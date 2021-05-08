@@ -2,148 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17CC9C433B4
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 23:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90EACC433ED
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 00:04:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF6C160FEA
-	for <git@archiver.kernel.org>; Fri,  7 May 2021 23:58:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B6AC61464
+	for <git@archiver.kernel.org>; Sat,  8 May 2021 00:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230227AbhEGX7O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 May 2021 19:59:14 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49848 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230252AbhEGX7M (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 May 2021 19:59:12 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 36C186041F;
-        Fri,  7 May 2021 23:57:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1620431860;
-        bh=sYEA7rloy9wboY88iPnW0K9A5fy9MgJPqmlIwEKmUK4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=jght35kq2dEYs2TC4KHAAm8YT07dfi1r+a3cHs1jN38ZaFrir6ON7zfvzB5uxN/DQ
-         zI0IbYuaMU98NFZC4a84XTp9pgPjSZU2VUcdcF7RQYcKE3n+tf6Jw4mxWapWWQnh1e
-         7gqQWtPvD7Ka42OIgiLJnAvGhDq3ul70rdYrKZMP7NGQ6Qt5wtR8fv2Z+FaZmeodfW
-         neSan2Wi1b6kD1jr/V066cfDItMND0WqHXPee1+MPMHeOMGP4uq3Gi6UGehCxrIUtf
-         IOZ/7EMwB2lmXDsDjcck116DmK39CK95wtY+ODCzWbXwWHuJFNiYEEPBcj683PfPlS
-         cWTE7/8WRA9Cir4NTEhXzA4g4CSoCe5XU6xjNILCwHAbLN9J7EqvpIMBUAds1uKHqh
-         hUqyjRQ/nUYYDA9oBRZoWJ5z3qEzp5EXjECx0dcGoLS5PbGn0hhiD9/fWsJLdmvUpv
-         b/wAqYxG2uEo2KjX/dU76hakBBSbsNl1zfUCagxLvHlLvgWc0qn
-Date:   Fri, 7 May 2021 23:57:32 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-Message-ID: <YJXT7AaqCeCV4WcZ@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
- <6095ceb984401_cfc7208b9@natae.notmuch>
+        id S230089AbhEHAFi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 May 2021 20:05:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230021AbhEHAFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 May 2021 20:05:38 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABAB2C061574
+        for <git@vger.kernel.org>; Fri,  7 May 2021 17:04:36 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id c3so10201096oic.8
+        for <git@vger.kernel.org>; Fri, 07 May 2021 17:04:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kuO1JFRb41rDJNbjRNr5ekOdGY1cdGJSbO06yXOhkf0=;
+        b=cPTSbSucc2kjaV4yrd+B3i6a8priKbt8d3p4ej5YmcilTNA1NQ8qT486YSMl6sGbKs
+         1k42KqLnZkKz42PU63T/RGfBte5hP9PUSTlC3VaEEfzJRs13N4rV8Nu1lpXuDW9X7xbe
+         id9Zj/sSeviJlbOIEffV3B0Hvm2dEHHYwLEaWwYq4eUCBx9V/ePZkTnxb3urER9+FwkM
+         zt+XC2g+MlwqbWjG3ShVry2xjFN16lbGjFYPNZftRaMYh7PpenKxqCKgvMEj962+fFHd
+         zNdjjQynSrz8O5gv9JQcQAriW/sBJjq2jTFEjVR4JbvKImKAF0cjrL8aXS78YQ65UHX3
+         rAIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kuO1JFRb41rDJNbjRNr5ekOdGY1cdGJSbO06yXOhkf0=;
+        b=OSRaRB0O1KiKPSOgud/xIRABC+BVDsVLvyfqP7AaIDAN2efPw4lUaoBauhOBXxHZoZ
+         5PZXb1FAjuXIYviBp98161+GhVqkESqe9tRCSq5wRjqD3OO2za3MMB4qS+jQqwIgHInA
+         VNCKGIX6fMY5k3sJgFYKzHZKgiqDEWBAVIer8IDATDf35JGXqX4kS5jNwSrlrYXw2PV0
+         40ZqXdF92i/rsKxkoEFvJECWlszjzFlm+qQzTywq/1ZpegPJIt8f8jzJk0zu33UNsqAw
+         QHT4fGbuJyo3frbsr9PrIe9KW/Osk7Lr6lAjuPjePvUrlNKy2gBA/y6M3qRFJDILIDt8
+         T6bw==
+X-Gm-Message-State: AOAM531YgwD6WPDWcMk+TSw68NcGlL5G5ZRrny/CCOHWKoxyFh7QoI24
+        URz4ghw47tdhy5OTIrsM1YRvSp6JpnJt01KsrIo=
+X-Google-Smtp-Source: ABdhPJwFxgvqZTfEXvynO5fZf0Aplv7bSQKaFdOVDoi+ugrVR6RdBI0LO7gN8fR1jtrZCNUyOlQOBHA/fsowt43E/ps=
+X-Received: by 2002:aca:3e05:: with SMTP id l5mr16577130oia.39.1620432276018;
+ Fri, 07 May 2021 17:04:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XCjbgYtqC1vB01sf"
-Content-Disposition: inline
-In-Reply-To: <6095ceb984401_cfc7208b9@natae.notmuch>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+References: <pull.1020.git.git.1620360300.gitgitgadget@gmail.com>
+ <a3bd253fa8e8ae47d19beb35327d8283ffa49289.1620360300.git.gitgitgadget@gmail.com>
+ <CAPig+cTzvKhUaNEXwRAVwV1Vkb7jpHNkcOytEPq0Gg33TrJXNg@mail.gmail.com>
+ <CABPp-BGzUBF8S8t3nixi3TCkiBe7oS1fQ5cNCozicb20iZxshA@mail.gmail.com> <YJXHrXWVDSgg5TZw@coredump.intra.peff.net>
+In-Reply-To: <YJXHrXWVDSgg5TZw@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 7 May 2021 17:04:24 -0700
+Message-ID: <CABPp-BEyUX8j-_rhNTyR5ZiqeLUWbBS-9q5+gEUWOEHpchambQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] t7300: add testcase showing unnecessary traversal
+ into ignored directory
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, May 7, 2021 at 4:05 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, May 06, 2021 at 10:00:49PM -0700, Elijah Newren wrote:
+>
+> > > > +               >directory-random-file.txt &&
+> > > > +               # Put this file under directory400/directory399/.../directory1/
+> > > > +               depth=400 &&
+> > > > +               for x in $(test_seq 1 $depth); do
+> > > > +                       mkdir "tmpdirectory$x" &&
+> > > > +                       mv directory* "tmpdirectory$x" &&
+> > > > +                       mv "tmpdirectory$x" "directory$x"
+> > > > +               done &&
+> > >
+> > > Is this expensive/slow loop needed because you'd otherwise run afoul
+> > > of command-line length limits on some platforms if you tried creating
+> > > the entire mess of directories with a single `mkdir -p`?
+> >
+> > The whole point is creating a path long enough that it runs afoul of
+> > limits, yes.
+> >
+> > If we had an alternative way to check whether dir.c actually recursed
+> > into a directory, then I could dispense with this and just have a
+> > single directory (and it could be named a single character long for
+> > that matter too), but I don't know of a good way to do that.  (Some
+> > possiibilities I considered along that route are mentioned at
+> > https://lore.kernel.org/git/CABPp-BF3e+MWQAGb6ER7d5jqjcV=kYqQ2stM_oDyaqvonPPPSw@mail.gmail.com/)
+>
+> I don't have a better way of checking the dir.c behavior. But I think
+> the other half of Eric's question was: why can't we do this setup way
+> more efficiently with "mkdir -p"?
 
---XCjbgYtqC1vB01sf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think I figured it out.  I now have the test simplified down to just:
 
-On 2021-05-07 at 23:35:21, Felipe Contreras wrote:
-> I don't think it would be that complicated.
->=20
-> This patch seems to do the trick here:
->=20
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index c2baad0bd8..8fa4896d22 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -189,6 +189,7 @@ ASCIIDOC_EXTRA +=3D -alitdd=3D'&\#x2d;&\#x2d;'
->  DBLATEX_COMMON =3D
->  XMLTO_EXTRA +=3D --skip-validation
->  XMLTO_EXTRA +=3D -x manpage.xsl
-> +TXT_TO_MAN =3D $(ASCIIDOC_COMMON) -b manpage
->  endif
-> =20
->  SHELL_PATH ?=3D $(SHELL)
-> @@ -360,9 +361,16 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf asci=
-idoctor-extensions.rb GIT-AS
->  manpage-base-url.xsl: manpage-base-url.xsl.in
->  	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
-> =20
-> +ifdef TXT_TO_MAN
-> +%.1 %.5 %.7 : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOC=
-FLAGS
-> +	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
-> +	$(TXT_TO_MAN) -o $@+ $< && \
-> +	mv $@+ $@
-> +else
->  %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
->  	$(QUIET_XMLTO)$(RM) $@ && \
->  	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
-> +endif
-> =20
->  %.xml : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
->  	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
->=20
-> I'm sure this can be improved with some knowledge about intermediary
-> rules.
+test_expect_success 'avoid traversing into ignored directories' '
+    test_when_finished rm -f output error trace.* &&
+    test_create_repo avoid-traversing-deep-hierarchy &&
+    (
+        mkdir -p untracked/subdir/with/a &&
+        >untracked/subdir/with/a/random-file.txt &&
 
-It's not quite that simple.  It requires changes to
-asciidoctor-extensions.rb and we also need to consider
-NO_MAN_BOLD_LITERAL and GNU_ROFF.  The latter especially is likely to be
-inconvenient, since according to the Makefile, it's impossible to write
-man output that works across troff versions.
+        GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+        git clean -ffdxn -e untracked &&
 
-We will also want to preserve the ability to use xmlto because we
-currently have doc-diff which helps us find divergences in the behavior
-of AsciiDoc and Asciidoctor, many of which affect all formats, and that
-will be completely useless if we use two different rendering toolchains.
+        grep data.*read_directo.*visited ../trace.output \
+            | cut -d "|" -f 9 >../trace.relevant &&
+        cat >../trace.expect <<-EOF &&
+        directories-visited:1
+        paths-visited:4
+        EOF
+        test_cmp ../trace.expect ../trace.relevant
+    )
+'
 
-So, yes, this is a good start, but it's not quite as trivial as it seems.
+This relies on a few extra changes to the code: (1) switching the
+existing trace calls in dir.c over to using trace2 variants, and (2)
+adding two new counters (visited_directories and visited_paths) that
+are output using the trace2 framework.  I'm a little unsure if I
+should check the paths-visited counter (will some platform have
+additional files in every directory besides '.' and '..'?  Or not have
+one of those?), but it is good to have it check that the code in this
+case visits no directories other than the toplevel one (i.e. that
+directories-visited is 1).
 
-> > It also doesn't help if you're generating more than just the manual
-> > pages, since generating the PDFs will definitely require xmlto and
-> > either dblatex or fop.  I personally prefer fop over dblatex, but folks
-> > have different opinions.
->=20
-> Huh? user-manual.pdf seems to require DBLATEX, not XMLTO.
-
-Ah, yes, because we do it manually instead of using xmlto.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---XCjbgYtqC1vB01sf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJXT6wAKCRB8DEliiIei
-gQSwAP9Qbg82bhZkQwCPULFSSAFP3aLgWLFsfTKRvwKsmFTuSQD+PhI33NxxetlT
-AFtXoMhP7wmuxNsQBNptMisjkl0QTws=
-=wGtq
------END PGP SIGNATURE-----
-
---XCjbgYtqC1vB01sf--
+New patches incoming shortly...
