@@ -2,107 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD1C0C433ED
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3BCCC433B4
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:36:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A66D261430
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:28:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D81660FEB
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbhEJF3m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 01:29:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51384 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229863AbhEJF3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 01:29:41 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75B49C67AB;
-        Mon, 10 May 2021 01:28:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2oQiCMJb1aN1/Rf+syUMdPvOcPHPl5lRCfoKJM
-        K6yOI=; b=dNUdB8arpFrTvJvtCrfNbL4yCDU5EdV1SNcgH7gGaISBoIJdqu55LX
-        kIOm1+pDghvO1JkRhyC1fHqJPrehx0UEv8RzExqu84NwawhWYeC6GLCCSIpQK9JE
-        e3ooSrdTh59SCZj2HpENuoLMUt6WUdYDYyMxG8qs7AEzCx/UBzoM0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 595ACC67AA;
-        Mon, 10 May 2021 01:28:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BC922C67A8;
-        Mon, 10 May 2021 01:28:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v3 4/8] t7300: add testcase showing unnecessary
- traversal into ignored directory
-References: <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
-        <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
-        <dc3d3f2471410aa55da4dbc8e2747192888bce5f.1620503945.git.gitgitgadget@gmail.com>
-Date:   Mon, 10 May 2021 14:28:35 +0900
-In-Reply-To: <dc3d3f2471410aa55da4dbc8e2747192888bce5f.1620503945.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Sat, 08 May 2021
-        19:59:00 +0000")
-Message-ID: <xmqq7dk7rwcc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230031AbhEJFht (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 01:37:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229943AbhEJFht (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 01:37:49 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F75C061573
+        for <git@vger.kernel.org>; Sun,  9 May 2021 22:36:44 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id t2-20020a17090a0242b0290155433387beso7641710pje.1
+        for <git@vger.kernel.org>; Sun, 09 May 2021 22:36:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=Xph/xqV+3JYsW1K70zlKVjQy3s/X4bmYy7DVVWXEqaI=;
+        b=ld0cOfmgdHjrkdFOCIEyHcfySlGivNyYWTp8wjE8dIqkX+KP7rNRiUlQj1dn1GoExC
+         jCj7UQYubqo0fJRmOrTgelNJ93sxTyN0+XhumDobm4po8/jeRozKYi8lcO3jaO8BYQI4
+         vaTG9owqtD+s12SyNo1J3nUkQCYocoRcTNJPWTnwGT4HHDmi1640XV6tJjwddndbodCy
+         vE06BwS24U0RywkwyF9IyqwMj20f6fkDkeEwucgUicikSz9VLkurZK5znZTX6HkmKKW6
+         2xLwhCr/EiH6iHxKaGwac4Ddbq21TaqJtDfe4/CAyW5lrlq2iCT+6Bo8QY/Es32LoBWn
+         tBaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Xph/xqV+3JYsW1K70zlKVjQy3s/X4bmYy7DVVWXEqaI=;
+        b=XFaz1aOu5h5sijrLOwYPQ+ZNd4MuofqPTs64mpfoFnoDk81aGJnz0EIIziqebz+mQf
+         j9cbsIW2LCu/L6OBE9kk78i7teMFdBYBxVS/Dh4bck3f33jRkEBUGtmUIqepqw5Jm01R
+         G2XXkLbXGkP8FcwDv4kedjkH6rgfUCRGD++2sKH+X16O3lvCFpgqZHmIAuipTv4dXwyi
+         MjjXWSW3jkBaXuT7vwQR/+q2I0Wdq82pFK66bzy5u4znJ6n/n0tfGrfMGaSCbgdoINPT
+         do4tziLYVwPrUb27UfzRjiXtOiBi2QjeCIxMnhqDlavFRGy5OAHVvMO4eo3COA8W7mbM
+         405A==
+X-Gm-Message-State: AOAM531x5sb8Y2hiXL4jN4RooqNWJk8mQimAIqjBqfd2WEuHgqdp/F8S
+        cShuK3+eJMGskmO2w3TBZAg=
+X-Google-Smtp-Source: ABdhPJydEhIMkr70iAaB1+d3ftLgmUHtHkioHurjezFGM0xkbnENgCeq/RmsuYTkHmy54O3Vf/S3Mg==
+X-Received: by 2002:a17:90a:f87:: with SMTP id 7mr6697235pjz.38.1620625003685;
+        Sun, 09 May 2021 22:36:43 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-59.three.co.id. [116.206.28.59])
+        by smtp.gmail.com with ESMTPSA id u17sm9948674pfm.113.2021.05.09.22.36.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 May 2021 22:36:43 -0700 (PDT)
+Subject: Re: [PATCH] merge-ort: split "distinct types" message into two
+ translatable messages
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        newren@gmail.com, gitster@pobox.com
+References: <20210509215250.33215-1-alexhenrie24@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <bb3a3968-f78e-7534-1274-2e6c916b9a8a@gmail.com>
+Date:   Mon, 10 May 2021 12:36:39 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9148FE38-B150-11EB-BE07-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20210509215250.33215-1-alexhenrie24@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 10/05/21 04.52, Alex Henrie wrote:
+> The word "renamed" has two possible translations in many European
+> languages depending on whether one thing was renamed or two things were
+> renamed. Give translators freedom to alter any part of the message to
+> make it sound right in their language.
 
-> +test_expect_failure 'avoid traversing into ignored directories' '
-> +	test_when_finished rm -f output error trace.* &&
-> +	test_create_repo avoid-traversing-deep-hierarchy &&
-> +	(
-> +		cd avoid-traversing-deep-hierarchy &&
-> +
-> +		mkdir -p untracked/subdir/with/a &&
-> +		>untracked/subdir/with/a/random-file.txt &&
-> +
-> +		GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
-> +		git clean -ffdxn -e untracked
-> +	) &&
-> +
-> +	grep data.*read_directo.*visited trace.output \
-> +		| cut -d "|" -f 9 >trace.relevant &&
-> +	cat >trace.expect <<-EOF &&
-> +	 directories-visited:1
-> +	 paths-visited:4
+What are the examples? In French, Spanish, German, Portuguese (pt-PT),
+or even Slavic (like Russian) or even Hungarian, and etc?
 
-Are the origins of '1' and '4' trivially obvious to those who are
-reading the test, or do these deserve comments?
+> -			path_msg(opt, path, 0,
+> -				 _("CONFLICT (distinct types): %s had different "
+> -				   "types on each side; renamed %s of them so "
+> -				   "each can be recorded somewhere."),
+> -				 path,
+> -				 (rename_a && rename_b) ? _("both") : _("one"));
+> +			if (rename_a && rename_b) {
+> +				path_msg(opt, path, 0,
+> +					 _("CONFLICT (distinct types): %s had "
+> +					   "different types on each side; "
+> +					   "renamed both of them so each can "
+> +					   "be recorded somewhere."),
+> +					 path);
+> +			} else {
+> +				path_msg(opt, path, 0,
+> +					 _("CONFLICT (distinct types): %s had "
+> +					   "different types on each side; "
+> +					   "renamed one of them so each can be "
+> +					   "recorded somewhere."),
+> +					 path);
+> +			}
 
-We create an empty test repository, go there and create a untracked/
-hierarchy with a junk file, and tell "clean" that 'untracked' is
-"also" in the exclude pattern (but since there is no other exclude
-pattern, that is the only one), so everything underneath untracked/
-we have no reason to inspect.
+Seems OK.
 
-So, we do not visit 'untracked' directory.  Which ones do we visit?
-Is '1' coming from the top-level of the working tree '.'?  What
-about the number of visited paths '4' (the trace is stored outside
-this new test repository, so that's not it).
+For example, in Indonesian, the first case (both sides are renamed) would be
+something like:
+```
+%s punya tipe yang berbeda pada setiap sisi, kedua-duanya dinamai ulang...
+```
+The second case (only one side) would be something like:
+```
+%s punya tipe yang berbeda pada setiap sisi, salah satunya dinamai ulang...
+```
+But the status quo (before this patch) would be translated as:
+```
+%s punya tipe yang berbeda pada setiap sisi, (kedua-duanya | satu) dari mereka
+dinamai ulang...
+```
+On the both sides case of status quo, the personal pronoun `mereka` (they)
+refers to the conflicted sides, where as on this patch, such conflicted sides
+are instead be referred as `-nya` suffix on the translation.
 
-Thanks.
+I personally avoid using `mereka` atau `ia` as personal pronoun that refer
+to things, and instead using `itu`.
 
-> +	EOF
-> +	test_cmp trace.expect trace.relevant
-> +'
-> +
->  test_done
+-- 
+An old man doll... just what I always wanted! - Clara
