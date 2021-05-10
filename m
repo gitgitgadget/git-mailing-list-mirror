@@ -7,94 +7,91 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45DE1C433ED
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 13:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88C3FC43460
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 13:41:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0737D61430
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 13:41:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69ABF6143B
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 13:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237049AbhEJNmA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 09:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42944 "EHLO
+        id S237503AbhEJNmJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 09:42:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240406AbhEJNAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 09:00:21 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B407AC06123B
-        for <git@vger.kernel.org>; Mon, 10 May 2021 05:51:26 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id a11so14636180ioo.0
-        for <git@vger.kernel.org>; Mon, 10 May 2021 05:51:26 -0700 (PDT)
+        with ESMTP id S235468AbhEJNDb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 09:03:31 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A6DC061761
+        for <git@vger.kernel.org>; Mon, 10 May 2021 06:02:23 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id l4so24363877ejc.10
+        for <git@vger.kernel.org>; Mon, 10 May 2021 06:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wc/Gsw9D+rs9dx0lulqtXRFPHDGWHdyFL2sZQJ/i6/I=;
-        b=L+9N1yvBFRIl6XJGi73EMXz1coqaepiaSiMgEQGYJJevGb8J+l7wXNEpvd74o+qYKq
-         PSfYUT7J8VwEyrmlp3AWEj0Jj4xbqviwJrHNBRuEKCx5YYF23dRdceg8ObUjRgwbgamH
-         8LDOb8l3fZiAUF7OEEvnBy1BRmkCZPN6oZQFAiwaqdb+rb4rizpQTswrnb20wiZ/brFk
-         THAqP4Z3GpLffEDItd+yZOZcsKu5tCKsIO6IOm/adEGZTVf9BUi6thGqwElHq4h3Z1OM
-         YIztK5wsD1dLWQMNFGoP5NSStp9zywmuqedDHAPayf8ePLOI3aXspnYvkSct5ROCXPr4
-         M2gw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=e5FzrP8EgDfSZTXWjSt+/VxzI1vsRd1vY09htA9JB1I=;
+        b=Ugpjc8tKs4TQnr6GbxX1enZppISLFWqMxrywvypzAuXqzYRTqu3gYEDa7MHZIwoMhR
+         AAyB6QJFpLjfemlCSngl3KAPOeca6gXZA+p0/OnHMleEPXmiLk2LAkiepaM0bV7KNAFs
+         8j59lQaD4baiCuC3iSA6Adlq5+wnHnxJ7H4C17gmXLyUmGycVEmbdDduPZgcMBrmzV7N
+         b9Za2o8SECveUqUilY+rMcmWyAVzB0tY3J4bLFAbtZFuC4ttiCiUlBBASlcG6TgZMTZl
+         Yf3hrPxWNLGSxZXtJJJTa43LUB2I6GlyFDr8tMTpGoi6m4gxBZ5yKjWk0EQwLz5AS3jL
+         hCtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wc/Gsw9D+rs9dx0lulqtXRFPHDGWHdyFL2sZQJ/i6/I=;
-        b=rQ8O2hnebUH7FbrhyluPW0kmVupPk7/xGn1S/nRLar5Uu5hCaGkEYNoA3dNtiDCIwg
-         Y0BUoZ09u1doVbKm9G4OTImEAgV40gJa1lI2pe5YIBYUsOORNeKNLjSWr4EPAgX0il1b
-         m1B3GLjhw3f/RVpN5PSoiTC2Cr1MALEJTv2HRJLQTmOJHDgonK/RMWl/YwLtk9FVqEds
-         zsE/DmICLhOG/QSPR9TJfsaV4/OB/+Wjb0GkXBNRBwovbchzL1mqHBaRaY54mDVS0U1n
-         txHcs3P1QyFQCcd720Gyqe71KgSNe2U3o9vcitwUJmn6ba5Mnj3ERfP6Wl1kXSXiIg7F
-         TyKA==
-X-Gm-Message-State: AOAM531hotriWqnxKylgomNIF2cDnWXr9M/ztpvRlnNi+BTPXANIO3bK
-        W0Jdh/dd23Mk4coJE9ynYABwJdJb7jixXmUnmQc=
-X-Google-Smtp-Source: ABdhPJxQvF5o+MWDVQ6tCABWEIUn9loQIcNJb7NB0enqfOPEocDn5RkL9IgoNSR7zC36teYlkHbJYerw3JCAZ7Gyvw0=
-X-Received: by 2002:a05:6638:2410:: with SMTP id z16mr21594734jat.130.1620651086188;
- Mon, 10 May 2021 05:51:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=e5FzrP8EgDfSZTXWjSt+/VxzI1vsRd1vY09htA9JB1I=;
+        b=S804qFFJmQTaszZQYhsDnp0Qncdzc5tymDNOCASZxS1idlPV9zrNfcy/T1GK3RGOK8
+         oBLx4LcQtLvi7PLTrk3MIX5y8FI62bDWl6D+rHfZH9pTtE7NlqE3BkRdNx4rIjjfPdsX
+         Q+wWTzVWB72fZpxGzYf9z9NN2LuPucNbuzq6urWeWCdxT3OCsRHvS1Z6rltjlrZrCShw
+         GhvsCYa1WWQpirBAu/Nuf6+DLhIBZjBFoHK2Fcc7tSQa6fQxBWt/+b56JrWP2FXXtdBo
+         mIAwf3QBC/hyUZYOYS1sHdwfe4LkyMcIUmP12kxIV9tlh1GEAiRX8irW9jW0UrfaRWrL
+         UpBA==
+X-Gm-Message-State: AOAM532Qn57nX0PZww3uJSmeNWfaEjdBp0W/XrqHcHw8jA41RZIbdXSL
+        i4eH7a1hn94q/EQ3d0OkKrc=
+X-Google-Smtp-Source: ABdhPJzoIqtt2pcOii9lYL3C7vXDQfR5d/IUr/oyDHYu3fhS5bQhBA3D6xUo0FjQIPzlYElSBPDuZw==
+X-Received: by 2002:a17:906:4809:: with SMTP id w9mr22641200ejq.401.1620651742311;
+        Mon, 10 May 2021 06:02:22 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id u1sm11234661edv.90.2021.05.10.06.02.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 May 2021 06:02:21 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] tr2: log parent process name
+Date:   Mon, 10 May 2021 14:29:15 +0200
+References: <20210507002908.1495061-1-emilyshaffer@google.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210507002908.1495061-1-emilyshaffer@google.com>
+Message-ID: <87im3qu4gy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.949.v2.git.1620318676776.gitgitgadget@gmail.com>
- <pull.949.v3.git.1620487572222.gitgitgadget@gmail.com> <xmqqcztzqc9j.fsf@gitster.g>
-In-Reply-To: <xmqqcztzqc9j.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 10 May 2021 20:51:10 +0800
-Message-ID: <CAOLTT8R3ys5ohujVRKiQa3vijrzdGzLThU5hsG-estiyUgOqhQ@mail.gmail.com>
-Subject: Re: [PATCH v3] [GSOC] ref-filter: fix read invalid union member bug
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Just a final sanity check.  Is this a recent breakage or was the
-> code introduced at cc72385f (for-each-ref: let upstream/push
-> optionally report the remote name, 2017-10-05) broken from the
-> beginning?
->
 
-Well, The trigger condition is very special, but the bug was introduced
-at that time. Let's see the "bug" example below.
+On Thu, May 06 2021, Emily Shaffer wrote:
 
-> I am wondering if it is easy to add a test to cover the codepath
-> that is affected by this change.
->
-> Thanks.
->
+> It can be useful to tell who invoked Git - was it invoked manually by a
+> user via CLI or script? By an IDE? Knowing where the Git invocation came
+> from can help with debugging to isolate where the problem came from.
 
-Well, because this bug must require that the seventeenth bit of
-`used_atom.u` is not 0, it took me a long time to find this bug.
-in `used_atom.u`, only the member "color" and "contents" which
-size is bigger than 17 bytes, but "%(contents:trailer:only)" only fill
-the 16th byte of `used_atom.u`.
+Aside from the portability concerns others have raised, I don't really
+see why you'd need this.
 
-"Fortunately", I found it.
+We already have the nest-level as part of the SID, so isn't it
+sufficient (and portable) at the top-level to log what isatty says + set
+the initial SID "root" in the IDE (which presumably knows about git).
 
-git for-each-ref --format='%(color:#aa22ac)'
+Wouldn't this log passwords in cases of e.g.:
 
-I will add test for it!
+    some-script --git-password secret # invokes "git"
 
-Thanks!
---
-ZheNing Hu
+In older versions of linux reading e.g. smaps from /proc/self would
+stall the kernel while the read was happening, I haven't checked whether
+cmdline is such a thing (probably not), but it's a subtle thing to have
+in mind for this / follow-ups if it's made portable (is that an issue on
+other OS's?).
+
+All that being said I've got nothing fundamentally against this.
