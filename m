@@ -7,102 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAEE6C43460
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3E42C433B4
 	for <git@archiver.kernel.org>; Mon, 10 May 2021 12:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB2BF61581
+	by mail.kernel.org (Postfix) with ESMTP id 8604B611F0
 	for <git@archiver.kernel.org>; Mon, 10 May 2021 12:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239743AbhEJMwL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 08:52:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343777AbhEJMOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 08:14:24 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82B90C06175F
-        for <git@vger.kernel.org>; Mon, 10 May 2021 05:11:44 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id r5so5802383lfr.5
-        for <git@vger.kernel.org>; Mon, 10 May 2021 05:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=e4kgPo04EpFd9dazUurGRMbpwXc1ghRtjBnorloftMc=;
-        b=p3ASDn6lIUp5BM1w42sC5GUfYr4PnGRyR35UognbhBIYUF1l0CmV0QFbKOK0xnotvY
-         yJetVA/3uUz8GlQUHCmtQxFw33MqUelfxfAie5Mhm1cSF/HhKsMciFb2FPJ+IWVfpJDF
-         Br9wAcGXqgi8chJOOb/VlIjohQVROWSGKLDX04J9vXDXFTWzYvaYRRirQ+1CzwBLzpSY
-         IzmTL474G/Lir88g+DtUGYskqcl7FAIdLncR3JJ2tRarY4rreLQsfa1n+5Ek+BsOT00H
-         VcHJ1p63uL14BhVeZEq7crDA3cxtpwy01lGYOsSBtGF58ZPz/w4fp+27JV41LW2r4KT3
-         TXIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=e4kgPo04EpFd9dazUurGRMbpwXc1ghRtjBnorloftMc=;
-        b=KsGkSmMIufMmn+HcawwRM27cEOUkAOAMQAH5Vt7k7zLa7nNeoSe0sFo2EPmnZDYN19
-         wBHvW68zlhg/B63k0BzQpYsuA1qiQ9vg9YDvEO1awAlMlxsaLHE9w2GiPDfysEuGMlZi
-         A8usPxX7XK+TEOuHJTDcpe+Oh5UBagodcbp4qI2VvlIO0p8O3htGOJsrAMM01mTrhiaK
-         Q8slsOhNrU7qRU+kNpTO0qweKnXkJf1cQwFKNzDE37xV0BWRF0TIHpaaH0yzYL5vcbJv
-         4mPGAutsFRaHtT8kNd5pxREG9/u33ldpJc2d+0SLD0LfojptDkr7EfdZ5bT5OaiqckVC
-         ULog==
-X-Gm-Message-State: AOAM530dURU4+9cxapzbUYnGRHNpzOV0+u+qpenNPcgeVtFbjPDk+hXr
-        A4NqjQz+xq0KPL5qrPyEVa4=
-X-Google-Smtp-Source: ABdhPJw0bjPTEWy0m+FKR/F1KpyorqUPklEGBLSPgcpz6SNfbOykyrh8eHUeZsQMQRP/DLtWn8oiPA==
-X-Received: by 2002:a05:6512:3c8:: with SMTP id w8mr6985563lfp.63.1620648703013;
-        Mon, 10 May 2021 05:11:43 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m2sm2243260lfo.23.2021.05.10.05.11.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 05:11:42 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why doesn't `git log -m` imply `-p`?
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-Date:   Mon, 10 May 2021 15:11:41 +0300
-In-Reply-To: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        (Alex Henrie's message of "Wed, 28 Apr 2021 19:44:19 -0600")
-Message-ID: <87a6p2hjpe.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S239661AbhEJMwF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 08:52:05 -0400
+Received: from st43p00im-ztfb10063301.me.com ([17.58.63.179]:53824 "EHLO
+        st43p00im-ztfb10063301.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S243476AbhEJL4D (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 May 2021 07:56:03 -0400
+X-Greylist: delayed 414 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 May 2021 07:56:03 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1620647281;
+        bh=F54aLMfBI3BtSLkg9iqiSa0TMdrvj/iuispL5+bgyYw=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=y1WT2HeKbL1Uy31BgNuWr4SABJQWoqrKtDnOdXMuirAMr8aTBk0JB95aDGPmERqsV
+         HVsKNevm/hLHDH1j+D/k/VRNlB5eYPRIDQl2xhPmVzoMMSnZDTrrahpUJELen2L4fm
+         1ywgG6syFfgpWcU4XesBWNif5a2c6hCxsDf/Zvrj27rhLkis3tQiDtvi29nkzlZmCQ
+         pPNRJ8n4lF0ELTC6lkonEqs59LwUuWing3Tm9O5ZrJAAxlTfpul+MGZrNZRbdsKn0l
+         iuJ12Hhz8yyZYZH/SZIzFli272TDYwpKCK6q1yMUFyhXqsU6ZiYbq/SLwc4QPXimlU
+         4L+cwj+Pue1VA==
+Received: from [198.51.100.111] (unknown [85.174.197.166])
+        by st43p00im-ztfb10063301.me.com (Postfix) with ESMTPSA id 516D8A4027B;
+        Mon, 10 May 2021 11:48:00 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+From:   =?utf-8?B?0J7QutGB0LDQvdCwINCQ0LvQtdC60YHQtdC10LLQsA==?= 
+        <oxyoma1980@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date:   Mon, 10 May 2021 14:47:57 +0300
+Subject: Re: Re: [PATCH] maintenance: fix two memory leaks
+Message-Id: <FADD543B-1D1E-492A-8F66-F79F2D4290DD@icloud.com>
+Cc:     dstolee@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
+        lenaic@lhuard.fr, sunshine@sunshineco.com
+To:     lilinchao@oschina.cn
+X-Mailer: iPhone Mail (18D70)
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.391,18.0.761,17.0.607.475.0000000_definitions?=
+ =?UTF-8?Q?=3D2021-05-10=5F06:2021-05-10=5F05,2021-05-10=5F06,2020-04-07?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 mlxlogscore=390 phishscore=0
+ clxscore=1011 spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2105100086
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
-
-> I read the following in `man git-log` today:
->
-> --diff-merges=separate, --diff-merges=m, -m
->     This makes merge commits show the full diff with respect to each of
->     the parents. Separate log entry and diff is generated for each
->     parent.  -m doesn't produce any output without -p.
->
-> --diff-merges=combined, --diff-merges=c, -c
->     With this option, diff output for a merge commit shows the
->     differences from each of the parents to the merge result
->     simultaneously instead of showing pairwise diff between a parent and
->     the result one at a time. Furthermore, it lists only files which
->     were modified from all parents.  -c implies -p.
->
-> --diff-merges=dense-combined, --diff-merges=cc, --cc
->     With this option the output produced by --diff-merges=combined is
->     further compressed by omitting uninteresting hunks whose contents
->     in the parents have only two variants and the merge result picks one
->     of them without modification.  --cc implies -p.
->
-> Why do -c and -cc imply -p, but -m does not? I tried to use both `git
-> log -c` and `git log -m` today and was confused when the latter didn't
-> produce any output. Could we change this behavior in a future version
-> of Git?
-
-Patches to fix this are almost ready, but I'd like to make a warning
-that you'd likely be even more confused by the current output of "-m",
-unless you set "log.diffMerges" configuration option to "first-parent".
-These diffs with respect to /second/ parent at the end of the output
-made me really mad once upon a time.
-
--- Sergey Organov
+DQoNCtCe0YLQv9GA0LDQstC70LXQvdC+INGBIGlQaG9uZQ==
