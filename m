@@ -2,144 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28437C433ED
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50302C433ED
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:35:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1A42611BE
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:25:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CEBE6120D
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237450AbhEJP0M convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 10 May 2021 11:26:12 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:20974 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236570AbhEJPZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 11:25:19 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14AFOBDZ043534
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Mon, 10 May 2021 11:24:12 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Git Mailing List'" <git@vger.kernel.org>
-References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com> <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com> <012601d73ddf$3d0cf660$b726e320$@nexbridge.com> <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com> <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com>
-In-Reply-To: <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com>
-Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
-Date:   Mon, 10 May 2021 11:24:06 -0400
-Message-ID: <01dd01d745b0$875c6920$96153b60$@nexbridge.com>
+        id S231562AbhEJPgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 11:36:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50042 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235775AbhEJPgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 11:36:02 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B8DBC061574
+        for <git@vger.kernel.org>; Mon, 10 May 2021 08:34:56 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id v5so21322445ljg.12
+        for <git@vger.kernel.org>; Mon, 10 May 2021 08:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CmDePphqS4bI1x9Scxn8yj2ZgNti6mWWhWF260/tRG0=;
+        b=E9HitAjNv3pQcXoiUDw540bOyyh1UhC4yNUcvJxHvXP49ujJB+qIJS62H2z2NbCuI1
+         QultRgXOAzngqO3+Ad7qOFigKTSD8fg8DrKO3J28o/x+PUQstpiC7T8jRPdAY9TEGRfz
+         myxF7TBSyP6oZVPH0AIcgCXSyYxHEitWN6c8AY+HlrYxp7dv7vCcBAcY+y4OeeDnRmGT
+         RH7tgzPeeWuPYD3S+cquOzOlg5lP+f5hPspIsdj9HxbXqHUStdPHZj1g4SPNtRtxzyUF
+         E/utVfClxlLRcYFYupDI3sM071+UDvO63Ju3HQ1OxKxxKJup3QNvnawknf02DSVhgpTT
+         Wf9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=CmDePphqS4bI1x9Scxn8yj2ZgNti6mWWhWF260/tRG0=;
+        b=YJ8wUEYBpahTwyTOwohlBD3StECRvGnIlnFwdx5rhINqIKsOHTBvcX4uT8SH4XpmrH
+         aez8v//LaH9mBCpbB97Th6FSTrASEd0FI5hnwdCfgQeXzITrbpmexEmb4yVnAp+imVkn
+         JMLnozmmAs+MaN9ogpZH+UPg6uuigFIa0MDyjdvy+IZQJFJD6d4lSwEmoY153vlEOa04
+         7EJulw2GC1NxRMTOOAlW1WoxWxZFjP8eDQEabt/Iubgm5jeEZ7fAb1kED5wAXRYjmeob
+         2Bz33lRbMoZRdpc3uoIWtk4Y1gJ4RUllHlJQH5OhlGJgd+16p2H/yRKOKeYARf3YUdvW
+         hgsw==
+X-Gm-Message-State: AOAM531kAyaO3KTVgjxy6zp6BJ36RsO5iDG5oV9hKOopB/EJpRNrGnB/
+        QuupPJYj7vb1vKROcnuxzYs=
+X-Google-Smtp-Source: ABdhPJwDjw4NznsjPADJt3w/kZZ+xUGW/wp3y4IV0/r1c9eGbOicIjs+y27bi929UxKHPbKP+nRVbw==
+X-Received: by 2002:a05:651c:487:: with SMTP id s7mr15648853ljc.351.1620660894652;
+        Mon, 10 May 2021 08:34:54 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id p8sm1525840lfe.224.2021.05.10.08.34.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 May 2021 08:34:54 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
+        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH 0/6] diff-merges: let -m imply -p
+Date:   Mon, 10 May 2021 18:34:45 +0300
+Message-Id: <20210510153451.15090-1-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIWGYGttp5Jdx88vf9L/5ZtrxnlMwG55eaXAXoXgPoC7mL63QI2zlGUqhxkGVA=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On April 30, 2021 1:32 PM, I wrote:
->Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
->
->On April 30, 2021 1:17 PM, Elijah Newren wrote:
->>On Fri, Apr 30, 2021 at 9:38 AM Randall S. Becker
->><rsbecker@nexbridge.com>
->>wrote:
->>>
->>> On April 30, 2021 12:25 PM, Elijah Newren wrote:
->>> >On Fri, Apr 30, 2021 at 7:58 AM Randall S. Becker
->>> ><rsbecker@nexbridge.com>
->>> >wrote:
->>> >>
->>> >> From ba4beb8ed0dff67ae6b95692d346adce346e2871 Mon Sep 17
->00:00:00
->>> >2001
->>> >> From: "Randall S. Becker" <rsbecker@nexbridge.com>
->>> >> Date: Fri, 30 Apr 2021 09:56:09 -0400
->>> >> Subject: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant
->set.
->>> >>
->>> >> This enhancement allows the NonStop SSH subsystem to be supported
->>> >> by git without the need of a wrapper script. The command arguments
->>> >> for the platform SSH client in /G/system/zssh/sshoss are
->>> >> constructed based on optional supplied environment variables
->>> >> SSH2_PROCESS_NAME (system defined), SSH_SUPPRESS_QUIET, and
->>SSH_SUPPRESS_BANNER.
->>> >
->>> >Before introducing 3 new special environment variables, I think this
->>> >commit message should explain why you can't just use
->>> >
->>> >GIT_SSH_COMMAND="/G/system/zssh/sshoss -Z -Q -S"
->>>
->>> No, it would be GIT_SSH_COMMAND='/G/system/zssh/sshoss -Z -Q -S
->$ZSSH0'
->>and that does not work correctly in the current git code base.
->>
->>Is the problem that $ZSSH0 may contain spaces, or that $ZSSH0 is
->>expected to change over time and you don't want to have to re-run
->>
->>GIT_SSH_COMMAND="/G/system/zssh/sshoss -Z -Q -S $ZSSH0"
->>
->>each time?
->>
->>> >particularly since GIT_SSH_COMMAND was introduced specifically so
->>> >people wouldn't have to create wrapper scripts to pass to GIT_SSH.
->>>
->>> Going back through the archive to why this is needed:
->>> https://public-inbox.org/git/008101d4f3db$56c20410$04460c30$@nexbridg
->>> e
->>> .com/
->>>
->>> The SSH2_PROCESS_NAME is a system environment variable, not something
->>> I
->>am introducing, that specifies the name of the SSH process. It's format
->>is [\NODE.]$NAME, which causes shell to blank it out. A wrapper script
->>is currently mandatory on this platform.
->>>
->>> I have been looking for a solution since that thread.
->>
->>Ah, so it's the case that $ZSSH0 changes for you, but is set somewhere
->>by the system and you don't want to have to redefine GIT_SSH_COMMAND
->>each time you log into some box.
->>
->>At a minimum, this explanation should be included in the commit message
->>here, otherwise the problem you're trying to address won't be
->>understood by reviewers.  It wasn't at all clear to me from your cover
->>letter or this commit, and I even had trouble parsing it out of the
->>other thread you linked to.  Only this above paragraph about
->>SSH2_PROCESS_NAME and its value on your system explain it. (It's still
->>hard to tell what from your "[\NODE.]$NAME" is literal text and what is
->>meant to be replaced, though, it might be useful to have an example of
->>the literal value of SSH2_PROCESS_NAME on some random node in the
->>explanation as well.)
->
->SSH2_PROCESS_NAME tends not to change much, although it is bound to a set of
->subnets. Example values are $ZSSH0 or \NODE.$ZSSH0, depending on whether
->the system admit decides to qualify the name with it's cluster host name, since
->you could use a different process on a different node. The name may change
->between repositories - so going to github.com would commonly have a different
->process name than a local enterprise server. I really would consider putting this
->in .gitconfig so it can be repository-specific, but I'd prefer to see whether this
->change has legs before doing that.
->
->There are use cases on the platform where, from the user's perspective, this
->value may be random. It is set on an inbound SSH session by the server and
->provided to the shell in that variable. Users will either use the system supplied
->process (somewhat QoS-related) or will select their own.
->
->Do you have suggestions about the other two settings? I don't like the
->environment variable approach, but passing switches through git seems pretty
->heavy to me.
->
->I will do what I can to expand the discussion in the connect.c commit on V2.
+Fix long standing inconsistency between -c/--cc that do imply -p, on
+one side, and -m that did not imply -p, on the other side.
 
-I'm wondering whether this is going to move forward or whether changes are needed. There is no V2 since suppression control of the various parameters used to set up the command appears to be needed.
+After these patches
 
-Thanks,
-Randall
+  git log -m
+
+will start to produce diffs without need to provide -p as well, that
+improves both consistency and usability. It gets even more useful if
+one sets "log.diffMerges" configuration variable to "first-parent" to
+force -m produce usual diff with respect to first parent only.
+
+Previous semantics of -m could still be accessed using
+--diff-merges=separate option.
+
+First 5 patches in the series are refactoring that is not expected to
+change existing behavior, and the last one is the actual functional
+change.
+
+Sergey Organov (6):
+  t4013: add test for "git diff-index -m"
+  diff-merges: move specific diff-index "-m" handling to diff-index
+  git-svn: stop passing "-m" to "git rev-list"
+  stash list: stop passing "-m" to "git list"
+  diff-merges: rename "combined_imply_patch" to "merges_imply_patch"
+  diff-merges: let -m imply -p
+
+ Documentation/diff-options.txt |  8 +++---
+ builtin/diff-index.c           | 45 ++++++++++++++++++++++++++--------
+ builtin/stash.c                |  2 +-
+ diff-merges.c                  | 24 ++++++------------
+ perl/Git/SVN.pm                |  2 +-
+ revision.h                     |  2 +-
+ t/t3903-stash.sh               |  2 +-
+ t/t4013-diff-various.sh        | 13 ++++++++++
+ 8 files changed, 63 insertions(+), 35 deletions(-)
+
+-- 
+2.25.1
 
