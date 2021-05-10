@@ -2,180 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85605C433ED
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCAA2C43461
 	for <git@archiver.kernel.org>; Mon, 10 May 2021 12:52:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 414AD6127A
+	by mail.kernel.org (Postfix) with ESMTP id 7A69E613B6
 	for <git@archiver.kernel.org>; Mon, 10 May 2021 12:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240943AbhEJMwU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 08:52:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
+        id S241142AbhEJMwm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 08:52:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345597AbhEJMXV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 08:23:21 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68F6C0611EB
-        for <git@vger.kernel.org>; Mon, 10 May 2021 05:17:35 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id s6so18411508edu.10
-        for <git@vger.kernel.org>; Mon, 10 May 2021 05:17:35 -0700 (PDT)
+        with ESMTP id S1347933AbhEJMhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 08:37:55 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA22C0613ED
+        for <git@vger.kernel.org>; Mon, 10 May 2021 05:35:12 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id z24so14599593ioj.7
+        for <git@vger.kernel.org>; Mon, 10 May 2021 05:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=e5AlPAH0IYOSNcLfqk7gPQLc9Lgoywe9mS8y2wA5c3o=;
-        b=Z+Pa9g4q61vGQwhYgUB7JsTXjbWaO6vMtlgTKU9u5ikhDCx3pcYwEgTI5aR3uIYwed
-         g4U9q2mxsOVeVEv2H4VqI448VEuLPQqD2DpXmQ+gNSQoM6t+x3FlUzOLh5yPy51DEeWh
-         hVRhLZE6/DmlXjH4dKqxhBAXyGjLVvgUJUXOrTcW3TsHZsbJwj4oWhSUz1j0B7hkqZhG
-         yZWfDc/AnZPHfw79EdtD9x15QeM/ne0b0WEh4gwSfAa1A7MLqUa4t5NuZlwz8cQg9fi5
-         vG2SxEGBkiwl3wSpdTgpf1mQOjHY3Se3IByUD3P1nuv4bW4CofFQdaqPYGHqZM6bnUxk
-         eH/Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=X/PlFb13aC9EKXJWdEpZdcesdC5az85/RqJA69Z434o=;
+        b=gOtHmtRTcgQbNj2bLTjWC6X1jzLg+OzqnEA7pU/w/bT2atukB7kyPDLMfTXmizMxmx
+         KlgoWb0hIxJ7iRq8m6zNZfh72ygQF7ONgh6IlTRRDviHUpluRp+ru6TWIloMz3xO4Zph
+         /xayFJpti2AeBbZ1ZEBd0RFPHhHMCMwL9dyca2i6E9dGovp7avp8azJOZqcxrkEzw0RB
+         IZwljrbMetHm8Pdb306DGjznhhc2jsSAZIQZERNSt4/s3i/a/x+hTQWbIJ0ooMdhQ4re
+         FxtKilc3Zb5uB2dVX1WBMiIi/94mVdYYWeka7qu/tjqmMYuQUv8mM6Ly8anJ3i9amXPb
+         qtcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=e5AlPAH0IYOSNcLfqk7gPQLc9Lgoywe9mS8y2wA5c3o=;
-        b=WynrRyO0lnvQf9dfd2IrjBcC59w/oB9xF5CLGEDXL55DYKU9CYfDKPLQZnLq7jTf0t
-         mvZ8l049xbhwDgSMitfYGHp6iN7W6ndwFYP/+oPcUwWNVYfSW7IndDmKeNw7BUxKVS9f
-         65f2AyH580GWiVaTUP3BHfGF62lXVFoDt/nnkNuShBK0/o0aD6bVWCLjlUvhpackRX59
-         Abt0lmsnoYjYr61kVNKXnx8k4TySi49AW0dP+xo2eL1xUDxfCMoZXSvJ5y1iNH6kYIpz
-         +mDDjxxLLk3Y7k3IB2m95HesnSi1zo4eZ4bHQCNBWuunuJm2CM8tXvH0mtmUEBMkfc6t
-         NBvQ==
-X-Gm-Message-State: AOAM532V+owxyLYbUkQoHtKCRQFb6wMqtFjbifSEnHvfQWI4ECmmgNBL
-        D39cET40wqK5fdE4LHUVOKFhLOYEC66SyQ==
-X-Google-Smtp-Source: ABdhPJybEMfMlbLMhoVE8BZ0taWln7K9KyyonplMkCfLSzKWvcG7mjNchLKKwQ9O1QkHUzaRUKZLiw==
-X-Received: by 2002:aa7:cb84:: with SMTP id r4mr28971928edt.187.1620649054129;
-        Mon, 10 May 2021 05:17:34 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id z22sm12636106edm.57.2021.05.10.05.17.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 05:17:33 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/8] maintenance: add --schedule option and config
-Date:   Mon, 10 May 2021 14:16:12 +0200
-References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
- <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
- <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
- <87blctcp30.fsf@evledraar.gmail.com>
- <1eff631f-b079-d097-b16d-36dc974efea9@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <1eff631f-b079-d097-b16d-36dc974efea9@gmail.com>
-Message-ID: <87o8diu6jn.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=X/PlFb13aC9EKXJWdEpZdcesdC5az85/RqJA69Z434o=;
+        b=OaEU6IINoQuZJbdytWqx2SboMxYRo3SxmBmL6EhFaJzca3+IeZXzuNEtvmPpotEAVR
+         XsFVqZd7GqBC3i94lInHb92wmnwlL7kbj1LCWlRcyuMs6tTpEf9zE/qt7e/uaoE+1+uW
+         NtkeL3zRZy/ipkp49KpEDmzgfa2FU1kT8xtilakyavcz/XXoWaYcML9Y1wfew7aLeBUu
+         cCq15PWez7wIDGcyGwpIRL2JgF1PYx335P/+BMP2YZ8kvlnw+CPhrCL25E44MRc3wGxJ
+         Gklf3VpzVhF7LTpIbu5CnPgcpJho2NDQOG1dsYmaGs2mmglg2KRLu+CNZm88faoINkqY
+         O9Dw==
+X-Gm-Message-State: AOAM530F7MgzfxniVW3MMoPCo75beGcFG+GPsitUh+2B0Bs18Hg0+WKm
+        eN+2Ep8lW/vy8M+qwFlnslKgFLjs3goiPRysXsI=
+X-Google-Smtp-Source: ABdhPJzk0FynnL+kQccl/Vw5BXMlcWU1W18flBv970fr9ZELWChQ8lD3F2Oe692I5hocAUTWIpa0hX6K09Oi7kIa3ek=
+X-Received: by 2002:a05:6638:1242:: with SMTP id o2mr21412018jas.10.1620650112268;
+ Mon, 10 May 2021 05:35:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.949.v2.git.1620318676776.gitgitgadget@gmail.com>
+ <pull.949.v3.git.1620487572222.gitgitgadget@gmail.com> <xmqqh7jbqck1.fsf@gitster.g>
+In-Reply-To: <xmqqh7jbqck1.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 10 May 2021 20:35:01 +0800
+Message-ID: <CAOLTT8T3yqbM8Ucey6Jfs2U75AP33B4d8W_Ab7ZYDQQDZX-4CQ@mail.gmail.com>
+Subject: Re: [PATCH v3] [GSOC] ref-filter: fix read invalid union member bug
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8810=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=883:21=E5=86=99=E9=81=93=EF=BC=9A
+>
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > used_atom.u is an union, and it has different members depending on
+> > what atom the auxiliary data the union part of the "struct
+> > used_atom" wants to record. At most only one of the members can be
+> > valid at any one time. Since the code checks u.remote_ref without
+> > even making sure if the atom is "push" or "push:" (which are only
+> > two cases that u.remote_ref.push becomes valid), but u.remote_ref
+> > shares the same storage for other members of the union, the check
+> > was reading from an invalid member, which was the bug.
+> >
+> > Modify the condition here to check whether the atom name
+> > equals to "push" or starts with "push:", to avoid reading the
+> > value of invalid member of the union.
+> >
+> > Helped-by: Junio C Hamano <gitster@pobox.com>
+> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> > ---
+> >     [GSOC] ref-filter: fix read invalid union member bug
+> >
+> >     Change from last version:
+> >     Modify the processing method of the condition: check whether the na=
+me of
+> >     the atom equals to "push" or starts with "pushs", which can enhance=
+d
+> >     security, although it may bring string match overhead.
+>
+> I do not think this would have much security implication either
+> way.  What it buys us is the future-proofing.
+>
 
-On Tue, Feb 09 2021, Derrick Stolee wrote:
+Ah, truely.
 
-> On 2/9/2021 9:06 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Thu, Oct 15 2020, Derrick Stolee via GitGitGadget wrote:
->>=20
->>> +--schedule::
->>> +	When combined with the `run` subcommand, run maintenance tasks
->>> +	only if certain time conditions are met, as specified by the
->>> +	`maintenance.<task>.schedule` config value for each `<task>`.
->>> +	This config value specifies a number of seconds since the last
->>> +	time that task ran, according to the `maintenance.<task>.lastRun`
->>> +	config value. The tasks that are tested are those provided by
->>> +	the `--task=3D<task>` option(s) or those with
->>> +	`maintenance.<task>.enabled` set to true.
->>=20
->> I see from searching on list and from spying on your repo that patches
->> for this maintenance.<task>.lastRun feature exist, but there's no code
->> for it in git.git.
->>=20
->> So we've got a 2.30.0 release with a mention of that, and it can't work,
->> because it's only in the doc due to b08ff1fee00 (maintenance: add
->> --schedule option and config, 2020-09-11).
+> I think it is OK to make this change without the enum thing to have
+> it graduate early as a fix to the existing code.  The enum thing can
+> come on top.
 >
-> Thank you for pointing out this docbug. This is based on an early
-> version of the patch series and should have been changed.
->
-> Please see this patch which attempts to do a better job. I can
-> create a new thread with this submission if we need more edits.
->
-> Thanks,
-> -Stolee
->
-> --- >8 ---
->
-> From 46436b06caf65ee824e781603a8108413bb87705 Mon Sep 17 00:00:00 2001
-> From: Derrick Stolee <dstolee@microsoft.com>
-> Date: Tue, 9 Feb 2021 11:51:32 -0500
-> Subject: [PATCH] maintenance: properly document --schedule
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=3DUTF-8
-> Content-Transfer-Encoding: 8bit
->
-> The documentation for the '--schedule' option is incorrect and based on
-> an early version of the background maintenance feature. Update the
-> documentation to describe the actual use of the option.
->
-> The most important thing is that Git takes this option as a hint for
-> which tasks it should run. Users should not run this command arbitrarily
-> and expect that Git will enforce some timing restrictions.
->
-> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  Documentation/git-maintenance.txt | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-mainte=
-nance.txt
-> index 6fec1eb8dc2..d4b5aea6760 100644
-> --- a/Documentation/git-maintenance.txt
-> +++ b/Documentation/git-maintenance.txt
-> @@ -155,15 +155,15 @@ OPTIONS
->  	exceeds the `gc.autoPackLimit` config setting. Not compatible with
->  	the `--schedule` option.
->=20=20
-> ---schedule::
-> +--schedule=3D<frequency>::
->  	When combined with the `run` subcommand, run maintenance tasks
-> -	only if certain time conditions are met, as specified by the
-> -	`maintenance.<task>.schedule` config value for each `<task>`.
-> -	This config value specifies a number of seconds since the last
-> -	time that task ran, according to the `maintenance.<task>.lastRun`
-> -	config value. The tasks that are tested are those provided by
-> -	the `--task=3D<task>` option(s) or those with
-> -	`maintenance.<task>.enabled` set to true.
-> +	whose `maintenance.<task>.schedule` config value is equal to
-> +	`<frequency>`. There is no timing restriction imposed by this
-> +	option, but instead is used to inform the Git process which
-> +	frequency to use. The command scheduler created by
-> +	`git maintenance start` runs this command with `<frequency>`
-> +	equal to `hourly`, `daily`, and `weekly` at the appropriate
-> +	intervals.
->=20=20
->  --quiet::
->  	Do not report progress or other information over `stderr`.
 
-+ CC Junio
+Indeed. "enum atom_type" is for ref-filter performance optimization and get
+some other benefits like quick index. So I put it in another topic.
 
-Late reply, I was reminded of this again. This patch looks good to me,
-but I see it never got picked up, and our docs still mention an
-unsupported "lastRun". Junio: I think it makes sense to just pick this
-up...
+> Will queue.  Thanks.
+
+Thanks.
+--
+ZheNing Hu
