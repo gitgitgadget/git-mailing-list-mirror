@@ -4,103 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFB84C433B4
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 18:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A2BC433ED
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 19:15:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89BCB61483
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 18:43:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3B0B61139
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 19:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232424AbhEJSop (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 14:44:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36718 "EHLO
+        id S232491AbhEJTQf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 15:16:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230186AbhEJSop (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 14:44:45 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52709C061574
-        for <git@vger.kernel.org>; Mon, 10 May 2021 11:43:40 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id gc22-20020a17090b3116b02901558435aec1so10886956pjb.4
-        for <git@vger.kernel.org>; Mon, 10 May 2021 11:43:40 -0700 (PDT)
+        with ESMTP id S230466AbhEJTQe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 15:16:34 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B88BEC061574
+        for <git@vger.kernel.org>; Mon, 10 May 2021 12:15:28 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id c21so14024303pgg.3
+        for <git@vger.kernel.org>; Mon, 10 May 2021 12:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X8ea3nwEl9R9eZ1lzm57tyHPiUKd0s2rbZl10a3i2u0=;
-        b=SDKBOJUZl0RVckuE/7S9G9Ca93nz9I6J2t2/fx4l7UUjnQKT0Dq6ACqrZviepWx+gA
-         mjIN+iR3pj/ugu4Kws9zbJv51SZWk+qgsjL2Ma7qVZ/D15GkfZnmk5tLXba4AfVkw3Hh
-         D0fx4L9nw5J746cPqX8D6PTzXWvPPeOLURrKu1Vr3ciVUYpGPLLd9J/HohRd5UltvL5C
-         RGKhsclh7IOVuItNmf99mZV5w2B+bjfg81nrCA+27J6Gxt15C11vWjZefVFdMeX1IbJp
-         OH7XKLmy4kEhXPI4TNbBbcOpxKjrNkSrh8m3kouo0W95nhfd+DHzmswjlqDPUb828TPq
-         UkrQ==
+         :cc:content-transfer-encoding;
+        bh=USOgnRf64leWqrj3KPb1XpgxS6nNpbhf4DAvDYiYQE0=;
+        b=QzF1plTf82XqIhw5SR75aFZX3RKuX87Sr+4fHnTFdQMq1wNmujA+iJlBWEzskDCnNv
+         0/VaZxkNrAPDYqB8Z8KUmdJUk6jfuvDkgV0QmliGaumhlk2wsylbMWqBEWe7BHV+0VId
+         8Dm+q15QyWe2YyRmUSjXCNM4Iu2GTqQOCN7Uzd+OoWAyy8ex1AMHPT1LwJ7lcM4yI0qx
+         mK5jGSd3ljXBdopklmC5/lVa1VEiWfKP3C8rrffn9+APmgVYyZTJV9JfUIF2jEMRsOc/
+         EcewJPuKxO1rxnFFvyaqKedcm1X5eXCPMrVwA1iELXsZB7n3imb/IjafVNZCbz/KSwU+
+         axzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X8ea3nwEl9R9eZ1lzm57tyHPiUKd0s2rbZl10a3i2u0=;
-        b=bQpfS+wlQfZFBNld/kyKR0kTcuYslgSdC32GQJu9ES0cNy4uY40h9UT77FveN2zDkl
-         7nPzbReMiqezHRjYkG7m+mEcjgy3zAJVAtBP5dvwVW4uWF1LLoUoMbKA+i8sXy9CTHR9
-         /Csu7dlv1eDrvYIw5gOfWPlkqy0UdXVufaLlT5Gb4Cm+QSarntpsVcWy6P/RLMSxlREv
-         O3GIY6fy1vm8lJpU4zpp4vK2zJfTaRa3MzvXB645YvOohZPWg/vwI8siXB0komPs989F
-         2zNAZPyElsJ7qqaYYaU+ddrMR0OB0GZD5c0MBo2/DPqC2hqlNPmCOjrjwCBQNM+ZoqCA
-         eZvQ==
-X-Gm-Message-State: AOAM530hYrcoYpRpqD60/BCIxv7p0aBbMoROQ8JlsJiudg0ny0S0Dh9e
-        cFhzq6NZwU8tmf/X+cq4d8lPZs+MeFJBVODA3TA=
-X-Google-Smtp-Source: ABdhPJy4U4NZuHZTK6ZgLoTDGejbui5Wfm/pk5zzeJriAsVwfnt+kyDbgKxmF9K5WrCtM2lvYR97P1e7riFqRcJMzWM=
-X-Received: by 2002:a17:902:d104:b029:ee:ac12:4b31 with SMTP id
- w4-20020a170902d104b02900eeac124b31mr25972389plw.56.1620672219911; Mon, 10
- May 2021 11:43:39 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=USOgnRf64leWqrj3KPb1XpgxS6nNpbhf4DAvDYiYQE0=;
+        b=euqm6bAQtV1MDbTmCZ2+mNlt+9Lbk/7p7UWltMopIoXwzfeGtVlKZI+S+cCSEnvN4x
+         Z2lLnR0kiNiXL404EhT+cLSNoooNBbMYC4u0eXX9uk6tVHuPVGruMM9WN0T8sXKJCkLy
+         5oc9ywxGj8T9Qcwm4ajehS5iCBIS2+Gz4UvXGBpTWH2r8bipnzq8uCOTO8Ey+jjh/y2u
+         8cVeVmv/rE6+4NQy0E59r6bn7OdkvgICe0RMUY+xAxLCECN2aLDl8KSAy/9qF16Z4b3t
+         maHvKqCa9sK6z/cLvJHHL7RMcGKIX0Ylo/APIBDp58b5wl3w8Op7lRgnrzsMUQmvombV
+         rKBw==
+X-Gm-Message-State: AOAM533mqBItdckJ6WqvubJa5BO/joMVdPuJIqXwAax3BmlOY7p8Iofi
+        8TBD4kWxk3wD1rDA8zWjMHZEWybES5mqWd/RKZc=
+X-Google-Smtp-Source: ABdhPJy3t/6iasuw4lqoAw6wIrimW0BBYUhfx6OWq4OxHUgRG7nlW65HLa3tX/BAo4PWw7gsWbmQmuAtFI9/OIUEgRM=
+X-Received: by 2002:a63:2c92:: with SMTP id s140mr26974970pgs.39.1620674128260;
+ Mon, 10 May 2021 12:15:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net> <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
- <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com> <CAMP44s3wagd6pk-YfnYV3QoRbZ5cRA0MBU4=Mdxerbdx80J7hw@mail.gmail.com>
-In-Reply-To: <CAMP44s3wagd6pk-YfnYV3QoRbZ5cRA0MBU4=Mdxerbdx80J7hw@mail.gmail.com>
+References: <20210501145220.2082670-1-lenaic@lhuard.fr> <20210509213217.449489-1-lenaic@lhuard.fr>
+ <20210509213217.449489-2-lenaic@lhuard.fr>
+In-Reply-To: <20210509213217.449489-2-lenaic@lhuard.fr>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 10 May 2021 20:43:26 +0200
-Message-ID: <CAN0heSrcZrfD60SJW9pJADwF8=SQ3Zw0KW1ZZvF4EPh82cNtPw@mail.gmail.com>
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
+Date:   Mon, 10 May 2021 21:15:15 +0200
+Message-ID: <CAN0heSqN6Pdxap7JVN_L-BKJmbKhLiuzNVvmdC87vZjitv6eWg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] maintenance: use systemd timers on Linux
+To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 9 May 2021 at 20:46, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> Are there some minimal requirements to say; this documentation was
-> built correctly (as far as we know)? If so, maybe we can add a
-> checker, or perhaps add a test under t/.
+Hi L=C3=A9na=C3=AFc,
 
-There's `make check-doc` which does some linting. But that's about
-checking that there's a manpage at all for each builtin, that the doc
-sources list sections in the right order, and such things. It doesn't
-actually build the docs.
+On Sun, 9 May 2021 at 23:37, L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr> wrot=
+e:
+> The default value is `auto` which chooses a suitable scheduler for the
+> system.
+> On Linux, if user systemd timers are available, they will be used as git
+> maintenance scheduler. If not, `cron` will be used if it is available.
+> If none is available, it will fail.
 
-ci/test-documentation.sh runs `make check-doc` (see above), then goes on
-to actually build the docs using both asciidoc and asciidoctor.  It
-checks the exit status, but also that stderr is empty after filtering
-out some expected, harmless output.
+I understand your reasoning for going with systemd-timer over cron,
+especially the part about knowing that the thing is actually running.
 
-I think that's about the right balance. We could perhaps do something
-under t/, but it probably shouldn't be to actually build the stuff. More
-like, "oh, you've built the documentation -- let me sanity-check it for
-you".  One way to detect that it makes sense to check it might be to see
-if the Git version in the manpage footer(s) matches the version under
-test. But I don't know what to check next.  (Actually, if we do find the
-version number there, we have verified a fairly tricky piece of content
-injection. At least "tricky" as in "we have more than one way of doing
-it, because we support more than one toolchain" [1]. And if that stuff
-broke, the test wouldn't notice, if we relied on detecting a version
-match to even start testing...)
+> +--scheduler=3Dauto|crontab|systemd-timer|launchctl|schtasks::
 
-[1] See 7a30134358 ("asciidoctor-extensions: provide `<refmiscinfo/>`",
-2019-09-16) and its parent commit.
+This says "systemd-timer"...
+
+> +       By default or when `auto` is specified, the most appropriate sche=
+duler
+> +       for the system is used. On MacOS, `launchctl` is used. On Windows=
+,
+> +       `schtasks` is used. On Linux, `systemd-timers` is used if user sy=
+stemd
+
+... this says "systemd-timers". Should those two be the same? (Which?)
+
+> +       timers are available, otherwise, `crontab` is used. On all other =
+systems,
+> +       `crontab` is used.
+
+So to be clear, I don't have a horse in this race. A few years ago I
+would have foreseen all kinds of reactions to the implication that
+systemd-timers would be "the most appropriate scheduler [...] on Linux".
+Maybe those times are behind us now. In the commit message, you say "a
+suitable", which reads a little bit less opinionated (to me).
+
+That's just a minor point; feel free to disregard.
+
+> +For more details, see systemd.timer(5)
+
+Missing trailing ".".
+
+A cursory grepping of our docs suggests this should be monospace
+(`systemd.timer(5)`). There aren't that many places where we refer to
+non-git manpages, thanks for doing so.
+
+That's the only nit I found to make about the markup in the
+documentation. Thanks for your attention to details. :-)
 
 Martin
