@@ -2,100 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F6CC433B4
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 04:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62F82C433ED
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 04:49:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9775613C0
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 04:22:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AFCE613E1
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 04:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbhEJEX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 00:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbhEJEX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 00:23:28 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB415C061573
-        for <git@vger.kernel.org>; Sun,  9 May 2021 21:22:22 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id g65so8354851wmg.2
-        for <git@vger.kernel.org>; Sun, 09 May 2021 21:22:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=hrE9wzzaGerPk6XWJ2cuXYVTNznRTa2urZbb+8j2fG0=;
-        b=tvlhpjS2TwS3pt8jDjAwEmj7dqWZJOKVv6XBZ41E02u9qeNZAC2AjUch6o+xSJOLOV
-         MU8bWYVe7bVW2knshw9MMfpq7q8ZOfzZGplangzjxi5/lHD5FiT8HZ0m71/rI+YmXvbz
-         SGaueBMmKphzFkc+RnJvF4fiH3H1H0MCJUqgFAp4vARm9Esi7Wm/8MuR9ToXHCXG/rd6
-         xH+n6C2jxD8F8x0BfTuyz4e/L23TqkVpY+yqoXczcbTpzstxVWT4QJx0V9mHzEOt6Zu2
-         OFvMzG29mOCaFqcHwrcVMVvwuLUi4/6an88/q2wiyYEHVU3m/cBijdqctXfhmjfHjAPE
-         TXCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=hrE9wzzaGerPk6XWJ2cuXYVTNznRTa2urZbb+8j2fG0=;
-        b=HsJswxUOz8msXESnut0ob8PIwtaQMi1eDU4d/3GZJj3y8Q5CHWnWAmYpwVUTgwqaS7
-         DBYOVmfAk93frSoVNfL6GpivR4PCEPj44pdr9tul59oK8DKDQ/D4xF3l20d1Y2MrVAgX
-         9+PHICmVvGrkkur1KvdDEUY/qzJ4asIQYzElwulFvODClbIs3GJ5FaGfTUettNXXeczT
-         g8Ao8UgTJ5SdKX2i/AGWT0qdxgt8Hm4Q8ImN7dHZU6BGTD4lf7yONBl7nQsPg2O78mnx
-         d/awlxgj/gboNknNMNTQ7vCoKH0xYIQHVwJolOF9atzJOGEXd5hpPUJOX7OZZVBwlCQD
-         yBvA==
-X-Gm-Message-State: AOAM5325NbIPngZVo/xKbLU/fL+BzYgBE+jEm3ivIiXiXZ7+p8BGxwGo
-        JV7tU36dmc5gzQgBj83iFW8=
-X-Google-Smtp-Source: ABdhPJytM6ZEoYXyR5uGQbz2U9K3oSx3qbHw6AAaRwB+SfHHK5WGqTL4xzcXUxSNeiFslhR6uAV4CA==
-X-Received: by 2002:a1c:bd46:: with SMTP id n67mr34463760wmf.113.1620620541660;
-        Sun, 09 May 2021 21:22:21 -0700 (PDT)
-Received: from Inspiron (2a01cb04010c420084a8e8ad2e2ee957.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:84a8:e8ad:2e2e:e957])
-        by smtp.gmail.com with ESMTPSA id x17sm23799962wmc.11.2021.05.09.21.22.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 May 2021 21:22:21 -0700 (PDT)
-From:   Firmin Martin <firminmartin24@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmail.com>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v1 7/8] doc/format-patch: describe --confirm-overwrite
-In-Reply-To: <e0bc4aef-a92a-20f2-0b9f-d65917710e3b@gmail.com>
-References: <20210506165102.123739-1-firminmartin24@gmail.com>
- <20210506165102.123739-8-firminmartin24@gmail.com>
- <e0bc4aef-a92a-20f2-0b9f-d65917710e3b@gmail.com>
-Date:   Mon, 10 May 2021 06:22:20 +0200
-Message-ID: <8735uvgqv7.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
+        id S230059AbhEJEum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 00:50:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51721 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229863AbhEJEul (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 00:50:41 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4526FB2B4D;
+        Mon, 10 May 2021 00:49:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=45OGR2MCf+HjRWUHObfU+AMyrWalv8ZheX7WPw
+        s7XpY=; b=ttJBl7YdTQL8TQB3cwTgZZc4AaRzrJvqJp1oooJiZyal2vQGMgUQ9r
+        PFbWDVNvZbbEIlTagG4+9d0u6RWHgFAzJjF0pKUmqAYYvgqzYiKdL2XJE2OBNxLa
+        imLfQk+vZfbbTG4Bx6uXx19YaXp6mBhxAfBUemaGe5xapW0sMwJeo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 393FFB2B4C;
+        Mon, 10 May 2021 00:49:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A9408B2B4B;
+        Mon, 10 May 2021 00:49:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v3 1/8] [RFC] dir: convert trace calls to trace2
+ equivalents
+References: <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
+        <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
+        <9f1c0d78d739cc1da8517eea92e81a7bd162578f.1620503945.git.gitgitgadget@gmail.com>
+Date:   Mon, 10 May 2021 13:49:35 +0900
+In-Reply-To: <9f1c0d78d739cc1da8517eea92e81a7bd162578f.1620503945.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Sat, 08 May 2021
+        19:58:57 +0000")
+Message-ID: <xmqqk0o7ry5c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 1F16587E-B14B-11EB-ADBF-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bagas,
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> +static void trace2_read_directory_statistics(struct dir_struct *dir,
+> +					     struct repository *repo)
+> +{
+> +	if (!dir->untracked)
+> +		return;
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "node-creation", dir->untracked->dir_created);
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "gitignore-invalidation",
+> +			   dir->untracked->gitignore_invalidated);
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "directory-invalidation",
+> +			   dir->untracked->dir_invalidated);
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "opendir", dir->untracked->dir_opened);
+> +}
+> +
 
-> On 06/05/21 23.51, Firmin Martin wrote:
->> +always;;
->> +never;;
->> +	Always/never prompt for confirmation whenever patches or a cover letter
->> +	are subject to be overwritten.
->> +cover;;
->> +	Ask confirmation whenever a cover letter is subject to be overwritten.
->> +--
->
-> For `always` and `never`, I think s/patches or/patches and\/or
-> For `cover`, I think s/whenever/whenever only (add `only` after `whenever`
+This obviously looks like an equivalent to what happens in the
+original inside the "if (dir->untracked)" block.
 
-Makes sense. I will change it if this text remains in v2.
+And we have a performance_{enter,leave} pair replaced with
+a region_[enter,leave} pair. 
 
->
-> -- 
-> An old man doll... just what I always wanted! - Clara
+> -	trace_performance_enter();
+> +	trace2_region_enter("dir", "read_directory", istate->repo);
+>   ...
+> -	trace_performance_leave("read directory %.*s", len, path);
+> +	trace2_region_leave("dir", "read_directory", istate->repo);
 
-Thanks,
+>  	if (dir->untracked) {
+>  		static int force_untracked_cache = -1;
+> -		static struct trace_key trace_untracked_stats = TRACE_KEY_INIT(UNTRACKED_STATS);
+>  
+>  		if (force_untracked_cache < 0)
+>  			force_untracked_cache =
+>  				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", 0);
+> -		trace_printf_key(&trace_untracked_stats,
+> -				 "node creation: %u\n"
+> -				 "gitignore invalidation: %u\n"
+> -				 "directory invalidation: %u\n"
+> -				 "opendir: %u\n",
+> -				 dir->untracked->dir_created,
+> -				 dir->untracked->gitignore_invalidated,
+> -				 dir->untracked->dir_invalidated,
+> -				 dir->untracked->dir_opened);
+>  		if (force_untracked_cache &&
+>  			dir->untracked == istate->untracked &&
+>  		    (dir->untracked->dir_opened ||
 
-Firmin
+Removal of the trace_printf() in the middle made the body of this
+if() statement much less distracting, which is good.
+
+> @@ -2811,6 +2818,9 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+>  			FREE_AND_NULL(dir->untracked);
+>  		}
+>  	}
+> +
+> +	if (trace2_is_enabled())
+> +		trace2_read_directory_statistics(dir, istate->repo);
+
+This slightly changes the semantics in that the original did an
+equivalent emitting from inside the "if (dir->untracked)" block, but
+this call is hoisted outside, and the new helper knows how to be
+silent when untracked thing is not in effect, so the net effect at
+this step is the same.  And if we ever add tracing statics that is
+relevant when !dir->untracked is true, the new code organization is
+easier to work with.
+
+The only curious thing is the guard "if (trace2_is_enabled())";
+correctness-wise, are there bad things going to happen if it is not
+here, or is this a performance hack, or is it more for its
+documentation value (meaning, it would be a bug if we later added
+things that are irrelevant when trace is not enabled to the helper)?
+
+> @@ -57,6 +57,19 @@ iuc () {
+>  	return $ret
+>  }
+>  
+> +get_relevant_traces() {
+
+Style.  SP on both sides of "()".
+
+> +	# From the GIT_TRACE2_PERF data of the form
+> +	#    $TIME $FILE:$LINE | d0 | main | data | r1 | ? | ? | read_directo | $RELEVANT_STAT
+> +	# extract the $RELEVANT_STAT fields.  We don't care about region_enter
+> +	# or region_leave, or stats for things outside read_directory.
+> +	INPUT_FILE=$1
+> +	OUTPUT_FILE=$2
+> +	grep data.*read_directo $INPUT_FILE \
+> +	    | cut -d "|" -f 9 \
+> +	    >$OUTPUT_FILE
+
+Style.  Wrapping the line after pipe '|' will allow you to omit the
+backslash.  Also quote the redirection target, i.e. >"$OUTPUT_FILE",
+to help certain vintage of bash.
+
+Those who are more familiar with the trace2 infrastructure may want
+to further comment, but it looked obvious and straightforward to me.
+
+Thanks.
