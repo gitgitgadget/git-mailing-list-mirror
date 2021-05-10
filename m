@@ -2,108 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C460C433ED
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB719C433B4
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:50:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33479613DC
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99811611F1
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 05:50:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229998AbhEJFtL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 01:49:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58525 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbhEJFtK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 01:49:10 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 18FC3C69BA;
-        Mon, 10 May 2021 01:48:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7huFrdImWW+ViOUd0TAFligvZlCT+VRX2PPi6T
-        sS8BQ=; b=pBVk2gpSdB2HbY0rqCFiTC+Z+LnuASmk5Xzp2yB5tQZ/0lZ97x/0V6
-        s4Wmtv1QPBpLlgzNiYB16c/qnOamqixJ8q3zbdkQfquJ2mxvG7f7GEgQPKCtwVIt
-        1CHsZy68EclW6bIC07mT6dS2pOAbBlk7ERhymX/xjR6NXuGxHZYlE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0EDF9C69B9;
-        Mon, 10 May 2021 01:48:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 44C72C69B8;
-        Mon, 10 May 2021 01:48:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v3 6/8] dir: avoid unnecessary traversal into ignored
- directory
-References: <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
-        <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
-        <66ffc7f02d08f3f07cb3cb2605b113a630f1e127.1620503945.git.gitgitgadget@gmail.com>
-Date:   Mon, 10 May 2021 14:48:04 +0900
-In-Reply-To: <66ffc7f02d08f3f07cb3cb2605b113a630f1e127.1620503945.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Sat, 08 May 2021
-        19:59:02 +0000")
-Message-ID: <xmqq35uvrvfv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230050AbhEJFvR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 01:51:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229943AbhEJFvP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 01:51:15 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4119EC061573
+        for <git@vger.kernel.org>; Sun,  9 May 2021 22:50:11 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id g24so9111472pji.4
+        for <git@vger.kernel.org>; Sun, 09 May 2021 22:50:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=rmxMZxuv23uTWLOihOzMmLIGQkGELbj+6YZW1jeOHvw=;
+        b=aEue4/mp59bCFo/aTsRaSR2RLYIjX+TgyWbj0YnTITVL36ejVz0fHvdgmgW2MtERoF
+         UsLcl45K5dEks5fsTeh0uwqWfQShtJJ0bjGFTn60fqBNRblzIp9ukVaAyb77k1X0b4Rg
+         r+KtcrUnDMbUZWcwE2z0Lz2Ol/UUKVigv5vcuhUrR/A0KIQmsZE+6tcP9K2+1ySnLGew
+         GVDluIVQE2Tb8Xz30VC16USUYnnQzcoeDxcb2CQpmT1Cl5OjRiNr0ew+RLBpGQHqGB+b
+         CTCq7r3JbtmyNeN99geGIRUh8fJwY3yTYbWmSAl4G/8Pqa0W3FLoTnk7GwpcCf4mVQ7E
+         QBjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rmxMZxuv23uTWLOihOzMmLIGQkGELbj+6YZW1jeOHvw=;
+        b=h6pBCfy4ILjCKfOTRAlldFmp8wJDP4GwNskHDf1roe1AX/SIIWz0kCYF6kKUoIyy4B
+         tuTOmVD2WHStwTcTJEcHmDDexQBDHnCYdXWPGYxpP4k9viHTxgC5z+wlRzsMi7miUsA3
+         3oh9bxayTBGn6GP4hB6jpQm8baBb7tnIMa5sBexuLVrdSQNfwO2H2FRGHX9siueG+n3J
+         55dwQX67N9aNOEyw8Pb5h9YFosvvpPFikhYVK/B8ssXGVd/SODus3wO3EzFuQCug3Rtc
+         5xGE2MGhZAMttQCG6djNLN6f37a7UA3GAb95LzYGkBfEDqUpCdADb3I3b44sIqhRdzpi
+         jS4g==
+X-Gm-Message-State: AOAM531pyMGFanjupuRYZc1urxepqM/BvtA4+jerCB8xKlYeLPpA8yUX
+        c+Md9ZSD9X4Bw0zmlRVDm4g=
+X-Google-Smtp-Source: ABdhPJxgBJfi/VHhnJ2KNJAAnP/6DIdSbNAPpfoE1+x7fKdIK23G7v7bDKhY0qyUPThkh9+XYdRbnA==
+X-Received: by 2002:a17:90a:cc11:: with SMTP id b17mr25417109pju.119.1620625810740;
+        Sun, 09 May 2021 22:50:10 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-59.three.co.id. [116.206.28.59])
+        by smtp.gmail.com with ESMTPSA id o4sm17869197pjs.38.2021.05.09.22.50.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 May 2021 22:50:10 -0700 (PDT)
+Subject: Re: [PATCH] merge-ort: split "distinct types" message into two
+ translatable messages
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        newren@gmail.com, gitster@pobox.com
+References: <20210509215250.33215-1-alexhenrie24@gmail.com>
+ <bb3a3968-f78e-7534-1274-2e6c916b9a8a@gmail.com>
+Message-ID: <4c86452a-81dd-3bb9-a6a8-29cb1a0dd0de@gmail.com>
+Date:   Mon, 10 May 2021 12:50:08 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A5E2D1A-B153-11EB-A6CE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <bb3a3968-f78e-7534-1274-2e6c916b9a8a@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 10/05/21 12.36, Bagas Sanjaya wrote:
+> Seems OK.
+> 
+> For example, in Indonesian, the first case (both sides are renamed) would be
+> something like:
+> ```
+> %s punya tipe yang berbeda pada setiap sisi, kedua-duanya dinamai ulang...
+> ```
+> The second case (only one side) would be something like:
+> ```
+> %s punya tipe yang berbeda pada setiap sisi, salah satunya dinamai ulang...
+> ```
+> But the status quo (before this patch) would be translated as:
+> ```
+> %s punya tipe yang berbeda pada setiap sisi, (kedua-duanya | satu) dari mereka
+> dinamai ulang...
+> ```
+> On the both sides case of status quo, the personal pronoun `mereka` (they)
+> refers to the conflicted sides, where as on this patch, such conflicted sides
+> are instead be referred as `-nya` suffix on the translation.
+> 
+> I personally avoid using `mereka` atau `ia` as personal pronoun that refer
+> to things, and instead using `itu`.
+> 
 
-> Some sidenotes about possible confusion with dir.c:
+What I meant was I use `itu` as personal pronoun that refers to things (not
+people) instead of `mereka` or `ia` as translation of English pronouns
+"them" and "it".
 
-Thanks for working on untangling this mess ;-)
-
-> * "ignored" often refers to an untracked ignore", i.e. a file which is
->   not tracked which matches one of the ignore/exclusion rules.  But you
->   can also have a "tracked ignore", a tracked file that happens to match
->   one of the ignore/exclusion rules and which dir.c has to worry about
->   since "git ls-files -c -i" is supposed to list them.
-
-OK.  This is to find a pattern in .gitignore that is too broad
-(i.e. if the path were to be added as a new thing today, it would
-require "add -f"), right?  The combination of "-i -c" does make
-sense for that purpose.
-
-> * The dir code often uses "ignored" and "excluded" interchangeably,
->   which you need to keep in mind while reading the code.  
-
-True.  In tree .gitignore files are to hold exclude patterns, and
-per repository personal exclude file is called $GIT_DIR/info/exclude
-which is confusing.
-
-> Sadly, though,
->   it can get very confusing since ignore rules can have exclusions, as
->   in the last of the following .gitignore rules:
->       .gitignore
->       *~
->       *.log
->       !settings.log
->   In the last entry above, (pathspec->items[3].magic & PATHSPEC_EXCLUDE)
->   will be true due the the '!' negating the rule.  Someone might refer
->   to this as "excluded".
-
-That one I've never heard of.  As far as I am concerned, that is a
-negative exclude pattern.
-
-I do wish we started the project with .gitignore files and
-$GIT_DIR/info/ignore both of which holds ignore patterns and
-negative ignore patterns from day one, but the boat sailed
-long time ago.
-
+-- 
+An old man doll... just what I always wanted! - Clara
