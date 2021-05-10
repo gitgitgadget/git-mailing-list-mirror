@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB7F3C433ED
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E46E2C433B4
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:35:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99B2B61409
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:35:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADD1061108
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 15:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234298AbhEJPge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 11:36:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50074 "EHLO
+        id S232253AbhEJPgv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 11:36:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236275AbhEJPgG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236124AbhEJPgG (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 10 May 2021 11:36:06 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DC3C06138B
-        for <git@vger.kernel.org>; Mon, 10 May 2021 08:34:59 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id b7so21346046ljr.4
-        for <git@vger.kernel.org>; Mon, 10 May 2021 08:34:59 -0700 (PDT)
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894ADC061761
+        for <git@vger.kernel.org>; Mon, 10 May 2021 08:35:00 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id v6so21341686ljj.5
+        for <git@vger.kernel.org>; Mon, 10 May 2021 08:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GAK0Kmgdeu2Z6za0hohy+9fZwSEjprYEppbMV+tguz4=;
-        b=q1bVpt4o4XIM760qj2qIyGBizt2kOfy0/KyR+/gjYWB8X5RpcZXNCr61VRJvI0gdJt
-         A6mekxr05UyPL3KLEXcJu1Jqdw5Mcu4bKDhFm+39wZ+1NDx1SUYNy7cta7w+pebNoH3s
-         ERjUosmRg+Klam/kt47Lj6wEh7PWlGiRgRDu7YQ5+uu3J8RBWjgjHQcO2/t5KwU9i/F1
-         5CRxSWdOfhi19SXcOeUYUE+foXczcDU2IFXsW+zBSnVqxEPngND3grHGYgvpFGvdKZNe
-         AddK2wzzWF05lXKizcpAUzBUd8d1JkMc5JN1RkLzfvcodwG71/4JC+b0+xdIZdIebxDw
-         wu8w==
+        bh=GCpV8oz7FCNaOUZBMyoTu3fLUwAHtr+vf+qs5Rm63RY=;
+        b=u1Tae1QSIXKi/tcFGWgKxyveOUJdmXeAfuvTkAHJQ78/5OLxMs5MB1tQztstuBjfWl
+         PgglvGybs4gUbEt7AxiiGduRrTreuW5Ha+/AzAhKu7CmxRr4m1RhAXWZ+c5LXFYAc/BY
+         uyMcy9hJVdBpYZXyStpEdTVeURTBQEWK9q4mfnUzdAvbvB8/4vF74brnjh2AtIZD8joT
+         rtjJ2oS7FH/MAQpzxKT68tf+IETnN8hFNOTIKtbtixF40PVfhUV/y4X2bxuyFLAwhDtZ
+         LFqhGOsasJkv/I/4kDwci302egXP/sxoG4T4nbTQkvtaGicYrs/GNuMbGypESE2kPAcP
+         ubBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GAK0Kmgdeu2Z6za0hohy+9fZwSEjprYEppbMV+tguz4=;
-        b=ndMpN0LMoXwOIP1kGEXS1fjKdZZvtDFEaEMdD1XsbXlJ3D6lZEUYpICMR4xY9dyT1E
-         DSOCmPyye0Z+A2/+UX0nk+BlOpevTE00iePYygMmUdvYk/SAFasjLSb7tsT12NMVwu3f
-         /qkXuLYYSbhbJf30Pgsekdj+881NktwVIYObw/eBu2zJpKKKrQuOe7bidoikpByD1POe
-         EASImgQQqz19oA6l5/9mkr27c4bShUrLoq6nd4UmWmY5r6EKvBiHPzdmPlE34mEGbetZ
-         UhDyAgsoSYTkXzUIncG9H7M8/SgqK9KBeHb6heV1DbK+jd7meecNmg36vyYg/p4zCICw
-         gMKQ==
-X-Gm-Message-State: AOAM530GmGrzFdIj+nRQU4K1B1HVW6BVI0FFn10JgFgVE7MtyydALROI
-        F5ESEf/L5jFjC7choXpitNSDUBnwW9w=
-X-Google-Smtp-Source: ABdhPJwdqhYPgV4LdW4oJfE0toQbJJAY3XuEt5SgKjZcLXRaiYYdAqsBbnEjg4R2NWaXZiIgc38JGw==
-X-Received: by 2002:a2e:9346:: with SMTP id m6mr2426717ljh.150.1620660897950;
-        Mon, 10 May 2021 08:34:57 -0700 (PDT)
+        bh=GCpV8oz7FCNaOUZBMyoTu3fLUwAHtr+vf+qs5Rm63RY=;
+        b=F0rU3h9hemOKGu5ltyuDq0vZxKZjkE3jdJfd/GAt9MWMRKEVz3lV4ZSJhpAvMdM9xQ
+         jC6XxdVrmSDEdcdjN8wZ9DOiuelRVRJ/7puQVU1GECRuX9mVTVpmshM0kQErjK9kLnvY
+         ke5Nsq389x0I9olQmxtHU8f9ufyomLOC2o7XAZz4UPlandAy1Qkk/tRWkMRC558bDiEm
+         EKAKVudd1C3GYPf63mkqs85tmv3TG80DTSca4zGjZFFRuuidLsJ6EfNSObgCCbN5cJqw
+         jiUl1QsQcD1ZBhUojmLtWU2eyW4BztjFc4U6d739yNPq/nCV/NK1IxfeRtD9xmfisH5u
+         xn6w==
+X-Gm-Message-State: AOAM5336cdbzQoRcUexLjzljZXVkXa5ao7TFt9OHcRGVYLBJwvOF2FuS
+        j8BkJFQysGq5iKOTpfvuMHM=
+X-Google-Smtp-Source: ABdhPJwi9g487CwdKc8RkxOGPk5Ev9ScnUJSQAcp44gYEpMITOzG1JGFCEFqVQsH2qLKWWjVywwhYA==
+X-Received: by 2002:a2e:1f12:: with SMTP id f18mr3057612ljf.75.1620660898777;
+        Mon, 10 May 2021 08:34:58 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id p8sm1525840lfe.224.2021.05.10.08.34.57
+        by smtp.gmail.com with ESMTPSA id p8sm1525840lfe.224.2021.05.10.08.34.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 May 2021 08:34:57 -0700 (PDT)
+        Mon, 10 May 2021 08:34:58 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
@@ -64,9 +64,9 @@ Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
         git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 4/6] stash list: stop passing "-m" to "git list"
-Date:   Mon, 10 May 2021 18:34:49 +0300
-Message-Id: <20210510153451.15090-5-sorganov@gmail.com>
+Subject: [PATCH 5/6] diff-merges: rename "combined_imply_patch" to "merges_imply_patch"
+Date:   Mon, 10 May 2021 18:34:50 +0300
+Message-Id: <20210510153451.15090-6-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20210510153451.15090-1-sorganov@gmail.com>
 References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
@@ -77,44 +77,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Passing "-m" in "git list --first-parent -m" is not needed as
---first-parent implies --diff-merges=first-parent anyway. OTOH, it
-will stop being harmless once we let "-m" imply "-p".
+This is refactoring change in preparation for the next commit that
+will let -m imply -p.
 
-While we are at it, fix corresponding test description in t3903-stash
-to match what it actually tests.
+The old name doesn't match the intention to let not only -c/-cc imply
+-p, but also -m, that is not a "combined" format, so we rename the
+flag accordingly.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- builtin/stash.c  | 2 +-
- t/t3903-stash.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ diff-merges.c | 10 +++++-----
+ revision.h    |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index d68ed784d2af..fe8e97428808 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -761,7 +761,7 @@ static int list_stash(int argc, const char **argv, const char *prefix)
+diff --git a/diff-merges.c b/diff-merges.c
+index 4016800c422c..211c99482cac 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -14,7 +14,7 @@ static void suppress(struct rev_info *revs)
+ 	revs->combine_merges = 0;
+ 	revs->dense_combined_merges = 0;
+ 	revs->combined_all_paths = 0;
+-	revs->combined_imply_patch = 0;
++	revs->merges_imply_patch = 0;
+ 	revs->merges_need_diff = 0;
+ }
  
- 	cp.git_cmd = 1;
- 	strvec_pushl(&cp.args, "log", "--format=%gd: %gs", "-g",
--		     "--first-parent", "-m", NULL);
-+		     "--first-parent", NULL);
- 	strvec_pushv(&cp.args, argv);
- 	strvec_push(&cp.args, ref_stash);
- 	strvec_push(&cp.args, "--");
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 5f282ecf6175..873aa56e359d 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -859,7 +859,7 @@ test_expect_success 'setup stash with index and worktree changes' '
- 	git stash
- '
- 
--test_expect_success 'stash list implies --first-parent -m' '
-+test_expect_success 'stash list -p shows simple diff' '
- 	cat >expect <<-EOF &&
- 	stash@{0}
+@@ -100,10 +100,10 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ 		set_to_default(revs);
+ 	} else if (!strcmp(arg, "-c")) {
+ 		set_combined(revs);
+-		revs->combined_imply_patch = 1;
++		revs->merges_imply_patch = 1;
+ 	} else if (!strcmp(arg, "--cc")) {
+ 		set_dense_combined(revs);
+-		revs->combined_imply_patch = 1;
++		revs->merges_imply_patch = 1;
+ 	} else if (!strcmp(arg, "--no-diff-merges")) {
+ 		suppress(revs);
+ 	} else if (!strcmp(arg, "--combined-all-paths")) {
+@@ -150,9 +150,9 @@ void diff_merges_setup_revs(struct rev_info *revs)
+ 		revs->first_parent_merges = 0;
+ 	if (revs->combined_all_paths && !revs->combine_merges)
+ 		die("--combined-all-paths makes no sense without -c or --cc");
+-	if (revs->combined_imply_patch)
++	if (revs->merges_imply_patch)
+ 		revs->diff = 1;
+-	if (revs->combined_imply_patch || revs->merges_need_diff) {
++	if (revs->merges_imply_patch || revs->merges_need_diff) {
+ 		if (!revs->diffopt.output_format)
+ 			revs->diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	}
+diff --git a/revision.h b/revision.h
+index 93aa012f518e..17698cb51aca 100644
+--- a/revision.h
++++ b/revision.h
+@@ -193,10 +193,10 @@ struct rev_info {
+ 			/* Diff-merge flags */
+ 			explicit_diff_merges: 1,
+ 			merges_need_diff: 1,
++			merges_imply_patch:1,
+ 			separate_merges: 1,
+ 			combine_merges:1,
+ 			combined_all_paths:1,
+-			combined_imply_patch:1,
+ 			dense_combined_merges:1,
+ 			first_parent_merges:1;
  
 -- 
 2.25.1
