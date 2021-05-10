@@ -2,98 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C2CCC433B4
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 06:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5621BC433B4
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 06:39:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 489F861104
-	for <git@archiver.kernel.org>; Mon, 10 May 2021 06:34:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3569261437
+	for <git@archiver.kernel.org>; Mon, 10 May 2021 06:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbhEJGfY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 02:35:24 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59952 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229863AbhEJGfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 02:35:24 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82FAFB3604;
-        Mon, 10 May 2021 02:34:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6oyhLS2yiRyI
-        dfBYVGmKDRVH6sjUga7DGZqyQ31RzZ0=; b=W4+G0+2k5nBfWTg363HS7TO/SoKI
-        4v9fs+ekafm4zKuATdeVR1yUfdGg0QTuywSiJ+TaH72iEKvWTNnLXTR8pqaF86+i
-        nRAfDWEMCt8n+7Ff6VniSHcOG2BQ5Rd6BS2AuLBIS+iJFXsmWy44mFBm1fxkDnvr
-        V4xrJ6yh1NDKL+E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68A70B3603;
-        Mon, 10 May 2021 02:34:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CE90EB3601;
-        Mon, 10 May 2021 02:34:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        id S230113AbhEJGkJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 02:40:09 -0400
+Received: from smtp44.hk.chengmail.me ([113.10.190.92]:36602 "EHLO
+        smtp44.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230059AbhEJGkI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 02:40:08 -0400
+X-CHENGMAILHOST: 113.10.190.92
+X-CHENGMAIL-INSTANCEID: 2783.6098d4ff.4d607.0
+Date:   Mon, 10 May 2021 14:38:56 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     =?utf-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        git <git@vger.kernel.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Derrick Stolee" <dstolee@microsoft.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        =?utf-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>
 Subject: Re: [PATCH] maintenance: fix two memory leaks
 References: <20210509221613.474887-1-lenaic@lhuard.fr>
-Date:   Mon, 10 May 2021 15:34:18 +0900
-In-Reply-To: <20210509221613.474887-1-lenaic@lhuard.fr> (=?utf-8?B?Ikw=?=
- =?utf-8?B?w6luYcOvYw==?= Huard"'s
-        message of "Mon, 10 May 2021 00:16:13 +0200")
-Message-ID: <xmqqpmxzqeqd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BF89B414-B159-11EB-82C1-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+X-Priority: 3
+X-GUID: 90A734A9-DAB6-4785-AB90-2AEB9DC92E1A
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+X-source-message-id: <2021051014375608575011@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
+Message-ID: <67ed4ca6b15a11eba8d80024e87935e7@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-L=C3=A9na=C3=AFc Huard <lenaic@lhuard.fr> writes:
+SGksCgo+Rml4ZXMgdHdvIG1lbW9yeSBsZWFrcyB3aGVuIHJ1bm5pbmcgYGdpdCBtYWludGVuYW5j
+ZSBzdGFydGAgb3IgYGdpdAo+bWFpbnRlbmFuY2Ugc3RvcGAgaW4gYHVwZGF0ZV9iYWNrZ3JvdW5k
+X3NjaGVkdWxlYDoKPgo+JCB2YWxncmluZCAtLWxlYWstY2hlY2s9ZnVsbCB+L2dpdC9iaW4vZ2l0
+IG1haW50ZW5hbmNlIHN0YXJ0Cj49PTc2NTg0PT0gTWVtY2hlY2ssIGEgbWVtb3J5IGVycm9yIGRl
+dGVjdG9yCj49PTc2NTg0PT0gQ29weXJpZ2h0IChDKSAyMDAyLTIwMTcsIGFuZCBHTlUgR1BMJ2Qs
+IGJ5IEp1bGlhbiBTZXdhcmQgZXQgYWwuCj49PTc2NTg0PT0gVXNpbmcgVmFsZ3JpbmQtMy4xNi4x
+IGFuZCBMaWJWRVg7IHJlcnVuIHdpdGggLWggZm9yIGNvcHlyaWdodCBpbmZvCj49PTc2NTg0PT0g
+Q29tbWFuZDogL2hvbWUvbGVuYWljL2dpdC9iaW4vZ2l0IG1haW50ZW5hbmNlIHN0YXJ0Cj49PTc2
+NTg0PT0KPj09NzY1ODQ9PQo+PT03NjU4ND09IEhFQVAgU1VNTUFSWToKPj09NzY1ODQ9PcKgwqDC
+oMKgIGluIHVzZSBhdCBleGl0OiAzNCw4ODAgYnl0ZXMgaW4gMjUyIGJsb2Nrcwo+PT03NjU4ND09
+wqDCoCB0b3RhbCBoZWFwIHVzYWdlOiA4MjAgYWxsb2NzLCA1NjggZnJlZXMsIDE0Niw0MTQgYnl0
+ZXMgYWxsb2NhdGVkCj49PTc2NTg0PT0KPj09NzY1ODQ9PSA2NSBieXRlcyBpbiAxIGJsb2NrcyBh
+cmUgZGVmaW5pdGVseSBsb3N0IGluIGxvc3MgcmVjb3JkIDE3IG9mIDM5Cj49PTc2NTg0PT3CoMKg
+wqAgYXQgMHg0ODNFNkFGOiBtYWxsb2MgKHZnX3JlcGxhY2VfbWFsbG9jLmM6MzA2KQo+PT03NjU4
+ND09wqDCoMKgIGJ5IDB4M0RDMzlDOiB4cmVhbGxvYyAod3JhcHBlci5jOjEyNikKPj09NzY1ODQ9
+PcKgwqDCoCBieSAweDM5OTJDQzogc3RyYnVmX2dyb3cgKHN0cmJ1Zi5jOjk4KQo+PT03NjU4ND09
+wqDCoMKgIGJ5IDB4MzlBNDczOiBzdHJidWZfdmFkZGYgKHN0cmJ1Zi5jOjM5MikKPj09NzY1ODQ9
+PcKgwqDCoCBieSAweDM5QkM1NDogeHN0cnZmbXQgKHN0cmJ1Zi5jOjk3OSkKPj09NzY1ODQ9PcKg
+wqDCoCBieSAweDM5QkQyQzogeHN0cmZtdCAoc3RyYnVmLmM6OTg5KQo+PT03NjU4ND09wqDCoMKg
+IGJ5IDB4MTg0NTFCOiB1cGRhdGVfYmFja2dyb3VuZF9zY2hlZHVsZSAoZ2MuYzoxOTc3KQo+PT03
+NjU4ND09wqDCoMKgIGJ5IDB4MTg0NkY2OiBtYWludGVuYW5jZV9zdGFydCAoZ2MuYzoyMDExKQo+
+PT03NjU4ND09wqDCoMKgIGJ5IDB4MTg0N0I0OiBjbWRfbWFpbnRlbmFuY2UgKGdjLmM6MjAzMCkK
+Pj09NzY1ODQ9PcKgwqDCoCBieSAweDEyN0EyRTogcnVuX2J1aWx0aW4gKGdpdC5jOjQ1MykKPj09
+NzY1ODQ9PcKgwqDCoCBieSAweDEyN0U4MTogaGFuZGxlX2J1aWx0aW4gKGdpdC5jOjcwNCkKPj09
+NzY1ODQ9PcKgwqDCoCBieSAweDEyODE0MjogcnVuX2FyZ3YgKGdpdC5jOjc3MSkKPj09NzY1ODQ9
+PQo+PT03NjU4ND09IDI0MCBieXRlcyBpbiAxIGJsb2NrcyBhcmUgZGVmaW5pdGVseSBsb3N0IGlu
+IGxvc3MgcmVjb3JkIDI5IG9mIDM5Cj49PTc2NTg0PT3CoMKgwqAgYXQgMHg0ODQwRDdCOiByZWFs
+bG9jICh2Z19yZXBsYWNlX21hbGxvYy5jOjgzNCkKPj09NzY1ODQ9PcKgwqDCoCBieSAweDQ5MUNF
+NUQ6IGdldGRlbGltIChpbiAvdXNyL2xpYi9saWJjLTIuMzMuc28pCj49PTc2NTg0PT3CoMKgwqAg
+YnkgMHgzOUFERDc6IHN0cmJ1Zl9nZXR3aG9sZWxpbmUgKHN0cmJ1Zi5jOjYzNSkKPj09NzY1ODQ9
+PcKgwqDCoCBieSAweDM5QUYzMTogc3RyYnVmX2dldGRlbGltIChzdHJidWYuYzo3MDYpCj49PTc2
+NTg0PT3CoMKgwqAgYnkgMHgzOUIwNjQ6IHN0cmJ1Zl9nZXRsaW5lX2xmIChzdHJidWYuYzo3Mjcp
+Cj49PTc2NTg0PT3CoMKgwqAgYnkgMHgxODQyNzM6IGNyb250YWJfdXBkYXRlX3NjaGVkdWxlIChn
+Yy5jOjE5MTkpCj49PTc2NTg0PT3CoMKgwqAgYnkgMHgxODQ2Nzg6IHVwZGF0ZV9iYWNrZ3JvdW5k
+X3NjaGVkdWxlIChnYy5jOjE5OTcpCj49PTc2NTg0PT3CoMKgwqAgYnkgMHgxODQ2RjY6IG1haW50
+ZW5hbmNlX3N0YXJ0IChnYy5jOjIwMTEpCj49PTc2NTg0PT3CoMKgwqAgYnkgMHgxODQ3QjQ6IGNt
+ZF9tYWludGVuYW5jZSAoZ2MuYzoyMDMwKQo+PT03NjU4ND09wqDCoMKgIGJ5IDB4MTI3QTJFOiBy
+dW5fYnVpbHRpbiAoZ2l0LmM6NDUzKQo+PT03NjU4ND09wqDCoMKgIGJ5IDB4MTI3RTgxOiBoYW5k
+bGVfYnVpbHRpbiAoZ2l0LmM6NzA0KQo+PT03NjU4ND09wqDCoMKgIGJ5IDB4MTI4MTQyOiBydW5f
+YXJndiAoZ2l0LmM6NzcxKQo+PT03NjU4ND09Cj49PTc2NTg0PT0gTEVBSyBTVU1NQVJZOgo+PT03
+NjU4ND09wqDCoMKgIGRlZmluaXRlbHkgbG9zdDogMzA1IGJ5dGVzIGluIDIgYmxvY2tzCj49PTc2
+NTg0PT3CoMKgwqAgaW5kaXJlY3RseSBsb3N0OiAwIGJ5dGVzIGluIDAgYmxvY2tzCj49PTc2NTg0
+PT3CoMKgwqDCoMKgIHBvc3NpYmx5IGxvc3Q6IDAgYnl0ZXMgaW4gMCBibG9ja3MKPj09NzY1ODQ9
+PcKgwqDCoCBzdGlsbCByZWFjaGFibGU6IDM0LDU3NSBieXRlcyBpbiAyNTAgYmxvY2tzCj49PTc2
+NTg0PT3CoMKgwqDCoMKgwqDCoMKgIHN1cHByZXNzZWQ6IDAgYnl0ZXMgaW4gMCBibG9ja3MKPj09
+NzY1ODQ9PSBSZWFjaGFibGUgYmxvY2tzICh0aG9zZSB0byB3aGljaCBhIHBvaW50ZXIgd2FzIGZv
+dW5kKSBhcmUgbm90IHNob3duLgo+PT03NjU4ND09IFRvIHNlZSB0aGVtLCByZXJ1biB3aXRoOiAt
+LWxlYWstY2hlY2s9ZnVsbCAtLXNob3ctbGVhay1raW5kcz1hbGwKPj09NzY1ODQ9PQo+PT03NjU4
+ND09IEZvciBsaXN0cyBvZiBkZXRlY3RlZCBhbmQgc3VwcHJlc3NlZCBlcnJvcnMsIHJlcnVuIHdp
+dGg6IC1zCj49PTc2NTg0PT0gRVJST1IgU1VNTUFSWTogMiBlcnJvcnMgZnJvbSAyIGNvbnRleHRz
+IChzdXBwcmVzc2VkOiAwIGZyb20gMCkKPgo+U2lnbmVkLW9mZi1ieTogTMOpbmHDr2MgSHVhcmQg
+PGxlbmFpY0BsaHVhcmQuZnI+Cj4tLS0KPiBidWlsdGluL2djLmMgfCAyICsrCj4gMSBmaWxlIGNo
+YW5nZWQsIDIgaW5zZXJ0aW9ucygrKQo+Cj5kaWZmIC0tZ2l0IGEvYnVpbHRpbi9nYy5jIGIvYnVp
+bHRpbi9nYy5jCj5pbmRleCBlZjcyMjZkN2JjLi4yNTc0MDY4YWUyIDEwMDY0NAo+LS0tIGEvYnVp
+bHRpbi9nYy5jCj4rKysgYi9idWlsdGluL2djLmMKPkBAIC0xOTQ3LDYgKzE5NDcsNyBAQCBzdGF0
+aWMgaW50IGNyb250YWJfdXBkYXRlX3NjaGVkdWxlKGludCBydW5fbWFpbnRlbmFuY2UsIGludCBm
+ZCwgY29uc3QgY2hhciAqY21kKQo+IGZwcmludGYoY3Jvbl9pbiwgIlxuJXNcbiIsIEVORF9MSU5F
+KTsKPiB9Cj4KPisJc3RyYnVmX3JlbGVhc2UoJmxpbmUpOyAKPiBmZmx1c2goY3Jvbl9pbik7Cj4g
+ZmNsb3NlKGNyb25faW4pOwo+IGNsb3NlKGNyb250YWJfZWRpdC5pbik7Cj5AQCAtMTk5OSw2ICsy
+MDAwLDcgQEAgc3RhdGljIGludCB1cGRhdGVfYmFja2dyb3VuZF9zY2hlZHVsZShpbnQgZW5hYmxl
+KQo+IGRpZSgidW5rbm93biBiYWNrZ3JvdW5kIHNjaGVkdWxlcjogJXMiLCBzY2hlZHVsZXIpOwo+
+Cj4gcm9sbGJhY2tfbG9ja19maWxlKCZsayk7Cj4rCWZyZWUobG9ja19wYXRoKTsgCkJhc2VkIG9u
+IHlvdXIgY2hhbmdlLCBJIHRoaW5rIHdoZW4gImhvbGRfbG9ja19maWxlX2Zvcl91cGRhdGUoKTww
+Iiwgd2Ugc2hvdWxkIGFsc28gZnJlZSBsb2NhbF9wYXRoCgo+IGZyZWUodGVzdGluZyk7Cj4gcmV0
+dXJuIHJlc3VsdDsKPiB9Cj4tLQo+Mi4zMS4xCj4KPiAKClRoYW5rcw==
 
-> Fixes two memory leaks when running `git maintenance start` or `git
-> maintenance stop` in `update_background_schedule`:
-
-Thanks, both places look correct, but I have one minor "hmph"
-comment.
-
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index ef7226d7bc..2574068ae2 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1947,6 +1947,7 @@ static int crontab_update_schedule(int run_mainte=
-nance, int fd, const char *cmd)
->  		fprintf(cron_in, "\n%s\n", END_LINE);
->  	}
-> =20
-> +	strbuf_release(&line);
->  	fflush(cron_in);
->  	fclose(cron_in);
->  	close(crontab_edit.in);
-
-This is somewhat a curious placement---the loop that iterates over
-the cron_list FILE with "while (!strbuf_getline_lf(&line, cron_list)"
-is the only place the list strbuf is used, and I wonder if it makes
-more sense to do this immediately after the loop.
-
-> @@ -1999,6 +2000,7 @@ static int update_background_schedule(int enable)
->  		die("unknown background scheduler: %s", scheduler);
-> =20
->  	rollback_lock_file(&lk);
-> +	free(lock_path);
->  	free(testing);
->  	return result;
->  }
-
-This one looks quite natural.
