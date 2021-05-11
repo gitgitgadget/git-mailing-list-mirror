@@ -2,159 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1B06C433ED
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 08:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9111FC433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 09:04:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA3F861448
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 08:03:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6002061921
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 09:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230168AbhEKIEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 04:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
+        id S230517AbhEKJGC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 05:06:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229917AbhEKIEr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 04:04:47 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02A55C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 01:03:41 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso16829656ote.1
-        for <git@vger.kernel.org>; Tue, 11 May 2021 01:03:40 -0700 (PDT)
+        with ESMTP id S230445AbhEKJGB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 05:06:01 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B6AC061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 02:04:53 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id l14so19330020wrx.5
+        for <git@vger.kernel.org>; Tue, 11 May 2021 02:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=Il/RZu7X8bSwODUYLblzfiyio8lfrMGkEeg7nRe+9Aw=;
-        b=uvmZSz1Qko1vcd5OLMZJYaj7J4mVYRS0WoAslL4A4e5xPulC6PHRMp+1WB1J0S2bAK
-         Gu1qU8ei1YWXpYqMzdIRhKRX5s1plH2O3AifiDbvr2P6wLkkJ1dY1lfElQSFcVaeXQt9
-         siXWFH4GkA0etm5D3wA4350oZf7TtuS8ANty8+mT8WWscx01tjz5Qak+1tyIkpHjUkQl
-         UM5GmwNSplz1G5F5QHuerfmyRi7jhYvVG3dX4kiSSGVdGpjLqsIvVb7qTRyAiq87chXe
-         J8hRwhzHKkR01xQ4yUrJjfrZLHVGoXJZalVNVachXbE+onjnkdJ3sRhQQYrp1VdnHggk
-         Je5A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=P7aGPITgrqxJdR3DOtribumiz73x7neCou28UUSKQ8I=;
+        b=ZDhDVrAIi9EodXwvbotoKYiOhZofaVEPdy4bE21pBeaEBY21LcHqmBoTnxs5IGBm3X
+         ZZxCwDwiVPanImwusxDBFUTYNiuch0/w/sjBpOMq4Ns7k/EBXTp0lWygW/Q+8sB+x48P
+         scYb+kn6ts4v/6ZE8X4xcJGm5d4oD7nWOX8wittwdA9OJPeSZFL309Dgw05O591cAP4X
+         CAlmY6wckewWEQQ2XDwNm0M85R4rIXzXkVwBe2Bisqx82Vr71tITYeWxp2YhXE2RYX46
+         Ha760Q1PzLkhRTS5e4N9vKg8iI2BHSbvN6b4kzSKhGT677bhp43372e8nnncbMtZfPER
+         yRhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=Il/RZu7X8bSwODUYLblzfiyio8lfrMGkEeg7nRe+9Aw=;
-        b=Isvb6tDts2xmlqM0km0/bAZr3D9+NwtWt51O3NENCogin7YTP7ELCtLHBe51AipLy4
-         X/zw8PbBuZk0UlSuXNhAXUIPSYYCI221SR9/ceYLUBojkVO6IEm2dVWIVB9Xu2Ue14w5
-         56JehfTkGOWutoXeee8mInOrT3LTgLtbhKSsmgDeXNQ1TMjBeG9KV9VZhbIdE1/EsQ3F
-         X3Tj1l61rpkCUF5/nyvDiUvjKN7aFt5TorVQeyW8RMdBZKtSWKWAvhz8Phy9fTP1kBzO
-         zwf+D+fRtMg2UM8dRzGalt2gOL/KZqTUHmDL6/NrMeDKYaB9FKVozDa1wURER3Tsqosv
-         k61w==
-X-Gm-Message-State: AOAM531LsryIymOW6LjjR49p1IAJwBjiW5O63e/Z7sSZo/fIfJbKNeMM
-        fRjPDdZbQ4FrgTWbzsAAWhc=
-X-Google-Smtp-Source: ABdhPJyeMgHAx6s4wLQCcEcXJWt1C00PCVfOyHeVFRLxkdUYIuSWmHAlVIeEFF4QP0cq8X0LDyArUA==
-X-Received: by 2002:a9d:5f82:: with SMTP id g2mr24778751oti.4.1620720220420;
-        Tue, 11 May 2021 01:03:40 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id s85sm3194710oos.4.2021.05.11.01.03.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 01:03:39 -0700 (PDT)
-Date:   Tue, 11 May 2021 03:03:38 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=P7aGPITgrqxJdR3DOtribumiz73x7neCou28UUSKQ8I=;
+        b=T5Yvcmw9q9wwLOPfal6XakkFehYBXhSi84ATOLOeg0kPPnix7K5k35G/r+9bEJhSs8
+         RY6sBc6t7oFwJ85n/Jem1/aoAOZ18Zk+NtfH7DabDHktx1zETuSIV8C3jgks9FQz9kiO
+         7AYkfg+HlDhocCHR0m2g6dAXZ4yIO/aNnNvTTx0NUb1OQaU6T07ejv2Asx2KPSP0FiUl
+         6egqDCAkENexuaS0W/J+gRzpRWYHdfMsIDpbVvEFauRJ+q+A51sd02gAkt6iAlTXJU4W
+         3Ta2nAU6/MHTwj7oLeoHJL95RzThl1NBtt5eCmdXZ5ANF3gqpvKWlg8KitoV8UxYH4OJ
+         X3XQ==
+X-Gm-Message-State: AOAM533TrxiZO07vDOhNW221m7NOZ63Qdnp4zxpD0Tb+fKOKFkvidbpv
+        7H9Ik11mXwM/100XO0KL+a1DGkfaxKKTgQ==
+X-Google-Smtp-Source: ABdhPJwt7LzL/eaNE8VESGWbDVyulrU0Et3E3UuQsISNMfCrjhOxp4LLjAJAUnzV24JYGqTgpo8DuQ==
+X-Received: by 2002:a5d:5052:: with SMTP id h18mr36007123wrt.365.1620723892381;
+        Tue, 11 May 2021 02:04:52 -0700 (PDT)
+Received: from [192.168.3.105] ([92.173.128.58])
+        by smtp.googlemail.com with ESMTPSA id e12sm1080135wrm.80.2021.05.11.02.04.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 May 2021 02:04:51 -0700 (PDT)
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Git Users <git@vger.kernel.org>
-Message-ID: <609a3a5a7aa08_5d5d32088@natae.notmuch>
-In-Reply-To: <YJogn8cUtSP/BAbJ@coredump.intra.peff.net>
 References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
  <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
  <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
  <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
- <YJmykGWaWi03+WoW@coredump.intra.peff.net>
- <609a07ca6a51c_5afe12088b@natae.notmuch>
- <YJogn8cUtSP/BAbJ@coredump.intra.peff.net>
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
+Message-ID: <0fd3182c-3805-ee1b-5a35-e0c9a67892ab@gmail.com>
+Date:   Tue, 11 May 2021 11:04:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Mon, May 10, 2021 at 11:27:54PM -0500, Felipe Contreras wrote:
-> > Jeff King wrote:
-> > > It does create a situation where people like Randall on NonStop might
-> > > need to do part of their dev work on another, more mainstream platform.
-> > > But I suspect that is already the case.
-> > 
-> > Or use distributed tarballs with already built documentation.
-> 
-> For users, yes. But the context above is about people who are
-> contributing to Git, and writing their own new documentation. Presumably
-> they'd like to build it to see the output.
+On 09/05/2021 at 10:20, Martin Ågren wrote :
+>
+> I tend to think asciidoctor even renders our manpages *better* than
+> asciidoc does. Not by a huge margin, but a few things here and there.
+> Some time around the Python 2 EOL, I was about to propose flipping the
+> default, but then I went to look up the asciidoc EOL schedule, and like
+> you, I noticed that it was a lot more alive and kicking than I thought
+> it was. So it's not so much "we should flip to avoid a bitrotting
+> dependency" as it is "asciidoctor is arguably nicer" or "it's the way
+> forward".
 
-I'm a developer, I've added 261 lines and removed 212 lines to the
-documentation, and I've very rarely built it. Why? Because it takes too
-long.
+If we start to change the documentation format to "the way  forward", we
+may soon end up with a format which is no longer handled by the legacy
+asciidoc.py
 
-But you were talking about Randall, who I don't know what his role is,
-but my bet is that he is a packager. It's not the same thing. Randall
-has contributed only one patch to the Documentation, and it was to
-install pre-formatted documentation. Precisely what I thought he would be
-interested in.
+As stated on https://github.com/asciidoc-py/asciidoc-py :
 
-In fact, the bulk of his contribution was to install-doc-quick.sh, which
-needs git-htmldocs and git-manpages. Two repositories I didn't even know
-existed. So that's yet another option for him.
+"AsciiDoc.py is a legacy processor for this syntax, handling an older
+rendition of AsciiDoc. As such, this will not properly handle the
+current AsciiDoc specification. It is suggested that unless you
+specifically require the AsciiDoc.py toolchain, you should find a
+processor that handles the modern AsciiDoc syntax."
 
-Of course Randall can say if he sees himself as a developer.
 
-> > > That does make things a little less convenient; Debian stable, for
-> > > instance, still has 1.5.8.
-> > 
-> > And it has git 2.20.1, released at the end of 2018.
-> > 
-> > I've never understood developers worried about how the bleeding edge
-> > would build in ancient platforms, when ancient platforms don't care
-> > about the bleeding edge.
-> 
-> Again, this is about developers. Are there people contributing new
-> documentation to Git who are doing so on Debian stable, and would be
-> inconvenienced by needing to upgrade their toolchain?
+So, as soon as the asciidoc format formal specification will gain
+traction in the public, we can expect asciidoc to be abandoned for new
+projects and receive minimal maintenance only for compatibility with
+legacy documentation.
 
-Developers don't need to create (or use) debian packages. They can
-simply do `gem install asciidoctor` and be done with it. Some may even
-create a docker container to install all the doc toolchain in order to
-avoid polluting their main environment.
+One argument in favor of Asciidoctor is that it's delivered "with
+batteries", meaning that you can generate manpages, html and even pdf
+with the same tool, without requiring secondary or even tertiary
+toolchains, which should ease usage on a broader range of platforms.
 
-I for one would start building the documentation more if all I needed is
-one dependency.
+FWIW, we are already using Asciidoctor for publishing the manpages to
+https://git-scm.com
 
-> > > I'm unclear when support for python asciidoc goes away here. Is it part
-> > > of step 6 (because it does not have another way of generating them)? Or
-> > > does it live on forever as a non-default legacy system? I'd prefer not,
-> > > but as long as we are clear about the primary target and leave it up to
-> > > people interested in the legacy to do the compat fixes, that might be
-> > > OK.
-> > 
-> > How about we leave the legacy system in place as an alternative, and
-> > decide later what to do with it?
-> 
-> That's what I was asking.
-> 
-> Leaving it forever does mean supporting xmlto forever, which complicates
-> the Makefile (and that support will bitrot if people are not actually
-> building it).
+JN
 
-Indeed. If and when it's clear the xmlto part has bitrotten, and
-people are happy with the asciidoc toolchain and output, then it can be
-obsoleted.
 
-That would be my vote (I don't think there will be a strong need to main
-the xmlto parts).
-
-It doesn't need to be decided today though.
-
--- 
-Felipe Contreras
