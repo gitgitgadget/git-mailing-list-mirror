@@ -2,212 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83B39C433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 15:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29490C433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 16:17:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BAAF6147F
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 15:35:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6D66616EA
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 16:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231690AbhEKPgd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 11:36:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35622 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231561AbhEKPgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 11:36:32 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A0DC061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 08:35:23 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id l2so20587626wrm.9
-        for <git@vger.kernel.org>; Tue, 11 May 2021 08:35:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XlDPQJC9Iw936176XTDjPbb5dl8gBgK6Zu2WYrm+sTs=;
-        b=YGRDVWY9d9hzO3hUx2IQI0uJubpqXBAPqDPeCouiFMHV7QgBlPq+TaEPF4UUXyHOpL
-         L/PO/S/JROM7tz4qe7G0itfdSP4MwdH7rlNaweWe1BW1TZ1gy3Q4hljMEFF9E/elA2mZ
-         lL77/OIb406wPcbgodbNn+iD21FqStyCs8kyijxCi0S8Kx+b6Qeb2k6WIi7GyjU0PcTp
-         Rna4jRbTbaIQN318Sk8QJqMLb+8AtDv7qwK9NXCFHzSgqWnfV7t2QFl5uJXhb7yvh6SV
-         SthR9FbUBmO9r9n6EvuskgxCwXf4To0nTmpiEaaBvddk295viMQYz8GgFiTwtAcWYvTL
-         vu5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XlDPQJC9Iw936176XTDjPbb5dl8gBgK6Zu2WYrm+sTs=;
-        b=no+jAnGkhgG6/QR4j86ih35gNASicj92fzGDpAxWLOAAtT2PxZq0pPqVprs4oANl7l
-         nU6bDF3ieiPfYPrOk8cW85neBFO18UddFrOToJNKFPLbvX+mOyL1ARfZQJLnuhV9hxLW
-         p9pgM2MEVHQBURLg+BWZqSZUf6E/c5eozVqHMn4l8JGU4M9AbqcCbQ5nY83b/c599bog
-         KACN9OBZzyy+9i197JPswSS87lGIP3ydzdns2o3s1CLQVxH4uV2GltHW4baXwrS9EJDZ
-         DcIOjEO7txxhEWXeKLVy2Xi7sP77O3MfXbO8hhdygjFFfwDXQsRio6E+I7O1BwKMrS1Z
-         KIiw==
-X-Gm-Message-State: AOAM533bZxKCNCr5ZV9ywW3aVp9q8irW53J5lcSOEyz6w/kqeCgn28PU
-        6W5soE2PtMKISYLPreWA2+x4IxfRDeo=
-X-Google-Smtp-Source: ABdhPJw7+3oPeYnZv4irbmOGsoYD8vMn78Glbllruv4SeBOqEhTL9p1Imq++eiwXRFMGECaqNWkt1g==
-X-Received: by 2002:a5d:51ce:: with SMTP id n14mr38393373wrv.239.1620747322551;
-        Tue, 11 May 2021 08:35:22 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm23642423wmf.9.2021.05.11.08.35.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 08:35:21 -0700 (PDT)
-Message-Id: <pull.949.v5.git.1620747320947.gitgitgadget@gmail.com>
-In-Reply-To: <pull.949.v4.git.1620658904283.gitgitgadget@gmail.com>
-References: <pull.949.v4.git.1620658904283.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 May 2021 15:35:20 +0000
-Subject: [PATCH v5] [GSOC] ref-filter: fix read invalid union member bug
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S231355AbhEKQSS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 12:18:18 -0400
+Received: from siwi.pair.com ([209.68.5.199]:51910 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231273AbhEKQSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 12:18:17 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 45B933F4139;
+        Tue, 11 May 2021 12:17:10 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id F27DC3F4098;
+        Tue, 11 May 2021 12:17:09 -0400 (EDT)
+Subject: Re: [PATCH v3 1/8] [RFC] dir: convert trace calls to trace2
+ equivalents
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Josh Steadmon <steadmon@google.com>
+References: <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
+ <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
+ <9f1c0d78d739cc1da8517eea92e81a7bd162578f.1620503945.git.gitgitgadget@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <96679919-f6ea-adcc-b8fc-9eaa0134c876@jeffhostetler.com>
+Date:   Tue, 11 May 2021 12:17:09 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+In-Reply-To: <9f1c0d78d739cc1da8517eea92e81a7bd162578f.1620503945.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
-
-used_atom.u is an union, and it has different members depending on
-what atom the auxiliary data the union part of the "struct
-used_atom" wants to record. At most only one of the members can be
-valid at any one time. Since the code checks u.remote_ref without
-even making sure if the atom is "push" or "push:" (which are only
-two cases that u.remote_ref.push becomes valid), but u.remote_ref
-shares the same storage for other members of the union, the check
-was reading from an invalid member, which was the bug.
-
-Modify the condition here to check whether the atom name
-equals to "push" or starts with "push:", to avoid reading the
-value of invalid member of the union.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC] ref-filter: fix read invalid union member bug
-    
-    I and Junio discussed the situation that this bug might actually occur.
-    
-    The damage that can be found currently is using %(colors:#aa22ac) or
-    some other %(colors) atoms. But Junio found that testing
-    %(colors:#aa22ac) alone did not show the expected bug in the commit
-    before the repair.
-    
-    So I conducted an experiment:
-    
-    When we use git push, Git will add some config, these configurations
-    will affect the result of the execution process related to atom %(push)
-    in populate_value().
-    
-    Change from last version: added a new test, which added two
-    configurations:
-    
-    git config branch.main.remote origin git config branch.main.merge
-    refs/heads/main
-    
-    used to simulate the configuration changes brought by git push.
-    
-    Finally, a test on the broken atom %(colors:#aa22ac). In the commit
-    before the repair, breakage occurs. In the commit after the repair,
-    breakage disappeared.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-949%2Fadlternative%2Fref-filter-enum-bug-fix-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-949/adlternative/ref-filter-enum-bug-fix-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/949
-
-Range-diff vs v4:
-
- 1:  8c6c0368a590 ! 1:  b546477e8c87 [GSOC] ref-filter: fix read invalid union member bug
-     @@ t/t6302-for-each-ref-filter.sh: test_expect_success '%(color) must fail' '
-       	test_must_fail git for-each-ref --format="%(color)%(refname)"
-       '
-       
-     -+test_expect_success '%(color:#aa22ac) must success' '
-     ++test_expect_success '%(color:#aa22ac) must successed' '
-     ++	test_when_finished "cd .. && rm -rf ./test" &&
-     ++	mkdir test &&
-     ++	cd test &&
-     ++	git init &&
-      +	cat >expect <<-\EOF &&
-      +	refs/heads/main
-     -+	refs/heads/side
-     -+	refs/odd/spot
-     -+	refs/tags/annotated-tag
-     -+	refs/tags/doubly-annotated-tag
-     -+	refs/tags/doubly-signed-tag
-     -+	refs/tags/four
-     -+	refs/tags/one
-     -+	refs/tags/signed-tag
-     -+	refs/tags/three
-     -+	refs/tags/two
-      +	EOF
-     ++	git add . &&
-     ++	git branch -M main &&
-     ++	git commit -m "test" &&
-     ++	git remote add origin nowhere &&
-     ++	git config branch.main.remote origin &&
-     ++	git config branch.main.merge refs/heads/main &&
-      +	git for-each-ref --format="%(color:#aa22ac)%(refname)" >actual &&
-      +	test_cmp expect actual
-      +'
 
 
- ref-filter.c                   |  2 +-
- t/t6302-for-each-ref-filter.sh | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+On 5/8/21 3:58 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>   dir.c                             |  34 ++++--
+>   t/t7063-status-untracked-cache.sh | 193 +++++++++++++++++-------------
+>   t/t7519-status-fsmonitor.sh       |   8 +-
+>   3 files changed, 135 insertions(+), 100 deletions(-)
+> 
+> diff --git a/dir.c b/dir.c
+> index 3474e67e8f3c..9f7c8debeab3 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2760,12 +2760,29 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>   	return root;
+>   }
+>   
+> +static void trace2_read_directory_statistics(struct dir_struct *dir,
+> +					     struct repository *repo)
+> +{
+> +	if (!dir->untracked)
+> +		return;
 
-diff --git a/ref-filter.c b/ref-filter.c
-index a0adb4551d87..213d3773ada3 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1730,7 +1730,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			else
- 				v->s = xstrdup("");
- 			continue;
--		} else if (atom->u.remote_ref.push) {
-+		} else if (!strcmp(atom->name, "push") || starts_with(atom->name, "push:")) {
- 			const char *branch_name;
- 			v->s = xstrdup("");
- 			if (!skip_prefix(ref->refname, "refs/heads/",
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 9866b1b57368..309cf699506f 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -117,6 +117,24 @@ test_expect_success '%(color) must fail' '
- 	test_must_fail git for-each-ref --format="%(color)%(refname)"
- '
- 
-+test_expect_success '%(color:#aa22ac) must successed' '
-+	test_when_finished "cd .. && rm -rf ./test" &&
-+	mkdir test &&
-+	cd test &&
-+	git init &&
-+	cat >expect <<-\EOF &&
-+	refs/heads/main
-+	EOF
-+	git add . &&
-+	git branch -M main &&
-+	git commit -m "test" &&
-+	git remote add origin nowhere &&
-+	git config branch.main.remote origin &&
-+	git config branch.main.merge refs/heads/main &&
-+	git for-each-ref --format="%(color:#aa22ac)%(refname)" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'left alignment is default' '
- 	cat >expect <<-\EOF &&
- 	refname is refs/heads/main    |refs/heads/main
+Is there value to also printing the path?
+The existing `trace_performance_leave()` calls were, but
+I'm familiar enough with this code to say if the output
+wasn't always something like ".".
 
-base-commit: 311531c9de557d25ac087c1637818bd2aad6eb3a
--- 
-gitgitgadget
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "node-creation", dir->untracked->dir_created);
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "gitignore-invalidation",
+> +			   dir->untracked->gitignore_invalidated);
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "directory-invalidation",
+> +			   dir->untracked->dir_invalidated);
+> +	trace2_data_intmax("read_directory", repo,
+> +			   "opendir", dir->untracked->dir_opened);
+> +}
+> +
+
+The existing code was quite tangled and I think this helps
+make things more clear.
+
+
+>   int read_directory(struct dir_struct *dir, struct index_state *istate,
+>   		   const char *path, int len, const struct pathspec *pathspec)
+>   {
+>   	struct untracked_cache_dir *untracked;
+>   
+> -	trace_performance_enter();
+> +	trace2_region_enter("dir", "read_directory", istate->repo);
+>   
+>   	if (has_symlink_leading_path(path, len)) {
+>   		trace_performance_leave("read directory %.*s", len, path);
+
+This `trace_performance_leave()` inside the `if` needs to be
+converted too.
+
+
+> @@ -2784,23 +2801,13 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+>   	QSORT(dir->entries, dir->nr, cmp_dir_entry);
+>   	QSORT(dir->ignored, dir->ignored_nr, cmp_dir_entry);
+>   
+> -	trace_performance_leave("read directory %.*s", len, path);
+> +	trace2_region_leave("dir", "read_directory", istate->repo);
+
+Can we put the call to `trace2_read_directory_statistics()` before
+the above `trace2_region_leave()` call?   Then those stats will
+appear indented between the begin- and end-region events in the output.
+
+That way, the following `if (dir-untracked) {...}` is only
+concerned with the untracked cache and/or freeing that data.
+
+>   	if (dir->untracked) {
+>   		static int force_untracked_cache = -1;
+> -		static struct trace_key trace_untracked_stats = TRACE_KEY_INIT(UNTRACKED_STATS);
+>   
+>   		if (force_untracked_cache < 0)
+>   			force_untracked_cache =
+>   				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", 0);
+> -		trace_printf_key(&trace_untracked_stats,
+> -				 "node creation: %u\n"
+> -				 "gitignore invalidation: %u\n"
+> -				 "directory invalidation: %u\n"
+> -				 "opendir: %u\n",
+> -				 dir->untracked->dir_created,
+> -				 dir->untracked->gitignore_invalidated,
+> -				 dir->untracked->dir_invalidated,
+> -				 dir->untracked->dir_opened);
+>   		if (force_untracked_cache &&
+>   			dir->untracked == istate->untracked &&
+>   		    (dir->untracked->dir_opened ||
+> @@ -2811,6 +2818,9 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+>   			FREE_AND_NULL(dir->untracked);
+>   		}
+>   	}
+> +
+> +	if (trace2_is_enabled())
+> +		trace2_read_directory_statistics(dir, istate->repo);
+
+Also, I think it'd be ok to move the `trace2_is_enabled()` call
+inside the function.  Since we're also testing `!dir->untracked`
+inside the function.
+
+The more that I look at the before and after versions, the
+more I think the `trace2_read_directory_statistics()` call
+should be up before the `trace2_region_leave()`.  Here at the
+bottom of the function, we may have already freed `dir->untracked`.
+I'm not familiar enough with this code to know if that is a
+good or bad thing.
+
+
+>   	return dir->nr;
+>   }
+>   
+...
+
+
+Thanks,
+Jeff
