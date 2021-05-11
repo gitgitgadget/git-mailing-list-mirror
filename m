@@ -7,77 +7,77 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0DEDC433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D2BC4360C
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:56:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 852866121E
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:53:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54FE2611C1
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:56:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229900AbhEKTyp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 15:54:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38202 "EHLO
+        id S230017AbhEKT5x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 15:57:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbhEKTyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 15:54:43 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E195C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 12:53:35 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id j10so30315069lfb.12
-        for <git@vger.kernel.org>; Tue, 11 May 2021 12:53:35 -0700 (PDT)
+        with ESMTP id S230005AbhEKT5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 15:57:52 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B46BC061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 12:56:45 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id f75-20020a9d03d10000b0290280def9ab76so18536142otf.12
+        for <git@vger.kernel.org>; Tue, 11 May 2021 12:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=HzqSGbtFtkfnMHXkrLTPk6sepLO/7KLNUjw1jH+j1U8=;
-        b=e8Wj8W+ANPxUV3FnqUZLh4rtUzhATysbWn/krPAaY/sFvKDMmYwjBuRgA5VQuyjjEL
-         v+ZFidhWhYCLsddTedZlhkdC9co6fi4rCyxODls8PWKECtA1l5ami/Wrpe07jQ8dYGFw
-         A+1LFQlxqwKy5BgR5tguX0HZz7P1hw5FcSfZHjpdQlJ6+baJDMTJOn69nsPI2GE4PxQW
-         RX7FIYZkytlIj4P1NFCfLn4iaIsQP4Wn9DNbkJGpHECXxO8RzAkwf9ZWxtWeDMZqFC4F
-         EqQU7gVKCV+7dC1vrG+FdCVT5kTjHWfcz2zimYBmNUMwhAjDux8JBDOs8U/w4BoXPtIe
-         llqg==
+        bh=ejMtyi5c+LhgKT5e94JWnDuMIk80b3LrEGu6vWDE1oE=;
+        b=FdccL2R5mpMqO5JYgxor8xBTYSvQkhPzrQRgFNUkVAVbNannqAoJjCn+LVESmjYJoA
+         oWWddC3tTiwR5SF6Qg3P3xEGzJozLKxQIBf9rYXWn4STYZlDDzxr9cJ0bV9YH/RbGqSS
+         t63H79HdmM8TNAz+piGKbtRueX6BSDsxvjPV/wOn3P+T+0qJAd8+KA1oxmI2Z0KgvFA1
+         xsRAExMemHEkDcRuJ7TWIO64QFsM/DYp7GjzHCn4/IMAo/Y82Q98n1ubOCSRDchlNSpC
+         5kw1e2l8aIubZvuxPZjFQWSjy3RhQ8JI1Cfi/tblVUkg8BOwwpSxc+FoZxjkb+QGpvK7
+         mLkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=HzqSGbtFtkfnMHXkrLTPk6sepLO/7KLNUjw1jH+j1U8=;
-        b=caLZE4XDYop6Oan0sGwTpn1ZFYIXBwmjLY8nLrYMeBwyddYg/yGgnLcFn2WWMX6+Ab
-         8NVn8zXo/fowN5vDrW6ABGrcWDXUWxWQzq947OZqI0RqRD5tMyeUJ6mIe8fcnr3ooqIE
-         wrRB0A1fnLOKqCsOCg5Z5b0oceYJ35LMZAPi2vo0FOQAxU99DojubJWmrMuii/15N6DE
-         th9coxvMl8/PRBdqvd3MnjxwzoHoiFZhtjg29BHVcRhhREpcE6tO58oD9nmAjXVLjF/u
-         1QPS1zGox4HEoV8Fk19gNZ75xAPhCD6LnwIxyxqT/sW0h6uAKfznY2O1+wZ2bQIr2SKl
-         Mw0A==
-X-Gm-Message-State: AOAM530NgYSQyD/u706AVZRcOsIMxt7IMfwfegb9ML441sUsXK+d6Cg4
-        MDiWdsAyA3pEHan1rOdigCRYov0KcU7PIYamY9A=
-X-Google-Smtp-Source: ABdhPJx0EinEDvn4s09iX8iOcbuCTnKsGo3R9kp09ROqc6aQmMkZYvOIniBMZYZIiRHM7mryzulWkP/K6/APD3S/O1U=
-X-Received: by 2002:ac2:5a01:: with SMTP id q1mr22150324lfn.148.1620762813881;
- Tue, 11 May 2021 12:53:33 -0700 (PDT)
+        bh=ejMtyi5c+LhgKT5e94JWnDuMIk80b3LrEGu6vWDE1oE=;
+        b=VidweUqUrQ/4gu/JJwrJjN9gbmzpX369Nd/kAESiXiFOW5RsNNQQO5ikPrMZ/Fusyh
+         daqUgZlDYB70bZAc38fJghn4RxDKZVoAbl2LYeuORn1IcMVGPu7TS6ZXr2G7sTnSAhFK
+         k94za+k2Woxwezu+U/Hpg5XJrQZNTsj9p4vUxlp3K1PVVfSiceGm4NWqR1tTPDKJECp+
+         ASvWGEH0OPwZSiTbSwPxp/sfl4PhNoCqvfalo9/R1p8tKe5FFDGl/iMn3veFCqdtZGOq
+         TiEqB1uKZV5kZhA4/kCQ0Xk9YOz1OYTuU3dyviHQRbM2WV0btn47Z05SVe6b0qYVSgem
+         GCLg==
+X-Gm-Message-State: AOAM533VMzx3LYjPyzZRhNVoi2IR7FtYpgXhIhfNJD7urZj2B5BQ9h2t
+        dE1vgv5ppzOPpMNnPpfY2w9wyvMpe39TjL52IQ4=
+X-Google-Smtp-Source: ABdhPJxW/3AvFZsoLZJiNatdpZrsbqx07lhDOC8ft+SKcjNXUon1nhUUe32J53Fuxk8sd7TFee+BUuYmADq5xkROG2Q=
+X-Received: by 2002:a9d:6b8d:: with SMTP id b13mr4954568otq.316.1620763004396;
+ Tue, 11 May 2021 12:56:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
  <20210510153451.15090-1-sorganov@gmail.com> <20210510153451.15090-7-sorganov@gmail.com>
  <xmqqsg2toqik.fsf@gitster.g> <xmqqo8dhool7.fsf@gitster.g> <87v97pv04p.fsf@osv.gnss.ru>
- <CAMMLpeTL9ZOuHLhqonFOwMu8yC9bETMVzkCZ__F2JsR=0umL3A@mail.gmail.com> <878s4lqfbk.fsf@osv.gnss.ru>
-In-Reply-To: <878s4lqfbk.fsf@osv.gnss.ru>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Tue, 11 May 2021 13:53:22 -0600
-Message-ID: <CAMMLpeR0eeM1droa3sxeToxw+8ACtJM3+3=SkWR9qrWbK_9sDQ@mail.gmail.com>
+ <CABPp-BEwp5bWWaBkv-G+OAJgd+pcsB=GoMCBd+gnhK5JAAnFgQ@mail.gmail.com> <874kf9qeof.fsf@osv.gnss.ru>
+In-Reply-To: <874kf9qeof.fsf@osv.gnss.ru>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 11 May 2021 12:56:32 -0700
+Message-ID: <CABPp-BHf45K3P8kKfTEWu-acWMdjTz74xvSPJwZVS_o=qagA6w@mail.gmail.com>
 Subject: Re: [PATCH 6/6] diff-merges: let -m imply -p
 To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 11, 2021 at 12:46 PM Sergey Organov <sorganov@gmail.com> wrote:
+On Tue, May 11, 2021 at 12:00 PM Sergey Organov <sorganov@gmail.com> wrote:
 >
-> Alex Henrie <alexhenrie24@gmail.com> writes:
+> Elijah Newren <newren@gmail.com> writes:
 >
-> > On Tue, May 11, 2021 at 8:03 AM Sergey Organov <sorganov@gmail.com> wrote:
+> > On Tue, May 11, 2021 at 7:03 AM Sergey Organov <sorganov@gmail.com> wrote:
 > >>
 > >> Junio C Hamano <gitster@pobox.com> writes:
 > >>
@@ -107,44 +107,81 @@ On Tue, May 11, 2021 at 12:46 PM Sergey Organov <sorganov@gmail.com> wrote:
 > >> I rather have strong preference for --diff-merges=first-parent. --cc is
 > >> only suitable for Git experts, and they know how to get what they want
 > >> anyway. Yep, by using --cc. Why spare yet another short option for that?
-> >>
+> >
+> > Interesting.  I have a strong preference for --diff-merges=remerge
+> > (yeah, I know it's not upstream, but it's been ready to submit for
+> > months, but just backed up behind the other ort changes.  Sorry, I
+> > can't push those through any faster).  I've had others using it for
+> > about 9 months now.
+>
+> Once somebody uses it for 9 months and starts to understand what it is
+> and really loves it, she can still set log.diffMerges=remerge (new
+> feature) and have fun.
+>
+> >
+> > I think --cc is a lot better than -m for helping you find what users
+> > changed when they did the merge,
+>
+> Yes, but it doesn't mean it should be the default.
+
+I didn't say it should be.
+
+> In my workflows, the first thing that matters is what commit did what
+> changes on the current branch. I don't typically care what the user
+> changed during the merge operation, only about the result. If I do care,
+> then only after I find the merge commit is responsible, and I can then
+> use --cc if I want to.
+>
+> > but I agree the format is somewhat difficult for many users to
+> > understand. (--diff-merges=remerge, or --remerge-diff, fixes these
+> > problems, IMO.) I think --diff-merges=first-parent, while fine when
+> > explicitly requested on the command line, would be wildly misleading
+> > as a default because it would attribute changes to a merge commit that
+> > were made elsewhere.
+>
+> No, it's exactly this merge commit that made these changes to the
+> current branch. The changes you refer to have been made on another
+> branch, and not by this particular merge commit, and we fortunately have
+> the reference to those commits through the second parent of this one.
+
+If you only care about "what introduced these changes to the current
+branch", then it's not only the diff against second parent that is
+irrelevant: ALL commits that are part of the history only via the
+second or later parents are also irrelevant and thus you should be
+using --first-parent when asking this question.  That changes both
+history traversal and the diff output.  It's a reasonable question,
+sure, but I didn't see you suggest that -m should change both.
+Perhaps you did mean that, in which case I think that's a proposal
+that would make -m become useful.  It'd be a drastically different
+option than what -m is today, which would normally make me wonder if
+it'd be considered a backward compatibility issue, but given how
+useless -m has been and since Junio apparently even suggested changing
+-m, this might be okay.
+
 > >> Overall, let's rather make -m give diff to the first parent by default.
 > >> Simple. Useful. Not confusing.
 > >
-> > Honestly --diff-merges=separate is fine. Two weeks ago, when I started
-> > this discussion, I was trying to use `git log -m` and `git show -m` to
-> > find which merge commit introduced a particular change. Extremely
-> > verbose diff output would have been great for that, the confusing part
-> > was just that `git show -m` produced diff output and `git log -m` did
-> > not.
+> > I think it's confusing.
 >
-> This is not a case in favor of "separate" over "first-parent" as the
-> default for "-m", right?
->
-> "Which merge commit introduced particular change" is exactly what
-> --diff-merges=1 achieves, so "--diff-merges=separate" was not in fact
-> needed, as I see it. Moreover, it could have produced wrong positives.
-> Looks like --diff-merges=1 is a better fit.
+> I think it isn't, once you accept that merge commit does introduce
+> changes to the branch, by itself.
 
-I didn't know which branch the change came from. If the change came
-from the first branch, it would not have appeared under the merge
-commit with --diff-merges=first-parent. But the change would
-definitely appear with --diff-merges=separate, which enabled me to
-identify the merge commit that included it. So yes, this is a case in
-favor of "separate" over "first-parent", but it's probably not a
-common enough scenario to demand keeping "separate" for -m.
+Asking what commits introduced changes to the branch is a useful
+question, but one which requires changing history traversal.  Unless
+making -m imply --first-parent is part of the proposal, I still find
+it somewhat confusing.
 
-On Tue, May 11, 2021 at 12:31 PM Elijah Newren <newren@gmail.com> wrote:
->
-> Interesting.  I have a strong preference for --diff-merges=remerge
-> (yeah, I know it's not upstream, but it's been ready to submit for
-> months, but just backed up behind the other ort changes.  Sorry, I
-> can't push those through any faster).  I've had others using it for
-> about 9 months now.
-
---diff-merges=remerge is the default I would expect when no options
-have been configured or passed on the command line (although it would
-not have helped in the scenario I described above). I look forward to
-using it!
-
--Alex
+Granted, "what changes were introduced to the branch?" is certainly
+not the only question you might be looking for answers to.  Others
+include "what changes were people making in each commit" or "who added
+calls to this function and why" (e.g. with git log S$function -p
+$maybe_some_merge_diff_flag) or "who caused this function to end up
+the way it is" (e.g. with git log -L :<funcname>:<file> -p
+$some_diff_merge_flag).  For any of those, a first parent diff is
+pretty terrible and highly misleading.  A separate diff is no better.
+--cc would often be useful, with some caveats -- the biggest of which
+is just how esoteric combined-diffs are.  --remerge-diff is way more
+natural for each of these questions I'm coming up with.  Are there
+other questions that -m helps us answer where first-parent diffs make
+sense and are generally correct without also needing --first-parent?
+I'm not thinking of any right now.
