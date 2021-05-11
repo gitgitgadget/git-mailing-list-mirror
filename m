@@ -2,136 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B040C433ED
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6403AC433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:14:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4ABDE610F8
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:12:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32121610F8
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230184AbhEKXN7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 19:13:59 -0400
-Received: from siwi.pair.com ([209.68.5.199]:42155 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230369AbhEKXN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 19:13:56 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id C4EAF3F4095;
-        Tue, 11 May 2021 19:12:48 -0400 (EDT)
-Received: from MININT-RVM6V2G.redmond.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S230285AbhEKXPV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 19:15:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52338 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229848AbhEKXPO (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 May 2021 19:15:14 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 64EBD3F4047;
-        Tue, 11 May 2021 19:12:48 -0400 (EDT)
-Subject: Re: [PATCH v4 1/8] dir: convert trace calls to trace2 equivalents
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Josh Steadmon <steadmon@google.com>
-References: <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
- <pull.1020.v4.git.git.1620758049.gitgitgadget@gmail.com>
- <9204e36b7e9035c4cdda018d7ced8e8ca7acc8bc.1620758049.git.gitgitgadget@gmail.com>
- <df3695ad-5ba7-df22-2a2a-ca799c5d16d8@jeffhostetler.com>
- <CABPp-BGeOUOvYRD+gX4jVR0kN8O5_icKtT18F9BdeR424DjUmg@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a01ffeaf-31de-fdf5-3992-bea40feb1213@jeffhostetler.com>
-Date:   Tue, 11 May 2021 19:12:47 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 580A760749;
+        Tue, 11 May 2021 23:14:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1620774846;
+        bh=FpxYvaDdDjBEvGblUuVbwwwGrqOm8rwAImeFDzUs0aQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=pGBPO7OADA1E9jlip7ICKZLHMKqEuuQ8N43tnLBblZ7w/RRQxvMVx4DjuZk5lcE6C
+         Gy2+0iN46Z+uBky75CsdpMPtfQtsEGCA2Uw9YV1U8aPPmMXm4oT+8qJTuJcVcnLu6T
+         2tKw9eUQ1koq4JtlgyANAYxoMDnTbK2t9HcIt6Q8ivyGmsstx3I+phXT6w85ap7tPj
+         5/uhxQEOaL5/n8E1FGxbMhzX8OY/6HJVuB9q6pWtwdwUJhz+HARB0fl38KpLF7ZNpb
+         8TofDvaNFypWoeyRZa4FpIR9aWBkRboDM7NHpLJufZkYtaHkVbcHaG6cMQZy2JhvIA
+         eqxtPKJG9VXD9gVJElnIMT4CWNy7+flFlSLGYL1NArv6KQIAbpoKjX/dgJSu+hMPIR
+         CxTuJY7vDDU8vCOIZI9csnDnkcxB22ed+8221vwNgm3Plurp7SWfANVTL7WwfUtUga
+         wkZgk3C8WooTMCdDfH7B9SRMoxIpX6D1SANdwZM7X1YqA3vinPg
+Date:   Tue, 11 May 2021 23:14:01 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+Message-ID: <YJsPuU5eLO8TkY2L@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+ <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
+ <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
+ <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
+ <YJmykGWaWi03+WoW@coredump.intra.peff.net>
+ <609a07ca6a51c_5afe12088b@natae.notmuch>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGeOUOvYRD+gX4jVR0kN8O5_icKtT18F9BdeR424DjUmg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="sB+CkA/qkILj2OIW"
+Content-Disposition: inline
+In-Reply-To: <609a07ca6a51c_5afe12088b@natae.notmuch>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--sB+CkA/qkILj2OIW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 5/11/21 4:12 PM, Elijah Newren wrote:
-> On Tue, May 11, 2021 at 12:06 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
->>
->> On 5/11/21 2:34 PM, Elijah Newren via GitGitGadget wrote:
->>> From: Elijah Newren <newren@gmail.com>
->>>
->>> Signed-off-by: Elijah Newren <newren@gmail.com>
->>> ---
->>>    dir.c                             |  43 +++++--
->>>    t/t7063-status-untracked-cache.sh | 205 ++++++++++++++++++------------
->>>    t/t7519-status-fsmonitor.sh       |   8 +-
->>>    3 files changed, 155 insertions(+), 101 deletions(-)
->>>
->>> diff --git a/dir.c b/dir.c
->>> index 3474e67e8f3c..122fcbffdf89 100644
->>> --- a/dir.c
->>> +++ b/dir.c
->>> @@ -2760,15 +2760,34 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
->>>        return root;
->>>    }
->>>
->>> +static void trace2_read_directory_statistics(struct dir_struct *dir,
->>> +                                          struct repository *repo,
->>> +                                          const char *path)
->>> +{
->>> +     if (!dir->untracked)
->>> +             return;
->>> +     trace2_data_string("read_directory", repo, "path", path);
->>
->> I'm probably just nit-picking here, but should this look more like:
-> 
-> nit-picking and questions are totally fine.  :-)  Thanks for reviewing.
-> 
->>
->>          if (path && *path)
->>                  trace2_data_string(...)
-> 
-> path is always non-NULL (it'd be an error to call read_directory()
-> with a NULL path).  So the first part of the check isn't meaningful
-> for this particular code.  The second half is interesting.  Do we want
-> to omit the path when it happens to be the toplevel directory (the
-> case where !*path)?  The original trace_performance_leave() calls
-> certainly didn't, and I was just trying to provide the same info they
-> do, as you suggested.  I guess people could determine the path by
-> knowing that the code doesn't print it when it's empty, but do we want
-> trace2 users to need to read the code to figure out statistics and
-> info?
+On 2021-05-11 at 04:27:54, Felipe Contreras wrote:
+> I've never understood developers worried about how the bleeding edge
+> would build in ancient platforms, when ancient platforms don't care
+> about the bleeding edge.
 
-that's fine.  it might be easier to just always print it (even if
-blank) so that post-processors know that rather than have to assume
-it.
+Debian stable is a common environment to do development on.  I know
+people who do use it for Git development, so I suspect we'll want to
+continue to support it.  In fact, most of my colleagues who use a Debian
+system for development use Debian stable, I'd say.
 
-> 
->>          if (!dir->untracked)
->>                  return;
->>
->> Then when you add the visitied fields in the next commit,
->> you'll have the path with them (when present).
-> 
-> There is always a path with them, it's just that the empty string
-> denotes the toplevel directory.
-> 
->> (and it would let you optionally avoid the tmp strbuf in
->> the caller.)
-> 
-> The path in read_directory() is not necessarily NUL-delimited, so
-> attempting to use it as-is, or even with your checks, would cause us
-> to possibly print garbage and do out-of-bounds reads.  We need the tmp
-> strbuf.
-> 
+Moreover, in some cases, the distros one can use for development are
+restricted due to requirements for software that runs on corporate
+machines, so making things work nicely on the latest stable versions of
+Debian and Ubuntu is generally kind.
 
-I just meant, "if (!len) pass NULL, else build and pass tmp.buf".
+Yes, people _can_ run "gem install asciidoctor", but people who are not
+Ruby developers generally would prefer a distro package over installing
+one-off gems, especially since getting the binaries into PATH is tricky
+with gem.
 
-but i'm nit-picking again.
+> > It's not too hard to install an updated gem, but not quite as nice as
+> > using the system package (it also makes things weird for building the
+> > stable Debian package itself, which would want to rely only on other
+> > packages; but of course any proposed change to the doc toolchain would
+> > be for new versions, and would not get backported there anyway).
+>=20
+> Anyone trying to build git master on top of Debian stable 1. probably
+> can live with the output of the current doc toolchain, and 2. probably
+> doesn't exist.
 
-Jeff
+I believe I have just demonstrated that 2 is false above.
 
+> > > I think what I'm arguing for is
+> > >=20
+> > >   1) switch the default to asciidoctor,
+> > >   2) enable optionally using it without xmlto,
+> > >   3) figure out what broke and fix it, and document which is the mini=
+mum
+> > >      asciidoctor version we're going to bother with for (2),
+> > >   4) lather, rinse, repeat (3),
+> > >   5) switch the default to not using xmlto,
+> > >   6) drop the xmlto way of generating the manpages(?).
+> >=20
+> > I'm unclear when support for python asciidoc goes away here. Is it part
+> > of step 6 (because it does not have another way of generating them)? Or
+> > does it live on forever as a non-default legacy system? I'd prefer not,
+> > but as long as we are clear about the primary target and leave it up to
+> > people interested in the legacy to do the compat fixes, that might be
+> > OK.
+>=20
+> How about we leave the legacy system in place as an alternative, and
+> decide later what to do with it?
+
+I think it would be fine to just leave it in place for now and let
+people decide which toolchain they'd like to use.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--sB+CkA/qkILj2OIW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJsPuQAKCRB8DEliiIei
+gcDOAQC3GAHxgvn0BiibbMC1+icCfYZgXwIK0NV9JHBYbBTSAQD+IaLfFbLo3wzE
+tVwQc88B7fSncIgOJq3uePxmMaQ6SAg=
+=l+mq
+-----END PGP SIGNATURE-----
+
+--sB+CkA/qkILj2OIW--
