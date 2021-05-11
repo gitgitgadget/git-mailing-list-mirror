@@ -2,111 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F129C433ED
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 18:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F2D3C433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 18:45:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 216706190A
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 18:44:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41E306190A
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 18:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231789AbhEKSqA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 14:46:00 -0400
-Received: from siwi.pair.com ([209.68.5.199]:13938 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231439AbhEKSqA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 14:46:00 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 4F9FD3F40D9;
-        Tue, 11 May 2021 14:44:53 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 2D6B83F40B7;
-        Tue, 11 May 2021 14:44:53 -0400 (EDT)
-Subject: Re: "bad revision" fetch error when fetching missing objects from
- partial clones
-To:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <ba5a0574-c71c-709c-a13c-bf6d5981545c@jeffhostetler.com>
-Date:   Tue, 11 May 2021 14:44:52 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S231963AbhEKSqd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 14:46:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231824AbhEKSqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 14:46:32 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FEEC061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 11:45:24 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id z18so7675016plg.8
+        for <git@vger.kernel.org>; Tue, 11 May 2021 11:45:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4e/0TeYpOvmUBdbMLNTy8FUhCZ8epdDqHG3SUytV8Vg=;
+        b=JeKphhKpxcke/v+Zl1crwz3bg4ifWhyQrrao9xl+dIod0NPucuYEKsqvRgF8HWC/0Y
+         6E5LMbNhGFzlKkYd9Ls7pvherM5gCIcysgfYNRlEs8eKKU4Tu5Us2ULiTxdVLZS3vFry
+         dXa1ZhzHQrI0rExRb0GACxCvgCmbfcWCrCKX7DkQMNs3VOpFPfaaqrsNluOtkHCh0rCq
+         r16we2kG0NZ5PSppvbv9uFMhLn+tgsj3IQSSL0kmjbTX0BT99mzLp5PMjeBezmkLVuC1
+         raxoQuqH6pku6+J17JmFQBSZPrFZh96Q0F5eHMxi5mfB6ICTdUvnAmrr5j5DBTdcAvJZ
+         w65g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4e/0TeYpOvmUBdbMLNTy8FUhCZ8epdDqHG3SUytV8Vg=;
+        b=AAGM95fWRIu6RXjcQoWVZ4Yvl5OCdFKUqsgAHVnY52L2G0H2zh4XUfoIBavS/FQBoW
+         cHObXQwLKc4NNIsOojnlA7396uPwPF034VMtUWU7eQ9gl3uRD7ajoa8o1lX9d7OcAqKA
+         /7fQv6MM7sVbApxAela0y5sdwCWm3ybUnbzrJ1v7O51YWwbUySficZQ/g1Dx1CeVDFKP
+         HutUn10BawngKNUelBbbiKshvRAQqpNOB8sjTM2A+Cb2ejhsiibvY5aMrcVwrkHJVJRg
+         zs7rzbiKZo/MgjiXtVKp6yTZ3pDEIF4lnYyLapHV4e6lrooPaGEkHqgNkoanDRxRGPoA
+         ZUtQ==
+X-Gm-Message-State: AOAM5328WKvUmT0hcAiQPoJjayzixR+rb9pdsH2+hESPsIcdyKjc4LCu
+        +PhS7ZX3NZliJRw9wMMTz0lYtV8Cibc9uKgT7LQ=
+X-Google-Smtp-Source: ABdhPJztiLWmno+Y7wpaWSiUpx1h4DtuZc564gCD543NZMSDqPwhYAYjcmKMkrUOxalUbk4a24bupZpNxYp/9/H7b6M=
+X-Received: by 2002:a17:90a:9312:: with SMTP id p18mr6545413pjo.171.1620758723750;
+ Tue, 11 May 2021 11:45:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+ <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net> <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
+ <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com> <YJmykGWaWi03+WoW@coredump.intra.peff.net>
+In-Reply-To: <YJmykGWaWi03+WoW@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 11 May 2021 20:45:10 +0200
+Message-ID: <CAN0heSp6uw7yqNZLD5w13xJUgnUtgHM0OYw9KQ6Z-FKk+x4OPA@mail.gmail.com>
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 11 May 2021 at 00:24, Jeff King <peff@peff.net> wrote:
+>
+> On Sun, May 09, 2021 at 10:20:37AM +0200, Martin =C3=85gren wrote:
+>
+> > it was. So it's not so much "we should flip to avoid a bitrotting
+> > dependency" as it is "asciidoctor is arguably nicer" or "it's the way
+> > forward".
+>
+> I'm OK with those arguments, too. :)
 
+Excellent. :)
 
-On 5/7/21 8:56 AM, Bagas Sanjaya wrote:
-> Hi,
-> 
-> I have a copy of Gitea application repository [1] on my local Git
-> server on my computer. I was playing with partial clones using that
-> repository as remote.
-> 
-> I began with blobless clone the repo by:
-> 
-> $ git clone https://<myhost>/bagas/gitea.git gitea --filter=blob:none
-> 
-> Then I tried to fetch missing objects. First, I gathered list of them:
-> 
-> $ git rev-list --objects --all --missing=print | grep -o -P '^\?\K\w+' > 
-> .git/missing.list
-> 
-> I had asked how to properly fetch objects from the list above before on
-> this list, and brian m. carlson (CC'ed) suggested [2] that I should
-> use xargs:
-> 
-> $ xargs git fetch origin < .git/missing.list
-> 
-> I expected that I received all missing objects. However, the error message
-> I got was something like below, repeated:
-> 
->> remote: ...<skipped>
->> Receiving objects: 100% (64/64), 154.49 KiB | 2.97 MiB/s, done.
->> remote: ...<skipped>
->> Receiving objects: 100% (37/37), 168.35 KiB | 4.95 MiB/s, done.
->> Resolving deltas: 100% (5/5), done.
->> Resolving deltas: 100% (49/49), completed with 47 local objects.
->> fatal: bad revision 'd5e9cd36ab21839af3d116eff3221c53f6ca7fd6'
->> error: https://<myhost>/bagas/gitea.git did not send all necessary 
->> objects
-> 
-> Then I repeated the object list gathering and fetching above, and the error
-> still occured. Even I tried fetching only one of problematic object above
-> and still errored.
-> 
-> When I inspected that object with `git cat-file -p` from my other, full
-> clone version (which I used for submitting changes upstream), the object
-> is properly displayed (in this case as source code in Go).
-> 
-> Note that I have uploadpack.allowfilter=true config on the server.
-> 
-> Am I missing something?
-> 
-> [1]: https://github.com/go-gitea/gitea
-> [2]: 
-> https://lore.kernel.org/git/YD7bczBsIR5rkqfc@camp.crustytoothpaste.net/
-> 
+> > When we looked at xmlto-less rendering around two years ago [1], we
+> > found various asciidoctor bugs up to and around version 2.0. We would
+> > likely need to require some >=3D2.0.x. The exact requirements will
+> > probably only become clear when someone really does the work.
+>
+> That does make things a little less convenient; Debian stable, for
+> instance, still has 1.5.8. It's not too hard to install an updated gem,
+> but not quite as nice as using the system package (it also makes things
+> weird for building the stable Debian package itself, which would want to
+> rely only on other packages; but of course any proposed change to the
+> doc toolchain would be for new versions, and would not get backported
+> there anyway).
 
-I'm not sure why you're getting that error, but you might
-also try enabling `uploadpack.allowAnySHA1InWant`
-(or one of the other "allow*SHS1InWant" values) and see if
-that helps.
+Right. And 1.5.8 is perfectly fine for ascidoctor *with* xmlto, i.e., as
+long as we're discussing moving away from asciidoc, not moving away from
+xmlto entirely. And soon enough, Debian stable should be at 2.12. ;-)
+(I realize Debian stable was just an example.)
 
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-uploadpackallowAnySHA1InWant
+> > I think what I'm arguing for is
+> >
+> >   1) switch the default to asciidoctor,
+> >   2) enable optionally using it without xmlto,
+> >   3) figure out what broke and fix it, and document which is the minimu=
+m
+> >      asciidoctor version we're going to bother with for (2),
+> >   4) lather, rinse, repeat (3),
+> >   5) switch the default to not using xmlto,
+> >   6) drop the xmlto way of generating the manpages(?).
+>
+> I'm unclear when support for python asciidoc goes away here. Is it part
+> of step 6 (because it does not have another way of generating them)? Or
+> does it live on forever as a non-default legacy system? I'd prefer not,
+> but as long as we are clear about the primary target and leave it up to
+> people interested in the legacy to do the compat fixes, that might be
+> OK.
 
-Jeff
+I think I meant it to happen somewhere in step 3 or 4, I just didn't
+call it out. If it happens super-early in step 3, that would perhaps be
+a bit unfortunate. But if fixing up the last few bits of
+xmlto-vs-no-xmlto with asciidoctor involves giving up on asciidoc, then
+so be it... If nothing else, we might all of a sudden find that our
+asciidoc-processed docs look awful and that nobody seems to have
+noticed.
+
+Martin
