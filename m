@@ -2,122 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9111FC433ED
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 09:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A791C433B4
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 09:30:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6002061921
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 09:04:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C60636162A
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 09:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbhEKJGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 05:06:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbhEKJGB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 05:06:01 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B6AC061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 02:04:53 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id l14so19330020wrx.5
-        for <git@vger.kernel.org>; Tue, 11 May 2021 02:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=P7aGPITgrqxJdR3DOtribumiz73x7neCou28UUSKQ8I=;
-        b=ZDhDVrAIi9EodXwvbotoKYiOhZofaVEPdy4bE21pBeaEBY21LcHqmBoTnxs5IGBm3X
-         ZZxCwDwiVPanImwusxDBFUTYNiuch0/w/sjBpOMq4Ns7k/EBXTp0lWygW/Q+8sB+x48P
-         scYb+kn6ts4v/6ZE8X4xcJGm5d4oD7nWOX8wittwdA9OJPeSZFL309Dgw05O591cAP4X
-         CAlmY6wckewWEQQ2XDwNm0M85R4rIXzXkVwBe2Bisqx82Vr71tITYeWxp2YhXE2RYX46
-         Ha760Q1PzLkhRTS5e4N9vKg8iI2BHSbvN6b4kzSKhGT677bhp43372e8nnncbMtZfPER
-         yRhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=P7aGPITgrqxJdR3DOtribumiz73x7neCou28UUSKQ8I=;
-        b=T5Yvcmw9q9wwLOPfal6XakkFehYBXhSi84ATOLOeg0kPPnix7K5k35G/r+9bEJhSs8
-         RY6sBc6t7oFwJ85n/Jem1/aoAOZ18Zk+NtfH7DabDHktx1zETuSIV8C3jgks9FQz9kiO
-         7AYkfg+HlDhocCHR0m2g6dAXZ4yIO/aNnNvTTx0NUb1OQaU6T07ejv2Asx2KPSP0FiUl
-         6egqDCAkENexuaS0W/J+gRzpRWYHdfMsIDpbVvEFauRJ+q+A51sd02gAkt6iAlTXJU4W
-         3Ta2nAU6/MHTwj7oLeoHJL95RzThl1NBtt5eCmdXZ5ANF3gqpvKWlg8KitoV8UxYH4OJ
-         X3XQ==
-X-Gm-Message-State: AOAM533TrxiZO07vDOhNW221m7NOZ63Qdnp4zxpD0Tb+fKOKFkvidbpv
-        7H9Ik11mXwM/100XO0KL+a1DGkfaxKKTgQ==
-X-Google-Smtp-Source: ABdhPJwt7LzL/eaNE8VESGWbDVyulrU0Et3E3UuQsISNMfCrjhOxp4LLjAJAUnzV24JYGqTgpo8DuQ==
-X-Received: by 2002:a5d:5052:: with SMTP id h18mr36007123wrt.365.1620723892381;
-        Tue, 11 May 2021 02:04:52 -0700 (PDT)
-Received: from [192.168.3.105] ([92.173.128.58])
-        by smtp.googlemail.com with ESMTPSA id e12sm1080135wrm.80.2021.05.11.02.04.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 May 2021 02:04:51 -0700 (PDT)
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
- <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
- <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
-Message-ID: <0fd3182c-3805-ee1b-5a35-e0c9a67892ab@gmail.com>
-Date:   Tue, 11 May 2021 11:04:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S231343AbhEKJbn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 05:31:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63222 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230427AbhEKJbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 05:31:37 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B086C1682;
+        Tue, 11 May 2021 05:30:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=h+T0fS+lHx1jV7zE/kRmwQITh1GNV8ngs1FFRn
+        qSTfY=; b=cBEPAndbRoEjJbYsqNJHcEnCi9Df4ZvYbd7Sn0B2opFZ7iKSi8eR8T
+        bTgkTmoM8r+koM1/w5auAIbFHAEMB+rLpA1t8JcD4Fg+gofYWNPTIc46ixtg5D0+
+        DQwCmLG8YLoTWB0Nluk74sreg9QseM+gywAcdjd1vPLCj/6qtrcGI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F69DC1680;
+        Tue, 11 May 2021 05:30:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B29C1C167F;
+        Tue, 11 May 2021 05:30:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4] [GSOC] ref-filter: fix read invalid union member bug
+References: <pull.949.v3.git.1620487572222.gitgitgadget@gmail.com>
+        <pull.949.v4.git.1620658904283.gitgitgadget@gmail.com>
+        <xmqqcztyovf7.fsf@gitster.g>
+        <CAOLTT8QR4Ga41ADKhgB4=C7VgGbJEe5G5HSbcjRb51H2yQVRPA@mail.gmail.com>
+Date:   Tue, 11 May 2021 18:30:29 +0900
+In-Reply-To: <CAOLTT8QR4Ga41ADKhgB4=C7VgGbJEe5G5HSbcjRb51H2yQVRPA@mail.gmail.com>
+        (ZheNing Hu's message of "Tue, 11 May 2021 14:28:32 +0800")
+Message-ID: <xmqqlf8lmxca.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Pobox-Relay-ID: 86B11410-B23B-11EB-9546-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/05/2021 at 10:20, Martin Ågren wrote :
+ZheNing Hu <adlternative@gmail.com> writes:
+
+> We are just in the process of using `populate_value()`, if the atom we
+> specify meets the following conditions, then the condition of
+> atom->u.remote_ref.push!=0 will be established.
 >
-> I tend to think asciidoctor even renders our manpages *better* than
-> asciidoc does. Not by a huge margin, but a few things here and there.
-> Some time around the Python 2 EOL, I was about to propose flipping the
-> default, but then I went to look up the asciidoc EOL schedule, and like
-> you, I noticed that it was a lot more alive and kicking than I thought
-> it was. So it's not so much "we should flip to avoid a bitrotting
-> dependency" as it is "asciidoctor is arguably nicer" or "it's the way
-> forward".
+> 1. The atom that triggers the bug , its "if" condition order must after
+> "if (atom->u.remote_ref.push)", such as %(refname) or %(worktreepath),
+> they can be executed correctly because their order is before "push".
+>
+> 2. The member size in used_atom.u corresponding to the atom must
+> larger than 17 bytes, because the offset of "u.remote_ref.push" in
+> "u.remote_ref" is 17, the satisfied atoms are only "%(color)" and
+>  "%(contents)", their corresponding members are u.color and u.contents.
+>
+> 3. We happen to be able to fill in the 17th position of these structures,
+>  which makes atom->u.remote_ref.push not equal to 0 established.
+>
+> So this kind of bug is not related to %(push), an atom that satisfies
+> the above conditions will make `if (atom->u.remote_ref.push)` be true.
+> then execute the program logic related to `%(push)`.
+>
+> Now, we only have `%(color)` can trigger it "sometime",
+> It is unpredictable to fill in the 17th byte of used_atom.u.color,
+> so we cannot track all the atoms related to this bug.
+>
+> git for-each-ref --format="%(color:#aa22ac)%(refname)"
+> git for-each-ref --format="%(color:#aa22ad)%(refname)"
+>
+> will trigger the bug.
+>
+> git for-each-ref --format="%(color:#aa22ae)%(refname)"
+> git for-each-ref --format="%(color:#aa22af)%(refname)"
+>
+> will not trigger the bug.
+>
+> In other words, we cannot use a perfect test set to cover all broken.
+> So now `%(color:#aa22ac)` is enough for explain the problem of this bug.
 
-If we start to change the documentation format to "the way  forward", we
-may soon end up with a format which is no longer handled by the legacy
-asciidoc.py
+Well, the thing is,
 
-As stated on https://github.com/asciidoc-py/asciidoc-py :
+    $ git checkout 49f38e2d ;# (The fifteenth batch, 2021-05-10)
+    $ git am -s mbox
+    $ git show --stat --oneline
+    39509d100a (HEAD) ref-filter: fix read invalid union member bug
+     ref-filter.c                   |  2 +-
+     t/t6302-for-each-ref-filter.sh | 18 ++++++++++++++++++
+     2 files changed, 19 insertions(+), 1 deletion(-)
+    $ git show ref-filter.c | git apply -R ;# revert only the fix
+    $ make -j32 && make -C t T=t6302-*.sh
 
-"AsciiDoc.py is a legacy processor for this syntax, handling an older
-rendition of AsciiDoc. As such, this will not properly handle the
-current AsciiDoc specification. It is suggested that unless you
-specifically require the AsciiDoc.py toolchain, you should find a
-processor that handles the modern AsciiDoc syntax."
-
-
-So, as soon as the asciidoc format formal specification will gain
-traction in the public, we can expect asciidoc to be abandoned for new
-projects and receive minimal maintenance only for compatibility with
-legacy documentation.
-
-One argument in favor of Asciidoctor is that it's delivered "with
-batteries", meaning that you can generate manpages, html and even pdf
-with the same tool, without requiring secondary or even tertiary
-toolchains, which should ease usage on a broader range of platforms.
-
-FWIW, we are already using Asciidoctor for publishing the manpages to
-https://git-scm.com
-
-JN
-
-
+does not seem to break anything.  Perhaps there is something more
+than the "17th byte" thing (like structure padding that may vary
+depending on the compiler and architecture)?
