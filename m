@@ -2,119 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B87EC433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 02:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65ECEC43460
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 02:17:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59FD961606
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 02:14:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FD7D6162B
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 02:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230458AbhEKCPx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 May 2021 22:15:53 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50358 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbhEKCPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 May 2021 22:15:53 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 846EA1182F1;
-        Mon, 10 May 2021 22:14:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=P3tDtsQeXDF46PAFWLGeG5w2ZvvfsE3nO/LOA1
-        mikTA=; b=IZzUqHL3OgTxRZy6+UloOElL6x6vod73hG6mVdQSiEZaOXSzNi7Jqk
-        7wgAxCDUSqIzyVBYyBwUrU9uuwc5DtYKYmHI+YEizHFdxagDJ+/chlYR7kXO+x0G
-        0wLu+VCXFzFEL1j3ypNCUEIqOy5ytjl5cxJXg6MEb7LSZiH4jxCoQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7D6A01182F0;
-        Mon, 10 May 2021 22:14:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B535C1182ED;
-        Mon, 10 May 2021 22:14:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v2 2/2] [GSOC] ref-filter: introduce enum atom_type
-References: <pull.951.git.1620487353.gitgitgadget@gmail.com>
-        <pull.951.v2.git.1620659000.gitgitgadget@gmail.com>
-        <a1f70b39b7efbadff9e2202968dd1ca65ea3c1b4.1620659000.git.gitgitgadget@gmail.com>
-Date:   Tue, 11 May 2021 11:14:42 +0900
-In-Reply-To: <a1f70b39b7efbadff9e2202968dd1ca65ea3c1b4.1620659000.git.gitgitgadget@gmail.com>
-        (ZheNing Hu via GitGitGadget's message of "Mon, 10 May 2021 15:03:19
-        +0000")
-Message-ID: <xmqqh7jaow31.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A70F75E0-B1FE-11EB-BE96-E43E2BB96649-77302942!pb-smtp20.pobox.com
+        id S230468AbhEKCSO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 May 2021 22:18:14 -0400
+Received: from smtp23.hk.chengmail.me ([113.10.190.88]:58313 "EHLO
+        smtp23.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229941AbhEKCSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 May 2021 22:18:14 -0400
+X-CHENGMAILHOST: 113.10.190.88
+X-CHENGMAIL-INSTANCEID: 38b8.6099e91c.f12d8.0
+Date:   Tue, 11 May 2021 10:17:03 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, "Derrick Stolee" <dstolee@microsoft.com>
+Subject: Re: Re: [PATCH] builtin/gc: warn when core.commitGraph is disabled
+References: <510425b8b17411eb93770026b95c99cc@oschina.cn>, 
+        <ceb22d54b18611ebb304a4badb2c2b1147508@gmail.com>
+X-Priority: 3
+X-GUID: F6B00E67-F471-4AB4-A55C-8EC0B6A366DF
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+X-source-message-id: <202105111016030245893@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
+Message-ID: <fa99dc5ab1fe11eb92230026b95c99cc@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Pgo+T24gTW9uLCBNYXkgMTAgMjAyMSwgbGlsaW5jaGFvQG9zY2hpbmEuY24gd3JvdGU6Cj4KPj4g
+RnJvbTogTGkgTGluY2hhbyA8bGlsaW5jaGFvQG9zY2hpbmEuY24+Cj4+Cj4+IFRocm93IHdhcm5p
+bmcgbWVzc2FnZSB3aGVuIGNvcmUuY29tbWl0R3JhcGggaXMgZGlzYWJsZWQgaW4gY29tbWl0LWdy
+YXBoCj4+IG1haW50ZW5hbmNlIHRhc2suCj4KPldvbid0IHRoaXMgY2F1c2UgdGhlIGdjLmxvZyBp
+c3N1ZSBub3RlZCBpbgo+aHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvZ2l0Lzg3cjFsMjdyYWUuZnNm
+QGV2bGVkcmFhci5nbWFpbC5jb20vCj4KPk1vcmUgaW1wb3J0YW50bHksIEkgZG9uJ3QgdGhpbmsg
+dGhpcyBVWCBtYWtlcyBzZW5zZS4gV2Ugc2FpZCB3ZSBkaWRuJ3QKPndhbnQgaXQsIHNvIHdoeSB3
+YXJuIGFib3V0IGl0Pwo+Cj5NYXliZSB0aGVyZSBhcmUgZ29vZCByZWFzb25zIHRvLCBidXQgdGhp
+cyBjb21taXQgbWVzc2FnZSAvIHBhdGNoIGRvZXNuJ3QKPm1ha2UgdGhlIGNhc2UgZm9yIGl0Li4u
+Cj4gCkZvcmdpdmUgbWUsIEkgZG9uJ3Qga25vdyBhbnkgb2YgeW91ciBwcmV2aW91cyBkaXNjdXNz
+aW9ucy4KU29ycnkgZm9yIGRpc3R1cmJpbmcuCgo+Cj4+IFNpZ25lZC1vZmYtYnk6IExpIExpbmNo
+YW8gPGxpbGluY2hhb0Bvc2NoaW5hLmNuPgo+PiAtLS0KPj7CoCBidWlsdGluL2djLmMgfCA0ICsr
+Ky0KPj7CoCAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pCj4+
+Cj4+IGRpZmYgLS1naXQgYS9idWlsdGluL2djLmMgYi9idWlsdGluL2djLmMKPj4gaW5kZXggOThh
+ODAzMTk2Yi4uOTA2ODRjYTNiMyAxMDA2NDQKPj4gLS0tIGEvYnVpbHRpbi9nYy5jCj4+ICsrKyBi
+L2J1aWx0aW4vZ2MuYwo+PiBAQCAtODYxLDggKzg2MSwxMCBAQCBzdGF0aWMgaW50IHJ1bl93cml0
+ZV9jb21taXRfZ3JhcGgoc3RydWN0IG1haW50ZW5hbmNlX3J1bl9vcHRzICpvcHRzKQo+PsKgIHN0
+YXRpYyBpbnQgbWFpbnRlbmFuY2VfdGFza19jb21taXRfZ3JhcGgoc3RydWN0IG1haW50ZW5hbmNl
+X3J1bl9vcHRzICpvcHRzKQo+PsKgIHsKPj7CoCBwcmVwYXJlX3JlcG9fc2V0dGluZ3ModGhlX3Jl
+cG9zaXRvcnkpOwo+PiAtCWlmICghdGhlX3JlcG9zaXRvcnktPnNldHRpbmdzLmNvcmVfY29tbWl0
+X2dyYXBoKQo+PiArCWlmICghdGhlX3JlcG9zaXRvcnktPnNldHRpbmdzLmNvcmVfY29tbWl0X2dy
+YXBoKSB7Cj4+ICsJd2FybmluZyhfKCJza2lwcGluZyBjb21taXQtZ3JhcGggdGFzayBiZWNhdXNl
+IGNvcmUuY29tbWl0R3JhcGggaXMgZGlzYWJsZWQiKSk7Cj4+wqAgcmV0dXJuIDA7Cj4+ICsJfQo+
+PsKgCj4+wqAgY2xvc2Vfb2JqZWN0X3N0b3JlKHRoZV9yZXBvc2l0b3J5LT5vYmplY3RzKTsKPj7C
+oCBpZiAocnVuX3dyaXRlX2NvbW1pdF9ncmFwaChvcHRzKSkgewo+
 
-> the enum value of `ATOM_UNKNOWN` is equals to zero, which
-
-s/the/The/;
-
-> could ensure that we can easily distinguish such a struct
-> where the atom_type is known from such a struct where it
-> is unknown yet.
->
-> the enum value of `ATOM_INVALID` is equals to the size of
-
-Ditto.
-
-> +/*
-> + * The enum atom_type is used as the coordinates of valid_atom entry.
-> + * In the atom parsing stage, it will be passed to used_atom.atom_type
-> + * as the identifier of the atom type. We can judge the type of used_atom
-> + * entry by `if (used_atom[i].atom_type == ATOM_*)`.
-> + *
-> + * ATOM_UNKNOWN equals to 0, used as an enumeration value of uninitialized
-> + * atom_type.
-
-Shouldn't it be (-1)?
-
-And I'd assume I am right in the following.
-
-> + * ATOM_INVALID equals to the size of valid_atom array, which could help us
-> + * iterate over valid_atom array like this:
-> + *
-> + * 	for (i = ATOM_UNKNOWN + 1; i < ATOM_INVALID; i++) {
-
-I find it far more intuitive to say
-
-	for (i = 0; i < ATOM_INVALID; i++)
-
-than having to say UNKNOWN+1.
-
-In any case, the values should be indented, and a comment should
-ensure that the final one stays at the end, perhaps like this.
-
-	enum atom_type {
-		ATOM_INVALID = -2,
-		ATOM_UNKNOWN = -1,
-		ATOM_REFNAME,
-		...
-		ATOM_ELSE,
-		ATOM_MAX /* MUST BE AT THE END */
-	}
-
-(note that the trailing comma is deliberately omitted).
-
-It would allow people to say
-
-	for (i = 0; i < ATOM_MAX; i++)
-
-instead, which would be even nicer.
