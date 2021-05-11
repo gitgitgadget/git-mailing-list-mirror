@@ -2,199 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C333BC433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 21:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8CF7C433B4
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 21:39:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 976BC61185
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 21:38:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96A036186A
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 21:39:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229945AbhEKVjx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 17:39:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33528 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbhEKVjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 17:39:53 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C75C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 14:38:45 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso18799799otn.3
-        for <git@vger.kernel.org>; Tue, 11 May 2021 14:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Etwn7NKmW+5z5ZAd7Aegsr5WPjcaOMT6NCi7W19bDms=;
-        b=YZsZw5dYxNG4Ij72YwD0ZcWeqya9ee6Ig+xMPIaAkcT/vM0AgSy/wRRBNWqhzwMGzs
-         iQgdoDlbVMRg0dbqejijMvKokvttfWyWt/bM1g3jzh1J8Gv3q8rMLZp9VQik32Fl+kBP
-         gN3EQOHfXGAfRo3L3Zy7Iym6JI2FNQ/Crf4fDm2+g7wQkhyThWTdsWOrcA5FNKEGcxFV
-         r3sB0IQLHgRMt7QjTgb+9FPWlMdo9H2TofQxvIQTbb+4J6XTVzLNmTHtzNbQoW3KLIdI
-         N2ObpVT86uDdCcK+ZnjXcezeDxXwQhVA85h/Jfnpejh5pZBTGd5Z1hHi6dy8POb+ULXa
-         dnTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Etwn7NKmW+5z5ZAd7Aegsr5WPjcaOMT6NCi7W19bDms=;
-        b=ZYKRdRqgtg29823QhuqE5+3yB7BIaFdVl24EA/+iQDkuKLvCpLQOZjHy8CoRfrMa5h
-         OT/6Bs8G5QWm4B4wRAnmwkjRpiQAhIVQcfvIiKUYZDUygYYJMwPapdXfGZxy2tf42W0k
-         9xLcmlbUbIKI9xSvuIEIdT2gs4crk5osV3HY+8hdVQPYDVEA9ikxfeU+3XLUAvyGItN1
-         EHNgqsKRDktHzFbWtjbr75YrT8+Jaq7VvhWHV+qx5Y+3HgwH8/D2iZy9+AS+AAfm9dLW
-         nkoN3l9HL6bMZsmRhEsX+gKpH3yFC3sCUxjuphfE/v/KRFz8y4FIMMzda+RpuEpPi4WL
-         eY8w==
-X-Gm-Message-State: AOAM532u3GhRFbII7RaVxIVidVV8K/LYiYVjqbpdBxUFX85W+YPaS+5D
-        S22g3ujIIlYNYQEdQdzaqRlVWrieG8zy2RX270A=
-X-Google-Smtp-Source: ABdhPJwQUPx0qH3vt+PXXSWOl0YaSwl7/jgRIgUCAo5WluG1L8e7djt8vil7Wqjovqa1KzLtYb0VoGfHe4kSoYniMkY=
-X-Received: by 2002:a9d:1d45:: with SMTP id m63mr6979051otm.302.1620769124898;
- Tue, 11 May 2021 14:38:44 -0700 (PDT)
+        id S230012AbhEKVlE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 17:41:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51406 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229637AbhEKVlE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 17:41:04 -0400
+Received: (qmail 24675 invoked by uid 109); 11 May 2021 21:39:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 May 2021 21:39:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28578 invoked by uid 111); 11 May 2021 21:39:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 May 2021 17:39:57 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 11 May 2021 17:39:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     Gregory Anders <greg@gpanders.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4] git-send-email: use ! to indicate relative path to
+ command
+Message-ID: <YJr5rHnQOve1DD6+@coredump.intra.peff.net>
+References: <YJrZ7Hho6jrVyM7f@coredump.intra.peff.net>
+ <20210511204044.69047-1-greg@gpanders.com>
 MIME-Version: 1.0
-References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
- <20210406092440.GZ6564@kitsune.suse.cz> <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
- <609ae224aa509_6064920851@natae.notmuch> <20210511202502.GM12700@kitsune.suse.cz>
-In-Reply-To: <20210511202502.GM12700@kitsune.suse.cz>
-From:   Varun Varada <varuncvarada@gmail.com>
-Date:   Tue, 11 May 2021 16:38:34 -0500
-Message-ID: <CAD2i4DALKgw2wG6QGs-oQhAHnS3AG1j1BSq2bxjPojVOtw+WjA@mail.gmail.com>
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210511204044.69047-1-greg@gpanders.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 11 May 2021 at 15:25, Michal Such=C3=A1nek <msuchanek@suse.de> wrot=
-e:
->
-> On Tue, May 11, 2021 at 02:59:32PM -0500, Felipe Contreras wrote:
-> > Varun Varada wrote:
-> > > On Tue, 6 Apr 2021 at 04:24, Michal Such=C3=A1nek <msuchanek@suse.de>=
- wrote:
-> > > > while using "will not impact" in an incorrect or unclear way may be=
- a
-> > > > problem the word "impact" in itself is not "jargon".
-> > >
-> > > The word means "to have a strong or marked effect on" (v.) and "a
-> > > strong or market influence" (n.) when used figuratively; it is not
-> > > synonymous with "affect" and "effect", respectively, as shown even by
-> > > all of the entries you've cited. Using it as such is the incorrect
-> > > part, so those are the instances I've changed in the diff.
-> >
-> > There are two ways impact can be used as a verb: transitive and
-> > intransitive, but git doesn't seem to be using the intransitive form. I=
-n
-> > the transitive form it usually means to strike "the car impacted the
-> > tree". But it can also mean to have a desired effect "reducing CO2
-> > emissions impacted climate change".
->
-> I don't know where you find the 'desired' effect meaning. Certainly none
-> of the dictionaries I consulted at random provides such definition.
->
-> >
-> > None of these are used in the documentation, we have things like:
-> >
-> >   the index does not impact the outcome
-> >
-> > Which is clearly wrong (unless we are talking about possitive outcome o=
-f
-> > the outcome, which makes no sense).
->
-> It is not clearly wrong. To me it makes perfect sense. If you want to
-> claim it's wrong please provide a source for your claim. Otherwise it's
-> just matter of different opinions of more fitting formulation.
+On Tue, May 11, 2021 at 02:40:44PM -0600, Gregory Anders wrote:
 
-You agreed that the word "impact" means to "significantly affect". The
-idea of whether something is *significantly* affected, as opposed to
-conveying the idea that something is affected at all, only arises in
-situations where degrees of an influence are possible; that's not the
-case in any of the examples my change is editing (except for the one I
-conceded where it says "badly impacted"). Assuming that a reader would
-know which of those involve degrees of influence are possible and
-which aren't, even if every reader of the documentation/command output
-was familiar, is entirely unnecessary. That's the point here: there is
-this point of confusion that is entirely avoidable with a simple
-one-word change.
+> Presently, the smtpServer config option can use a sendmail-like program
+> by providing an absolute path to the program as the value for this
+> option. However, an absolute path is not always portable and it is often
+> preferable to simply specify a program name and have `git-send-email`
+> find that program on $PATH.
+> 
+> For example, if a user wishes to use msmtp to send emails, they might
+> be able to simply use
+> 
+>     [sendemail]
+>             smtpServer = !msmtp
+> 
+> instead of using the full path. This is particularly useful when a
+> common git config file is used across multiple systems where the
+> absolute path to a given program may differ.
+> 
+> To that end, this patch allows the smtpServer config option to be
+> prefixed with a ! character that implements the above behavior; namely,
+> the specified value (sans the ! character) is used as if the user had
+> entered it directly on the command line.
 
-Re: your point about me not pointing out specific examples: the
-command output for detached HEAD state reads "you can discard any
-commits you make in this state without impacting any branches by
-switching back to a branch". I'm incredibly passionate about this
-example. Here, the user is left to think, "wait...so this will not
-impact (significantly affect) any branches, but will it affect them?
-As in, are there side effects that I should be aware of? Where do I go
-to find out what they are?" All of this mental energy is completely
-unnecessary. Mind you, this is regarding discarding commits, which is
-a destructive action.
+Thanks, this justifies the change quite nicely, I think.
 
-You might feel that this is just one example that might need fixing,
-but I assure you, I've analysed all the other examples and they all
-have similar problems. It's entirely unnecessary to have this
-confusion.
+> See also https://lore.kernel.org/git/YJrH8uqzapnpNEsb@gpanders.com/.
 
->
-> >
-> > As a noun it can mean a siginificant or major effect: "the impact of
-> > science".
-> >
-> > However, the documentation is not using it that way:
-> >
-> >   the runtime impact of tracking all omitted objects
-> >
-> > The noun usage is less wrong than the verb usage, but it's still wrong.
->
-> Why is that wrong?
->
-> How did you infer that the effect is insignificant or minor?
+IMHO this link could be dropped. I referenced it earlier in the thread
+since there wasn't much context in your commit message. In general we
+prefer to copy that context into the commit, so it doesn't depend on
+having access to the list. And you already did that quite nicely, so the
+link tells us nothing new. :)
 
-No one did, and that's the point. All impacts are effects, but not all
-effects are impacts. You yourself acknowledged that there is a
-prevalent tendency to hyperbolize, and the fact that one doesn't know
-which it is in this case (or frankly any of the other cases my commit
-touches) is problematic. This kind of confusion surely doesn't belong
-in technical documentation. And if it is indeed an "impact", where is
-that conveyed? What's so notable about the effect on the runtime?
-That's the point.
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index 93708aefea..418e66c703 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -212,12 +212,13 @@ a password is obtained using 'git-credential'.
+>  --smtp-server=<host>::
+>  	If set, specifies the outgoing SMTP server to use (e.g.
+>  	`smtp.example.com` or a raw IP address).  Alternatively it can
+> -	specify a full pathname of a sendmail-like program instead;
+> -	the program must support the `-i` option.  Default value can
+> -	be specified by the `sendemail.smtpServer` configuration
+> -	option; the built-in default is to search for `sendmail` in
+> -	`/usr/sbin`, `/usr/lib` and $PATH if such program is
+> -	available, falling back to `localhost` otherwise.
+> +	specify a sendmail-like program instead, either by a full
+> +	path-name or by prefixing the program name with `!`.  The
+> +	program must support the `-i` option.  Default value can be
+> +	specified by the `sendemail.smtpServer` configuration option;
+> +	the built-in default is to search for `sendmail` in `/usr/sbin`,
+> +	`/usr/lib` and $PATH if such program is available, falling back
+> +	to `localhost` otherwise.
 
->
-> In fact while some dictionaries list 'impact' as 'have strong effect'
-> the Oxford dicrionary lists is as simply synonymous to 'affect'.
->
-> > The verb usage could be corrected by changing "the index does not
-> > impact", to "the index does not have an impact on".
->
-> Why is that change needed at all?
->
-> > But why bother? The word "affect" is a much superior choice.
->
-> Why bother with a chenge at all?
+Ah, thanks for remembering to update the documentation. This looks good.
 
-It seems like you already previously agreed with the premise that the
-word means "a significant effect" or "to significantly affect". I
-understand and appreciate your thoroughness to scrutinize changes to
-the repo, but I'm frankly surprised that such a small change is
-attracting such fierce debate. This is meant to be a change that is
-probably one of the easiest ones to decide on: it only consists of
-one-word changes that don't change functionality, yet undeniably
-reduce confusion.
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 65b3035371..14cc61ace7 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -2225,4 +2225,14 @@ test_expect_success $PREREQ 'test forbidSendmailVariables behavior override' '
+>  		HEAD^
+>  '
+>  
+> +test_expect_success $PREREQ 'test using a command for smtpServer with !' '
+> +	clean_fake_sendmail &&
+> +	PATH="$(pwd):$PATH" \
+> +	git send-email \
+> +		--from="Example <nobody@example.com>" \
+> +		--to=nobody@example.com \
+> +		--smtp-server="!fake.sendmail" \
+> +		$patches 2>errors
+> +'
 
-Re: your previous point about linguistic authorities: yes, there is no
-authority on usage, but therein lies my point. This doesn't even need
-to rise to the domain of usage, because it is squarely within the
-realm of semantics. Words mean something, and we all use dictionaries
-to learn about / confirm those meanings. Insofar as all the major
-dictionaries cite the word as "a significant effect" / "to affect
-significantly", that semantic concept doesn't belong in the cases
-where I've made changes. And if it does, then those need to be
-clarified (because that's where the real confusion/ambiguity is).
-I.e., it's not "why is not every case a significant effect?", but "why
-are some cases a significant effect?"
+How do we know that we successfully ran our fake.sendmail script? I
+guess probably send-email would error out, but should we confirm that it
+touched commandline1, etc?
 
->
-> Thanks
->
-> Michal
+It also seems to fail for me. I think $patches isn't valid at this point
+in the script, as the patch files have been removed. Switching to just
+HEAD~2 doesn't seem to work either, as earlier tests set up a hook which
+rejects it. I think we could pass HEAD^ to send just one path, but I
+thought it would be nice to confirm that sending multiple works (i.e.,
+avoiding the bug we discussed earlier).
+
+I think the existing hook tests are somewhat poor to leave this
+confusing state. But the easiest thing to me is to just bump our test up
+a bit, like:
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 14cc61ace7..31d25b32b5 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2148,6 +2148,18 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+ 	test_cmp expected-list actual-list
+ '
+ 
++test_expect_success $PREREQ 'test using a command for smtpServer with !' '
++	clean_fake_sendmail &&
++	PATH="$(pwd):$PATH" \
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="!fake.sendmail" \
++		HEAD~2 2>errors &&
++	test_path_is_file commandline1 &&
++	test_path_is_file commandline2
++'
++
+ test_expect_success $PREREQ 'invoke hook' '
+ 	mkdir -p .git/hooks &&
+ 
+@@ -2225,14 +2237,4 @@ test_expect_success $PREREQ 'test forbidSendmailVariables behavior override' '
+ 		HEAD^
+ '
+ 
+-test_expect_success $PREREQ 'test using a command for smtpServer with !' '
+-	clean_fake_sendmail &&
+-	PATH="$(pwd):$PATH" \
+-	git send-email \
+-		--from="Example <nobody@example.com>" \
+-		--to=nobody@example.com \
+-		--smtp-server="!fake.sendmail" \
+-		$patches 2>errors
+-'
+-
+ test_done
