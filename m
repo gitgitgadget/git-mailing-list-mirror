@@ -6,71 +6,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFE89C433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61A76C433B4
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:11:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C41761585
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:09:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 369D861184
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232096AbhEKTK0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 15:10:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51112 "EHLO cloud.peff.net"
+        id S231896AbhEKTM7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 15:12:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51124 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231439AbhEKTKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 15:10:25 -0400
-Received: (qmail 24200 invoked by uid 109); 11 May 2021 19:09:18 -0000
+        id S231439AbhEKTM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 15:12:58 -0400
+Received: (qmail 24224 invoked by uid 109); 11 May 2021 19:11:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 May 2021 19:09:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 May 2021 19:11:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27005 invoked by uid 111); 11 May 2021 19:09:18 -0000
+Received: (qmail 27047 invoked by uid 111); 11 May 2021 19:11:52 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 May 2021 15:09:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 May 2021 15:11:52 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 11 May 2021 15:09:17 -0400
+Date:   Tue, 11 May 2021 15:11:51 -0400
 From:   Jeff King <peff@peff.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
-Message-ID: <YJrWXfmaNVIL/TzT@coredump.intra.peff.net>
-References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
- <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
- <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
- <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
- <YJmykGWaWi03+WoW@coredump.intra.peff.net>
- <609a07ca6a51c_5afe12088b@natae.notmuch>
- <YJogn8cUtSP/BAbJ@coredump.intra.peff.net>
- <609a3a5a7aa08_5d5d32088@natae.notmuch>
- <877dk5tovj.fsf@evledraar.gmail.com>
- <609ad46776dec_6011e208d7@natae.notmuch>
+To:     Gregory Anders <greg@gpanders.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-send-email: use ! to indicate relative path to
+ command
+Message-ID: <YJrW98FZN/N6u7un@coredump.intra.peff.net>
+References: <20210511183703.9488-1-greg@gpanders.com>
+ <YJrTlXzuuMoxeJay@coredump.intra.peff.net>
+ <YJrVBA4HP0HEqRLD@gpanders.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <609ad46776dec_6011e208d7@natae.notmuch>
+In-Reply-To: <YJrVBA4HP0HEqRLD@gpanders.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 11, 2021 at 02:00:55PM -0500, Felipe Contreras wrote:
+On Tue, May 11, 2021 at 01:03:32PM -0600, Gregory Anders wrote:
 
-> > > > It's not too hard to install an updated gem, but not quite as nice
-> > > > as using the system package (it also makes things weird for
-> > > > building the stable Debian package itself, which would want to
-> > > > rely only on other packages; but of course any proposed change to
-> > > > the doc toolchain would be for new versions, and would not get
-> > > > backported there anyway).
+> I also noticed this after some quick testing and just sent a v2 right before
+> seeing your reply.
 > 
-> Doing `gem install` solves the problem for whomever wants to build the
-> latest git in Debian stable.
-> 
-> Building Debian stable packages is something else.
+> Your (untested) implementation seems much cleaner than mine, and I'm happy
+> to give that a try. Question: is it okay that we pass just a raw command
+> name to exec instead of a full path? That is, is there any reason we need to
+> first find the command in PATH *and then* pass it to exec (which is what my
+> v2 implementation does)?
 
-Perhaps I wasn't clear with the "but of course" part of my statement. It
-was meant to rebut the earlier half of the parenthetical. I.e., drawing
-that same distinction as "we don't have to worry about packaging Debian
-stable here".
+I don't think so. Perl's exec() should do the PATH lookup itself. I was
+surprised not to see this mentioned explicitly in the documentation, but
+it clearly does work. E.g., try:
+
+  perl -e 'exec("ls")'
 
 -Peff
