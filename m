@@ -7,132 +7,123 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0188DC43461
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 12:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FE0EC433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 12:51:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C587161921
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 12:38:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 481CB61075
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 12:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231546AbhEKMjH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 08:39:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51594 "EHLO
+        id S231648AbhEKMwk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 08:52:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231472AbhEKMi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 08:38:56 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30E5C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 05:37:49 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id z24so17990387ioi.3
-        for <git@vger.kernel.org>; Tue, 11 May 2021 05:37:49 -0700 (PDT)
+        with ESMTP id S231643AbhEKMwi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 08:52:38 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B59B4C061763
+        for <git@vger.kernel.org>; Tue, 11 May 2021 05:51:30 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id n25so22720314edr.5
+        for <git@vger.kernel.org>; Tue, 11 May 2021 05:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=h6LZ9aEpU752BaPRhz8BKVSP7eTOeHZBLvld+0By/us=;
-        b=NPG/q+vyHyF6JMFKDqYWb7BI6rcUFkNZgIPMfWOb9SLUFLrkW4CRhLGUz5NKMacBAo
-         Tz506nUWxAsyZ8+2QrwWzNpbAwQIHZIjKW8HPDR4RbiRaksEhcDhA6Pb4Fym2O9iOJn3
-         K3JAB+xn73UEtFVKuAXktMzcXo3y4OpfUi89FBiyN3UWPh8c5OHfVM/QLxUjk3kByz+w
-         P6pIzhUNk7X187fzoF3jXbQHTwAIYvCH4my6BuCHHJHwHDXKmceCAdAehl80RtRmlY0U
-         uz27g1pweBGM+iu02sJB/BBzdXenhSpRFQgH43ScYt3asJgkL3mKIXlQ+t8K07mFB1HI
-         r/IQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=oBWDlFUBkcWftACA5f17z8ZP2bhgImKatstXPkGjEZU=;
+        b=JJCBzC4c3x3beIiWFwObiRoVlK9t0+M6g+1fhjVnRup7pqIgZkM3/SSKz7QTlNC334
+         aBggQrFmSjdcFIJtHQBfnrkhDU7UN8v3gCwWbml6or0CvWndcAXGQZCOykdF0obB8GG+
+         aj2Od7S0ttNhGFjbHnnesUeDm6noOZ7/1WLVUQzef/IEBjd3WqKLg2U9oNmsrHe1Dzds
+         VAAOjHO3feudYPqpK7LNnatcb84vE+IQnp/VuAhCD5XSzBMkZZmi1T/lRKk6yk4bOMuC
+         pqgd3l35SpZTPTiSwHHXvfOAXXmzezLtSdsCkBUAj7MquRe4dYO/3fajrADcjnNazhrU
+         AHuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=h6LZ9aEpU752BaPRhz8BKVSP7eTOeHZBLvld+0By/us=;
-        b=oiKVvc3geQ0G5cPX9aCZtVa9kNBLFvE1uekMp8URu7okKyiC+7n1K55hckIBm7RTUN
-         IivI/1J+d/yG4rxIXy7DG90eiABAqjWnu9La7YtTIdYbx96TntAiUjS8ZHj/Ei00Wd4Q
-         ffMgCnR8DSsFCNvxRk4QDlwPA5BmzS+D5oi7DN86Cm32CVtAVwmVgixFKUbZPC0xFDwD
-         B/mgKZa1yBAoFQF526OKSKpFLY8On66F4Z1i+afmt0kmcJooMUzVBrwUWIm+LDUTJf96
-         2ZXpCE6WUKcZPaU8qz8MbwBDg6PsAwjFT4wI1r0IEhbRYVubIB4fDKukLih2ILJgEQeC
-         7fTg==
-X-Gm-Message-State: AOAM530XE99hjjLQp9pqY4oLx0sx0o6yB9UeVMubL7TethtltbskhwQK
-        EiNOGGivzudG3zmvJ6MMGu86EVnYrcsVEgFqK73GEBKsFGG/8Gef
-X-Google-Smtp-Source: ABdhPJwc6mzQ5UfuybAGG+UeorRu71F++w5asabQ0mf2ai57nTwwZaVDhQjDPDUAaj+wxJMSmg4+jsnnDi8fUPzPcOs=
-X-Received: by 2002:a02:84a5:: with SMTP id f34mr26272120jai.50.1620736669179;
- Tue, 11 May 2021 05:37:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=oBWDlFUBkcWftACA5f17z8ZP2bhgImKatstXPkGjEZU=;
+        b=t+UUW5YM3Qg84pNl+pf8mN8wPcY/0CDu5rAjNr3spW2tLvgaiVImn9dKopbNT9mRiO
+         yU1ee+yQP6XW6p7Ype70R14sTqLCpuqyfn3OT8PafXQhoIhC7jAd7AJ6cly1qdLKJcUY
+         cF77NUSDmW1ArfgBl6MnjgZbYJQYsczNGKuJ1esjX25iwRcbMzREGsWNnUcUGZSqVxDz
+         lU6jKvwfetNV84iKQ9+raG7Hqdws5LfnyAi/zc86EOG0P1ihLiLA/9dciJOgwsV3Bymn
+         jumN0D+HB+SfIWvu9aXfXiKwFYdXKZ9eIhqo9B00yUIQp8uBS6nZ7Sz6IO1NrbtFQ+pN
+         2Gmw==
+X-Gm-Message-State: AOAM530GRO5j0VUBPKC7eT94EAa9nXzwKNH8+Z4D1wG+OXgd8FcEyh1k
+        EfFh2HWVOQPgIhByAjQVofg=
+X-Google-Smtp-Source: ABdhPJyx0W5EYZC4LZYgP2SQ36NtkoXmWLbrZppzv8aq9RY/onvByblDdpI0Qxb4gqX1x0pz2cwPoQ==
+X-Received: by 2002:a05:6402:1d8f:: with SMTP id dk15mr33631997edb.146.1620737489439;
+        Tue, 11 May 2021 05:51:29 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id a24sm14559926edr.74.2021.05.11.05.51.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 May 2021 05:51:28 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+Date:   Tue, 11 May 2021 14:44:41 +0200
+References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+        <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
+        <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
+        <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
+        <YJmykGWaWi03+WoW@coredump.intra.peff.net>
+        <609a07ca6a51c_5afe12088b@natae.notmuch>
+        <YJogn8cUtSP/BAbJ@coredump.intra.peff.net>
+        <609a3a5a7aa08_5d5d32088@natae.notmuch>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <609a3a5a7aa08_5d5d32088@natae.notmuch>
+Message-ID: <877dk5tovj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.951.git.1620487353.gitgitgadget@gmail.com>
- <pull.951.v2.git.1620659000.gitgitgadget@gmail.com> <a1f70b39b7efbadff9e2202968dd1ca65ea3c1b4.1620659000.git.gitgitgadget@gmail.com>
- <xmqqh7jaow31.fsf@gitster.g> <CAP8UFD3m0TA3nPDaPhaU3=FVF_r5cPM8xksVL6MpCOhNC4dT3g@mail.gmail.com>
-In-Reply-To: <CAP8UFD3m0TA3nPDaPhaU3=FVF_r5cPM8xksVL6MpCOhNC4dT3g@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 11 May 2021 20:37:33 +0800
-Message-ID: <CAOLTT8RP9B7mmP+zfgdjrP+jjoBgJyeWmxnJitOFM87JraXCFQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] [GSOC] ref-filter: introduce enum atom_type
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Hariom Verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=
-=8811=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=881:51=E5=86=99=E9=81=93=
-=EF=BC=9A
+
+On Tue, May 11 2021, Felipe Contreras wrote:
+
+> Jeff King wrote:
+>> On Mon, May 10, 2021 at 11:27:54PM -0500, Felipe Contreras wrote:
+>> > Jeff King wrote:
+>> [...]
+>> > I've never understood developers worried about how the bleeding edge
+>> > would build in ancient platforms, when ancient platforms don't care
+>> > about the bleeding edge.
+>> 
+>> Again, this is about developers. Are there people contributing new
+>> documentation to Git who are doing so on Debian stable, and would be
+>> inconvenienced by needing to upgrade their toolchain?
 >
-> >
-> > Shouldn't it be (-1)?
+> Developers don't need to create (or use) debian packages. They can
+> simply do `gem install asciidoctor` and be done with it. Some may even
+> create a docker container to install all the doc toolchain in order to
+> avoid polluting their main environment.
 >
-> If it's -1 instead of 0, then it might be a bit more complex to
-> initialize structs that contain such a field, as it cannot be done
-> with only xcalloc().
->
+> I for one would start building the documentation more if all I needed is
+> one dependency.
 
-I agree. If the traverse start from 0, an init atom_type will have
-"ATOM_REFNAME" junk value. If let users manually adjust it to
-ATOM_UNKNOWN, it seems to be very troublesome.
+Just because I'm developing the latest git.git revision on Debian stable
+that doesn't mean that I'm keen to install the very latest openssl,
+libcurl, asciidoc, C compiler, or whatever other thing we depend on.
 
-> > And I'd assume I am right in the following.
-> >
-> > > + * ATOM_INVALID equals to the size of valid_atom array, which could =
-help us
-> > > + * iterate over valid_atom array like this:
-> > > + *
-> > > + *   for (i =3D ATOM_UNKNOWN + 1; i < ATOM_INVALID; i++) {
-> >
-> > I find it far more intuitive to say
-> >
-> >         for (i =3D 0; i < ATOM_INVALID; i++)
-> >
-> > than having to say UNKNOWN+1.
->
-> Yeah, that's more intuitive. But in my opinion, using `ATOM_UNKNOWN +
-> 1` instead of `0` at least shouldn't often result in more lines of
-> code, and should be a bit easier to get right, compared to having to
-> initialize the field with ATOM_UNKNOWN.
->
+I'm not disagreeing with bumping the dependency in this case (I haven't
+looked into it). I'm just pointing out that in general there's a lot of
+use-cases for e.g. building a latest git on an N year old OS.
 
-There will be a trade-off. Traverse from 0 or does not need to adjust the
-initialized atom_type =3D UNKNOWN.
+Of course we can ask these people to just build their dependencies too,
+as I noted in [1] in a past discussion. Whether we bump our required
+dependencies is a trade-off between our own convenience and these sorts
+of in-the-wild builds.
 
->
-> > It would allow people to say
-> >
-> >         for (i =3D 0; i < ATOM_MAX; i++)
-> >
-> > instead, which would be even nicer.
->
-> Yeah, it's also a tradeoff to have the last one called ATOM_MAX
-> instead of ATOM_INVALID, and to have a separate ATOM_INVALID if it's
-> needed.
+I'm just saying we should keep this use-case in mind, it's not an all or
+nothing where you either have ancient deps + ancient git or bleeding
+edge deps + bleeding edge git. A lot of people build ancient deps +
+bleeding edge git.
 
-About ATOM_MAX or ATOM_INVALID, I have a idea:
+The "just use the built doc tarballs" is only a partial solution, and
+e.g. won't work for someone who's interested in building "next" or
+otherwise applying local patches that have doc changes.
 
-enum atom_type {
-ATOM_UNKNOWN,
-...
-ATOM_ELSE,
-ATOM_INVALID,
-+ATOM_MAX =3D ATOM_INVALID
- };
-
-This might be able to do both.
-
-Thanks.
---
-ZheNing Hu
+1. https://lore.kernel.org/git/874ltg2tvo.fsf@gmail.com/
