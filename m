@@ -2,97 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AFD4C433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 579C8C433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:07:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C2EB61492
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:06:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2663E61626
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 19:07:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232218AbhEKTHS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 15:07:18 -0400
-Received: from siwi.pair.com ([209.68.5.199]:16066 "EHLO siwi.pair.com"
+        id S232127AbhEKTIh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 15:08:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51092 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232256AbhEKTHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 15:07:11 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id BBC263F4090;
-        Tue, 11 May 2021 15:06:04 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 6BE403F4047;
-        Tue, 11 May 2021 15:06:04 -0400 (EDT)
-Subject: Re: [PATCH v4 1/8] dir: convert trace calls to trace2 equivalents
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Josh Steadmon <steadmon@google.com>
-References: <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
- <pull.1020.v4.git.git.1620758049.gitgitgadget@gmail.com>
- <9204e36b7e9035c4cdda018d7ced8e8ca7acc8bc.1620758049.git.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <df3695ad-5ba7-df22-2a2a-ca799c5d16d8@jeffhostetler.com>
-Date:   Tue, 11 May 2021 15:06:03 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S232082AbhEKTI1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 15:08:27 -0400
+Received: (qmail 24173 invoked by uid 109); 11 May 2021 19:07:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 May 2021 19:07:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26985 invoked by uid 111); 11 May 2021 19:07:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 May 2021 15:07:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 11 May 2021 15:07:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [RFC suggestion] Generate manpage directly with Asciidoctor
+Message-ID: <YJrV52HOv0mlbJB1@coredump.intra.peff.net>
+References: <3461c7b0-594d-989e-3048-2fc6583084ad@gmail.com>
+ <YJWiQH2nf0B14Zy7@camp.crustytoothpaste.net>
+ <YJW81zNr5bgW+yVs@coredump.intra.peff.net>
+ <CAN0heSpN_ieGc2HJCvSsmUuEqS-GGPDcZHz=v2Z3hJY=Or_HMw@mail.gmail.com>
+ <YJmykGWaWi03+WoW@coredump.intra.peff.net>
+ <CAN0heSp6uw7yqNZLD5w13xJUgnUtgHM0OYw9KQ6Z-FKk+x4OPA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <9204e36b7e9035c4cdda018d7ced8e8ca7acc8bc.1620758049.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSp6uw7yqNZLD5w13xJUgnUtgHM0OYw9KQ6Z-FKk+x4OPA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, May 11, 2021 at 08:45:10PM +0200, Martin Ågren wrote:
 
-
-On 5/11/21 2:34 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+> > That does make things a little less convenient; Debian stable, for
+> > instance, still has 1.5.8. It's not too hard to install an updated gem,
+> > but not quite as nice as using the system package (it also makes things
+> > weird for building the stable Debian package itself, which would want to
+> > rely only on other packages; but of course any proposed change to the
+> > doc toolchain would be for new versions, and would not get backported
+> > there anyway).
 > 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->   dir.c                             |  43 +++++--
->   t/t7063-status-untracked-cache.sh | 205 ++++++++++++++++++------------
->   t/t7519-status-fsmonitor.sh       |   8 +-
->   3 files changed, 155 insertions(+), 101 deletions(-)
-> 
-> diff --git a/dir.c b/dir.c
-> index 3474e67e8f3c..122fcbffdf89 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2760,15 +2760,34 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
->   	return root;
->   }
->   
-> +static void trace2_read_directory_statistics(struct dir_struct *dir,
-> +					     struct repository *repo,
-> +					     const char *path)
-> +{
-> +	if (!dir->untracked)
-> +		return;
-> +	trace2_data_string("read_directory", repo, "path", path);
+> Right. And 1.5.8 is perfectly fine for ascidoctor *with* xmlto, i.e., as
+> long as we're discussing moving away from asciidoc, not moving away from
+> xmlto entirely. And soon enough, Debian stable should be at 2.12. ;-)
+> (I realize Debian stable was just an example.)
 
-I'm probably just nit-picking here, but should this look more like:
+Debian stable is just an example, but I also consider it a bit of a
+benchmark for "reasonable". Surely there are people running RHEL6
+somewhere in this world, but it's hard to care too much about them.
 
-	if (path && *path)
-		trace2_data_string(...)
-	if (!dir->untracked)
-		return;
+I think the transition you're proposing would probably take a while to
+do, too. If we don't drop the python asciidoc support until close to the
+end, then that buys a bit more time. Likewise, this isn't a hard limit
+for OS support for users. The worst case is just making things slightly
+more inconvenient for Git developers on older systems, because because
+they might have to install an updated gem rather than using the system
+package (you sometimes can end up in dependency hell for a gem upgrade
+with versions of ruby, system libraries, etc, but I haven't found
+asciidoctor particularly needy in that respect).
 
-Then when you add the visitied fields in the next commit,
-you'll have the path with them (when present).
+So I dunno. I certainly don't have a big complaint about _starting_ the
+transition. If we can hold on to python asciidoc support (or even
+old-asciidoctor + xmlto) for a while as a fallback, even if we know it's
+slowly bitrotting, then it's possible nobody would even complain.
 
-(and it would let you optionally avoid the tmp strbuf in
-the caller.)
-
-Jeff
+-Peff
