@@ -2,163 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D67DC433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58CAFC433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:52:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B494613C6
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:51:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30C2061492
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 23:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbhEKXxC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 19:53:02 -0400
-Received: from mslow1.mail.gandi.net ([217.70.178.240]:51567 "EHLO
-        mslow1.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhEKXxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 19:53:02 -0400
-Received: from relay9-d.mail.gandi.net (unknown [217.70.183.199])
-        by mslow1.mail.gandi.net (Postfix) with ESMTP id 9A1B1CC732
-        for <git@vger.kernel.org>; Tue, 11 May 2021 23:50:07 +0000 (UTC)
-X-Originating-IP: 73.26.133.58
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gpanders.com;
-        s=gm1; t=1620776986;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=sqhWx24YygsGuwdv01q6qLtIWYzu34eU+Ll3eqH/Zwk=;
-        b=PXvYobJmgPk8neQEMrQB/LEne9wkpxPrdLWzJ9SFEC0pw4skJDgIc4NutSRfLC3suWCYyU
-        kz5WzEBQWvbxpvYaiXTZsr0NSPEK0dDuD9awFQlJObZ3Z/ijRRzje3Dkr/TamQK3MX/43V
-        pHKcrJkud2mRF31Grzl/OhGBBi5g35vmW8T8QuNOcjXIttlgYKpbF9i9pqsaaqrECxjqP7
-        8MWR2CY4Imc1AtdWzmGAVYH54m53EGk7v9YfS4Osk2O+SoPv3HJfKf14aPrlhOFWPtcjul
-        CU5gCfkHfoKTv3VAWKI1YW2xNSuAIDL883fid4RwB4cQoqbF8c3CBb9992T4zA==
-Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
-        (Authenticated sender: greg@gpanders.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 1C479FF803;
-        Tue, 11 May 2021 23:49:44 +0000 (UTC)
-From:   Gregory Anders <greg@gpanders.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Gregory Anders <greg@gpanders.com>
-Subject: [PATCH v5] git-send-email: use ! to indicate relative path to command
-Date:   Tue, 11 May 2021 17:49:35 -0600
-Message-Id: <20210511234935.65147-1-greg@gpanders.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210511204044.69047-1-greg@gpanders.com>
-References: <20210511204044.69047-1-greg@gpanders.com>
+        id S230009AbhEKXxJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 19:53:09 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52364 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229637AbhEKXxI (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 May 2021 19:53:08 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3A4786042E;
+        Tue, 11 May 2021 23:51:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1620777091;
+        bh=q6JrMrhMOuMbXXNLkmNA57cmI2UwiH3zh105H0oPh6g=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=zxRVxPjN5gi7ZAe3ydGoGILVFP8fb4aUMo9RSQ1eswsBGlrcFJ1prvr2vtvcasfHC
+         UfbTZ15KJOqkW6nENcsaJaikuFtFtx4c7sYeJqkgxc7AelPmavbR5voo3zxKzW7pM6
+         JozgrzB9MasllJNsL0MtoeUGH5pYJ4kt9M+LjgLc/jzQzbZDdnQJDseyb+655pSzKv
+         mYt6lqx1rWbqh+98i+pz+joczMxbjhgtyoVoYIWjTw7lvRstwVhQ17P8BnaSjFpQwp
+         BX1K+7B9k24I11dkxyE21h9KkkH4zJNrwzltMij9tpFVFuQwo7z39jrtf2pXUI4zRH
+         UjNe+F6JAiboYh25d3nmiWKwLBs6AQq2vaUrN3zxmcbb6mIv3iU+AOsjtSivVbJb/q
+         t744H25c+7clIb5rY5YqYta36IlnpDDizm08dLdf13nwDnM5fg7esS+ueVrVp2KagJ
+         IUfHGc3/UyNj1Fc5oPxb51znu5TFclunJmDSkjWycMUwRvfql4X
+Date:   Tue, 11 May 2021 23:51:26 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+Subject: Re: [PATCH] remote-curl: fix clone on sha256 repos
+Message-ID: <YJsYfm36owkE92by@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        git@vger.kernel.org
+References: <20210511103730.GA15003@dcvr>
+ <YJsM3sUXRYjJiwZG@camp.crustytoothpaste.net>
+ <xmqq8s4kj0gs.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pYuwdo2n1usIEmTv"
+Content-Disposition: inline
+In-Reply-To: <xmqq8s4kj0gs.fsf@gitster.g>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sendemail.smtpServer configuration option and the '--smtp-server'
-command line option can name a program to use by providing an absolute
-path to the program. However, an absolute path is not always portable
-and it is often preferable to simply specify a program name and have
-'git-send-email' find that program on $PATH.
 
-For example, if a user wishes to use msmtp to send emails, they might
-be able to simply use
+--pYuwdo2n1usIEmTv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    [sendemail]
-            smtpServer = !msmtp
+On 2021-05-11 at 23:48:51, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > This seems fine as a solution for now.  I tried to keep the transport
+> > code mostly independent of the local repository settings, but in this
+> > case because the HTTP walker mucks around with the internals of the
+> > local pack files, I don't think we can avoid this without some major
+> > restructuring, which I'm not interested in sitting down and writing this
+> > evening.
+> >
+> > I'll clean this up in a nicer way once I get interop working.  Thanks
+> > for sending a patch for this.
+>=20
+> Thanks, both.
+>=20
+> As an "experimental" stuff, I do not think SHA256 "fix" is as urgent
+> as (or of higher priority than) other stuff, like reducing
+> inter-developer stepping-on-others-toes, so I'll refrain from
+> picking Eric's patch up myself and let you include/handle it later.
 
-instead of using the full path. This is particularly useful when a
-common git config file is used across multiple systems where the
-absolute path to a given program may differ.
+No, please do pick up the patch.  The time frame for which I'm looking
+at fixing this is several months out and I think some solution is best
+adopted now.  Since Eric has sent a patch that works, I think it's best
+to fix the immediate problem and let me clean up things later on.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-To that end, this patch allows both the configuration and command line
-options to be prefixed with a '!' character to indicate that the
-specified command should be found on $PATH, as if the user had entered
-it directly on the command line.
+--pYuwdo2n1usIEmTv
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Signed-off-by: Gregory Anders <greg@gpanders.com>
----
-Diff from v4:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-* Update the test with suggestions from Jeff King (this should fix 
-  erroneous test failures caused by patch files being deleted by earlier 
-  tests)
-* Reword the commit message with feedback from Jeff King and Junio 
-  Hamano
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJsYfQAKCRB8DEliiIei
+gZTOAQDdC+/RIROo+WI4AFO+UERDvr/7/Um5O0/hREsSljKq+AD/Z6sylsHAn/t5
+yzzwV2YD7H1goezLoIg901cvp0xrwAI=
+=UILo
+-----END PGP SIGNATURE-----
 
- Documentation/git-send-email.txt | 13 +++++++------
- git-send-email.perl              |  7 +++++--
- t/t9001-send-email.sh            | 12 ++++++++++++
- 3 files changed, 24 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 93708aefea..418e66c703 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -212,12 +212,13 @@ a password is obtained using 'git-credential'.
- --smtp-server=<host>::
- 	If set, specifies the outgoing SMTP server to use (e.g.
- 	`smtp.example.com` or a raw IP address).  Alternatively it can
--	specify a full pathname of a sendmail-like program instead;
--	the program must support the `-i` option.  Default value can
--	be specified by the `sendemail.smtpServer` configuration
--	option; the built-in default is to search for `sendmail` in
--	`/usr/sbin`, `/usr/lib` and $PATH if such program is
--	available, falling back to `localhost` otherwise.
-+	specify a sendmail-like program instead, either by a full
-+	path-name or by prefixing the program name with `!`.  The
-+	program must support the `-i` option.  Default value can be
-+	specified by the `sendemail.smtpServer` configuration option;
-+	the built-in default is to search for `sendmail` in `/usr/sbin`,
-+	`/usr/lib` and $PATH if such program is available, falling back
-+	to `localhost` otherwise.
- 
- --smtp-server-port=<port>::
- 	Specifies a port different from the default port (SMTP
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 175da07d94..022dcf0999 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1492,11 +1492,14 @@ sub send_message {
- 
- 	if ($dry_run) {
- 		# We don't want to send the email.
--	} elsif (file_name_is_absolute($smtp_server)) {
-+	} elsif (file_name_is_absolute($smtp_server) || $smtp_server =~ /^!/) {
-+		my $prog = $smtp_server;
-+		$prog =~ s/^!//;
-+
- 		my $pid = open my $sm, '|-';
- 		defined $pid or die $!;
- 		if (!$pid) {
--			exec($smtp_server, @sendmail_parameters) or die $!;
-+			exec($prog, @sendmail_parameters) or die $!;
- 		}
- 		print $sm "$header\n$message";
- 		close $sm or die $!;
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 65b3035371..31d25b32b5 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2148,6 +2148,18 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
- 	test_cmp expected-list actual-list
- '
- 
-+test_expect_success $PREREQ 'test using a command for smtpServer with !' '
-+	clean_fake_sendmail &&
-+	PATH="$(pwd):$PATH" \
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="!fake.sendmail" \
-+		HEAD~2 2>errors &&
-+	test_path_is_file commandline1 &&
-+	test_path_is_file commandline2
-+'
-+
- test_expect_success $PREREQ 'invoke hook' '
- 	mkdir -p .git/hooks &&
- 
--- 
-2.31.1
-
+--pYuwdo2n1usIEmTv--
