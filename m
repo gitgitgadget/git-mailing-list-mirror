@@ -6,62 +6,57 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FC71C433ED
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 22:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 324F3C433B4
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 22:19:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52571616EA
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 22:18:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAEF96191E
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 22:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbhEKWTi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 18:19:38 -0400
-Received: from relay12.mail.gandi.net ([217.70.178.232]:35897 "EHLO
-        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbhEKWTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 18:19:38 -0400
-Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
-        (Authenticated sender: greg@gpanders.com)
-        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 97D15200004;
-        Tue, 11 May 2021 22:18:29 +0000 (UTC)
+        id S230002AbhEKWU5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 18:20:57 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:54713 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229994AbhEKWU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 18:20:56 -0400
+X-Originating-IP: 73.26.133.58
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gpanders.com;
-        s=gm1; t=1620771510;
+        s=gm1; t=1620771589;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=HQ+0UHuoUB1aKr2ZnXFDa9JQVDAN2zY7sgFi4laK5SA=;
-        b=AHGH4e8fjPDEUlXXgnOfZepC24FneQroQCv++WZvWnCkt5nPliXckSR2q0sjbGo1AOk56E
-        vivEmGRelYS9xSYaIp/nJGEq5bOeiHRa8x4HbfrDg1kSNfoabTQSU3j+Mp98XlaA6rx4tc
-        TpA+IFMfsHlK8a/yDanV6yWyLtdJcN5KuhITG9oH3vB+yzXTCld3tPB5fz0I3q989EmyeD
-        WJRdhTME+mLwj4z5TpQHxlkutCR83wVvAsO5SBfWA87Kl3ySJgxxpNBpuzQzh15T8LdAsk
-        I7W54ZgdITTwX47QI94JxBVULmE51cSdJYET0X/FaKo09jCxP5AhWbov5+NKhA==
-Date:   Tue, 11 May 2021 16:18:26 -0600
+        bh=2sOEx57M0m2t0ns39O/gDH5fMpa9tvHJI5ekrPZQri8=;
+        b=K1ITvJLMXgRha69wGsNV07PuGjQGAoNMR0RD3Kh35aYc81Z4kra3rp41h7+UQg8E4MiIsr
+        QUFKbju4YEU7NwYNUUxO0uR190NeeG4CJQU842OJumiOZTzMqSXwwqwQjk+tqcqqx81Qiu
+        E0ocC0jnT8dKrQRspRnJjwiitUsHcGNlQtzlBwquX7THTzby7yQ5JyaGxIBWtcBpPhpXay
+        DHsPGdZn3OmMFYMZsoTWE0TJazICpTXEnHKCzMW7ZMmw72FT2x16X5c9vwUY71cibJo3n+
+        HkD233DcKu5TIKeFepQfkdf6q3tpKQWX2NQtMoFOLwLxWoatWey5dnY8wTvSEg==
+Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
+        (Authenticated sender: greg@gpanders.com)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id B6C7F40004;
+        Tue, 11 May 2021 22:19:48 +0000 (UTC)
+Date:   Tue, 11 May 2021 16:19:46 -0600
 From:   Gregory Anders <greg@gpanders.com>
-To:     Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4] git-send-email: use ! to indicate relative path to
+Subject: Re: [PATCH v3] git-send-email: use ! to indicate relative path to
  command
-Message-ID: <YJsCslVJhcGANb13@gpanders.com>
-References: <YJrZ7Hho6jrVyM7f@coredump.intra.peff.net>
- <20210511204044.69047-1-greg@gpanders.com>
- <YJr5rHnQOve1DD6+@coredump.intra.peff.net>
+Message-ID: <YJsDAnHcnro6Gfk4@gpanders.com>
+References: <20210511191510.25888-1-greg@gpanders.com>
+ <609ae32e3b9f_60649208e0@natae.notmuch>
+ <YJrsTu5YtGNpQvZh@gpanders.com>
+ <609b0017a323b_6064920888@natae.notmuch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <YJr5rHnQOve1DD6+@coredump.intra.peff.net>
+In-Reply-To: <609b0017a323b_6064920888@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 11 May 2021 17:39 -0400, Jeff King wrote:
->It also seems to fail for me. I think $patches isn't valid at this 
->point in the script, as the patch files have been removed. Switching to 
->just HEAD~2 doesn't seem to work either, as earlier tests set up a hook 
->which rejects it. I think we could pass HEAD^ to send just one path, 
->but I thought it would be nice to confirm that sending multiple works 
->(i.e., avoiding the bug we discussed earlier).
+On Tue, 11 May 2021 17:07 -0500, Felipe Contreras wrote:
+>It would be much better to have sendemail.program, and then we wouldn't
+>need to deal with these workarounds.
 
-I had to play around with this too (being unfamiliar with how this test 
-harness worked). It would pass if I ran the first ~20 tests (20 is not 
-significant, it's just a number I chose to ensure that whatever 
-necessary setup needed to happen was done), but would fail otherwise. 
-Moving the test up seems fine, I put it at the bottom simply because I 
-wasn't sure where else to put it.
+Frankly I agree. Should I modify my patch to add this new option instead 
+of modifying the behavior of smtpServer? Obviously the smtpServer option 
+would need to preserve its current behavior for backward compatibility.
