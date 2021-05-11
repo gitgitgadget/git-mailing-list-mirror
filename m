@@ -2,131 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44854C433B4
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 06:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D09C433ED
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 06:37:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 090C06161F
-	for <git@archiver.kernel.org>; Tue, 11 May 2021 06:28:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACD4661430
+	for <git@archiver.kernel.org>; Tue, 11 May 2021 06:37:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230027AbhEKG35 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 02:29:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52812 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbhEKG35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 02:29:57 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F6AC061574
-        for <git@vger.kernel.org>; Mon, 10 May 2021 23:28:49 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id k25so17139327iob.6
-        for <git@vger.kernel.org>; Mon, 10 May 2021 23:28:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+frpMShiBN5OMziTKCzRI9wQj8JfPGMMTTemzZOnIrE=;
-        b=tGEcddyGLndz9RJNFDuoNkqja0xQT0cuutw74is+xDuyWo1emYafCo1S6eMDZNTG6B
-         tikDEK0K87M4pfxmZ/mgDV4csxLn6KXx28U/fqvf+Ll59ejf2C+my29oVVUM2r4XemS9
-         PigJwx70EDzyCGjqEDkt+AUFUJPiKN/9Rq2bW/kL2Q7UAnZzUyRcGR/1F2FLtuf5FFzY
-         5FAY577LGfz+bPJmeq0w7zT6q4Qphfs+ShmAr2aMZlWXoqQ7iGGnItcDg1xiWnFd/VVD
-         ekToMsfe0vm0PHeaOs7Jv3JtI759fWDArO8Mq01BFN1qY9qeNLP0/fD0KY83d9fWk1At
-         pzkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+frpMShiBN5OMziTKCzRI9wQj8JfPGMMTTemzZOnIrE=;
-        b=jYT+NwQLVftXpnE0bkluktJBudVfXgazNXSPq+6e5itqjHC/7FnEqFXkuulJ60IM/z
-         gT4p+rs2hRzB7QvVmTCKKjNtK9CDH88X/PKhOQSgaG9K2vw1XqhzgzGZ4it8QmVgmm0N
-         SQyeLSiR3UqyqiDYydeJpCHeM2X1kLxUHlPrd7NLwKPbgx33NNOQpLZnXL98JARex7oE
-         vUUJ4TX/uoZ7EgD65HzbJv6MrYLcfwLSvjWl3PrACX666hpgKQJUGYZAs0q9Nfn9oTLE
-         VxwOiEeSw5e8v03oWQP95A7xYsbSFL1VSXihMukxuu17ld+Cg1YT+kNZSmTPfE3hKW8x
-         Nzeg==
-X-Gm-Message-State: AOAM532u8ujZWRa1OmPCpdFyCa25hc0cKsZQVgsogHdA7MZZl3jy/Gsl
-        TKBuGjYfTHm5tRUjdP5WrvdlDaDNNR5EXE0ZLP4=
-X-Google-Smtp-Source: ABdhPJw9V9QA6QTfSDzB/G0XSnMb/UHB1ysXlite4xJlO6t/S3+LvOOVFuXHqheWDP8y0mkqxyqbeYEbCNVOELmmrbI=
-X-Received: by 2002:a6b:d213:: with SMTP id q19mr20645241iob.203.1620714529228;
- Mon, 10 May 2021 23:28:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.949.v3.git.1620487572222.gitgitgadget@gmail.com>
- <pull.949.v4.git.1620658904283.gitgitgadget@gmail.com> <xmqqcztyovf7.fsf@gitster.g>
-In-Reply-To: <xmqqcztyovf7.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 11 May 2021 14:28:32 +0800
-Message-ID: <CAOLTT8QR4Ga41ADKhgB4=C7VgGbJEe5G5HSbcjRb51H2yQVRPA@mail.gmail.com>
-Subject: Re: [PATCH v4] [GSOC] ref-filter: fix read invalid union member bug
+        id S230383AbhEKGiS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 02:38:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50230 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229807AbhEKGiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 02:38:15 -0400
+Received: (qmail 21418 invoked by uid 109); 11 May 2021 06:37:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 May 2021 06:37:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20741 invoked by uid 111); 11 May 2021 06:37:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 May 2021 02:37:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 11 May 2021 02:37:08 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Firmin Martin <firminmartin24@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v1 1/8] compat/terminal: let prompt accept input from pipe
+Message-ID: <YJomFMGsurmmEetB@coredump.intra.peff.net>
+References: <20210506165102.123739-1-firminmartin24@gmail.com>
+ <20210506165102.123739-2-firminmartin24@gmail.com>
+ <xmqqr1ijwi0i.fsf@gitster.g>
+ <YJTH+sTP/O5Nxtp9@coredump.intra.peff.net>
+ <875yzrgr1f.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
+ <YJmmXZdwSoR+vxjw@coredump.intra.peff.net>
+ <xmqq1raeos7x.fsf@gitster.g>
+ <YJof0/Eq18QnLumV@coredump.intra.peff.net>
+ <xmqq35utokuu.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq35utokuu.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8811=E6=97=
-=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=8810:29=E5=86=99=E9=81=93=EF=BC=9A
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >     Change from last version:
-> >     Prove that the bug may appear when using %(color) atom. And add
-> >     corresponding test for it.
->
-> >      ++test_expect_success '%(color:#aa22ac) must success' '
->
-> s/success/succeed/
->
-> But more importantly, I am not sure how this is supposed to
-> demonstrate existing breakage around the %(push).  Did you mean to
-> use %(push) instead of %(refname) or something?
->
+On Tue, May 11, 2021 at 03:17:13PM +0900, Junio C Hamano wrote:
 
-Ah, I don=E2=80=99t think this scene of damage is related to using %(push)
-or %(refname).
+> >> OK, that is because in the context of a "bisect" session, we won't
+> >> be feeding any real data from its standard input, unlike "git am"
+> >> that may well be eating a patch stream from its standard input
+> >> stream.  If so, makes sense.
+> >
+> > Yes, though even in "git am", we forbid using interactive mode with
+> > patches on stdin (and did so even when we were reading from the tty;
+> > presumably the rule dates back to when it was a shell script and was
+> > using stdin).
+> 
+> As long as the "prompt and accept an single-line answer from the end
+> user" is restricted to "git am -i", I'll be perfectly OK with that.
+> I just do not want my regular "type '|' in my MUA to pipe the
+> current article to a command, and give 'git am -s' as the command"
+> workflow to get broken in the future when somebody blindly follows a
+> carelessly written direction to use a helper that reads from the
+> standard input for confirmation.  The condition under which use of
+> that helper is appropriate needs to be clearly spelled out.
 
-We are just in the process of using `populate_value()`, if the atom we
-specify meets the following conditions, then the condition of
-atom->u.remote_ref.push!=3D0 will be established.
+Yeah, I don't think anybody is proposing to change the behavior of "git
+am" here (we might swap out the current fgets(stdin) for a helper which
+does the equivalent). But I agree that any comment recommending one
+versus the other should probably remind people to think about how stdin
+is otherwise used in the program, and whether that will cause any
+conflicts.
 
-1. The atom that triggers the bug , its "if" condition order must after
-"if (atom->u.remote_ref.push)", such as %(refname) or %(worktreepath),
-they can be executed correctly because their order is before "push".
-
-2. The member size in used_atom.u corresponding to the atom must
-larger than 17 bytes, because the offset of "u.remote_ref.push" in
-"u.remote_ref" is 17, the satisfied atoms are only "%(color)" and
- "%(contents)", their corresponding members are u.color and u.contents.
-
-3. We happen to be able to fill in the 17th position of these structures,
- which makes atom->u.remote_ref.push not equal to 0 established.
-
-So this kind of bug is not related to %(push), an atom that satisfies
-the above conditions will make `if (atom->u.remote_ref.push)` be true.
-then execute the program logic related to `%(push)`.
-
-Now, we only have `%(color)` can trigger it "sometime",
-It is unpredictable to fill in the 17th byte of used_atom.u.color,
-so we cannot track all the atoms related to this bug.
-
-git for-each-ref --format=3D"%(color:#aa22ac)%(refname)"
-git for-each-ref --format=3D"%(color:#aa22ad)%(refname)"
-
-will trigger the bug.
-
-git for-each-ref --format=3D"%(color:#aa22ae)%(refname)"
-git for-each-ref --format=3D"%(color:#aa22af)%(refname)"
-
-will not trigger the bug.
-
-In other words, we cannot use a perfect test set to cover all broken.
-So now `%(color:#aa22ac)` is enough for explain the problem of this bug.
-
-Thanks.
---
-ZheNing Hu
+-Peff
