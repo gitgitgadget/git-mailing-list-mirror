@@ -2,133 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FBF4C433ED
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0461C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A72961927
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:00:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A135E6162B
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhELHBp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 03:01:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60650 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbhELHBi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 03:01:38 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20BDA1248A8;
-        Wed, 12 May 2021 03:00:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gdUngrh1xptTvHt4+9PITSYlshkuSPUtmIQwZH
-        lz/CU=; b=v5BU5RxP3epxZvX4VeHQekIEOJqm69VAeOt1Nn1IsV2GkHizjhMqcu
-        LSmRU25rxjuR00f2gMw+OwLwICn5OG8O8ZzG9vn90WzxQDYoeS1inWu1O+he19pb
-        mvjup81NpKtWyXZQbUH9GPiL3YFm/93O3aiFoztBFDBoXCx2EZTKU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 18ED11248A7;
-        Wed, 12 May 2021 03:00:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3824B1248A0;
-        Wed, 12 May 2021 03:00:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] INSTALL: note about make man with Asciidoctor backend
-References: <20210512064128.15411-1-bagasdotme@gmail.com>
-Date:   Wed, 12 May 2021 16:00:26 +0900
-In-Reply-To: <20210512064128.15411-1-bagasdotme@gmail.com> (Bagas Sanjaya's
-        message of "Wed, 12 May 2021 13:41:29 +0700")
-Message-ID: <xmqqtun8fncl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BBCA84F6-B2EF-11EB-AAA5-E43E2BB96649-77302942!pb-smtp20.pobox.com
+        id S230114AbhELHYu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 03:24:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50796 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229627AbhELHYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 03:24:49 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA3EC061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 00:23:42 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id c3so21390295oic.8
+        for <git@vger.kernel.org>; Wed, 12 May 2021 00:23:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=wYubJ6Otx2kRK3myfY/h1FcRcDXHcXgr1X5guaR+5nE=;
+        b=JU9nEvMJZeG7DN6tWzXBWfmAfHRjf95S9D7ZsO7bI52yaVOyiNvWPwkBIuIjXvyt4T
+         y264NxBouGeTizCzNIYxLyFvmrYEmFxXpZoHXPbRHLZ/gNzf/Y5rJMIVbiH2hhDyE8qa
+         U2I23e1ibnSGmJtz1A5ck/3al0WB4M0yGX5NpEeGfmUSf3AIK5geEXdEcSdXt/aOG1Cc
+         bTOspAik/6iQNi6Do/3LtQrM08ohAoYUElopn8iSewn6VNQKtX5MZECIojWTcefxEUHA
+         qN5GdaQCsPfcTNwg/Mn6a1w/iTSAdWOw7S12dubm75yaESGnnFHwYRd3dJgDekai0GRv
+         7scQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=wYubJ6Otx2kRK3myfY/h1FcRcDXHcXgr1X5guaR+5nE=;
+        b=YAgOsQ5jaA4ac+6NJnZtoZwJUDZk2STjVagTdZ04G7oAgQEMjHqJ96/MN2T/lH+XEk
+         z/8nk3Pn/B2Tb69yI92q3HVOuTVxtEZtw6BWJ2lYk2aOVXbC8Dpeat1wEzycvEYI31fH
+         U5NTGJp+vAGSaNBHUD8I/uTU1MNoJRiDBA9f/iHzX9a7FLSk//oo9nvqF/bIj363Yhv8
+         IRhzisixA7DT3mPBtJAwM6VF7XhFq95jwukXiQdm45mpJwhEhGWoaNsYX79Ht8dTbSPi
+         +hVwUcocdgJetHX8wnr1ZXnEXqhNcmsyjhKYhvoYeRCkWznW7HTSbjUWTp04bw+UlY/Q
+         w9Pg==
+X-Gm-Message-State: AOAM5320ktw1IwEXpXrq7R7dPFi2A4eEFuJlv8U8f+QIkxtUw5AdrFbh
+        MoZODMSL5V9h2TTrVFANGKTPfP8VZ1v1IQ==
+X-Google-Smtp-Source: ABdhPJzBcGLXE/fGnGuVRR8h8EgHhGqTSscyqK6VCRze7l4WA4Q92NtQ+QI8iWaOEYp+ohyCIJUrsQ==
+X-Received: by 2002:aca:408a:: with SMTP id n132mr25527375oia.70.1620804221391;
+        Wed, 12 May 2021 00:23:41 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id 50sm4297509oty.6.2021.05.12.00.23.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 May 2021 00:23:40 -0700 (PDT)
+Date:   Wed, 12 May 2021 02:23:36 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Andrew Ottaviano <andrew_o1995@live.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <609b827884bfd_6e0fc2083c@natae.notmuch>
+In-Reply-To: <MN2PR07MB59526F40B255183931649AD19C529@MN2PR07MB5952.namprd07.prod.outlook.com>
+References: <MN2PR07MB59526F40B255183931649AD19C529@MN2PR07MB5952.namprd07.prod.outlook.com>
+Subject: RE: Rebase Question
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Andrew Ottaviano wrote:
+> The difficulty with this is that if I have merge conflicts that show
+> up on my first commit, I have to resolve that stupid thing for every
+> subsequent commit.
 
-> "make man" can now be also done with Asciidoctor's manpage backend
-> instead of asciidoc+xmlto.
->
-> Update INSTALL to reflect that.
->
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> ---
->
->  This patch is based on  "doc: add an option to have Asciidoctor build
->  man pages directly" series by brian m. carlson [1]. It can be added
->  to that series.
+I don't quite understand that. If you have resolved the chunk, then that
+chunk is resolved, and the rest of the commits don't have to worry
+about that...
 
-It's not like "can be"; it would not make any sense to queue this
-patch before queuing those two patches below it ;-)
+Unless they touch *precisely* the same lines as the first commit, in
+which case... Yeah, you have to resolve that stupid thing over and over.
 
-Not everybody with Asciidoctor can do the "man" without xmlto; they
-must have recent enough vintage of Asciidoctor, or they need xmlto.
-The second hunk makes it quite clear, but the updated text in the
-first hunk falls a bit short to convey that and needs a bit more
-work to clarify, I would think.
+> The solution that I thought of is instead of resolving conflicts from
+> the bottom up (starting with earliest history), resolving from the top
+> down (latest to earliest) and resolving the conflict in the commit it
+> occurred.
 
-> diff --git a/INSTALL b/INSTALL
-> index 66389ce059..89e31566c3 100644
-> --- a/INSTALL
-> +++ b/INSTALL
-> @@ -184,8 +184,9 @@ Issues of note:
->  
->     "make doc" builds documentation in man and html formats; there are
->     also "make man", "make html" and "make info". Note that "make html"
-> -   requires asciidoc, but not xmlto. "make man" (and thus make doc)
-> -   requires both.
-> +   requires asciidoc, but not xmlto. "make man" requires either
-> +   Asciidoctor or asciidoc+xmlto. "make doc" requires both asciidoc
-> +   and xmlto.
+Well, this is interesting because it's something I've wanted to write
+about for a long time, and it's what I call my "pronged approach".
 
-As "make doc" is "make -C Documentaiton all",
-   "make html" is "make -C Documentaiton html",
-   "make man" is "make -C Documentaiton man",
-and 
-   "make -C Documentation all" is "make -C Documentation html man"
 
-it seems that those who choose to go xmlto-less route for manpages
-should not need xmlto while doing "make doc", so the last part of
-the updated text is not quite accurate, no?
+I actually do *both*; I do a rebase and fix the problems from 1) the bottom-up,
+but after I have resolved the conflicts from 2) the top-down. In 1)
+(bottom-up) I resolve the conflicts in a rebase, and in 2) I resolve the
+conflicts in merge, but in *both* the end result sould be the exactly
+same [`git diff 1) 2)` is empty].
 
-> @@ -201,6 +202,11 @@ Issues of note:
->     use Asciidoctor (requires Ruby) by passing USE_ASCIIDOCTOR=YesPlease
->     to make. You need at least Asciidoctor version 1.5.
->  
-> +   You can also do "make man" using Asciidoctor's manpage backend in
-> +   place of xmlto by passing USE_ASCIIDOCTOR_MANPAGE=YesPlease. Version
-> +   2.0 or later is highly recommended, as these version properly handle
-> +   apostrophes.
-> +
+Yes, it is more work, but at the end of the day I'm 100% sure I did the
+rebase right, so I don't have to think about it that much; either
+there's a diff or there isn't.
 
-Hmph, I wasn't closely following the previous discussion, but is the
-apostrophes the primary reason why anything below 2.0 is not usable?
+In fact, I rarely do just one rebase, because quite often I miss things,
+so I do a second, or third, or fourth rebase, but at the end I make sure
+that the diff with the merge (top-down approach) is the same.
 
-I actually do not mind, for clarity and brevity's sake, to give
-readers a bit of white lie and just say something along the lines of
+To facilitate this work I use two tools: 1) git rerere [1] (others have
+mentioned this), and 2) git reintegrate [2] (only useful if there's more
+than one branch you are merging).
 
-    If you use Asciidoctor version 2.0 or later, you can choose to
-    directly generate manpages with its manpage backend, instaed of
-    using xmlto in between, by passing USE_ASCIIDOCTOR_MANPAGE=YesPlease
-    to "make man".
 
-to _require_ 2.0 without even hinting that earlier versions might be
-usable.
+Yeah, it's a lot of work, but I'd rather do a lot of tedious work that
+I'm 100% sure is correct, than do a little bit of work that I can't
+easily verify.
 
-In any case, thanks for a good start.
+Cheers.
+
+[1] https://git-scm.com/docs/git-rerere
+[2] https://github.com/felipec/git-reintegrate
+
+-- 
+Felipe Contreras
