@@ -2,106 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E041C433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCC56C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:22:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E181561925
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:22:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EB296192B
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbhELGXR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 02:23:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52014 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229626AbhELGXP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 02:23:15 -0400
-Received: (qmail 26357 invoked by uid 109); 12 May 2021 06:22:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 May 2021 06:22:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2527 invoked by uid 111); 12 May 2021 06:22:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 May 2021 02:22:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 May 2021 02:22:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-Message-ID: <YJt0Dv7HP2VnLLwv@coredump.intra.peff.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210512021138.63598-1-sandals@crustytoothpaste.net>
+        id S230225AbhELGXh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 02:23:37 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61975 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230230AbhELGXg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 02:23:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC4D013FCBF;
+        Wed, 12 May 2021 02:22:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=A7r8d5jumPr4iLT8tRmCHxuukv6HeMjpjS7Vlz
+        gUgZE=; b=d/Lb5VQd9FH428HBLkwfEe1aqC/qPWNty6O2CGyEybkyE+ECW2TG6p
+        0o6SSJ7Bb4GWqzyfEI7VLGzVRFglntq8lHHNs7e+3nvBm6ofh1yUaLJmL5aYUQYz
+        GKCG5+y8VL0/KRooaOpTlGiHvg3cUxef8PiqfyFlJHaLVPzK5mmJE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B57E413FCBE;
+        Wed, 12 May 2021 02:22:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EDBE613FCBD;
+        Wed, 12 May 2021 02:22:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Andrew Ottaviano <andrew_o1995@live.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Rebase Question
+References: <MN2PR07MB59526F40B255183931649AD19C529@MN2PR07MB5952.namprd07.prod.outlook.com>
+        <CAGyf7-GEA0mtxUxqEjYsfqM4Te-5JO5_nW0S6Vitdmywz1J7mg@mail.gmail.com>
+        <YJsk49WBd27NrCAA@coredump.intra.peff.net>
+Date:   Wed, 12 May 2021 15:22:24 +0900
+In-Reply-To: <YJsk49WBd27NrCAA@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 11 May 2021 20:44:19 -0400")
+Message-ID: <xmqqy2ckfp3z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210512021138.63598-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B756D68-B2EA-11EB-817D-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 12, 2021 at 02:11:37AM +0000, brian m. carlson wrote:
+Jeff King <peff@peff.net> writes:
 
-> @@ -367,9 +370,16 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf asciidoctor-extensions.rb GIT-AS
->  manpage-base-url.xsl: manpage-base-url.xsl.in
->  	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
->  
-> +ifdef TXT_TO_MAN
-> +%.1 %.5 %.7 : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
-> +	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
-> +	$(TXT_TO_MAN) -o $@+ $< && \
-> +	mv $@+ $@
-> +else
+> I don't think rerere helps here. In a rebase like this, the problem is
+> that it _isn't_ the same conflict.
+>
+> Imagine a case like this:
+> ...
+> Applying the first commit gets this conflict (in diff3 form)
+>
+>   <<<<<<< ours
+>   base
+>   another
+>   ||||||| base
+>   base
+>   =======
+>   one
+>   >>>>>>> theirs
+>
+> After we fix that up to "one\nanother", the second conflict is:
+>
+>   <<<<<<< ours
+>   one
+>   another
+>   ||||||| base
+>   one
+>   =======
+>   two
+>   >>>>>>> theirs
+>
+> Likewise, even if you had done the original merge between branch tips,
+> you'd have seen yet another conflict:
+>
+>   <<<<<<< ours
+>   two
+>   ||||||| base
+>   base
+>   =======
+>   base
+>   another
+>   >>>>>>> theirs
+>
+> The actual lines changed are the same, but as the nearby context is
+> continually shifting, we don't consider these to be the "same" conflict.
 
-This depends on GIT-ASCIIDOCFLAGS, which is good. But I think we'd also
-want to tell that file whether we are using the direct backend or not.
-Otherwise, doing:
+Correct.  The conflict you see at each step may be trivial to
+resolve, but would not "replay" at all, exactly because they are not
+the same conflicts.  Knowing that the user would resolve
 
-  make USE_ASCIIDOCTOR=1 git.1
-  make USE_ASCIIDOCTOR=1 USE_ASCIIDOCTOR_MANPAGE=1 git.1
+    base --> base/another
+        \                \
+         ---> one--------- one/another
 
-gets confused. Because git.1 is more recent than git.txt, it things
-there is nothing to build in the second case. I think you want:
+does not help us to decide that
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 536d9a5f3d..4b66a61f51 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -337,7 +337,7 @@ mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
- 		show_tool_names can_merge "* " || :' >mergetools-merge.txt && \
- 	date >$@
- 
--TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK))
-+TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK):$(USE_ASCIIDOCTOR_MANPAGE))
- 
- GIT-ASCIIDOCFLAGS: FORCE
- 	@FLAGS='$(TRACK_ASCIIDOCFLAGS)'; \
+    base --> two -----------
+        \                   \
+         ---> base/another---???
 
-With that change, plus a patch I'll send in a minute, it's easy to run
-doc-diff on the result.
+is resolved to two/another.
 
-> diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-> index d906a00803..40fa87b121 100644
-> --- a/Documentation/asciidoctor-extensions.rb
-> +++ b/Documentation/asciidoctor-extensions.rb
-> @@ -15,6 +15,8 @@ module Git
->            "#{target}(#{attrs[1]})</ulink>"
->          elsif parent.document.basebackend? 'html'
->            %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
-> +        elsif parent.document.basebackend? 'manpage'
-> +          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
-
-Unfortunately, this doesn't seem to work. Diffing the rendered docs
-between regular asciidoctor-then-xmlto and direct-to-manpage shows a lot
-of hunks like:
-
-              For more details about the <pathspec> syntax, see the pathspec
-  -           entry in gitglossary(7).
-  +           entry in \fBgitglossary\fP\fR(7)\fP.
-
--Peff
