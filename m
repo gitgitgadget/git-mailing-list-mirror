@@ -2,123 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0461C433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3678BC433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:35:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A135E6162B
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:23:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 03AD76147F
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 07:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230114AbhELHYu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 03:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbhELHYt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 03:24:49 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA3EC061574
-        for <git@vger.kernel.org>; Wed, 12 May 2021 00:23:42 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id c3so21390295oic.8
-        for <git@vger.kernel.org>; Wed, 12 May 2021 00:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=wYubJ6Otx2kRK3myfY/h1FcRcDXHcXgr1X5guaR+5nE=;
-        b=JU9nEvMJZeG7DN6tWzXBWfmAfHRjf95S9D7ZsO7bI52yaVOyiNvWPwkBIuIjXvyt4T
-         y264NxBouGeTizCzNIYxLyFvmrYEmFxXpZoHXPbRHLZ/gNzf/Y5rJMIVbiH2hhDyE8qa
-         U2I23e1ibnSGmJtz1A5ck/3al0WB4M0yGX5NpEeGfmUSf3AIK5geEXdEcSdXt/aOG1Cc
-         bTOspAik/6iQNi6Do/3LtQrM08ohAoYUElopn8iSewn6VNQKtX5MZECIojWTcefxEUHA
-         qN5GdaQCsPfcTNwg/Mn6a1w/iTSAdWOw7S12dubm75yaESGnnFHwYRd3dJgDekai0GRv
-         7scQ==
+        id S230075AbhELHgx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 03:36:53 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:38772 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229850AbhELHgx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 03:36:53 -0400
+Received: by mail-ed1-f46.google.com with SMTP id n25so25880123edr.5
+        for <git@vger.kernel.org>; Wed, 12 May 2021 00:35:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=wYubJ6Otx2kRK3myfY/h1FcRcDXHcXgr1X5guaR+5nE=;
-        b=YAgOsQ5jaA4ac+6NJnZtoZwJUDZk2STjVagTdZ04G7oAgQEMjHqJ96/MN2T/lH+XEk
-         z/8nk3Pn/B2Tb69yI92q3HVOuTVxtEZtw6BWJ2lYk2aOVXbC8Dpeat1wEzycvEYI31fH
-         U5NTGJp+vAGSaNBHUD8I/uTU1MNoJRiDBA9f/iHzX9a7FLSk//oo9nvqF/bIj363Yhv8
-         IRhzisixA7DT3mPBtJAwM6VF7XhFq95jwukXiQdm45mpJwhEhGWoaNsYX79Ht8dTbSPi
-         +hVwUcocdgJetHX8wnr1ZXnEXqhNcmsyjhKYhvoYeRCkWznW7HTSbjUWTp04bw+UlY/Q
-         w9Pg==
-X-Gm-Message-State: AOAM5320ktw1IwEXpXrq7R7dPFi2A4eEFuJlv8U8f+QIkxtUw5AdrFbh
-        MoZODMSL5V9h2TTrVFANGKTPfP8VZ1v1IQ==
-X-Google-Smtp-Source: ABdhPJzBcGLXE/fGnGuVRR8h8EgHhGqTSscyqK6VCRze7l4WA4Q92NtQ+QI8iWaOEYp+ohyCIJUrsQ==
-X-Received: by 2002:aca:408a:: with SMTP id n132mr25527375oia.70.1620804221391;
-        Wed, 12 May 2021 00:23:41 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id 50sm4297509oty.6.2021.05.12.00.23.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 May 2021 00:23:40 -0700 (PDT)
-Date:   Wed, 12 May 2021 02:23:36 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Andrew Ottaviano <andrew_o1995@live.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <609b827884bfd_6e0fc2083c@natae.notmuch>
-In-Reply-To: <MN2PR07MB59526F40B255183931649AD19C529@MN2PR07MB5952.namprd07.prod.outlook.com>
-References: <MN2PR07MB59526F40B255183931649AD19C529@MN2PR07MB5952.namprd07.prod.outlook.com>
-Subject: RE: Rebase Question
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bQcU4nsn7RNQS5CFtNDWrmrt4lRje/HZGZDX5cNOIY4=;
+        b=VKcH68gqbjCfME0DjMS0zh5dvMGaKncBNp3IxbaHBWi6/fu//To4HsQJrGzMHVYiNl
+         hqWU9J3+OJ5/gKH5c+PRyi5gS8xhVFWfRVN16eHq8F3a2D0G5PUfQfnmKDPS/MwdyPi8
+         vdpVyLsgNrbobTQ7Svx86srnV86eRLZ8fhoE4TaAMkaiIkai6GjUX8xZbMmWxZolZuZ+
+         xxGeWH7rrhAwebaN7raTytU8P2Mj5yVX8ngEysTULSh0GXZW39e+zuXUvJywPouTl2vI
+         UhFScFyiICsk7jNmXIpjVd2QwK8BPW3+hI1Drwt7aHJ50Ul00QhNdAzKPCjZou8Z8pcM
+         SbHw==
+X-Gm-Message-State: AOAM530E7g5LEzhpHnP1XcBhqoMmg5LOX1JqAoxHct7IFYpx7s2p8nO9
+        ngLojTNCx0ihIKqOx3ntsfQL7fAmdNFuEyj4YEn0qMZI5bs=
+X-Google-Smtp-Source: ABdhPJx00OI7oaKYQQGHwq9tykkWMZ9wp1XnkUEC6D1MNcrF7bgG48VF44jLcf+sthne5UUkzCICY6WWPlCXBRJHp+Y=
+X-Received: by 2002:a05:6402:1587:: with SMTP id c7mr40955297edv.181.1620804943961;
+ Wed, 12 May 2021 00:35:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210512025447.6068-1-dwh@linuxprogrammer.org>
+ <20210512031821.6498-1-dwh@linuxprogrammer.org> <20210512031821.6498-2-dwh@linuxprogrammer.org>
+ <80e0215a-cd00-57f9-afb6-b85b33dba91d@gmail.com> <609b797a818bb_6d897208ce@natae.notmuch>
+In-Reply-To: <609b797a818bb_6d897208ce@natae.notmuch>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 12 May 2021 03:35:32 -0400
+Message-ID: <CAPig+cQvnsRe0fdPaBe9hJ4LbPFmHmGVNdiGYLqi2JM7A5GmjA@mail.gmail.com>
+Subject: Re: [PATCH v2] Writing down mail list etiquette.
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Dave Huseby <dwh@linuxprogrammer.org>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, stefanmoch@mail.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrew Ottaviano wrote:
-> The difficulty with this is that if I have merge conflicts that show
-> up on my first commit, I have to resolve that stupid thing for every
-> subsequent commit.
+On Wed, May 12, 2021 at 2:45 AM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Bagas Sanjaya wrote:
+> > In practice, the maintainer could instead merged v5 (without having me to
+> > send v6 [final]), because v5 is merge-ready in absence of maintainer's
+> > email address in either To: or Cc:.
+>
+> Generally you don't need to worry about this, that's Junio's job. If
+> your patch is ready, Junio will merge it... But not always.
+>
+> So no, you don't need to send v6, Junio will pick v5. If he doesn't,
+> it's most likely because it slipped through the cracks, and you can see
+> that in the next "What's cooking in git.git".
+>
+> If you don't see your merge-ready patch series in "what's cooking", then
+> by all means send it again as v6, or reply to the "what's cooking" or
+> something. But generally there's no point in sending a v6 identical to a
+> v5.
+>
+> But if you already sent a v5 that is is merge-ready, there's no need
+> to send an identical v6.
+>
+> All these suggestions are of course based on my own experience. Others
+> might have different experiences.
 
-I don't quite understand that. If you have resolved the chunk, then that
-chunk is resolved, and the rest of the commits don't have to worry
-about that...
+This has been my experience, as well. I've never sent a v6 with Junio
+as an explicit recipient, but which was otherwise identical to v5.
 
-Unless they touch *precisely* the same lines as the first commit, in
-which case... Yeah, you have to resolve that stupid thing over and over.
+Another reason to avoid sending v6 which is identical to v5 is that it
+potentially wastes reviewer bandwidth.
 
-> The solution that I thought of is instead of resolving conflicts from
-> the bottom up (starting with earliest history), resolving from the top
-> down (latest to earliest) and resolving the conflict in the commit it
-> occurred.
+The advice which seems to have triggered this particular discussion
+comes from Documentation/SubmittingPatches:
 
-Well, this is interesting because it's something I've wanted to write
-about for a long time, and it's what I call my "pronged approach".
+    After the list reached a consensus that it is a good idea to
+    apply the patch, re-send it with "To:" set to the
+    maintainer{current-maintainer} and "cc:" the list{git-ml} for
+    inclusion.  This is especially relevant when the maintainer did
+    not heavily participate in the discussion and instead left the
+    review to trusted others.
 
+It's not the first time this advice has resulted in confusion. Perhaps
+now would a good time to retire it altogether, or at least rewrite it
+to mention the points you gave above about responding to "What's
+Cooking" or by sending a "ping" to the original patch email (which may
+result in Junio either picking up the patch or responding with an
+explanation as to why he didn't).
 
-I actually do *both*; I do a rebase and fix the problems from 1) the bottom-up,
-but after I have resolved the conflicts from 2) the top-down. In 1)
-(bottom-up) I resolve the conflicts in a rebase, and in 2) I resolve the
-conflicts in merge, but in *both* the end result sould be the exactly
-same [`git diff 1) 2)` is empty].
+Following the above SubmittingPatches paragraph is another which also
+seems to mislead people frequently:
 
-Yes, it is more work, but at the end of the day I'm 100% sure I did the
-rebase right, so I don't have to think about it that much; either
-there's a diff or there isn't.
+    Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:`
+    and `Tested-by:` lines as necessary to credit people who helped
+    your patch, and "cc:" them when sending such a final version for
+    inclusion.
 
-In fact, I rarely do just one rebase, because quite often I miss things,
-so I do a second, or third, or fourth rebase, but at the end I make sure
-that the diff with the merge (top-down approach) is the same.
-
-To facilitate this work I use two tools: 1) git rerere [1] (others have
-mentioned this), and 2) git reintegrate [2] (only useful if there's more
-than one branch you are merging).
-
-
-Yeah, it's a lot of work, but I'd rather do a lot of tedious work that
-I'm 100% sure is correct, than do a little bit of work that I can't
-easily verify.
-
-Cheers.
-
-[1] https://git-scm.com/docs/git-rerere
-[2] https://github.com/felipec/git-reintegrate
-
--- 
-Felipe Contreras
+In fact, a submitter should almost never add a Reviewed-by: trailer
+because Reviewed-by: is explicitly given by a reviewer only when the
+reviewer is satisfied that the patch is merge-ready, in which case no
+more re-rolls are expected. Instead, these particular trailers are
+almost always added by Junio based upon reviewer responses he sees
+when picking up a patch. So, it may be time, too, either to remove
+this paragraph or to revise it to mention other trailers more
+appropriate for use by the patch submitter, such as Helped-by:,
+Suggested-by:, perhaps Co-authored-by:, etc.
