@@ -7,98 +7,112 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5941CC433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD88BC433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:10:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C7CD61628
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:02:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6946961941
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:10:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbhELDDu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 23:03:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49938 "EHLO
+        id S229964AbhELDLH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 23:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbhELDDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 23:03:50 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F254C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 20:02:42 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id t17-20020a4a3e110000b02901fab2f46a48so4658099oot.6
-        for <git@vger.kernel.org>; Tue, 11 May 2021 20:02:42 -0700 (PDT)
+        with ESMTP id S229934AbhELDLG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 23:11:06 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 767B9C061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 20:09:58 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso19407167ote.1
+        for <git@vger.kernel.org>; Tue, 11 May 2021 20:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=575LtBSgLQU6P1uV3zTJcTOKI01/B/kUdpVj0Qjjym8=;
-        b=Lm32xKTybduCdyNuNHHfEeSTSk770INn+FpaueipcCyWTuSBvn/2oe/WKen2U1xG/3
-         on5LHW6/OwTgfdgr1kjVeOEePNglXVqA/eHrD5tG08hQL3LiUQ+6+dAX/fNq4VyaClk9
-         E824B44Dtk5+plbYnB3u96cfxHLo+iaw7oit6f7iwzY3SREIiAGfKH7WRVtAqbIyYhUb
-         mkhjsDiI43mBOa9qbTg4Ot1wDgh5OvbY6jK8yU0oSLqzMiOsV1R/uGcYmn8qfFY+7qhn
-         P+WBRljAikjXAdd7eejjZd7azxwbO4yiiZN9WsXXKEWsRjb+WZqOFPZm2Or5VxHboDwf
-         UEeg==
+        bh=xLC09sKaGCeOVR13oE4lkwbUG6tuOGBYCn9bEiGWRb0=;
+        b=YbjZ5wLZBFOVPGuVzohHUkhkV/7zH5ZFCO1kT+9myTT47DTvs7pl8JYj/aXXkNYpJx
+         uOlDSdkVFdP92MA/FVZ+3SlkG/wCGVC67N2fuTHSXLeUj+Iy6D68Bcgshzff2xwsxjl5
+         ty+1LVSl7r8ycu45jBZjH8+F3qsQy441lH3EVNDu19rcV4+reBjGIZboUw9oEch/v/pp
+         GKG/N/6BGqgsYRTY6C0w7HAQYE+1TIHLaVYLL7VkxiNKzXekFttugkbR2gtKh3zdY6+r
+         0zkKLnqNZLZ6wmFDrcZ93ihlh98ih2jZAvhcFO0252YASLC6AOjuigvHuTAa1Q3fjbEr
+         BlNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=575LtBSgLQU6P1uV3zTJcTOKI01/B/kUdpVj0Qjjym8=;
-        b=I4KfilxpdVXgZ3WD5zbW/o1QxscDGKyVFAlELl4jB29xxO/lw4mdYzQ8RHCHpNrF82
-         +rsYmZp5MxEpJRqN6xoQNJj+IqKWElcwoNFYJzYZqGHOhT9HyznDzYC7YLWmIaLBe0ZK
-         X6sMpoJ0N5IJTUGc1ci8CAekuNiQjNbvljAbGqojfDtB2s6Cgu8vtIqVDe+SgVhTjr7z
-         96bj4FqaGk4CrdZpDOug0TObL4PcFnMnH8XDfU0TwAVnKS3LofIW4CQOyn1q/mwh8iNI
-         YELtjvyzp0MpQZrot4qkAaYmp3CdwoNcH3Oe418T33yt9zxx2iFEvqZJoBU4b3HL3iNf
-         NkAw==
-X-Gm-Message-State: AOAM532xt52qrPFVoW0J61hiAvmt6V9SW3juMSo7vcqiDaXuZEOxrwak
-        ojuwOHwF+0C+SrQjYJh1q5o=
-X-Google-Smtp-Source: ABdhPJw6DkHkBjS6P4TN4dvLNQQ07M9928wB3WLRVbiK8wrOcHK8r/6j9QSrE5sJXpEVpQC97EAHCg==
-X-Received: by 2002:a4a:e61a:: with SMTP id f26mr26122695oot.76.1620788561748;
-        Tue, 11 May 2021 20:02:41 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id l11sm3690882ooq.44.2021.05.11.20.02.41
+        bh=xLC09sKaGCeOVR13oE4lkwbUG6tuOGBYCn9bEiGWRb0=;
+        b=TdRUkGcyY7ZJgjWKqiYAVI8HzH7heywspY8KnJ+uMQZG7Z5ktnMdYJQZSE31p1Djea
+         1lEN/osezV2HXhwRsmTbx4H2t1EKytnubve9x2kGPag9S1pg8wPvN0bHeYQa/jm4UNsb
+         zk92a29cDH9dn2EiI76RRrLdcGwcDjVdqGWZ39UN/uP6S5Gddnt+GrmmXc/oF6vEMrhA
+         GrRUx3pOTCwrsiuXe7fOHTqNFCLnql4xNhPWLPzwa1WkXFYYiXCVovcB8kE6LulWYvao
+         7rBPlmn4/Vfkiz4NutBNmKv/pbXggwTKUG8Y3YfZqQFyb4EYWFJSJCuF6j+8AP8ZhCbc
+         tltg==
+X-Gm-Message-State: AOAM533Ef8Jo2GZ/Rh2dzXsZowfyQJgF/VhNbiXMbMz0wtm+J3BIK8Jt
+        4C/TgWzCQdjdFRKThO+aNIL2onYM0sVF4g==
+X-Google-Smtp-Source: ABdhPJwgbPmjUwsfLvhYYDOAYBGVr1tmSq/aZ/HEjDkSu5RsxjaHV3rjHWNUvRy/RDTDSMCCTrq8gA==
+X-Received: by 2002:a05:6830:15d2:: with SMTP id j18mr29023960otr.89.1620788997947;
+        Tue, 11 May 2021 20:09:57 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
+        by smtp.gmail.com with ESMTPSA id b19sm1338169oib.46.2021.05.11.20.09.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 20:02:41 -0700 (PDT)
-Date:   Tue, 11 May 2021 22:02:37 -0500
+        Tue, 11 May 2021 20:09:57 -0700 (PDT)
+Date:   Tue, 11 May 2021 22:09:56 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>
-Cc:     Varun Varada <varuncvarada@gmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Message-ID: <609b454d33df2_678ff208f9@natae.notmuch>
-In-Reply-To: <xmqq35utmmll.fsf@gitster.g>
-References: <CAD2i4DDNZ+oOgtp8dcgqwUjtwaTYnNmg2E0oC88ZDW3LYMBiRw@mail.gmail.com>
- <CAD2i4DCtqxziTy5TPjG+U8EGC+8daJGXjpVgxoJwp8__t8fqxQ@mail.gmail.com>
- <20210428085838.GN6564@kitsune.suse.cz>
- <CAD2i4DASL-ZAsLm=_U53zvqMaAC_AOsGnTe-H=XQsfnftgb=rA@mail.gmail.com>
- <20210428184956.GS6564@kitsune.suse.cz>
- <CAD2i4DCLpvAuwp5UEDcPA0wzr4Eg_qhs_xXDW1eLiOwYkUvL1g@mail.gmail.com>
- <20210430075924.GB6564@kitsune.suse.cz>
- <CAD2i4DBSajgNFCwMMDv_tyQwuKDU095avmHs=BHcrAY1GbCqwA@mail.gmail.com>
- <20210510173502.GH12700@kitsune.suse.cz>
- <CAD2i4DBrERhtE5Br22s-bSt7C3SAvcHG62EZ=61COcnBGtUh-g@mail.gmail.com>
- <20210511104326.GJ12700@kitsune.suse.cz>
- <xmqq35utmmll.fsf@gitster.g>
+To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
+Message-ID: <609b47043a719_678ff208e@natae.notmuch>
+In-Reply-To: <20210511195723.GL12700@kitsune.suse.cz>
+References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
+ <20210406092440.GZ6564@kitsune.suse.cz>
+ <609ad9473d535_6011e2082@natae.notmuch>
+ <20210511195723.GL12700@kitsune.suse.cz>
 Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> As you said, lack of a specific example of what is universally
-> confusing, or at least confusing to a not-so-insignificant part of
-> the readership, was why this change didn't gain much support.
+Michal Such=C3=A1nek wrote:
+> On Tue, May 11, 2021 at 02:21:43PM -0500, Felipe Contreras wrote:
+> > Michal Such=C3=A1nek wrote:
 
-The original version doesn't necessarily need to be confusing.
+> > > If you are concerned about correctness and clarity of the documenta=
+tion please
+> > > avoid spreading misinformation.
+> > =
 
-It's sufficient that the new version is better.
+> > Under certain definition of "jaron" Varun's statement would be
+> > incorrect, but not under all definitions. If you use the definition
+> > I stated above, "impact" can be considered jargon, because it's a bit=
 
-> There might be one or two such places where the updated text does read
-> better, but it is not a very good use of reviewers' time to find such
-> needles in 700+ line haystack of a patch.
+> > obscure language.
+> =
 
-As a reviewer I will decide where I to allocate my reviewer's time,
-because it's my time.
+> Do you have any frequency data that supports your claim that the word
+> 'impact' is obscure?
 
--- 
-Felipe Contreras
+This is not how logic works.
+
+If I don't have frequency data that supports $x, but you have no
+frequency data that supports !$x, then we return to the default position;=
+
+we don't know if $x is true or not.
+
+Do **you** have any frequency data that supports the negative claim that
+the word "impact" is not obscure?
+
+> The bar for change should be that the word as used is very unfitting or=
+
+> unintelligible.
+
+No. The bar is that **nobody** have any problem with "affect", and some
+people have a problem with "impact".
+
+Do you have any problem with "affect"?
+
+-- =
+
+Felipe Contreras=
