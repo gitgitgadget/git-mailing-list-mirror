@@ -2,189 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1D7EC433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 04:46:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86E55C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 05:03:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 970DB617C9
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 04:46:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 501A0613E9
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 05:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbhELErK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 00:47:10 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56952 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbhELErJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 00:47:09 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02B01C6CB8;
-        Wed, 12 May 2021 00:46:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2o3JJFVdUD/FCkjCS/bJmjfO5FU2sbehraHnq0
-        u7N18=; b=gs1TGVuMSqFh4LGXXOSUDqubKi8CeOQCgBx6gu2Qdj12YdRVOTOQMD
-        ngaa1dA9qOGCD2LbHXNeL3rKSytPw/NDWFI8v6EDRH8FeHX4NStR4Wy36uAd8AI3
-        LCOpdRcgXSP5ojOoZwRkgCMTfzurW3F+8JGa7u3LM5QZ6SmzspCuw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CC5DCC6CB7;
-        Wed, 12 May 2021 00:46:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E65ACC6CB4;
-        Wed, 12 May 2021 00:46:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dave Huseby <dwh@linuxprogrammer.org>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        felipe.contreras@gmail.com, stefanmoch@mail.de
-Subject: Re: [PATCH v2] Writing down mail list etiquette.
-References: <20210512025447.6068-1-dwh@linuxprogrammer.org>
-        <20210512031821.6498-1-dwh@linuxprogrammer.org>
-        <20210512031821.6498-2-dwh@linuxprogrammer.org>
-Date:   Wed, 12 May 2021 13:46:00 +0900
-In-Reply-To: <20210512031821.6498-2-dwh@linuxprogrammer.org> (Dave Huseby's
-        message of "Tue, 11 May 2021 20:18:21 -0700")
-Message-ID: <xmqqa6p0h853.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F3561236-B2DC-11EB-94B8-D152C8D8090B-77302942!pb-smtp1.pobox.com
+        id S229803AbhELFEX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 01:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48052 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229654AbhELFEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 01:04:23 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC4A3C061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 22:03:15 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id r26-20020a056830121ab02902a5ff1c9b81so19537603otp.11
+        for <git@vger.kernel.org>; Tue, 11 May 2021 22:03:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=JH+vQc8yWujNYd3v0llYrpusMQ7TBcAnmyc6aQpYh2w=;
+        b=u6F2dRNRx8eytuT9uLynYWb3n9Cmoe5f56kfCJDn/G2q2KmYLujvSulXA1lBw3Uupd
+         7nzliGxwFL4GmMmKRtHW4W85kd6hVnKv4PY69Pi3TfNlYJ+t84ASzgf921kCV/6x/Hrs
+         8NNCFLt4v0w3dm+9YbZ+2eMVYJY/bAuMt6e1ba+dg7OW3ONC2viul2Ur8pZv8IY/HIUa
+         gSsWYgMn0NspGhwkc+2Ra7UqXZDWOrTmsC+s/aLLM24DuWNe25i2hSbgpVUP3aQoMFZe
+         hI08wZy35VKXeWh1AxJgQkoNuvBPYcJl98UCdTJ+ynxMFoa/EBX44Na1DE7JW9LCw0OL
+         tkEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=JH+vQc8yWujNYd3v0llYrpusMQ7TBcAnmyc6aQpYh2w=;
+        b=adJ1+PlWyVObFSKZIkVPu560YOeNLyExQOdYnEPXdzOQcJ4+kS766BWWsATu0u/bQp
+         17nKX9nxi7dIGPIvFXK2vxU0RTRzHPYbzXzZWU2ZCDf+S/xQzqI/M1dDYf1r18zDdo1K
+         DMOW9rT3PqfRsLkYLte9CuAT7mn5ec9/6qxk7mwjEBbfNx1QrMFE7+a3QAfm+D2i+H5C
+         hgBRuVjg9EdVMlF3dlIleYJDhYq7UA+DbZ8GpcP8qXRICF71gIQnqId4oIcmVbaEwy/I
+         QLvgJ+ee/e7GfoymQ3hifwJP4FhsY5fl8TYQoxUHW7s67m10aZtwz32iFQdT5W09t79m
+         KB5g==
+X-Gm-Message-State: AOAM5306dJgHtZlXCnxXvirSMJh0aoIZwVrO6BcAESS9TK+OiYQh6Qvv
+        vqbSeH8DsIz94B+LYTEotCAACzBBCb5xFA==
+X-Google-Smtp-Source: ABdhPJw71KUvtAq6i3tK4Ak2llxWg9sLZpq6duN8lhym2mR8+M2CPTSIwIuDp96SWvh4Ic1GvKfqSg==
+X-Received: by 2002:a9d:67cf:: with SMTP id c15mr28960644otn.285.1620795795160;
+        Tue, 11 May 2021 22:03:15 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id a12sm4244900oti.12.2021.05.11.22.03.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 May 2021 22:03:14 -0700 (PDT)
+Date:   Wed, 12 May 2021 00:03:10 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Message-ID: <609b618e663bd_678ff208ec@natae.notmuch>
+In-Reply-To: <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210512021138.63598-1-sandals@crustytoothpaste.net>
+ <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
+Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dave Huseby <dwh@linuxprogrammer.org> writes:
+Bagas Sanjaya wrote:
+> On 12/05/21 09.11, brian m. carlson wrote:
+> > From: Felipe Contreras <felipe.contreras@gmail.com>
+> > 
+> > Asciidoctor contains a converter to generate man pages.  In some
+> > environments, where building only the manual pages and not the other
+> > documentation is desired, installing a toolchain for building
+> > DocBook-based manual pages may be burdensome, and using Asciidoctor
+> > directly may be easier, so let's add an option to build manual pages
+> > using Asciidoctor without the DocBook toolchain.
+> 
+> I have concern: I currently generate manpages with Asciidoctor+xmlto. Does
+> this change affects people using xmlto?
 
-> +Mailing List Etiquette
-> +======================
-> +
-> +[[introduction]]
-> +== Introduction
-> +
-> +Open source, community projects such as Git use a mailing list and email to
-> +coordinate development and to submit patches for review. This article documents
-> +the unspoken rules and etiquette for the proper way to send email to the
-> +mailing list. What follows are considered best practices to follow.
+His proposed change: no, but mine does.
 
-Please ensure that we do *not* sound like dictating our rules on
-broader open-source community.  The document merely talks about the
-rules followed in _our_ community (iow, git@vger.kernel.org mailing
-list).
+> > We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
+> > contain proper handling of the apostrophe, which is controlled normally
+> > by the GNU_ROFF option.  This option for the DocBook toolchain, as well
+> > as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
+> > instead of a Unicode apostrophe in text, so as to make copy and pasting
+> > commands easier.  These newer versions of Asciidoctor detect groff and
+> > do the right thing in all cases, so the GNU_ROFF option is obsolete in
+> > this case.
+> 
+> At what version of Asciidoctor the apostrophe handling is corrected?
 
-> +[[proper-use-of-to-and-cc]]
-> +== Proper Use of To and Cc
-> +
-> +When starting a new email thread that is not directed at any specific person,
-> +put the mailing list address in the "To:" field, otherwise address it to the
-> +person and put the mailing list address in the "Cc:" field.
-> +
-> +When replying to an email on the mailing list, put the person you are replying
-> +to in the "To:" field and all other people in the thread in the "Cc:" field,
-> +including the mailing list address.
+I will look into this, but in my opinion it's not worth complicating the
+doc toolchain for ancient distributions.
 
-The above two say "do X" but lack "because Y".
+The only time people are going to notice something is when:
 
-Even when starting a new discussion thread, it is perfectly fine to
-have specific people on To: while keeping general community members
-in the loop by CC:ing the list.  You'd summon area expert that way.
+ 1. They build git with USE_ASCIIDOCTOR=YesPlease
+    USE_ASCIIDOCTOR_MANPAGE=YesPlease
+ 2. They use an ancient distribution
+ 3. They use the ancient distribution's asciidoctor packages, instead of
+    Ruby's asciidoctor gem
+ 4. They open a manpage generated by this process
+ 5. They select text that specifically has an apostrophe
+ 6. They copy this text
+ 7. They paste this text somewhere else
 
-I think the above two items can be viewed from a different angle as
-a mere consequence of a single guiding principle.  
+Then, they *might* see some issue.
 
-"To:" is the place to list the people you want to directly interact
-with and request responses from, and "Cc:" is for other people, to
-whom you would want to inform this conversation is going on, but you
-do not necessarily need to hear their opinion from (they are of
-course welcome to chime in).
+Yeah, let's not worry about about this *too much*.
 
-And as a consequence of that, the two rules you wrote will fall out
-naturally.  If you have people in mind that you want to directly
-talk to and/or expect their reaction from, list them on "To";
-everybody else goes to "Cc:'.  When there is no particular person to
-talk to, the mailing list address is a good catch-all address to
-reach everybody, hoping there may be some people who are interested
-enough to respond.
+> > Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> > I've preserved Felipe's authorship on this patch because much of it is
+> > his work.  However, I have made some substantial changes here with which
+> > I suspect he will disagree, in addition to expanding on the commit
+> > message, so if he would prefer, I can reroll with the authorship
+> > changed.  I have no preference myself.
+> > 
+> >   Documentation/Makefile                  | 10 ++++++++++
+> >   Documentation/asciidoctor-extensions.rb |  2 ++
+> >   Makefile                                |  3 +++
+> >   3 files changed, 15 insertions(+)
+> > 
+> > diff --git a/Documentation/Makefile b/Documentation/Makefile
+> > index 2aae4c9cbb..536d9a5f3d 100644
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -196,6 +196,9 @@ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+> >   DBLATEX_COMMON =
+> >   XMLTO_EXTRA += --skip-validation
+> >   XMLTO_EXTRA += -x manpage.xsl
+> > +ifdef USE_ASCIIDOCTOR_MANPAGE
+> > +TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
+> I think "ASCIIDOCTOR_TO_MAN" would be good alternative name here, since
+> this command generates manpage from asciidoctor.
 
-The above is the "do X" part.  We need to explain why we want
-readers to do so, i.e. "because Y".
+All the current TXT_TO_* definitions use asciidoc.
 
-   This allows recipients to prioritize their incoming messages;
-   they can direct their immediate attention to those messages with
-   their names on the To: field and the ones with their names on the
-   Cc: field can wait.
+Moreover, I'm currently working on some cleanup patches to make
+TXT_TO_MAN work with asciidoc + xmlto, so this is future-proof.
 
-> +Make sure to keep everyone involved in the "Cc:" field so that they do not have
-> +to be subscribed to the mailing list to receive replies.
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -285,6 +285,9 @@ all::
+> >   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
+> >   # documentation.
+> >   #
+> > +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
+> > +# instead of building manual pages from DocBook.
+> > +#
+> The wording should be "...instead of building manual pages from DocBook with
+> xmlto".
 
-This one has both "do X, because Y". Good.
+That's why in my opinion it should be the other way around:
+USE_ASCIIDOCTOR_XMLTO=No.
 
-> +[[do-not-use-mail-followup-to]]
-> +== Do Not Use Mail-Followup-To
-> +
-> +When posting to the mailing list, your email client might add a
-> +"Mail-Followup-To:" field which contains all of the recipients, including the
-> +mailing list address, but not the sender's email address. This is intended to
-> +prevent the sender from receiving replies twice, once from the replying person
-> +and again from the mailing list.
-> +
-> +This goes directly against the desired "To:" and "Cc:" etiquette (see "Proper
-> +Use of To and Cc" above).
+Then the expalantion is not even needed, because you can deduce it from
+the name of the configuration variable.
 
-... because "Reply to all" will redirect the response to all the
-folks that were originally on "cc:", instead of going to the person
-who sent the message that is being responded to.
+Cheers.
 
-> Most users want to use "group reply" or "Reply to
-> +all" in their mail client and create a reply email that is sent directly to
-> +author of the email they are replying to with all other recipients, as well as
-> +the mailing list address, in the "Cc:" field.
-> +
-> +The proper thing to do is to never use the "Mail-Followup-To:" field as well as
-> +disable honoring any "Mail-Followup-To:" fields in any emails you reply to.
-> +Some email clients come with both enabled by default. Mutt is like this (see
-> +Disable Mail-Followup-To in the Mutt section below).
-> +
-> +[[enable-plain-text-mode]]
-> +== Enable Plain Text Mode
-> +
-> +Most email clients automatically reject mailing list email if it is not a
-> +text/plain formatted email.
-
-Is this true?  I know that _our_ mailing list will reject text/html
-e-mail and that is why we ask people to send text/plain e-mails.  I
-doubt that some/many/most clients reject non text messages.
-
-> +For that reason, it is important that your email
-> +client is set to create text/plain emails instead of text/enriched or
-> +text/html email.
-> +
-> +[[patches-that-receive-no-response]]
-> +
-> +From Junio's notes from the maintainer:
-> +
-> +> If you sent a patch and you did not hear any response from anybody for
-> +> several days, it could be that your patch was totally uninteresting,
-> +> but it also is possible that it was simply lost in the noise.  Please
-> +> do not hesitate to send a reminder message in such a case.  Messages
-> +> getting lost in the noise may be a sign that those who can evaluate
-> +> your patch don't have enough mental/time bandwidth to process them
-> +> right at the moment, and it often helps to wait until the list traffic
-> +> becomes calmer before sending such a reminder.
-> +
-> +[[send-merge-ready-patches-to-the-maintainer]]
-> +== Send Merge-Ready Patches to the Maintainer
-> +
-> +Once a patch has achieved consensus and all stakeholders are staisfied and
-> +everything is ready for merging, then you send it to the maintainer: "To:
-> +gitster@pobox.com".
-
-This needs to be cc'ed to the list.  But I am not sure if it needs
-to be duplicated in this document.  Practically nobody seems to do
-this and expect me to pick things up instead.
-
-
+-- 
+Felipe Contreras
