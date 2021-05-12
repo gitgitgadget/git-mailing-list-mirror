@@ -7,157 +7,174 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E40A7C43460
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E20C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:18:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4CFF61260
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:12:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59CFE61363
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231803AbhELNNc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 09:13:32 -0400
-Received: from relay10.mail.gandi.net ([217.70.178.230]:45819 "EHLO
-        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231695AbhELNNb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 09:13:31 -0400
-Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
-        (Authenticated sender: greg@gpanders.com)
-        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 232C5240007;
-        Wed, 12 May 2021 13:12:18 +0000 (UTC)
+        id S230370AbhELNTS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 09:19:18 -0400
+Received: from relay8-d.mail.gandi.net ([217.70.183.201]:43857 "EHLO
+        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230246AbhELNTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 09:19:17 -0400
+X-Originating-IP: 73.26.133.58
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gpanders.com;
-        s=gm1; t=1620825139;
+        s=gm1; t=1620825487;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=xv6mc7rQx35XRTO4x03sq5rtOP+n/K9Ml59Ep3EKuF8=;
-        b=R9hznLYmaoVYig0RHdZD1Y29hBVzPtfPWcgSl1zq2M4X7TPlqkIx/78mSyJ9cPcTKR7lJs
-        XlA6WcdcvchSmSxzBU+oDbDKFuTGcaycm7qOn22KNhjpu0OHrvyx0a3IKxHgYRL21/4/Ve
-        sVpRwYPe9srx1RILwxujrpP3CBtxPLo8gysPXQf3hAgy/8GSTf9BTIIGtkwe43OJXSEumF
-        HO5CDYG2i++a7SEwvsBh+/C0KoF4KP12e0pSouY/sBLwZxd4gDmkb1Mw5iAdeoiURnnzLJ
-        Xvos0Wx32ix1K1v2ynzWry1I47+GWCGLPk/B629EF06m1WLI+uUH58Mze5bz4Q==
-Date:   Wed, 12 May 2021 07:12:17 -0600
+        bh=2fOM8nwaMw2ruf4wKChW1TBJqy7CuLpxXz8waOH7c+g=;
+        b=SzPc9YyRe+h/izgYYiVspkT37Q5NyVkotxZyiy2egYm2Oy/K154f+sMdaBjMTyw4b6rhm0
+        EFUxNVjndpjOWaHcjUljjQD5swH9LHSwtR7g0jB2KFaGe+OEm/hXXlr1cIkrP+sbOtYPlP
+        zoarATZ/HcuwfjeJi2YQvmBwwCqKGFQSdNyV9PH7IfH06/ZaP2Pet2fxTSOn5zqBXuDHq0
+        2EkgcnAA/eb6QdInlZaW7c4m2krzVvyimKlhXJKfb3UdEGKgCuPX096DTGc4MiztT2TXDj
+        YUe7mGwG4GMmNrKvWxl1gfuTkUguvMLJUlhnnC/tupd7MawUVeJ+6JjAKa1uFw==
+Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
+        (Authenticated sender: greg@gpanders.com)
+        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id 503E01BF210;
+        Wed, 12 May 2021 13:18:06 +0000 (UTC)
+Date:   Wed, 12 May 2021 07:18:04 -0600
 From:   Gregory Anders <greg@gpanders.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] git-send-email: add sendmailCommand option
-Message-ID: <YJvUMTAVKJqPZF2t@gpanders.com>
+Message-ID: <YJvVjLTFsES2i8a0@gpanders.com>
 References: <20210512033039.4022-1-greg@gpanders.com>
- <609b8a5a65826_6e0fc2084c@natae.notmuch>
+ <87y2cks3lt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <609b8a5a65826_6e0fc2084c@natae.notmuch>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y2cks3lt.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 12 May 2021 02:57 -0500, Felipe Contreras wrote:
->Gregory Anders wrote:
->I'm not against these kinds of changes but it took me one minute to
->figure out all you did was change the format.
+On Wed, 12 May 2021 11:04 +0200, Ævar Arnfjörð Bjarmason wrote:
 >
->This belongs in a separate patch.
-
-Yes this was pointed out by the other reviewers as well, I'll omit it in 
-subsequent revisions.
-
+>On Tue, May 11 2021, Gregory Anders wrote:
 >
->> +--sendmail-cmd=<command>::
->
->Oh no no no. Don't do shortcuts.
->
->If you think --sendmail-command is too long, then address that problem
->head on, don't try to hide it.
->
->I do think it's too long, which is why I suggested --command (especially
->since it's obvious which command we are talking about), but I wouldn't
->suggest --sdm-command, or something of that sort. We have to own our
->decisions.
->
->  1. --command
->  2. --sendmail
->  3. --sendmail-command
->
->We have to pick one. I suggest #1.
->
->To try to make #3 shorter is just shoving the problem under the rug.
-
-The intention behind `--sendmail-cmd` was consistency with `--to-cmd` 
-and `--cc-cmd`. Though both of those options also use the condensed 
-'cmd' form in their configuration options as well, so I suppose I should 
-also change this one to 'sendemail.sendmailcmd'.
-
-I'm not opposed to just '--sendmail' and 'sendemail.sendmail' either. I 
-personally believe --sendmail-cmd is the clearest, even if it's verbose, 
-but I'll concede to whatever consensus we arrive at.
-
->
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -70,6 +70,7 @@ sub usage {
+>> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+>> index 93708aefea..d9fe8cb7c0 100644
+>> --- a/Documentation/git-send-email.txt
+>> +++ b/Documentation/git-send-email.txt
+>> @@ -159,13 +159,23 @@ Sending
+>>  ~~~~~~~
 >>
->>    Sending:
->>      --envelope-sender       <str>  * Email envelope sender.
->> +    --sendmail-cmd          <str>  * Shell command to run to send email.
->>      --smtp-server       <str:int>  * Outgoing SMTP server to use. The port
->>                                       is optional. Default 'localhost'.
->>      --smtp-server-option    <str>  * Outgoing SMTP server option to use.
->> @@ -252,6 +253,7 @@ sub do_edit {
->>  my (@suppress_cc);
->>  my ($auto_8bit_encoding);
->>  my ($compose_encoding);
->> +my ($sendmail_command);
->>  # Variables with corresponding config settings & hardcoded defaults
->>  my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
->>  my $thread = 1;
->> @@ -299,6 +301,7 @@ sub do_edit {
->>      "assume8bitencoding" => \$auto_8bit_encoding,
->>      "composeencoding" => \$compose_encoding,
->>      "transferencoding" => \$target_xfer_encoding,
->> +    "sendmailcommand" => \$sendmail_command,
->>  );
+>>  --envelope-sender=<address>::
+>> -	Specify the envelope sender used to send the emails.
+>> -	This is useful if your default address is not the address that is
+>> -	subscribed to a list. In order to use the 'From' address, set the
+>> -	value to "auto". If you use the sendmail binary, you must have
+>> -	suitable privileges for the -f parameter.  Default is the value of the
+>> -	`sendemail.envelopeSender` configuration variable; if that is
+>> -	unspecified, choosing the envelope sender is left to your MTA.
+>> +	Specify the envelope sender used to send the emails.  This is
+>> +	useful if your default address is not the address that is
+>> +	subscribed to a list. In order to use the 'From' address, set
+>> +	the value to "auto". If you use the sendmail binary, you must
+>> +	have suitable privileges for the -f parameter.  Default is the
+>> +	value of the `sendemail.envelopeSender` configuration variable;
+>> +	if that is unspecified, choosing the envelope sender is left to
+>> +	your MTA.
+>
+>Please don't include word-wrapping for unrelated changes in the main
+>patch.
+
+My mistake, this has been pointed out to me multiple times now. I'll 
+remove it in the next revision and I'll be sure to avoid this in the 
+future.
+
+>
+>> -	$smtp_server ||= 'localhost'; # could be 127.0.0.1, too... *shrug*
+>> +
+>> +	if (!defined $sendmail_command) {
+>> +		$smtp_server = 'localhost'; # could be 127.0.0.1, too... *shrug*
+>> +	}
+>>  }
+>
+>This "let's not accept a 0" change seems unrelated & should be split
+>into a prep cleanup / refactoring patch. On the one hand it's sensible,
+>on the other nobody cares about having a command named "0" in their path
+>(or a hostname), so I think it's fine to have the ||= Perl idiom leak
+>out here.
+>
+>But also, this just seems like confusing logic. Per your docs "your
+>sendmailCommand has precedence over smtpServer.".
+>
+>Why not make this "if not $sendmail_command" part of the top-level check
+>here (the if this one is nested under), which is only done if
+>$smtp_sever is not defined, if $sendmail_command is defined we don't
+>care about $smtp_server later on, no?
+
+I mostly left this the way it is to minimize the diff, as this is the 
+style the code was already written in. I agree that explicitly checking 
+whether sendmail_command is undefined is probably clearer to the reader.
+
+>
+>>  if ($compose && $compose > 0) {
+>> @@ -1490,14 +1497,15 @@ sub send_message {
 >>
->>  my %config_path_settings = (
->> @@ -432,6 +435,7 @@ sub read_config {
->>  		    "no-bcc" => \$no_bcc,
->>  		    "chain-reply-to!" => \$chain_reply_to,
->>  		    "no-chain-reply-to" => sub {$chain_reply_to = 0},
->> +		    "sendmail-cmd=s" => \$sendmail_command,
+>>  	unshift (@sendmail_parameters, @smtp_server_options);
+>>
+>> +	if (file_name_is_absolute($smtp_server)) {
+>> +		# Preserved for backward compatibility
+>> +		$sendmail_command ||= $smtp_server;
+>> +	}
+>> +
+>>  	if ($dry_run) {
+>>  		# We don't want to send the email.
+>> -	} elsif (file_name_is_absolute($smtp_server)) {
+>> -		my $pid = open my $sm, '|-';
+>> -		defined $pid or die $!;
+>> -		if (!$pid) {
+>> -			exec($smtp_server, @sendmail_parameters) or die $!;
+>> -		}
+>> +	} elsif (defined $sendmail_command) {
+>> +		open my $sm, '|-', "$sendmail_command @sendmail_parameters";
 >
->Isn't it interesting that to make the code readable you picked
->$sendmail_command, but you don't want users to type so much, even if
->it's more readable?
+>Can we really not avoid moving from exec-as-list so Perl quotes
+>everything, to doing our own interpolation here? It looks like the tests
+>don't check arguments with whitespace (which should fail with this
+>change).
+>
 
-See my note above.
+Shell interpolation in this case is considered a feature, not a bug, 
+i.e. we want to provide users the ability to use arbitrary shell 
+expressions (as they do in e.g. aliases) or pass arguments. I also 
+modeled this after the implementation for --to-cmd and --cc-cmd, which 
+also run their respective commands in the shell just like this.
 
->
->> --- a/t/t9001-send-email.sh
->> +++ b/t/t9001-send-email.sh
->> @@ -57,7 +57,7 @@ test_no_confirm () {
->>  		git send-email \
->>  		--from="Example <from@example.com>" \
->>  		--to=nobody@example.com \
->> -		--smtp-server="$(pwd)/fake.sendmail" \
->> +		--sendmail-cmd="\"$(pwd)/fake.sendmail\"" \
->
->People are already using --smpt-server=$cmd, we need to keep testing
->that.
->
->Yes, eventually we would want them to move to --sendmail-cmd (or
->--command, or whatever), but that won't happen tomorrow. Therefore our
->primary tests need to be focused on --smtp-server.
->
->We need new *additional* tests for --sendmail-cmd, but those should not
->override the current tests. At least not right now.
+Also, this *did* cause the tests to fail since the tests write output to 
+a path with a space in it. You'll notice that in the diff for the tests 
+I had to wrap '$(pwd)/fake.sendmail' in additional quotes to resolve 
+this.
 
-I will add a test case for the absolute path form of --smtp-server; 
-however, if we are introducing an option for specifying a sendmail-like 
-command, surely that is the one to use when using "fake.sendmail", no?
+>> @@ -1592,14 +1600,14 @@ sub send_message {
+>>  		printf($dry_run ? __("Dry-Sent %s\n") : __("Sent %s\n"), $subject);
+>>  	} else {
+>>  		print($dry_run ? __("Dry-OK. Log says:\n") : __("OK. Log says:\n"));
+>> -		if (!file_name_is_absolute($smtp_server)) {
+>> +		if (defined $sendmail_command) {
+>> +			print "Sendmail: $sendmail_command ".join(' ',@sendmail_parameters)."\n";
+>> +		} else {
+>>  			print "Server: $smtp_server\n";
+>>  			print "MAIL FROM:<$raw_from>\n";
+>>  			foreach my $entry (@recipients) {
+>>  			    print "RCPT TO:<$entry>\n";
+>>  			}
+>> -		} else {
+>> -			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
+>>  		}
+>>  		print $header, "\n";
+>>  		if ($smtp) {
+>
+>Minor nit: Let's just continue to use "if (!" here to keep the diff
+>minimal or split up such refactoring into another change...
 
-If we leave the test cases as-is for now, we introduce a split that 
-someone will eventually need to come back and update anyway. Instead of 
-kicking that can down the road, I thought it best to go ahead and do it 
-now.
+Sure, I can do that.
 
 Thanks for your feedback.
-
-Greg
