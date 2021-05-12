@@ -2,166 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B30C43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8533BC43616
 	for <git@archiver.kernel.org>; Wed, 12 May 2021 17:55:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33BDC61434
+	by mail.kernel.org (Postfix) with ESMTP id 62CB061434
 	for <git@archiver.kernel.org>; Wed, 12 May 2021 17:55:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236728AbhELRnS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 13:43:18 -0400
-Received: from mx2.suse.de ([195.135.220.15]:57928 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1344920AbhELRDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 13:03:05 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id AB600B1B4;
-        Wed, 12 May 2021 17:01:54 +0000 (UTC)
-Date:   Wed, 12 May 2021 19:01:53 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Varun Varada <varuncvarada@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-Message-ID: <20210512170153.GE8544@kitsune.suse.cz>
-References: <20210406092440.GZ6564@kitsune.suse.cz>
- <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
- <609ae224aa509_6064920851@natae.notmuch>
- <20210511202502.GM12700@kitsune.suse.cz>
- <CAD2i4DALKgw2wG6QGs-oQhAHnS3AG1j1BSq2bxjPojVOtw+WjA@mail.gmail.com>
- <609b4eea1088a_678ff208ba@natae.notmuch>
- <20210512040926.GN12700@kitsune.suse.cz>
- <609b63e48fd49_6d7da2086@natae.notmuch>
- <20210512064733.GP12700@kitsune.suse.cz>
- <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S236849AbhELRnT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 13:43:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347186AbhELRW7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 13:22:59 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 115F5C061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 10:21:51 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id u16so22938323oiu.7
+        for <git@vger.kernel.org>; Wed, 12 May 2021 10:21:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=Hl5tBYuVBzOZp28AJNuQ/n/nLEgbcJpCp0Cbcb4MrHE=;
+        b=helITNMkeo6AhDsA+/Ig839WMdtm0mlgkxumttMWma0eQfiuplphg4E5MwZ2qKtoYF
+         4ol3xlVxshUQQOzNfQXYRZ4/rG+MFgiCLm6D7DN307lG/0Lu4ATjXHZNJxjVO+AnZSkz
+         6UVxwOCRtPacLiNvd8Ba/ZCB548ROKysdRsWcLAoOpaPU9Cay5E7ZE/zrUqEgn8CTuls
+         X28IBowZPiNoF+pxfSPXDJSGtsDNGhMGWTZ+cIYF0UH/K6tA3RzAV888/M0ohqPAQDmj
+         GpX3UGElUgLXHNChjS8deKK30Ub1pJ7NBp0nJY73H97jTo7HDbjgNauihxO/4tkFqGAW
+         xBxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=Hl5tBYuVBzOZp28AJNuQ/n/nLEgbcJpCp0Cbcb4MrHE=;
+        b=H2gC5lO/CAbXXcfGo3aoEf7u8mbY2X/rgHvSTUvpELNWgn9W1RwA+U2X/mTM8tPHXa
+         N5sjMt313H/t3EDPNGmg8zuX+Gjaf3jBUqn6xK7iYFvw6wyf/16UPMhNmZLMrn6un/dN
+         MYiT6V4+j/LTDUiCeLRVo73mF2Mf2owQ/fRtnWvhvbxTt26B8z7TvDGvQxQRxziPLHf3
+         Uz6AfHvKfg9FTOm148MBVmMMyxysMsVGzS7GcqIoT1F6eZd8XFOxigOUKp1Oc8S8FFGW
+         YewHT0ZCZM5XUz9XZ4XA0MUL5lwK8vJorSwVLWe85I5GzJSSZUfff+6MByRA6Z7OeIRJ
+         7X+Q==
+X-Gm-Message-State: AOAM5337g1dXofnpLVgJCDMl81+syflFiGlDAxdewUcQws6Wepw7bsyV
+        /45QNTa8EJjslMjLcn8hTf00zJ3AeJ4kVQ==
+X-Google-Smtp-Source: ABdhPJxg4nxGxW04eK/dAcukH8s3nlNhPdvEpKk7OCyP/YOEJP+IeJMAHJGjs8IIaQZGJE7ku8nZ6Q==
+X-Received: by 2002:aca:42c6:: with SMTP id p189mr8283307oia.36.1620840110366;
+        Wed, 12 May 2021 10:21:50 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
+        by smtp.gmail.com with ESMTPSA id w66sm129968ooa.37.2021.05.12.10.21.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 May 2021 10:21:49 -0700 (PDT)
+Date:   Wed, 12 May 2021 12:21:48 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Gregory Anders <greg@gpanders.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <609c0eaca8d28_71bd120878@natae.notmuch>
+In-Reply-To: <YJvUMTAVKJqPZF2t@gpanders.com>
+References: <20210512033039.4022-1-greg@gpanders.com>
+ <609b8a5a65826_6e0fc2084c@natae.notmuch>
+ <YJvUMTAVKJqPZF2t@gpanders.com>
+Subject: Re: [PATCH] git-send-email: add sendmailCommand option
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 12, 2021 at 11:47:15AM -0500, Varun Varada wrote:
-> On Wed, 12 May 2021 at 01:47, Michal Suchánek <msuchanek@suse.de> wrote:
+Gregory Anders wrote:
+> >> +--sendmail-cmd=<command>::
 > >
-> > On Wed, May 12, 2021 at 12:13:08AM -0500, Felipe Contreras wrote:
-> > > Michal Suchánek wrote:
-> > > > On Tue, May 11, 2021 at 10:43:38PM -0500, Felipe Contreras wrote:
-> > > > > It is a paradox called "the bikeshedding effect". When you contribute a
-> > > > > complex and convoluted change it's easier to get it in because few people
-> > > > > can object (as few people can understand it). But when you contribute a
-> > > > > change as simple as changing the color of something, then *everyone* can
-> > > > > opine (literally).
-> > > >
-> > > > You forget that what you are doing right now is bikeshedding after the
-> > > > fact.
-> > >
-> > > Except that's not what I'm doing.
-> > >
-> > > > You can use 'affect' or 'impact' and it generally conveys the same
-> > > > meaning.
-> > >
-> > > That's clearly *your* opinion, but that's not my opinon.
-> > >
-> > > I'm not arguing between blue and red; I'm arguing between water-based and
-> > > lead-based paint.
+> >Oh no no no. Don't do shortcuts.
 > >
-> > No, you are not. There is no clear problem with 'impact', either.
+> >If you think --sendmail-command is too long, then address that problem
+> >head on, don't try to hide it.
 > >
-> > So if somebody comes along later and says that they find 'affect'
-> > confusing and impact should be used does that need to be accepted as
-> > well, back and forth ad nauseam?
+> >I do think it's too long, which is why I suggested --command (especially
+> >since it's obvious which command we are talking about), but I wouldn't
+> >suggest --sdm-command, or something of that sort. We have to own our
+> >decisions.
+> >
+> >  1. --command
+> >  2. --sendmail
+> >  3. --sendmail-command
+> >
+> >We have to pick one. I suggest #1.
+> >
+> >To try to make #3 shorter is just shoving the problem under the rug.
 > 
-> This is whataboutism and hypothetical. But even if one were to
-> disregard those facts, I'm willing to bet actual money that no one (at
-> least anyone with access to a dictionary or even a basic grasp of the
-> English language) would do this because "affect" has a universal
-> definition and is not in the realm of jargon in any dictionary or
-> style guide. The same cannot be said about "impact".
+> The intention behind `--sendmail-cmd` was consistency with `--to-cmd` 
+> and `--cc-cmd`. Though both of those options also use the condensed 
+> 'cmd' form in their configuration options as well, so I suppose I should 
+> also change this one to 'sendemail.sendmailcmd'.
+
+I see. In that case that might make sense. I still prefer #1.
+
+> >> --- a/t/t9001-send-email.sh
+> >> +++ b/t/t9001-send-email.sh
+> >> @@ -57,7 +57,7 @@ test_no_confirm () {
+> >>  		git send-email \
+> >>  		--from="Example <from@example.com>" \
+> >>  		--to=nobody@example.com \
+> >> -		--smtp-server="$(pwd)/fake.sendmail" \
+> >> +		--sendmail-cmd="\"$(pwd)/fake.sendmail\"" \
+> >
+> >People are already using --smpt-server=$cmd, we need to keep testing
+> >that.
+> >
+> >Yes, eventually we would want them to move to --sendmail-cmd (or
+> >--command, or whatever), but that won't happen tomorrow. Therefore our
+> >primary tests need to be focused on --smtp-server.
+> >
+> >We need new *additional* tests for --sendmail-cmd, but those should not
+> >override the current tests. At least not right now.
 > 
-> >
-> > > The difference may not matter to you, but it matters to me.
-> > >
-> > > If it's bikeshedding to you, and it "gnerally conveys the same meaning",
-> > > why are you arguing against?
-> >
-> > So if 'for' loops and 'while' loops generally convey the same meaning
-> > should we accept patches that replace some 'for' loops with 'while'
-> > lopps or vice versa?
-> >
-> > Surely not. There are different situations in which loops can be used,
-> > and different people find 'for' and 'while' loops clearer and and easier
-> > to understand in different situations. If you rewrite the piece of code
-> > that includes a loop it might be worthwhile to change the loop type for
-> > clarity, and at the time when the code is added or modified it is time
-> > to discuss which one is better, not after.
-> >
-> > On the other hand if you state the goal to not have redundant semicolons
-> > then even if code with and without redundant semicolons is the same and
-> > in most cases it does not make any difference for human understanding
-> > either patches that just remove redundant semicolons work towards a
-> > specific goal. That makes them acceptable even if they are very minor
-> > because there is clear metric they improve which makes the inverse patch
-> > not acceptable.
-> >
-> > If you want to make the case for 'impact' in general being obscure or
-> > hard to understand you will have hard time doing so. There are
-> > dictionaries that recognize 'impact' as synonymous to 'affect' without
-> > any difference in degree. In the COCA corpus there is around 200k
-> > instances of 'effect', around 100k instances of 'affect', and around
-> > 100k instances of 'impact' which makes effect/affect about 3 times more
-> > frequent than 'impact'. That's not even an order of magnitude - clearly
-> > not enough to claim it obscure. All of the words are within first 1k so
-> > arguably if you have intermediate knowledge of (US) English you should
-> > be familiar with all three.
-> >
-> > However, there is a different corpus that is much more relevant for the
-> > git project:
-> >
-> > ✔ ~/git [master|…9]
-> > 06:35 $ git grep affect | wc -l
-> > 368
-> > ✔ ~/git [master|…9]
-> > 06:41 $ git grep effect | wc -l
-> > 350
-> > ✔ ~/git [master|…9]
-> > 06:42 $ git grep impact | wc -l
-> > 54
-> >
-> > There are only 54 instances of the word 'impact' in the git repository
-> > which make up only 7.5%. It is feasible to eliminate those 54 instances
-> > completely. In doing so you will make the git project use the same
-> > wording consistently which makes it arguably more approachable to
-> > non-native speakers with limited vocabulary. That states a clear metric
-> > that is improved by such patch which also makes the reverse patch not
-> > acceptable and prevents potential for infinite back-and-forth changing
-> > from one synonym to the other.
-> >
-> > Bonus points if you add a test that prevents adding new instances of
-> > 'impact' in the future.
+> I will add a test case for the absolute path form of --smtp-server; 
+> however, if we are introducing an option for specifying a sendmail-like 
+> command, surely that is the one to use when using "fake.sendmail", no?
 > 
-> So you're saying you're OK with getting rid of all instances of
-> "impact"? I'm for this, but insofar as I searched the code base, I
-> only found the ones I'm changing in my patch (save for a couple that,
-> as a previous reviewer mentioned, are included from other repos, so I
-> left those).
+> If we leave the test cases as-is for now, we introduce a split that 
+> someone will eventually need to come back and update anyway. Instead of 
+> kicking that can down the road, I thought it best to go ahead and do it 
+> now.
 
-Yes, I am not opposed to the change in principle. You just failed to
-provide any valid reason.
+The sole purpose of software is that it's useful to users. Software that
+works today but not tomorrow is bad software.
 
-Part of writing a patch is coming up with sound reasoning why the change
-is desirable and stating that clearly in the commit message.
+The primary purpose of the testing framework is to ensure that doesn't
+happen; that git keeps working in the same way today than it did
+yesterday.
 
-I don't know if this reasoning is acceptable to git maintainers but at
-least there is some real data it is based on.
+That's why it's more important that tests excercise the options people
+were using yesterday.
 
-Thanks
+In addition we also want to be testing new functionality, but that's *in
+addition*.
 
-Michal
+Maybe at some point in the future more people will be using
+--sendmail-cmd, but right now that's not the case. Right now we need to
+be testing the option people are using *today*.
+
+Cheers.
+
+-- 
+Felipe Contreras
