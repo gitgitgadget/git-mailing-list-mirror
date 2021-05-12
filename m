@@ -2,309 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63BABC433ED
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79C6EC43460
 	for <git@archiver.kernel.org>; Wed, 12 May 2021 23:53:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D92961355
+	by mail.kernel.org (Postfix) with ESMTP id 41C3A61421
 	for <git@archiver.kernel.org>; Wed, 12 May 2021 23:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234041AbhELXyH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 19:54:07 -0400
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:60013 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1349580AbhELXf1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 12 May 2021 19:35:27 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 0BF931ACF;
-        Wed, 12 May 2021 19:34:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 12 May 2021 19:34:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        linuxprogrammer.org; h=from:to:cc:subject:date:message-id
-        :in-reply-to:references:mime-version:content-type
-        :content-transfer-encoding; s=fm3; bh=sHmpoNCVJZU9xtFuxG0r0iQXJz
-        BUBXLW184yYtjiGm8=; b=V5mCuznXPszXxWbapnrUQjaTO2XNtgGMIl3wBIsVl9
-        J1aLt2KcuDF0q59QoPKcnNvGcMDEmlbnbaeOhjTjvFOHGWohrGEuFXB4SuMNoFLh
-        Z3rX59FgMugIUrfyFJcP3/Wu4kEMI3RCzGSCcv5ikuToBob8NOzhCgXEfZwV0g3f
-        pFwqSXAegd3RH/2ISmxo49FTxZH+iYW8dO+r9XJDGYwb8Io2Poub8qQhjNS6Btr2
-        VC55Z7yzQg0SBrSj3r2pG66QlB/SULmyR0Rv5nlakC36mzA2uTHELqrBBergR0Kt
-        NRv/dPY8XQb/2+u7pm2lpmtEPwnv+RSbbjRJkvDPAGJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=sHmpoNCVJZU9xtFuxG0r0iQXJzBUBXLW184yYtjiG
-        m8=; b=tLc5jfuy6jbxbFpTep5J0i/DDGlUmqs+HU5FN6Rb5jSy+SFo87YHVWKx0
-        mqEg2A12+F3RC9cRRiakO4VYb3FdBOzj6gkz95J53u6AsalmBblpyYOjuDGQVSdV
-        ek+y21cMSwd6yUPqIZOCGc5VaJQmohXaKQEkBuPkhvLsUlvuTWxqu90FcvRGnGqk
-        pGwmJVVBb47soKqqgmdeijV0BQD11DfekEF+7TslDT8QZExEGln/p4x3xIipQFAP
-        JugW3pB32YXjP3OmiaJ1Ywuc/pi7D9bFFC9wXf8gPu2NX9ThLvriORJKkfKKGKJu
-        TYPF9E4eno9dUxDQzmvnGRn6qc9vg==
-X-ME-Sender: <xms:92WcYMVpIDkLug6B6j_TsZnhJ7QjdFSepZpbvuVQWg919FhBRU_XSw>
-    <xme:92WcYAkjZhE7_Ab8quymtKmxKMlGU3SW_03U9xIzunxe8L9wGRnAPv2VW3Re3Eqoy
-    b-NpyMtIit8-fy2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehfedgvdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhggtgfgsehtke
-    ertdertdejnecuhfhrohhmpeffrghvvgcujfhushgvsgihuceougifhheslhhinhhugihp
-    rhhoghhrrghmmhgvrhdrohhrgheqnecuggftrfgrthhtvghrnhepkeffvefffedvtdejve
-    eggeeiudfhudefudfffffgkeejueekvdelvedtiefhgfelnecuffhomhgrihhnpehfrhgv
-    vghnohguvgdrnhgvthenucfkphepudejgedrhedvrdduhedrfeejnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepugifhheslhhinhhugihprhho
-    ghhrrghmmhgvrhdrohhrgh
-X-ME-Proxy: <xmx:92WcYAZZoz1OaGplCXii0yTMZWi5RMtDGzHdC14qaqRoZrLTAMVUKQ>
-    <xmx:92WcYLW384p_rNLVH0i_X7IdTjWqRoYKMWgfHCE3rMftum-DKt15_g>
-    <xmx:92WcYGma8a2wxQwU3GR4S207b1K-zHmHfspkrT1XsDCJPp9pZadjvA>
-    <xmx:-GWcYNuqGF8p7AQmdOe7Cbr5OfSoGklUiUjqYy38ywd3Xn0uJSJQog>
-Received: from linuxprogrammer.org (c-174-52-15-37.hsd1.ut.comcast.net [174.52.15.37])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Wed, 12 May 2021 19:34:14 -0400 (EDT)
-From:   Dave Huseby <dwh@linuxprogrammer.org>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, felipe.contreras@gmail.com,
-        gitster@pobox.com, stefanmoch@mail.de, philipoak@iee.email,
-        bagasdotme@gmail.com, sunshine@sunshineco.com, avarab@gmail.com
-Subject: [PATCH v3] doc: writing down Git mailing list etiquette
-Date:   Wed, 12 May 2021 16:34:12 -0700
-Message-Id: <20210512233412.10737-1-dwh@linuxprogrammer.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210512031821.6498-2-dwh@linuxprogrammer.org>
-References: <20210512031821.6498-2-dwh@linuxprogrammer.org>
+        id S237062AbhELXyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 19:54:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53030 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1350065AbhELXgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 19:36:05 -0400
+Received: (qmail 30742 invoked by uid 109); 12 May 2021 23:34:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 May 2021 23:34:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11018 invoked by uid 111); 12 May 2021 23:34:54 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 May 2021 19:34:54 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 12 May 2021 19:34:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Gregory Anders <greg@gpanders.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH 0/9] send-email: various optimizations to speed up by >2x
+Message-ID: <YJxmHbHAn4x93xsr@coredump.intra.peff.net>
+References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After violating a few unspoken etiquette rules while submitting patches
-to the Git mailing list, it was suggeted that somebody write a guide.
-Since I was the latest cause of this perenial discussion, I took it upon
-myself to learn from my mistakes and document the Git mailing list
-etiquette and the fixes I made to my email setup.
+On Wed, May 12, 2021 at 03:48:16PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-* Add documentation specifically on Git mailing list etiquette
-* Add alternative actions for patches that receive no response.
-* Add section on submitting a final, merge-ready patch.
-* Add section on Mutt MUA settings.
+> This combines by not-picked-up[1] recent patches to remove the support
+> for the "sendemail.smtpssl" variable with the later patches showing
+> where that effort was really going.
+> 
+> As noted in the subject this speeds up git-send-email invocations by
+> ~2x or more, and brings the very slow t9001 test from running in ~26s
+> on my box to ~12s. It's no longer consistently the slowest test I run.
 
-Reported-by: Christian Couder <christian.couder@gmail.com>
-Reported-by: Filipe Contreras <felipe.contreras@gmail.com>
-Thanks-to: Junio C Hamano <gitster@pobox.com>
-Thanks-to: Philip Oakley <philipoakley@iee.email>
-Thanks-to: Bagas Sanjaya <bagasdotme@gmail.com>
-Thanks-to: Eric Sunshine <sunshine@sunshineco.com>
-Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Dave Huseby <dwh@linuxprogrammer.org>
----
- Documentation/MailingListEtiquette.txt | 93 ++++++++++++++++++++++++++
- Documentation/SubmittingPatches        | 74 +++++++++++++++++++-
- 2 files changed, 166 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/MailingListEtiquette.txt
+Nice. I have observed that with a decent number of cores, the running
+time of the entire test suite correlates strongly with the running time
+of t9001. :)
 
-diff --git a/Documentation/MailingListEtiquette.txt b/Documentation/MailingListEtiquette.txt
-new file mode 100644
-index 0000000000..8a383f81a8
---- /dev/null
-+++ b/Documentation/MailingListEtiquette.txt
-@@ -0,0 +1,93 @@
-+Mailing List Etiquette
-+======================
-+
-+[[introduction]]
-+== Introduction
-+
-+The Git project uses a mailing list and email to coordinate development and
-+submit patches. Many other open source projects use web-based forums and pull
-+requests (PRs) to achieve the same thing. This article focuses entirely on the
-+Git project and the etiquette and unspoken rules that have developed over the
-+years. What follows are best practices and suggestions for the "proper" way to
-+interact via email on the Git mailing list.
-+
-+If you are looking for details on how to submit a patch, that is documented
-+elsewhere in:
-+
-+- `Documentation/SubmittingPatches`
-+- `Documentation/MyFirstContribution.txt`
-+
-+[[proper-use-of-to-and-cc]]
-+== Proper Use of To and Cc
-+
-+The "To:" field is the place to list the people you want to directly interact
-+with and request responses from and the "Cc:" field is for other people that
-+you wish to inform of this conversation. Everybody is welcome to chime in on
-+the thread. When there is no particular person you wish to talk to, the mailing
-+list address is a good catch-all addres to reach everybody and should be put in
-+the "To:" field.
-+
-+When replying to an email on the mailing list, put the person you are replying
-+to in the "To:" field and all other people in the thread in the "Cc:" field,
-+including the mailing list address.
-+
-+The motivation for the above suggestions is to allow recipients to prioritize
-+their incoming messages; they can direct their immediate attention to those
-+messages with their names on the "To:" field and the ones with their names on
-+the "Cc:" field can wait.
-+
-+Make sure to keep everyone involved in the "Cc:" field so that they do not have
-+to be subscribed to the mailing list to receive replies.
-+
-+[[proper-use-of-subject]]
-+== Proper Use of the Subject
-+
-+When replying to an email on the list, make sure that the subject of the
-+original email is the subject of your email with "Re:" added to it. So if
-+you reply to an email with subject "first post", the subject of your email
-+should be "Re: first post".
-+
-+Sometimes email threads diverge into other threads about related, but distinct
-+topics. In those cases, the subject like should change to the new topic and
-+include in parenthesis "(Was: <original thread subject>)". So for instance,
-+if a side thread is created from the "first post" thread example, the subject
-+line should be something like "second post (was: first post)" with replies
-+having the subject "Re: second post (was: first post)".
-+
-+[[use-interleaved-style]]
-+== Use Interleaved Style in Replies
-+
-+> A: Because it messes up the order in which people normally read text.
-+> Q: Why is top-posting such a bad thing?
-+> A: Top-posting.
-+> Q: What is the most annoying thing in email?
-+
-+When replying to emails, use interleaved style which is also sometimes called
-+an "inline reply". This creates a natural flow for the reader of the reply. They
-+can easily see what the context for the reply is. Also leave only the context
-+that is important for your reply and delete the rest.
-+
-+[[do-not-use-mail-followup-to]]
-+== Do Not Use Mail-Followup-To
-+
-+When posting to the mailing list, your email client might add a
-+"Mail-Followup-To:" field containing all of the recipients, including the
-+mailing list address, but not the sender's email address. This is intended to
-+prevent the sender from receiving replies twice, once from the replying person
-+and again from the mailing list.
-+
-+This goes directly against the desired "To:" and "Cc:" etiquette (see "Proper
-+Use of To and Cc" above) because "Reply to all"/"group reply" will redirect the
-+response to all of the people in the original "Cc:" field instead of going to
-+the person who sent the message being responded to.
-+
-+Some email clients, such as Mutt (see Disable Mail-Followup-To in the Mutt
-+section below) are configured by default to add "Mail-Followup-To:" fields and
-+to honor existing "Mail-Followup-To:" fields. It is best to disable both.
-+
-+[[enable-plain-text-mode]]
-+== Enable Plain Text Mode
-+
-+The Git mailing list software rejects email sent in text/html format. It is
-+important that your email client is set to create text/plain emails to ensure
-+delivery.
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 55287d72e0..4f8b9f24ee 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -433,7 +433,7 @@ help you find out who they are.
- 
- In any time between the (2)-(3) cycle, the maintainer may pick it up
- from the list and queue it to `seen`, in order to make it easier for
--people play with it without having to pick up and apply the patch to
-+people to play with it without having to pick up and apply the patch to
- their trees themselves.
- 
- [[patch-status]]
-@@ -450,6 +450,46 @@ their trees themselves.
-   entitled "What's cooking in git.git" and "What's in git.git" giving
-   the status of various proposed changes.
- 
-+[[patches-that-receive-no-response]]
-+== Patches that Receive No Response
-+
-+If you sent a patch and you did not hear any response from anybody for
-+several days, it could be that your patch was totally uninteresting,
-+but it also is possible that it was simply lost in the noise.  Please
-+do not hesitate to send a reminder message in such a case.  Messages
-+getting lost in the noise may be a sign that those who can evaluate
-+your patch don't have enough mental/time bandwidth to process them
-+right at the moment, and it often helps to wait until the list traffic
-+becomes calmer before sending such a reminder.
-+
-+Alternatives to sending direct reminders are:
-+
-+* Wait for the next "What's cooking in git.git" email to see if your patch
-+  series was mentioned and replying to that email with a note pointing out that
-+  your patch series has been overlooked.
-+
-+* Attend the weekly "stand-up" meeting held in the "#git-devel" channel on
-+  irc.freenode.net and bring it up then.
-+
-+[[send-merge-ready-patches-to-the-maintainer]]
-+== Send Merge-Ready Patches to the Maintainer
-+
-+Once a patch has achieved consensus and all stakeholders are satisfied and
-+everything is ready for merging, you have two main options for getting your
-+patch noticed by the maintainer.
-+
-+1. Submit a new, final, version of the patch with an accurate list of commit
-+   trailers. Make this submission "To:" the maintainer, "In-Reply-To:" the
-+   previous version of the patch, and add everybody concerned, including the
-+   mailing list address to the "Cc:" field. This is a nice way to reduce the
-+   amount of work the maintainer must do to merge the patch while also getting
-+   their attention.
-+
-+2. Creating a "group reply"/"Reply to all" email to the latest patch series
-+   with the maintainer in the "To:" field. This is sometimes referred to as a
-+   "review ping" email and is appropriate if the patch requires no more work
-+   and is in its final state with an accurate list of commit trailers.
-+
- [[travis]]
- == GitHub-Travis CI hints
- 
-@@ -510,6 +550,38 @@ first patch.\n", if you really want to put in the patch e-mail,
- should come after the three-dash line that signals the end of the
- commit message.
- 
-+=== Mutt
-+
-+[[known-mailing-lists]]
-+==== Known Mailing Lists
-+
-+Mutt has the ability to change its behavior when replying to a mailing list. You
-+must specify mailing list addresses using the `subscribe` keyword in your Mutt
-+configuration:
-+
-+**~/.muttrc:**
-+```
-+# tell Mutt about the Git mailing list
-+subscribe git@vger.kernel.org
-+```
-+
-+[[disable-mail-followup-to]]
-+==== Disable Mail-Followup-To
-+
-+By default, when replying to mailing lists, Mutt automatically generates
-+"Mail-Followup-To:" fields. To fix this, disable the generation of the field
-+in your Mutt configuration. It is also a good idea to disable honoring any
-+"Mail-Followup-To:" field so that your "group reply" operations are correctly
-+addressed.
-+
-+**~/.muttrc:**
-+```
-+# disable Mail-Followup-To header
-+unset followup_to
-+
-+# disable honoring Mail-Followup-To header
-+unset honor_followup_to
-+```
- 
- === Pine
- 
--- 
-2.20.1
+Here are timings for individual tests run with "prove --state=slow,save".
+(This is on an 8-core machine using -j32, skipping cvs/svn/p4 tests,
+and using a tmpfs via --root). The timings were computed with:
 
+  perl -MYAML -e '
+    $_ = do { local $/; <> };
+    # prove puts this non-YAML cruft at the end
+    s/\.\.\.$//s;
+
+    my $t = YAML::Load($_)->{tests};
+    print "$_->[1] $_->[0]\n" for
+      sort { $b->[1] <=> $a->[1] }
+      map { [$_, $t->{$_}->{elapsed}] }
+      keys(%$t);
+  ' t/.prove | head
+
+Before your patches, the whole sweet takes ~60-63s, and the top timings
+(from a 63s run) are:
+
+    63.2607979774475 t9001-send-email.sh
+    51.742644071579 t0027-auto-crlf.sh
+    37.7909920215607 t3070-wildmatch.sh
+    27.09605717659 t7610-mergetool.sh
+    24.7028169631958 t7112-reset-submodule.sh
+    24.5535898208618 t5572-pull-submodule.sh
+    23.8404550552368 t9500-gitweb-standalone-no-errors.sh
+    22.3544380664825 t7400-submodule-basic.sh
+    21.7017750740051 t5510-fetch.sh
+    21.4575610160828 t3305-notes-fanout.sh
+
+Now after, which takes ~54-59s (this is from a 54s run):
+
+  46.796669960022 t0027-auto-crlf.sh
+  32.5747599601746 t3070-wildmatch.sh
+  21.5069420337677 t7610-mergetool.sh
+  20.8392388820648 t1701-racy-split-index.sh
+  19.7403028011322 t5572-pull-submodule.sh
+  19.7386808395386 t9001-send-email.sh
+  19.4622302055359 t7112-reset-submodule.sh
+  18.9555768966675 t9500-gitweb-standalone-no-errors.sh
+  18.0672709941864 t7400-submodule-basic.sh
+  17.641391992569 t5510-fetch.sh
+
+I have some messy patches to split t9001 into two segments. They were
+waiting to get polished, but perhaps I can just discard them now. :)
+
+Some side notes for those interested in timing the test suite:
+
+  - If I run t9001 standalone, it goes much faster, of course; the CPU
+    throttles down when we're running all the tests in parallel.
+
+  - Those are with "-x --verbose-log", which is nice for catching flaky
+    results. Dropping those seems to shave a few seconds off.
+
+  - A big chunk of time for t0027 and t3070 is spent running the sed-based
+    chain-linting for their huge tables of auto-generated tests (1400+
+    and 1800+ respectively). Dropping the sed linting for just those
+    tests knocks off about 30 CPU-seconds.
+
+-Peff
