@@ -2,203 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99698C433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CD75C433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:54:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 649FD61943
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:49:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59B5761937
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230017AbhELCuL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 22:50:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46946 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbhELCuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 22:50:10 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9187DC061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 19:49:03 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id p17so11766976plf.12
-        for <git@vger.kernel.org>; Tue, 11 May 2021 19:49:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6YZW82k5E7QjtJSURLLoGgm3wdZlC81CqCRHiaDMktA=;
-        b=WU6dMvYKf062lQeJsKDdTz6CeXSy7iQc+EtIYJ5GsltaYS2/dH1fyMGxmWbMRLJ7MB
-         Eeppxu4YE8X3SOu2OmMHHlehrhwkT9qRL3qoSryok0yuryB/24BzTJJtBj9UiOOTM+e+
-         ca5cS45w30CkUdiRB4qwaLS7NY6KgyTuwwUekJoLVNvHn/+s0J9Buhl4gybXVkha0o4y
-         ancdtwjS7eR++0Zf8ZcrynKHtywtRXINyPtfv8h+DZQCO3MgEI7XuunBz2yIUP9wAsoH
-         lmEcodbnT2sTay/UXypDm9x6OhsUB7BPfCwjaparyypC8e47KSDTyfXZGEcm838DPCWg
-         YVaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6YZW82k5E7QjtJSURLLoGgm3wdZlC81CqCRHiaDMktA=;
-        b=kUlQWUA4MiKMla4yL5wNQ96olQsU4cxjN0QCqjTQ7LQ0/1xw3C5dcEifoCZN1KhbWg
-         6bT2n70EU+e+QYPJVtzVKQut9K9tTakDugC4hwhHPwCeMuchu5vLInCD/sjzjlo2FKx/
-         brH+DShL5txoEmw7R1wzD22PUbOq9dFoQO0EZd+LuMrSPK92346crnYgGZYlEBom/laa
-         4P98aaKl5nOcyKCoJtRBtG5l22N4N1xgOa2Wy3tmIxp/YdMln/SH9PiaN6xIQYsMettu
-         B/vtANNu2XJfbcSV9NVJjWPgv7QTZdgaRDiK6nr0PTWDy5ppHSjCEb98484blVlgxoUU
-         +z5A==
-X-Gm-Message-State: AOAM530moHl7LwWFUEjL4Q3iE99M+YN3CjqMOl2FTyFJIYs3T3wLBPav
-        xvzK3aAPidltVzSzrULrQv8=
-X-Google-Smtp-Source: ABdhPJw7OOhd7bv6gmF2KRXCdqxCm8UTZiruWfROtAH+RrrTXjbax7yrodVawbdSoSUFhe7pNLkDLA==
-X-Received: by 2002:a17:902:c104:b029:ef:836e:15d6 with SMTP id 4-20020a170902c104b02900ef836e15d6mr507528pli.39.1620787743048;
-        Tue, 11 May 2021 19:49:03 -0700 (PDT)
-Received: from [192.168.43.80] (subs32-116-206-28-46.three.co.id. [116.206.28.46])
-        by smtp.gmail.com with ESMTPSA id i5sm2642248pfd.159.2021.05.11.19.49.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 May 2021 19:49:02 -0700 (PDT)
-Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210512021138.63598-1-sandals@crustytoothpaste.net>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
-Date:   Wed, 12 May 2021 09:48:59 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S229952AbhELCz5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 22:55:57 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33595 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229848AbhELCz5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 May 2021 22:55:57 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id D8C555C018D
+        for <git@vger.kernel.org>; Tue, 11 May 2021 22:54:49 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 11 May 2021 22:54:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        linuxprogrammer.org; h=from:to:subject:date:message-id
+        :mime-version:content-transfer-encoding; s=fm3; bh=oodnSMnRnBGko
+        AJSOxnChFYFIPq2Vgj8CGBAAvACB2s=; b=R/fetOgKoFHKKxZNSPM7m6IN4oV/R
+        Tg5YbaYgyPxP5hJxamIyPrB0Rfv2/3DCwlThyui85Rqn3tdjA0DJ0yFGYnmxVuRK
+        Jmti5gxbokFn21ylMCxuQUckBqsvErzwormhr7bwcNhY2Rnd6hqADwGeIKjT6GJZ
+        AMLcZ1ctqsrGnP183spqocn0RkduEdRDqnsu7VTpLCIjIclxcbs2V0c+7WSTd8nF
+        1VWMqD+DMsEq1NiNPC1l+yY+pwXAqivRu8uX79sZnWiSdG+WfqFUiLmmevX9SIjM
+        WKjZV3i4ALQs4ORPDPqtss2h2N9aUJvlvBmLg5BpZO/jvxK3Kz0wBlY1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=oodnSMnRnBGkoAJSO
+        xnChFYFIPq2Vgj8CGBAAvACB2s=; b=iGewv3non5FlN47cDyU0NdNfAPssrElQJ
+        h4shgGlG2XWnp2Gd/ndD+kH73FguRHNc7pS+ICbuzloQ3aS8/wdJ/22KLJCfe70U
+        TFHZiUWLKb+qLGV0CZldVKLzL4nOUQwA55JIt2BrNAuKUH7604MSkOPkQNg+bJX2
+        Hbwuk+9I1UQ3u63PPXKv7UbEVtMmhk8HIFfNuSAixROcYVq/dFFwmYJzXBHd03Fs
+        wG7+MPh1GtjXURWIho3SXDZ8ihjhYcgx8MuRisk9L1gVrlHUMM1EVpzvs7A/TzUE
+        b6DLL//XHewPrzbonptlkKt0rThdrqoj675zUB+48KEIhZnLXLhQA==
+X-ME-Sender: <xms:eUObYMZ1fg1tutff5p03GJwACTMBplEvvIhQsrWeoAkSGGvixM1Vng>
+    <xme:eUObYHYlJuvlD7ldsQwD5A-G2lfHwRePU0lgqBZdY3WO0D-k7ad-_8dmVb4W5zNO_
+    UdMBYZKlMFapbBS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehuddgieegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+    dttdenucfhrhhomhepffgrvhgvucfjuhhsvggshicuoegufihhsehlihhnuhigphhrohhg
+    rhgrmhhmvghrrdhorhhgqeenucggtffrrghtthgvrhhnpeekteeigfeuvdfhtedttdekud
+    evgfelleektdethfevheehudeuuddvgfeujeevveenucfkphepudejgedrhedvrdduhedr
+    feejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepug
+    ifhheslhhinhhugihprhhoghhrrghmmhgvrhdrohhrgh
+X-ME-Proxy: <xmx:eUObYG9PDjn2cfsDygArUXIrv9sm_IcG8uYI52g21_shofqUTi1BBg>
+    <xmx:eUObYGr4rOcCAAflyFRN9godATwE_pl8HOsWWMIwunASRHHMhZcZLA>
+    <xmx:eUObYHrF0DUFdANlqU9R7123R9f3AtGn7E7AWImL4Rc3jcufyVDa1w>
+    <xmx:eUObYM5_EJad3pQ-xLIYTFHooPNQ7GEF9gJZ6lrQr8ycJoG-1yMNPw>
+Received: from linuxprogrammer.org (c-174-52-15-37.hsd1.ut.comcast.net [174.52.15.37])
+        by mail.messagingengine.com (Postfix) with ESMTPA
+        for <git@vger.kernel.org>; Tue, 11 May 2021 22:54:49 -0400 (EDT)
+From:   Dave Huseby <dwh@linuxprogrammer.org>
+To:     git@vger.kernel.org
+Subject: [PATCH v1] Writing down mail list etiquette.
+Date:   Tue, 11 May 2021 19:54:47 -0700
+Message-Id: <20210512025447.6068-1-dwh@linuxprogrammer.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20210512021138.63598-1-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/05/21 09.11, brian m. carlson wrote:
-> From: Felipe Contreras <felipe.contreras@gmail.com>
-> 
-> Asciidoctor contains a converter to generate man pages.  In some
-> environments, where building only the manual pages and not the other
-> documentation is desired, installing a toolchain for building
-> DocBook-based manual pages may be burdensome, and using Asciidoctor
-> directly may be easier, so let's add an option to build manual pages
-> using Asciidoctor without the DocBook toolchain.
+After violating a few unspoken etiquette rules that were spotted by
+Christian Couder <christian.couder@gmail.com>, Filipe Contreras
+<felipe.contreras@gmail.com> suggested that somebody write a guide.
+Since I was the latest cause of this perenial discussion, I took it upon
+myself to learn from my mistakes and document the fixes.
 
-I have concern: I currently generate manpages with Asciidoctor+xmlto. Does
-this change affects people using xmlto?
+Thanks to Junio <gitster@pobox.com> for providing links to similar
+discussions in the past and Stefan Moch <stefanmoc@gmail.com> for
+pointing out where the related documentation already existed in the
+tree.
 
-> We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
-> contain proper handling of the apostrophe, which is controlled normally
-> by the GNU_ROFF option.  This option for the DocBook toolchain, as well
-> as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
-> instead of a Unicode apostrophe in text, so as to make copy and pasting
-> commands easier.  These newer versions of Asciidoctor detect groff and
-> do the right thing in all cases, so the GNU_ROFF option is obsolete in
-> this case.
+Signed-off-by: Dave Huseby <dwh@linuxprogrammer.org>
+---
+ Documentation/MailingListEtiquette.txt | 125 +++++++++++++++++++++++++
+ 1 file changed, 125 insertions(+)
+ create mode 100644 Documentation/MailingListEtiquette.txt
 
-At what version of Asciidoctor the apostrophe handling is corrected?
-
-> We also need to update the code that tells Asciidoctor how to format our
-> linkgit macros so that it can output proper code for man pages.  Be
-> careful to reset the font to the previous after the change.  In order to
-> do so, we must reset to the previous after each font change so the
-> previous state at the end is the state before our inserted text, since
-> troff only remembers one previous font.
-> 
-> Because Asciidoctor versions before 2.0 had a few problems with man page
-> output, let's default this to off for now, since some common distros are
-> still on 1.5.  If users are using a more modern toolchain or don't care
-> about the rendering issues, they can enable the option.
-
-Maybe when distros upgraded shipped Asciidoctor version to 2.0, we can
-bump the version requirement.
-
-> Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> I've preserved Felipe's authorship on this patch because much of it is
-> his work.  However, I have made some substantial changes here with which
-> I suspect he will disagree, in addition to expanding on the commit
-> message, so if he would prefer, I can reroll with the authorship
-> changed.  I have no preference myself.
-> 
->   Documentation/Makefile                  | 10 ++++++++++
->   Documentation/asciidoctor-extensions.rb |  2 ++
->   Makefile                                |  3 +++
->   3 files changed, 15 insertions(+)
-> 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 2aae4c9cbb..536d9a5f3d 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -196,6 +196,9 @@ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
->   DBLATEX_COMMON =
->   XMLTO_EXTRA += --skip-validation
->   XMLTO_EXTRA += -x manpage.xsl
-> +ifdef USE_ASCIIDOCTOR_MANPAGE
-> +TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
-I think "ASCIIDOCTOR_TO_MAN" would be good alternative name here, since
-this command generates manpage from asciidoctor.
-> +endif
->   endif
->   
->   SHELL_PATH ?= $(SHELL)
-> @@ -367,9 +370,16 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf asciidoctor-extensions.rb GIT-AS
->   manpage-base-url.xsl: manpage-base-url.xsl.in
->   	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
->   
-> +ifdef TXT_TO_MAN
-> +%.1 %.5 %.7 : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
-> +	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
-> +	$(TXT_TO_MAN) -o $@+ $< && \
-> +	mv $@+ $@
-> +else
->   %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
->   	$(QUIET_XMLTO)$(RM) $@ && \
->   	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
-> +endif
->   
->   %.xml : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
->   	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
-> diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-> index d906a00803..40fa87b121 100644
-> --- a/Documentation/asciidoctor-extensions.rb
-> +++ b/Documentation/asciidoctor-extensions.rb
-> @@ -15,6 +15,8 @@ module Git
->             "#{target}(#{attrs[1]})</ulink>"
->           elsif parent.document.basebackend? 'html'
->             %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
-> +        elsif parent.document.basebackend? 'manpage'
-> +          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
->           elsif parent.document.basebackend? 'docbook'
->             "<citerefentry>\n" \
->               "<refentrytitle>#{target}</refentrytitle>" \
-> diff --git a/Makefile b/Makefile
-> index 93664d6714..cb75dec314 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -285,6 +285,9 @@ all::
->   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
->   # documentation.
->   #
-> +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
-> +# instead of building manual pages from DocBook.
-> +#
-The wording should be "...instead of building manual pages from DocBook with
-xmlto".
->   # Define ASCIIDOCTOR_EXTENSIONS_LAB to point to the location of the Asciidoctor
->   # Extensions Lab if you have it available.
->   #
-> 
-
-Thanks for my review.
-
+diff --git a/Documentation/MailingListEtiquette.txt b/Documentation/MailingListEtiquette.txt
+new file mode 100644
+index 0000000000..9da2d490aa
+--- /dev/null
++++ b/Documentation/MailingListEtiquette.txt
+@@ -0,0 +1,125 @@
++Mailing List Etiquette
++======================
++
++[[introduction]]
++== Introduction
++
++Open source, community projects such as Git use a mailing list and email to
++coordinate development and to submit patches for review. This article documents
++the unspoken rules and etiquette for the proper way to send email to the
++mailing list. What follows are considered best practices to follow.
++
++If you are looking for details on how to submit a patch, that is documented
++elsewhere in:
++
++- `Documentation/SubmittingPatches`
++- `Documentation/MyFirstContribution.txt`
++
++[[proper-use-of-to-and-cc]]
++== Proper Use of To and Cc
++
++When starting a new email thread that is not directed at any specific person,
++put the mailing list address in the "To:" field, otherwise address it to the
++person and put the mailing list address in the "Cc:" field.
++
++When replying to an email on the mailing list, put the person you are replying
++to in the "To:" field and all other people in the thread in the "Cc:" field,
++including the mailing list address.
++
++Make sure to keep everyone involved in the "Cc:" field so that they do not have
++to be subscribed to the mailing list to receive replies.
++
++[[do-not-use-mail-followup-to]]
++== Do Not Use Mail-Followup-To
++
++When posting to the mailing list, your email client might add a
++"Mail-Followup-To:" field which contains all of the recipients, including the
++mailing list address, but not the sender's email address. This is intended to
++prevent the sender from receiving replies twice, once from the replying person
++and again from the mailing list.
++
++This goes directly against the desired "To:" and "Cc:" etiquette (see "Proper
++Use of To and Cc" above). Most users want to use "group reply" or "Reply to
++all" in their mail client and create a reply email that is sent directly to
++author of the email they are replying to with all other recipients, as well as
++the mailing list address, in the "Cc:" field.
++
++The proper thing to do is to never use the "Mail-Followup-To:" field as well as
++disable honoring any "Mail-Followup-To:" fields in any emails you reply to.
++Some email clients come with both enabled by default. Mutt is like this (see
++Disable Mail-Followup-To in the Mutt section below).
++
++[[enable-plain-text-mode]]
++== Enable Plain Text Mode
++
++Most email clients automatically reject mailing list email if it is not a
++text/plain formatted email. For that reason, it is important that your email
++client is set to create text/plain emails instead of text/enriched or
++text/html email.
++
++[[patches-that-receive-no-response]]
++
++From Junio's notes from the maintainer:
++
++> If you sent a patch and you did not hear any response from anybody for
++> several days, it could be that your patch was totally uninteresting,
++> but it also is possible that it was simply lost in the noise.  Please
++> do not hesitate to send a reminder message in such a case.  Messages
++> getting lost in the noise may be a sign that those who can evaluate
++> your patch don't have enough mental/time bandwidth to process them
++> right at the moment, and it often helps to wait until the list traffic
++> becomes calmer before sending such a reminder.
++
++[[send-merge-ready-patches-to-the-maintainer]]
++== Send Merge-Ready Patches to the Maintainer
++
++Once a patch has achieved consensus and all stakeholders are staisfied and
++everything is ready for merging, then you send it to the maintainer: "To:
++gitster@pobox.com".
++
++[[mutt-config]]
++== Mutt Config
++
++This section has suggestions for how to set up Mutt to be polite.
++
++[[known-mailing-lists]]
++=== Known Mailing Lists
++
++Mutt has the ability to change its behavior when replying to a mailing list. For
++Mutt to know when an address is a mailing list, use the `subscribe` keyword in
++your Mutt configuration:
++
++**~/.muttrc:**
++```
++# tell Mutt about the Git mailing list
++subscribe git@vger.kernel.org
++```
++
++[[reply-properly]]
++=== Reply Properly
++
++By default, Mutt uses the 'g' and 'L' hotkeys to execute a "group reply" or
++"list reply" respectively. A "group reply" creates an email addressed to the
++sender with all other recipients in the "Cc". A "list reply" starts an email
++addressed only to the mailing list without anybody else as "Cc".
++
++Per rule X, Y, and Z above, using "group reply" in Mutt is what you want to do.
++
++[[disable-mail-followup-to]]
++=== Disable Mail-Followup-To
++
++By default, when replying to mailing lists, Mutt will automatically generate
++"Mail-Followup-To" headers. To fix this, disable the generation of the header
++in your Mutt configuration. It is also a good idea to disable honoring any
++"Mail-Followup-To" headers so that any "group reply" operations are correctly
++addressed.
++
++**~/.muttrc:**
++```
++# disable Mail-Followup-To header
++unset followup_to
++
++# disable honoring Mail-Followup-To header
++unset honor_followup_to
++```
++
 -- 
-An old man doll... just what I always wanted! - Clara
+2.20.1
+
