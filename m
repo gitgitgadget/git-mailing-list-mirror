@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F1DEC4363F
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 17:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BDC7C4363C
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 17:55:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE83B61166
+	by mail.kernel.org (Postfix) with ESMTP id 2B64961418
 	for <git@archiver.kernel.org>; Wed, 12 May 2021 17:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237855AbhELRoA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 13:44:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
+        id S237660AbhELRnt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 13:43:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347746AbhELR3g (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1347742AbhELR3g (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 May 2021 13:29:36 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A6E6C06175F
-        for <git@vger.kernel.org>; Wed, 12 May 2021 10:28:28 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id a4so24447109wrr.2
-        for <git@vger.kernel.org>; Wed, 12 May 2021 10:28:28 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7048DC06174A
+        for <git@vger.kernel.org>; Wed, 12 May 2021 10:28:27 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id o26-20020a1c4d1a0000b0290146e1feccdaso341697wmh.0
+        for <git@vger.kernel.org>; Wed, 12 May 2021 10:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OD7n3L0qIorVlEic5lpEhxsSGS1aewtOJbk93/bYA1I=;
-        b=HNUhZoYc0uVWOz+3ahQPgBSm0R6LFOJbqHnOai/ofaWWXMONdN9r9ry3pD1mXL+g2B
-         CbdYZR9is2x3K6bZCUKm4JbtQVQE32gxrr+53+uAg3kKtBBBUS2XKd+uOxeXYLpVwI3K
-         K5bl7HLBO8ybWjEdOZseGp2bwb3LQblilXmtqUE9Tl43KNXLp5Zn47kq1neFQLiq4zDF
-         Gdhdq1FJmdhJEzstFQaktXLakMqSkc04cm9u0SEpQcrK8TpevrpFtAd57HdRbjbu5+RS
-         wH6QQqufX318yjMutUe6sc0qIF1kkdoJKIeyh6T61NlJtoFC18MEHWZDyD3pMgUjgbqr
-         6tRg==
+        bh=dm8sgUAbByH21XfkXMiORzWivUxVG7D9c7/7YP9peOs=;
+        b=t0Zqrp0kbQXYqL3MowhGPIRs/TbDgcQT9HOyzN/bHG7gXHyF6qMPBu7BsBUyCGezZz
+         ZqcheTQVbk5VZTkW6hszR1yPi+z0v6vtcCBI0yLv7ZrE5hqGPOHA1isY1MdU7auyJz/f
+         PHkw0SNDSboQpoG5gGqagbVeE73amz/4uwEFRmrSWph0A9HXZYk3wQnyhP1+zgZSYR60
+         4OdcDfYY4ZUfPrH8ff8ntYE5VonayxRfcI0tG3m58cKim2NfNgprM/W+cB/bF+aSSlmX
+         G34u1aS6UmdwOlfBMkO79jah7xU37exuJumSVCelay2mNFbkn7+P36lOO8Ubiaab7ENN
+         620g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OD7n3L0qIorVlEic5lpEhxsSGS1aewtOJbk93/bYA1I=;
-        b=A7De5JZekOj4OC5gWhQgFG9HCEwOuLvRDCEpKKImoctAEsKZxzfkUKykSPfomz0Zfv
-         mDlV10wO6NmXXYpnDaVig/S13PC1fAxPGQt1p13e5/j6PFYq9gDg6ylkgcqF0JgGAAVw
-         kshrMCTTsvlbRYAgfuuTirVfs5ysG1wjdQV8ga5ZdfyXNrW15f/8m5xd+kV570l5awIG
-         /ytLkLkxAJd4w8h14IbaoyO5LTusXCRcTyxUmpZMW6991nv+37jhIzLPShMuUDqouVeu
-         bqJkXykeb8Yo/KunmL6n6yq1rlXqAYonSC4XMiXt1G6xantqn63kY5Us2jUmd+ltXIoN
-         b1HQ==
-X-Gm-Message-State: AOAM5329/Pxz4NRqIj6ZJRNrSn4ULxXgsMMjWC6L0fOcvVIqq7fW4jcZ
-        fW1dpEdbCPudQOr6GSVIHtgA4ntXpEo=
-X-Google-Smtp-Source: ABdhPJy5wmSczJe+/QFFxIm5xW9PD7VZj54XUFjXP2X0zhvUNmR4SYPnAzfi0VPovtw9dLUqEAKxHA==
-X-Received: by 2002:a5d:58d0:: with SMTP id o16mr10309602wrf.420.1620840507282;
-        Wed, 12 May 2021 10:28:27 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s18sm287953wro.95.2021.05.12.10.28.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=dm8sgUAbByH21XfkXMiORzWivUxVG7D9c7/7YP9peOs=;
+        b=hpc8WAI5Thbf9omA9as+hBI5HPHcxaLaxJaSCUdfEIkJLx7omHd6y89ptYgIiVUI+/
+         kdTG9sU4+Lb85LiC451VrGQiMuIaFKPJl0CAgqhHeGEXl2NpDQT9/gePUh2XkXtTSZvX
+         n1rGhyAMlJLgkuc5je4w0tGFxXC+P8jqCTXTjXmu6Gsu16oKfByaHrIFtmGWpyCCDuXc
+         xXQPWXdJcyIOpvhSezCxQv4/nRNljg4k8jvagGq5HbEmbtO1Lep5pf4n3Ur9CxLlyKTu
+         fBLX69J/jOU9P0N9vhTJb+MEANmjLoc/mjYfqZDbgOsUZqVZGETWbBDYB8S5mVruE3HG
+         +5LQ==
+X-Gm-Message-State: AOAM5337RPkU4qvemxGGSzLPEMPN+s5ob7hi5fkMmmkhOFFzkSr0DaqV
+        Q+Tjswm9H8eKSqU4HXgPKpKHiFB0I/M=
+X-Google-Smtp-Source: ABdhPJypTS7Ds6EotjNXASCxjsBcY30rYl+EIOtBewx/47R4QKbYBdeIq3SRTL7bzT3Ssl31+pMU5A==
+X-Received: by 2002:a1c:bd8a:: with SMTP id n132mr7489904wmf.106.1620840506177;
         Wed, 12 May 2021 10:28:26 -0700 (PDT)
-Message-Id: <cfe2898b7a7e08e01ef5b71f913f6f34bebf38f0.1620840502.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l22sm6395572wmq.28.2021.05.12.10.28.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 May 2021 10:28:25 -0700 (PDT)
+Message-Id: <6b1b4820dd20ed0911e049f0edadc2adcc391e9d.1620840502.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1020.v5.git.git.1620840502.gitgitgadget@gmail.com>
 References: <pull.1020.v4.git.git.1620758049.gitgitgadget@gmail.com>
         <pull.1020.v5.git.git.1620840502.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 May 2021 17:28:15 +0000
-Subject: [PATCH v5 2/9] dir: report number of visited directories and paths
- with trace2
+Date:   Wed, 12 May 2021 17:28:14 +0000
+Subject: [PATCH v5 1/9] dir: convert trace calls to trace2 equivalents
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,88 +83,530 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Provide more statistics in trace2 output that include the number of
-directories and total paths visited by the directory traversal logic.
-Subsequent patches will take advantage of this to ensure we do not
-unnecessarily traverse into ignored directories.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c                             | 9 +++++++++
- dir.h                             | 4 ++++
- t/t7063-status-untracked-cache.sh | 3 ++-
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ dir.c                             |  50 ++++++--
+ t/t7063-status-untracked-cache.sh | 205 ++++++++++++++++++------------
+ t/t7519-status-fsmonitor.sh       |   8 +-
+ 3 files changed, 162 insertions(+), 101 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index cf19a83d3e2c..f6dec5fd4a78 100644
+index 3474e67e8f3c..cf19a83d3e2c 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -2440,6 +2440,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 
- 	if (open_cached_dir(&cdir, dir, untracked, istate, &path, check_only))
- 		goto out;
-+	dir->visited_directories++;
- 
- 	if (untracked)
- 		untracked->check_only = !!check_only;
-@@ -2448,6 +2449,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 		/* check how the file or directory should be treated */
- 		state = treat_path(dir, untracked, &cdir, istate, &path,
- 				   baselen, pathspec);
-+		dir->visited_paths++;
- 
- 		if (state > dir_state)
- 			dir_state = state;
-@@ -2777,6 +2779,11 @@ static void emit_traversal_statistics(struct dir_struct *dir,
- 		strbuf_release(&tmp);
- 	}
- 
-+	trace2_data_intmax("read_directory", repo,
-+			   "directories-visited", dir->visited_directories);
-+	trace2_data_intmax("read_directory", repo,
-+			   "paths-visited", dir->visited_paths);
-+
- 	if (!dir->untracked)
- 		return;
- 	trace2_data_intmax("read_directory", repo,
-@@ -2797,6 +2804,8 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 	struct untracked_cache_dir *untracked;
- 
- 	trace2_region_enter("dir", "read_directory", istate->repo);
-+	dir->visited_paths = 0;
-+	dir->visited_directories = 0;
- 
- 	if (has_symlink_leading_path(path, len)) {
- 		trace2_region_leave("dir", "read_directory", istate->repo);
-diff --git a/dir.h b/dir.h
-index 04d886cfce75..22c67907f689 100644
---- a/dir.h
-+++ b/dir.h
-@@ -336,6 +336,10 @@ struct dir_struct {
- 	struct oid_stat ss_info_exclude;
- 	struct oid_stat ss_excludes_file;
- 	unsigned unmanaged_exclude_files;
-+
-+	/* Stats about the traversal */
-+	unsigned visited_paths;
-+	unsigned visited_directories;
- };
- 
- /*Count the number of slashes for string s*/
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 9710d33b3cd6..a0c123b0a77a 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -65,7 +65,8 @@ get_relevant_traces () {
- 	INPUT_FILE=$1
- 	OUTPUT_FILE=$2
- 	grep data.*read_directo $INPUT_FILE |
--	    cut -d "|" -f 9 \
-+	    cut -d "|" -f 9 |
-+	    grep -v visited \
- 	    >"$OUTPUT_FILE"
+@@ -2760,15 +2760,46 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 	return root;
  }
  
++static void emit_traversal_statistics(struct dir_struct *dir,
++				      struct repository *repo,
++				      const char *path,
++				      int path_len)
++{
++	if (!trace2_is_enabled())
++		return;
++
++	if (!path_len) {
++		trace2_data_string("read_directory", repo, "path", "");
++	} else {
++		struct strbuf tmp = STRBUF_INIT;
++		strbuf_add(&tmp, path, path_len);
++		trace2_data_string("read_directory", repo, "path", tmp.buf);
++		strbuf_release(&tmp);
++	}
++
++	if (!dir->untracked)
++		return;
++	trace2_data_intmax("read_directory", repo,
++			   "node-creation", dir->untracked->dir_created);
++	trace2_data_intmax("read_directory", repo,
++			   "gitignore-invalidation",
++			   dir->untracked->gitignore_invalidated);
++	trace2_data_intmax("read_directory", repo,
++			   "directory-invalidation",
++			   dir->untracked->dir_invalidated);
++	trace2_data_intmax("read_directory", repo,
++			   "opendir", dir->untracked->dir_opened);
++}
++
+ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 		   const char *path, int len, const struct pathspec *pathspec)
+ {
+ 	struct untracked_cache_dir *untracked;
+ 
+-	trace_performance_enter();
++	trace2_region_enter("dir", "read_directory", istate->repo);
+ 
+ 	if (has_symlink_leading_path(path, len)) {
+-		trace_performance_leave("read directory %.*s", len, path);
++		trace2_region_leave("dir", "read_directory", istate->repo);
+ 		return dir->nr;
+ 	}
+ 
+@@ -2784,23 +2815,15 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 	QSORT(dir->entries, dir->nr, cmp_dir_entry);
+ 	QSORT(dir->ignored, dir->ignored_nr, cmp_dir_entry);
+ 
+-	trace_performance_leave("read directory %.*s", len, path);
++	emit_traversal_statistics(dir, istate->repo, path, len);
++
++	trace2_region_leave("dir", "read_directory", istate->repo);
+ 	if (dir->untracked) {
+ 		static int force_untracked_cache = -1;
+-		static struct trace_key trace_untracked_stats = TRACE_KEY_INIT(UNTRACKED_STATS);
+ 
+ 		if (force_untracked_cache < 0)
+ 			force_untracked_cache =
+ 				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", 0);
+-		trace_printf_key(&trace_untracked_stats,
+-				 "node creation: %u\n"
+-				 "gitignore invalidation: %u\n"
+-				 "directory invalidation: %u\n"
+-				 "opendir: %u\n",
+-				 dir->untracked->dir_created,
+-				 dir->untracked->gitignore_invalidated,
+-				 dir->untracked->dir_invalidated,
+-				 dir->untracked->dir_opened);
+ 		if (force_untracked_cache &&
+ 			dir->untracked == istate->untracked &&
+ 		    (dir->untracked->dir_opened ||
+@@ -2811,6 +2834,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 			FREE_AND_NULL(dir->untracked);
+ 		}
+ 	}
++
+ 	return dir->nr;
+ }
+ 
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index accefde72fb1..9710d33b3cd6 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -57,6 +57,19 @@ iuc () {
+ 	return $ret
+ }
+ 
++get_relevant_traces () {
++	# From the GIT_TRACE2_PERF data of the form
++	#    $TIME $FILE:$LINE | d0 | main | data | r1 | ? | ? | read_directo | $RELEVANT_STAT
++	# extract the $RELEVANT_STAT fields.  We don't care about region_enter
++	# or region_leave, or stats for things outside read_directory.
++	INPUT_FILE=$1
++	OUTPUT_FILE=$2
++	grep data.*read_directo $INPUT_FILE |
++	    cut -d "|" -f 9 \
++	    >"$OUTPUT_FILE"
++}
++
++
+ test_lazy_prereq UNTRACKED_CACHE '
+ 	{ git update-index --test-untracked-cache; ret=$?; } &&
+ 	test $ret -ne 1
+@@ -129,19 +142,21 @@ EOF
+ 
+ test_expect_success 'status first time (empty cache)' '
+ 	avoid_racy &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 3
+-gitignore invalidation: 1
+-directory invalidation: 0
+-opendir: 4
++ ....path:
++ ....node-creation:3
++ ....gitignore-invalidation:1
++ ....directory-invalidation:0
++ ....opendir:4
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'untracked cache after first status' '
+@@ -151,19 +166,21 @@ test_expect_success 'untracked cache after first status' '
+ 
+ test_expect_success 'status second time (fully populated cache)' '
+ 	avoid_racy &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 0
+-opendir: 0
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:0
++ ....opendir:0
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'untracked cache after second status' '
+@@ -174,8 +191,8 @@ test_expect_success 'untracked cache after second status' '
+ test_expect_success 'modify in root directory, one dir invalidation' '
+ 	avoid_racy &&
+ 	: >four &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -189,13 +206,15 @@ A  two
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 1
+-opendir: 1
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:1
++ ....opendir:1
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ 
+ '
+ 
+@@ -223,8 +242,8 @@ EOF
+ test_expect_success 'new .gitignore invalidates recursively' '
+ 	avoid_racy &&
+ 	echo four >.gitignore &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -238,13 +257,15 @@ A  two
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 1
+-directory invalidation: 1
+-opendir: 4
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:1
++ ....directory-invalidation:1
++ ....opendir:4
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ 
+ '
+ 
+@@ -272,8 +293,8 @@ EOF
+ test_expect_success 'new info/exclude invalidates everything' '
+ 	avoid_racy &&
+ 	echo three >>.git/info/exclude &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -285,13 +306,15 @@ A  two
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 1
+-directory invalidation: 0
+-opendir: 4
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:1
++ ....directory-invalidation:0
++ ....opendir:4
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'verify untracked cache dump' '
+@@ -330,8 +353,8 @@ EOF
+ '
+ 
+ test_expect_success 'status after the move' '
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -343,13 +366,15 @@ A  one
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 0
+-opendir: 1
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:0
++ ....opendir:1
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'verify untracked cache dump' '
+@@ -389,8 +414,8 @@ EOF
+ '
+ 
+ test_expect_success 'status after the move' '
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -402,13 +427,15 @@ A  two
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 0
+-opendir: 1
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:0
++ ....opendir:1
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'verify untracked cache dump' '
+@@ -438,8 +465,8 @@ test_expect_success 'set up for sparse checkout testing' '
+ '
+ 
+ test_expect_success 'status after commit' '
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -448,13 +475,15 @@ test_expect_success 'status after commit' '
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 0
+-opendir: 2
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:0
++ ....opendir:2
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'untracked cache correct after commit' '
+@@ -496,9 +525,9 @@ test_expect_success 'create/modify files, some of which are gitignored' '
+ '
+ 
+ test_expect_success 'test sparse status with untracked cache' '
+-	: >../trace &&
++	: >../trace.output &&
+ 	avoid_racy &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../status.actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -509,13 +538,15 @@ test_expect_success 'test sparse status with untracked cache' '
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../status.actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 1
+-directory invalidation: 2
+-opendir: 2
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:1
++ ....directory-invalidation:2
++ ....opendir:2
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'untracked cache correct after status' '
+@@ -539,8 +570,8 @@ EOF
+ 
+ test_expect_success 'test sparse status again with untracked cache' '
+ 	avoid_racy &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../status.actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -551,13 +582,15 @@ test_expect_success 'test sparse status again with untracked cache' '
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../status.actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 0
+-opendir: 0
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:0
++ ....opendir:0
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'set up for test of subdir and sparse checkouts' '
+@@ -568,8 +601,8 @@ test_expect_success 'set up for test of subdir and sparse checkouts' '
+ 
+ test_expect_success 'test sparse status with untracked cache and subdir' '
+ 	avoid_racy &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../status.actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	cat >../status.expect <<EOF &&
+@@ -581,13 +614,15 @@ test_expect_success 'test sparse status with untracked cache and subdir' '
+ EOF
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../status.actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 2
+-gitignore invalidation: 0
+-directory invalidation: 1
+-opendir: 3
++ ....path:
++ ....node-creation:2
++ ....gitignore-invalidation:0
++ ....directory-invalidation:1
++ ....opendir:3
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'verify untracked cache dump (sparse/subdirs)' '
+@@ -616,19 +651,21 @@ EOF
+ 
+ test_expect_success 'test sparse status again with untracked cache and subdir' '
+ 	avoid_racy &&
+-	: >../trace &&
+-	GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace" \
++	: >../trace.output &&
++	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.output" \
+ 	git status --porcelain >../status.actual &&
+ 	iuc status --porcelain >../status.iuc &&
+ 	test_cmp ../status.expect ../status.iuc &&
+ 	test_cmp ../status.expect ../status.actual &&
++	get_relevant_traces ../trace.output ../trace.relevant &&
+ 	cat >../trace.expect <<EOF &&
+-node creation: 0
+-gitignore invalidation: 0
+-directory invalidation: 0
+-opendir: 0
++ ....path:
++ ....node-creation:0
++ ....gitignore-invalidation:0
++ ....directory-invalidation:0
++ ....opendir:0
+ EOF
+-	test_cmp ../trace.expect ../trace
++	test_cmp ../trace.expect ../trace.relevant
+ '
+ 
+ test_expect_success 'move entry in subdir from untracked to cached' '
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 45d025f96010..637391c6ce46 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -334,7 +334,7 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
+ 		git config core.fsmonitor .git/hooks/fsmonitor-test &&
+ 		git update-index --untracked-cache &&
+ 		git update-index --fsmonitor &&
+-		GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace-before" \
++		GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace-before" \
+ 		git status &&
+ 		test-tool dump-untracked-cache >../before
+ 	) &&
+@@ -346,12 +346,12 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
+ 	EOF
+ 	(
+ 		cd dot-git &&
+-		GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace-after" \
++		GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace-after" \
+ 		git status &&
+ 		test-tool dump-untracked-cache >../after
+ 	) &&
+-	grep "directory invalidation" trace-before >>before &&
+-	grep "directory invalidation" trace-after >>after &&
++	grep "directory-invalidation" trace-before | cut -d"|" -f 9 >>before &&
++	grep "directory-invalidation" trace-after  | cut -d"|" -f 9 >>after &&
+ 	# UNTR extension unchanged, dir invalidation count unchanged
+ 	test_cmp before after
+ '
 -- 
 gitgitgadget
 
