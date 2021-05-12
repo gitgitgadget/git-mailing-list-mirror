@@ -2,88 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C99C4C43460
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 12:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC664C433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:03:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B3C061108
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 12:31:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7B9F61287
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232328AbhELMcR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 08:32:17 -0400
-Received: from cpanel8.indieserve.net ([199.212.143.3]:50971 "EHLO
-        cpanel8.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232323AbhELMcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 08:32:16 -0400
-X-Greylist: delayed 2759 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 May 2021 08:32:16 EDT
-Received: from cpeac202e043973-cmac202e043970.sdns.net.rogers.com ([174.114.107.13]:60934 helo=fedora)
-        by cpanel8.indieserve.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1lgnIb-0005Qe-Jg; Wed, 12 May 2021 07:45:08 -0400
-Date:   Wed, 12 May 2021 07:45:05 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-To:     =?ISO-8859-15?Q?Michal_Such=E1nek?= <msuchanek@suse.de>
-cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: replace jargon word "impact" with
- "effect"/"affect"
-In-Reply-To: <20210512112059.GD8544@kitsune.suse.cz>
-Message-ID: <8e353a57-8abd-74d0-8b42-488b166e58a2@crashcourse.ca>
-References: <609ae224aa509_6064920851@natae.notmuch> <20210511202502.GM12700@kitsune.suse.cz> <CAD2i4DALKgw2wG6QGs-oQhAHnS3AG1j1BSq2bxjPojVOtw+WjA@mail.gmail.com> <609b4eea1088a_678ff208ba@natae.notmuch> <20210512040926.GN12700@kitsune.suse.cz>
- <609b63e48fd49_6d7da2086@natae.notmuch> <20210512064733.GP12700@kitsune.suse.cz> <609b9ab0b1120_6e4e9208cc@natae.notmuch> <20210512100855.GA8544@kitsune.suse.cz> <609bb67c96463_70eac2089d@natae.notmuch> <20210512112059.GD8544@kitsune.suse.cz>
+        id S231695AbhELNEs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 09:04:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230293AbhELNEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 09:04:41 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03542C061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:03:31 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id f184so1969952oig.3
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=at1YuYZsQBUFmqJiQfWD2kClxHwek7K8/o0vhWS9Zmo=;
+        b=AY4jyDjzWQjqEtyutRXea0f9Hi4HYQYDJdUxCeig88Lpc4QI/MROeVrIhBO7P1wnpV
+         mv8VJAn+WD2JI4Ynhu/+CZ6IkEdDsgL++xN+FoTxbIzt6uTvIhZ2Xbcv546Y1SBXop3b
+         OpOUX1Csbjx0CrNi9FYFZl3iz3alPUaFhBPsNkESG0aEsf3aIsdMW0mMFColQsUh1gyG
+         Wy0cF/xOjaNkBw0uiTCMyR0gBo0PezNWXGo7wxZKvZcdj0OrGf4nW+CObUMeF61t/vaH
+         H0Xhp5P6zCQ9JpM10llDPTRm1B+n/U46ol7HMVr+wXK683R4cS7b2owYoNK98DPmgLNk
+         aWAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=at1YuYZsQBUFmqJiQfWD2kClxHwek7K8/o0vhWS9Zmo=;
+        b=Cz3YwJe+o6HvoaRc27/pdnMPn6jx+TzM4kHQWXkz5Kx6oiqVPQgZQy5zmVdjFJePfq
+         v5nU84LAezqlO1qUWfYvs/loQSnfzRrnbj04got83CLBfgBevFtxGPrWy0Db/yGRBvKL
+         EPfQ3nYpcY38TRZYuZY0TB2jlGlEAUkurIIoF+NnOYuhANszVIGT2Lfns+E005NycLCq
+         bC1VcWnkb5SmYwl2omkqkDwR4RBEpFGC5CDQJChawf1CQXQVJpvi5MUDduLrQLAlThki
+         r3aNtc9/xuLkm5Fsm+gPED5T34FT5yNP/7I36QurvzmltTs4Q52UK9PJ8hFPphDix9he
+         JhlA==
+X-Gm-Message-State: AOAM533B4TTbJiAW9EAI72hcQ2SB/WDNporDflvDmM1QxZWpVRczRMIe
+        pz2ji7DKZ8UyQonf6rj4wHpN9asDVL8Dpg==
+X-Google-Smtp-Source: ABdhPJxapAw9Ztri3QM2Zwj8zPfw6b/gfN+6fkOl8+knIfoaZZYT9H3bJ7FY/IJpmVW8byQ0wi3ymw==
+X-Received: by 2002:aca:b5c4:: with SMTP id e187mr26481519oif.149.1620824610047;
+        Wed, 12 May 2021 06:03:30 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:49c7:8eaa:aef9:ce4b? ([2600:1700:e72:80a0:49c7:8eaa:aef9:ce4b])
+        by smtp.gmail.com with ESMTPSA id e7sm2488570oos.15.2021.05.12.06.03.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 May 2021 06:03:29 -0700 (PDT)
+Subject: Re: What's cooking in git.git (May 2021, #02; Wed, 12)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqo8dgfl8l.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <05932ebc-04ac-b3c5-a460-5d37d8604fd9@gmail.com>
+Date:   Wed, 12 May 2021 09:03:28 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-548397769-1620819908=:14390"
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel8.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel8.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel8.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <xmqqo8dgfl8l.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 5/12/2021 3:46 AM, Junio C Hamano wrote:
 
---8323328-548397769-1620819908=:14390
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+> * ds/status-with-sparse-index (2021-04-28) 10 commits
+>  - fsmonitor: test with sparse index
+>  - status: use sparse-index throughout
+>  - status: skip sparse-checkout percentage with sparse-index
+>  - dir.c: accept a directory as part of cone-mode patterns
+>  - unpack-trees: stop recursing into sparse directories
+>  - unpack-trees: compare sparse directories correctly
+>  - unpack-trees: preserve cache_bottom
+>  - t1092: add tests for status/add and sparse files
+>  - Merge branch 'mt/add-rm-in-sparse-checkout' into ds/status-with-sparse-index
+>  - Merge branch 'ds/sparse-index-protections' into ds/status-with-sparse-index
+> 
+>  "git status" codepath learned to work with sparsely populated index
+>  without hydrating it fully.
+> 
+>  What's the status of this thing?
 
-On Wed, 12 May 2021, Michal Suchánek wrote:
+There has been no review on the simplified v2. But also I've been working
+to integrate the sparse-index work into our Scalar functional tests and
+have found some issues with the series. I'm working through those issues
+now and will send a v3 when I'm ready. Feel free to eject it until then.
 
-> On Wed, May 12, 2021 at 06:05:32AM -0500, Felipe Contreras wrote:
-> > Michal Suchánek wrote:
-> > > On Wed, May 12, 2021 at 04:06:56AM -0500, Felipe Contreras wrote:
-> > > > So... Can you answer my question?
-> > > >
-> > > > Do you have anything against the word "affect" in *any* instance?
-> > >
-> > > Yss, the Merriam-Webster dictionary also lists the meaning
-> > > "to cause illness, symptoms, etc."
-> >
-> > I did not ask you if you could list one definition contrary to the
-> > intended purpose of the word "affect".
-> >
-> > I asked you if you have something againt the word "affect".
-> >
-> > We can use your same logic to find one definition for the word "impact"
-> > contrary to your intended purpose.
->
-> That's exactly the point you have been making, though.
-
-  y'all realize that linus torvalds wrote an entire version control
-system in less time than it's taken you to argue about what two words
-mean, right?
-
-rday
---8323328-548397769-1620819908=:14390--
+Thanks,
+-Stolee
