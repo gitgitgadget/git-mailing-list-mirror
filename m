@@ -2,179 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2E20C433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7EFDC433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:26:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59CFE61363
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:18:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 925FC613D6
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:26:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230370AbhELNTS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 09:19:18 -0400
-Received: from relay8-d.mail.gandi.net ([217.70.183.201]:43857 "EHLO
-        relay8-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230246AbhELNTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 09:19:17 -0400
-X-Originating-IP: 73.26.133.58
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gpanders.com;
-        s=gm1; t=1620825487;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=2fOM8nwaMw2ruf4wKChW1TBJqy7CuLpxXz8waOH7c+g=;
-        b=SzPc9YyRe+h/izgYYiVspkT37Q5NyVkotxZyiy2egYm2Oy/K154f+sMdaBjMTyw4b6rhm0
-        EFUxNVjndpjOWaHcjUljjQD5swH9LHSwtR7g0jB2KFaGe+OEm/hXXlr1cIkrP+sbOtYPlP
-        zoarATZ/HcuwfjeJi2YQvmBwwCqKGFQSdNyV9PH7IfH06/ZaP2Pet2fxTSOn5zqBXuDHq0
-        2EkgcnAA/eb6QdInlZaW7c4m2krzVvyimKlhXJKfb3UdEGKgCuPX096DTGc4MiztT2TXDj
-        YUe7mGwG4GMmNrKvWxl1gfuTkUguvMLJUlhnnC/tupd7MawUVeJ+6JjAKa1uFw==
-Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
-        (Authenticated sender: greg@gpanders.com)
-        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id 503E01BF210;
-        Wed, 12 May 2021 13:18:06 +0000 (UTC)
-Date:   Wed, 12 May 2021 07:18:04 -0600
-From:   Gregory Anders <greg@gpanders.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-send-email: add sendmailCommand option
-Message-ID: <YJvVjLTFsES2i8a0@gpanders.com>
-References: <20210512033039.4022-1-greg@gpanders.com>
- <87y2cks3lt.fsf@evledraar.gmail.com>
+        id S230213AbhELN1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 09:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47894 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230037AbhELN1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 09:27:34 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0ABC061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:26:26 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id n17-20020a7bc5d10000b0290169edfadac9so2506814wmk.1
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:26:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Ypo0p1EFkVSi0QhfBqZnwTcGAZYlDDZtphSIurD/Ub4=;
+        b=vLOsJ+smsaEmu/3lF7X7/frc3QHirbKuHivt2hIs7uj12nLOqduDuwNkMIB61mj3iD
+         i8ia3RnmaotxeED57T2lDDdgMfnyeQ0xyV3A+K+sCNotcE0IA3TxDcisGpSp0VU7ah8X
+         Yolk4kYYzYeeTh/zAUFIAvpvu8UK36qaMUEpk7dnXpd18QIfRpx14seDQi+i3GJj4lnG
+         cYU9kBSTNirPKmzbQaKZP+IU4e0zzK37O5dGbPmrZA1W+4vQ28n58K1v/zwGtapxk5Lk
+         ODgkEwsdHAgzWMtgzll5iW9/WNxmhVioyk0OsGy4mkZonsFG1SjFlNkESOkTZl90cDYs
+         7diA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Ypo0p1EFkVSi0QhfBqZnwTcGAZYlDDZtphSIurD/Ub4=;
+        b=eUeHhNEwxlMC2W1eFFfWvxHOembXdG+008E0tyE3TMLkAR473w6sOmqXe1UIrCYent
+         L/mHxvG/uNiQO42mO7EIDOxsAyN2IkrO7LqYSrjPXwxX1+xjplRZMoso71GOZqKS9Dp1
+         CLuRk6gEbYt4SXJw/a+MPjlyk8LfOLaxix+8pInYMy4p1eEbsNyKY9D8dWJG82UrjWh7
+         aV6ypb4hvLxBCC1lyexIjqIU0jtJvn40j821m7pg20HO2jU1Fwt2h4z6+MnW/gJyZfLo
+         Dc8JkYjVXU5UKk59bP8pVvw3OgzOlvF1dfH7HZ9wdG/K26UjeVp86mGnNd1TcnaUR4JG
+         eFRA==
+X-Gm-Message-State: AOAM533RZiZUdMlfBc66M+np6qOMoFi0S1Pxyu4W0KlyXjuWvkvrmcYg
+        jphgqdfmL5Fwr44mIxnXTm8=
+X-Google-Smtp-Source: ABdhPJznuDrl3bAZETgnxCMo6y566ZLROh6P4ChSv2r5x8csBPJMuZANCrUmH8U2fg/cUwPIsBQNLw==
+X-Received: by 2002:a05:600c:4896:: with SMTP id j22mr11406985wmp.156.1620825985449;
+        Wed, 12 May 2021 06:26:25 -0700 (PDT)
+Received: from [192.168.1.240] (88.22.198.146.dyn.plus.net. [146.198.22.88])
+        by smtp.gmail.com with ESMTPSA id n5sm30977293wrx.31.2021.05.12.06.26.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 May 2021 06:26:25 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/1] maintenance: use systemd timers on Linux
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20210501145220.2082670-1-lenaic@lhuard.fr>
+ <20210509213217.449489-1-lenaic@lhuard.fr>
+ <20210509213217.449489-2-lenaic@lhuard.fr> <YJiKXRywBhhGXC5Q@danh.dev>
+ <CAPig+cQdU_0uPKDkbuz3XqdYePAMNPcF_u+Enx+qfgRGvtiseA@mail.gmail.com>
+ <xmqqtunbqf5o.fsf@gitster.g> <YJsheKt/UBJNtgv1@danh.dev>
+ <609b7cd397063_6e0fc2082c@natae.notmuch>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <c676b6e7-e152-ef8b-c29d-3835a3899ffa@gmail.com>
+Date:   Wed, 12 May 2021 14:26:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
+In-Reply-To: <609b7cd397063_6e0fc2082c@natae.notmuch>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y2cks3lt.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 12 May 2021 11:04 +0200, Ævar Arnfjörð Bjarmason wrote:
->
->On Tue, May 11 2021, Gregory Anders wrote:
->
->> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
->> index 93708aefea..d9fe8cb7c0 100644
->> --- a/Documentation/git-send-email.txt
->> +++ b/Documentation/git-send-email.txt
->> @@ -159,13 +159,23 @@ Sending
->>  ~~~~~~~
->>
->>  --envelope-sender=<address>::
->> -	Specify the envelope sender used to send the emails.
->> -	This is useful if your default address is not the address that is
->> -	subscribed to a list. In order to use the 'From' address, set the
->> -	value to "auto". If you use the sendmail binary, you must have
->> -	suitable privileges for the -f parameter.  Default is the value of the
->> -	`sendemail.envelopeSender` configuration variable; if that is
->> -	unspecified, choosing the envelope sender is left to your MTA.
->> +	Specify the envelope sender used to send the emails.  This is
->> +	useful if your default address is not the address that is
->> +	subscribed to a list. In order to use the 'From' address, set
->> +	the value to "auto". If you use the sendmail binary, you must
->> +	have suitable privileges for the -f parameter.  Default is the
->> +	value of the `sendemail.envelopeSender` configuration variable;
->> +	if that is unspecified, choosing the envelope sender is left to
->> +	your MTA.
->
->Please don't include word-wrapping for unrelated changes in the main
->patch.
+On 12/05/2021 07:59, Felipe Contreras wrote:
+> Đoàn Trần Công Danh wrote:
+>> Yes, dependence on systemd should be strictly opt-in.
+>> Although, I don't use systemd-based distro, so it is irrelevant to me.
+>> I think it's none of Git (the project) business to decide which
+>> scheduler should be given higher priority. It's crontab when
+>> maintenance was introduced, it should be crontab, now.
+> 
+> I do use a systemd-based distro, and I like the option to use systemd
+> units, but let's be honest...
+> 
+> 100% of systems with systemd have cron...
 
-My mistake, this has been pointed out to me multiple times now. I'll 
-remove it in the next revision and I'll be sure to avoid this in the 
-future.
+This is untrue, as the commit message points out cron is optional on 
+systems running systemd and there are distributions such as Arch Linux 
+that do not install a cron daemon without explicit user intervention.
 
->
->> -	$smtp_server ||= 'localhost'; # could be 127.0.0.1, too... *shrug*
->> +
->> +	if (!defined $sendmail_command) {
->> +		$smtp_server = 'localhost'; # could be 127.0.0.1, too... *shrug*
->> +	}
->>  }
->
->This "let's not accept a 0" change seems unrelated & should be split
->into a prep cleanup / refactoring patch. On the one hand it's sensible,
->on the other nobody cares about having a command named "0" in their path
->(or a hostname), so I think it's fine to have the ||= Perl idiom leak
->out here.
->
->But also, this just seems like confusing logic. Per your docs "your
->sendmailCommand has precedence over smtpServer.".
->
->Why not make this "if not $sendmail_command" part of the top-level check
->here (the if this one is nested under), which is only done if
->$smtp_sever is not defined, if $sendmail_command is defined we don't
->care about $smtp_server later on, no?
-
-I mostly left this the way it is to minimize the diff, as this is the 
-style the code was already written in. I agree that explicitly checking 
-whether sendmail_command is undefined is probably clearer to the reader.
-
->
->>  if ($compose && $compose > 0) {
->> @@ -1490,14 +1497,15 @@ sub send_message {
->>
->>  	unshift (@sendmail_parameters, @smtp_server_options);
->>
->> +	if (file_name_is_absolute($smtp_server)) {
->> +		# Preserved for backward compatibility
->> +		$sendmail_command ||= $smtp_server;
->> +	}
->> +
->>  	if ($dry_run) {
->>  		# We don't want to send the email.
->> -	} elsif (file_name_is_absolute($smtp_server)) {
->> -		my $pid = open my $sm, '|-';
->> -		defined $pid or die $!;
->> -		if (!$pid) {
->> -			exec($smtp_server, @sendmail_parameters) or die $!;
->> -		}
->> +	} elsif (defined $sendmail_command) {
->> +		open my $sm, '|-', "$sendmail_command @sendmail_parameters";
->
->Can we really not avoid moving from exec-as-list so Perl quotes
->everything, to doing our own interpolation here? It looks like the tests
->don't check arguments with whitespace (which should fail with this
->change).
->
-
-Shell interpolation in this case is considered a feature, not a bug, 
-i.e. we want to provide users the ability to use arbitrary shell 
-expressions (as they do in e.g. aliases) or pass arguments. I also 
-modeled this after the implementation for --to-cmd and --cc-cmd, which 
-also run their respective commands in the shell just like this.
-
-Also, this *did* cause the tests to fail since the tests write output to 
-a path with a space in it. You'll notice that in the diff for the tests 
-I had to wrap '$(pwd)/fake.sendmail' in additional quotes to resolve 
-this.
-
->> @@ -1592,14 +1600,14 @@ sub send_message {
->>  		printf($dry_run ? __("Dry-Sent %s\n") : __("Sent %s\n"), $subject);
->>  	} else {
->>  		print($dry_run ? __("Dry-OK. Log says:\n") : __("OK. Log says:\n"));
->> -		if (!file_name_is_absolute($smtp_server)) {
->> +		if (defined $sendmail_command) {
->> +			print "Sendmail: $sendmail_command ".join(' ',@sendmail_parameters)."\n";
->> +		} else {
->>  			print "Server: $smtp_server\n";
->>  			print "MAIL FROM:<$raw_from>\n";
->>  			foreach my $entry (@recipients) {
->>  			    print "RCPT TO:<$entry>\n";
->>  			}
->> -		} else {
->> -			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
->>  		}
->>  		print $header, "\n";
->>  		if ($smtp) {
->
->Minor nit: Let's just continue to use "if (!" here to keep the diff
->minimal or split up such refactoring into another change...
-
-Sure, I can do that.
-
-Thanks for your feedback.
+  So...
+> 
