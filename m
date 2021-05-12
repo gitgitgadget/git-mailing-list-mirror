@@ -2,166 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10593C433ED
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0A8EC433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:57:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8981613C9
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:45:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 915EA613F3
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:57:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230433AbhELIqX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 04:46:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40834 "EHLO
+        id S230481AbhELI6h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 04:58:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230295AbhELIqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 04:46:20 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D17BEC061574
-        for <git@vger.kernel.org>; Wed, 12 May 2021 01:45:11 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id q5so3290915wrs.4
-        for <git@vger.kernel.org>; Wed, 12 May 2021 01:45:11 -0700 (PDT)
+        with ESMTP id S230310AbhELI6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 04:58:37 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527E0C061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 01:57:28 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id s20so28328315ejr.9
+        for <git@vger.kernel.org>; Wed, 12 May 2021 01:57:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uaxz/Ph376cOwdcyhQVUjYs6MUELYpvJZseTEzqx/cY=;
-        b=KjSUs3X2umeiyLf/ojS0FIh9bFDKbyyMrH6sd3PVOfz6kkdb3U5L/mjsImc6g6mRXb
-         FWWo26iESEOv6VnyGW02yu2JGA6NnKEUAa3WAIO9Wihlp9frS5CNlCydVnGv1HCcRqdj
-         qcYdwU9wPd/m93xSokUR+K8+BBgG40nrmESBbj+R2z+q4jPR7mKfvMnDPEr1LDE+0f2C
-         qumFuBZ+Ybgs9fUoBUgBE8e53d/jAEIq/hv0lp3JPX9PskKip7mfeG7U7VMt2/0sYZ7s
-         SOpDT5kq1YPlqFJjXz2eupxyrC0IyAN+WsSnS1O5oJkw8vEIZiGy3S7mm6KX00h7IS9r
-         1gsw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=KiMG8XftnpzS+GyvXsllkOtYjAkX0YDji4kIby5h9tI=;
+        b=txeNjVcIYC26Dfs21rVyXqqHfUr+DImuUV+8D6hCeqv5wXWHhMYCZg8cuRy9eZL58f
+         mfbEKf7RW1xF5c7Gr+qD6M+LasKlRDDlioIHG74jeL4vo+Ec1ILQH0hrwQ8EhzSHMeIx
+         HCDbMTPzzx4qJTb5RIMG8UfQwW8ysEQjiIbF/g9h/Zr5KDTeIhSkdRcxxPQ5/VJf3sPI
+         DNIBIPfBLcIajWRHVHwLAZd3EDqMhn/UkVkcVo2qYGLVdJrnV+zG8gMVoANzNdYEC6e6
+         X4GIJZaY0YSsSezdWNFX5/Nkwp7lV/wg9+sFaGbm0Cfzu2KLhxQLi3kEPUr+E8/3grkQ
+         ESuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uaxz/Ph376cOwdcyhQVUjYs6MUELYpvJZseTEzqx/cY=;
-        b=mOWOlhMy71sv+U8jzjSajkSefGclvsi9TrCaiRfjyXd+GB1h4iCMy9DziVIewa6okv
-         gwNVV7R81o+SgQs2nD/IGDc9iaLwMzeOZeUb7SI4NC43dEoVvvC58JSC8iqTmO/hFTzm
-         dP4PSMQZ34pbgmL0HWmUVlUvrVh5eWK6Ib3IdB2BvIfBNG1Pt6NR0n/1XRV8YGpreOC3
-         8Dl/TNkJFkTTrNA9X8Q1kCFdQM8IqSbMX78sIXCZA8DW+anU6qzm8Gl+idCciLjmWvaC
-         dZFrZTpr8GYH6ytF+lhsDjPYkJ2GRHm9mKKHy6vuddhBcue5Ue20hpCR2ribgMJr/F3J
-         gZIg==
-X-Gm-Message-State: AOAM532XRlk/Oyxn39dZY7KEm0Xh3lrs/WSjOSRrn0fZGH6uRL45lDp6
-        o5NeAEo6vWyTbvEkKwJSEQ6NuQTR3MULZg==
-X-Google-Smtp-Source: ABdhPJzqvrL2Mi+aV0P/sRRnSaCQL2jZLgQQVppLH/+UNk3cATwL6xOfLlRREBXeuTvE2Fh1xvJfBw==
-X-Received: by 2002:a5d:5306:: with SMTP id e6mr6856373wrv.324.1620809110391;
-        Wed, 12 May 2021 01:45:10 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p17sm30284051wru.1.2021.05.12.01.45.09
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=KiMG8XftnpzS+GyvXsllkOtYjAkX0YDji4kIby5h9tI=;
+        b=RfVO3VuduE0jeoKTvgsOxtXyktqfI78kFmJviHxEACumFwa/fPJyW/6emCVJ/2xSK5
+         0WlPvfc58TTJ7HLrR2xvNaiqD8R8pY8IrSyrOB/dszGnaGayfDmckaQnLMjfYVOM5lF3
+         dSNDdv2rRlR7h1nSZUjXTCU1rLjSfra4EquZKz5GoEjmE0rO/4Ge520Zpayt+ALF3Q42
+         erctLtwUwM5pCBX1B89Be7yWDREciQm4M+J6wpPbs0jJvO8dS1FAy2yttOjwDuKDFR4P
+         sGXd+nyjxHmJlYqmhIgccLUn/GwhBlhpwvchineYRktC1xBHepFG1TzeV303bmiPmTog
+         ek4A==
+X-Gm-Message-State: AOAM531srrvshhNG2zdnUPN2g8r7e2OovSV0trnAMtx5fqA3Zyp2C7a6
+        eWpogYPoHQwSJqzna8PWHNI=
+X-Google-Smtp-Source: ABdhPJxK6zojxx/lS8PvAirtfoCfzOYr/KkAetbWXaQEdmY6rvhXAFrQgyRGFRIiFCY2HHfVBhOdLA==
+X-Received: by 2002:a17:906:2b0c:: with SMTP id a12mr36247282ejg.473.1620809846860;
+        Wed, 12 May 2021 01:57:26 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id o3sm17337975edr.84.2021.05.12.01.57.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 May 2021 01:45:10 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Dave Huseby <dwh@linuxprogrammer.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] SubmittingPatches: remove pine-specific hints from MUA hints
-Date:   Wed, 12 May 2021 10:45:02 +0200
-Message-Id: <patch-3.3-9da5bc4a0c-20210512T084137Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.1.909.g789bb6d90e
-In-Reply-To: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
-References: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
+        Wed, 12 May 2021 01:57:26 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dave Huseby <dwh@linuxprogrammer.org>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        felipe.contreras@gmail.com, gitster@pobox.com, stefanmoch@mail.de
+Subject: Re: [PATCH v2] Writing down mail list etiquette.
+Date:   Wed, 12 May 2021 10:45:39 +0200
+References: <20210512025447.6068-1-dwh@linuxprogrammer.org>
+ <20210512031821.6498-1-dwh@linuxprogrammer.org>
+ <20210512031821.6498-2-dwh@linuxprogrammer.org>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210512031821.6498-2-dwh@linuxprogrammer.org>
+Message-ID: <871ractjm1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the whole section about configuring pine with
-no-strip-whitespace-before-send.
 
-There hasn't been a release of Pine since late 2005, in Alpine the
-no-strip-whitespace-before-send switch is already the default.
+On Tue, May 11 2021, Dave Huseby wrote:
 
-This documentation was initially added in 9740d289ee7 (Update
-SubmittingPatches to add MUA specific notes., 2005-08-26), at this
-point it's safe to say that it's not useful to anyone anymore, let's
-remove it.
+> After violating a few unspoken etiquette rules that were spotted by
+> Christian Couder <christian.couder@gmail.com>, Filipe Contreras
+> <felipe.contreras@gmail.com> suggested that somebody write a guide.
+> Since I was the latest cause of this perenial discussion, I took it upon
+> myself to learn from my mistakes and document the fixes.
+>
+> Thanks to Junio <gitster@pobox.com> for providing links to similar
+> discussions in the past and Stefan Moch <stefanmoch@mail.de> for
+> pointing out where the related documentation already existed in the
+> tree.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/SubmittingPatches | 56 ---------------------------------
- 1 file changed, 56 deletions(-)
+Improvements in this area are most needed, so thanks for working on
+this.
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 2aa217da9c..e616d20556 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -498,62 +498,6 @@ first patch.\n", if you really want to put in the patch e-mail,
- should come after the three-dash line that signals the end of the
- commit message.
- 
--
--=== Pine
--
--(Johannes Schindelin)
--
--....
--I don't know how many people still use pine, but for those poor
--souls it may be good to mention that the quell-flowed-text is
--needed for recent versions.
--
--... the "no-strip-whitespace-before-send" option, too. AFAIK it
--was introduced in 4.60.
--....
--
--(Linus Torvalds)
--
--....
--And 4.58 needs at least this.
--
--diff-tree 8326dd8350be64ac7fc805f6563a1d61ad10d32c (from e886a61f76edf5410573e92e38ce22974f9c40f1)
--Author: Linus Torvalds <torvalds@g5.osdl.org>
--Date:   Mon Aug 15 17:23:51 2005 -0700
--
--    Fix pine whitespace-corruption bug
--
--    There's no excuse for unconditionally removing whitespace from
--    the pico buffers on close.
--
--diff --git a/pico/pico.c b/pico/pico.c
----- a/pico/pico.c
--+++ b/pico/pico.c
--@@ -219,7 +219,9 @@ PICO *pm;
--	    switch(pico_all_done){	/* prepare for/handle final events */
--	      case COMP_EXIT :		/* already confirmed */
--		packheader();
--+#if 0
--		stripwhitespace();
--+#endif
--		c |= COMP_EXIT;
--		break;
--....
--
--(Daniel Barkalow)
--
--....
--> A patch to SubmittingPatches, MUA specific help section for
--> users of Pine 4.63 would be very much appreciated.
--
--Ah, it looks like a recent version changed the default behavior to do the
--right thing, and inverted the sense of the configuration option. (Either
--that or Gentoo did it.) So you need to set the
--"no-strip-whitespace-before-send" option, unless the option you have is
--"strip-whitespace-before-send", in which case you should avoid checking
--it.
--....
--
- === Thunderbird, KMail, GMail
- 
- See the MUA-SPECIFIC HINTS section of linkgit:git-format-patch[1].
--- 
-2.31.1.909.g789bb6d90e
+We should not have a new file describing this though, we already cover
+the content you're adding here partially in
+Documentation/SubmittingPatches, and some more in
+Documentation/MyFirstContribution.txt (e.g. a passing mention of
+in-reply-to etiquette), with this applied we'd have discussion of these
+related topics in three places.
 
+I had some rough WIP patches to update Documentation/SubmittingPatches
+to address some of what you're adding here, which I've discarded, but I
+submitted some related patches just now as [1].
+
+As you can see from that topic we e.g. already have MUA-specific tips in
+Documentation/SubmittingPatches, your addition of a section discussing
+mutt's config here is another thing we'd be duplicating/unnecessarily
+splitting across multiple places.
+
+I do think it's going to be hard to update SubmittingPatches, for
+example it has a long section going on about the specific format of
+patches to craft for the ML, as if anyone's using anything other than
+git-format-patch these days (it was written before that existed/was as
+established).
+
+I suspect though that any suggestion to simply remove most/all of that
+for simplicity will probably be met with (IMO unwarranted resistance),
+which is why I gave up on this the other day before even submitting
+patches to the ML.
+
+But regardless of that, the post-image after your patch of having
+another place we discuss the same/related topic would be worse, we
+really should have one canonical guide, so your patch(es) should be
+amending/splitting Documentation/SubmittingPatches, not duplicating it.
+
+1. https://lore.kernel.org/git/cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com/
