@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6DCBC43460
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2B9DC433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77EFF60FE6
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:48:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A16B961040
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbhELNtu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 09:49:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52880 "EHLO
+        id S231308AbhELNtw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 09:49:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231166AbhELNto (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231182AbhELNto (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 May 2021 09:49:44 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D25C06138A
-        for <git@vger.kernel.org>; Wed, 12 May 2021 06:48:34 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id t18so23711828wry.1
-        for <git@vger.kernel.org>; Wed, 12 May 2021 06:48:34 -0700 (PDT)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDFCC061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:48:36 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id b19-20020a05600c06d3b029014258a636e8so3081606wmn.2
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hwbnWD3Bl014IacyafllGwqxnOLBvjeMJ+tEHyBKC0M=;
-        b=j/lFFEbBpzgAf9UvnvMKfFS6DusUQsu591HKl6Oy5nfQTbiuG6HoOinS01svW67Him
-         UnyUS0CtjF4MyAYNpZ7tpn48/wj6HcVCe2xisaEFwvVYLdwVa7WkmX9kz44NT5LT0n0c
-         MSBj1FtY3uHsd2TiA9/QHpntpnNsa11qCsO82sCf3XPWJV/iag+qhK7E6hBX6deeBMeM
-         SkjveV/4Mj9m2QSgmSGw8/Luo738FPT9XgEIKMfsG+Zio2GO3QM0gfc1Z98dIpLbpqEo
-         R2Y7/2KRQO4GdGdvqMeExSIxIiVfI2uOFN3g1+9uQR25LZZZEJMrNnhLsAL6mP6eNBWT
-         d9Gg==
+        bh=hMBc0k8GsPu5lUaY9RoSIKmGYK8M1KP5ub7m7/1DxYE=;
+        b=Gg5U6lNNXnIkZgPPnVZCtCXuP8viW+jl1OTGRX4fvsbLiPNQNL3pSVUMDbMoMDEqjL
+         Rn3UW9yJbXepVb/0EDG9h5YFniCz41UWmAw1cvmJn4ljG5r4CXx6o9r7kUbjzmtMsg4w
+         g7hwTyWIbsf47Z3TA/FSXPXhWXdPzYd+QL3mjqVPYsDVZj5dmIGxmNR1mIkziPxUcjPL
+         EaiKl25jdvnSygFUd18uBf1zsESLDq/gKXChNOMCqaB1ZPFRvgSDu/sY505dS6AUQB0F
+         6sDEorxi7EZv44/YmC/45Z3Q2m0MKqyCXNL5O8WfD3/wtw1Z06QQ3gQW/u1vAhvjddX3
+         aVaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hwbnWD3Bl014IacyafllGwqxnOLBvjeMJ+tEHyBKC0M=;
-        b=VbNkbLrlIfsMzoyRMo/NcaF8LvoCoUNg9xrDzkaTAfwvAz2GrHyKi5+2OHFvu0N2R+
-         SJiR/+FskFgJiQypH+001OqgxK1BRzxPXTEy3oV595qxAMLaJ8z5tkSDv7sQVtultrLU
-         Kyiz+FqTzm/RjEGnPzL2AkamYhUbXsNv0mGKkC0bIYw0tnxbxATDsIbJAyDcFxrP0/xc
-         4OGAV0uX5H+m4KZkF0ZcdSnyZPDdQ7S0Fmml9Kd9+kbucErZDEh24ztvFMblrAEr2Adq
-         XahEmzSZMvmvOYwjZstumohEeZmMfHbRjpyCtuZsvxMNMQP3ipwDidzHK60iF2CVruJs
-         cwPQ==
-X-Gm-Message-State: AOAM530D5GEcjvSj8F2sx4meBgKpa2frsZoi+lc9AWAK9xFkyz6mRH29
-        Pu7TJaESCa9nvLW3SV1KGKDbhNAAiamU5g==
-X-Google-Smtp-Source: ABdhPJzRuclffzsff1d9nG9TOzAKiI1RbbJ0AUfPafl/MYDc4pUT/09o6tgdG0pnGA0YD9PU+MIu5w==
-X-Received: by 2002:a5d:64c6:: with SMTP id f6mr45947321wri.18.1620827313246;
-        Wed, 12 May 2021 06:48:33 -0700 (PDT)
+        bh=hMBc0k8GsPu5lUaY9RoSIKmGYK8M1KP5ub7m7/1DxYE=;
+        b=FtLS4XN789IeyGhKis+mstZslpID6/N1oUWqiVltJ8ovcwtnfLlov7YqXb3xbn+YYM
+         ZUA3quig45RCej1R/BJfJvLYDs1BV+oNX+KyCljcG7mkSGJiw6ztIA5EeaIeaOx47MQC
+         4IE8x26peMlpXtY9RqijypwfP3lxJJByG5WRKbhfP/GsknVfnHHC3BTJXI4W+ojAhnxl
+         ey0sz2rCpYQQBRUL4gPM7rOMMflicGHyDcp5nnN6EXUUU0zK36OiIIAoL/rSZYYq9sJD
+         OCi1p3wASk4JG9aOqU7c0omyj1s4ynmisf4LPw0xA4IO0y/kNp1b+sPyXFeMSLUJJGZ0
+         SV2g==
+X-Gm-Message-State: AOAM532ZRrd1C9H66GXLBDPZui0HGWK9nfai49zHfCeuDKCwA7DnKfKp
+        QIe3FE474pjgMUxI6S/VM/QRIAfFmfoMfA==
+X-Google-Smtp-Source: ABdhPJzltUaLnnxOnqnXOjP1GZml06su52NQot+WqHRFJ57AWiX5WaKE0bqMD1M/idMOszRk6dzOvQ==
+X-Received: by 2002:a1c:1b43:: with SMTP id b64mr11616319wmb.178.1620827314169;
+        Wed, 12 May 2021 06:48:34 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2sm31416612wmb.32.2021.05.12.06.48.32
+        by smtp.gmail.com with ESMTPSA id n2sm31416612wmb.32.2021.05.12.06.48.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 May 2021 06:48:32 -0700 (PDT)
+        Wed, 12 May 2021 06:48:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 7/9] send-email: lazily load modules for a big speedup
-Date:   Wed, 12 May 2021 15:48:23 +0200
-Message-Id: <patch-7.9-55a0b07062-20210512T132955Z-avarab@gmail.com>
+Subject: [PATCH 8/9] perl: lazily load some common Git.pm setup code
+Date:   Wed, 12 May 2021 15:48:24 +0200
+Message-Id: <patch-8.9-2312346f71-20210512T132955Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.909.g789bb6d90e
 In-Reply-To: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
 References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
@@ -78,222 +78,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Optimize the time git-send-email takes to do even the simplest of
-things (such as serving up "-h") from around ~150ms to ~80ms-~90ms by
-lazily loading the modules it requires.
+Instead of unconditionally requiring modules such as File::Spec, let's
+only load them when needed. This speeds up code that only needs a
+subset of the features Git.pm provides.
 
-Before this change Devel::TraceUse would report 99/97 used modules
-under NO_GETTEXT=[|Y], respectively. Now it's 52/37. It now takes ~15s
-to run t9001-send-email.sh, down from ~20s.
+This brings a plain invocation of "git send-email" down from 52/37
+loaded modules under NO_GETTEXT=[|Y] to 39/18, and it now takes
+~60-~70ms instead of ~80-~90ms. The runtime of t9001-send-email.sh
+test is down to ~13s from ~15s.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl | 70 +++++++++++++++++++++++++--------------------
- 1 file changed, 39 insertions(+), 31 deletions(-)
+ perl/Git.pm | 35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f9c780ceed..907dc1425f 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -19,20 +19,10 @@
- use 5.008;
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 06a10b175a..f18852fb09 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -11,9 +11,6 @@ package Git;
  use strict;
- use warnings;
--use POSIX qw/strftime/;
--use Term::ReadLine;
- use Getopt::Long;
--use Text::ParseWords;
--use Term::ANSIColor;
--use File::Temp qw/ tempdir tempfile /;
--use File::Spec::Functions qw(catdir catfile);
+ use warnings $ENV{GIT_PERL_FATAL_WARNINGS} ? qw(FATAL all) : ();
+ 
+-use File::Temp ();
+-use File::Spec ();
+-
+ BEGIN {
+ 
+ our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
+@@ -103,12 +100,9 @@ =head1 DESCRIPTION
+ =cut
+ 
+ 
+-use Carp qw(carp croak); # but croak is bad - throw instead
++sub carp { require Carp; goto &Carp::carp }
++sub croak { require Carp; goto &Carp::croak }
  use Git::LoadCPAN::Error qw(:try);
 -use Cwd qw(abs_path cwd);
- use Git;
- use Git::I18N;
--use Net::Domain ();
--use Net::SMTP ();
--use Git::LoadCPAN::Mail::Address;
- 
- Getopt::Long::Configure qw/ pass_through /;
- 
-@@ -166,7 +156,6 @@ sub format_2822_time {
- 		       );
+-use IPC::Open2 qw(open2);
+-use Fcntl qw(SEEK_SET SEEK_CUR);
+-use Time::Local qw(timegm);
  }
  
--my $have_email_valid = eval { require Email::Valid; 1 };
- my $smtp;
- my $auth;
- my $num_sent = 0;
-@@ -192,14 +181,6 @@ sub format_2822_time {
  
- my $repo = eval { Git->repository() };
- my @repo = $repo ? ($repo) : ();
--my $term = eval {
--	$ENV{"GIT_SEND_EMAIL_NOTTY"}
--		? Term::ReadLine->new('git-send-email', \*STDIN, \*STDOUT)
--		: Term::ReadLine->new('git-send-email');
--};
--if ($@) {
--	$term = FakeTerm->new("$@: going non-interactive");
--}
+@@ -191,13 +185,15 @@ sub repository {
+ 			$dir = undef;
+ 		};
  
- # Behavior modification variables
- my ($quiet, $dry_run) = (0, 0);
-@@ -309,9 +290,10 @@ sub do_edit {
++		require Cwd;
+ 		if ($dir) {
++			require File::Spec;
+ 			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
+-			$opts{Repository} = abs_path($dir);
++			$opts{Repository} = Cwd::abs_path($dir);
  
- # Handle Uncouth Termination
- sub signal_handler {
-+	require Term::ANSIColor;
+ 			# If --git-dir went ok, this shouldn't die either.
+ 			my $prefix = $search->command_oneline('rev-parse', '--show-prefix');
+-			$dir = abs_path($opts{Directory}) . '/';
++			$dir = Cwd::abs_path($opts{Directory}) . '/';
+ 			if ($prefix) {
+ 				if (substr($dir, -length($prefix)) ne $prefix) {
+ 					throw Error::Simple("rev-parse confused me - $dir does not have trailing $prefix");
+@@ -223,7 +219,7 @@ sub repository {
+ 				throw Error::Simple("fatal: Not a git repository: $dir");
+ 			}
  
- 	# Make text normal
--	print color("reset"), "\n";
-+	print Term::ANSIColor::color("reset"), "\n";
+-			$opts{Repository} = abs_path($dir);
++			$opts{Repository} = Cwd::abs_path($dir);
+ 		}
  
- 	# SMTP password masked
- 	system "stty echo";
-@@ -574,11 +556,13 @@ sub read_config {
- }
- 
- sub parse_address_line {
-+	require Git::LoadCPAN::Mail::Address;
- 	return map { $_->format } Mail::Address->parse($_[0]);
- }
- 
- sub split_addrs {
--	return quotewords('\s*,\s*', 1, @_);
-+	require Text::ParseWords;
-+	return Text::ParseWords::quotewords('\s*,\s*', 1, @_);
- }
- 
- my %aliases;
-@@ -627,10 +611,11 @@ sub parse_sendmail_aliases {
- 			s/\\"/"/g foreach @addr;
- 			$aliases{$alias} = \@addr
- 		}}},
--	mailrc => sub { my $fh = shift; while (<$fh>) {
-+	mailrc => sub {	my $fh = shift; while (<$fh>) {
- 		if (/^alias\s+(\S+)\s+(.*?)\s*$/) {
-+			require Text::ParseWords;
- 			# spaces delimit multiple addresses
--			$aliases{$1} = [ quotewords('\s+', 0, $2) ];
-+			$aliases{$1} = [ Text::ParseWords::quotewords('\s+', 0, $2) ];
- 		}}},
- 	pine => sub { my $fh = shift; my $f='\t[^\t]*';
- 	        for (my $x = ''; defined($x); $x = $_) {
-@@ -702,7 +687,8 @@ sub is_format_patch_arg {
- 		opendir my $dh, $f
- 			or die sprintf(__("Failed to opendir %s: %s"), $f, $!);
- 
--		push @files, grep { -f $_ } map { catfile($f, $_) }
-+		require File::Spec;
-+		push @files, grep { -f $_ } map { File::Spec->catfile($f, $_) }
- 				sort readdir $dh;
- 		closedir $dh;
- 	} elsif ((-f $f or -p $f) and !is_format_patch_arg($f)) {
-@@ -715,7 +701,8 @@ sub is_format_patch_arg {
- if (@rev_list_opts) {
- 	die __("Cannot run git format-patch from outside a repository\n")
- 		unless $repo;
--	push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP => 1), @rev_list_opts);
-+	require File::Temp;
-+	push @files, $repo->command('format-patch', '-o', File::Temp::tempdir(CLEANUP => 1), @rev_list_opts);
- }
- 
- @files = handle_backup_files(@files);
-@@ -752,9 +739,10 @@ sub get_patch_subject {
- if ($compose) {
- 	# Note that this does not need to be secure, but we will make a small
- 	# effort to have it be unique
-+	require File::Temp;
- 	$compose_filename = ($repo ?
--		tempfile(".gitsendemail.msg.XXXXXX", DIR => $repo->repo_path()) :
--		tempfile(".gitsendemail.msg.XXXXXX", DIR => "."))[1];
-+		File::Temp::tempfile(".gitsendemail.msg.XXXXXX", DIR => $repo->repo_path()) :
-+		File::Temp::tempfile(".gitsendemail.msg.XXXXXX", DIR => "."))[1];
- 	open my $c, ">", $compose_filename
- 		or die sprintf(__("Failed to open for writing %s: %s"), $compose_filename, $!);
- 
-@@ -861,6 +849,19 @@ sub get_patch_subject {
- 	do_edit(@files);
- }
- 
-+sub term {
-+	my $term = eval {
-+		require Term::ReadLine;
-+		$ENV{"GIT_SEND_EMAIL_NOTTY"}
-+			? Term::ReadLine->new('git-send-email', \*STDIN, \*STDOUT)
-+			: Term::ReadLine->new('git-send-email');
-+	};
-+	if ($@) {
-+		$term = FakeTerm->new("$@: going non-interactive");
-+	}
-+	return $term;
-+}
-+
- sub ask {
- 	my ($prompt, %arg) = @_;
- 	my $valid_re = $arg{valid_re};
-@@ -868,6 +869,7 @@ sub ask {
- 	my $confirm_only = $arg{confirm_only};
- 	my $resp;
- 	my $i = 0;
-+	my $term = term();
- 	return defined $default ? $default : undef
- 		unless defined $term->IN and defined fileno($term->IN) and
- 		       defined $term->OUT and defined fileno($term->OUT);
-@@ -1048,6 +1050,7 @@ sub extract_valid_address {
- 	return $address if ($address =~ /^($local_part_regexp)$/);
- 
- 	$address =~ s/^\s*<(.*)>\s*$/$1/;
-+	my $have_email_valid = eval { require Email::Valid; 1 };
- 	if ($have_email_valid) {
- 		return scalar Email::Valid->address($address);
+ 		delete $opts{Directory};
+@@ -408,10 +404,12 @@ sub command_bidi_pipe {
+ 	my $cwd_save = undef;
+ 	if ($self) {
+ 		shift;
+-		$cwd_save = cwd();
++		require Cwd;
++		$cwd_save = Cwd::cwd();
+ 		_setup_git_cmd_env($self);
  	}
-@@ -1107,7 +1110,8 @@ sub validate_address_list {
- sub make_message_id {
- 	my $uniq;
- 	if (!defined $message_id_stamp) {
--		$message_id_stamp = strftime("%Y%m%d%H%M%S.$$", gmtime(time));
-+		require POSIX;
-+		$message_id_stamp = POSIX::strftime("%Y%m%d%H%M%S.$$", gmtime(time));
- 		$message_id_serial = 0;
- 	}
- 	$message_id_serial++;
-@@ -1277,6 +1281,7 @@ sub valid_fqdn {
- sub maildomain_net {
- 	my $maildomain;
+-	$pid = open2($in, $out, 'git', @_);
++	require IPC::Open2;
++	$pid = IPC::Open2::open2($in, $out, 'git', @_);
+ 	chdir($cwd_save) if $cwd_save;
+ 	return ($pid, $in, $out, join(' ', @_));
+ }
+@@ -538,7 +536,8 @@ sub get_tz_offset {
+ 	my $t = shift || time;
+ 	my @t = localtime($t);
+ 	$t[5] += 1900;
+-	my $gm = timegm(@t);
++	require Time::Local;
++	my $gm = Time::Local::timegm(@t);
+ 	my $sign = qw( + + - )[ $gm <=> $t ];
+ 	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
+ }
+@@ -629,7 +628,8 @@ sub hooks_path {
+ 	my ($self) = @_;
  
-+	require Net::Domain;
- 	my $domain = Net::Domain::domainname();
- 	$maildomain = $domain if valid_fqdn($domain);
+ 	my $dir = $self->command_oneline('rev-parse', '--git-path', 'hooks');
+-	my $abs = abs_path($dir);
++	require Cwd;
++	my $abs = Cwd::abs_path($dir);
+ 	return $abs;
+ }
  
-@@ -1287,6 +1292,7 @@ sub maildomain_mta {
- 	my $maildomain;
+@@ -1353,6 +1353,7 @@ sub _temp_cache {
+ 		my $n = $name;
+ 		$n =~ s/\W/_/g; # no strange chars
  
- 	for my $host (qw(mailhost localhost)) {
-+		require Net::SMTP;
- 		my $smtp = Net::SMTP->new($host);
- 		if (defined $smtp) {
- 			my $domain = $smtp->domain;
-@@ -1965,13 +1971,15 @@ sub validate_patch {
- 	my ($fn, $xfer_encoding) = @_;
++		require File::Temp;
+ 		($$temp_fd, $fname) = File::Temp::tempfile(
+ 			"Git_${n}_XXXXXX", UNLINK => 1, DIR => $tmpdir,
+ 			) or throw Error::Simple("couldn't open new temp file");
+@@ -1375,9 +1376,9 @@ sub temp_reset {
  
- 	if ($repo) {
--		my $validate_hook = catfile($repo->hooks_path(),
-+		require File::Spec;
-+		my $validate_hook = File::Spec->catfile($repo->hooks_path(),
- 					    'sendemail-validate');
- 		my $hook_error;
- 		if (-x $validate_hook) {
--			my $target = abs_path($fn);
-+			require Cwd;
-+			my $target = Cwd::abs_path($fn);
- 			# The hook needs a correct cwd and GIT_DIR.
--			my $cwd_save = cwd();
-+			my $cwd_save = Cwd::cwd();
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
+ 	truncate $temp_fd, 0
+ 		or throw Error::Simple("couldn't truncate file");
+-	sysseek($temp_fd, 0, SEEK_SET) and seek($temp_fd, 0, SEEK_SET)
++	sysseek($temp_fd, 0, Fcntl::SEEK_SET()) and seek($temp_fd, 0, Fcntl::SEEK_SET())
+ 		or throw Error::Simple("couldn't seek to beginning of file");
+-	sysseek($temp_fd, 0, SEEK_CUR) == 0 and tell($temp_fd) == 0
++	sysseek($temp_fd, 0, Fcntl::SEEK_CUR()) == 0 and tell($temp_fd) == 0
+ 		or throw Error::Simple("expected file position to be reset");
+ }
+ 
 -- 
 2.31.1.909.g789bb6d90e
 
