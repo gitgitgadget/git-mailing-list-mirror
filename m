@@ -2,116 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4689C433ED
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99698C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:49:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75B556188B
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:48:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 649FD61943
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 02:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbhELCtU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 22:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
+        id S230017AbhELCuL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 22:50:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbhELCtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 22:49:19 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8432C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 19:48:12 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id z3so19757696oib.5
-        for <git@vger.kernel.org>; Tue, 11 May 2021 19:48:12 -0700 (PDT)
+        with ESMTP id S229968AbhELCuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 22:50:10 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9187DC061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 19:49:03 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id p17so11766976plf.12
+        for <git@vger.kernel.org>; Tue, 11 May 2021 19:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=4lQovy4/Uygeek+FM0G+Ha0Gl0RC3ovLxj362MHVOBU=;
-        b=qsp9d7G1WFprt2WzqxdJuoR+kc4PjRCBT6JHhvj1m+OM/C2lz3yO978QMSaStSokLo
-         xVOFf8L3EQI7FpjH/5zQVjjOz3+0N0i3E4qrNnU2md9OQwxCSBGNvcfXY+cz3TGe3c8p
-         tuJZ5oUXJQfeToAWl1CuVWOxcpUSXTF+w5HHqaX/6EVHCChzLadq3EBf4XydvLtQX8qU
-         JSnCDg9hf4mdUmTwTEtUxDetPgwu6aQAETfdCfRmXQZHQXt6DybzbYrf4AShq4AcfgWP
-         pTHDdc2d0jZDy3CKN4umtqJ1FetUv7yOSmSt8fy0t90pF99yb4AiexXMdpzDup83zC+R
-         MHGg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=6YZW82k5E7QjtJSURLLoGgm3wdZlC81CqCRHiaDMktA=;
+        b=WU6dMvYKf062lQeJsKDdTz6CeXSy7iQc+EtIYJ5GsltaYS2/dH1fyMGxmWbMRLJ7MB
+         Eeppxu4YE8X3SOu2OmMHHlehrhwkT9qRL3qoSryok0yuryB/24BzTJJtBj9UiOOTM+e+
+         ca5cS45w30CkUdiRB4qwaLS7NY6KgyTuwwUekJoLVNvHn/+s0J9Buhl4gybXVkha0o4y
+         ancdtwjS7eR++0Zf8ZcrynKHtywtRXINyPtfv8h+DZQCO3MgEI7XuunBz2yIUP9wAsoH
+         lmEcodbnT2sTay/UXypDm9x6OhsUB7BPfCwjaparyypC8e47KSDTyfXZGEcm838DPCWg
+         YVaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=4lQovy4/Uygeek+FM0G+Ha0Gl0RC3ovLxj362MHVOBU=;
-        b=iQyW6zE/PakgGSA6tWSV0nW/MtYdlNUBGpPaKx4rQKscxqGzk7BfcCyV6/o97HaIJV
-         nzVsifpqx1BYyWGLCXYN/cxtSKB3cU1IfExuzDp8xDHRdAsNF/2mYtUv6mbr6Hnuousi
-         CggvjK0rfZ966e88wQz5QbaGwG6qfQ91MSCABuvcCIwDEp2TASUCzKYuYxTLhdi0GLVN
-         lXpHvAzNnxSyH9PnqJug6FIgVym3lp5IhhkjlibBpG/SeUKxGqIv3g/b7kiehFJb37AW
-         CS+imHTQJ1bkxF4MWIlDPcFxx5s8xPi5YO1aTr71T17Umc3HetRUC5U3JnhBYRI0BnOU
-         EDsg==
-X-Gm-Message-State: AOAM531oAGBuqhdv7HEcrJ47VIpm5mzRXOnmOFvcXPXbKhgS3vtGfoOn
-        LjCxjno7Tz/XOWzvIKy9LRyP2Bk11NiaCQ==
-X-Google-Smtp-Source: ABdhPJzuMyKlWVgrc+cMbRIGUED24Zf3NSOdlL8MObyaVgWBX+AKNTVAyrzNNt62P7pR62I5lfdKFQ==
-X-Received: by 2002:aca:df55:: with SMTP id w82mr5943650oig.25.1620787692256;
-        Tue, 11 May 2021 19:48:12 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id q1sm4309820otc.21.2021.05.11.19.48.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 19:48:11 -0700 (PDT)
-Date:   Tue, 11 May 2021 21:48:10 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
-        Varun Varada <varuncvarada@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Message-ID: <609b41ea9a75a_678ff2085d@natae.notmuch>
-In-Reply-To: <20210510173502.GH12700@kitsune.suse.cz>
-References: <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
- <YGzoX9OeWMKXpqtf@coredump.intra.peff.net>
- <CAD2i4DDNZ+oOgtp8dcgqwUjtwaTYnNmg2E0oC88ZDW3LYMBiRw@mail.gmail.com>
- <CAD2i4DCtqxziTy5TPjG+U8EGC+8daJGXjpVgxoJwp8__t8fqxQ@mail.gmail.com>
- <20210428085838.GN6564@kitsune.suse.cz>
- <CAD2i4DASL-ZAsLm=_U53zvqMaAC_AOsGnTe-H=XQsfnftgb=rA@mail.gmail.com>
- <20210428184956.GS6564@kitsune.suse.cz>
- <CAD2i4DCLpvAuwp5UEDcPA0wzr4Eg_qhs_xXDW1eLiOwYkUvL1g@mail.gmail.com>
- <20210430075924.GB6564@kitsune.suse.cz>
- <CAD2i4DBSajgNFCwMMDv_tyQwuKDU095avmHs=BHcrAY1GbCqwA@mail.gmail.com>
- <20210510173502.GH12700@kitsune.suse.cz>
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6YZW82k5E7QjtJSURLLoGgm3wdZlC81CqCRHiaDMktA=;
+        b=kUlQWUA4MiKMla4yL5wNQ96olQsU4cxjN0QCqjTQ7LQ0/1xw3C5dcEifoCZN1KhbWg
+         6bT2n70EU+e+QYPJVtzVKQut9K9tTakDugC4hwhHPwCeMuchu5vLInCD/sjzjlo2FKx/
+         brH+DShL5txoEmw7R1wzD22PUbOq9dFoQO0EZd+LuMrSPK92346crnYgGZYlEBom/laa
+         4P98aaKl5nOcyKCoJtRBtG5l22N4N1xgOa2Wy3tmIxp/YdMln/SH9PiaN6xIQYsMettu
+         B/vtANNu2XJfbcSV9NVJjWPgv7QTZdgaRDiK6nr0PTWDy5ppHSjCEb98484blVlgxoUU
+         +z5A==
+X-Gm-Message-State: AOAM530moHl7LwWFUEjL4Q3iE99M+YN3CjqMOl2FTyFJIYs3T3wLBPav
+        xvzK3aAPidltVzSzrULrQv8=
+X-Google-Smtp-Source: ABdhPJw7OOhd7bv6gmF2KRXCdqxCm8UTZiruWfROtAH+RrrTXjbax7yrodVawbdSoSUFhe7pNLkDLA==
+X-Received: by 2002:a17:902:c104:b029:ef:836e:15d6 with SMTP id 4-20020a170902c104b02900ef836e15d6mr507528pli.39.1620787743048;
+        Tue, 11 May 2021 19:49:03 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-46.three.co.id. [116.206.28.46])
+        by smtp.gmail.com with ESMTPSA id i5sm2642248pfd.159.2021.05.11.19.49.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 May 2021 19:49:02 -0700 (PDT)
+Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210512021138.63598-1-sandals@crustytoothpaste.net>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
+Date:   Wed, 12 May 2021 09:48:59 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
+MIME-Version: 1.0
+In-Reply-To: <20210512021138.63598-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Such=C3=A1nek wrote:
-> On Mon, May 10, 2021 at 12:19:05PM -0500, Varun Varada wrote:
+On 12/05/21 09.11, brian m. carlson wrote:
+> From: Felipe Contreras <felipe.contreras@gmail.com>
+> 
+> Asciidoctor contains a converter to generate man pages.  In some
+> environments, where building only the manual pages and not the other
+> documentation is desired, installing a toolchain for building
+> DocBook-based manual pages may be burdensome, and using Asciidoctor
+> directly may be easier, so let's add an option to build manual pages
+> using Asciidoctor without the DocBook toolchain.
 
-> It refers to redundant changes to the codebase which do not improve it =
-in
-> any way.
+I have concern: I currently generate manpages with Asciidoctor+xmlto. Does
+this change affects people using xmlto?
 
-This is not the codebase, and what does or not "improve in any way"
-the status quo is relative to who you ask.
+> We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
+> contain proper handling of the apostrophe, which is controlled normally
+> by the GNU_ROFF option.  This option for the DocBook toolchain, as well
+> as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
+> instead of a Unicode apostrophe in text, so as to make copy and pasting
+> commands easier.  These newer versions of Asciidoctor detect groff and
+> do the right thing in all cases, so the GNU_ROFF option is obsolete in
+> this case.
 
-> > As for there being no distinction, there's no gradation within the
-> > semantics of this context; this doesn't change the semantics of the
-> > words themselves. Using "impact" when what is meant is just "effect"
-> > or "affect" is incorrect in all such instances.
-> =
+At what version of Asciidoctor the apostrophe handling is corrected?
 
-> That's your opinion not shared by the authors of the text.
+> We also need to update the code that tells Asciidoctor how to format our
+> linkgit macros so that it can output proper code for man pages.  Be
+> careful to reset the font to the previous after the change.  In order to
+> do so, we must reset to the previous after each font change so the
+> previous state at the end is the state before our inserted text, since
+> troff only remembers one previous font.
+> 
+> Because Asciidoctor versions before 2.0 had a few problems with man page
+> output, let's default this to off for now, since some common distros are
+> still on 1.5.  If users are using a more modern toolchain or don't care
+> about the rendering issues, they can enable the option.
 
-How do you know? Have you asked them?
+Maybe when distros upgraded shipped Asciidoctor version to 2.0, we can
+bump the version requirement.
 
-Just because person A wrote text X doesn't necessarily mean they think
-their version is superior to any and all future suggestions of
-improvment.
+> Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> I've preserved Felipe's authorship on this patch because much of it is
+> his work.  However, I have made some substantial changes here with which
+> I suspect he will disagree, in addition to expanding on the commit
+> message, so if he would prefer, I can reroll with the authorship
+> changed.  I have no preference myself.
+> 
+>   Documentation/Makefile                  | 10 ++++++++++
+>   Documentation/asciidoctor-extensions.rb |  2 ++
+>   Makefile                                |  3 +++
+>   3 files changed, 15 insertions(+)
+> 
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 2aae4c9cbb..536d9a5f3d 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -196,6 +196,9 @@ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+>   DBLATEX_COMMON =
+>   XMLTO_EXTRA += --skip-validation
+>   XMLTO_EXTRA += -x manpage.xsl
+> +ifdef USE_ASCIIDOCTOR_MANPAGE
+> +TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
+I think "ASCIIDOCTOR_TO_MAN" would be good alternative name here, since
+this command generates manpage from asciidoctor.
+> +endif
+>   endif
+>   
+>   SHELL_PATH ?= $(SHELL)
+> @@ -367,9 +370,16 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf asciidoctor-extensions.rb GIT-AS
+>   manpage-base-url.xsl: manpage-base-url.xsl.in
+>   	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+>   
+> +ifdef TXT_TO_MAN
+> +%.1 %.5 %.7 : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+> +	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> +	$(TXT_TO_MAN) -o $@+ $< && \
+> +	mv $@+ $@
+> +else
+>   %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+>   	$(QUIET_XMLTO)$(RM) $@ && \
+>   	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+> +endif
+>   
+>   %.xml : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+>   	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
+> index d906a00803..40fa87b121 100644
+> --- a/Documentation/asciidoctor-extensions.rb
+> +++ b/Documentation/asciidoctor-extensions.rb
+> @@ -15,6 +15,8 @@ module Git
+>             "#{target}(#{attrs[1]})</ulink>"
+>           elsif parent.document.basebackend? 'html'
+>             %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
+> +        elsif parent.document.basebackend? 'manpage'
+> +          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
+>           elsif parent.document.basebackend? 'docbook'
+>             "<citerefentry>\n" \
+>               "<refentrytitle>#{target}</refentrytitle>" \
+> diff --git a/Makefile b/Makefile
+> index 93664d6714..cb75dec314 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -285,6 +285,9 @@ all::
+>   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
+>   # documentation.
+>   #
+> +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
+> +# instead of building manual pages from DocBook.
+> +#
+The wording should be "...instead of building manual pages from DocBook with
+xmlto".
+>   # Define ASCIIDOCTOR_EXTENSIONS_LAB to point to the location of the Asciidoctor
+>   # Extensions Lab if you have it available.
+>   #
+> 
 
-> The authority you refer to is MIT which is known for technical
-> brilliance but not as authority on linguistics.
+Thanks for my review.
 
-The MIT hosted Noam Chomsky for many decadates. Are you really arguing
-Noam Chomsky is not an authority in linguistics?
-
--- =
-
-Felipe Contreras=
+-- 
+An old man doll... just what I always wanted! - Clara
