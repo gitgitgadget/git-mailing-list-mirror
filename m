@@ -2,199 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39291C41602
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 16:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EADCC2BD0F
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 16:45:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0451E61C43
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 16:07:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BD5E6121E
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 16:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230428AbhELQIK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 12:08:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51184 "EHLO
+        id S234910AbhELQqI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 12:46:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231777AbhELPvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 11:51:07 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D799AC06175F
-        for <git@vger.kernel.org>; Wed, 12 May 2021 08:24:49 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id r26-20020a056830121ab02902a5ff1c9b81so20890029otp.11
-        for <git@vger.kernel.org>; Wed, 12 May 2021 08:24:49 -0700 (PDT)
+        with ESMTP id S234326AbhELQIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 12:08:20 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D475C03460E
+        for <git@vger.kernel.org>; Wed, 12 May 2021 08:41:49 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id k15so5700505pgb.10
+        for <git@vger.kernel.org>; Wed, 12 May 2021 08:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nZ41p6+TfUNGlHIw7SM76tgQFJ/Tojb1XwO1q/OBTLE=;
-        b=J/jMZX/tDc5rb8ehXFvh04dlFJ0yJodgqXNyRpf24upFv5Fbkh0fuNHOkhO4nEQ1ow
-         l8ZIXrW9YOPGE5gO2HzWHtA5f08l77gHViUbaPwuEsD2eas7FvyvGFimcpyoqjDokiEr
-         7E64p+fn9iDOTLULfQ7ICwc5BZ76+5LT3pguMjCHki8Ebwn9TXXbfIVYCmmYJprR+DcV
-         Ai7/HAIVFzlemgzJf9LxkJ/EXz40O6U2G7dfB03zJSA2aL2ziICrJqRv2YzKYDe+areR
-         QwQfQuIBi/oh6iU6+7zFDRs+yDoerZFPPX4rTYBINLMhUrC8aP0roUKLc1OMvFsD8eO/
-         W2dg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pCmAhXu7LgFdklzTKis2avgQBkG8Zji1OGF3iHTIqRw=;
+        b=s5WQ21JNEhu8OUPqKdt4FY4jxo3g8uvt3PTstX98ELI8s+x/ryqRQNlgDTCyBdSY2e
+         wkQTTbZ1i0DFOS5zs+en32X5Ntk1SGWnFeNiNw9JDUygiEJJDmAfMPADAuQnnd5frAD1
+         sYbxeNXGsUK+gAadv6Tiyzev4KDuoQQDxLpr/PW1VVCx+Tkpte6EbRJiR5T8XEadTjjw
+         aIFaUpWmMO0W8pUEVvRyJoyOvdor9atpDM2NntkYKNEi45rAZ94u5gW0QE8l3nz8+F6o
+         hscfeKFupaIa1TOpnoc+lAuOsHV+Lbn9ozOT7UNRT3sZGxRSHDUZn1h7V8vrU1ZELrWQ
+         IyUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nZ41p6+TfUNGlHIw7SM76tgQFJ/Tojb1XwO1q/OBTLE=;
-        b=m5wSB0NLM4XSXSNpoq8gODKNtUS94jS0fnRlDIkCZz4VXFHD1/jjFDdokfdrzliICI
-         Opwk1JVWGRsLY/bk9mDeqj2dxvexOR+tGULPm+ZcOBazEzPvFfT7plCYM12J4ZTz2Gr7
-         MhgvP9VbmgdcGATWiEBYliydW5wNQlSdyQqxQmVkyOh0ez0JsOokB4JM6bczrQL+zCOm
-         z7kQCYq/svR5WrziTyNJBzu7U5u364SWBYY+un0d6cTGPC8/nHZle4BOJQK4iVSsTc95
-         wcudS/ySmLWDKaY2Px5maD4qcdPREMCVRLZwER/1XGXstDHEp7/+Wy9e0E7kAhdViDZy
-         W0gQ==
-X-Gm-Message-State: AOAM532sONCHXo1CU6BSbjxkPffa18wO/MqQwxs5mXhh87zGc1UHKr/q
-        oTbG74xFe3E5LGF0a/kdJM4ujknsjXc5EkVrDV8=
-X-Google-Smtp-Source: ABdhPJxjOD9B5+1xfxl/th3O3jwgGX9jxsjGiAPsemORu10L00cU+3MbPSkJ8+WISupvf9wkkXPup262KQZ/RV8yxvk=
-X-Received: by 2002:a9d:7096:: with SMTP id l22mr23958106otj.345.1620833089282;
- Wed, 12 May 2021 08:24:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
- <pull.1020.v4.git.git.1620758049.gitgitgadget@gmail.com> <9204e36b7e9035c4cdda018d7ced8e8ca7acc8bc.1620758049.git.gitgitgadget@gmail.com>
- <df3695ad-5ba7-df22-2a2a-ca799c5d16d8@jeffhostetler.com> <CABPp-BGeOUOvYRD+gX4jVR0kN8O5_icKtT18F9BdeR424DjUmg@mail.gmail.com>
- <a01ffeaf-31de-fdf5-3992-bea40feb1213@jeffhostetler.com> <CABPp-BF9ptJio+NSi-i-sQJqjsOiKfFxzVHQ=RTPQkV9hjPrMQ@mail.gmail.com>
- <d9690dfc-2883-6f0a-e66b-89066b660c8d@jeffhostetler.com>
-In-Reply-To: <d9690dfc-2883-6f0a-e66b-89066b660c8d@jeffhostetler.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 12 May 2021 08:24:37 -0700
-Message-ID: <CABPp-BHSoEqy2R=X3dRzPykMQH7Pie_bMqo79Y+CR1bUoYXLfA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/8] dir: convert trace calls to trace2 equivalents
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pCmAhXu7LgFdklzTKis2avgQBkG8Zji1OGF3iHTIqRw=;
+        b=cBpgwy5dP8xkE3JzoZaBV8dndI6CktXVwolH/C8ICJO1CtjRoD59ZnDkRkaPsYn/B2
+         +NpAMKmWwjUuNQyZTMVDKP235enkfe3ptn1eNb6h4+IDW6SevtiaXojzXgU0fkgOEBTM
+         Rk/WoRM4qv6eknFwmLES0taACdUMH+uztx53m47kkfoKn6OCHYpSRwXDR7TAFO6MVV0x
+         nhBMmcSXZ0LeGrAza4zsHaU+gNJRVmpNLrfxb8rAO4x/FPDPbY1Iuia+FJ0B5NpV+Eer
+         EwPAhGWcFhsqVKQqpvpsIfRkezc0F5E8plZ+077qRP3j4RDfWpcJ2ZHDSgroy9nOglEb
+         cv0w==
+X-Gm-Message-State: AOAM530X78zVbJnEKv77kFj4YJTywyytRZypsE2mUcVsKlwdCZSgcp+D
+        LrtBApzMPzHoiuYGBOfjtr3eKwjc1dLgkb/h
+X-Google-Smtp-Source: ABdhPJxmNKysHEC3beVgs3Phzh1tSNcY0ptZe9eY9HGuVLMuS0l6rcKUcuOFQefHtpiflicSep7tEA==
+X-Received: by 2002:a05:6a00:84f:b029:2be:3b80:e9eb with SMTP id q15-20020a056a00084fb02902be3b80e9ebmr17017553pfk.39.1620834108681;
+        Wed, 12 May 2021 08:41:48 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
+        by smtp.gmail.com with ESMTPSA id b1sm233946pgf.84.2021.05.12.08.41.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 May 2021 08:41:48 -0700 (PDT)
+Date:   Wed, 12 May 2021 22:41:46 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 1/1] maintenance: use systemd timers on Linux
+Message-ID: <YJv3Ojt+4ZElN6JG@danh.dev>
+References: <20210501145220.2082670-1-lenaic@lhuard.fr>
+ <20210509213217.449489-1-lenaic@lhuard.fr>
+ <20210509213217.449489-2-lenaic@lhuard.fr>
+ <YJiKXRywBhhGXC5Q@danh.dev>
+ <CAPig+cQdU_0uPKDkbuz3XqdYePAMNPcF_u+Enx+qfgRGvtiseA@mail.gmail.com>
+ <xmqqtunbqf5o.fsf@gitster.g>
+ <YJsheKt/UBJNtgv1@danh.dev>
+ <fbfd503b-d822-e9df-f766-cc70941fdec1@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fbfd503b-d822-e9df-f766-cc70941fdec1@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 12, 2021 at 5:26 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
->
-> On 5/11/21 8:44 PM, Elijah Newren wrote:
-> > On Tue, May 11, 2021 at 4:12 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> >>
-> >> On 5/11/21 4:12 PM, Elijah Newren wrote:
-> >>> On Tue, May 11, 2021 at 12:06 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> >>>>
-> >>>> On 5/11/21 2:34 PM, Elijah Newren via GitGitGadget wrote:
-> >>>>> From: Elijah Newren <newren@gmail.com>
-> >>>>>
-> >>>>> Signed-off-by: Elijah Newren <newren@gmail.com>
-> >>>>> ---
-> >>>>>     dir.c                             |  43 +++++--
-> >>>>>     t/t7063-status-untracked-cache.sh | 205 ++++++++++++++++++------------
-> >>>>>     t/t7519-status-fsmonitor.sh       |   8 +-
-> >>>>>     3 files changed, 155 insertions(+), 101 deletions(-)
-> >>>>>
-> >>>>> diff --git a/dir.c b/dir.c
-> >>>>> index 3474e67e8f3c..122fcbffdf89 100644
-> >>>>> --- a/dir.c
-> >>>>> +++ b/dir.c
-> >>>>> @@ -2760,15 +2760,34 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
-> >>>>>         return root;
-> >>>>>     }
-> >>>>>
-> >>>>> +static void trace2_read_directory_statistics(struct dir_struct *dir,
-> >>>>> +                                          struct repository *repo,
-> >>>>> +                                          const char *path)
-> >>>>> +{
-> >>>>> +     if (!dir->untracked)
-> >>>>> +             return;
-> >>>>> +     trace2_data_string("read_directory", repo, "path", path);
-> >>>>
-> >>>> I'm probably just nit-picking here, but should this look more like:
-> >>>
-> >>> nit-picking and questions are totally fine.  :-)  Thanks for reviewing.
-> >>>
-> >>>>
-> >>>>           if (path && *path)
-> >>>>                   trace2_data_string(...)
-> >>>
-> >>> path is always non-NULL (it'd be an error to call read_directory()
-> >>> with a NULL path).  So the first part of the check isn't meaningful
-> >>> for this particular code.  The second half is interesting.  Do we want
-> >>> to omit the path when it happens to be the toplevel directory (the
-> >>> case where !*path)?  The original trace_performance_leave() calls
-> >>> certainly didn't, and I was just trying to provide the same info they
-> >>> do, as you suggested.  I guess people could determine the path by
-> >>> knowing that the code doesn't print it when it's empty, but do we want
-> >>> trace2 users to need to read the code to figure out statistics and
-> >>> info?
-> >>
-> >> that's fine.  it might be easier to just always print it (even if
-> >> blank) so that post-processors know that rather than have to assume
-> >> it.
-> >>
-> >>>
-> >>>>           if (!dir->untracked)
-> >>>>                   return;
-> >>>>
-> >>>> Then when you add the visitied fields in the next commit,
-> >>>> you'll have the path with them (when present).
-> >>>
-> >>> There is always a path with them, it's just that the empty string
-> >>> denotes the toplevel directory.
-> >>>
-> >>>> (and it would let you optionally avoid the tmp strbuf in
-> >>>> the caller.)
-> >>>
-> >>> The path in read_directory() is not necessarily NUL-delimited, so
-> >>> attempting to use it as-is, or even with your checks, would cause us
-> >>> to possibly print garbage and do out-of-bounds reads.  We need the tmp
-> >>> strbuf.
-> >>>
-> >>
-> >> I just meant, "if (!len) pass NULL, else build and pass tmp.buf".
-> >
-> > Ah, gotcha, that's why you were checking non-NULL.
-> >
-> > However, what about the other case when len is nonzero.  Let's say
-> > that len = 8 and path points at
-> > "filename*%&#)aWholeBunchOfTotalGarbageAfterTheRealFilenameThatShouldNotBeReadOrIncluded\0\0\0\0\0\0\0\0\0\0"
-> > ?
-> >
-> > How do you make it print "filename" and only "filename" without the
-> > other stuff without using the tmp strbuf?
-> >
->
-> I was still saying to use the "strbuf tmp" in the non-zero len case,
-> but just pass NULL (or "") for the len==0 case.
+On 2021-05-12 14:38:26+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > Yes, dependence on systemd should be strictly opt-in.
+> > Although, I don't use systemd-based distro, so it is irrelevant to me.
+> > I think it's none of Git (the project) business to decide which
+> > scheduler should be given higher priority. It's crontab when
+> > maintenance was introduced, it should be crontab, now.
+> 
+> You seem to be simultaneously arguing that git should be neutral on the
+> choice of scheduler while saying it should prioritize crontab.
 
-Ah, now I see what you were saying.  Sorry for not getting it earlier.
+Yes, I'm arguing for git should be neutral on the choice of scheduler.
 
-> Alternatively, since `trace2_read_directory_statistics() a static
-> local function, we could move all of the path manipulation into it.
->
-> static void emit_stats(
->         struct dir_struct *dir,
->         struct repository *repo,
->         const char* path_buf,
->         size_t path_len)
-> {
->         if (!path_len)
->                 trace2_data_string("read_directory", repo,
->                         "path", "");
->         else {
->                 struct strbuf tmp = STRBUF_INIT;
->                 strbuf_add(&tmp, path_buf, path_len);
->                 trace2_data_string("read_directory", repo,
->                         "path", tmp.buf);
->                 strbuf_release(&tmp);
->         }
->         ... the rest of intmax stats ...
-> }
+No, I'm not arguing for git should be prioritize crontab, I'm arguing
+for "princible of least surprise" for no known break-through advantage.
 
-Makes sense.
+FWIW, whatever default scheduler chosen won't affect me, since I don't
+have systemd-timers to begin with. So ...
 
-> BTW, could we also rename your stats function?  I've been trying
-> to keep the "trace2_" prefix reserved for the Trace2 API.
+In addition, I was one of those people pointed out that beside
+crontab, Linux users nowaday employed different schedulers [1],
+and the consensus, some how, settled on crontab.
 
-Sure, will do.
+I think  we shouldn't switch away from crontab if we don't have any
+compelling reasons.
+
+> The commit
+> message and cover letter list a number of difficulties with the strategy of
+> prioritizing crontab over systemd when both are installed. I think we should
+> aim for the solution that has the most chance of working without user
+> intervention.
+
+The solution that has the most chance of working without user
+intervention is the solution that is the status quo. Promoting
+systemd-timers to higher priority is a solution requires either
+user intervention or our supports (which will be carried over our
+lifetime).
+
+> > Another point for eternal bikeshedding: why do we limit ourselves in
+> > crontab and systemd, how about other homebrew schedulers? What should
+> > we do if another scheduler raise to be the big star in the scheduler
+> > world?
+> 
+> We should support the default scheduler on each platform - that was the rod
+> we made for our own back when we decided to use the platform's scheduler
+> rather than having a cross platform git maintenance daemon. It just happens
+> that there are two possible default schedulers on linux so we need to
+> support both of them.
+
+As noted in [1], some home-brew solutions are very popular solutions
+among those some community.
+I'm not arguing that crontab or systemd-timers aren't popular.
+In fact, I think they're *very* popular, I listed systemd-timers as
+*first* alternative in the linked email.
+I'm not against supporting both of them, I was arguing about a generic
+solution.
+
+1: https://lore.kernel.org/git/20200407005828.GC2568@danh.dev/
+
+-- 
+Danh
