@@ -2,266 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF635C433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 04:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D661C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 04:41:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F00A6162A
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 04:19:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F250613C8
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 04:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbhELEUy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 00:20:54 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55307 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbhELEUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 00:20:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6723513F389;
-        Wed, 12 May 2021 00:19:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WwyYRKNpqweTuKbMMKMtmniiijrfi/zLrdxmfL
-        wmGzA=; b=Cz5jJXxpPcWAQrqPYUKxQhMPp5aGOwlCTDplYl/18XmJhDfb1R6Yk2
-        xAt8dpYJoAxuVfhUL7lINvvgVQRVZIfsYHMCmDYvpNpYFCgts/FOA4P5X8Hr+y9Z
-        K5+kExv2QpdRKJBAqZDgt+WKoPNEq5LV0L04pjBJX9sSQJ0VOTDTQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FA2413F388;
-        Wed, 12 May 2021 00:19:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9997A13F387;
-        Wed, 12 May 2021 00:19:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Gregory Anders <greg@gpanders.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-send-email: add sendmailCommand option
-References: <20210512033039.4022-1-greg@gpanders.com>
-Date:   Wed, 12 May 2021 13:19:41 +0900
-In-Reply-To: <20210512033039.4022-1-greg@gpanders.com> (Gregory Anders's
-        message of "Tue, 11 May 2021 21:30:40 -0600")
-Message-ID: <xmqqh7j8h9cy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4728C1A0-B2D9-11EB-AAD3-D609E328BF65-77302942!pb-smtp21.pobox.com
+        id S229682AbhELEmz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 00:42:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43288 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229495AbhELEmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 00:42:54 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B6D6C061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 21:41:47 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id p6-20020a4adc060000b02901f9a8fc324fso4691810oov.10
+        for <git@vger.kernel.org>; Tue, 11 May 2021 21:41:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=7G8SgAPgzRnu2yldXLIg2LZFhWQ2c8xf9zxkfFRJJFQ=;
+        b=S0WdN44+rQtWyEwN5trPGKxG64Qpd7ekisGQKAnmvEGDQ+MWKWLVVhsa4XK6ovOdbk
+         qsddTlnurprj3bL4QtftJICUMBft4VblcNmosuNbmyOZiDRqKApxau1bhsp3PPDTENsv
+         tRm55Ja5jCZawZMjy6ecIIr3GXzEIEr1YHSisGwVDmenFh+tBJFXi1SaPkED2D2HwvV1
+         xXCOqoML9L9UwBNe55qmvcQJ+m+6ijHoQElEyX3YOmZDWjNoda7p4l/A38hZT4f51pYK
+         OOjT/PHReqpd+teWjf4JybWnUn5n99P10y/EqI/dXDjJa5F6icJ0WaO5fTeKTLvYkFAe
+         XV8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=7G8SgAPgzRnu2yldXLIg2LZFhWQ2c8xf9zxkfFRJJFQ=;
+        b=LkzV8nQWowRRsGj0R5ZVvWeGY5LV9Gmh+s//iiPRiqzhYMYRAwoFaLqXTCvNyCO7It
+         QzZ4DZg+wqyGPO6rhG9YEGssfD/VtzYt9UqFhutn0YURnfpwUfIp5PXqjBsa+CWU4Wcw
+         vq8mXDBSgZfx81P7ZjoP+875SbhOnZ/+qIVJYsr1CHZEPMnLi4vuHJt+p+g41tI/vHly
+         GCN4bVUraLtXCeTCrejHfkNi9xZhjCtmoPZ0E7RdeClt1uf5RlQxkvBLZG2rZR4S2+e8
+         MejPeG7zCdr0B3ywjGEOUxzVMCh8gsXZ18FHG3sll0yI5TeEZFfgLtAYsCkyRK1ZyXbf
+         gLGQ==
+X-Gm-Message-State: AOAM530PHGpaM7l5gGn1IbU9JxSDCiXaMfNWKjOKuo0VJ43Lq4cTxp6g
+        +wk8sQ6VMhGhVMnthUf01C0=
+X-Google-Smtp-Source: ABdhPJyuCQxqu3UHkDCcMjUMV2UdY4XAsUBt/hyu0N/8Y4pM8jfBTkhDw+lgzPUBNt3Wuua7RZ8sfA==
+X-Received: by 2002:a4a:b24b:: with SMTP id i11mr7557443ooo.17.1620794506745;
+        Tue, 11 May 2021 21:41:46 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id v1sm4156471ott.32.2021.05.11.21.41.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 May 2021 21:41:46 -0700 (PDT)
+Date:   Tue, 11 May 2021 23:41:41 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
+Message-ID: <609b5c85b7c61_678ff20848@natae.notmuch>
+In-Reply-To: <20210512021138.63598-1-sandals@crustytoothpaste.net>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210512021138.63598-1-sandals@crustytoothpaste.net>
+Subject: RE: [PATCH 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Gregory Anders <greg@gpanders.com> writes:
+brian m. carlson wrote:
+> From: Felipe Contreras <felipe.contreras@gmail.com>
+> 
+> Asciidoctor contains a converter to generate man pages.  In some
+> environments, where building only the manual pages and not the other
+> documentation is desired, installing a toolchain for building
+> DocBook-based manual pages may be burdensome, and using Asciidoctor
+> directly may be easier, so let's add an option to build manual pages
+> using Asciidoctor without the DocBook toolchain.
+> 
+> We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
+> contain proper handling of the apostrophe, which is controlled normally
+> by the GNU_ROFF option.  This option for the DocBook toolchain, as well
+> as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
+> instead of a Unicode apostrophe in text, so as to make copy and pasting
+> commands easier.  These newer versions of Asciidoctor detect groff and
+> do the right thing in all cases, so the GNU_ROFF option is obsolete in
+> this case.
+> 
+> We also need to update the code that tells Asciidoctor how to format our
+> linkgit macros so that it can output proper code for man pages.  Be
+> careful to reset the font to the previous after the change.  In order to
+> do so, we must reset to the previous after each font change so the
+> previous state at the end is the state before our inserted text, since
+> troff only remembers one previous font.
+> 
+> Because Asciidoctor versions before 2.0 had a few problems with man page
+> output, let's default this to off for now,
 
-> The sendemail.smtpServer option currently supports using a sendmail-like
-> program to send emails by specifying an absolute file path. However,
+> since some common distros are > still on 1.5.
 
-That is not wrong per-se, but it is not limited to the configuration
-variable, but is a shared trait with --smtp-server command line
-option.  It is easier on the readers to mention both.
+Are "some common distros" namely Debian stable *exclusively*?
 
-Our problem description talks about the status quo in the present
-tense.  No noiseword "currently " necessary.  I.e. something along
-this line:
+If so, I would consider flipping the default the other way around,
+espececially since it's only te default shipped by the Debian stable
+packages (easily fixed by `gem install asciidoctor`).
 
-    The sendemail.smtpServer configuration variable (and the
-    "--smtp-server" command line option of "git send-email" command)
-    allows to name a command to run to send emails by specifying an
-    absolute path name.  However,
+> If users are using a more modern toolchain or don't care
+> about the rendering issues, they can enable the option.
 
-> this is not ideal for the following reasons:
->
-> 1. It overloads the meaning of smtpServer (now a program is being used
->    for the server?)
-> 2. It doesn't allow for non-absolute paths, arguments, or arbitrary
->    scripting.
->
-> Requiring an absolute path is bad for portability, as the same
-> program may be in different locations on different systems. If I wish
-> to pass arguments to my program, I have to use the smtpServerOption
-> option, which is cumbersome (as it must be repeated for each option)
-> and doesn't adhere to normal git conventions.
+The other way around: if users are using an ancient distribution they
+can disable the option.
 
-Up to here, nice explanation of the background and description of
-the problem being solved.
+> Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 
-> This patch attempts to solve these problems by introducing a new
-> configuration option sendemail.sendmailCommand as well as a command line
-> option --sendmail-cmd. The value of this option is invoked with the
-> standard sendmail options passed as arguments.
+Commit-message-by: brian m. carlson <sandals@crustytoothpaste.net>
 
-When presenting a potential solution, in the history of this
-project, we'd talk as if we are giving an order to the codebase to
-"be like so".
-
-    Introduce a command line option '--sendmail-cmd' and a
-    configuration variable sendemail.sendmailCommand that can be
-    used to specify the command line (possibly including its command
-    line options) to send pieces of e-mail.  This is invoked while
-    honoring $PATH, so it does not have to be named with an absolute
-    path to the command.
-
-    Give it a higher precedence over --smtp-server (and
-    sendemail.smtpServer), as the new interface is more flexible.
-
-> sendmailCommand has precedence over smtpServer. If both options are
-> unspecified, the default is to search for 'sendmail' in /usr/sbin,
-> /usr/lib, and $PATH. If not found, smtpServer is set to localhost. This
-> mimics the current behavior when smtpServer is unspecified.
-
-I do not think "If both options are unspecified" and everything
-after it is needed.
-
-> The option is passed to Perl's `exec()` function, which automatically
-> determines whether or not to invoke a shell. If shell metacharacters are
-> detected, then a shell is used; otherwise, the command is invoked
-> directly.
-
-I do not think this, and the two examples below (omitted), are
-relevant, either.
-
-The "metacharacters make the command diverted to shell" is a mere
-optimization and not of interest to the end users.  Even if
-sendemail.sendmailcommand is set to just a single word 'msmtp',
-which does not have any metacharacter, we _could_ spawn it via the
-shell and the observable end result would be the same as if the
-single word was directly executed without the shell.
-
-> This change deprecates the use of absolute paths in 
-> sendemail.smtpServer, although support is kept for backward
-> compatibility.
-
-I am on the fence about saying this.  We may eventually want to
-deprecate, but until we start issuing a warning when the
-absolute-path form is used, I'd rather not to call it "deprecated"
-in either the proposed log message or in the documenation.
+I certainly would not want to pretend to have written the text above.
 
 > ---
+> I've preserved Felipe's authorship on this patch because much of it is
+> his work.  However, I have made some substantial changes here with which
+> I suspect he will disagree, in addition to expanding on the commit
+> message, so if he would prefer, I can reroll with the authorship
+> changed.  I have no preference myself.
 
-Missing sign-off.
+Hard to tell in this frankenstein commit. I'd be fine with a
+Commit-message-by line.
 
->
-> Note that this patch is incompatible with (and supersedes) the patch
-> discussed here: 
->
->     https://public-inbox.org/git/YJs2RceLliGHI5TX@gpanders.com/T/#t
+>  Documentation/Makefile                  | 10 ++++++++++
+>  Documentation/asciidoctor-extensions.rb |  2 ++
+>  Makefile                                |  3 +++
+>  3 files changed, 15 insertions(+)
+> 
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 2aae4c9cbb..536d9a5f3d 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -196,6 +196,9 @@ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+>  DBLATEX_COMMON =
+>  XMLTO_EXTRA += --skip-validation
+>  XMLTO_EXTRA += -x manpage.xsl
+> +ifdef USE_ASCIIDOCTOR_MANPAGE
 
-Thanks---such a note is very valuable.
+I'd do:
 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 93708aefea..d9fe8cb7c0 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -159,13 +159,23 @@ Sending
->  ~~~~~~~
+  ifndef USE_ASCIIDOCTOR_XMLTO
+
+(the other way around)
+
+> +TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
+> +endif
+>  endif
 >  
->  --envelope-sender=<address>::
-> -	Specify the envelope sender used to send the emails.
-> -	This is useful if your default address is not the address that is
-> -	subscribed to a list. In order to use the 'From' address, set the
-> -	value to "auto". If you use the sendmail binary, you must have
-> -	suitable privileges for the -f parameter.  Default is the value of the
-> -	`sendemail.envelopeSender` configuration variable; if that is
-> -	unspecified, choosing the envelope sender is left to your MTA.
-> +	Specify the envelope sender used to send the emails.  This is
-> +	useful if your default address is not the address that is
-> +	subscribed to a list. In order to use the 'From' address, set
-> +	the value to "auto". If you use the sendmail binary, you must
-> +	have suitable privileges for the -f parameter.  Default is the
-> +	value of the `sendemail.envelopeSender` configuration variable;
-> +	if that is unspecified, choosing the envelope sender is left to
-> +	your MTA.
+>  SHELL_PATH ?= $(SHELL)
 
-Is this a totally unwarranted rewrapping of an unrelated part of the
-same document, or was there some words or phrases in this
-description of the envelope-sender option that needed to be adjusted
-for the introduction of sendmail-cmd option?
+> diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
+> index d906a00803..40fa87b121 100644
+> --- a/Documentation/asciidoctor-extensions.rb
+> +++ b/Documentation/asciidoctor-extensions.rb
+> @@ -15,6 +15,8 @@ module Git
+>            "#{target}(#{attrs[1]})</ulink>"
+>          elsif parent.document.basebackend? 'html'
+>            %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
+> +        elsif parent.document.basebackend? 'manpage'
+> +          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
 
-> +--sendmail-cmd=<command>::
-> +	Specify a command to run to send the email. The command should
-> +	be compatible with `sendmail` as the arguments are passed
-> +	directly.  The command will be executed in the shell if
-> +	necessary.  Default is the value of `sendemail.sendmailCommand`.
-> +	If unspecified, and if --smtp-server is also unspecified,
-> +	git-send-email will search for `sendmail` in `/usr/sbin`,
-> +	`/usr/lib` and $PATH if such a program is available.
+I still prefer my original version, especially since:
 
-OK, but doesn't this also need to support '-i'?
+ 1. I suspect most git developers are familiar with printf directives:
+    %s.
+ 2. Where is that \\fP coming from? I don't see that with xmlto, nor the
+    publicly genrated man pages[1].
+ 3. Doesn't work on my machine without my original \e; I see
+    "\fBgittutorial\fR(7)".
 
-> @@ -211,13 +221,14 @@ a password is obtained using 'git-credential'.
->  
->  --smtp-server=<host>::
->  	If set, specifies the outgoing SMTP server to use (e.g.
-> -	`smtp.example.com` or a raw IP address).  Alternatively it can
-> -	specify a full pathname of a sendmail-like program instead;
-> -	the program must support the `-i` option.  Default value can
-> -	be specified by the `sendemail.smtpServer` configuration
-> -	option; the built-in default is to search for `sendmail` in
-> -	`/usr/sbin`, `/usr/lib` and $PATH if such program is
-> -	available, falling back to `localhost` otherwise.
-> +	`smtp.example.com` or a raw IP address).  If unspecified, and if
-> +	`--sendmail-cmd` is also unspecified, the default is to search
-> +	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH if such a
-> +	program is available, falling back to `localhost` otherwise.
-> +
-> +	For backward compatibility, this option can also specify a full
-> +	pathname of a sendmail-like program instead; the program must
-> +	support the `-i` option.  Prefer using `--sendmail-cmd` instead.
+I don't see any way this is an improvement.
 
-Drop the last sentence, if we are not going to explain why.  Or
-perhaps:
+Cheers.
 
-	... an absolute path to a program that behaves like
-	`sendmail` (among other things, it must support the `-i`
-	option).  As you only can specify the path to the program
-	and cannot give any leading arguments to it, consider using
-	`--sendmail-cmd` instead.
+[1] https://git.kernel.org/pub/scm/git/git-manpages.git/tree/man1/git.1
 
-> @@ -1490,14 +1497,15 @@ sub send_message {
->  
->  	unshift (@sendmail_parameters, @smtp_server_options);
->  
-> +	if (file_name_is_absolute($smtp_server)) {
-> +		# Preserved for backward compatibility
-> +		$sendmail_command ||= $smtp_server;
-> +	}
-
-Hmph, I wonder if this makes the intent more clear.
-
-	if (!defined $sendmail_command && file_name_is_absolute($smtp_server)) {
-		$sendmail_command = $smtp_server;
-	}
-
-That is, if the user gave us the command in newer form, we do not
-even have to bother checking if the server is given as an absolute
-pathname.
-
-> @@ -1069,7 +1069,7 @@ test_expect_success $PREREQ 'utf8 Cc is rfc2047 encoded' '
->  	git send-email \
->  	--from="Example <nobody@example.com>" \
->  	--to=nobody@example.com \
-> -	--smtp-server="$(pwd)/fake.sendmail" \
-> +	--sendmail-cmd="\"$(pwd)/fake.sendmail\"" \
->  	outdir/*.patch &&
->  	grep "^	" msgtxt1 |
->  	grep "=?UTF-8?q?=C3=A0=C3=A9=C3=AC=C3=B6=C3=BA?= <utf8@example.com>"
-
-You seem to have replaced every smtp-server="$(pwd)/ mechanically
-with sendmai-cmd=\"$(pwd)/, but please make sure that we have at
-least one test left that passes an absolute path to --smtp-server to
-ensure that the old mechanism keeps working.  A bonus point for
-marking such a test that needs to be adjusted when the actual
-deprecation happens (i.e. we'd likely to detect the use of absolute
-path and throw a warning, so the test should notice the warning
-message).
-
-Also you would want to tweak some of the --sendmail-cmd variants to
-use just the command name, with and without args, to ensure that (1)
-discovery on $PATH works, and (2) passing initial args works.
-
-Thanks.
+-- 
+Felipe Contreras
