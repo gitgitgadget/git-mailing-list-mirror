@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 762E7C43460
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF09C433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:45:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42084613C8
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:45:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D36D6613C9
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 08:45:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbhELIqT (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230431AbhELIqT (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 12 May 2021 04:46:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40830 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbhELIqS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230295AbhELIqS (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 May 2021 04:46:18 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45983C06174A
-        for <git@vger.kernel.org>; Wed, 12 May 2021 01:45:10 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id y124-20020a1c32820000b029010c93864955so962944wmy.5
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6CFC061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 01:45:11 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id m9so22765328wrx.3
         for <git@vger.kernel.org>; Wed, 12 May 2021 01:45:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8mL+ztmzK+Rm/MAbjbRj9pPhSHscp2JWJ909HiVjFXM=;
-        b=lPAk6eSRqLZV8qmlqP7ta0LggySoZGoDqmnQnDNntWQRUZ75L5kEYokHFl9abH193G
-         NeScArJHfJ/1GnDjaKaE0w8+bmQ3I9jVt2tZNl2dtCDfC8FwNPd/vaRBDomEnVUBYXyp
-         Fni70HVk2zcg0CxxlyyL27lsG92I2wpcEW9W9him8o3t82rWQDFRzCvodpyM5UtSC+FQ
-         1r6HCvsfiJC4CcaezQEb6MRbuTkGbVKJGy8frwqM8n56IGxzEajFMk4mL302wn0Li3sO
-         ZY6ReBtRFFC61Hd4Lg26UCEdqb3ATNTP8OH6fdbw6e6+nxsHD4S3C+hGfViE4Y7ZrqNQ
-         gWoQ==
+        bh=wh7P7AR4jRhgPXq0zC3n8dfYSAFiMdgcPiNVoXXDKus=;
+        b=mqFI2M5WYUPrUsqaXqfL7PxrYnW/3AUL3bHOU7TD0aGLmNFQM9dHS/sq6PhgDwKXfM
+         gFcbte1W1XSIWoBmyWLb6+ZsP/YxlBC56BtZEgZdOmssyrBPf7nyo5n1N8HuZUsmQaQG
+         4GR9J84uu7YShdaCLqTIXjNeosAgd5VZ4kLCr4muGYrYp1Pspy7IIoYqWqrCm3rnOVyl
+         mdnT19m06KJ3d/QmFDRVmhqdsMQBKP5qXNHW6O4B2TJfixtTcLvdoFbgZJqTD2BDqWEI
+         p3KxuWzdMeD5hl5nujLGz19cI4KVBq/M7uWXvTcMqIhrnwfM0Mlm0vhDD+iA3etMuEJs
+         FYCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8mL+ztmzK+Rm/MAbjbRj9pPhSHscp2JWJ909HiVjFXM=;
-        b=g4tHMRQSpgEFDeGqNNMtLla6D7BNJbq4ohgrH9liNnH29uvW8aaMVW3P+8oRgH9PPs
-         7hVjdH5BfOxbGo0vMXx/WFWKiWGjZfAgTzgXENUgwXDH5XqythpdHjF7BaLDnsG6o8XQ
-         2N3fSad4f+ZoPCtnauORrGK5gThR/wortlwFDygEYhU9JaNnxaZOsflrxIi9Fd26kuYm
-         5CJ5niH2KwkjZNtwuZak3lFW7Z1hvQQNQ9Nr2b7EowRQ6PZ0ggOWkIhUXsxpJwUrqDXJ
-         t8Iq97W/tSD4wJSZyuciR2f/jN203RAiP4tW27m+6vg1CGXergdT84v5mWyhDyWaI9wj
-         aUSA==
-X-Gm-Message-State: AOAM53383Fuqj3oG+SluecrNVtV5e7WOSoeYmaMR3+Wy7KhubGrCtJf8
-        JpvPP6ByjBZ8nUQZI5Ujrpx1hi43A5LVYA==
-X-Google-Smtp-Source: ABdhPJxI/r5xYbQFbnVx0qiTbWN9aXTF3X6XhlNK4BKTljvtU2rWnTR0nAmCG+cq+olZ2fZxXGqOsg==
-X-Received: by 2002:a05:600c:499a:: with SMTP id h26mr36589737wmp.176.1620809108605;
-        Wed, 12 May 2021 01:45:08 -0700 (PDT)
+        bh=wh7P7AR4jRhgPXq0zC3n8dfYSAFiMdgcPiNVoXXDKus=;
+        b=Bu9Stgx/RoCgYTcHtdGZT0C0u39uSrXSTTWAr07qbciUTm/BLwlVgnB3dpwxxIV+Eb
+         ptQ51WWwRbssMEe96WQw+JpN2wJ+BqBg4r7NMXec+vOJUvKUGLE+2SZUnkGLRyihSqH2
+         MWJ+cHNLkCh5gATWyNcs2100M7YUB6ojuXM0SlMj8WU0iGmGUCC0Vs8aanMwMbPkWXpy
+         lSgBMpUpDIALhfyT5SOtmUVAZhuonxIE5ewRnDGWhWmvKwNL1dnCQbjwvySYH/cRQwjF
+         eGhuvBpy7wQRFknhQhkVfdjoHYX/fc/50JQE1efjvFn5u5gcWspBYyn0xMhWSsoviOjG
+         HoNg==
+X-Gm-Message-State: AOAM532SlXOgoTtNg5IujwEojbgCvTTdCxtAepHCjnwNuaN+NIZe478F
+        XfDhtqfrXxnocn/slRkCxOhCpUZnWFRzRQ==
+X-Google-Smtp-Source: ABdhPJyvNgvt0kB2GlPGegjWXOX7XMNN0wfYKd+Ex+IaImXRxmEdXTr/yKamE/SrvDflar1zwu1H4A==
+X-Received: by 2002:adf:e84a:: with SMTP id d10mr43839628wrn.132.1620809109508;
+        Wed, 12 May 2021 01:45:09 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p17sm30284051wru.1.2021.05.12.01.45.07
+        by smtp.gmail.com with ESMTPSA id p17sm30284051wru.1.2021.05.12.01.45.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 May 2021 01:45:07 -0700 (PDT)
+        Wed, 12 May 2021 01:45:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <congdanhqx@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/3] SubmittingPatches: move discussion of Signed-off-by above "send"
-Date:   Wed, 12 May 2021 10:45:00 +0200
-Message-Id: <patch-1.3-d18a3caa07-20210512T084137Z-avarab@gmail.com>
+Subject: [PATCH 2/3] SubmittingPatches: replace discussion of Travis with GitHub Actions
+Date:   Wed, 12 May 2021 10:45:01 +0200
+Message-Id: <patch-2.3-7add00cc87-20210512T084137Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.1.909.g789bb6d90e
 In-Reply-To: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
 References: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
@@ -79,198 +79,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the section discussing the addition of a SOB trailer above the
-section that discusses generating the patch itself. This makes sense
-as we don't want someone to go through the process of "git
-format-patch", only to realize late that they should have used "git
-commit -s" or equivalent.
+Replace the discussion of Travis CI added in
+0e5d028a7a0 (Documentation: add setup instructions for Travis CI,
+2016-05-02) with something that covers the GitHub Actions added in
+889cacb6897 (ci: configure GitHub Actions for CI/PR, 2020-04-11).
 
-This is a move-only change, no lines here are are being altered, only
-moved around.
+The setup is trivial compared to using Travis, and it even works on
+Windows (that "hopefully soon" comment was probably out-of-date on
+Travis as well).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/SubmittingPatches | 160 ++++++++++++++++----------------
- 1 file changed, 80 insertions(+), 80 deletions(-)
+ Documentation/SubmittingPatches | 44 ++++++++++++---------------------
+ 1 file changed, 16 insertions(+), 28 deletions(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 55287d72e0..2643062624 100644
+index 2643062624..2aa217da9c 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -167,6 +167,86 @@ or, on an older version of Git without support for --pretty=reference:
- 	git show -s --date=short --pretty='format:%h (%s, %ad)' <commit>
- ....
+@@ -74,10 +74,9 @@ the feature triggers the new behavior when it should, and to show the
+ feature does not trigger when it shouldn't.  After any code change, make
+ sure that the entire test suite passes.
  
-+[[sign-off]]
-+=== Certify your work by adding your `Signed-off-by` trailer
-+
-+To improve tracking of who did what, we ask you to certify that you
-+wrote the patch or have the right to pass it on under the same license
-+as ours, by "signing off" your patch.  Without sign-off, we cannot
-+accept your patches.
-+
-+If (and only if) you certify the below D-C-O:
-+
-+[[dco]]
-+.Developer's Certificate of Origin 1.1
-+____
-+By making a contribution to this project, I certify that:
-+
-+a. The contribution was created in whole or in part by me and I
-+   have the right to submit it under the open source license
-+   indicated in the file; or
-+
-+b. The contribution is based upon previous work that, to the best
-+   of my knowledge, is covered under an appropriate open source
-+   license and I have the right under that license to submit that
-+   work with modifications, whether created in whole or in part
-+   by me, under the same open source license (unless I am
-+   permitted to submit under a different license), as indicated
-+   in the file; or
-+
-+c. The contribution was provided directly to me by some other
-+   person who certified (a), (b) or (c) and I have not modified
-+   it.
-+
-+d. I understand and agree that this project and the contribution
-+   are public and that a record of the contribution (including all
-+   personal information I submit with it, including my sign-off) is
-+   maintained indefinitely and may be redistributed consistent with
-+   this project or the open source license(s) involved.
-+____
-+
-+you add a "Signed-off-by" trailer to your commit, that looks like
-+this:
-+
-+....
-+	Signed-off-by: Random J Developer <random@developer.example.org>
-+....
-+
-+This line can be added by Git if you run the git-commit command with
-+the -s option.
-+
-+Notice that you can place your own `Signed-off-by` trailer when
-+forwarding somebody else's patch with the above rules for
-+D-C-O.  Indeed you are encouraged to do so.  Do not forget to
-+place an in-body "From: " line at the beginning to properly attribute
-+the change to its true author (see (2) above).
-+
-+This procedure originally came from the Linux kernel project, so our
-+rule is quite similar to theirs, but what exactly it means to sign-off
-+your patch differs from project to project, so it may be different
-+from that of the project you are accustomed to.
-+
-+[[real-name]]
-+Also notice that a real name is used in the `Signed-off-by` trailer. Please
-+don't hide your real name.
-+
-+[[commit-trailers]]
-+If you like, you can put extra tags at the end:
-+
-+. `Reported-by:` is used to credit someone who found the bug that
-+  the patch attempts to fix.
-+. `Acked-by:` says that the person who is more familiar with the area
-+  the patch attempts to modify liked the patch.
-+. `Reviewed-by:`, unlike the other tags, can only be offered by the
-+  reviewer and means that she is completely satisfied that the patch
-+  is ready for application.  It is usually offered only after a
-+  detailed review.
-+. `Tested-by:` is used to indicate that the person applied the patch
-+  and found it to have the desired effect.
-+
-+You can also create your own tag or use one that's in common usage
-+such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
-+
- [[git-tools]]
- === Generate your patch using Git tools out of your commits.
+-If you have an account at GitHub (and you can get one for free to work
+-on open source projects), you can use their Travis CI integration to
+-test your changes on Linux, Mac (and hopefully soon Windows).  See
+-GitHub-Travis CI hints section for details.
++If you have an account at GitHub pushing to a fork of
++https://github.com/git/git will use their CI integration to test your
++changes on Linux, Mac and Windows. See the GitHub CI section for details.
  
-@@ -302,86 +382,6 @@ Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:` and
- `Tested-by:` lines as necessary to credit people who helped your
- patch, and "cc:" them when sending such a final version for inclusion.
+ Do not forget to update the documentation to describe the updated
+ behavior and make sure that the resulting documentation set formats
+@@ -451,12 +450,12 @@ their trees themselves.
+   the status of various proposed changes.
  
--[[sign-off]]
--=== Certify your work by adding your `Signed-off-by` trailer
--
--To improve tracking of who did what, we ask you to certify that you
--wrote the patch or have the right to pass it on under the same license
--as ours, by "signing off" your patch.  Without sign-off, we cannot
--accept your patches.
--
--If (and only if) you certify the below D-C-O:
--
--[[dco]]
--.Developer's Certificate of Origin 1.1
--____
--By making a contribution to this project, I certify that:
--
--a. The contribution was created in whole or in part by me and I
--   have the right to submit it under the open source license
--   indicated in the file; or
--
--b. The contribution is based upon previous work that, to the best
--   of my knowledge, is covered under an appropriate open source
--   license and I have the right under that license to submit that
--   work with modifications, whether created in whole or in part
--   by me, under the same open source license (unless I am
--   permitted to submit under a different license), as indicated
--   in the file; or
--
--c. The contribution was provided directly to me by some other
--   person who certified (a), (b) or (c) and I have not modified
--   it.
--
--d. I understand and agree that this project and the contribution
--   are public and that a record of the contribution (including all
--   personal information I submit with it, including my sign-off) is
--   maintained indefinitely and may be redistributed consistent with
--   this project or the open source license(s) involved.
--____
--
--you add a "Signed-off-by" trailer to your commit, that looks like
--this:
--
--....
--	Signed-off-by: Random J Developer <random@developer.example.org>
--....
--
--This line can be added by Git if you run the git-commit command with
--the -s option.
--
--Notice that you can place your own `Signed-off-by` trailer when
--forwarding somebody else's patch with the above rules for
--D-C-O.  Indeed you are encouraged to do so.  Do not forget to
--place an in-body "From: " line at the beginning to properly attribute
--the change to its true author (see (2) above).
--
--This procedure originally came from the Linux kernel project, so our
--rule is quite similar to theirs, but what exactly it means to sign-off
--your patch differs from project to project, so it may be different
--from that of the project you are accustomed to.
--
--[[real-name]]
--Also notice that a real name is used in the `Signed-off-by` trailer. Please
--don't hide your real name.
--
--[[commit-trailers]]
--If you like, you can put extra tags at the end:
--
--. `Reported-by:` is used to credit someone who found the bug that
--  the patch attempts to fix.
--. `Acked-by:` says that the person who is more familiar with the area
--  the patch attempts to modify liked the patch.
--. `Reviewed-by:`, unlike the other tags, can only be offered by the
--  reviewer and means that she is completely satisfied that the patch
--  is ready for application.  It is usually offered only after a
--  detailed review.
--. `Tested-by:` is used to indicate that the person applied the patch
--  and found it to have the desired effect.
--
--You can also create your own tag or use one that's in common usage
--such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
--
- == Subsystems with dedicated maintainers
+ [[travis]]
+-== GitHub-Travis CI hints
++== GitHub CI
  
- Some parts of the system have dedicated maintainers with their own
+-With an account at GitHub (you can get one for free to work on open
+-source projects), you can use Travis CI to test your changes on Linux,
+-Mac (and hopefully soon Windows).  You can find a successful example
+-test build here: https://travis-ci.org/git/git/builds/120473209
++With an account at GitHub you can use GitHub CI to test your changes
++on Linux, Mac and Windows. See
++https://github.com/git/git/actions/workflows/main.yml for examples of
++recent CI runs.
+ 
+ Follow these steps for the initial setup:
+ 
+@@ -464,31 +463,20 @@ Follow these steps for the initial setup:
+   You can find detailed instructions how to fork here:
+   https://help.github.com/articles/fork-a-repo/
+ 
+-. Open the Travis CI website: https://travis-ci.org
+-
+-. Press the "Sign in with GitHub" button.
+-
+-. Grant Travis CI permissions to access your GitHub account.
+-  You can find more information about the required permissions here:
+-  https://docs.travis-ci.com/user/github-oauth-scopes
+-
+-. Open your Travis CI profile page: https://travis-ci.org/profile
+-
+ . Enable Travis CI builds for your Git fork.
+ 
+ After the initial setup, Travis CI will run whenever you push new changes
+ to your fork of Git on GitHub.  You can monitor the test state of all your
+-branches here: https://travis-ci.org/__<Your GitHub handle>__/git/branches
++branches here: https://github.com/<Your GitHub handle>/git/actions/workflows/main.yml
+ 
+ If a branch did not pass all test cases then it is marked with a red
+-cross.  In that case you can click on the failing Travis CI job and
+-scroll all the way down in the log.  Find the line "<-- Click here to see
+-detailed test output!" and click on the triangle next to the log line
+-number to expand the detailed test output.  Here is such a failing
+-example: https://travis-ci.org/git/git/jobs/122676187
+-
+-Fix the problem and push your fix to your Git fork.  This will trigger
+-a new Travis CI build to ensure all tests pass.
++cross. In that case you can click on the failing job and navigate to
++"ci/run-build-and-tests.sh" and/or "ci/print-test-failures.sh". You
++can also download "Artifacts" which are tarred (or zipped) archives
++with test data relevant for debugging.
++
++Then fix the problem and push your fix to your Github fork. This will
++trigger a new CI build to ensure all tests pass.
+ 
+ [[mua]]
+ == MUA specific hints
 -- 
 2.31.1.909.g789bb6d90e
 
