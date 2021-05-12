@@ -2,136 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AAA1C43600
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1D35C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:42:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 290896193E
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:30:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B197F616ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbhELGbd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 02:31:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52040 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229626AbhELGbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 02:31:31 -0400
-Received: (qmail 26550 invoked by uid 109); 12 May 2021 06:30:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 May 2021 06:30:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2599 invoked by uid 111); 12 May 2021 06:30:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 May 2021 02:30:23 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 May 2021 02:30:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-Message-ID: <YJt1/DO1cXNTRNxK@coredump.intra.peff.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210512021138.63598-1-sandals@crustytoothpaste.net>
- <YJt0Dv7HP2VnLLwv@coredump.intra.peff.net>
+        id S230018AbhELGnr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 02:43:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229580AbhELGnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 02:43:46 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 503BCC061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 23:42:39 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id q2so17757656pfh.13
+        for <git@vger.kernel.org>; Tue, 11 May 2021 23:42:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5Ma99Vjwb7pKPSlMiIJew1BqJYZmDeaYiYct3GTiqcs=;
+        b=mKhZuI3iZKUumrV6JPoLWyoxUeDa7EIu9UDBgw1fCvbggC6EB8/v8eUCQQGImmaKV9
+         RfRwod2eeKTkMk8Zza3JZiWNYU6IEPUOXaNeQ2RIZSAPmYFBsj/QJxCKgdOzmE4kQvD3
+         Df0kebheEC+E4CaAoKi1r2qAKeuY+/CcoYP7yMxBhDBRS7UBPBNKRCEN3LYLlx8VjIYE
+         8Zdhni7N2wt7NjyxgBrSbD8zmsE8mSEy3XZT+YdK3t0JhascO1cviiQ+dsjsmXZSdNER
+         Z6Ob3tpT1F1qbLe+/j4mXrMxXF7nekVqBincT7LJ5caR8Jw629Bc4YnO5mZZAtYpWYDp
+         MYUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5Ma99Vjwb7pKPSlMiIJew1BqJYZmDeaYiYct3GTiqcs=;
+        b=Byeg1scy3FidJ5LpSsc6B0lhzwgJFK2WJf3suHeRg2yEd0sh1dSGRpjgqiblawt5sj
+         OepE/8tWuwDZsxslSNfxS+W26j8P/VWahrz6b41a466n9Iv43NwAChLnRXrpd5Mfx3n0
+         uj81VGIOlXd46WqIzq+fy05sGRl6qdVSBoaZu40kwI5kjynnXZyUJbJYmFcRlwHuIIFP
+         GFuOHL0XykXxOQhUZgxaMid3l0MzgNQgv2SrJFtFruY9HNBAihvWGdvBtFENz3LOsD4i
+         +tBGkDGm9TcWYapKMdQhic3NEP4er3xClkKAdwbe0YIQM4iRu9A7EA8Tl+ahaXRTzS0L
+         ynbQ==
+X-Gm-Message-State: AOAM532sdSkjioNmNJ8RR8v1TQeWFIV8IFcVURTSioOtQ6uQO2uiyCmT
+        g33qM9aauHuwL1ViCjApM8QYjElTQGgRxw==
+X-Google-Smtp-Source: ABdhPJz+C+s6wuRthyY4cJQydDyLaaARvjMaMb7ygTFI33B8ZKnpTyerc3ClLJSDP3U0JGjOEbztgQ==
+X-Received: by 2002:aa7:86d3:0:b029:291:cb2d:f91d with SMTP id h19-20020aa786d30000b0290291cb2df91dmr33835384pfo.57.1620801758469;
+        Tue, 11 May 2021 23:42:38 -0700 (PDT)
+Received: from ubuntu.mate (subs02-180-214-232-75.three.co.id. [180.214.232.75])
+        by smtp.gmail.com with ESMTPSA id j7sm3677778pjw.4.2021.05.11.23.42.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 May 2021 23:42:38 -0700 (PDT)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     git@vger.kernel.org
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>, Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [PATCH] INSTALL: note about make man with Asciidoctor backend
+Date:   Wed, 12 May 2021 13:41:29 +0700
+Message-Id: <20210512064128.15411-1-bagasdotme@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YJt0Dv7HP2VnLLwv@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 12, 2021 at 02:22:06AM -0400, Jeff King wrote:
+"make man" can now be also done with Asciidoctor's manpage backend
+instead of asciidoc+xmlto.
 
-> With that change, plus a patch I'll send in a minute, it's easy to run
-> doc-diff on the result.
+Update INSTALL to reflect that.
 
-And here that is (note that if you don't apply the flags fix I showed,
-then doc-diff gets confused, because it expects back-to-back runs of
-"make" to handle the changed flags correctly).
-
-Feel free to add it to your series if it helps (I had originally thought
-it would just be a one-off to look at the output, but there are enough
-changes, both correctness and style, that it may be useful to have this
-option around).
-
--- >8 --
-Subject: [PATCH] doc-diff: support --asciidoctor-direct mode
-
-The new option enables both asciidoctor as well as its direct-to-manpage
-mode that skips xmlto. This lets you view the rendered difference
-between the two pipelines with something like:
-
-  ./doc-diff --from-asciidoctor --to-asciidoctor-direct HEAD HEAD
-
-Note that we have to add quotes when passing around $makemanflags, as it
-now may contain whitespace due to multiple arguments (but the deference
-inside render_tree must remain unquoted, because it wants to perform
-whitespace splitting to get the individual arguments back).
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 ---
- Documentation/doc-diff | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-index 1694300e50..2c774ee954 100755
---- a/Documentation/doc-diff
-+++ b/Documentation/doc-diff
-@@ -17,10 +17,13 @@ f			force rebuild; do not rely on cached results
- c,clean			cleanup temporary working files
- from-asciidoc		use asciidoc with the 'from'-commit
- from-asciidoctor	use asciidoctor with the 'from'-commit
-+from-asciidoctor-direct use asciidoctor without xmlto for 'from'-commit
- asciidoc		use asciidoc with both commits
- to-asciidoc		use asciidoc with the 'to'-commit
- to-asciidoctor		use asciidoctor with the 'to'-commit
-+to-asciidoctor-direct   use asciidoctor without xmlto for 'to'-commit
- asciidoctor		use asciidoctor with both commits
-+asciidoctor-direct      use asciidoctor without xml for both commits
- cut-footer		cut away footer
- "
- SUBDIRECTORY_OK=1
-@@ -55,6 +58,13 @@ do
- 	--asciidoc)
- 		from_program=-asciidoc
- 		to_program=-asciidoc ;;
-+	--from-asciidoctor-direct)
-+		from_program=-asciidoctor-direct ;;
-+	--to-asciidoctor-direct)
-+		to_program=-asciidoctor-direct ;;
-+	--asciidoctor-direct)
-+		from_program=-asciidoctor-direct
-+		to_program=-asciidoctor-direct ;;
- 	--cut-footer)
- 		cut_footer=-cut-footer ;;
- 	--)
-@@ -112,6 +122,10 @@ construct_makemanflags () {
- 	elif test "$1" = "-asciidoctor"
- 	then
- 		echo USE_ASCIIDOCTOR=YesPlease
-+	elif test "$1" = "-asciidoctor-direct"
-+	then
-+		echo USE_ASCIIDOCTOR=YesPlease
-+		echo USE_ASCIIDOCTOR_MANPAGE=YesPlease
- 	fi
- }
+ This patch is based on  "doc: add an option to have Asciidoctor build
+ man pages directly" series by brian m. carlson [1]. It can be added
+ to that series.
+
+ [1]:
+https://lore.kernel.org/git/20210512021138.63598-1-sandals@crustytoothpaste.net/
+
+ INSTALL | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 66389ce059..89e31566c3 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -184,8 +184,9 @@ Issues of note:
  
-@@ -181,6 +195,6 @@ render_tree () {
- 	fi
- }
+    "make doc" builds documentation in man and html formats; there are
+    also "make man", "make html" and "make info". Note that "make html"
+-   requires asciidoc, but not xmlto. "make man" (and thus make doc)
+-   requires both.
++   requires asciidoc, but not xmlto. "make man" requires either
++   Asciidoctor or asciidoc+xmlto. "make doc" requires both asciidoc
++   and xmlto.
  
--render_tree $from_oid $from_dir $from_makemanflags &&
--render_tree $to_oid $to_dir $to_makemanflags &&
-+render_tree $from_oid $from_dir "$from_makemanflags" &&
-+render_tree $to_oid $to_dir "$to_makemanflags" &&
- git -C $tmp/rendered diff --no-index "$@" $from_dir $to_dir
+    "make install-doc" installs documentation in man format only; there
+    are also "make install-man", "make install-html" and "make
+@@ -201,6 +202,11 @@ Issues of note:
+    use Asciidoctor (requires Ruby) by passing USE_ASCIIDOCTOR=YesPlease
+    to make. You need at least Asciidoctor version 1.5.
+ 
++   You can also do "make man" using Asciidoctor's manpage backend in
++   place of xmlto by passing USE_ASCIIDOCTOR_MANPAGE=YesPlease. Version
++   2.0 or later is highly recommended, as these version properly handle
++   apostrophes.
++
+    There are also "make quick-install-doc", "make quick-install-man"
+    and "make quick-install-html" which install preformatted man pages
+    and html documentation. To use these build targets, you need to
 -- 
-2.31.1.1027.g87a751368c
+2.25.1
 
