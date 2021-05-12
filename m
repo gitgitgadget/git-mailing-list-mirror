@@ -2,117 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD88BC433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D37D4C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:17:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6946961941
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:10:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8394610A1
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:17:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbhELDLH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 23:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbhELDLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 23:11:06 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 767B9C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 20:09:58 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso19407167ote.1
-        for <git@vger.kernel.org>; Tue, 11 May 2021 20:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=xLC09sKaGCeOVR13oE4lkwbUG6tuOGBYCn9bEiGWRb0=;
-        b=YbjZ5wLZBFOVPGuVzohHUkhkV/7zH5ZFCO1kT+9myTT47DTvs7pl8JYj/aXXkNYpJx
-         uOlDSdkVFdP92MA/FVZ+3SlkG/wCGVC67N2fuTHSXLeUj+Iy6D68Bcgshzff2xwsxjl5
-         ty+1LVSl7r8ycu45jBZjH8+F3qsQy441lH3EVNDu19rcV4+reBjGIZboUw9oEch/v/pp
-         GKG/N/6BGqgsYRTY6C0w7HAQYE+1TIHLaVYLL7VkxiNKzXekFttugkbR2gtKh3zdY6+r
-         0zkKLnqNZLZ6wmFDrcZ93ihlh98ih2jZAvhcFO0252YASLC6AOjuigvHuTAa1Q3fjbEr
-         BlNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=xLC09sKaGCeOVR13oE4lkwbUG6tuOGBYCn9bEiGWRb0=;
-        b=TdRUkGcyY7ZJgjWKqiYAVI8HzH7heywspY8KnJ+uMQZG7Z5ktnMdYJQZSE31p1Djea
-         1lEN/osezV2HXhwRsmTbx4H2t1EKytnubve9x2kGPag9S1pg8wPvN0bHeYQa/jm4UNsb
-         zk92a29cDH9dn2EiI76RRrLdcGwcDjVdqGWZ39UN/uP6S5Gddnt+GrmmXc/oF6vEMrhA
-         GrRUx3pOTCwrsiuXe7fOHTqNFCLnql4xNhPWLPzwa1WkXFYYiXCVovcB8kE6LulWYvao
-         7rBPlmn4/Vfkiz4NutBNmKv/pbXggwTKUG8Y3YfZqQFyb4EYWFJSJCuF6j+8AP8ZhCbc
-         tltg==
-X-Gm-Message-State: AOAM533Ef8Jo2GZ/Rh2dzXsZowfyQJgF/VhNbiXMbMz0wtm+J3BIK8Jt
-        4C/TgWzCQdjdFRKThO+aNIL2onYM0sVF4g==
-X-Google-Smtp-Source: ABdhPJwgbPmjUwsfLvhYYDOAYBGVr1tmSq/aZ/HEjDkSu5RsxjaHV3rjHWNUvRy/RDTDSMCCTrq8gA==
-X-Received: by 2002:a05:6830:15d2:: with SMTP id j18mr29023960otr.89.1620788997947;
-        Tue, 11 May 2021 20:09:57 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id b19sm1338169oib.46.2021.05.11.20.09.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 20:09:57 -0700 (PDT)
-Date:   Tue, 11 May 2021 22:09:56 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
-Message-ID: <609b47043a719_678ff208e@natae.notmuch>
-In-Reply-To: <20210511195723.GL12700@kitsune.suse.cz>
-References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
- <20210406092440.GZ6564@kitsune.suse.cz>
- <609ad9473d535_6011e2082@natae.notmuch>
- <20210511195723.GL12700@kitsune.suse.cz>
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S229996AbhELDTE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 23:19:04 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53097 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229848AbhELDTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 23:19:03 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91927123459;
+        Tue, 11 May 2021 23:17:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=V5kKdHCm4+oQQbVK+XdpxAyClZivpjdtYgjtT1
+        3v+ck=; b=L5WgrCYWAnGBiTZa7BY0BhHsZJCLVQHd8exJ6qTHD/hs3eW8FEDk++
+        mwzevmxEm261K+VlGWb0Q8dLQyKc3K2pqUfKpbgc7aFGM2vnT9ey/oigOnwH50l0
+        GSooJx7sQQ/1rHG8khS3p3IpVFuVBTmUUED/IrmvkjnF4EbQJxmao=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 89640123458;
+        Tue, 11 May 2021 23:17:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BF6A0123457;
+        Tue, 11 May 2021 23:17:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v3 4/8] t7300: add testcase showing unnecessary
+ traversal into ignored directory
+References: <pull.1020.v2.git.git.1620432500.gitgitgadget@gmail.com>
+        <pull.1020.v3.git.git.1620503945.gitgitgadget@gmail.com>
+        <dc3d3f2471410aa55da4dbc8e2747192888bce5f.1620503945.git.gitgitgadget@gmail.com>
+        <xmqq7dk7rwcc.fsf@gitster.g>
+        <CABPp-BFV6R9GNeZVbiKx_Tazq+6LuBNCzLcsEq63MfG5YD0hFQ@mail.gmail.com>
+        <xmqqsg2sj3id.fsf@gitster.g>
+        <CABPp-BEJQ5RQdvm58xrNcWm9VdPrUF8_-bym-M424bs7xR=8Gg@mail.gmail.com>
+Date:   Wed, 12 May 2021 12:17:51 +0900
+In-Reply-To: <CABPp-BEJQ5RQdvm58xrNcWm9VdPrUF8_-bym-M424bs7xR=8Gg@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 11 May 2021 19:07:40 -0700")
+Message-ID: <xmqqy2ckhc80.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A3537118-B2D0-11EB-8384-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Such=C3=A1nek wrote:
-> On Tue, May 11, 2021 at 02:21:43PM -0500, Felipe Contreras wrote:
-> > Michal Such=C3=A1nek wrote:
+Elijah Newren <newren@gmail.com> writes:
 
-> > > If you are concerned about correctness and clarity of the documenta=
-tion please
-> > > avoid spreading misinformation.
-> > =
+> If you'd like, I can add another patch in the series with this change
+> so that all readdir() calls in dir.c have such ignore '.' and '..'
+> logic.  Or, we could perhaps introduce a new readdir() wrapper that
+> does nothing other than ignore '.' and '..' and have all three of
+> these callsites use that new wrapper.
 
-> > Under certain definition of "jaron" Varun's statement would be
-> > incorrect, but not under all definitions. If you use the definition
-> > I stated above, "impact" can be considered jargon, because it's a bit=
+Yeah, it is good to be consistent (either implementation).
 
-> > obscure language.
-> =
+>> So dropping the test for number of visited paths would be nicer from
+>> portability's point of view ;-)
+>
+> Yep, makes sense.  I already did that in v4, which means it'll
+> continue to pass with or without the above proposed change to
+> read_cached_dir().
 
-> Do you have any frequency data that supports your claim that the word
-> 'impact' is obscure?
-
-This is not how logic works.
-
-If I don't have frequency data that supports $x, but you have no
-frequency data that supports !$x, then we return to the default position;=
-
-we don't know if $x is true or not.
-
-Do **you** have any frequency data that supports the negative claim that
-the word "impact" is not obscure?
-
-> The bar for change should be that the word as used is very unfitting or=
-
-> unintelligible.
-
-No. The bar is that **nobody** have any problem with "affect", and some
-people have a problem with "impact".
-
-Do you have any problem with "affect"?
-
--- =
-
-Felipe Contreras=
+Yup.
