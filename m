@@ -7,69 +7,67 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1DEFC433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 05:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDAE4C433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 05:22:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 801C46143A
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 05:13:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B06D61370
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 05:22:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbhELFOW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 01:14:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50186 "EHLO
+        id S229730AbhELFXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 01:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbhELFOV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 01:14:21 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FDF4C061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 22:13:14 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id v22so16334220oic.2
-        for <git@vger.kernel.org>; Tue, 11 May 2021 22:13:14 -0700 (PDT)
+        with ESMTP id S229627AbhELFXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 01:23:53 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ED30C061574
+        for <git@vger.kernel.org>; Tue, 11 May 2021 22:22:45 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so6130207otc.6
+        for <git@vger.kernel.org>; Tue, 11 May 2021 22:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=pwDEooVV/eNOXeT4/kSAxkNd0Vpt3BYS4BCqaKP8AHc=;
-        b=asjLlv6IyUT7rsRNWLw6L6wqxDgGFnRc8H9aS//Lb0ePyAJRn1vOSif4pjTT28HB2P
-         3cc04Un1dYIJSrmj3QrWoPWfn+6ywuTfrt0d50/rMRUsd/0ULOE2fYKd+5TgX7iC5uCw
-         H7BBBqLvSnwgqCJ2SRm+jj8BgxRrRtm3UjvkznKYZgI0T0hVg8DUkJU6QDXv7MDlIEri
-         5nsY25aXm34qGlfmeqz7ZqDsk90sUEC2gNZIXX23ualyHohIL9PJe1hwlJtCAJi2XUwR
-         0XWsGKtP/nlJccda4JXv8+Uqs4913GMrsZtcWFMiJMjvpVYHzX1DHiMYf3DfdjMYJXcB
-         iCYQ==
+        bh=CEPfb+aaC/XpGSJqefBxWR5e5uN4qhf8ml1EIHbUgi4=;
+        b=HRuD/J04wFAHuqBhuTRxWAQ2kfHZWxAII3uwUHPogSjNyWr3yuaYbqHQlCH786AouA
+         mbYOC7hCpAnWkka5Cbh18ek2ZT5fJHIy4Gk2afyfAvJ13OjX33rP0R92MSZ2JjH8YuEf
+         zL43dKoET81Dvfwb0KGDWW3ElAeID6tI4OL7kn0u9wptGCdpRXiW9C+h24hSP7cNYat8
+         DhtaVlNc3g/NA8tV6IH/93MwdLyQgJkB6LXRtzX/3JT/rQsfiDeBtoydJ86lDjN6iF99
+         e0xs6HmfHIlbQtDkgwkp32MPMBTSugImMtWvTcgCxQkVxHdXt9tXUV9Ojw5gJvkh+qP3
+         aF3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=pwDEooVV/eNOXeT4/kSAxkNd0Vpt3BYS4BCqaKP8AHc=;
-        b=Ch2ZVnkR0fo20zSawMq90wihkzDO3hc2wr3+RS0O3EnhzDqlkwepAiwS/m1unmBHod
-         hl00CPAv9NXsI9I3XIhM1YY9RpNUoQYLy3WQJdkW3Z45CUJmE7T8f2dXLWiZ50fd4BEm
-         SI8NsSp/IPbFSIMphFZIlSQeqMs7X+5hVC8f0wxS7pF1yrCyaRxIqm8IjlsTMSPuwwnr
-         Wg5JYvHyGQae1NEz4zrPG4TxPxA6nvx8wP0e6wjr7kWNdxH++ets9Qosx+nrgEmsRoQl
-         stZJKDgDJVAnNcpwtLK80AEwbld32vhRsf2+hDIZZV4MS3z9JogXy5YSs/SoVm3JRMzy
-         j/gQ==
-X-Gm-Message-State: AOAM530BCuPSm2nU+x0NjTTm2+qwaaQHGA6I71tmwXRpFQIrxYsrSnjB
-        sEvCjZYky0rtqbTRk3giYT8=
-X-Google-Smtp-Source: ABdhPJxJFMGeFwS2POhCn9qJhPvAYTt7Oz5PRuCme17811SDBu0q6Y3P3UoehWUh3VAbyz1s8Lrk1A==
-X-Received: by 2002:aca:a945:: with SMTP id s66mr6255073oie.165.1620796393672;
-        Tue, 11 May 2021 22:13:13 -0700 (PDT)
+        bh=CEPfb+aaC/XpGSJqefBxWR5e5uN4qhf8ml1EIHbUgi4=;
+        b=cstd3/tOh6Vw9rCMe+Bfb7L8d2LE0uqYMEJ4yGnFG+gulnGwXgLAesImDKJ/jSbNNY
+         fCcBK3QeG06MVhtU+TzCIMj66gKpc+4wGOyDGce4La76IGQ08HY73zhUnlVDhhoUe2RK
+         X8b4tc3ZPWtNA4M6FVOeYZS2ncFu1oozFeNz8M/35HAGXe8nvL0D0WHyesFSNAIeki2p
+         yl5CzRaSNl5P1qjd3BiGqLnQRJj6cfby1GlhZjAtWjDD8MVdyPyj0J+fIjmwNLh8gTDy
+         gP1jde+Siricp8Zrw6+IqPzld/c/873j0mF8Voo+TEguJE/4nT9uPUE5Yw5N0NMfoU5c
+         BgRQ==
+X-Gm-Message-State: AOAM532CV+Zuhs7rQvowxFWY8WEDvL9/9hpm45KWn1ZIEaGHa4YzYeyP
+        6qJ0CUTjEyREPC5m/FhVS3o=
+X-Google-Smtp-Source: ABdhPJxgLTR7XTs1XuagpUHVz7AXsWlM4cdwRT/HWRp/vXqUOfGzFxldKD6giqr2ZYw+B9w+s2OeBA==
+X-Received: by 2002:a05:6830:214f:: with SMTP id r15mr28641077otd.204.1620796964793;
+        Tue, 11 May 2021 22:22:44 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id a4sm3685950oib.17.2021.05.11.22.13.12
+        by smtp.gmail.com with ESMTPSA id r2sm4285176otq.28.2021.05.11.22.22.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 22:13:12 -0700 (PDT)
-Date:   Wed, 12 May 2021 00:13:08 -0500
+        Tue, 11 May 2021 22:22:44 -0700 (PDT)
+Date:   Wed, 12 May 2021 00:22:40 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
         Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
-Message-ID: <609b63e48fd49_6d7da2086@natae.notmuch>
-In-Reply-To: <20210512040926.GN12700@kitsune.suse.cz>
+Message-ID: <609b66203c81_6d7da208f8@natae.notmuch>
+In-Reply-To: <20210512041138.GO12700@kitsune.suse.cz>
 References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
  <20210406092440.GZ6564@kitsune.suse.cz>
- <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
- <609ae224aa509_6064920851@natae.notmuch>
- <20210511202502.GM12700@kitsune.suse.cz>
- <CAD2i4DALKgw2wG6QGs-oQhAHnS3AG1j1BSq2bxjPojVOtw+WjA@mail.gmail.com>
- <609b4eea1088a_678ff208ba@natae.notmuch>
- <20210512040926.GN12700@kitsune.suse.cz>
+ <609ad9473d535_6011e2082@natae.notmuch>
+ <20210511195723.GL12700@kitsune.suse.cz>
+ <609b47043a719_678ff208e@natae.notmuch>
+ <20210512041138.GO12700@kitsune.suse.cz>
 Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -80,36 +78,32 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Michal Such=C3=A1nek wrote:
-> On Tue, May 11, 2021 at 10:43:38PM -0500, Felipe Contreras wrote:
-> > It is a paradox called "the bikeshedding effect". When you contribute=
- a
-> > complex and convoluted change it's easier to get it in because few pe=
-ople
-> > can object (as few people can understand it). But when you contribute=
- a
-> > change as simple as changing the color of something, then *everyone* =
-can
-> > opine (literally).
+> On Tue, May 11, 2021 at 10:09:56PM -0500, Felipe Contreras wrote:
+> > Do **you** have any frequency data that supports the negative claim t=
+hat
+> > the word "impact" is not obscure?
 > =
 
-> You forget that what you are doing right now is bikeshedding after the
-> fact.
+> I don't need that data.
 
-Except that's not what I'm doing.
+> You are proposing a change so it is your duty to support your claim
+> that the change is worthwhile.
 
-> You can use 'affect' or 'impact' and it generally conveys the same
-> meaning.
+I am not the one proposing the change, but it has been established that
+at least two people find the change worthwhile, and many dictionaries
+find "affect" less problematic than "impact".
 
-That's clearly *your* opinion, but that's not my opinon.
+You (and others) don't find the change worthline, fair enough.
 
-I'm not arguing between blue and red; I'm arguing between water-based and=
+But you also can't find anything wrong with the proposed change.
 
-lead-based paint.
+So let me try to explain the situation programatically:
 
-The difference may not matter to you, but it matters to me.
+ 1. ($a > $b) * 0
+ 2. ($a =3D $b) * 3
+ 3. ($a < $b) * 2
 
-If it's bikeshedding to you, and it "gnerally conveys the same meaning",
-why are you arguing against?
+Which one should we stay with? $a or $b?
 
 -- =
 
