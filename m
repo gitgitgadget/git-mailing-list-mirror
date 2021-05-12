@@ -2,182 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A1D7C433ED
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E8B8C433ED
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:25:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C888861177
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:21:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C0BE61352
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 03:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbhELDW5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 May 2021 23:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54114 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbhELDW4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 May 2021 23:22:56 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8663CC061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 20:21:49 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id v14-20020a4ae6ce0000b02901fe68cd377fso4655732oot.13
-        for <git@vger.kernel.org>; Tue, 11 May 2021 20:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=0y/9iiK///smKxcA3KmBf7PixwDOR2XbB4h8aDqOQi4=;
-        b=syZdTRbBBve9SyCTXjULZV2OAZ7mPsZt3f6aujl9DCgaMh3x3zEQcgO+pkOTSkGEDr
-         M0qSaYaaF77Xf1+2vzDcG2WRgXL+Mr5LPfAQeVmTGNGKKkThXBFUVTxcIOMWkt7LtrSw
-         UKVt0KcJqfOmK9Y8Bnew15i1b3D03+ySM98oxRKMAovACdh0IwYXwcy7LtiWsF5wUhxZ
-         vOo0XsWn6zDJfA1ygbBVd2C4dxJgqq38DmhuxPaCfLHpviSweklWhm/1bdFZml/RWOMX
-         vGpXQNDHnReYHTwjuz7msxMaoVnxOMzPat8B4W1t5gdgMx6vMvtg2XqIjr6d9JENeQFq
-         obcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=0y/9iiK///smKxcA3KmBf7PixwDOR2XbB4h8aDqOQi4=;
-        b=EzOqJDqPPwgd439CAc+4oU/tCmvnEgFuugCt9h5PFpIzEqTbmm+A5HTBdCmII87vKa
-         KKbEhmUBAnGHelrYKaXTEA1LtrLIMWihVQU9nTyk7bUhg1gD2rESD95i3UtYhStSZEdQ
-         MkvMevGRZw98ZY+hBxab/d0rXVW1xkHD/lHxrrBwCaElI9hr/21mLGZrlVXUGEmTKZfu
-         28xvKWFHnrH6OglWwloYW8ggrNrRmvEA9mQoGz3Mex+HsTjiaglPKpAP5j5p1Yse7sio
-         8EMMQfM2rYye+ghb72yIqQwD/0DTJaITs3n97FWH1lt/lq5N0LBDLSI48iz8F/I6hQsT
-         5CdQ==
-X-Gm-Message-State: AOAM531WrOcUpDg8k8g44z5hltsciQSF6TKsj23jtX1JEgaHJWx/9Mls
-        yITTp6XHr6IPPAD7chyjEwg=
-X-Google-Smtp-Source: ABdhPJwAHeMoIoFyZmMuD494B1WJADJnwt8w2Rgvs0GCp4KLcjfjd3gJXBOBKGZ8JAdxwxhcgffISg==
-X-Received: by 2002:a4a:8311:: with SMTP id f17mr22980857oog.83.1620789708958;
-        Tue, 11 May 2021 20:21:48 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id r83sm810429oih.48.2021.05.11.20.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 20:21:48 -0700 (PDT)
-Date:   Tue, 11 May 2021 22:21:44 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
-Message-ID: <609b49c85d761_678ff208cd@natae.notmuch>
-In-Reply-To: <20210511202502.GM12700@kitsune.suse.cz>
-References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
- <20210406092440.GZ6564@kitsune.suse.cz>
- <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
- <609ae224aa509_6064920851@natae.notmuch>
- <20210511202502.GM12700@kitsune.suse.cz>
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S230139AbhELD0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 May 2021 23:26:25 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54060 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230115AbhELD0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 May 2021 23:26:25 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0231C878A;
+        Tue, 11 May 2021 23:25:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Me25thdfXpA0ZCEMLbRaus1fYkVF+3AksGTRW8
+        x8Vig=; b=Sr7t0zB82RxZ/sXoUt6zr4r/UpZAE0FkoUUA0PdqnGToFUq17/yQi8
+        CR19XOBkHroxE4bxACLfaweZRYHJfEdsn7R4nfFfL1Gs+lxlBnpAn7U2Stku7qS8
+        cSNPDM/bQbfud+Izh7qAWJ64HTke4/XOQgTjobCltRb+zi7E/d7+U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97938C8788;
+        Tue, 11 May 2021 23:25:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 179ECC8787;
+        Tue, 11 May 2021 23:25:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Gregory Anders <greg@gpanders.com>, git@vger.kernel.org
+Subject: Re: Syntax for specifying a command in git config
+References: <YJrH8uqzapnpNEsb@gpanders.com>
+        <YJrKJAa45mNIL+rf@coredump.intra.peff.net>
+        <xmqqo8dgj2vk.fsf@gitster.g>
+        <YJsiKDNbKclFU00b@coredump.intra.peff.net>
+Date:   Wed, 12 May 2021 12:25:16 +0900
+In-Reply-To: <YJsiKDNbKclFU00b@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 11 May 2021 20:32:40 -0400")
+Message-ID: <xmqqtun8hbvn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AC2814DC-B2D1-11EB-8B5C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Such=C3=A1nek wrote:
-> On Tue, May 11, 2021 at 02:59:32PM -0500, Felipe Contreras wrote:
-> > Varun Varada wrote:
-> > > On Tue, 6 Apr 2021 at 04:24, Michal Such=C3=A1nek <msuchanek@suse.d=
-e> wrote:
-> > > > while using "will not impact" in an incorrect or unclear way may =
-be a
-> > > > problem the word "impact" in itself is not "jargon".
-> > > =
+Jeff King <peff@peff.net> writes:
 
-> > > The word means "to have a strong or marked effect on" (v.) and "a
-> > > strong or market influence" (n.) when used figuratively; it is not
-> > > synonymous with "affect" and "effect", respectively, as shown even =
-by
-> > > all of the entries you've cited. Using it as such is the incorrect
-> > > part, so those are the instances I've changed in the diff.
-> > =
+>> 	git send-email --smtp-server="/usr/bin/env msmtp"
+>> 	git send-email --smtp-server="!my-msa --emulate-sendmail"
+>
+> Yes, the patch under discussion does apply to both the command-line
+> option and the config option (and I agree it should).
+>
+> I didn't think about arguments, but you're right that may be a useful
+> feature. And if done via the shell, as brian suggested elsewhere, would
+> be more consistent with other parts of Git using "!" syntax.
 
-> > There are two ways impact can be used as a verb: transitive and
-> > intransitive, but git doesn't seem to be using the intransitive form.=
- In
-> > the transitive form it usually means to strike "the car impacted the
-> > tree". But it can also mean to have a desired effect "reducing CO2
-> > emissions impacted climate change".
-> =
+Heh, it was my tongue-in-cheek way to say we do not need this '!'
+new feature, as long as everybody has 'env' in /usr/bin ;-)
 
-> I don't know where you find the 'desired' effect meaning. Certainly non=
-e
-> of the dictionaries I consulted at random provides such definition.
+> It does make things a little weird in that:
+>
+>   git send-email --smtp-server='/path/to/my-sendmail foo'
+>
+> and
+>
+>   git send-email --smtp-server '!my-sendmail foo'
+>
+> behave differently (the first does not work; it looks for an executable
+> with a space in the name).
 
-You yourself consulted Merriam-Webster [1]:
+True.  Hopefully we do not have to worry about $IFS whitespaces in
+an absolute path to the mail submission program?  ... Nah, that's a
+wishful thinking.
 
-  impact _verb_
-  : to have a direct effect or impact on : impinge on
+But then nobody stops you from saying
 
-Did you not? [2]
+	git send-email --smtp-server '!/path/to/my-sendmail foo'
 
-> > None of these are used in the documentation, we have things like:
-> > =
+so it probably is OK.  We can gradually deprecate the "absolute path"
+form and standardise on the "!prefix" form.
 
-> >   the index does not impact the outcome
-> > =
-
-> > Which is clearly wrong (unless we are talking about possitive outcome=
- of
-> > the outcome, which makes no sense).
-> =
-
-> It is not clearly wrong. To me it makes perfect sense. If you want to
-> claim it's wrong please provide a source for your claim.
-
-Merriam-Webster [1].
-
-> > As a noun it can mean a siginificant or major effect: "the impact of
-> > science".
-> > =
-
-> > However, the documentation is not using it that way:
-> > =
-
-> >   the runtime impact of tracking all omitted objects
-> > =
-
-> > The noun usage is less wrong than the verb usage, but it's still wron=
-g.
-> =
-
-> Why is that wrong?
-
-Because it's not a "a significant or major effect" [1].
-
-> How did you infer that the effect is insignificant or minor?
-
-I did not.
-
-If I claim temperature $x is not hot, that doesn't mean I'm claiming
-it's cold.
-
-> In fact while some dictionaries list 'impact' as 'have strong effect'
-> the Oxford dicrionary lists is as simply synonymous to 'affect'.
-
-Synonymous doesn't mean equal. In fact, the Oxford dictionary defines
-"impact" as [3]:
-
- the powerful effect that something has on somebody/something
-
-Note: *powerful*.
-
-> > But why bother? The word "affect" is a much superior choice.
-> =
-
-> Why bother with a chenge at all?
-
-Because it's better.
-
-Do you have any evidence that it's worse?
-
-[1] https://www.merriam-webster.com/dictionary/impact
-[2] https://lore.kernel.org/git/20210406092440.GZ6564@kitsune.suse.cz/
-[3] https://www.oxfordlearnersdictionaries.com/definition/english/impact_=
-1
-
--- =
-
-Felipe Contreras=
