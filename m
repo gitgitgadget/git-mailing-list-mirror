@@ -2,140 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DF38C433B4
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97095C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:48:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F025D613DA
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:38:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 536E960FE6
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbhELNjj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 09:39:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50554 "EHLO
+        id S230362AbhELNth (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 09:49:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbhELNjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 09:39:39 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD1FC061574
-        for <git@vger.kernel.org>; Wed, 12 May 2021 06:38:30 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id v12so23639470wrq.6
-        for <git@vger.kernel.org>; Wed, 12 May 2021 06:38:30 -0700 (PDT)
+        with ESMTP id S230182AbhELNth (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 09:49:37 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C778C061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:48:29 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id s8so23705478wrw.10
+        for <git@vger.kernel.org>; Wed, 12 May 2021 06:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0AMA0UyIjU9A0f75lUObDIw81UdEmFEg1tx9eV4aPVw=;
-        b=KNGsemAxNWrdrQ/AIIGa0lTlMymReNOzeUCa2kHQ+MxhG6cTk9kMM9m7sNXZl6ZSaf
-         jWJ8oVJhKbv5h+tyyyMYhYodKwy65ftqH3MShsCuyHuwu8CBXDQ5QaDgMzg9bBTyd0b9
-         cv0Y71dOx2ely62/rtFNucQ0oseROCGuj0HS9yPQ+inay9EaneoaKVHU0e+Jqv2D5R9i
-         w+nZEvdly4XZBB9AtvdEi8bEM1zLhiXx+q3LpssZmmAy1uNYNuIHkKccrfdxSrkU1Af+
-         kKVMwC9Ew9aA25t6yeE3MqmE/0kbVt8yL4pTg2p2bPykGNAG7LyeFmlT4Zdpd+vepmOM
-         wv2w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LwYeCJMG9tnJGLEM2mYpdKJkBsyDF9Jx9HZRfT4eMxw=;
+        b=qIRO5p32saSHu6l64nar1Sw4Iu0UCWYCft69T+fY0r180IbC633pKIcsgUHp4Jntuz
+         CqgMgRBUJy7GfiX1Sq3xZqTrNMwSSZy2aUOFQfCUXynFpHupo8ZTAAohP9xzPMSITvZu
+         l7qKZ6YLLMkRSVucv5JzgWSMRIZJPsXuFSq2QmQkZzK5KtwoIJzjlWT/oUIjOjSaFB0C
+         vvQenZu694LiCNs9NErZzqzyDknEhLupdRfLg9TiTvkRAAwIDZ60HnoJbu3TCFj0GcUL
+         2oIhn1B8EMYM1F2tKFFBav8CPuEU8FTX4iK9sF08TTUmCchGZJ1VEF5YuE0kqi5R4WBR
+         3eNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=0AMA0UyIjU9A0f75lUObDIw81UdEmFEg1tx9eV4aPVw=;
-        b=nSF7cKi9MPvKKj2XRoVceFCn93hgovXFmlcZOGrwbsWuQTtf7H0kFu3NSZkZMjCtO2
-         G2M8KXlvQZdE8R0g5KVkcw11mkq2llo0PsVRGdGowbgPDS4fZBrS0BeLr7TZ05+FMkUy
-         gohUDICOATwxT8I8IKIKhcuk3Ksbs4oTQbRJj+Xj0dj/uWPXCZLBSL7ZPhPWD6pKVMjM
-         0VYHVs8oY1pRS40wWpFKS8/rhP/no6+bWJ5OWvtluIfa88CGIYs9DXR9iZWPPDlPn35D
-         8MAjvFi61R/CXX+8ht0JNZqS5Ri7+oCWctV6ZRJmISdmrKkmSbpb8Ic/xmbt1nRxeM+c
-         Om2w==
-X-Gm-Message-State: AOAM531aFt4pIWAgklEzjBn31sYosIWTRGclOSkG3VKY2j6oDTgAbScv
-        BeTpnYLvrRABWNshoPTGDqpBkn9VUyI=
-X-Google-Smtp-Source: ABdhPJyx/u3OLNDS2bV7aIrjwL6Vdqv949jpK4UjjF70kdndKnjUGVz5Q7WavenHdZD1jlNpEeU1yg==
-X-Received: by 2002:adf:f508:: with SMTP id q8mr45840203wro.109.1620826709078;
-        Wed, 12 May 2021 06:38:29 -0700 (PDT)
-Received: from [192.168.1.240] (88.22.198.146.dyn.plus.net. [146.198.22.88])
-        by smtp.gmail.com with ESMTPSA id p12sm4311708wme.20.2021.05.12.06.38.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 May 2021 06:38:28 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/1] maintenance: use systemd timers on Linux
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20210501145220.2082670-1-lenaic@lhuard.fr>
- <20210509213217.449489-1-lenaic@lhuard.fr>
- <20210509213217.449489-2-lenaic@lhuard.fr> <YJiKXRywBhhGXC5Q@danh.dev>
- <CAPig+cQdU_0uPKDkbuz3XqdYePAMNPcF_u+Enx+qfgRGvtiseA@mail.gmail.com>
- <xmqqtunbqf5o.fsf@gitster.g> <YJsheKt/UBJNtgv1@danh.dev>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <fbfd503b-d822-e9df-f766-cc70941fdec1@gmail.com>
-Date:   Wed, 12 May 2021 14:38:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LwYeCJMG9tnJGLEM2mYpdKJkBsyDF9Jx9HZRfT4eMxw=;
+        b=JyxoTWwEIbUjHLShuTG2rGg517xohnuxKYhb+x8mpXU95cG7N78+Q4oe3yokBG1V9V
+         X6LLSjMAZi5p6yNDJ7qD2cgcnA+jDv+AUnhK5rij/RoPXee3MjK+wJIhiinqIIkZq7Vq
+         qS8MUmh8pF8ooRw0J1fXyI243HXxJsGlm2xzywgHSEMFF2rjrg86TIYogvy9o+1P14Mz
+         C4zonuLQWXbUYxzMTE3oonXXsLeDxOVo4me9KHVn8KAL+7BtikF2khxDWwwd0X0QF1Ja
+         2w7Pbwya7M3XhV8t2MdfUD+xIYmfOrc0iooOTjVHbBp3exvx7jn4VApnd0gqJ0CjP0Yj
+         r5Vw==
+X-Gm-Message-State: AOAM531+f6W4TDFSv8oeXl0u9/qTg1s3+1zniGkChM/1aflPLjze4WbA
+        wLDLuwMkTIuRfEJP5vr5MGny4OHf/vGILw==
+X-Google-Smtp-Source: ABdhPJytvgPcA89/W2PS3KhrZe/dacnVD86vsWo08rRVk006+w0iavTzdQXZQZtEUOyhuT2WK3AYqw==
+X-Received: by 2002:adf:ef47:: with SMTP id c7mr45116744wrp.297.1620827307628;
+        Wed, 12 May 2021 06:48:27 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n2sm31416612wmb.32.2021.05.12.06.48.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 May 2021 06:48:27 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Gregory Anders <greg@gpanders.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/9] send-email: various optimizations to speed up by >2x
+Date:   Wed, 12 May 2021 15:48:16 +0200
+Message-Id: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.1.909.g789bb6d90e
 MIME-Version: 1.0
-In-Reply-To: <YJsheKt/UBJNtgv1@danh.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Đoàn
+This is on top of my just-submitted [1] which in turn is on top of
+send-email work of mine sitting in "next".
 
-On 12/05/2021 01:29, Đoàn Trần Công Danh wrote:
-> On 2021-05-10 15:25:07+0900, Junio C Hamano <gitster@pobox.com> wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>
->>>> I think others have strong opinion on not using "%1$s",
->>>> and prefer simple "%s" and using "exec_path" twice instead.
->>>
->>> I brought it up only because I hadn't seen it in Git sources, and
->>> wasn't sure if we'd want to start using it. Aside from Ævar, who
->>> seemed reasonably in favor of it, nobody else chimed in, so it could
->>> go either way, I suppose.
->>
->> If this were a piece of code that _everybody_ would use on _all_ the
->> supported platforms, I would suggest declaring that this is a
->> weather-balloon to see if some platforms have trouble using it.  But
->> unfortunately this is not such a piece of code.  Dependence on
->> systemd should strictly be opt-in.
-> 
-> Yes, dependence on systemd should be strictly opt-in.
-> Although, I don't use systemd-based distro, so it is irrelevant to me.
-> I think it's none of Git (the project) business to decide which
-> scheduler should be given higher priority. It's crontab when
-> maintenance was introduced, it should be crontab, now.
+I was meaning to hold off on these patches for a bit, but given the
+concurrent on-list discussion about doing config discovery in
+send-email I wanted to send this now.
 
-You seem to be simultaneously arguing that git should be neutral on the 
-choice of scheduler while saying it should prioritize crontab. The 
-commit message and cover letter list a number of difficulties with the 
-strategy of prioritizing crontab over systemd when both are installed. I 
-think we should aim for the solution that has the most chance of working 
-without user intervention.
+This combines by not-picked-up[1] recent patches to remove the support
+for the "sendemail.smtpssl" variable with the later patches showing
+where that effort was really going.
 
-> Another point for eternal bikeshedding: why do we limit ourselves in
-> crontab and systemd, how about other homebrew schedulers? What should
-> we do if another scheduler raise to be the big star in the scheduler
-> world?
+As noted in the subject this speeds up git-send-email invocations by
+~2x or more, and brings the very slow t9001 test from running in ~26s
+on my box to ~12s. It's no longer consistently the slowest test I run.
 
-We should support the default scheduler on each platform - that was the 
-rod we made for our own back when we decided to use the platform's 
-scheduler rather than having a cross platform git maintenance daemon. It 
-just happens that there are two possible default schedulers on linux so 
-we need to support both of them.
+This is basically done in two ways: We lazily invoke "git config" to
+get config, before it's very eager, and deferring Perl compilation
+with s/use/require/g.
 
-Best Wishes
+1. https://lore.kernel.org/git/patch-1.1-92571a8cf7-20210512T094803Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/cover-0.2-00000000000-20210411T144128Z-avarab@gmail.com/
 
-Phillip
+Ævar Arnfjörð Bjarmason (9):
+  send-email: remove non-working support for "sendemail.smtpssl"
+  send-email: refactor sendemail.smtpencryption config parsing
+  send-email: lazily load config for a big speedup
+  send-email: lazily shell out to "git var"
+  send-email: use function syntax instead of barewords
+  send-email: get rid of indirect object syntax
+  send-email: lazily load modules for a big speedup
+  perl: lazily load some common Git.pm setup code
+  send-email: move trivial config handling to Perl
 
-> I guess we should take some templates for running on {,un}register
-> instead? However, I think such design may open another can of worms.
-> So, I don't know.
-> 
-> 
+ Documentation/config/sendemail.txt |   3 -
+ git-send-email.perl                | 145 +++++++++++++++++------------
+ perl/Git.pm                        |  49 +++++-----
+ 3 files changed, 111 insertions(+), 86 deletions(-)
+
+-- 
+2.31.1.909.g789bb6d90e
+
