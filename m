@@ -2,91 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDF06C433ED
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AAA1C43600
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:30:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A976661928
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:25:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 290896193E
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 06:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbhELG0r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 May 2021 02:26:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37760 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbhELG0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 02:26:46 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A87DAC061574
-        for <git@vger.kernel.org>; Tue, 11 May 2021 23:25:38 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso19692440ote.1
-        for <git@vger.kernel.org>; Tue, 11 May 2021 23:25:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=yK0oX2qduNzTWiYUbu6fN+P9ZplB8o5PpmWLSIhEgSo=;
-        b=tztCzDLG7294CFLqJBwtxbxqjnQYtrUyl7oLeWTiAKNugWpT7z4K2/iEglbfBS8WoB
-         oqIGrKCsAO0SSComTKKTwEmU50z2ynxAt0iIkdcZc8lBapS9nHyD2BS3ILW1mOo3tAFP
-         ile9EUEzfthdu9K4lk6ntYxArT8pnVPVN/SsPJ0sqFVyH0KviDVPZzb7rMSYt3Kjg0+9
-         OWu0oN9BeRVJ2BkV94LhrWkaAMQIc5OPDlBi/gQ7a+SG7MI3f14IW9zqxVEPz6K7g0SX
-         D7BSA8HUcuP8uylqq9AN+Eb0+2zH9sQLti7AGnrvj++3731gwC/jxzJM5PDuxpwBwAtn
-         cpHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=yK0oX2qduNzTWiYUbu6fN+P9ZplB8o5PpmWLSIhEgSo=;
-        b=nIMgfJRg73lbVcG1iFJLZEYobQ93eHish/nTxzHPyGIKFRWyuSGrqaEzMu84f/Lobs
-         592Cq7S4YqO7RuZ51E6ah4QQJHG5tuBIe3oAuhM4pn77xagyvxNAwWoR/JWAM0lopQFt
-         6SqpPZX3y6N8L4NPFj/0i5dkLgNRVPuvewvz+YP8E+jhdI8C5Tnfwi9kEXPmgaupS4qH
-         oxCiTN6Mapgz10GPaDVBYR4h79a/Moe+pVF7LcQC5i1yCpyFE6q5k7E96vAv48F/V/m5
-         4/JFELKuGsqBjpv9ZHwNo9zgMdmzFbHyLXkkpZ1yU5gMVcGZVZ5ClWyq3KygcLGaz+RR
-         Zcmg==
-X-Gm-Message-State: AOAM530DTRezBmJVBh+vwm/fm3CCkiry25TIbXh7tn5+8FtMtS0KxVG+
-        8RE8rf8a73ikPasEzqWbGlo=
-X-Google-Smtp-Source: ABdhPJxlPRh9XIU6PoWkz8cm1bZzn3BhUqApebdmTiWFGYZM0CzkWkPeYvT8G9dPkOTcTtpX3No4Mw==
-X-Received: by 2002:a9d:7312:: with SMTP id e18mr11456164otk.334.1620800738127;
-        Tue, 11 May 2021 23:25:38 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id r2sm4312873otq.28.2021.05.11.23.25.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 May 2021 23:25:37 -0700 (PDT)
-Date:   Wed, 12 May 2021 01:25:33 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Dave Huseby <dwh@linuxprogrammer.org>, git@vger.kernel.org
-Message-ID: <609b74dd87714_6d8972089f@natae.notmuch>
-In-Reply-To: <20210512025746.GA1899@localhost>
-References: <20210512025447.6068-1-dwh@linuxprogrammer.org>
- <20210512025746.GA1899@localhost>
-Subject: Re: [PATCH v1] Writing down mail list etiquette.
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S230130AbhELGbd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 02:31:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52040 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229626AbhELGbb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 May 2021 02:31:31 -0400
+Received: (qmail 26550 invoked by uid 109); 12 May 2021 06:30:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 May 2021 06:30:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2599 invoked by uid 111); 12 May 2021 06:30:23 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 May 2021 02:30:23 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 12 May 2021 02:30:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Message-ID: <YJt1/DO1cXNTRNxK@coredump.intra.peff.net>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210512021138.63598-1-sandals@crustytoothpaste.net>
+ <YJt0Dv7HP2VnLLwv@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YJt0Dv7HP2VnLLwv@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dave Huseby wrote:
-> Doh! I forgot to make this patch In-Reply-To the previous thread that
-> sparked this discussion. Well, at least this patch email doesn't have a
-> Mail-Followup-To header.
+On Wed, May 12, 2021 at 02:22:06AM -0400, Jeff King wrote:
 
-Ahh, that reminds me of another point I wanted to raise.
+> With that change, plus a patch I'll send in a minute, it's easy to run
+> doc-diff on the result.
 
+And here that is (note that if you don't apply the flags fix I showed,
+then doc-diff gets confused, because it expects back-to-back runs of
+"make" to handle the changed flags correctly).
 
-In general people should try to start new threads rather than recycle
-old ones (unless specifically necessary).
+Feel free to add it to your series if it helps (I had originally thought
+it would just be a one-off to look at the output, but there are enough
+changes, both correctness and style, that it may be useful to have this
+option around).
 
-I suspect this is contentious at this point, but I personally belive
-this is the way to go.
+-- >8 --
+Subject: [PATCH] doc-diff: support --asciidoctor-direct mode
 
-If people align with my view, then you did the correct thing by starting
-a new thread rather than using In-Reply-To. We'll see.
+The new option enables both asciidoctor as well as its direct-to-manpage
+mode that skips xmlto. This lets you view the rendered difference
+between the two pipelines with something like:
 
+  ./doc-diff --from-asciidoctor --to-asciidoctor-direct HEAD HEAD
+
+Note that we have to add quotes when passing around $makemanflags, as it
+now may contain whitespace due to multiple arguments (but the deference
+inside render_tree must remain unquoted, because it wants to perform
+whitespace splitting to get the individual arguments back).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/doc-diff | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+index 1694300e50..2c774ee954 100755
+--- a/Documentation/doc-diff
++++ b/Documentation/doc-diff
+@@ -17,10 +17,13 @@ f			force rebuild; do not rely on cached results
+ c,clean			cleanup temporary working files
+ from-asciidoc		use asciidoc with the 'from'-commit
+ from-asciidoctor	use asciidoctor with the 'from'-commit
++from-asciidoctor-direct use asciidoctor without xmlto for 'from'-commit
+ asciidoc		use asciidoc with both commits
+ to-asciidoc		use asciidoc with the 'to'-commit
+ to-asciidoctor		use asciidoctor with the 'to'-commit
++to-asciidoctor-direct   use asciidoctor without xmlto for 'to'-commit
+ asciidoctor		use asciidoctor with both commits
++asciidoctor-direct      use asciidoctor without xml for both commits
+ cut-footer		cut away footer
+ "
+ SUBDIRECTORY_OK=1
+@@ -55,6 +58,13 @@ do
+ 	--asciidoc)
+ 		from_program=-asciidoc
+ 		to_program=-asciidoc ;;
++	--from-asciidoctor-direct)
++		from_program=-asciidoctor-direct ;;
++	--to-asciidoctor-direct)
++		to_program=-asciidoctor-direct ;;
++	--asciidoctor-direct)
++		from_program=-asciidoctor-direct
++		to_program=-asciidoctor-direct ;;
+ 	--cut-footer)
+ 		cut_footer=-cut-footer ;;
+ 	--)
+@@ -112,6 +122,10 @@ construct_makemanflags () {
+ 	elif test "$1" = "-asciidoctor"
+ 	then
+ 		echo USE_ASCIIDOCTOR=YesPlease
++	elif test "$1" = "-asciidoctor-direct"
++	then
++		echo USE_ASCIIDOCTOR=YesPlease
++		echo USE_ASCIIDOCTOR_MANPAGE=YesPlease
+ 	fi
+ }
+ 
+@@ -181,6 +195,6 @@ render_tree () {
+ 	fi
+ }
+ 
+-render_tree $from_oid $from_dir $from_makemanflags &&
+-render_tree $to_oid $to_dir $to_makemanflags &&
++render_tree $from_oid $from_dir "$from_makemanflags" &&
++render_tree $to_oid $to_dir "$to_makemanflags" &&
+ git -C $tmp/rendered diff --no-index "$@" $from_dir $to_dir
 -- 
-Felipe Contreras
+2.31.1.1027.g87a751368c
+
