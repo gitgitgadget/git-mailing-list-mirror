@@ -2,100 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC664C433ED
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43E18C433B4
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:03:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7B9F61287
-	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:03:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F35BC613EB
+	for <git@archiver.kernel.org>; Wed, 12 May 2021 13:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231695AbhELNEs (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231725AbhELNEt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 May 2021 09:04:49 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:54197 "EHLO
+        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231316AbhELNEs (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 May 2021 09:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42654 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbhELNEl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 May 2021 09:04:41 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03542C061574
-        for <git@vger.kernel.org>; Wed, 12 May 2021 06:03:31 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id f184so1969952oig.3
-        for <git@vger.kernel.org>; Wed, 12 May 2021 06:03:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=at1YuYZsQBUFmqJiQfWD2kClxHwek7K8/o0vhWS9Zmo=;
-        b=AY4jyDjzWQjqEtyutRXea0f9Hi4HYQYDJdUxCeig88Lpc4QI/MROeVrIhBO7P1wnpV
-         mv8VJAn+WD2JI4Ynhu/+CZ6IkEdDsgL++xN+FoTxbIzt6uTvIhZ2Xbcv546Y1SBXop3b
-         OpOUX1Csbjx0CrNi9FYFZl3iz3alPUaFhBPsNkESG0aEsf3aIsdMW0mMFColQsUh1gyG
-         Wy0cF/xOjaNkBw0uiTCMyR0gBo0PezNWXGo7wxZKvZcdj0OrGf4nW+CObUMeF61t/vaH
-         H0Xhp5P6zCQ9JpM10llDPTRm1B+n/U46ol7HMVr+wXK683R4cS7b2owYoNK98DPmgLNk
-         aWAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=at1YuYZsQBUFmqJiQfWD2kClxHwek7K8/o0vhWS9Zmo=;
-        b=Cz3YwJe+o6HvoaRc27/pdnMPn6jx+TzM4kHQWXkz5Kx6oiqVPQgZQy5zmVdjFJePfq
-         v5nU84LAezqlO1qUWfYvs/loQSnfzRrnbj04got83CLBfgBevFtxGPrWy0Db/yGRBvKL
-         EPfQ3nYpcY38TRZYuZY0TB2jlGlEAUkurIIoF+NnOYuhANszVIGT2Lfns+E005NycLCq
-         bC1VcWnkb5SmYwl2omkqkDwR4RBEpFGC5CDQJChawf1CQXQVJpvi5MUDduLrQLAlThki
-         r3aNtc9/xuLkm5Fsm+gPED5T34FT5yNP/7I36QurvzmltTs4Q52UK9PJ8hFPphDix9he
-         JhlA==
-X-Gm-Message-State: AOAM533B4TTbJiAW9EAI72hcQ2SB/WDNporDflvDmM1QxZWpVRczRMIe
-        pz2ji7DKZ8UyQonf6rj4wHpN9asDVL8Dpg==
-X-Google-Smtp-Source: ABdhPJxapAw9Ztri3QM2Zwj8zPfw6b/gfN+6fkOl8+knIfoaZZYT9H3bJ7FY/IJpmVW8byQ0wi3ymw==
-X-Received: by 2002:aca:b5c4:: with SMTP id e187mr26481519oif.149.1620824610047;
-        Wed, 12 May 2021 06:03:30 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:49c7:8eaa:aef9:ce4b? ([2600:1700:e72:80a0:49c7:8eaa:aef9:ce4b])
-        by smtp.gmail.com with ESMTPSA id e7sm2488570oos.15.2021.05.12.06.03.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 May 2021 06:03:29 -0700 (PDT)
-Subject: Re: What's cooking in git.git (May 2021, #02; Wed, 12)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqo8dgfl8l.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <05932ebc-04ac-b3c5-a460-5d37d8604fd9@gmail.com>
-Date:   Wed, 12 May 2021 09:03:28 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+X-Originating-IP: 73.26.133.58
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gpanders.com;
+        s=gm1; t=1620824618;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=cVfX0IUipLFY1Br4QHK5lJSR8lGIOZ2D6dlMmq6n3n8=;
+        b=HJLFFVTsPmM2aDPJlsKdbZtO9Y4t3km6kGK/xnI9XPZ6jX/BdNgd5+PD3eqrt4CqNQqUD0
+        dQG/sWXP1mWYrpSGCx3VhG08g2+S4wuo+yS8gw5xL8bCYTskTdsH2C87W4FRAkyzt+BbLS
+        j6KUQxPzo43tcHTrjnpcrHR5Rv50OicWvrO5B4YonghsB2g3D3+T11nHWATIe6zKIlZh6W
+        a7jMHJhcp5QarDJozIBkr5KBXP3e083BkvUzGxVecH27EqqsMoFvlUW/gSec5/OI3F62n4
+        prNOBRN+Qw9lCbtTaioDMuP6zCZMPd85YfkEzt5ZeWPEFLr6Cx88D3wL+39Bug==
+Received: from localhost (c-73-26-133-58.hsd1.nm.comcast.net [73.26.133.58])
+        (Authenticated sender: greg@gpanders.com)
+        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id A340C4000C;
+        Wed, 12 May 2021 13:03:37 +0000 (UTC)
+Date:   Wed, 12 May 2021 07:03:35 -0600
+From:   Gregory Anders <greg@gpanders.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-send-email: add sendmailCommand option
+Message-ID: <YJvSJ3/2RWFJVmoq@gpanders.com>
+References: <20210512033039.4022-1-greg@gpanders.com>
+ <xmqqh7j8h9cy.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8dgfl8l.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqh7j8h9cy.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/12/2021 3:46 AM, Junio C Hamano wrote:
+On Wed, 12 May 2021 13:19 +0900, Junio C Hamano wrote:
+>Is this a totally unwarranted rewrapping of an unrelated part of the
+>same document, or was there some words or phrases in this
+>description of the envelope-sender option that needed to be adjusted
+>for the introduction of sendmail-cmd option?
 
-> * ds/status-with-sparse-index (2021-04-28) 10 commits
->  - fsmonitor: test with sparse index
->  - status: use sparse-index throughout
->  - status: skip sparse-checkout percentage with sparse-index
->  - dir.c: accept a directory as part of cone-mode patterns
->  - unpack-trees: stop recursing into sparse directories
->  - unpack-trees: compare sparse directories correctly
->  - unpack-trees: preserve cache_bottom
->  - t1092: add tests for status/add and sparse files
->  - Merge branch 'mt/add-rm-in-sparse-checkout' into ds/status-with-sparse-index
->  - Merge branch 'ds/sparse-index-protections' into ds/status-with-sparse-index
-> 
->  "git status" codepath learned to work with sparsely populated index
->  without hydrating it fully.
-> 
->  What's the status of this thing?
+Yes it's just a rewrapping that I did while adding my new paragraph. The 
+other reviewers pointed this out as well. My mistake, I will remove this 
+from the next patch revision.
 
-There has been no review on the simplified v2. But also I've been working
-to integrate the sparse-index work into our Scalar functional tests and
-have found some issues with the series. I'm working through those issues
-now and will send a v3 when I'm ready. Feel free to eject it until then.
+>> +--sendmail-cmd=<command>::
+>> +	Specify a command to run to send the email. The command should
+>> +	be compatible with `sendmail` as the arguments are passed
+>> +	directly.  The command will be executed in the shell if
+>> +	necessary.  Default is the value of `sendemail.sendmailCommand`.
+>> +	If unspecified, and if --smtp-server is also unspecified,
+>> +	git-send-email will search for `sendmail` in `/usr/sbin`,
+>> +	`/usr/lib` and $PATH if such a program is available.
 
-Thanks,
--Stolee
+>OK, but doesn't this also need to support '-i'?
+
+'The command should be compatible with `sendmail`' was meant to imply
+this, though I can make this more explicit.
+
+>> @@ -211,13 +221,14 @@ a password is obtained using 'git-credential'.
+>>
+>>  --smtp-server=<host>::
+>>  	If set, specifies the outgoing SMTP server to use (e.g.
+>> -	`smtp.example.com` or a raw IP address).  Alternatively it can
+>> -	specify a full pathname of a sendmail-like program instead;
+>> -	the program must support the `-i` option.  Default value can
+>> -	be specified by the `sendemail.smtpServer` configuration
+>> -	option; the built-in default is to search for `sendmail` in
+>> -	`/usr/sbin`, `/usr/lib` and $PATH if such program is
+>> -	available, falling back to `localhost` otherwise.
+>> +	`smtp.example.com` or a raw IP address).  If unspecified, and if
+>> +	`--sendmail-cmd` is also unspecified, the default is to search
+>> +	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH if such a
+>> +	program is available, falling back to `localhost` otherwise.
+>> +
+>> +	For backward compatibility, this option can also specify a full
+>> +	pathname of a sendmail-like program instead; the program must
+>> +	support the `-i` option.  Prefer using `--sendmail-cmd` instead.
+
+>Drop the last sentence, if we are not going to explain why.
+
+I do think nudging users to use the "correct" option is valuable, so I 
+will add some why text. Though I think adhering to the "--smtp-server 
+should specify a host and --sendmail-cmd specifies a command" dichotomy 
+is a good reason in and of itself.
+
+>> @@ -1490,14 +1497,15 @@ sub send_message {
+>>
+>>  	unshift (@sendmail_parameters, @smtp_server_options);
+>>
+>> +	if (file_name_is_absolute($smtp_server)) {
+>> +		# Preserved for backward compatibility
+>> +		$sendmail_command ||= $smtp_server;
+>> +	}
+>
+>Hmph, I wonder if this makes the intent more clear.
+>
+>	if (!defined $sendmail_command && file_name_is_absolute($smtp_server)) {
+>		$sendmail_command = $smtp_server;
+>	}
+>
+>That is, if the user gave us the command in newer form, we do not
+>even have to bother checking if the server is given as an absolute
+>pathname.
+
+Yes I think you're right, I'll make this change.
+
+>You seem to have replaced every smtp-server="$(pwd)/ mechanically
+>with sendmai-cmd=\"$(pwd)/, but please make sure that we have at
+>least one test left that passes an absolute path to --smtp-server to
+>ensure that the old mechanism keeps working.  A bonus point for
+>marking such a test that needs to be adjusted when the actual
+>deprecation happens (i.e. we'd likely to detect the use of absolute
+>path and throw a warning, so the test should notice the warning
+>message).
+
+Noted, I'll add a test for this case.
+
+>Also you would want to tweak some of the --sendmail-cmd variants to
+>use just the command name, with and without args, to ensure that (1)
+>discovery on $PATH works, and (2) passing initial args works.
+
+I did add two such tests:
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 65b3035371..82a3efb987 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2148,6 +2148,29 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+         test_cmp expected-list actual-list
+  '
+
++test_expect_success $PREREQ 'test using relative path with sendmailCommand' '
++       clean_fake_sendmail &&
++       PATH="$(pwd):$PATH" \
++       git send-email \
++               --from="Example <nobody@example.com>" \
++               --to=nobody@example.com \
++               --sendmail-cmd="fake.sendmail" \
++               HEAD~2 &&
++       test_path_is_file commandline1 &&
++       test_path_is_file commandline2
++'
++
++test_expect_success $PREREQ 'test using shell with sendmailCommand' '
++       clean_fake_sendmail &&
++       git send-email \
++               --from="Example <nobody@example.com>" \
++               --to=nobody@example.com \
++               --sendmail-cmd="[ 1 -eq 1 ] && \"$(pwd)/fake.sendmail\"" \
++               HEAD~2 &&
++       test_path_is_file commandline1 &&
++       test_path_is_file commandline2
++'
++
+  test_expect_success $PREREQ 'invoke hook' '
+         mkdir -p .git/hooks &&
+
+
+Granted, the second test tests for some generic shell expression, not 
+passing arguments, but I think if the former works the latter ought to 
+as well.
+
+Thanks for your feedback.
