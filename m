@@ -7,67 +7,74 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED296C433ED
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB5CBC433ED
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:20:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B498B61287
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:10:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8504F613DE
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhEMGLr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 02:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45054 "EHLO
+        id S230336AbhEMGVG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 02:21:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbhEMGLq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 02:11:46 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08988C061574
-        for <git@vger.kernel.org>; Wed, 12 May 2021 23:10:36 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id f184so4240960oig.3
-        for <git@vger.kernel.org>; Wed, 12 May 2021 23:10:36 -0700 (PDT)
+        with ESMTP id S230070AbhEMGVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 02:21:01 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9376C061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 23:19:38 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso22797665otn.3
+        for <git@vger.kernel.org>; Wed, 12 May 2021 23:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=rtTdSz/wNsC/E75ZzlmxnXTpN5ea9w0rQTXrI1FGiDg=;
-        b=eZooZVLhispaO486YCE7boOIEjYMA9QWdQ9c8D07Z88i+2fZKSNyA7l0qFUQE/1zkY
-         qnZX9On4DmOeeiapdZNSpX5Z7ve+ytEkhjztpkmieIKFIAAO3p0SubqmhJMljxdVAhKr
-         2xX12sBORWPMdfNoiV5gk8i6xGXVjL41idrWPnvq3l+zJ25cV4r0mcbM7lzy2FL3SFWV
-         xol0OcT6TVInqL5ZwpYbb10PkfQTc0zCrwT+DYwsj7Ew5FHyWP4rcTOx3NWGEweB/Dvn
-         qFk/tCyMptomOHM2tEHsiWg0zXTDp3EJY71faXWhcxG5AJQI3ObipzUv6FUPi8oX8Toz
-         G1yg==
+        bh=37xWJe5rvoCdRNaa0P0lzq9Zh6lMc6qG0JTPa4JrSNs=;
+        b=rFhvPFHoR8pWvwlZEE5AUZLmFWhHyP5EsP5QcD18fyFaGQDTYrRC8PPfp+o8u20NMr
+         T4OOOcxvIRmQQBoxb3cJ/NJbRolmPJVGuGr/yATBzDdRvRXwYmswgp/QUW9ApURFWk2E
+         peX1d/fA/5lbEnO5qMPAX5yoxk49m4VDeeKayiluhzyA5L04yFnmpm4HOh+fnHzXNTNp
+         GyYTMsoHMcPFiiI9OCUaRWs5Ir5KYw2eFmg81Fpb3dbeHQimPSKG6D7y+30yNCUNXeCr
+         +tOrm4Tr61GjmgpUsBWQEMjq9Cb2kiXzfteoWPMaA+TJHlY9085kLR99X9cj/PjN+cJ0
+         /gtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=rtTdSz/wNsC/E75ZzlmxnXTpN5ea9w0rQTXrI1FGiDg=;
-        b=oHnKNKjXnLFmkUbVimCTAMdj0irE/qw+NqN+4XEmgoE5w78HphHDSNV/5kG8MoWizP
-         UrqOcNfsGdfaygY8lj4d0p+VN1XnhvvcFAcItdahQmntX3P/y5qeivnAk+lef+PcAfy+
-         r98mn8jhL4tQu38J0aHhIRp5RsTqYNv8rOKz5PJLJtGGZDCZiG3++f6ga6b/4sdAM9QL
-         Wq1LzK80HuKaUS55qft1BWOykSIyLBBFvKtPf2P7OcHrUtwCjI7gr2/3KLpJIsHxy0Ei
-         YlbtAPmL1eQCox4p353quLtWUHcZohSeRUkwzh+3J5OPz3rdLbKKvk5SiwQrlyu4x8pz
-         Nucg==
-X-Gm-Message-State: AOAM531AO/7IMPRxE7/tE88Nn47+4O4zMh4d9xOv/pOBzw+/O8DlvHjm
-        TEf7CjW4PNDbcvepCqoT9G8=
-X-Google-Smtp-Source: ABdhPJy1ymojAqZHlucXD4t2fO4qcTmbrMCYOgnWaZAG1lGO7YvczTT9TBcj+PfnASRP8s4dGVzP+w==
-X-Received: by 2002:a05:6808:144e:: with SMTP id x14mr1884315oiv.166.1620886235430;
-        Wed, 12 May 2021 23:10:35 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:638f:a2c5:89ff:fe0c:1151])
-        by smtp.gmail.com with ESMTPSA id f30sm488742ooh.10.2021.05.12.23.10.34
+        bh=37xWJe5rvoCdRNaa0P0lzq9Zh6lMc6qG0JTPa4JrSNs=;
+        b=B+FxTJcNq1bLF40snj6soiGoSmTrq68kA6BIDedyUhxhpPO/eNQztpwDoKtX88Gb2M
+         vCAj31iDys6lzvKNQanmo23JcwU8a1ni6EpN134Z/1x32Eoz4Ub6E70NlOnofOPb/MSM
+         OevduhJe9Ip65M7ULdcBRT2x4gEplgvFQUh7NSwNsfkcfks5JvKESQpf8ga7YUFFOw0B
+         9cq0UxP9HF1TE3ZfIe/0P8caAwqsQjyJBZNZMBf40uec5mF/1e7JYKd9lksvfY1aGMed
+         rkTOSJRP0sbSu7so+VtdR1cWEB0KguOVr2jUTygwhqPfBKj4KDgJULcIIoYx8lAAfEV+
+         6y4w==
+X-Gm-Message-State: AOAM531Zyu0Dfgt6knFiIet/lrEk+pqib9YJJbC1DzHhR8T3CkVtgzy4
+        PZv5DnNE1yrbBX+kISNHhSU=
+X-Google-Smtp-Source: ABdhPJygwKHYwYL2Qt1g/0N4dFWti9ihac7zcEgIgyXeL1xbJ7zRZGBPQbGcW+mcyuCaUYRm0sMeWA==
+X-Received: by 2002:a05:6830:17d5:: with SMTP id p21mr13344403ota.318.1620886777978;
+        Wed, 12 May 2021 23:19:37 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id t3sm480988ooa.18.2021.05.12.23.19.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 May 2021 23:10:34 -0700 (PDT)
-Date:   Thu, 13 May 2021 01:10:18 -0500
+        Wed, 12 May 2021 23:19:37 -0700 (PDT)
+Date:   Thu, 13 May 2021 01:19:33 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Message-ID: <609cc2ca7cf26_1e7820868@natae.notmuch>
-In-Reply-To: <xmqqmtszb47p.fsf@gitster.g>
-References: <20210512222803.508446-1-felipe.contreras@gmail.com>
- <20210512222803.508446-5-felipe.contreras@gmail.com>
- <xmqqmtszb47p.fsf@gitster.g>
-Subject: Re: [PATCH 4/8] doc: simplify the handling of interruptions
+To:     Varun Varada <varuncvarada@gmail.com>,
+        =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Message-ID: <609cc4f5d05f_32932089@natae.notmuch>
+In-Reply-To: <CAD2i4DB0Zt1snCS_iHZrRJ-woeY5eS-WpWpfdvWo2f5Mk5AY1w@mail.gmail.com>
+References: <20210406092440.GZ6564@kitsune.suse.cz>
+ <CAD2i4DDr3Ftk6RE8cA74iSsJTpC9nEb=Cqvr79pF51BpcWEnsA@mail.gmail.com>
+ <609ae224aa509_6064920851@natae.notmuch>
+ <20210511202502.GM12700@kitsune.suse.cz>
+ <CAD2i4DALKgw2wG6QGs-oQhAHnS3AG1j1BSq2bxjPojVOtw+WjA@mail.gmail.com>
+ <609b4eea1088a_678ff208ba@natae.notmuch>
+ <20210512040926.GN12700@kitsune.suse.cz>
+ <609b63e48fd49_6d7da2086@natae.notmuch>
+ <20210512064733.GP12700@kitsune.suse.cz>
+ <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
+ <20210512170153.GE8544@kitsune.suse.cz>
+ <CAD2i4DB0Zt1snCS_iHZrRJ-woeY5eS-WpWpfdvWo2f5Mk5AY1w@mail.gmail.com>
+Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -76,45 +83,13 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > +"${args[@]}" -o "$out" "$1" ||
-> > +{ rm -f "$out"; false; }
-> 
-> It would be so nice if this worked, but here is what I saw in a
-> quick-and-dirty experiment:
-> 
->     $ f hoi || rm hoi ;# wait a bit and hit ^C
-> 
-> So, I suspect it unfortunately may not work well.
+Varun Varada wrote:
+> The advantage, fortunately, is that you can like any or all of these
+> reasons, and we don't have to agree on which ones are the most
+> important or relevant. The end result is the same: a less ambiguous
+> code base that makes everyone happy.
 
-That's because the interrupt signal is not caught.
-
-This works:
-
-  sh -c 'echo foo >"$1" && trap "exit 1" INT && sleep 20' test hoi || rm hoi
-
-And so does this:
-
-  #!/bin/sh
-
-  ruby - hoi <<EOF || rm hoi
-  File.write(ARGV[0], 'foo')
-  begin
-    sleep(10)
-  rescue Exception
-    exit(1)
-  end
-  EOF
-
-Both asciidoc and asciidoctor trap the signal.
-
-> We need to get 2/8 redone without bash-ism,
-
-Yes, if we agree this approach is indeed desirable I can do that.
-
-Cheers.
+Or rather: doesn't make anyone unhappy.
 
 -- 
 Felipe Contreras
