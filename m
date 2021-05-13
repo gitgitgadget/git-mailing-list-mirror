@@ -4,78 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56B74C433B4
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 19:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8EF1C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 20:04:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22A4B61406
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 19:35:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80B7A613CD
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 20:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230359AbhEMTgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 15:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55196 "EHLO
+        id S232395AbhEMUFe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 16:05:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbhEMTgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 15:36:39 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 858C2C061574
-        for <git@vger.kernel.org>; Thu, 13 May 2021 12:35:29 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id m124so22354784pgm.13
-        for <git@vger.kernel.org>; Thu, 13 May 2021 12:35:29 -0700 (PDT)
+        with ESMTP id S232389AbhEMUFd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 16:05:33 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9D4C061574
+        for <git@vger.kernel.org>; Thu, 13 May 2021 13:04:23 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id t4-20020a05683014c4b02902ed26dd7a60so14494039otq.7
+        for <git@vger.kernel.org>; Thu, 13 May 2021 13:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fVWAJm3mVIszTDct4GJEDb6yogOOmr1B3dAxvCGL3zo=;
-        b=ppine/ZyBjJuWMUTaEq9BzLGt297EQxmr5yEyzmK/D4lQr7VAs8jwzBNA4Frqx/XRH
-         aACY4IRo3ALHUmHJXViMhNbpbJKv9xX55c0cyRe63s+k8KN/2RGquDX/TzBmJxIcVt8A
-         IfHFYb8BhxQL7tLwDoBZz3KnRUrA2K6PApImA2L6Vhq3CTuKOsrLYh/ZtdWONLXVtVxz
-         fRARNVGOSq+Bw2Uzn3kBQKJ3bItY+BpxuuwrMKPG6R0dIIJXAXGVgS7YlRdlGfvK7cEH
-         nMB5qZbFfTRtztYiYNOQ+96pll3qzzE+6rj8fg6rXLcV6tVlqA/1DNHsypt0RfB8XxUi
-         SG5Q==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=FbtH+cJhXsRUJ/fnE8qBQy/Ru5Al6PQWuhw0U/WaHxw=;
+        b=CvBnj+XSndMBPuyySILlBbwkxv79AunwYIPs0h8L/EqhDo74ab/AaPDEYFaG9hfnFZ
+         3tnYlNRAG57rRkPjeyDOa7IwEbdH6IgZIRsJPBA1U/hLOXW9pmG45qywaHFmOimKUY43
+         nD4HsUsXQExkFfn2o2JPa5tDmXiATyt+nTrsfZw39Dldidx5e9pkf0J9NhXzUjfUo5NJ
+         9dcYhlR5vdjrU1YqG/Qm9xXm7k6CMg2yBft+fmNToZBdDrUTm2zlH3DlrYnlArJ4Cufx
+         6xsQ+SuXygeFC70PdzMtrkWVvTDe7jli4qU0etpiaq9k/6j4b6VglRvTp0bevhXqQK28
+         vNtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fVWAJm3mVIszTDct4GJEDb6yogOOmr1B3dAxvCGL3zo=;
-        b=HwJbq0i2TOpIdvxUWiZI0M6G7W3N+ZQ12s5XKzne+3DjB5aMgtWe5OCQWzQUZvPFic
-         2QXPcMGuZo4J3nkTQqwQzu1VzeKbkpfPq1yZhDpfi/8pTxxS0PPktERGxyfO4m78LBTD
-         ja+soUEP5P/4qD5OP6Dz10RdaBmW/Uo5CJcj0ITaJVLhK+umhAa5NW6HWRDDzxrhAUdT
-         +/HY59txUImf56zWtqBONLBHEtP5zeb2UuuaejKJ7V1TcIZqcFxXJg88IEHyuCvAOqA0
-         6ujjXykYR+FC6LyQB32JYw6WW+zBKysJWshAnB5jF8hDDRG8FaxIrm5my0kXul77lsie
-         PzsA==
-X-Gm-Message-State: AOAM530gRI9UdOsg5nnHcT+mf/EGncqIdGVB1irf/3ToHt6E3PvDt+F8
-        oxsuTrC2Kp9M/g7cGslNALrfFRhiDATXck5c+9ix738M
-X-Google-Smtp-Source: ABdhPJw78oUE9XYUeOpuWxI3OGJzS+5La4CnO2E8rautf2yrWGZBfvFReSEZu1WI3AGoxinxiWR1zEVhsb61aqWST9g=
-X-Received: by 2002:aa7:8ac3:0:b029:28e:df57:991b with SMTP id
- b3-20020aa78ac30000b029028edf57991bmr41744338pfd.38.1620934529063; Thu, 13
- May 2021 12:35:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1620928059.git.martin.agren@gmail.com> <f2a78267fd0f424c5cfa6969c891597af4d5171f.1620928059.git.martin.agren@gmail.com>
- <CAPig+cSKod_dL7Cm+=T_TPdTxxcV6mz2d+ktm4i1SEUJxQWUqg@mail.gmail.com>
-In-Reply-To: <CAPig+cSKod_dL7Cm+=T_TPdTxxcV6mz2d+ktm4i1SEUJxQWUqg@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 13 May 2021 21:35:16 +0200
-Message-ID: <CAN0heSo0u9z8yFjWHFQ6rub2xTKy8B5zitjbaQm8o+1-xzaG8g@mail.gmail.com>
-Subject: Re: [PATCH 3/6] git-check-ref-format.txt: avoid single quote
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=FbtH+cJhXsRUJ/fnE8qBQy/Ru5Al6PQWuhw0U/WaHxw=;
+        b=LOfy40CTg57U6WHB7TNtnBoudtIhQ6pWn98vlPEcByGyCO+VrWFq79C99kx7j1BLuj
+         OdFJmKz7hBlRp2ksd6GA1HRxc01aHXKkKj5xQJCWmYi6TUzCvQkd7X+p6kW0LAlcEFlL
+         efSXE3nPz6gfiuvDFmnlfGersMfcNafw6fEdGpaLdWp2dhhOl08F4kVkcALdtqo0urKZ
+         quIlOBM6RfXlyiW6jN2gLOfU4PrCzHY13wtY+4d/pac7NkPsz7EavlJKC/X6CF3Du2rb
+         wTITnvv5wTP5Fc8fFO+zNqTfTCGuBf9BGHHFsWQRsCmn6EWiFqC/AGGSZMY/If+Gdiyr
+         ffpA==
+X-Gm-Message-State: AOAM5309tzzURrNFP+j+Gf/Uokct19XFHRgdUzuZhZw4fmtPvk45EXaz
+        ekfKpGzIXIEsWJAwh7967Pc=
+X-Google-Smtp-Source: ABdhPJzvMvHFlX06E63JUEAhpyFnx0QS6NCAiTUnWdRNDfGgQe3JOsDGWpHPw2iKCbL9zW358oDSyA==
+X-Received: by 2002:a9d:c24:: with SMTP id 33mr35870499otr.289.1620936262974;
+        Thu, 13 May 2021 13:04:22 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id d19sm852938oti.57.2021.05.13.13.04.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 May 2021 13:04:22 -0700 (PDT)
+Date:   Thu, 13 May 2021 15:04:21 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Dave Huseby <dwh@linuxprogrammer.org>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, christian.couder@gmail.com,
+        felipe.contreras@gmail.com, stefanmoch@mail.de,
+        philipoak@iee.email, bagasdotme@gmail.com, sunshine@sunshineco.com
+Message-ID: <609d8645626ac_80a2208cc@natae.notmuch>
+In-Reply-To: <20210513171706.GD11882@localhost>
+References: <20210512031821.6498-2-dwh@linuxprogrammer.org>
+ <20210512233412.10737-1-dwh@linuxprogrammer.org>
+ <xmqqy2cjcwn4.fsf@gitster.g>
+ <20210513171706.GD11882@localhost>
+Subject: Re: [PATCH v3] doc: writing down Git mailing list etiquette
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 13 May 2021 at 21:16, Eric Sunshine <sunshine@sunshineco.com> wrote=
-:
->
-> On Thu, May 13, 2021 at 2:18 PM Martin =C3=85gren <martin.agren@gmail.com=
-> wrote:
-> > Asciidoctor renders 'git cat-file' with the single quotes. It's somehow
-> > tricked by the single quote in "srcref\'s" earler in the paragraph. If
->
-> s/earler/earlier/
+Dave Huseby wrote:
+> It sounds to me like adding a MailingListEtiquette.txt file isn't the
+> favored approach. I can tailor the information in here to fit into new
+> sections of SubmittingPatches.
 
-Oops. Thanks!
+I don't think this belongs to SubmittingPatches because it applies to
+*everyone*, yes people submitting patches, but also people reviewing
+patches. Additionally people submitting bug reports, people responding
+to bug reports. People suggesting improvements. And of course people
+maintainging the project too.
+
+Also, any other discussions.
+
+-- 
+Felipe Contreras
