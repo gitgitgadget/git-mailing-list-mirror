@@ -2,92 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4098C433B4
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B4C9C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:57:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F15661405
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:50:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 367BF6143B
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 06:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231429AbhEMGvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 02:51:08 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63880 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230063AbhEMGvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 02:51:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 218BC147A8B;
-        Thu, 13 May 2021 02:49:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=A2B2aSGx+9Y+MvzRX7aAq276W9dklXuejBReGW
-        WwciU=; b=aTcHv6T8tOViXcMUOYNaOita6ao7IeBHZXRXEPI0BIJht5Vc8aMPFK
-        Mmamh4J/gIN8SrzoGSqcD+JmaUOraOmuTuLmwKq2BPepx8mJwrgalfYE6iNO0fVq
-        +338muA2UvYHU6EL1KSkuZSxZ8UA0HHBK1K0d8Yktf+O9oRWE3LoE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1A6A6147A8A;
-        Thu, 13 May 2021 02:49:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 81E2E147A89;
-        Thu, 13 May 2021 02:49:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] t: avoid sed-based chain-linting in some expensive cases
-References: <YJzGcZpZ+E9R0gYd@coredump.intra.peff.net>
-Date:   Thu, 13 May 2021 15:49:52 +0900
-In-Reply-To: <YJzGcZpZ+E9R0gYd@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 13 May 2021 02:25:53 -0400")
-Message-ID: <xmqqim3nb01b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231464AbhEMG6v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 02:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55532 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230246AbhEMG6u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 02:58:50 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07291C061574
+        for <git@vger.kernel.org>; Wed, 12 May 2021 23:57:40 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id y2so33637980ybq.13
+        for <git@vger.kernel.org>; Wed, 12 May 2021 23:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=5WqmyPVkA5ZnuQIMwJkrVJvM49AqvYJltueKgQFzvi0=;
+        b=KFq7UCPNu82hwZHT83HzLh+1ncyVVgKWVaGILQvCVSa2Tw4KWqfPnmKVpH326zWEXb
+         p1XeD4rraUtkSxS9pdNgfl/frFxfWBMcz0pM55mPE+iPISTO8LhagH5U6YXvosG/iWMO
+         N5vW7nx69Cg7ZnAQUkrnfP2JfsdNAP0VBPYVsRSpC3El2JmVglm9H18DtFl7aARKN2cy
+         od1fkeIVnNill752MXCAbUWVhkCmg50GwaYLZVbl8G2KUazk5Z4qaBMt9F+NsUaSPkoF
+         0rof4haara2oGt03J+F8yfgvI+wxRqwXtlBbuJg0zFRPsD7XfS7LzceLsgSBFugvdziC
+         HmfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=5WqmyPVkA5ZnuQIMwJkrVJvM49AqvYJltueKgQFzvi0=;
+        b=t5f1TjulkZWFl670pWuipMw/Z44nyIJPwk6hmIYVKdrjQQjCD5+pufypRuj/ObOiv7
+         34QV730avgy+ibYhS3qmWiuC0uVyn+R/PjTMw9cXMZvD96e8OJTwXYLvyDCqqiKfe86B
+         G1VAYedId6jOXwGD8fWeoGPsIvVojBvLFwlSU8C1dd/T5mjlr8v41EpeegBq/YJP8XR+
+         c7SNEItk4mjCTkTAdqtc2U8MVynzQ1w0LDzDW6X7lg/Ied0bJ+nj3FyJ/nOkqbiRlSQs
+         3/I/SUxwyf2sgxVdx8PzqYrp1ReC3zcseQUYX3NZ91awHfbEX/wss/uAraPQbIHamDxp
+         RcqA==
+X-Gm-Message-State: AOAM531wh2XALmHDUX5mu1/OAsKO2qgx7cSIrEHCP42LPN7vKOp4YXGG
+        VAOZXDbxBvkdquCybJ3A5gxauZVOPMOj5sEvbyiQa8JD9A==
+X-Google-Smtp-Source: ABdhPJzfjT3bq1fmNUbjrldN4W25PUc1NPz9PLYSGP7oEyewp0nZUuEMj0Yq0X4q5MzafbCTRF6Q7HRa3JMfo1zTOTo=
+X-Received: by 2002:a5b:50e:: with SMTP id o14mr54094419ybp.43.1620889059210;
+ Wed, 12 May 2021 23:57:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6C7D22DC-B3B7-11EB-A03A-D609E328BF65-77302942!pb-smtp21.pobox.com
+From:   Alexandre Remy <alexandre.remy.contact@gmail.com>
+Date:   Thu, 13 May 2021 08:57:28 +0200
+Message-ID: <CAKToE5BnzXd_2pjhJY13E=e6b1ZgOV=NmXr_WfpCQd+LxXsO3A@mail.gmail.com>
+Subject: Git pathspecs difference in behavior between linux (wsl) and windows
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> Of course those extra lint checks are doing something useful, so paying
-> a few extra seconds (at least on Linux) isn't so bad (though note the
-> CPU time; we're bounded in our parallel run here by the slowest test, so
-> it really is ~120s of CPU improvement).
+I do not understand why the same command works on linux and not on
+windows. Is the pathspecs syntax differ or there is a problem on the
+git windows version?
 
-Nice.
+* On windows (git version 2.31.1.windows.1)
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index adaa2db601..adaf03543e 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -947,8 +947,11 @@ test_run_ () {
->  		trace=
->  		# 117 is magic because it is unlikely to match the exit
->  		# code of other programs
-> -		if $(printf '%s\n' "$1" | sed -f "$GIT_BUILD_DIR/t/chainlint.sed" | grep -q '?![A-Z][A-Z]*?!') ||
-> -			test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
-> +		if test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)" ||
-> +		   {
-> +			test "${GIT_TEST_CHAIN_LINT_HARDER:-${GIT_TEST_CHAIN_LINT_HARDER_DEFAULT:-1}}" != 0 &&
-> +			$(printf '%s\n' "$1" | sed -f "$GIT_BUILD_DIR/t/chainlint.sed" | grep -q '?![A-Z][A-Z]*?!')
-> +		   }
+git status -- 'src/test.js'
+On branch master
+nothing to commit, working tree clean
 
-We have been doing the more expensive one first, but we now
-optionally skip it while retaining the one that uses the shell.
-OK.
 
-Nicely done.
+* On linux (wsl: git version 2.25.1)
 
->  		then
->  			BUG "broken &&-chain or run-away HERE-DOC: $1"
->  		fi
+git status -- 'src/test.js'
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   src/test.js
+A classic git status gives the same result between linux and windows
+(with correct file detected).
+
+Regards,
