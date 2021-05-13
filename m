@@ -2,84 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B22FC433B4
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 21:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E30C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 21:03:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02F7B61439
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 21:03:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8E4B613B6
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 21:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233245AbhEMVEm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 17:04:42 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55452 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233226AbhEMVEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 17:04:40 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1731D1331A2;
-        Thu, 13 May 2021 17:03:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gu4fThY9oY4JeCl0S94TNLbGdbGix0/d8LTRwO
-        CRjgE=; b=FdRDWB/09R3W9GSFucB5FV3EsvZ0g3wfgf+GcmgCgC8CglwzCZAhum
-        Jg6Z5ebbu5qaUB9A7yNKEDGmoGUPIzG7lnMeWqGRdpObt4oxtTvy3dOnpFFM2/8C
-        HJJ6YO3VsU5YbfqDsCHQi8cj3+8sKTlSyArzbFBaWMFG3UHPXgJ4Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F6B11331A0;
-        Thu, 13 May 2021 17:03:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2E30A13319F;
-        Thu, 13 May 2021 17:03:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     dwh@linuxprogrammer.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: Is the sha256 object format experimental or not?
-References: <20210508022225.GH3986@localhost>
-        <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
-        <87lf8mu642.fsf@evledraar.gmail.com>
-        <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
-        <20210513202919.GE11882@localhost>
-Date:   Fri, 14 May 2021 06:03:23 +0900
-In-Reply-To: <20210513202919.GE11882@localhost> (dwh@linuxprogrammer.org's
-        message of "Thu, 13 May 2021 13:29:19 -0700")
-Message-ID: <xmqqo8de9wis.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233268AbhEMVFI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 17:05:08 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:46658 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233247AbhEMVFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 17:05:07 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 4Fh3zv2ptPz5tlD;
+        Thu, 13 May 2021 23:03:55 +0200 (CEST)
+Subject: Re: Git pathspecs difference in behavior between linux (wsl) and
+ windows
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alexandre Remy <alexandre.remy.contact@gmail.com>,
+        git@vger.kernel.org
+References: <CAKToE5BnzXd_2pjhJY13E=e6b1ZgOV=NmXr_WfpCQd+LxXsO3A@mail.gmail.com>
+ <81d06db6-fd91-7ec5-6aa5-84f69a227204@kdbg.org>
+ <CAKToE5DgtW1Kuw4AE5+Am_=9gATN-S=xk1kYXMZUWvtdtNy_PQ@mail.gmail.com>
+ <CAKToE5DEL1ZFwUbvcC-M3y-3mSVsVgMXDig4G=jcKbc-nJ_GnQ@mail.gmail.com>
+ <68a4ebd3-3c80-8983-9a26-f205debc4b5b@kdbg.org> <xmqqeeeabdml.fsf@gitster.g>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <dbf1e10c-c43c-3293-61b7-eff5fceecb84@kdbg.org>
+Date:   Thu, 13 May 2021 23:03:55 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A86BA80A-B42E-11EB-AD37-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <xmqqeeeabdml.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-dwh@linuxprogrammer.org writes:
+Am 13.05.21 um 22:08 schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Am 13.05.21 um 11:31 schrieb Alexandre Remy:
+>>> I have an additional question, does double-quotes be safely used in
+>>> both windows (that's ok) and linux shell  for pathspecs (git status --
+>>> "src/test.js") in case of spaces in the path?
+>>
+>> They can be used in both POSIX shell and Windows CMD and, I would
+>> assume, also in the PowerShell. Note though, that there are subtle
+>> differences when other special characters occur between double-quotes,
+>> notably the backslash. Please use your favorite search engine to learn more.
+> 
+> And a dollar sign, in addition to the backslash?
 
-> I think Git should externalize the calculation of object digests just
-> like it externalizes the calcualtion of object digital signatures.
+Granted, there's not a subtle, but a big difference how the dollar sign
+is treated ;) but I don't want to write a tutorial here. Hence, my hint
+towards a search engine.
 
-The hashing algorithms used to generate object names has
-requirements fundamentally different from that of digital
-signatures.  I strongly suspect that that fact would change the
-equation when you rethink what you said above.
-
-We can "upgrade" digital signature algorithms fairly easily---nobody
-would complain if you suddenly choose different signing algorithm
-over a blob of data, as long as all project participants are aware
-(and self-describing datastream helps here) and are capable of
-grokking the new algorithm we are adopting.  But because object
-names are used by one object to refer to another, and most
-importantly, we do not want a single object to have multiple names,
-we cannot afford to introduce a new hashing algorithm every time we
-feel like it.  In other words, diversity of object naming algorithms
-is to be avoided as much as possible, while diversity of signature
-algorithms is naturally expected.
+-- Hannes
