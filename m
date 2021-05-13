@@ -2,79 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53295C433B4
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 08:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97810C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 08:28:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27A0261168
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 08:23:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65F5D610F8
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 08:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231907AbhEMIYl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 04:24:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46188 "EHLO
+        id S231824AbhEMIaC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 04:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231305AbhEMIYj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 04:24:39 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7F47C061574
-        for <git@vger.kernel.org>; Thu, 13 May 2021 01:23:27 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id d3-20020a9d29030000b029027e8019067fso22932226otb.13
-        for <git@vger.kernel.org>; Thu, 13 May 2021 01:23:27 -0700 (PDT)
+        with ESMTP id S231149AbhEMI37 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 04:29:59 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24E54C06174A
+        for <git@vger.kernel.org>; Thu, 13 May 2021 01:28:50 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso22996637otn.3
+        for <git@vger.kernel.org>; Thu, 13 May 2021 01:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=O4hPVFylfPzbksVb/LA3H5GxHANVuWTRE5jvBk6RlWs=;
-        b=YN6EO6clRvIeoSJU685glRoOIwN1JqX0+5D46B4n2+/Znp6S0CXZY9eEII/KYO8vRg
-         KB31X5/+2V+PBa6wc0jaWghfITXtq81tWf0i2T6Gh3aMhu9vzFXGAqjC5s5XttuTDWwy
-         R5Bp977NiAGqgK61XXz8Zw51WlnXQZbjY0byJfI28h/6LArJD5ScqldBVFf6NXcA++AO
-         aF5kXE8cQFvv3vLZYUZHmZC/Up5YLx59EJFnzF9RpXp8nLgBvyB1xVm4zr34YqpIQtkY
-         LMqVnos9wNJLkdwHZnpLBYFUiniLiupkW4SKGw83je/P6h3aTsRSbFh5Tt0jqWBUSE/u
-         sJgA==
+        bh=7hc4q5QowVMeJtQkBRe0jt6qxWqMGklMFD9wvHtcNrY=;
+        b=tyljFliaNE2qosEUmwmFyPvrKlmA8sqs5NL0+X6ePd51SyQL63m4vUmBWSaVumx1Gi
+         bmy5Mn5ZQJRJlBTaSY+Qy+bIvfTPkpo50b7BZrH+bOKV7ciX+fy+Hqm5PpokrFOM/KNG
+         eF2vWp1wqPQR2RsmMjHhq8UUwNChoLcZ2MYQS18u7qXK7Z8ITlv79bl6F+kcaDsB2nyK
+         Q8ZassSQkh3gUlXfbmED59sxbvu1VlZ2rTISjZbB3wxtuc+BKSB9wf6Ynfi0dS2d6t5f
+         H364ZHEaqh5tFHOXMCdEqHou9VAkTGkQlg5pg83ZHjj3D6R4fDvhXbRkhM+torM1Eud2
+         xzYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=O4hPVFylfPzbksVb/LA3H5GxHANVuWTRE5jvBk6RlWs=;
-        b=HYPqVUdQKhNQ478W+Qi3Kb/B9ijAzrLTgY7mSBOjXMBbsXmy4ltz3uDr1XkTDRFUrp
-         UKIuVI5Ljq8q9AjsRUa8sj7ChgFqT0upyQiN1Qh6GXlehYUXcg3qeUGuPTSabe6ZBRO7
-         yeu4/2AXQg/+ICnGLOMcvncWhSIBlXnahmeBKZ8+UcdAR+p6TgX75G5Sr6j40jKM0NNM
-         iWfB4qQ7RDlAftggyPmuPNkCpbi5dlWZOPzFBvkwy/XDllzyTUTw1XGEKTL315CK2SWq
-         gWfT4RXYHoKQDLdOTcvxjph5cY9h7G3bRvDSxWkEgKu6KJAsDbrDXIfV8lafWG1kr29c
-         qAtw==
-X-Gm-Message-State: AOAM530aE4MWBiee0GdFcdnbZGy7iDsfySKxTIZocRkJAMMZ3ivL0+3h
-        TVAzzIMCB8EQY6R/ZgTIQhM=
-X-Google-Smtp-Source: ABdhPJyTWiHFisMlJ0sMm5rp/2Oeze1tVQb5PnQIv9/B/uo6lJHoAF7utSdIJZStZpayabOW+lHvzA==
-X-Received: by 2002:a05:6830:1510:: with SMTP id k16mr20516341otp.290.1620894207270;
-        Thu, 13 May 2021 01:23:27 -0700 (PDT)
+        bh=7hc4q5QowVMeJtQkBRe0jt6qxWqMGklMFD9wvHtcNrY=;
+        b=SKSnlKbb/aKOT0GoBopj8MF8GpQm4Gd51smxmhYZXFeb83xxEEKcKUWdRbPO+pQ9il
+         SUH/WknaKdh5NSs2iyOEpRIqbDki+XxVm3HwZGEYaZqgqpilUfd3Ue4TFSw/QKwbyNHW
+         SAKs+lP2ibMoMNU9HoLT+C4SkI3V31AV0218D1NEmchgdqf3nAbBXBPAyjJMcjdHSCeu
+         e4cfGA2jpFcWupAfyaMm4nbNVWEc5GS/sRaWdQgvxU0AdpabucLhztgFehpXV5eYX51M
+         Yke3iIrmXuCbldUin/sOihpbdTvD4dEckXmy/kdPrKiW4/g2yK2oP4Hn/u/ilv/mN3py
+         YBww==
+X-Gm-Message-State: AOAM533TVjxUJsS9WM6MsaXi+0xqmXv2ppHhFvZDnH8u1mCATviijn5W
+        TGxI/MDpId0T03sueyvKl8s=
+X-Google-Smtp-Source: ABdhPJx+SDjG21QE6L2Z4Iry8t/eg3VFR6rEPzAsUPmGj76gitK5nzN2uZHqWjgNmPhI1vTiqj5D4w==
+X-Received: by 2002:a9d:6c81:: with SMTP id c1mr20779124otr.248.1620894529542;
+        Thu, 13 May 2021 01:28:49 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id 67sm522643otp.68.2021.05.13.01.23.26
+        by smtp.gmail.com with ESMTPSA id p15sm494923otl.23.2021.05.13.01.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 May 2021 01:23:26 -0700 (PDT)
-Date:   Thu, 13 May 2021 03:23:25 -0500
+        Thu, 13 May 2021 01:28:48 -0700 (PDT)
+Date:   Thu, 13 May 2021 03:28:47 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Matthieu Moy <git@matthieu-moy.fr>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>,
-        Andreas Schwab <schwab@linux-m68k.org>
-Message-ID: <609ce1fd6b614_5a8208e3@natae.notmuch>
-In-Reply-To: <87pmxvrs73.fsf@evledraar.gmail.com>
-References: <cover-00.11-00000000000-20210423T072006Z-avarab@gmail.com>
- <cover-00.11-00000000000-20210510T141055Z-avarab@gmail.com>
- <patch-11.11-217c5aed491-20210510T141055Z-avarab@gmail.com>
- <609ccaf67710b_3293208be@natae.notmuch>
- <87pmxvrs73.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH v6 11/11] test-lib: split up and deprecate
- test_create_repo()
+Cc:     Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
+Message-ID: <609ce33fc57e7_5a820820@natae.notmuch>
+In-Reply-To: <20210513074622.GG8544@kitsune.suse.cz>
+References: <CAD2i4DALKgw2wG6QGs-oQhAHnS3AG1j1BSq2bxjPojVOtw+WjA@mail.gmail.com>
+ <609b4eea1088a_678ff208ba@natae.notmuch>
+ <20210512040926.GN12700@kitsune.suse.cz>
+ <609b63e48fd49_6d7da2086@natae.notmuch>
+ <20210512064733.GP12700@kitsune.suse.cz>
+ <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
+ <20210512170153.GE8544@kitsune.suse.cz>
+ <609c112066acd_71bd1208aa@natae.notmuch>
+ <20210512180418.GF8544@kitsune.suse.cz>
+ <609c2f98932f3_71bd120840@natae.notmuch>
+ <20210513074622.GG8544@kitsune.suse.cz>
+Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -83,54 +82,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Michal Such=C3=A1nek wrote:
+> On Wed, May 12, 2021 at 02:42:16PM -0500, Felipe Contreras wrote:
+> > If you and your wife are deciding what to eat for dinner, and you hav=
+e
+> > two opinions:
+> > =
+
+> >   1. Whatever is fine
+> >   2. I really would like pizza
+> > =
+
+> > What do you think you should order?
 > =
 
-> On Thu, May 13 2021, Felipe Contreras wrote:
+> That would be the situation if you comented on the patch adding 'impact=
+'
+> before it was merged.
+
+No analogy is perfect.
+
+> If you want a dining metaphor for the current situation it would be mor=
+e
+> like
 > =
 
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> --- a/t/test-lib-functions.sh
-> >> +++ b/t/test-lib-functions.sh
-> >> @@ -1243,21 +1243,10 @@ test_atexit () {
-> >>  		} && (exit \"\$eval_ret\"); eval_ret=3D\$?; $test_atexit_cleanup"=
+> 1. There are 100 people around the table eating lasagne
 
-> >>  }
-> >>  =
+You are starting wrong. *Nobody* is reading the word "impact" right now,
+and we are not going to swap the word in the middle of their reading.
 
-> >> -# Most tests can use the created repository, but some may need to c=
-reate more.
-> >> +# Deprecated wrapper for "git init", use "git init" directly instea=
-d
-> >>  # Usage: test_create_repo <directory>
-> >>  test_create_repo () {
-> >
-> > If this is deprecated why not add a warning?
-> >
-> >   echo "warning: test_create_repo is deprecated in favor of git init"=
- >&2
-> =
-
-> Because like test_i18ncmp, test_i18ngrep or whatever this is in the
-> state of "don't use this for new code", but annoying everyone who runs
-> the test suite with loads of this output under -v would be too
-> distracting.
-> =
-
-> The attention of the developer community is much better spent on one
-> person doing a s/test_create_repo/git init/ patch than having everyone
-> see this warning until somebody does that.
-
-Then it's not really deprecated; it's merely disfavored.
-
-To deprecate means to express disapproval of. If we are not going to
-express disapproval (i.e. annoy the users of the test suite), then it's
-not really deprecated. You can't eat your cake and have it too.
-
-I agree we shouldn't throw a warning right now, but at some point in the
-future we should, *then* it will be deprecated.
-
-Cheers.
+This is a much worse analogy, and I seriously doubt you actually think
+this remotely resembles the situation at hand.
 
 -- =
 
