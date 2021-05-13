@@ -2,161 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D20C3C433ED
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DECF0C43460
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:26:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D0F161421
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:24:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DB0B61433
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231504AbhEMX0G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 19:26:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47156 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229544AbhEMX0F (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 May 2021 19:26:05 -0400
-Received: from camp.crustytoothpaste.net (unknown [138.237.15.37])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 87F7B6043F;
-        Thu, 13 May 2021 23:24:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1620948294;
-        bh=D0v2CUk07CiwnHJ3VyOl2qtiac7xIq7ytEXcTy5pXzk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=LbqDxZgIka0jzW8NAfTEttFC71650CwFfPPKMbqcUh1Q3eq+aZscSKe1Mhc3nQwQz
-         eEexrA6DFvMjzBrAA3tUSU8AFF2y3L1+JvKelHiQ68sOAHQ8/tLP/xzwszV/z0UIQ4
-         eeLY1ufgNNnLlqOKULlFT7DB4pzPiJ1EhcZFwefChDTu4K33sc/O3VzESfYm6T/8kc
-         d1NsOrKg+Z+ip4rp+GnlG3IJaOgOopqQWx5HyA/XWVuPv7kkyGIEUp556w5ADEKVS2
-         tiUZKhVbaOit5dXicvuvwxVR7dTmkHSormXovHZ6mjdxPJaCnWJbz7ISPuYF3DInOj
-         0qDY2i1Ffj/1BMToM14xw2fZS4PeXAUl90g4ZPk+GB59+dmz8am0GJbB3u3vx1WpdO
-         nzHtihaXnEw5ho2pe/q6s2uKhesckWVNvrDWQq9W6zwXUAW1+BdXjGXS/GvpexFUAp
-         /4J3c8Hesso7Nbkz+D1tZmWOUPtXvmct33+vruD0Cpw7pjoGItM
-Date:   Thu, 13 May 2021 23:24:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-Message-ID: <YJ21Qfnk0tpPgPqu@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210512021138.63598-1-sandals@crustytoothpaste.net>
- <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
+        id S231510AbhEMX1b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 19:27:31 -0400
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:52353 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229544AbhEMX1a (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 May 2021 19:27:30 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 62DC210AB;
+        Thu, 13 May 2021 19:26:17 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Thu, 13 May 2021 19:26:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        linuxprogrammer.org; h=date:from:to:cc:subject:message-id
+        :references:mime-version:content-type:in-reply-to; s=fm3; bh=4uc
+        CQWBkUFNGlzlR7jzr+sOAd1ACFZ34jySAF/jDei0=; b=QhoQ2Ol7fVRs2mK1vsN
+        ctEsiomPIiYyTCRz4ek9u0nvEmIKew979k80a3hmKhW/cEecerJnIJS3fTBWvspd
+        kqZJENQ5c46V6YWti1mehjy9/nzhgVylKcdWUTQFhref7i7FBsap9Vwt/E3MhqKX
+        h8UMlW3NPYCFL6otqLxtsjngJihYDcl74wA8W2TAILrFK7mNAEWltkplrpcwnAAV
+        1KrKJw+MtZMSCHTfUlV4Ita1ths+f1yjfn4MaimQSUhU3dr7Kd90krfP9c9FnqjT
+        S4Lh89Ri21Zm2XPUvmG9ot5Ebo4G0QPX9YaNSKhgEm5B+6GaSwY84o+JFoIblUn5
+        hrg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=4ucCQW
+        BkUFNGlzlR7jzr+sOAd1ACFZ34jySAF/jDei0=; b=O8Mx/8Sq/+eS/6AR1KiS0V
+        N9yxkonX+nO7/JUqb6AIcSuA12VCyRXWBuI7KYTpPI+/qn1FeP19Bs03eVp7vebs
+        9E9kVl/arQd6efwLvGyPGDxjeJzr5BKGlH1lyJFmmuPddZkH32xXIRvwsqm10Bju
+        iMdlbg/zhuIUusjS3ms2VkTx5d51NBxp9r2dBPMQlbYERUbFIVR9EseKdUhv/FZA
+        vd3Cmnm+P/OyOcs30+AyOcdxniiup1WEorXBCX23Vlg1IPT1w8wsiI0Q8lEhudBk
+        ooUjVazjy44WDHOXbYLbkz/sig860YAHLvAc5B/dyayqLQKebAnzysm/HV+uAszg
+        ==
+X-ME-Sender: <xms:mLWdYLPT5YnxgsBAGNoUAyiruhHU6ekMIeqyivmsi21E9TzPBVBRsQ>
+    <xme:mLWdYF8RCN73tuVQfrN9C_P-5hTCCnofvmbNgnmFa3JKlc1th1711sIN_sSmy5FYy
+    X6s3jZlGwM29e9a>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehhedgvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujggfsehttd
+    ertddtreejnecuhfhrohhmpegufihhsehlihhnuhigphhrohhgrhgrmhhmvghrrdhorhhg
+    necuggftrfgrthhtvghrnhepgfdtkedvkedtfeevheeifeeggfffheejkeffvdelhffffe
+    efleehvdehheeileelnecukfhppedujeegrdehvddrudehrdefjeenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegufihhsehlihhnuhigphhroh
+    hgrhgrmhhmvghrrdhorhhg
+X-ME-Proxy: <xmx:mLWdYKQX_yUdXaUWyoIDW09ctQ7KvodX5R02-q5kJQqytxEP8ekyng>
+    <xmx:mLWdYPvU7aTNuXLf-S6Fj8yY59nqZilNNtG-O8SLsRX3Z_r8kGpr6Q>
+    <xmx:mLWdYDf1RCRP4kmvFl-oIYwAFKt6i-NZO988O1teiQon5r0aFfo_rw>
+    <xmx:mbWdYDkFksQ7S_UncVzqLmIy3v7B80xU1dkw3BL33UPMurPFAo_GtQ>
+Received: from localhost (c-174-52-15-37.hsd1.ut.comcast.net [174.52.15.37])
+        by mail.messagingengine.com (Postfix) with ESMTPA;
+        Thu, 13 May 2021 19:26:16 -0400 (EDT)
+Date:   Thu, 13 May 2021 16:26:14 -0700
+From:   dwh@linuxprogrammer.org
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Is the sha256 object format experimental or not?
+Message-ID: <20210513232614.GF11882@localhost>
+References: <20210508022225.GH3986@localhost>
+ <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
+ <87lf8mu642.fsf@evledraar.gmail.com>
+ <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
+ <20210513202919.GE11882@localhost>
+ <xmqqo8de9wis.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="m3q6OHd339oZyJlK"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <xmqqo8de9wis.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 14.05.2021 06:03, Junio C Hamano wrote:
+>dwh@linuxprogrammer.org writes:
+>
+>> I think Git should externalize the calculation of object digests just
+>> like it externalizes the calcualtion of object digital signatures.
+>
+>The hashing algorithms used to generate object names has
+>requirements fundamentally different from that of digital
+>signatures.  I strongly suspect that that fact would change the
+>equation when you rethink what you said above.
 
---m3q6OHd339oZyJlK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I agree with you. Object names are exactly that: names. Names for
+resources/data must be persistent, as well as global in scope and
+uniqueness, and autonomously assigned. What this means is that once an
+object has a name, that name shall never change as long as the object
+remains unchanged. The names must be unique in the scope of all objects
+(e.g. all copies of a repo) and generated without coordination.
 
-On 2021-05-12 at 02:48:59, Bagas Sanjaya wrote:
-> On 12/05/21 09.11, brian m. carlson wrote:
-> > From: Felipe Contreras <felipe.contreras@gmail.com>
-> >=20
-> > Asciidoctor contains a converter to generate man pages.  In some
-> > environments, where building only the manual pages and not the other
-> > documentation is desired, installing a toolchain for building
-> > DocBook-based manual pages may be burdensome, and using Asciidoctor
-> > directly may be easier, so let's add an option to build manual pages
-> > using Asciidoctor without the DocBook toolchain.
->=20
-> I have concern: I currently generate manpages with Asciidoctor+xmlto. Does
-> this change affects people using xmlto?
+Calculating object names using a digest algorithm meets all of these
+requirements. Choosing a strong digest algorithm creates a strong
+cryptographic binding between the name and the object contents. Using
+self-describing digests allows for a repo to switch digest algorithms at
+arbitrary points in the history.
 
-This change adds an option to allow not using xmlto at all but instead
-using just Asciidoctor to generate manual pages.  If you do nothing,
-you'll continue to use xmlto as before.
+I think that objects named with SHA1 digests should remain named with
+the SHA1 digest. I do *not* advocate going back and rewriting history
+to change all of the object names to a digest with a different
+algorithm. Git is a provenance log and history matters. I recommend
+preserving all existing names, even if they were created with known-weak
+digest algorithms, and making the change to a new algorithm at a
+specific point in time (e.g. at a tag). Using self-describing digest
+encoding and externalizing digest calculation future-proofs
+repositories and allows for preservation of history while allowing
+algorithm agility.
 
-> > We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
-> > contain proper handling of the apostrophe, which is controlled normally
-> > by the GNU_ROFF option.  This option for the DocBook toolchain, as well
-> > as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
-> > instead of a Unicode apostrophe in text, so as to make copy and pasting
-> > commands easier.  These newer versions of Asciidoctor detect groff and
-> > do the right thing in all cases, so the GNU_ROFF option is obsolete in
-> > this case.
->=20
-> At what version of Asciidoctor the apostrophe handling is corrected?
+To illustrate my point, I envision that a repos could have a history
+like this:
 
-The first released version is 1.5.3.
+object 2923f6fa36614586ea09b4424b438915cc1b9b67 (naked SHA1)
+  |
+<many objects named with SHA1>
+  |
+object 5f167fb6b3e96273b564fff0b041fb94fee4d3de (naked SHA1)
+  |
+<modify Git to ext. digest calculation and self-desc encoding>
+  |
+object 98c2e1c0965e60b0f137577ac5dd0a5c96ce224d (naked SHA1)
+  |
+<many objects named with SHA1>
+  |
+<a project decides to switch to SHA2-256, maybe marked in a tag>
+  |
+object IAOdLVxteOxQwKa-xn8yCBUkuPkjAqcuQ2V7fKAlao8o (self-desc.SHA2-256)
+  |
+<many objects named with self-describing SHA2-256 digests>
+  |
+<a project decices to switch to SHA3-256, maybe marked in a tag>
+  |
+object EK832G0PFhBFf-Dfgr205UKpUMqmVXJX9ltLwQo4Awct (self-desc.SHA3-256)
+  |
+<many objects named with self-descring SHA3-256 digests>
+  .
+  .
+  .
 
-> > We also need to update the code that tells Asciidoctor how to format our
-> > linkgit macros so that it can output proper code for man pages.  Be
-> > careful to reset the font to the previous after the change.  In order to
-> > do so, we must reset to the previous after each font change so the
-> > previous state at the end is the state before our inserted text, since
-> > troff only remembers one previous font.
-> >=20
-> > Because Asciidoctor versions before 2.0 had a few problems with man page
-> > output, let's default this to off for now, since some common distros are
-> > still on 1.5.  If users are using a more modern toolchain or don't care
-> > about the rendering issues, they can enable the option.
->=20
-> Maybe when distros upgraded shipped Asciidoctor version to 2.0, we can
-> bump the version requirement.
+Neither decision to switch to SHA2-256 nor to SHA3-256 would require any
+code changes. If we continue down the current SHA-256 road, we will have
+to repeat that multi-year effort in the future to switch to SHA3 or
+something else. Most importantly, the choice of digest algorithm would
+be left up to the maintainers of a given repo and not limited to the
+algorithms we have hard coded into Git.
 
-My general policy, which need not be Git's policy (but I think is
-reasonable), is that I will support the previous version of Debian and
-Ubuntu LTS for a year after the new one comes out.  Under that policy,
-we'd wait until a year after Debian 11 (bullseye) is released.
+Brian's work on the SHA-256 switch is valuable. We can leverage a lot of
+it to switch to externalized digest calculation and self-describing
+digests and never have to worry about doing that again.
 
-> > diff --git a/Makefile b/Makefile
-> > index 93664d6714..cb75dec314 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -285,6 +285,9 @@ all::
-> >   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to bu=
-ild the
-> >   # documentation.
-> >   #
-> > +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page back=
-end
-> > +# instead of building manual pages from DocBook.
-> > +#
-> The wording should be "...instead of building manual pages from DocBook w=
-ith
-> xmlto".
-
-I can make that change.  We're not using DocBook either way, with xmlto
-or other tooling (e.g., a plain xsltproc), so what we have here is
-accurate.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---m3q6OHd339oZyJlK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJ21QQAKCRB8DEliiIei
-gf3SAP0UIZWCRfDunh/5WeSVF5Mpytr0hah+I/CTk56pLUDLHwEAt+myCfF67upb
-gXnkxhvXQJHYlv1ye5xyIz9k3yIrxQM=
-=FNQF
------END PGP SIGNATURE-----
-
---m3q6OHd339oZyJlK--
+Cheers!
+Dave
