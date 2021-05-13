@@ -2,95 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 887D4C433ED
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 13:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13A62C433ED
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 13:08:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BD65611CE
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 13:05:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDBB961421
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 13:08:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233773AbhEMNHE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 09:07:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233795AbhEMNG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 09:06:57 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D37CC061760
-        for <git@vger.kernel.org>; Thu, 13 May 2021 06:05:47 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id h7so14353392plt.1
-        for <git@vger.kernel.org>; Thu, 13 May 2021 06:05:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=eUP5IMDSDG49LsfaudWbgg96hsCCAds0xSymJeiQF1s=;
-        b=OThtPikSyWa3ojed6EtIg+k5YokOpmxifB3TAME2MFKMqbXGFgXhwUNrkhaTzUYB+7
-         REO6SCZi3cisuh+n9tdysaXvwdBZJrdctWZR2MRUXVDywnrOu/64axplmJrzazBxLtue
-         McLkz1cWIZ8XkZzYG3XgvzhYN/m3EwyebdKiv2BQ8fFGWkviqJDiUrMKP7XKzfe3j+oR
-         UuYVH9g12E85HlrXytveix5kSjJlCBqlaRAu7389MWF7VZ5wlzjDND6sNSDsTJ/GGONY
-         j5QiBzo6qRTDsQ9cyQOasREONdXgdGgG/Gghvcej51sb66RiV08wCmdxy4LTzZn0LhYa
-         gpyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=eUP5IMDSDG49LsfaudWbgg96hsCCAds0xSymJeiQF1s=;
-        b=l47xXy7uqV4GR9UeM81ypbDCqieGmuAUZbdl5uoXaLeiFXPN1exs1Fgw3b2Z3LHGVP
-         aLHHuhKmpIJRnt5Eicpd+YGNeQjptuTwLq9OJZRXeo76Z6Em6Ek3kd21ybZkIpnIe6Dd
-         KyTk0ULJF+o/1lpB2e7pTr8VJJ7x61AvA4lFHt9gp+MDr3JV25fH375L+ivdfmm4Vo6R
-         ZmfSrJwYJHnjJB9SwCXxvUJGSScVi/BbrXlPeH9qFoUFdWTRHdXtkqcHD/QfZI4D7swU
-         cbwAoL7G0HJxKSLWUheymI0AoKz8tKj0qcS2Qqz186ewD1ZF5qnh8azYFcpDJBaXY0Iq
-         EQkw==
-X-Gm-Message-State: AOAM5321F8FLGzc54S0SRjhHjZFXlyajhRSBLjiWQ6foKbKRItWMvfze
-        YY1ml5cU0w5xx4DLy9QzAj30w1+3zq8Zzg==
-X-Google-Smtp-Source: ABdhPJzb9Y3LPeL24fFc5eR9sUK7nnnxOkUo2KOc4+q3kLBiedkM+1CBALSXwNW+vKXRwe2bBTjBdA==
-X-Received: by 2002:a17:902:ec83:b029:ef:919c:39f5 with SMTP id x3-20020a170902ec83b02900ef919c39f5mr5669517plg.83.1620911146361;
-        Thu, 13 May 2021 06:05:46 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-89.three.co.id. [180.214.233.89])
-        by smtp.gmail.com with ESMTPSA id p36sm2237444pgm.74.2021.05.13.06.05.45
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 May 2021 06:05:46 -0700 (PDT)
-To:     Git Users <git@vger.kernel.org>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [RFC doc] Tracking git.git
-Message-ID: <4591b3bd-1f35-55cb-6eb0-be97810d6e68@gmail.com>
-Date:   Thu, 13 May 2021 20:05:43 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S233847AbhEMNJr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 09:09:47 -0400
+Received: from bee.birch.relay.mailchannels.net ([23.83.209.14]:30113 "EHLO
+        bee.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233880AbhEMNJk (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 May 2021 09:09:40 -0400
+X-Sender-Id: instrampxe0y3a|x-authsender|calestyo@scientia.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id 114803624DD
+        for <git@vger.kernel.org>; Thu, 13 May 2021 13:08:28 +0000 (UTC)
+Received: from mailgw-02.dd24.net (100-96-18-74.trex.outbound.svc.cluster.local [100.96.18.74])
+        (Authenticated sender: instrampxe0y3a)
+        by relay.mailchannels.net (Postfix) with ESMTPA id 73C0D3627F0
+        for <git@vger.kernel.org>; Thu, 13 May 2021 13:08:21 +0000 (UTC)
+X-Sender-Id: instrampxe0y3a|x-authsender|calestyo@scientia.net
+Received: from mailgw-02.dd24.net (mailgw-02.dd24.net [193.46.215.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
+        by 100.96.18.74 (trex/6.2.1);
+        Thu, 13 May 2021 13:08:27 +0000
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authsender|calestyo@scientia.net
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Versed-Zesty: 5ee0a4e547a1409c_1620911302286_1116510204
+X-MC-Loop-Signature: 1620911302286:3095768409
+X-MC-Ingress-Time: 1620911302286
+Received: from heisenberg.fritz.box (ppp-46-244-246-192.dynamic.mnet-online.de [46.244.246.192])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: calestyo@scientia.net)
+        by smtp.dd24.net (Postfix) with ESMTPSA id 7E86B5FC25
+        for <git@vger.kernel.org>; Thu, 13 May 2021 13:08:17 +0000 (UTC)
+Message-ID: <123ef9e4f5dfe64e62dbdb207633df06cd94e818.camel@scientia.net>
+Subject: Re: git-sh-prompt: bash: GIT_PS1_COMPRESSSPARSESTATE: unbound
+ variable
+From:   Christoph Anton Mitterer <calestyo@scientia.net>
+To:     git@vger.kernel.org
+Date:   Thu, 13 May 2021 15:08:16 +0200
+In-Reply-To: <xmqq4kf7cmaj.fsf@gitster.g>
+References: <f1fc174b10ca5bc8b54ede513bc79e3864d8e014.camel@scientia.net>
+         <xmqq4kf7cmaj.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.3-1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, 2021-05-13 at 13:03 +0900, Junio C Hamano wrote:
+> Would
+>     $ set +u
+> fix it, I have to wonder?
 
-Some people (most notably Git developers here and me) like to run Git
-compiled from git.git repository, as opposed to normal users that run
-either Git from distribution or compiled from official source tarball.
+Damn, I'm so blind ^^ Had recently set -u to try out whether unset
+variables are used anywhere.
+Yes it fixes it.
 
-In git.git repo, besides master, there is also next, seen, and maint
-branches. The purposes of these branches are described on
-Documentation/howto/maintain-git.txt.
+Thanks anyway for going to fix it :-)
 
-When we have git.git repo clone and track it, tracking master, next,
-and maint are easy peasy: git pull will do the job. But tracking seen
-is more like tracking linux-next. We do NOT use git pull because
-often doing so will try to merge origin (upstream) with our local
-version, which are divergent and most likely will end with conflict.
-Instead, we do git fetch first followed by resetting to upstream by
-git reset --hard origin/seen.
 
-Should the fact above be documented? And on what file the fact should
-be placed? In INSTALL?
+Cheers,
+Chris.
 
--- 
-An old man doll... just what I always wanted! - Clara
