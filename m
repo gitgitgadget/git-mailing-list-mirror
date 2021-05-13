@@ -7,99 +7,113 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB509C433B4
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:30:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FEC6C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:31:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8288C6143B
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:30:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3C6261352
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232607AbhEMJbQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 05:31:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32816 "EHLO
+        id S232614AbhEMJcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 05:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbhEMJbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 05:31:15 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE141C061574
-        for <git@vger.kernel.org>; Thu, 13 May 2021 02:30:05 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id n10so24338248ion.8
-        for <git@vger.kernel.org>; Thu, 13 May 2021 02:30:05 -0700 (PDT)
+        with ESMTP id S231954AbhEMJcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 05:32:39 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C1D7C061574
+        for <git@vger.kernel.org>; Thu, 13 May 2021 02:31:29 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id i4so34081932ybe.2
+        for <git@vger.kernel.org>; Thu, 13 May 2021 02:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=Uc+IpijcAPMnJJ/JerCjUKYHWL5NdxIMQlNXsegaDUY=;
-        b=jqCALLepZPVgJfjKGfiYDte/C9NgCPkaVujH6iVDbhpHVLB5/sq7Q9P9cD4os+AA4+
-         dxI3Cm9DR+fipEiMIc+/BtM1nXPxmSnZRfFlkp2S/TPmzlp7m6izr9M9RAXkfdxLGcux
-         ZTER/bkni63Rv/liVxdYIRlWafksdy3u0QuqqAoTX3HXTvNg/WYJ8QmZ+gyaOmahS6c6
-         ppvndQFRojfKcK55Ld+48bIKWrAvxReUpTnXZYFj1LSXARntnBU1QdyVChEU2isJwSiP
-         hFcIl4eGWMs4MTwx5gryRjtsjMTIiCWK46aBDqpKSHJbWpJHlP4/PacDLTSjLiQjAUPR
-         2xrw==
+        bh=UHSWrzzxVyG5NyniOtAnWuHjPWm0EnFu/L+B/uk6pvU=;
+        b=WPb8q+8Tfl4IAndbahTlISkQYGpKDAcDSSq8cngxv21hpscuz6s2fkATqk0bObW7Xu
+         96NerdxidREQZdATCuGFnRj4inawnkOvpYu95/CBbe+YFtD7svQz7kLEXrETx6rIwvCN
+         Dw+ydK0QM2Lg6MPDcYzxUq39xglIoYKZF5ImUpHpBszSta2qDKNjKToQ1SR0/dinb0Pc
+         W0L6O/7I2c7fn5bamr16JbKJAC16z2HyWiE0uXuPsdtPiDF3BbNQOcJtFi7JAE3t/cBV
+         6Ikc2ddep8hdJN3Emj1vQ5JhQfAVl2Lbl6L2RsHKY2QxBUQmqcv0RzdhBRjd+JxHjiM0
+         EDww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Uc+IpijcAPMnJJ/JerCjUKYHWL5NdxIMQlNXsegaDUY=;
-        b=uWDCtGGUVFqCHY0I/IS7iZ6x/5Dm7ZVMTG+uUD9VTSKyTasUnEd3LUp8kGHzKpGsXq
-         8crvKwmMQWSEKNYCoBxlPDzdExjY30IZVYN/GS/ZRk3+YYxK7xYxPi+4X2KWG5qGoMVE
-         R4rjghOsC6OazvOqCZfw06ky0CquWjs2NiwI8rE5OhTBKYe/jHqAD+q5IENtUNLVXpfN
-         3m3ZPK1/Wi55vGFFNrbSRhqHRbwHXboBhOTAZO9ePxLc3D+EDQWbvi2/vRKKfp9/hEii
-         HwePJOKpHVt98zJfdXi8irwVI7EIVS/HaXfDhcGTGmoFyQ9jkRO4otxPnSO6iyXTaIfa
-         AVjw==
-X-Gm-Message-State: AOAM532X2+xHD172vuru7ACI0JKsTMJ33usgiy3652VwRSwPb8t/1urI
-        HHUaVa8T5vtqiUTR7TsDf1P8x0UMtrZVl/IUiYE=
-X-Google-Smtp-Source: ABdhPJwskKQUDMNj70cWtmjp+smNF4eqimbGthS2Focht7TmO/V0rK5I4/j4QRONBC7kxB7hSvPsBt4ek5fNh/t6Bqs=
-X-Received: by 2002:a5e:8a08:: with SMTP id d8mr30532496iok.192.1620898205348;
- Thu, 13 May 2021 02:30:05 -0700 (PDT)
+        bh=UHSWrzzxVyG5NyniOtAnWuHjPWm0EnFu/L+B/uk6pvU=;
+        b=d0uoJlM8OOzFIyd0Jokswnib9N2kQ602Dk733cmX9F5dhCDGXwbpfkDEZMF5Ffkag0
+         MwEHzRiYxpOc/fSm6bEmuV2lCFh/FmZiRF1MFvm6tiLJ6/C0UcP3iSyvHwYq7tSXuWJQ
+         XD3tYHp9nVkUexjpnIXAKWAO3GYeK4OSpHlISFH302qpGA6YmobTup2/VPD/x1WvwP4b
+         TB6r3y/91pRLNNzbm4dR+DxfNJp3QQBSvjpO/8omudjk5ZiRku86ypQPjkB7CFOJaFyT
+         n5rMKt4H3NspjjEg8vvvbg5pTQ9aGwF6EyJmNmJbraarE37flLttIOw6cyCP4SOCFLlS
+         6tmg==
+X-Gm-Message-State: AOAM5335f/qyqC4J6i1rTaTJuU8FDL4KUu+NS0CQS1R1JJeRUWqU+Pl+
+        dJ2M45+uNgCbPAPc/zJBvquBGAiOfFch7N14i5hdGCl9fQ==
+X-Google-Smtp-Source: ABdhPJxyFLYxPIunchIAnpiOjQOo2EMPZ5y51RdXFEaem75C5XRQ3RaXHNHiv5YI4COtgEq5VH6UkFsGvG4RzuRkwxA=
+X-Received: by 2002:a25:19d7:: with SMTP id 206mr24091093ybz.483.1620898288707;
+ Thu, 13 May 2021 02:31:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.949.v5.git.1620747320947.gitgitgadget@gmail.com>
- <pull.949.v6.git.1620821572126.gitgitgadget@gmail.com> <xmqqfsyredsr.fsf@gitster.g>
-In-Reply-To: <xmqqfsyredsr.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 13 May 2021 17:29:54 +0800
-Message-ID: <CAOLTT8R0sXRLB5=ePGi9dSpKR+YFSYLtDPvoD8PhNzneF0=NrQ@mail.gmail.com>
-Subject: Re: [PATCH v6] [GSOC] ref-filter: fix read invalid union member bug
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <CAKToE5BnzXd_2pjhJY13E=e6b1ZgOV=NmXr_WfpCQd+LxXsO3A@mail.gmail.com>
+ <81d06db6-fd91-7ec5-6aa5-84f69a227204@kdbg.org> <CAKToE5DgtW1Kuw4AE5+Am_=9gATN-S=xk1kYXMZUWvtdtNy_PQ@mail.gmail.com>
+In-Reply-To: <CAKToE5DgtW1Kuw4AE5+Am_=9gATN-S=xk1kYXMZUWvtdtNy_PQ@mail.gmail.com>
+From:   Alexandre Remy <alexandre.remy.contact@gmail.com>
+Date:   Thu, 13 May 2021 11:31:18 +0200
+Message-ID: <CAKToE5DEL1ZFwUbvcC-M3y-3mSVsVgMXDig4G=jcKbc-nJ_GnQ@mail.gmail.com>
+Subject: Re: Git pathspecs difference in behavior between linux (wsl) and windows
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8813=E6=97=
-=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=887:24=E5=86=99=E9=81=93=EF=BC=9A
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +test_expect_success '%(color:#aa22ac) must succeed' '
-> > +     mkdir test &&
->
-> You do not need "mkdir test" here, as "git init test" would take
-> care of it.
->
+I have an additional question, does double-quotes be safely used in
+both windows (that's ok) and linux shell  for pathspecs (git status --
+"src/test.js") in case of spaces in the path?
 
-Make sence.
-
-> On the other hand, you'd want to get 'test' directory removed after
-> this passes, so
+Le jeu. 13 mai 2021 =C3=A0 10:05, Alexandre Remy
+<alexandre.remy.contact@gmail.com> a =C3=A9crit :
 >
->         test_when_finished rm -fr test &&
+> Thank you, that was that. I was misled by the doc and the single-quote
+> which indeed is specific to the linux platform.
 >
-> would be useful.
+> Thank you again for your prompt reply.
 >
-
-Well, deleting or not deleting the directory "test" is not a big problem he=
-re.
-Delete it is ok.
-
-> Other than that, looks good to me.
->
-> Thanks.
->
-
-Thanks.
---
-ZheNing Hu
+> Le jeu. 13 mai 2021 =C3=A0 09:49, Johannes Sixt <j6t@kdbg.org> a =C3=A9cr=
+it :
+> >
+> > Am 13.05.21 um 08:57 schrieb Alexandre Remy:
+> > > Hi,
+> > >
+> > > I do not understand why the same command works on linux and not on
+> > > windows. Is the pathspecs syntax differ or there is a problem on the
+> > > git windows version?
+> > >
+> > > * On windows (git version 2.31.1.windows.1)
+> > >
+> > > git status -- 'src/test.js'
+> > > On branch master
+> > > nothing to commit, working tree clean
+> > >
+> > >
+> > > * On linux (wsl: git version 2.25.1)
+> > >
+> > > git status -- 'src/test.js'
+> > > On branch master
+> > > Changes not staged for commit:
+> > >   (use "git add <file>..." to update what will be committed)
+> > >   (use "git restore <file>..." to discard changes in working director=
+y)
+> > >         modified:   src/test.js
+> > > A classic git status gives the same result between linux and windows
+> > > (with correct file detected).
+> >
+> > Which shell did you use to invoke the Windows version? If it was from
+> > CMD or PowerShell, then you must not put the name in single-quotes:
+> >
+> >    git status -- src/test.js
+> >
+> > The reason is that the single-quote does not have a special meaning for
+> > CMD and PowerShell like it does for a POSIX shell.
+> >
+> > -- Hannes
