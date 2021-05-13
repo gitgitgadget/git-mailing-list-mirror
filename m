@@ -2,95 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C4D9C433ED
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A62C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:58:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3557561404
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:48:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 072576143B
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 09:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232190AbhEMJtb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 05:49:31 -0400
-Received: from mx2.suse.de ([195.135.220.15]:57864 "EHLO mx2.suse.de"
+        id S232377AbhEMJ7Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 05:59:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53468 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230338AbhEMJta (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 05:49:30 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id D5AE9AF2C;
-        Thu, 13 May 2021 09:48:19 +0000 (UTC)
-Date:   Thu, 13 May 2021 11:48:18 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Robert Coup <robert.coup@koordinates.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Varun Varada <varuncvarada@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-Message-ID: <20210513094818.GH8544@kitsune.suse.cz>
-References: <20210512040926.GN12700@kitsune.suse.cz>
- <609b63e48fd49_6d7da2086@natae.notmuch>
- <20210512064733.GP12700@kitsune.suse.cz>
- <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
- <20210512170153.GE8544@kitsune.suse.cz>
- <609c112066acd_71bd1208aa@natae.notmuch>
- <20210512180418.GF8544@kitsune.suse.cz>
- <609c2f98932f3_71bd120840@natae.notmuch>
- <20210513074622.GG8544@kitsune.suse.cz>
- <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
+        id S232770AbhEMJ7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 05:59:10 -0400
+Received: (qmail 3489 invoked by uid 109); 13 May 2021 09:57:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 May 2021 09:57:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15132 invoked by uid 111); 13 May 2021 09:58:00 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 May 2021 05:58:00 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 13 May 2021 05:57:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: "bad revision" fetch error when fetching missing objects from
+ partial clones
+Message-ID: <YJz4JTsFjTtL7mE2@coredump.intra.peff.net>
+References: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
+ <ba5a0574-c71c-709c-a13c-bf6d5981545c@jeffhostetler.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <ba5a0574-c71c-709c-a13c-bf6d5981545c@jeffhostetler.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 13, 2021 at 09:55:42AM +0100, Robert Coup wrote:
-> Hi Michal,
+On Tue, May 11, 2021 at 02:44:52PM -0400, Jeff Hostetler wrote:
+
+> > > remote: ...<skipped>
+> > > Receiving objects: 100% (64/64), 154.49 KiB | 2.97 MiB/s, done.
+> > > remote: ...<skipped>
+> > > Receiving objects: 100% (37/37), 168.35 KiB | 4.95 MiB/s, done.
+> > > Resolving deltas: 100% (5/5), done.
+> > > Resolving deltas: 100% (49/49), completed with 47 local objects.
+> > > fatal: bad revision 'd5e9cd36ab21839af3d116eff3221c53f6ca7fd6'
+> > > error: https://<myhost>/bagas/gitea.git did not send all necessary
+> > > objects
+> [...]
 > 
-> On Thu, 13 May 2021 at 08:47, Michal Suchánek <msuchanek@suse.de> wrote:
-> >
-> > That would be the situation if you comented on the patch adding 'impact'
-> > before it was merged.
-> 
-> As a lurker (and there are a lot more of us than people who email the
-> list), this comes across to me as veering well into bad faith. Because
-> it wasn't picked up at the time it can never be improved? Code doesn't
-> work that way, neither should any other aspect of the project.
-> 
-> Non-native English speakers outnumber native ones about 3:1 [1], and
-> even within native English speaking countries there are variances in
-> common vocabulary. This sort of stuff trips up non-native speakers
-> though (and the lack of rules in English makes it difficult enough) -
-> why would we want to make understanding Git harder for people when
-> there's a simple improvement to be had?
+> I'm not sure why you're getting that error, but you might
+> also try enabling `uploadpack.allowAnySHA1InWant`
+> (or one of the other "allow*SHS1InWant" values) and see if
+> that helps.
 
-Indeed, and I even provided an argument why eliminating 'impact' in git
-would likely improve the situation for non-native speakers. 'impact' is
-very rarely used in git, and by eliminating it (which is completely
-feasible) we reduce the vocabulary needed to read git documentation and
-make it more consistent.
+That shouldn't be necessary these days, since the v2 protocol allows
+arbitrary objects to be fetched.
 
-Yet Felipe insists that 'impact' is somehow generally bad word to use or
-that it should be abolished solely because he finds it bad and nobody
-objected to the alternative wording.
+I think it is actually a bug with pack-objects not sending the object,
+but it only seems to trigger with bitmaps. This works:
 
-Opinions on use of 'impact' differ both among the participants of this
-discussion and authorities like authors well-known dictionaries.
+  git init repo
+  cd repo
 
-It looks like this is generally matter of stylistic preferences and
-opinions. That is even if there is some slight stylistic preference for
-not using the word 'impact' it is very hard to prove such and then it is
-very hard to request change based only on writing style preferences.
+  echo content >file
+  git add file
+  git commit -m base
 
-That's not to say it's impossible but Felipe chooses the option to
-rehash the same arguments ad nauseam without bringing clear and
-substantial arguments in favor of the change.
+  git config uploadpack.allowfilter true
+  git clone --no-local --bare --filter=blob:none . clone
 
-Thanks
+  cd clone
+  git fetch origin $(git rev-parse HEAD:file)
 
-Michal
+But if I add a "git repack -adb" in the parent repository before the "cd
+clone", then I get:
+
+  remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+  fatal: bad revision 'd95f3ad14dee633a758d2e331151e950dd13e4ed'
+  error: /home/peff/tmp/repo/. did not send all necessary objects
+
+So presumably this is a bug in the bitmap-aware filtering code that is
+not present in the regular filter-traversing code. But what really
+puzzles me is that the result seems totally broken. Yet the test
+coverage in t5310 passes, and nobody has noticed on major sites like
+GitHub (which supports partial clones and most certainly has bitmaps
+enabled).
+
+So I think it will require some digging. My _guess_ is that it has to do
+with the "never filter out an object that was explicitly requested" rule
+not being consistently followed. But we'll see.
+
+-Peff
