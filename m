@@ -2,136 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D68EC433B4
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76AA0C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:54:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A82A61354
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:47:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 495336143C
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 23:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230455AbhEMXsU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 19:48:20 -0400
-Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:39123 "EHLO
-        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230210AbhEMXsU (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 May 2021 19:48:20 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id D82741DC8;
-        Thu, 13 May 2021 19:47:09 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 13 May 2021 19:47:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        linuxprogrammer.org; h=date:from:to:cc:subject:message-id
-        :references:mime-version:content-type:in-reply-to; s=fm3; bh=xPR
-        3nv9RViuUI7Pm5HeyKP7a/yFpe94UvKTn3SkPqso=; b=Yfr6v8osFdkXpIu6Ear
-        9+DUlf9fW5SiEe0h/LlJHAJi1mn52L/wGy7xFyZVTSkZ7Efp8la63FcQIR2ssjrT
-        vjn1ngftnDjOBaWUCKekzZaPMIWuteuo6aNjrjzIri/lp3Vbn4JuPdn7+j8eptQm
-        yoSknBYA6RHfO51+i3Jm9eq5N99tydDzjCWnLMiuUCwrmIqaQpqQHes5UuYPy1Uj
-        AKoXnsODUCpY5C30w2QlEui/A4MQ82e3xGBPDiKjkz02TjMpaM/DXpCiQOyGRaO1
-        yLr3wqrlDSEeqS2yrMzE2PV9+02A5vnp23lWAlux6VL55a1eI5pXP9u1El65GvGp
-        9nQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xPR3nv
-        9RViuUI7Pm5HeyKP7a/yFpe94UvKTn3SkPqso=; b=R+9K9fDVv8h1TJ1zlLVn8d
-        lWqgbBSacX5nWWBQQ9BETzFOWe217NsAlOPNsth39rOxFnJZl7tUPY8JyemKLSfT
-        tR+pYeq5vze2w42e7B6M/UmyzhKdEf+87PzE3Ag4hT3F/PU3aJIlusafVoPipfiY
-        a83Gcdx5KYbP3tsooUSjKDv9UXV2Ml8UAmdBgsO8NYEcraXr+ujk07qKttcFbMNg
-        qXnAAr4hR5Gq0zZE8xg38lr3ZOFV2PTCzz2dOzQU0ASYq7Eh+evdfbR/X1dZNyLi
-        8tJ7UFF+l5KE3pe6B3nmBwZobV+iWtnyB6e253u3X1zhNfol03rRLsNuwB0pbzBw
-        ==
-X-ME-Sender: <xms:fLqdYE-vjIt4K8lZfyZp9hfwkpJ_YROE_KvuCP857Y9jmp1g49EctA>
-    <xme:fLqdYMu6MTfI_XZZ11zcWWE-MQ-YyqFCXpgQlD4EnWOPAT_C5J1fjCsUWjOO6JlqP
-    Od5e0rip6icC403>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdehhedgvdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjfgesthdtredttderjeenucfhrhhomhepugifhhes
-    lhhinhhugihprhhoghhrrghmmhgvrhdrohhrghenucggtffrrghtthgvrhhnpeefjeevve
-    dtveelgffhteeuleejhfeutdettefghedtleegieeuteekgfffieeileenucffohhmrghi
-    nhepphihphhirdhorhhgnecukfhppedujeegrdehvddrudehrdefjeenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegufihhsehlihhnuhigphhr
-    ohhgrhgrmhhmvghrrdhorhhg
-X-ME-Proxy: <xmx:fLqdYKBCg2LE3ABbur4y5T967V0Rd7fsjMLVWP304m5TTkdgasZOvQ>
-    <xmx:fLqdYEeKIlAwEJxpJ3kri7dmUG1D4UU28uN9T1XIGSm3EGeWlTHHPA>
-    <xmx:fLqdYJNuqG4lTzG_XquFhL4LiBO6n-LWWZ6WHACiHkfm8tBdtrGHbA>
-    <xmx:fbqdYLUTumIMSroEw-SzeGETdUqzA2UdZgaXmAZ9LjW55igsXSktPg>
-Received: from localhost (c-174-52-15-37.hsd1.ut.comcast.net [174.52.15.37])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Thu, 13 May 2021 19:47:08 -0400 (EDT)
-Date:   Thu, 13 May 2021 16:47:06 -0700
-From:   dwh@linuxprogrammer.org
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Is the sha256 object format experimental or not?
-Message-ID: <20210513234706.GG11882@localhost>
-References: <20210508022225.GH3986@localhost>
- <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
- <87lf8mu642.fsf@evledraar.gmail.com>
- <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
- <20210513202919.GE11882@localhost>
- <20210513204957.5g76czb5bk3thlep@meerkat.local>
+        id S231157AbhEMXzv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 19:55:51 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47174 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230363AbhEMXzv (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 May 2021 19:55:51 -0400
+Received: from camp.crustytoothpaste.net (unknown [138.237.15.37])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 33EE76043F;
+        Thu, 13 May 2021 23:54:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1620950080;
+        bh=o7ch7ZdoUMIjzSlrzwrwZiy+wbh6AH5shXUMSOwHLKI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=znMpxu2X9oO9xgHllxXGvSnAVjObdQBn17jwYLMu7xqXwwCesk+so4770XQhQA5LE
+         TH4acw91bc+N7o/g9zKOjW1ZEN++MwL+eHBtUggTJ5tb5Ru2ZyfXUC6uB39Z6O5pi+
+         NhUYS4WIXjmIXFulmIqzOxle/eo2fNu7ZmY6VSfhR1wcitX713NT7nNNnRcZwJDexa
+         qavdAMkqInCzPSEcqT6CftMJLyGYagZw4yd64XPRfp3Ne16ErdLHIEiDdgh3by20nH
+         nwAdr5caWfp3bS9o1/QGKSkcAmQyHjHOGQc1RExMVqb0gjhj0rsw9sIzRf78iVVYqm
+         PXmXKV3ItmBU67AlW+l9Pdth3COdz7SdxLYkfzjaTtG1hCy+tU/CLmAqVW82N8IQlr
+         OOLEHmRO4KL4gE/y0GrSf85ebHCG+ZVEdlLDh7upIPv8OpfNYUBzro6EiYlXPF6uvj
+         +Ro/xrpJEyRWyUF2dWex0f3uQR74MiPleMCFsm0sCI/GdeXsgJd
+Date:   Thu, 13 May 2021 23:54:35 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Message-ID: <YJ28O7kBwyo4ucOC@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210512021138.63598-1-sandals@crustytoothpaste.net>
+ <117a0b3b-ae7a-ffe7-feee-ae659c588920@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ONYYSy6w/qXhNUZK"
 Content-Disposition: inline
-In-Reply-To: <20210513204957.5g76czb5bk3thlep@meerkat.local>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <117a0b3b-ae7a-ffe7-feee-ae659c588920@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13.05.2021 16:49, Konstantin Ryabitsev wrote:
->Check out what we're doing as part of patatt and b4:
->https://pypi.org/project/patatt/
->
->It takes your keyring-in-git idea and runs with it -- it would be good to have
->your input while the project is still young and widely unknown. :)
 
-Konstantin:
+--ONYYSy6w/qXhNUZK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's really clever. I especially love how you're using the list
-archive as the provenance log of old keys developers used. That seems
-like it would work although I have worries about the security of
-X-Developer-Key and the lack of key history immediately available to
-`git log` because it's in the list archive and not in the repo directly.
-I guess the old keys would still be in your local keyring for `gpg` to
-use but it would mark signatures created with old revoked keys as
-invalid even though they are valid.
+On 2021-05-12 at 04:43:14, Bagas Sanjaya wrote:
+> It is customary for multi-patches patch series to have a cover letter.
+> For example, when I send a patch that add corrections to an existing
+> patch series, I can add permalink of that series' cover letter to be
+> clear that my patch is applied on top of another patch series.
 
-Old keys--even if revoked or compromised--matter in a world of digitally
-signed data. As a matter of course, people should rotate their signing
-keys on a regular basis. It's just good hygiene. That means that there
-will always be old data signed with old keys and those old keys need to
-be kept around to validate the old signatures.
+I often send one, but I didn't think one was necessary in this case.
+I'll send one for v2, since I need to reroll.
 
-My approach has been to move to cryptographically secure provenance logs
-that contain key rotation events and commitments to future keys and also
-cryptographically linking to arbitrary metadata (e.g. KYC proofs, etc).
-The file format is documented using the Community Standard template from
-the LF. I'm hoping to move Git to use external tools for all digest and
-digital signature operations. Then I can start putting provenance logs
-into a ".well-known" path in Git repos, maybe ".plogs" or something.
-Then I can write/adapt a signing tool to understand provenance logs
-of public keys in the repo instead of the GPG keyring stuff we have
-today.
+> > diff --git a/Makefile b/Makefile
+> > index 93664d6714..cb75dec314 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -285,6 +285,9 @@ all::
+> >   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to bu=
+ild the
+> >   # documentation.
+> >   #
+> > +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page back=
+end
+> > +# instead of building manual pages from DocBook.
+> > +#
+>=20
+> Does USE_ASCIIDOCTOR_MANPAGE imply USE_ASCIIDOCTOR?
 
-Provenance logs accumulate the full key history of a developer over
-time. It represents a second axis of time such that the HEAD of a repo
-will have the full key history, for every contributor available to
-cryptographic tools for verifying signatures. This makes `git log
---show-signature` operations maximally efficient because we don't have
-to check out old keyrings from history to recreate the state GPG was in
-when the signature was created.
+It does not, any more than ASCIIDOCTOR_EXTENSIONS_LAB implies that.  I
+will update the documentation.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-I still like your approach purely for the "it works right now" aspect of
-the solution. Good job. I can't wait to see it in action.
+--ONYYSy6w/qXhNUZK
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Cheers!
-Dave
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJ28OgAKCRB8DEliiIei
+gUocAP0WlDezC+d8qToCQV7V1dnUtPk6q6kY+k5DO3CPqBwQjAEA9uNWAtyuLF6m
+GmHVGh05I9SyxAcN1/tupuxxjGSYIw8=
+=fhqH
+-----END PGP SIGNATURE-----
+
+--ONYYSy6w/qXhNUZK--
