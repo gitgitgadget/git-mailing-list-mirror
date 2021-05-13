@@ -2,126 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1164C433ED
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 04:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F00F6C433ED
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 04:13:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90F67613A9
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 04:12:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3F7D61417
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 04:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbhEMEN4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 00:13:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229466AbhEMENz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 00:13:55 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C8B1C061574
-        for <git@vger.kernel.org>; Wed, 12 May 2021 21:12:46 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id g15-20020a9d128f0000b02902a7d7a7bb6eso22633504otg.9
-        for <git@vger.kernel.org>; Wed, 12 May 2021 21:12:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IJsNsUzENm8jaqv6HZmf/n5YA87NeR9q7sEzGnoQYN0=;
-        b=VteaaT/CkV/78wUC4gaczDeNEjIxv/MDXAOdn8jjgUQX8iWD1NCkxtEqUSZj8KdYEH
-         /GzNscUPd5fV+06rS17FEU6vdWz1WaIhKpKQNEB1TPnDR2YUQbcq7dOdYNYrhLf5eL1k
-         JDzB0cgg3KT7Ny1TcQnEWRcqG0sSHQxWt6C2u+8OkbCfTEuoOtb8bx4woquEO8Oz1zmD
-         y7sqkjz5ZbddXyoYWkjOm4rRCJx6zOkKlWuRm6+zRb2anOXZPYGCrsH5gl4iErXIv0LY
-         VTd1UX/QxYUUQxmI9/YDV8hrzSkQsetYgSwvftgNoFFNrIk1J0zK+Gmp7L317MBA3yk+
-         LFIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IJsNsUzENm8jaqv6HZmf/n5YA87NeR9q7sEzGnoQYN0=;
-        b=CeGO+qXS4HfNDYxxXsB2ylnkZcOGBgzRcDDGxWC3//4D3W0oYMbUOG1LqznJUaWQvm
-         eUDv0n17cv5ok65oVPNCLM8OxokmG2fE7/p/xpfIFrTrtXJ8X4mVPfwkFl7M772FG1xD
-         oIzQz2NhS/j7sQRKXS0hkfVGZP73Z5dwnQw1Z8XxlNnxMyYT+OreU7FKmhiFCqWO8TwW
-         ajW+sdzGzQMVWtDyPVGgDU+CTLZ3aYwkqu3KYUYrC+NKlbMnJtO9BCewNAnoCRkPdeEW
-         i9hNzQatgPM+XLLVfmhhfBdJPeMQQ/3qshTIXF+2noX9o+9uzIHtzQiQM56AieygWlJW
-         TC/w==
-X-Gm-Message-State: AOAM533w0yL5prjzG/g5ScVESy2R/FAJBv6IntSHJ+ZcBVK2TU3rRL/0
-        z/0GzyToJNpN2H5jFgGZLCFIyxc8iQgqNiTpiD8=
-X-Google-Smtp-Source: ABdhPJwFeeUMYmgvNl6HmQz2c4yu7yVeYWimq+lSuAaAiWbZdBCtv+UQVKtzM1jkxxyUvVw3vylo+tou2iWxKMLp8kM=
-X-Received: by 2002:a9d:6b8d:: with SMTP id b13mr11002227otq.316.1620879165410;
- Wed, 12 May 2021 21:12:45 -0700 (PDT)
+        id S229516AbhEMEOc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 00:14:32 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54172 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229459AbhEMEO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 00:14:28 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5663312D006;
+        Thu, 13 May 2021 00:13:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uY8cK7kDSB7bBdnnUZrP8tKnDOH/lgWffrINtB
+        tqRyE=; b=l/QubsKpj7y7Fsu8h3KfPJ/5UcCDaxOssi0myFAIXeP+RL4tItbJ9c
+        /BBMX3Glm/k3WGkZMmr5vPAeft5NQZlLGd/NGO+xq/f71B/MPsXVvUBRMeLcCmIr
+        v+Kg9Pj/SkfqrqkQAFdSljqF1PwQzF5Rn8QNGWkPtq/pqH97D50nw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C92D12D002;
+        Thu, 13 May 2021 00:13:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 62F1A12CFEF;
+        Thu, 13 May 2021 00:13:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org,
+        Christoph Anton Mitterer <calestyo@scientia.net>
+Subject: Re: git-sh-prompt: bash: GIT_PS1_COMPRESSSPARSESTATE: unbound variable
+References: <f1fc174b10ca5bc8b54ede513bc79e3864d8e014.camel@scientia.net>
+        <xmqq4kf7cmaj.fsf@gitster.g>
+Date:   Thu, 13 May 2021 13:13:14 +0900
+In-Reply-To: <xmqq4kf7cmaj.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        13 May 2021 13:03:48 +0900")
+Message-ID: <xmqqzgwzb7ad.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.932.git.1618322497.gitgitgadget@gmail.com> <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
-In-Reply-To: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 12 May 2021 21:12:34 -0700
-Message-ID: <CABPp-BF0EGo-WLTN45qOu02O4sEzmSCUXT3XeoKQdbTHToNQOw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] Sparse-index: integrate with status
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8AC5200C-B3A1-11EB-B0F4-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 23, 2021 at 2:34 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This is the first "payoff" series in the sparse-index work. It makes 'git
-> status' very fast when a sparse-index is enabled on a repository with
-> cone-mode sparse-checkout (and a small populated set).
->
-> This is based on ds/sparse-index-protections AND mt/add-rm-sparse-checkout.
-> The latter branch is needed because it changes the behavior of 'git add'
-> around sparse entries, which changes the expectations of a test added in
-> patch 1.
->
-> The approach here is to audit the places where ensure_full_index() pops up
-> while doing normal commands with pathspecs within the sparse-checkout
-> definition. Each of these are checked and tested. In the end, the
-> sparse-index is integrated with these features:
->
->  * git status
->  * FS Monitor index extension.
->
-> The performance tests in p2000-sparse-operations.sh improve by 95% or more,
-> even when compared with the full-index cases, not just the sparse-index
-> cases that previously had extra overhead.
->
-> Hopefully this is the first example of how ds/sparse-index-protections has
-> done the basic work to do these conversions safely, making them look easier
-> than they seemed when starting this adventure.
->
-> Thanks, -Stolee
->
->
-> Updates in V2
-> =============
->
->  * Based on the feedback, it is clear that 'git add' will require much more
->    careful testing and thought. I'm splitting it out of this series and it
->    will return with a follow-up.
->  * Test cases are improved, both in coverage and organization.
->  * The previous "unpack-trees: make sparse aware" patch is split into three
->    now.
->  * Stale messages based on an old implementation of the "protections" topic
->    are now fixed.
->  * Performance tests were re-run.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I read through the topic, both my old comments, the range-diff, and
-the new patches where the range-diff wasn't enough.  I tried to spot
-issues, and was hoping to find problems you alluded to in your recent
-comments at https://lore.kernel.org/git/05932ebc-04ac-b3c5-a460-5d37d8604fd9@gmail.com/,
-but I failed to spot them.  I hope it has to do with the cache bottom
-stuff that I just don't understand, because otherwise I just missed
-the problems in my review.  I can say that in v2 you fixed the issues
-I did spot in my review of v1.
+> Christoph Anton Mitterer <calestyo@scientia.net> writes:
+>
+>> Could it be that git-sh-prompt no longer works properly?
+>>
+>> With git 2.31.1:
+>> $ . /usr/lib/git-core/git-sh-prompt
+>> $ PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+>> $ cd someGitRepo
+>> bash: GIT_PS1_COMPRESSSPARSESTATE: unbound variable
+>> $ 
+>
+> Would
+>
+>     $ set +u
+>
+> fix it, I have to wonder?
 
-I'll look forward to v3 to see what it was I missed.  If I somehow
-don't respond soon (in a week at the latest), do feel free to ping me;
-sorry for somehow having this one slip through the cracks.
+Assuming that the answer is yes,...
+
+I do not know who maintains this contrib/ script, but here is what
+
+$ git grep -e '\$GIT_PS1_' -e '\${GIT_PS1_[^}-]*}' contrib/completion
+
+gave me a handful candidates for fixes.  Randomly picking Elijah from
+the output of
+
+    $ git shortlog --no-merges -sn --since=18.months  \
+	contrib/completion/git-prompt.sh |
+      head -n 1
+
+for ideas.
+
+Thanks.
+
+ contrib/completion/git-prompt.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git i/contrib/completion/git-prompt.sh w/contrib/completion/git-prompt.sh
+index 4640a1535d..b9485f4016 100644
+--- i/contrib/completion/git-prompt.sh
++++ w/contrib/completion/git-prompt.sh
+@@ -139,7 +139,7 @@ __git_ps1_show_upstream ()
+ 
+ 	# parse configuration values
+ 	local option
+-	for option in ${GIT_PS1_SHOWUPSTREAM}; do
++	for option in ${GIT_PS1_SHOWUPSTREAM-}; do
+ 		case "$option" in
+ 		git|svn) upstream="$option" ;;
+ 		verbose) verbose=1 ;;
+@@ -433,8 +433,8 @@ __git_ps1 ()
+ 	fi
+ 
+ 	local sparse=""
+-	if [ -z "${GIT_PS1_COMPRESSSPARSESTATE}" ] &&
+-	   [ -z "${GIT_PS1_OMITSPARSESTATE}" ] &&
++	if [ -z "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
++	   [ -z "${GIT_PS1_OMITSPARSESTATE-}" ] &&
+ 	   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
+ 		sparse="|SPARSE"
+ 	fi
+@@ -543,7 +543,7 @@ __git_ps1 ()
+ 			u="%${ZSH_VERSION+%}"
+ 		fi
+ 
+-		if [ -n "${GIT_PS1_COMPRESSSPARSESTATE}" ] &&
++		if [ -n "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
+ 		   [ "$(git config --bool core.sparseCheckout)" = "true" ]; then
+ 			h="?"
+ 		fi
