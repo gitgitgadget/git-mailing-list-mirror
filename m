@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 653E1C433ED
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 18:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DB1DC43460
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 18:18:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4895A613CA
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 18:18:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79589613CA
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 18:18:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbhEMSTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 14:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38078 "EHLO
+        id S230113AbhEMSTl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 14:19:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230081AbhEMST1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 14:19:27 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB2EC06174A
-        for <git@vger.kernel.org>; Thu, 13 May 2021 11:18:17 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id w15so34819412ljo.10
-        for <git@vger.kernel.org>; Thu, 13 May 2021 11:18:17 -0700 (PDT)
+        with ESMTP id S230030AbhEMSTd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 14:19:33 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77BECC061574
+        for <git@vger.kernel.org>; Thu, 13 May 2021 11:18:20 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 131so9439518ljj.3
+        for <git@vger.kernel.org>; Thu, 13 May 2021 11:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=MwYdhQUMKM80wPh7YuwuNf+VaOf3JJj67pkQcNVle6s=;
-        b=LHAUYi1+0ori0ucZ5xjtuvra/PIoqFFKh03dXoxJz/Ki2NT+NuArYtVfYSTGTnmbQR
-         kWnJ9yBjjanPQmQ4g0hXYJS8T4+mgaAsyV1uoH76HLYKsrmSEo912Ovpfua2H6BYfocg
-         4LpYkW0FfyUQ2wu/6rfVUpH82i3G+zQaOFqRfGIJLCRSbXGBMTfudww+RfYmWqg0D0R+
-         G51SwLDUCJ8zijmWscSTKLEIp/xJUw+zK/aoJQDdkwXOB+IBIVSVkhAnhdwUGyiW9PQ3
-         qyUHXTxVhIUBpf/hlZklOJtIZrfzMmkk7Z4yNxzSvxu8DWJhskCPar/c5MRzoZhv6+r2
-         NFQw==
+        bh=uifB8NJeojaeK+nDmSVKQhtY0qawzOshRrAWtqB0FD8=;
+        b=ns8Z2ODQFzkk/cuekNI4kTjwUpQVwLHCw8oKwqTuZzGjwxIilhnl0ZKLhG4Tiw4wwx
+         Sqp45Ygomj+yS5zadDrSBvgz/96jHJ0W28XoAUaTqc4EQm9MdwDhOTPLIneairRxW2Zj
+         8jvCnSnqWuMUUYMT8Mvfeg3tq9YPDZrESAD9YPbKat3oMjQ1oJ+IuQIfTJ+ls/4bhwoG
+         cavDFTwrz8Arz/8dV6KdCwmKM3W4ER7EiEpGMQqa9CmJbumAdKILJLtRq59es56ZEJfm
+         ykCRonw1QdoJOascobTRWcUJrx7+9+AApg6OJlr+hcO8hejSl41h55TfUQxn1yYGdii0
+         SILw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MwYdhQUMKM80wPh7YuwuNf+VaOf3JJj67pkQcNVle6s=;
-        b=MthqiK1RkkbwtUCvyv7nvLkfg4KR7X2+B9j5E25NbFx7Aec/UBFOSx8mtOSocXOvu5
-         hxXz9eWvG/9+QABo9FP7CjmCBwYMkmrZDda+QMx2/UU3d+fVpnA3dDXTHyrV0tPc5M2G
-         rDmKUTo+HAQgBgZFQwQVtWyPiktyJ6+Pdi4018uTNSnWxbyvcUFIWWRcJjrZ45t5lQI9
-         XcPmU9iCl5lNaPAFE16OPlYklPxqrFVLatf1S2LJcWoEJOvMpv4MxuUBfKSXBIkdvrxL
-         CpJXuDMV/xQAkwPCjqJ6s+KYkXOf5RQ4gNsRyypA9obl0ngjJyqiAtgKKJy8cBIY/Eoy
-         0yDg==
-X-Gm-Message-State: AOAM530BEAK4wdNX4Cc+JfTnnc4fyYN1lFejZiRi8361qrMu3KMAWXvL
-        gV9+bVKnCnaCCo9Y1jWvPtLxFwlyZU0=
-X-Google-Smtp-Source: ABdhPJyCYpfN8dYCFBgo2XSarVvyR23ilELorS+IBw3QcxRjp2z4tDMU0DS0pgtEdHZL7cXgYwFwHQ==
-X-Received: by 2002:a2e:9e57:: with SMTP id g23mr16268445ljk.123.1620929895787;
-        Thu, 13 May 2021 11:18:15 -0700 (PDT)
+        bh=uifB8NJeojaeK+nDmSVKQhtY0qawzOshRrAWtqB0FD8=;
+        b=E8ITfL25Pd6NHRF5cdUB0IEwNJnA889jd1TPQrwfU2PZThJmA+VYAVn10RTM3v8WDa
+         2NlnGpg5QDPyaFTFVQhwDTZsWTmhbOPrmYFac6HupW0hzH+q+cFWkUnGVRAS4dDgtze1
+         5cXg+pi+zNN4OBqugNvoRKRY30vRGH3sKKtPYWKs1AN+up7V1UKN+x+XJK44yfIx2rO8
+         Jmk/+LENnA3E4cDV3Dmc122Siwo1uZhgB9Y+vPUGD+5olpY739WSq1sTAlqKyXQGwewP
+         3vO+a+SyERqG5sxW8D+jR2qGBSYMncpXU/Vq9Y2v/yv/15t8nDAubuIOG6tloIp6hDzS
+         mJRA==
+X-Gm-Message-State: AOAM532THDIUTu9tdYq9wKuUdsp6tuL5Fn6XG3yaFEmRz1KGjdCDftaz
+        /zS3rO/KDQzNHrHh9fT84Y0QeA6c1vg=
+X-Google-Smtp-Source: ABdhPJytbe/tB/KBRxikSmWM0v+Lo8fB0NVhqPelBzP2f7IgJIHBxApFOLz6mbM/ecS4vzwqaOnxJw==
+X-Received: by 2002:a2e:9806:: with SMTP id a6mr17880966ljj.214.1620929898656;
+        Thu, 13 May 2021 11:18:18 -0700 (PDT)
 Received: from localhost.localdomain (81-231-136-235-no600.tbcn.telia.com. [81.231.136.235])
-        by smtp.gmail.com with ESMTPSA id v8sm554153ljn.17.2021.05.13.11.18.14
+        by smtp.gmail.com with ESMTPSA id v8sm554153ljn.17.2021.05.13.11.18.17
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 May 2021 11:18:15 -0700 (PDT)
+        Thu, 13 May 2021 11:18:18 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 5/6] git-svn.txt: change verse to listing block
-Date:   Thu, 13 May 2021 20:17:44 +0200
-Message-Id: <96c5a7ce800b37306274a6725ad44582fefb06a8.1620928059.git.martin.agren@gmail.com>
+Subject: [PATCH 6/6] Doc: use two backticks for monospace, not backtick+apostrophe
+Date:   Thu, 13 May 2021 20:17:45 +0200
+Message-Id: <f0af6c8f6aeb765a2670cc6c097059c591cdcedc.1620928059.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.31.1.751.gd2f1c929bd
 In-Reply-To: <cover.1620928059.git.martin.agren@gmail.com>
 References: <cover.1620928059.git.martin.agren@gmail.com>
@@ -72,201 +72,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unlike AsciiDoc, Asciidoctor seems to leave out an empty line after a verse
-in a list continuation:
+In a few places, we wrap the name of an --option or an ENV_VARIABLE in
+backtick+apostrophe rather than backtick+backtick. Switch to using
+two backticks, as per the coding guidelines.
 
-  allow only certain refs.
-
-       config key: svn-remote.<name>.ignore-refs
-  If the ignore-refs configuration key is ...
-
-We could probably convince Asciidoctor do this differently, but thinking
-about it, there's no real reason for a "verse" here. We might as well
-use a listing block.
-
-This is the only place in our documentation that uses this "config key:
-foo.bar" construction. We could rework it into prose ("This option
-overrides the foo.bar configuration, which defaults to baz."). Right
-now, let's just solve the immediate issue of the missing empty line when
-we use Asciidoctor to generate the manpage.
+As an added bonus to rendering these as monospace, we will have them
+render the same with AsciiDoc and Asciidoctor. The `quoted' way ends up
+as ‘quoted’ vs “quoted”.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-svn.txt | 45 ++++++++++++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ Documentation/config/diff.txt      | 2 +-
+ Documentation/git-check-ignore.txt | 2 +-
+ Documentation/git-describe.txt     | 2 +-
+ Documentation/git-svn.txt          | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index 2d3331f55c..eda0c452d1 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -69,7 +69,7 @@ diff.interHunkContext::
+ diff.external::
+ 	If this config variable is set, diff generation is not
+ 	performed using the internal diff machinery, but using the
+-	given command.  Can be overridden with the `GIT_EXTERNAL_DIFF'
++	given command.  Can be overridden with the `GIT_EXTERNAL_DIFF`
+ 	environment variable.  The command is called with parameters
+ 	as described under "git Diffs" in linkgit:git[1].  Note: if
+ 	you want to use an external diff program only on a subset of
+diff --git a/Documentation/git-check-ignore.txt b/Documentation/git-check-ignore.txt
+index 0c3924a63d..ab97ee9d50 100644
+--- a/Documentation/git-check-ignore.txt
++++ b/Documentation/git-check-ignore.txt
+@@ -21,7 +21,7 @@ input files to the exclude mechanism) and output the path if it is
+ excluded.
+ 
+ By default, tracked files are not shown at all since they are not
+-subject to exclude rules; but see `--no-index'.
++subject to exclude rules; but see `--no-index`.
+ 
+ OPTIONS
+ -------
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index a88f6ae2c6..adbbb8907f 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -44,7 +44,7 @@ OPTIONS
+ 	HEAD".  If the working tree has local modification "-dirty"
+ 	is appended to it.  If a repository is corrupt and Git
+ 	cannot determine if there is local modification, Git will
+-	error out, unless `--broken' is given, which appends
++	error out, unless `--broken` is given, which appends
+ 	the suffix "-broken" instead.
+ 
+ --all::
 diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index d5776ffcfd..4e62dc37e7 100644
+index 4e62dc37e7..2491ed47a6 100644
 --- a/Documentation/git-svn.txt
 +++ b/Documentation/git-svn.txt
-@@ -148,8 +148,9 @@ the same local time zone.
- 	`^refs/remotes/origin/(?!tags/wanted-tag|wanted-branch).*$`
- 	can be used to allow only certain refs.
+@@ -361,7 +361,7 @@ where <name> is the name of the SVN repository as specified by the -R option to
+ 	This should make it easy to look up svn log messages when svn
+ 	users refer to -r/--revision numbers.
  +
--[verse]
-+------------
- config key: svn-remote.<name>.ignore-refs
-+------------
+-The following features from `svn log' are supported:
++The following features from `svn log` are supported:
  +
- If the ignore-refs configuration key is set, and the command-line
- option is also given, both regular expressions will be used.
-@@ -161,8 +162,9 @@ option is also given, both regular expressions will be used.
- 	(including automatic fetches due to 'clone', 'dcommit',
- 	'rebase', etc) on a given repository.
- +
--[verse]
-+------------
- config key: svn-remote.<name>.ignore-paths
-+------------
- +
- If the ignore-paths configuration key is set, and the command-line
- option is also given, both regular expressions will be used.
-@@ -191,8 +193,9 @@ Skip "branches" and "tags" of first level directories;;
- 	'rebase', etc) on a given repository. `--ignore-paths` takes
- 	precedence over `--include-paths`.
- +
--[verse]
-+------------
- config key: svn-remote.<name>.include-paths
-+------------
+ --
+ -r <n>[:<n>];;
+@@ -397,7 +397,7 @@ Any other arguments are passed directly to 'git log'
+ 'blame'::
+ 	Show what revision and author last modified each line of a file. The
+ 	output of this mode is format-compatible with the output of
+-	`svn blame' by default. Like the SVN blame command,
++	`svn blame` by default. Like the SVN blame command,
+ 	local uncommitted changes in the working tree are ignored;
+ 	the version of the file in the HEAD revision is annotated. Unknown
+ 	arguments are passed directly to 'git blame'.
+@@ -482,7 +482,7 @@ denotes such an object, or it is requested by invoking an editor (see
  
- --log-window-size=<n>;;
- 	Fetch <n> log entries per request when scanning Subversion history.
-@@ -267,9 +270,10 @@ Use of 'dcommit' is preferred to 'set-tree' (below).
- 	reused if a user is later given access to an alternate transport
- 	method (e.g. `svn+ssh://` or `https://`) for commit.
- +
--[verse]
-+------------
- config key: svn-remote.<name>.commiturl
- config key: svn.commiturl (overwrites all svn-remote.<name>.commiturl options)
-+------------
- +
- Note that the SVN URL of the commiturl config key includes the SVN branch.
- If you rather want to set the commit URL for an entire SVN repository use
-@@ -286,8 +290,9 @@ discouraged.
- 	branches, use a single space character between the branches
- 	(`--mergeinfo="/branches/foo:1-10 /branches/bar:3,5-6,8"`)
- +
--[verse]
-+------------
- config key: svn.pushmergeinfo
-+------------
- +
- This option will cause git-svn to attempt to automatically populate the
- svn:mergeinfo property in the SVN repository when possible. Currently, this can
-@@ -548,9 +553,10 @@ Assume you have local changes in "master", but you need to refetch "r2".
- Fix the ignore-paths or SVN permissions problem that caused "r2" to
- be incomplete in the first place.  Then:
- +
--[verse]
-+------------
- git svn reset -r2 -p
- git svn fetch
-+------------
- +
- ------------
-     r1---r2'--r3' remotes/git-svn
-@@ -562,8 +568,9 @@ Then fixup "master" with 'git rebase'.
- Do NOT use 'git merge' or your history will not be compatible with a
- future 'dcommit'!
- +
--[verse]
-+------------
- git rebase --onto remotes/git-svn A^ master
-+------------
- +
- ------------
-     r1---r2'--r3' remotes/git-svn
-@@ -608,8 +615,9 @@ removed by default if there are no files left in them.  Git
- cannot version empty directories.  Enabling this flag will make
- the commit to SVN act like Git.
- +
--[verse]
-+------------
- config key: svn.rmdir
-+------------
+ 'info'::
+ 	Shows information about a file or directory similar to what
+-	`svn info' provides.  Does not currently support a -r/--revision
++	`svn info` provides.  Does not currently support a -r/--revision
+ 	argument.  Use the --url option to output only the value of the
+ 	'URL:' field.
  
- -e::
- --edit::
-@@ -619,8 +627,9 @@ Edit the commit message before committing to SVN.  This is off by
- default for objects that are commits, and forced on when committing
- tree objects.
- +
--[verse]
-+------------
- config key: svn.edit
-+------------
- 
- -l<num>::
- --find-copies-harder::
-@@ -629,9 +638,10 @@ config key: svn.edit
- They are both passed directly to 'git diff-tree'; see
- linkgit:git-diff-tree[1] for more information.
- +
--[verse]
-+------------
- config key: svn.l
- config key: svn.findcopiesharder
-+------------
- 
- -A<filename>::
- --authors-file=<filename>::
-@@ -648,8 +658,9 @@ will abort operation. The user will then have to add the
- appropriate entry.  Re-running the previous 'git svn' command
- after the authors-file is modified should continue operation.
- +
--[verse]
-+------------
- config key: svn.authorsfile
-+------------
- 
- --authors-prog=<filename>::
- 	If this option is specified, for each SVN committer name that
-@@ -664,8 +675,9 @@ relative to the current directory for 'init' and 'clone' and relative
- to the root of the working tree for 'fetch'. If 'filename' is
- not found, it is searched like any other command in '$PATH'.
- +
--[verse]
-+------------
- config key: svn.authorsProg
-+------------
- 
- -q::
- --quiet::
-@@ -704,8 +716,9 @@ creating the branch or tag.
- 	'dcommit' operations), look for the first `From:` line or `Signed-off-by` trailer
- 	in the log message and use that as the author string.
- +
--[verse]
-+------------
- config key: svn.useLogAuthor
-+------------
- 
- --add-author-from::
- 	When committing to svn from Git (as part of 'set-tree' or 'dcommit'
-@@ -714,8 +727,9 @@ config key: svn.useLogAuthor
- 	Git commit's author string.  If you use this, then `--use-log-author`
- 	will retrieve a valid author string for all commits.
- +
--[verse]
-+------------
- config key: svn.addAuthorFrom
-+------------
- 
- ADVANCED OPTIONS
- ----------------
-@@ -749,8 +763,9 @@ ADVANCED OPTIONS
- 	process. This feature is enabled by default, use
- 	--no-follow-parent to disable it.
- +
--[verse]
-+------------
- config key: svn.followparent
-+------------
- 
- CONFIG FILE-ONLY OPTIONS
- ------------------------
 -- 
 2.31.1.751.gd2f1c929bd
 
