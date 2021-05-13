@@ -4,130 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F974C43460
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 11:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE165C433B4
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 11:45:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F3E35613CB
-	for <git@archiver.kernel.org>; Thu, 13 May 2021 11:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95CE660FE3
+	for <git@archiver.kernel.org>; Thu, 13 May 2021 11:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233283AbhEMLRN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 07:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56322 "EHLO
+        id S233505AbhEMLqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 07:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233273AbhEMLRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 07:17:04 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4379C061574
-        for <git@vger.kernel.org>; Thu, 13 May 2021 04:15:54 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id g15-20020a9d128f0000b02902a7d7a7bb6eso23278806otg.9
-        for <git@vger.kernel.org>; Thu, 13 May 2021 04:15:54 -0700 (PDT)
+        with ESMTP id S233517AbhEMLpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 07:45:50 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88C85C06175F
+        for <git@vger.kernel.org>; Thu, 13 May 2021 04:44:39 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id t4so39514206ejo.0
+        for <git@vger.kernel.org>; Thu, 13 May 2021 04:44:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=vcKZtadTpYKZ1FBEXiuwoR5NyCESKfSzTVb0feTbVmY=;
-        b=PhPhqK54Soy69/nQlb5TGnZvZH1lTA8TN/XZQKEhI1/17oVw8hWWlkGXZyn3/A+pdW
-         38y7DImFbI6a0tvzVwUBmzmr+/fs2ywhCHwFWkMnNma+w7kBUciulrHXMhse6qVqlCPt
-         JU6SpzK7o+eQJSin/wNo3fq7JXNRAruL9SRj78Z1nSDvn/9JreIVOIcIDFNVmkuRC6Yh
-         epXSYz6v7Qt7SSEFTM/kB43GJmxRtfIxN6HjDr5/FFVagCQuKiyiwnbhXzu84CCDnzYp
-         t4BhXICXsn30OMKbPEhjHZrixcrxOC/Y/ZFSRMpXD1QTkkQMLOqGvUfSct69TP8wlG+l
-         3qsA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=QknEPk+uzxKxsRNPzRPq3yWkVTKs1x8g4cVJCvkO86A=;
+        b=B3v0giKM7GrfHP/wHsGtRHSCcvRHhmbeEBzjnMsxyoI+9b0LDSa7cecKZBZBlaWRQR
+         EAcF4LcmvsUXmrz5iFhnltfwrNQca8SqJ3htMb9Wzqm0YYGytqtPZ/rxB28mfX2woIUs
+         5fa38CYS0kVt4tZSWSOMSAtuNnRKw8IawPH3sDKBH0Z35FoW5KD4lu++jZuklbJRZql4
+         JPmiqdiqlFP9dQSdkY75nfNKaa+EYcZPTAnLwLIBvfKZ9mL297qJAkh4ayBMb8vw+rN3
+         PKGncKdaMahfzLFW2kjeas6Psr4zcHMcxRXTEN8WkTJouBEadNdzhgDu2JeLbTR6TdEY
+         ojyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=vcKZtadTpYKZ1FBEXiuwoR5NyCESKfSzTVb0feTbVmY=;
-        b=Y6pAzWDtahyq5r7qRFlWFldXlPaihZW3Am1CWyCWqKBdN4oByyiuJaOBkKUIh8I2wS
-         Q03lYZU53tIzlp0XEE+H0fasV9EQVRmluM1BZGG3Igx3sAOxiCUDfqvrokWZj3hP1Xrf
-         uBZO7qefErKjbqUluJ0ew3aIaooT0nC5vNHxSR40lnQPcv3plHJlEVhndoLXr+3RpoPz
-         DmSLqmqtph0v4OJr9XoeYAHSRupjyIm1Cp2kwRF7kVkgIvHjdMzDEbkEpRU+N91PeoXq
-         FXAeRbI9tflmFPLCht/I+SbTxPqNL8A5QNh0PQf9So1SonMv+leTgqrcVMrL9OZwfpDC
-         8+Ew==
-X-Gm-Message-State: AOAM533Jl0Y1kGdWMjX0C4gyffDH2jfv1QBEWda0YJEo34dGUGbeXRdf
-        VICF06iogGxbXNYAgA1/6nEjTpI8Vhkfog==
-X-Google-Smtp-Source: ABdhPJxE6GJ4Pu1JN+8E3uiZBFpDDkqE6z1Q0m3ggWh7LWDXiSiVy/z2On5OOYoo4UnvGIeAT+Kkqg==
-X-Received: by 2002:a9d:6106:: with SMTP id i6mr30065867otj.354.1620904554092;
-        Thu, 13 May 2021 04:15:54 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id m189sm542223oif.45.2021.05.13.04.15.53
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=QknEPk+uzxKxsRNPzRPq3yWkVTKs1x8g4cVJCvkO86A=;
+        b=TvPYtU1vfib7HhnAS03pffzOlEOTZqm9PoQb57KUGB5TMf4jQYDphCoBu60u2fGTD5
+         bdRv9+05afOJXTjgTwi/BLuTHFxZ/BZc1PhBq5pW/UugcBkWkkxo807+2V0ZEo1RYX6R
+         R22lKnmsKtAiLnxgliH8Eqa+TjpWuh23kq83s0t4jn3I07EDVI2rst/xqraW85WmMjDu
+         DTbsJ7KJi0mLdzF7am1cmzT5Q+dD0XZOKtMblY+i0VNTyKd8gjgxsSDaIhf8R7FyW+pg
+         6FF9oL4RbbjgOTGuiBWXIyhjVA51W0l9jmn0LhDc3tZqZHFMijNQFJpRUsTey9T9ruOw
+         MlWA==
+X-Gm-Message-State: AOAM533ctX10R2HB5vdhGx3LtoFW13WWKGIJ9snASc5c5uZmN7rMDcXB
+        7CEHWNDK8uymzBPSF+R8TUs=
+X-Google-Smtp-Source: ABdhPJxLC6UqN26/KdQIleHF6JIHOOKIn+QALAOkEJgWTVIShexaVloa9OMov5XJx8y/RH+rup+DVA==
+X-Received: by 2002:a17:906:79a:: with SMTP id l26mr42930634ejc.268.1620906278197;
+        Thu, 13 May 2021 04:44:38 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id c5sm2143926eds.94.2021.05.13.04.44.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 May 2021 04:15:53 -0700 (PDT)
-Date:   Thu, 13 May 2021 06:15:52 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Thu, 13 May 2021 04:44:37 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>
-Message-ID: <609d0a684ece6_271c20831@natae.notmuch>
-In-Reply-To: <CAN0heSrWu462h9Ch5K-aMHUgjB-BGqRp9YpWa=vPi_V+MiUwBg@mail.gmail.com>
-References: <20210512222803.508446-1-felipe.contreras@gmail.com>
- <20210512222803.508446-9-felipe.contreras@gmail.com>
- <CAN0heSrWu462h9Ch5K-aMHUgjB-BGqRp9YpWa=vPi_V+MiUwBg@mail.gmail.com>
-Subject: Re: [PATCH 8/8] doc: join xml and man rules
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Subject: Re: [PATCH] builtin/gc: warn when core.commitGraph is disabled
+Date:   Thu, 13 May 2021 13:24:38 +0200
+References: <510425b8b17411eb93770026b95c99cc@oschina.cn>
+ <b87b12b4b3c311eba1fd0024e87935e7@oschina.cn>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <b87b12b4b3c311eba1fd0024e87935e7@oschina.cn>
+Message-ID: <87k0o2svru.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren wrote:
-> On Thu, 13 May 2021 at 00:28, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> >
-> > Will be useful later with asciidoctor that can do both at the same ti=
-me.
-> =
 
-> > -%.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
-> > -       $(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $=
-<
-> > -
-> > -%.xml : %.txt $(ASCIIDOC_DEPS)
-> > -       $(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@ $<
-> > +%.1 %.5 %.7 : %.txt $(ASCIIDOC_DEPS) manpage-base-url.xsl $(wildcard=
- manpage*.xsl)
-> > +       $(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $*.xml $< && \
-> > +       $(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $*.xml
-> =
+On Thu, May 13 2021, lilinchao@oschina.cn wrote:
 
-> It does mean that if manpage-base-url.xsl changes, we'll regenerate all=
+>>
+>>On Mon, May 10 2021, lilinchao@oschina.cn wrote:
+>>
+>>> From: Li Linchao <lilinchao@oschina.cn>
+>>>
+>>> Throw warning message when core.commitGraph is disabled in commit-graph
+>>> maintenance task.
+>>
+>>Won't this cause the gc.log issue noted in
+>>https://lore.kernel.org/git/87r1l27rae.fsf@evledraar.gmail.com/
+>>
+>>More importantly, I don't think this UX makes sense. We said we didn't
+>>want it, so why warn about it?
+>>
+>>Maybe there are good reasons to, but this commit message / patch doesn't
+>>make the case for it...
+>>
+> Uh, well, maybe I should argue for this patch a bit more.
 
-> the xml files. Before this change, we would just rerun the xmlto step.
+> First this is in git maintenance task, I've read the link you post,
+> and I feel it has nothing to do with=C2=A0maintenance task.
 
-True.
+Yes, maybe the issue I noted with gc.log being populated because
+something wrote to stderr won't happen here. I was just asking if you'd
+taken it into account.
 
-> Also, this will break `make info`.
+> Second I hope the `commit-graph` task can do the same thing with
+> `incremental repack` task that to warn user when the related necessary
+> setting is not yet ready, instead of running quietly, but doing
+> nothing.
 
-Ahh, I didn't see that dependency on MAN_XML.
+I agree that if you ask git to --do-stuff and core.stuff=3Dfalse then we
+should probably emit a warning, "but you disabled stuff!".
 
-> (If you're wondering if anyone is actually using `make info`, there's
-> some discussion at [1]. I don't think anyone would be too sad to see it=
+In this case though, isn't the entry point just "incremental", we then
+check should_write_commit_graph (as an aside, and not new in your
+change, shouldn't this "is the config set" be moved there & be the first
+thing we check?).
 
-> go. Once `make info` is the only reason we need to generate the xml
-> files, I think it's a given we should try to drop that stuff.)
+Then we run maintenance_task_commit_graph, where we see that the config
+is disabled.
 
-Perhaps, but not in this patch series.
+So aren't there users that want incremental maintenance, but have also
+disabled core.commitGraph (or writeCommitGraph or whatever), that are
+then going to get a warning about something they explicitly disabled?
 
-> I think we should keep the separate xml targets as long as "asciidoctor=
+Or is this warning just for cases where the user has somehow scheduled a
+"commit graph" task, with config disabled, and the task can therefore
+never do anything useful? I agree that in such a case it probably makes
+sense to warn (or just exit non-zero?).
 
-> without xmlto" isn't the only way we support building the manpages. If
-> the only benefit here is "later", I think we should do this patch later=
-.
-> I could also imagine that the xml target will just go away once all the=
+Anyway, I really do mean what I said about the "issue" being that the
+commit message needs to "make a case for it". I.e. even as someone who's
+hacked on the gc.c code (although not since "maintenance" became a
+thing), I honestly don't know if this warning is OK, i.e. are we at the
+point where we issue it where the user really wants the commit graph,
+but we just have a misconfiguration?
 
-> "old" ways of building the manpages are gone and `make info` is gone,
-> i.e., when we simply don't need any of these generated xml files.
+I *suspect* not, and that it's going to be annoying to people who really
+don't want the commit-graph, but who run "incremental", but maybe I'm
+wrong.
 
-Agreed. I will drop this in the next version.
+If that is the case maybe there's still a case for saying something, but
+that should probably be an advise(), not a warning().
 
-Cheers.
-
--- =
-
-Felipe Contreras=
+Or the whole thing is fine, I honestly don't know :)
