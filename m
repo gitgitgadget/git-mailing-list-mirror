@@ -2,114 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B70F2C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 20:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAC62C433ED
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 20:00:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9445661574
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 20:00:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9ECD761622
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 20:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbhENUBu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 16:01:50 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47232 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229659AbhENUBt (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 May 2021 16:01:49 -0400
-Received: from camp.crustytoothpaste.net (unknown [138.237.15.37])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 42D9060456;
-        Fri, 14 May 2021 20:00:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1621022437;
-        bh=aavho9+L0PPSNkOUgIgWrAcxFLcNxYfA/fBKyNWnn+o=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=CR5un82V3dts3DT0+zqu+8g/5VUiyeHIie4ceX4tNQMEFhbAHLFVkxwsa5e0m6FxR
-         zobHeSYjXrwKzFkZnBCIW0vhCYP444X29pbmUTsztzoqG0Yrny+kLI4krWdVl90FKl
-         uiqLQPJtIwZJHSfbZnvCgX7XdXYZJ9XBWroqNjLxCub04cT/yhudNhiZkDtsrQBY9c
-         Xo62slG8HNXZN1ZdFDSBxI/OT/n+Z+gfwLYwrOw7T9D+FyhNYf+e6lDM7zrWkPSCxc
-         Zu8bJadxT9/l5kxFeFPeAtispfruzTH6PoUvFxWIq7+qZUTJkpgJEXCc7rGMDDPT5L
-         BcK9JzvVal7lFM+CVZCnz+9TZL7oJ+2gbxkPPN+NFiV5DVsAupzUMIxgMxmYSZkJ1/
-         UJmyosgL2cXhYPLT31EFS63eHsMcjXjhXw1HTrQi+Fukp/WMBQg5I0nmeabTKx3/Zj
-         F6yda4J+bVodX0MWoBwdMFCesSnBiN1io57SdK6sVehstCskLih
-Date:   Fri, 14 May 2021 20:00:33 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/2] Asciidoctor native manpage builds
-Message-ID: <YJ7W4YrboXQhMh/B@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
+        id S230478AbhENUBw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 16:01:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229659AbhENUBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 16:01:51 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B84C061574
+        for <git@vger.kernel.org>; Fri, 14 May 2021 13:00:39 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id u11so586520oiv.1
+        for <git@vger.kernel.org>; Fri, 14 May 2021 13:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=oy5A2Ma1NljOhoQ3pv+czALiV7LPwaL8XUBGDX7uebc=;
+        b=fXOmdgh2r70Jk7/dbre+Pe2R8bK6SHZ42fnz1lgP2BLEQSwUtx3tJiZeYxF7SCzmSY
+         kQ039hyS9X5rrZqym7ZBxxbqq0psFcthJD1eQr3sdQ9ulZiuQ2OapP+DCUdvr85TE1SW
+         WoXnufGvdduyRqznxqte82pKC8vpqwvieItrmn1kzUdU9NFh7FkFyyGax04ua7BvoGad
+         sN02BCK0PMR6IR/V+FMLwwKlg1Ee+wE1HTWK11IxaeyeAgkcdRRqLPj7zb0SjZ/hnrAv
+         6Tt3nrnboHcWYjmLsaP14EOw8V3oFzwhgtIaeTHoTxalI2vm7ljCbi8/7525LZG2PgfM
+         ZaEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=oy5A2Ma1NljOhoQ3pv+czALiV7LPwaL8XUBGDX7uebc=;
+        b=jeTUb+A3YeCLVOKpt3K6Q/kx8/wb3njEc4Kn0Vn2seKi65avm7Tqtf6GBezNWi0N2i
+         aXNRfhy48DHBsOtFjm6Ioz/7OuAqMZPABErMM081NKkoL36fSoGDnYnDzcxkuHEmNH1/
+         ZULWZ61IwfXy8NcSjlbFA38nyQtCy1SaLz+1AjYy639lO1/tt3eA9eIMO8OijYYPH80g
+         sMZ/dgdEppDaiMecATKUtVCFF9f97bDZYDw3epp69mArODfugEU4qQ16L2tG8IukJfBt
+         fElAwUV2emom2mV58Y2i5T5BtwTFrcQ8x1ZBBtOlr7/NHh5U98vx34I+gUTciMnQWFWi
+         lTvg==
+X-Gm-Message-State: AOAM533Wm98huS8VF4IOZ7RKFFzrmvAvQdnz7PmVDtbbmmDym3QjfxAK
+        kywh3xwUiPB5U6GaV211i6I=
+X-Google-Smtp-Source: ABdhPJy4wZc2cs/xUNzsz6ZbYLo5Myif5xGRXK1LysO+Yio0dg9MdG43jrmF4sU7Ulh2/oP/s3K+iw==
+X-Received: by 2002:aca:c317:: with SMTP id t23mr7833837oif.159.1621022438841;
+        Fri, 14 May 2021 13:00:38 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id f9sm1518581otq.27.2021.05.14.13.00.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 May 2021 13:00:38 -0700 (PDT)
+Date:   Fri, 14 May 2021 15:00:36 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <609ed6e4e5a26_43127208b2@natae.notmuch>
+In-Reply-To: <YJ4KLfd16qwnRqUx@coredump.intra.peff.net>
 References: <609b2828309fc_678ff2082@natae.notmuch>
  <20210514003104.94644-1-sandals@crustytoothpaste.net>
- <609eca5a42be2_43127208f2@natae.notmuch>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7eTWbW7goPqcQLHx"
-Content-Disposition: inline
-In-Reply-To: <609eca5a42be2_43127208f2@natae.notmuch>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+ <20210514003104.94644-2-sandals@crustytoothpaste.net>
+ <xmqqbl9e7yqz.fsf@gitster.g>
+ <YJ4KLfd16qwnRqUx@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King wrote:
+> > It is curious that {plus} for Asciidoctor is deffined only for
+> > manpages and HTML/XML side lacks the definition.  Intended?
+> 
+> I don't think it's needed on the HTML/XML side, as AsciiDoctor ships
+> with reasonable conversions there to HTML entities. It's only for the
+> direct-to-manpage path that needs them. This is probably a bug in
+> AsciiDoctor, but I haven't investigated fully.
 
---7eTWbW7goPqcQLHx
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have, as I have explained in my patch series, which does isolate this
+workaround in a single patch [1].
 
-On 2021-05-14 at 19:07:06, Felipe Contreras wrote:
-> brian m. carlson wrote:
-> >     @@ Documentation/asciidoctor-extensions.rb: module Git
-> >               elsif parent.document.basebackend? 'html'
-> >                 %(<a href=3D"#{prefix}#{target}.html">#{target}(#{attrs=
-[1]})</a>)
-> >      +        elsif parent.document.basebackend? 'manpage'
-> >     -+          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
-> >     ++          %(\e\\fB#{target}\e\\fP\e\\fR(#{attrs[1]})\e\\fP)
-> >               elsif parent.document.basebackend? 'docbook'
-> >                 "<citerefentry>\n" \
-> >                   "<refentrytitle>#{target}</refentrytitle>" \
->=20
-> Huh? Didn't you say \e was not needed?
+[1] https://lore.kernel.org/git/20210514121435.504423-8-felipe.contreras@gmail.com/T/#u
 
-Yes, but I believe in that case my build was broken and I was incorrect.
-
-> You are doing basically the same thing thing my patches now, except in a
-> more convoluted way.
-
-The way your patches do it, if someone adds a line like this:
-
-  _abc linkgit:git-update-index[1] def_
-
-the latter part (def) is not italicized.  In my version, it is, which is
-the correct behavior.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---7eTWbW7goPqcQLHx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJ7W4QAKCRB8DEliiIei
-gddHAP9tUJcpEUS1j0QznzsuL8cLbZOOlMfp0NiGl91XBVVElgD8CTL+hi1UD0/Y
-q/m6EpV0xS8RMi0f2lGIJvuxG1sRKQg=
-=RtaI
------END PGP SIGNATURE-----
-
---7eTWbW7goPqcQLHx--
+-- 
+Felipe Contreras
