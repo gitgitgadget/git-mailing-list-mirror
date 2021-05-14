@@ -2,85 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3779C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 09:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2115DC433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 11:56:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0F8A60FF2
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 09:47:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4A696145A
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 11:56:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbhENJsc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 05:48:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45262 "EHLO
+        id S232376AbhENL5r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 07:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231479AbhENJsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 05:48:31 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907EFC061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 02:47:19 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id x2so42276335lff.10
-        for <git@vger.kernel.org>; Fri, 14 May 2021 02:47:19 -0700 (PDT)
+        with ESMTP id S231839AbhENL5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 07:57:45 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA621C061574
+        for <git@vger.kernel.org>; Fri, 14 May 2021 04:56:33 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id g15-20020a9d128f0000b02902a7d7a7bb6eso26227376otg.9
+        for <git@vger.kernel.org>; Fri, 14 May 2021 04:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=aE88qg07ptsmnW6PUeh3uFSMeW7ys1cEfE3afgF2i/Y=;
-        b=RnIZutzuXZNyindeDIdGG2fDNn7Y077c44haUppMd3PRVa4GUXos9wd+SGlVW2zlU7
-         hlQoNf44i68sA8IaJ97kDHbdf5HxN8/SKd4xXHTHrj4xu2Qsvae051rpX8VaupICYT7I
-         /Pml1b06pd8F5/5VfFrfTgMOrZBbj2/a7UV7LicXccG3YTIpGTOcXLQQUlE22UsoF/p3
-         RbJDQMMB3I8NBUg2ReWDx2u+hjV0F617iGrlW+FsHfC1vyWrpGyJIkDpTtd7rNOng1cc
-         FmjUPg5Y8aecJhj63xideDQfGA0q04KkHNDwg0vxccGvQ8A1+XEqhUDvPW3W4TatqMOa
-         fMTg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3uc4fWdM3+Jj/RzCUHKA/3tdsoYVrC7OPY4CX7zbw18=;
+        b=UDBkGb8eNkQH9JZbhnpXrJJ9DFvPqRZNuYZYyTtSJsHaANFFNqHBRONN0Y74jBEIQB
+         has+op0Xw3RGUrm4Ytok1V147yCZK2YCpaCOp87mp7iNNq4k6okW+sPGm4LxFLQSiT08
+         ptzJCCIVAdvrEPpN51jIJ0g1eICNAEu23pxBOw12kIxq8ix/yWAV/IXKfu+AtI1NQteg
+         Bt3icfSXqDP731rMlTiQe2S4xbJyOpi0YwtCiHrpZ+A1jKC+/qdriVXAm+7f+WgLdAqR
+         EvXatGv90MX2HBwc7ohBCFbxvVY6dopfBYlovwWg9SNl/Zp6UtFfq/BwQsysOrQrwMDG
+         Bh9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=aE88qg07ptsmnW6PUeh3uFSMeW7ys1cEfE3afgF2i/Y=;
-        b=ee6NdNQml9Gyl4sw5LXmIsFxnA5V6eavfKO+SdGIuYwb/z79tHGrnwnK0l3Gx/NSm4
-         tcVsQz1QMhVeCDT7RwoOJOXtIXnp816lxt9L1f/Gj9EfQvJ08NkEFkBk/nUZlP43zdn7
-         kqzusctoSvGLXa6TEnXUD+SML+vwN8A+tZ7UvJNzOG6e6fpoR4DfpBPY8eBWVcRVCry9
-         OKDSiGAvAExa2dbSw6CRVbRWME5cda0pdD060XKBjwlOM5lwf8V1ChXhSeZayBW8APgG
-         6kageKOLcOQPu8wv//VMKHV3i1MPn+5nYSZ6M6jRLf+lCx0+x3Y8wFkYWgQxvR6YR6xF
-         mOlw==
-X-Gm-Message-State: AOAM530/DtYmSWPNJWAbyYUhUwYekMGDnbvX7MRTrjsV2ovJeBCF+qKb
-        /O2nIkEH1yycDrKmHyZytOgRuu0RknQBw6We+7Z7UhpMm+r4QQ==
-X-Google-Smtp-Source: ABdhPJxvczJidRWkAqAJeCrwDyk7UQmQf/YeeUy+vBpvEOR6IXX++J6K6zOGxvWkwj9N3GkafK3EuBjdgkdlG/nmc2s=
-X-Received: by 2002:a19:6b0a:: with SMTP id d10mr32993296lfa.310.1620985637854;
- Fri, 14 May 2021 02:47:17 -0700 (PDT)
-MIME-Version: 1.0
-From:   Allan Ford <allan.ford17@gmail.com>
-Date:   Fri, 14 May 2021 19:17:05 +0930
-Message-ID: <CAL-6oQo3KDrrw+DiQsJJR_2tMjrLY3xu5ARJz0SJJ-naQqo8Rw@mail.gmail.com>
-Subject: Git Gui - Searching for in Google
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3uc4fWdM3+Jj/RzCUHKA/3tdsoYVrC7OPY4CX7zbw18=;
+        b=UCAQiAlttg5b4+bg40snTkyZspSsFULqJWMxtTfC+i9v3K9XjUdZBfvkdOfHCmWCtZ
+         chlXjIywvuVW35L+blJlPWZEPmspqfInKlbsFK+FY6AxZcYINvZhUXQIyq+buO1pn5nF
+         2TwPLwXuqEAEoGwY117XcNHSfW5z+qVtvuoUdHjRkLXLA6TorzSJ7G9OPd7DqYN6NdSC
+         2wjLwYz03Vm2czr25sPZ/sD31mLJqXYMPwqujjoeGMPG+5vAfudOOuKdOn4eB14QCZKz
+         3fGh5xKbv8xsuEY1qrFyeZYv9wjXeXW4ndTwxoh3quFWFBhpX/B/ppYGS2vmyNFShC0J
+         FwDw==
+X-Gm-Message-State: AOAM5323FgzLkO0R7IgqnhEQm0TXMdZMi9Pfe0X6j+NOHsCDULQh9CzG
+        u33G3OEK9SH/Yw/ognp/nKbwioBbGKxCuw==
+X-Google-Smtp-Source: ABdhPJwCnSIfh3XAcS370zGf3D3F4Eyt015ypasMQh16JN4vFbJuRLKxUzdOzmYKMJvjHlFcT2xB3g==
+X-Received: by 2002:a05:6830:248d:: with SMTP id u13mr38750481ots.121.1620993392902;
+        Fri, 14 May 2021 04:56:32 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id a11sm1138843oif.52.2021.05.14.04.56.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 May 2021 04:56:32 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/5] doc: asciidoc cleanups
+Date:   Fri, 14 May 2021 06:56:26 -0500
+Message-Id: <20210514115631.503276-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git Community,
+This patch series is an attempt to cleanup the Makefile of the documentation.
 
-Just a thought and suggestion ..
+It's quie different from v1 mainly because now the .DELETE_ON_ERROR approach is being used as Aevar
+suggested, however it tries to do the same thing.
 
-Git Gui comes with Git download .. (remember this now ..)
+It does not enable asciidoctor direct man page creation, that's in a separate patch.
 
-https://git-scm.com/downloads states this in text.
-https://git-scm.com/downloads/guis states this in text.
+Felipe Contreras (5):
+  doc: refactor common asciidoc dependencies
+  doc: improve asciidoc dependencies
+  doc: remove unnecessary rm instances
+  doc: simplify Makefile using .DELETE_ON_ERROR
+  doc: avoid using rm directly
 
+ Documentation/Makefile | 77 ++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 48 deletions(-)
 
-However .. If a person is using Google and searching for Git Gui
-download am thinking a picture of what Git Gui interface looks like
-would help flag to the searcher that they are in the right place ! ?
+Range-diff against v1:
+1:  62d76c126a < -:  ---------- doc: standardize asciidoc calls
+2:  0677725926 < -:  ---------- doc: add an asciidoc helper
+3:  ca69c75596 < -:  ---------- doc: disable asciidoc-helper for asciidoctor
+4:  f379515577 < -:  ---------- doc: simplify the handling of interruptions
+5:  d2d10b34f3 < -:  ---------- doc: remove redundant rm
+6:  d78e08aa2a < -:  ---------- doc: refactor common dependencies
+7:  450a79d36f < -:  ---------- doc: improve asciidoc dependencies
+8:  5be9efaa11 < -:  ---------- doc: join xml and man rules
+-:  ---------- > 1:  55b188c8ad doc: refactor common asciidoc dependencies
+-:  ---------- > 2:  e69d0a5b89 doc: improve asciidoc dependencies
+-:  ---------- > 3:  4f18675ce9 doc: remove unnecessary rm instances
+-:  ---------- > 4:  935675e070 doc: simplify Makefile using .DELETE_ON_ERROR
+-:  ---------- > 5:  b621f3b8e9 doc: avoid using rm directly
+-- 
+2.31.1
 
-I.e. https://git-scm.com/downloads/guis has pictures of all the other
-GUI Clients .. but not git gui !
-
-Git Gui has the recognizable vertical Git in large Grey Red and Green letters ..
-
-What do you think ?
-Can we add a picture of Git Gui interface to either
-https://git-scm.com/downloads or https://git-scm.com/downloads/guis ?
-
-kind regards, cheers, Allan Ford.
