@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85A81C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAEC6C433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:24:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F4646145B
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:18:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D04C361285
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233081AbhENMT5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 08:19:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51328 "EHLO
+        id S233313AbhENMZY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 08:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233019AbhENMT4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 08:19:56 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A262EC06174A
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:18:44 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id s19so2201963oic.7
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:18:44 -0700 (PDT)
+        with ESMTP id S232963AbhENMZY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 08:25:24 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A388C061574
+        for <git@vger.kernel.org>; Fri, 14 May 2021 05:24:12 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso26283928otn.3
+        for <git@vger.kernel.org>; Fri, 14 May 2021 05:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=mW/3D7chLvKoTFzG6DUKWradBN1RNxcqD2ViXLvhE3c=;
-        b=SBQjS163cOCrL+5Pet9itwAMlSBIVUKYcRwmhkT9l0Q1zU+YIL9iRCVtxw4TyGFQ7+
-         rVMaQdQD1kz0QaFMuuYMzh/oOEjxsoXsACGLnLpoLzT8W+1a0by41uQP3ixBUUS8t5Gm
-         HK57aQoDgmek9hHj0zlRR9igIkFLTFfOIbu+v/152p/vMWLZbU9QeD2CylQeU9SMqJPo
-         Sq+Urb/PrfvA2X0obKfxaAqFuiedO8b5HlmYvWJdA8Xb4ZzM8ueANT8j/Cbkp48AeL9m
-         QVZND6UOzIhuoyEj1kZ+EUtx40quiq38H+w2AN0GXWgk4/BEygMrKQgOKA9dscObLPvy
-         RgDQ==
+        bh=ufAuZ2scmEGCDTLrqSnEoTxEsw9DSb+f+cLyaxrFU/o=;
+        b=hQZnaQSzI88nKEVtKOBbjrAiDgnE0JUOKKaxZqM+ZU+MiBGFG79OT0rzRUiIRYVXfe
+         d26sZqDo1/4Y/4BFy4msQvKSGLm+8/k97/YzF0sBK06h9ENcd5ilEbMxhxOSXFE3uhCL
+         gAR8ynT8r7rFUMJQ8S+dLJ2nTHfNpLaNwengDL+bf6+nzlsiPX7cBcG9GEBuoSe5UbAC
+         SyFYGh2pfJwYPG3m4jsOnCPalGYRy3fx5E6+X2pkBEAsWcEGKGmUJtsU1JmnmiyER+BN
+         n4g5XuvlC9CHS0ksFiyJ1juiWkjGm73QNrwZ5eYzyIDVOc3wZ4tj0sI2rYOTR1US74w9
+         PvAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=mW/3D7chLvKoTFzG6DUKWradBN1RNxcqD2ViXLvhE3c=;
-        b=fBuZz71ybsvxVgjla+lyI6Wle975qvwsDZm7q+Hv5bGg/uSY9T2Ny1TIfxELgwLpMB
-         OOmif/c5KWarHJF0gzz0C2iad6Ru1vFyaOYjQoikiZRoQaZdwGeuNL6VnDlCU8UfUlsI
-         BmWxFbYYnYK/5zQeAiTR7HIIvCBpjarQYjipLUE3Cfpvi5kV/1iuUgXVtFh+7+HDz2bd
-         ddCI+dbGWsz202xXfSbqdYYpEq6KLpvi4behiHPm7hk29x/85YS7d/526aFp245ONUjH
-         XPfhxuMKEpJSNRKGqWSypx2HBNScbJWUiIRJjfDR7ENZxnh6AvGwyWm5UdZ6j++WBW0F
-         bDPw==
-X-Gm-Message-State: AOAM532vxMZ7ndTF5JdZJ9pKAOLrlNTxig+bhiAMr2LkRo3Q0Vqn6hfZ
-        KyT1nMqOlQ30EVtml7lgDjo=
-X-Google-Smtp-Source: ABdhPJxYjuueQ66GUEbKxmp31nPVbeUVK0rUzE4q7banlXrLIsS4qxXvC8w9cp2ZKfHbsatTlVb7+Q==
-X-Received: by 2002:a05:6808:484:: with SMTP id z4mr21095306oid.64.1620994724108;
-        Fri, 14 May 2021 05:18:44 -0700 (PDT)
+        bh=ufAuZ2scmEGCDTLrqSnEoTxEsw9DSb+f+cLyaxrFU/o=;
+        b=KqgxpFdcytL8USJU0UOJgM8mc9V8sE6DSo9pxqjo832Ts+hbvmlRVfY9OWeZXWqcMe
+         cBGePVh+wEV1oP8y0bUPRzFNaiMjp2TN8X1m6/E9zNwitDaYbvpMu1Y0Uc8D5Or10UqF
+         IRXO7gHpD0CH3qJoqPH15pT39EeEbuj00Og/YeqQhWRqGSLApAVZWof8rSGJLQLoboW4
+         e+yYzTnEWiXPPAZKiCJbCU5maMQrhzodFeu3J+N0aeJmbuAd6CZDDE1nRgnpsuJlBppZ
+         jjKO9/rhvjB55wQ3F0cw4uhIJLTtt8ildxMWzFkX+udJmieHuoAfBd1J8Lr0JB4wHu/Z
+         dkjQ==
+X-Gm-Message-State: AOAM5301jY94GsztGj41Q2e6L/sa2BEvH/d+JvuAo96s83sWEyqIdxAX
+        3gwZNZVWYgkiS5DuQjQsqn8=
+X-Google-Smtp-Source: ABdhPJyRYfOMKvXuWezOG6KHg7DUql/MxiTn9riBaH/IpW0ZXrv5s4cfmDUtsvGXytPYTZvyBYtt1g==
+X-Received: by 2002:a9d:74c6:: with SMTP id a6mr24169882otl.132.1620995051504;
+        Fri, 14 May 2021 05:24:11 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id m189sm1130018oif.45.2021.05.14.05.18.43
+        by smtp.gmail.com with ESMTPSA id w25sm1338331otq.40.2021.05.14.05.24.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 05:18:43 -0700 (PDT)
-Date:   Fri, 14 May 2021 07:18:42 -0500
+        Fri, 14 May 2021 05:24:10 -0700 (PDT)
+Date:   Fri, 14 May 2021 07:24:04 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Message-ID: <609e6aa287cc9_4312720893@natae.notmuch>
-In-Reply-To: <CAN0heSrzkexY9K=VD=y0h9D0pVh59BjaLLg0pEo-WxsP+s0juA@mail.gmail.com>
+Message-ID: <609e6be4bc14d_4312720861@natae.notmuch>
+In-Reply-To: <CAN0heSoK5VfP68Us2e2bwSfTzY=5FBEBjxuTHRXeA_qg5MH65w@mail.gmail.com>
 References: <cover.1620928059.git.martin.agren@gmail.com>
- <xmqqsg2q9xts.fsf@gitster.g>
- <CAN0heSrzkexY9K=VD=y0h9D0pVh59BjaLLg0pEo-WxsP+s0juA@mail.gmail.com>
+ <609dd5171e7de_19566208ca@natae.notmuch>
+ <CAN0heSoK5VfP68Us2e2bwSfTzY=5FBEBjxuTHRXeA_qg5MH65w@mail.gmail.com>
 Subject: Re: [PATCH 0/6] AsciiDoc vs Asciidoctor, once again
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -75,54 +75,31 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Martin =C3=85gren wrote:
-> On Thu, 13 May 2021 at 22:35, Junio C Hamano <gitster@pobox.com> wrote:=
-
-> >
-> > Martin =C3=85gren <martin.agren@gmail.com> writes:
-> >
-> > > Some of these rephrase wording such as "other peoples' commits" to =
-avoid
-> > > that apostrophe at the end of a word. I'm hoping those rephrasings =
-don't
-> > > regress the quality of the text -- if they do, I'll be happy to try=
-
-> > > something else.
-> >
-> > It is sad, but we really should try "something else", unfortunately.
-> >
-> > I do agree with the "motive" very much---even though condensing it
-> > down to plain text before running comparison already loses too much
-> > information, doc-diff is the only tool we currently have to
-> > effectively review regressions in rendered document, and the
-> > proposed transition cannot be done safely with confidence without
-> > being able to vet the differences.  I am happy to hear about 17%
-> > reduction already, but the requirement to rewrite things like "other
-> > peoples' commits" is a dealbreaker.
+> On Fri, 14 May 2021 at 03:40, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 > =
 
-> OK, calling it a dealbreaker is fair. Thanks.
-
-If I understood correctly the deal-breaker is as a long-term solution.
-
-These particular patches may be welcome right now to reduce the
-doc-diff, but eventually these issues should be fixed in asciidoctor.
-
-> > A typesettig rule like "instead of double-dashes --, use {litdd}" is
-> > an acceptable way out.  At least that wouldn't constrain what the
-> > final product that gets delivered to the end-users can say.
+> > We should be submitting bug reports to the asciidoctor project as wel=
+l,
+> > so in the future it's less likely we find ourselves in the same
+> > scenario.
+> >
+> > Preferably the bug report should be in the commit message.
 > =
 
-> I've done some experimenting now with a new attribute "apos" which
-> expands to a lone SQ. It seems to work fine across the different tools.=
+> I don't have an account with the website they use for their issue
+> tracking.
 
-> The rule could be that all ' should be {apos}. That's a quite
-> aggressive rule in a sense. It could be narrowed down to something like=
+GitHub? It probably takes a couple of minutes to set up an account.
 
-> "... if the paragraph contains other quotation, such as backticks or
-> single quotes", but that's probably just overly complicating things.
+> If you want to submit a bug report and post the link here,
+> that's fine by me and I'll include it in the reroll.
 
-I would rather fix it in asciidoctor (the ones that are actually
-asciidoctor issues)
+If you would rather have me act as a proxy, that's fine by me.
+
+Just give me a simple example that produces the issue.
+
+Cheers.
 
 -- =
 
