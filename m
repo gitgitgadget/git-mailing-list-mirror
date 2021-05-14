@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 656C3C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B28C43461
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42BE96144C
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2ECB661440
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233680AbhENScb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 14:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
+        id S233700AbhENScc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 14:32:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233563AbhENSc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 14:32:28 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6D74C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:16 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id m9so182615wrx.3
+        with ESMTP id S233573AbhENSc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 14:32:29 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0756BC06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:17 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id j3-20020a05600c4843b02901484662c4ebso1884090wmo.0
         for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QTzuOgoXGKpn026RiRL8qt8jaloUIGodP1E75w97/mM=;
-        b=iVhb01muPrs8Po4zHYEovwlFGbDUCkRZr+qjURvmQEnOVYWCP0+MyAMYwPulBkCbpl
-         0VVFw54JpWptMq0tP9/peEzFajQssHDrb/tZxDjbQm+Z/GOfBYd4eyTwZZKBr8pWRb4J
-         hn5F3r1dll0KflHtl8pi8VWyGuGo0rKDPEN6DkuOEifpRvlzcLKdEYjd9fRbB9lya7YP
-         yind4eAg9SAO4RbJCf0QP5/wJG91DxWRupJSB4sSS4t2YlkndP4EdBb6//CiCHKRuZ6U
-         l+zJnkUbfmLsBo63/8upVKJe9Dk0RdfPcLwDNiZkzF3nIwp1z2x7ufVf6FvVbsdLceIo
-         nHgA==
+        bh=tnv8/RvaEXbX/IGlvdgT6jdK85+oA3TpgnT3UjIuqEE=;
+        b=IrfaZiskLcw2xXbrucGPffQmiT7+NOfN+27cCzby6mzT+B9qRumuwNkFQyCehBV8TB
+         kxPkWG0FMoeRe6VfbISJPZWl9iHNTQ/qyKa9th+FAfcSRPk2uR0C7z4pxPuiCitxVgCe
+         kRvPv68XeNYcT2LxiqUTViveMrTNp7UhDYFvJcoqLnmX3YD6ztckaoTThLdkDNue/rTB
+         BwITaBpcYAnKA53LVWgy4l8s0U5CnNTfbDbsBKhHwhc1pS1RC6J7GZ/zLAkqalJcw7cH
+         rrmfsAWkjVpkE93xoEhx6p+00AUWxdsUfy0/23yF9FVcAxEKCEvubZgdmmxNEItTuGud
+         ljEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QTzuOgoXGKpn026RiRL8qt8jaloUIGodP1E75w97/mM=;
-        b=gQXbOzdYh1TQaTJTVmQdA426sB5kLt0+n/hmLEeeaXD+gTO76hlXpuh517jwI/6LiS
-         ftDaX37HVW6q8NYVI+WCcnhEr8H7A3YVgH/LOCLB00djoG7JT1TCYLrXfXwGyYMj8GYt
-         QFtqhCN/5+KHvCQF25L2Bt7ImV5ZUxpgPatmUJJ3D2xgJ1d7k786hFi0Y1iGiOeKloRX
-         +kbzrHS1Lt/TnQN/2qChaMGjdTZf30h+FMsq/ZZ+p91sxWhYk/xxgAy7ZvVef8TtbhTH
-         cEl08n6h4DrJRZeb28coT1jpwxL18yDxr5pq2che/bCqMYRxkE5gPc6jp4n9pEFkPoI9
-         MTIQ==
-X-Gm-Message-State: AOAM5318s+iai5bWef/GMhd2MCvC0GdfW+EouwzJ50q+TCJVXoJ7ZZ07
-        E9sjTPROThOAZO10JyCWHYk6T/zq3pI=
-X-Google-Smtp-Source: ABdhPJwwgCL8ePyfSm5mx5WaL1MYyqdDp2lAJAeYdoi79DpOByZIzLdvYmgZseBKdSP63JXXefBf+A==
-X-Received: by 2002:adf:ed47:: with SMTP id u7mr13710481wro.254.1621017075650;
-        Fri, 14 May 2021 11:31:15 -0700 (PDT)
+        bh=tnv8/RvaEXbX/IGlvdgT6jdK85+oA3TpgnT3UjIuqEE=;
+        b=JeqheM1qHyaeQBKkmjglQizn2hfvakfV/r3+cwIjawl3BHHRe6LwVMJObXYQ6t/j6U
+         Wxc2CU2fI9+PoWjczoVDb98yPWbFt9HhhYuE1jCX//IDyTmPq4z10YGi8G4tW8JJFG8M
+         OZeaiOacHUIlEjRr9a1Ef1+UanzOSQCJ55AKtyciujbd2kV5wk3iSBQftTHn5+KG9mRJ
+         cnB05Mln9uT6tQr/pwXL7zbmsGUis6Ns6mSdkBUKmJQZSidxfusssgt8LNiYBxZBw8sH
+         ri4lbMyXwB8tZhHlAiNFav+oMLh126rVOxz0flf81/5eVxukOpE3Ot/CLp3zOL1KratS
+         BIDw==
+X-Gm-Message-State: AOAM5339FEopMKEWFMVmPQexP78Hg1XZiFkNDOZsr+mltGXOav11eQMw
+        mBUiZZN2BZRm3dese/kUoBhAxnielv0=
+X-Google-Smtp-Source: ABdhPJw7Rd+3uEW93+sgzqzfpK9O9M1Y66Ra+Vrg2h6f5OJ+izuH0YbKN/M1pn8Yq7crwZhBElk6fw==
+X-Received: by 2002:a1c:4e0b:: with SMTP id g11mr10815043wmh.3.1621017074788;
+        Fri, 14 May 2021 11:31:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a15sm8439123wrx.9.2021.05.14.11.31.15
+        by smtp.gmail.com with ESMTPSA id t18sm5790339wmq.19.2021.05.14.11.31.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 11:31:15 -0700 (PDT)
-Message-Id: <8aa41e749471df3bd9d593b8f55db6506eafea12.1621017072.git.gitgitgadget@gmail.com>
+        Fri, 14 May 2021 11:31:14 -0700 (PDT)
+Message-Id: <5a2ed3d1d701b11c241bf3855db3bb35f5e93994.1621017072.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
 References: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
         <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 May 2021 18:31:01 +0000
-Subject: [PATCH v3 02/12] sparse-index: include EXTENDED flag when expanding
+Date:   Fri, 14 May 2021 18:31:00 +0000
+Subject: [PATCH v3 01/12] sparse-index: skip indexes with unmerged entries
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,31 +79,105 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When creating a full index from a sparse one, we create cache entries
-for every blob within a given sparse directory entry. These are
-correctly marked with the CE_SKIP_WORKTREE flag, but they must also be
-marked with the CE_EXTENDED flag to ensure that the skip-worktree bit is
-correctly written to disk in the case that the index is not converted
-back down to a sparse-index.
+The sparse-index format is designed to be compatible with merge
+conflicts, even those outside the sparse-checkout definition. The reason
+is that when converting a full index to a sparse one, a cache entry with
+nonzero stage will not be collapsed into a sparse directory entry.
+
+However, this behavior was not tested, and a different behavior within
+convert_to_sparse() fails in this scenario. Specifically,
+cache_tree_update() will fail when unmerged entries exist.
+convert_to_sparse_rec() uses the cache-tree data to recursively walk the
+tree structure, but also to compute the OIDs used in the
+sparse-directory entries.
+
+Add an index scan to convert_to_sparse() that will detect if these merge
+conflict entries exist and skip the conversion before trying to update
+the cache-tree. This is marked as NEEDSWORK because this can be removed
+with a suitable update to cache_tree_update() or a similar method that
+can construct a cache-tree with invalid nodes, but still allow creating
+the nodes necessary for creating sparse directory entries.
+
+It is possible that in the future we will not need to make such an
+update, since if we do not expand a sparse-index into a full one, this
+conversion does not need to happen. Thus, this can be deferred until the
+merge machinery is made to integrate with the sparse-index.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- sparse-index.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sparse-index.c                           | 18 ++++++++++++++++++
+ t/t1092-sparse-checkout-compatibility.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
 diff --git a/sparse-index.c b/sparse-index.c
-index 1b49898d0cb7..b2b3fbd75050 100644
+index 6f21397e2ee0..1b49898d0cb7 100644
 --- a/sparse-index.c
 +++ b/sparse-index.c
-@@ -222,7 +222,7 @@ static int add_path_to_index(const struct object_id *oid,
- 	strbuf_addstr(base, path);
+@@ -125,6 +125,17 @@ int set_sparse_index_config(struct repository *repo, int enable)
+ 	return res;
+ }
  
- 	ce = make_cache_entry(istate, mode, oid, base->buf, 0, 0);
--	ce->ce_flags |= CE_SKIP_WORKTREE;
-+	ce->ce_flags |= CE_SKIP_WORKTREE | CE_EXTENDED;
- 	set_index_entry(istate, istate->cache_nr++, ce);
++static int index_has_unmerged_entries(struct index_state *istate)
++{
++	int i;
++	for (i = 0; i < istate->cache_nr; i++) {
++		if (ce_stage(istate->cache[i]))
++			return 1;
++	}
++
++	return 0;
++}
++
+ int convert_to_sparse(struct index_state *istate)
+ {
+ 	int test_env;
+@@ -161,6 +172,13 @@ int convert_to_sparse(struct index_state *istate)
+ 		return -1;
+ 	}
  
- 	strbuf_setlen(base, len);
++	/*
++	 * NEEDSWORK: If we have unmerged entries, then stay full.
++	 * Unmerged entries prevent the cache-tree extension from working.
++	 */
++	if (index_has_unmerged_entries(istate))
++		return 0;
++
+ 	if (cache_tree_update(istate, 0)) {
+ 		warning(_("unable to update cache-tree, staying full"));
+ 		return -1;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 12e6c453024f..4f2f09b53a32 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -352,6 +352,28 @@ test_expect_success 'merge with outside renames' '
+ 	done
+ '
+ 
++# Sparse-index fails to convert the index in the
++# final 'git cherry-pick' command.
++test_expect_success 'cherry-pick with conflicts' '
++	init_repos &&
++
++	write_script edit-conflict <<-\EOF &&
++	echo $1 >conflict
++	EOF
++
++	test_all_match git checkout -b to-cherry-pick &&
++	run_on_all ../edit-conflict ABC &&
++	test_all_match git add conflict &&
++	test_all_match git commit -m "conflict to pick" &&
++
++	test_all_match git checkout -B base HEAD~1 &&
++	run_on_all ../edit-conflict DEF &&
++	test_all_match git add conflict &&
++	test_all_match git commit -m "conflict in base" &&
++
++	test_all_match test_must_fail git cherry-pick to-cherry-pick
++'
++
+ test_expect_success 'clean' '
+ 	init_repos &&
+ 
 -- 
 gitgitgadget
 
