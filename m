@@ -2,103 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B63EC433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBEB0C43460
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:57:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FEA761490
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:55:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 950BC61574
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232645AbhENT5D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 15:57:03 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47220 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232197AbhENT5C (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 May 2021 15:57:02 -0400
-Received: from camp.crustytoothpaste.net (unknown [138.237.15.37])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 98CC360456;
-        Fri, 14 May 2021 19:55:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1621022149;
-        bh=xsz1/+IailAzJnNB6ajYZuatLeSk1/itIJZKatSQdQs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=VU0ZHq5hRPtvyVf/iHABw7VJWU6MAVDlSWoQcXf7bjp8r6uAEzVI1h9cxPElWk0JY
-         1nrtQKp4ND7NChoPueUmw6eihqyErpCpJOYl/SWPKXj48uI61xibSCg9/W6lobm/mh
-         m2gvq9LZNJsKAaUqujW+u0VzLXBeyMRAVbChTBOuk1K/Y205SRdFls1PVbu8wH+Njj
-         Lzue1zTWwoYA9WgXk7AjXvt/2D1b13EaasNxyJI5NbBiRzdPwl3gXeUS2t3hHpB7ii
-         lhDoruY0B9jLcDU85r8osEMtg2PRwi+OpLZeyD8lP5/VmBBt4Qq/hFuKMPVmVb3Xdk
-         wZO83JxKK1T4Jn6A+HsAJuaXQHZjuZSG7clrtKgzNp5ZB6gXqbJXGAtEenupPkd6bs
-         No4D0H6e/4pje4wL173lVj7mSfrJX8O8uHBm8666/yxxewHSeXv1Vx1HtDD9jjKpHc
-         RcH3j0l19dTEBYDJ17eSJzWgPOuErrVkbPAenZ7S9r9BV99F1Hm
-Date:   Fri, 14 May 2021 19:55:45 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S233223AbhENT6w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 15:58:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233239AbhENT6o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 15:58:44 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B84C061756
+        for <git@vger.kernel.org>; Fri, 14 May 2021 12:57:32 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id b25so613475oic.0
+        for <git@vger.kernel.org>; Fri, 14 May 2021 12:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=5fBpkrPK+Umz6BWfLdUansYOFvUj0fwO+rhW4jBF5DM=;
+        b=RBJxNyNURhQap7+Yi3HugopQyQXfeWKuiAcgdF0+A/CWCc3uN28eILvzLC9mf/+Kqy
+         t5ky2dgnIpfIv5zbBfiCb4w4JgKraL4nbX2hCdfauuUua0yWHNFdJk0uW0bRNC6G+H4H
+         Oefgdxs2up+wo/dmySDl6TZS7XbClTABruIoBW7dD97RwMh+5RtWpK4Jl2UioAVmiw3G
+         bwX2bpHTG5rG5B67pwVZIHqB1rvEH/uNRV8q5QnNYO8MBgW6i9ZOP8lwyhn7T2LKln/3
+         NrnnWsoZXrdAoaFOWtYVAfpXa1AwTDj1UEk7wEcN1yBIvnS6MA6LTLstD8kFgwFHsPPu
+         hliQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=5fBpkrPK+Umz6BWfLdUansYOFvUj0fwO+rhW4jBF5DM=;
+        b=avYWERALjPw/g9aXHPxL9bR4+jA3rfrNjyfF5xlix8b3rl6tCcDFJTNxC0hfMCztOU
+         6StxePSrdyq/X0R5mCfA9RdVvI3v97CWOebvXDfILP02/tmodop/PTK2pfiGezprd15t
+         UMUpBAt3fD/CZ46OzAEH55WV1k96ftBSkuIBEFopkBjO2MKWWTx1aFkU0po2qGltvPXU
+         hk/lAjJIYb7coJzouBWvhxXg2EJwRiLq6UFqrW270kYSTyqYYEj7B3suPaMSV+pbVdcN
+         uuOWUJvrMxaliIsb6NA/LldTuz2ItRbut13NzwjuCswsumtLXzkqZY19R7chtrkWyoi4
+         aW2A==
+X-Gm-Message-State: AOAM532wnN6upH5i8IrXWSyYZZe17k1azwRI2zah9DqK28MfkApwlEbw
+        r2x3qfJh+EuuJA5P3KevBWs=
+X-Google-Smtp-Source: ABdhPJwA6+x1a+IYnW+9i6aAqf0sp83agyJxYmflIgF8OGF4MBpmnexu4E9wvuodnA4q1vyDEsOGWA==
+X-Received: by 2002:aca:42c6:: with SMTP id p189mr7907193oia.36.1621022251806;
+        Fri, 14 May 2021 12:57:31 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id 77sm515277otc.54.2021.05.14.12.57.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 May 2021 12:57:31 -0700 (PDT)
+Date:   Fri, 14 May 2021 14:57:30 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-Message-ID: <YJ7VwbELmik+RVCu@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
+Message-ID: <609ed62a3ad1d_4312720825@natae.notmuch>
+In-Reply-To: <xmqqbl9e7yqz.fsf@gitster.g>
 References: <609b2828309fc_678ff2082@natae.notmuch>
  <20210514003104.94644-1-sandals@crustytoothpaste.net>
  <20210514003104.94644-2-sandals@crustytoothpaste.net>
  <xmqqbl9e7yqz.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bqMAjQeSnseo+e3g"
-Content-Disposition: inline
-In-Reply-To: <xmqqbl9e7yqz.fsf@gitster.g>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Subject: Re: [PATCH v2 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---bqMAjQeSnseo+e3g
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2021-05-14 at 03:58:12, Junio C Hamano wrote:
+Junio C Hamano wrote:
+> > diff --git a/Documentation/Makefile b/Documentation/Makefile
+> > index 2aae4c9cbb..891181c0f3 100644
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -192,10 +192,16 @@ ASCIIDOC_HTML = xhtml5
+> >  ASCIIDOC_DOCBOOK = docbook5
+> >  ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
+> >  ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
+> > -ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+> > +TXT_TO_HTML += -alitdd='&\#x2d;&\#x2d;'
+> > +TXT_TO_XML  += -alitdd='&\#x2d;&\#x2d;'
+> >  DBLATEX_COMMON =
+> >  XMLTO_EXTRA += --skip-validation
+> >  XMLTO_EXTRA += -x manpage.xsl
+> > +ifdef USE_ASCIIDOCTOR_MANPAGE
+> > +TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
+> > +TXT_TO_MAN += -aplus='+'
+> > +TXT_TO_MAN += -alitdd='\--'
+> > +endif
+> >  endif
+> 
+> This hunk is wholly inside USE_ASCIIDOCTOR and deals with {litdd}
+> and {plus}, which are defined in asciidoc.conf that is not read by
+> Asciidoctor, so we'd need to be careful to keep these three places
+> (i.e. TXT_TO_HTML, TXT_TO_XML and TXT_TO_MAN) in sync with the
+> asciidoct.conf file.
+> 
 > It is curious that {plus} for Asciidoctor is deffined only for
 > manpages and HTML/XML side lacks the definition.  Intended?
 
-Yes, that's intended, because the behavior is already correct there.
+Yes. It is a temporary workaround for a bug in asciidoctor. Eventually
+we don't want to do this.
 
-> It seems that the latter has several more "attributes" defined that
-> we do not replicate in the Makefile---I wonder if that is a sign
-> that we can get rid of entries for asterisk, caret, startsb,
-> etc. from asciidoc.conf?
+It's much more clearer in my patch, that contains the hack to a single
+place inside asciidoctor-extensions.rb [1].
 
-I can't speak to the Python implementation, but maybe someone else can.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+[1] https://lore.kernel.org/git/20210514121435.504423-8-felipe.contreras@gmail.com/T/#u
 
---bqMAjQeSnseo+e3g
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJ7VwQAKCRB8DEliiIei
-gfSXAQCPwxGVHrl2lb0ExZrrhjBiVdQ5d0helwU3sPh4G4tlSAD/Xli/LSOEfL7n
-/TIRZPeP2ib0/D1uG1EHHog40O9Z7gU=
-=ytrb
------END PGP SIGNATURE-----
-
---bqMAjQeSnseo+e3g--
+-- 
+Felipe Contreras
