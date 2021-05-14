@@ -2,129 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A102CC433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 669E5C43460
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 13:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7281F61404
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:58:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35BBC6145A
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 13:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhENM7V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 08:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60274 "EHLO
+        id S231388AbhENNqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 09:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbhENM7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 08:59:20 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AF4C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:58:08 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id f184so8147617oig.3
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:58:08 -0700 (PDT)
+        with ESMTP id S231376AbhENNqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 09:46:16 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A52C06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 06:45:04 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id 76so28686164qkn.13
+        for <git@vger.kernel.org>; Fri, 14 May 2021 06:45:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=eM0WuTJjgrj6KV1uA7zjEhDPevXP4xsOSXvri10RJ5E=;
-        b=p4/DdFHzTpZJLX2IKHVg9hoUf11rmPOUDLv71Q/is7hRLxkcY44OCJtDXr7EeoUAD1
-         7/ClRpOwPrSS+/hL9FUJw3htxUoJ+it6H+T79JStq+KBSlWdHF4kKu800qTlnGQScUYK
-         eXtfps+C10pMsy0oJ0s1Kr5J+YVnVsPno1rU0ASGu/EqMzVQCqzXPVGXB3g1234liuMV
-         obMiHQ6+MyBrTMgf3fiLJbiX9cFMpD6uHE+DAoTiJumWgZZhaKBQACoD5hQH1PMXxmK5
-         50io6/hPweeaPZUPLR++kSMhbsESYSe7sMhr6iIv3c5iV6i1Upnv952QAwB7eD845QzD
-         lpCA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7SYrnVyFH0F0nbLOUx2s8jCyJFtlKMa0Nb9RUF0jizI=;
+        b=LxgkmPaU8ix63UAweXzvKHaJxm1IT/Ajr93YKPlfqa3oiLmOeRXtn3Bqv9iQjIP6ly
+         Ix2N0hvv3nTD4bBbWhau72p4y/0PaRhXdnWEH7mrXu595f9v5cgDRLelC2odNgMQu6uo
+         9cwn8NgQxHAoH1GU5VioSUmvWtw8eBBfbQS3g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=eM0WuTJjgrj6KV1uA7zjEhDPevXP4xsOSXvri10RJ5E=;
-        b=kCj/6GuR7XjTD4s5pFWROitKr1sYingESXZZ6SjTDPfzDOKOXZuI3s4DzuuEsF7RX7
-         6qcpHnJ9flbR0RzHP3RDz9ZJwbuoQY/0YlphfEio9IHV8j0lGyiC6I0RV15jqRz5kju9
-         abAZH+vuQOfjAF7wwn8lEd40Hg4sqciuywVCcU4Yz0wE5vu0Zx2YhE42WKExbM5myXIE
-         bod45rbyNdIDLuU5F5MCNYSuSmAXBYyloBWCS4rWVGRL9MaPbB/PcCMeidg53Ut8/z7g
-         60h78TGUlDdjybYpMPjX72uVHqfyE89ui001afrHAc8dXGSB3o4/B6flmOYGOnB5sMSr
-         oOww==
-X-Gm-Message-State: AOAM531IXR1FeGUVs6ePp6MZZQrKVMAxZSVVIZovu+qVVQshcAWME5ha
-        RuzuJobQpQ+H9C+UjKbkRHI=
-X-Google-Smtp-Source: ABdhPJzL5xA9HUX6KZ3TJsEaAsMu7bgLCHnCzKvcVBKYKWWR2BPTc3NtNZp3Zr917w/V3JAXfLMEHg==
-X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr6775897oij.46.1620997087680;
-        Fri, 14 May 2021 05:58:07 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id w25sm1353432otq.40.2021.05.14.05.58.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7SYrnVyFH0F0nbLOUx2s8jCyJFtlKMa0Nb9RUF0jizI=;
+        b=k7yJp8I4tGF0Z80TpQ+uTBBZE/KIr/k9wZPFDhocbYZkXVEqFp/NdBNzokPce96CKT
+         isWWevynzP4iN4Q5/E7cuVy4DVs45gwy5g5GyyTJY9CPRL3ugW4Cgimd0S2ovKNXRvaG
+         OGi3R2pez0PcL2myglVJwGrtVlDtDzPpSaEL3hTYJcWu8unOCnazZhMqvcYn/ivYPXyP
+         5Ks6XvGvMPLA5vW2CXsLh6Y1Z+pYvhRXS8jhAP/L94HuyCJouxLrMGvv4MsypqY8Ud9A
+         fLXW+PuUhOwVtIWag5oT0OUPmabJYiEYNcmCLGqDP7csk0mOJE629R1+A/r3Sfg1rOtK
+         ayGA==
+X-Gm-Message-State: AOAM532aFTQDtJgD9DLcoM+jA4FAD6BFBKlEieHwB5xUbrLUGp9KceN2
+        WJ+TZke4s9KlsFBu+rmFRV5EKx1QhFRP60RU
+X-Google-Smtp-Source: ABdhPJxw533JXsrWGiYo0dKe1XP3ND79O0MfuDNMlZ3FFdmUvaDmZPAws4+oBbVEvsl9B0FHro+cdQ==
+X-Received: by 2002:a05:620a:530:: with SMTP id h16mr14015081qkh.266.1620999903665;
+        Fri, 14 May 2021 06:45:03 -0700 (PDT)
+Received: from meerkat.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id b3sm3185946qtg.55.2021.05.14.06.45.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 05:58:07 -0700 (PDT)
-Date:   Fri, 14 May 2021 07:58:04 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Message-ID: <609e73dcbe525_431272081e@natae.notmuch>
-In-Reply-To: <YJ21Qfnk0tpPgPqu@camp.crustytoothpaste.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210512021138.63598-1-sandals@crustytoothpaste.net>
- <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
- <YJ21Qfnk0tpPgPqu@camp.crustytoothpaste.net>
-Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Fri, 14 May 2021 06:45:03 -0700 (PDT)
+Date:   Fri, 14 May 2021 09:45:01 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     dwh@linuxprogrammer.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Is the sha256 object format experimental or not?
+Message-ID: <20210514134501.3vzgqdfwwejafkq7@meerkat.local>
+References: <20210508022225.GH3986@localhost>
+ <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
+ <87lf8mu642.fsf@evledraar.gmail.com>
+ <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
+ <20210513202919.GE11882@localhost>
+ <20210513204957.5g76czb5bk3thlep@meerkat.local>
+ <20210513234706.GG11882@localhost>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210513234706.GG11882@localhost>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On 2021-05-12 at 02:48:59, Bagas Sanjaya wrote:
-> > Maybe when distros upgraded shipped Asciidoctor version to 2.0, we can
-> > bump the version requirement.
+On Thu, May 13, 2021 at 04:47:06PM -0700, dwh@linuxprogrammer.org wrote:
+> On 13.05.2021 16:49, Konstantin Ryabitsev wrote:
+> > Check out what we're doing as part of patatt and b4:
+> > https://pypi.org/project/patatt/
+> > 
+> > It takes your keyring-in-git idea and runs with it -- it would be good to have
+> > your input while the project is still young and widely unknown. :)
 > 
-> My general policy, which need not be Git's policy (but I think is
-> reasonable), is that I will support the previous version of Debian and
-> Ubuntu LTS for a year after the new one comes out.  Under that policy,
-> we'd wait until a year after Debian 11 (bullseye) is released.
-
-Under that policy the supported version would be Debian 10 (buster),
-which ships with Ruby 2.5. It's more than capable of running
-asciidoctor.
-
-The CI of asciidoctor tests versionof Ruby as old as 2.3, so Debian 10
-is safe.
-
-In fact, I would bet you that asciidoctor works fine in Ruby 2.1 shipped
-with Debian 8 (jessie) released in 2015. Maybe users of Debian 7 would
-have trouble... *maybe*... It's hard to tell because Debian doesn't
-even provide package information about that release.
-
-> > > diff --git a/Makefile b/Makefile
-> > > index 93664d6714..cb75dec314 100644
-> > > --- a/Makefile
-> > > +++ b/Makefile
-> > > @@ -285,6 +285,9 @@ all::
-> > >   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
-> > >   # documentation.
-> > >   #
-> > > +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
-> > > +# instead of building manual pages from DocBook.
-> > > +#
-> > The wording should be "...instead of building manual pages from DocBook with
-> > xmlto".
+> Konstantin:
 > 
-> I can make that change.  We're not using DocBook either way, with xmlto
-> or other tooling (e.g., a plain xsltproc), so what we have here is
-> accurate.
+> That's really clever. I especially love how you're using the list
+> archive as the provenance log of old keys developers used. That seems
+> like it would work although I have worries about the security of
+> X-Developer-Key and the lack of key history immediately available to
+> `git log` because it's in the list archive and not in the repo directly.
+>
+> I guess the old keys would still be in your local keyring for `gpg` to
+> use but it would mark signatures created with old revoked keys as
+> invalid even though they are valid.
 
-Hmm...
+Thanks for taking a look at it. I don't view this as much of a problem, since
+the goal for the project is specifically end-to-end patch attestation. For git
+commits, if they are signed with a key from the in-git keyring, it would
+actually be really straightforward to get the valid key at the time of signing
+-- you just retrieve the keyring using the date of the commit.
 
-cat Documentation/manpage.xsl
+> My approach has been to move to cryptographically secure provenance logs
+> that contain key rotation events and commitments to future keys and also
+> cryptographically linking to arbitrary metadata (e.g. KYC proofs, etc).
+> The file format is documented using the Community Standard template from
+> the LF. I'm hoping to move Git to use external tools for all digest and
+> digital signature operations. Then I can start putting provenance logs
+> into a ".well-known" path in Git repos, maybe ".plogs" or something.
+> Then I can write/adapt a signing tool to understand provenance logs
+> of public keys in the repo instead of the GPG keyring stuff we have
+> today.
+> 
+> Provenance logs accumulate the full key history of a developer over
+> time. It represents a second axis of time such that the HEAD of a repo
+> will have the full key history, for every contributor available to
+> cryptographic tools for verifying signatures. This makes `git log
+> --show-signature` operations maximally efficient because we don't have
+> to check out old keyrings from history to recreate the state GPG was in
+> when the signature was created.
 
-  <xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/manpages/docbook.xsl" />
+Hmm... I'm not sure if it's an inefficient operation in the first place. If
+the keyring is in the same branch as the commit itself, then you can retrieve
+the public key using "git show [commit-sha]:path/to/that/pubkey". If it's in a
+different branch, then it's slightly more complicated because then you have to
+find a keyring commit corresponding to the commit-date of the object you're
+checking. In any case, these are all pretty fast operations in git.
 
-That's a deliverable of the DocBook project, is it not?
+> I still like your approach purely for the "it works right now" aspect of
+> the solution. Good job. I can't wait to see it in action.
 
--- 
-Felipe Contreras
+As you know, this is my third attempt at getting patch attestation off the
+ground. The first one I implemented using detached attestation documents and
+it was clever and neat, but it was too complicated and failed to take off -- I
+think mostly because a) it wasn't easy to understand what it's doing, and b)
+it required that people adjust their workflows too much.
+
+The second attempt was better, but I think it was still too complicated,
+because it required that we parse patch content, making it fragile and slow on
+very large patch sets.
+
+I'm hoping that this version resolves the downsides of the previous two
+attempts by both being dumb and simple and by only requiring a simple one-time
+setup (via the sendemail-validate hook) with no further changes to the usual
+git-send-email workflow after that.
+
+I've not yet widely promoted this, as patatt is a very new project, but I'm
+hoping to start reaching out to people to trial it out in the next few weeks.
+
+Thanks,
+-K
