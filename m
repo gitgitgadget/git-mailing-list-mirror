@@ -7,94 +7,161 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA01C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 03:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 192A9C433ED
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 04:25:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D230C6100C
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 03:58:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E617C610EA
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 04:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231829AbhEND70 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 23:59:26 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61358 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbhEND7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 23:59:25 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6412B8FBB;
-        Thu, 13 May 2021 23:58:13 -0400 (EDT)
+        id S232200AbhENE0Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 00:26:24 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56377 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232139AbhENE0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 00:26:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB55F120977;
+        Fri, 14 May 2021 00:25:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H1nCf3k8gOApMIb3jfgQg6AJFwLF07UE5ENPAi
-        kcKHw=; b=KriVrTRuEmkQxNpOSZIiD8EHhzL/coTmfuYSkHhT33Nv6zPZVK1m2K
-        0cTegoYGKL1VAgJSiCjM/8WwA5OGxZnWH4Pl9SlgP580Y1ers7pon+8oVOkyCuoV
-        QM03QxfUfHhEKXRnWW1DgIjSniHNd2DIozP/Wok+zNbnYD204x9CI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE66FB8FBA;
-        Thu, 13 May 2021 23:58:13 -0400 (EDT)
+        :content-type; s=sasl; bh=GB+4Zk8Pmy0IlBwnUMmRutBYp+W29XEmx9uCpp
+        HzmQs=; b=eaCG3ANNWIsCmCdECOCrGDIG7TaUKZgbYa44XdtJny+M5B6gPOwekW
+        Gx2QXZNhnKhcD3czTz2h09xV8SA0gFdyfIkBxCu95sa4hRK8FgsPXbeTS8dgyX+4
+        Bk9pyMQUWPhpDBIZIkBi5K6KyA3ibwrZ/mCduPhA5auIhFgLNtA4o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B7CEC120976;
+        Fri, 14 May 2021 00:25:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 70CCAB8FB8;
-        Thu, 13 May 2021 23:58:13 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E6E11120974;
+        Fri, 14 May 2021 00:25:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-References: <609b2828309fc_678ff2082@natae.notmuch>
-        <20210514003104.94644-1-sandals@crustytoothpaste.net>
-        <20210514003104.94644-2-sandals@crustytoothpaste.net>
-Date:   Fri, 14 May 2021 12:58:12 +0900
-In-Reply-To: <20210514003104.94644-2-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 14 May 2021 00:31:03 +0000")
-Message-ID: <xmqqbl9e7yqz.fsf@gitster.g>
+To:     Gregory Anders <greg@gpanders.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3] git-send-email: add option to specify sendmail command
+References: <20210513023212.72221-1-greg@gpanders.com>
+        <20210513152329.22578-1-greg@gpanders.com>
+Date:   Fri, 14 May 2021 13:25:09 +0900
+In-Reply-To: <20210513152329.22578-1-greg@gpanders.com> (Gregory Anders's
+        message of "Thu, 13 May 2021 09:23:29 -0600")
+Message-ID: <xmqq7dk27xi2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9AFD0EEA-B468-11EB-8551-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 5F14D418-B46C-11EB-BEA0-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 2aae4c9cbb..891181c0f3 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -192,10 +192,16 @@ ASCIIDOC_HTML = xhtml5
->  ASCIIDOC_DOCBOOK = docbook5
->  ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
->  ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
-> -ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-> +TXT_TO_HTML += -alitdd='&\#x2d;&\#x2d;'
-> +TXT_TO_XML  += -alitdd='&\#x2d;&\#x2d;'
->  DBLATEX_COMMON =
->  XMLTO_EXTRA += --skip-validation
->  XMLTO_EXTRA += -x manpage.xsl
-> +ifdef USE_ASCIIDOCTOR_MANPAGE
-> +TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
-> +TXT_TO_MAN += -aplus='+'
-> +TXT_TO_MAN += -alitdd='\--'
-> +endif
->  endif
+Gregory Anders <greg@gpanders.com> writes:
 
-This hunk is wholly inside USE_ASCIIDOCTOR and deals with {litdd}
-and {plus}, which are defined in asciidoc.conf that is not read by
-Asciidoctor, so we'd need to be careful to keep these three places
-(i.e. TXT_TO_HTML, TXT_TO_XML and TXT_TO_MAN) in sync with the
-asciidoct.conf file.
+> Use a block scoped variable to print the sendmail invocation at the end 
+> of the 'send_message' subroutine. Assigning directly to $sendmail_cmd 
+> (as in the v2 patch) causes some bizarre problems; namely, it seems to 
+> affect the value of $sendmail_cmd that is read at earlier points in the 
+> same subroutine, which causes test invocations of the form
+>
+>     git send-email --smtp-server="$(pwd)/fake.sendmail"
+>
+> to fail. The value passed to --smtp-server was assigned to $sendmail_cmd 
+> at the end of the 'send_message' subprocedure, but somehow this caused 
+> the 'if (defined $sendmail_cmd)' condition earlier in the subproc to 
+> evaluate to true.
 
-It is curious that {plus} for Asciidoctor is deffined only for
-manpages and HTML/XML side lacks the definition.  Intended?
+Are you talking about the use of $sm that is local to the debug
+output?  I think leaving $sendmail_cmd intact by using a separate
+variable is the right choice.  Isn't the problem you observed a
+consequence of send_message() getting called once for each message,
+so assigning to $sendmail_cmd in the function for the first
+invocation of the function would change its value for the second
+invocation?
 
-It seems that the latter has several more "attributes" defined that
-we do not replicate in the Makefile---I wonder if that is a sign
-that we can get rid of entries for asterisk, caret, startsb,
-etc. from asciidoc.conf?
+Also, if we have been using
+
+	--smtp-server=$(pwd)/fake.sendmail
+
+we cannot expect to use the same value like this:
+
+	--sendmail-cmd=$(pwd)/fake.sendmail
+
+because we deliberately add a space in the $(pwd) by choosing the
+name of the test directory to be "trash directory.something".  We'd
+need to do something like
+
+	--sendmail-cmd='$(pwd)/fake.sendmail'
+
+so that the shell sees '$(pwd)/fake.sendmail' literally and runs pwd
+to find out what the path to the program is, I would think.
+
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 65b3035371..583fbba410 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -2148,6 +2148,37 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+>  	test_cmp expected-list actual-list
+>  '
+>  
+> +test_expect_success $PREREQ 'test using command name with --sendmail-cmd' '
+> +	clean_fake_sendmail &&
+> +	PATH="$(pwd):$PATH" \
+> +	git send-email \
+> +		--from="Example <nobody@example.com>" \
+> +		--to=nobody@example.com \
+> +		--sendmail-cmd="fake.sendmail" \
+> +		HEAD^ &&
+> +	test_path_is_file commandline1
+> +'
+
+Nice demonstration of the "we no longer need an absolute pathname"
+feature.
+
+> +test_expect_success $PREREQ 'test using arguments with --sendmail-cmd' '
+> +	clean_fake_sendmail &&
+> +	git send-email \
+> +		--from="Example <nobody@example.com>" \
+> +		--to=nobody@example.com \
+> +		--sendmail-cmd="\"$(pwd)/fake.sendmail\" -f nobody@example.com" \
+> +		HEAD^ &&
+> +	test_path_is_file commandline1
+> +'
+
+Hmph, if $(pwd) has a double quote character in it, this may not
+work as expected, as the shell that is expanding the command line
+arguments for "git send-email" would see $(pwd), expand it and our
+program will see
+
+    "/path/with/d"quote/git/t/trash directory.9001/fake.sendmail" -f nobody@e.c
+
+as the value of --sendmail-cmd, which would not interpolate well,
+no?
+
+We want the shell that eats the command line of 'git send-email' to see
+
+	--sendmail-cmd='$(pwd)/fake.sendmail'\" -f nobody@example.com"
+
+and because this is inside a sq pair, it would become
+
+	--sendmail-cmd='\''$(pwd)/fake.sendmail'\''\" -f nobody@example.com"
+
+after we replace each sq with '\'', or something like that, perhaps?
+
+> +test_expect_success $PREREQ 'test shell expression with --sendmail-cmd' '
+> +	clean_fake_sendmail &&
+> +	git send-email \
+> +		--from="Example <nobody@example.com>" \
+> +		--to=nobody@example.com \
+> +		--sendmail-cmd="f() { \"$(pwd)/fake.sendmail\" \"\$@\"; };f" \
+> +		HEAD^ &&
+> +	test_path_is_file commandline1
+> +'
+
+Nice demonstration of how a bit of scripting can be used.
+
+>  test_expect_success $PREREQ 'invoke hook' '
+>  	mkdir -p .git/hooks &&
 
 Thanks.
