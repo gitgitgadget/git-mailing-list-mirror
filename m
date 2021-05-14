@@ -7,98 +7,94 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 801F6C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 01:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DC5C433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 01:40:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5456961354
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 01:01:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D82886142E
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 01:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231993AbhENBCb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 May 2021 21:02:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42496 "EHLO
+        id S232137AbhENBly (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 May 2021 21:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231265AbhENBCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 May 2021 21:02:31 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 749A1C061574
-        for <git@vger.kernel.org>; Thu, 13 May 2021 18:01:19 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id e11so22408287ljn.13
-        for <git@vger.kernel.org>; Thu, 13 May 2021 18:01:19 -0700 (PDT)
+        with ESMTP id S230460AbhENBlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 May 2021 21:41:53 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05D92C061574
+        for <git@vger.kernel.org>; Thu, 13 May 2021 18:40:41 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id t4-20020a05683014c4b02902ed26dd7a60so15115604otq.7
+        for <git@vger.kernel.org>; Thu, 13 May 2021 18:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=i6kru9vtSh5SiB+JYK6RJiAHCQSIPGpAN/SLtebyrI0=;
-        b=VklXyMA4IpxwIVLf8bosOEHFfBzxB/7P670D4A+K34/iECaEA1ojGW0mWNjMelfELj
-         4FMeaBXY9a4d5RViNK+RdRxzrxS/guky4ILkrgUWbgmdGX2yFdtZko+673MkKxSBmoud
-         plTEKE6bZQcqY39Sv3xyRy+C7TNwmlbssc7zMWgT1q8NNj83DiQFrcY+wHf0gf0bx1tu
-         lGXgDy23QkO2Gy1Y5FvbiZNEGJFRMTPd2dBhjE1UQOIRd37M1gXa0x9pWoTM7WuwsnRm
-         8YXxLo4yiQ0IxrNZSfYJxSRxmILDgy0Aw79ljGVL5dKeakVVsHSntpRhWyZLHWoTzysn
-         LbSQ==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=BLBsYuz1SfgAsS0JkfLTd4BxNMFP/dTO1LbFHkO4+yg=;
+        b=XKv/N1g4xH5NLGs+u9/wWa8iqM32R5aNPB8Pn2HWoYfWbtye3PR0topdA7seZpQcUc
+         2tgZGvYF4o0xlFzA+516GwuN3PtK7hpSxYyLgYo/apleJw/jsiXKXQFH/oH+PF7oenhA
+         7IO839a/PKBFUEdD90fdoOtMHV7a6Ad/ABFun9jNUngR5rj9WlvMTVxeYoqF5j3sdbUJ
+         X7YDGgKtA74u9L9QvCd7ilkWrKdoEbEHAN+ozYyaaZVeTkvxsxW45rLNs1QW2uHahVK6
+         MR3npmav5g5uHiw6vpeTn1VhW10k4gwqD0SObVaxZIUHUOtH4Q0XUKU0Y3aDkVgGtAV6
+         nxFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=i6kru9vtSh5SiB+JYK6RJiAHCQSIPGpAN/SLtebyrI0=;
-        b=s2vDYeqz5A7gOKOPAjNrDWlXNMUEMpZN4w+/vwiudd6sfhobT9c1hA6hxWaA5qhyGI
-         4SUTaT/CatjOtDNhw8I8fOhfbW7pf3gt79YdmW+hbhqJDdITVNkTdKFzYzADvDsTlm42
-         kTYcuOQ22HNhCsi+FrpXE3swcY8T31QPNYxkOGVS6tzaPq5sjIVwVZZFxhzbJF07wAA8
-         wbdyYnpqDvNVFOy7iJkbvXWt/P4tejVWZzmUFiREn78E0M3IQByh8/PrlrYZm6tbWNy1
-         q9KZn/XEhCsuMv+SFnyVzfxc7oAukXHsvIygsV5sPc15VnmGofJK7gnHpkWboXFn19te
-         Oesw==
-X-Gm-Message-State: AOAM533tOE+ek2qV1w04yBnK1uxC/YL0Dch/V7LKEhAApdLhtHG2Jup5
-        50hW35J5k+I6VZqGvWANbe54koAEKeV5haKAsTI=
-X-Google-Smtp-Source: ABdhPJyPPkjr4rCKFHBb7skPd2YLoOfH6jFfGyM7bYAxHIVAjmZX39jaLoeekcQp9SHNhyoMCE1i4hkU4YP3uVbZzOc=
-X-Received: by 2002:a2e:81d0:: with SMTP id s16mr37585806ljg.74.1620954077972;
- Thu, 13 May 2021 18:01:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <87r1iakbyn.fsf@osv.gnss.ru> <CAMMLpeQ8_isyDtP34p+_tEK3JAasfro7dJbVrTVPZ7C4q0kT6w@mail.gmail.com>
- <YJ3LJ++lsAuSkCUJ@danh.dev>
-In-Reply-To: <YJ3LJ++lsAuSkCUJ@danh.dev>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Thu, 13 May 2021 19:01:07 -0600
-Message-ID: <CAMMLpeSaJ-tr64qMATJOodBa=jtSvN0+AdDWpGxPG09XwSfvEA@mail.gmail.com>
-Subject: Re: Rebase options via git pull
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=BLBsYuz1SfgAsS0JkfLTd4BxNMFP/dTO1LbFHkO4+yg=;
+        b=Yt9HVfkc98gdokguB4LWzN9ndMDXs2hMx5GqoUOk10OJ21oaJxAsJ77bLJMTkmBrc1
+         0bTw7kYEuyfx8ZvoU1ImYOkPUhJFgZIEd183NfE/EfC0rdaExzU2rGl5Nj+90E5M5xXr
+         g15PJ/iqPxmYU8cU8NBKdsmf6DQMdPgxUmuRbMhxctdsB2mnM4yqRJuWcnGfYf4GLvro
+         MmKalkfy0KiKaDxa0Y3GhQ5ag0Id18eZ/30SwuEiP3rj8j5DS0gsDMDRPHqvBrHtQS0x
+         1TLUnxZ/ch6G8a8hclGVQLu9QmM4EKYC4Osz5TJP31bGKpm08zxvUWxmLkOHrdHyqXeS
+         lKqA==
+X-Gm-Message-State: AOAM532akIki7yZEETOS9vSI1Tub3RCMO6yb+8YkqguPCKQPCJ6YKJgj
+        4MpPkKndWcp3f8eyN3MrFuU=
+X-Google-Smtp-Source: ABdhPJwknNYWM34W5ByTCt24Luz+zkAamoMEjMttbXaSPtRk0y9IDaOYIs0fAOLbTiqiUuaR2MTUBw==
+X-Received: by 2002:a9d:d0e:: with SMTP id 14mr38416430oti.12.1620956441297;
+        Thu, 13 May 2021 18:40:41 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id u24sm1013520otg.73.2021.05.13.18.40.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 May 2021 18:40:40 -0700 (PDT)
+Date:   Thu, 13 May 2021 20:40:39 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Message-ID: <609dd5171e7de_19566208ca@natae.notmuch>
+In-Reply-To: <cover.1620928059.git.martin.agren@gmail.com>
+References: <cover.1620928059.git.martin.agren@gmail.com>
+Subject: RE: [PATCH 0/6] AsciiDoc vs Asciidoctor, once again
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 13, 2021 at 6:58 PM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
-<congdanhqx@gmail.com> wrote:
->
-> On 2021-05-13 18:49:03-0600, Alex Henrie <alexhenrie24@gmail.com> wrote:
-> > On Thu, May 13, 2021 at 7:23 AM Sergey Organov <sorganov@gmail.com> wro=
-te:
-> > >
-> > > Hello,
-> > >
-> > > Is there a way to specify additional options for "git rebase" when it=
-'s
-> > > invoked via:
-> > >
-> > >   git pull --rebase
-> > >
-> > > ? What if rebase is used implicitly due to "pull.rebase" being set
-> > > accordingly?
-> > >
-> > > In particular, I'd like to be able to:
-> > >
-> > >   git pull --rebase --no-fork-point
-> > >
-> > > but it doesn't work.
-> >
-> > It would be cumbersome, but you could run `git config rebase.forkPoint
-> > false` before pulling and `git config rebase.forkPoint true` after.
->
-> Or, for this *specific* case:
->
->         git -c rebase.forkpoint=3Dfalse pull --rebase
+Martin =C3=85gren wrote:
+> These patches reduce
+> =
 
-I forgot that you can do that. Thanks for the better answer!
+>   ./doc-diff --from-asciidoc --to-asciidoctor --cut-footer HEAD HEAD
+> =
 
--Alex
+> from ~1200 to ~1000 lines. It's the usual mix of things where one or th=
+e
+> other of the tools renders something less well, or where we're doing
+> something odd in the source and we just happen to notice it in the diff=
+.
+
+These changes are good, but what happens the next time somebody
+inadvertedly introduces something that "trips" asciidoctor?
+
+We should be submitting bug reports to the asciidoctor project as well,
+so in the future it's less likely we find ourselves in the same
+scenario.
+
+Preferably the bug report should be in the commit message.
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
