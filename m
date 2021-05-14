@@ -2,94 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E08E6C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD773C433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE5DA6144C
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:07:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A33BD6144A
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 19:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232990AbhENTIV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 15:08:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58370 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231302AbhENTIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 15:08:20 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5790EC061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 12:07:09 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id v22so451905oic.2
-        for <git@vger.kernel.org>; Fri, 14 May 2021 12:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=F+Msq1qeFKdTK7eU30W+YC+Z5iYsqMhsAC1/0J1PbJo=;
-        b=F/YaXiQN0Xy4UrKoL3ub0GFZ5zCyDQiv7a/AN1FJ+iQzePT4uliNHpFRSWy/FWqLKO
-         Z7eoLXmJ2RhuE6Pt2NU6WcQYSKmv+paJehzq+8hI3XzKgTFakPzYSRQXX4zFg+e7EFJj
-         ycjhJsSJS8usoR/6KU2sq64aET+Xd0Etb+9HIH48C49Eykd1jg28lQjLoByeyfWh2eGU
-         yTHRw702zJrkKlzZxWkko02K+kwIV+V7gAPb4Rp+mQ5VfI3mzpdJ/2OthX2EShtwQAKR
-         mOugiP/1Ah5RIhdrblqYh6yvw6LS3lhl8F5Pnc/ZIJ23t1ZoLpc+YlZtQdML60gSKv5F
-         tNWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=F+Msq1qeFKdTK7eU30W+YC+Z5iYsqMhsAC1/0J1PbJo=;
-        b=uoJ6GA3KcNVmaGyLCoR5RgTQ2wahp4O7ddkGh0I/QtkQeEpel266afNHlVBsMkFUJq
-         NI5qeJRzrV9moS2toPhKnIbjJbN5ams9HHw3y0oKA0L5HI0m6zfQKKrYS7AGuz76bFlM
-         s+5G6fH0y55Sw7lAA+rPBNdcVhBuqn6FqARg5FbLxtIwUfadpWiREnMoTeZuxhqgKdV0
-         YfaMiccatM0Bjslk6f1NvPUKwbAhZRE9PipD4OKg0IiszBImOlllse5lVwKN1h0lriQs
-         NXgwWKkT7wS39/fvTzB2LwG/SS9hjx0YXq7bAzLuILOm3o0VaDnrNI5GSW9cEqpv8KIu
-         3STQ==
-X-Gm-Message-State: AOAM533vcomE7oINaWUAn2DLR2CpeelD3N/mo4l5+6SopUV9sP54ZdQv
-        ZqOv14x0+kyZ9q+dH48nLpo=
-X-Google-Smtp-Source: ABdhPJxtzVy/1bkxaC27g7uy104l1+wWb9Tldx+3iStAEbLqqfNo9kI89pI/EvRhpstcNL5tZYYkUg==
-X-Received: by 2002:aca:2319:: with SMTP id e25mr7547659oie.38.1621019228034;
-        Fri, 14 May 2021 12:07:08 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id d207sm1438110oob.7.2021.05.14.12.07.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 12:07:07 -0700 (PDT)
-Date:   Fri, 14 May 2021 14:07:06 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
-Message-ID: <609eca5a42be2_43127208f2@natae.notmuch>
-In-Reply-To: <20210514003104.94644-1-sandals@crustytoothpaste.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210514003104.94644-1-sandals@crustytoothpaste.net>
-Subject: RE: [PATCH v2 0/2] Asciidoctor native manpage builds
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S232029AbhENTyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 15:54:24 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47214 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230431AbhENTyY (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 May 2021 15:54:24 -0400
+Received: from camp.crustytoothpaste.net (unknown [138.237.15.37])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8103760456;
+        Fri, 14 May 2021 19:53:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1621021991;
+        bh=KptolAxDZaBEYMRyzwyTOjnvGhKoOLah/RXPHqodV+o=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=GXrblbjdKpSvEDn82PKE+tNKPN5pmM3ipZrckSNX2lYZTfYTZFsBJB5CwDC1BGphT
+         LOeOY1x2G1jqmqu9A5vI076CFfGroXptBzmHZikjR5AAfiLpw7ijB0AcQL+pnWrlZH
+         iVqxSQDRmieBaewoIbfzk2vpoBi8yUesLE6TVh170U6APW3/HVoqP2w0veCWpyiSuz
+         uy7kKxuSeSgN43G+9YjJPH5iGYiphTfxiwQ6jHr9auBScBCgBaXIZs+yF3Lx/OkNmA
+         eDuKZV9PODYCIoMFTlD8cLxi7VTYlb1k/urzoGL9koT08EPh53AaK/tOTTMN6Ct4yM
+         131nLZ+/Qu4O26T8yaGQM9z9+L2ZeC8vmQtVeiillhIAw+q8LSxNRWFNtLyFc29h3T
+         VAJcKJJIF3s0pl5n44LCF09TVqdc+G0EgqYaKoaKnnCs9gBLDyGUjcoJ6/2Ac7yHmi
+         D0OrbfVJMTM1Lva7xveXcYw78m/PeXEduiZxCpacVQYXZsmxkbq
+Date:   Fri, 14 May 2021 19:53:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] parallel-checkout: send the new object_id algo field
+ to the workers
+Message-ID: <YJ7VI5kHAAk126YJ@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
+References: <a4225bc79d963c5a411105e2b75f9ca4b80de835.1621000916.git.matheus.bernardino@usp.br>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DLz+9mSYoJKtCoKe"
+Content-Disposition: inline
+In-Reply-To: <a4225bc79d963c5a411105e2b75f9ca4b80de835.1621000916.git.matheus.bernardino@usp.br>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
->     @@ Documentation/asciidoctor-extensions.rb: module Git
->               elsif parent.document.basebackend? 'html'
->                 %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
->      +        elsif parent.document.basebackend? 'manpage'
->     -+          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
->     ++          %(\e\\fB#{target}\e\\fP\e\\fR(#{attrs[1]})\e\\fP)
->               elsif parent.document.basebackend? 'docbook'
->                 "<citerefentry>\n" \
->                   "<refentrytitle>#{target}</refentrytitle>" \
 
-Huh? Didn't you say \e was not needed?
+--DLz+9mSYoJKtCoKe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You are doing basically the same thing thing my patches now, except in a
-more convoluted way.
+On 2021-05-14 at 14:36:00, Matheus Tavares wrote:
+> An object_id storing a SHA-1 name has some unused bytes at the end of
+> the hash array. Since these bytes are not used, they are usually not
+> initialized to any value either. However, at
+> parallel_checkout.c:send_one_item() the object_id of a cache entry is
+> copied into a buffer which is later sent to a checkout worker through a
+> pipe write(). This makes Valgrind complain about passing uninitialized
+> bytes to a syscall. The worker won't use these uninitialized bytes
+> either, but the warning could confuse someone trying to debug this code;
+> So instead of using oidcpy(), send_one_item() uses hashcpy() to only
+> copy the used/initialized bytes of the object_id, and leave the
+> remaining part with zeros.
+>=20
+> However, since cf0983213c ("hash: add an algo member to struct
+> object_id", 2021-04-26), using hashcpy() is no longer sufficient here as
+> it won't copy the new algo field from the object_id. Let's add and use a
+> new function which meets both our requirements of copying all the
+> important object_id data while still avoiding the uninitialized bytes,
+> by padding the end of the hash array in the destination object_id. With
+> this change, we also no longer need the destination buffer from
+> send_one_item() to be initialized with zeros, so let's switch from
+> xcalloc() to xmalloc() to make this clear.
+>=20
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+>=20
+> Hi, brian
+>=20
+> I've read the hash transition plan, but I'm not confident to say that I
+> fully understand it yet, so maybe this patch is not exactly what we need
+> here. Mainly, I'm not sure I understand in which cases we will have an
+> object_id.algo that is not the_hash_algo. Is it for the early transition
+> phases, where we have a SHA-256 repo that accepts user input as SHA-1?=20
 
--- 
-Felipe Contreras
+Yes, that's correct, as well as for interoperability with remotes using
+a different hash algorithm.
+
+> Also, the object_id's copied here at send_one_item() always come from a
+> `struct cache_entry`. In this case, can they still have different
+> `algo`s or do we expect them to be the_hash_algo?
+
+No, things in the index should always use the same algorithm..
+
+The patch looks fine to me.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--DLz+9mSYoJKtCoKe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYJ7VIwAKCRB8DEliiIei
+gdZNAP9DRlbZhv/uPQGiF2jH7gbvW9orexOLWIOfOIhFYXQ+AgEAtYWs9JeAWaWS
+VtXMoL8md/saMYY+vyVEAPKSE3BvpQA=
+=o3nh
+-----END PGP SIGNATURE-----
+
+--DLz+9mSYoJKtCoKe--
