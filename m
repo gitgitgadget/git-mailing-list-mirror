@@ -7,133 +7,113 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 454F0C433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 08:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E56FC433ED
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 08:56:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13A82613E9
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 08:52:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 359ED613E6
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 08:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230478AbhENIyA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 04:54:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32992 "EHLO
+        id S231982AbhENI5f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 04:57:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbhENIx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 04:53:59 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FB9C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 01:52:48 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id t21so15889206plo.2
-        for <git@vger.kernel.org>; Fri, 14 May 2021 01:52:48 -0700 (PDT)
+        with ESMTP id S229544AbhENI5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 04:57:30 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9ACFC061574
+        for <git@vger.kernel.org>; Fri, 14 May 2021 01:56:18 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id v5so22801981edc.8
+        for <git@vger.kernel.org>; Fri, 14 May 2021 01:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IwJ74iBnhMDvnEkKv8mbEyw3Ew2yB7VgJIlCT4motz8=;
-        b=S5q+F1/Mg3ds2uZg2lLmpQjnLuW75D5FTG7bL4b2USbJd/9NriwUkSoHHwElU+RzY9
-         gs28O7tfXb3OQ6JBb5Phl02exr0gXZnrJquDJTiytAjWnvK2TAa4Rqrq2IzPVenXC2RF
-         t9nqVEwJM+JnWazOaBQh5ferQ6fCHx9oz5uohyctPA/cU9fqMn2fsAGZQFgPGmoriRRq
-         dGbH3sqLr2ueebassyd21MkDNTE96hwSF0u223D/+KHRzKkniWmfqNVRVEOtXvqtCFzD
-         SqG73HF6X4E5PaSZmEYCH8miwNg3e4MeqskyRHaGtYH7qX498LJjoGnGR06vqqGsxkfQ
-         WUSg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=cuKolcHuUveqoXKziIQKlUmE7LTOrf51k7kTaEtOeSE=;
+        b=oy0ytvUnNClENur9TfNbVj+vVES7PpdcKe4lLjZ0VkHbd3j1hgSVCZSEtV/+ZyGXo0
+         Foewe+OEN/OjDkz6ILeUb64fzijJPeeUjvAstMouOI82aoMUntg8qJGiAEoh7PCAdplw
+         wcGEv6ZAIe09XaW5ox++TfbOQQ1feT5kDJarZKVz+MxuwNU7nLjzzAc2senU0qSg0xgh
+         Hea96oQbqwcN4MI9L8saN2PEaUNUoVd15GaTNw5tFApZxF3gyL3jq1Pg3kBqIpm8OvUj
+         rTsYYr2pO2Qcwy0n71RiS8sP5VaB7Cqx2IbK9ly1Fm1Vol4AQXElHyN3u+H7bd51ddTF
+         a2Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IwJ74iBnhMDvnEkKv8mbEyw3Ew2yB7VgJIlCT4motz8=;
-        b=WxEwYw9CMnoHuH8HyC348OBkB2JQpYQUBEiJXgdbJEpOVtBRDaIem7yfxhwwmRWzQO
-         rDdqA/VMV7FoJ3chLC2K/qS278DRvVwzW74opGBrYy3jjugMuJFR4XBkUpUQGcwJzpDJ
-         B4RQ6BI08hsNg4GzKznQ6kSARTi1rvwWfYTfkEWP+H3EdM49J2Y2zqgNwBniMHHfIZG0
-         cI7s7dcDoNl68ImTVfHLMzuaWzi74ex8LG4wzu/cCpAUXNs9k964AvcMK8+ndhMmwBcH
-         8eMlB2EhWrsHgompmgkbOlXrzhifnPm4MXemN48VmmeRQNVwhCQNY+jRgqkUPaKHz90w
-         KlXA==
-X-Gm-Message-State: AOAM532xaN7JWtUbOmfb9vTpqAAlpiz4EXz5uhf5EY78nYOGtBky1Ply
-        V/gtJ2ghW14/TICimN0YEe93ZNepFJ8pUvFZVbg=
-X-Google-Smtp-Source: ABdhPJytT7vgl7U02LH2eXEy7XFG/YIGw8R5HQ05YoyuMn2pZD9u843NhuhMsG0vndzzOyfh7iAeLQ3n5+wXo3jvBhs=
-X-Received: by 2002:a17:902:7c8a:b029:e6:f010:a4f4 with SMTP id
- y10-20020a1709027c8ab02900e6f010a4f4mr44313154pll.17.1620982368283; Fri, 14
- May 2021 01:52:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=cuKolcHuUveqoXKziIQKlUmE7LTOrf51k7kTaEtOeSE=;
+        b=SPCPC9Y9gbJl4UGcK89MjcFGjC6z38OU+cg4fnMVtLCa/BmVIg2tPw1tHyAz1l8zVj
+         6ommE7P4zyvvKF+JXoU+xQ9b3bo4oW7w7e4Qn1VVlLALs4fiJQlO17zcA5T81pah5sGh
+         8DjQGsRCeYoWSU7f09RrrBVxcD8Rpgfc6nN7cVuMFKE6LE1p4L8lFkxpY9ggWyqJtL1n
+         ViWmrSkWBNpUQnnq1PSB2Z7UT/DfHO3qGvvkaAlL1EBXIO2Xo1nYJ0sk+1Dl7Mqw/n/J
+         Xg6hST4OyGH2xX6FMQvpmzT5YKJOzjBSxyrJHo+E4IGNfpA9yBsI39hx2nGNT23ADWCp
+         DvkA==
+X-Gm-Message-State: AOAM5337xZ5LTW1+FwwAoKycHF7bZYChDtzdvyJpWNSOanhIe042Hx5w
+        RZYLAxY4Lzy5zRItlge1O6U=
+X-Google-Smtp-Source: ABdhPJyMMh1q3YsC8wHUrrEnTjat/UcfTS1bqvk36DC/zWBjAwOdGdPZAzEfBdHZgLNiJqxFLdxQ5g==
+X-Received: by 2002:a05:6402:284:: with SMTP id l4mr55969955edv.299.1620982577564;
+        Fri, 14 May 2021 01:56:17 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id f30sm3282034ejl.62.2021.05.14.01.56.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 May 2021 01:56:17 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     dwh@linuxprogrammer.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: Is the sha256 object format experimental or not?
+Date:   Fri, 14 May 2021 10:49:42 +0200
+References: <20210508022225.GH3986@localhost>
+ <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
+ <87lf8mu642.fsf@evledraar.gmail.com>
+ <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
+ <20210513202919.GE11882@localhost> <xmqqo8de9wis.fsf@gitster.g>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <xmqqo8de9wis.fsf@gitster.g>
+Message-ID: <875yzlsngv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <YJzGcZpZ+E9R0gYd@coredump.intra.peff.net> <CAN0heSp3mXQeqeC_Zd==bBoJCCWe-NzJsomuUf6MTxy7+WZ1wA@mail.gmail.com>
- <YJ4PHbVoQ8+ubfBK@coredump.intra.peff.net>
-In-Reply-To: <YJ4PHbVoQ8+ubfBK@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 14 May 2021 10:52:35 +0200
-Message-ID: <CAN0heSrjPJG_OGyV2dt9bOfkd07He=kBUKQ-+w5JXNae+YH7qg@mail.gmail.com>
-Subject: Re: [PATCH] t: avoid sed-based chain-linting in some expensive cases
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 14 May 2021 at 07:48, Jeff King <peff@peff.net> wrote:
+
+On Fri, May 14 2021, Junio C Hamano wrote:
+
+> dwh@linuxprogrammer.org writes:
 >
-> On Thu, May 13, 2021 at 01:05:28PM +0200, Martin =C3=85gren wrote:
+>> I think Git should externalize the calculation of object digests just
+>> like it externalizes the calcualtion of object digital signatures.
 >
-> > Devil's advocate: Who do we expect to turn GIT_TEST_CHAIN_LINT_HARDER
-> > on, and when?  If no one ever does it then we might as well drop the
-> > "default" thing and just go "we won't bother linting these particular
-> > tests, ever". But as long as "someone" does it "sometimes", it's not
-> > like it's a very complex mechanism to carry around.
+> The hashing algorithms used to generate object names has
+> requirements fundamentally different from that of digital
+> signatures.  I strongly suspect that that fact would change the
+> equation when you rethink what you said above.
 >
-> The answer is probably: people who suspect something is broken. We could
-> perhaps also turn it on for CI to be more complete there (and where 30
-> seconds of CPU time is relatively much smaller). It was also handy to
-> have while timing the impact, of course.
->
-> I'm not opposed to having it be less flexible, and in fact I wrote it
+> We can "upgrade" digital signature algorithms fairly easily---nobody
+> would complain if you suddenly choose different signing algorithm
+> over a blob of data, as long as all project participants are aware
+> (and self-describing datastream helps here) and are capable of
+> grokking the new algorithm we are adopting.  But because object
+> names are used by one object to refer to another, and most
+> importantly, we do not want a single object to have multiple names,
+> we cannot afford to introduce a new hashing algorithm every time we
+> feel like it.  In other words, diversity of object naming algorithms
+> is to be avoided as much as possible, while diversity of signature
+> algorithms is naturally expected.
 
-And to be clear, I'm not opposed to having it more flexible. :)
+I agree insofar that I don't see a good reason for us to support some
+plethora of hash algorithms, but I wouldn't have objections to adding
+more if people find them useful for some reason. See e.g. [1] for an
+implementation.
 
-> that way originally. But it doesn't actually make the code much simpler.
-> The assignments to _DEFAULT in the scripts become GIT_TEST_CHAIN_LINT_HAR=
-DER
-> and the read side has one less level of defaulting:
->
-> -test "${GIT_TEST_CHAIN_LINT_HARDER:-${GIT_TEST_CHAIN_LINT_HARDER_DEFAULT=
-:-1}}" !=3D 0 &&
-> +test "${GIT_TEST_CHAIN_LINT_HARDER:-1}" !=3D 0 &&
->
-> I guess it's conceptually a little simpler, though. I dunno. I sort of
-> assumed it would just work and nobody would need to ever look at or
-> configure it either way. :)
+But I really don't see how anything you've said would present a
+technical hurdle once we have SHA-1<->SHA-256 interop in a good enough
+state. At that point we'll support re-hashing on arrival of content
+hashed with algorithm X into Y, with a local lookup table between X<=>Y.
 
-:)
+So if somebody wants to maintain content hashed with algorithm Z locally
+we should easily be able to support that. The "diversity of naming"
+won't matter past that local repository, any mention of Z will be
+translated to X or Y on fetch/push.
 
-> > I seem to have 140 tests that haven't changed on disk since I did this
-> > particular clone in 2017. 235 haven't changed this calendar year. Maybe
-> > we could skip linting those tests that haven't been modified for severa=
-l
-> > weeks on the basis that they can't reasonably have newly-introduced
-> > syntax mistakes. I guess it gets tricky where the t????-*.sh file
-> > doesn't change in a long time, but it sources tests from other places,
-> > such as a lib-foo.sh helper. We'd have to be a bit more clever there.
-> > That's all just thinking out loud, and definitely not something that
-> > should hold up your patch.
->
-> Yeah, I suspect that would work in general. But it seems like even more
-> complexity (now you have a cache of "I linted this script at time X and
-> it was good" that has to be written). It does increase the possible
-> savings though (up to perhaps 100 or so seconds of parallel CPU in my
-> case).
-
-Yeah, I thought about the cache. I guess it would be a list of
-known-good test script hashes / blob IDs. But what I actually meant was
-to check whether the mtime was way back in the past. It's not fool-proof
-though. You could have a network-mounted disk where the date is way off,
-or you could hack up the test script, wait for several weeks and *then*
-run it. ;)
-
-> I think a bigger and better version of that is to actually see which
-> code paths are run by which scripts, and not even bother running scripts
-> that don't touch code which has changed. But that's a _lot_ more
-> complicated, and writing such a tool is probably at least worth a thesis
-> project. ;)
-
-Ah yes, it should be safe to punt on that for now.
-
-Martin
+1. https://lore.kernel.org/git/20191222064809.35667-1-michaeljclark@mac.com/
