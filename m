@@ -7,169 +7,273 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70967C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 14:36:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84BF5C433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:16:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B6276141F
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 14:36:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C632613F5
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232971AbhENOhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 10:37:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54152 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232838AbhENOhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 10:37:19 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD87DC06174A
-        for <git@vger.kernel.org>; Fri, 14 May 2021 07:36:07 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id k127so28882696qkc.6
-        for <git@vger.kernel.org>; Fri, 14 May 2021 07:36:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wsVTUU+qgjq41r/L/f0DE/C/bMjrdpnEykjHQ9uE44Q=;
-        b=VlrUs+EfQhsiyJkCIk+gv7qDP9K3lkw1UkQtmvdzOGz3u9xul0kzAdB1ZEdczzJaZ6
-         YnEUsoYihwcS5T9fSq6xeWccbOx23ndqIq2qd97AXLPG06KDRjbs//oXGJ2zr4QP3Y9S
-         T7A2yiKaPQ5FRUYkusW9L9UEbHQxDC9C828HpGrMi+6yN2zBbQ7HxqzmI8y87B+L0Sga
-         ajdVyKLRYxD1UPi/bbH4eVD51szSXl7O7V6JWZSMTYmroZylK8wrtazdlIq8ZeUpwmtO
-         9GPHCuK6g36YMxptcfsrgVmbWi880YVdNcoxVQ+yyzWHBoXhu2fn+RbHO7dJzC9qteEj
-         d7iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wsVTUU+qgjq41r/L/f0DE/C/bMjrdpnEykjHQ9uE44Q=;
-        b=f47LbYHVAlnGN5UWhN/D83S4tAe9wiyivgRwRxnPHFB59IySv07wgaNzRHdpeI9EUW
-         uI6tLs2SHuITow8/wz8FcPWfQzR4MuPIL857pQ3lCLesDwZ7pA+xx2jhQYpW1E6+mPzU
-         uhn3AAGALmGG03CR74lQnG7+/z5AoYIdvbjHIMwUJHUc/kdd2C4JJxH5J48Cud7rnJrx
-         TiSCe6tWufr/Y6Yo6WVynmwnwE6Pl5ZUh0S+rb9Jo2T6BlxnucL68E/ikRbqA2pHbmoM
-         jTroZ/96OzJe+HmAkLZe1wtPFVbyo6XNTuJVXz+j6zQLoQX2XPZQigqDVxHp2VhHbERP
-         Phvw==
-X-Gm-Message-State: AOAM530fRYsVo9WfcFEK9vuwBCejjoRkCSNDnhIRXt7u/Db+ujJa4prs
-        Y6GNhSQC8iEng9pOL8ZrfXN6Wt1MMkG55Q==
-X-Google-Smtp-Source: ABdhPJzNaOpfBNWuCpDMqA2Cz8hvVgWuvv4ifTHuAhnTzLy6IABeZTTQDbdnZor4h1E3wfD3TBB4gw==
-X-Received: by 2002:a37:785:: with SMTP id 127mr43924753qkh.58.1621002967049;
-        Fri, 14 May 2021 07:36:07 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id i5sm4813228qki.115.2021.05.14.07.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 07:36:06 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     sandals@crustytoothpaste.net
-Cc:     git@vger.kernel.org
-Subject: [RFC PATCH] parallel-checkout: send the new object_id algo field to the workers
-Date:   Fri, 14 May 2021 11:36:00 -0300
-Message-Id: <a4225bc79d963c5a411105e2b75f9ca4b80de835.1621000916.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.30.1
+        id S232357AbhENPR3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 11:17:29 -0400
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:47221 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231142AbhENPR3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 11:17:29 -0400
+Received: (Authenticated sender: greg@gpanders.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 0BA3B20002;
+        Fri, 14 May 2021 15:16:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gpanders.com;
+        s=gm1; t=1621005377;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LBe/5egYBcsfzbmAUr8RXTYH/Q5+6z3HS5OFuFDAoN8=;
+        b=Hd9cBOBGKTzzKtXJ5K7REcicAs7n6PK5NibmNX+eLMJ7yu28cr6KmVxBfKxvjAXBCtx7Xx
+        GsPM/OqmSX8tOeZT1xWWWlWXXpgvF0BgeWG2ov4wBN0n9+ekjwEN9Aa+/gkQBf5CPpHLSy
+        k8ZBkKfo5D5bzEpiC+I12/X4hVjGwuPbO9c78RKYwWiapgfUQ1IWNdsojxSN+KoWplyIuN
+        8+Sz/fWWdfnlIpiH0E8a1EKwriU+HEBpjlW28VsI3HZapOJi0fF8YuWF9UHQUVzbCLcOth
+        EyQ/b5HWRiPahixVLaHzTZ70K/XkqHDlXRPO5LGnGeLhZjYEFO1xeV1rxqWwJA==
+From:   Gregory Anders <greg@gpanders.com>
+To:     git@vger.kernel.org
+Cc:     Gregory Anders <greg@gpanders.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4] git-send-email: add option to specify sendmail command
+Date:   Fri, 14 May 2021 09:15:53 -0600
+Message-Id: <20210514151553.42938-1-greg@gpanders.com>
+X-Mailer: git-send-email 2.31.1.576.g1878d50f81
+In-Reply-To: <20210513152329.22578-1-greg@gpanders.com>
+References: <20210513152329.22578-1-greg@gpanders.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An object_id storing a SHA-1 name has some unused bytes at the end of
-the hash array. Since these bytes are not used, they are usually not
-initialized to any value either. However, at
-parallel_checkout.c:send_one_item() the object_id of a cache entry is
-copied into a buffer which is later sent to a checkout worker through a
-pipe write(). This makes Valgrind complain about passing uninitialized
-bytes to a syscall. The worker won't use these uninitialized bytes
-either, but the warning could confuse someone trying to debug this code;
-So instead of using oidcpy(), send_one_item() uses hashcpy() to only
-copy the used/initialized bytes of the object_id, and leave the
-remaining part with zeros.
+The sendemail.smtpServer configuration option and --smtp-server command
+line option both support using a sendmail-like program to send emails by
+specifying an absolute file path. However, this is not ideal for the
+following reasons:
 
-However, since cf0983213c ("hash: add an algo member to struct
-object_id", 2021-04-26), using hashcpy() is no longer sufficient here as
-it won't copy the new algo field from the object_id. Let's add and use a
-new function which meets both our requirements of copying all the
-important object_id data while still avoiding the uninitialized bytes,
-by padding the end of the hash array in the destination object_id. With
-this change, we also no longer need the destination buffer from
-send_one_item() to be initialized with zeros, so let's switch from
-xcalloc() to xmalloc() to make this clear.
+1. It overloads the meaning of smtpServer (now a program is being used
+   for the server?)
+2. It doesn't allow for non-absolute paths, arguments, or arbitrary
+   scripting
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+Requiring an absolute path is bad for portability, as the same program
+may be in different locations on different systems. If a user wishes to
+pass arguments to their program, they have to use the smtpServerOption
+option, which is cumbersome (as it must be repeated for each option) and
+doesn't adhere to normal git conventions.
+
+Introduce a new configuration option sendemail.sendmailCmd as well as a
+command line option --sendmail-cmd that can be used to specify a command
+(with or without arguments) or shell expression to run to send email.
+The name of this option is consistent with --to-cmd and --cc-cmd. This
+invocation honors the user's $PATH so that absolute paths are not
+necessary. Arbitrary shell expressions are also supported, allowing
+users to do basic scripting.
+
+Give this option a higher precedence over --smtp-server and
+sendemail.smtpServer, as the new interface is more flexible. For
+backward compatibility, continue to support absolute paths in
+--smtp-server and sendemail.smtpServer.
+
+Signed-off-by: Gregory Anders <greg@gpanders.com>
 ---
+ Documentation/git-send-email.txt | 25 ++++++++++++++++-------
+ git-send-email.perl              | 34 +++++++++++++++++++++++++-------
+ t/t9001-send-email.sh            | 31 +++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+), 14 deletions(-)
 
-Hi, brian
-
-I've read the hash transition plan, but I'm not confident to say that I
-fully understand it yet, so maybe this patch is not exactly what we need
-here. Mainly, I'm not sure I understand in which cases we will have an
-object_id.algo that is not the_hash_algo. Is it for the early transition
-phases, where we have a SHA-256 repo that accepts user input as SHA-1? 
-
-Also, the object_id's copied here at send_one_item() always come from a
-`struct cache_entry`. In this case, can they still have different
-`algo`s or do we expect them to be the_hash_algo?
-
-Thanks!
-
- hash.h              | 16 ++++++++++++++++
- parallel-checkout.c | 13 ++++++-------
- 2 files changed, 22 insertions(+), 7 deletions(-)
-
-diff --git a/hash.h b/hash.h
-index 2986f991c6..9c6df4d952 100644
---- a/hash.h
-+++ b/hash.h
-@@ -263,6 +263,22 @@ static inline void oidcpy(struct object_id *dst, const struct object_id *src)
- 	dst->algo = src->algo;
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 93708aefea..3db4eab4ba 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -167,6 +167,14 @@ Sending
+ 	`sendemail.envelopeSender` configuration variable; if that is
+ 	unspecified, choosing the envelope sender is left to your MTA.
+ 
++--sendmail-cmd=<command>::
++	Specify a command to run to send the email. The command should
++	be sendmail-like; specifically, it must support the `-i` option.
++	The command will be executed in the shell if necessary.  Default
++	is the value of `sendemail.sendmailcmd`.  If unspecified, and if
++	--smtp-server is also unspecified, git-send-email will search
++	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
++
+ --smtp-encryption=<encryption>::
+ 	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
+ 	value reverts to plain SMTP.  Default is the value of
+@@ -211,13 +219,16 @@ a password is obtained using 'git-credential'.
+ 
+ --smtp-server=<host>::
+ 	If set, specifies the outgoing SMTP server to use (e.g.
+-	`smtp.example.com` or a raw IP address).  Alternatively it can
+-	specify a full pathname of a sendmail-like program instead;
+-	the program must support the `-i` option.  Default value can
+-	be specified by the `sendemail.smtpServer` configuration
+-	option; the built-in default is to search for `sendmail` in
+-	`/usr/sbin`, `/usr/lib` and $PATH if such program is
+-	available, falling back to `localhost` otherwise.
++	`smtp.example.com` or a raw IP address).  If unspecified, and if
++	`--sendmail-cmd` is also unspecified, the default is to search
++	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH if such a
++	program is available, falling back to `localhost` otherwise.
+++
++For backward compatibility, this option can also specify a full pathname
++of a sendmail-like program instead; the program must support the `-i`
++option.  This method does not support passing arguments or using plain
++command names.  For those use cases, consider using `--sendmail-cmd`
++instead.
+ 
+ --smtp-server-port=<port>::
+ 	Specifies a port different from the default port (SMTP
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 175da07d94..dbb144aa11 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -70,6 +70,7 @@ sub usage {
+ 
+   Sending:
+     --envelope-sender       <str>  * Email envelope sender.
++    --sendmail-cmd          <str>  * Command to run to send email.
+     --smtp-server       <str:int>  * Outgoing SMTP server to use. The port
+                                      is optional. Default 'localhost'.
+     --smtp-server-option    <str>  * Outgoing SMTP server option to use.
+@@ -252,6 +253,7 @@ sub do_edit {
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
+ my ($compose_encoding);
++my ($sendmail_cmd);
+ # Variables with corresponding config settings & hardcoded defaults
+ my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
+ my $thread = 1;
+@@ -299,6 +301,7 @@ sub do_edit {
+     "assume8bitencoding" => \$auto_8bit_encoding,
+     "composeencoding" => \$compose_encoding,
+     "transferencoding" => \$target_xfer_encoding,
++    "sendmailcmd" => \$sendmail_cmd,
+ );
+ 
+ my %config_path_settings = (
+@@ -432,6 +435,7 @@ sub read_config {
+ 		    "no-bcc" => \$no_bcc,
+ 		    "chain-reply-to!" => \$chain_reply_to,
+ 		    "no-chain-reply-to" => sub {$chain_reply_to = 0},
++		    "sendmail-cmd=s" => \$sendmail_cmd,
+ 		    "smtp-server=s" => \$smtp_server,
+ 		    "smtp-server-option=s" => \@smtp_server_options,
+ 		    "smtp-server-port=s" => \$smtp_server_port,
+@@ -1003,16 +1007,19 @@ sub expand_one_alias {
+ 	$reply_to = sanitize_address($reply_to);
  }
  
-+/* Like oidcpy() but zero-pads the unused bytes in dst's hash array. */
-+static inline void oidcpy_with_padding(struct object_id *dst,
-+				       struct object_id *src)
-+{
-+	size_t hashsz;
+-if (!defined $smtp_server) {
++if (!defined $sendmail_cmd && !defined $smtp_server) {
+ 	my @sendmail_paths = qw( /usr/sbin/sendmail /usr/lib/sendmail );
+ 	push @sendmail_paths, map {"$_/sendmail"} split /:/, $ENV{PATH};
+ 	foreach (@sendmail_paths) {
+ 		if (-x $_) {
+-			$smtp_server = $_;
++			$sendmail_cmd = $_;
+ 			last;
+ 		}
+ 	}
+-	$smtp_server ||= 'localhost'; # could be 127.0.0.1, too... *shrug*
 +
-+	if (!src->algo)
-+		hashsz = the_hash_algo->rawsz;
-+	else
-+		hashsz = hash_algos[src->algo].rawsz;
++	if (!defined $sendmail_cmd) {
++		$smtp_server = 'localhost'; # could be 127.0.0.1, too... *shrug*
++	}
+ }
+ 
+ if ($compose && $compose > 0) {
+@@ -1492,11 +1499,17 @@ sub send_message {
+ 
+ 	if ($dry_run) {
+ 		# We don't want to send the email.
+-	} elsif (file_name_is_absolute($smtp_server)) {
++	} elsif (defined $sendmail_cmd || file_name_is_absolute($smtp_server)) {
+ 		my $pid = open my $sm, '|-';
+ 		defined $pid or die $!;
+ 		if (!$pid) {
+-			exec($smtp_server, @sendmail_parameters) or die $!;
++			if (defined $sendmail_cmd) {
++				exec ("sh", "-c", "$sendmail_cmd \"\$@\"", "-", @sendmail_parameters)
++					or die $!;
++			} else {
++				exec ($smtp_server, @sendmail_parameters)
++					or die $!;
++			}
+ 		}
+ 		print $sm "$header\n$message";
+ 		close $sm or die $!;
+@@ -1592,14 +1605,21 @@ sub send_message {
+ 		printf($dry_run ? __("Dry-Sent %s\n") : __("Sent %s\n"), $subject);
+ 	} else {
+ 		print($dry_run ? __("Dry-OK. Log says:\n") : __("OK. Log says:\n"));
+-		if (!file_name_is_absolute($smtp_server)) {
++		if (!defined $sendmail_cmd && !file_name_is_absolute($smtp_server)) {
+ 			print "Server: $smtp_server\n";
+ 			print "MAIL FROM:<$raw_from>\n";
+ 			foreach my $entry (@recipients) {
+ 			    print "RCPT TO:<$entry>\n";
+ 			}
+ 		} else {
+-			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
++			my $sm;
++			if (defined $sendmail_cmd) {
++				$sm = $sendmail_cmd;
++			} else {
++				$sm = $smtp_server;
++			}
 +
-+	memcpy(dst->hash, src->hash, hashsz);
-+	memset(dst->hash + hashsz, 0, GIT_MAX_RAWSZ - hashsz);
-+	dst->algo = src->algo;
-+}
++			print "Sendmail: $sm ".join(' ',@sendmail_parameters)."\n";
+ 		}
+ 		print $header, "\n";
+ 		if ($smtp) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 65b3035371..d771eb9297 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2148,6 +2148,37 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+ 	test_cmp expected-list actual-list
+ '
+ 
++test_expect_success $PREREQ 'test using command name with --sendmail-cmd' '
++	clean_fake_sendmail &&
++	PATH="$(pwd):$PATH" \
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--sendmail-cmd="fake.sendmail" \
++		HEAD^ &&
++	test_path_is_file commandline1
++'
 +
- static inline struct object_id *oiddup(const struct object_id *src)
- {
- 	struct object_id *dst = xmalloc(sizeof(struct object_id));
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 09e8b10a35..684cbb9ab4 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -393,7 +393,7 @@ static void send_one_item(int fd, struct parallel_checkout_item *pc_item)
- 	len_data = sizeof(struct pc_item_fixed_portion) + name_len +
- 		   working_tree_encoding_len;
++test_expect_success $PREREQ 'test using arguments with --sendmail-cmd' '
++	clean_fake_sendmail &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--sendmail-cmd='\''"$(pwd)/fake.sendmail" -f nobody@example.com'\'' \
++		HEAD^ &&
++	test_path_is_file commandline1
++'
++
++test_expect_success $PREREQ 'test shell expression with --sendmail-cmd' '
++	clean_fake_sendmail &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--sendmail-cmd='\''f() { "$(pwd)/fake.sendmail" "$@"; };f'\'' \
++		HEAD^ &&
++	test_path_is_file commandline1
++'
++
+ test_expect_success $PREREQ 'invoke hook' '
+ 	mkdir -p .git/hooks &&
  
--	data = xcalloc(1, len_data);
-+	data = xmalloc(len_data);
- 
- 	fixed_portion = (struct pc_item_fixed_portion *)data;
- 	fixed_portion->id = pc_item->id;
-@@ -403,13 +403,12 @@ static void send_one_item(int fd, struct parallel_checkout_item *pc_item)
- 	fixed_portion->name_len = name_len;
- 	fixed_portion->working_tree_encoding_len = working_tree_encoding_len;
- 	/*
--	 * We use hashcpy() instead of oidcpy() because the hash[] positions
--	 * after `the_hash_algo->rawsz` might not be initialized. And Valgrind
--	 * would complain about passing uninitialized bytes to a syscall
--	 * (write(2)). There is no real harm in this case, but the warning could
--	 * hinder the detection of actual errors.
-+	 * We pad the unused bytes in the hash array because, otherwise,
-+	 * Valgrind would complain about passing uninitialized bytes to a
-+	 * write() syscall. The warning doesn't represent any real risk here,
-+	 * but it could hinder the detection of actual errors.
- 	 */
--	hashcpy(fixed_portion->oid.hash, pc_item->ce->oid.hash);
-+	oidcpy_with_padding(&fixed_portion->oid, &pc_item->ce->oid);
- 
- 	variant = data + sizeof(*fixed_portion);
- 	if (working_tree_encoding_len) {
 -- 
-2.30.1
+2.31.1.576.g1878d50f81
 
