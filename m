@@ -2,91 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D172C433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4232AC433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:39:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E480E6144C
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:35:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AB3161440
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:39:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234874AbhENPgU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 11:36:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39330 "EHLO
+        id S234957AbhENPkK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 11:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233670AbhENPgU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 11:36:20 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3225C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 08:35:06 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id q2so24791610pfh.13
-        for <git@vger.kernel.org>; Fri, 14 May 2021 08:35:06 -0700 (PDT)
+        with ESMTP id S234955AbhENPkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 11:40:10 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E759C06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 08:38:58 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id g6-20020a17090adac6b029015d1a9a6f1aso1525592pjx.1
+        for <git@vger.kernel.org>; Fri, 14 May 2021 08:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oX2JLxS/nbUqKy+F8PIh4ng73O0+cu+6kDfPV5Jfbrc=;
-        b=VgF0aMGzcIFcDyA9wEcy8qGn6YqwzjRqIvONXvheRB3QDobct0HYSI2oJzZmWjXrbw
-         sVBL9I/JztaZ1ipe/OQX3JGbZ7W67oUZ3sBtc8dmfMXWqJrrxcqdvIqde576HobCAHk/
-         88BYHc3XMGD07VJ8diqSs4bUEY4jfqsjsZ3QuTUEPQ9ahpfHk3i7cM6R6cQB1J5V1Ubu
-         mXKNdXlW3Elp6+rJep1tPLEqq0WKgdz5TnQikleL8bkidNClb3Mj03PIewmp0+PoTYgD
-         vaVNN/VmGzyP7QFCh+T8bwjfUp6nnWlhnSk2d3MJRQThvrhsrDywQRk4uMzA91qbiUqV
-         Uvxg==
+         :cc;
+        bh=6WAtYHEoBTuTl4cB7TSGTTBRneCmh9gRFJUThlY/TgQ=;
+        b=ROuPucV5gPgLwEva69NClTzpIlvbq1YQhKbMrCGmOpWxDjBQ9VZawjOLp4yx9zFmqQ
+         lvumgEfh+sCmlYi/PW+nUOWF/YFruF5bas+vO5jbo8db10OcKmxrg4+f9qQUjV306ZoO
+         XihTgjDgalRBasLCfbWA8IIvfrMPhq5q7+UMLX+djAQiFVdXSpNmN2MFHiy4ZPjrjRlm
+         bAPU5M/GIGzWzbVpM1JHWwq88iA48di4Y5UfaIAyRr/Rxv+K1HSQIcJtEQ++slj6iKdl
+         HHXmolQ/l5J9kjCA4aeOKp1nnY1rT/s4za3dfPjsTDAGASheg0QpruL3ArAuAFrCQlFC
+         WFNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oX2JLxS/nbUqKy+F8PIh4ng73O0+cu+6kDfPV5Jfbrc=;
-        b=foebQL+8QOc8WBrVNx21VHB7Q2B/oWMlOTHkA0MxNo+Z1bHHTuYNFcAv72Hl2rH/zQ
-         eIGYGHB9ohSq41i2ZP3HD18q41l++iFbiDWc8SQYZTQkU+Wt7nOBD8G2St91jgBSmKqR
-         IprM+VWGP4rGcDL9wuQZDGAmdb3NzoUUr7J5MR0A9fIqOr57O5N3g0kMuzfCKbyOWzTm
-         n03SLf9UnXSlrIjS1iTkIHUVVQO5qWwDFHpj/PaZQZha72AHlVRJC7uEdd2rtWRcjpLH
-         uHCe4HF4dnzB5uqTUxdwjnBbZANJaQWSwSiR8eqC1DZW8W7WGqvWLswbxaZrFbN9vZAN
-         nDww==
-X-Gm-Message-State: AOAM530ITSBGT/9Dq4tvGLLA/8EaSZCC10Bo9GOk54tytTZBnjAVc2V9
-        q3HpdkUGanpe4m+S7oT/6MRz/8+75X1vhzU5Jfw1pj/1Um4=
-X-Google-Smtp-Source: ABdhPJxpo7WHsXN3ryYmevscUiLs8wXFmkIykPGpS1vYP0vYBazWY158xRSmL4nV7fvI35zV7HWmB5X8R8TXNRh3Xe0=
-X-Received: by 2002:aa7:8ac3:0:b029:28e:df57:991b with SMTP id
- b3-20020aa78ac30000b029028edf57991bmr46172183pfd.38.1621006506420; Fri, 14
- May 2021 08:35:06 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=6WAtYHEoBTuTl4cB7TSGTTBRneCmh9gRFJUThlY/TgQ=;
+        b=jVoT3OGQgbro0cX1RvlYnywmm+B4r5YRFvtjP2Pc2xe7t/a+93cLkX1p4QJdE4O8pP
+         voWjoQkq/F9Xg32diUeZsbR7/7ajIYX2zIkbUfrOdSb4Lo3c+e/C6XM050IDy3muKMxt
+         rY2b2TwBhoq2k72HjSid7/ujUEn9gpQZDi5MZ+3mIwzRmRmAjZ/3SWvXvy4OuJPG3JWw
+         NleDnSjrpmXIQNlrMeZmQmxWr+zztYQNVqAvdAT+X0mc+nSNY2rLdDOmjqTHZfndZqNg
+         T5ZQ4TWpk4IFTHytusrR6lvF+ImLtN7JrQl2neq1reTnkNZwWUgxjtfjj3SGqPABnxNh
+         noiQ==
+X-Gm-Message-State: AOAM530auQD/lNNlBmPC7A1i/sbaWhn5XqfhqpYQU0li3bJTWBo0dFe9
+        j5d9/vXeZ+X7FT4G/xIzxHB8lsVzEB+T6R3EwAM=
+X-Google-Smtp-Source: ABdhPJx6vJ+sxiNHoU9RyAnz3P/6baaejCIBPw6S7gNu1VM/v7LUsizfE+KD1CmhgqUPk2p9X+kK3/W3949tEn3XscU=
+X-Received: by 2002:a17:90a:9312:: with SMTP id p18mr11793456pjo.171.1621006738405;
+ Fri, 14 May 2021 08:38:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <609b2828309fc_678ff2082@natae.notmuch> <20210512021138.63598-1-sandals@crustytoothpaste.net>
- <YJt0Dv7HP2VnLLwv@coredump.intra.peff.net> <YJt1/DO1cXNTRNxK@coredump.intra.peff.net>
-In-Reply-To: <YJt1/DO1cXNTRNxK@coredump.intra.peff.net>
+References: <20210514121435.504423-1-felipe.contreras@gmail.com> <20210514121435.504423-5-felipe.contreras@gmail.com>
+In-Reply-To: <20210514121435.504423-5-felipe.contreras@gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 14 May 2021 17:34:54 +0200
-Message-ID: <CAN0heSpQz3mAe6vS__rKSfj8wCh+H3pRqauQA5TpjZkYhMBGrA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
+Date:   Fri, 14 May 2021 17:38:46 +0200
+Message-ID: <CAN0heSpX53tK8Z4XSx4sp79b+XWKZg5+ABW8pmzBSHPZ+qy+oQ@mail.gmail.com>
+Subject: Re: [PATCH 04/11] doc: use asciidoctor to build man pages directly
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 12 May 2021 at 08:30, Jeff King <peff@peff.net> wrote:
+On Fri, 14 May 2021 at 14:14, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 >
-> On Wed, May 12, 2021 at 02:22:06AM -0400, Jeff King wrote:
+> There's no need to use xmlto to build the man pages when modern
+> asciidoctor can do it by itself.
 >
-> > With that change, plus a patch I'll send in a minute, it's easy to run
-> > doc-diff on the result.
->
-> Feel free to add it to your series if it helps (I had originally thought
-> it would just be a one-off to look at the output, but there are enough
-> changes, both correctness and style, that it may be useful to have this
-> option around).
+> This new mode will be active only when USE_ASCIIDOCTOR is set.
 
-I agree that this would be useful to have longer-term.
+May I suggest incorporating something more like brian's patch here [1],
+so that there's a separate knob for this thing?
 
-> -- >8 --
-> Subject: [PATCH] doc-diff: support --asciidoctor-direct mode
+The commit message is short on details and makes it sound like this is
+it, we're done. But then there are several patches to fix up things.
+Which is a good approach, so that this patch doesn't need to do several
+things at once. This commit message could say something about it, e.g.,
 
-FWIW: Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
+  The doc-diff here [which doc-diff? see below] is a XYZ-line diff.
+  Large parts of this difference will be addressed in the following
+  patches.
+
+About the use of doc-diff: If this commit introduces a new knob rather
+than taking over USE_ASCIIDOCTOR=Yes, the next patch could be Peff's
+patch to doc-diff that compares the two asciidoctor approaches [2], and
+then the next few patches could diff between them. That would get the
+asciidoc-vs-asciidoctor differences out of the way, so you can focus on
+asciidoctor-vs-asciidoctor.
+
+With a separate knob, it would feel like a lot easier decision to take
+something like this. There are over 11000 lines in the doc-diff after
+applying your series, and there's the missing boldness for literals.
+Maybe those differences are all great (I would be missing the bold
+literals, though). If this series doesn't affect someone using
+"vanilla" USE_ASCIIDOCTOR=Yes, we could let this thing cook in master
+and work incrementally on top.
+
+[1] https://lore.kernel.org/git/20210514003104.94644-2-sandals@crustytoothpaste.net/
+
+[2] https://lore.kernel.org/git/YJt81neO7zsGz2ah@coredump.intra.peff.net/
+
+
+Martin
