@@ -7,114 +7,130 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C2AC433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7593EC433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:28:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1485E60C3D
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:27:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 550B4613F5
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 15:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234673AbhENP2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 11:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
+        id S234742AbhENP3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 11:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234665AbhENP2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 11:28:50 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF012C06174A
-        for <git@vger.kernel.org>; Fri, 14 May 2021 08:27:38 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id c17so24845624pfn.6
-        for <git@vger.kernel.org>; Fri, 14 May 2021 08:27:38 -0700 (PDT)
+        with ESMTP id S234757AbhENP3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 11:29:35 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D33C0613ED
+        for <git@vger.kernel.org>; Fri, 14 May 2021 08:28:22 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id s20so16311310plr.13
+        for <git@vger.kernel.org>; Fri, 14 May 2021 08:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Wd51zbDK7MbSPqZx7ERtD5bIY0+W3RV2xmMggG4pB4I=;
-        b=SqMKBuaQ36dbR7V0qwsi06wdZrSBwzP5/e0Hb0DEzfHQntCnh3XlqdHH1LHFg44wYd
-         9a2r+czW/P5wj4waqzcnEIKlN7jPYO6LVX75g5AZEz9di4+jBkVnDs7mVACeod+8qvgA
-         ni88CnJBbvjokvv+TeYKSXq57qzvlP5oj6NlqmJEr4kiKOsxImWF6nzE0W9eLOKk7/Wc
-         kRWEKL+v8ntvqpDOB+JHFFwSNBenq4M6CP1wPAYxZsyU8U4q8T02hPifxacXaHAgQO76
-         b6LbrkoO5mgMXjuczpruWK8pmae8rxX8KN2C1V5SC/mA8+N+j6mOmdOWMsBo9Hb4WebC
-         Ugwg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NQaw1BpHF43tnc3X60ca8L8iu5v0Ji5V8J5WwAydlyA=;
+        b=ixo5LKXzfIk2HylEk4vz6niLNOTp+7BGSszFrpBP05egs6UFML5noin4Zg/XQBPsps
+         QsagijYaLT7nY/jSrx3WLqc3C2X1gCpkAUArYB2y4fXrfXGVJ4u1gDqKXnn0qZXQWPNI
+         fZlqjp3/dPf0hQdVgBDmU72stNH4PedBOfgClqXUMeKrh7Ne2Z8xgn8vfat/npYZVggd
+         5hzMm3XDsvnni1F8xglnWNAcPdFHeDDwtNWVLDweNMo5uW3pZ2lshpJMa+CibwUkZGHs
+         f5SqGqOCvrcc/y1DQQm2w2zq/x9o4sajIRrccIMpTpoPSP2TSFPlEtJKiLUWTk5rOwnX
+         5BnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Wd51zbDK7MbSPqZx7ERtD5bIY0+W3RV2xmMggG4pB4I=;
-        b=dIA/FefI5tLG3Afaii3ucrcusjatbuo0bhhka5b631cLiJUF4lxz7eFebvJILuU0y5
-         rfURPQ/zqN/B1Ibcw5ocYeRHXE+VIxGWd3/lWKZ/tnMsW+rh096JNDKhzyqTwQ+sPe1T
-         HnhekfR/0TxW8fMV1YssF+ZlgFoZB5EBmfwqw1lkHhBsPYrhTzG1ZEKnistFYtyCem2l
-         v0VO7deXnkae5PyjGBGt+6sOBO0JJCVK3AdhQ7cfY4/p08umdA7fky7rlbvq539srCt9
-         CDlAVI1GShTIiXvkuKbdtZmrMK7cBOETYQ3CvCURhVaRlGp9YpWjzCHf7Gtiv6OAPb45
-         SaMg==
-X-Gm-Message-State: AOAM533hfyzeNrZsxsR7V5uYuVtohca5tcDXb6dzTIsoerlDhcjTBh6c
-        tUE0Zyevq8tizoSikZLQaDexBqElpjFWNA==
-X-Google-Smtp-Source: ABdhPJxYELPDB8yAPWsPOBCH0lew4Xz4Ej4/VrDD1dRJCZbuHlx31lvItklYSPLJqTCvnDnXDhtERg==
-X-Received: by 2002:a65:654e:: with SMTP id a14mr1455221pgw.332.1621006058565;
-        Fri, 14 May 2021 08:27:38 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:d379:85bd:c83a:4b40:cd9b])
-        by smtp.gmail.com with ESMTPSA id v17sm4362089pfi.188.2021.05.14.08.27.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 08:27:38 -0700 (PDT)
-Date:   Fri, 14 May 2021 22:27:35 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/howto: tracking git.git
-Message-ID: <YJ6W50M+EJlIO1GJ@danh.dev>
-References: <20210514124925.39229-1-bagasdotme@gmail.com>
- <xmqqwns177cv.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NQaw1BpHF43tnc3X60ca8L8iu5v0Ji5V8J5WwAydlyA=;
+        b=VHSWFPTUCOKEathzleLlbuW2nWAojBWl/Qc8P0jvt70mFVdHsmF3Uho/iYqQiX+00l
+         2U8N9OzxfRLqR4qs6TjzRp5wiG9OC4u8OPynDt2qqrK3Xx7QlQDgrKQLcdUkbcxnaDdi
+         Z1NYeyLZBjbWBSwzJy6YhJBo3cQoqAlXEQnJjZuRkWaqy52g70UHaK50GFv5lAYEwMRx
+         V4aEtJR8W75rAzVvxtmmiC9mE2MzbEMeEhPviTfS1lEtf+Jj2lF9F9e/WLJCrFZSBqx4
+         ctJOwBeepxOdGYHDJntm5Ue8uZ+ljOUMotfAZqqIEgdTkluKhv5lx9dKL9HU6MxswBvs
+         Rd/w==
+X-Gm-Message-State: AOAM5328yDQsh2qdAs+JSje6ykgJA96sfqr5Vd3DSGCjC2BxHrMK9hTC
+        iG8cG17O87v2LabA6nn8W4Ubghz2qDN3Gc+4d1AO58okDy8=
+X-Google-Smtp-Source: ABdhPJzaDJP2Rmly/i6U73fZCu3C1hwhqlKiCokK9wtje/6gyRB4+jBqKBuln9JOXmX/i++7yVkZUF0kN4CzKZHo9c4=
+X-Received: by 2002:a17:90a:5207:: with SMTP id v7mr11886710pjh.87.1621006102415;
+ Fri, 14 May 2021 08:28:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwns177cv.fsf@gitster.g>
+References: <cover.1620928059.git.martin.agren@gmail.com> <609dd5171e7de_19566208ca@natae.notmuch>
+ <CAN0heSoK5VfP68Us2e2bwSfTzY=5FBEBjxuTHRXeA_qg5MH65w@mail.gmail.com> <609e6be4bc14d_4312720861@natae.notmuch>
+In-Reply-To: <609e6be4bc14d_4312720861@natae.notmuch>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 14 May 2021 17:28:09 +0200
+Message-ID: <CAN0heSp7JFS3j+DypQm=P-rPzyScvs+Yed75AXYBsQpbJtVytA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] AsciiDoc vs Asciidoctor, once again
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-14 22:49:52+0900, Junio C Hamano <gitster@pobox.com> wrote:
-> Bagas Sanjaya <bagasdotme@gmail.com> writes:
-> 
-> > +Available Branches
-> > +------------------
-> > +
-> > +There are several branches on git.git with different purposes:
-> > +
-> > +master::
-> > +This is the most stable branch. Changes (topics) that are merged
-> > +to master should have been stabilized in next and suitable for
-> > +production use. Feature releases (vX.Y.0) are cut from this
-> > +branch.
-> 
-> Isn't "maint" meant to be more stable?
-> 
-> > +next::
-> > +This is where topics that haven't been yet merged to master are
-> > +stabilized and tested for breakage and regressions. It gives
-> > +a summary forecast of what next batch of topics that will be
-> > +merged to master looks like.
-> > +
-> > +seen::
-> > +This is the most bleeding edge branch where all excited
-> > +developments happened. All proposed topics are queued in seen
-> > +by the maintainer. However, these may be buggy (have breakage or
-> > +regressions). When topics queued are deemed good and ready for
-> > +inclusion, they are graduated to next for stabilization.
-> 
-> This is inconsistent with what has been written elsewhere about this
-> integration branch.  In short, you should not read anything more
-> than "the maintainer happens to have seen these topics" out of the
-> fact that a topic is in 'seen'.  Not all proposed topics will be in
-> this branch, and a branch that was in 'seen' on one day may not be
-> there the next day, but that does not mean anything (certainly it
-> does not mean the topic has been "rejected").
+On Fri, 14 May 2021 at 14:24, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> Martin =C3=85gren wrote:
+> > On Fri, 14 May 2021 at 03:40, Felipe Contreras
+> > <felipe.contreras@gmail.com> wrote:
+> >
+> > > We should be submitting bug reports to the asciidoctor project as wel=
+l,
+> > > so in the future it's less likely we find ourselves in the same
+> > > scenario.
+> > >
+> > > Preferably the bug report should be in the commit message.
+> >
+> > I don't have an account with the website they use for their issue
+> > tracking.
+>
+> GitHub? It probably takes a couple of minutes to set up an account.
 
-Well, I think most of this document's points has been written in
-Documentation/howto/maintain-git.txt and
-Documentation/SubmittingPatches.txt.
+Yes, it's GitHub. I'm not interested in having an account there. There's
+some trade-off there with me not being able to report bugs, but that
+cuts both ways, so I don't feel bad about it.
 
-With only 2 above points, I think if we have this document in,
-we'll have more things to maintain :shrug:
+> > If you want to submit a bug report and post the link here,
+> > that's fine by me and I'll include it in the reroll.
+>
+> If you would rather have me act as a proxy, that's fine by me.
 
--- 
-Danh
+Thanks. If you have better things to do, no worry.
+
+> Just give me a simple example that produces the issue.
+
+Here are three variants where AsciiDoc 8.6.10 renders the same, with
+emphasis:
+
+  single quotes that will not render literally: 'git cat-file'.
+
+  single quotes that won't render literally: 'git cat-file'.
+
+  single quotes that\'ll render literally: 'git cat-file'.
+
+With Asciidoctor (2.0.15),
+
+  asciidoctor -b docbook5 -d manpage -o test.xml test.txt
+
+the XML contains
+
+<simpara>single quotes that will not render literally: <emphasis>git
+cat-file</emphasis>.</simpara>
+<simpara>single quotes that won&#8217;t render literally:
+<emphasis>git cat-file</emphasis>.</simpara>
+<simpara>single quotes that&#8217;ll render literally: 'git cat-file'.</sim=
+para>
+
+That last paragraph is not as expected. I expect <emphasis>.
+
+I realize that a good answer here is "don't do that then". But the
+background is that there's some other stuff going on that means AsciiDoc
+needs that backspaced apostrophe. So this is a minimal reproduction for
+Asciidoctor where we've lost some of the AsciiDoc-specific background.
+
+A fix that works with both tools is an attribute:
+
+  :apos: '
+  single quotes that won{apos}t render literally: 'git cat-file'.
+
+Martin
