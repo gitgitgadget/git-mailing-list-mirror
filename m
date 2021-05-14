@@ -2,181 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39319C433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A102CC433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:58:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0781E613F5
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:50:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7281F61404
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233677AbhENMvM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 08:51:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58422 "EHLO
+        id S230197AbhENM7V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 08:59:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233419AbhENMvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 08:51:00 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D30C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:49:49 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id s22so24019092pgk.6
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:49:48 -0700 (PDT)
+        with ESMTP id S229459AbhENM7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 08:59:20 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AF4C061574
+        for <git@vger.kernel.org>; Fri, 14 May 2021 05:58:08 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id f184so8147617oig.3
+        for <git@vger.kernel.org>; Fri, 14 May 2021 05:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=A4g+KHQJP/T99yFrImqJdaLD/ZNHCoYWo4lnSocCRlM=;
-        b=kmtmHY380U0CqWlaou+bAXJyDEviEwqvXhZJ2A1/G1In70PqPpDv6IEd3x6NjlyJCl
-         RsQaSoXrFI6heziqHu4iwIyTyqDspCVVSTJRKFXnP/QhLacG5TtMWncphhNA/E2bU7Kh
-         bZ8B0bwhmLupeEvbzripFCjPU4JUpB69iXoW5dCSlXbI4g2wUPFQ9BtPby6lX+IhSlZ8
-         D/0vlZnjaDuW8MiB8Kii2lS0dN7j+7/T29VyN/mGkv5PvcT/1O5gTV8E+qbKs/qwBOch
-         BdfL2dGgXOgMYdXPI2o0nX2Z7aXwC/sZHtl8pX6+2akssW9DXyE6rRfkrWNP4f50sh5V
-         dJ3A==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=eM0WuTJjgrj6KV1uA7zjEhDPevXP4xsOSXvri10RJ5E=;
+        b=p4/DdFHzTpZJLX2IKHVg9hoUf11rmPOUDLv71Q/is7hRLxkcY44OCJtDXr7EeoUAD1
+         7/ClRpOwPrSS+/hL9FUJw3htxUoJ+it6H+T79JStq+KBSlWdHF4kKu800qTlnGQScUYK
+         eXtfps+C10pMsy0oJ0s1Kr5J+YVnVsPno1rU0ASGu/EqMzVQCqzXPVGXB3g1234liuMV
+         obMiHQ6+MyBrTMgf3fiLJbiX9cFMpD6uHE+DAoTiJumWgZZhaKBQACoD5hQH1PMXxmK5
+         50io6/hPweeaPZUPLR++kSMhbsESYSe7sMhr6iIv3c5iV6i1Upnv952QAwB7eD845QzD
+         lpCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=A4g+KHQJP/T99yFrImqJdaLD/ZNHCoYWo4lnSocCRlM=;
-        b=WNZYrdi8AD+QHO3MRHj7vbqSKe7/zeQMnS2APf8wfa8wnD9G6yOFaAuZVv9Dj1mUyc
-         BkiD/RFerTv6WXzcdM9W1Vz4CxPohxTydknzZvCLegkuRBQU/5MhTtcb4cTUaQ5Z4FDU
-         Xy4kLImGjtnscuEkq2nIvV8u4XAUgvMUT5ZXmLgHH1FA/zOphtUTy5s+v9YRcHOlGQsz
-         QA8IdqT/miKZlMqndbEFo2vjHaICcRNkdmsbwCZseYdjGH078LbJeYtm0/lZZV+uAsmk
-         yyQIUYpaptQ5PZDWJy4mqJjOetkmxjr6N4ndanjUiy9NSCysczAmT+o3p2DZi3YtG80O
-         vpNg==
-X-Gm-Message-State: AOAM530UadeISc4RNCw2wsNo48ME+mmbqRFaipuswFzHUrmwVDj+Yh3q
-        DhDM1E23HvoasvMYAAK0wxKRBhikHfsMhA==
-X-Google-Smtp-Source: ABdhPJzhZYSwZ5A6J5RZKeo9seG4EOFliweQLylTxe3a5uNhXZ8ZEdk2Z2hvRT7bhXoKck+wetEVNA==
-X-Received: by 2002:a63:d30e:: with SMTP id b14mr31460542pgg.237.1620996588337;
-        Fri, 14 May 2021 05:49:48 -0700 (PDT)
-Received: from ubuntu.mate (subs02-180-214-232-13.three.co.id. [180.214.232.13])
-        by smtp.gmail.com with ESMTPSA id x13sm4784851pjl.22.2021.05.14.05.49.46
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=eM0WuTJjgrj6KV1uA7zjEhDPevXP4xsOSXvri10RJ5E=;
+        b=kCj/6GuR7XjTD4s5pFWROitKr1sYingESXZZ6SjTDPfzDOKOXZuI3s4DzuuEsF7RX7
+         6qcpHnJ9flbR0RzHP3RDz9ZJwbuoQY/0YlphfEio9IHV8j0lGyiC6I0RV15jqRz5kju9
+         abAZH+vuQOfjAF7wwn8lEd40Hg4sqciuywVCcU4Yz0wE5vu0Zx2YhE42WKExbM5myXIE
+         bod45rbyNdIDLuU5F5MCNYSuSmAXBYyloBWCS4rWVGRL9MaPbB/PcCMeidg53Ut8/z7g
+         60h78TGUlDdjybYpMPjX72uVHqfyE89ui001afrHAc8dXGSB3o4/B6flmOYGOnB5sMSr
+         oOww==
+X-Gm-Message-State: AOAM531IXR1FeGUVs6ePp6MZZQrKVMAxZSVVIZovu+qVVQshcAWME5ha
+        RuzuJobQpQ+H9C+UjKbkRHI=
+X-Google-Smtp-Source: ABdhPJzL5xA9HUX6KZ3TJsEaAsMu7bgLCHnCzKvcVBKYKWWR2BPTc3NtNZp3Zr917w/V3JAXfLMEHg==
+X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr6775897oij.46.1620997087680;
+        Fri, 14 May 2021 05:58:07 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id w25sm1353432otq.40.2021.05.14.05.58.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 05:49:47 -0700 (PDT)
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH] Documentation/howto: tracking git.git
-Date:   Fri, 14 May 2021 19:49:26 +0700
-Message-Id: <20210514124925.39229-1-bagasdotme@gmail.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Fri, 14 May 2021 05:58:07 -0700 (PDT)
+Date:   Fri, 14 May 2021 07:58:04 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Message-ID: <609e73dcbe525_431272081e@natae.notmuch>
+In-Reply-To: <YJ21Qfnk0tpPgPqu@camp.crustytoothpaste.net>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210512021138.63598-1-sandals@crustytoothpaste.net>
+ <6d56412a-cc67-22fc-717f-9fa218264b40@gmail.com>
+ <YJ21Qfnk0tpPgPqu@camp.crustytoothpaste.net>
+Subject: Re: [PATCH 1/2] doc: add an option to have Asciidoctor build man
+ pages directly
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document how to track git.git repository for Git development.
+brian m. carlson wrote:
+> On 2021-05-12 at 02:48:59, Bagas Sanjaya wrote:
+> > Maybe when distros upgraded shipped Asciidoctor version to 2.0, we can
+> > bump the version requirement.
+> 
+> My general policy, which need not be Git's policy (but I think is
+> reasonable), is that I will support the previous version of Debian and
+> Ubuntu LTS for a year after the new one comes out.  Under that policy,
+> we'd wait until a year after Debian 11 (bullseye) is released.
 
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/Makefile                  |  1 +
- Documentation/howto/tracking-gitgit.txt | 79 +++++++++++++++++++++++++
- 2 files changed, 80 insertions(+)
- create mode 100644 Documentation/howto/tracking-gitgit.txt
+Under that policy the supported version would be Debian 10 (buster),
+which ships with Ruby 2.5. It's more than capable of running
+asciidoctor.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 2aae4c9cbb..2b5b8b28b0 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -84,6 +84,7 @@ SP_ARTICLES += howto/rebase-from-internal-branch
- SP_ARTICLES += howto/keep-canonical-history-correct
- SP_ARTICLES += howto/maintain-git
- SP_ARTICLES += howto/coordinate-embargoed-releases
-+SP_ARTICLES += howto/tracking-gitgit
- API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
- SP_ARTICLES += $(API_DOCS)
- 
-diff --git a/Documentation/howto/tracking-gitgit.txt b/Documentation/howto/tracking-gitgit.txt
-new file mode 100644
-index 0000000000..61dbd2540b
---- /dev/null
-+++ b/Documentation/howto/tracking-gitgit.txt
-@@ -0,0 +1,79 @@
-+From: Bagas Sanjaya <bagasdotme@gmail.com>
-+Date: Fri, 14 May 2021 13:26:33 +0700
-+Subject: Tracking git.git
-+Abstract: How to track git.git repository for Git development
-+Content-type: text/asciidoc
-+
-+Tracking git.git
-+================
-+
-+This short document shows how to track git.git (source code repository
-+for Git) for purposes of Git development.
-+
-+Available Branches
-+------------------
-+
-+There are several branches on git.git with different purposes:
-+
-+master::
-+This is the most stable branch. Changes (topics) that are merged
-+to master should have been stabilized in next and suitable for
-+production use. Feature releases (vX.Y.0) are cut from this
-+branch.
-+
-+next::
-+This is where topics that haven't been yet merged to master are
-+stabilized and tested for breakage and regressions. It gives
-+a summary forecast of what next batch of topics that will be
-+merged to master looks like.
-+
-+seen::
-+This is the most bleeding edge branch where all excited
-+developments happened. All proposed topics are queued in seen
-+by the maintainer. However, these may be buggy (have breakage or
-+regressions). When topics queued are deemed good and ready for
-+inclusion, they are graduated to next for stabilization.
-+
-+maint::
-+This branch is used for preparing maintenance releases. Bugfixes
-+for feature release (vX.Y.0) are accumulated in maint. Then at
-+some point, the tip of the branch is tagged with vX.Y.Z.
-+
-+todo::
-+This contains helper tools written by the maintainer to ease
-+maintaining Git. Also, "What's cooking in Git" messages are
-+prepared in todo before being sent to the mailing list.
-+
-+Tracking
-+--------
-+
-+If you don't have git.git clone handy, you can obtain one by:
-+
-+----
-+$ git clone https://github.com/git/git.git git
-+----
-+
-+Now you can start hacking your topics. Don't forget to read
-+`Documentation/SubmittingPatches` for instructions on patch
-+submission.
-+
-+After some time, there will be updates to git.git. First, fetch them:
-+
-+----
-+$ git fetch origin
-+----
-+
-+Then pull the updates.
-+
-+ - For `master`, `next`, `maint`, and `todo`, you can do fast-forward
-+   pull:
-+
-+ $ git pull --ff-only
-+
-+ - For `seen`, DO NOT pull with `git pull`. This is because seen is
-+   in constant flux, and most often your local seen is divergent from
-+   the origin, caused by force-push from the maintainer. Attempting
-+   to pull either via merge or rebase will most likely end in
-+   conflict. Instead, pull by resetting the local seen to the origin:
-+
-+ $ git reset --hard origin/seen
+The CI of asciidoctor tests versionof Ruby as old as 2.3, so Debian 10
+is safe.
 
-base-commit: df6c4f722c94641d5a9ea5496511f7043433abc2
+In fact, I would bet you that asciidoctor works fine in Ruby 2.1 shipped
+with Debian 8 (jessie) released in 2015. Maybe users of Debian 7 would
+have trouble... *maybe*... It's hard to tell because Debian doesn't
+even provide package information about that release.
+
+> > > diff --git a/Makefile b/Makefile
+> > > index 93664d6714..cb75dec314 100644
+> > > --- a/Makefile
+> > > +++ b/Makefile
+> > > @@ -285,6 +285,9 @@ all::
+> > >   # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
+> > >   # documentation.
+> > >   #
+> > > +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
+> > > +# instead of building manual pages from DocBook.
+> > > +#
+> > The wording should be "...instead of building manual pages from DocBook with
+> > xmlto".
+> 
+> I can make that change.  We're not using DocBook either way, with xmlto
+> or other tooling (e.g., a plain xsltproc), so what we have here is
+> accurate.
+
+Hmm...
+
+cat Documentation/manpage.xsl
+
+  <xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/manpages/docbook.xsl" />
+
+That's a deliverable of the DocBook project, is it not?
+
 -- 
-2.25.1
-
+Felipe Contreras
