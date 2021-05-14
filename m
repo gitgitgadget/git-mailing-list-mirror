@@ -2,123 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5056BC433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 07:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E89FDC433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 08:40:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 123DE61446
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 07:27:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4BD461260
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 08:40:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232526AbhENH2Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 03:28:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54438 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230326AbhENH2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 03:28:25 -0400
-Received: (qmail 17192 invoked by uid 109); 14 May 2021 07:27:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 May 2021 07:27:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30890 invoked by uid 111); 14 May 2021 07:27:15 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 May 2021 03:27:15 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 May 2021 03:27:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: "bad revision" fetch error when fetching missing objects from
- partial clones
-Message-ID: <YJ4mUJ+EEAnudI3G@coredump.intra.peff.net>
-References: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
- <ba5a0574-c71c-709c-a13c-bf6d5981545c@jeffhostetler.com>
- <YJz4JTsFjTtL7mE2@coredump.intra.peff.net>
- <YJ0FL3zr/SnWN7t6@coredump.intra.peff.net>
+        id S231981AbhENIlm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 04:41:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58442 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231658AbhENIll (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 04:41:41 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0C6C061574
+        for <git@vger.kernel.org>; Fri, 14 May 2021 01:40:29 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id e19so5929891pfv.3
+        for <git@vger.kernel.org>; Fri, 14 May 2021 01:40:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=zCV2R4ZLSjWbif5a6NcVEg2cqfrXudE18E5bOY1xt3s=;
+        b=skC8EjWf+n4C7OPmo2PwuZxpPHGApxHcAOtsn1UtznsbwkpAgyo0XgP6/Jccz5jQ2l
+         VWSoWHgBh+tODZ4k3xH69GQyLfplMnBklAOkUm1BTaqjrXzwmqeDUs1rYbjoEMs+udKt
+         uPQRDoJ8natUymrDRXflMsiGofDcWxZHPDLwR6wS8t8SB4OfZSLRSEkMIBZAU3pc9OVK
+         IvdzY+Z1kGIkpXX6DLKwATaTz3/KLBRF6ctkgYB2zFt5ce4Q7wG7xqEzYirqmha/8QOR
+         DejVeThr2YACOTcMuusMBsVrXUKChzi6Nj0AKxFfFW0dKtDbuo5yYGYXeyFdy80ClVI6
+         vSUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zCV2R4ZLSjWbif5a6NcVEg2cqfrXudE18E5bOY1xt3s=;
+        b=d/ILWpfvC1kh0HrUwTeEZueIOIJS70kILQ6h/KHfZrZXWnbBP4I4UdwvirB7/UIM/E
+         uMh6jV+oZwN70eAKJzT1t0V4TRTFrLaC46LZMAGhvdlFJmGBWTyzkgTL1cB/mX/qIxlg
+         QSPwmPHjDoq/DRctBik2Unox8VK5XV9Lbhbm4XhOfFxtnPdVpxfVn3EJSqC5n0l1tTRo
+         8bSiEgRGTogif/YWfyxXbwWwV5H07DhlUjedMbnnEKu0AgsQmo4j+d55R34OFZi2gTHD
+         r9OTmngqg438Cws0JULYHj69ekmvVc7xaX6SGmkxWBzXYnprYa95gwlQgwQTVlp2OuEQ
+         a4QA==
+X-Gm-Message-State: AOAM533I3aX+fhkkfA4AIkU8sRxe9AAWCw2p+/6RDkLBPRN6v1fLoPZm
+        Q9/3AHyK4sLh7DLXhYYgLPNN4U0LSG0GC/ZdkWxfuXND24Y=
+X-Google-Smtp-Source: ABdhPJwxiwCh2uwGdUiJUW7gvmEyFvufsWnLatUOLret9zV2DhWSQ4894NzJYt5jWjSfCL1NVhr6mZBhJ2mNHjwI5n0=
+X-Received: by 2002:aa7:8ac3:0:b029:28e:df57:991b with SMTP id
+ b3-20020aa78ac30000b029028edf57991bmr44505295pfd.38.1620981629442; Fri, 14
+ May 2021 01:40:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YJ0FL3zr/SnWN7t6@coredump.intra.peff.net>
+References: <cover.1620928059.git.martin.agren@gmail.com> <xmqqsg2q9xts.fsf@gitster.g>
+In-Reply-To: <xmqqsg2q9xts.fsf@gitster.g>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 14 May 2021 10:40:17 +0200
+Message-ID: <CAN0heSrzkexY9K=VD=y0h9D0pVh59BjaLLg0pEo-WxsP+s0juA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] AsciiDoc vs Asciidoctor, once again
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[+cc Jonathan Tan for partial clone wisdom]
+On Thu, 13 May 2021 at 22:35, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> > Some of these rephrase wording such as "other peoples' commits" to avoi=
+d
+> > that apostrophe at the end of a word. I'm hoping those rephrasings don'=
+t
+> > regress the quality of the text -- if they do, I'll be happy to try
+> > something else.
+>
+> It is sad, but we really should try "something else", unfortunately.
+>
+> I do agree with the "motive" very much---even though condensing it
+> down to plain text before running comparison already loses too much
+> information, doc-diff is the only tool we currently have to
+> effectively review regressions in rendered document, and the
+> proposed transition cannot be done safely with confidence without
+> being able to vet the differences.  I am happy to hear about 17%
+> reduction already, but the requirement to rewrite things like "other
+> peoples' commits" is a dealbreaker.
 
-On Thu, May 13, 2021 at 06:53:36AM -0400, Jeff King wrote:
+OK, calling it a dealbreaker is fair. Thanks.
 
-> > So I think it will require some digging. My _guess_ is that it has to do
-> > with the "never filter out an object that was explicitly requested" rule
-> > not being consistently followed. But we'll see.
-> 
-> OK, I think I've unraveled the mysteries.
+> A typesettig rule like "instead of double-dashes --, use {litdd}" is
+> an acceptable way out.  At least that wouldn't constrain what the
+> final product that gets delivered to the end-users can say.
 
-Nope. This part is wrong:
+I've done some experimenting now with a new attribute "apos" which
+expands to a lone SQ. It seems to work fine across the different tools.
+The rule could be that all ' should be {apos}. That's a quite
+aggressive rule in a sense. It could be narrowed down to something like
+"... if the paragraph contains other quotation, such as backticks or
+single quotes", but that's probably just overly complicating things.
 
-> It is indeed a problem with the "never filter out an object that was
-> explicitly requested" rule. But really, that rule is stronger: it is
-> "always include an explicitly requested object". I.e., it must override
-> even the usual "you said commit X was uninteresting, so we did not
-> include objects reachable from X" logic.
+I don't see an immediate need to go s/'/{apos}/ just because we can.
+We've identified five problematic spots, four of which are with the tool
+we're moving away from.
 
-The rule really is the softer "don't filter out explicitly-requested
-objects". It's just that the non-bitmap traversal code is way less
-careful about finding uninteresting objects.
-
-Here's the same scenario failing without using bitmaps at all:
-
-  # same as before; repo with one commit
-  git init repo
-  cd repo
-  
-  echo content >file
-  git add file
-  git commit -m base
-
-  # and now we make a partial clone omitting the blob
-  git config uploadpack.allowfilter true
-  git clone --no-local --bare --filter=blob:none . clone
-
-  # but here's the twist. Now we make a second commit...
-  echo more >file
-  git commit -am more
-
-  # ...and then we fetch both the object we need _and_ that second
-  # commit. That causes pack-objects to traverse from base..more.
-  # The boundary is at "base", so we mark its tree and blob as
-  # UNINTERESTING, and thus we _don't_ send them.
-  cd clone
-  git fetch origin $(git rev-parse HEAD:file) HEAD
-
-So I guess the first question is: is this supposed to work? Without
-bitmaps, it often will. Because we walk commits first, and then only
-mark trees uninteresting at the boundary; so if there were more commits
-here, and we were asking to get a blob from one of the middle ones, it
-would probably work. But fundamentally the client is lying to the server
-here (as all partial clones must); it is saying "I have that first
-commit", but of course we don't have all of the reachable objects.
-
-If this is supposed to work, I think we need to teach the traversal code
-to "add back" all of the objects that were explicitly given when a
-filter is in use (either explicitly, or perhaps just clearing or
-avoiding the UNINTERESTING flag on user-given objects in the first
-place). And my earlier patch does that for the bitmap side, but not the
-regular traversal.
-
-Alternatively, part of that fundamental "partial clones are lying about
-their reachability" property is that we assume they can fetch the
-objects they need on-demand. And indeed, the on-demand fetch we'd do
-will use the noop negotiation algorithm, and will succeed. So should we,
-after receiving an empty pack from the other side (because we claimed to
-have objects reachable from the commit), then do a follow-up on-demand
-fetch? If so, then why isn't that kicking in (I can guess there might be
-some limits to on-demand fetching during a fetch itself, in order to
-avoid infinite recursion)?
-
--Peff
+Martin
