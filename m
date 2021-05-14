@@ -2,99 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A64E9C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 05:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B531C433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 06:37:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71D3161440
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 05:48:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA9BF61028
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 06:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230430AbhENFt1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 01:49:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54402 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230109AbhENFtZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 01:49:25 -0400
-Received: (qmail 16879 invoked by uid 109); 14 May 2021 05:48:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 May 2021 05:48:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30623 invoked by uid 111); 14 May 2021 05:48:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 May 2021 01:48:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 May 2021 01:48:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] t: avoid sed-based chain-linting in some expensive cases
-Message-ID: <YJ4PHbVoQ8+ubfBK@coredump.intra.peff.net>
-References: <YJzGcZpZ+E9R0gYd@coredump.intra.peff.net>
- <CAN0heSp3mXQeqeC_Zd==bBoJCCWe-NzJsomuUf6MTxy7+WZ1wA@mail.gmail.com>
+        id S232525AbhENGik (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 02:38:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59130 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230329AbhENGii (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 02:38:38 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D922DC061574
+        for <git@vger.kernel.org>; Thu, 13 May 2021 23:37:25 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id z9so41663147lfu.8
+        for <git@vger.kernel.org>; Thu, 13 May 2021 23:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=n4V7y3LwplNVJf3S2auf+oi/IGVuxk3qqJAkv8y9nAY=;
+        b=tlRZWQz6sPoGpGtGc6fCk0Vn2IbkrozJ9iqian1nLyYy9NniUa8NT5q+3T7h/c1TTd
+         nykUO0KN3t+gNU/SDifw08GUR5cKgM2YTB1WA5pLmnTlwKr/U4QgANT4tsf5rJfYdqQH
+         lKMEZuh4x4txICcFCfOKt70QVEZY13ID/LdJS0Sq64czdpikIGjkuCfOD2BCW5I/8ye2
+         O/RvUOe15Ka+yfvElNvEgV7gDAvyfue/bjvFp1ag8JQTApgGAOayBj7Cn2RhLF+rodcM
+         JAMJkvdjkgMotSTRgp+DH+T6spNlq3Lwf7iGXBTQoRcszTOalv3zDvY+GthyiYkA/bdM
+         3z3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=n4V7y3LwplNVJf3S2auf+oi/IGVuxk3qqJAkv8y9nAY=;
+        b=JmQ4FAJ1hKBh4XY8ZWXDx19cgplcwNVufZii0S/m9QLme0bBgdzdPsmsQLEN1kJqJm
+         SHuecCk2tHrxMA0eF5hzPqcmoEHavUwGzldZ7S/WctQW8gLyg7wytnMG+UehzNbuT1A5
+         qI5zIUtjCbjJu2tuvFZeNo9PFacJkNtALVy4wjOUSkQzRD7m0W9hmbDoUym0Nxa0ZFEy
+         uS8zR41l5BAE/MLN5gHOoGYJI9KuGaIrmHGzJwyirrhYHo2j3yv0IMJZYaIC5Py/FkZ0
+         5Eh5jaIN/M9diAHikcmg+aQbDtvArRU0oxgTJ87pEtthxL304l/65Rouwtcw++a6XZbk
+         f60w==
+X-Gm-Message-State: AOAM530lCn2pEeT0hMUFeRxxXMQHPI+RCDcvAORhByHQ11ovC12uaW2x
+        DbvW/o5sXkNNdN4R2wDCTjYzBahxzgo=
+X-Google-Smtp-Source: ABdhPJxjBDYB516N6NyMe9FZbe7AMUvBRZthJI6QeGN/vqf0mHC7049UbqfGHd1DLTMPeVvxwAec1g==
+X-Received: by 2002:ac2:5fe5:: with SMTP id s5mr29090293lfg.364.1620974244107;
+        Thu, 13 May 2021 23:37:24 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id a20sm824006ljk.29.2021.05.13.23.37.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 May 2021 23:37:23 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: Rebase options via git pull
+References: <87r1iakbyn.fsf@osv.gnss.ru>
+        <CAMMLpeQ8_isyDtP34p+_tEK3JAasfro7dJbVrTVPZ7C4q0kT6w@mail.gmail.com>
+        <YJ3LJ++lsAuSkCUJ@danh.dev>
+Date:   Fri, 14 May 2021 09:37:22 +0300
+In-Reply-To: <YJ3LJ++lsAuSkCUJ@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
+ =?utf-8?B?Q8O0bmc=?= Danh"'s message of
+        "Fri, 14 May 2021 07:58:15 +0700")
+Message-ID: <875yzlu8gt.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSp3mXQeqeC_Zd==bBoJCCWe-NzJsomuUf6MTxy7+WZ1wA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 13, 2021 at 01:05:28PM +0200, Martin Ågren wrote:
+Đoàn Trần Công Danh <congdanhqx@gmail.com> writes:
 
-> > +# Disable expensive chain-lint tests; all of the tests in this script
-> > +# are variants of a few trivial test-tool invocations, and there are a lot of
-> > +# them.
-> > +GIT_TEST_CHAIN_LINT_HARDER_DEFAULT=0
-> 
-> Devil's advocate: Who do we expect to turn GIT_TEST_CHAIN_LINT_HARDER
-> on, and when?  If no one ever does it then we might as well drop the
-> "default" thing and just go "we won't bother linting these particular
-> tests, ever". But as long as "someone" does it "sometimes", it's not
-> like it's a very complex mechanism to carry around.
+> On 2021-05-13 18:49:03-0600, Alex Henrie <alexhenrie24@gmail.com> wrote:
+>> On Thu, May 13, 2021 at 7:23 AM Sergey Organov <sorganov@gmail.com> wrote:
+>> >
+>> > Hello,
+>> >
+>> > Is there a way to specify additional options for "git rebase" when it's
+>> > invoked via:
+>> >
+>> >   git pull --rebase
+>> >
+>> > ? What if rebase is used implicitly due to "pull.rebase" being set
+>> > accordingly?
+>> >
+>> > In particular, I'd like to be able to:
+>> >
+>> >   git pull --rebase --no-fork-point
+>> >
+>> > but it doesn't work.
+>> 
+>> It would be cumbersome, but you could run `git config rebase.forkPoint
+>> false` before pulling and `git config rebase.forkPoint true` after.
+>
+> Or, for this *specific* case:
+>
+> 	git -c rebase.forkpoint=false pull --rebase
 
-The answer is probably: people who suspect something is broken. We could
-perhaps also turn it on for CI to be more complete there (and where 30
-seconds of CPU time is relatively much smaller). It was also handy to
-have while timing the impact, of course.
+That's nice, thanks! Doesn't solve entire issue, but definitely better
+than nothing.
 
-I'm not opposed to having it be less flexible, and in fact I wrote it
-that way originally. But it doesn't actually make the code much simpler.
-The assignments to _DEFAULT in the scripts become GIT_TEST_CHAIN_LINT_HARDER
-and the read side has one less level of defaulting:
+Probably add generic cmd.<cmd>.opts config support, so that I can say:
 
--test "${GIT_TEST_CHAIN_LINT_HARDER:-${GIT_TEST_CHAIN_LINT_HARDER_DEFAULT:-1}}" != 0 &&
-+test "${GIT_TEST_CHAIN_LINT_HARDER:-1}" != 0 &&
+  git -c cmd.rebase.opts="--no-fork-point --empty=keep" pull --rebase
 
-I guess it's conceptually a little simpler, though. I dunno. I sort of
-assumed it would just work and nobody would need to ever look at or
-configure it either way. :)
+Thoughts?
 
-> I seem to have 140 tests that haven't changed on disk since I did this
-> particular clone in 2017. 235 haven't changed this calendar year. Maybe
-> we could skip linting those tests that haven't been modified for several
-> weeks on the basis that they can't reasonably have newly-introduced
-> syntax mistakes. I guess it gets tricky where the t????-*.sh file
-> doesn't change in a long time, but it sources tests from other places,
-> such as a lib-foo.sh helper. We'd have to be a bit more clever there.
-> That's all just thinking out loud, and definitely not something that
-> should hold up your patch.
-
-Yeah, I suspect that would work in general. But it seems like even more
-complexity (now you have a cache of "I linted this script at time X and
-it was good" that has to be written). It does increase the possible
-savings though (up to perhaps 100 or so seconds of parallel CPU in my
-case).
-
-I think a bigger and better version of that is to actually see which
-code paths are run by which scripts, and not even bother running scripts
-that don't touch code which has changed. But that's a _lot_ more
-complicated, and writing such a tool is probably at least worth a thesis
-project. ;)
-
--Peff
+Thanks,
+-- Sergey Organov
