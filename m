@@ -2,129 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 618A1C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 21:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 674CBC433ED
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 21:21:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 38E2960FDB
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 21:04:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48BEB61476
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 21:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231485AbhENVGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 17:06:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55544 "EHLO
+        id S232323AbhENVWf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 17:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbhENVGH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 17:06:07 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B37AC061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 14:04:17 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so430941otg.2
-        for <git@vger.kernel.org>; Fri, 14 May 2021 14:04:17 -0700 (PDT)
+        with ESMTP id S229504AbhENVWf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 17:22:35 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51116C06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 14:21:23 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so445018otc.6
+        for <git@vger.kernel.org>; Fri, 14 May 2021 14:21:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZB5fsZ8puulF1yAL1Xu8vTIOXmSTUBdiGsNWJcOfoVc=;
-        b=stMIN08KFAjpX2mZbfEPANyyWalDde/zSRTxe0xwgcnTF1afB47mMnLnTPKtcyJCAd
-         X3XVid6sYrib56K1Afu70ExvaX6TjqkG7M8E4gthh3eapLEzBLZF2QunPXTu7SGPs7kR
-         RZ7VytsexGx9GIN1ehYfJvredfBM5B6Oz2Lk3UenfgkQguK4ps8nuIUMkQyILA5xWBHH
-         8BK9CJ7Kiqh3hVZWH4wnfJVbWL2P/Wc6fXx8tFtQxOnIVjXo36ZWEii0pUOwwOsCyVP4
-         CVryizVUO7Xp9++fgGihTi1D/fYFcf2rlxXC1G+cBT88V1MZV9pXfEQobU/T3I93Bhan
-         Zgjw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=7KbWnB7MU8symYmS2XRRO8RAbnXOl/maFUjggl+aOew=;
+        b=l2QgOSNwTsYg1mvNCv7VF8YO8r7B7x1VuQQCCejH4cCkJSttXMQCwvs2YEzwxmCmTk
+         tj/GlKKKugGoz8NgLj9egxg+4RoWWepGPrXpUEc09Rm0JfD2Re99wRiWkndXKboXrDzk
+         gwskgfLUHS1WRM0Y0Ckn+LecbyR8dnKa9FA6qgIqs2SETjs3AnafxoLbAi4CGT2gzGLL
+         6y9z9aOOuSBxsfLRTeuDZHM1dPWwngv1hFlHRdHl+7BRghyBdkfe0WXXdlZp7l3bwXRy
+         R2r8K9Mrde/eB+2N542FP4kXMcdWB1WdEn+btjtZfqgGqxj2iANOHp0aHr4yBtxEu4l+
+         ibhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZB5fsZ8puulF1yAL1Xu8vTIOXmSTUBdiGsNWJcOfoVc=;
-        b=MoqvIxWO75RxC6MMXUpFYTbPFJl0bpdF0hGqIzyCX/N6bkLhWYG9X5T5ZhoPNArxKQ
-         ZIzRqwv3Oz9Bn3PHllmVVCjSl6S3IU7lrUobr/CX43B09JGfTSV3UMQMgoe9s7M7Lmr9
-         TSASbpHox6ShfUyza60Ykpylf25tVMcEYrxnRmmtE74Rc0HkZ9/KqK3sClex0sJmd4lJ
-         abCSdTp508tPnUIWdJfrJocbZtUOQx91mVHMy3+FYCPNf/F6Zx21SWeOxsLg/OL1N9YQ
-         1o60W1uAynQWDkCRRd2+a7Debk8A8wfOMNjIcgcNNuxIjwD/STCtXUzSPTo7nriNj2hJ
-         w6oQ==
-X-Gm-Message-State: AOAM530bcHRDtEmnIMPAzvyij6QMnCyTYIiOUzjQyuDLIRxOavSRsv4e
-        b0ojifmYDE4GzwERMqYKNvE=
-X-Google-Smtp-Source: ABdhPJyfJt42ySSCwSE0wCQ/A3esgROhezVYeuahJQ4bfoqqTimaC3LqNPq9GTa6ubpQIf4qk5RyTw==
-X-Received: by 2002:a9d:7f1a:: with SMTP id j26mr40682082otq.244.1621026256315;
-        Fri, 14 May 2021 14:04:16 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:6c05:727e:b905:fa7e? ([2600:1700:e72:80a0:6c05:727e:b905:fa7e])
-        by smtp.gmail.com with ESMTPSA id i130sm1412575oif.49.2021.05.14.14.04.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 May 2021 14:04:15 -0700 (PDT)
-Subject: Re: [PATCH v2 00/13] Optimization batch 11: avoid repeatedly
- detecting same renames
-To:     Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
- <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
- <CABPp-BGz-SGzbHAHOOjjo5FCBOgYehR0qa_rEn3saOw2gXt86g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <36465338-3c3c-c861-648c-711c3106a828@gmail.com>
-Date:   Fri, 14 May 2021 17:04:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
-MIME-Version: 1.0
-In-Reply-To: <CABPp-BGz-SGzbHAHOOjjo5FCBOgYehR0qa_rEn3saOw2gXt86g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=7KbWnB7MU8symYmS2XRRO8RAbnXOl/maFUjggl+aOew=;
+        b=aYwRgEWoX4aN6rXyX8qMubbOseR+qtMQ5ER1nRfrUKB0EIFPnFskQshX5pnP2f8S/U
+         f6+L4mWk1JV7hhCldpARTUZBVlp2qrD8svBholETg0T9XLwsQ7YF7x8qtdVSn6G6Xa/y
+         ZJrnk2W4ySETAFXYBuljR1krrv+VCtMsUXouiL/m8Y8ShPfr3SNwVr2Jn7dCA+7k59dp
+         3TA/S08M+kFUgv9TJIUSrKK+TvciYqITrfI8SZcVOFXnwXiBpTdpo7ic7aAAb3ttJAC3
+         5ftrj4zkJLzh6bcM66mNa4nra4G4rmTI5fMu4M1kkBX0BIgasnYUywf/C4dXjpxqT8/2
+         r14w==
+X-Gm-Message-State: AOAM533f54CV/HTOtwNd2HfNU9fqH8Cu0JEJvcV1yaqP80PtH2loTAMU
+        HJkCAHShTu56TnTObI+g7W0=
+X-Google-Smtp-Source: ABdhPJwfpwr6naFEY7dPOhJpL0KCgvYbVvLXupqMShTLjxCTF58x+jqD3E1glvChPPWqSOH4WTFviA==
+X-Received: by 2002:a9d:170b:: with SMTP id i11mr36127056ota.161.1621027282722;
+        Fri, 14 May 2021 14:21:22 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id e7sm1582378oos.15.2021.05.14.14.21.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 May 2021 14:21:22 -0700 (PDT)
+Date:   Fri, 14 May 2021 16:21:21 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
+Message-ID: <609ee9d117baa_4312720826@natae.notmuch>
+In-Reply-To: <YJ7W4YrboXQhMh/B@camp.crustytoothpaste.net>
+References: <609b2828309fc_678ff2082@natae.notmuch>
+ <20210514003104.94644-1-sandals@crustytoothpaste.net>
+ <609eca5a42be2_43127208f2@natae.notmuch>
+ <YJ7W4YrboXQhMh/B@camp.crustytoothpaste.net>
+Subject: Re: [PATCH v2 0/2] Asciidoctor native manpage builds
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 5/14/2021 1:37 PM, Elijah Newren wrote:
-> On Mon, May 3, 2021 at 7:12 PM Elijah Newren via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> This series avoids repeatedly detecting the same renames in a sequence of
->> merges such as a rebase or cherry-pick of several commits. It's
->> unfortunately become a bit lengthy, but much of the length (the first five
->> patches) is owed to special testcases and documentation.
+brian m. carlson wrote:
+> On 2021-05-14 at 19:07:06, Felipe Contreras wrote:
+> > brian m. carlson wrote:
+> > >     @@ Documentation/asciidoctor-extensions.rb: module Git
+> > >               elsif parent.document.basebackend? 'html'
+> > >                 %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
+> > >      +        elsif parent.document.basebackend? 'manpage'
+> > >     -+          %(\\fB#{target}\\fP\\fR(#{attrs[1]})\\fP)
+> > >     ++          %(\e\\fB#{target}\e\\fP\e\\fR(#{attrs[1]})\e\\fP)
+> > >               elsif parent.document.basebackend? 'docbook'
+> > >                 "<citerefentry>\n" \
+> > >                   "<refentrytitle>#{target}</refentrytitle>" \
+> > 
+> > Huh? Didn't you say \e was not needed?
 > 
-> Since this obviously hasn't inspired much review, let me note that you
-> can cut out 90% of the review size by skipping patches 2 & 5.
+> Yes, but I believe in that case my build was broken and I was incorrect.
+
+I see. If it helps you I'm using this script [1] to run the specific
+version of asciidoctor of a git repository (their wrapper is wrong).
+
+> > You are doing basically the same thing thing my patches now, except in a
+> > more convoluted way.
 > 
-> Patch 2 is essentially written as something approaching a formal
-> proof, so yes it's dense and lengthy, but it's not at all required;
-> there's no code there.  Think of it as insurance for if someone wants
-> to introduce some new tricky optimizations or radically different
-> features to the merge machinery, because the remember-renames
-> optimization by its nature tends to interact with other optimizations.
-> I figured because of that interaction that documenting why and how the
-> remember renames optimization works at a much deeper level than is
-> typical for optimizations or code in git in general that it might help
-> with future maintenance...and it happened to help me catch two minor
-> bugs.
+> The way your patches do it, if someone adds a line like this:
 > 
-> Patch 5 is very much related to patch 2; it's testcases inspired by
-> that document.  Most of those tests were just "what could possibly go
-> wrong in a new from-scratch implementation of this optimization?"
-> based on what's written in this proof-like document.  Most of the
-> tests didn't turn up anything, but a couple found some small issues in
-> my implementation.  I decided to just include all of them; it's nice
-> to be thorough.
+>   _abc linkgit:git-update-index[1] def_
 > 
-> You can get 95% of the whole idea behind this optimization skipping
-> those patches and reading Junio's great two-paragraph summary at
-> https://lore.kernel.org/git/xmqqzgyrukic.fsf@gitster.g/, and then just
-> read the other patches in this series.
+> the latter part (def) is not italicized.  In my version, it is, which is
+> the correct behavior.
 
-Sorry, yes. I've been reading this a bit but haven't commented yet.
+Right, but my version is precisely what asciidoc+docbook generates in
+the simplest case.
 
-Patch 2 was enlightening and I appreciate the attention to detail
-there. The overall argument made sense to me.
+I agree your version is superior (although I wouldn't do the second
+\fR \fP). But that belongs in a separate patch IMO.
 
-I can promise a completed review on Monday.
+Cheers.
 
--Stolee
+[1] https://dpaste.com/3AEDTFCSK
+
+-- 
+Felipe Contreras
