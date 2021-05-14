@@ -2,151 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 669E5C43460
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 13:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC4DC433ED
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 13:49:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35BBC6145A
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 13:45:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A971B6145A
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 13:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbhENNqQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 09:46:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42492 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231376AbhENNqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 09:46:16 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A52C06174A
-        for <git@vger.kernel.org>; Fri, 14 May 2021 06:45:04 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id 76so28686164qkn.13
-        for <git@vger.kernel.org>; Fri, 14 May 2021 06:45:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7SYrnVyFH0F0nbLOUx2s8jCyJFtlKMa0Nb9RUF0jizI=;
-        b=LxgkmPaU8ix63UAweXzvKHaJxm1IT/Ajr93YKPlfqa3oiLmOeRXtn3Bqv9iQjIP6ly
-         Ix2N0hvv3nTD4bBbWhau72p4y/0PaRhXdnWEH7mrXu595f9v5cgDRLelC2odNgMQu6uo
-         9cwn8NgQxHAoH1GU5VioSUmvWtw8eBBfbQS3g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7SYrnVyFH0F0nbLOUx2s8jCyJFtlKMa0Nb9RUF0jizI=;
-        b=k7yJp8I4tGF0Z80TpQ+uTBBZE/KIr/k9wZPFDhocbYZkXVEqFp/NdBNzokPce96CKT
-         isWWevynzP4iN4Q5/E7cuVy4DVs45gwy5g5GyyTJY9CPRL3ugW4Cgimd0S2ovKNXRvaG
-         OGi3R2pez0PcL2myglVJwGrtVlDtDzPpSaEL3hTYJcWu8unOCnazZhMqvcYn/ivYPXyP
-         5Ks6XvGvMPLA5vW2CXsLh6Y1Z+pYvhRXS8jhAP/L94HuyCJouxLrMGvv4MsypqY8Ud9A
-         fLXW+PuUhOwVtIWag5oT0OUPmabJYiEYNcmCLGqDP7csk0mOJE629R1+A/r3Sfg1rOtK
-         ayGA==
-X-Gm-Message-State: AOAM532aFTQDtJgD9DLcoM+jA4FAD6BFBKlEieHwB5xUbrLUGp9KceN2
-        WJ+TZke4s9KlsFBu+rmFRV5EKx1QhFRP60RU
-X-Google-Smtp-Source: ABdhPJxw533JXsrWGiYo0dKe1XP3ND79O0MfuDNMlZ3FFdmUvaDmZPAws4+oBbVEvsl9B0FHro+cdQ==
-X-Received: by 2002:a05:620a:530:: with SMTP id h16mr14015081qkh.266.1620999903665;
-        Fri, 14 May 2021 06:45:03 -0700 (PDT)
-Received: from meerkat.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id b3sm3185946qtg.55.2021.05.14.06.45.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 06:45:03 -0700 (PDT)
-Date:   Fri, 14 May 2021 09:45:01 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     dwh@linuxprogrammer.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Is the sha256 object format experimental or not?
-Message-ID: <20210514134501.3vzgqdfwwejafkq7@meerkat.local>
-References: <20210508022225.GH3986@localhost>
- <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
- <87lf8mu642.fsf@evledraar.gmail.com>
- <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
- <20210513202919.GE11882@localhost>
- <20210513204957.5g76czb5bk3thlep@meerkat.local>
- <20210513234706.GG11882@localhost>
+        id S231593AbhENNvJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 09:51:09 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54119 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230121AbhENNvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 09:51:08 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 198A91389DC;
+        Fri, 14 May 2021 09:49:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hm+zZpxqGDtz8+WmGQjuky/MXA8SBIeb3np+BV
+        WFE7I=; b=NYod+RMwlf9ZEHNyaA0XTDYpVfW0FHQ1dqubCjRXhX1LwCCodj2Y7f
+        7i2idEAeEdy0ABy+UtRmDkFBzorEBy+eMOywysRHz+p0Uy9yB8D0UE8vwXvNSPP9
+        gkVX1RRgpcNfCBKWjryA+n47QeOyTPSca0MlAk8C5SMrilJj8sO08=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 12DB01389DB;
+        Fri, 14 May 2021 09:49:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 37DFD1389D9;
+        Fri, 14 May 2021 09:49:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/howto: tracking git.git
+References: <20210514124925.39229-1-bagasdotme@gmail.com>
+Date:   Fri, 14 May 2021 22:49:52 +0900
+In-Reply-To: <20210514124925.39229-1-bagasdotme@gmail.com> (Bagas Sanjaya's
+        message of "Fri, 14 May 2021 19:49:26 +0700")
+Message-ID: <xmqqwns177cv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210513234706.GG11882@localhost>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4317A9B2-B4BB-11EB-8F7F-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 13, 2021 at 04:47:06PM -0700, dwh@linuxprogrammer.org wrote:
-> On 13.05.2021 16:49, Konstantin Ryabitsev wrote:
-> > Check out what we're doing as part of patatt and b4:
-> > https://pypi.org/project/patatt/
-> > 
-> > It takes your keyring-in-git idea and runs with it -- it would be good to have
-> > your input while the project is still young and widely unknown. :)
-> 
-> Konstantin:
-> 
-> That's really clever. I especially love how you're using the list
-> archive as the provenance log of old keys developers used. That seems
-> like it would work although I have worries about the security of
-> X-Developer-Key and the lack of key history immediately available to
-> `git log` because it's in the list archive and not in the repo directly.
->
-> I guess the old keys would still be in your local keyring for `gpg` to
-> use but it would mark signatures created with old revoked keys as
-> invalid even though they are valid.
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-Thanks for taking a look at it. I don't view this as much of a problem, since
-the goal for the project is specifically end-to-end patch attestation. For git
-commits, if they are signed with a key from the in-git keyring, it would
-actually be really straightforward to get the valid key at the time of signing
--- you just retrieve the keyring using the date of the commit.
+> +Available Branches
+> +------------------
+> +
+> +There are several branches on git.git with different purposes:
+> +
+> +master::
+> +This is the most stable branch. Changes (topics) that are merged
+> +to master should have been stabilized in next and suitable for
+> +production use. Feature releases (vX.Y.0) are cut from this
+> +branch.
 
-> My approach has been to move to cryptographically secure provenance logs
-> that contain key rotation events and commitments to future keys and also
-> cryptographically linking to arbitrary metadata (e.g. KYC proofs, etc).
-> The file format is documented using the Community Standard template from
-> the LF. I'm hoping to move Git to use external tools for all digest and
-> digital signature operations. Then I can start putting provenance logs
-> into a ".well-known" path in Git repos, maybe ".plogs" or something.
-> Then I can write/adapt a signing tool to understand provenance logs
-> of public keys in the repo instead of the GPG keyring stuff we have
-> today.
-> 
-> Provenance logs accumulate the full key history of a developer over
-> time. It represents a second axis of time such that the HEAD of a repo
-> will have the full key history, for every contributor available to
-> cryptographic tools for verifying signatures. This makes `git log
-> --show-signature` operations maximally efficient because we don't have
-> to check out old keyrings from history to recreate the state GPG was in
-> when the signature was created.
+Isn't "maint" meant to be more stable?
 
-Hmm... I'm not sure if it's an inefficient operation in the first place. If
-the keyring is in the same branch as the commit itself, then you can retrieve
-the public key using "git show [commit-sha]:path/to/that/pubkey". If it's in a
-different branch, then it's slightly more complicated because then you have to
-find a keyring commit corresponding to the commit-date of the object you're
-checking. In any case, these are all pretty fast operations in git.
+> +next::
+> +This is where topics that haven't been yet merged to master are
+> +stabilized and tested for breakage and regressions. It gives
+> +a summary forecast of what next batch of topics that will be
+> +merged to master looks like.
+> +
+> +seen::
+> +This is the most bleeding edge branch where all excited
+> +developments happened. All proposed topics are queued in seen
+> +by the maintainer. However, these may be buggy (have breakage or
+> +regressions). When topics queued are deemed good and ready for
+> +inclusion, they are graduated to next for stabilization.
 
-> I still like your approach purely for the "it works right now" aspect of
-> the solution. Good job. I can't wait to see it in action.
+This is inconsistent with what has been written elsewhere about this
+integration branch.  In short, you should not read anything more
+than "the maintainer happens to have seen these topics" out of the
+fact that a topic is in 'seen'.  Not all proposed topics will be in
+this branch, and a branch that was in 'seen' on one day may not be
+there the next day, but that does not mean anything (certainly it
+does not mean the topic has been "rejected").
 
-As you know, this is my third attempt at getting patch attestation off the
-ground. The first one I implemented using detached attestation documents and
-it was clever and neat, but it was too complicated and failed to take off -- I
-think mostly because a) it wasn't easy to understand what it's doing, and b)
-it required that people adjust their workflows too much.
+> +Tracking
+> +--------
+> +
+> +If you don't have git.git clone handy, you can obtain one by:
+> +
+> +----
+> +$ git clone https://github.com/git/git.git git
+> +----
+> +
+> +Now you can start hacking your topics. Don't forget to read
+> +`Documentation/SubmittingPatches` for instructions on patch
+> +submission.
+> +
+> +After some time, there will be updates to git.git. First, fetch them:
+> +
+> +----
+> +$ git fetch origin
+> +----
+> +
+> +Then pull the updates.
+> +
+> + - For `master`, `next`, `maint`, and `todo`, you can do fast-forward
+> +   pull:
+> +
+> + $ git pull --ff-only
 
-The second attempt was better, but I think it was still too complicated,
-because it required that we parse patch content, making it fragile and slow on
-very large patch sets.
+I do not see a point in doing this for all of these branches, and
+I'd rather not to see this recommended to people who "track to
+develop" at all.  It may make sense to do so if you do not do any
+development of your own and will always stay on 'master' to check
+out, build, test and install from the upstream, though.
 
-I'm hoping that this version resolves the downsides of the previous two
-attempts by both being dumb and simple and by only requiring a simple one-time
-setup (via the sendemail-validate hook) with no further changes to the usual
-git-send-email workflow after that.
+For those who track to develop", if you want a reference point to
+work from, you can do "git fetch origin" and then run
 
-I've not yet widely promoted this, as patatt is a very new project, but I'm
-hoping to start reaching out to people to trial it out in the next few weeks.
+    $ git checkout -b mytopic origin/master
 
-Thanks,
--K
+for a new feature, and
+
+    $ git checkout -b myfix origin/maint
+
+for a fix.  You can track your progress with
+
+    $ git log origin/master..mytopic
+    $ git log origin/master..myfix
+
+If you are fixing a longstanding bug, you may even want to do
+
+    $ git checkout -b myfix-for-2.29-and-above v2.29.3
+    $ git log origin/master..myfix-for-2.29-and-above
+
+To test your various topics, you would then do
+
+    $ git checkout -B trial origin/master
+    $ git merge mytopic
+    $ git merge myfix
+    ... build, test, install, employ it for daily use ...
+
+And you can make sure you do not step on toes of others by doing
+trial merges
+
+    $ git checkout -B trial origin/seen ;# or origin/next
+    $ git merge mytopic
+    $ git merge myfix
+    ... build and test
+
+which is highly recommended.  This will give you a chance to notice
+who, if any, are working in areas of the codebase that potentially
+overlaps with what you are working on before you even send out your
+series for review.
+
+> + - For `seen`, DO NOT pull with `git pull`. This is because seen is
+> +   in constant flux, and most often your local seen is divergent from
+> +   the origin, caused by force-push from the maintainer. Attempting
+> +   to pull either via merge or rebase will most likely end in
+> +   conflict. Instead, pull by resetting the local seen to the origin:
+> +
+> + $ git reset --hard origin/seen
+
+Even better, do not even create your own 'seen' branch at all.  If
+you are interested in what is going on
+
+    $ git log --first-parent --oneline origin/master..origin/seen
+
+might be worth paying attention to, and checking out the tip of
+topics of other people you seen in the output and playing with it on
+a detached HEAD may also be useful, and if you find bugs in other's
+work, you can futz with the code from that commit and you may end up
+with a patch you can send as an improvement suggestion to the
+original author of the topic.  But 'seen' as a whole is rarely of
+interest, except for the purpose of learning what other topics may
+be in flight.  Nobody sane is supposed to be running the version
+from 'seen'; after all, the selection criteria of the topics in it
+is "some of the topics that the maintainer happened to have seen",
+and not even "these topics are interesting, promising and are wished
+to be in 'next' someday".
+
