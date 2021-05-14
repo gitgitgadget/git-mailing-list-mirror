@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66678C433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 11:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFADC433B4
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 11:56:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4653861406
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 11:56:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 445D761406
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 11:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232564AbhENL5u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 07:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46358 "EHLO
+        id S232658AbhENL5v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 07:57:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232409AbhENL5t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 07:57:49 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52235C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 04:56:37 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so5084253otp.4
-        for <git@vger.kernel.org>; Fri, 14 May 2021 04:56:37 -0700 (PDT)
+        with ESMTP id S232428AbhENL5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 07:57:50 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1544DC06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 04:56:39 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so26244803oth.5
+        for <git@vger.kernel.org>; Fri, 14 May 2021 04:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5RFBlhMgpyZpA/ZONYGLWsJTLeqpmosbKmwfuSpvfoc=;
-        b=j2jYYmLcXbTSVtXcnVWvdee7OF8QnZoe64larvxlzh6/BOQd8DEchhgv5zFEXIU29r
-         uSu6oBZIAUEHpS5+lveMEoDVks8jT4GYUSXiEQM4l6QBCX4ByNzrlV/uOIuZl4Qoqt4a
-         /Icw+7TWAbThAn81sQ3VP16LSnn3NINwmUQ8VyipCKyN/7iExOFP4Zk7EFcda5/vFOco
-         JGo4qOHJ+nBYhpvf4NLoXAY5++yzT3CpspQyVUlXlkL8dCfWfA4zTKGUUTo8jTl0zc/q
-         aS4lzYEm7vMI6s41x1xRFIWQvctw9bb+Cug7xBe5ylrWBZyY/ruApxNVZtLmA1gCWj8U
-         SxUg==
+        bh=eELljfT6wicp9sMuiJj+IVC8he2MZfvlcRihzftFcsE=;
+        b=fsEv/2qTiwodQCZlC+waPW/2ZRkiAhKukZK7hsi1MTz4ryeUbuh6J8Zy5i4Q1+sBF9
+         cYocDQ67t2+DZprOBNm5gwHyIq5+JywtIdLUle9Xv2dKqwASCuN2xddLFDR/Yaniz3kY
+         hIEiiO/ZRS5HXa0jdOl1SGBhLxvOGqouDSFfWcPSEzX0m2cj1i+IctQNcRWeRlgZyB8z
+         Oanq+a6uxvK8Ann7lj2XpnqlyYo9m+VF6AX62p7wZ1BGT8OgI08hXCjHP9MbhLQQ5ypX
+         BhyMUcLtPna25ooMfqmo3ami2P96skLQLyaMa/xbAUhp0oEz/1MrkTAQ6SntBN5coP/8
+         AHxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5RFBlhMgpyZpA/ZONYGLWsJTLeqpmosbKmwfuSpvfoc=;
-        b=W0LU89MIgBSmMbL5oADBBQD1mo1ToALw3VaJpsacqIQzebVY8qGV9Bta1sTvnpezr6
-         oqQ5Lzi6fFC9XYGTeYA8f6onbWKPpEJbPSY8VaAUSZjV9cZNIk1oKd3S/GWK/rM9Ni2S
-         erUa1xZzzzq1oD2mpXy4Blt7fgq2fRpwQL/Z8nHoOnqaptQCuz0Dhs/3G3SdXqcJtSbB
-         DkgbiCn1l94xGt9p45OM7qszIhHetTiZASlwuY/1gSeexkXrfoPAUlqnlWGGVvFI5zKo
-         iAYoESDg+2as9HA9gTZZlKNqfoPmJ7ZH87efjkaBu6MFSIBFePK5POa72d8F6K5QxypD
-         c/Ig==
-X-Gm-Message-State: AOAM530uKdsZ5J4e5L/T7nF51F6VyNMT093PwTU1NNpA4sF+Ad1A/VD5
-        SfuMHTS+as+rcHuwhc05hoHlUoQ+UGgY6A==
-X-Google-Smtp-Source: ABdhPJzfC6CDjFuXuIYumDnCT/bLLfmQDPx7P7S4NdZvfcvvTggZ1IORqaVzi5c5s1uLJ5GMLInTZQ==
-X-Received: by 2002:a05:6830:4014:: with SMTP id h20mr39633756ots.62.1620993396568;
-        Fri, 14 May 2021 04:56:36 -0700 (PDT)
+        bh=eELljfT6wicp9sMuiJj+IVC8he2MZfvlcRihzftFcsE=;
+        b=QrBQQqRIbsuVV4bW6j/fpoWd5svWMZNre1g/vNzywpZpm/jtbVyWfMH5O5RRMKVDDT
+         SDPTDusUq4iR0OF2GgmXfAJAVgWo5CXdSSwVBSW1DZFGd5P4srJm4b3LLJw5yjKlv/80
+         GnONcONkCv4ZK9RA/sxDREZh8AClBctqO9l+ANVfTOjyxiK2uqXRzTNdjxQ5wLsqUdA3
+         7O7+wMVxl9cc+RJfgzyxF/g/e5A1J6Xs5HpHzQ83vwtZuCWBTyujWJMNddcCbxZ4odk3
+         ndE9yGF6/ksEYfI8PkBBXQ8Ll5hEBy955+ekhRuJu7klAwtxO9QHb1ctf8IZOJGh862s
+         eKtA==
+X-Gm-Message-State: AOAM531V68XV0krAw1IzX5Qulx/R4catnrg5nO6fvqxe0c94/6vEM58F
+        MRe7kmaVY47+UZny8oIh3KeOK3JMV5iZeQ==
+X-Google-Smtp-Source: ABdhPJxqhr5OWbz7h84wVO8FW3HkbPNrVrqACjDgBQiz2zGi8/iDaniN9EOJm7nQT/g9Algn5GlLFg==
+X-Received: by 2002:a9d:7d8d:: with SMTP id j13mr18830353otn.208.1620993398315;
+        Fri, 14 May 2021 04:56:38 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id j26sm749863otk.11.2021.05.14.04.56.35
+        by smtp.gmail.com with ESMTPSA id s6sm1262669otk.71.2021.05.14.04.56.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 04:56:36 -0700 (PDT)
+        Fri, 14 May 2021 04:56:37 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/5] doc: improve asciidoc dependencies
-Date:   Fri, 14 May 2021 06:56:28 -0500
-Message-Id: <20210514115631.503276-3-felipe.contreras@gmail.com>
+Subject: [PATCH v2 3/5] doc: remove unnecessary rm instances
+Date:   Fri, 14 May 2021 06:56:29 -0500
+Message-Id: <20210514115631.503276-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210514115631.503276-1-felipe.contreras@gmail.com>
 References: <20210514115631.503276-1-felipe.contreras@gmail.com>
@@ -76,36 +76,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-asciidoc needs asciidoc.conf, asciidoctor asciidoctor-extensions.rb.
+Commits 50cff52f1a (When generating manpages, delete outdated targets
+first., 2007-08-02) and f9286765b2 (Documentation/Makefile: remove
+cmd-list.made before redirecting to it., 2007-08-06) created these rm
+instances for a very rare corner-case: building as root by mistake.
 
-Neither needs the other.
+It's odd to have workarounds here, but nowhere else in the Makefile--
+which already fails in this stuation, starting from
+Documentation/technical/.
+
+We gain nothing but complexity, so let's remove them.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/Makefile | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 46d9b98dac..0f59cc0853 100644
+index 0f59cc0853..aae8803e4c 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -139,7 +139,7 @@ ASCIIDOC_CONF = -f asciidoc.conf
- ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
- 		-amanversion=$(GIT_VERSION) \
- 		-amanmanual='Git Manual' -amansource='Git'
--ASCIIDOC_DEPS = asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
-+ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
- TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
- TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
- MANPAGE_XSL = manpage-normal.xsl
-@@ -194,6 +194,7 @@ ASCIIDOC_DOCBOOK = docbook5
- ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
- ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
- ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-+ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
- DBLATEX_COMMON =
- XMLTO_EXTRA += --skip-validation
- XMLTO_EXTRA += -x manpage.xsl
+@@ -318,8 +318,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
+ $(cmds_txt): cmd-list.made
+ 
+ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+-	$(QUIET_GEN)$(RM) $@ && \
+-	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
++	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
+ 	date >$@
+ 
+ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+@@ -327,7 +326,7 @@ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+ $(mergetools_txt): mergetools-list.made
+ 
+ mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
+-	$(QUIET_GEN)$(RM) $@ && \
++	$(QUIET_GEN) \
+ 	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && \
+ 		. ../git-mergetool--lib.sh && \
+ 		show_tool_names can_diff "* " || :' >mergetools-diff.txt && \
+@@ -370,8 +369,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+ 
+ %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+-	$(QUIET_XMLTO)$(RM) $@ && \
+-	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
++	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+ 
+ %.xml : %.txt $(ASCIIDOC_DEPS)
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
 -- 
 2.31.1
 
