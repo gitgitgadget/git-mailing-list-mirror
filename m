@@ -8,65 +8,64 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40626C433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6952CC43461
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:15:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1524D6144C
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:14:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 497FE6145B
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 12:15:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232854AbhENMQD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 08:16:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50408 "EHLO
+        id S233153AbhENMQL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 08:16:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232712AbhENMP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 08:15:56 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 280B1C061574
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:14:44 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id v22so23384782oic.2
-        for <git@vger.kernel.org>; Fri, 14 May 2021 05:14:44 -0700 (PDT)
+        with ESMTP id S232478AbhENMP6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 08:15:58 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6858C06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 05:14:45 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id j75so28218944oih.10
+        for <git@vger.kernel.org>; Fri, 14 May 2021 05:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=otm/PrI+MiTE4j38696D4wY8wq/7XarYa+F8PkJSIps=;
-        b=TBHLVCGd3snNxmyxktfDaleFa6cU0aa3rd6he7VU2I4Nru8lriLEUEo8xgfWU1x8EZ
-         iTzbZm0zHW+I3/Vj3LS55DACDoVAjRy8gIGFdcX82IYVeBHw5HSEBoqM1iBuTDG/TEQy
-         6/194/Vt20Y7gHOiiGVB+7Sjo+3ePWoynlVXZM9+rBeSwvaIWK8FaMZpCzlARvigTSbQ
-         JXsdV6rolBR6IcaHENFGemh1VfwsXIyQB4wC6TzIcm2ZNcRlqGTpxY7t0wfEflO2/sgC
-         z07tgsxpQnMvoKqm85eNm5aUPVQbEaePUbEgScfZpPb5raoTfjlGDaYhP//vSqdp7WRJ
-         vclg==
+        bh=ztBaJ2CE2139tz9IYPibSrKG5Xg32re2wYcBYtNISgs=;
+        b=lAYAwtoJOiQmk3SBJsQlo9z4ZhA0kcAhjNhrr6s1Uo2dhypFXisZL+joY/CayuC2hz
+         3B+Y55oCuawy3lrqeEOoSVASgnfQkCNqyWAwq/luRxAACy3g8jv3XR43iRKv+Zkqis6k
+         FHTAWQ9qf2QqMnCt7n7YgUlYumkynzYuV09nvh9si2LSswcQqfBJvYQJPTBjdfGXjpni
+         rNkHYVpk3YGehhwwwJmGOroaXZrscwQuDuZsvnKUWCHlU0R0pRQXCxk61LyA6dK39gYE
+         Q7PpjH3jKcgqGhAj3Rd0j0UoUCnA81LAXELhbaVVcv8tc7AikWHxmok+D4zkE8LcU/Pc
+         fs7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=otm/PrI+MiTE4j38696D4wY8wq/7XarYa+F8PkJSIps=;
-        b=K1nbrJcS0Tg8QBzf7fjsouSouHJmJ9SPvtw48ckgKcRJYOPo/enwJ0YEvrm6cYfaFT
-         g4j26TIDHfrwy+XuN3PKQp8JoFhJpBlTfGEmF5IJT0SMHvKjgRqtjixAPNQiSgsAjYPi
-         H0rM9pGQ/CQn68owoT8fZRDBf7vZYI6fXJtdYqN8eta8oA6bhHOoEt6/ODBC6l5wF98N
-         9/D9+1i2uizumDLucMN8+QOXEHCMmI5/w9g9w7NUg0xTgpK0wlssqCZADWTw/Z4K1QdN
-         ovpBucNTZjaoDo+62QrOU3h3qTmRSrZHOaI/vo3EwRciNAZMyagwFRgNZCb2B9gTrGEz
-         h80A==
-X-Gm-Message-State: AOAM530+lzJzPBIJ87AYUzc2SGtEMuG/FcXgpvUDpaEaSsXnJVQvsgwA
-        pvTA1IxAwH0ornlgiidT/8Ybm9EJKPM+aA==
-X-Google-Smtp-Source: ABdhPJxCvSfyBoPXiXIpE3Tj+Zdu7qeyNl3R8XRhOJFRGv0a2hS+2nlI0+o8FqVMg4YQ3USPcydadQ==
-X-Received: by 2002:aca:4ec4:: with SMTP id c187mr32495557oib.34.1620994483371;
-        Fri, 14 May 2021 05:14:43 -0700 (PDT)
+        bh=ztBaJ2CE2139tz9IYPibSrKG5Xg32re2wYcBYtNISgs=;
+        b=sKhwD8x1b9wBJ3gTNwuipMPoKv3SvTEc9QMmN7OLMpViTs6cvb9pYhjS35GeMtwMeJ
+         +qJqwtlUK29SPs8nKCT3IyYC+gS/n3fO+aHOGHL1DvGIrO5pix2yCbrJLpl0OJWhCga8
+         6eG3R9ptQqMiueHNeVECXDDX195yauD9y/NJ+EE1ARANKuufFi9TjFn25rLJnKtnkeLl
+         87l8A2KK55ny/NxWWGFLiobVRNbSRDh1Wv7Gzdy4mxITE1svtjkzktCrOyZL4Oa+g6SV
+         haKlYA6M7X1QJ7ZcdcxV8c2/tKgY666ymOO3cSSSb+v5m5J8c2M1C2hDI47U2f15ZroY
+         E68g==
+X-Gm-Message-State: AOAM530DT6JxdyFfk91TOsAyC6RzDoH1jgB3rl7CaoIcOiKVJs/ArKhN
+        J/l4mvRkyBVUCSX8zXBDiO1aC7MNSNUP4g==
+X-Google-Smtp-Source: ABdhPJwC4wg7RZT2E30L2R03h9BHim+HVF5lofgAxxfE9ujNz60geis11tng2oI6B3z6P8woytI7zQ==
+X-Received: by 2002:aca:aa08:: with SMTP id t8mr6566118oie.66.1620994484953;
+        Fri, 14 May 2021 05:14:44 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id h9sm1288489otn.56.2021.05.14.05.14.42
+        by smtp.gmail.com with ESMTPSA id s24sm1255155ooh.28.2021.05.14.05.14.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 05:14:43 -0700 (PDT)
+        Fri, 14 May 2021 05:14:44 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH 04/11] doc: use asciidoctor to build man pages directly
-Date:   Fri, 14 May 2021 07:14:28 -0500
-Message-Id: <20210514121435.504423-5-felipe.contreras@gmail.com>
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 05/11] doc: asciidoctor: add linkgit macros in man pages
+Date:   Fri, 14 May 2021 07:14:29 -0500
+Message-Id: <20210514121435.504423-6-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210514121435.504423-1-felipe.contreras@gmail.com>
 References: <20210514121435.504423-1-felipe.contreras@gmail.com>
@@ -76,43 +75,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's no need to use xmlto to build the man pages when modern
-asciidoctor can do it by itself.
+Fixes the doc-diff:
 
-This new mode will be active only when USE_ASCIIDOCTOR is set.
+-       Please see git-commit(1) for alternative ways to add content to a
+-       commit.
++       Please see  for alternative ways to add content to a commit.
 
-Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/asciidoctor-extensions.rb | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 981e322f18..ce9cea0817 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -198,6 +198,7 @@ ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
- DBLATEX_COMMON =
- XMLTO_EXTRA += --skip-validation
- XMLTO_EXTRA += -x manpage.xsl
-+TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
- endif
- 
- SHELL_PATH ?= $(SHELL)
-@@ -362,8 +363,13 @@ $(OBSOLETE_HTML): %.html : %.txto $(ASCIIDOC_DEPS)
- manpage-base-url.xsl: manpage-base-url.xsl.in
- 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
- 
-+ifdef TXT_TO_MAN
-+%.1 %.5 %.7 : %.txt $(ASCIIDOC_DEPS)
-+	$(QUIET_ASCIIDOC)$(TXT_TO_MAN) -o $@ $<
-+else
- %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
- 	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
-+endif
- 
- %.xml : %.txt $(ASCIIDOC_DEPS)
- 	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@ $<
+diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
+index d906a00803..ad68f7b0bb 100644
+--- a/Documentation/asciidoctor-extensions.rb
++++ b/Documentation/asciidoctor-extensions.rb
+@@ -15,6 +15,8 @@ module Git
+           "#{target}(#{attrs[1]})</ulink>"
+         elsif parent.document.basebackend? 'html'
+           %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
++        elsif parent.document.basebackend? 'manpage'
++          "\e\\fB%s\e\\fR(%s)" % [target, attrs[1]]
+         elsif parent.document.basebackend? 'docbook'
+           "<citerefentry>\n" \
+             "<refentrytitle>#{target}</refentrytitle>" \
 -- 
 2.31.1
 
