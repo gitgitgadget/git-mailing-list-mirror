@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E8E1C433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E26DBC433ED
 	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77D8C61166
+	by mail.kernel.org (Postfix) with ESMTP id C8DAF61440
 	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233686AbhENScv (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233819AbhENScv (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 14 May 2021 14:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50258 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233640AbhENSch (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 14:32:37 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F74DC06138F
-        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:25 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id h4so140948wrt.12
-        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:25 -0700 (PDT)
+        with ESMTP id S233573AbhENSci (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 14:32:38 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE72AC061760
+        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:21 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id f75-20020a1c1f4e0000b0290171001e7329so218752wmf.1
+        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HVK7x9ytblDj8iy4lmiMNtwNDpdpLC/uAkky1UzqoLw=;
-        b=hQ1lrAIRnMZo58X9mawtlOtMDVP1vsRXgcc6X814AUjB686fzIA37E1yfAP8M0DvOJ
-         ZpJMyoU8M+1x6sRGKaRQdLNljXyxExxmMS6+lmbnsiYDCMqELk/liLgA6/JhTET/blSp
-         f08XKky9kjbkoNUJJaUGY9BxwvUMSvZOCohJBFTlWEA8o3d0zKlhna4GkbCW5FqsRo5i
-         8Yyfg+MK4KjJUR1lia8HDYEoKMW5g1HBKEFSGQShbwSbBLSeV4i8hoeVBT0OYDlFCrDA
-         WNi3wwCKfcmyO8nF5lPTcDUREH3lFeGBaH9LiMh6cY/EO/F2scl1/V7TD05YWWOraqL3
-         0tdA==
+        bh=IKPjTUqki+7odL+EABJRxmdzP4v6AWl9RXlIatOMDLM=;
+        b=pSB21RPeDgNv9QiLYrSqwohqTkokd+n7t+kdchckQBtqYMLNUtlf0ABeaY4pXAO+qN
+         wzChLu+mSOlFrdcoY6JYqG1m327M8KPcixEg91cYZ7niujCIVSwhp9UM4UOEaHylH9KC
+         2pPV6/eAn5H001CwtY1aEZSq6a6K2G+aMaSFRJfhWhYgW+r7YrxpyO8zMLRtYmr9aP1e
+         v9Fv00QvDTnLVItNyBzngNVvDLN7VvGkOynh7FB8U6Czzbqab0FY/UWE4jok7cpeVchN
+         usoIE0AYs3JrMrA9u69q3cUTjZAVOboIZCajzglFMa2WPIit2sjVME3UCr7rJ+KDYzYo
+         aMkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HVK7x9ytblDj8iy4lmiMNtwNDpdpLC/uAkky1UzqoLw=;
-        b=j9DXAzGNBXfMO1QpoOhwOAxbcJvpE4HeDZS+WfXtXotGD9Tlo/31umRdu3iR70vNp5
-         Ot5BvK11VgmHMX37RddEAqR9D0xZdIMst5GuGOuP4ZcDTlTkYlAD+kHyCBOfUd8DAuhZ
-         htPH7zfwP31RB9QEL6Ote/kLdfwWP1OoU5840Geyo2ukGAMeQyFYIyu9r9bwsrdb+5Av
-         k/qc4hnR3YwY0NF9YDXaughJ5Usdn46WtoqIZI30YxiwevYo8M5njwv49oz3sqgYBxhy
-         TdjJgbS3xzbV/HI9w1uu07RuKZNcT+9lrxiHkmIrAtwGVpxyv7MD1K79SR8nKI72vKAu
-         ITLA==
-X-Gm-Message-State: AOAM533vGdPQ6+IJoHGMVn+D9qIRsElpiC2XA4CQU0KXTzHbDvhVU++l
-        MILGeBzqr1aCpFQZ87SFuKqfy32C3t0=
-X-Google-Smtp-Source: ABdhPJx7WWwFgulPceYHRmIEoaVQpcX1PgoWyuDNDL0j5SV7BvIYkA+7bvw8EgE6iUXdcfqsuTOesA==
-X-Received: by 2002:a5d:410e:: with SMTP id l14mr15014563wrp.230.1621017084253;
-        Fri, 14 May 2021 11:31:24 -0700 (PDT)
+        bh=IKPjTUqki+7odL+EABJRxmdzP4v6AWl9RXlIatOMDLM=;
+        b=DD8KwHi/ovtYbWbXoCzaHcLyYzdix9lYGxDq0Qy89IvblHs+vGd6eDczz3UoIwaKWt
+         ld3oMBTYWA+TQJ8GVw/g4gxupujp5V1ZB9/ksE0rQeWr7gvJ8HhoGgf9D3cpGGIxAXNQ
+         ifsNczaoVZLjPWU8A1XcKkV9+z3B9ENk8QTcYeOg2wHBD67hrX8i6tMsjFX8Y0FM+2sC
+         mjniQ5w0QdXBlVXM9haTurt/+ObCPnz4uWseJIIj3pLREciWpbFloUvs0qiyTnsHQbv8
+         vSPRrlK0oMSDGZ10Zxotl1KcxQAFXw7AwLDART8+QTnQxWoi9cvvdSEEoXxnIMRwsM8z
+         Q3Og==
+X-Gm-Message-State: AOAM533iut/LWJuTPCHZrT99a9DQOVh94URG4HtfsHrgd/8CTJRzT0Jq
+        4AGcSIWyn+Zf0pjfjp8LedTLsw8G9ZY=
+X-Google-Smtp-Source: ABdhPJzpcvAFORdLbmQSvbRGNEAYgu5u32zQVIldfBvjYaV2DKlD122j1HhpHF1Qal02q+3Nt7tY3A==
+X-Received: by 2002:a1c:7711:: with SMTP id t17mr51809198wmi.6.1621017080758;
+        Fri, 14 May 2021 11:31:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g10sm710454wrq.12.2021.05.14.11.31.23
+        by smtp.gmail.com with ESMTPSA id b8sm7532729wrx.15.2021.05.14.11.31.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 11:31:23 -0700 (PDT)
-Message-Id: <b72507f514d130afc4aa651116a96a007c92e242.1621017072.git.gitgitgadget@gmail.com>
+        Fri, 14 May 2021 11:31:20 -0700 (PDT)
+Message-Id: <47da2b317237c4ce8c95ce847e1c65c2d82fcfb7.1621017072.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
 References: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
         <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 May 2021 18:31:11 +0000
-Subject: [PATCH v3 12/12] fsmonitor: integrate with sparse index
+Date:   Fri, 14 May 2021 18:31:07 +0000
+Subject: [PATCH v3 08/12] dir.c: accept a directory as part of cone-mode
+ patterns
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,114 +80,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-If we need to expand a sparse-index into a full one, then the FS Monitor
-bitmap is going to be incorrect. Ensure that we start fresh at such an
-event.
+When we have sparse directory entries in the index, we want to compare
+that directory against sparse-checkout patterns. Those pattern matching
+algorithms are built expecting a file path, not a directory path. This
+is especially important in the "cone mode" patterns which will match
+files that exist within the "parent directories" as well as the
+recursive directory matches.
 
-While this is currently a performance drawback, the eventual hope of the
-sparse-index feature is that these expansions will be rare and hence we
-will be able to keep the FS Monitor data accurate across multiple Git
-commands.
-
-These tests are added to demonstrate that the behavior is the same
-across a full index and a sparse index, but also that file modifications
-to a tracked directory outside of the sparse cone will trigger
-ensure_full_index().
+If path_matches_pattern_list() is given a directory, we can add a fake
+filename ("-") to the directory and get the same results as before,
+assuming we are in cone mode. Since sparse index requires cone mode
+patterns, this is an acceptable assumption.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- sparse-index.c              |  7 ++++++
- t/t7519-status-fsmonitor.sh | 48 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+ dir.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/sparse-index.c b/sparse-index.c
-index b2b3fbd75050..32ba0d17ef7c 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -195,6 +195,10 @@ int convert_to_sparse(struct index_state *istate)
- 	cache_tree_free(&istate->cache_tree);
- 	cache_tree_update(istate, 0);
+diff --git a/dir.c b/dir.c
+index 166238e79f52..ab76ef286495 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1378,6 +1378,17 @@ enum pattern_match_result path_matches_pattern_list(
+ 	strbuf_addch(&parent_pathname, '/');
+ 	strbuf_add(&parent_pathname, pathname, pathlen);
  
-+	istate->fsmonitor_has_run_once = 0;
-+	FREE_AND_NULL(istate->fsmonitor_dirty);
-+	FREE_AND_NULL(istate->fsmonitor_last_update);
++	/*
++	 * Directory entries are matched if and only if a file
++	 * contained immediately within them is matched. For the
++	 * case of a directory entry, modify the path to create
++	 * a fake filename within this directory, allowing us to
++	 * use the file-base matching logic in an equivalent way.
++	 */
++	if (parent_pathname.len > 0 &&
++	    parent_pathname.buf[parent_pathname.len - 1] == '/')
++		strbuf_add(&parent_pathname, "-", 1);
 +
- 	istate->sparse_index = 1;
- 	trace2_region_leave("index", "convert_to_sparse", istate->repo);
- 	return 0;
-@@ -291,6 +295,9 @@ void ensure_full_index(struct index_state *istate)
- 	istate->cache = full->cache;
- 	istate->cache_nr = full->cache_nr;
- 	istate->cache_alloc = full->cache_alloc;
-+	istate->fsmonitor_has_run_once = 0;
-+	FREE_AND_NULL(istate->fsmonitor_dirty);
-+	FREE_AND_NULL(istate->fsmonitor_last_update);
- 
- 	strbuf_release(&base);
- 	free(full);
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 45d025f96010..f70fe961902e 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -73,6 +73,7 @@ test_expect_success 'setup' '
- 	expect*
- 	actual*
- 	marker*
-+	trace2*
- 	EOF
- '
- 
-@@ -383,4 +384,51 @@ test_expect_success 'status succeeds after staging/unstaging' '
- 	)
- '
- 
-+# Usage:
-+# check_sparse_index_behavior [!]
-+# If "!" is supplied, then we verify that we do not call ensure_full_index
-+# during a call to 'git status'. Otherwise, we verify that we _do_ call it.
-+check_sparse_index_behavior () {
-+	git status --porcelain=v2 >expect &&
-+	git sparse-checkout init --cone --sparse-index &&
-+	git sparse-checkout set dir1 dir2 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git status --porcelain=v2 >actual &&
-+	test_region $1 index ensure_full_index trace2.txt &&
-+	test_cmp expect actual &&
-+	rm trace2.txt &&
-+	git sparse-checkout disable
-+}
-+
-+test_expect_success 'status succeeds with sparse index' '
-+	git reset --hard &&
-+
-+	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
-+	check_sparse_index_behavior ! &&
-+
-+	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
-+	EOF
-+	git config core.fsmonitor .git/hooks/fsmonitor-test &&
-+	check_sparse_index_behavior ! &&
-+
-+	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
-+		printf "dir1/modified\0"
-+	EOF
-+	check_sparse_index_behavior ! &&
-+
-+	cp -r dir1 dir1a &&
-+	git add dir1a &&
-+	git commit -m "add dir1a" &&
-+
-+	# This one modifies outside the sparse-checkout definition
-+	# and hence we expect to expand the sparse-index.
-+	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
-+		printf "dir1a/modified\0"
-+	EOF
-+	check_sparse_index_behavior
-+'
-+
- test_done
+ 	if (hashmap_contains_path(&pl->recursive_hashmap,
+ 				  &parent_pathname)) {
+ 		result = MATCHED_RECURSIVE;
 -- 
 gitgitgadget
+
