@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEB23C433B4
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19DF7C433ED
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C397861444
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1BFA61444
+	for <git@archiver.kernel.org>; Fri, 14 May 2021 18:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233749AbhENScf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 14:32:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50258 "EHLO
+        id S233813AbhENSci (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 14:32:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233616AbhENSca (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 14:32:30 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93F6EC06175F
-        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:18 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id o6-20020a05600c4fc6b029015ec06d5269so235948wmq.0
-        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:18 -0700 (PDT)
+        with ESMTP id S233661AbhENScb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 14:32:31 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ECC8C06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:19 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id b19-20020a05600c06d3b029014258a636e8so214751wmn.2
+        for <git@vger.kernel.org>; Fri, 14 May 2021 11:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pAyAAv6l4SLCdrEeaFHhQFp08BencxoPH4VLlINqObY=;
-        b=Dn0MYHe13HsK0uSFKBIBOt7KkWU6fMGjJaZ0QpHBGIx/VPMBdOIyOxuXVElkYGwdeD
-         DfzqxiVSLyNCk0bb002lcTCvbEcj2KUVpWLqjxt2/ocNBdNz6ITn/Uio1cyXNrPsF5T+
-         0m/JgndP2OTsdr4eUshDWJL3ZFHD3P0+CjIH5AqFhYb5cfl7W+CUtNWFAPZN88foJxCg
-         d7hk87jjNU9GxkAlkRdcWn6XY9UNQtQShc5oN+yv0W1efjAwuCTk5hQ79bfQACcs0ZpU
-         UWhfUhEZudOG7zxzEWm299d5PatfTNmg4TWIT4j50QvG1uMomXl74NZw0uYo50VbR2jS
-         BYTQ==
+        bh=wFfpok35DynSJzLw2iHIzdshoI7yibKc8zfxCLq0Mn8=;
+        b=iFlK0hB5qcmq25w1ecdyMbTFXPTdD3be4NsiXaAJ5jsj9tfSnkP4tXkVuXwtASaCYs
+         IC8jC/1fHnDg4HZxa9Tn4rnziHQLYhq9ys2zjKpN1zOlnuIZOEs4L0XIfTViQR8gi65v
+         av9E69PrrUSJgnXzhCmRfg6WSKLHL1YTyghNrfcyZCLzY31Az/IGfbzgAD7AwE6ohtos
+         UKMD+ZhBAx0SaQ8mFligUMCTkC0XoHM7tYnAWqn+7K5NSfUy4itCs+3REAgucONVIZWH
+         0rV6Izboc8C179FC6skqWO2zPMArJP0DWD+PqBCDr9ffP4LzXq5eBEtD3TgyqNWrZqJ4
+         /R8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pAyAAv6l4SLCdrEeaFHhQFp08BencxoPH4VLlINqObY=;
-        b=JO6lK6EOio0XGSAFpvsAgc2AUnnCE6v7kC79/rjcFgXyW4OOy7rsBl3abNQGx17+a9
-         5Pw17TjtOiSnlObPWSUApSnuVhzbrl5M1OKHABIQ29tuVRjg8GGkj1F51fM3aPb8DAFZ
-         qdWcQncN7kF8zI1Qrql9koTr/meFMOiL+Azz111AzVxg+DCbrYsuNxyYT4wrDoZGKbcb
-         qqkdSYJ/DIZvjjwzSquzYmBkimzMhlC9WBmbJSv+iSnY5BLG5qznctxWkQ732gKR4d+R
-         nHdNbcWgLhDCNbj6HfsgyCwqqhAAdaz68EV2I6hV0hNAa8cGGDiaNMLnhK5bW1Gqtljk
-         CX9w==
-X-Gm-Message-State: AOAM531zOAlQ1TxVDOZ3G4Hzi6pH3pL5r0xuwOrp+vvNkz19p6Ucdi2S
-        uJYrgMSqZRWA5cPvvsevOuM71XXuF30=
-X-Google-Smtp-Source: ABdhPJy5p2ZCykh5Tqe72WY4LHhv9mg/hoNqPy2w1J7s1XO3DzFxseg/CcjRXMbkZIDFty2utQQlbg==
-X-Received: by 2002:a05:600c:4fd3:: with SMTP id o19mr10488350wmq.17.1621017077351;
-        Fri, 14 May 2021 11:31:17 -0700 (PDT)
+        bh=wFfpok35DynSJzLw2iHIzdshoI7yibKc8zfxCLq0Mn8=;
+        b=le44p7g+l0tLnN84EDjERngS+m/zpCyovTmFSLDJQdm9qcGNPvjcYCM5Z56f3SAXkR
+         z1WngUblRZF5q2EME6CnWqGya+Mrr5ZRlm82laZD1k/d0Yo/z1oZFk6c7nDlhGDqL3Ad
+         NkP2fM9mfZxFl1tFAStaKE3qivjsvSRFJmta3I1IY4w1Z6hwtLqQCymOhmchAUUTKz4J
+         PY+ZWPnEv8A96WzlQwm3kdQshyqfmkYOkpEmLQj8o6rsYUabjC8oA9yExthJjqnqlpMs
+         LcjeQiM4PiFxvnV+gip7VlhDSuM1MqVioSN6Qln0Q00e4gdU2JXVYapBwx1XSBnkgQYk
+         XdTA==
+X-Gm-Message-State: AOAM531bfBCC0XKUuiecgeQqKpY56kVcFslUaOZQXrPVk9CcTARNHKiX
+        il+gqab5I/G0psv0/UjGxfDP+JsbLTk=
+X-Google-Smtp-Source: ABdhPJzSFOweu4X0DRneEM3cpPmTJC0Ti31ex93IWax0cxBYnMlDGl1/T7oKp/0VLNZ7DF2eGG0DLA==
+X-Received: by 2002:a05:600c:4f4d:: with SMTP id m13mr51509375wmq.4.1621017078195;
+        Fri, 14 May 2021 11:31:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 61sm8008268wrm.52.2021.05.14.11.31.16
+        by smtp.gmail.com with ESMTPSA id h9sm5877183wmb.35.2021.05.14.11.31.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 11:31:16 -0700 (PDT)
-Message-Id: <a80b5a41153f07a58167be9c9759f3af3048cc5d.1621017072.git.gitgitgadget@gmail.com>
+        Fri, 14 May 2021 11:31:17 -0700 (PDT)
+Message-Id: <07a45b661c4a6ecd63ede19c9e058a8879069742.1621017072.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
 References: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
         <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 May 2021 18:31:03 +0000
-Subject: [PATCH v3 04/12] t1092: add tests for status/add and sparse files
+Date:   Fri, 14 May 2021 18:31:04 +0000
+Subject: [PATCH v3 05/12] unpack-trees: preserve cache_bottom
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,78 +79,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before moving to update 'git status' and 'git add' to work with sparse
-indexes, add an explicit test that ensures the sparse-index works the
-same as a normal sparse-checkout when the worktree contains directories
-and files outside of the sparse cone.
+The cache_bottom member of 'struct unpack_trees_options' is used to
+track the range of index entries corresponding to a node of the cache
+tree. While recursing with traverse_by_cache_tree(), this value is
+preserved on the call stack using a local and then restored as that
+method returns.
 
-Specifically, 'folder1/a' is a file in our test repo, but 'folder1' is
-not in the sparse cone. When 'folder1/a' is modified, the file is not
-shown as modified and adding it will fail. This is new behavior as of
-a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
-2021-04-08). Before that change, these adds would be silently ignored.
-
-Untracked files are fine: adding new files both with 'git add .' and
-'git add folder1/' works just as in a full checkout. This may not be
-entirely desirable, but we are not intending to change behavior at the
-moment, only document it. A future change could alter the behavior to
-be more sensible, and this test could be modified to satisfy the new
-expected behavior.
+The mark_ce_used() method normally modifies the cache_bottom member when
+it refers to the marked cache entry. However, sparse directory entries
+are stored as nodes in the cache-tree data structure as of 2de37c53
+(cache-tree: integrate with sparse directory entries, 2021-03-30). Thus,
+the cache_bottom will be modified as the cache-tree walk advances. Do
+not update it as well within mark_ce_used().
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 38 ++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ unpack-trees.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 98257695979a..fba98d5484ae 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -238,6 +238,44 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout -
- '
+diff --git a/unpack-trees.c b/unpack-trees.c
+index dddf106d5bd4..1067db19c9d2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -586,6 +586,13 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
+ {
+ 	ce->ce_flags |= CE_UNPACKED;
  
-+test_expect_success 'status/add: outside sparse cone' '
-+	init_repos &&
++	/*
++	 * If this is a sparse directory, don't advance cache_bottom.
++	 * That will be advanced later using the cache-tree data.
++	 */
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		return;
 +
-+	# adding a "missing" file outside the cone should fail
-+	test_sparse_match test_must_fail git add folder1/a &&
-+
-+	# folder1 is at HEAD, but outside the sparse cone
-+	run_on_sparse mkdir folder1 &&
-+	cp initial-repo/folder1/a sparse-checkout/folder1/a &&
-+	cp initial-repo/folder1/a sparse-index/folder1/a &&
-+
-+	test_sparse_match git status &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+	run_on_sparse ../edit-contents folder1/a &&
-+	run_on_all ../edit-contents folder1/new &&
-+
-+	test_sparse_match git status --porcelain=v2 &&
-+
-+	# This "git add folder1/a" fails with a warning
-+	# in the sparse repos, differing from the full
-+	# repo. This is intentional.
-+	test_sparse_match test_must_fail git add folder1/a &&
-+	test_sparse_match test_must_fail git add --refresh folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git add . &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/new &&
-+
-+	run_on_all ../edit-contents folder1/newer &&
-+	test_all_match git add folder1/ &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/newer
-+'
-+
- test_expect_success 'checkout and reset --hard' '
- 	init_repos &&
- 
+ 	if (o->cache_bottom < o->src_index->cache_nr &&
+ 	    o->src_index->cache[o->cache_bottom] == ce) {
+ 		int bottom = o->cache_bottom;
 -- 
 gitgitgadget
 
