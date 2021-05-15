@@ -1,74 +1,111 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.4 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,MONEY_FREEMAIL_REPTO,MONEY_NOHTML,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFF95C433ED
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 10:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 399C1C433B4
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D07DF6128A
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 10:15:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06DAE613BB
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234801AbhEOKRC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 06:17:02 -0400
-Received: from slot0.bmz-groups.com ([185.121.120.126]:47983 "EHLO
-        slot0.bmz-groups.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231222AbhEOKQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 May 2021 06:16:59 -0400
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 May 2021 06:16:59 EDT
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=dkim; d=bmz-groups.com;
- h=Reply-To:From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding; i=postmaster@bmz-groups.com;
- bh=XFoCwE59FjueVPQF0gp/uMKXq/s=;
- b=Nj7LGth7/Ua5Ae8aBsvbnpF5BbdiUZyWYXTn4SyYWXv3/Q3Ets33/shBtE83hKQ+T3YB9z57bJM7
-   E8hgYGaZqb76SACAu07dsSX1d9zEFpJgtKF4SDt7rtFkmIsQhkFDrwl8/6lUe2bsbQBbjrc/zxSt
-   9taxyD25XcMEuN5ofs/8KaI9o5RwLLVDnoPQeZqzXBf8ySZ7po5qnHrrHqS/t5fho9J6f4u1QRDw
-   ga2nzafla9hMjHjG2HRkhLGEjVwj2Jx6GCS81w20E4i076Aa82w8rMsUZ9WYCWQ6i0V7mRxkWhlY
-   84iO82xK3WYqWc0XgkrdmK5fCOVn8mfTcuWWbA==
-DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=dkim; d=bmz-groups.com;
- b=ZCABMpG9bJ86YJDpKQuQYCpW3jq6W1D2fcQ4MrCexRPDYKrCAKs4Ig+JEjWNeaWtcY+6RWP9ZhyZ
-   IG7A4MDxJbYcXD0LOajoPDVzQIEYF8iwEZP9M42jheEhdASQrXHAWQGbzKQUQBQL8XFacZS5+IeN
-   NGLSYUZNJNZDE17yQu3Pvghgg+ViMrAqBWx57bwpLdnSfIhazLHv7svFBgHD1pDnwkIBP73Sr6Nq
-   kBaNLLGtqjRi6zb3WQq4lLkCgszsaWLl7T3mSEa/4WKBEHpF47ywvbH9AJ9Y6yr/VN6lLBzYiaJH
-   BUPBprVz/84OnS13AfTWPNL7zjrSM6xmLLb57A==;
-Reply-To: mepramitbc@gmail.com
-From:   Christian Garcia <postmaster@bmz-groups.com>
+        id S231916AbhEOL6L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 07:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230448AbhEOL6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 May 2021 07:58:09 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 258A2C061573
+        for <git@vger.kernel.org>; Sat, 15 May 2021 04:56:56 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id c3so2051845oic.8
+        for <git@vger.kernel.org>; Sat, 15 May 2021 04:56:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CYMLOVhTIDN6rp5Muq+LudJgWqB82yrroTOfrm9MdFc=;
+        b=jHAmloSiehRYlwe2qOkoHkUALkdl4m85dZZx8KTwr8OCP9FrXmowFW8p7eYGw7bYvu
+         RDK5sx/V5DjOH+Ye7b1iDW5dJ8z4XvrBBACB626tWgRsF5Xmky8vQQOWsBrXTGrgTQuY
+         xG2ZfFFDl8oqIGM7ACuz8mriE2+UgaICMIxdygHfIPHEBLsKGfjdMlRRXrOw+eylHxlY
+         e4KtTzOegg7Gi2M7E3sAqCCAlsrTHNPCzJ/AaC53y9ozsCKrIgFjyKOQJkdHb7wVLux9
+         vn+pMZCtZBxffsBbiixX+3Z5rR+esBsShIFhyL7D+tgAfqsVGDS3foLmXRf998u3YX7z
+         wg1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CYMLOVhTIDN6rp5Muq+LudJgWqB82yrroTOfrm9MdFc=;
+        b=A1OKEFS1buHCSYI87YI6UuX+wtS2Xaapqbvr05KFxYsj48Gc67k+S0uIiwD8qijN8X
+         SY14+Yw7tf5viHk/7AxOZvNfz+k2xtvZ3bq0K+vINxMtuaks0AJt502vABRwhnYWgnKW
+         SWvNw58NlBMXKLIOV/NB21efQH598Fx2fjyvSn8H24wp2Bh4l6kSsEIDXd1GrSn7LIbU
+         J+5jhNrE5Io/Kenb1c/RfYJKik+YBKxhQkdgNPgq8gkfnU6VkfaQtMAG6N9X/ugTj5Jb
+         lB09aeJHnqvbka7ICMhjwuopDZ+PFu8MoHFa/sUR+hEwH8taQ7++XOGX2BCP61g9Z2Rd
+         692w==
+X-Gm-Message-State: AOAM532L5C9zu7bw3TysKDovJ4lzYqwSMCcdtJufH4uCuC50wS89V6uV
+        69hN+fawGpkaAnL+UoWffkS+clyP/f5ikg==
+X-Google-Smtp-Source: ABdhPJzmVAMltC82QpVbHbyRsdM7zOIBOlcfsYqc73bnSuThj8jUGaQ000kriOgVu/CyQlgvQCmA2Q==
+X-Received: by 2002:a05:6808:1149:: with SMTP id u9mr5310924oiu.61.1621079815207;
+        Sat, 15 May 2021 04:56:55 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id m81sm1689829oig.43.2021.05.15.04.56.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 May 2021 04:56:54 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Subject: Re: Christian Garcia of Bank of America priority
-Date:   15 May 2021 10:05:39 +0000
-Message-ID: <20210515100538.EE2638AF8C5436CE@bmz-groups.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 00/12] doc: cleanup old cruft and asciidoctor revamp
+Date:   Sat, 15 May 2021 06:56:41 -0500
+Message-Id: <20210515115653.922902-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This patch series gets rid of old unnecessary workarounds and convoluted solutions.
 
-Being a Branch Manager in Bank Of America. I have an Important &=20
-very private matter to Discuss with you concerning my late=20
-customer Dennis R. Kozacek who Died in a plane crash on 29th=20
-April 2019 with none of his family and associates linked to his=20
-$362Million in his company account with us. I know that recently=20
-what comes to mind when somoene makes such claim is "this may be=20
-lies or unrealistic" but Get back to me so that we can discus and=20
-chat a way forward but you must be extremely secretive before=20
-replying to this email.
+Additionally it cleanups the asciidoctor-specific code so it ends up much more simpler.
 
-Its not a crime if you don't believe me and as such refuse to=20
-reply. I will prefer that you don't reply than reply but doubtful=20
-and unwilling which will eventually get us stock at the cross=20
-road and deminish our chases of success.
+This goes on top of my other cleanup patches [1].
 
-please dont reply if you don't believe.
+[1] 20210514115631.503276-1-felipe.contreras@gmail.com
 
-Christian Garcia
-Branch Manager
-NB: Heres the link to the story if you wish to confirm my info:
-https://www.kptv.com/news/police-id-two-people-found-dead-in-plane-crash-ne=
-ar-la-center/article_ad80ce36-6c6b-11e9-a396-5f69062ee973.amp.html
+Felipe Contreras (12):
+  doc: remove GNU troff workaround
+  doc: use --stringparam in xmlto
+  doc: simplify version passing
+  doc: asciidoc: remove unnecessary attribute
+  doc: asciidoctor: remove unnecessary require
+  doc: asciidoctor: remove cruft
+  doc: asciidoctor: reorganize extensions
+  doc: asciidoctor: use html-prefix only for html
+  doc: asciidoctor: refactor macro registration
+  doc: asciidoctor: improve string handling
+  doc: asciidoctor: split the format from the code
+  doc: asciidoctor: specify name of our group
+
+ Documentation/.gitignore                |  1 -
+ Documentation/Makefile                  | 19 ++-------
+ Documentation/asciidoc.conf             | 20 ---------
+ Documentation/asciidoctor-extensions.rb | 56 ++++++++-----------------
+ Documentation/manpage-base-url.xsl.in   | 10 -----
+ Documentation/manpage-quote-apos.xsl    | 16 -------
+ Makefile                                |  4 --
+ 7 files changed, 21 insertions(+), 105 deletions(-)
+ delete mode 100644 Documentation/manpage-base-url.xsl.in
+ delete mode 100644 Documentation/manpage-quote-apos.xsl
+
+-- 
+2.31.1
+
