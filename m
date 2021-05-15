@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C1EC433ED
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A7D5C433B4
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3016A61354
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 382C561354
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232153AbhEOL6W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 07:58:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53212 "EHLO
+        id S232164AbhEOL60 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 07:58:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232027AbhEOL6Q (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232040AbhEOL6Q (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 May 2021 07:58:16 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6CC8C061573
-        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:00 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so1641640oto.0
-        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:00 -0700 (PDT)
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5503FC061756
+        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:02 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id b25so2121638oic.0
+        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WbWoYgvt/tW5xz3bC9UhkyBUsad/cCPG2DBw/TN8na8=;
-        b=bC/OLc6LOTDzZPqVWShrcTik50QqIlXErkkyi6f79ZnvFRyhDSQLeJqxC4RGy/VhFH
-         YCRfBdSeI/vzzTIGMSiCMNZONMGCA4xS1B1TScyn4fHDZ03aKygDZpE+BZGWJzRHryTi
-         tFFED6rKSTUllUdp4NwyjssugRh81U1jVYXekfPGtBX8gRRZD6dM2/IbssOGhwmxmbX2
-         cccxxYyy0/Lo3KEUROIeC/5uxxyt7Nn6umMg8gpM4ubhymB4rzuSk9X8CGXRZHvINGRZ
-         JsV+QdOhw4VmYzUTJvN48vfWcIY2t2Tvimn+jkI4hppXtxl/Dkyh2DOOCeHjbAkj3eMX
-         AK6A==
+        bh=yIqQBfEdH5opye+2jtHlPSoJoDotMhI4gSjXvYXRgUc=;
+        b=jkZ2feUk8Qey3LXmfI6fn/knMwIgJAwMsh39J+9Ul+QlaoGVVAn1PPMNBOfo3j14H3
+         Sdf7CEhiCFPbvIYmVtw1zLMx2OqlOrX2q0EwJAsivxDZrlz9WEdGKnDSrZOoL2rBWpJ5
+         uzHYtE7qFWQxp3UollICW86xSiTEsyajsK+RcYQ4PiCDcLX2X4WZtDZrW79qKXM3TLly
+         2aas8YxY67tWm3LlawXRfrBHnS52w+fXOQVO9i0PC5zbNauVF9b6GVAM5iqZ4M9SFDpU
+         TvqWSXJce5BnwiBFINmLw1+GvI75ABPRBJoYG1mXg1CvyWCzf2oEp8m/uf8AMKX/MoLa
+         fR8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WbWoYgvt/tW5xz3bC9UhkyBUsad/cCPG2DBw/TN8na8=;
-        b=RI7+xXbNm9B3EnOI0SQWryCfPmmUCTegi10e+pkndcc469Ua1/S63CamqJw4KnZO2z
-         l+GKnMc10gBBBUlEv3XXOrwmw7a/wEM4sD07lEz28vShpGq/yMho0FKJnfNeOzC8+2eB
-         mR+PauDwTrGfAis+6o2LFyIG9dCSr7SfIH4KwczGzSndONp+6JT5FBSMF1S7rhWethA0
-         9p3UK6YHnv4bEAwUuvsnA+SqDlntj5NSh0lyyosWn2JrQfcNLAwjTa8kX3ONc8EfqylC
-         M7tTkrtSW/Elavm2L4HsxBlY5WY5uKgEiusmeolcVq8XTU91SiFi5ioFmLHPSrzcWFOI
-         ciUg==
-X-Gm-Message-State: AOAM530cqYZJmgrpyjFE3CC5nEFfJ5hy2Z6e4u8PdBMD+Ay1k3l1WexU
-        y1LTWbN7tEvU3vNwAPSSCLgRlaVDMQFApA==
-X-Google-Smtp-Source: ABdhPJw8eq1uR6LZmevpfNgnyWVM9lcfpIBpaq0E9XLP7e2PwYE/z9yuxIMg8KT9k1XPxHS880TS6Q==
-X-Received: by 2002:a9d:192e:: with SMTP id j46mr14730746ota.346.1621079819945;
-        Sat, 15 May 2021 04:56:59 -0700 (PDT)
+        bh=yIqQBfEdH5opye+2jtHlPSoJoDotMhI4gSjXvYXRgUc=;
+        b=rHxSj7kvuYTIrYZLH3+L+B131Ik1rZ+A89b3Ap8xq6O8RViJyKJAyuXs4+lMeAR2C8
+         KAHpFnuyuZ/L+AGgvVXaSSIcJwl5BXXhygbCPHEe0GyHr5TtcwVkEJ0VjCxZOUJfy9i7
+         oX/eiKyg16xvacLqD3SUGElfSDCeReor/rzmWhyWhu6fNyiJ8zTDDnbDyIKUMruCQXcF
+         BaH67h3XwpgfSIzjeezN9BVA6g25ssFc4UnmuUoz9Q2w7VEW+DhrdqZoczFLzDcaoP7Q
+         byj1rIpZYsLwuEPAQixFmx3tzdHqNwiDxU7z+zNQjx8SLOIhtqqQwxynWhtdXSx1WcWe
+         jIcQ==
+X-Gm-Message-State: AOAM530nAsx+F2lJXeSvPWYiKRxxCAdpdTvZxQJwj8SHxqsXkA7wtWQM
+        7oeq+TUvkPcU1tAvtn97ZVKiyQYNMp/22g==
+X-Google-Smtp-Source: ABdhPJz+H4w7dwKgdQwT3GRxnYhztLkbfWQ76mBdRwuYH21Tb2+w9D2CI8DqSNIY2phQ9GZAeZbKxw==
+X-Received: by 2002:a05:6808:345:: with SMTP id j5mr9911495oie.106.1621079821575;
+        Sat, 15 May 2021 04:57:01 -0700 (PDT)
 Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id d185sm1727310oib.25.2021.05.15.04.56.59
+        by smtp.gmail.com with ESMTPSA id z9sm1912823oog.25.2021.05.15.04.57.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 04:56:59 -0700 (PDT)
+        Sat, 15 May 2021 04:57:01 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 03/12] doc: simplify version passing
-Date:   Sat, 15 May 2021 06:56:44 -0500
-Message-Id: <20210515115653.922902-4-felipe.contreras@gmail.com>
+Subject: [PATCH 04/12] doc: asciidoc: remove unnecessary attribute
+Date:   Sat, 15 May 2021 06:56:45 -0500
+Message-Id: <20210515115653.922902-5-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210515115653.922902-1-felipe.contreras@gmail.com>
 References: <20210515115653.922902-1-felipe.contreras@gmail.com>
@@ -74,98 +74,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code to pass the version of the man page comes from 2007:
-7ef195ba3e (Documentation: Add version information to man pages,
-2007-03-25). However, both asciidoc and asciidoctor already do this by
-default.
-
-Asciidoctor doesn't read manversion, but there's no need since both
-tools just join mansource and manversion.
-
-Let's do that ourselves and get rid of a bunch of code.
+It's part of asciidoc global configuration since 2012.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/Makefile                  |  3 +--
- Documentation/asciidoc.conf             | 19 -------------------
- Documentation/asciidoctor-extensions.rb | 17 -----------------
- 3 files changed, 1 insertion(+), 38 deletions(-)
+ Documentation/asciidoc.conf | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 84643a34e9..47053c78f8 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -137,8 +137,7 @@ ASCIIDOC_HTML = xhtml11
- ASCIIDOC_DOCBOOK = docbook
- ASCIIDOC_CONF = -f asciidoc.conf
- ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
--		-amanversion=$(GIT_VERSION) \
--		-amanmanual='Git Manual' -amansource='Git'
-+		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)'
- ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
- TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
- TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
 diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 3e4c13971b..60f76f43ed 100644
+index 60f76f43ed..f7908f9dea 100644
 --- a/Documentation/asciidoc.conf
 +++ b/Documentation/asciidoc.conf
-@@ -51,25 +51,6 @@ ifdef::doctype-manpage[]
- endif::doctype-manpage[]
- endif::backend-docbook[]
+@@ -12,7 +12,6 @@
  
--ifdef::doctype-manpage[]
--ifdef::backend-docbook[]
--[header]
--template::[header-declarations]
--<refentry>
--<refmeta>
--<refentrytitle>{mantitle}</refentrytitle>
--<manvolnum>{manvolnum}</manvolnum>
--<refmiscinfo class="source">{mansource}</refmiscinfo>
--<refmiscinfo class="version">{manversion}</refmiscinfo>
--<refmiscinfo class="manual">{manmanual}</refmiscinfo>
--</refmeta>
--<refnamediv>
--  <refname>{manname}</refname>
--  <refpurpose>{manpurpose}</refpurpose>
--</refnamediv>
--endif::backend-docbook[]
--endif::doctype-manpage[]
--
- ifdef::backend-xhtml11[]
  [attributes]
- git-relative-html-prefix=
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index d906a00803..70a0956663 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -23,26 +23,9 @@ module Git
-         end
-       end
-     end
--
--    class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
--      def process document, output
--        if document.basebackend? 'docbook'
--          mansource = document.attributes['mansource']
--          manversion = document.attributes['manversion']
--          manmanual = document.attributes['manmanual']
--          new_tags = "" \
--            "<refmiscinfo class=\"source\">#{mansource}</refmiscinfo>\n" \
--            "<refmiscinfo class=\"version\">#{manversion}</refmiscinfo>\n" \
--            "<refmiscinfo class=\"manual\">#{manmanual}</refmiscinfo>\n"
--          output = output.sub(/<\/refmeta>/, new_tags + "</refmeta>")
--        end
--        output
--      end
--    end
-   end
- end
- 
- Asciidoctor::Extensions.register do
-   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
--  postprocessor Git::Documentation::DocumentPostProcessor
- end
+ asterisk=&#42;
+-plus=&#43;
+ caret=&#94;
+ startsb=&#91;
+ endsb=&#93;
 -- 
 2.31.1
 
