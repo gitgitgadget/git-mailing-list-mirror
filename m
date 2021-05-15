@@ -2,292 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E5AC433ED
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 23:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F220C433ED
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 03:32:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7B97611BE
-	for <git@archiver.kernel.org>; Fri, 14 May 2021 23:31:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31317613D1
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 03:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234389AbhENXc3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 May 2021 19:32:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
+        id S233322AbhEODdp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 May 2021 23:33:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbhENXc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 May 2021 19:32:28 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9992C06174A
-        for <git@vger.kernel.org>; Fri, 14 May 2021 16:31:15 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso694921otn.3
-        for <git@vger.kernel.org>; Fri, 14 May 2021 16:31:15 -0700 (PDT)
+        with ESMTP id S229898AbhEODdo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 May 2021 23:33:44 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F406C06174A
+        for <git@vger.kernel.org>; Fri, 14 May 2021 20:32:32 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id h7so340864plt.1
+        for <git@vger.kernel.org>; Fri, 14 May 2021 20:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=7sKJq4iFXLlfG7etyargmPGZ0+QvRPj6WFgIgzRHPmA=;
-        b=UQj4EtskwvFkL5zsUnT3zVp6SOTC/jOD+dwCTV3/JINxjdLxDYjaad+ViDCkzWtrB1
-         O2AqeuAPTrTCf/s9McVAimzoFGO8mAzO3ICSZa4tHOUJMZFnhIJMIV7VU3OmflkvyLNN
-         zOePlCv8Cv4MrdNUeXCtXBxnhZ0ucCYGLi6pqDltbHSY5PlLEME709K7YE/6DWgwEX67
-         x4SIKnDG95coH/etTQ48LahWQaYu4C+Qzcx6CdGX8sewSL/V5zNaqJ6fwerigp34TfVf
-         eq1Xxx+L7pykGKEhnz3Y9Rp0I9QxBT/Msm91IbvObICMFMznPg84rJ69RwEZHKIL8egj
-         2+Ww==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=EGc3jjWJsjZTIiHC4IwlBFPxeNzZCUa3p0/A11ilz30=;
+        b=CVaaIK6ijGRuvH3QjE+6sqSOvYZYx6YwIsqEiAa31YgkTOZbaicyORDpZA6bN13d+w
+         11NBSn7dTDc7UzNPaPZ+qOUjBd9imLDVOzU7XZQZgAKpUEIiI++hRgUzpZHOLzAD3cGn
+         x40LL004IPdziAktVbGUwaccHcJPCTu4blyYiYao2G00OxDVTl0BRl/oJw3km2HOYvn3
+         0KLCZteppUZdBpQqOXWMZsEwtyHLvtyx+P6lG4ughkIU2OFfESs1og7PMIFOFA1tZQ7N
+         kTL/3YlGAlE5YxWqtlHmrjILGm21sAqfLwgqmUVpLfTw3zDm0pfvwSn43aVMPxzBv/ms
+         oLXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=7sKJq4iFXLlfG7etyargmPGZ0+QvRPj6WFgIgzRHPmA=;
-        b=nsIPJMHZRO2qcISQRbQJLajDqwGlpME//5qDTiTncQJxLdLMEMOOZw0CqC8VHgwzx5
-         pAQw9lvPphqS7fSuK4ZkZ+AJ0KvPWdvMUfQm2IEv/pSt+4RVGP7tY4/uHZ4GCq/7vjYb
-         HiodKH0kvPjpMAOroorbv1JhF3eoD0MMvnLTOIdKKRXFG8jgYYcP544QwrC0FfjcBF0Y
-         +cbMiodHFPjZN1o5mky0eB3LO1aFNCKz4x3fmhXnCq7Jf2PqciFvFFMmFcDfNU3e2thB
-         1LXTEghX4SWrc9CnsXUJJS0fxukWn9nff16UhE3zYaM6ethlw4iRr2i9RFFqxhP6Zbb9
-         5HqQ==
-X-Gm-Message-State: AOAM530C41nFSl3kXoszgQiNr+xXFy4bZ6WrSs4xb5Zc0bvxH/IfrfY/
-        ok/VKDrttVmSwlRkYegBgrU=
-X-Google-Smtp-Source: ABdhPJz7/PEdtDn7swruG1Pu90bloVrcBxwvPVAy9igQEhZFt8kSNlYFf3lXwPcbjOqD4uVwzo8XwQ==
-X-Received: by 2002:a05:6830:16d8:: with SMTP id l24mr26151325otr.106.1621035074891;
-        Fri, 14 May 2021 16:31:14 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id 186sm1553508oof.14.2021.05.14.16.31.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 May 2021 16:31:14 -0700 (PDT)
-Date:   Fri, 14 May 2021 18:31:12 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
-Message-ID: <609f0840eb383_4312720868@natae.notmuch>
-In-Reply-To: <YJ7avgek24eu+HHM@camp.crustytoothpaste.net>
-References: <609b2828309fc_678ff2082@natae.notmuch>
- <20210514003104.94644-1-sandals@crustytoothpaste.net>
- <20210514003104.94644-2-sandals@crustytoothpaste.net>
- <609ed529e2306_431272087@natae.notmuch>
- <YJ7avgek24eu+HHM@camp.crustytoothpaste.net>
-Subject: Re: [PATCH v2 1/2] doc: add an option to have Asciidoctor build man
- pages directly
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EGc3jjWJsjZTIiHC4IwlBFPxeNzZCUa3p0/A11ilz30=;
+        b=aFA1a59uJLzYg8T11fxcgTRSeEFJk0D+hED4G584YecG/ALgjhEJjP4ETvRqw4fUh7
+         S45AyRnhN+1zgX+SFHx1X0nqwwzGKJR41eW9rJQ4SgKi0UpDOXdtY39V9SxARtyHxn61
+         UdD3leJCm57VjF03s4snKTZxTOXF39/7UO2KqixMgEGMUB6XnFzp8tnJz8iCeDbl7++q
+         3sEAbVxycONZa4LA/xFH1WznIuH7MITNkCZkxaExI6yWEET0DcPtW3APZcgF+WZ4KriY
+         fB9uIz3BJ3FWP0sAnLgn4KZVcIpOvYqK/2f77W6P4Tm/VDwRQk9At1pnwymdJlCryds8
+         znpw==
+X-Gm-Message-State: AOAM530BWLicXhy2AnW9jKaM53f7mlz3jlkun7jitKZ5csexXL5yG4a9
+        ZA8VpGjLVdYo8mKfV+LH4oEqhzyuiZ6bUg==
+X-Google-Smtp-Source: ABdhPJxDOO2cj2jKbQmYW7M8zPOZu6QX0IMmrJJyGSjLWbTRGHK9LVZCuI/jAgBVwU3tFrtHXv8YNw==
+X-Received: by 2002:a17:902:104:b029:ec:9fa6:c08 with SMTP id 4-20020a1709020104b02900ec9fa60c08mr49422586plb.10.1621049551658;
+        Fri, 14 May 2021 20:32:31 -0700 (PDT)
+Received: from [192.168.43.80] (subs09b-223-255-225-233.three.co.id. [223.255.225.233])
+        by smtp.gmail.com with ESMTPSA id t24sm10002926pji.56.2021.05.14.20.32.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 May 2021 20:32:31 -0700 (PDT)
+Subject: Re: [PATCH] Documentation/howto: tracking git.git
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <20210514124925.39229-1-bagasdotme@gmail.com>
+ <xmqqwns177cv.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <cbbde4f4-3e10-2c08-6ca1-6f22f8497194@gmail.com>
+Date:   Sat, 15 May 2021 10:32:27 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqwns177cv.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On 2021-05-14 at 19:53:13, Felipe Contreras wrote:
-> > brian m. carlson wrote:
-> > > We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
-> > > contain proper handling of the apostrophe, which is controlled normally
-> > > by the GNU_ROFF option.  This option for the DocBook toolchain, as well
-> > > as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
-> > > instead of a Unicode apostrophe in text, so as to make copy and pasting
-> > > commands easier.  These newer versions of Asciidoctor (1.5.3 and above)
-> > > detect groff and do the right thing in all cases, so the GNU_ROFF option
-> > > is obsolete in this case.
-> > 
-> > I don't see what that paragraph has to do with the patch below.
+On 14/05/21 20.49, Junio C Hamano wrote:
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
 > 
-> It's relevant because it explains why it's acceptable to discount that
-> feature that we're not supporting as part of the patch.
-
-It's easier to first drop that feature, and then you don't have to
-explain anything.
-
-> > > We also need to update the code that tells Asciidoctor how to format our
-> > > linkgit macros so that it can output proper code for man pages.
-> > 
-> > Yes, but why shove it in this patch? Now this is is doing *two*
-> > logically-independent changes.
+>> +Available Branches
+>> +------------------
+>> +
+>> +There are several branches on git.git with different purposes:
+>> +
+>> +master::
+>> +This is the most stable branch. Changes (topics) that are merged
+>> +to master should have been stabilized in next and suitable for
+>> +production use. Feature releases (vX.Y.0) are cut from this
+>> +branch.
 > 
-> This is one logical change: implementing Asciidoctor native support for
-> man pages.
-
-By that logic all patch series can be a "logical change": "implement
-SHA-256 support".
-
-> > > Be careful to reset the font to the previous after the change.
-> > 
-> > This is a third change, since the current man pages already don't do
-> > this:
-> > 
-> >   % zcat /usr/share/man/man1/git-add.1.gz | grep '\fB'
-> >   you must use the \fBadd\fR command
+> Isn't "maint" meant to be more stable?
 > 
-> As explained downthread, we don't know in the manual pages what font
-> styling we're in.  troff has font-change commands, not nesting begin-end
-> pairs, for italics and bold.  If the linkgit macro appears in the middle
-> of a passage in italics, by not using \fP, we'll force the rest of the
-> text which is to be italicized into roman.
+
+I think "maint" is maintenance branch for latest feature release.
+For feature stabilization it happens on "main", so "master" is fully
+polished.
+
+>> +next::
+>> +This is where topics that haven't been yet merged to master are
+>> +stabilized and tested for breakage and regressions. It gives
+>> +a summary forecast of what next batch of topics that will be
+>> +merged to master looks like.
+>> +
+>> +seen::
+>> +This is the most bleeding edge branch where all excited
+>> +developments happened. All proposed topics are queued in seen
+>> +by the maintainer. However, these may be buggy (have breakage or
+>> +regressions). When topics queued are deemed good and ready for
+>> +inclusion, they are graduated to next for stabilization.
 > 
-> The toolchain, whether Asciidoctor or the XSLT stylesheets, _does_ have
-> this context and therefore can explicitly move between bold and roman,
-> but our extensions do not.
-
-Indeed but it's rare (there's probably zero instances), and it increases
-the delta. Yes, it's more correct, but it trades a hypothetical benefit
-for a real disadvantage.
-
-Either way I see no point in arguing about this. If you feel strongly
-about this I can include it in my version.
-
-> > > Additionally, we don't want to use XML-style escapes for the litdd and
-> > > plus macros, so let's only use the XML-style escapes in HTML and XML and
-> > > use something different for our man pages.
-> > 
-> > That's a fourth change now, and one that complicates the Makefile even
-> > more, when I've been trying to simplify it.
+> This is inconsistent with what has been written elsewhere about this
+> integration branch.  In short, you should not read anything more
+> than "the maintainer happens to have seen these topics" out of the
+> fact that a topic is in 'seen'.  Not all proposed topics will be in
+> this branch, and a branch that was in 'seen' on one day may not be
+> there the next day, but that does not mean anything (certainly it
+> does not mean the topic has been "rejected").
 > 
-> I'm sorry that this complicates work you'd like to do, but
-> unfortunately, the other option is broken rendering.
-
-Clean and maintainable code is a benefit to the project, not just me.
-And the Makefile is code too.
-
-Forget about me, a clean and simple Makefile is better than a cluttered
-and complex Makefile. That is the point.
-
-Yes, the rendering is "broken" without the change (that's loaded
-language, but OK), we want to know precisely how, and how it got fixed.
-We don't wan to sneak in all the fixes in the world in the first patch.
-
-Moreover, there's no dicotomy here; we can fix the "broken" state in
-other ways that don't complicate the Makefile, as I did in my patch
-series [1].
-
-But in fact, I have an even simpler version now:
-
- Asciidoctor::Extensions.register do
-+  # Override attributes for man pages.
-+  # https://github.com/asciidoctor/asciidoctor/issues/4059
-+  if document.backend == 'manpage'
-+    document.attributes.merge!({ 'litdd' => '\--', 'plus' => '+' })
-+  end
-+
-   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
-   postprocessor Git::Documentation::DocumentPostProcessor
- end
-
-> > > If users are using a more modern toolchain or don't care
-> > > about the rendering issues, they can enable the option.
-> > 
-> > What rendering issues?
+>> +Tracking
+>> +--------
+>> +
+>> +If you don't have git.git clone handy, you can obtain one by:
+>> +
+>> +----
+>> +$ git clone https://github.com/git/git.git git
+>> +----
+>> +
+>> +Now you can start hacking your topics. Don't forget to read
+>> +`Documentation/SubmittingPatches` for instructions on patch
+>> +submission.
+>> +
+>> +After some time, there will be updates to git.git. First, fetch them:
+>> +
+>> +----
+>> +$ git fetch origin
+>> +----
+>> +
+>> +Then pull the updates.
+>> +
+>> + - For `master`, `next`, `maint`, and `todo`, you can do fast-forward
+>> +   pull:
+>> +
+>> + $ git pull --ff-only
 > 
-> They were mentioned upthread.
-
-No. Pepole mentioned issues they *think* existed, nobody pointed out an
-actual reproducible issue.
-
-As you experienced with the \e setback, the issue could have been with
-their build, or it could be present in v1.5.7, but not v1.5.8. It's hard
-to know if nobody spells out what the issue is.
-
-So... What rendering issues?
-
-> > Also, the many should not suffer because of the few.
-> > 
-> > If a few people doing USE_ASCIIDOCTOR=YesPlease have issues (because of
-> > ancient packages in their distribution, and their reluctance to type
-> > `gem install`), then *they* can disable USE_ASCIIDOCTOR_MANPAGE (or just
-> > disable USE_ASCIIDOCTOR altogether). Most people doing
-> > USE_ASCIIDOCTOR=YesPlease should not suffer because of a
-> > minority.
+> I do not see a point in doing this for all of these branches, and
+> I'd rather not to see this recommended to people who "track to
+> develop" at all.  It may make sense to do so if you do not do any
+> development of your own and will always stay on 'master' to check
+> out, build, test and install from the upstream, though.
 > 
-> I don't believe we're going to agree on this.  I believe we should
-> choose defaults that work with the most popular Linux distributions, and
-> you don't.
 
-Untrue.
+But when someone clones git.git, Git will automatically checkout default
+branch (which is "master") after cloning. If he wants to checkout other
+branches, he had to "git checkout next" for example. I wrote it above
+under the assumption that someone had already checkout other branches
+before.
 
-`make USE_ASCIIDOCTOR= doc` works perfectly fine on Debian stable with
-my patches, and that's the default, nobody is changing that.
-
-And so does this:
-
-  gem install asciidoctor && make USE_ASCIIDOCTOR=1 doc
-
-But in fact, so does `make USE_ASCIIDOCTOR=1 doc`, because asciidoctor
-1.5.8 works just fine. I just did a doc-diff with v1.5.8, and I
-checked everything without finding any serious issue (not present in
-2.0.15).
-
-The only issue is that \\ was not handled correctly, but I now have a
-workaround for that:
-
-  if document.basebackend?('manpage') and Asciidoctor::VERSION < '2.0.11'
-    postprocessor do
-      process do |document, output|
-        output.gsub("\\(rs\\\\", "\\(rs\\(rs\\")
-      end
-    end
-  end
-
-> I think your approach is unnecessarily hostile to ordinary
-> users and developers and understates the value that people derive from
-> distributions.
-
-Please tell me exactly how my patches are hostile to "ordinary
-developers" (who are not ordinary at all).
-
- 1. Will they be able to build the documentation with default flags?
-    Yes
- 2. Will they be able to build with USE_ASCIIDOCTOR=1?
-    Yes
- 3. Will they be able to see a reasonable output?
-    Yes
- 4. Will they be forced to install a gem?
-    No
-
-So where exactly is the hostility?
-
-> > > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > 
-> > I most definitely do not sign off this.
+> For those who track to develop", if you want a reference point to
+> work from, you can do "git fetch origin" and then run
 > 
-> This sign-off is not an approval of the patch.
+>      $ git checkout -b mytopic origin/master
+> 
+> for a new feature, and
+> 
+>      $ git checkout -b myfix origin/maint
+> 
+> for a fix.  You can track your progress with
+> 
+>      $ git log origin/master..mytopic
+>      $ git log origin/master..myfix
+> 
 
-Yes it is. According to the Developer Certificate of Origin [2] I must:
+I think git log above shows only commits that are on mytopic/myfix/
+whatever that aren't on origin/master.
 
-  agree that a record of the contribution (including my sign-off) is
-  maintained indefinitely
+> If you are fixing a longstanding bug, you may even want to do
+> 
+>      $ git checkout -b myfix-for-2.29-and-above v2.29.3
+>      $ git log origin/master..myfix-for-2.29-and-above
+> 
+> To test your various topics, you would then do
+> 
+>      $ git checkout -B trial origin/master
+>      $ git merge mytopic
+>      $ git merge myfix
+>      ... build, test, install, employ it for daily use ...
+> 
+> And you can make sure you do not step on toes of others by doing
+> trial merges
+> 
+>      $ git checkout -B trial origin/seen ;# or origin/next
+>      $ git merge mytopic
+>      $ git merge myfix
+>      ... build and test
+> 
+> which is highly recommended.  This will give you a chance to notice
+> who, if any, are working in areas of the codebase that potentially
+> overlaps with what you are working on before you even send out your
+> series for review.
+> 
+>> + - For `seen`, DO NOT pull with `git pull`. This is because seen is
+>> +   in constant flux, and most often your local seen is divergent from
+>> +   the origin, caused by force-push from the maintainer. Attempting
+>> +   to pull either via merge or rebase will most likely end in
+>> +   conflict. Instead, pull by resetting the local seen to the origin:
+>> +
+>> + $ git reset --hard origin/seen
+> 
+> Even better, do not even create your own 'seen' branch at all.  If
+> you are interested in what is going on
+> 
+>      $ git log --first-parent --oneline origin/master..origin/seen
+> 
 
-Which I don't.
+OK.
 
-Feel free to disregard my lack of agreement, but I'm stating it for the
-record.
-
-> I do want to be clear that I'm aware you don't approve of this patch and
-> that's why I submitted a counterproposal: because I don't approve of
-> your patch
-
-That happens.
-
-> and you seem unwilling to make changes to it.
-
-Just because I disagree with your changes doesn't mean I'm unwilling to
-make changes to my patch, especially since I already agreed on making
-changes to my patch.
-
-> I would love nothing more than to remove your name from it entirely,
-> but unfortunately, that's not possible with the DCO.
-
-It's not possible *if* 1) you use my code, and 2) you made changes I'm
-opposed to. But you are already in violation of the DCO anyway by
-disregarding my agreement, which is mandatory.
-
-If you don't want to be in violation of the DCO you could try to fix
-either 1) or 2).
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20210514121435.504423-8-felipe.contreras@gmail.com/T/#u
-[2] https://developercertificate.org/
+> might be worth paying attention to, and checking out the tip of
+> topics of other people you seen in the output and playing with it on
+> a detached HEAD may also be useful, and if you find bugs in other's
+> work, you can futz with the code from that commit and you may end up
+> with a patch you can send as an improvement suggestion to the
+> original author of the topic.  But 'seen' as a whole is rarely of
+> interest, except for the purpose of learning what other topics may
+> be in flight.  Nobody sane is supposed to be running the version
+> from 'seen'; after all, the selection criteria of the topics in it
+> is "some of the topics that the maintainer happened to have seen",
+> and not even "these topics are interesting, promising and are wished
+> to be in 'next' someday".
+>
+Thanks for your review.
 
 -- 
-Felipe Contreras
+An old man doll... just what I always wanted! - Clara
