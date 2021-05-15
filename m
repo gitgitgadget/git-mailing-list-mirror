@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51A69C433B4
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 12:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9253AC433B4
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 12:13:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E32E613CD
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 12:11:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B4BC613D1
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 12:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231286AbhEOMND (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 08:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56462 "EHLO
+        id S231591AbhEOMPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 08:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231146AbhEOMM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 May 2021 08:12:58 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3EC8C061573
-        for <git@vger.kernel.org>; Sat, 15 May 2021 05:11:44 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so1662009oto.0
-        for <git@vger.kernel.org>; Sat, 15 May 2021 05:11:44 -0700 (PDT)
+        with ESMTP id S231583AbhEOMPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 May 2021 08:15:04 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB592C061573
+        for <git@vger.kernel.org>; Sat, 15 May 2021 05:13:50 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id f184so2101306oig.3
+        for <git@vger.kernel.org>; Sat, 15 May 2021 05:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=yAmOZQMHAqWig6jW/Mw96Z4fmn4rc+QG2jy5zfF6iuY=;
-        b=IUPQa9LGaLa6p8p/i7oj/PpUsWudW2i0PuD138/jIgeFc+EOoOOBdIEWc/kKSk7eB5
-         8noCH1svKCziQSmDGdquZjDseY8vLHiXZ4NOZq6ulBJKWoJD5eyQf0t4yS5fAQCSBSTt
-         Bc/hOL4ckTOoSyRJAzGHo7aEOfhqHvtuPreOhvrb/Y630jABCznd8AsW4ZxEJ1qfUs8x
-         d9dtvW9L2TksgZhHYsmxSGz05CBS4CPdRHh6+sBkfBigSLou0e+uVJkALBRoqjIG5Fso
-         C2ZFq8kCE75kmvCbQ3wqBOdCUIdGhwqSQYLTS2wCTcCalnXioNOpI94/AjDPgjnxhMxQ
-         A/Kw==
+        bh=LxQDeqZ4Hy8eKy2vDsiCLTqlPF7fHXKjaesJ0RukAOs=;
+        b=YL6Bo3Mm2Nhom/YYdTo5pX27rJJ8X6wjYen4sT3tKBeIFwTs/ZwGSvdKd0pG/l2+Ki
+         C3JqVEzFH6OMXoRfNoxecbauIBCSXCinuLmpqVAwlQ0iwD8mcpyCr7AGFvBgE9ztOZnp
+         lEowe1SthM5mZXMekUQhSPRZcwPmulVQigLiynBKrJFi+9RaAQyAr3ANeaPnPJfBAD99
+         mXOr4v9U4+DFCsM1cw/r/biySz28MRMKMyPgudTbU38ONQ4Ex25l9g8o+2PBywR6NH4u
+         /JoEBVgn2eFXy+WdggfEWYDVthQuE92WtDBZe22706iz/JGtGCQLsG5x7VCYu7FSrxhQ
+         2Crg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=yAmOZQMHAqWig6jW/Mw96Z4fmn4rc+QG2jy5zfF6iuY=;
-        b=hAWFNkrmZxQf72IvhFeN9i8HQcWZcoKyByValrAeKcDODi3gDBhjQbJkPAcjvZmyoT
-         033Z5t3eQms1+DhmLI6tnygrNgMbqx3kZW7Z4EpWb6jciQpnhbp14HuL7uzKbD3tNIdQ
-         bxz6Ojhj3PqSZjUMO1xu1lH04bdS6O/UAcw9TUQ8XnbnfAu0cE5EreA3ZQJneuflEK5h
-         744X1sGPbAxErnbXE1zjnpd6/WZJefUaRrCAZdl/jZEeToNGfjFXjRMCG40UeaBiv7dK
-         0o08Htu1dxFMOrhlAsXy69NG1s4xlLmbz4J09mq647OxP3uZqg127/0HOwN0J0B9YT9G
-         g7Mw==
-X-Gm-Message-State: AOAM530HuzYuPphMySi452zGDofw0zkLJkCXfxZK/NZ42vlbH3Z4g7dZ
-        CwvztjFvDt7CY7H1k8iEjxKE4APM/qoHjA==
-X-Google-Smtp-Source: ABdhPJxeaJQ1WCmIVEOo4G3W3cJYKXoGWK1gMwpAqj4KMSHJaS/w9mzXDBH2LwNfmGF4rtbZVAY1NQ==
-X-Received: by 2002:a9d:c24:: with SMTP id 33mr42214382otr.289.1621080704001;
-        Sat, 15 May 2021 05:11:44 -0700 (PDT)
+        bh=LxQDeqZ4Hy8eKy2vDsiCLTqlPF7fHXKjaesJ0RukAOs=;
+        b=sTlTWdZbb55VFrmMbMEy2eLnnItIbcUBjYzvUDpdNjRQjjOakIwGyPTTVbzU899iLH
+         GPiwPVMX+KtrPZon1Hd7OJ2AloBMdsCayGfioJKXGG6PLPl9I2/efn2ZOKNgjEbwIX39
+         B8HTWJmq0cFPTLAGC0SXF65cIOMg/Co/h5jVqRtZkZuwCjUefB5Cy/KZFYTZ4u0LEL+A
+         qYjO7nvfHqIiXL2VIR8kYdiDDhtCLY9B6klTvD30Sc/0eZv+8Z/bVCI5D+Q7woyuf5Jr
+         DXLiKranSHg67TSgY1zhuQgfycdzIPYfdVCxmifVtzel5o0uoSUyQICo3LC/uql5nr68
+         xJIA==
+X-Gm-Message-State: AOAM530oK6aRLAaKfeQ68w34ShbGxRLgHTciAN0n/pvnChLYSkK1u5xb
+        glAZe9MOM1yf3GSDeYBrA4s=
+X-Google-Smtp-Source: ABdhPJzzm+RJS6+16LLjuWMphBuU8UCAo1CICiafJXQUDRqVNFm/AJaI6jY7KDkhpKDmWop7YqNKKA==
+X-Received: by 2002:a05:6808:b35:: with SMTP id t21mr17692091oij.18.1621080829875;
+        Sat, 15 May 2021 05:13:49 -0700 (PDT)
 Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id r72sm1671745oie.20.2021.05.15.05.11.43
+        by smtp.gmail.com with ESMTPSA id i11sm1925038otk.70.2021.05.15.05.13.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 05:11:43 -0700 (PDT)
-Date:   Sat, 15 May 2021 07:11:42 -0500
+        Sat, 15 May 2021 05:13:49 -0700 (PDT)
+Date:   Sat, 15 May 2021 07:13:48 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
@@ -64,12 +63,13 @@ Cc:     git@vger.kernel.org,
         =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Message-ID: <609fba7e89291_e173a208ce@natae.notmuch>
-In-Reply-To: <YJ+WbMx+HTjbV2ZP@coredump.intra.peff.net>
+Message-ID: <609fbafc73fcd_e173a208f4@natae.notmuch>
+In-Reply-To: <YJ+WzATLCM8SW2GH@coredump.intra.peff.net>
 References: <20210514121435.504423-1-felipe.contreras@gmail.com>
- <20210514121435.504423-3-felipe.contreras@gmail.com>
- <YJ+WbMx+HTjbV2ZP@coredump.intra.peff.net>
-Subject: Re: [PATCH 02/11] doc: doc-diff: allow more than one flag
+ <20210514121435.504423-2-felipe.contreras@gmail.com>
+ <YJ+VGKUa0Kk3BRWQ@coredump.intra.peff.net>
+ <YJ+WzATLCM8SW2GH@coredump.intra.peff.net>
+Subject: Re: [PATCH 01/11] doc: allow the user to provide ASCIIDOC_EXTRA
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -79,46 +79,23 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King wrote:
-> On Fri, May 14, 2021 at 07:14:26AM -0500, Felipe Contreras wrote:
+> On Sat, May 15, 2021 at 05:32:08AM -0400, Jeff King wrote:
 > 
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  Documentation/doc-diff | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> > On Fri, May 14, 2021 at 07:14:25AM -0500, Felipe Contreras wrote:
 > > 
-> > diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-> > index 1694300e50..ecd88b0524 100755
-> > --- a/Documentation/doc-diff
-> > +++ b/Documentation/doc-diff
-> > @@ -146,7 +146,7 @@ render_tree () {
-> >  	# through.
-> >  	oid=$1 &&
-> >  	dname=$2 &&
-> > -	makemanflags=$3 &&
-> > +	makemanflags="$3" &&
+> > > Without `override` all additions will be ignored by make.
+> > 
+> > That's true of all of our Makefile variables. Is there a particular
+> > reason to give this one special treatment?
 > 
-> This line does nothing; the shell won't split whitespace here either
-> way.
+> To go into further detail: usually we distinguish variables we use
+> internally from user-facing ones, and include the latter in the former.
+> I see a later patch wants to start passing ASCIIDOC_EXTRA on the
+> command-line, and we'd use two variables for that.
 
-Right.
+Well, it's not exactly user-facing; it's only needed for doc-diff.
 
-> > @@ -181,6 +181,6 @@ render_tree () {
-> >  	fi
-> >  }
-> >  
-> > -render_tree $from_oid $from_dir $from_makemanflags &&
-> > -render_tree $to_oid $to_dir $to_makemanflags &&
-> > +render_tree $from_oid $from_dir "$from_makemanflags" &&
-> > +render_tree $to_oid $to_dir "$to_makemanflags" &&
-> 
-> This part is necessary (and sufficient).
-> 
-> It would be nice to mention in the commit message why the use of
-> $makemanflags in render_tree must remain unquoted (as I did in mine when
-> I made the same change).
-
-Ahh, I didn't see exactly how you implemented it. Now I see it's very
-similar.
+Would TEST_ASCIIDOC_EXTRA make sense?
 
 -- 
 Felipe Contreras
