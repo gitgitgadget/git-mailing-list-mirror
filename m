@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0F18C433B4
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 15:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A4B8C43460
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 15:28:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D083E613CD
+	by mail.kernel.org (Postfix) with ESMTP id DEE82613CE
 	for <git@archiver.kernel.org>; Sat, 15 May 2021 15:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232517AbhEOPaH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 11:30:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42886 "EHLO
+        id S232544AbhEOPaJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 11:30:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232490AbhEOPaC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 May 2021 11:30:02 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1962C06174A
-        for <git@vger.kernel.org>; Sat, 15 May 2021 08:28:48 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id c14so219319wrx.3
-        for <git@vger.kernel.org>; Sat, 15 May 2021 08:28:48 -0700 (PDT)
+        with ESMTP id S232498AbhEOPaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 May 2021 11:30:03 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF60C061756
+        for <git@vger.kernel.org>; Sat, 15 May 2021 08:28:49 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id f6-20020a1c1f060000b0290175ca89f698so363484wmf.5
+        for <git@vger.kernel.org>; Sat, 15 May 2021 08:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=quu6wgTeIjBA1kV7o0O2ZgbLtCXyj3suFBWBlOx2IxI=;
-        b=HyE8H/3TcHeSFFWcZzJMxd6otMerD3w3RxS5pY8zJXlB9A3GW7PfXMqJBdQn+L2J0W
-         QHSmEvHmn+VeFXcmnBY+0mSX7Rf+jeu5y29J1aCeoG1VI2EfmjN0tcyyd/JtU24EqiAO
-         YBXRnZX/PEKDGGMCK63ynGGqP1FKkhiCMVVY0GNjziwCqZpvd5TP0Mk5vtvLQjB/ihWw
-         AcL5ppE8yG6IIiRVZBZS+a6ZmKQ2NhF42985Azx/owADvKScc1rRT1eAoVumVq058y9C
-         HWsjQPR3ASXCnTBwjLaUDJQXcdKD7nQSJXb9pTQiXc6GHwfStGQv3qaQXw988D0LGQ8l
-         VfsA==
+        bh=vMG5CNA8YIyFhcuQQxL390sVVqrk+jyktA5t48mBxkY=;
+        b=cO7OzeKJ3dKFzlL5JXq9+4QKh3IAuQyamOYzYqifptD2aXijiYllwHQlm9sIFxYW40
+         bQQMEOyJzvX6CCc19gy+nIiK73ggFL2jYajmXEeWEQsuUNHjmuev6JNdbjpEvuemIiRt
+         tTNRnOBg5jYPmAy1RsJSRTNNVJIb6sHDBV9/Nz8uq5Dak8cC6VzVmT1j1twfHj0VqxXP
+         7sNPEzZ83hVOQscEvvUCogq/lzeseVgtQOUC3QydBx88lM+i9d/iA8omf6ouzOUwHrhq
+         mF8Ge98V5bhasRkrG/prFKMV6EX2aeXDvBsNFVbfV0C22kP+0K2xPZsSK/k3Te/dr8s0
+         fJXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=quu6wgTeIjBA1kV7o0O2ZgbLtCXyj3suFBWBlOx2IxI=;
-        b=pYsi9M1zKZbzkqp7pN8McXmedevTWkYjur8LhL+RejtLpjCnUbFUF7HVj2idSmt8ZB
-         FvpqXxY9FT2+KtZhglufdoLQgxkDgQFlzMRca/WRBSOtwmyKb9HA0+xyvJLy0f6jpdUu
-         JjOjOuSaKEMR/dEHidmDRKAnDjmt6AuKrNsBwiKSPAf7K2zVptFG2pghgyPXm7t4aM4T
-         pIL9IJ0Yyj3LGHzf9jIpfSHHwy/pEG2v0OtczQxs9YVPnAf2KNLHOxMSqBSRw8xdjKAH
-         E4hJ4XYAaLHfDhZ/Gu0v5peTr96s9GsG4Vog2lK6sCow1hAQ1MKGzWcN8yIQkcioD3xV
-         ZB4Q==
-X-Gm-Message-State: AOAM530zmvNZq6IDXj4RxyvwVgGbY61mm1MrecOEUqTEymGPT6VtaBNh
-        Rs57xYjpB001xuaO0fTVaOU=
-X-Google-Smtp-Source: ABdhPJy3VeYadpa5q644818CyBgCPvd3oteTMz23m4s1CAVGIMnPkxFku4BjrI5Y9/i8AYt4d5XB6A==
-X-Received: by 2002:a5d:44cb:: with SMTP id z11mr14686174wrr.159.1621092527545;
-        Sat, 15 May 2021 08:28:47 -0700 (PDT)
+        bh=vMG5CNA8YIyFhcuQQxL390sVVqrk+jyktA5t48mBxkY=;
+        b=nl1FEMHnfEE7WVH4nDN1hv/Ntvz7L5meDRWwHc/uzTSdAZmrm+XCNOaKMbgocM7I7E
+         iat9rdaQAViNZPqmxFqLaM4okgvfCo1vTG8jlRVfTmDz79bg0dWWSdQ7Rk7tMB0gcfWZ
+         STV0zyDNGqwZxlUpTgR1DpSiA8nxgkoUd0EV7ktm/8NRET/yrF3Wdp/v0kwBNqqnYgKQ
+         ycmI5dxjaupLDSj30k4SehFoYLER0BTeRrgKS4/Yw2CsTL0ANZakyM2aAlR7D7s4mJft
+         fEUiUGvArLKzlhKYqoqGkAvb8ABdKeT9rd+rTqyYA8jFNDIJj++wQhrnWz/dHhIzPlN8
+         j/hQ==
+X-Gm-Message-State: AOAM532c1avtY0WEhPffwYzRD1LVQkzz3B2ETqFrqfdYZcXusJpS+qLE
+        uLRiQozyTulV3Gr2KQPm/tM=
+X-Google-Smtp-Source: ABdhPJwqfQzaboyZK97kI5cBvarLhZeQ1wXjudbQff8s/ysvWwav+lmHdWGqK4J4SJSszZFbWlP27w==
+X-Received: by 2002:a1c:f303:: with SMTP id q3mr14944085wmq.9.1621092528314;
+        Sat, 15 May 2021 08:28:48 -0700 (PDT)
 Received: from Inspiron.home (2a01cb04010c42001504451e90ab6b33.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:1504:451e:90ab:6b33])
-        by smtp.gmail.com with ESMTPSA id v18sm11617271wro.18.2021.05.15.08.28.46
+        by smtp.gmail.com with ESMTPSA id v18sm11617271wro.18.2021.05.15.08.28.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 15 May 2021 08:28:47 -0700 (PDT)
 From:   Firmin Martin <firminmartin24@gmail.com>
 To:     Firmin Martin <firminmartin24@gmail.com>, git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 1/2] t/README: document test_config
-Date:   Sat, 15 May 2021 17:27:20 +0200
-Message-Id: <20210515152721.885728-2-firminmartin24@gmail.com>
+Subject: [PATCH v2 2/2] t: use test_config whenever possible
+Date:   Sat, 15 May 2021 17:27:21 +0200
+Message-Id: <20210515152721.885728-3-firminmartin24@gmail.com>
 X-Mailer: git-send-email 2.31.1.443.g67a420f573
 In-Reply-To: <20210515152721.885728-1-firminmartin24@gmail.com>
 References: <20210514065508.247044-1-firminmartin24@gmail.com>
@@ -73,41 +73,312 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-test_config is used over one thousand times in the test suite, yet not
-documented. Give it a place in the "Test harness library" section.
+Replace patterns of the form
+1.
+        git config <config-option> <value> &&
+        ...
+        git config --unset <config-option> &&
+2.
+        test_when_finished "git config --unset <config-option>" &&
+        git config <config-option> <value> &&
+        ...
 
-Thanks-to: Eric Sunshine <sunshine@sunshineco.com>
+to the concise
+
+        test_config <config-option> <value>
+
+In t5526, two tests have been further simplified as the output file is
+written before "git config --global --unset".
+
 Signed-off-by: Firmin Martin <firminmartin24@gmail.com>
 ---
- t/README | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ t/t3200-branch.sh                |  9 +++------
+ t/t3900-i18n-commit.sh           |  3 +--
+ t/t4027-diff-submodule.sh        |  3 +--
+ t/t4041-diff-submodule-option.sh |  3 +--
+ t/t4205-log-pretty-formats.sh    |  8 +++-----
+ t/t5505-remote.sh                |  3 +--
+ t/t5526-fetch-submodules.sh      | 16 ++++------------
+ t/t6006-rev-list-format.sh       |  5 ++---
+ t/t7401-submodule-summary.sh     |  3 +--
+ t/t7610-mergetool.sh             |  2 +-
+ t/t7900-maintenance.sh           |  9 +++------
+ 11 files changed, 21 insertions(+), 43 deletions(-)
 
-diff --git a/t/README b/t/README
-index 8eb9e46b1d..aaf1c9cadc 100644
---- a/t/README
-+++ b/t/README
-@@ -1046,6 +1046,21 @@ library for your script to use.
-    Abort the test script if either the value of the variable or the
-    default are not valid bool values.
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index cc4b10236e..0b0119bbe2 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -365,11 +365,9 @@ EOF
+ '
  
-+ - test_config <config-option> [<value>]
-+
-+   Set the configuration option <config-option> to <value>, and unset it at the
-+   end of the current test. For a similar purpose, test_config_global for
-+   global configuration is also available. Note, however, that test_config_*
-+   must not be used in a subshell.
-+  
-+   Example:
-+
-+	test_config format.coverLetter auto
-+
-+   Is a concise way to write:
-+	test_when_finished "git config --unset format.coverLetter" &&
-+	git config format.coverLetter auto
-+
+ test_expect_success 'git branch with column.*' '
+-	git config column.ui column &&
+-	git config column.branch "dense" &&
++	test_config column.ui column &&
++	test_config column.branch "dense" &&
+ 	COLUMNS=80 git branch >actual &&
+-	git config --unset column.branch &&
+-	git config --unset column.ui &&
+ 	cat >expect <<\EOF &&
+   a/b/c   bam   foo   l   * main   n     o/p   r
+   abc     bar   j/k   m/m   mb     o/o   q     topic
+@@ -382,9 +380,8 @@ test_expect_success 'git branch --column -v should fail' '
+ '
  
- Prerequisites
- -------------
+ test_expect_success 'git branch -v with column.ui ignored' '
+-	git config column.ui column &&
++	test_config column.ui column &&
+ 	COLUMNS=80 git branch -v | cut -c -8 | sed "s/ *$//" >actual &&
+-	git config --unset column.ui &&
+ 	cat >expect <<\EOF &&
+   a/b/c
+   abc
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index bfab245eb3..c16c0f7fba 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -179,7 +179,7 @@ test_commit_autosquash_flags () {
+ 	H=$1
+ 	flag=$2
+ 	test_expect_success "commit --$flag with $H encoding" '
+-		git config i18n.commitencoding $H &&
++		test_config i18n.commitencoding $H &&
+ 		git checkout -b $H-$flag C0 &&
+ 		echo $H >>F &&
+ 		git commit -a -F "$TEST_DIRECTORY"/t3900/$H.txt &&
+@@ -193,7 +193,6 @@ test_commit_autosquash_flags () {
+ 		E=$(git cat-file commit '$H-$flag' |
+ 			sed -ne "s/^encoding //p") &&
+ 		test "z$E" = "z$H" &&
+-		git config --unset-all i18n.commitencoding &&
+ 		git rebase --autosquash -i HEAD^^^ &&
+ 		git log --oneline >actual &&
+ 		test_line_count = 3 actual
+diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+index 94ef77e1df..a6eb2416ed 100755
+--- a/t/t4027-diff-submodule.sh
++++ b/t/t4027-diff-submodule.sh
+@@ -123,7 +123,7 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)'
+ '
+ 
+ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match) [.gitmodules]' '
+-	git config diff.ignoreSubmodules dirty &&
++	test_config diff.ignoreSubmodules dirty &&
+ 	git diff HEAD >actual &&
+ 	test_must_be_empty actual &&
+ 	git config --add -f .gitmodules submodule.subname.ignore none &&
+@@ -152,7 +152,6 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)
+ 	test_cmp expect.body actual.body &&
+ 	git config --remove-section submodule.subname &&
+ 	git config --remove-section -f .gitmodules submodule.subname &&
+-	git config --unset diff.ignoreSubmodules &&
+ 	rm .gitmodules
+ '
+ 
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index 0c1502d4b0..782424c2d0 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -58,13 +58,12 @@ test_expect_success 'added submodule' '
+ '
+ 
+ test_expect_success 'added submodule, set diff.submodule' '
+-	git config diff.submodule log &&
++	test_config diff.submodule log &&
+ 	git add sm1 &&
+ 	git diff --cached >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 0000000...$head1 (new submodule)
+ 	EOF
+-	git config --unset diff.submodule &&
+ 	test_cmp expected actual
+ '
+ 
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 8272d94ce6..fbe8ae5378 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -30,12 +30,11 @@ test_expect_success 'set up basic repos' '
+ 	>bar &&
+ 	git add foo &&
+ 	test_tick &&
+-	git config i18n.commitEncoding $test_encoding &&
++	test_config i18n.commitEncoding $test_encoding &&
+ 	commit_msg $test_encoding | git commit -F - &&
+ 	git add bar &&
+ 	test_tick &&
+-	git commit -m "add bar" &&
+-	git config --unset i18n.commitEncoding
++	git commit -m "add bar"
+ '
+ 
+ test_expect_success 'alias builtin format' '
+@@ -60,10 +59,9 @@ test_expect_success 'alias user-defined format' '
+ '
+ 
+ test_expect_success 'alias user-defined tformat with %s (ISO8859-1 encoding)' '
+-	git config i18n.logOutputEncoding $test_encoding &&
++	test_config i18n.logOutputEncoding $test_encoding &&
+ 	git log --oneline >expected-s &&
+ 	git log --pretty="tformat:%h %s" >actual-s &&
+-	git config --unset i18n.logOutputEncoding &&
+ 	test_cmp expected-s actual-s
+ '
+ 
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index c7b392794b..bed8e6633a 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -836,8 +836,7 @@ test_expect_success 'rename a remote with name prefix of other remote' '
+ 
+ test_expect_success 'rename succeeds with existing remote.<target>.prune' '
+ 	git clone one four.four &&
+-	test_when_finished git config --global --unset remote.upstream.prune &&
+-	git config --global remote.upstream.prune true &&
++	test_config_global remote.upstream.prune true &&
+ 	git -C four.four remote rename origin upstream
+ '
+ 
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index ed11569d8d..ff18263171 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -418,7 +418,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config
+ 		git fetch --recurse-submodules
+ 	) &&
+ 	add_upstream_commit &&
+-	git config --global fetch.recurseSubmodules false &&
++	test_config_global fetch.recurseSubmodules false &&
+ 	head1=$(git rev-parse --short HEAD) &&
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+@@ -429,11 +429,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config
+ 	(
+ 		cd downstream &&
+ 		git config fetch.recurseSubmodules on-demand &&
+-		git fetch >../actual.out 2>../actual.err
+-	) &&
+-	git config --global --unset fetch.recurseSubmodules &&
+-	(
+-		cd downstream &&
++		git fetch >../actual.out 2>../actual.err &&
+ 		git config --unset fetch.recurseSubmodules
+ 	) &&
+ 	test_must_be_empty actual.out &&
+@@ -446,7 +442,7 @@ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' override
+ 		git fetch --recurse-submodules
+ 	) &&
+ 	add_upstream_commit &&
+-	git config fetch.recurseSubmodules false &&
++	test_config fetch.recurseSubmodules false &&
+ 	head1=$(git rev-parse --short HEAD) &&
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+@@ -457,11 +453,7 @@ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' override
+ 	(
+ 		cd downstream &&
+ 		git config submodule.submodule.fetchRecurseSubmodules on-demand &&
+-		git fetch >../actual.out 2>../actual.err
+-	) &&
+-	git config --unset fetch.recurseSubmodules &&
+-	(
+-		cd downstream &&
++		git fetch >../actual.out 2>../actual.err &&
+ 		git config --unset submodule.submodule.fetchRecurseSubmodules
+ 	) &&
+ 	test_must_be_empty actual.out &&
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 35a2f62392..9ba06ec5ae 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -37,7 +37,7 @@ truncate_count=20
+ test_expect_success 'setup' '
+ 	: >foo &&
+ 	git add foo &&
+-	git config i18n.commitEncoding $test_encoding &&
++	test_config i18n.commitEncoding $test_encoding &&
+ 	echo "$added_iso88591" | git commit -F - &&
+ 	head1=$(git rev-parse --verify HEAD) &&
+ 	head1_short=$(git rev-parse --verify --short $head1) &&
+@@ -48,8 +48,7 @@ test_expect_success 'setup' '
+ 	head2=$(git rev-parse --verify HEAD) &&
+ 	head2_short=$(git rev-parse --verify --short $head2) &&
+ 	tree2=$(git rev-parse --verify HEAD:) &&
+-	tree2_short=$(git rev-parse --verify --short $tree2) &&
+-	git config --unset i18n.commitEncoding
++	tree2_short=$(git rev-parse --verify --short $tree2)
+ '
+ 
+ # usage: test_format name format_string [failure] <expected_output
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+index 9c3cc4cf40..4963f3290d 100755
+--- a/t/t7401-submodule-summary.sh
++++ b/t/t7401-submodule-summary.sh
+@@ -116,7 +116,7 @@ test_expect_success 'no ignore=all setting has any effect' "
+ 	git config -f .gitmodules submodule.sm1.path sm1 &&
+ 	git config -f .gitmodules submodule.sm1.ignore all &&
+ 	git config submodule.sm1.ignore all &&
+-	git config diff.ignoreSubmodules all &&
++	test_config diff.ignoreSubmodules all &&
+ 	git submodule summary >actual &&
+ 	cat >expected <<-EOF &&
+ 	* sm1 $head1...$head2 (1):
+@@ -124,7 +124,6 @@ test_expect_success 'no ignore=all setting has any effect' "
+ 
+ 	EOF
+ 	test_cmp expected actual &&
+-	git config --unset diff.ignoreSubmodules &&
+ 	git config --remove-section submodule.sm1 &&
+ 	git config -f .gitmodules --remove-section submodule.sm1
+ "
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 8cc64729ad..2ff00f6c46 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -803,7 +803,7 @@ test_expect_success 'diff.orderFile configuration is honored' '
+ test_expect_success 'mergetool -Oorder-file is honored' '
+ 	test_when_finished "git reset --hard" &&
+ 	git checkout -b test$test_count order-file-side2 &&
+-	test_config diff.orderFile order-file &&
++	git config diff.orderFile order-file &&
+ 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
+ 	test_config mergetool.myecho.trustExitCode true &&
+ 	echo b >order-file &&
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index b93ae014ee..7f12619feb 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -155,8 +155,7 @@ test_expect_success 'prefetch multiple remotes' '
+ 	git log --oneline --decorate --all >log &&
+ 	! grep "prefetch" log &&
+ 
+-	test_when_finished git config --unset remote.remote1.skipFetchAll &&
+-	git config remote.remote1.skipFetchAll true &&
++	test_config remote.remote1.skipFetchAll true &&
+ 	GIT_TRACE2_EVENT="$(pwd)/skip-remote1.txt" git maintenance run --task=prefetch 2>/dev/null &&
+ 	test_subcommand ! git fetch remote1 $fetchargs <skip-remote1.txt &&
+ 	test_subcommand git fetch remote2 $fetchargs <skip-remote1.txt
+@@ -407,8 +406,7 @@ test_expect_success 'maintenance.strategy inheritance' '
+ 		git config --unset maintenance.$task.schedule || return 1
+ 	done &&
+ 
+-	test_when_finished git config --unset maintenance.strategy &&
+-	git config maintenance.strategy incremental &&
++	test_config maintenance.strategy incremental &&
+ 
+ 	GIT_TRACE2_EVENT="$(pwd)/incremental-hourly.txt" \
+ 		git maintenance run --schedule=hourly --quiet &&
+@@ -465,8 +463,7 @@ test_expect_success 'maintenance.strategy inheritance' '
+ '
+ 
+ test_expect_success 'register and unregister' '
+-	test_when_finished git config --global --unset-all maintenance.repo &&
+-	git config --global --add maintenance.repo /existing1 &&
++	test_config_global maintenance.repo /existing1 &&
+ 	git config --global --add maintenance.repo /existing2 &&
+ 	git config --global --get-all maintenance.repo >before &&
+ 
 -- 
 2.31.1.443.g67a420f573
 
