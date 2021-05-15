@@ -7,81 +7,117 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A6DEC433B4
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 22:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2366C433B4
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 22:10:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C1A861352
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 22:00:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B0EA61355
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 22:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235166AbhEOWBx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 18:01:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
+        id S235168AbhEOWLb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 18:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235126AbhEOWBv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 May 2021 18:01:51 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E878C061573
-        for <git@vger.kernel.org>; Sat, 15 May 2021 15:00:36 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id i17so2523282wrq.11
-        for <git@vger.kernel.org>; Sat, 15 May 2021 15:00:36 -0700 (PDT)
+        with ESMTP id S232925AbhEOWL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 May 2021 18:11:28 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738DFC061573
+        for <git@vger.kernel.org>; Sat, 15 May 2021 15:10:13 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so2414347oth.5
+        for <git@vger.kernel.org>; Sat, 15 May 2021 15:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=gXDErnbyGbhg1/xt0VuPpdMCx6SIO+EpE0HjjmcvcIQ=;
-        b=cViz3VDBDQ8cT5CkMGgyz/a/Q72n13Cu/fCc4k+31O0PK1BzhPGhmKLkNof2AmSG1P
-         8GB7bJLCprLaoZYLH8pvbuGBnAgc3/yq4dIKwP+qLTefo5CgMz3d8iJ45XW9wxwXMHRv
-         QKkArmS62nuth8pPnSoWv5QN/M1uC4PcnCBEcCfvGnYawHGUaX4EZZNUxdUVU6aGGd+X
-         Bkn2o/fzch6jTiiEmO+YlUcMv4a+0jUvt2jofFHUgxvOJvlDo33OUP8t1vseJNNP1MIc
-         7eslyMgGoQcQrBrQmPPFu4eWU8mUsVXSA9bRN4w6yVlHv749AwZrxwyIYwE/7o2AgVc0
-         GdVg==
+        h=date:from:to:message-id:subject:mime-version
+         :content-transfer-encoding;
+        bh=hvhS4H4QZi1218duXwaZeSXwjGh+fC8DhW/P8Upuy2E=;
+        b=kRMUs9Lt8NOCBayAy0pn4SJuwpKFZpawzGZA6btTUhwGXlwzv1/Y/iXMjkUBqHRBc/
+         Dt/aNgY1MQHs/n1b4oG9rskq/1ug8MHeQTCY0qvPXvJfjKM606REsZOZ5M2ngYS+YzL1
+         DanFk1oltewKk4MQUN4XMv1X8w4w+VNoIZq1452btQZKOX9Kmxg2EKpI0q2tM0pVRDh0
+         2AhvljpYmInYs9R7pKjS8fvQyejdByDCY6cNJkeO9AyFaZqwBpQsIvHft6vwICgS6sks
+         K+D7f80eEfyEtrKA5oSZXypswpioITIyFvNW8jJyJRrJlTP5uWdxZyogHz0jAEM3xnYi
+         /1Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=gXDErnbyGbhg1/xt0VuPpdMCx6SIO+EpE0HjjmcvcIQ=;
-        b=ct5LcLORhZ7IkYvlQhEAHBSsSZzbcqmB8cOVJ0NA0gcrf4SItsPqJyQ9E8m6oZATy0
-         6UzLdGVVPmIv+7tSLNdiD2LnmZ730mEjfckx1omFmdQjOsKTDm36wZGuGmcu9RlBTv5g
-         m/1jytnhMS3czT/m9Nf8s3ka4sulPuVIc5PI6OOU9lOqGycm+kXWn/6xFoC9A7SrNCJg
-         /VFkGBOSTlFxGKCfIrnAVYkyxUeoD4gEFMwYRhyPIJUXPokVFqjL/+0ai4BLqOAv0PV6
-         BK/nVmWPDfWklIp/R4UQwj49qPRjXunskBiENPcmip0yenSOkH8zGZysJd/C294Exfii
-         9jgA==
-X-Gm-Message-State: AOAM532QqgwygpMbDnqFmFJkHdWnyTGnrc5TI6TFCSLxCJLUk3sWiTGO
-        6jEFfJ8UhsGEjcq47GlYsj4=
-X-Google-Smtp-Source: ABdhPJzPvXAxiAs7LO/C0dQDw7jEOaqQsoLo0su+AokV+N1SefAwMezcTpnFQivAMTiTMBeZBVhvaw==
-X-Received: by 2002:a5d:63c1:: with SMTP id c1mr12402612wrw.71.1621116034679;
-        Sat, 15 May 2021 15:00:34 -0700 (PDT)
-Received: from Inspiron (2a01cb04010c4200cd08ad531d1c64b1.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:cd08:ad53:1d1c:64b1])
-        by smtp.gmail.com with ESMTPSA id s5sm8996044wmh.37.2021.05.15.15.00.33
+        h=x-gm-message-state:date:from:to:message-id:subject:mime-version
+         :content-transfer-encoding;
+        bh=hvhS4H4QZi1218duXwaZeSXwjGh+fC8DhW/P8Upuy2E=;
+        b=pazkju2jpoTEGAmPZbJN31G7m9s7k/hqRgBlYV8p8BKAZyKscBa5n9WrR08ZV0T1R+
+         n2FxsrDjxLsWljPGgYxii6ietpEE4JOU22JSm1QF0WBf5CylmH2VjYY6DVG5kwnE75Dq
+         zlw+CCTczF+6/3SsEBBy5MsneUkXMJhfP3q7xjeSkpwasnHRoYB0z95oYVO3X3gHPo4O
+         n5jeeq+4j5VpQzQhplMN7UvX5ZumzfVdKTs9tcckebedNpRxRUUeiS1cmJPTGbkSH6rn
+         9N8CO9zO2cYEM/n+xMhWv4THNX7arabdDrm8pvoOev/ydlu2fDStPPea2cpPSUoDK5UY
+         WURw==
+X-Gm-Message-State: AOAM5335ZLTGR9ZP+AYM+KBtmse2532axSzdCb309LNMG4Uv0WuoRlDN
+        PO2ONOpJ57QuvmHgKGmtZQIXCf9LRRKtPQ==
+X-Google-Smtp-Source: ABdhPJyRRN0m2Nt2xENyfmeREzFe58eMtahN2RBJU2DkVj2CA1o7QlFBV7YFY9Ne0cIfO996PZNZvA==
+X-Received: by 2002:a9d:6394:: with SMTP id w20mr44151472otk.174.1621116612429;
+        Sat, 15 May 2021 15:10:12 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id b6sm1925788oic.12.2021.05.15.15.10.11
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 15:00:34 -0700 (PDT)
-From:   Firmin Martin <firminmartin24@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: RE: [PATCH 2/2] t: use test_config whenever possible
-In-Reply-To: <60a02d62838cf_eacf5208d2@natae.notmuch>
-References: <20210514065508.247044-1-firminmartin24@gmail.com>
- <20210514065508.247044-2-firminmartin24@gmail.com>
- <60a02bf2f16a2_eacf52085@natae.notmuch>
- <60a02d62838cf_eacf5208d2@natae.notmuch>
-Date:   Sun, 16 May 2021 00:00:29 +0200
-Message-ID: <87im3jfyiq.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
-MIME-Version: 1.0
-Content-Type: text/plain
+        Sat, 15 May 2021 15:10:12 -0700 (PDT)
+Date:   Sat, 15 May 2021 17:10:05 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <60a046bd83001_f4b0f20861@natae.notmuch>
+Subject: Man pages have colors? A deep dive into groff
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> Ahh, I just read the comment about not using it in a subshell.
->
-> Then outside:
->
->   test_config -C downstream fetch.recurseSubmodules on-demand &&
-True. This makes me realize that I should also briefly document the -C option.
+Hi,
 
-Thanks,
+While I was doing the investigagion for my GNU_ROFF patch [1], I checked
+different versions of all the tools (asciidoc, asciidoctor, docbook, and
+groff).
 
-Firmin
+When I tested my own compiled version of groff I noticed something
+weird: man pages have colors. This did not happen with the version
+shipped by Arch Linux.
+
+I did notice the output generated by docbook stylesheets showed
+\m[blue], but no color showed up.
+
+It turns out Arch Linux disables colors, and so does Debian, by
+disabling a feature called SGR. This happened about 10 years, and the
+rationale was that "it doesn't work correctly".
+
+To enable SGR on these distributions you need to do GROFF_SGR=1, but
+that is not documented anywhere.
+
+groff does check for a variable GROFF_NO_SGR, but it's the other way
+around: SGR is enabled unless that variable is set.
+
+There's other ways your distribution might be screwing up with groff
+(for example Arch Linux converts \' to ', which is not correct), so you
+might want to check your shipped configuration in:
+
+  /usr/share/groff/site-tmac/man.local
+
+Unfortunately the colors in man pages leave a lot to be desired.
+
+Here is a simple trick I've been using to show some custom colors:
+
+  man() {
+    GROFF_NO_SGR=1 \
+    LESS_TERMCAP_md=$'\e[1;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[1;34m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[1;35m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    command man "$@"
+  }
+
+Hopefully some of you might find this useful.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/20210515115653.922902-2-felipe.contreras@gmail.com/
+
+-- 
+Felipe Contreras
