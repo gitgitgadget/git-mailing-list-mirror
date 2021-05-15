@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A7D5C433B4
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC745C433B4
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 382C561354
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5D4461354
+	for <git@archiver.kernel.org>; Sat, 15 May 2021 11:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232164AbhEOL60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 07:58:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53222 "EHLO
+        id S232217AbhEOL6d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 07:58:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232040AbhEOL6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 May 2021 07:58:16 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5503FC061756
-        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:02 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id b25so2121638oic.0
-        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:02 -0700 (PDT)
+        with ESMTP id S231958AbhEOL6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 May 2021 07:58:18 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E05C0C06175F
+        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:03 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id x15so2027112oic.13
+        for <git@vger.kernel.org>; Sat, 15 May 2021 04:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yIqQBfEdH5opye+2jtHlPSoJoDotMhI4gSjXvYXRgUc=;
-        b=jkZ2feUk8Qey3LXmfI6fn/knMwIgJAwMsh39J+9Ul+QlaoGVVAn1PPMNBOfo3j14H3
-         Sdf7CEhiCFPbvIYmVtw1zLMx2OqlOrX2q0EwJAsivxDZrlz9WEdGKnDSrZOoL2rBWpJ5
-         uzHYtE7qFWQxp3UollICW86xSiTEsyajsK+RcYQ4PiCDcLX2X4WZtDZrW79qKXM3TLly
-         2aas8YxY67tWm3LlawXRfrBHnS52w+fXOQVO9i0PC5zbNauVF9b6GVAM5iqZ4M9SFDpU
-         TvqWSXJce5BnwiBFINmLw1+GvI75ABPRBJoYG1mXg1CvyWCzf2oEp8m/uf8AMKX/MoLa
-         fR8g==
+        bh=mQNgCPhzxzCFTTlDUt00GfHjGdusv/qaDXTiOv2Fkqo=;
+        b=DZFpKBs/hI+WcNt32HwXnVRAkghXi+64aWp8QpPVsH4fmaOaWeA7u9g8yXdnd0/ADA
+         DceO6HEwxBW/s4CyF8Y4sKupB5YPug26IMr9DjTvRYG7YcYT57hvYGhomWAzm/gfeNWm
+         xXHRcZGsCaB3qfCK8JoxlbTuqafkZTiTZVjJ9GOpL+AYxnKI3GOqbY8iOnJVXsp9fyk1
+         2u+Umgr4E/JaO7abb0Da43v0irsJqKZW/+O2prTHSr+CbnO8LcQoK2x/eVA4+5YO5ppQ
+         FQbTUC3R6og86/NgnjS1LWcUVhWfIkvkbLyFvfQlfG9Pws8VKirqC6ZmRlhhYrZrw5yK
+         vJmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yIqQBfEdH5opye+2jtHlPSoJoDotMhI4gSjXvYXRgUc=;
-        b=rHxSj7kvuYTIrYZLH3+L+B131Ik1rZ+A89b3Ap8xq6O8RViJyKJAyuXs4+lMeAR2C8
-         KAHpFnuyuZ/L+AGgvVXaSSIcJwl5BXXhygbCPHEe0GyHr5TtcwVkEJ0VjCxZOUJfy9i7
-         oX/eiKyg16xvacLqD3SUGElfSDCeReor/rzmWhyWhu6fNyiJ8zTDDnbDyIKUMruCQXcF
-         BaH67h3XwpgfSIzjeezN9BVA6g25ssFc4UnmuUoz9Q2w7VEW+DhrdqZoczFLzDcaoP7Q
-         byj1rIpZYsLwuEPAQixFmx3tzdHqNwiDxU7z+zNQjx8SLOIhtqqQwxynWhtdXSx1WcWe
-         jIcQ==
-X-Gm-Message-State: AOAM530nAsx+F2lJXeSvPWYiKRxxCAdpdTvZxQJwj8SHxqsXkA7wtWQM
-        7oeq+TUvkPcU1tAvtn97ZVKiyQYNMp/22g==
-X-Google-Smtp-Source: ABdhPJz+H4w7dwKgdQwT3GRxnYhztLkbfWQ76mBdRwuYH21Tb2+w9D2CI8DqSNIY2phQ9GZAeZbKxw==
-X-Received: by 2002:a05:6808:345:: with SMTP id j5mr9911495oie.106.1621079821575;
-        Sat, 15 May 2021 04:57:01 -0700 (PDT)
+        bh=mQNgCPhzxzCFTTlDUt00GfHjGdusv/qaDXTiOv2Fkqo=;
+        b=P63e5ZvUNXb6ZZNwipphso5Halo67syevtvljmTr9TCl8Y1Xa/p/XYoP6DAyxge5Uy
+         KVfGheGuDYmnsTmhTCpqe3eqNK+kpWfHqhz3XRQU3Hbto/uBwWU7mkvFiKzdboy8g1TM
+         ijoUHDDWvHDBcsEIulvvqA5oryQqaiU2sMVpvG4t8Mi8utDLC2uMJX32yvvOzNKDSY51
+         flG7IfmZN6CJaEu/B45+p9zBnzKJO6btVqBeSg05MGIPRgyxLZb2D1IuNyNyfL3sTZUP
+         25oOhSFjElezo7n5v/lO2Rj1DckK1X0LgwL2MhFVI03fPom/nrv51BRhLCbffTS0fCuN
+         SbLw==
+X-Gm-Message-State: AOAM531mHq4a3X+RXsGa3TGxGRupd+JDHhfaUxzub1aU6WC4gLzEOYeH
+        CYqxW352ImvfAyRRpPgLTe8og6B0pkQpJg==
+X-Google-Smtp-Source: ABdhPJy5aE2N5Xgomjww1KPXrMaAHvQwMvuhHwak+nx2TgnRYbwPP0CUyWs6WtAchCy74fF9AC3W4g==
+X-Received: by 2002:aca:4752:: with SMTP id u79mr20829068oia.86.1621079823110;
+        Sat, 15 May 2021 04:57:03 -0700 (PDT)
 Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id z9sm1912823oog.25.2021.05.15.04.57.00
+        by smtp.gmail.com with ESMTPSA id h81sm1709159oif.53.2021.05.15.04.57.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 04:57:01 -0700 (PDT)
+        Sat, 15 May 2021 04:57:02 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 04/12] doc: asciidoc: remove unnecessary attribute
-Date:   Sat, 15 May 2021 06:56:45 -0500
-Message-Id: <20210515115653.922902-5-felipe.contreras@gmail.com>
+Subject: [PATCH 05/12] doc: asciidoctor: remove unnecessary require
+Date:   Sat, 15 May 2021 06:56:46 -0500
+Message-Id: <20210515115653.922902-6-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210515115653.922902-1-felipe.contreras@gmail.com>
 References: <20210515115653.922902-1-felipe.contreras@gmail.com>
@@ -74,25 +74,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's part of asciidoc global configuration since 2012.
+This file is loaded by asciidoctor, the module is already loaded.
+
+In addition to being less redundant this fixes a problem while trying
+use a development version of asciidoctor when the gem is available:
+
+  $GEM_HOME/gems/asciidoctor-2.0.15/lib/asciidoctor.rb:51:
+    warning: already initialized constant Asciidoctor::RUBY_ENGINE
+  $HOME/asciidoctor/lib/asciidoctor.rb:52:
+    warning: previous definition of RUBY_ENGINE was here
+  ...
+
+That's a bug in asciidoctor, but there's no need to trigger it.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/asciidoc.conf | 1 -
+ Documentation/asciidoctor-extensions.rb | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 60f76f43ed..f7908f9dea 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -12,7 +12,6 @@
+diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
+index 70a0956663..423450392d 100644
+--- a/Documentation/asciidoctor-extensions.rb
++++ b/Documentation/asciidoctor-extensions.rb
+@@ -1,4 +1,3 @@
+-require 'asciidoctor'
+ require 'asciidoctor/extensions'
  
- [attributes]
- asterisk=&#42;
--plus=&#43;
- caret=&#94;
- startsb=&#91;
- endsb=&#93;
+ module Git
 -- 
 2.31.1
 
