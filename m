@@ -2,107 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CCDDC433B4
-	for <git@archiver.kernel.org>; Sun, 16 May 2021 21:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E238C433ED
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 22:00:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11A5E61019
-	for <git@archiver.kernel.org>; Sun, 16 May 2021 21:59:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 154DB61159
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 22:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbhEPWAg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 May 2021 18:00:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50258 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbhEPWAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 May 2021 18:00:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 673A3BE40B;
-        Sun, 16 May 2021 17:59:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ny6AxyEquALr
-        5B8gpPg1J/Hn0+dM9lSyFpkdXTd2hGM=; b=El2dmywrBh/obTJ80t9UpaBBbr9z
-        KbBbgaE3bQkrNC95anbvfqiGwSNNuuwkwFGwce9r/cyOYTKvAImuH/r54ooXHtKe
-        eLfmYtpPQvimK0WDjPNh3QRmeD767E/9s9eE+Gu13m812e1NUVFPdkTzCz3ENc8c
-        aDmzu6ZuxkenVh4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F46ABE40A;
-        Sun, 16 May 2021 17:59:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8DF1BE409;
-        Sun, 16 May 2021 17:59:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wolfgang =?utf-8?Q?M=C3=BCller?= <wolf@oriole.systems>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] rev-parse: fix segfault with missing --path-format
- argument
-References: <20210516120449.661636-1-wolf@oriole.systems>
-        <xmqqsg2m6dsi.fsf@gitster.g>
-        <20210516143156.mauc2ukryx5j2e2r@nabokov.fritz.box>
-Date:   Mon, 17 May 2021 06:59:18 +0900
-In-Reply-To: <20210516143156.mauc2ukryx5j2e2r@nabokov.fritz.box> ("Wolfgang
-        =?utf-8?Q?M=C3=BCller=22's?= message of "Sun, 16 May 2021 16:31:56 +0200")
-Message-ID: <xmqqk0ny5oi1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230157AbhEPWB2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 May 2021 18:01:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229942AbhEPWB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 May 2021 18:01:27 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C832C061573
+        for <git@vger.kernel.org>; Sun, 16 May 2021 15:00:11 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id b9-20020a17090a9909b029015cf9effaeaso4482057pjp.5
+        for <git@vger.kernel.org>; Sun, 16 May 2021 15:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uS2z7qlP5QLTfs5EcIVo9nzS37wSxh/OSxGoRL3D6UA=;
+        b=tyXoiZRw2oMd642b7xR+88s9+2LAdH/PmE58V/EglzATW4Rb6GUW0TrbL6IsWT1uIk
+         MOJpJKinQkcn+M1qavxu4j11IKkOFyshkKuVv3lipbTEaeW/NODn+RbxKE9iYO3j9g3z
+         cKUj7b0E53HBV0cpODmW9VY6vOpQVV9/ML0f2nxhMcn5as9lcZjzDZF740IxsHvt2ip/
+         /nPkeAEMprmmWz3iIWsj8LqczeN92S62hL6O75VrbYqxBthfbDcy1Df6nc4JiIpJ12GC
+         fcA0s1z2m/Qp3nX/67kAcHWh9BtwBkmlY/hMpIiIZgGRXEmTq5DtjAtG82kF5o+mQdKY
+         kiWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uS2z7qlP5QLTfs5EcIVo9nzS37wSxh/OSxGoRL3D6UA=;
+        b=MENXkcI/h+oxszY9PHso3ULuoTKmdCkKriWZNm9yVAax+QQCAUW3lbRZkmO5ELW6fW
+         OKmdq3cS2si384LD8k/7FLdriVxjSYdHgY2QeDTvjiyIewdLBJuRDOYJFxYFATqrmDMm
+         CU22bAqumXBBzpxSrQM3z7XfdlsQGQNMZhazZNhX8YN0O+mmGogZ0kuNbuw5VU+1YIjG
+         xXhx3oEIUbvjoBsxPI5ewoxHS7MkHm/35K3rbmr+RWWuRE7W3cb6exaVPJR2r+CPa2pe
+         pbp7OS9/4JwDSar9ZVoE2OeRPRLdW5X38pEiKGaDzfUukUd0t99X2QJmxWBfru6na5uw
+         VMjg==
+X-Gm-Message-State: AOAM531uJwJNhD3/8E6nhsub99kBdaTzmJ0t/8KZxBHV3OuGINoKUz6W
+        EncJ6mF7lpEjufoV8UuZo4D2H+5TCHyUbw==
+X-Google-Smtp-Source: ABdhPJwhVkQ0UUm8EOyEg2zXWwZQTU9sWNk7UaO5F30d8GOl+UhP3Sikn/OU2bYAZ5EKPY593AoAaQ==
+X-Received: by 2002:a17:902:bd09:b029:ec:7e58:a54a with SMTP id p9-20020a170902bd09b02900ec7e58a54amr58430341pls.62.1621202410788;
+        Sun, 16 May 2021 15:00:10 -0700 (PDT)
+Received: from xavier.bn-i.net ([2001:470:b:65c:3ff0:7a20:2df8:dfc8])
+        by smtp.gmail.com with ESMTPSA id u1sm152004pfc.63.2021.05.16.15.00.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 May 2021 15:00:10 -0700 (PDT)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, pc44800@gmail.com, chriscool@tuxfamily.org,
+        stefanbeller@gmail.com, kaartic.sivaraam@gmail.com,
+        Johannes.Schindelin@gmx.de, shouryashukla.oo@gmail.com,
+        gitster@pobox.com
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] submodule: use the imperative mood to describe the --files option
+Date:   Sun, 16 May 2021 15:59:57 -0600
+Message-Id: <20210516215957.33341-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F69F2BC2-B691-11EB-945C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wolfgang M=C3=BCller <wolf@oriole.systems> writes:
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ builtin/submodule--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On 2021-05-16 21:53, Junio C Hamano wrote:
->
->> As die() is end-user facing, you'd probably want
->>=20
->> 	die(_("--path-format requires an argument"));
->>=20
->> We do have untranslated die() nearby for the same option, which may
->> want to be cleaned up either in a preliminary patch, or in this same
->> patch as an unrelated fix "while we are at it".
->
-> I would not mind preparing a preliminary patch that cleans up all
-> untranslated user-facing calls to die(). My editor finds 15 of those in
-> rev-parse.c, and I think they all qualify.
->
-> If you'd rather not touch unrelated code paths I'll instead include it
-> in v2 as an unrelated fix in the same commit.
-
-I am puzzled by the last paragraph.  Somebody who does not want to
-see "unrelated" codepaths touched would appreciate if a commit that
-fixes this segfault does not touch them at the same time.
-
-In any case, I now counted existing die() messages in this file, and
-among 15 of them, only 1 is marked with _(...).  I think that it
-is the best to apply the patch as-is (without _(...)), adding one
-untranslated message to the file.
-
-Then, on top of this change, the 15 untranslated messages can be
-marked with _(...) a separate commit (and it does not even have to
-be done by you).
-
-> I think I initially went for "--path-format --show-toplevel" because I
-> was under the assumption that --path-format needs another option it can
-> modify. It seems that this is not the case, so wouldn't it be simpler
-> here to do the following instead:
->
-> 	test_must_fail git rev-parse --path-format
->
-> That way we do not have to worry about subsequent changes to other,
-> unrelated, options.
-
-That's good, too.  Simple.
-
-Thanks.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index d55f6262e9..ae6174ab05 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1300,7 +1300,7 @@ static int module_summary(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "cached", &cached,
+ 			 N_("use the commit stored in the index instead of the submodule HEAD")),
+ 		OPT_BOOL(0, "files", &files,
+-			 N_("to compare the commit in the index with that in the submodule HEAD")),
++			 N_("compare the commit in the index with that in the submodule HEAD")),
+ 		OPT_BOOL(0, "for-status", &for_status,
+ 			 N_("skip submodules with 'ignore_config' value set to 'all'")),
+ 		OPT_INTEGER('n', "summary-limit", &summary_limit,
+-- 
+2.31.1
 
