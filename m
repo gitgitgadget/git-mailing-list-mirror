@@ -2,113 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A57DC433ED
-	for <git@archiver.kernel.org>; Sun, 16 May 2021 21:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A727CC433B4
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 21:58:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE0EA610C8
-	for <git@archiver.kernel.org>; Sun, 16 May 2021 21:09:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F65161159
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 21:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233810AbhEPVIg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 May 2021 17:08:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
+        id S229586AbhEPV7X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 May 2021 17:59:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233721AbhEPVIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 May 2021 17:08:35 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF32C061573
-        for <git@vger.kernel.org>; Sun, 16 May 2021 14:07:19 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id i17so4332255wrq.11
-        for <git@vger.kernel.org>; Sun, 16 May 2021 14:07:18 -0700 (PDT)
+        with ESMTP id S229445AbhEPV7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 May 2021 17:59:21 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E938C061573
+        for <git@vger.kernel.org>; Sun, 16 May 2021 14:58:05 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id o17-20020a17090a9f91b029015cef5b3c50so4476654pjp.4
+        for <git@vger.kernel.org>; Sun, 16 May 2021 14:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Mtp3KKtbQpqMnRUpG66ddXQ9aP3rNHdtMjWWdzvIxMw=;
-        b=GpijMtqLfWr2PoYTQgg8JEAfHlOhIZzDyn5bEqw+KR0ZkkZYwFtssCoPcQ6viywicD
-         fv9tbbAFOjkVOlV9vnN2M/qJcsvC8Fso7Kv4FG0b3p1po7H7p0s8eMBWTYGYDEJt2kgd
-         MQWuJjalmdwM15KlWiraIID/LDXiHHun/7kvCrpC7amULHXD7PAmknEEGzuHe9yBrtI3
-         wOH6HICTFJc2j9EpSgYY3IIYbJ5kLyR0eR0wJX5KNvgQATT8vwqxNPk+M6jLGmj8z+qE
-         lcl9pxuKQWFRgS5GB5AWO8krMoa0Kgkgb8cfeWsw65u3vIY05DM7UtJHfRxvpD/laZej
-         yrHQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RMnWZ9Ep+2le7KCoWE0TFnyd3Vhz+RBXeeWqCdyXm5U=;
+        b=MLJx41FehRJXaoRbra3EY+keG/UEoUlknddKYJPAOvfzA7UfDXKrJADKGa+fVxiBd7
+         f2XAS5/9/iSU77cByG99Zrh5KeBgiG973oIozl4L6conAFjcAy7cy0MHLy5ESiDYlHi4
+         YaB27NTj6Vlzdqc4RYB+IN/dqKryB+Z04aHCRhxkrgQxchAjG7xerjirdYxxuHGSHCbs
+         v3YKOocvULebnK/RzHwyZH2hKBDeSAUUm62pWG0s9yenPrLitqreBGf5CERnhthYL6QN
+         plUWOea4dOx+mAIRJ5DHRAsWMXle68mF3dEYeLwYFHsapvZ+XKEYlOCFmzZvpTtkYP/w
+         NpQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Mtp3KKtbQpqMnRUpG66ddXQ9aP3rNHdtMjWWdzvIxMw=;
-        b=CGfTTGbJjiXiMeuKvDn0M9DTqWrXF53nagutgPl2KfKDZRGYS9MYKL8dvyUj5Cx8Fs
-         llpeoZkvyTY73geV1qBfr31E85duukxi2X2EVwun0mYc7l2pKUW9rVYeFzhAQAmPk0xC
-         o0BogX7M2Tdy0+GWc2tdTeutx1l6VzzbW1h9ib+unIGGQjcLYOODJVrzfGHPA6GNvr9J
-         GtAaAGYajXEArPEfJYUGCqWTEPGnnS8uezUMJnXPEpXrUShsOcNeT7a7Z0BLi9bL+kSr
-         U/zdGoO9ZyJgdwczIRUgUz569tz0iED65Ew6GyRg/kF12o20zUywXCz1PC4tVEVfdi4n
-         hE6g==
-X-Gm-Message-State: AOAM531jtgQRqASXc4lRuW06RfIy++Nw5U1Y7iIOqxYcvvtEWA2CwCc4
-        9jTzonLltfVoU4NuZoG29bkWJceTxIyOLcpsEkw=
-X-Google-Smtp-Source: ABdhPJzJkU9LVHWqyVO86wczHwYvroIPWwPMYdjdUZSZHqlYU6LGt82T16HMS1csesq0eBhDFV9oPJtGHJdLAenHLwE=
-X-Received: by 2002:a5d:5184:: with SMTP id k4mr25047741wrv.84.1621199237651;
- Sun, 16 May 2021 14:07:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RMnWZ9Ep+2le7KCoWE0TFnyd3Vhz+RBXeeWqCdyXm5U=;
+        b=TzDvZSBzV3wyKUwuXnpOVLr/LFYcLWGliNtBcX9u/r5CEpXmxU9uAlZiaywDvNbKGP
+         gzbeSZJGEs+gHZpvzoTVndChpcSHqXGGFbSFPpZKg8uyysHBu6SP6Z5PyX6+nRtkOvN1
+         h9lxKF5EFzHcajcJHkcHKfU/+zypg+2OUYWql1jX4Bn9nwkjJyyWSUAaUZ3lc/M8jeiG
+         5fRMFcxQOWrM0/Z0yjZNthlEqf6SMXH5oI0rDIU/BZot0NOOwOEXdmZD958E4hThJZX5
+         s6XM1shh0b8MiAAXWUWfuKsrPtEJ7yZPgFbQ1TM1G2o+nFDVJFCIifxqONIIJw5Bn2in
+         CXtg==
+X-Gm-Message-State: AOAM530X0Mg3CcbwU8Z1eFt4GqX+1V+hLtx6WVMdKbGvI77OIKt4o0rL
+        fwfCNWLN2veopnZ77AhCJHdPSFEuZI8=
+X-Google-Smtp-Source: ABdhPJwSQ66YIUp9ViCHTkHRMbn8t7HK+cpcc732zj4yomKyeSi5Ze/Mbu0ReGgT0J2jbby24jYkJg==
+X-Received: by 2002:a17:90a:d30b:: with SMTP id p11mr25949287pju.49.1621202284167;
+        Sun, 16 May 2021 14:58:04 -0700 (PDT)
+Received: from xavier.bn-i.net ([2001:470:b:65c:3ff0:7a20:2df8:dfc8])
+        by smtp.gmail.com with ESMTPSA id g89sm10776572pjg.30.2021.05.16.14.58.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 May 2021 14:58:03 -0700 (PDT)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, ungureanupaulsebastian@gmail.com,
+        t.gummerer@gmail.com, gitster@pobox.com
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] stash: don't translate literal commands
+Date:   Sun, 16 May 2021 15:57:04 -0600
+Message-Id: <20210516215704.32440-1-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-References: <pull.1026.git.git.1621150366442.gitgitgadget@gmail.com>
- <1dc7877e-adb4-e3f5-3b59-bd45f9673596@gmail.com> <60a1699eedcd4_109fc7208e1@natae.notmuch>
- <7ab75f6a-14a8-1aa7-ad0-20f484e2c8@crashcourse.ca>
-In-Reply-To: <7ab75f6a-14a8-1aa7-ad0-20f484e2c8@crashcourse.ca>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sun, 16 May 2021 16:07:06 -0500
-Message-ID: <CAMP44s3AKCTjHshRz7Nc4KzSj3orBrrV24V1tb1gs3=Yh=PhSA@mail.gmail.com>
-Subject: Re: [PATCH] describe-doc: clarify default length of abbreviation
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Anders_H=C3=B6ckersten_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, Git <git@vger.kernel.org>,
-        =?UTF-8?Q?Anders_H=C3=B6ckersten?= <anders@hockersten.se>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 16, 2021 at 2:00 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> On Sun, 16 May 2021, Felipe Contreras wrote:
-> > Bagas Sanjaya wrote:
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ builtin/stash.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> > > What is the birthday paradox then?
-> >
-> > It's a probability fact that goes against common sense. In a romm
-> > with 23 people you are 50% likely to find two people with the same
-> > birthday.
-> >
-> > https://en.wikipedia.org/wiki/Birthday_problem
->
->   i've had to explain the logic behind this to people who really have
-> a tough time understanding this, and it's a concept that applies in a
-> lot of places (surprisingly).
-
-Indeed. Very very few people actually understand probability. Any
-intuition you have is almost always wrong. Even professional
-probabilists get probability wrong consistently.
-
-I've found it's safer and easier to not trust my intuition, write
-code, and that way get the probability (also called Monte Carlo
-method).
-
-I have a git repository with tricky simulations and I actually had
-written one for the birthday paradox, but I had not pushed it. Now I
-have [1].
-
-The actual code is just two lines:
-
-  birthdays = Array.new($n) { rand(365.25) }
-  birthdays.any? { |e| birthdays.count(e) > 1 }
-
-Yet our brain somehow has trouble figuring out the approximate result
-of that computation.
-
-Cheers.
-
-[1] https://github.com/felipec/simulation/blob/master/examples/birthday
-
+diff --git a/builtin/stash.c b/builtin/stash.c
+index d68ed784d2..075bcf6ee5 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -26,7 +26,7 @@ static const char * const git_stash_usage[] = {
+ 	N_("git stash drop [-q|--quiet] [<stash>]"),
+ 	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+ 	N_("git stash branch <branchname> [<stash>]"),
+-	N_("git stash clear"),
++	"git stash clear",
+ 	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+ 	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
+ 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+@@ -67,7 +67,7 @@ static const char * const git_stash_branch_usage[] = {
+ };
+ 
+ static const char * const git_stash_clear_usage[] = {
+-	N_("git stash clear"),
++	"git stash clear",
+ 	NULL
+ };
+ 
 -- 
-Felipe Contreras
+2.31.1
+
