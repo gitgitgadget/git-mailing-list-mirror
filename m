@@ -2,171 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F04C0C433ED
-	for <git@archiver.kernel.org>; Sun, 16 May 2021 11:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED60FC433ED
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 12:00:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C27A26109F
-	for <git@archiver.kernel.org>; Sun, 16 May 2021 11:34:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB14961028
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 12:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbhEPLgA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 May 2021 07:36:00 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61251 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231840AbhEPLf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 May 2021 07:35:58 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A1B91339D7;
-        Sun, 16 May 2021 07:34:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rqi13XzyI8Sn
-        arh7bEXJu6NbX9f/b2/JYWjgp48DZkk=; b=x3Iqa+lYfEhjtycBYUVZAF/KF9ob
-        k+/JltiYT4wOFNxXi9ogJ9YaU9WUzCiywwH92fiwdo1a2y346a6EMzs8UnTUdi80
-        m18k/pY0I4jdrcfAB1xjL7UkJjUjgtUXCotdQd1VRq/nEk6INaW21YJXHeYQ1NTp
-        VJWRiwo0kjAnLZ4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7561C1339D6;
-        Sun, 16 May 2021 07:34:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9B8B51339D5;
-        Sun, 16 May 2021 07:34:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Anders_H=C3=B6ckersten_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Anders =?utf-8?Q?H=C3=B6ckersten?= <anders@hockersten.se>
+        id S232108AbhEPMBf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 May 2021 08:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56052 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230185AbhEPMBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 May 2021 08:01:34 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DAAC061573
+        for <git@vger.kernel.org>; Sun, 16 May 2021 05:00:18 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id m124so2756524pgm.13
+        for <git@vger.kernel.org>; Sun, 16 May 2021 05:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kVEFem3Ce+HdP8UfTM+YKnVwk/z1PBTh4+urDpIk5RY=;
+        b=cmhap5x5k3DCRcugXSz7qTXcI4vSCFg8GxR2pzLwsU11AjIBLa5KmvHq7yPvHtn5ah
+         WzKWDl+djEpXTL2qCs8u61Fu6fLAWkHFABZJtPsAj/TqWyIAKhRKljQA9Ub9zICBZrCp
+         tRWHpX5Dfzpb0/m9syP+VWnZnCq78BUUHRevO4uO2PHS29vybXBxZJ/UGeFDhhqpluJ1
+         oFclPG9tAjFx9Sujmb9Uc8jYMdcYQhQyRinwg2WIpmvzb2ye0eqZbTunfvVc6jqNvvy0
+         o2MRYGVxkRJRiVl/FAPlDUCjqJpZ/PkcwUYv6+6i+exiTdTqhfZDSUG4/8Mo+BJ9wRLV
+         JlnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kVEFem3Ce+HdP8UfTM+YKnVwk/z1PBTh4+urDpIk5RY=;
+        b=iDBP3sb+O7QWEi0eppzxg2TKBPdkOR6uaGAtANxNmZAXcn5r/OnFai2tI04rHfvrO5
+         yzeNZWL4xUL25rml8ZGer29mNyoY41E5euqzXrL0WEonhqvWgstjk7Q/GlRjzYgcByfh
+         W1IFZ6PtyfZaO3R7c10fZzfyEV6toPzS98OTwP8a+93wQTHkytZE97gTosK3rmenZoc8
+         zcSylmzh8wSURxc1zMvXfo3Xcrjp4FFh4TRoJOC40DdRjub1qk+y6aVExu0xnHRxUMGp
+         xhB7jem+vTKoSL3VCVUA1EVWScluGbiOt3DyLmSxW9rCp+7UvC4RwSIM2Mnw5q/BPCRV
+         apYA==
+X-Gm-Message-State: AOAM5318naHPQUXP906JloYMQcBCtHpvIYtXCK5ehZB42bJeWtinoCKl
+        TobPROZA90plfRaDPXC//czh3/gk1qCv3Q==
+X-Google-Smtp-Source: ABdhPJwALHV0L3R2Liiz3+BV/pZMacMo6KSkJIw1apPfiCjihDa60lKW7/ebBab9UQ61655rKKI13w==
+X-Received: by 2002:a63:da55:: with SMTP id l21mr56223933pgj.188.1621166417963;
+        Sun, 16 May 2021 05:00:17 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-23.three.co.id. [116.206.28.23])
+        by smtp.gmail.com with ESMTPSA id i197sm7782802pgc.13.2021.05.16.05.00.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 May 2021 05:00:17 -0700 (PDT)
 Subject: Re: [PATCH] describe-doc: clarify default length of abbreviation
+To:     =?UTF-8?Q?Anders_H=c3=b6ckersten_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     =?UTF-8?Q?Anders_H=c3=b6ckersten?= <anders@hockersten.se>
 References: <pull.1026.git.git.1621150366442.gitgitgadget@gmail.com>
-Date:   Sun, 16 May 2021 20:34:37 +0900
-In-Reply-To: <pull.1026.git.git.1621150366442.gitgitgadget@gmail.com>
- ("Anders
-        =?utf-8?Q?H=C3=B6ckersten?= via GitGitGadget"'s message of "Sun, 16 May
- 2021 07:32:45
-        +0000")
-Message-ID: <xmqq7djy7vzm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <1dc7877e-adb4-e3f5-3b59-bd45f9673596@gmail.com>
+Date:   Sun, 16 May 2021 19:00:15 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B33EE34C-B63A-11EB-B387-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <pull.1026.git.git.1621150366442.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Anders H=C3=B6ckersten via GitGitGadget"  <gitgitgadget@gmail.com>
-writes:
-
-> From: =3D?UTF-8?q?Anders=3D20H=3DC3=3DB6ckersten?=3D <anders@hockersten=
-.se>
->
-> Clarify the default length used for the abbreviated form used for
-> commits in git describe.
->
-> The behavior was modified in Git 2.11.0, but the documentation was not
-> updated to clarify the new behavior.
->
-> Signed-off-by: Anders H=C3=B6ckersten <anders@hockersten.se>
-> ---
->     describe-doc: clarify default length of abbreviation
->    =20
->     Clarify the default length used for the abbreviated form used for
->     commits in git describe.
->    =20
->     The behavior was modified in Git 2.11.0, but the documentation was =
-not
->     updated to clarify the new behavior.
->    =20
->     Signed-off-by: Anders H=C3=B6ckersten anders@hockersten.se
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1=
-026%2Fahockersten%2Fdescribe-doc-abbreviation-clarification-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1026=
-/ahockersten/describe-doc-abbreviation-clarification-v1
-> Pull-Request: https://github.com/git/git/pull/1026
-
-
-.git/rebase-apply/patch:32: trailing whitespace.
-	will vary according to the size of the repository with a default of=20
-.git/rebase-apply/patch:34: trailing whitespace.
-	as needed to form a unique object name.  An <n> of 0 will suppress=20
-.git/rebase-apply/patch:46: trailing whitespace.
-of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The=20
-.git/rebase-apply/patch:47: trailing whitespace.
-length of the abbreviation scales as the repository grows, using the=20
-.git/rebase-apply/patch:48: trailing whitespace.
-approximate number of objects in the repository and a bit of math=20
-warning: 5 lines applied after fixing whitespace errors.
-Applying: describe-doc: clarify default length of abbreviation
-
-Will fix them up while applying, but please be careful the next
-time.  A good way to double check is to do
-
-    $ git format-patch -o my.patch origin..
-    $ git checkout --detach origin
-    $ git am --whitespace=3Dwarn my.patch
-
-that is, (1) create a patch series out of the branch you have worked
-on, designed to be applied on top of the origin, (2) detach HEAD at
-the origin, and (3) apply the patch.  Once you are done, you can go
-back to the original branch with
-
-    $ git checkout -
-
-The patch text looks good.
-
-Thanks.
-
-
->  Documentation/git-describe.txt | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/git-describe.txt b/Documentation/git-describ=
-e.txt
-> index a88f6ae2c6e7..f3f41cfac496 100644
-> --- a/Documentation/git-describe.txt
-> +++ b/Documentation/git-describe.txt
-> @@ -63,10 +63,11 @@ OPTIONS
->  	Automatically implies --tags.
-> =20
->  --abbrev=3D<n>::
+On 16/05/21 14.32, Anders Höckersten via GitGitGadget wrote:
+  >   --abbrev=<n>::
 > -	Instead of using the default 7 hexadecimal digits as the
 > -	abbreviated object name, use <n> digits, or as many digits
 > -	as needed to form a unique object name.  An <n> of 0
 > -	will suppress long format, only showing the closest tag.
 > +	Instead of using the default number of hexadecimal digits (which
-> +	will vary according to the size of the repository with a default of=20
+> +	will vary according to the size of the repository with a default of
 > +	7) of the abbreviated object name, use <n> digits, or as many digits
-> +	as needed to form a unique object name.  An <n> of 0 will suppress=20
+> +	as needed to form a unique object name.  An <n> of 0 will suppress
 > +	long format, only showing the closest tag.
-> =20
->  --candidates=3D<n>::
->  	Instead of considering only the 10 most recent tags as
+>   
+
+I think the more correct is the abbreviated hash length is determined
+by number of objects.
+
+>   --candidates=<n>::
+>   	Instead of considering only the 10 most recent tags as
 > @@ -139,8 +140,11 @@ at the end.
-> =20
->  The number of additional commits is the number
->  of commits which would be displayed by "git log v1.0.4..parent".
+>   
+>   The number of additional commits is the number
+>   of commits which would be displayed by "git log v1.0.4..parent".
 > -The hash suffix is "-g" + unambiguous abbreviation for the tip commit
 > -of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`).
-> +The hash suffix is "-g" + an unambigous abbreviation for the tip commi=
-t
-> +of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The=20
-> +length of the abbreviation scales as the repository grows, using the=20
-> +approximate number of objects in the repository and a bit of math=20
+> +The hash suffix is "-g" + an unambigous abbreviation for the tip commit
+> +of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The
+> +length of the abbreviation scales as the repository grows, using the
+> +approximate number of objects in the repository and a bit of math
 > +around the birthday paradox, and defaults to a minimum of 7.
->  The "g" prefix stands for "git" and is used to allow describing the ve=
-rsion of
->  a software depending on the SCM the software is managed with. This is =
-useful
->  in an environment where people may use different SCMs.
->
-> base-commit: 48bf2fa8bad054d66bd79c6ba903c89c704201f7
+
+What is the birthday paradox then?
+
+Also, better say "... and by default the minimum length is 7.".
+
+Thanks.
+
+-- 
+An old man doll... just what I always wanted! - Clara
