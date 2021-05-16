@@ -2,122 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2366C433B4
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 22:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4AABC433ED
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 01:01:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B0EA61355
-	for <git@archiver.kernel.org>; Sat, 15 May 2021 22:10:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DFB2610CA
+	for <git@archiver.kernel.org>; Sun, 16 May 2021 01:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235168AbhEOWLb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 May 2021 18:11:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45566 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232925AbhEOWL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 May 2021 18:11:28 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738DFC061573
-        for <git@vger.kernel.org>; Sat, 15 May 2021 15:10:13 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id q7-20020a9d57870000b02902a5c2bd8c17so2414347oth.5
-        for <git@vger.kernel.org>; Sat, 15 May 2021 15:10:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:subject:mime-version
-         :content-transfer-encoding;
-        bh=hvhS4H4QZi1218duXwaZeSXwjGh+fC8DhW/P8Upuy2E=;
-        b=kRMUs9Lt8NOCBayAy0pn4SJuwpKFZpawzGZA6btTUhwGXlwzv1/Y/iXMjkUBqHRBc/
-         Dt/aNgY1MQHs/n1b4oG9rskq/1ug8MHeQTCY0qvPXvJfjKM606REsZOZ5M2ngYS+YzL1
-         DanFk1oltewKk4MQUN4XMv1X8w4w+VNoIZq1452btQZKOX9Kmxg2EKpI0q2tM0pVRDh0
-         2AhvljpYmInYs9R7pKjS8fvQyejdByDCY6cNJkeO9AyFaZqwBpQsIvHft6vwICgS6sks
-         K+D7f80eEfyEtrKA5oSZXypswpioITIyFvNW8jJyJRrJlTP5uWdxZyogHz0jAEM3xnYi
-         /1Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:subject:mime-version
-         :content-transfer-encoding;
-        bh=hvhS4H4QZi1218duXwaZeSXwjGh+fC8DhW/P8Upuy2E=;
-        b=pazkju2jpoTEGAmPZbJN31G7m9s7k/hqRgBlYV8p8BKAZyKscBa5n9WrR08ZV0T1R+
-         n2FxsrDjxLsWljPGgYxii6ietpEE4JOU22JSm1QF0WBf5CylmH2VjYY6DVG5kwnE75Dq
-         zlw+CCTczF+6/3SsEBBy5MsneUkXMJhfP3q7xjeSkpwasnHRoYB0z95oYVO3X3gHPo4O
-         n5jeeq+4j5VpQzQhplMN7UvX5ZumzfVdKTs9tcckebedNpRxRUUeiS1cmJPTGbkSH6rn
-         9N8CO9zO2cYEM/n+xMhWv4THNX7arabdDrm8pvoOev/ydlu2fDStPPea2cpPSUoDK5UY
-         WURw==
-X-Gm-Message-State: AOAM5335ZLTGR9ZP+AYM+KBtmse2532axSzdCb309LNMG4Uv0WuoRlDN
-        PO2ONOpJ57QuvmHgKGmtZQIXCf9LRRKtPQ==
-X-Google-Smtp-Source: ABdhPJyRRN0m2Nt2xENyfmeREzFe58eMtahN2RBJU2DkVj2CA1o7QlFBV7YFY9Ne0cIfO996PZNZvA==
-X-Received: by 2002:a9d:6394:: with SMTP id w20mr44151472otk.174.1621116612429;
-        Sat, 15 May 2021 15:10:12 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id b6sm1925788oic.12.2021.05.15.15.10.11
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 May 2021 15:10:12 -0700 (PDT)
-Date:   Sat, 15 May 2021 17:10:05 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <60a046bd83001_f4b0f20861@natae.notmuch>
-Subject: Man pages have colors? A deep dive into groff
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S231936AbhEPA66 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 May 2021 20:58:58 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54427 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231608AbhEPA65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 May 2021 20:58:57 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 66B8A130B1D;
+        Sat, 15 May 2021 20:57:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=dowve8d1cKpk
+        VtbGUMTwu0YzbJup6kWGqDJYntBwbZ0=; b=bDgat0FcB4XHzS0MSsbt+XDvLQ6I
+        2kpw0QzwLHfW72oj99AMKPCkcnQMtyQpXNLJmLXPv41P9BUIbpQJanYbHrOltrzE
+        bb1jQnkCUJ8AfKEG2+KipK5Aw0aVfZdk3Me/0/RHNdVB1LODFZU7+jBiSh9xuQPe
+        /CdqAVO8b/+n2d4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C5DF130B1C;
+        Sat, 15 May 2021 20:57:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6E24F130B1B;
+        Sat, 15 May 2021 20:57:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/howto: tracking git.git
+References: <20210514124925.39229-1-bagasdotme@gmail.com>
+        <xmqqwns177cv.fsf@gitster.g>
+        <cbbde4f4-3e10-2c08-6ca1-6f22f8497194@gmail.com>
+Date:   Sun, 16 May 2021 09:57:38 +0900
+In-Reply-To: <cbbde4f4-3e10-2c08-6ca1-6f22f8497194@gmail.com> (Bagas Sanjaya's
+        message of "Sat, 15 May 2021 10:32:27 +0700")
+Message-ID: <xmqqsg2n7awt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B6D5B46C-B5E1-11EB-B8FA-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-While I was doing the investigagion for my GNU_ROFF patch [1], I checked
-different versions of all the tools (asciidoc, asciidoctor, docbook, and
-groff).
+> On 14/05/21 20.49, Junio C Hamano wrote:
+>> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+>>=20
+>>> +Available Branches
+>>> +------------------
+>>> +
+>>> +There are several branches on git.git with different purposes:
+>>> +
+>>> +master::
+>>> +This is the most stable branch. Changes (topics) that are merged
+>>> +to master should have been stabilized in next and suitable for
+>>> +production use. Feature releases (vX.Y.0) are cut from this
+>>> +branch.
+>> Isn't "maint" meant to be more stable?
+>>=20
+>
+> I think "maint" is maintenance branch for latest feature release.
+> For feature stabilization it happens on "main", so "master" is fully
+> polished.
 
-When I tested my own compiled version of groff I noticed something
-weird: man pages have colors. This did not happen with the version
-shipped by Arch Linux.
+With the status of being back-then-most polished plus only fixes and
+no unnecessary new features that can introduce unstability yet to be
+discovered, by definition 'maint' ought to be "more stable" than
+'master', no?
 
-I did notice the output generated by docbook stylesheets showed
-\m[blue], but no color showed up.
+In any case, as =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh pointed out, I=
+ think we have
+most of these written down elsewhere, and it is easier for readers
+if we can find a way to reorganize them and incorporate new stuff
+that is brought in by this proposal.
 
-It turns out Arch Linux disables colors, and so does Debian, by
-disabling a feature called SGR. This happened about 10 years, and the
-rationale was that "it doesn't work correctly".
-
-To enable SGR on these distributions you need to do GROFF_SGR=1, but
-that is not documented anywhere.
-
-groff does check for a variable GROFF_NO_SGR, but it's the other way
-around: SGR is enabled unless that variable is set.
-
-There's other ways your distribution might be screwing up with groff
-(for example Arch Linux converts \' to ', which is not correct), so you
-might want to check your shipped configuration in:
-
-  /usr/share/groff/site-tmac/man.local
-
-Unfortunately the colors in man pages leave a lot to be desired.
-
-Here is a simple trick I've been using to show some custom colors:
-
-  man() {
-    GROFF_NO_SGR=1 \
-    LESS_TERMCAP_md=$'\e[1;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[1;34m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[1;35m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    command man "$@"
-  }
-
-Hopefully some of you might find this useful.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20210515115653.922902-2-felipe.contreras@gmail.com/
-
--- 
-Felipe Contreras
