@@ -2,112 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A4B4C433B4
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C0B0C433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16FF5611BF
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 514CA61028
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242095AbhEQQwn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 12:52:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43516 "EHLO
+        id S242214AbhEQQww (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 12:52:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241681AbhEQQwi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 12:52:38 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81338C061248
-        for <git@vger.kernel.org>; Mon, 17 May 2021 09:48:35 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id v8so6431685qkv.1
-        for <git@vger.kernel.org>; Mon, 17 May 2021 09:48:35 -0700 (PDT)
+        with ESMTP id S240423AbhEQQwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 12:52:42 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB26BC061364
+        for <git@vger.kernel.org>; Mon, 17 May 2021 09:49:48 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id a25so7699570edr.12
+        for <git@vger.kernel.org>; Mon, 17 May 2021 09:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Xmf8EM3g9V1ZR5H06NshGj5vPs+PlE3N11XMsMYReVI=;
-        b=i2zL3ELgSAu7vJwjr1EdrBKa8Us2jDcp/FoNFTLukz8kijk3zgbk5z/gy51eOkmWT+
-         rbyTqBMJcUfTcPHG3GuQh3HudrbSHiO7UBgC2SQuWvb8hsqELKX3z7Ii/cyvdcly78mD
-         BTWBX3B397zsi8iO66P4GykINlvmcvGHreYh8Dg5kJJnS8ZV6DFmPifoH41H5T2TIyBF
-         /NcmxMsyDqdvzRxqppCUSic4L2en53ww2u+eaHfQ0eoqYuTotMuXiMpSiIGt7sWULVbk
-         83BaV9X+rCXTSA9Eepk/99dHtkZNtnTPxNRUrIRTFRlIdXD8YrVL+PcsWgRt8pnxeM6e
-         1SnA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ZU/Q6RL8lUkXGvcPnqUhky5cL+s2AP7scQz77ssYqa0=;
+        b=YULzspe0R90XhFfvgeC5PripzGWCQrgNeS/NECk2QNq+dipzUIFDtgWGkAlW7wuupx
+         7177GUnMFr03wtQqyCQkFK5X7+enHeAL3y90OET2KoGiw6D2zmUoKk8cgCUrvzT/DZLQ
+         D9nfPXK82XNq7BBcCfZbNTWypoWlXL2xHbHq8d9xjoKsb+pmhkWpt8IE8MYP+27eBAxg
+         ajeOi872tfudc6uMfkU83dLO6I6l3o9aOXdrujzpT9t73lnTFNdHFqckpkQW4qEvnBVx
+         7572XgJU4jwWhdimukYc/uW8x7FWCEhWnyM/EqNIL2yTWNw4sve6vlQcbeypdfbIjb5j
+         p1ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Xmf8EM3g9V1ZR5H06NshGj5vPs+PlE3N11XMsMYReVI=;
-        b=qWS8XqGWWKunuH/2cxx8EfY5Z6p8Jn4Zt53GsZdNwDWxjjblJO1/VOkEOs22FONqZA
-         cDDxQKMFI0JrlFOcW5HaTRAd48or2u7eS5I6WTAVCLXwWrfVvGXs0wdKD1cVUQrd5Odp
-         L/47SnIwNpNlEsLvN6hWd794bg9LIJxlEKLsBPgNtpn9wlFpzKpDNs3dnkrn3OhzwBkJ
-         uKGDnzgEV9IJRnoIg2jlAIeeU0Fps73dhdiPVs0zU4Pc2IdzUTs0FSTZTndoNHCoWKU7
-         TavkeFskYbvOko5rPnGeRCZAEmfKrlTOebNwE0Dn2WtmFQXLpN+KdLZ9ea4LxIzAb3U6
-         JJdA==
-X-Gm-Message-State: AOAM530jXRmnsPBhM+pehTSprpnl2jE3W1QZV2Njmevd8uEYCgGEG914
-        yxHNnKok97mzzlsj5/kFQ1w=
-X-Google-Smtp-Source: ABdhPJyk77YJzEF/9TbIFl1HFZ3pQLjUKVxHgYT/buPcnYGRgERTzdGS23ktbR8ueaRmWrQMnEv4Nw==
-X-Received: by 2002:a37:b945:: with SMTP id j66mr782625qkf.270.1621270114703;
-        Mon, 17 May 2021 09:48:34 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:68e5:b0b1:d7d3:e820? ([2600:1700:e72:80a0:68e5:b0b1:d7d3:e820])
-        by smtp.gmail.com with ESMTPSA id g140sm10932484qke.32.2021.05.17.09.48.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 May 2021 09:48:34 -0700 (PDT)
-Subject: Re: [PATCH] stash: don't translate literal commands
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        ungureanupaulsebastian@gmail.com, t.gummerer@gmail.com,
-        gitster@pobox.com
-References: <20210516215704.32440-1-alexhenrie24@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <91d3d4e7-a04f-3fc4-a97b-90af02b20ed5@gmail.com>
-Date:   Mon, 17 May 2021 12:48:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ZU/Q6RL8lUkXGvcPnqUhky5cL+s2AP7scQz77ssYqa0=;
+        b=Yl2olYfVxrWxhGtCMOaWHhFBdtOWXE0bmtExsgCchibRhD6YDyJ2zNyKXHSuUZWCde
+         mVo3DtZjq9S1zc/sZFJbxySuLa3gxesoCEXEjg5+GBYLriGcnIBQ1/mZ4cnKThsCQh7H
+         Kfq3BHtRrS7mebgELvMLXPL0qJRyPD90Sjcfb9Z+Rmp5JNS8IhfHpmbqksAkI/3eykBP
+         WozJLb2RCyxT+zz6CCBFEkOcHGE2KoYViEHtTc5kgTuQaP4lSqktONbi9WpbWKubN+E5
+         uCtcB4bSI+/QbKEBbKRc/c71YNyWGFJJdcQFXDMVWkRyoWtfO+sl92VNB02s0h4d8vSA
+         6shQ==
+X-Gm-Message-State: AOAM5335ywRysgSq4X+6YIvB5O/u70oYxH9I/z4OoIzlaVlC36abTX4M
+        dHT1r9xpteMM4P5SmMNOm4w=
+X-Google-Smtp-Source: ABdhPJxm45Dw3ZKBj6ioErD9Il8/DmgzXDIAF4HwKIxNDZuk4dDUAUsYfjSyM6GVNVu5e1yxz09afA==
+X-Received: by 2002:a05:6402:438d:: with SMTP id o13mr1162206edc.324.1621270187423;
+        Mon, 17 May 2021 09:49:47 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id y2sm8823391ejg.123.2021.05.17.09.49.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 May 2021 09:49:47 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Man pages have colors? A deep dive into groff
+Date:   Mon, 17 May 2021 18:48:04 +0200
+References: <60a046bd83001_f4b0f20861@natae.notmuch>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <60a046bd83001_f4b0f20861@natae.notmuch>
+Message-ID: <87tun1qp91.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210516215704.32440-1-alexhenrie24@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/16/2021 5:57 PM, Alex Henrie wrote:
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  builtin/stash.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index d68ed784d2..075bcf6ee5 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -26,7 +26,7 @@ static const char * const git_stash_usage[] = {
->  	N_("git stash drop [-q|--quiet] [<stash>]"),
->  	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
->  	N_("git stash branch <branchname> [<stash>]"),
-> -	N_("git stash clear"),
-> +	"git stash clear",
 
-I immediately saw the commands above and wondered why you are
-not removing them from being translated. My guess is that the
-"<stash>" strings are the bits that are interesting to
-translate. Perhaps add some description in your commit message
-as to why you are drawing the line here?
+On Sat, May 15 2021, Felipe Contreras wrote:
 
->  static const char * const git_stash_clear_usage[] = {
-> -	N_("git stash clear"),
-> +	"git stash clear",
->  	NULL
->  };
+> Hi,
+>
+> While I was doing the investigagion for my GNU_ROFF patch [1], I checked
+> different versions of all the tools (asciidoc, asciidoctor, docbook, and
+> groff).
+>
+> When I tested my own compiled version of groff I noticed something
+> weird: man pages have colors. This did not happen with the version
+> shipped by Arch Linux.
+>
+> I did notice the output generated by docbook stylesheets showed
+> \m[blue], but no color showed up.
+>
+> It turns out Arch Linux disables colors, and so does Debian, by
+> disabling a feature called SGR. This happened about 10 years, and the
+> rationale was that "it doesn't work correctly".
+>
+> To enable SGR on these distributions you need to do GROFF_SGR=1, but
+> that is not documented anywhere.
+>
+> groff does check for a variable GROFF_NO_SGR, but it's the other way
+> around: SGR is enabled unless that variable is set.
+>
+> There's other ways your distribution might be screwing up with groff
+> (for example Arch Linux converts \' to ', which is not correct), so you
+> might want to check your shipped configuration in:
+>
+>   /usr/share/groff/site-tmac/man.local
+>
+> Unfortunately the colors in man pages leave a lot to be desired.
+>
+> Here is a simple trick I've been using to show some custom colors:
+>
+>   man() {
+>     GROFF_NO_SGR=1 \
+>     LESS_TERMCAP_md=$'\e[1;31m' \
+>     LESS_TERMCAP_me=$'\e[0m' \
+>     LESS_TERMCAP_us=$'\e[1;34m' \
+>     LESS_TERMCAP_ue=$'\e[0m' \
+>     LESS_TERMCAP_so=$'\e[1;35m' \
+>     LESS_TERMCAP_se=$'\e[0m' \
+>     command man "$@"
+>   }
+>
+> Hopefully some of you might find this useful.
+>
+> Cheers.
+>
+> [1] https://lore.kernel.org/git/20210515115653.922902-2-felipe.contreras@gmail.com/
 
-Are there other instances in builtin/*.c? If not, then it
-would be nice to say so. Otherwise, it would be good to fix
-them, while you are here.
+This looks much better.
 
-Thanks,
--Stolee
+I wonder a good follow-up (hint, hint! :) would be to have
+exec_man_man() and exec_man_cmd() in builtin/help.c set this depending
+on color.ui (so we'd do it by default with "auto").
+
+Then e.g. "git help git" would look prettier than "man git".
