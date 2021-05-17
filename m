@@ -2,204 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DBC3C433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 06:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22FEFC433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 06:56:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B01F61185
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 06:49:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7FB361185
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 06:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233315AbhEQGu1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 02:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48884 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbhEQGu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 02:50:26 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE20C061573
-        for <git@vger.kernel.org>; Sun, 16 May 2021 23:49:10 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id l70so3989311pga.1
-        for <git@vger.kernel.org>; Sun, 16 May 2021 23:49:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YbEczw/eXXMSs9GYp2iku5+6F4BUzIn44OLg2ihPHFw=;
-        b=rddNnm46JWC8OikSb8Fma2TVniyQsu8N/KGVRcKyUoZiEoKMrHApH39UXRAM4IZ0QS
-         bLkGN+I0wFRKxMSGJoUz3tX1L72YhjnKtlz2FQQSjk8tLnSclN2sTuVpc08aXYxYCOH6
-         80TCa+pk0teBwg0gug891SX1SctPCrblYnfopzzdBuSER/DwbI9IKVrdhfm8XGXEcX+F
-         7MnfYRQNXnMMqQRWeFaA5AhcrxBJE1nn1wFVhECJ+pyJfoCYDvPAp+73Q4MgbEY3eCzw
-         L/NsvWv/4PuqG68fTPydd28LjVhYQeUEVPjr89BnM8/KVP/whg/HA35CbFQEFUlM88Y1
-         zPgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YbEczw/eXXMSs9GYp2iku5+6F4BUzIn44OLg2ihPHFw=;
-        b=PpxWSPQ/a51FfJD8zua4mTaxTg/U9o+tkfHSRD4sQMDzky+wPxoB1u669+zY5utob3
-         tm0RbsG0/qOK3ijeCau53EH84yrU7z4ACZWDSi1wlt1ryVcf4098qdN0ojFcUQW5AGKz
-         9ipfpSlYWN7r0BdhCAodxIETaHjr8+Zw7KAo+YVKrieUkLuHCUXEe1nim4Q8nBVP/Wfb
-         nyxCmCTgGzEae+DsaMWpwpVyc7RCV48zk2pC8Ce9FTaGflNRL2djASjLVjpP+87GW4jC
-         LVuQfU+DL0U4TAst/iEhCYkSWczll8i3EuS4OU2/prv1KBJZzFvq2eONy4iNi4bgyQ/r
-         BThA==
-X-Gm-Message-State: AOAM531H8hxfdYJrqSUots+nG1I4mxR9avslWZlUCmLxEvzHwmyI/t2d
-        X8NgLTKeJOi6R6TPkEsNaC1dw/RNmdcNXA==
-X-Google-Smtp-Source: ABdhPJy53V/jQg2obHx2Q1Gi3iER5aKEngTR7USkXOaDrUSsrkA9hR3C4TTXJx8KMMjqNAvQP6gWtQ==
-X-Received: by 2002:a63:4145:: with SMTP id o66mr36920986pga.4.1621234149940;
-        Sun, 16 May 2021 23:49:09 -0700 (PDT)
-Received: from [192.168.43.80] (subs28-116-206-12-39.three.co.id. [116.206.12.39])
-        by smtp.gmail.com with ESMTPSA id y13sm4407637pgp.16.2021.05.16.23.49.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 May 2021 23:49:09 -0700 (PDT)
-Subject: Cryptographic hash agnostic git (was: Re: Preserving the ability to
- have both SHA1 and SHA256 signatures)
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Personal Sam Smith <sam@samuelsmith.org>,
-        dwh@linuxprogrammer.org
-Cc:     git@vger.kernel.org
-References: <D433038A-2643-4F63-8677-CA8AB6904AE1@samuelsmith.org>
- <60a1e1cc5b8b6_11206d20830@natae.notmuch>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <649946ac-b080-7f8b-3777-0be6556547e9@gmail.com>
-Date:   Mon, 17 May 2021 13:49:06 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+        id S234458AbhEQG5Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 02:57:16 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60252 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234103AbhEQG5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 02:57:16 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5FB1F12E443;
+        Mon, 17 May 2021 02:56:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jXOxocxqjdlMq7C7R3KFbDVPhwlTVo3MYVa1Qs
+        3jG74=; b=L9TRKFS33LK6VdcpqGT8YY4mSJ/NL4RZE7It7d1NkD8gOOOADYGAfj
+        LPjfg2OyUuPEXiSIeapFzJ/x+PdPeAB84towltwco8VenZ2ag8ngQGCV4e2LDTXd
+        Cm0/c6LjXjdBajX8dDI0oISsNsgNfOm9Yie0jBM+XENf7NQqQ5Nmc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5916C12E442;
+        Mon, 17 May 2021 02:56:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A705012E441;
+        Mon, 17 May 2021 02:55:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Firmin Martin <firminmartin24@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/2] t: use test_config whenever possible
+References: <20210514065508.247044-1-firminmartin24@gmail.com>
+        <20210515152721.885728-1-firminmartin24@gmail.com>
+        <20210515152721.885728-3-firminmartin24@gmail.com>
+        <xmqqbl9b6zla.fsf@gitster.g>
+        <87fsylgadx.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
+Date:   Mon, 17 May 2021 15:55:55 +0900
+In-Reply-To: <87fsylgadx.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
+        (Firmin Martin's message of "Mon, 17 May 2021 08:08:42 +0200")
+Message-ID: <xmqqsg2l3l38.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <60a1e1cc5b8b6_11206d20830@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: EE98BE02-B6DC-11EB-81CC-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Firmin Martin <firminmartin24@gmail.com> writes:
 
+> fact, I suspect that you misread the diff, cf. the end of the email). 
+> I copy here the full test with line number to make sure that we are in
+> the same page.
 
-On 17/05/21 10.23, Felipe Contreras wrote:
-> Personal Sam Smith wrote:
->> One of the essential properties of any good cryptographic system is
->> what is called cryptographic algorithm agility. Without it the system
->> cannot easily adapt to new attacks and newly discovered weaknesses in
->> cryptographic algorithms. Self-describing cryptographic primitives are
->> the most convenient enabler for cryptographic agility. One advantage
->> of signed hash chained provenance logs is that the whole log must be
->> compromised not merely one part of it. Such a log that exhibits
->> agility especially through self-describing primitives is self-healing
->> in sense that new appendages to the log may use stronger crypto
->> primitives which protect earlier entries in the log that use weaker
->> primitives. This makes the log (or any such agile self-describing
->> verifiable data structure) future proof. It is the best practice for
->> designing distributed (over the internet) zero trust computing
->> applications.
-> 
-> This is way above my pay grade, but let me try to interpret the above.
-> 
-> If we have a repository with two digest algorithms:
-> 
->   2. BLAKE2b (considered non-compromised)
->   1. SHA-1 (broken)
-> 
-> We may not be confident on the SHA-1 history (1), but as long as we have
-> BLAKE2b history (2), we can be confident on that.
-> 
-> The delta between when SHA-1 was broken, and the switch to BLAKE2b
-> happened, is when the repository could be potentially compromised.
-> 
-> So, it's in the best interest of the repository owners to switch to the
-> non-compromised version as soon as possible. In fact, it would be better
-> if the switch happened *BEFORE* SHA-1 was broken.
-> 
-> This is why algorithm agility is important.
-> 
-> 
-> But this is not sufficient, because BLAKE2b could get
-> compromised in the future. The repository owners need to be thinking
-> ahead to the time, to when they'll need to make yet another algorithm
-> switch.
-> 
-> When such times comes, they need their infrastructure to be able to
-> perform the switch as fast as possible. If possible right after they've
-> finalized their decision.
-> 
-> 
-> So, if I can summarize your and dwh's proposal: git should be
-> cryptographic-digest-algorithm-agnostic.
->
+The following is the original test before your patch, right?
 
-  
-But SHA-256 support on Git is still on progress, unfortunately. What if
-on someday SHA-1 is broken completely, and we're still not yet switch to
-stronger hashes?
+>>  415 test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config" '
+>>  416     (
+>>  417         cd downstream &&
+>>  418         git fetch --recurse-submodules
+>>  419     ) &&
+>>  420     add_upstream_commit &&
+>>  421     git config --global fetch.recurseSubmodules false &&
+>>  422     head1=$(git rev-parse --short HEAD) &&
+>>  423     git add submodule &&
+>>  424     git commit -m "new submodule" &&
+>>  425     head2=$(git rev-parse --short HEAD) &&
+>>  426     echo "From $pwd/." > expect.err.2 &&
+>>  427     echo "   $head1..$head2  super      -> origin/super" >>expect.err.2 &&
+>>  428     head -3 expect.err >> expect.err.2 &&
+>>  429     (
+>>  430         cd downstream &&
+>>  431         git config fetch.recurseSubmodules on-demand &&
+>>  432         git fetch >../actual.out 2>../actual.err
 
-Anyway, beside SHA-256 and BLAKE2b, there is also SHA-3 family, which
-supports from 224 bits to 512 bits. If Git wants to support SHA-3 hashed
-objects, which bit length should we use? I prefer 256 bits, because it's
-a nice trade-off between performance (speed) and security (resistance).
+Here we run one "fetch" inside downstream, with a config specific to
+the downstream repository; the expectation is that this on-demand
+setting is honored, overriding the "global" setting that was set on
+line 421.
 
-> 
-> So far this makes sense to me.
-> 
-> The only problem comes when you consider day-to-day operations, which to
-> be honest have been totally uninterrupted by 15 years of using SHA-1.
-> 
-> At this point it's worth noting that if the git project has a maxim, it
-> would be a single word: "performance". Nothing else matters.
-> 
-> So, if you suggest to switch from SHA-1 to SHA-256, that's fine; as long
-> as you can guarantee that *performance* is not affected. This is the
-> work brian m. carlson seems to have been doing.
-> 
-> On the other hand what dwh seemed to suggest is to support every digest
-> algorithm on the horizon--without regards of how that would affect
-> performance--and as expected that didn't land very smoothly.
-> 
-> 
-> But I don't think the two approaches are incompatible.
-> 
-> All we have to do is reconcile two facts:
-> 
->    1. The ability for users to switch to a new digest is important
->    2. We don't want users to be switching algorithms every other commit
-> 
-> If git can switch the digest algorithm on a per-repository basis, I
-> don't think anybody would have a problem with that.
-> 
-> Git could support SHA-1, SHA-256, and BLAKE2b as of today. The
-> repository owners can decide wich algorithm to choose today, and their
-> past history would not be affected.
-> 
+>>  433     ) &&
+>>  434     git config --global --unset fetch.recurseSubmodules &&
 
-In reality, many users just use Git that is packaged by the distribution,
-and depending on release version of the distro, it can be older than
-recent. So we need to also consider that.
+And then we discard the "global" setting.
 
-> This is future-proof, and would make repository owners be able to make
-> that decision, not git.
-> 
-> If at some point in the future people want to start to get ready for
-> SHA-4, that could be introduced to the git core, *before* people want to
-> make such transition, and *after* the project has made sure such change
-> does not impact on performance.
-> 
-> Or am I missing something?
-> 
-> Cheers.
-> 
+>>  435     (
+>>  436         cd downstream &&
+>>  437         git config --unset fetch.recurseSubmodules
 
-Another remark: currently we roll-out hash algorithms on our own, but
-industry best practices said that we should instead use third-party libraries
-to do the job (OpenSSL or similar).
+Oh, I thought I saw there was another fetch before this unset
+between 436 and 437, that writes to the same actual.out and
+actual.err.
 
-The problem of offloading hash algorithm implementation to third-party
-libraries is some (or most) distributions camp specific version of library
-for usage for several years, with only (backported) bugfix updates are added.
-This make algorithm agility is more resistant to do, because we must wait
-until ALL distributions supported our objective algorithms in their libraries.
+> At this point, I have the feeling that you have misread the diff
+> (do correct me If I'm wrong) and saw ...
+>>  (
+>>      cd downstream &&
+>>      git config fetch.recurseSubmodules on-demand &&
+>>      git fetch >../actual.out 2>../actual.err
+>>  ) &&
+>>  git config --global --unset fetch.recurseSubmodules &&
+>>  (
+>>      cd downstream &&
+>>      git fetch >../actual.out 2>../actual.err
+>>      git config --unset fetch.recurseSubmodules
+>>  ) &&
 
--- 
-An old man doll... just what I always wanted! - Clara
+Exactly.  Thanks and sorry for the noise.
