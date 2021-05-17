@@ -2,212 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD67DC433B4
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8CF2C433ED
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A37FF61019
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:04:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC21A61029
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241064AbhEQPFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 11:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240515AbhEQPDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 11:03:07 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95DC5C0611E2
-        for <git@vger.kernel.org>; Mon, 17 May 2021 07:23:44 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id w127so2807707oig.12
-        for <git@vger.kernel.org>; Mon, 17 May 2021 07:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SC9kDA27mESPmAgK9uH0ahK3NJAOlEHIxvkzzsyr9Ao=;
-        b=pQFWNawZwKD66HT6v4ssjR4Z2r6LJeYNOjkxMvW9P9ddwu32aQ4UiHE0MB8TOA07hc
-         y8XAIevANaMVYfw/OZihtF8s7KZEikSurapdrGRD0gK8orbz+bEqxbz402xWrlDVrid3
-         Qa2Z9Uz4w+GmTVou/lYeYq6QcoLhEl/WWjzb/4NVLiWMA16mYgQINwtXh35QTPKUoQeP
-         tsHAip82zkQLOSpHhf+qK6wlHkotaq2Egw5bRJYvOegeJw1STSUDmuVoEXeFDHwabtAl
-         1pGTt6esLjXpz3V1ygLNXAuzUWp7fUvBDhpi0CR4c8E8o1DIHgkS4iPIl1Mz49pWXmoS
-         HpAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=SC9kDA27mESPmAgK9uH0ahK3NJAOlEHIxvkzzsyr9Ao=;
-        b=EFq7mhegh2XB+n4sT36giAJj/oyBYu8Df7ZX1ywIbLJN1/fZYvKoT0yrWexHU4jjPM
-         gfqAVF2snFmm9yD4cwFlPimRuo1DiDK8pG5kGOXHJ+/wHxip7z+RTrpHAOjSfOZSHDLM
-         0lBEfdUbfCND6dKF6JopoAbNpL+0NFloPLeGQ11FCe0GNXQBlqRMtOSKucj+TWF3JgLh
-         9SVIiWBrCkyUZEtotE+avLIxOF+X2nnzX1/+63NGyWLf/kkQDMa+O8DZl5SFF8RE6pcR
-         nnxMcicj4vezXRrgkkaZ4jHpR2o0aQuWj6k4zKXUswgF4WIGsNhlZLzeldMC1+rGRnM4
-         IjtA==
-X-Gm-Message-State: AOAM532Jov+oCzwM69vW8sXsyAf16voEAtNcoJmpS7RpaAkKAPWnUcyT
-        egSsPV9p0TDS9bigWTEfrTKX+CAledMFyQ==
-X-Google-Smtp-Source: ABdhPJxqEhIBBDeod09W6MO4F3hl1E8dkrTV+hp5BkJ/QgCyBcgUBWniYI55xdLAbbuuzLMXTt2NOg==
-X-Received: by 2002:a05:6808:997:: with SMTP id a23mr57473oic.129.1621261422950;
-        Mon, 17 May 2021 07:23:42 -0700 (PDT)
-Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:20ee:d66c:315:bb13])
-        by smtp.gmail.com with ESMTPSA id v28sm3169394ood.27.2021.05.17.07.23.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 May 2021 07:23:42 -0700 (PDT)
-Subject: Re: [PATCH v2 13/13] merge-ort, diffcore-rename: employ cached
- renames when possible
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
- <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
- <91b6768adf2d1777219fb2d83cc2363f1497dbbd.1620094339.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f0c50259-5627-482b-1daf-b73819cde108@gmail.com>
-Date:   Mon, 17 May 2021 10:23:41 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.1
+        id S242108AbhEQPLE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 11:11:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53957 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241406AbhEQPHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 11:07:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1621263949;
+        bh=qtIXqYI2wvpXaXggMXfqqkPdvgSnOzcnPPKb1Q9avCs=;
+        h=X-UI-Sender-Class:Date:From:To:Subject;
+        b=gfEdsi8g4NwWMKt3bogr9WEI2g7YNGCjhbEKFxv9IWOtMTEg+oe+v4sjH4+0qkB4z
+         6Yd2ETjlaR1GApIG+M6pSGGzgxxpoBf8vZN1aWvHeyfbkzKmodhuan9rqD20iUQsby
+         sAdaonO7WTFPzyxz7+WvfI+sdv2G2E0inBDDPoB0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.216.183] ([89.1.215.198]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMXUD-1m190E0GX9-00JcR1; Mon, 17
+ May 2021 17:05:49 +0200
+Date:   Mon, 17 May 2021 17:05:47 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.32.0-rc0
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <91b6768adf2d1777219fb2d83cc2363f1497dbbd.1620094339.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1MQe5k-1m5Hjv0XeY-00Nj2Y@mail.gmx.net>
+X-Provags-ID: V03:K1:j87u5pcUrQU8wutJY4LCE9vR04XiNib18u13YlyIgvkigk2q922
+ fdZ5UXAK+sNtofcYYeypZEkrQ0/ZucmDctsS3oxZzIj5YoITX011fY3wSdoT7eMk5oMwi26
+ 60p1oiYq/snbjg8RycvU5gOkRpkzc49i70nrexpRnFONEESNK7nZ7YavekWaXD/CkgdYLVv
+ 5xi6uNGKs97Ee3ahw3PXA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Jh1owFzxf58=:MGDiqEUngtbGoUiRcMtICG
+ Zkk5VnMEUXh5CGoZvU/OLHOAywShIzztfd9195a081Jt3ewPjTH1Zckr6h27xR7J7NJZwLV2S
+ Z+G9zLL8C3uzehxPRvtBxAn3ppz61DnZFyYdhsbrylCzdMluJvulRxhphfjOOiAsY7T8TSdqI
+ JtcP3SqYLLXrQ9cJ0gSYLyCaM3k6NtEaTIGSdaa2ujOTCwMX+WOhW0vIg9OLzyWQjYlujbC/M
+ ZBEomtMlfkdZlt0A/0uFSKnoYHjgASFduehDMeBoPRqeqhvQKqsdg8l+phHw/4Vxd5qB+CG7C
+ V9TcsVk+ZhCoYhCjxakRNXOtGLHj4JB6QqA8sovtN2+VUYle0d5szeFLbmDbhF04D94RLVz+0
+ 9q6EZjHDk+tXWwj3RJwXg51uj7O4wKnfJ7R8KzeSI5tGyjcUpfkxHMBwoI7cLRC4aqMbefyxo
+ Zku7NUgqcZG4AjslJGalYiiUaggkOZUQNTISP0t6D6FoAGc2gcG3V/16I2AhbLUD1m7F+ZGPc
+ 50pF0AnH6dJCBCc+C91qA0JvnmnadXO5k7Fc5p0iut50+pCQijR3HglJ1MuGyl4l+aikAiqhg
+ A9wrbfA2jG2Ne/txokTqVsS1JwRNVO6n1j+xo1KfzzrAGDDzQ+zXf8OYfSTucCyxg1nZ14VdT
+ kuPV+CMYILQXmQOaFRHlAx59/F+2uZ7/7YEpTPiLu/nXK5/+ks1sVDRbKdNRCTnQzI4jQdcFb
+ q8BFBAr3eP6E/mN6gLNiOrKIHX5W9qbVgwVBhgBvrDMV3OyltCLU24zl2GejGC6ixPcduUhHW
+ xnxDvm9kHfmuK7U0epj0XNUr0zUp6kcoqhLhWNyBjRQ+36d2tLD3zgtsoQ7I30XaeWsSJ3kS+
+ E4nUCQbWCwLq6C/7N46fW3OKYzS506tIGN6YADF0zOk5eec2NIW057cV/hpU0YgtzQazkcri0
+ IQ4lZHl4uRJlnGqcgRNsiug/dPT35iQx8Ta1RPacneP9JtiOwGNqSHv9mZbhViI54wUhFIf7H
+ xGir7lYYXRobuAFzPSebV0/jVTpOfeY/H8SXEoOzNtlEJPv+6GULDbQZSh2+lNqcaIetWVrk3
+ V0hkbsVq8JW8Fb/5v2QQqKQeN4q8dHVAK1f8yGrrR4ZttDukfdW+qLnkSTVheLoFG+4Svuv3R
+ AgtIxPun21ooy/zgBuK7wo/dW6JC1Q8BJHm7JL/M8zRSEmlvgy4ZyajM77AXNIueA70VE4M6F
+ bSkf8Z4iQS8bLwUL+
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/3/21 10:12 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-...
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 2fc98b803d1c..17dc3deb3c73 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -753,15 +753,48 @@ static void add_pair(struct merge_options *opt,
->  	struct rename_info *renames = &opt->priv->renames;
->  	int names_idx = is_add ? side : 0;
->  
-> -	if (!is_add) {
-> +	if (is_add) {
-> +		if (strset_contains(&renames->cached_target_names[side],
-> +				    pathname))
-> +			return;
-> +	} else {
->  		unsigned content_relevant = (match_mask == 0);
->  		unsigned location_relevant = (dir_rename_mask == 0x07);
->  
-> +		/*
-> +		 * If pathname is found in cached_irrelevant[side] due to
-> +		 * previous pick but for this commit content is relevant,
-> +		 * then we need to remove it from cached_irrelevant.
-> +		 */
-> +		if (content_relevant)
-> +			/* strset_remove is no-op if strset doesn't have key */
-> +			strset_remove(&renames->cached_irrelevant[side],
-> +				      pathname);
+Dear Git users,
 
-I see, content can become relevant again.
+I hereby announce that Git for Windows 2.32.0-rc0 is available from:
 
-...
+    https://github.com/git-for-windows/git/releases/tag/v2.32.0-rc0.windows.1
 
-> diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-> index f47d8924ee73..035edc40b1eb 100755
-> --- a/t/t6429-merge-sequence-rename-caching.sh
-> +++ b/t/t6429-merge-sequence-rename-caching.sh
-> @@ -101,10 +101,10 @@ test_expect_success 'caching renames does not preclude finding new ones' '
->  # dramatic change in size of the file, but remembering the rename and
->  # reusing it is reasonable too.
->  #
-> -# Rename detection (diffcore_rename_extended()) will run twice here; it is
-> -# not needed on the topic side of history for either of the two commits
-> -# being merged, but it is needed on the upstream side of history for each
-> -# commit being picked.
-> +# We do test here that we expect rename detection to only be run once total
-> +# (the topic side of history doesn't need renames, and with caching we
-> +# should be able to only run rename detection on the upstream side one
-> +# time.)
->  test_expect_success 'cherry-pick both a commit and its immediate revert' '
->  	test_create_repo pick-commit-and-its-immediate-revert &&
->  	(
-> @@ -140,11 +140,11 @@ test_expect_success 'cherry-pick both a commit and its immediate revert' '
->  		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
->  		export GIT_TRACE2_PERF &&
->  
-> -		test_might_fail test-tool fast-rebase --onto HEAD upstream~1 topic &&
-> +		test-tool fast-rebase --onto HEAD upstream~1 topic &&
+Changes since Git for Windows v2.31.1 (March 27th 2021)
 
-Here is a change of behavior, but it appears to be a good one!
+New Features
 
->  		#git cherry-pick upstream~1..topic &&
->  
->  		grep region_enter.*diffcore_rename trace.output >calls &&
-> -		test_line_count = 2 calls
-> +		test_line_count = 1 calls
->  	)
-...
-> @@ -450,7 +459,7 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
->  		#git cherry-pick upstream..topic &&
->  
->  		grep region_enter.*diffcore_rename trace.output >calls &&
-> -		test_line_count = 3 calls &&
-> +		test_line_count = 2 calls &&
->  
->  		git ls-files >tracked &&
->  		test_line_count = 5 tracked &&
-> @@ -516,7 +525,7 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
->  		#git cherry-pick upstream..topic &&
->  
->  		grep region_enter.*diffcore_rename trace.output >calls &&
-> -		test_line_count = 4 calls &&
-> +		test_line_count = 3 calls &&
+  * Comes with Git v2.32.0-rc0.
+  * Comes with cURL v7.76.1.
+  * Comes with Git Credential Manager Core v2.0.435.9025.
 
-I appreciate that this use of tracing demonstrates a change of
-internal behavior.
+Bug Fixes
 
->  		test_path_is_missing somefile &&
->  		test_path_is_missing olddir/newfile &&
-> @@ -648,9 +657,8 @@ test_expect_success 'caching renames only on upstream side, part 1' '
->  # for the wrong side of history.
->  #
->  #
-> -# This testcase should only need three calls to diffcore_rename_extended(),
-> -# because there are no renames on the topic side of history for picking
-> -# Topic_2.
-> +# This testcase should only need two calls to diffcore_rename_extended(),
-> +# both for the first merge, one for each side of history.
->  #
->  test_expect_success 'caching renames only on upstream side, part 2' '
->  	test_setup_topic_rename cache-renames-only-upstream-rename-file &&
-> @@ -677,7 +685,7 @@ test_expect_success 'caching renames only on upstream side, part 2' '
->  		#git cherry-pick upstream..topic &&
->  
->  		grep region_enter.*diffcore_rename trace.output >calls &&
-> -		test_line_count = 3 calls &&
-> +		test_line_count = 2 calls &&
+  * When testing a custom editor in the installer, we now spawn it in
+    non-elevated mode, fixing e.g. Atom when an instance is already
+    running.
 
-Same here.
+Git-2.32.0-rc0-64-bit.exe | fc8356260bad2a28fc3b89f71a51852be78818f6d0bab21f30f37a516dc5e22d
+Git-2.32.0-rc0-32-bit.exe | 05ff80a9aca719279b58a73d2f3f035af859d4af12e6258e78a855b9709736c6
+PortableGit-2.32.0-rc0-64-bit.7z.exe | 873ed9cf2220e6061096fa17b8715aa172bb92c4a468ea4313c772da7b1257e5
+PortableGit-2.32.0-rc0-32-bit.7z.exe | 1add6bfd2247dbb47ada2951ba9ad11299c9ecce972346353041a5c3dffa57c2
+MinGit-2.32.0-rc0-64-bit.zip | 5df5603a1a813bbf39d9f92b9203daefee1790829147621fb417ae7bb2735639
+MinGit-2.32.0-rc0-32-bit.zip | 4bbb59f6eedcdba48b93321e4c09c3506b602eea74fe3cbdb16f96fd4f037f23
+MinGit-2.32.0-rc0-busybox-64-bit.zip | 2e64e94f3229a49fd93f08cb3f8dc5e8419c178116ef9b4f258a5743b683dcc3
+MinGit-2.32.0-rc0-busybox-32-bit.zip | b815c7d78a8e5379d97f9192dca6adef45eb281fafb458ba5b1243cf1bd74be6
+Git-2.32.0-rc0-64-bit.tar.bz2 | e2e144a92ba99712de21bf7fb4f58f60bb6901022872b39bbba42a37d6fdf965
+Git-2.32.0-rc0-32-bit.tar.bz2 | 8a18d84272dccab152b2ce9884d68310f2070606ee520bec6a48afb2530fd711
 
-As I was reading, I was also thinking that it would be good to
-have some kind of tracing, if only a summary of how often we
-relied upon the cached renames. That would present a mechanism
-for the test cases to verify that the rename cache is behaving
-as expected, but also provides a way to diagnose any issues that
-might arise in the future by asking a user to reproduce a
-problematic rebase/merge with a GIT_TRACE2* target. Such a
-change would fit as a follow-up, and does not need to insert
-into an already heavy patch.
-
-I have now read all of the patches in this series to the level
-I can. It's all very deep stuff, so the more we can rely on the
-tests to show correctness, the better.
-
-I appreciate the extra tests that you added, which increases my
-confidence in the series.
-
-Thanks,
--Stolee
+Ciao,
+Johannes
