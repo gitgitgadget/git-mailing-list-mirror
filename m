@@ -2,136 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E144C433B4
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5563BC433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:43:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFC0D61004
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:15:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C6A061059
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238865AbhEQQQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 12:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35226 "EHLO
+        id S239475AbhEQQoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 12:44:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347219AbhEQQPX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 12:15:23 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95042C03543D
-        for <git@vger.kernel.org>; Mon, 17 May 2021 07:48:37 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id z4so1075316plg.8
-        for <git@vger.kernel.org>; Mon, 17 May 2021 07:48:37 -0700 (PDT)
+        with ESMTP id S238203AbhEQQon (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 12:44:43 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339F1C026CF8
+        for <git@vger.kernel.org>; Mon, 17 May 2021 08:58:40 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id i22so9499964lfl.10
+        for <git@vger.kernel.org>; Mon, 17 May 2021 08:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=4AKCO1L3I7Kzvtw1cuapjUC8hVjO6rs40Z+Ml+u4wu8=;
-        b=rjNsrBOxvMt7ntcOcNRpeiJb9hdIEn3FREhgpOmHQL3H5sOjnALyE+5aZgnii49oUv
-         45HZwX40xVcwUCmibD9kd3zgOfxTzbNWXyadTS2vIc0BN2ETcGa4tf/G2SFUoKpFrEEZ
-         nYBMeHQvNzWKabrFkoiF9XYQlf4NjYD1wEE6YSyqV7pVlDsbQQFZlZHV8xmXKmM7UV5E
-         AgUDO9haJzB+m9P7KfeZz5KuGD+8hXFtUNnetHd+Aj3qityKmr9EYO3LM2qCWQB4S/Lo
-         6iLUSR6HiVGA4X3vIVx7m6bCf31kxOwCAWaJO2KmtZgzWjmRZ2Iy+rqczQxOP5IeHTZI
-         Qn3Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7dkgZsX2HyqQXzwicqV1ASn7xJG4Xe9wKAEfsARmcx0=;
+        b=MqNCTh0yuTk0/E2KxRwll9aa0b7MLMZn1uA1/KWZbo3sLLmKEqwVWzus1SADlmqlRh
+         BuVfaV5vEQvNR0HlD/mFTIOALDkKXh9eUxkuR8fBk96RmJf0DdOdEpb6BSSkA339XFVR
+         T3HxVv+um3AEvUESTw9FVeHvfljaj6NgJnOMKPxw0v+9kA167DDrVafl+t1YMfIk1imy
+         cKo6Phb1tszbh2vRjQfdiNzc8H313DkeSam52SdlNCIHlKaTFoJxB2j38LnN5ebcBgDH
+         jCdox0mCBKGwzg8nVgopmnG9Vpqb2T+yStOJYYvoNBf3bq1Xll5Tap2wLDSaCvk56Dkt
+         86+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=4AKCO1L3I7Kzvtw1cuapjUC8hVjO6rs40Z+Ml+u4wu8=;
-        b=Qk6bMEvPvN3FsvCzk5bHCw9oncfIfNZ0iRnw/W/sKx0BVi1NseEoMWMW/+P/yLhSWc
-         qiDUP18zHWro8VUVkUEPT38rXn06d6sK4VwCbVAwhpzQ+XIZyHHmNM3qD8BjpzndWAdM
-         fGhQEY1aQttZ9OKRFT82S0emhFXMJ06hI9wvdpdBlrHjB3PelW8Q8PXb82fxnjpa5D+L
-         82jgxvrWV1ADaQiMtCFsEuNJOyMsmL3S58bnNByMiSpxMB1JLCpMNWBUEpUt547qmI5F
-         A3SuQEqd7t4Bw0t3c7usN2n54OG34MGMtCrR0L0XwAOKuuqGMeq/WLZJQdos9nCAwaSp
-         C/uA==
-X-Gm-Message-State: AOAM530VQjYelIWOu4UPVhXjFajQM1T3ZtLAzo+4CkDPI4XsO6i9bRvH
-        QR8/p+VGWqdTysC0uu1oMEOZsR4Fbp8A6g==
-X-Google-Smtp-Source: ABdhPJwtEZlvIE3eHTppU7Z3ZxuoRW1DmmDST6raRY3yveIL1Js3hsS94y5MhdejGrPd89UHvTL3NQ==
-X-Received: by 2002:a17:90a:7f81:: with SMTP id m1mr287810pjl.23.1621262917185;
-        Mon, 17 May 2021 07:48:37 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:92ac:abeb:6648:927:6523])
-        by smtp.gmail.com with ESMTPSA id z25sm11453071pgu.89.2021.05.17.07.48.36
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7dkgZsX2HyqQXzwicqV1ASn7xJG4Xe9wKAEfsARmcx0=;
+        b=eQ5TEehUL6YvlnAotoUmcInWHaQcP5UPhFrn3wADji+akm5GVP937jSIDLQ9+7Bc8U
+         1pzjP+6E5geX4Ti6EOnysDzi17XMydqNSZ+bfZOGCMMfZZ2nq6Qpu/jGEGN7zmGg5yn1
+         49eD/WyQOJaol+IY26dIw+fpSDaOOQQI6erQLOwXi03GGfz6IAPKA70X9nR9MW4mqeos
+         yapqvMYAfdH3/BcSTbXma+fTQvAGASSj2wi81BxaA542pFyJbr5ohLxYmSQmumkSvZx0
+         Tx90gxgCJwv3Twlp0cLx+gT5S9+4k+NMVlMzkjnGrCXihaGiiN5lRV2s5/rZcCevellK
+         QBfg==
+X-Gm-Message-State: AOAM53163J82nv4Sl4zajGLd62VIf/T3zNZPET0YdSEBP5fq3T1PpSp1
+        /vswTxDJIdZpKreeAOvDdL8=
+X-Google-Smtp-Source: ABdhPJzCXiOE2zO5cs+OIWvJRX2Cp7GQmlnkekeJR2GXT/JDRnBLX6HyT6Kjp5x38TUJkPjC3h7mLA==
+X-Received: by 2002:a05:6512:1093:: with SMTP id j19mr401406lfg.508.1621267118790;
+        Mon, 17 May 2021 08:58:38 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id i8sm1996834lfd.12.2021.05.17.08.58.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 07:48:36 -0700 (PDT)
-Date:   Mon, 17 May 2021 21:48:34 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Rebase options via git pull
-Message-ID: <YKKCQmaEHMR5WATP@danh.dev>
-References: <87r1iakbyn.fsf@osv.gnss.ru>
- <CAMMLpeQ8_isyDtP34p+_tEK3JAasfro7dJbVrTVPZ7C4q0kT6w@mail.gmail.com>
- <YJ3LJ++lsAuSkCUJ@danh.dev>
- <875yzlu8gt.fsf@osv.gnss.ru>
- <87zgwtr7i4.fsf@evledraar.gmail.com>
- <87k0nxv8tt.fsf@osv.gnss.ru>
- <YKJkmws18M6oJZXy@danh.dev>
- <87a6otv7lm.fsf@osv.gnss.ru>
+        Mon, 17 May 2021 08:58:38 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
+        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH v1 1/9] t4013: test that "-m" alone has no effect in "git log"
+Date:   Mon, 17 May 2021 18:58:10 +0300
+Message-Id: <20210517155818.32224-2-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20210517155818.32224-1-sorganov@gmail.com>
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+ <20210517155818.32224-1-sorganov@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a6otv7lm.fsf@osv.gnss.ru>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-17 15:59:49+0300, Sergey Organov <sorganov@gmail.com> wrote:
-> Đoàn Trần Công Danh <congdanhqx@gmail.com> writes:
-> 
->> On 2021-05-17 15:33:18+0300, Sergey Organov <sorganov@gmail.com> wrote:
->>> >> Probably add generic cmd.<cmd>.opts config support, so that I can say:
->>> >>
->>> >>   git -c cmd.rebase.opts="--no-fork-point --empty=keep" pull --rebase
->>> >>
->>> >> Thoughts?
->>> >
->>> > It's been discussed before (but I did not dig up the discussions,
->>> > sorry). It's been considered a bad idea, because our commands are a
->>> > mixture of plumbing/porcelain commands and switches, so we want to be
->>> > able to reliably invoke say ls-tree with some switches internally,
->>> > without config tripping us up.
->>> >
->>> > Of course we could make this sort of thing work by selectively ignoring
->>> > the config, but such a thing would be equal in complexity to the effort
->>> > of assering that it's safe to introduce new rebase.* config in the
->>> > codebase for every switch it has now, but with a less friendly interface
->>> > both for git itself and users.
->>> 
->>> I don't see much complexity here. We'd then just need to effectively
->>> invoke ls-tree internally like this:
->>> 
->>>    git -c 'cmd.ls-tree.opts=' ls-tree
->>> 
->>> Not a big deal.
->>
->> It's a big deal.
->>
->> Scripts was written with plumbing command and expect stable output.
->> If such change can be accepted, a lot of scripts will begin to fail.
-> 
-> Makes sense. Then simply don't do it for plumbing?
+This is to notice current behavior that we are going to change when
+when we start to imply "-p" by "-m".
 
-Then, we will get back to the state Ævar pointed out.
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+ t/t4013-diff-various.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Quoted again:
-
->>> > Of course we could make this sort of thing work by selectively ignoring
->>> > the config, but such a thing would be equal in complexity to the effort
->>> > of assering that it's safe to introduce new rebase.* config in the
->>> > codebase for every switch it has now, but with a less friendly interface
->>> > both for git itself and users.
-
-Anyway, it's not only plumbing command, it's also semi-plumbing
-commands (the ones accept --porcelain option) like:
-
-	git status --porcelain[=<version>]
-
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 87def81699bf..e9f67cd24351 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -452,6 +452,14 @@ diff-tree --stat --compact-summary initial mode
+ diff-tree -R --stat --compact-summary initial mode
+ EOF
+ 
++test_expect_success 'log -m matches pure log' '
++	git log master >result &&
++	process_diffs result >expected &&
++	git log -m >result &&
++	process_diffs result >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
+ 	git log -p --diff-merges=separate master >result &&
+ 	process_diffs result >expected &&
 -- 
-Danh
+2.25.1
+
