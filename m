@@ -2,136 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E77F0C43461
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A4B4C433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2AB4611BF
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16FF5611BF
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 16:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241380AbhEQQwc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 12:52:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43844 "EHLO
+        id S242095AbhEQQwn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 12:52:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241673AbhEQQwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 12:52:24 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317D2C06134F
-        for <git@vger.kernel.org>; Mon, 17 May 2021 09:44:30 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id et19so3117275ejc.4
-        for <git@vger.kernel.org>; Mon, 17 May 2021 09:44:30 -0700 (PDT)
+        with ESMTP id S241681AbhEQQwi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 12:52:38 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81338C061248
+        for <git@vger.kernel.org>; Mon, 17 May 2021 09:48:35 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id v8so6431685qkv.1
+        for <git@vger.kernel.org>; Mon, 17 May 2021 09:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=O/rc2PwrEhnt8Oj1H4/vK2mbpvkQypYBvBqAvC3Cz0Y=;
-        b=X8LeHnQRbBpbwotVl8mlfj/Qn8BqBY65hPJAGPuKyJ2A3VPTpbIGV8nAQv5DHhwRBV
-         FaQ0MyOQTUHkkCCcxeOFCnFa8Wpgm57ihjt1hddwB/RcLT+/ddtZ/iRqdzPARZEFPsFE
-         0hfAvisaECy+Nyym+p9hF8P+bdi6zufv0TFaI1KqOi5LzgYok6KgjH4thiZiHW+69EF8
-         xpd1zuOvjWfxxpWKmVUL93VlyKtXjJ7YVWR+GKQoMTvoaPFpBaqbCf6GT93oBaKxNTiP
-         G9WTtkwl/HJzK5pkJ+bpihstITV9l5J+fjsdu2VuH1KpREtndu9WO8O79FA8eEP9Yfbs
-         6bqw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=Xmf8EM3g9V1ZR5H06NshGj5vPs+PlE3N11XMsMYReVI=;
+        b=i2zL3ELgSAu7vJwjr1EdrBKa8Us2jDcp/FoNFTLukz8kijk3zgbk5z/gy51eOkmWT+
+         rbyTqBMJcUfTcPHG3GuQh3HudrbSHiO7UBgC2SQuWvb8hsqELKX3z7Ii/cyvdcly78mD
+         BTWBX3B397zsi8iO66P4GykINlvmcvGHreYh8Dg5kJJnS8ZV6DFmPifoH41H5T2TIyBF
+         /NcmxMsyDqdvzRxqppCUSic4L2en53ww2u+eaHfQ0eoqYuTotMuXiMpSiIGt7sWULVbk
+         83BaV9X+rCXTSA9Eepk/99dHtkZNtnTPxNRUrIRTFRlIdXD8YrVL+PcsWgRt8pnxeM6e
+         1SnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=O/rc2PwrEhnt8Oj1H4/vK2mbpvkQypYBvBqAvC3Cz0Y=;
-        b=feMh70LU+Enoj+wAY4U14HYJCdQVrnRa9NhdgLmUmH/V5CQBKrBPbRqQOfClq6hiU2
-         VahBUuj3m6CGr7EWKGfZGiUdnyM/Z7xjC9jdmDJ5Bc7oeoAkhUT/crBOMD6Wc30t7mQW
-         WcQgTTSxb9KdlKE1prKCl2p/QOVxf/qSLrWdewFRd7Uh3llnHffFH5eCAr1HyZj8Exk+
-         l6rrPP1Vq8GelGWwIeev7mtUyi0PITSRTJqSP7oJJ0O3f9kxsZdYhjAkWf0F5Db2lzYp
-         fesxvmL54qF2dY+Aztwel3EQPYslmFUnKA0WBOIqxXQ1XFQ/bZQkq4yu9FiwWPbFljQg
-         POfw==
-X-Gm-Message-State: AOAM5325FKvcFotiwbnHQ8tZp/LbjWJoyVnBWPqUKayj2jFkjppWFU4D
-        BZrJIa4xP6JGDhDFFlYtuhDWeraXLzc=
-X-Google-Smtp-Source: ABdhPJxfnX/6gEbze+Xh8SrNi1nhYjclCAWxXXJ12/ORnh0f84XEf/tji+4DbgAabWZsN/ugZWtYQA==
-X-Received: by 2002:a17:906:d1d2:: with SMTP id bs18mr876250ejb.56.1621269868617;
-        Mon, 17 May 2021 09:44:28 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id di7sm11480134edb.34.2021.05.17.09.44.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 09:44:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Charvi Mendiratta <charvi077@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7500: remove non-existant C_LOCALE_OUTPUT prereq
-Date:   Mon, 17 May 2021 18:42:34 +0200
-References: <20210517151222.2865093-1-tmz@pobox.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210517151222.2865093-1-tmz@pobox.com>
-Message-ID: <87wnrxqphw.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Xmf8EM3g9V1ZR5H06NshGj5vPs+PlE3N11XMsMYReVI=;
+        b=qWS8XqGWWKunuH/2cxx8EfY5Z6p8Jn4Zt53GsZdNwDWxjjblJO1/VOkEOs22FONqZA
+         cDDxQKMFI0JrlFOcW5HaTRAd48or2u7eS5I6WTAVCLXwWrfVvGXs0wdKD1cVUQrd5Odp
+         L/47SnIwNpNlEsLvN6hWd794bg9LIJxlEKLsBPgNtpn9wlFpzKpDNs3dnkrn3OhzwBkJ
+         uKGDnzgEV9IJRnoIg2jlAIeeU0Fps73dhdiPVs0zU4Pc2IdzUTs0FSTZTndoNHCoWKU7
+         TavkeFskYbvOko5rPnGeRCZAEmfKrlTOebNwE0Dn2WtmFQXLpN+KdLZ9ea4LxIzAb3U6
+         JJdA==
+X-Gm-Message-State: AOAM530jXRmnsPBhM+pehTSprpnl2jE3W1QZV2Njmevd8uEYCgGEG914
+        yxHNnKok97mzzlsj5/kFQ1w=
+X-Google-Smtp-Source: ABdhPJyk77YJzEF/9TbIFl1HFZ3pQLjUKVxHgYT/buPcnYGRgERTzdGS23ktbR8ueaRmWrQMnEv4Nw==
+X-Received: by 2002:a37:b945:: with SMTP id j66mr782625qkf.270.1621270114703;
+        Mon, 17 May 2021 09:48:34 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:68e5:b0b1:d7d3:e820? ([2600:1700:e72:80a0:68e5:b0b1:d7d3:e820])
+        by smtp.gmail.com with ESMTPSA id g140sm10932484qke.32.2021.05.17.09.48.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 May 2021 09:48:34 -0700 (PDT)
+Subject: Re: [PATCH] stash: don't translate literal commands
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        ungureanupaulsebastian@gmail.com, t.gummerer@gmail.com,
+        gitster@pobox.com
+References: <20210516215704.32440-1-alexhenrie24@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <91d3d4e7-a04f-3fc4-a97b-90af02b20ed5@gmail.com>
+Date:   Mon, 17 May 2021 12:48:33 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
+In-Reply-To: <20210516215704.32440-1-alexhenrie24@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, May 17 2021, Todd Zullinger wrote:
-
-> The C_LOCALE_OUTPUT prerequisite was removed in b1e079807b (tests:
-> remove last uses of C_LOCALE_OUTPUT, 2021-02-11), where =C3=86var noted:
->
->     I'm not leaving the prerequisite itself in place for in-flight changes
->     as there currently are none that introduce new tests that rely on it,
->     and because C_LOCALE_OUTPUT is currently a noop on the master branch
->     we likely won't have any new submissions that use it.
->
-> One more use of C_LOCALE_OUTPUT did creep in with 3d1bda6b5b (t7500: add
-> tests for --fixup=3D[amend|reword] options, 2021-03-15).  This causes a
-> number of the tests to be skipped by default:
->
->     ok 35 # SKIP --fixup=3Dreword: incompatible with --all (missing C_LOC=
-ALE_OUTPUT)
->     ok 36 # SKIP --fixup=3Dreword: incompatible with --include (missing C=
-_LOCALE_OUTPUT)
->     ok 37 # SKIP --fixup=3Dreword: incompatible with --only (missing C_LO=
-CALE_OUTPUT)
->     ok 38 # SKIP --fixup=3Dreword: incompatible with --interactive (missi=
-ng C_LOCALE_OUTPUT)
->     ok 39 # SKIP --fixup=3Dreword: incompatible with --patch (missing C_L=
-OCALE_OUTPUT)
->
-> Remove the C_LOCALE_OUTPUT prerequisite from these tests so they are
-> not skipped.
->
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+On 5/16/2021 5:57 PM, Alex Henrie wrote:
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 > ---
-> I noticed this while testing 2.32.0-rc0.  I grep for skipped tests to hel=
-p me
-> catch missing requirements in the Fedora packages.
->
->  t/t7500-commit-template-squash-signoff.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-t=
-emplate-squash-signoff.sh
-> index 9092db5fdc..7d02f79c0d 100755
-> --- a/t/t7500-commit-template-squash-signoff.sh
-> +++ b/t/t7500-commit-template-squash-signoff.sh
-> @@ -413,7 +413,7 @@ test_expect_success 'amend! commit allows empty commi=
-t msg body with --allow-emp
->  '
->=20=20
->  test_fixup_reword_opt () {
-> -	test_expect_success C_LOCALE_OUTPUT "--fixup=3Dreword: incompatible wit=
-h $1" "
-> +	test_expect_success "--fixup=3Dreword: incompatible with $1" "
->  		echo 'fatal: reword option of --fixup is mutually exclusive with'\
->  			'--patch/--interactive/--all/--include/--only' >expect &&
->  		test_must_fail git commit --fixup=3Dreword:HEAD~ $1 2>actual &&
+>  builtin/stash.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index d68ed784d2..075bcf6ee5 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -26,7 +26,7 @@ static const char * const git_stash_usage[] = {
+>  	N_("git stash drop [-q|--quiet] [<stash>]"),
+>  	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+>  	N_("git stash branch <branchname> [<stash>]"),
+> -	N_("git stash clear"),
+> +	"git stash clear",
 
-Thanks. This is obviously correct.
+I immediately saw the commands above and wondered why you are
+not removing them from being translated. My guess is that the
+"<stash>" strings are the bits that are interesting to
+translate. Perhaps add some description in your commit message
+as to why you are drawing the line here?
 
-Junio (added to CC): I also think it makes sense to pull this into rc1,
-since we have 3d1bda6b5b new in 2.32.0, and will be skipping this part
-of its tests everywhere without this patc.h
+>  static const char * const git_stash_clear_usage[] = {
+> -	N_("git stash clear"),
+> +	"git stash clear",
+>  	NULL
+>  };
+
+Are there other instances in builtin/*.c? If not, then it
+would be nice to say so. Otherwise, it would be good to fix
+them, while you are here.
+
+Thanks,
+-Stolee
