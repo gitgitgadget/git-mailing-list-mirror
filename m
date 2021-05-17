@@ -2,128 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F3E6C43462
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 07:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF31C433ED
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 07:46:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5F996121F
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 07:44:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E32D2611ED
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 07:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235067AbhEQHp4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 03:45:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33018 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233139AbhEQHpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 03:45:55 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1802FC061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 00:44:25 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id o6-20020a05600c4fc6b029015ec06d5269so2988498wmq.0
-        for <git@vger.kernel.org>; Mon, 17 May 2021 00:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=9Bjlr/OreNSRklK48V779rZlLtRxsxkfR5rlv9nkrMQ=;
-        b=W8HrIcrqmTR5RWi4Wd5o4Hc4PCqn+oftejL+PjKzjWUxpbyhWlydjEcRHNid08WOIU
-         UmRyXfep+GsFu1g41XdvHxawPUNIaWEUU3Qy6D9rQ6OXg8p/mN70SCeZDNCAkDH0fTdt
-         KUMGCsYh2hnwutttHsjuTkcUXJzVzcD3Rsjxzgk+Dh0v4GNw3yjVkC8NUjJXqKAHbwy6
-         R7nkqAo0JOfIrMYFiJA3QuZC5SSgqigTMkmsL/96kEgGT0Hn9G1XG/pvf7PHosvsCRvX
-         oWYazs6bRzwJcvFrlMJRrKVVXOEM7Z7AdqcHwpZwUWzCAVAE/UMjR76fFREVV8vUZtIU
-         9iNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=9Bjlr/OreNSRklK48V779rZlLtRxsxkfR5rlv9nkrMQ=;
-        b=qbEpPi/TrdMqVWug//8mkjWBjTSIKITeCSI86S2ibPjF4xo+Mh3A1PDYjdKiw3qqA1
-         l0ssLDqSyIh7ZCxChL4N72oXaBcACfEAQiZTQU7d0XgFKXiEfxhWCWeIjo2AkH3HQrrV
-         81Tp7ur+RK2ZM2e1SI8RBem+oFkNpfKRuZcPfY4i5JhT7TpIgtL6RB4BN2QJAC5jfh9Q
-         XYJfTqN71pYXyr5ZcR3LDFfzdmCVzz5KZ07Lmn0muVaboq6bNHzHawv/VIZqNn9y9cwy
-         vnZDl5Y5Qfcpnl/mcNF902ID1NBs2fsPcxGVYYUffuEyPukS87oVHisiV/AxqJgTVbLH
-         BECA==
-X-Gm-Message-State: AOAM532DqHGPPhYDUEzwgS6g17CKAo+jEAqI39NIqP1wDJdFqN5jNtrH
-        x4if/DqcC0wBJkk6cL1ygJo=
-X-Google-Smtp-Source: ABdhPJzJXl1dllS6+bqeqW+/00rYjUN22AJlmnVmqYCJCA0cjHlojfXMEkZDdeWWykB4xdTfoWMbOQ==
-X-Received: by 2002:a05:600c:379a:: with SMTP id o26mr1793354wmr.86.1621237463847;
-        Mon, 17 May 2021 00:44:23 -0700 (PDT)
-Received: from Inspiron (2a01cb04010c42001d97d57b11f780ca.ipv6.abo.wanadoo.fr. [2a01:cb04:10c:4200:1d97:d57b:11f7:80ca])
-        by smtp.gmail.com with ESMTPSA id c15sm16344540wrd.49.2021.05.17.00.44.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 00:44:23 -0700 (PDT)
-From:   Firmin Martin <firminmartin24@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] t/README: document test_config
-In-Reply-To: <5faaa5a6-8ebf-b2ef-805f-551a36ab7e6c@gmail.com>
-References: <20210514065508.247044-1-firminmartin24@gmail.com>
- <20210515152721.885728-1-firminmartin24@gmail.com>
- <20210515152721.885728-2-firminmartin24@gmail.com>
- <5faaa5a6-8ebf-b2ef-805f-551a36ab7e6c@gmail.com>
-Date:   Mon, 17 May 2021 09:44:22 +0200
-Message-ID: <87cztpg5yh.fsf@Inspiron.i-did-not-set--mail-host-address--so-tickle-me>
+        id S234959AbhEQHrX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 03:47:23 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50834 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231787AbhEQHrW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 03:47:22 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F1B52B9E85;
+        Mon, 17 May 2021 03:46:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=1Vu/vkS+brbs/RKprIgQ/aVCI33FJW/UHUMAn3WT1kc=; b=gJl1
+        VhWji7Qi5nbC3mqrSVv7PIDFsVfDhWgLTvkUlBpntYksqOO9g7sJljzgEDx7hBXo
+        SL77i2uXBWrMozx8MQh2XXuoWRHsyK/Z61FqDVbhrC1qlKnAFDVL8f8F1BhZUuvU
+        v/NWVaEtHfj3iXjUkAXSi2YjYlXbcQn1l5T2ZKw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E4B0CB9E84;
+        Mon, 17 May 2021 03:46:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A917AB9E83;
+        Mon, 17 May 2021 03:46:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Richard Hansen <rhansen@rhansen.org>
+Subject: Re* [PATCH] doc: glossary: add entry for revision range
+References: <20210516203736.1098072-1-felipe.contreras@gmail.com>
+Date:   Mon, 17 May 2021 16:46:02 +0900
+Message-ID: <xmqqbl993irp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: EE5207EE-B6E3-11EB-9EC4-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bagas,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
-
-> On 15/05/21 22.27, Firmin Martin wrote:
->>   
->> + - test_config <config-option> [<value>]
->> +
->> +   Set the configuration option <config-option> to <value>, and unset it at the
->> +   end of the current test. For a similar purpose, test_config_global for
->> +   global configuration is also available. Note, however, that test_config_*
->> +   must not be used in a subshell.
->> +
-
->  From the syntax above, when I omit <value>, default value for <config-option>
-> will be set, right? 
-Good remark. I thought the same as you, but no, it will "git config
-<config-option>" (query the value of <config-option>) and then "git
-config --unset <config-option>" which is dangerous. Doing so is more
-likely an error and should be forbidden, as in this case, it is
-equivalent to test_unconfig <config-option>. Will reflect this in v3.
-> You forgot to mention it.
-I'll thus drop square brackets.
-
->> +   Example:
->> +
->> +	test_config format.coverLetter auto
->> +
->> +   Is a concise way to write:
->> +	test_when_finished "git config --unset format.coverLetter" &&
->> +	git config format.coverLetter auto
->> +
->>   
+> Revision ranges are one of the most pervasive concepts in Git. It belongs
+> in the glossary.
 >
-> The description said "set the config, then unset it". But the expanded version
-> said "unsetting the config is deferred to the end of test and set the config".
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  Documentation/glossary-content.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
-> The documentation for test_when_finished said:
->
->>    Prepend <script> to a list of commands to run to clean up
->>    at the end of the current test.  If some clean-up command
->>    fails, the test will not pass.
->
-> Is my interpretation above correct?
-Yes.
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index 67c7a50b96..31151277ba 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -554,6 +554,10 @@ The most notable example is `HEAD`.
+>  [[def_revision]]revision::
+>  	Synonym for <<def_commit,commit>> (the noun).
+>  
+> +[[def_revision_range]]revision range::
+> +        A syntax to specify a list of commits, usually indicating the starting
+> +        and ending points. For example: `master..@`.
 
-> Oh yeah, maybe it's better to say:
-> "For example: <blah> have the same effect as <blah>."
-I agree, because the two lines have not exactly the same behaviour as
-test_config. Will fix wording.
+As there is no need to spell out HEAD, `master..` would be a better
+example.  Especially since most people are downstream consumers, I'd
+suggest using `origin..` or `@{u}..` here.  Either is in line with
+the spirit of the example in the patch that asks "what did I do on
+my own on this branch since I forked?".  Incidentally, it also
+avoids fruitless arguments about what the name of the primary
+integration branch ought to be.
 
-Thanks,
+Also "see the 'Specifying Ranges' and 'Revision Range Summary'
+sections of linkgit:gitrevisions[7] for details" would be a helpful
+addition to readers.  Since there are examples there, we may even be
+able to drop "For example..." from here and have just refer the
+readers to these sections.
 
-Firmin
+By the way, this reminds of me one thing that seems to occasionally
+confuse new people.  Most Git commands take a single range, even
+though you can give multiple bottoms and tops.  This is because a
+revision range is *not* just a random "list" of commits, but a single
+connected set of commits, and to new people, the distinction between
+them seems to be a bit unclear.
+
+We may want to clarify with something like the following.
+
+ Documentation/revisions.txt | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git c/Documentation/revisions.txt w/Documentation/revisions.txt
+index d9169c062e..2b7d8e3745 100644
+--- c/Documentation/revisions.txt
++++ w/Documentation/revisions.txt
+@@ -260,6 +260,9 @@ any of the given commits.
+ A commit's reachable set is the commit itself and the commits in
+ its ancestry chain.
+ 
++There are several notations to specify a set of connected commits
++(called a "revision range"), illustrated below.
++
+ 
+ Commit Exclusions
+ ~~~~~~~~~~~~~~~~~
+@@ -294,6 +297,20 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
+ I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
+ empty range that is both reachable and unreachable from HEAD.
+ 
++Commands that are specifically designed to take two distinct ranges
++(e.g. "git range-diff R1 R2" to compare two ranges) do exist, but
++they are exceptions.  Unless otherwise noted, all "git" commands
++that operate on set of commits work on a single revision range.  In
++other words, giving two dotted ranges next to each other, e.g.
++
++    $ git log 'r1..r2' 'r3..r4'
++
++does *not* specify two revision ranges for most commands.  Instead
++it will name a single connected set of commits, i.e. those that are
++reachable from either r2 or r4 but are reachable from neither r1 or
++r3.
++
++
+ Other <rev>{caret} Parent Shorthand Notations
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Three other shorthands exist, particularly useful for merge commits,
