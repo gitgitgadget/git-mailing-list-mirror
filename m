@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3885BC433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A38C433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:22:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1583460FD8
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:21:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E6E860FE7
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242634AbhEQRWP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 13:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51214 "EHLO
+        id S235719AbhEQRYK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 13:24:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235374AbhEQRWP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 13:22:15 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB97C061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 10:20:58 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id w127so3337292oig.12
-        for <git@vger.kernel.org>; Mon, 17 May 2021 10:20:58 -0700 (PDT)
+        with ESMTP id S236778AbhEQRYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 13:24:06 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03790C061573
+        for <git@vger.kernel.org>; Mon, 17 May 2021 10:22:50 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id u11so7192553oiv.1
+        for <git@vger.kernel.org>; Mon, 17 May 2021 10:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wZdIxhGTVbviTE2Ct1Gep0iuCMumIFNL7nccHpGxc5k=;
-        b=qYrYF0bRw+NooHyT6j5No46Xi5QWXbkrfZIiy6PbyawFQ2qrGr2nHcWjfSNVB5km5e
-         b2bsn/PyJ6ZfuwAzqoYZKGBWCH6k3MGk4nZnazPloFeYTURgpbTc4+tkoJdmhI7rm8OM
-         kxRneL75cm+WcJtpWv6zB+CixQVdc3/Hilw98Cjm2xLwnGOfmw9jCOhwyT9Si5IrqNhB
-         eKxrvfnxp9lihQnIylGbe4TwvTr7SruGaja4M060D3OOBvpwVacx1GwpoTHX2hPC1NWB
-         HgXOMq2rm7ywMqqXZjT+LdGMjXixSjBQsauhvp8xLo3+CtbxFvAwrkob2ucjm5obvK/s
-         3wJg==
+        bh=YSBV1Wrgu9WpbajQghHaUb0pxMLkAbP0RjfV+b+g9b0=;
+        b=nFgLmBxVqG1xuzcmcIGEV8W+YYUXAxqiGRq81w0Nuxkq5cmCDbT6FnLOWQQinGCaZO
+         W12yojwn9ox2QoMg+A4Sv3+E2KfV2dYUDT8NqJdjEQ95ECagDSi/mCH87Hu1vTcLa66x
+         /mTRuBqDSqxiHB6VvKdO0N3WlbIzDgNytKifthCEPF/dTsetZ51l7vrEPVWghu/9Cl8j
+         A0zvZ/u4oTgOz3DGEe+a1RaJCrcb6ED3fhkRpw21f78pWmwyk/yW35sNHOxi6YPsONjD
+         mLZZUghA3FtdjTTU09NtsAwzMexwjNC77yyv9dMyBcj94D1pzX6XPTb4ow027VrH1W54
+         GERg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=wZdIxhGTVbviTE2Ct1Gep0iuCMumIFNL7nccHpGxc5k=;
-        b=KOfWTMI7gcix6dlmWQ5FD21XNjqd74t/Kv+WBtyVXlwxfqLIZs21V/8dgH36gaoHv3
-         UNKSc6O+3qbIQ9CHR2aP2jtGPH3Bpw7CqpDcop55Xiw7ZGtqu3T6rxg2e/DyYFa17Kp7
-         +t1e88lOZTblq+xvRgPkeSsxG9P6Lrc1rPxkdZ6RWb7o4itxRiJEMSBrNwMDka93Ghv9
-         GSc6FH6j97LdQgZN23mpZhr3xeqWBWXRDVbvsIqfcZOdukmquHDz9aPEHePUsxOglypx
-         svHtjUFuxXsVywAvAXm1Ns8sR1e4Mu9nKF2uBlSfFh9cuu+8mRwdDvywlqK9rvWo2FDe
-         nNDA==
-X-Gm-Message-State: AOAM533cPtcxEKoaqEMy+Ovi8uzQCAio3+FjKfmtcI3tFWlGduBqnVfU
-        nJlW12huKIhOg9sKVK+692s=
-X-Google-Smtp-Source: ABdhPJzF+/YlNk0mkM8+CpvVjh/GVoY/tKJlg1ydIj5Keiv0Qdw9ggNP7vkLUDRKS5b3bMlZQ2XjCA==
-X-Received: by 2002:a05:6808:1154:: with SMTP id u20mr616243oiu.35.1621272057991;
-        Mon, 17 May 2021 10:20:57 -0700 (PDT)
+        bh=YSBV1Wrgu9WpbajQghHaUb0pxMLkAbP0RjfV+b+g9b0=;
+        b=kYjhph8kxUMj/iAjiGWxS0Nj9NyZLkNK1eaZA5LZXNU70cSjJkZMnpuEcrSNWLzjEL
+         FFMeRJbi58USEmPGdx27/w7d3hXmZ6zjRpnl/9lC+vjHntS69HZANcdXSb9gQFFo2jMG
+         Pa5kbEp3T+ZJCVHwVVdxG4x9ws3iCMGYLWvbRxPTegxZPyTXxDTgiS+fEY0o9iB7Bu7l
+         JNbuWY7BQ8AVNkriuJOY5kycnpBK8tnU6jGqy3wbcmtqS/Ev5e8csX9/p48l9xQFkxIz
+         dgtUMiuIJlrmBr0J6claDMS+7xogC4SIq5WFGIEV9N8xkAEyLtB3os4R6S2K4OFcKa40
+         4X7g==
+X-Gm-Message-State: AOAM533WsJIhpV3BdOvBQ3mFqPUWS2X/wFtCuLq9QTAZiUP+yFkTB/xn
+        4KO6PK4lKBDk7v/jA/Ou1Vo=
+X-Google-Smtp-Source: ABdhPJx5mP7RFzAS3JNO6A8d/7obQ0EQ1a4JhPUef46TaJkfEw3N7X4E4Jl3TS7/9jFvvqoLF5W5Yw==
+X-Received: by 2002:aca:f0c:: with SMTP id 12mr605251oip.131.1621272169432;
+        Mon, 17 May 2021 10:22:49 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:68e5:b0b1:d7d3:e820? ([2600:1700:e72:80a0:68e5:b0b1:d7d3:e820])
-        by smtp.gmail.com with ESMTPSA id p11sm3204045oti.53.2021.05.17.10.20.56
+        by smtp.gmail.com with ESMTPSA id v1sm1594769ott.62.2021.05.17.10.22.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 May 2021 10:20:57 -0700 (PDT)
-Subject: Re: [PATCH v5 8/9] dir: update stale description of treat_directory()
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Mon, 17 May 2021 10:22:48 -0700 (PDT)
+Subject: Re: [PATCH v5 9/9] dir: introduce readdir_skip_dot_and_dotdot()
+ helper
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
@@ -68,14 +68,14 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <git@jeffhostetler.com>
 References: <pull.1020.v4.git.git.1620758049.gitgitgadget@gmail.com>
  <pull.1020.v5.git.git.1620840502.gitgitgadget@gmail.com>
- <179f992edc9254803252ae10e5d692f3755a40f3.1620840502.git.gitgitgadget@gmail.com>
+ <b7c6176560bda67e146d0402f927180dace534a2.1620840502.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bac325b9-8370-601b-a348-a7270df8b824@gmail.com>
-Date:   Mon, 17 May 2021 13:20:56 -0400
+Message-ID: <2b7ba27c-5ffa-0ef0-6c7a-4da45f979b9c@gmail.com>
+Date:   Mon, 17 May 2021 13:22:48 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.1
 MIME-Version: 1.0
-In-Reply-To: <179f992edc9254803252ae10e5d692f3755a40f3.1620840502.git.gitgitgadget@gmail.com>
+In-Reply-To: <b7c6176560bda67e146d0402f927180dace534a2.1620840502.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -83,26 +83,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/12/2021 1:28 PM, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <stolee@gmail.com>
+On 5/12/2021 1:28 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
 > 
-> The documentation comment for treat_directory() was originally written
-> in 095952 (Teach directory traversal about subprojects, 2007-04-11)
-> which was before the 'struct dir_struct' split its bitfield of named
-> options into a 'flags' enum in 7c4c97c0 (Turn the flags in struct
-> dir_struct into a single variable, 2009-02-16). When those flags
-> changed, the comment became stale, since members like
-> 'show_other_directories' transitioned into flags like
-> DIR_SHOW_OTHER_DIRECTORIES.
+> Many places in the code were doing
+>     while ((d = readdir(dir)) != NULL) {
+>         if (is_dot_or_dotdot(d->d_name))
+>             continue;
+>         ...process d...
+>     }
+> Introduce a readdir_skip_dot_and_dotdot() helper to make that a one-liner:
+>     while ((d = readdir_skip_dot_and_dotdot(dir)) != NULL) {
+>         ...process d...
+>     }
 > 
-> Update the comments for treat_directory() to use these flag names rather
-> than the old member names.
+> This helper particularly simplifies checks for empty directories.
 > 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> Reviewed-by: Elijah Newren <newren@gmail.com>
+> Also use this helper in read_cached_dir() so that our statistics are
+> consistent across platforms.  (In other words, read_cached_dir() should
+> have been using is_dot_or_dotdot() and skipping such entries, but did
+> not and left it to treat_path() to detect and mark such entries as
+> path_none.)
 
-I think you want the "Reviewed-by" before the "Signed-off-by",
-followed by your own sign-off.
+I like the idea of this helper!
+  
+> +struct dirent *
+> +readdir_skip_dot_and_dotdot(DIR *dirp)
 
-Thanks,
+nit: This seems like an accidental newline between the
+return type and the method name.
+
+Otherwise, patch LGTM.
+
 -Stolee
