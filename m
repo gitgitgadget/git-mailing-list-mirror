@@ -2,102 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8CF2C433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 187C1C433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:14:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC21A61029
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:09:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F33AF610FA
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 15:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242108AbhEQPLE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 11:11:04 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53957 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241406AbhEQPHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 11:07:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1621263949;
-        bh=qtIXqYI2wvpXaXggMXfqqkPdvgSnOzcnPPKb1Q9avCs=;
-        h=X-UI-Sender-Class:Date:From:To:Subject;
-        b=gfEdsi8g4NwWMKt3bogr9WEI2g7YNGCjhbEKFxv9IWOtMTEg+oe+v4sjH4+0qkB4z
-         6Yd2ETjlaR1GApIG+M6pSGGzgxxpoBf8vZN1aWvHeyfbkzKmodhuan9rqD20iUQsby
-         sAdaonO7WTFPzyxz7+WvfI+sdv2G2E0inBDDPoB0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.216.183] ([89.1.215.198]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMXUD-1m190E0GX9-00JcR1; Mon, 17
- May 2021 17:05:49 +0200
-Date:   Mon, 17 May 2021 17:05:47 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.32.0-rc0
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S243952AbhEQPQL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 11:16:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57652 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243384AbhEQPNn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 11:13:43 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B612BCC28;
+        Mon, 17 May 2021 11:12:25 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=BYo3W6xtE1jUoncb8cerrTQ0r
+        JrJFoC+tdGJv5+SeIA=; b=EiJp8m1k8shWRnVxm6LqGRhplyKRIbNBnDBqXfjTO
+        p8sOZPlK8l0UevPvW3MLzVqfJw+gAaIOsc6CoJ1TRjOZn0PpxD4A2zSxEJgBLzyk
+        pVxSZ2VCzlsDfrfHx99rBZTTD37tmvebWjhGp5F4/mHajHR+XUfjOrz4BIjlzyUx
+        2w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 831E5BCC27;
+        Mon, 17 May 2021 11:12:25 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.87.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BC879BCC26;
+        Mon, 17 May 2021 11:12:24 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Charvi Mendiratta <charvi077@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] t7500: remove non-existant C_LOCALE_OUTPUT prereq
+Date:   Mon, 17 May 2021 11:12:22 -0400
+Message-Id: <20210517151222.2865093-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.32.0.rc0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Message-ID: <1MQe5k-1m5Hjv0XeY-00Nj2Y@mail.gmx.net>
-X-Provags-ID: V03:K1:j87u5pcUrQU8wutJY4LCE9vR04XiNib18u13YlyIgvkigk2q922
- fdZ5UXAK+sNtofcYYeypZEkrQ0/ZucmDctsS3oxZzIj5YoITX011fY3wSdoT7eMk5oMwi26
- 60p1oiYq/snbjg8RycvU5gOkRpkzc49i70nrexpRnFONEESNK7nZ7YavekWaXD/CkgdYLVv
- 5xi6uNGKs97Ee3ahw3PXA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Jh1owFzxf58=:MGDiqEUngtbGoUiRcMtICG
- Zkk5VnMEUXh5CGoZvU/OLHOAywShIzztfd9195a081Jt3ewPjTH1Zckr6h27xR7J7NJZwLV2S
- Z+G9zLL8C3uzehxPRvtBxAn3ppz61DnZFyYdhsbrylCzdMluJvulRxhphfjOOiAsY7T8TSdqI
- JtcP3SqYLLXrQ9cJ0gSYLyCaM3k6NtEaTIGSdaa2ujOTCwMX+WOhW0vIg9OLzyWQjYlujbC/M
- ZBEomtMlfkdZlt0A/0uFSKnoYHjgASFduehDMeBoPRqeqhvQKqsdg8l+phHw/4Vxd5qB+CG7C
- V9TcsVk+ZhCoYhCjxakRNXOtGLHj4JB6QqA8sovtN2+VUYle0d5szeFLbmDbhF04D94RLVz+0
- 9q6EZjHDk+tXWwj3RJwXg51uj7O4wKnfJ7R8KzeSI5tGyjcUpfkxHMBwoI7cLRC4aqMbefyxo
- Zku7NUgqcZG4AjslJGalYiiUaggkOZUQNTISP0t6D6FoAGc2gcG3V/16I2AhbLUD1m7F+ZGPc
- 50pF0AnH6dJCBCc+C91qA0JvnmnadXO5k7Fc5p0iut50+pCQijR3HglJ1MuGyl4l+aikAiqhg
- A9wrbfA2jG2Ne/txokTqVsS1JwRNVO6n1j+xo1KfzzrAGDDzQ+zXf8OYfSTucCyxg1nZ14VdT
- kuPV+CMYILQXmQOaFRHlAx59/F+2uZ7/7YEpTPiLu/nXK5/+ks1sVDRbKdNRCTnQzI4jQdcFb
- q8BFBAr3eP6E/mN6gLNiOrKIHX5W9qbVgwVBhgBvrDMV3OyltCLU24zl2GejGC6ixPcduUhHW
- xnxDvm9kHfmuK7U0epj0XNUr0zUp6kcoqhLhWNyBjRQ+36d2tLD3zgtsoQ7I30XaeWsSJ3kS+
- E4nUCQbWCwLq6C/7N46fW3OKYzS506tIGN6YADF0zOk5eec2NIW057cV/hpU0YgtzQazkcri0
- IQ4lZHl4uRJlnGqcgRNsiug/dPT35iQx8Ta1RPacneP9JtiOwGNqSHv9mZbhViI54wUhFIf7H
- xGir7lYYXRobuAFzPSebV0/jVTpOfeY/H8SXEoOzNtlEJPv+6GULDbQZSh2+lNqcaIetWVrk3
- V0hkbsVq8JW8Fb/5v2QQqKQeN4q8dHVAK1f8yGrrR4ZttDukfdW+qLnkSTVheLoFG+4Svuv3R
- AgtIxPun21ooy/zgBuK7wo/dW6JC1Q8BJHm7JL/M8zRSEmlvgy4ZyajM77AXNIueA70VE4M6F
- bSkf8Z4iQS8bLwUL+
+Content-Type: text/plain; charset=UTF-8
+X-Pobox-Relay-ID: 4938871C-B722-11EB-941E-D152C8D8090B-09356542!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+The C_LOCALE_OUTPUT prerequisite was removed in b1e079807b (tests:
+remove last uses of C_LOCALE_OUTPUT, 2021-02-11), where =C3=86var noted:
 
-I hereby announce that Git for Windows 2.32.0-rc0 is available from:
+    I'm not leaving the prerequisite itself in place for in-flight change=
+s
+    as there currently are none that introduce new tests that rely on it,
+    and because C_LOCALE_OUTPUT is currently a noop on the master branch
+    we likely won't have any new submissions that use it.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.32.0-rc0.windows.1
+One more use of C_LOCALE_OUTPUT did creep in with 3d1bda6b5b (t7500: add
+tests for --fixup=3D[amend|reword] options, 2021-03-15).  This causes a
+number of the tests to be skipped by default:
 
-Changes since Git for Windows v2.31.1 (March 27th 2021)
+    ok 35 # SKIP --fixup=3Dreword: incompatible with --all (missing C_LOC=
+ALE_OUTPUT)
+    ok 36 # SKIP --fixup=3Dreword: incompatible with --include (missing C=
+_LOCALE_OUTPUT)
+    ok 37 # SKIP --fixup=3Dreword: incompatible with --only (missing C_LO=
+CALE_OUTPUT)
+    ok 38 # SKIP --fixup=3Dreword: incompatible with --interactive (missi=
+ng C_LOCALE_OUTPUT)
+    ok 39 # SKIP --fixup=3Dreword: incompatible with --patch (missing C_L=
+OCALE_OUTPUT)
 
-New Features
+Remove the C_LOCALE_OUTPUT prerequisite from these tests so they are
+not skipped.
 
-  * Comes with Git v2.32.0-rc0.
-  * Comes with cURL v7.76.1.
-  * Comes with Git Credential Manager Core v2.0.435.9025.
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+I noticed this while testing 2.32.0-rc0.  I grep for skipped tests to hel=
+p me
+catch missing requirements in the Fedora packages.
 
-Bug Fixes
+ t/t7500-commit-template-squash-signoff.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  * When testing a custom editor in the installer, we now spawn it in
-    non-elevated mode, fixing e.g. Atom when an instance is already
-    running.
-
-Git-2.32.0-rc0-64-bit.exe | fc8356260bad2a28fc3b89f71a51852be78818f6d0bab21f30f37a516dc5e22d
-Git-2.32.0-rc0-32-bit.exe | 05ff80a9aca719279b58a73d2f3f035af859d4af12e6258e78a855b9709736c6
-PortableGit-2.32.0-rc0-64-bit.7z.exe | 873ed9cf2220e6061096fa17b8715aa172bb92c4a468ea4313c772da7b1257e5
-PortableGit-2.32.0-rc0-32-bit.7z.exe | 1add6bfd2247dbb47ada2951ba9ad11299c9ecce972346353041a5c3dffa57c2
-MinGit-2.32.0-rc0-64-bit.zip | 5df5603a1a813bbf39d9f92b9203daefee1790829147621fb417ae7bb2735639
-MinGit-2.32.0-rc0-32-bit.zip | 4bbb59f6eedcdba48b93321e4c09c3506b602eea74fe3cbdb16f96fd4f037f23
-MinGit-2.32.0-rc0-busybox-64-bit.zip | 2e64e94f3229a49fd93f08cb3f8dc5e8419c178116ef9b4f258a5743b683dcc3
-MinGit-2.32.0-rc0-busybox-32-bit.zip | b815c7d78a8e5379d97f9192dca6adef45eb281fafb458ba5b1243cf1bd74be6
-Git-2.32.0-rc0-64-bit.tar.bz2 | e2e144a92ba99712de21bf7fb4f58f60bb6901022872b39bbba42a37d6fdf965
-Git-2.32.0-rc0-32-bit.tar.bz2 | 8a18d84272dccab152b2ce9884d68310f2070606ee520bec6a48afb2530fd711
-
-Ciao,
-Johannes
+diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-t=
+emplate-squash-signoff.sh
+index 9092db5fdc..7d02f79c0d 100755
+--- a/t/t7500-commit-template-squash-signoff.sh
++++ b/t/t7500-commit-template-squash-signoff.sh
+@@ -413,7 +413,7 @@ test_expect_success 'amend! commit allows empty commi=
+t msg body with --allow-emp
+ '
+=20
+ test_fixup_reword_opt () {
+-	test_expect_success C_LOCALE_OUTPUT "--fixup=3Dreword: incompatible wit=
+h $1" "
++	test_expect_success "--fixup=3Dreword: incompatible with $1" "
+ 		echo 'fatal: reword option of --fixup is mutually exclusive with'\
+ 			'--patch/--interactive/--all/--include/--only' >expect &&
+ 		test_must_fail git commit --fixup=3Dreword:HEAD~ $1 2>actual &&
