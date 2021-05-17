@@ -4,93 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06227C433B4
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C9E4C43600
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:28:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA3596109E
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:26:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7164B61285
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233426AbhEQT2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 15:28:12 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54741 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232773AbhEQT2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 15:28:11 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0DCE313342F;
-        Mon, 17 May 2021 15:26:55 -0400 (EDT)
+        id S233770AbhEQTaC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 15:30:02 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55545 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233821AbhEQT35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 15:29:57 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3EBB913E0C0;
+        Mon, 17 May 2021 15:28:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ui38oCEMTd/9W0wwiuWbPQdP7Kr+ZiqhFdRGri
-        Zi/Ag=; b=J7PzS4BP3MS+IlCCI+qJPObljGC4NSkqQqsLX+SZAVaKY3oBKLl/b6
-        raJ6LSo7ojk6hy5dum3MzJtTiJYKGbswYPZ+2RXs+jIFzOSSbTm4X2nRbIAcWU97
-        0zTNhjgUcFRuqnUZngHXdAp2Dfxi6tIKqJyBRKkfL1yEyqz4sSA8g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 06D4013342E;
-        Mon, 17 May 2021 15:26:55 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=dWvdKFwfLmrt
+        su0tSiABc2Cn+KbPKS0c2FZj6AKLsH0=; b=waq9yssA+X/8g6DGuUg+9ZU1ne+w
+        xg+D1JJ57wz3bKFmYR+3seFGiHctxVMnkLIL3IvK/cOndSku2x5ZXHXU1WBx42pC
+        5AIBWAIgIKkzP2HFt/H6n4CNf9wmjcyqSXQq6S2MLO+GO59Tb2ADspffSSrZ+wu8
+        Lt8mqFL7MDu8GLM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37E9B13E0BF;
+        Mon, 17 May 2021 15:28:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DFF7E13342D;
-        Mon, 17 May 2021 15:26:49 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7651113E0BB;
+        Mon, 17 May 2021 15:28:36 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Richard Hansen <rhansen@rhansen.org>
-Subject: Re: Re* [PATCH] doc: glossary: add entry for revision range
-References: <20210516203736.1098072-1-felipe.contreras@gmail.com>
-        <xmqqbl993irp.fsf@gitster.g> <60a245a927c62_126333208ea@natae.notmuch>
-        <YKJZt4vFECoLZhc2@coredump.intra.peff.net>
-Date:   Tue, 18 May 2021 04:26:48 +0900
-In-Reply-To: <YKJZt4vFECoLZhc2@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 17 May 2021 07:55:35 -0400")
-Message-ID: <xmqqpmxp6u13.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Subject: Re: Man pages have colors? A deep dive into groff
+References: <60a046bd83001_f4b0f20861@natae.notmuch>
+        <87tun1qp91.fsf@evledraar.gmail.com>
+Date:   Tue, 18 May 2021 04:28:34 +0900
+In-Reply-To: <87tun1qp91.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 17 May 2021 18:48:04 +0200")
+Message-ID: <xmqqlf8d6ty5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D3D270D6-B745-11EB-8E6D-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 135688D2-B746-11EB-8902-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> I agree that if the purpose is to be illustrative, using shortcuts like
-> "an empty endpoint means HEAD" is not helpful. And likewise for "@"; if
-> you need to have "revision range" defined, there is a good chance that
-> you don't know about shortcuts like "@" either.
+> This looks much better.
 >
-> So I would prefer something more explicit (whether it's "mybranch" or
-> "end" or "HEAD" or whatever).
-
-Perhaps.  Being illustrative for common use case is also important,
-so I do not mind teaching "missing endpoint at either side defaults
-to HEAD" early.
-
-If "missing" endpoint is disturbing, the description can be fixed to
-stress that they are "often but not always" given.
-
->> > Especially since most people are downstream consumers, I'd
->> > suggest using `origin..` or `@{u}..` here.
->> 
->> Nobody uses "origin" (what does that even mean?), [...]
+> I wonder a good follow-up (hint, hint! :) would be to have
+> exec_man_man() and exec_man_cmd() in builtin/help.c set this depending
+> on color.ui (so we'd do it by default with "auto").
 >
-> I guess I'm "nobody" then, because I use it all the time.
+> Then e.g. "git help git" would look prettier than "man git".
 
-Oh, I'm nobody, too, and so are many others ;-)
-
-> The example in Documentation/rev-list-description.txt (which feeds into
-> the git-log and git-rev-list manpages) uses "origin..HEAD", as well.
->
-> IMHO it is a pretty reasonable example, but the examples in
-> gitrevisions(7) use made up "r1..r2", and that seems perfectly readable,
-> as well.
->
-> -Peff
+As long as color.man.ui can be used to override the blanket
+color.ui, I think it is a good idea.
