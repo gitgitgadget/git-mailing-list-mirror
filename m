@@ -2,185 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4E8DC433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 05:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA20C43460
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 05:58:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA0966121F
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 05:53:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 957BF610E9
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 05:58:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231754AbhEQFzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 01:55:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
+        id S233099AbhEQF73 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 01:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231203AbhEQFzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 01:55:11 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D85BC061573
-        for <git@vger.kernel.org>; Sun, 16 May 2021 22:53:54 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id i17so4977098wrq.11
-        for <git@vger.kernel.org>; Sun, 16 May 2021 22:53:53 -0700 (PDT)
+        with ESMTP id S233034AbhEQF72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 01:59:28 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A296AC06174A
+        for <git@vger.kernel.org>; Sun, 16 May 2021 22:58:08 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id x188so4202144pfd.7
+        for <git@vger.kernel.org>; Sun, 16 May 2021 22:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=pXy1HGqILamEapxgt3vvXikOU0PQ3e9U1mtdHle/EiU=;
-        b=H2KuGe8ydOSn6Jfqe7K4PT8ARevl6rNhgkYvVP/SxfZYPLcA/mtlHIf92cMYiRGIY6
-         b1fJH+7dwBRseZglatLkjBsFG7dUjVUa6NR+C1HGyeI8Yax9DIiTaXhCK09mqlYG6iAH
-         Lm+zfqg2MMeUicM9R1Nmlav2X6YrDe+EXFCXPVeCDkHlKsEm94zQNU3Cey7aK2YlGioA
-         2xnTX5qGNjyVW2gkY6OCQh0zdGuCv/elYuvsU2uLw88gE2z2bBssdsGn/Cy7Q0yrayhZ
-         glloq8C+mF109TQFwUWfki7NbhrM1+Db5LbM85M59H+F8Xa76xKAEGEXae6IwRYuxv+K
-         xw9A==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=u/VBYog8Df8wa4IQbF/Nf8HCU0dKe30rfWd64633xR8=;
+        b=XD+yDXPnqA32aYAbxgWttzUcpi4raGIBwMHaE+a0sCNmeXmjJJuh2XuAJ5WP6HEh3w
+         JMrsp560VqQjp9DCMBKk6/2PSfEjh7k1ST3kueoJT6iiLKW62/BIemc7wli4eKj+T8gS
+         WQe2D705shGTVhRIGQ73S2+ve6J+GC0UmiviW2cjGQXBj7DWseEBiuYVdXefGoj0BF7o
+         5fmzyc9iw4HkOheCwlJuY1MMMAdaGU9/0NUf8nZvz6uLOWjBeWO4Fi+5G/hRufZZ2k1k
+         qcEqY0qMKruqHxDvcRXLytE7W3Rl0pBjkozacYuQiqIuMa/agFFG4xI28cMWIS+yru/2
+         buEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=pXy1HGqILamEapxgt3vvXikOU0PQ3e9U1mtdHle/EiU=;
-        b=GGdlP2Uw5VmARQNAsrvHmAJg/Ny0c3xrA7iUTM67yM39C8YBi/BhAkO231mRjy6OiT
-         nBZL+y1BUt+dXoXbfVVZYg9w4QNSQH2Mp2t174QyFclgR7PaZ5eARIQFk4fO9RPUj2gh
-         Thk2stsRQoBilIA2Vll0PVr39xbpfRL51O7P9EfOkJjrFsgImH2893x/Or6tXSI5V5Mk
-         Q8OtAgE2keUYV9yWJUUodFaRvMIWBweC3LSPGd2D8ZVp2GLcwn5Ic4vx6Pi8fu3S2uI/
-         UXETthV34/nvhu7qAcBHkXszm6ZNqb/9n351r/XNarL0p1tHovzlITbTBdNySWQEjfLH
-         8fKQ==
-X-Gm-Message-State: AOAM531MtOBPRc8IhBzr5gsOxNiisGDJ7unvPGqE/SM/7OMRXihdPDg5
-        N7Sp4qpVWwz73TrfTIRzeGY4Z0onhvs=
-X-Google-Smtp-Source: ABdhPJyHf8XarjzRVGWSYeUPv/Ymx6crvuJsNn6Tk2zOQvYnEqacYHTbnU4bXCjneTinGcQOM5IUMw==
-X-Received: by 2002:adf:e38a:: with SMTP id e10mr6828724wrm.194.1621230832433;
-        Sun, 16 May 2021 22:53:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g16sm16560545wmh.32.2021.05.16.22.53.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 May 2021 22:53:52 -0700 (PDT)
-Message-Id: <pull.1026.v2.git.git.1621230831465.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1026.git.git.1621150366442.gitgitgadget@gmail.com>
-References: <pull.1026.git.git.1621150366442.gitgitgadget@gmail.com>
-From:   "Anders =?UTF-8?Q?H=C3=B6ckersten?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Mon, 17 May 2021 05:53:50 +0000
-Subject: [PATCH v2] describe-doc: clarify default length of abbreviation
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=u/VBYog8Df8wa4IQbF/Nf8HCU0dKe30rfWd64633xR8=;
+        b=G8M6dfwdUwMea/g//sZlBTOQX9HggTU3di17EKWQWWiwgnttr9nEuZ6sI1XJH0p5Hh
+         +PLJcN9JwZHMlvCsJCJ/qNjwmnhhMnkLW7vImiBBlbNwnwD624afbAJqhvd6LYYz7VFf
+         +sT0Za/9JpTcmUKOzjjA9ARE9RrbQfI+3/vGXPFW11M5ZIuVf9WIbXE+AI6YcewUra3U
+         0BWtjUJF8jJjHi9RP/kozrLTqk5QxiF+dkp712Xpq246A8BR9gcMOQGvTPJ1Rav7SkEX
+         kzuPCyHOCOvUtldBREKSHlDHZCR9ljePMkAEC8hkmEETUMnkFngkYZ9MieNrcEMKhuDg
+         F/CQ==
+X-Gm-Message-State: AOAM530ZWiyjRv6yXqHdS+qqxPOkYAxAstC8G7/qaQfI3FAberSrsOIW
+        WE6EcXT9U9gtUk2LH8NhDCI=
+X-Google-Smtp-Source: ABdhPJwHZwMkc+N+9EZXC5Pj4LDs7C2DDTv11RAXbOspi55roHUtQ5zxSioOJPBqPCl6pitb1ruR7w==
+X-Received: by 2002:a62:b403:0:b029:20c:cbd5:5be1 with SMTP id h3-20020a62b4030000b029020ccbd55be1mr58724443pfn.53.1621231088291;
+        Sun, 16 May 2021 22:58:08 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-39.three.co.id. [116.206.12.39])
+        by smtp.gmail.com with ESMTPSA id m6sm6059093pfc.133.2021.05.16.22.58.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 May 2021 22:58:07 -0700 (PDT)
+Subject: Re: [PATCH] submodule: use the imperative mood to describe the
+ --files option
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        pc44800@gmail.com, chriscool@tuxfamily.org, stefanbeller@gmail.com,
+        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
+        shouryashukla.oo@gmail.com, gitster@pobox.com
+References: <20210516215957.33341-1-alexhenrie24@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <1cfb25fd-1ef9-864c-bbb3-bab0a5676728@gmail.com>
+Date:   Mon, 17 May 2021 12:58:03 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Anders =?UTF-8?Q?H=C3=B6ckersten?= <anders@hockersten.se>,
-        =?UTF-8?q?Anders=20H=C3=B6ckersten?= <anders@hockersten.se>
+In-Reply-To: <20210516215957.33341-1-alexhenrie24@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Anders=20H=C3=B6ckersten?= <anders@hockersten.se>
+Hi Alex,
 
-Clarify the default length used for the abbreviated form used for
-commits in git describe.
+On 17/05/21 04.59, Alex Henrie wrote:
+> -			 N_("to compare the commit in the index with that in the submodule HEAD")),
+> +			 N_("compare the commit in the index with that in the submodule HEAD")),
 
-The behavior was modified in Git 2.11.0, but the documentation was not
-updated to clarify the new behavior.
+Seems correct.
 
-Signed-off-by: Anders Höckersten <anders@hockersten.se>
----
-    describe-doc: clarify default length of abbreviation
-    
-    Clarify the default length used for the abbreviated form used for
-    commits in git describe.
-    
-    The behavior was modified in Git 2.11.0, but the documentation was not
-    updated to clarify the new behavior.
-    
-    Changes since v1:
-    
-     * tweaked the wording in --abbrev parameter to better match
-       implementation, as suggested by Bagas Sanjaya
-     * trailing whitespace removed
-    
-    Signed-off-by: Anders Höckersten anders@hockersten.se
+FYI, on my native language (Indonesian), we say "Review yourself" as
+"Tinjau dirimu" for imperative mood. Unfortunately many imperative
+sentences on software l10n instead prefix the verb with "me-", such as
+"meninjau dirimu". That is not imperative mood; that is descriptive
+mood with infinitive verb form.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1026%2Fahockersten%2Fdescribe-doc-abbreviation-clarification-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1026/ahockersten/describe-doc-abbreviation-clarification-v2
-Pull-Request: https://github.com/git/git/pull/1026
+Anyway, thanks.
 
-Range-diff vs v1:
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
- 1:  a3aa09ab6fca ! 1:  4cf527801901 describe-doc: clarify default length of abbreviation
-     @@ Documentation/git-describe.txt: OPTIONS
-      -	Instead of using the default 7 hexadecimal digits as the
-      -	abbreviated object name, use <n> digits, or as many digits
-      -	as needed to form a unique object name.  An <n> of 0
-     --	will suppress long format, only showing the closest tag.
-      +	Instead of using the default number of hexadecimal digits (which
-     -+	will vary according to the size of the repository with a default of 
-     -+	7) of the abbreviated object name, use <n> digits, or as many digits
-     -+	as needed to form a unique object name.  An <n> of 0 will suppress 
-     -+	long format, only showing the closest tag.
-     ++	will vary according to the number of objects in the repository with
-     ++	a default of 7) of the abbreviated object name, use <n> digits, or
-     ++	as many digits as needed to form a unique object name. An <n> of 0
-     + 	will suppress long format, only showing the closest tag.
-       
-       --candidates=<n>::
-     - 	Instead of considering only the 10 most recent tags as
-      @@ Documentation/git-describe.txt: at the end.
-       
-       The number of additional commits is the number
-     @@ Documentation/git-describe.txt: at the end.
-      -The hash suffix is "-g" + unambiguous abbreviation for the tip commit
-      -of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`).
-      +The hash suffix is "-g" + an unambigous abbreviation for the tip commit
-     -+of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The 
-     -+length of the abbreviation scales as the repository grows, using the 
-     -+approximate number of objects in the repository and a bit of math 
-     ++of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The
-     ++length of the abbreviation scales as the repository grows, using the
-     ++approximate number of objects in the repository and a bit of math
-      +around the birthday paradox, and defaults to a minimum of 7.
-       The "g" prefix stands for "git" and is used to allow describing the version of
-       a software depending on the SCM the software is managed with. This is useful
-
-
- Documentation/git-describe.txt | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index a88f6ae2c6e7..c6a79c2a0f29 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -63,9 +63,10 @@ OPTIONS
- 	Automatically implies --tags.
- 
- --abbrev=<n>::
--	Instead of using the default 7 hexadecimal digits as the
--	abbreviated object name, use <n> digits, or as many digits
--	as needed to form a unique object name.  An <n> of 0
-+	Instead of using the default number of hexadecimal digits (which
-+	will vary according to the number of objects in the repository with
-+	a default of 7) of the abbreviated object name, use <n> digits, or
-+	as many digits as needed to form a unique object name. An <n> of 0
- 	will suppress long format, only showing the closest tag.
- 
- --candidates=<n>::
-@@ -139,8 +140,11 @@ at the end.
- 
- The number of additional commits is the number
- of commits which would be displayed by "git log v1.0.4..parent".
--The hash suffix is "-g" + unambiguous abbreviation for the tip commit
--of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`).
-+The hash suffix is "-g" + an unambigous abbreviation for the tip commit
-+of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The
-+length of the abbreviation scales as the repository grows, using the
-+approximate number of objects in the repository and a bit of math
-+around the birthday paradox, and defaults to a minimum of 7.
- The "g" prefix stands for "git" and is used to allow describing the version of
- a software depending on the SCM the software is managed with. This is useful
- in an environment where people may use different SCMs.
-
-base-commit: 48bf2fa8bad054d66bd79c6ba903c89c704201f7
 -- 
-gitgitgadget
+An old man doll... just what I always wanted! - Clara
