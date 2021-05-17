@@ -7,148 +7,127 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D2C3C433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 21:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 887F2C433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 21:05:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75DEF61244
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 21:00:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 613BE6113C
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 21:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244654AbhEQVBs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 17:01:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44442 "EHLO
+        id S237650AbhEQVHB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 17:07:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244669AbhEQVBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 17:01:36 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5059C061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 14:00:18 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id w4so8906372ljw.9
-        for <git@vger.kernel.org>; Mon, 17 May 2021 14:00:18 -0700 (PDT)
+        with ESMTP id S234755AbhEQVHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 17:07:01 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E9B5C061573
+        for <git@vger.kernel.org>; Mon, 17 May 2021 14:05:44 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so6826530oto.0
+        for <git@vger.kernel.org>; Mon, 17 May 2021 14:05:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oGVT/8g2oSLlTWeTWM5bGoQRLsPe9Q/ETtV2FG+bOqg=;
-        b=cKNHN2qTmUyk0vwJgieYwruMBeCzeXVaHzV54Ld7q2F0xM80MSFAwpPPoSdleDFycU
-         2nwhEmzIYLtrBH/PZmx3V7GFeZpU0Q7e3sOjaQ6LWEz5wYcpVpDddQED36Aj9h3mcGV7
-         /XYRHyV/PQ2icgeoMr+nhkPDnI5QKb53pQKy6hLg2YLaZU402Xcfh0VrTu8LYXrHdWYP
-         yN7xBOeJAYQlCI6uB6rYQt0xfjSnZ+RSjRKgeVEJlAuIJ/byTLmu36CQA7y6NtpBKc+r
-         zP5cvfiU2Xiy7hByPEsGg0j9b0YFkaqwL9ZXKKwjimpkF78bRSY4V74fARJnLewPiTpT
-         Ikrg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=gksr61ia1Zh3tvycMS297ZxR0dzyzKLg2lIkRpH7pHw=;
+        b=GntTbYGlevnQnpa6pXg7o5BS7Bl4L2Nid7cHR8NfGsXauc1QgUot/MWnkUhL3UdYDn
+         Suec+u1JBcGaPfs2mLkgE+AfXMiFo2JnhLMePxbupGEEJeKGY5G3TZGB96nP+mK0IiSH
+         rWID6UzKgZJ6UQViOTNdjWHDh/pwCGGQXmaPH3AX5oJg+5LGXhd1rxYZxXApBynwmYxj
+         t+wpJF/ypwYa/QUi6EA6ju58Bbl7LybgHOSzBcsSMOP9Mn3tubDLQSImjQfqBziJJxRK
+         kbGgMMsLJg2TPpzz+Mu++yD8HAt40Wwh/iAfm/YvPbIPwbG+Gh8zTqfZU0nwAOKZavOv
+         vCHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=oGVT/8g2oSLlTWeTWM5bGoQRLsPe9Q/ETtV2FG+bOqg=;
-        b=Hiv2zeeUDukGFvwHGhc23n7T0lV8FJTFwo+/Y3TAcRxlIOJyzaATCWAKKajCPPfec3
-         3m31Oc9SR0n/zK6mY9AlabEmEfJJTRhM8TwTaA1kLyHfYgOX6N9O8uwTPWJcKXLzRVmX
-         o8c7xIzxDK2tTyuqRD6AZMumG3yqdzcG+LEW1ih9Dj1KXflZwPAWgFb4Ayd5J/U3CFk8
-         ZVlRBXnXXy8vWUBR+WmCZ/lrFku8/oCKgrX1rY4SX87Tjweb2wSxhaZ/E2R6qioy5omy
-         dr3IKRDR6DSh2a6kgkzLfpE7CRh3vrdPacaFohf8rjsQ5qv38v2p1DJqtBKLU0/z774T
-         WSlQ==
-X-Gm-Message-State: AOAM533eNFJSJdTyKoxClNQxEe/JHGYbD63VJE7NmDzpSAbTmPcwByX1
-        cvYG8FVhIjwN7nRX9AQsjrCayrla2A8=
-X-Google-Smtp-Source: ABdhPJxbJ6l1nEwuhzRlqxgqUlTts1S/RYb9wWzk2FVitkF5ENdwt7rKuH4zBQEWiQ2CTb3siNj8QA==
-X-Received: by 2002:a2e:a550:: with SMTP id e16mr1010476ljn.136.1621285216886;
-        Mon, 17 May 2021 14:00:16 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id l6sm632115lfk.49.2021.05.17.14.00.15
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=gksr61ia1Zh3tvycMS297ZxR0dzyzKLg2lIkRpH7pHw=;
+        b=N13ec7QJ6qegYWtiv5nJ2yEAtSCntDLPdpBXkbNgg6qHppsdET0RE9JOjO0f6MsEpF
+         ZvyeA+pJDlXVcEJ97hb1gZI4HcQeXQqgHSFMf1pecorVMRYNZwvqQsjdODbee6XtWla9
+         ZqC7IgTH14LASc7bxbvb5SaIkV56RIGDI+/37lHWgD1ja8w67t1QWL7tppSAV48j1a7Q
+         GkjjfZbwaXcIejZbmZG5YatVjvn6ivrWusB+2a9hiMDyB9EAHE/AIbdJDIqzak7VRbTQ
+         oabpamydE4ADJ2q8GzVz9AKYvEqnSYf9xmogwm3hqtD37eR+QQO3jBEH2BBzG4VCHkJs
+         nc3A==
+X-Gm-Message-State: AOAM533N9a4dnfZcmNQJZWs9byNmm/lR7dU8wYEZXoCmTz8f1nGC9m+l
+        LxnAfmBYy5QCr0MgFKZAZ2QtOjwvxEcE0w==
+X-Google-Smtp-Source: ABdhPJxvPHhypDLOun7kxjCo2hbIPBdLG4RMBg3TC4wBLmKJBXkfzzf3IOOu669nJprM/oILXhIuQw==
+X-Received: by 2002:a05:6830:12d6:: with SMTP id a22mr1287132otq.66.1621285543793;
+        Mon, 17 May 2021 14:05:43 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id g11sm2995088oif.27.2021.05.17.14.05.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 14:00:16 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1 5/9] diff-merges: move specific diff-index "-m"
- handling to diff-index
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <20210517155818.32224-1-sorganov@gmail.com>
-        <20210517155818.32224-6-sorganov@gmail.com>
-        <xmqqv97h5ckn.fsf@gitster.g>
-Date:   Tue, 18 May 2021 00:00:15 +0300
-In-Reply-To: <xmqqv97h5ckn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        18 May 2021 05:29:12 +0900")
-Message-ID: <87cztpyt28.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Mon, 17 May 2021 14:05:42 -0700 (PDT)
+Date:   Mon, 17 May 2021 16:05:41 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Richard Hansen <rhansen@rhansen.org>
+Message-ID: <60a2daa57d8a6_13c370208f3@natae.notmuch>
+In-Reply-To: <xmqqpmxp6u13.fsf@gitster.g>
+References: <20210516203736.1098072-1-felipe.contreras@gmail.com>
+ <xmqqbl993irp.fsf@gitster.g>
+ <60a245a927c62_126333208ea@natae.notmuch>
+ <YKJZt4vFECoLZhc2@coredump.intra.peff.net>
+ <xmqqpmxp6u13.fsf@gitster.g>
+Subject: Re: Re* [PATCH] doc: glossary: add entry for revision range
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > I agree that if the purpose is to be illustrative, using shortcuts like
+> > "an empty endpoint means HEAD" is not helpful. And likewise for "@"; if
+> > you need to have "revision range" defined, there is a good chance that
+> > you don't know about shortcuts like "@" either.
+> >
+> > So I would prefer something more explicit (whether it's "mybranch" or
+> > "end" or "HEAD" or whatever).
+> 
+> Perhaps.  Being illustrative for common use case is also important,
+> so I do not mind teaching "missing endpoint at either side defaults
+> to HEAD" early.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Move specific handling of "-m" for diff-index to diff-index.c, so
->> diff-merges is left to handle only diff for merges options.
->>
->> Being a better design by itself, this is especially essential in
->> preparation for letting -m imply -p, as "diff-index -m" obviously
->> should not imply -p, as it's entirely unrelated.
->>
->> To handle this, in addition to moving specific diff-index "-m" code
->> out of diff-merges, we introduce new
->>
->>   diff_merges_suppress_options_parsing()
->>
->> and call it before generic options processing in cmd_diff_index().
->
-> This change has a small but obvious fallout.
->
->     $ git diff-index -c --cached HEAD^
->
-> now starts failing loudly.  Earlier, it silently fell back to
-> "combined" diff of one parent, which is "-p".
->
-> I think the end result is good (and luckily, "DIFF FORMAT FOR
-> MERGES" section explicitly limits "-c" and "--cc" to diff-tree,
-> diff-files and diff (and by implication excludes diff-index) so I am
-> sure there are small but non-zero number of people somewhere in the
-> world who has "diff-index -c" in their scripts that suddenly starts
-> failing with the version of Git with this change, but we can just
-> say their use was broken ;-)
->
-> Having said all that, I have to wonder if it still is needed to keep
-> the "diff-index -m" working, or we would be better off breaking it
-> to avoid a change like this that makes us bend over backwards to
-> work around the command line parsing infrastructure.
->
-> The only reason why "diff-index -m" exists is because it was part of
-> the idea Linus had for the merge implementation that we ended up
-> deciding not taking, where merges and possibly other bulk operations
-> that would affect the working tree is done in a separate, temporary
-> directory that is sparsely populated, the user is asked to edit away
-> conflicts in the temporary directory and expected to monitor his or
-> her own progress using "diff-index -m".  Our plan was to populate
-> such a temporary directory with only paths that are involved in the
-> operation in progress, without instantiating paths that are not
-> touched, so "treat missing files as if they haven't been modified"
-> was a handy ingredient for such a mode of operation.
->
-> But we ended up going with a different design, in which the main
-> working tree area is used to perform merges and to resolve
-> conflicts, which made this "pretend missing files as unmodified"
-> unnecessary feature.  In the end, we made a good move, as the
-> current design allows users to verify their changes in the context
-> of a full checkout (e.g. "make" would not have been a good way to
-> validate the conflict resolution if it is done in a separate
-> temporary directory that is sparsely populated with only the paths
-> involved in the merge---you need all files for building, including
-> the ones that are not modified, and "make" does not know to treat
-> missing files as if they are unmodified).
+A glossary is not a place to teach (anything other than the definition).
+It's supposed to contain glosses (brief explanations).
 
-This could be a good thing to do, but as I wrote in the description,
-there are in fact other commands that don't need diff-merges options and
-currently just eat them silently instead of bailing out.
+You don't find a complete recipe when you look for the definition of
+"recpipe". That information belongs elsewhere.
 
-It's likely that 90% of uses of setup_revisions() don't need
-diff-merges, so a feature to exclude diff-merges parsing seems to be
-useful by itself.
+> If "missing" endpoint is disturbing, the description can be fixed to
+> stress that they are "often but not always" given.
 
-Thanks,
+This is unnecessary information.
 
--- Sergey Organov
+If we teach that then we also have to teach that the starting point is
+not always given either (`..mybranch`). And where does it end? We would
+have to teach that `mybranch ^master` is yet another form of a revision
+range, and so is -1.
+
+That's what gitrevisions(7) is for.
+
+> >> > Especially since most people are downstream consumers, I'd
+> >> > suggest using `origin..` or `@{u}..` here.
+> >> 
+> >> Nobody uses "origin" (what does that even mean?), [...]
+> >
+> > I guess I'm "nobody" then, because I use it all the time.
+> 
+> Oh, I'm nobody, too, and so are many others ;-)
+
+That depends on the definition of "many". My guess is that it's less
+than 1% of users (probably 0.01%), and for me that's not many.
+
+If you google for `git remote "set-head"` there's barely any
+information. It's basically all online man pages.
+
+I don't think anyone can argue it's not obscure.
+
+Cheers.
+
+-- 
+Felipe Contreras
