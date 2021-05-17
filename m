@@ -2,104 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 999B8C433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06227C433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:26:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E719611EE
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:05:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA3596109E
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 19:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231222AbhEQTHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 15:07:01 -0400
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:50883 "EHLO
-        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229535AbhEQTGx (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 17 May 2021 15:06:53 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 39CD7ED7;
-        Mon, 17 May 2021 15:05:36 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 17 May 2021 15:05:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        linuxprogrammer.org; h=date:from:to:cc:subject:message-id
-        :references:mime-version:content-type:in-reply-to; s=fm3; bh=m7Q
-        SIdzo4XBVmEdkSaqc/9A4+al13pMDo2hpyU1Me6Q=; b=gyXeK63Xkclwg2ly+pb
-        Oq0PW2wkMrYV+6bRy9b8bJSycvW0Y2JHC5QBlgEhnmKkT+rSmUaZpQaJ8NeveXW3
-        JnFnBgFl5CL8trMnnfHZ3v7Q5JuR+eI0FSlq3DIw40ZP52JovmaepPfnsTKf67dN
-        foN7CbxklWEOFoGAgBzN+390qvHCe06lSxV0/gC3wYar1ZDnUlkeWaWk0Fkh+u8Z
-        QBZhAH5FatCKE4deRb/i4VqkyacyvCOHk0DGY6w/vMgrW/ZN2RDAVWxXLKgMUp3N
-        ayBEPfDblfjW8zR3stTwxh4uDgfcPmCPYNv15RIpnHr2xTKl7+uiO3V8AQcF7fxD
-        9Yw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=m7QSId
-        zo4XBVmEdkSaqc/9A4+al13pMDo2hpyU1Me6Q=; b=hJu2FOwpfp52WJB1QnsMgV
-        cDHp1CZKyMMlPZJvokg+DBiICst8hTu1T4BQTei/4GdZKCQUS5TRphFKof5rU4ts
-        43JSDOJaUKD8hkOBaZKoRk8DDIYfLcH1WYYRGvI8TEhvz+KBm4TnQO+kB454kbFq
-        EgYCVwldNAmV69g+MbIiXgmMgjr1cKJJa9Kv0G5/RRviZYZRzUG9GX6k4PHWnmsn
-        oX+AHPLGhv5wcxVPONdLfJXQcgiE+sSXQ19Ak3QqBRno20oqZAZ4+kOcdjddErHN
-        0DLwKaB3jTKzDkw/wya3nt7yB0KJito6TQDhSLLG2KHSauw919nkM4X/rxbc+qRg
-        ==
-X-ME-Sender: <xms:fr6iYLFXhPTJv4sfDr4XwrqGw9sPcvm7Jl7GgK2o9ZdaO7XBM2T3Bw>
-    <xme:fr6iYIV4RKBYeJQQWnMVHmwLG9y-BzoLe8KuuGrjqcDzPceO9XSmOnWkXqS98QmlV
-    D9as6Ac4jqMgxss>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeihedgudefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggujggfsehttdertddtreejnecuhfhrohhmpeffrghv
-    vgcujfhushgvsgihuceougifhheslhhinhhugihprhhoghhrrghmmhgvrhdrohhrgheqne
-    cuggftrfgrthhtvghrnhepjedtueejhefhtefgieduudekgfektefgvdevfffhieehveet
-    kefgtdetffeflefgnecuffhomhgrihhnpehnohhtmhhutghhmhgrihhlrdhorhhgpdhgih
-    hthhhusgdrtghomhdphihouhhtuhgsvgdrtghomhenucfkphepieekrddvvdegrdeikedr
-    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegufi
-    hhsehlihhnuhigphhrohhgrhgrmhhmvghrrdhorhhg
-X-ME-Proxy: <xmx:fr6iYNImaynutxkoeazN8BmCtnif2v31LM0qTfNOtJ88cjdXxx_-fQ>
-    <xmx:fr6iYJGf-xH1KXO6etdWzGq4IOxbI7wMWgO2YsbUR5JNTB9VtyRq-Q>
-    <xmx:fr6iYBX7bs2GLfQMbGKoWACYO0PmXedmRToVfZz6kpPixSbVBm4A3w>
-    <xmx:fr6iYOh1FHsCq3VoSbrCwj3iFYq7IbUZDydjUC1A9k8aA0lTZq3fSA>
-Received: from localhost (ip68-224-68-5.lv.lv.cox.net [68.224.68.5])
-        by mail.messagingengine.com (Postfix) with ESMTPA;
-        Mon, 17 May 2021 15:05:34 -0400 (EDT)
-Date:   Mon, 17 May 2021 12:05:32 -0700
-From:   Dave Huseby <dwh@linuxprogrammer.org>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Subject: Re: [PATCH 3/3] SubmittingPatches: remove pine-specific hints from
- MUA hints
-Message-ID: <20210517190532.GA1011@localhost>
-References: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
- <patch-3.3-9da5bc4a0c-20210512T084137Z-avarab@gmail.com>
- <20210512235136.GB10785@localhost>
- <609cc953e0ade_329320811@natae.notmuch>
- <20210513144550.GB11882@localhost>
- <609d875881c7c_80a2208e7@natae.notmuch>
+        id S233426AbhEQT2M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 15:28:12 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54741 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232773AbhEQT2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 15:28:11 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0DCE313342F;
+        Mon, 17 May 2021 15:26:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ui38oCEMTd/9W0wwiuWbPQdP7Kr+ZiqhFdRGri
+        Zi/Ag=; b=J7PzS4BP3MS+IlCCI+qJPObljGC4NSkqQqsLX+SZAVaKY3oBKLl/b6
+        raJ6LSo7ojk6hy5dum3MzJtTiJYKGbswYPZ+2RXs+jIFzOSSbTm4X2nRbIAcWU97
+        0zTNhjgUcFRuqnUZngHXdAp2Dfxi6tIKqJyBRKkfL1yEyqz4sSA8g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 06D4013342E;
+        Mon, 17 May 2021 15:26:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DFF7E13342D;
+        Mon, 17 May 2021 15:26:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Richard Hansen <rhansen@rhansen.org>
+Subject: Re: Re* [PATCH] doc: glossary: add entry for revision range
+References: <20210516203736.1098072-1-felipe.contreras@gmail.com>
+        <xmqqbl993irp.fsf@gitster.g> <60a245a927c62_126333208ea@natae.notmuch>
+        <YKJZt4vFECoLZhc2@coredump.intra.peff.net>
+Date:   Tue, 18 May 2021 04:26:48 +0900
+In-Reply-To: <YKJZt4vFECoLZhc2@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 17 May 2021 07:55:35 -0400")
+Message-ID: <xmqqpmxp6u13.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <609d875881c7c_80a2208e7@natae.notmuch>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: D3D270D6-B745-11EB-8E6D-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13.05.2021 15:08, Felipe Contreras wrote:
->Cheers.
+Jeff King <peff@peff.net> writes:
+
+> I agree that if the purpose is to be illustrative, using shortcuts like
+> "an empty endpoint means HEAD" is not helpful. And likewise for "@"; if
+> you need to have "revision range" defined, there is a good chance that
+> you don't know about shortcuts like "@" either.
 >
->[1] https://notmuchmail.org/getting-started/
->[2] https://github.com/felipec/notmuch-vim
->[3] https://www.youtube.com/watch?v=JGD7IbZmnIs
+> So I would prefer something more explicit (whether it's "mybranch" or
+> "end" or "HEAD" or whatever).
 
-Oh wow. As a fellow vim user this looks amazing. I had no idea this
-existed. Thank you for sharing.
+Perhaps.  Being illustrative for common use case is also important,
+so I do not mind teaching "missing endpoint at either side defaults
+to HEAD" early.
 
-Cheers!
-Dave
+If "missing" endpoint is disturbing, the description can be fixed to
+stress that they are "often but not always" given.
+
+>> > Especially since most people are downstream consumers, I'd
+>> > suggest using `origin..` or `@{u}..` here.
+>> 
+>> Nobody uses "origin" (what does that even mean?), [...]
+>
+> I guess I'm "nobody" then, because I use it all the time.
+
+Oh, I'm nobody, too, and so are many others ;-)
+
+> The example in Documentation/rev-list-description.txt (which feeds into
+> the git-log and git-rev-list manpages) uses "origin..HEAD", as well.
+>
+> IMHO it is a pretty reasonable example, but the examples in
+> gitrevisions(7) use made up "r1..r2", and that seems perfectly readable,
+> as well.
+>
+> -Peff
