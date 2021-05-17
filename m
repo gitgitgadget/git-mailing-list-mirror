@@ -2,166 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A290C433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6B87C433ED
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:23:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 662A160FDB
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:23:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C82C261263
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 17:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236255AbhEQRYQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 13:24:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51688 "EHLO
+        id S238340AbhEQRZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 13:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235092AbhEQRYP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 13:24:15 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B10CDC061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 10:22:58 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so6210994otc.6
-        for <git@vger.kernel.org>; Mon, 17 May 2021 10:22:58 -0700 (PDT)
+        with ESMTP id S237875AbhEQRY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 13:24:59 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27EA0C061573
+        for <git@vger.kernel.org>; Mon, 17 May 2021 10:23:43 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id t4-20020a05683014c4b02902ed26dd7a60so6213536otq.7
+        for <git@vger.kernel.org>; Mon, 17 May 2021 10:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=14I6rpDKbwv74f8ZbFMXL+nTyv//3yyPnqatoz+6cKo=;
-        b=pt4oX+Kr3t3QkstHJOAQPtNybd/nqX7ZGjPGUFoiD1BFntdHPyiZLpmyZtCiWdZeQR
-         WV909HV75guixpMD3oSHF5lb6gDIeeYQ7lfSumV8ATEz1sZQuVgteIe9Zq3tKUe2GQm7
-         nqli9B1DiaOPBPjoW8kkEZ7gtxv6Paj9jc/78TPECoGM4ZkLUublFP4uECmag1shVHSS
-         xfOUapIsXNcKTcGvFfTL1LcSecLze/JI4A6wizfeDZTk+mtJLgwaSJ+9GqrLstznVe+q
-         2of45rsU7mbMJcUnx1R8t0DVjSWiO1uw1giselP/jTZjUsjb8676iY99m9725XvxksBM
-         rCmg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=C4V2yQbdyyYOSiK8vam0OGhPpxFcVWp2jwrTAdrD/EI=;
+        b=hbTmSzkFsd6D8jA3kIT/KdGHGcA6BJlSeQ97iaK8n8hMHx4s9357ZW/m0CP0zx2pZo
+         UMHxOfiom6vSfGh7Y9froZcitTwEREUN79D9onwmM20sZ2ddjKPmj1H+8DxiYioVCkEW
+         P8uK9V7u4BdtUbvzWP9Ym/OnjVubESzbPN+lL25j02E6q/3KnyxOxluazmGNvL8jY5lC
+         jy3prJdQ720is14X3jJPz3PcYXhayVNHUcWyjRkHMpHK36gcEmCgReYx+OEXqC/QutML
+         JPKvuh2pbfgEHn3rTncXEomIBQLzFsuhVkdVinOhAJCwFUHUz7kYU2tdXtbeznXe8VtH
+         qMQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=14I6rpDKbwv74f8ZbFMXL+nTyv//3yyPnqatoz+6cKo=;
-        b=dnUXg/rKQ6LcTImeuLFqnP2qLponQ5oAyDcD4UbCC9tD9l7hUw9v3g7Un41pUJ6KMN
-         7gzA8I25+ZpQvm9mMiZkOi+1AZ8KJO63jDCEmYYjAhT55cJtwgkMXmk2AhoFE9TKmRBZ
-         yNWEafykIXzS+butOhH4TqexIbzPwiZI92I5/PuKq45/H60q0jHGdMMLOMWMOZoxiOdc
-         UHgbTr0dvWXlkff53KqlOVFgNAFvRAHHwpPbP4i9advYvGtCCbnC/1fWpX8SBPPgNUkz
-         BVRf4cKFsSH58LaSNcOB/6Hh2aBMM3ta8GpIZFqmyT7ZiLZZZHmYqjmq8te46MMe57qN
-         MpHA==
-X-Gm-Message-State: AOAM532DPUnG5et0Bo93n+8YjtXf3NZRcO9b8u+YMP6CncNLJtRPotih
-        iJhLNExi8KkWwnZ361Dk42w=
-X-Google-Smtp-Source: ABdhPJzOBXsvwXXm07/QwTKPY++DRisZJeZPDxLMsQ+VMIFzWl7j6I1H0qe60Mdk3ngTr1lFt5M2SQ==
-X-Received: by 2002:a05:6830:1bd8:: with SMTP id v24mr519103ota.203.1621272178159;
-        Mon, 17 May 2021 10:22:58 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id w10sm3174288oou.35.2021.05.17.10.22.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 10:22:57 -0700 (PDT)
-Date:   Mon, 17 May 2021 12:22:56 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Richard Hansen <rhansen@rhansen.org>
-Message-ID: <60a2a670648b1_12801e20895@natae.notmuch>
-In-Reply-To: <YKJZt4vFECoLZhc2@coredump.intra.peff.net>
-References: <20210516203736.1098072-1-felipe.contreras@gmail.com>
- <xmqqbl993irp.fsf@gitster.g>
- <60a245a927c62_126333208ea@natae.notmuch>
- <YKJZt4vFECoLZhc2@coredump.intra.peff.net>
-Subject: Re: Re* [PATCH] doc: glossary: add entry for revision range
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=C4V2yQbdyyYOSiK8vam0OGhPpxFcVWp2jwrTAdrD/EI=;
+        b=GfhDlGK9DIKQk9WhOeeNg0jqeZaZVOBGo1aqWD97D+62IeyqPYGpNDD0fTVMRikmSr
+         L3vscnQjJqzk3HMysB3Gab3TbmZrcmwX9LFQhmJr/azrhYtOuTy3JTxBTxnUC7WY5YDV
+         3Y1be0E02UKORhyHAAyfGmHq6AX3vb76eFU2UJ+7ohpGkRmDCYnNSghujmiMgkCrsO8d
+         f1w6nY/Jd8WLiKD4uDNTMFRbxGpejRhe8kJ7N5l5iBpjLwQnrAghIMBMhp3w+riJli28
+         kWHicm45iNZbziDqfNbf8Vxe3upwLcCszW6LysUQwvfZKQiIPc1LJ5jJXDn9Ccs7d0LG
+         J59w==
+X-Gm-Message-State: AOAM532MJhjO/nzPivyOA7uGcf2d2o2gqUA3+zlRYTKjvoJdlpehw4m8
+        KEzmBN3hutvhp/D+30LZEOs=
+X-Google-Smtp-Source: ABdhPJzCS8OyxeR9/8ht8OAW75RMr8JkKeUO841zOqhZ7I5Q0StxAIX3rYC6s8d08n77HRBCI01xvw==
+X-Received: by 2002:a9d:4697:: with SMTP id z23mr547592ote.109.1621272222527;
+        Mon, 17 May 2021 10:23:42 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:68e5:b0b1:d7d3:e820? ([2600:1700:e72:80a0:68e5:b0b1:d7d3:e820])
+        by smtp.gmail.com with ESMTPSA id 64sm3127063oob.12.2021.05.17.10.23.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 May 2021 10:23:42 -0700 (PDT)
+Subject: Re: [PATCH v5 0/9] Directory traversal fixes
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+References: <pull.1020.v4.git.git.1620758049.gitgitgadget@gmail.com>
+ <pull.1020.v5.git.git.1620840502.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e03ea953-5d43-fe33-3219-364ef69691b1@gmail.com>
+Date:   Mon, 17 May 2021 13:23:41 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
+MIME-Version: 1.0
+In-Reply-To: <pull.1020.v5.git.git.1620840502.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Mon, May 17, 2021 at 05:30:01AM -0500, Felipe Contreras wrote:
-> 
-> > > As there is no need to spell out HEAD, `master..` would be a better
-> > > example.
-> > 
-> > I don't think so. The description said _starting_ and _ending_ points...
-> > `master..` has no ending point.
-> > 
-> > If we must not use @, then I would rather use `master..mybranch`, or
-> > something like that. HEAD seems like a technical accident. But of course
-> > I would prefer HEAD to nothing, because at least it qualifies as an
-> > ending point.
-> 
-> I agree that if the purpose is to be illustrative, using shortcuts like
-> "an empty endpoint means HEAD" is not helpful. And likewise for "@"; if
-> you need to have "revision range" defined, there is a good chance that
-> you don't know about shortcuts like "@" either.
+On 5/12/2021 1:28 PM, Elijah Newren via GitGitGadget wrote:
+> This patchset fixes a few directory traversal issues, where fill_directory()
+> would traverse into directories that it shouldn't and not traverse into
+> directories that it should (one of which was originally reported on this
+> list at [1]). And it includes a few cleanups
 
-But they don't need to know what @ means; it's clearly a shortcut for
-_something_, and that's all they need to know. In fact, I'd say most
-people can quickly realize what a shorcut for it is, which is why it was
-picked by the git project, and many Mercurial projects as well.
+Sorry that I've been sleeping on this series since v1. I re-read this
+version from scratch and only found a couple nitpicks.
 
-Sure the same argument applies to HEAD too, but if we are going to pick
-a placeholder for _something_ the user doesn't need to know about, then
-@ is much simpler than HEAD.
+> If anyone has any ideas about a better place to put the "Some sidenotes"
+> from the sixth commit message rather than keeping them in a random commit
+> message, that might be helpful.
 
-We could do X too (typically used for _whatever_), but I'd argue @ is
-much better than X because it actually works, and not just works, but
-it's what the user most often would use.
+I don't have any better ideas, sorry.
 
-> So I would prefer something more explicit (whether it's "mybranch" or
-> "end" or "HEAD" or whatever).
-
-I prefer something less explicit, because it's not relevant what X is,
-just that it is an end point.
-
-But if you feel strongly about it, "mybranch" it is.
-
-Actually, I would prefer something more real, like "feature-x".
-
-> In a more fleshed-out description it might be nice to casually introduce
-> such shortcuts to let the user pick them up naturally, but in a
-> one-liner like a glossary entry, I think clarity is the most important
-> thing.
-
-Indeed, but I find `master..@` is a perfectly clear example of a
-revision range from something to something.
-
-> > > Especially since most people are downstream consumers, I'd
-> > > suggest using `origin..` or `@{u}..` here.
-> > 
-> > Nobody uses "origin" (what does that even mean?), [...]
-> 
-> I guess I'm "nobody" then, because I use it all the time.
-
-Language is rarely 100% specific. By "nobody" of course I meant
-"virtually nobody".
-
-And yeah, I know you actually use "origin", because you do have correct
-"origin/HEAD" for many of your repositories. I don't, and I'd argume
-most users don't either.
-
-It's right next in my to-do list to work on fetch.updateHead so I (and
-many users) can join you in using "origin". But that's not the case
-today.
-
-> The example in Documentation/rev-list-description.txt (which feeds into
-> the git-log and git-rev-list manpages) uses "origin..HEAD", as well.
-
-I think it shouldn't, but that's a separate topic.
-
-> IMHO it is a pretty reasonable example, but the examples in
-> gitrevisions(7) use made up "r1..r2", and that seems perfectly readable,
-> as well.
-
-It is readable, sure, but it's not a real example. When picking an
-example of English sentence with subject and predicate I'd pick "Mary
-went to the moves" over "Subject predicate" in heartbeat.
-
-An instance that doesn't come from the set of real commands is not
-really an example to me.
-
-Cheers.
-
--- 
-Felipe Contreras
+Thanks,
+-Stolee
