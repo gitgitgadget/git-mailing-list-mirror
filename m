@@ -6,89 +6,91 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95029C433ED
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 08:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F0CCC433B4
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 08:53:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A5DD610C9
-	for <git@archiver.kernel.org>; Mon, 17 May 2021 08:51:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0E16611BD
+	for <git@archiver.kernel.org>; Mon, 17 May 2021 08:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235665AbhEQIww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 04:52:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56078 "EHLO cloud.peff.net"
+        id S235771AbhEQIyf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 04:54:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56086 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235456AbhEQIwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 04:52:51 -0400
-Received: (qmail 4576 invoked by uid 109); 17 May 2021 08:51:35 -0000
+        id S235659AbhEQIyd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 04:54:33 -0400
+Received: (qmail 4590 invoked by uid 109); 17 May 2021 08:53:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 May 2021 08:51:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 17 May 2021 08:53:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26589 invoked by uid 111); 17 May 2021 08:51:35 -0000
+Received: (qmail 26610 invoked by uid 111); 17 May 2021 08:53:17 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 May 2021 04:51:35 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 17 May 2021 04:53:17 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 17 May 2021 04:51:34 -0400
+Date:   Mon, 17 May 2021 04:53:16 -0400
 From:   Jeff King <peff@peff.net>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: git repack on shallow clone of large repo (linux kernel) hangs
- at "Enumerating objects"
-Message-ID: <YKIulliGp8hyf5Y6@coredump.intra.peff.net>
-References: <c98e51b0-d89b-9170-e3bc-69ac9ec5e114@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 3/5] doc: remove unnecessary rm instances
+Message-ID: <YKIu/DUfmU8JbDY2@coredump.intra.peff.net>
+References: <20210514115631.503276-1-felipe.contreras@gmail.com>
+ <20210514115631.503276-4-felipe.contreras@gmail.com>
+ <YJ+TQiYVgocUBQRV@coredump.intra.peff.net>
+ <609fb8b5bf799_e173a20897@natae.notmuch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c98e51b0-d89b-9170-e3bc-69ac9ec5e114@gmail.com>
+In-Reply-To: <609fb8b5bf799_e173a20897@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 16, 2021 at 08:09:56PM +0700, Bagas Sanjaya wrote:
+On Sat, May 15, 2021 at 07:04:05AM -0500, Felipe Contreras wrote:
 
-> I have a shallow clone of linux-stable repo [1] on my computer. Now
-> I'm trying to repack with `git repack -A -d`.
+> Jeff King wrote:
+> > On Fri, May 14, 2021 at 06:56:29AM -0500, Felipe Contreras wrote:
+> > 
+> > > Commits 50cff52f1a (When generating manpages, delete outdated targets
+> > > first., 2007-08-02) and f9286765b2 (Documentation/Makefile: remove
+> > > cmd-list.made before redirecting to it., 2007-08-06) created these rm
+> > > instances for a very rare corner-case: building as root by mistake.
+> > > 
+> > > It's odd to have workarounds here, but nowhere else in the Makefile--
+> > > which already fails in this stuation, starting from
+> > > Documentation/technical/.
+> > 
+> > Aren't there tons more that you end up removing in the next patch? E.g.:
+> > 
+> >    doc.dep : $(docdep_prereqs) $(DOC_DEP_TXT) build-docdep.perl
+> >   -       $(QUIET_GEN)$(RM) $@+ $@ && \
+> >   -       $(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
+> >   -       mv $@+ $@
+> >   +       $(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl >$@ $(QUIET_STDERR)
+> > 
+> > That does differ in that it removes $@+, too, but the premise is the
+> > same (we know that $@+ could not be a problem, as we're about to
+> > clobber it anyway).
+> > 
+> > I'm OK with getting rid of all of them, but it seems like it ought to be
+> > happening all in this patch.
 > 
-> Before repacking, here is the object counts on my clone
-> (`git count-objects -v`):
+> Yeah, but the rationale is different.
 > 
-> > count: 0
-> > size: 0
-> > in-pack: 3162206
-> > packs: 17
-> > size-pack: 3120393
-> > prune-packable: 0
-> > garbage: 0
-> > size-garbage: 0
+>   1. $(RM) $@: these remove the target file because of permissions
+>      (i.e. root owned)
+>   2. $(RM) $@+ $@ && $(CODE) && mv $@+ $@: these are for interrupted builds
 > 
-> And I have 41496 commits (only on master).
-> 
-> And here are relevant config used:
-> 
-> > pack.deltacachesize=120M
-> > pack.windowmemory=400M
-> > pack.packsizelimit=650M
-> > pack.autopacklimit=0
-> 
-> When I trigger repack operation, I expected that all objects on 17 packs
-> are consolidated into several 650M-sized packs. However, in my case, repacking
-> was hang at "Enumerating objects" stage, that is I stuck at:
-> 
-> "Eumerating objects: 902036"
+> To get rid of #2 we need an alternative solution, like .DELETE_ON_ERROR,
+> to get rid of #1 we don't, we can just do it.
 
-You could try using strace or gdb to see what it's doing.
+To get rid of the "mv", you need something like .DELETE_ON_ERROR. But
+the "rm" in the second case has nothing to do with interrupted builds.
+It is is doing the same nothing that the ones you are getting rid of
+here are.
 
-But as a guess, one thing that sometimes causes a stall near the end of
-"enumerating objects" is loosening unreachable objects that are
-currently packed. You told repack to use "-A", which asks to loosen
-those objects so they aren't lost when the old packs are deleted (as
-opposed to "-a").
-
-You'd probably want to at least say "--unpack-unreachable=some.time" to
-avoid writing out ones which are not even recent (and which is what "git
-gc" will do under the hood).
-
-But if you don't care about keeping them at all (e.g., because this is
-not an active repository where other simultaneous operations may be
-taking place, so you know it is safe to delete even recent ones), then
-just "git repack -a -d" is probably your best bet.
+I.e., I was suggesting to get rid of the "rm" call in the hunk I showed
+above, but leave the "mv" for the follow-on patch.
 
 -Peff
