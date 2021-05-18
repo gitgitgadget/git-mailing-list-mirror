@@ -2,129 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE2CEC433B4
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 03:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93599C433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 03:28:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3136611CC
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 03:22:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A6A860231
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 03:28:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240643AbhERDYA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 May 2021 23:24:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45332 "EHLO
+        id S1346287AbhERD3U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 May 2021 23:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236765AbhERDX5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 May 2021 23:23:57 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9B37C061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 20:22:39 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so7454003otp.4
-        for <git@vger.kernel.org>; Mon, 17 May 2021 20:22:39 -0700 (PDT)
+        with ESMTP id S236765AbhERD3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 May 2021 23:29:01 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A799C061573
+        for <git@vger.kernel.org>; Mon, 17 May 2021 20:27:44 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id t30so6024450pgl.8
+        for <git@vger.kernel.org>; Mon, 17 May 2021 20:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=0HbQTihE2SI7NMN2L7lytOt5rq4zVZykwPQ3y21wJ6k=;
-        b=J2fpSElCv0Vwj6Y7JfkBDSF/Q4GcwRJmmyjP0xLg2PgCUcc8NEXfrzMSSFRQ4u4VE3
-         DAmq5ujWqaZjqq5/6mzwX5+ENay/ZUzR6Rn+S65UFVYGYduesW5CT7H/9wS/StCL+VjZ
-         Ouf34UUrh/GJ/rSHE/SSazcG2i8Zg0rvS5IUSUGi04x79RsNT/Js0a+esL4Ar+hQASaJ
-         r/jhozo7YKuOENY5e4B4pI1S6pnkdmr4oOBk/o8oenjz+ifHIcKklbIDZlVxrXdg/kHI
-         OMZ5m6uM6bdB/TPjoRwzSPNuE5qhGvMg+792MSZNXY4OEJwPlTE/Kx+fBI21A2mmSZ8k
-         rahQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=d+x/6QXUfFC/EOW/csIQeS1h3DvNWFA8kKzzZb9Ik8w=;
+        b=WxybXpvyYNvRD3Sc27Fxr+/po4nBOAnYOyFVUJ9xXN9r7IENsaUxjuXXEWowljuShG
+         kLvypd+yovSTpYoh/YWpWBQLCvJ7ulPvsPP5V8csjwjfTaQ5SKTotg/RfjUx8zZY6+B4
+         iIh5+ropEOITAit0jqpVWtyheOAnIM5E6PCxCY/+9Grn/WrDgomTBHskkmU0ya77p7xM
+         PPEiSzHwc/fwywLu+z8Eaun1fkO5tba7WOAZM9jGMe2ci5yI2FeX8MMcy3X3XDZC08Xs
+         xxpwURoXBSMVydz47iAnKaSDarG0CgARMdzJ5n8YUVaMxWmZQEuFwtlUjPGQYv37AEta
+         tw/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=0HbQTihE2SI7NMN2L7lytOt5rq4zVZykwPQ3y21wJ6k=;
-        b=kl4vEpRHlI8cR3f01DWbxnoSHzm3W2iAxioYLqT9diomqoJdUNmDPi0RZfnZXi1op7
-         13nT3xPo7KWSL825J4rfhssgaumpNias51AV2iwDoEitPe/7X+MJ7Cwu6irYWU4F3fu+
-         dX3yzwxyQudLLhkrROm4menGsIhx3zxeLpDjlN7MQgmyiG3rredlm4xsX7yr0yZlmCGh
-         71glrkdCqt4NB6uE/bqoMw8BtolwBnLuxe0eqWNJUie3ZvHlCQrNPzU7bP0GxbZ8oDlJ
-         vDWZJ2cF3jPenZrga8d+GVCBS7Es6Oyz9jx3lpPiFrTPJtCsvVfUfK+cs4J9FTQTWPcs
-         zdSA==
-X-Gm-Message-State: AOAM5339WkR4QFEj98nGYo7DQMw0WlnV/AHy8OHGcmt7sEPH/G2pHIt8
-        ANf+wh7pYDF96JW6zrHbvlQ=
-X-Google-Smtp-Source: ABdhPJwA1n0RLDMNv1eQYvYxvgg80kBcHm5RIlXZzGcyMAw5StavTuXZs23Wixf+liu/qPPXDawSwA==
-X-Received: by 2002:a05:6830:719:: with SMTP id y25mr2372264ots.218.1621308159084;
-        Mon, 17 May 2021 20:22:39 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id v1sm1938479ott.62.2021.05.17.20.22.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 20:22:38 -0700 (PDT)
-Date:   Mon, 17 May 2021 22:22:37 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=d+x/6QXUfFC/EOW/csIQeS1h3DvNWFA8kKzzZb9Ik8w=;
+        b=oVd9xHPu53L3Rouy5slZjaW8GQpwIfvx8kE3jWYMjuL81RyJ5y2C2013x7kS91FBJ2
+         FPRuhyHlUr1JETgpVoEoWjb68m6gogVvnu1hbzJNK1IvKAvTICe6XhVW8iEHUG3AAz6y
+         gVq+MqyPZVJ3l+pGyrnKbkdnw+za6ZNsP31lJTIoVDfSFWqtNBufnj8Am5FZNOrElYV6
+         i2H+CplfHeTIu0IAm8Vd2tvJ60HkfHqEtDp9ZUjX2rxuJYvh0sQboApgGL8QSW3L4nCA
+         xBeoeK3Ob8JqTUbOH1sTN2YogfvjTMMls7jb7+1EX/azd/GE859459eXGs76uozcvUR0
+         U+Eg==
+X-Gm-Message-State: AOAM5326r3lK0+rJyG8dN5iPg874NjordvEUN+0B82qiIWzWfJgxjfe1
+        Zi3tC57SQ4IRjBJpe1KG3vY31ySBlKhzT64j
+X-Google-Smtp-Source: ABdhPJz1PiELKvB+GeJB/u+TlxFSkj+s8dWAtIpdD4tXtSDHs8Mdkue4DwYU3sUGCSkrfL7WHxr56g==
+X-Received: by 2002:aa7:8686:0:b029:2db:7eea:8fb4 with SMTP id d6-20020aa786860000b02902db7eea8fb4mr2822868pfo.34.1621308463572;
+        Mon, 17 May 2021 20:27:43 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-88.three.co.id. [180.214.232.88])
+        by smtp.gmail.com with ESMTPSA id cv24sm11709995pjb.7.2021.05.17.20.27.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 May 2021 20:27:43 -0700 (PDT)
+Subject: Re: [PATCH v1 2/9] t4013: test "git -m --raw"
+To:     Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Message-ID: <60a332fd22dad_14c8d4208ed@natae.notmuch>
-In-Reply-To: <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
-Subject: Re: [PATCH] help: colorize man pages
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+ <20210517155818.32224-1-sorganov@gmail.com>
+ <20210517155818.32224-3-sorganov@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <1a78e837-13a0-f9bb-1ee2-a54534af37b1@gmail.com>
+Date:   Tue, 18 May 2021 10:27:39 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
+MIME-Version: 1.0
+In-Reply-To: <20210517155818.32224-3-sorganov@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On 2021-05-18 at 01:01:21, Felipe Contreras wrote:
-> > Our man pages don't contain many useful colors (just blue links),
-> > moreover, many people have groff SGR disabled, so they don't see any
-> > colors with man pages.
-> > 
-> > We can set LESS_TERMCAP variables to render bold and underlined text
-> > with colors in the pager; a common trick[1].
-> > 
-> > Bold is rendered as red, underlined as blue, and standout (messages and
-> > highlighted search) as inverse magenta.
-> > 
-> > This only works when the pager is less, and the color.pager
-> > configuration is enabled, as well as color.ui.
+On 17/05/21 22.58, Sergey Organov wrote:
+> This is to ensure we won't break different diff formats when we start
+> to imply "-p" by "-m".
 > 
-> I think we should let the user decide whether they want to set this
-> feature themselves instead of setting it for them.  For example, I have
-> specific colors set up with these environment variables, and I'd like
-> Git to honor them without having to configure Git independently of less.
-> I expect other users will expect Git's rendering of the manual pages to
-> work like other instances of man(1) on their system as well.
 
-It does respect them.
+This patch, and patch 3, have the same commit message (and thus the logic),
+so these can be squashed.
 
-This would render the man page with the color specified in the
-environment, not the default of git.
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
+>   t/t4013-diff-various.sh          |  1 +
+>   t/t4013/diff.log_-m_--raw_master | 61 ++++++++++++++++++++++++++++++++
+>   2 files changed, 62 insertions(+)
+>   create mode 100644 t/t4013/diff.log_-m_--raw_master
+> 
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index e9f67cd24351..1809355f9bb1 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -337,6 +337,7 @@ log -m -p --first-parent master
+>   log -m -p master
+>   log --cc -m -p master
+>   log -c -m -p master
+> +log -m --raw master
+>   log -SF master
+>   log -S F master
+>   log -SF -p master
 
-  LESS_TERMCAP_md=$'\e[1;33m' LESS_TERMCAP_me=$'\e[m' git help git
+In near future, we will switch default branch created by `git init` to
+main. Had the test be prepared?
 
-> Additionally, using colors poses accessibility problems.  I know someone
-> who, due to his colorblindness, finds terminal colors distracting and
-> hard to read, and prefers not to use them at all.
+> +:100644 100644 7289e35... 992913c... M	dir/sub
+> +:100644 100644 f4615da... 10a8a9f... M	file0
+> +:000000 100644 0000000... b1e6722... A	file1
+> +:100644 000000 01e79c3... 0000000... D	file2
+> +:100644 000000 7289e35... 0000000... D	file3
+> +
+> +commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a
+> +Author: A U Thor <author@example.com>
+> +Date:   Mon Jun 26 00:03:00 2006 +0000
+> +
+> +    Side
+> +
+> +:100644 100644 35d242b... 7289e35... M	dir/sub
+> +:100644 100644 01e79c3... f4615da... M	file0
+> +:000000 100644 0000000... 7289e35... A	file3
+> +
+> +commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
+> +Author: A U Thor <author@example.com>
+> +Date:   Mon Jun 26 00:02:00 2006 +0000
+> +
+> +    Third
+> +
+> +:100644 100644 8422d40... cead32e... M	dir/sub
+> +:000000 100644 0000000... b1e6722... A	file1
+> +
+> +commit 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44
+> +Author: A U Thor <author@example.com>
+> +Date:   Mon Jun 26 00:01:00 2006 +0000
+> +
+> +    Second
+> +
+> +    This is the second commit.
+> +
 
-  git -c color.ui=never help git
+The rest of commits only have commit title, why do this second commit
+have also commit message body?
 
-> Even users who want to use them might find some colors to be too
-> similar, and this patch doesn't permit them to be configured.
+> +:100644 100644 35d242b... 8422d40... M	dir/sub
+> +:100644 100644 01e79c3... b414108... M	file0
+> +:100644 000000 01e79c3... 0000000... D	file2
+> +
+> +commit 444ac553ac7612cc88969031b02b3767fb8a353a
+> +Author: A U Thor <author@example.com>
+> +Date:   Mon Jun 26 00:00:00 2006 +0000
+> +
+> +    Initial
+> +$
+> 
 
-Yes it does:
-
-  LESS_TERMCAP_md=$'\e[01;38;5;33m' git help git
-
-> In my particular case, despite having normal color vision, because I use
-> a transparent terminal which often results in a grey background, I find
-> the standard terminal red to be difficult to read, and so this patch
-> would result in a significant decrease in the readability of the manual
-> pages for me.
-
-If you have LESS_TERMCAP_md set in your environment, it won't.
+Thanks.
 
 -- 
-Felipe Contreras
+An old man doll... just what I always wanted! - Clara
