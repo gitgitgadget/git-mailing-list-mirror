@@ -2,131 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7636FC433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AA91C433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:54:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54E6661074
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:38:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D794611AD
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349701AbhERNjT convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 18 May 2021 09:39:19 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:40935 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349682AbhERNjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 09:39:13 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14IDbiXu020710
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 18 May 2021 09:37:44 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>
-Cc:     <git@jeffhostetler.com>, <git@vger.kernel.org>,
-        "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>,
-        "'Johannes Schindelin via GitGitGadget'" <gitgitgadget@gmail.com>,
-        <jeffhost@microsoft.com>
-References: <009d01d74b44$9efe8a60$dcfb9f20$@nexbridge.com> <YKN5lXs4AoK/JFTO@coredump.intra.peff.net>
-In-Reply-To: <YKN5lXs4AoK/JFTO@coredump.intra.peff.net>
-Subject: RE: [BUG] Unix Builds Requires Pthread Support (was [PATCH v4 00/12] Simple IPC Mechanism)
-Date:   Tue, 18 May 2021 09:37:38 -0400
-Message-ID: <00f301d74bea$fb39d220$f1ad7660$@nexbridge.com>
+        id S245342AbhERNz5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 09:55:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244823AbhERNzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 09:55:53 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB75C061756
+        for <git@vger.kernel.org>; Tue, 18 May 2021 06:54:34 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id q17-20020a4a33110000b029020ebab0e615so324169ooq.8
+        for <git@vger.kernel.org>; Tue, 18 May 2021 06:54:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cP9Obcc0JpD0yt1ygLnPnNwqa/T3OpnX+FVLRSbMS20=;
+        b=ktyShktN7OT7e9AFA1EXKSJPvN7FJE9KSqNR9VpwRLm3Sxvz4Re3C+XhA0sJygE2wL
+         n8LAdKzQLqTByJmy9XWmZcfDbyjmOLfzVVXHonVAThW0o6eBxxuVur601VMoIVG61FmN
+         wgIl+3CqJC0xE4cOqBl6oCMFG7goTQaiIenuFB6f1BW642PtDt1q6pAjNSRn77Y31IO+
+         1Q/f7ksrvep4EJqbIXoBrv3NUDgK9qpsHG4JdI/K2EpJZp+8V8E7uQ62zWE4aqB9GH/7
+         3lvKyCyTepIDOVBkr8zCiVSq/W2Lkt0/fNtnapljUynNvs5++VGl6cu22Xja+O6v8sfI
+         EmLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cP9Obcc0JpD0yt1ygLnPnNwqa/T3OpnX+FVLRSbMS20=;
+        b=L3Th29kQfsWYzFldXa40XBr89DX+O9a7m5AEApW+jN2mPAeehr5rUabRQM2jzA8oTh
+         hXtIxNW5z9ZfqQfR2T02bZrPCqfjmX31jbWemJ8Ty7GKmKeM9QkAjXSq6nrpZQpW20s9
+         UpI+qLF8l1LY3nERIzdmWVrSryL/BV13JdexUn6BcZ+dRnzSgQt4+9m97rWhZSeK6HN6
+         9gqXEvqXFF8dO9Bjpbn4pu4bAPOSFu8dZolrqL8CcvaOWTrql/GwG9BsZNiLm5RVZhjx
+         lPh4Wbziv/A3oo+Udop1vqy4evKFPd0NyHeQ6pSm2LhOkWvaznUMEqoms3gcMqkr2qgj
+         GEzw==
+X-Gm-Message-State: AOAM533aofZnTnpzKnLiK1E7ggzHIrg0mhV3MRXJg0VTd5E6y0USFIs2
+        CKh5+Kiw2LpB7OqmKPzM65M=
+X-Google-Smtp-Source: ABdhPJy0kUIcv6Bd+/bB4NawAPSgoGipM+YtYkO5qV0TBptgh1gxXO3ZifO5WzKR025QFNwrJiXb/Q==
+X-Received: by 2002:a4a:250e:: with SMTP id g14mr4522786ooa.31.1621346073984;
+        Tue, 18 May 2021 06:54:33 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:bcf4:c194:74a1:9906? ([2600:1700:e72:80a0:bcf4:c194:74a1:9906])
+        by smtp.gmail.com with ESMTPSA id 16sm3798210otu.79.2021.05.18.06.54.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 May 2021 06:54:32 -0700 (PDT)
+Subject: Re: [PATCH v2 04/13] fast-rebase: write conflict state to working
+ tree, index, and HEAD
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
+ <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
+ <887b151c26ff0f175f2da431d77cd377bd066990.1620094339.git.gitgitgadget@gmail.com>
+ <30c23689-cdab-143e-159c-93e50c808430@gmail.com>
+ <CABPp-BHpLBjyxsb+BM+ssZVHRJnn+DjazSQi6bHRXHET1vqGhg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <34ba20ec-5868-756d-c22a-e865480cea50@gmail.com>
+Date:   Tue, 18 May 2021 09:54:30 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGxshUz11zbZtUuRwTCdmgD3e3njwKANMoXqyBuSKA=
+In-Reply-To: <CABPp-BHpLBjyxsb+BM+ssZVHRJnn+DjazSQi6bHRXHET1vqGhg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 18, 2021 4:24 AM, Jeff King wrote:
->On Mon, May 17, 2021 at 01:46:46PM -0400, Randall S. Becker wrote:
->
->> On Wed, 17 Feb 2021 21:48:36, Jeff Hostetler wrote:
+On 5/17/2021 11:42 PM, Elijah Newren wrote:
+> On Mon, May 17, 2021 at 6:32 AM Derrick Stolee <stolee@gmail.com> wrote:
 >>
->> >Here is V4 of my "Simple IPC" series. It addresses Gábor's comment
->> >WRT shutting down the server to make unit tests more predictable on CI servers.
->> >(https://lore.kernel.org/git/20210213093052.GJ1015009@szeder.dev)
+>> On 5/3/21 10:12 PM, Elijah Newren via GitGitGadget wrote:
+>>> From: Elijah Newren <newren@gmail.com>
+>>>
+>>> Previously, when fast-rebase hit a conflict, it simply aborted and left
+>>> HEAD, the index, and the working tree where they were before the
+>>> operation started.  While fast-rebase does not support restarting from a
+>>> conflicted state, write the conflicted state out anyway as it gives us a
+>>> way to see what the conflicts are and write tests that check for them.
+>>>
+>>> This will be important in the upcoming commits, because sequencer.c is
+>>> only superficially integrated with merge-ort.c; in particular, it calls
+>>> merge_switch_to_result() after EACH merge instead of only calling it at
+>>> the end of all the sequence of merges (or when a conflict is hit).  This
+>>> not only causes needless updates to the working copy and index, but also
+>>> causes all intermediate data to be freed and tossed, preventing caching
+>>> information from one merge to the next.  However, integrating
+>>> sequencer.c more deeply with merge-ort.c is a big task, and making this
+>>> small extension to fast-rebase.c provides us with a simple way to test
+>>> the edge and corner cases that we want to make sure continue working.
 >>
->> I missed this at the time, but it appears that ipc-unix-socket.c
->> forces a dependency on pthreads for Git under Unix-like platforms.
->> This is probably not a correct assumption (or likely intended), but
->> causes git to no longer build on NonStop x86 and ia64 as of
->> 2.32.0-rc0. I am not suggesting undoing this, but amending to make the
->> change more sensitive to a lack of pthread support.
->> pthread_sigmask() showed up as an undefined external:
->
->Hrm. Usually we do not assume that threads are available. For "async"
->stuff via run-command, we allow it to be implemented via fork(), and insist that the async process talk back to us only over a pipe
->descriptor (so it works whether it's a thread or a separate process).
->In cases where we use worker threads for performance (like index-pack or pack-objects), we just run a single "thread" instead, waiting for
->it to complete.
->
->In the simple-ipc API, there's an explicit "async" interface. But it's not clear to me how rich it expects the communication with the caller to
->be (i.e., whether we could get away with the fork() trick here). Or if it would be OK for the threading to remain an implementation detail,
->with one "worker" upon whom we wait for completion.
->
->> **** ERROR **** [1210]:
->>    libgit.a(ipc-unix-socket.o): In function `thread_block_sigpipe':
->>    ipc-unix-socket.o(.text+0xb87): unresolved reference to pthread_sigmask.
+>> This seems a noble goal. I'm worried about the ramifications of such
+>> a change, specifically about the state an automated process would be in
+>> after hitting a conflict.
+> 
+> Why would an automated process be using test-helper code?  Note that
+> this is code from t/helper/test-fast-rebase.c.
+...
+>> So perhaps this could use a test case to demonstrate the change in
+>> behavior? Such a test would want to be created before this commit, then
+>> the behavior change is provided as an edit to the test in this commit.
 >>
->> On NonStop, pthread_sigmask is defined in -lput or -lspt, which are
->> not used in our build – and would cause a bunch of other issues if referenced. The build does define NO_PTHREADS.
->
->So yeah, you hit that problem because you only have a sort-of-pthreads-ish case. But it seems like a system which truly has no pthread
->support at all and defines NO_PTHREADS to tell us so will have much more of its compilation broken (because it's also missing obvious bits
->like pthread_create()).
->
->We already make simple-ipc compilation conditional on NO_UNIX_SOCKETS. I think we could probably just do the same for
->NO_PTHREADS?
->
->Something like:
->
->diff --git a/Makefile b/Makefile
->index 3a2d3c80a8..bd7fe0fc24 100644
->--- a/Makefile
->+++ b/Makefile
->@@ -1687,14 +1687,20 @@ ifdef NO_UNIX_SOCKETS  else
-> 	LIB_OBJS += unix-socket.o
-> 	LIB_OBJS += unix-stream-server.o
->+endif
->+
->+# All simple-ipc requires threads, and then individual # mechanisms
->+have their own requirements.
->+ifndef NO_PTHREADS
->+	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
-> 	LIB_OBJS += compat/simple-ipc/ipc-shared.o
->+ifndef NO_UNIX_SOCKETS
-> 	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
-> endif
->-
-> ifdef USE_WIN32_IPC
->-	LIB_OBJS += compat/simple-ipc/ipc-shared.o
-> 	LIB_OBJS += compat/simple-ipc/ipc-win32.o  endif
->+endif
->
-> ifdef NO_ICONV
-> 	BASIC_CFLAGS += -DNO_ICONV
->diff --git a/simple-ipc.h b/simple-ipc.h index dc3606e30b..0f58be7945 100644
->--- a/simple-ipc.h
->+++ b/simple-ipc.h
->@@ -4,11 +4,6 @@
-> /*
->  * See Documentation/technical/api-simple-ipc.txt
->  */
->-
->-#if defined(GIT_WINDOWS_NATIVE) || !defined(NO_UNIX_SOCKETS) -#define SUPPORTS_SIMPLE_IPC -#endif
->-
-> #ifdef SUPPORTS_SIMPLE_IPC
-> #include "pkt-line.h"
+>> But maybe I'm misunderstanding the change here and such a test is
+>> inappropriate.
+> 
+> If this weren't code under t/helper/, I'd agree whole-heartedly with
+> the suggestion.
 
-I'm not sure this is going to work. The platform *does* support UNIX sockets (and not disabled) and pthreads, but we have disabled pthreads in our build. So in the above, ipc-unix-socket.o will be included at the ifndef NO_UNIX_SOCKETS. If NO_PTHREADS, not being pedantic, there should be no pthread references, regardless of other considerations. Although, at some point, I hope to resolve why pthreads (PUT) is having issues in git on the platform but not at this point.
+You're right. Ignore me.
 
+-Stolee
