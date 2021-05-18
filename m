@@ -2,124 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7265C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40C0DC433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:57:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C81CD610A8
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:50:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FC7061353
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236518AbhEROwN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 10:52:13 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51147 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235888AbhEROwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 10:52:13 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A671139FC3;
-        Tue, 18 May 2021 10:50:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8tJIFfxrwQNL7LWmOG0OccBPHLz8ygHV1ql5XH
-        YGAoE=; b=PQHvISfIjZ8pmeipCgUBesC7b+PdOaG4SMi0c39yxX4QzqIHEV/1pT
-        0NOZ4hDMPeHKZ3wSPouTMUzhzrcxQ8QNWo7b7/UqbLH/EkRsDPXpAiFkawP95q/y
-        gUiC67CqyhSSjpFIApmztSfnOKVbMMWpUW2X5NgzyJ9MSPmtdarrg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 92C6A139FC2;
-        Tue, 18 May 2021 10:50:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DD667139FBD;
-        Tue, 18 May 2021 10:50:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v2] help: colorize man pages
-References: <20210518132056.2003135-1-felipe.contreras@gmail.com>
-Date:   Tue, 18 May 2021 23:50:50 +0900
-In-Reply-To: <20210518132056.2003135-1-felipe.contreras@gmail.com> (Felipe
-        Contreras's message of "Tue, 18 May 2021 08:20:56 -0500")
-Message-ID: <xmqqa6os2j05.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S244545AbhERO6k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 10:58:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33564 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240578AbhERO6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 10:58:38 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB820C061573
+        for <git@vger.kernel.org>; Tue, 18 May 2021 07:57:20 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so8860793oth.8
+        for <git@vger.kernel.org>; Tue, 18 May 2021 07:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=1slN2gr68RfZTr3EYoTH4/wEI91UuaYwBYqA9FQDLVw=;
+        b=aEt/rCVfp026oCR/tx8d8HExnwak0N3zugmPHkVSMZi60w4Ta+/tY1msKhPK6kj8FP
+         gNc+A4VXbqraLaysOO3EfF/5DCJ1g+I1H5ZN8t1QpZHsz4p/rXSpl8Qe/nVn3n2SxBrO
+         oX/1CHSS2xdzZ7mN6KZmswnUGg5bPVoh99YJv09eHa6kC37imGGr64e4cZKumZZLNgUe
+         rqO2N5zHhSVqozqoHKeWCgu/Y4ZXNKCZaQnQxWJ74mqszqXwnx/Pzj5zNxZuEcg3JImN
+         BU+E9kf7DOg87u1w/DVHrsWfdtFd3bauArJOZUNg361zRnqhynugpmkI0WgDDxe4Rd7C
+         2ELQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1slN2gr68RfZTr3EYoTH4/wEI91UuaYwBYqA9FQDLVw=;
+        b=bm0m+n0gUGuYOavzCaEfDqblkVDhwoTpuiL9GI5boagRTtBPt0Y6mB+5r2deEHkcWQ
+         HvWyjRw7HS/vNMa1ioe8T8DlLYro/7qmgaESdhwEXadffmB8XHRbyZNl9y9fcmUy1iOO
+         VDcBcEfhZV1pKqfpOvRPIz4Pqficlud2P8MS5OVsrmeefEx6TXxO9nCrEHAL3uH7xI4m
+         wb2vJ1wGZzwvWw5MrMWUdQZ58EznSGGXOuDa3Ewp5yCZ9kT6YSNVMlsTYDeCD+JMjVO8
+         8rGMD36LsoimSaYfWp3tjqGRiTknOqbTy37ZT9jiILltkFUZalMhJGBfPI+U1p5k/Or4
+         YSHA==
+X-Gm-Message-State: AOAM532Eubu/dcg2G+ndJ2Bvo411pjtCSjA/jclMFVNvIS2hUV6PfcIR
+        3ckWNjQ0Vb00tUgWOn31SAc=
+X-Google-Smtp-Source: ABdhPJzUn1Sk5x4HZpGbnrss9ShnV2zZjG0Sw+S7nmDFx6Wy91/h5EGPTMqmgirzTF082TCrgskX0g==
+X-Received: by 2002:a9d:721e:: with SMTP id u30mr3034178otj.250.1621349840243;
+        Tue, 18 May 2021 07:57:20 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:bcf4:c194:74a1:9906? ([2600:1700:e72:80a0:bcf4:c194:74a1:9906])
+        by smtp.gmail.com with ESMTPSA id o15sm3768445ota.61.2021.05.18.07.57.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 May 2021 07:57:18 -0700 (PDT)
+Subject: Re: [PATCH v3 02/12] sparse-index: include EXTENDED flag when
+ expanding
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
+ <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
+ <8aa41e749471df3bd9d593b8f55db6506eafea12.1621017072.git.gitgitgadget@gmail.com>
+ <CABPp-BFx9=7j5LrLnQwzxba+i7_cAEXngzyt9rfOJfBuqOPBsw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ddeda8ec-bc21-1f62-5d0e-839be74f1ec8@gmail.com>
+Date:   Tue, 18 May 2021 10:57:17 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 70E3FA78-B7E8-11EB-87DC-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <CABPp-BFx9=7j5LrLnQwzxba+i7_cAEXngzyt9rfOJfBuqOPBsw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 5/17/2021 9:33 PM, Elijah Newren wrote:
+> On Fri, May 14, 2021 at 11:31 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> When creating a full index from a sparse one, we create cache entries
+>> for every blob within a given sparse directory entry. These are
+>> correctly marked with the CE_SKIP_WORKTREE flag, but they must also be
+>> marked with the CE_EXTENDED flag to ensure that the skip-worktree bit is
+>> correctly written to disk in the case that the index is not converted
+>> back down to a sparse-index.
+> 
+> This seems odd to me.  When sparse-index is not involved and we are
+> just doing simple sparse checkouts, do we mark CE_SKIP_WORKTREE
+> entries with CE_EXTENDED?  I can't find any code that does so.
+> 
+> Is it possible that the setting of CE_EXTENDED is just a workaround
+> that happens to force the index to be written in cases where the logic
+> is otherwise thinking it can get away without one?  Or is there
+> something I'm missing about why the CE_EXTENDED flag is actually
+> needed here?
 
-> +color.man::
-> +	When set to `always`, always colorize the man pages. When `false`
-> +	(or `never`), never.  When set to `true` or `auto`, use color only
-> +	when the output is written to the terminal. If unset, then the
-> +	value of `color.ui` is used (`auto` by default).
+This is happening within the context of ensure_full_index(), so we
+are creating new cache entries and want to mimic what they would
+look like on-disk. Something within do_write_index() discovers that
+since CE_SKIP_WORKTREE is set, then also CE_EXTENDED should be set
+in order to ensure that the on-disk representation has enough room
+for the CE_SKIP_WORKTREE bit.
 
-Makes sense and is more in line with the rest of the system to have
-subcommand specific color.* variable.
+I suppose this might not have a meaningful purpose other than when
+I compare a full index against an expanded sparse-index and check
+if their flags match.
 
-There are two things that make me wonder in the above description,
-though.
-
-> +static void colorize_man(void)
-> +{
-> +	if (!want_color(man_color) || !pager_use_color)
-> +		return;
-> +
-> +	/* Disable groff colors */
-> +	setenv("GROFF_NO_SGR", "1", 0);
-> +
-> +	/* Bold */
-> +	setenv("LESS_TERMCAP_md", GIT_COLOR_BOLD_RED, 0);
-> +	setenv("LESS_TERMCAP_me", GIT_COLOR_RESET, 0);
-> +
-> +	/* Underline */
-> +	setenv("LESS_TERMCAP_us", GIT_COLOR_BLUE GIT_COLOR_UNDERLINE, 0);
-> +	setenv("LESS_TERMCAP_ue", GIT_COLOR_RESET, 0);
-> +
-> +	/* Standout */
-> +	setenv("LESS_TERMCAP_so", GIT_COLOR_MAGENTA GIT_COLOR_REVERSE, 0);
-> +	setenv("LESS_TERMCAP_se", GIT_COLOR_RESET, 0);
-> +}
-
-This seems very specific to use of "less" and hopefully does not do
-anything (bad) when a different pager is used by "man".
-
- - Would it help readers to somehow tell that color.man does not
-   apply at all to those whose "man" does not "less" in the
-   documentation?
-
- - What does it mean to set this variable to "always"?  For commands
-   that we control how the various pieces of output are colored (or
-   not), e.g.
-
-   $ git -c color.ui=always log -1 -p >git-log-output.txt
-
-   it is obvious what "always" means, but given the implementation
-   that tweaks how "less" should behave, a similar command (below)
-   would not colorize its output like the "git log" example above
-   does, would it?
-
-   $ git -c color.man=always help -m git >git-help-text.txt
-
-I am just wondering if we are better off not to mention "always" in
-the documentation patch above.  It seems more like that the
-configuration variable is to answer this question and nothing else:
-
-    when 'git help' shows manual pages and internally uses 'less' as
-    its pager, do we tell it to colorize the output?
-
-for which sensible answers are 'true' or 'false'.  For that matter,
-it is not clear what "auto" ought to mean, either.
-
-Thanks.
+Thanks,
+-Stolee
