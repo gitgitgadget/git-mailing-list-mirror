@@ -2,141 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 939E3C43462
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA3C8C433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:16:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 718986100C
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:03:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97EC5610FA
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344063AbhERPFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 11:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35062 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343903AbhERPFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 11:05:11 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EDE4C061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 08:03:52 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id t30so7201091pgl.8
-        for <git@vger.kernel.org>; Tue, 18 May 2021 08:03:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=nI424pw4wyWEqUsowBl4sv/G5ycm/MBb2NdfJca347k=;
-        b=RpJZsAgyfvztvUqFoUtbJNDn6VAVIg/heuSEfinvJl5j2gACAbG6vobAalUAftoc7R
-         Zv8ROmYf4uPZUj53dxIkeaVNqzXuMJpfpGj2sulaUf7S4jHsrtiIQ7M13HqF+5AMIsbj
-         idG+2sLjbeNFpJvRorecvZc7k+a1ijFui7Tn0ciRRfg79eECWtDiiZz4J/VPqZpwVB2E
-         8P2zBO+114vNb6giBhHWHrWxYnoozKCWQUKjnUlPZxWk+A8z+UF4ebiUzm6Hq/wKSRkQ
-         2uRpQAKvdGFb7lLT7GooqvFEtaUDXcCjH6mG4RW2qH74zXrTOKvxPYBRdmOoNzZqx/bf
-         XEYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=nI424pw4wyWEqUsowBl4sv/G5ycm/MBb2NdfJca347k=;
-        b=MohjxA6S4qu+RjT4lbX/JU7oU7WVx8xMGiDJSI7gk0DW1Wn1Ty3hcmQRkW5m/6s1+C
-         sAQIiZYSLmTyOvcWefwoSZVqaotKeqPz3UTpeoBc755ijUkZX32ek+XfdIOBEaieNVWK
-         8j7tZ9G7Y+svFjNLTzFUfbVRcjB40FHX/THqrmLhu5k/KV1V8uPtXDAVc2BrWITWBMUz
-         Jeq3z+2dyJ8x23yYuq5YAtdwiZInMof8ecrNKNMg6UIlMZ7QROWDrS0TtGxL9zbq7Nzr
-         KN40RWk3g3SR3CswQ8osiX/yjni3o8UXFt+ch0R1z+HeJjfUVPpVvxZnd/cITWALPqk8
-         s0eg==
-X-Gm-Message-State: AOAM531npBiMDskTOakxftUSWo2pnQ6br+oLn1Dup0tAR5DU1W1nwxgd
-        jpZWPUYtBe3zFt6XbX3QCbEaImyXLyA=
-X-Google-Smtp-Source: ABdhPJxLrERgJcOBJ4O2j3HRJU/hanLlJST2xYqVIrcuFuR8UdeNVpKEoNKbK6oDJ+0Zm6PSyAiRAw==
-X-Received: by 2002:a63:ed4d:: with SMTP id m13mr5461546pgk.433.1621350231103;
-        Tue, 18 May 2021 08:03:51 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ea96:bdac:27b4:8cdc])
-        by smtp.gmail.com with ESMTPSA id u6sm11936457pfi.44.2021.05.18.08.03.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 08:03:50 -0700 (PDT)
-Date:   Tue, 18 May 2021 08:03:48 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] xsize_t: avoid implementation defined behavior when len < 0
-Message-ID: <YKPXVMchtGbwDuue@google.com>
+        id S1343506AbhERPRZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 11:17:25 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65120 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243998AbhERPRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 11:17:24 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 52E9513A159;
+        Tue, 18 May 2021 11:16:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Co3kDJ2K+7gf
+        Fv5F+jz+jgEXPfzBoFUEiSalWurG87E=; b=oFyTG6VehmD3i515ceIV9VV5f2vX
+        ovHbd4S7ZDfSkqz/HlB11fCAbTwfoL8tEnjRZ691/gQIIeCGyF9mQJp9U1EcT4yv
+        VKODaQ89E+Dzxo8ivnXUiMOjF23VZl3m1Y+0YGwkgnZuZjgXgkBLqfy2iUk/JVMP
+        ECoGp9C25NAZeuM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B2F613A158;
+        Tue, 18 May 2021 11:16:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8D34113A157;
+        Tue, 18 May 2021 11:16:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        karthik nayak <karthik.188@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Options like hash-object --literally and cat-file
+ --allow-unknown-type
+References: <87r1i4qf4h.fsf@evledraar.gmail.com>
+Date:   Wed, 19 May 2021 00:16:01 +0900
+In-Reply-To: <87r1i4qf4h.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 18 May 2021 16:08:18 +0200")
+Message-ID: <xmqqtun0139q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F5EB2874-B7EB-11EB-B8EF-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The xsize_t helper aims to safely convert an off_t to a size_t,
-erroring out when a file offset is too large to fit into a memory
-address.  It does this by using two casts:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-	size_t size = (size_t) len;
-	if (len != (off_t) size)
-		... error out ...
+> So you might expect it to accept an --allow-unknown-type, but it
+> doesn't. I could add support for that, but I think it would be stupid.
+>
+> Why should you need to restart a "cat-file --batch" just because you
+> encounter a bad object? Just .. print it, we can do that safely. I
+> really don't see the point of having --allow-unknown-type at all. Ditto
+> for the --batch-check mode.
+>
+> I mean, having read all the code I think I know why it's there. I think
+> It's because there was no way to ferry the information up from
+> object-file.c before my yet-to-be-submitted patches, so the solution wa=
+s
+> to pass down a flag saying "please don't die()".
+>
+> But is it something that anyone thinks is a good idea in the abstract? =
+I
+> don't see why I shouldn't just document something like:
+>
+>     Older versions of "cat-file" used to require an --allow-unknown-typ=
+e
+>     flag to emit information about objects of unknown types. This is no
+>     longer required or the default. If you'd like to die on anything
+>     except known types (e.g. to die instead of bothering with parsing a
+>     "bad" type that possibly has spaces in it in the --batch output)
+>     supply --no-allow-unknown-type.
+>
+> What do you think?
 
-On a platform with sizeof(size_t) < sizeof(off_t), this check is safe
-and correct.  The first cast truncates to a size_t by finding the
-remainder modulo SIZE_MAX+1 (see C99 section 6.3.1.3 Signed and
-unsigned integers) and the second promotes to an off_t, meaning the
-result is true if and only if len is representable as a size_t.
+Thanks for thinking things through.
 
-On other platforms, this two-casts strategy still works well (always
-succeeds) for len >= 0.  But for len < 0, when the first cast succeeds
-and produces SIZE_MAX + 1 + len, the resulting value is too large to
-be represented as an off_t, so the second cast produces implementation
-defined behavior.  In practice, it is likely to produce a result of
-true despite len not being representable as size_t.
+My knee-jerk reaction is
 
-Simplify by replacing with a more straightforward check: compare len
-to the relevant bounds and then cast it.
+ - As long as "cat-file -t $thing" exits with non-zero status for an
+   invalid thing, which was crafted using hash-object --literally,
+   reporting the typename it read from the object header to its
+   standard output would be fine without "--allow-unknown-type".
+   But scripts would be upset if it suddenly started to return with
+   zero status when asked to check what type of object the $thing
+   is.
 
-In practice, this is not likely to come up since typical callers use
-nonnegative len.  Still, it's helpful to handle this case to make the
-behavior easy to reason about.
+ - For "cat-file --batch[-check]", I am on the fence.  A script may
+   break because it is not prepared to see anything but four
+   existing types (so it might even say "do X if it is a blob, do Y
+   if it is a tree, do Z if it is a tag, and do W for everything
+   else" and expect/assume that W will see only commits), so failing
+   without --allow may still be a prudent thing to do.  We could
+   declare that such a script is already broken, even though it
+   would not change the fact that the user has been successfully
+   using it reliably.
 
-Historical note: the original bounds-checking in 46be82dfd0 (xsize_t:
-check whether we lose bits, 2010-07-28) did not produce this
-implementation-defined behavior, though it still did not handle
-negative offsets.  It was not until 73560c793a (git-compat-util.h:
-xsize_t() - avoid -Wsign-compare warnings, 2017-09-21) introduced the
-double cast that the implementation-defined behavior was triggered.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Hi,
-
-This is *not* -rc material; it's just something I noticed and figured
-I would send it before I forget (among other benefits, this helps us
-kick the tires on the release candidate by having patches to work
-with).
-
-Thoughts welcome, as always.
-
-Jonathan
-
- git-compat-util.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a508dbe5a3..20318a0aac 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -986,11 +986,9 @@ static inline char *xstrdup_or_null(const char *str)
- 
- static inline size_t xsize_t(off_t len)
- {
--	size_t size = (size_t) len;
--
--	if (len != (off_t) size)
-+	if (len < 0 || len > SIZE_MAX)
- 		die("Cannot handle files this big");
--	return size;
-+	return (size_t) len;
- }
- 
- __attribute__((format (printf, 3, 4)))
--- 
-2.31.1.818.g46aad6cb9e
-
+With your new "we can now bubble necessary information up from the
+object-file.c layer without dying" change, it might make it easier
+to arrange so that object-file.c layer would never die and I do not
+think I have any objection against such a plan.  The implementation
+of "--[no-]allow-unknown-type" would have to be migrated to the
+caller at the higher level to decide what to do when it learns that
+the object it asked the object_info() about is of an invalid type.
+And the choice of the default would become easier to change later
+with such a change to the lower layer.  But I am not sure if that
+warrants switching of the default.
