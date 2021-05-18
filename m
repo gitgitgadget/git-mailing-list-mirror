@@ -2,246 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ABADC433B4
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A876EC433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:23:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D164B6124C
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:15:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81BFB6108C
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239273AbhERIRG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 04:17:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54118 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238398AbhERIRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 04:17:05 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF044C061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 01:15:46 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id s20so4646115plr.13
-        for <git@vger.kernel.org>; Tue, 18 May 2021 01:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bvFsKnuXiXZUn8wkxroaylV9nhA5Lx05B+o/iwo98+c=;
-        b=pb8U94nB7m9I7GgsvMhNWTJhhai07ooXMz1u2NjysenJZTiTcTkK6csawMk9GEyWwd
-         /7ilT0cjq2DbWW481hO2YFweu3IhjCSqTZY6EVdPsimQdSQswPu0jz8XBYjuVlJKC8Yv
-         JWdpehrye1xf+bcHeqIGR9u9wIjrd/m57U0g93v8QCn/iqZn3j5BRoA+cbQ1sltcBotP
-         tFBpyWkNJimREuOcdaJ7rAhRjIY+Six4Cgama14L6eD5MCOUJsZnHDXK1pysr2/LMnli
-         91e3Ov70K12BYo1vtZdDr2VcoS++kbFGZEmlUMpHNaONIq4UgZR52u3nj8rwHbwgQXJq
-         PNMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bvFsKnuXiXZUn8wkxroaylV9nhA5Lx05B+o/iwo98+c=;
-        b=uT4tdDddlO7L3S4TkphGUl2vs/TmSvxL5RMIH91jsBGyANMCcgw87DwRFhm6ERodkK
-         SIO/F+EJJ7g5Nex5cp3/JkyLio9pq60JoBeqdH4Y8dcWZrq4vcb19fyQhkcKSvO1/d+p
-         aJZ8lsYAwri7xwpNS3GIL2jmXcp6O6lhNxR5Wz8XaH0frRPmZgy8ZFYEqpU3gzNOjvbG
-         Ka+aaAW/uKghfZOwBUmbWDAEuYkLKMW+CrAildaq73EqeRoo2Aa+El8nXurEgc6SEL99
-         tX0J8KtdhP4VhNmO+gvN35mq3e/JxHT8NUANBgnZI0Xz9udEydwgZpX5LJJB1iHLrmrJ
-         meyA==
-X-Gm-Message-State: AOAM531jfN8xgLPs/4JbIChc2mrAlRLU9VUk0GeCMqRIk0vHDhE3uxhZ
-        /LMiyJb2XsId5sgjyHlNqjA6ZPnxqFU=
-X-Google-Smtp-Source: ABdhPJzzc45eyyTSCAl8Qcxk5bj86L9MxAf2LVF9cKzmgwTx7A+D91VZ0iziHMZvKDmPlkuMGfXKmQ==
-X-Received: by 2002:a17:902:bcc7:b029:ed:6f73:ffc4 with SMTP id o7-20020a170902bcc7b02900ed6f73ffc4mr3276998pls.1.1621325745837;
-        Tue, 18 May 2021 01:15:45 -0700 (PDT)
-Received: from archbookpro.localdomain ([172.92.165.181])
-        by smtp.gmail.com with ESMTPSA id bt4sm5496413pjb.53.2021.05.18.01.15.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 01:15:45 -0700 (PDT)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] stash show: don't setup default diff output format if --{include,only}-untracked given
-Date:   Tue, 18 May 2021 01:15:38 -0700
-Message-Id: <76dfa90a32ae926f7477d5966109f81441eb2783.1621325684.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc0.171.g09c0ee21fe
+        id S241800AbhERIZI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 04:25:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57570 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229688AbhERIZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 04:25:07 -0400
+Received: (qmail 12105 invoked by uid 109); 18 May 2021 08:23:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 May 2021 08:23:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5838 invoked by uid 111); 18 May 2021 08:23:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 May 2021 04:23:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 18 May 2021 04:23:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org,
+        'SZEDER =?utf-8?Q?G=C3=A1bor'?= <szeder.dev@gmail.com>,
+        'Johannes Schindelin via GitGitGadget' 
+        <gitgitgadget@gmail.com>, jeffhost@microsoft.com
+Subject: Re: [BUG] Unix Builds Requires Pthread Support (was [PATCH v4 00/12]
+ Simple IPC Mechanism)
+Message-ID: <YKN5lXs4AoK/JFTO@coredump.intra.peff.net>
+References: <009d01d74b44$9efe8a60$dcfb9f20$@nexbridge.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <009d01d74b44$9efe8a60$dcfb9f20$@nexbridge.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `git stash show` is given no arguments, it will pass `--stat` to
-`git diff` by default. When any argument is given, `--stat` is no longer
-passed by default.
+On Mon, May 17, 2021 at 01:46:46PM -0400, Randall S. Becker wrote:
 
-When `git stash show` learned the `--include-untracked` and
-`--only-untracked` options, it failed to retain the same behaviour of
-not passing `--stat` by default.
+> On Wed, 17 Feb 2021 21:48:36, Jeff Hostetler wrote:
+> 
+> >Here is V4 of my "Simple IPC" series. It addresses Gábor's comment WRT
+> >shutting down the server to make unit tests more predictable on CI servers.
+> >(https://lore.kernel.org/git/20210213093052.GJ1015009@szeder.dev)
+> 
+> I missed this at the time, but it appears that ipc-unix-socket.c
+> forces a dependency on pthreads for Git under Unix-like platforms.
+> This is probably not a correct assumption (or likely intended), but
+> causes git to no longer build on NonStop x86 and ia64 as of
+> 2.32.0-rc0. I am not suggesting undoing this, but amending to make the
+> change more sensitive to a lack of pthread support.
+> pthread_sigmask() showed up as an undefined external:
 
-This isn't necessarily incorrect since with other arguments, they're
-passed through directly to `git diff` which means it wouldn't make sense
-to pass `--stat` as well. With `--include-untracked` and
-`--only-untracked`, they are handled by `git stash show` directly
-meaning we don't necessarily have this conflict. However, this would be
-unintuitive for users since the existing behaviour seems to be that if
-any arguments are given, `--stat` will not be given by default.
+Hrm. Usually we do not assume that threads are available. For "async"
+stuff via run-command, we allow it to be implemented via fork(), and
+insist that the async process talk back to us only over a pipe
+descriptor (so it works whether it's a thread or a separate process).
+In cases where we use worker threads for performance (like index-pack or
+pack-objects), we just run a single "thread" instead, waiting for it to
+complete.
 
-Don't setup the default diff output format if `--include-untracked` or
-`--only-untracked` are given.
+In the simple-ipc API, there's an explicit "async" interface. But it's
+not clear to me how rich it expects the communication with the caller to
+be (i.e., whether we could get away with the fork() trick here). Or if
+it would be OK for the threading to remain an implementation detail,
+with one "worker" upon whom we wait for completion.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-This is based on 'dl/stash-show-untracked-fixup'.
+> **** ERROR **** [1210]:
+>    libgit.a(ipc-unix-socket.o): In function `thread_block_sigpipe':
+>    ipc-unix-socket.o(.text+0xb87): unresolved reference to pthread_sigmask.
+> 
+> On NonStop, pthread_sigmask is defined in -lput or -lspt, which are not used in our build  and would cause a bunch of other issues
+> if referenced. The build does define NO_PTHREADS.
 
- builtin/stash.c                    |  3 +-
- t/t3903-stash.sh                   | 18 ++++++++++++
- t/t3905-stash-include-untracked.sh | 46 +++++++++++-------------------
- 3 files changed, 37 insertions(+), 30 deletions(-)
+So yeah, you hit that problem because you only have a
+sort-of-pthreads-ish case. But it seems like a system which truly has no
+pthread support at all and defines NO_PTHREADS to tell us so will have
+much more of its compilation broken (because it's also missing obvious
+bits like pthread_create()).
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 82e4829d44..675261b7f5 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -841,6 +841,7 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 			      UNTRACKED_ONLY, PARSE_OPT_NONEG),
- 		OPT_END()
- 	};
-+	int old_argc = argc;
- 
- 	init_diff_ui_defaults();
- 	git_config(git_diff_ui_config, NULL);
-@@ -867,7 +868,7 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 	 * The config settings are applied only if there are not passed
- 	 * any options.
- 	 */
--	if (revision_args.nr == 1) {
-+	if (revision_args.nr == 1 && argc == old_argc) {
- 		if (show_stat)
- 			rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT;
- 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 84b039e573..5bc286e251 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -655,6 +655,24 @@ test_expect_success 'stash show --patience shows diff' '
- 	diff_cmp expected actual
- '
- 
-+test_expect_success 'stash show --include-untracked shows diff' '
-+	git reset --hard &&
-+	echo foo >>file &&
-+	STASH_ID=$(git stash create) &&
-+	git reset --hard &&
-+	cat >expected <<-EOF &&
-+	diff --git a/file b/file
-+	index 7601807..71b52c4 100644
-+	--- a/file
-+	+++ b/file
-+	@@ -1 +1,2 @@
-+	 baz
-+	+foo
-+	EOF
-+	git stash show --include-untracked ${STASH_ID} >actual &&
-+	diff_cmp expected actual
-+'
+We already make simple-ipc compilation conditional on NO_UNIX_SOCKETS. I
+think we could probably just do the same for NO_PTHREADS?
+
+Something like:
+
+diff --git a/Makefile b/Makefile
+index 3a2d3c80a8..bd7fe0fc24 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1687,14 +1687,20 @@ ifdef NO_UNIX_SOCKETS
+ else
+ 	LIB_OBJS += unix-socket.o
+ 	LIB_OBJS += unix-stream-server.o
++endif
 +
- test_expect_success 'drop: fail early if specified stash is not a stash ref' '
- 	git stash clear &&
- 	test_when_finished "git reset --hard HEAD && git stash clear" &&
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index 1c9765928d..892cf7d8c9 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -307,9 +307,12 @@ test_expect_success 'stash show --include-untracked shows untracked files' '
- 	git stash -u &&
- 
- 	cat >expect <<-EOF &&
--	 tracked   | 0
--	 untracked | 0
--	 2 files changed, 0 insertions(+), 0 deletions(-)
-+	diff --git a/tracked b/tracked
-+	new file mode 100644
-+	index 0000000..$empty_blob_oid
-+	diff --git a/untracked b/untracked
-+	new file mode 100644
-+	index 0000000..$empty_blob_oid
- 	EOF
- 	git stash show --include-untracked >actual &&
- 	test_cmp expect actual &&
-@@ -319,20 +322,13 @@ test_expect_success 'stash show --include-untracked shows untracked files' '
- 	test_cmp expect actual &&
- 	git stash show --only-untracked --include-untracked >actual &&
- 	test_cmp expect actual &&
--	git -c stash.showIncludeUntracked=true stash show >actual &&
--	test_cmp expect actual &&
- 
- 	cat >expect <<-EOF &&
--	diff --git a/tracked b/tracked
--	new file mode 100644
--	index 0000000..$empty_blob_oid
--	diff --git a/untracked b/untracked
--	new file mode 100644
--	index 0000000..$empty_blob_oid
-+	 tracked   | 0
-+	 untracked | 0
-+	 2 files changed, 0 insertions(+), 0 deletions(-)
- 	EOF
--	git stash show -p --include-untracked >actual &&
--	test_cmp expect actual &&
--	git stash show --include-untracked -p >actual &&
-+	git -c stash.showIncludeUntracked=true stash show >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -346,24 +342,15 @@ test_expect_success 'stash show --only-untracked only shows untracked files' '
- 	git stash -u &&
- 
- 	cat >expect <<-EOF &&
--	 untracked | 0
--	 1 file changed, 0 insertions(+), 0 deletions(-)
-+	diff --git a/untracked b/untracked
-+	new file mode 100644
-+	index 0000000..$empty_blob_oid
- 	EOF
- 	git stash show --only-untracked >actual &&
- 	test_cmp expect actual &&
- 	git stash show --no-include-untracked --only-untracked >actual &&
- 	test_cmp expect actual &&
- 	git stash show --include-untracked --only-untracked >actual &&
--	test_cmp expect actual &&
++# All simple-ipc requires threads, and then individual
++# mechanisms have their own requirements.
++ifndef NO_PTHREADS
++	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
+ 	LIB_OBJS += compat/simple-ipc/ipc-shared.o
++ifndef NO_UNIX_SOCKETS
+ 	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
+ endif
 -
--	cat >expect <<-EOF &&
--	diff --git a/untracked b/untracked
--	new file mode 100644
--	index 0000000..$empty_blob_oid
--	EOF
--	git stash show -p --only-untracked >actual &&
--	test_cmp expect actual &&
--	git stash show --only-untracked -p >actual &&
- 	test_cmp expect actual
- '
+ ifdef USE_WIN32_IPC
+-	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+ 	LIB_OBJS += compat/simple-ipc/ipc-win32.o
+ endif
++endif
  
-@@ -376,8 +363,9 @@ test_expect_success 'stash show --no-include-untracked cancels --{include,only}-
- 	git stash -u &&
+ ifdef NO_ICONV
+ 	BASIC_CFLAGS += -DNO_ICONV
+diff --git a/simple-ipc.h b/simple-ipc.h
+index dc3606e30b..0f58be7945 100644
+--- a/simple-ipc.h
++++ b/simple-ipc.h
+@@ -4,11 +4,6 @@
+ /*
+  * See Documentation/technical/api-simple-ipc.txt
+  */
+-
+-#if defined(GIT_WINDOWS_NATIVE) || !defined(NO_UNIX_SOCKETS)
+-#define SUPPORTS_SIMPLE_IPC
+-#endif
+-
+ #ifdef SUPPORTS_SIMPLE_IPC
+ #include "pkt-line.h"
  
- 	cat >expect <<-EOF &&
--	 tracked | 0
--	 1 file changed, 0 insertions(+), 0 deletions(-)
-+	diff --git a/tracked b/tracked
-+	new file mode 100644
-+	index 0000000..$empty_blob_oid
- 	EOF
- 	git stash show --only-untracked --no-include-untracked >actual &&
- 	test_cmp expect actual &&
-@@ -412,7 +400,7 @@ test_expect_success 'stash show --{include,only}-untracked on stashes without un
- 	git add tracked &&
- 	git stash &&
- 
--	git stash show >expect &&
-+	git stash show -p >expect &&
- 	git stash show --include-untracked >actual &&
- 	test_cmp expect actual &&
- 
--- 
-2.32.0.rc0.171.g09c0ee21fe
-
