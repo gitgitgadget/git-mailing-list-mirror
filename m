@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29668C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14520C433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:18:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06F466109E
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:12:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E94246109E
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349477AbhERNNm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 09:13:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
+        id S1349519AbhERNT7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 09:19:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349473AbhERNNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 09:13:41 -0400
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5DCC061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 06:12:23 -0700 (PDT)
-Received: by mail-vs1-xe33.google.com with SMTP id x13so4892729vsh.1
-        for <git@vger.kernel.org>; Tue, 18 May 2021 06:12:23 -0700 (PDT)
+        with ESMTP id S233079AbhERNT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 09:19:57 -0400
+Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26EB7C061573
+        for <git@vger.kernel.org>; Tue, 18 May 2021 06:18:38 -0700 (PDT)
+Received: by mail-vk1-xa2c.google.com with SMTP id m129so2039447vkh.9
+        for <git@vger.kernel.org>; Tue, 18 May 2021 06:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=tKVg8+exIGc0AbKpHuqf5xu38oEZyZld5vzISDln2jY=;
-        b=HJ6r37ey1XpfVdskuMeS5CxVEWXQJ8BZ7bt169UzsfDj5lKGIpz+wFAXnPVTZaJ917
-         ff8mTAjCyVN4yn+EULgIIYOZjuepfS67cpN7/GbFuTKbOkkPojuAFSsMerl4/hhSm+0C
-         t6pqsLQrWanKTD0C7fL5rirckuxNzoOL3ti2H+P++LUM736ujcSIFZmeWSUI9XDRY5P0
-         HaKRINdDCKuJLGJjt0aNqimenEVJqks1LNgjPbRAqRYhmUEpSyTWxGOUrKlfIsgx//03
-         0J3JtOhFyoZzwvO1UMKKPtwwzQL7xt+MMnfMquHpFkuoQzbWgh+n3xJbjJ3D9FlLPXUS
-         n0yQ==
+        bh=qhJBVa10QlawsRbp9O6G5F4Jhbw28sVAgFeDa+A8K50=;
+        b=C7AR7ty3YhDUl1syFNhKdQNLGsBoTDsMgxkc/1wN7wNyUIcgTsoPGGmAD4nD2Ttx4v
+         lkq9EY2RiBoAGkgiWhWGwaQQ/qJqpkWTGOgOlFifdNOWBVCHnVq3O5aCE1n/5y0Mp8Hd
+         +pqiPdfXjvJPJxgJ4aLb2EbmF8p8ezeKIOPA3oM+feZgRJjlCsw6WNcTSilwA0M+9BJH
+         FoI5bxw+fEsGHOMb5DJqVEK7IvPtz7g14EQuEq/2/rp1JUlCRfmRSWX85bxWUWfctBvX
+         GmXPX2VYlYv7xYKAhlCAWRLWF9pUorqtnEFlg8dNFtcccMdddVZ1kZLQ5Eb/dNBmFfRs
+         kpGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tKVg8+exIGc0AbKpHuqf5xu38oEZyZld5vzISDln2jY=;
-        b=mvjn26qq4QCc/1cP2CWQxiYmJv+m9nZaMfd/iZtCTc9fmDUveA4coVyTFpkI8hjdnA
-         dW115e+G5VCRDdPB29UT3ZBYT92ppZdoTXr4qlCoc+Yr1sbIhcLggnu8jhawGAImZ+I2
-         1j2SOl2YFQtuZ0a6aeuFX6he5dePk6u6oqeZeM+8M72OyEU9GtI8/AvUfjkb3JBZBYWd
-         KWgzgesNlOFSuk3HkxTqbCSICGX0xpHgGeJ0IYwiO1qLkLWxiwB75izbg8OccNFYXfk3
-         5yqix48zBQvDdWQbWdrEm80PN2BkHZ6cqRcG0AmN25wdHWfL2magkZNBDiYMAoAHW1M7
-         3Gjg==
-X-Gm-Message-State: AOAM5302Ir6NtiVEzoHz6h6jOi43ccoksBJnFPdZ9JH/+7erw/L1NoT4
-        BVhQ5ZW35wGblNVgwwdOHsBlo6s4tuxbKPqi9NBkrA==
-X-Google-Smtp-Source: ABdhPJylAiFT0psWoFEsw56lyXexprp7ZQCkM7lJRz/L8Tub83uSuOvRJVd7WpaFUiSgaqm6/mTkN0mgQ57pRrDHlRo=
-X-Received: by 2002:a05:6102:9c9:: with SMTP id g9mr5351781vsi.50.1621343542859;
- Tue, 18 May 2021 06:12:22 -0700 (PDT)
+        bh=qhJBVa10QlawsRbp9O6G5F4Jhbw28sVAgFeDa+A8K50=;
+        b=LgBClaQiH6iwkgAJvXoe3OUi6+9eXUc2K40vZVfzE31gSiAg7ktqZlQMbCbmibp+XD
+         aC7mjvtuUAmH2s3YwldQHF6MoCftNS1kCm2+ZT1dj+0pi0XBNKMShGHfrlG7P0vVq9ZP
+         jlDmmGwomhMJDyAlnZ/Kmhzmx/DZoUNo7fX7S4cSSGVmZl6i3QkAouGfh3jYdQ6wyz+3
+         vEcxctgq7TkawIKCYrmQTfS+OwBH/aoalhfT0GVYpjXUpoRCkIR715WBM/7QHczsEBa2
+         xm4cRNPvKO7lzWFA3bjjQthWc7AKaDsgSjLMQGwsCGaTtScNevQTKiX2jXf3bg50TD/v
+         x98A==
+X-Gm-Message-State: AOAM533Serx+QuYWfh87pEFk4IPg5ys8lYkPhqOsMGIdlYYblq3SLDHx
+        izjcy9NbfZ1et+w6q8vHaYxk//smLAfh70Rpk1wyjA==
+X-Google-Smtp-Source: ABdhPJxl7McbZi9atzFwQtJ0vLsUok61Qk+mUowE4W1cNgV1Y4ZBOJJnPxBZa5RcOcYJNTMMjFo2kKE6v1rYySN+rTU=
+X-Received: by 2002:a1f:5687:: with SMTP id k129mr5903158vkb.8.1621343913851;
+ Tue, 18 May 2021 06:18:33 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.847.v6.git.git.1618255552.gitgitgadget@gmail.com>
- <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <028dd13e701bf82523cc6da1e68a9dab480c1b27.1618832277.git.gitgitgadget@gmail.com>
- <ef664c5c-d959-e265-d678-6fc54d23f031@ahunt.org>
-In-Reply-To: <ef664c5c-d959-e265-d678-6fc54d23f031@ahunt.org>
+ <pull.847.v7.git.git.1618832276.gitgitgadget@gmail.com> <2fd7cb8c0983501e2af2f195aec81d7c17fb80e1.1618832277.git.gitgitgadget@gmail.com>
+ <f5711aa9-e70f-8bb1-09d9-4f283b010d46@ahunt.org>
+In-Reply-To: <f5711aa9-e70f-8bb1-09d9-4f283b010d46@ahunt.org>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 18 May 2021 15:12:11 +0200
-Message-ID: <CAFQ2z_Ot=tsVi9bruFXJ2KgPVFvHpJEKZTRQQh6oHjF0px93Ow@mail.gmail.com>
-Subject: Re: [PATCH v7 10/28] reftable: (de)serialization for the polymorphic
- record type.
+Date:   Tue, 18 May 2021 15:18:21 +0200
+Message-ID: <CAFQ2z_Os02GHCcPX0Hcin7+va232Di5wFBbdbOBqEehJvTFbFA@mail.gmail.com>
+Subject: Re: [PATCH v7 23/28] Reftable support for git-core
 To:     Andrzej Hunt <andrzej@ahunt.org>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
@@ -81,15 +80,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 4, 2021 at 7:23 PM Andrzej Hunt <andrzej@ahunt.org> wrote:
-> If src->offset_len is 0 then offsets will be NULL - and passing NULL
-> into memcpy() results in undefined behaviour. I think we should either
-> add an "if (src->offset_len)" check around the memcpy, or perhaps switch
-> to COPY_ARRAY() which performs that check for us. (We can probably also
-> skip the malloc and hence also olen calculation in this scenario though,
-> because obj->offsets should already be NULL if src->offsets was NULL?)
+On Tue, May 4, 2021 at 7:24 PM Andrzej Hunt <andrzej@ahunt.org> wrote:
+> > +             } else {
+> > +                     oidread(&old_id, ref.value.val1);
+> > +             }
+>
+> This seems to assume that 'ref.value_type =3D=3D REFTABLE_REF_VAL1' - but=
+ do
+> we expect to have to handle the other types
+> (REFTABLE_REF_VAL2/REFTABLE_REF_SYMREF)? When I run tests in seen
+> against ASAN I see the following errors in t0031, which suggests we're
+> running this code against REFTABLE_REF_SYMREF too - but I don't know if
+> that means that this code should be able to handle the other ref types
+> or if there's a bug higher up the stack. (AFAIUI REFTABLE_REF_DELETION
+> is already handled because reftable_table_read_ref() already returns 1
+> for deletion, but the other cases seem valid?)
 
-Thanks for the detailed report. I've fixed this for the next round.
+Curious.  I didn't know it was supported to create symrefs in a
+transaction, but I've added an assert to make sure this doesn't
+trigger any sanitizers.
 
 --=20
 Han-Wen Nienhuys - Google Munich
