@@ -2,160 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C93B6C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 21:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2F13C433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 23:49:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6FD061209
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 21:10:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 944646113C
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 23:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352387AbhERVL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 17:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33324 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239661AbhERVLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 17:11:20 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B27EC061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 14:10:01 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso9903753otn.3
-        for <git@vger.kernel.org>; Tue, 18 May 2021 14:10:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=VBIXMOfMYnE3wqIWvV0VtDduwiTOZjnJT4OaYQTzUBw=;
-        b=dRt6Nkib0coGaj+hlnsJ2IMdfku7HtOS0ttSwmhdULR8ubaQEMtLOTgOLJxbvsWJHP
-         8fW29JyjptDJGm08ufyO4dUUGH15TRTFAjleBvjREkzoMGZXWHgQTxHaE69qbvCEc1Q1
-         2apnfPzFP/4CW0SiaSiTgx1RIIezZ4yCH1QLGx/FriY1ECeWZ28krS+rz/lrVjNZPK/x
-         Ozs+cZplE98HfqUTFbFwFf/BryqNE3NvXx5xolU/Dg01Ir7WTvyb9PiZuj6pixH7EKdW
-         DH8I3OJlYljv6/Z/KgH5jeQtlsnhB0gtlAEMBeoP9LKX8ZFbDIVt4vJ+FzHq0mYFHhGO
-         WzAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=VBIXMOfMYnE3wqIWvV0VtDduwiTOZjnJT4OaYQTzUBw=;
-        b=exv1/lSLqtLT+2h3/vmVP+EoRse7Wy6bPttmdjvhPcwvAHKU/66uzMICxFTcYidK1Z
-         typ6FOMfmi5yXmjAiqzLhsBNuiqet8AYYfdxLV+xBm3fxdEQ/yDaMB95D45wmVLDqqot
-         NZ6ShQVD4IMFmjJ20NOlnnF9F6R6AVeBp1Fm+k4Q2TE8MkB7vO9WioaHGRRQthYU+JHl
-         wIdN14krEVTSzBL+tn32K4AhtoyIuTD5/KTXmyNLH4s1hTBxICYwBlnXUy9td3LTUuuJ
-         2QHAb2BZeqzQVJa5LFNNXra0wjtJXj9LPGgJ1a+itNFy0YDS+gMXo5h8j4bMhS5WHD1s
-         Xa3Q==
-X-Gm-Message-State: AOAM533l1RHjRFl/mHM0WXbW0QnAzFJAg98zeU+QVdzcGXzt5xMkPAzX
-        +xOiTX31fNYUqQKiO1BBr4Q=
-X-Google-Smtp-Source: ABdhPJzAqwcqqB8hCo58Ogkv1E4V5IqLCyufQfFzP5XcAScZrRCBRzuLd25D+/oPBpgJKV0vOF1VnQ==
-X-Received: by 2002:a05:6830:445:: with SMTP id d5mr5802508otc.331.1621372200936;
-        Tue, 18 May 2021 14:10:00 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id f30sm3967844ooh.10.2021.05.18.14.10.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 14:10:00 -0700 (PDT)
-Date:   Tue, 18 May 2021 16:09:58 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Richard Hansen <rhansen@rhansen.org>
-Message-ID: <60a42d26c91ed_2c10208e3@natae.notmuch>
-In-Reply-To: <YKO3eeNPxCwvIkEw@coredump.intra.peff.net>
-References: <20210516203736.1098072-1-felipe.contreras@gmail.com>
- <xmqqbl993irp.fsf@gitster.g>
- <60a245a927c62_126333208ea@natae.notmuch>
- <YKJZt4vFECoLZhc2@coredump.intra.peff.net>
- <xmqqpmxp6u13.fsf@gitster.g>
- <60a2daa57d8a6_13c370208f3@natae.notmuch>
- <YKMhqZNhamnKqWfi@coredump.intra.peff.net>
- <60a34a7616cda_14d1bc20818@natae.notmuch>
- <YKNk+5k3hKW/xPBZ@coredump.intra.peff.net>
- <60a3a808d7eeb_151987208bb@natae.notmuch>
- <YKO3eeNPxCwvIkEw@coredump.intra.peff.net>
-Subject: Re: Re* [PATCH] doc: glossary: add entry for revision range
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S235992AbhERXvG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 19:51:06 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47280 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229969AbhERXvF (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 18 May 2021 19:51:05 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B9BD560479;
+        Tue, 18 May 2021 23:49:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1621381786;
+        bh=5yU7URgTsojw0CSyNf5WoYbIyi2oCZcC1zytXp8EYEk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ntYZTlEjC4CMM86tklY5KFOOjZx6eRJJwFaH7U8YO9rJbndDr//MweIjF0Ri2JdP4
+         KwEDgQOO8SDEEmrwe+Q/EMgJA9vZLU2+UAxbGAagZRnqzqjVnXqhYAvpFLDBEwv3oq
+         Z2u5OUy4ta4QFOiPU7YpIZw3/7tp+XlMNN8WT2Zic7q3TZ4YRJ3zsDDX4m7bo5t/xm
+         0yvmBbfTIbnJHuR8YTvpxx+OoiUUEY4Cnd0ETDauIdFETuEJxVsFFBkPiAbgVXDXto
+         LQMYI/OXruZz2Rd/KrayWJSAfzciyg1+uliy5EdTS3pkufR6H7+u6OLVEeDF3WTIQl
+         u2fJIR9O/2pfESjMoEKEaTGkoAuSAki1i+tEX0gfFuTt4xmapqgzUtMVMq2jdyNGUJ
+         bc7vk5D+WeKi88O81K+T6dK44FNQuFRBGiRMuF0mm9tMuHyfvsFRYSzGH5QPDXDVPH
+         4imwfumwskcz+s7SRZSn//5R3S4uUsHMd2gmZwNxqxaY7Ej8PBc
+Date:   Tue, 18 May 2021 23:49:40 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] help: colorize man pages
+Message-ID: <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
+ <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
+ <60a332fd22dad_14c8d4208ed@natae.notmuch>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Al4ADeQKEOTDzgVQ"
+Content-Disposition: inline
+In-Reply-To: <60a332fd22dad_14c8d4208ed@natae.notmuch>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Tue, May 18, 2021 at 06:42:00AM -0500, Felipe Contreras wrote:
-> 
-> > A random github.com link doesn't show anything. The instructions I'm
-> > talking about are the **first** thing the site gives to users.
-> 
-> I would think the first thing most users see is _somebody else's
-> repository_, full of commits, that they then clone.
 
-All the tutorials I've seen start with `git init`. If you want to learn
-git starting from a monstrous repository such as Chrome OS is probably
-not a good idea.
+--Al4ADeQKEOTDzgVQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And yeah, if you assume most users are professional programmers, then
-yeah, that's probably true. But that's an assumption.
+On 2021-05-18 at 03:22:37, Felipe Contreras wrote:
+> brian m. carlson wrote:
+> > I think we should let the user decide whether they want to set this
+> > feature themselves instead of setting it for them.  For example, I have
+> > specific colors set up with these environment variables, and I'd like
+> > Git to honor them without having to configure Git independently of less.
+> > I expect other users will expect Git's rendering of the manual pages to
+> > work like other instances of man(1) on their system as well.
+>=20
+> It does respect them.
+>=20
+> This would render the man page with the color specified in the
+> environment, not the default of git.
+>=20
+>   LESS_TERMCAP_md=3D$'\e[1;33m' LESS_TERMCAP_me=3D$'\e[m' git help git
 
-Many users are students, others are amateur programmers, others might
-be using git to track something other than code, like writing a book, or
-their dotfiles.
+It still doesn't work like other instances of man(1) on the system.
+While you claimed that "that's a preference others don't share", I'm
+pretty certain that I'm not the only person who feels this way.
 
-Experts often forget what it is to be a beginner.
+There's a big difference between Git coloring a Git UI, like a diff, and
+Git coloring a separate program that already has sensible, standard
+defaults.  A user who has not configured any color settings would
+probably not want Git to render manual pages one way, cargo to render
+manual pages a second way, and still other programs to render manual
+pages in other, incompatible ways.  We need to consider not only the
+impact that our decisions have in a vacuum, but what results similar
+decisions from other projects would produce in the software ecosystem as
+a whole.
 
-> > > People clone a lot more than they create new repositories.
-> > 
-> > Depends what you call "people". If you are talking about professional
-> > software developers, then maybe.
-> > 
-> > But they are not the only users of git.
-> > 
-> > Do you have any stats?
-> 
-> On one of GitHub's servers (selected randomly), there were ~300k clones
-> in the past 24 hours. In the same time period on the same server, there
-> were 1780 new repos. Even that's overstating it, since some portion of
-> those are just forks of existing repos (so the user probably either
-> cloned their fork immediately, or was already working on a clone of the
-> upstream fork, rather than having run "git init" locally).
+Would you consider various projects coloring their respective manual
+pages differently to be a desirable state of affairs?
 
-How do you distinguish a git clone from a git init + git remote add + git
-fetch?
+> > Additionally, using colors poses accessibility problems.  I know someone
+> > who, due to his colorblindness, finds terminal colors distracting and
+> > hard to read, and prefers not to use them at all.
+>=20
+>   git -c color.ui=3Dnever help git
 
-> > > I don't think that proves anything except that your workflow is
-> > > different than mine.
-> > 
-> > Exactly, and we cannot assume most people follow your workflow. In fact,
-> > I'd say your workflow is probably one of the most atypical in the world.
-> > You know tricks 99.99% of users don't know about, in fact that probably
-> > 99% of git.git developers don't know.
-> > 
-> > It is sufficient to acknowledge that there are different workflows.
-> 
-> I'm not making some bizarre claim about workflows. I'm saying that
-> people commonly use "git clone" to get repositories. That really doesn't
-> seem controversial.
+Yes, but unfortunately, since you've colored the manual pages, they may
+be hard to read for the user who needs to read them to learn about your
+configuration.  This is great for you and me, who are already very
+familiar with Git and know how to do that without looking, but not great
+for the novice colorblind user.
 
-It's not controversial, but it's also not necessarily true.
+For similar reasons, colorizing help output in general is unhelpful
+because users cannot find the options to disable it.
 
-On what are you basing that claim?
+In general, this is made worse because Git doesn't honor the unofficial
+but widely supported NO_COLOR[0], so reading the documentation is
+obligatory.
 
-> But you know what, I've wasted enough time on this thread. If you want
-> to believe that people don't use "git clone", go for it.
+> > Even users who want to use them might find some colors to be too
+> > similar, and this patch doesn't permit them to be configured.
+>=20
+> Yes it does:
+>=20
+>   LESS_TERMCAP_md=3D$'\e[01;38;5;33m' git help git
 
-I'll parse that as an answer to my quesion:
+I should clarify that the patch doesn't permit them to be configured
+using the normal Git mechanisms.  For example, unless the user sets the
+environment variables, which take effect globally, they're stuck with
+the colors that we've chosen here.  Yes, they can specify a single
+environment variable before the command, but practically nobody will do
+that.
 
-> > Is there anything that would falsify the premise?
+It's my argument that the user doesn't want Git manual pages to be
+colored differently than other manual pages on the system, but if you
+believe differently, then we should allow the user to configure the
+colors that are used in the Git-specific context using Git standard
+mechanisms.
 
-"No, there's absolutely nothing that would falsify my premise".
+> > In my particular case, despite having normal color vision, because I use
+> > a transparent terminal which often results in a grey background, I find
+> > the standard terminal red to be difficult to read, and so this patch
+> > would result in a significant decrease in the readability of the manual
+> > pages for me.
+>=20
+> If you have LESS_TERMCAP_md set in your environment, it won't.
 
-If there's no way to falsify a claim, then there is no point in even
-entertaining that claim.
+The problem is, I don't always.  I am on call for a set of hundreds of
+servers, only one of which has my shell configuration set up, so
+defaults here matter.  Moreover, because there are many novice users of
+Git, we should consider that for a decent number of users, they
+literally won't know where to look in our documentation to make
+changes, and therefore the defaults matter for them, too.
 
-Cheers.
+[0] https://no-color.org/
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
--- 
-Felipe Contreras
+--Al4ADeQKEOTDzgVQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYKRSkwAKCRB8DEliiIei
+gUqDAP95XpBh3DefJzAeRi7LrYKjrY57az2LYuyMySV1DXqLLgEA86FJS5rYyojj
+dklKgsTlhO6pPVFjNgnKIvMB98RvUQI=
+=5rIV
+-----END PGP SIGNATURE-----
+
+--Al4ADeQKEOTDzgVQ--
