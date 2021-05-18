@@ -6,75 +6,86 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC37C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD331C433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:27:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C71EE61007
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:17:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB784611CC
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 14:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349903AbhEROTC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 10:19:02 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64417 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349900AbhEROTB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 10:19:01 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 012BFCC53E;
-        Tue, 18 May 2021 10:17:43 -0400 (EDT)
+        id S231601AbhERO24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 10:28:56 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60872 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231421AbhERO24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 10:28:56 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 262B81254CF;
+        Tue, 18 May 2021 10:27:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iTBKTYKsuQgAVuF9yUH30Pr3q94y/si2PDRUJJ
-        XyllA=; b=t5v6PRaAcukfbsoOLvLhVSRVMv/JXnsXvfvrIfyqFARxF8t46m9qvn
-        meRWAbH65wKNfPh5gPOD2ZVm67p3+3eO7l5RHNN/3AOr3cHDo8j8s4p6zMTFDWfV
-        t5tYqt8JWls7zazR2QhETc3rMQQ0tsN1wiSXuxEXQGPXyLDkCZLH4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC026CC53D;
-        Tue, 18 May 2021 10:17:42 -0400 (EDT)
+        :content-type; s=sasl; bh=Xt8xxUCsF3/srgTbI8KXDDbd7X0+fU1qbXoHXb
+        015Ys=; b=b9Dh8BnvQYX8NiXK8KaWryjCzgRPvNX0WVwHCOVzNXzqSw4Xrox8+v
+        2E9TvJToyze5rZH8NEUojJJ5Qt0uuAWmxJyUaoxEyF0QbYpMmNid3OS4r3Ec0IMG
+        OzWV55Ez08QX2gq3aIZXThSvrZiEZ+QDK4AYrgCbe2KDLqGqwv+eE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 207CE1254CE;
+        Tue, 18 May 2021 10:27:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6F420CC53C;
-        Tue, 18 May 2021 10:17:42 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 597DD1254CB;
+        Tue, 18 May 2021 10:27:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1 0/9] diff-merges: let -m imply -p
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <20210517155818.32224-1-sorganov@gmail.com>
-Date:   Tue, 18 May 2021 23:17:41 +0900
-In-Reply-To: <20210517155818.32224-1-sorganov@gmail.com> (Sergey Organov's
-        message of "Mon, 17 May 2021 18:58:09 +0300")
-Message-ID: <xmqqr1i42kje.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: Man pages have colors? A deep dive into groff
+References: <60a046bd83001_f4b0f20861@natae.notmuch>
+        <87tun1qp91.fsf@evledraar.gmail.com> <xmqqlf8d6ty5.fsf@gitster.g>
+        <60a2f1c4cab0d_13c3702083a@natae.notmuch> <xmqqim3g4ys5.fsf@gitster.g>
+        <60a3422b9556c_14d1bc2082f@natae.notmuch>
+        <YKNptH9DL6pe18Dk@coredump.intra.peff.net>
+Date:   Tue, 18 May 2021 23:27:33 +0900
+In-Reply-To: <YKNptH9DL6pe18Dk@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 18 May 2021 03:16:04 -0400")
+Message-ID: <xmqqlf8c2k2y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CF16AED8-B7E3-11EB-BA33-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 307D32FE-B7E5-11EB-A804-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Sergey Organov (9):
->   t4013: test that "-m" alone has no effect in "git log"
->   t4013: test "git -m --raw"
->   t4013: test "git -m --stat"
+> On Mon, May 17, 2021 at 11:27:23PM -0500, Felipe Contreras wrote:
+>
+>> > So in short, the color.pager is about "is the pager capable of
+>> > colors?"
+>> 
+>> That's not the case.
+>> 
+>> Even the documentation says so:
+>> 
+>>   color.pager::
+>>     A boolean to enable/disable colored output when the pager is in
+>>     use (default is true).
+>
+> I think that documentation misses the reason you'd want to use it.
 
-These two are mistitled (s/git -m/git log -m/).  Not a big deal as I
-could "rebase -i" locally if there is no other changes needed, but
-if you are going to have a reroll for other reasons, please correct
-them.
+Thanks for digging and I agree that this one is quite bad---no
+wonder it misled to the "why not color.pager?" question.
 
->   stash list: stop passing "-m" to "git list"
+The configuration is solely used to disable (because it defaults to
+true) colors when pager is in use and the configurations on the
+application side (i.e. color.ui and friends) specify "auto".  We
+should update the description.
 
-s/git list/git log/, I would think.
-
->   diff-merges: rename "combined_imply_patch" to "merges_imply_patch"
->   diff-merges: let "-m" imply "-p"
+> And so likewise, we would want to avoid turning on colors if the user
+> has set color.pager=false. Usually this is done automatically because
+> want_color() checks, which knows if we are using the pager or not.
