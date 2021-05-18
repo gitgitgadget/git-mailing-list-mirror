@@ -2,114 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA138C43470
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 11:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A43EC433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 11:21:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BECFE610FA
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 11:17:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77A43600CD
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 11:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348811AbhERLTJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 07:19:09 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64563 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348739AbhERLTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 07:19:05 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 67056123EC4;
-        Tue, 18 May 2021 07:17:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=t
-        2C19L0n2vb7ZK6lKOgmJ8DG8wGYq7TY7GYh2Uxrj18=; b=ErsVGkY4RPR6MrLaq
-        wOdW5j2pE/YPkwLQyMZNTrw6+twQdO9852RNx+E3AkxQ9brfVPsdCUuxc0u9TDZc
-        uiGgrzLeq8zTmivHOyQmrAe3e9vqqOIPm3OyOt3qilJsNgasiWZuC7FDKs+bQI45
-        hRLnlvlC9SfMmBr98Q3n/Hb15Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 60A54123EC3;
-        Tue, 18 May 2021 07:17:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S230246AbhERLXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 07:23:10 -0400
+Received: from siwi.pair.com ([209.68.5.199]:33362 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230164AbhERLW5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 07:22:57 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id E49153F40B7;
+        Tue, 18 May 2021 07:21:33 -0400 (EDT)
+Received: from MININT-RVM6V2G.redmond.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7FBD1123EC2;
-        Tue, 18 May 2021 07:17:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] revisions(7): clarify that most commands take a single
- revision range
-Date:   Tue, 18 May 2021 20:17:42 +0900
-Message-ID: <xmqqv97g2svd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id A105B3F4047;
+        Tue, 18 May 2021 07:21:33 -0400 (EDT)
+Subject: Re: [BUG] Unix Builds Requires Pthread Support (was [PATCH v4 00/12]
+ Simple IPC Mechanism)
+To:     Jeff King <peff@peff.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?J1NaRURFUiBHw6Fib3In?= <szeder.dev@gmail.com>,
+        'Johannes Schindelin via GitGitGadget' 
+        <gitgitgadget@gmail.com>, jeffhost@microsoft.com
+References: <009d01d74b44$9efe8a60$dcfb9f20$@nexbridge.com>
+ <YKN5lXs4AoK/JFTO@coredump.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <8540e41e-3ba6-8d40-9424-8f62ea785f42@jeffhostetler.com>
+Date:   Tue, 18 May 2021 07:21:33 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AB040054-B7CA-11EB-9E42-D609E328BF65-77302942!pb-smtp21.pobox.com
+In-Reply-To: <YKN5lXs4AoK/JFTO@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes new people are confused by how a revision "range" works,
-in that it is not a random collection of commits but a set of
-commits that are all connected to each other, and most Git commands
-work on a single such "range".
 
-Give an example to clarify it.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+On 5/18/21 4:23 AM, Jeff King wrote:
+> On Mon, May 17, 2021 at 01:46:46PM -0400, Randall S. Becker wrote:
+> 
+>> On Wed, 17 Feb 2021 21:48:36, Jeff Hostetler wrote:
+>>
+>>> Here is V4 of my "Simple IPC" series. It addresses Gábor's comment WRT
+>>> shutting down the server to make unit tests more predictable on CI servers.
+>>> (https://lore.kernel.org/git/20210213093052.GJ1015009@szeder.dev)
+>>
+>> I missed this at the time, but it appears that ipc-unix-socket.c
+>> forces a dependency on pthreads for Git under Unix-like platforms.
+>> This is probably not a correct assumption (or likely intended), but
+>> causes git to no longer build on NonStop x86 and ia64 as of
+>> 2.32.0-rc0. I am not suggesting undoing this, but amending to make the
+>> change more sensitive to a lack of pthread support.
+>> pthread_sigmask() showed up as an undefined external:
+> 
+> Hrm. Usually we do not assume that threads are available. For "async"
+> stuff via run-command, we allow it to be implemented via fork(), and
+> insist that the async process talk back to us only over a pipe
+> descriptor (so it works whether it's a thread or a separate process).
+> In cases where we use worker threads for performance (like index-pack or
+> pack-objects), we just run a single "thread" instead, waiting for it to
+> complete.
+> 
+> In the simple-ipc API, there's an explicit "async" interface. But it's
+> not clear to me how rich it expects the communication with the caller to
+> be (i.e., whether we could get away with the fork() trick here). Or if
+> it would be OK for the threading to remain an implementation detail,
+> with one "worker" upon whom we wait for completion.
+> 
 
- * So, here it is in a proper patch form, with an extended
-   description and illustration.
+TBH I forgot that we still support NO_PTHREAD systems.
+I seem to remember that we got rid of some of the non-pthread
+stub functions at one point, but I'm fuzzy on the details.
 
- Documentation/revisions.txt | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+WRT to "simple ipc" (and future "builtin fsmonitor"), it's heavily
+threaded.  There's no point in trying to fake it with forks.
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index d9169c062e..f5f17b65a1 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -260,6 +260,9 @@ any of the given commits.
- A commit's reachable set is the commit itself and the commits in
- its ancestry chain.
- 
-+There are several notations to specify a set of connected commits
-+(called a "revision range"), illustrated below.
-+
- 
- Commit Exclusions
- ~~~~~~~~~~~~~~~~~
-@@ -294,6 +297,26 @@ is a shorthand for 'HEAD..origin' and asks "What did the origin do since
- I forked from them?"  Note that '..' would mean 'HEAD..HEAD' which is an
- empty range that is both reachable and unreachable from HEAD.
- 
-+Commands that are specifically designed to take two distinct ranges
-+(e.g. "git range-diff R1 R2" to compare two ranges) do exist, but
-+they are exceptions.  Unless otherwise noted, all "git" commands
-+that operate on a set of commits work on a single revision range.
-+In other words, writing two "two-dot range notation" next to each
-+other, e.g.
-+
-+    $ git log A..B C..D
-+
-+does *not* specify two revision ranges for most commands.  Instead
-+it will name a single connected set of commits, i.e. those that are
-+reachable from either B or D but are reachable from neither A or C.
-+In a linear history like this:
-+
-+    ---A---B---o---o---C---D
-+
-+because A and B are reachable from C, the revision range specified
-+by these two dotted ranges is a single commit D.
-+
-+
- Other <rev>{caret} Parent Shorthand Notations
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- Three other shorthands exist, particularly useful for merge commits,
--- 
-2.32.0-rc0-111-g32b9632252
+The server side of simple ipc implements a thread pool.  And
+the builtin fsmonitor will use a thread to monitor FS events
+and that thread pool to respond to clients.  All driven from a
+shared queue of events.
 
+It would be a major overhaul to do all that without threads
+-- and even that assumes that nonstop has a sufficient file
+system notification mechanism.
+
+So, yes, we should ifdef it out as Peff suggests.
+
+Jeff
+
+
+
+>> **** ERROR **** [1210]:
+>>     libgit.a(ipc-unix-socket.o): In function `thread_block_sigpipe':
+>>     ipc-unix-socket.o(.text+0xb87): unresolved reference to pthread_sigmask.
+>>
+>> On NonStop, pthread_sigmask is defined in -lput or -lspt, which are not used in our build  and would cause a bunch of other issues
+>> if referenced. The build does define NO_PTHREADS.
+> 
+> So yeah, you hit that problem because you only have a
+> sort-of-pthreads-ish case. But it seems like a system which truly has no
+> pthread support at all and defines NO_PTHREADS to tell us so will have
+> much more of its compilation broken (because it's also missing obvious
+> bits like pthread_create()).
+> 
+> We already make simple-ipc compilation conditional on NO_UNIX_SOCKETS. I
+> think we could probably just do the same for NO_PTHREADS?
+> 
+> Something like:
+> 
+> diff --git a/Makefile b/Makefile
+> index 3a2d3c80a8..bd7fe0fc24 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1687,14 +1687,20 @@ ifdef NO_UNIX_SOCKETS
+>   else
+>   	LIB_OBJS += unix-socket.o
+>   	LIB_OBJS += unix-stream-server.o
+> +endif
+> +
+> +# All simple-ipc requires threads, and then individual
+> +# mechanisms have their own requirements.
+> +ifndef NO_PTHREADS
+> +	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
+>   	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+> +ifndef NO_UNIX_SOCKETS
+>   	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
+>   endif
+> -
+>   ifdef USE_WIN32_IPC
+> -	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+>   	LIB_OBJS += compat/simple-ipc/ipc-win32.o
+>   endif
+> +endif
+>   
+>   ifdef NO_ICONV
+>   	BASIC_CFLAGS += -DNO_ICONV
+> diff --git a/simple-ipc.h b/simple-ipc.h
+> index dc3606e30b..0f58be7945 100644
+> --- a/simple-ipc.h
+> +++ b/simple-ipc.h
+> @@ -4,11 +4,6 @@
+>   /*
+>    * See Documentation/technical/api-simple-ipc.txt
+>    */
+> -
+> -#if defined(GIT_WINDOWS_NATIVE) || !defined(NO_UNIX_SOCKETS)
+> -#define SUPPORTS_SIMPLE_IPC
+> -#endif
+> -
+>   #ifdef SUPPORTS_SIMPLE_IPC
+>   #include "pkt-line.h"
+>   
+> 
