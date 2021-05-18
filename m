@@ -2,126 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA3C8C433B4
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51435C433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:36:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97EC5610FA
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:16:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B0D4600EF
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343506AbhERPRZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 11:17:25 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65120 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243998AbhERPRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 11:17:24 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 52E9513A159;
-        Tue, 18 May 2021 11:16:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Co3kDJ2K+7gf
-        Fv5F+jz+jgEXPfzBoFUEiSalWurG87E=; b=oFyTG6VehmD3i515ceIV9VV5f2vX
-        ovHbd4S7ZDfSkqz/HlB11fCAbTwfoL8tEnjRZ691/gQIIeCGyF9mQJp9U1EcT4yv
-        VKODaQ89E+Dzxo8ivnXUiMOjF23VZl3m1Y+0YGwkgnZuZjgXgkBLqfy2iUk/JVMP
-        ECoGp9C25NAZeuM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B2F613A158;
-        Tue, 18 May 2021 11:16:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8D34113A157;
-        Tue, 18 May 2021 11:16:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        karthik nayak <karthik.188@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Options like hash-object --literally and cat-file
- --allow-unknown-type
-References: <87r1i4qf4h.fsf@evledraar.gmail.com>
-Date:   Wed, 19 May 2021 00:16:01 +0900
-In-Reply-To: <87r1i4qf4h.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 18 May 2021 16:08:18 +0200")
-Message-ID: <xmqqtun0139q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1350218AbhERPhz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 11:37:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350164AbhERPhz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 11:37:55 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB144C061573
+        for <git@vger.kernel.org>; Tue, 18 May 2021 08:36:34 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id b19-20020a05600c06d3b029014258a636e8so1718232wmn.2
+        for <git@vger.kernel.org>; Tue, 18 May 2021 08:36:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=MJHleCLYhnNWHRsQPADJ0ZmLZbdvap8Ocm/r43IT3WQ=;
+        b=HPzmXY3BEfCmgplIH8k5Tss4Do18wMH7TuEc0sB/hEuxvD/sp6NmZRTZEDCjMNKFBL
+         NwXqS8qQ6PxSQknr0EQovnCsuIvll9e49/FMcyEPuInw0ogZwM5sE1j4CdXgT29nHVKF
+         Ah6bhr64/yRnJQGXhv3PGNjZHjVxSwiA6BpWroTk8GXnWtMaQN5t8D/YQVtJf7+TSION
+         DMPJAt9w+eKb5wdew1s0M5ky6i3GMpxtSXeainKZB830dbH0hnm0byn66hheZA7GTTFF
+         FlK+7fAxNwgxigFxcc1vKc9flp75EBhNnpsPhS+6d5rPrnD2MkgVkfGvPuUhg600IQ+c
+         dfeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MJHleCLYhnNWHRsQPADJ0ZmLZbdvap8Ocm/r43IT3WQ=;
+        b=LAU4Esx512c3nM6OeUdShY8kUHlUkUavxB8+s7xHYpDMoPVkhfl2BIbVKQBDxu8ZkV
+         xF5dIgiRgSABybGgUY394CAzgMHZjJ+70R+HerWspoh44vl8cUenWNpj6iQB4m6i6493
+         aX+qZZbcA5NRXysIEpDJV4C4aZs92ZfWPDSnakaEH8ixhNsw5gOe00BEUXkAX9xstCWs
+         +nZo0lf6nnECMkENzPADXEjZeVaDBxSnkep9wEks2NBn+iqvRH4zrVxAJnOFc+88RwVr
+         ozen1TyloHhl5XMqcfnDiOQX8ExtGXX75zxpPpexDNmrSllVVrZYS+rc9NTxIZujzTP0
+         2AHA==
+X-Gm-Message-State: AOAM530Z4E29cy/aw4SYL9eovxls2lgFRk0shGvjAJibhRHf6vfDc/KE
+        OPM6kQ1Iif9zy8IMnQH3coOTZoJXjqY=
+X-Google-Smtp-Source: ABdhPJwrChLQVCtZWFRS2yqwuDMJX6lW9VepVErrdBvnG2Z6coHQibA0saJCQCr7aQ+XWjK8z5XQ9A==
+X-Received: by 2002:a05:600c:2e42:: with SMTP id q2mr6301667wmf.64.1621352193480;
+        Tue, 18 May 2021 08:36:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a17sm14049656wrt.53.2021.05.18.08.36.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 May 2021 08:36:32 -0700 (PDT)
+Message-Id: <pull.955.git.1621352192238.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 18 May 2021 15:36:31 +0000
+Subject: [PATCH] simple-ipc: correct ifdefs when NO_PTHREADS is defined
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F5EB2874-B7EB-11EB-B8EF-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-> So you might expect it to accept an --allow-unknown-type, but it
-> doesn't. I could add support for that, but I think it would be stupid.
->
-> Why should you need to restart a "cat-file --batch" just because you
-> encounter a bad object? Just .. print it, we can do that safely. I
-> really don't see the point of having --allow-unknown-type at all. Ditto
-> for the --batch-check mode.
->
-> I mean, having read all the code I think I know why it's there. I think
-> It's because there was no way to ferry the information up from
-> object-file.c before my yet-to-be-submitted patches, so the solution wa=
-s
-> to pass down a flag saying "please don't die()".
->
-> But is it something that anyone thinks is a good idea in the abstract? =
-I
-> don't see why I shouldn't just document something like:
->
->     Older versions of "cat-file" used to require an --allow-unknown-typ=
-e
->     flag to emit information about objects of unknown types. This is no
->     longer required or the default. If you'd like to die on anything
->     except known types (e.g. to die instead of bothering with parsing a
->     "bad" type that possibly has spaces in it in the --batch output)
->     supply --no-allow-unknown-type.
->
-> What do you think?
+Simple IPC always requires threads (in addition to various
+platform-specific IPC support).  Fix the ifdefs in the Makefile
+to define SUPPORTS_SIMPLE_IPC when appropriate.
 
-Thanks for thinking things through.
+Previously, the Unix version of the code would only verify that
+Unix domain sockets were available.
 
-My knee-jerk reaction is
+This problem was reported here:
+https://lore.kernel.org/git/YKN5lXs4AoK%2FJFTO@coredump.intra.peff.net/T/#m08be8f1942ea8a2c36cfee0e51cdf06489fdeafc
 
- - As long as "cat-file -t $thing" exits with non-zero status for an
-   invalid thing, which was crafted using hash-object --literally,
-   reporting the typename it read from the object header to its
-   standard output would be fine without "--allow-unknown-type".
-   But scripts would be upset if it suddenly started to return with
-   zero status when asked to check what type of object the $thing
-   is.
+Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+    simple-ipc: correct ifdefs when NO_PTHREADS is defined
+    
+    Simple IPC always requires threads (in addition to various
+    platform-specific IPC support). Fix the ifdefs in the Makefile to define
+    SUPPORTS_SIMPLE_IPC when appropriate.
+    
+    Previously, the Unix version of the code would only verify that Unix
+    domain sockets were available.
+    
+    This problem was reported here:
+    https://lore.kernel.org/git/YKN5lXs4AoK%2FJFTO@coredump.intra.peff.net/T/#m08be8f1942ea8a2c36cfee0e51cdf06489fdeafc
+    
+    Reported-by: Randall S. Becker rsbecker@nexbridge.com Helped-by: Jeff
+    King peff@peff.net Signed-off-by: Jeff Hostetler jeffhost@microsoft.com
 
- - For "cat-file --batch[-check]", I am on the fence.  A script may
-   break because it is not prepared to see anything but four
-   existing types (so it might even say "do X if it is a blob, do Y
-   if it is a tree, do Z if it is a tag, and do W for everything
-   else" and expect/assume that W will see only commits), so failing
-   without --allow may still be a prudent thing to do.  We could
-   declare that such a script is already broken, even though it
-   would not change the fact that the user has been successfully
-   using it reliably.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-955%2Fjeffhostetler%2Ffixup-simple-ipc-no-pthreads-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-955/jeffhostetler/fixup-simple-ipc-no-pthreads-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/955
 
-With your new "we can now bubble necessary information up from the
-object-file.c layer without dying" change, it might make it easier
-to arrange so that object-file.c layer would never die and I do not
-think I have any objection against such a plan.  The implementation
-of "--[no-]allow-unknown-type" would have to be migrated to the
-caller at the higher level to decide what to do when it learns that
-the object it asked the object_info() about is of an invalid type.
-And the choice of the default would become easier to change later
-with such a change to the lower layer.  But I am not sure if that
-warrants switching of the default.
+ Makefile                            | 14 ++++++++++++--
+ compat/simple-ipc/ipc-unix-socket.c |  8 ++++++++
+ compat/simple-ipc/ipc-win32.c       |  4 ++++
+ simple-ipc.h                        |  4 ----
+ 4 files changed, 24 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 3a2d3c80a81a..30df67fd62eb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1687,13 +1687,23 @@ ifdef NO_UNIX_SOCKETS
+ else
+ 	LIB_OBJS += unix-socket.o
+ 	LIB_OBJS += unix-stream-server.o
+-	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+-	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
+ endif
+ 
++# Simple-ipc requires threads and platform-specific IPC support.
++# (We group all Unix variants in the top-level else because Windows
++# also defines NO_UNIX_SOCKETS.)
+ ifdef USE_WIN32_IPC
++	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
+ 	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+ 	LIB_OBJS += compat/simple-ipc/ipc-win32.o
++else
++ifndef NO_PTHREADS
++ifndef NO_UNIX_SOCKETS
++	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
++	LIB_OBJS += compat/simple-ipc/ipc-shared.o
++	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
++endif
++endif
+ endif
+ 
+ ifdef NO_ICONV
+diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
+index 38689b278df3..c23b17973983 100644
+--- a/compat/simple-ipc/ipc-unix-socket.c
++++ b/compat/simple-ipc/ipc-unix-socket.c
+@@ -6,10 +6,16 @@
+ #include "unix-socket.h"
+ #include "unix-stream-server.h"
+ 
++#ifdef SUPPORTS_SIMPLE_IPC
++
+ #ifdef NO_UNIX_SOCKETS
+ #error compat/simple-ipc/ipc-unix-socket.c requires Unix sockets
+ #endif
+ 
++#ifdef NO_PTHREADS
++#error compat/simple-ipc/ipc-unix-socket.c requires pthreads
++#endif
++
+ enum ipc_active_state ipc_get_active_state(const char *path)
+ {
+ 	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
+@@ -997,3 +1003,5 @@ void ipc_server_free(struct ipc_server_data *server_data)
+ 	free(server_data->fifo_fds);
+ 	free(server_data);
+ }
++
++#endif /* SUPPORTS_SIMPLE_IPC */
+diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
+index 8f89c02037e3..958bb562ebb6 100644
+--- a/compat/simple-ipc/ipc-win32.c
++++ b/compat/simple-ipc/ipc-win32.c
+@@ -4,6 +4,8 @@
+ #include "pkt-line.h"
+ #include "thread-utils.h"
+ 
++#ifdef SUPPORTS_SIMPLE_IPC
++
+ #ifndef GIT_WINDOWS_NATIVE
+ #error This file can only be compiled on Windows
+ #endif
+@@ -749,3 +751,5 @@ void ipc_server_free(struct ipc_server_data *server_data)
+ 
+ 	free(server_data);
+ }
++
++#endif /* SUPPORTS_SIMPLE_IPC */
+diff --git a/simple-ipc.h b/simple-ipc.h
+index dc3606e30bd6..2c48a5ee0047 100644
+--- a/simple-ipc.h
++++ b/simple-ipc.h
+@@ -5,10 +5,6 @@
+  * See Documentation/technical/api-simple-ipc.txt
+  */
+ 
+-#if defined(GIT_WINDOWS_NATIVE) || !defined(NO_UNIX_SOCKETS)
+-#define SUPPORTS_SIMPLE_IPC
+-#endif
+-
+ #ifdef SUPPORTS_SIMPLE_IPC
+ #include "pkt-line.h"
+ 
+
+base-commit: bf949ade81106fbda068c1fdb2c6fd1cb1babe7e
+-- 
+gitgitgadget
