@@ -2,196 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE0D5C433B4
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 18:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F4DC433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 19:05:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FE3361285
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 18:55:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26DF66100C
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 19:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351680AbhERS4s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 14:56:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59438 "EHLO
+        id S238743AbhERTGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 15:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242777AbhERS4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 14:56:47 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D431C061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 11:55:28 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id df21so12486979edb.3
-        for <git@vger.kernel.org>; Tue, 18 May 2021 11:55:28 -0700 (PDT)
+        with ESMTP id S232073AbhERTGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 15:06:20 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610D2C061573
+        for <git@vger.kernel.org>; Tue, 18 May 2021 12:05:02 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso9626150ote.1
+        for <git@vger.kernel.org>; Tue, 18 May 2021 12:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=GwsQahaQ36+BPGDTr+B2UtiRQpFpYBt+73MQuh7oCQM=;
-        b=VufDqTZwfFdyReDEvKI9hcf267xMpQT8hNp9qkxBIYTxVdW7UJGB2ql4fFEUgiNPE+
-         H3/m/D6ER7fLSAUw4lpi+xiCDfrru2lEBlYgJ3EwMaC7g+f6ynmXxIuodpmIDW/Iyzqn
-         J0PhDslDfolSU89cEgAgrmDu+Ywls+m+jC8+z7295xoNsCQi/RRvHqLAaxLZW+S86/kl
-         fy+SPLkcD1jIf0BhdfnwvPaXIz7gn3TTZFq+5OPPfg8kmmcdD3pxIIn4lM1oIXEgN2Ev
-         Ny6FlTbeRsn8QuahMV4kw5A7U9qhchUjtYT/JUT4tqI32Zcb9HsiNY8QLDJJwwQpOPY5
-         sbmw==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=MKyEWj6AmRGJI21CYCQTIfMmRnG3uuhMiFBr42vBMqI=;
+        b=OugomSypItFCINiflyIigAAUWBbeee7/3Zvkl+M7jMyF0QOJMzOOZXL2pipcFPtrl6
+         RjK5sz83WWgZ7h5w8N9pecIZzXQprVIBLC2HU4nnQfki3UTwXcVlSyBZWZNO2zoXiBE0
+         RfZue2xpaXJsxZWaLvhku3r/XZo37yE4DV3VCq+E9/2y3mVUQAhmN0Llmx7A8KFofAG4
+         uB75VGvC7TOl7Ye6lLIpWbwiPxSzunQ3KqW2QOUjsHujDOriwlkm3fLFOE7coa3+WLUb
+         YRMn72wJYupmRXbH4h2DpFQw87ZIiwPArRkDv0acWwafvCUWnPYEHykHkB8zqPhbXeZ8
+         HhyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=GwsQahaQ36+BPGDTr+B2UtiRQpFpYBt+73MQuh7oCQM=;
-        b=uoPoWh8dW9R92rTpkH9gotYQd64qqvEDgirKdXCBlmT8JJZrYmFgmHKxZKQqujzIZr
-         8YemiTTtWaqljb3OPMlfoYvYUdcGn3wrg1DNGQw1uVfJ0pN8c7+kct8/0T8wNykZ8+Hf
-         JxbxzzetWNBd4G/1uWfG8VqnZsKZCaYPIwoRq09ZOR23LGJlMx/AELcRzrpPo0GnZZVo
-         DarEECnLTWKr0kxEmPufpeX63jy6IPR4hLWnhWk/JqsYSMXa15JeC3vjUhil6KckO/+X
-         dtslTIlOgT2HQu6Ef5sCJHfjPGxYUwJaEpbtbpkUcPvYx0QgkC2Yn/k4eFxCCgvNUNqe
-         NCsA==
-X-Gm-Message-State: AOAM532HZoAgmfDn8v3MQS+TT1PPWMdrTBEsLMCR6UKXyPAG26XrPBqA
-        62V+zUwFQoWYmK3M2r/4RM4=
-X-Google-Smtp-Source: ABdhPJxbvv64dO0WGxVwfiIYVRkbMxLLqUWnOixSSNIdAkehukXwZ8mfLgEHKwwRO+BnyZw/kwctUA==
-X-Received: by 2002:aa7:cd6b:: with SMTP id ca11mr8797088edb.115.1621364126934;
-        Tue, 18 May 2021 11:55:26 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id i19sm2174641eds.65.2021.05.18.11.55.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 11:55:26 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        karthik nayak <karthik.188@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Options like hash-object --literally and cat-file
- --allow-unknown-type
-Date:   Tue, 18 May 2021 20:42:26 +0200
-References: <87r1i4qf4h.fsf@evledraar.gmail.com> <xmqqtun0139q.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <xmqqtun0139q.fsf@gitster.g>
-Message-ID: <87o8d7rhwi.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MKyEWj6AmRGJI21CYCQTIfMmRnG3uuhMiFBr42vBMqI=;
+        b=QMIe85UcrVtmn3bvgloU41Q27a6vjfDkFxCnMMykqD6gAXGoeDPfTXIR28QVMccMWS
+         fctsizmTBBxnPhSyIqiJwIHuAd5WworLtsSOyUmRMY3PKxpdQ8QbBJoEmjC7dg7M8MSD
+         o3slxP1nc7QuHp6vFApw4FiybkBotcpQvFarBBCT5M6cybHeT/5UuXsDVsX6PdoyRnbq
+         tl6yrpNIiwdzO8Dh3lNOLFQimk3wYeFsJ37GFiVV/zMUszvWFOvoQUG5IdANe5nO94MI
+         fQ4nV01hPOI0X1KbFXA4CdkTHL/+sySQbLZKDckmaiRURlBlDaINLa2AHyEJa0WF1c6S
+         9ERg==
+X-Gm-Message-State: AOAM5337A3U1kf0SJleJwYnqYWUJSyp8elLDmsGUFSUethHN42ud6/ww
+        8DOp4Va6obt4LA5PRk+EWdQ=
+X-Google-Smtp-Source: ABdhPJxlAudef46fT4V/YGDpbMmWoLcn7dzzEMcSv0WRjZ/yVzhVg8wbbqqffjrGsaA7cSeq9jAexw==
+X-Received: by 2002:a05:6830:1690:: with SMTP id k16mr5430002otr.54.1621364701552;
+        Tue, 18 May 2021 12:05:01 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:bcf4:c194:74a1:9906? ([2600:1700:e72:80a0:bcf4:c194:74a1:9906])
+        by smtp.gmail.com with ESMTPSA id a7sm3982494ooo.9.2021.05.18.12.05.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 May 2021 12:05:01 -0700 (PDT)
+Subject: Re: [PATCH v3 11/12] wt-status: expand added sparse directory entries
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
+ <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
+ <3b42783d4a86473420480b2789d61d8103e6e7d4.1621017072.git.gitgitgadget@gmail.com>
+ <CABPp-BGww6VPMmp9dDyRJ2vgNCOdj16-LjU3aM3MM1NQ+T-pmg@mail.gmail.com>
+ <a96b5081-e913-22a8-45eb-8d5de432dccb@gmail.com>
+Message-ID: <f592fa8e-b607-1665-5f2e-3a3ad834b30b@gmail.com>
+Date:   Tue, 18 May 2021 15:04:58 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
+In-Reply-To: <a96b5081-e913-22a8-45eb-8d5de432dccb@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, May 19 2021, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> So you might expect it to accept an --allow-unknown-type, but it
->> doesn't. I could add support for that, but I think it would be stupid.
+On 5/18/2021 2:26 PM, Derrick Stolee wrote:
+> On 5/17/2021 10:27 PM, Elijah Newren wrote:
+>> On Fri, May 14, 2021 at 11:31 AM Derrick Stolee via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>>
+>>> From: Derrick Stolee <dstolee@microsoft.com>
+>>>
+>>> It is difficult, but possible, to get into a state where we intend to
+>>> add a directory that is outside of the sparse-checkout definition. Add a
 >>
->> Why should you need to restart a "cat-file --batch" just because you
->> encounter a bad object? Just .. print it, we can do that safely. I
->> really don't see the point of having --allow-unknown-type at all. Ditto
->> for the --batch-check mode.
+>> Then we need to fix that; allowing things to be added outside the
+>> sparse-checkout definition is a bug[1][2].  That's an invariant I
+>> believe we should maintain everywhere; things get really confusing to
+>> users somewhere later down the road if we don't.  Matheus worked to
+>> fix that with 'git add'; if there are other commands that need fixing
+>> too, then we should also fix them.
 >>
->> I mean, having read all the code I think I know why it's there. I think
->> It's because there was no way to ferry the information up from
->> object-file.c before my yet-to-be-submitted patches, so the solution was
->> to pass down a flag saying "please don't die()".
+>> [1] https://lore.kernel.org/git/CABPp-BFhyFiKSXdLM5q5t=ZKzr6V0pY7dbheierRaOHFbMEdkg@mail.gmail.com/
+>> [2] https://lore.kernel.org/git/CABPp-BF0ZhbSs42R3Bw_r-hbhQ71qtbXSBqXdq0djyaan=8p=A@mail.gmail.com/
 >>
->> But is it something that anyone thinks is a good idea in the abstract? I
->> don't see why I shouldn't just document something like:
+>>> test to t1092-sparse-checkout-compatibility.sh that demonstrates this
+>>> using a combination of 'git reset --mixed' and 'git checkout --orphan'.
 >>
->>     Older versions of "cat-file" used to require an --allow-unknown-type
->>     flag to emit information about objects of unknown types. This is no
->>     longer required or the default. If you'd like to die on anything
->>     except known types (e.g. to die instead of bothering with parsing a
->>     "bad" type that possibly has spaces in it in the --batch output)
->>     supply --no-allow-unknown-type.
->>
->> What do you think?
->
-> Thanks for thinking things through.
->
-> My knee-jerk reaction is
->
->  - As long as "cat-file -t $thing" exits with non-zero status for an
->    invalid thing, which was crafted using hash-object --literally,
->    reporting the typename it read from the object header to its
->    standard output would be fine without "--allow-unknown-type".
->    But scripts would be upset if it suddenly started to return with
->    zero status when asked to check what type of object the $thing
->    is.
+>> I think `git checkout --orphan` should just throw an error if
+>> sparse-checkout is in use.  Allowing adding paths outside the
+>> sparse-checkout set causes too much collateral and deferred confusion
+>> for users.
+> 
+> I've been trying to strike an interesting balance of creating
+> performance improvements without changing behavior, trying to
+> defer those behavior changes to an isolated instance. I think
+> that approach is unavoidable with the 'git add' work that I
+> pulled out of this series and will return to soon.
+> 
+> However, here I think it would be too much to start throwing
+> an error in this case. I think that change is a bit too much.
+> 
+> The thing I can try to do, instead of the current approach, is
+> to not allow sparse directory entries to differ between the
+> index and HEAD. That will satisfy this case, but also a lot of
+> other painful cases.
+> 
+> I have no idea how to actually accomplish that, but I'll start
+> digging.
 
-That feels even weirder to me. Why conflate the "this is naughty object"
-with "we successfully inspected it"? I don't think cat-file should be
-exiting non-zero unless it actually has an error inspecting the object.
+It didn't take much digging to discover that this is likely
+impossible, or rather it would be a drastic change to make this
+happen.
 
-But in terms of implementation that's trivial, just look if the object
-is on the whitelist of types before exiting. It's certainly less hassle
-than what it's currently doing.
+The immediate issue is trying to prevent sparse directory entries
+from existing when the contained paths don't match what exists at
+HEAD. However, in the 'git checkout --orphan' case, we are using
+a full index for the unpack_trees() that updates the in-memory
+index according to the paths at HEAD, then updates HEAD to point
+to a non-existing ref. The sparse directories are only created as
+part of convert_to_sparse() within do_write_index(). At that
+point, there is no HEAD provided. Trying to load it from scratch
+violates the fact that HEAD is being staged to change _after_ the
+index updates in a command like 'git checkout'.
 
-I was thinking something like an advise() to stderr at most when we
-emitted one of these:
+So, the drastic change to make this work would be to update the
+index API to require a root tree to be provided whenever writing
+the index. However, that doesn't make sense, either! What do we
+do when in a conflicted state?
 
->  - For "cat-file --batch[-check]", I am on the fence.  A script may
->    break because it is not prepared to see anything but four
->    existing types (so it might even say "do X if it is a blob, do Y
->    if it is a tree, do Z if it is a tag, and do W for everything
->    else" and expect/assume that W will see only commits), so failing
->    without --allow may still be a prudent thing to do.  We could
->    declare that such a script is already broken, even though it
->    would not change the fact that the user has been successfully
->    using it reliably.
+What if a user modifies HEAD manually to point to a new ref?
 
-The main reason I even care about this was the fsck case, and it looking
-up and down the callstacks from OBJECT_INFO_ALLOW_UNKNOWN_TYPE I think
-we're needlessly worrying about this in the cat-file case.
+Such a change would couple the index to the concept of HEAD in
+an unproductive way, I think. The index data structure exists
+as a separate entity that is frequently _compared_ to HEAD, and
+the solution presented in this patch presents a way to keep the
+comparison of a sparse-index and HEAD to be the same as if we
+had a full index.
 
-I think even in the case you mentioned a script would be better off with
-a default of --allow-unknown-type. Right now if you somehow fed it an
-object with such a type it would just hard die, whereas after you could
-proceed to feed it other objects.
+So, after looking into it, I'm back in favor of this change and
+forever allowing sparse cache entries to differ from HEAD,
+because there is no way to avoid it.
 
-But realistically (and I may be wrong here) I don't think we need to
-worry about backwards compatibility with --allow-unknown-type at
-all. I'm fairly certain nobody's dealing with these objects in the wild
-except git's own test suite.
-
-No server implementation will accept them, you can't even push/pull them
-locally. It's just there for completeness with "hash-object
---literally": https://lore.kernel.org/git/54EDACC9.5080204@gmail.com/
-
-So I think it's fine just to say it was a mistake to require opt-in
-options to *inspect* such naughty objects, as opposed to creating them
-(where we should have the opt-in --literally option).
-
-> With your new "we can now bubble necessary information up from the
-> object-file.c layer without dying" change, it might make it easier
-> to arrange so that object-file.c layer would never die and I do not
-> think I have any objection against such a plan.  The implementation
-> of "--[no-]allow-unknown-type" would have to be migrated to the
-> caller at the higher level to decide what to do when it learns that
-> the object it asked the object_info() about is of an invalid type.
-> And the choice of the default would become easier to change later
-> with such a change to the lower layer.
-
-For what it's worth the new API is just passing
-OBJECT_INFO_ALLOW_UNKNOWN_TYPE to oid_object_info_extended() along with
-the (existing) "typep". You then see if the typep is < 0.
-
-> But I am not sure if that warrants switching of the default.
-
-Hopefully either this thread or a re-roll of that series will convince
-you, is this something you'd like to see on list in the next few days or
-is it better to hold off until after the RC period?
-
-Another thing I didn't mention as a reason for getting rid of
---allow-unknown-type is that part of the patches I was hacking up made
-various read-only commants behave sensibly in the face of these badly
-typed objects, where now they'll just die.
-
-E.g. Jeff King's recent --disk-usage for rev-list will just die on it,
-since we call "what is the type of this" without
-OBJECT_INFO_ALLOW_UNKNOWN_TYPE somewhere.
-
-I think it's a much better approach to just implicitly supply a
-OBJECT_INFO_ALLOW_UNKNOWN_TYPE at a high level (you just want the total
-disk use, who cares if there's one bad object there), as opposed to
-teaching rev-list and others about --allow-unknown-type.
-
+Thanks,
+-Stolee
