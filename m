@@ -2,142 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD2E9C433B4
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE3A9C433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:11:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A05EF61042
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5D2961073
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 08:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347380AbhERIKG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 04:10:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52352 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345704AbhERIKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 04:10:05 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF21CC061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 01:08:47 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso1131468pji.0
-        for <git@vger.kernel.org>; Tue, 18 May 2021 01:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=79Xsp62T2rn1O6XJUsW9j8vWIjGJ3R8QmGAfxq8dGeA=;
-        b=PAQcq2rIA3CPNux1AVX46XNTRw7JS8iaWbruKV9I2nCUM92XCfTWMtlvlC/6Gf1dCD
-         p6ZD+xI0ftGgbhwXOPZg654VMWXTB0Q60A2VwmHLJsayAkRCid6A8tjIav1rgt2Rjzca
-         IsLsRFWoDQxGLKcRhhBAzzEEyh3ixCAsYVE9HQFC3nK1tXb6Vh6RW0JQ6khjw6oNJPUm
-         b7ya7rmaCNAsiLCXsrqe17K6I0ED1auVd2jUnoNLBdWMYx80raEdLnY5Q83Vl1iygrSv
-         jx7kYTgriWuujS0DljefreGe0hDhohcIx8tVc2nqDxQtI8exnKk1P3Lpcx9UYtnCvhbk
-         b8Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=79Xsp62T2rn1O6XJUsW9j8vWIjGJ3R8QmGAfxq8dGeA=;
-        b=uYINVXorXJh1RryC9zXcJ39YC/jg5tJUbe1Ic666z5FWU0t53OLFht4DKmZW2UqpWR
-         AVctoNqkIqA59gu1T/W3DuFpBG1rnCuGFNa52xG5FjT+03EflcCctonZgvDdJZs/mYGK
-         ONCM3KcDWKwHjE4ZlUh7l4SEXaKM04FgVjIPCt3Jpw4h2BnmSLtHe4J6qno+06bXA9jV
-         so6NvybdxJ+aL/9GoJt9d9ZxAuo+5TzeFxiy6nplc3MpFweQaWpmUJxb620KunZVjLbO
-         Ax9Sgu1cOB3yJlX/pFns8Ui5JfWAzFto3HnGsQ9iAxiTjx0+7W5myE2WRsg/QwTSfWyb
-         A9uw==
-X-Gm-Message-State: AOAM532hfYQ7BSzOGxXuyetpOO92lwYC7VhBTxqDVh8e5Bo/qoOdASo4
-        FCLkTPB1k7aZiNwfgXuEDuYLE9cqRSagJB0NYV0=
-X-Google-Smtp-Source: ABdhPJyWvyHrRnkU5IiJzVIgNkSz+nYfIjbfmOZuvgGrgZUgcZ/HVDSXPU8cyv1c7eWMgRiv+rSSmtzESsEk1Y2k1rg=
-X-Received: by 2002:a17:90a:29c4:: with SMTP id h62mr4330864pjd.177.1621325327525;
- Tue, 18 May 2021 01:08:47 -0700 (PDT)
+        id S1347405AbhERIND (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 04:13:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57538 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240590AbhERINC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 04:13:02 -0400
+Received: (qmail 11999 invoked by uid 109); 18 May 2021 08:11:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 May 2021 08:11:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5769 invoked by uid 111); 18 May 2021 08:11:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 May 2021 04:11:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 18 May 2021 04:11:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: "bad revision" fetch error when fetching missing objects from
+ partial clones
+Message-ID: <YKN2vT+zi/N6jUAN@coredump.intra.peff.net>
+References: <6422f505-29c4-bee9-e28c-b77dd831c246@gmail.com>
+ <ba5a0574-c71c-709c-a13c-bf6d5981545c@jeffhostetler.com>
+ <YJz4JTsFjTtL7mE2@coredump.intra.peff.net>
+ <YJ0FL3zr/SnWN7t6@coredump.intra.peff.net>
+ <YJ4mUJ+EEAnudI3G@coredump.intra.peff.net>
+ <32e5852f-f94b-e169-de1c-8cc9a534c93c@gmail.com>
 MIME-Version: 1.0
-From:   Teng Long <dyroneteng@gmail.com>
-Date:   Tue, 18 May 2021 16:08:36 +0800
-Message-ID: <CADMgQSReX+Ue0AtPh6JWNde-pyFC5-r+juQFoKd5fZp5Wv6_Ow@mail.gmail.com>
-Subject: Re: [PATCH] Packfile-uris support excluding commit objects
-To:     avarab@gmail.com
-Cc:     dyroneteng@gmail.com, git@vger.kernel.org, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <32e5852f-f94b-e169-de1c-8cc9a534c93c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso wrote:
+On Mon, May 17, 2021 at 12:25:02PM -0400, Derrick Stolee wrote:
 
-> It seems like this and your
-> http://lore.kernel.org/git/20210506073354.27833-1-dyroneteng@gmail.com
-> should be part of one series, not split up.
+> > Here's the same scenario failing without using bitmaps at all:
+> > 
+> ...
+> >   # ...and then we fetch both the object we need _and_ that second
+> >   # commit. That causes pack-objects to traverse from base..more.
+> >   # The boundary is at "base", so we mark its tree and blob as
+> >   # UNINTERESTING, and thus we _don't_ send them.
+> >   cd clone
+> >   git fetch origin $(git rev-parse HEAD:file) HEAD
+> 
+> This is the critical reason why this isn't failing in practice: it
+> is very rare to ask for a commit and a blob at the same time. Usually,
+> a blob request comes when something like 'git checkout' is actually
+> navigating to a commit, and then it only asks for missing blobs.
 
-Obviously, the current series of patches will be longer, and the patches
-of the separate documents you mentioned can be repaired and released in
-advance. The latter, Junio said, will be added to the queue.
+Yes, I think that may be part of it. But more fundamentally, the request
+done by "git checkout" does not send any "have" lines at all, so it
+could never trigger this bug, even if it did try to ask for a commit.
 
-> Per my understanding in
-> https://lore.kernel.org/git/87o8hk820f.fsf@evledraar.gmail.com/ this +
-> Jonathan's earlier bfc2a36ff2a (Doc: clarify contents of packfile sent
-> as URI, 2021-01-20) still makes this whole thing more confusing that it
-> needs to be.
+> > So I guess the first question is: is this supposed to work? Without
+> > bitmaps, it often will. Because we walk commits first, and then only
+> > mark trees uninteresting at the boundary; so if there were more commits
+> > here, and we were asking to get a blob from one of the middle ones, it
+> > would probably work. But fundamentally the client is lying to the server
+> > here (as all partial clones must); it is saying "I have that first
+> > commit", but of course we don't have all of the reachable objects.
+> 
+> It _should_ work. We should be specifying the blob:none filter, so when
+> we say "we have these commits" it should apply that filter to those
+> commits for the "haves".
 
-> I think we should just have a new uploadpack.excludeObject, and document
-> that uploadpack.blobpackfileuri is an (unfortunately named) synonym for
-> it. I.e. the actual implementation doesn't care about the objec type it
-> just excludes any object listed via an oidmap. No?
+I guess my "should it work" was more about: are filter requests that
+feed arbitrary combinations to git-fetch, including "haves", something
+we want to support?
 
-Regarding the naming of "uploadpack.blobpackfileuri" and future
-scalability issues, I have similar feelings. In next round, I will follow
-your naming suggestions about "uploadpack.excludeObject". In addition,
-the naming modification may cause a compatible question, although I know
-packfile-uris is an experimental feature, I still hope to get some
-compatibility-related suggestions.
+I think the world is a better place if we do. But what I'm wondering is
+if there was some intentional choice to avoid triggering this
+(especially in the way that the on-demand fetcher uses the "noop"
+negotiation algorithm).
 
-> I realize you're probably not a native English speaker (neither am I),
-> but I honestly can't understand that "This work will be done in a
-> further patch recently.". Do you mean something like:
->        ......
+And yes, we do specify the blob:none filter. BTW, I saw an interesting
+side-behavior here.  If the server _stops_ supporting filters and then
+we try to fetch with it, we will happily say "oh well, the other side
+doesn't support filters, so I won't bother sending my filter spec". And
+then all hell breaks loose, as the other side has no clue that we are a
+partial clone.
 
-Thanks for correcting, I may rewrite the commit message in the next
-patch. I'm not a native English speaker, improving :)
+In practice I think it's an unlikely failure mode for a server you
+partial-cloned from to turn off filters, so it's probably not that
+important. I hit it because a test script used test_config to enable
+them, and then the follow-on test I added to run git-fetch got quite
+confused. A more likely scenario is that you might see it a
+misconfigured load-balanced pool of servers.
 
-> Please send the earlier doc cleanup + the spec change for this + any doc
-> updates as one series.
+I do wonder how hitting a third-party server should work, though. E.g.,
+I partial clone from A, and then ask B to fetch some related history
+built on top. Do I tell B that I'm a partial clone and might be missing
+some objects? Or do I behave as normal, and expect to fault in objects
+that it assumes I have (e.g., a delta base)? And if the latter, does
+that work (if it does, then why doesn't the same logic kick in for this
+fetch?).
 
-The reason for splitting the two patches is mentioned above, and the
-corresponding document modification to support the exclusion of commit
-will be added in the next patch series.
+Anyway, that's maybe orthogonal to the bug at hand (and my questions
+above are all sincere; it might well work just fine, but I haven't dug
+into it further).
 
-> Nit: Split this across two lines.
-> Indending with spaces.
-> More indenting with spaces, also don't need the {} here.
-> Don't indent the "then", also spaces...
-> Use ">objh" not "> objh".
+> > If this is supposed to work, I think we need to teach the traversal code
+> > to "add back" all of the objects that were explicitly given when a
+> > filter is in use (either explicitly, or perhaps just clearing or
+> > avoiding the UNINTERESTING flag on user-given objects in the first
+> > place). And my earlier patch does that for the bitmap side, but not the
+> > regular traversal.
+> 
+> This gets more complicated if we were in a treeless clone, for example.
+> We could explicitly ask for a tree and really need all of its reachable
+> trees and blobs. It's not enough to just isolate that single object.
 
-Thanks, will correct them in the next round.
+Good point. That really requires walking any objects that were listed to
+"add back", but _only_ the ones that would have been filtered. In the
+treeless clone case, that's easier. But if I say "don't give me any
+trees deeper than X", how do I even know which ones those are?
 
-> I think by having a uploadpack.excludeObject documented as the primary
->interface to this we could just say "object already listed by an earlier
->exclusion" or something like that.
+> I wouldn't spend too much time optimizing for the treeless clone case,
+> as I believe the client will self-recover by asking for those reachable
+> trees when it walks to them.
 
-Thanks, will refer to your suggestions.
+Yes, I think as long as the on-demand fetch kicks in, then it becomes an
+optimization problem, not a correctness one. So perhaps the first fix
+should focus on that, even for the blob case being discussed. Then it
+_works_, just with an extra round-trip for the on-demand fetch.
 
-> This whole if/else seems like it could be better split up by discovering
-> the variable first, using that as a variable, and then avoiding the
-> duplication. But if we just used uploadpack.excludeObject...
-
-I will try to modify it, but I am not sure to fully understand what you
-mean. If this problem persists in the next patch, please help to point
-out the problem.
-
-> Put stuff like this in "test_when_finished"
-> You can just use test_commit here, no?
-
-Thanks, now I know about "test_when_finished" and "test_commit".
-In addition, there are some problems with using "rm" directly in t5702,
-I will replace them in the next patch series.
-
-> Personally I'd just skip this whole "rev-parse HEAD" etc. and just pass
-> the tag name(s) created by earlier test_commit, then have
-> configure_exclusion ust always do a rev-parse...
-
-Thanks, will use tag name(s) instead of "HEAD".
+-Peff
