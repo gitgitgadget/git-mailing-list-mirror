@@ -2,176 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE6AC433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 05:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A69D7C433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 05:50:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9476A60FDB
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 05:32:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76BE26108C
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 05:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240898AbhERFeO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 01:34:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45700 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241023AbhERFeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 01:34:13 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DD5C061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 22:32:55 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id z4so2253265plg.8
-        for <git@vger.kernel.org>; Mon, 17 May 2021 22:32:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i38TMWczsm1KGqhLrnqvbkPoHGlw2GFz3tlHGLQe47M=;
-        b=f5oq6UYSO+p3bfafKP9AL+umWIXrBrDVAhFMVQM9nQ1REosb/ViLkKnXqIRzq2mEiQ
-         Iaz54yU+jakPtw6HGXOyWHi0Xto+g3pt9P0xuMtihwwR5Vx1BDIt0AU4w04vIznCYX2O
-         lI+a1qV8SWmln+yKrriSGHs36xHUJ5L/EaefpKAvMVI8qCyxhvS2e9pkTBej29tMMevL
-         6D3GyoimLKd0Zq0sx43guwu1vIbi3xd1MVu57A5uF25xAs9pDuET53B5N7BZto4WaIvW
-         vHIl4ZPLUWGyYkYk3u12JUWIyfNINfWRF7Pkb9Dsz5FjXq0aB1eJm2qd+vOusoT6ZOC0
-         JbMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i38TMWczsm1KGqhLrnqvbkPoHGlw2GFz3tlHGLQe47M=;
-        b=WTIszrjJ71JGXkCJq/4BC+7bIcIbKgH/N4VXBbULv0VNynB3tv8FOIAxQeBhP+wpWJ
-         /rHi1563UEn/T2suIkJumh9rJpIIQj+t8wzrYeG5RCaLyZ6kEDYXuvt6MKuUcDdOr/FN
-         xF3e0pBjKDCIaUeEDwDobBDhGaVr1vL0O3e/sA2JnQdyD2Pv4q/lAqtRZZLNwo32Pvwx
-         zB7lhyh/3/V3ygRMcodxBehAXkKclLuT8Icz9X3Ah9JIqS4hVMhBNZKa1bQedNHLB9Er
-         p8El7mHus6U9/2pfTLqGCDj9t4eqZPvY8KBEa4l/naS3eN4HMIuD/kesBI5l0Nbu5Ijb
-         YHMw==
-X-Gm-Message-State: AOAM533zm1gU1sYgpspAskjdN9h/W4gW0kvzUpQ0gbiTL+WvTUBFJQ/F
-        jNkJwLE0EY50g7cPhf8cNCHtDxgP+UY=
-X-Google-Smtp-Source: ABdhPJw9YPc0KTScFJ/nr4Yg8QXsur8fPrqrxcKDQX85b6U1IdgzOsCrW5o+OEXHAPEzGbuXkvy3Bg==
-X-Received: by 2002:a17:902:b183:b029:ee:ff72:f580 with SMTP id s3-20020a170902b183b02900eeff72f580mr2666926plr.26.1621315974637;
-        Mon, 17 May 2021 22:32:54 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:ea96:bdac:27b4:8cdc])
-        by smtp.gmail.com with ESMTPSA id 184sm4304037pfv.38.2021.05.17.22.32.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 22:32:54 -0700 (PDT)
-Date:   Mon, 17 May 2021 22:32:51 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     dwh@linuxprogrammer.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        id S238151AbhERFvr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 01:51:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57300 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230328AbhERFvq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 01:51:46 -0400
+Received: (qmail 10270 invoked by uid 109); 18 May 2021 05:50:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 May 2021 05:50:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4815 invoked by uid 111); 18 May 2021 05:50:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 May 2021 01:50:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 18 May 2021 01:50:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ben Humphreys <behumphreys@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christopher Schenk <christopher@cschenk.net>,
         git@vger.kernel.org
-Subject: Re: Is the sha256 object format experimental or not?
-Message-ID: <YKNRg691mu8x7Pua@google.com>
-References: <20210508022225.GH3986@localhost>
- <YJcqqYsOerijsxRQ@camp.crustytoothpaste.net>
- <87lf8mu642.fsf@evledraar.gmail.com>
- <YJm23HESQb1Z6h8y@camp.crustytoothpaste.net>
- <20210513202919.GE11882@localhost>
+Subject: Re: Git 2.23.0-rc0 HTTP authentication failure - error message change
+Message-ID: <YKNVop80H8xSTCjz@coredump.intra.peff.net>
+References: <YKMvePOPqjwiXeQ+@C02WD045HTDG>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210513202919.GE11882@localhost>
+In-Reply-To: <YKMvePOPqjwiXeQ+@C02WD045HTDG>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, May 18, 2021 at 01:07:36PM +1000, Ben Humphreys wrote:
 
-dwh@linuxprogrammer.org wrote:
+> I've run 2.32.0-rc0 through the Bitbucket Server test matrix and it picked up a
+> change in error message that perhaps is unintentional.
+> 
+> On 2.31.1:
+>   $ git ls-remote http://notauser@localhost:7990/bitbucket/scm/project_1/rep_1.git
+>   Password for 'http://notauser@localhost:7990':
+>   fatal: Authentication failed for 'http://localhost:7990/bitbucket/scm/project_1/rep_1.git/'
+> 
+> and on 2.32.0-rc0:
+>   $ git ls-remote http://notauser@localhost:7990/bitbucket/scm/project_1/rep_1.git
+>   Password for 'http://notauser@localhost:7990':
+>   fatal: unable to access 'http://localhost:7990/bitbucket/scm/project_1/rep_1.git/': The requested URL returned error: 401
+> 
+> This appears to be a side effect of 1b0d9545bb8, if I revert that commit the old
+> behavior returns. Certainly we can update our pattern matching to match the new message,
+> but I wonder if the old message is preferred for folks who are not familiar with HTTP
+> status codes.
 
-> I think we should make one last breaking change for digests and not go
-> with the existing SHA-256 implementation but instead switch to
-> self-describing digests and digital signatures and rely on external
-> tools that Git talks to using a standard protocol. We can maintain full
-> backward compatibility and even support full round tripping using some
-> of the similar techniques that Brian came up with.
+Thanks for reporting; I've added the author of that commit to the cc.
 
-Forgive my ignorance: can you describe what compatibility break you
-mean?  Do you mean _removing_ support for gpgsig-sha256?  If so,
-why --- couldn't you get the same benefit by introducing the new
-functionality you're describing without getting rid of historical
-functionality at the same time?
+I think this is definitely a regression in the output we're giving, but
+it also points to a bug in the behavior (we fail to forget about bad
+credentials; see below).
 
-A nice thing about signatures is that they don't change the semantics
-of the object.  So some future version of Git can remove support for
-verifying them, if they turn out
+The motivation from the commit is:
 
-By the way, to be clear, the hash-function-transition doc in
-Documentation/technical/ is not by Brian alone.  It is the result of
-collaboration by various people on list (see its git history for
-details).
+    When the username and password are supplied in a url like this
+    https://myuser:secret@git.exampe/myrepo.git and the server supports the
+    negotiate authenticaten method, git does not fall back to basic auth and
+    libcurl hardly tries to authenticate with the negotiate method.
 
-[...]
-> object 04b871796dc0420f8e7561a895b52484b701d51a
-> obj 0ED_zgYrQg584bCrqKPoUvxaQ5aMis0GtnW_NrZFTTxUlHLUOyp77LanoZEGV6ajhYGLGTaTfCIQhryovyeNFJuG
-> type commit
-> tag signedtag
-> tagger C O Mitter <committer@example.com> 1465981006 +0000
-> signtype openpgp
-> sign LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KVmVyc2lvbjogR251UEcgdjEKCmlRRWN
-> CQUFCQWdBR0JRSlhZUmhPQUFvSkVHRUpMb1czSW5HSmtsa0lBSWNuaEw3UndFYi8rUWVYOWVua1
-> hoeG4KcnhmZHFydldkMUs4MHNsMlRPdDhCZy9OWXdyVUJ3L1JXSitzZy9oaEhwNFd0dkUxSERHS
-> GxrRXozeTExTGt1aAo4dFN4UzNxS1R4WFVHb3p5UEd1RTkwc0pmRXhoWmxXNGtuSVExd3QveVdx
-> TSszM0U5cE40aHpQcUx3eXJkb2RzCnE4RldFcVBQVWJTSlhvTWJSUHcwNFM1anJMdFpTc1VXYlJ
-> Zam1KQ0h6bGhTZkZXVzRlRmQzN3VxdUlhTFVCUzAKcmtDM0pyeDc0MjBqa0lwZ0ZjVEkyczYwdW
-> hTUUx6Z2NDd2RBMnVrU1lJUm5qZy96RGtqOCszaC9HYVJPSjcyeApsWnlJNkhXaXhLSmtXdzhsR
-> TlhQU9EOVRtVFc5c0ZKd2NWQXptQXVGWDJrVXJlRFVLTVpkdUdjb1JZR3BEN0U9Cj1qcFhhCi0t
-> LS0tRU5EIFBHUCBTSUdOQVRVUkUtLS0tLQo
-[...]
-> I think a good move to make right now would be to add a general function
-> for stripping out any number of named fields from objects and also
-> stripping out in-body signatures found in tags. That way we can add
-> support in today's Git for stripping out fields/data for things like
-> creating/verifying the object digest and/or digital signature.
+    Stop using the Negotiate authentication method after the first failure
+    because if it fails on the first try it will never succeed.
 
-Can you say a little more about the user-facing model here?  How does
-a user know whether the signature verification result they're looking
-at describes the part of the object they care about or has stripped it
-out?
+So it is focused on the case when the credentials came in the URL,
+before the first contact with the server (where we'd get an HTTP 401).
+And the diff moves the negotiate check earlier in the function, before
+we see if we already have credentials:
 
-[...]
-> Let me try to lay out the case for making a breaking change to sha256
-> right now that will future-proof repos going forward.
->
-> It has been known for a few decades now that cryptography has a
-> shelf-life.
+diff --git a/http.c b/http.c
+index 0e31fc21bc..19c203d0ca 100644
+--- a/http.c
++++ b/http.c
+@@ -1641,17 +1641,18 @@ static int handle_curl_result(struct slot_results *results)
+ 	} else if (missing_target(results))
+ 		return HTTP_MISSING_TARGET;
+ 	else if (results->http_code == 401) {
++#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++		http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
++		if (results->auth_avail) {
++			http_auth_methods &= results->auth_avail;
++			http_auth_methods_restricted = 1;
++			return HTTP_REAUTH;
++		}
++#endif
+ 		if (http_auth.username && http_auth.password) {
+ 			credential_reject(&http_auth);
+ 			return HTTP_NOAUTH;
+ 		} else {
+-#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+-			http_auth_methods &= ~CURLAUTH_GSSNEGOTIATE;
+-			if (results->auth_avail) {
+-				http_auth_methods &= results->auth_avail;
+-				http_auth_methods_restricted = 1;
+-			}
+-#endif
+ 			return HTTP_REAUTH;
+ 		}
+ 	} else {
 
-Yes, this is a key assumption of the hash function transition.  It is
-meant to be repeatable, so that we are not stuck on a particular
-cryptographic hash.
+So in that case, we'd clear the GSSNEGOTIATE bit and return HTTP_REAUTH,
+and the caller will try again. Makes sense for the use case described.
 
-[...]
->                                       The end result is that in high
-> security software, SHA-256 is being replaced with SHA-3 and Blake2
-> digests.
+But imagine we didn't get a username/password in the URL. The first
+request will return REAUTH because of this moved code path (just as it
+would have before, because http.auth.{username,password} are not set).
+And then we'll get a credential from the user or from a helper and try
+again. But this time, if we fail, we'll return HTTP_REAUTH again! We
+never hit the "if (http_auth.username && http_auth.password)" check at
+all. And hence we never return HTTP_NOAUTH (which gives us the more
+useful "authentication failed" message), nor the credential_reject()
+line (which informs helpers to stop caching a known-bad password).
 
-Do you mean that practice is drifting away from the conclusion of
-https://www.imperialviolet.org/2017/05/31/skipsha3.html?  Where can I
-read more?
+We can see it like this. First, seed the cache with a bad password (in
+this case a bogus token to elicit a 401 response from GitHub). In real
+life, this would be a password stored from a previous successful
+attempt, but which was invalidated in the meantime. Note the empty value
+for credential.helper clears the list of any regular helpers you'd use
+for github.com.
 
-It took a while to decide on sha256 as the hash for Git to use to
-replace sha1.  The process involved useful feedback from Keccak team
-and others, and I feel pretty comfortable with how thoroughly it was
-discussed, though of course I wouldn't be surprised if the state of
-cryptanalysis has changed in some way since then.
+  echo url=https://peff:ghp_000000000000000000000000000000000000@github.com |
+  git -c credential.helper= \
+      -c credential.helper=cache \
+      credential approve
 
-The front runners were from the SHA2, SHA3, and Blake2 families.  The
-main factor that led to deciding on SHA2 is the wide availability of
-efficient and trustworthy implementations, in hardware and software.
-See https://lore.kernel.org/git/alpine.DEB.2.21.1.1706151122180.4200@virtualbox/#t
-and https://lore.kernel.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/#t
-for some of the discussion that led there.
+Now make a request that requires auth; we expect it to fail since our
+credential is bad.
 
-[...]
-> 4. switch to "late binding", "self describing" cryptographic constructs.
+  git -c credential.helper= \
+        -c credential.helper=cache \
+        ls-remote https://github.com/peff/foo
 
-As Junio mentioned, Git does not impose a requirement on the signature
-algorithm used in a signature block, including the digest involved.
-However, signing history typically involves signing object names, and
-object names use a cryptographic hash for other reasons.  If we want
-Git to stop using a content addressable object store, that would be a
-more fundamental changes to its design.
+which yields:
 
-Thanks and hope that helps,
-Jonathan
+  remote: Invalid username or password.
+  fatal: unable to access 'https://github.com/peff/foo/': The requested URL returned error: 401
+
+as expected (except for the error message). But we also expect it to
+clear the bogus credential from the helper, so that if we run ls-remote
+again, it will prompt us. But it doesn't! With git v2.32.0-rc0, you can
+run that ls-remote as many times as you want, and it will always fail.
+
+Whereas if you switch to 1b0d9545bb8^, on the second run it will
+correctly prompt you for an updated password.
+
+I think for this to work, we would need to figure out from libcurl's
+response that GSSNEGOTIATE was the problem for our particular request,
+and only trigger the bit-clearing and HTTP_REAUTH if that was true. I'm
+not sure if that's possible, though.
+
+I suspect we could hack around it by pessimistically guessing that
+GSSNEGOTIATE was the problem. But I'm worried that making that work
+would require up to three requests (one to find out we need auth, one to
+remove the GSSNEGOTIATE bit, and one to retry with a username/password).
+That seems like punishing people with servers that don't even care about
+Negotiate for no reason.
+
+So perhaps somebody can come up with something clever, but I suspect we
+may need to just revert this for the v2.32 release, and re-break the
+case that 1b0d9545bb8 was trying to solve.
+
+We probably should beef up the tests around http's credential-rejection,
+too, to catch this regression.
+
+-Peff
