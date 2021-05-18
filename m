@@ -7,102 +7,99 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 087D3C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B738C433ED
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 16:23:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D67746117A
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:52:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A9036109F
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 16:23:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350428AbhERPxe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 11:53:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
+        id S1343956AbhERQYq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 12:24:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239415AbhERPxd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 11:53:33 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B2AC061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 08:52:15 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id v5so12156027ljg.12
-        for <git@vger.kernel.org>; Tue, 18 May 2021 08:52:15 -0700 (PDT)
+        with ESMTP id S237986AbhERQYp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 12:24:45 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B57ACC061573
+        for <git@vger.kernel.org>; Tue, 18 May 2021 09:23:26 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id w12so4188237edx.1
+        for <git@vger.kernel.org>; Tue, 18 May 2021 09:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uQMyWBpVICt9rPT+0qtG94R1qinifkMxqRdM6M8p0Ek=;
-        b=VtwttCsgxg70pEByD9zRahANbXxnep81FfWK8a3teJEYzi+pPZaJorD7Vqt027zyL6
-         DUEdhUpkvn4tz8TPbPVzmqgSKVolm51zfKVMxeH75gjGMOxSB1Dw3rBFFG1iAnbN/rBJ
-         bauEYWWI554dbpZrUDwR/Ju0LKXbgZWz5ROCwqdjTXXRmvpXpMtTHEwuKN1HB9k2DDQU
-         dBXn54l7ZLj6u3XWwNff1UAimX78FPRQ6sq44/c6dY+Qt0DjE6hgU1MdJAGqNEK9wasm
-         3myyRToRfiy9KWRGOZyI1Xlvui7v8w9TFpEXsU9mCuX4vP4gEs6ozQFOHnfyRXpqz4VW
-         7nPw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=72/0TygspPj7R9U+kWL8bHGR3UyAkVQiv8p7fVnBaxs=;
+        b=puiVh3AVPbjQfHQhNTCwL0Ph4NpkliD8XwUwzEGlmy0vhuhXivWU91CTdHJtMVV1C8
+         X1ItgNVxTXSMBJIU7Mk4m3oxpbLc/eUCTlJlGHjeMmnbz9qSJe8oWmAesmss3PoTp5pn
+         wLggEHpjfC5v1D87lJ87UNRZWSSkeAgSE6KNKCTc29rYojGBMMRDRFtgtwv1/bY5yTSG
+         jBci8NfJZtFueVkCh2DliNRsEwo2bw49nQryRG0KKgZEHAGQ+g+dnfukjj9qkUBSFgmF
+         TEMqgNqpgpb1KIW6Dsg4WgavtrHiSOt0qQ37CiVaDH5efNRAKD2NQE2qnk89MAEvkHPY
+         7FdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=uQMyWBpVICt9rPT+0qtG94R1qinifkMxqRdM6M8p0Ek=;
-        b=Ri03hA4qEK68YgZst3fgcjJEEzJ/nenPA8zTYciCnXI82p+NnlSole2yNQWprh8sCh
-         t5IGg6NJ2NdlS11iMRbLbrqf80zCqV4wAHGu65boW1bH+Ovy9m3Q0R10hylbUAaU1s3B
-         VnNo39sJpBz6LOM9WqSd0rEK7jbcpt5qERgpXLcDl106jFllPOE1bFjnifjW/ogTp9fX
-         4vtxNSHiZrvWXoUk1YIVG1BgiaBqMaojsYX6iQkcf44aKqknUwpBT1xQM650LJrbeVhF
-         nugv4Ez6EFkkXrZd1W3SSRN62X/j8I1CO0MOzB9VpbSs2antS9p8D/pru+Ww6xQCCs33
-         ulxQ==
-X-Gm-Message-State: AOAM530xY+TqAoOxKr7J+uR27512+TvcF6N5E8kx4EsEOsXFqOgX9H2y
-        fGFB2Qhj2WWmm+aWcSd+yQ//7VyuYdE=
-X-Google-Smtp-Source: ABdhPJx7xwUUDRSJLdEU4G4JceK6Jyuweub4Sc9NjLzd9wIFOLKjT8qc5RY0TddEzto4gjv5yuqQSg==
-X-Received: by 2002:a2e:6c1a:: with SMTP id h26mr4695053ljc.478.1621353133702;
-        Tue, 18 May 2021 08:52:13 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id h13sm3262411lji.102.2021.05.18.08.52.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 08:52:13 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1 0/9] diff-merges: let -m imply -p
-References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
-        <20210517155818.32224-1-sorganov@gmail.com>
-        <xmqqr1i42kje.fsf@gitster.g>
-Date:   Tue, 18 May 2021 18:52:12 +0300
-In-Reply-To: <xmqqr1i42kje.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        18 May 2021 23:17:41 +0900")
-Message-ID: <87bl989h03.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=72/0TygspPj7R9U+kWL8bHGR3UyAkVQiv8p7fVnBaxs=;
+        b=ZmKg1PfXiVkFg5eFXzrPlzxZjRo2P5HMEVJkwo7F+ZM3NNblBrj4EX5IYVxkQ56h+H
+         VJENQLqJLyX9k5Zk7IaxesaCvxyWKw1k23NU2U18Ktfgy9R1JsJ0wTOXehHs4EE1tVzz
+         9c07TNUryNXq2n9UrYs92Z+75GaqMHFP4l67Mx5JrOBTmIXntDCxGFpYV1abMyP9Jdnc
+         AS0vZUltmxD8QxoaBIPxPDfiM/qkJV783uD3tuTjZrzUJ3uVc0amwSV1T0kOAVJSLap1
+         FPpZOI/8qYfsPVwysTBWlOwmY8/VH5/HzW/WhtL2gq5MOx7Kz3ei6WNHB2eP+QsxALqw
+         KFZQ==
+X-Gm-Message-State: AOAM532jfBphZMIXBIJaRQiKpdFpMOKtTGZkxhx5dl0v3eiI7dItl6lo
+        0ra2nfk0QYFKRrOkKJL9ThH4wesjkvUsWkoopYg=
+X-Google-Smtp-Source: ABdhPJyZXUMgPR0wcn235gZETYLXZilfYCEVOfpnEDM7gqAHBGnqZD/yQeiCkNINkuiJ4bqsPTIzCF26S24cgPnOm10=
+X-Received: by 2002:a05:6402:752:: with SMTP id p18mr8104375edy.127.1621355005505;
+ Tue, 18 May 2021 09:23:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <740165DC-19B3-49A0-8D70-B78B2BDF4C1D@gmail.com>
+In-Reply-To: <740165DC-19B3-49A0-8D70-B78B2BDF4C1D@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 18 May 2021 18:23:14 +0200
+Message-ID: <CAP8UFD2b4Gd-g55MzgJkcKobhw6NCueuV=f+HFGPgSMvPeQ0OQ@mail.gmail.com>
+Subject: Re: [GSoC] An Introduction
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Atharva,
 
-> Sergey Organov <sorganov@gmail.com> writes:
+On Tue, May 18, 2021 at 9:15 AM Atharva Raykar <raykar.ath@gmail.com> wrote=
+:
 >
->> Sergey Organov (9):
->>   t4013: test that "-m" alone has no effect in "git log"
->>   t4013: test "git -m --raw"
->>   t4013: test "git -m --stat"
+> Hello Git Developers!
 >
-> These two are mistitled (s/git -m/git log -m/).  Not a big deal as I
-> could "rebase -i" locally if there is no other changes needed, but
-> if you are going to have a reroll for other reasons, please correct
-> them.
+> I am Atharva Raykar, a student from Bangalore, who is going to be
+> involved more deeply with the Git community in the coming months.
+>
+> I am going to be focusing on converting Git's Submodule functionality
+> from shell to C, and I greatly look forward to make improve Git :)
 
-I'll correct and re-roll, please don't bother rebasing.
+Thanks for your work so far! We are happy to mentor you and also look
+forward to the improvements you will make!
 
+> Congratulations to ZheNing Hu for getting selected as well. I am
+> not surprised at all -- his volume of contributions even before his
+> selection has been great, and quite inspiring for me.
 >
->>   stash list: stop passing "-m" to "git list"
+> I look forward to helping out in any way I can and get to know the
+> community better. I'd also like to thank Christian, Kaartic, =C3=86var,
+> Junio, Johannes and Phillip who have all helped me learn and guide
+> me through my first few Git contributions.
 >
-> s/git list/git log/, I would think.
-
-Yep, and the description itself is as buggy.
+> Thanks again for trusting me with this work. I look forward to
+> contribute and help others contribute!
 
 Thanks,
-
--- Sergey Organov
-
-[...]
-
+Christian.
