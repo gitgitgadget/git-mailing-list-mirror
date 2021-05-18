@@ -7,139 +7,116 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA33C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 04:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E38C433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 04:31:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AE4061354
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 04:27:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A176061002
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 04:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240942AbhERE2r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 00:28:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59424 "EHLO
+        id S240953AbhEREcv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 00:32:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235926AbhERE2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 00:28:46 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8683C061573
-        for <git@vger.kernel.org>; Mon, 17 May 2021 21:27:27 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id h9so8600740oih.4
-        for <git@vger.kernel.org>; Mon, 17 May 2021 21:27:27 -0700 (PDT)
+        with ESMTP id S232178AbhEREcu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 00:32:50 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98245C061573
+        for <git@vger.kernel.org>; Mon, 17 May 2021 21:31:32 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id l25-20020a4a35190000b029020a54735152so1960007ooa.4
+        for <git@vger.kernel.org>; Mon, 17 May 2021 21:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=sf9AAPYABY/FRKaKoAq4HSt5GQYN6GrxON0+peSgzrE=;
-        b=k9TEKKLk7pGL8t9CzJr0/XKjQdR5Y/CGfSXb17HuvxX/fazdQC+wih/a3T6k7F0OKn
-         uFzIGh5BSxq5qowTSd1r3sgBGf7escuV52x6ekpYtnR5UqJsRNriT7J5NviR2BDRI0tV
-         qANdUExlBaJ6Aly33eQh7a5V1S6xFRnCwHtF6DSXuIFR4RmlkXkx/sJxeNvtSdP6yLLC
-         Vfn/y5IAzy2CJWaAsirbtLxz57n1VooAdNBkwNcAj3mSQRK38XWCCDwQtvBVplD9Gs87
-         c5E4PGBpJ0ES9e92NO9MUeQLmrXxh2M5N5GF7xVaoA4L8uaqZKsZJWm2vEp4381rhx6Y
-         YuOA==
+        bh=7PHq6vKfn3MobhbU6W9e0rVCNbgLNdDIly1Fx3K1Yw8=;
+        b=XaLfztU+v8g7asRSQlIa+TUYAZCbHZz/xwIGXjK0F2RIquBGzrUOJjPekozML/Udj4
+         m5aZrtB3gTk0c/5PCOO2HWBLxz8iVErKjvyhLxFzYBQjobOPAcd5ewl40NKWJEkQPqoq
+         l9gSYh7pyKLhjeFc2OaYuQC21TmQVjRhujgMKIIliISXCajZ4rvo8FY+cQ2OcFsKJsj/
+         xNnQ/zaGeY+BExnFuEc4NznpA07ZXHV8AU8eKwUmLyDVMhx9JXoCp8bxuPfxOMccwN4N
+         Q6usAI1sI0SfbA7yYE7UUt5/h5XsacZ1mNqT/ZjVyNJZEtm2y6U4Jxj9qcVlbZStMxAH
+         N2Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=sf9AAPYABY/FRKaKoAq4HSt5GQYN6GrxON0+peSgzrE=;
-        b=MF64iichkD1V45l1q9I+TZrwg7MrYtEEyTf2jnoKRQ05B0G5l/AIKi2eb6d/eo0F/L
-         qukN8f1b7wn9OFclev6Q1E2GuX64Ab07EAu+f/Cn6ydpgy/tDAwgIRFBLdJTQfdbOe+7
-         WYxnYGXHjMpcPb8qgInki4bmMwDlaee6Z5CjvJSzQ//R4paikgzmhn4varWuK7L7jp6T
-         CmLrAsUOC8f1CgKjSjpkGtJVchIVyv/K1P5PXopvYT90Vzn1MwZb+4yMT8lbWB+gAE2y
-         TWFTpQRGqKybx5CkoylkG1fNsF1yGWCrONKTUVHNT31JltK7YDUd8JHR0OKTnbtZANSJ
-         zSzg==
-X-Gm-Message-State: AOAM533QKfCwR8Kras7Ct++HgdK222d6N6G8SFOd7VEiWqSpSXn+cjqV
-        kXCHDbRnDSNAbFszKXeGQuQ=
-X-Google-Smtp-Source: ABdhPJx26Ho1FRqdu2amqhyV0sGPHa+CDeFC3zEMOGtZ8KJ0JG7/FsoTImE3H2RitH/WqV7evp5YKg==
-X-Received: by 2002:aca:53d8:: with SMTP id h207mr1970289oib.177.1621312047092;
-        Mon, 17 May 2021 21:27:27 -0700 (PDT)
+        bh=7PHq6vKfn3MobhbU6W9e0rVCNbgLNdDIly1Fx3K1Yw8=;
+        b=O/yBLfyU2+bLuDIaPqXYsPWnvxsUhoullm5Krh4AyYtrJRGZ4cYvMnKzgekwaqakk1
+         l64JtOeNxjvUzGSPvnp60fn39860VSynUAYH+Mr4DIDN3LKqTZEy9E8MJMOzJy0GDi4H
+         sJECk1ylu25F3fuBBMDa8FDKWeIYVBDTzMxuQ6cEtvydsAbkuUZyTXH5WD6fyplp0to8
+         CQGRCo4+6ultNAMOM8xgTU881cHS/imc/fiPMG55Pd15JiDmY/xYyzTIjl/5qMhzgzHW
+         jW4jsb+XQh/VHzDWwCHNANETbtLMmGYdku2rkgNf1eHEESJEkRJUNl5frb8LQpK6Mx3o
+         6GTw==
+X-Gm-Message-State: AOAM533QWz/pv3uN3Sc4XtYdW1DpKJ5q6nKmebNr6cXw0e9/zH0sj35w
+        HYxXE26MrTt1Z4ajzcECX5fV0qrs8ozitg==
+X-Google-Smtp-Source: ABdhPJwBM5kgdXuQYDoe3PJa8LQTpMacBJcmZhzlUVrfi7jf4Yq41cOhwoi9gtTfSPu3TGG9R6ktiw==
+X-Received: by 2002:a4a:97ed:: with SMTP id x42mr2694292ooi.40.1621312292083;
+        Mon, 17 May 2021 21:31:32 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id y11sm3530557ooq.2.2021.05.17.21.27.25
+        by smtp.gmail.com with ESMTPSA id d67sm3068654oia.56.2021.05.17.21.31.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 May 2021 21:27:26 -0700 (PDT)
-Date:   Mon, 17 May 2021 23:27:23 -0500
+        Mon, 17 May 2021 21:31:31 -0700 (PDT)
+Date:   Mon, 17 May 2021 23:31:30 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Message-ID: <60a3422b9556c_14d1bc2082f@natae.notmuch>
-In-Reply-To: <xmqqim3g4ys5.fsf@gitster.g>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Message-ID: <60a343226a0ab_14d1bc208f8@natae.notmuch>
+In-Reply-To: <YKMYUUVVVJMWH7xi@camp.crustytoothpaste.net>
 References: <60a046bd83001_f4b0f20861@natae.notmuch>
  <87tun1qp91.fsf@evledraar.gmail.com>
- <xmqqlf8d6ty5.fsf@gitster.g>
- <60a2f1c4cab0d_13c3702083a@natae.notmuch>
- <xmqqim3g4ys5.fsf@gitster.g>
+ <YKMYUUVVVJMWH7xi@camp.crustytoothpaste.net>
 Subject: Re: Man pages have colors? A deep dive into groff
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+brian m. carlson wrote:
+> On 2021-05-17 at 16:48:04, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote=
+:
+> > This looks much better.
+> > =
 
-> > Why not use color.pager?
-> 
-> I dug a bit to refresh my memory and it turns out that the reason we
-> should not do so is because it means something totally different.
-> 
-> color.[ch] defines want_color() that applications like "diff" and
-> "log" can use to see if the application is configured to paint its
-> output in colors.
-> 
-> When that layer says for that particular application it should be
-> decided automatically, then we call into color.c::check_auto_color()
-> which is the only user of pager_use_color (which is set from the
-> color.pager configuration variable).  The purpose of that call is to
-> ask if the pager is capable of colors.
+> > I wonder a good follow-up (hint, hint! :) would be to have
+> > exec_man_man() and exec_man_cmd() in builtin/help.c set this dependin=
+g
+> > on color.ui (so we'd do it by default with "auto").
+> > =
 
-That is not true. check_auto_color() returns 1 when the fd is a tty.
+> > Then e.g. "git help git" would look prettier than "man git".
+> =
 
-For example advice() would indirectly call check_auto_color() and no
-pager is involved.
+> As I mentioned on the patch itself, I'd prefer if Git didn't do this.  =
+I
+> have my own colors configured and don't want Git to render its man
+> output differently from what I have.
 
-Inside the help built-in want_color(GIT_COLOR_UNKNOWN) will always
-return 1 (unless you do something like `git help git > file`).
+It won't.
 
-pager_use_color is completely ignored in this case.
+> Even if I didn't, I wouldn't want Git to change the output of man(1)
+> to be different from what's on the system.
 
-It's used only when 1) the fd is not a tty, 2) it's stdout, 3) git is
-using a pager... Only _then_ it checks for pager_use_color
-(color.pager).
+That's a preference others don't share.
 
-So no; the first purpose of check_auto_color() is to find out if the fd
-is capable of showing colors, secondary, if we are using a pager, then
-check the user configuration.
+> I should point out that I have my shell configuration set up to use
+> different colors depending on the capability of the terminal, such as
+> using a 256-color palette when that's supported and a 16-color palette
+> when it's not, so there is literally no configuration that Git can
+> provide here that matches my existing settings.
 
-In the case we are using a pager it's not check if the pager is capable
-of colors, the pager could be capable of colors and yet the user would
-disable them: it's the check for the user preference.
+Once again; your configuration is not going to be overridden.
 
-> So in short, the color.pager is about "is the pager capable of
-> colors?"
+> Additionally, colors tend to pose accessibility problems for a lot of
+> people.  I have normal color vision, but because I use a transparent
+> background which renders as grey, the standard terminal red is nearly
+> illegible for me.  I also know people with colorblindness who have
+> problems with various colors or any colors at all.
 
-That's not the case.
+Their configuration won't be overridden either.
 
-Even the documentation says so:
+-- =
 
-  color.pager::
-    A boolean to enable/disable colored output when the pager is in
-    use (default is true).
-
-> and the color.ui (and color.<cmd>) is about "does the user
-> wants output from <cmd> in color?"
-
-> Tying it directly to "color.pager" is wrong.
-
-Why? color.pager is to enable/disable colored output when a pager is in
-use.
-
-The fact that it's man executing the pager and not git makes no
-difference to the user.
-
-Cheers.
-
--- 
-Felipe Contreras
+Felipe Contreras=
