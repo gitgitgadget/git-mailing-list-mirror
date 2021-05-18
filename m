@@ -2,105 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F09BC433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 939E3C43462
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:03:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CA11610A8
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:00:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 718986100C
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 15:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244559AbhERPBY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 11:01:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34202 "EHLO
+        id S1344063AbhERPFL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 11:05:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234596AbhERPBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 11:01:21 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA36C061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 08:00:02 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id z1so5068457qvo.4
-        for <git@vger.kernel.org>; Tue, 18 May 2021 08:00:02 -0700 (PDT)
+        with ESMTP id S1343903AbhERPFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 11:05:11 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EDE4C061573
+        for <git@vger.kernel.org>; Tue, 18 May 2021 08:03:52 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id t30so7201091pgl.8
+        for <git@vger.kernel.org>; Tue, 18 May 2021 08:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GcWRaQtcEtJMJQ4WOMKNrVUKvG6Dnly+CJ+UFIa5Qv4=;
-        b=WuGIqKWohJJwUzA9d/m1gUsGNhIWmF62RrNZ6Bfcj+Hx1dJCgbZzSOyO7DnPz0lZ+l
-         sVo3V2JqLQ6pEAmQrOMCGD3b3M7dFILnr5DhFevNqauqYrNF/pJisfNZdYHBUtpuSHNm
-         5WBkszCM63JQwFaOxvQQ5pCb1RnCOaeGQdHNYq+6lJwovNOcX6zPbDXhfDLgN4MNRleM
-         Mp7lVmH69dPheBPQsLD2LrOxu2x8a20e12OEmBA42m5Ry5g8Iyjj8BLGZFz6Czq+u053
-         VDA2tfRdckBFtFpEs69qtxXQGuk2nHZLrsieuzChzW9o0pql8cw0EqgjEXNg9Fq4aM6+
-         byPg==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=nI424pw4wyWEqUsowBl4sv/G5ycm/MBb2NdfJca347k=;
+        b=RpJZsAgyfvztvUqFoUtbJNDn6VAVIg/heuSEfinvJl5j2gACAbG6vobAalUAftoc7R
+         Zv8ROmYf4uPZUj53dxIkeaVNqzXuMJpfpGj2sulaUf7S4jHsrtiIQ7M13HqF+5AMIsbj
+         idG+2sLjbeNFpJvRorecvZc7k+a1ijFui7Tn0ciRRfg79eECWtDiiZz4J/VPqZpwVB2E
+         8P2zBO+114vNb6giBhHWHrWxYnoozKCWQUKjnUlPZxWk+A8z+UF4ebiUzm6Hq/wKSRkQ
+         2uRpQAKvdGFb7lLT7GooqvFEtaUDXcCjH6mG4RW2qH74zXrTOKvxPYBRdmOoNzZqx/bf
+         XEYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GcWRaQtcEtJMJQ4WOMKNrVUKvG6Dnly+CJ+UFIa5Qv4=;
-        b=lmVNSPlU+NokLuadLuK0SeNK2dz9anGwBy2NTLf0Q5yo1M9k8RSpreeVJD6ZP1O0BA
-         jr6nvSjP2LcPHEm5iu7OX1kYWL/ANxT0iYSInWv72Vu09L1rn+H/HTnp/76Opl5jSOw7
-         iWie5CoOtuTLeXw7NMJ+ew9WgaNyKW98tR8bLKdNGjZyz2F5B0gDdQF/mz5YEZ9u2DDv
-         WBYcN4SJESGcVvcUMXSOhEyHT/sT2ecYzgKIJz8dR5EiUY9z0HML8VFfIZYNV8hTtZlb
-         24AmbJHLI3ArpkGrCrpkQWZERHoxOQtIeS/dEjht1ob/3vDPi3laLoHECrkJ7sDa3D7n
-         coeg==
-X-Gm-Message-State: AOAM530oPM94pqFWhQb2PxWqZBsF5IS1HZwdNJa90PxChW1RTOyS5LzV
-        oOti5yxvY84OZPclkJ/IXlw=
-X-Google-Smtp-Source: ABdhPJzfZ8K0kFu2p4DKjUgzcvD6h8cOR4buMBs/67Tp1QoD+nb14OAwvXwOiSzqiz6Hr/NtNWeHIw==
-X-Received: by 2002:ad4:4184:: with SMTP id e4mr6044669qvp.13.1621350001310;
-        Tue, 18 May 2021 08:00:01 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:bcf4:c194:74a1:9906? ([2600:1700:e72:80a0:bcf4:c194:74a1:9906])
-        by smtp.gmail.com with ESMTPSA id t17sm3978965qto.92.2021.05.18.08.00.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 May 2021 08:00:00 -0700 (PDT)
-Subject: Re: [PATCH v3 03/12] t1092: expand repository data shape
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.932.v2.git.1619213665.gitgitgadget@gmail.com>
- <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
- <70971b1f9261f2623ad6d6393be1a8e191003eb4.1621017072.git.gitgitgadget@gmail.com>
- <CABPp-BG=5huMt2FOrzscNrg9rCpo40we7ms8K=508+Kur0yGnQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <48a361fd-33d5-29ba-556f-10075139de33@gmail.com>
-Date:   Tue, 18 May 2021 10:59:59 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=nI424pw4wyWEqUsowBl4sv/G5ycm/MBb2NdfJca347k=;
+        b=MohjxA6S4qu+RjT4lbX/JU7oU7WVx8xMGiDJSI7gk0DW1Wn1Ty3hcmQRkW5m/6s1+C
+         sAQIiZYSLmTyOvcWefwoSZVqaotKeqPz3UTpeoBc755ijUkZX32ek+XfdIOBEaieNVWK
+         8j7tZ9G7Y+svFjNLTzFUfbVRcjB40FHX/THqrmLhu5k/KV1V8uPtXDAVc2BrWITWBMUz
+         Jeq3z+2dyJ8x23yYuq5YAtdwiZInMof8ecrNKNMg6UIlMZ7QROWDrS0TtGxL9zbq7Nzr
+         KN40RWk3g3SR3CswQ8osiX/yjni3o8UXFt+ch0R1z+HeJjfUVPpVvxZnd/cITWALPqk8
+         s0eg==
+X-Gm-Message-State: AOAM531npBiMDskTOakxftUSWo2pnQ6br+oLn1Dup0tAR5DU1W1nwxgd
+        jpZWPUYtBe3zFt6XbX3QCbEaImyXLyA=
+X-Google-Smtp-Source: ABdhPJxLrERgJcOBJ4O2j3HRJU/hanLlJST2xYqVIrcuFuR8UdeNVpKEoNKbK6oDJ+0Zm6PSyAiRAw==
+X-Received: by 2002:a63:ed4d:: with SMTP id m13mr5461546pgk.433.1621350231103;
+        Tue, 18 May 2021 08:03:51 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:ea96:bdac:27b4:8cdc])
+        by smtp.gmail.com with ESMTPSA id u6sm11936457pfi.44.2021.05.18.08.03.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 May 2021 08:03:50 -0700 (PDT)
+Date:   Tue, 18 May 2021 08:03:48 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] xsize_t: avoid implementation defined behavior when len < 0
+Message-ID: <YKPXVMchtGbwDuue@google.com>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BG=5huMt2FOrzscNrg9rCpo40we7ms8K=508+Kur0yGnQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/17/2021 9:49 PM, Elijah Newren wrote:
-> On Fri, May 14, 2021 at 11:31 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> Later tests will take advantage of these shapes, but they also deepen
->> the tests that already exist.
-> 
-> Makes sense.  Do we also want to add ones of the form
-> 
->    foo/bar
->    foo.txt
-> 
-> ?
-> 
-> Here we'd be particularly looking that if foo is a sparse directory,
-> we want to avoid messing up its order.  ('foo' sorts before 'foo.txt',
-> but 'foo/' sorts after, and thus 'foo' the directory should be after
-> 'foo.txt')
+The xsize_t helper aims to safely convert an off_t to a size_t,
+erroring out when a file offset is too large to fit into a memory
+address.  It does this by using two casts:
 
-Good idea!
+	size_t size = (size_t) len;
+	if (len != (off_t) size)
+		... error out ...
 
-Thanks,
--Stolee
+On a platform with sizeof(size_t) < sizeof(off_t), this check is safe
+and correct.  The first cast truncates to a size_t by finding the
+remainder modulo SIZE_MAX+1 (see C99 section 6.3.1.3 Signed and
+unsigned integers) and the second promotes to an off_t, meaning the
+result is true if and only if len is representable as a size_t.
+
+On other platforms, this two-casts strategy still works well (always
+succeeds) for len >= 0.  But for len < 0, when the first cast succeeds
+and produces SIZE_MAX + 1 + len, the resulting value is too large to
+be represented as an off_t, so the second cast produces implementation
+defined behavior.  In practice, it is likely to produce a result of
+true despite len not being representable as size_t.
+
+Simplify by replacing with a more straightforward check: compare len
+to the relevant bounds and then cast it.
+
+In practice, this is not likely to come up since typical callers use
+nonnegative len.  Still, it's helpful to handle this case to make the
+behavior easy to reason about.
+
+Historical note: the original bounds-checking in 46be82dfd0 (xsize_t:
+check whether we lose bits, 2010-07-28) did not produce this
+implementation-defined behavior, though it still did not handle
+negative offsets.  It was not until 73560c793a (git-compat-util.h:
+xsize_t() - avoid -Wsign-compare warnings, 2017-09-21) introduced the
+double cast that the implementation-defined behavior was triggered.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi,
+
+This is *not* -rc material; it's just something I noticed and figured
+I would send it before I forget (among other benefits, this helps us
+kick the tires on the release candidate by having patches to work
+with).
+
+Thoughts welcome, as always.
+
+Jonathan
+
+ git-compat-util.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index a508dbe5a3..20318a0aac 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -986,11 +986,9 @@ static inline char *xstrdup_or_null(const char *str)
+ 
+ static inline size_t xsize_t(off_t len)
+ {
+-	size_t size = (size_t) len;
+-
+-	if (len != (off_t) size)
++	if (len < 0 || len > SIZE_MAX)
+ 		die("Cannot handle files this big");
+-	return size;
++	return (size_t) len;
+ }
+ 
+ __attribute__((format (printf, 3, 4)))
+-- 
+2.31.1.818.g46aad6cb9e
+
