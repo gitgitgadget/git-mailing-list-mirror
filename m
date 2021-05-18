@@ -2,298 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1171C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BC1CC433B4
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:21:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DCBD6113C
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:21:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80E366113C
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 13:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240033AbhERNWU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 09:22:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39408 "EHLO
+        id S243669AbhERNWs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 09:22:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239145AbhERNWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 09:22:19 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A62C061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 06:21:02 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id g7-20020a9d12870000b0290328b1342b73so742860otg.9
-        for <git@vger.kernel.org>; Tue, 18 May 2021 06:21:02 -0700 (PDT)
+        with ESMTP id S239145AbhERNWr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 09:22:47 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0312CC061756
+        for <git@vger.kernel.org>; Tue, 18 May 2021 06:21:29 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id c196so1546548oib.9
+        for <git@vger.kernel.org>; Tue, 18 May 2021 06:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iYsVnmt9H+4tgE4S6sUaN0SHVKIx4P4qubHbXIlAj+8=;
-        b=pqCQnucZ3OywLJ3nJKdkiRq5Kk+1Bmra1OEyoRjWHa+QsxB3vlPSfZOw2KaAZbgmGm
-         wLwBlNZmlnHEOvwbrwau6EANwXfaVEcI+PPqWU3dOPndWsWag6wM2uXVVnfqT24NUqk1
-         APvkDgVIneUtCaPO6sTKAJrToML77LasQKDui5/hT7ZO2N8EPtEXcl3xUz/pQkUa/ez3
-         qzD/VFxWHWLuxqfHsMEAWHHLH9ig2qgARDpWPrZsLIEA1en343xSnSnErZZJApVA63ZV
-         Y+N4piYuIlhL4VC4kgm2lFVq/Qf4MxivMQLkc4YvabjAL+LgmCOGG0pauwtrYUfbq5+9
-         KJBQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=3u/L9ENQPYvvO+UBnsQEn8fZpm1rD5NgXKz8QRd3YKw=;
+        b=ZEBa/TJCcJFiJns/RCb+nPpEUIWYSKWPVS/r4UOGKFr40/Mzwjg9P7q4GExxOnwwUW
+         ywoWaiFGv+L1b9Qj1iagGQrwNvBD8oFq9DYVhDRtYwjn4CX595gv5qwvIuN0WZPow9Cf
+         UNj4q6D5FkX0wk3ff+2yigxVD0QYAYMOq2x94+zNlqDO+7vvM86uCDRZgBjUXIOvxwbF
+         quHLiF4KpFoscA2/Ut1upqXLJMwZKKuV1EI9ykzEvd1Fb5SfTTc/Cmzo2jeyp0/Q/xLX
+         ndorL4I7VYtdeyIkqPgBfdoYvlR+kVq+zOXJCkOwVSJrajjN3p8ZB/U4kA9ENDTuj/YV
+         I5jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iYsVnmt9H+4tgE4S6sUaN0SHVKIx4P4qubHbXIlAj+8=;
-        b=tSHJ2bmfgSUD+6iFTDRhU+KxtxMbGhS8CEbgjUMRLdueFazRBYXshQbiKbIYDlDhDJ
-         Mk05iaV+dByzSmhVsQ7zOJlptAba2mRv6SBpufmbZC9iSd/nx4V1cEOwmMZVA2FFk50d
-         AHwmBV2aFBmu1D3dK2jI2605p2XXrecMvZJALuuonAv0BqyWeClTz01q7qCsCoN/ZwYD
-         fzQNfs4Xf1NtgjLBYf/HuOuPlsS0CS8GaEQsEXY9k/uxmHHOk3Ut1jk7wZscoLPXz/G0
-         YwZajlE9CC+QyS39DZO3WnrT9JLVbSmTpxAYKkSzlPBOf0Wh3xSqhBgICWidOCw+A9Hy
-         O1eQ==
-X-Gm-Message-State: AOAM533NFvn+bKtlOm2QYj7+7sUh69+ayak9um68yv3YV73jf0zWKiRF
-        UMmRbsa4VvQGbV54D7sE663dhmzd8HoKGw==
-X-Google-Smtp-Source: ABdhPJzG0yDL2CUVgWMib7fnSbnN90Dpku/gs1SkNoFzVop+/hcV6XW3qktwS9qz21OXdrp/sl2ojA==
-X-Received: by 2002:a9d:5a4:: with SMTP id 33mr4268645otd.328.1621344061067;
-        Tue, 18 May 2021 06:21:01 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=3u/L9ENQPYvvO+UBnsQEn8fZpm1rD5NgXKz8QRd3YKw=;
+        b=bcuTgx1jgwfWp/sCZ6f5fS7FCleDoXWcz0wYcz1nw4IWThaHS2uBJOKa+5hfcx4YLF
+         xMhLMtuo0ALD3l41oNXPiAy22ZNMi85aVG2drl8FkIGuWQCGNSHdalNxCX1oKtz/fzkl
+         LWra8yUXQ8yYAGlV4zDLtp+VTonC/i7e9MMpLwhqdFYS7SUuRZhFUhZcB8u9esH4Eo8G
+         P+x28LIHgOFpmovsNJloTZibWUY6NNHleyamk9DFhfEJdCmCDr+deWui+P1tKMczjf7f
+         Orihzp/OUa9pVkhkxKx4UkVw7HsTR5Tt4O/HRtbGSkKLurfmtPoxVJO1q3mYcjqCHu2a
+         fhVw==
+X-Gm-Message-State: AOAM533Td0992tm8kjVVuXq2ZDAis3OgpLuckyF/JIufIY+Bpq6OiQ8p
+        8W8RW7/CxxKIPFc8U7/QBsI=
+X-Google-Smtp-Source: ABdhPJyCf4NGCs7xNm8Ik4d84DyRbY3M7pDonY+b8TyQf1HGEbHdn5BOD9JBZdZRUGaO5lEM2rwuwg==
+X-Received: by 2002:aca:f008:: with SMTP id o8mr3963575oih.106.1621344087804;
+        Tue, 18 May 2021 06:21:27 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id a23sm3853191otf.47.2021.05.18.06.21.00
+        by smtp.gmail.com with ESMTPSA id t69sm43156oif.28.2021.05.18.06.21.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 May 2021 06:21:00 -0700 (PDT)
+        Tue, 18 May 2021 06:21:27 -0700 (PDT)
+Date:   Tue, 18 May 2021 08:21:26 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
+To:     Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2] help: colorize man pages
-Date:   Tue, 18 May 2021 08:20:56 -0500
-Message-Id: <20210518132056.2003135-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.31.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Message-ID: <60a3bf5624cbc_15198720876@natae.notmuch>
+In-Reply-To: <YKNptH9DL6pe18Dk@coredump.intra.peff.net>
+References: <60a046bd83001_f4b0f20861@natae.notmuch>
+ <87tun1qp91.fsf@evledraar.gmail.com>
+ <xmqqlf8d6ty5.fsf@gitster.g>
+ <60a2f1c4cab0d_13c3702083a@natae.notmuch>
+ <xmqqim3g4ys5.fsf@gitster.g>
+ <60a3422b9556c_14d1bc2082f@natae.notmuch>
+ <YKNptH9DL6pe18Dk@coredump.intra.peff.net>
+Subject: Re: Man pages have colors? A deep dive into groff
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our man pages don't contain many useful colors (just blue links),
-moreover, many people have groff SGR disabled, so they don't see any
-colors with man pages.
+Jeff King wrote:
+> On Mon, May 17, 2021 at 11:27:23PM -0500, Felipe Contreras wrote:
+> 
+> > > So in short, the color.pager is about "is the pager capable of
+> > > colors?"
+> > 
+> > That's not the case.
+> > 
+> > Even the documentation says so:
+> > 
+> >   color.pager::
+> >     A boolean to enable/disable colored output when the pager is in
+> >     use (default is true).
+> 
+> I think that documentation misses the reason you'd want to use it.
+> Likewise, the commit message introducing it (aa086eb813d) sucks,
 
-We can set LESS_TERMCAP variables to render bold and underlined text
-with colors in the pager; a common trick[1].
+Well, it was 2006. Many of the best practices of today were not followed
+back then.
 
-Bold is rendered as red, underlined as blue, and standout (messages and
-highlighted search) as inverse magenta.
+> but the
+> motivation (from [0]) was:
+> 
+>   When I use a pager that escapes the escape character or highlights the
+>   content itself the output of git diff without the pager should have
+>   colors but not with the pager.  For example using git diff with a
+>   pathspec is quite short most of the time.  For git diff I have to
+>   enable paging manually and run git diff | $PAGER usually but git log
+>   uses the pager automatically and should not use colors with it.
 
-This only works when the pager is less.
+This is aligned with what I said: the uswer wants to disable colors when
+using a pager.
 
-If the user already has LESS_TERMCAP variables set in his/her
-environment, those are respected and not overwritten.
+Yes, in this instance it's because the pager doesn't support colors, but
+that's not always necessarily so. A person with sight problems may use
+less (perfectly capable of colors), but yet not want to exercise that
+capability.
 
-A new color configuration is added: `color.man`, otherwise `color.ui` is
-respected, and in addition color.pager needs to turned on.
+It's still a preference.
 
-Normally check_auto_color() would check the value of `color.pager`, but
-in this particular case it's not git the one executing the pager, but
-man. Therefore we need to check pager_use_color ourselves.
+> For a more concrete example, my pager _does_ understand colors, and I
+> would not want to set pager.color to "false" (because then "git log",
+> etc, would not show me any colors). But I don't like the man colors you
+> are suggesting.
 
-[1] https://unix.stackexchange.com/questions/119/colors-in-man-pages/147
+You can change them in your environment.
 
-Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Comments-by: Jeff King <peff@peff.net>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
-Range-diff against v1:
-1:  a943dedab8 ! 1:  9e34a49fa9 help: colorize man pages
-    @@ Commit message
-         Bold is rendered as red, underlined as blue, and standout (messages and
-         highlighted search) as inverse magenta.
-     
-    -    This only works when the pager is less, and the color.pager
-    -    configuration is enabled, as well as color.ui.
-    +    This only works when the pager is less.
-    +
-    +    If the user already has LESS_TERMCAP variables set in his/her
-    +    environment, those are respected and not overwritten.
-    +
-    +    A new color configuration is added: `color.man`, otherwise `color.ui` is
-    +    respected, and in addition color.pager needs to turned on.
-    +
-    +    Normally check_auto_color() would check the value of `color.pager`, but
-    +    in this particular case it's not git the one executing the pager, but
-    +    man. Therefore we need to check pager_use_color ourselves.
-     
-         [1] https://unix.stackexchange.com/questions/119/colors-in-man-pages/147
-     
-    +    Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    +    Comments-by: Jeff King <peff@peff.net>
-         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-     
-    + ## Documentation/config/color.txt ##
-    +@@ Documentation/config/color.txt: color.interactive.<slot>::
-    + 	or `error`, for four distinct types of normal output from
-    + 	interactive commands.
-    + 
-    ++color.man::
-    ++	When set to `always`, always colorize the man pages. When `false`
-    ++	(or `never`), never.  When set to `true` or `auto`, use color only
-    ++	when the output is written to the terminal. If unset, then the
-    ++	value of `color.ui` is used (`auto` by default).
-    ++
-    + color.pager::
-    + 	A boolean to enable/disable colored output when the pager is in
-    + 	use (default is true).
-    +
-      ## builtin/help.c ##
-     @@
-      #include "config-list.h"
-    @@ builtin/help.c
-      
-      #ifndef DEFAULT_HELP_FORMAT
-      #define DEFAULT_HELP_FORMAT "man"
-    +@@ builtin/help.c: static int verbose = 1;
-    + static unsigned int colopts;
-    + static enum help_format help_format = HELP_FORMAT_NONE;
-    + static int exclude_guides;
-    ++static int man_color = GIT_COLOR_UNKNOWN;
-    + static struct option builtin_help_options[] = {
-    + 	OPT_BOOL('a', "all", &show_all, N_("print all available commands")),
-    + 	OPT_HIDDEN_BOOL(0, "exclude-guides", &exclude_guides, N_("exclude guides")),
-     @@ builtin/help.c: static void exec_man_konqueror(const char *path, const char *page)
-      	}
-      }
-      
-     +static void colorize_man(void)
-     +{
-    -+	if (!pager_use_color || !want_color(GIT_COLOR_UNKNOWN))
-    ++	if (!want_color(man_color) || !pager_use_color)
-     +		return;
-     +
-     +	/* Disable groff colors */
-    @@ builtin/help.c: static void exec_man_man(const char *path, const char *page)
-      	execl(SHELL_PATH, SHELL_PATH, "-c", shell_cmd.buf, (char *)NULL);
-      	warning(_("failed to exec '%s'"), cmd);
-     @@ builtin/help.c: static int git_help_config(const char *var, const char *value, void *cb)
-    + 	}
-      	if (starts_with(var, "man."))
-      		return add_man_viewer_info(var, value);
-    ++	if (!strcmp(var, "color.man")) {
-    ++		man_color = git_config_colorbool(var, value);
-    ++		return 0;
-    ++	}
-      
-     -	return git_default_config(var, value, cb);
-     +	return git_color_default_config(var, value, cb);
+> I want to be able to turn them off by setting "color.man" or similar
+> to false, not by disabling color for everything that is paged.
 
- Documentation/config/color.txt |  6 ++++++
- builtin/help.c                 | 32 +++++++++++++++++++++++++++++++-
- color.h                        |  1 +
- 3 files changed, 38 insertions(+), 1 deletion(-)
+Sure, for that particular case it does make sense. I'll add that.
 
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-index d5daacb13a..02019a612c 100644
---- a/Documentation/config/color.txt
-+++ b/Documentation/config/color.txt
-@@ -126,6 +126,12 @@ color.interactive.<slot>::
- 	or `error`, for four distinct types of normal output from
- 	interactive commands.
- 
-+color.man::
-+	When set to `always`, always colorize the man pages. When `false`
-+	(or `never`), never.  When set to `true` or `auto`, use color only
-+	when the output is written to the terminal. If unset, then the
-+	value of `color.ui` is used (`auto` by default).
-+
- color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
-diff --git a/builtin/help.c b/builtin/help.c
-index bb339f0fc8..05c758ca1b 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -11,6 +11,7 @@
- #include "config-list.h"
- #include "help.h"
- #include "alias.h"
-+#include "color.h"
- 
- #ifndef DEFAULT_HELP_FORMAT
- #define DEFAULT_HELP_FORMAT "man"
-@@ -43,6 +44,7 @@ static int verbose = 1;
- static unsigned int colopts;
- static enum help_format help_format = HELP_FORMAT_NONE;
- static int exclude_guides;
-+static int man_color = GIT_COLOR_UNKNOWN;
- static struct option builtin_help_options[] = {
- 	OPT_BOOL('a', "all", &show_all, N_("print all available commands")),
- 	OPT_HIDDEN_BOOL(0, "exclude-guides", &exclude_guides, N_("exclude guides")),
-@@ -253,10 +255,33 @@ static void exec_man_konqueror(const char *path, const char *page)
- 	}
- }
- 
-+static void colorize_man(void)
-+{
-+	if (!want_color(man_color) || !pager_use_color)
-+		return;
-+
-+	/* Disable groff colors */
-+	setenv("GROFF_NO_SGR", "1", 0);
-+
-+	/* Bold */
-+	setenv("LESS_TERMCAP_md", GIT_COLOR_BOLD_RED, 0);
-+	setenv("LESS_TERMCAP_me", GIT_COLOR_RESET, 0);
-+
-+	/* Underline */
-+	setenv("LESS_TERMCAP_us", GIT_COLOR_BLUE GIT_COLOR_UNDERLINE, 0);
-+	setenv("LESS_TERMCAP_ue", GIT_COLOR_RESET, 0);
-+
-+	/* Standout */
-+	setenv("LESS_TERMCAP_so", GIT_COLOR_MAGENTA GIT_COLOR_REVERSE, 0);
-+	setenv("LESS_TERMCAP_se", GIT_COLOR_RESET, 0);
-+}
-+
- static void exec_man_man(const char *path, const char *page)
- {
- 	if (!path)
- 		path = "man";
-+
-+	colorize_man();
- 	execlp(path, "man", page, (char *)NULL);
- 	warning_errno(_("failed to exec '%s'"), path);
- }
-@@ -264,6 +289,7 @@ static void exec_man_man(const char *path, const char *page)
- static void exec_man_cmd(const char *cmd, const char *page)
- {
- 	struct strbuf shell_cmd = STRBUF_INIT;
-+	colorize_man();
- 	strbuf_addf(&shell_cmd, "%s %s", cmd, page);
- 	execl(SHELL_PATH, SHELL_PATH, "-c", shell_cmd.buf, (char *)NULL);
- 	warning(_("failed to exec '%s'"), cmd);
-@@ -371,8 +397,12 @@ static int git_help_config(const char *var, const char *value, void *cb)
- 	}
- 	if (starts_with(var, "man."))
- 		return add_man_viewer_info(var, value);
-+	if (!strcmp(var, "color.man")) {
-+		man_color = git_config_colorbool(var, value);
-+		return 0;
-+	}
- 
--	return git_default_config(var, value, cb);
-+	return git_color_default_config(var, value, cb);
- }
- 
- static struct cmdnames main_cmds, other_cmds;
-diff --git a/color.h b/color.h
-index 98894d6a17..d012add4e8 100644
---- a/color.h
-+++ b/color.h
-@@ -51,6 +51,7 @@ struct strbuf;
- #define GIT_COLOR_FAINT		"\033[2m"
- #define GIT_COLOR_FAINT_ITALIC	"\033[2;3m"
- #define GIT_COLOR_REVERSE	"\033[7m"
-+#define GIT_COLOR_UNDERLINE	"\033[4m"
- 
- /* A special value meaning "no color selected" */
- #define GIT_COLOR_NIL "NIL"
+> So color.pager being true is _necessary_ for showing colors in paged
+> outputs, but by itself is not sufficient. We have other per-context
+> color options (color.diff, color.branch, and so on).
+> 
+> And so likewise, we would want to avoid turning on colors if the user
+> has set color.pager=false. Usually this is done automatically because
+> want_color() checks, which knows if we are using the pager or not. But
+> if we are going to call out to "man" which will invoke another pager,
+> that caller would have to check pager_use_color themselves (it's yet
+> another question of whether "the pager can handle color" applies equally
+> to the pager that Git will run versus the one that man will run).
+
+Yes, but we still need to check pager_use_color.
+
+Except... Maybe a user has GIT_PAGER set to a colorless pager, and
+MANPAGER to something fancier, in which case color.pager should be
+ignored. But that's probably a corner-case nobody is ever going to hit.
+
+Anyway, I've sent an update version with color.man.
+
 -- 
-2.31.1
-
+Felipe Contreras
