@@ -2,100 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49EA8C433B4
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 07:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11EB4C43460
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 07:16:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AEE261263
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 07:15:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB34161350
+	for <git@archiver.kernel.org>; Tue, 18 May 2021 07:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241081AbhERHRH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 03:17:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40340 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239586AbhERHRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 03:17:07 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2183C061573
-        for <git@vger.kernel.org>; Tue, 18 May 2021 00:15:49 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id t11so5045331pjm.0
-        for <git@vger.kernel.org>; Tue, 18 May 2021 00:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=gKanxr60/9cs9s0iN7n0zySdo2WoBl9GP+QuepqGvn4=;
-        b=aQi1cbPqXiGKuA+n+1WmwMlKefh7n/ZOGQ6p4sCYLhJWfBJbD4ujaha8djEgv1Sf+F
-         /8EOMRoNvesK14IrWx3qvwN3F0CmjwK+SJpPfCwPSu11RG/7yb2+RLzWdVKWkKGV6ke6
-         R4JvESw73r9r5ITaUsSKdb43Cdwrr0M/NURhdT12/dng5ykTwXCztTiBLqJo6VEWi7+P
-         XVjXvSEO7NAIcBUlTbZXspN1EBEvuudpmByg/TI/X52uorpa8gFK9T0GJFa1k3PZjIhm
-         P2wHS8Q5P+wdXA1VuhwZ5UeU+YZwRxpfQCLpGVvlQL6gdEDU0Z5op2yDppJ3cfcNagld
-         Aq1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=gKanxr60/9cs9s0iN7n0zySdo2WoBl9GP+QuepqGvn4=;
-        b=sFd3DZjvhX9sFqcqlxV5vORV9+5j9bn417mWg03I8FFXltiGQUS467f8M328lZCLYE
-         Q+WlWId6+wOjy4OSRGVPF8gWawZ2WY5H7iE9MiT71kCyntfggdEIGzGZNTyGACoJjwqb
-         KKTH6cekOdks4W6jE+2P2SQjZfkvKQM2Rz+kInScf5nCBvwouC9XfvQDB7ul73Y9f0Ph
-         6+qIvcmcQ867NVH5Q0ect1VMTZhOYTVLtyp/cc9h5GjHnISbYbPp2L7hURZ8GkoNOVTc
-         d0/VfT4ZET/A+lHKUzgBFPVAswzwDeqmVOCno1tSVzRVcatxutxodZfpcYRYXAj/CDHP
-         XNVw==
-X-Gm-Message-State: AOAM53294rGz5fq4rOvKqcBvWCeRW0Lr7DSFvl3iqXEBkPJyn0PfOogs
-        lVoxScUg0ORq38zPYIdh9pRImgzPVsgjcWFa
-X-Google-Smtp-Source: ABdhPJyPirnMATYogeYvm7LlhG/V6yKwR224RIX1uCnHA7jiaghk/jxKYOnIxPT9uVCyia06lQGLuA==
-X-Received: by 2002:a17:90b:4c4f:: with SMTP id np15mr3894668pjb.191.1621322149042;
-        Tue, 18 May 2021 00:15:49 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.121.70])
-        by smtp.gmail.com with ESMTPSA id n19sm1443065pfa.97.2021.05.18.00.15.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 May 2021 00:15:48 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: [GSoC] An Introduction
-Message-Id: <740165DC-19B3-49A0-8D70-B78B2BDF4C1D@gmail.com>
-Date:   Tue, 18 May 2021 12:45:43 +0530
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        adlternative@gmail.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-To:     git <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        id S1346774AbhERHRY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 03:17:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57426 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239586AbhERHRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 03:17:23 -0400
+Received: (qmail 11115 invoked by uid 109); 18 May 2021 07:16:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 May 2021 07:16:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5325 invoked by uid 111); 18 May 2021 07:16:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 May 2021 03:16:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 18 May 2021 03:16:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Man pages have colors? A deep dive into groff
+Message-ID: <YKNptH9DL6pe18Dk@coredump.intra.peff.net>
+References: <60a046bd83001_f4b0f20861@natae.notmuch>
+ <87tun1qp91.fsf@evledraar.gmail.com>
+ <xmqqlf8d6ty5.fsf@gitster.g>
+ <60a2f1c4cab0d_13c3702083a@natae.notmuch>
+ <xmqqim3g4ys5.fsf@gitster.g>
+ <60a3422b9556c_14d1bc2082f@natae.notmuch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <60a3422b9556c_14d1bc2082f@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git Developers!
+On Mon, May 17, 2021 at 11:27:23PM -0500, Felipe Contreras wrote:
 
-I am Atharva Raykar, a student from Bangalore, who is going to be
-involved more deeply with the Git community in the coming months.
+> > So in short, the color.pager is about "is the pager capable of
+> > colors?"
+> 
+> That's not the case.
+> 
+> Even the documentation says so:
+> 
+>   color.pager::
+>     A boolean to enable/disable colored output when the pager is in
+>     use (default is true).
 
-I am going to be focusing on converting Git's Submodule functionality
-from shell to C, and I greatly look forward to make improve Git :)
+I think that documentation misses the reason you'd want to use it.
+Likewise, the commit message introducing it (aa086eb813d) sucks, but the
+motivation (from [0]) was:
 
-Congratulations to ZheNing Hu for getting selected as well. I am
-not surprised at all -- his volume of contributions even before his
-selection has been great, and quite inspiring for me.
+  When I use a pager that escapes the escape character or highlights the
+  content itself the output of git diff without the pager should have
+  colors but not with the pager.  For example using git diff with a
+  pathspec is quite short most of the time.  For git diff I have to
+  enable paging manually and run git diff | $PAGER usually but git log
+  uses the pager automatically and should not use colors with it.
 
-I look forward to helping out in any way I can and get to know the
-community better. I'd also like to thank Christian, Kaartic, =C3=86var,
-Junio, Johannes and Phillip who have all helped me learn and guide
-me through my first few Git contributions.
+For a more concrete example, my pager _does_ understand colors, and I
+would not want to set pager.color to "false" (because then "git log",
+etc, would not show me any colors). But I don't like the man colors you
+are suggesting. I want to be able to turn them off by setting
+"color.man" or similar to false, not by disabling color for everything
+that is paged.
 
-Thanks again for trusting me with this work. I look forward to
-contribute and help others contribute!
+So color.pager being true is _necessary_ for showing colors in paged
+outputs, but by itself is not sufficient. We have other per-context
+color options (color.diff, color.branch, and so on).
 
---
-Atharva Raykar=
+And so likewise, we would want to avoid turning on colors if the user
+has set color.pager=false. Usually this is done automatically because
+want_color() checks, which knows if we are using the pager or not. But
+if we are going to call out to "man" which will invoke another pager,
+that caller would have to check pager_use_color themselves (it's yet
+another question of whether "the pager can handle color" applies equally
+to the pager that Git will run versus the one that man will run).
+
+-Peff
+
+[0] https://lore.kernel.org/git/E1G6zPH-00062L-Je@moooo.ath.cx/
