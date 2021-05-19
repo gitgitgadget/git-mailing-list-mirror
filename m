@@ -2,111 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10386C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0448DC433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E71E06135C
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:08:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBE716108D
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231889AbhESTJc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 15:09:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48586 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231974AbhESTJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 15:09:32 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000E4C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 12:08:10 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id q15so10114976pgg.12
-        for <git@vger.kernel.org>; Wed, 19 May 2021 12:08:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=riPNMzgx4RZsCaCRex1sDuQG3dubTpn1CO6kT+jLFSs=;
-        b=AU5W9nMcBZiLPcVxdBBXu/Vob1a407v1imrgCd/WatB7H4drGwZlcToknKxfAlU7rQ
-         1kH2Rq2KH+5m1Tn+6x8Ylvl8Je1RAsrJU24ccxn9YMJp6KZFW98qHMbUi3N5g51zpc9s
-         iBW585HISEBbWMnvIj1J4kc+4k/0NvZC9fFrYkayK0M8mZI4Iq4SSqyEztqyxo5Qqn0m
-         JKZjh/eAKGhoWKsvobfAQWmj+GmXl2aEDp6KAW2piwRoM1jaljJdGCX8hkcOGprAECZR
-         CuDwyoLOxKLaVxPu9OE6Rqgqir9AdXTCT0MCNuYvMCFFAevy6p5GUWYrm1AurzxHS3Kq
-         aKDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=riPNMzgx4RZsCaCRex1sDuQG3dubTpn1CO6kT+jLFSs=;
-        b=EfVJp91SB4VqhXuaAcO8Dd+rVKwvRd7YSWuSBGYwioi36BpXWRJr7B1w8NR7QQ8pCw
-         05Mh2IGVdyIy8cGb+NufeX0P0rlFNvNaWw4Z7hCoVYlS5UnTMg156ODo0apfZumaIjwa
-         uxuKj4hcaNl1XsjfD0xzegE3fFjbKHjsGyqkVgl0BPXupiun/uc+gDMqSbkL2RZ1Z1HA
-         Xj5xI82ZbtF3lZYoE0LMCp4/Pu6zfK+500pQ3HWZB8xEF3do7KfsMN1c0fgTBXFCWIHT
-         QBjWqPyTTerFjr1HAl4f554CDMyojHRqmJqiQUTaCmk80FdYQHw7z2/40edPGxhhHz/S
-         MSuw==
-X-Gm-Message-State: AOAM532tiQTYNuhgsyrk2L8IhYY6bpDX+10H+18CSJM6anohenBnRSrE
-        wjm/2zD7YFwF6XdL01XodZYQEH+rSBQ=
-X-Google-Smtp-Source: ABdhPJzXIBKwDiCk7/jk4tC68+F0kqGQ6zITlyJvg91U+xAbkPnxXZYR/snr1ar4NkX6EUup3fh2Rw==
-X-Received: by 2002:aa7:9d86:0:b029:2dc:9acd:620d with SMTP id f6-20020aa79d860000b02902dc9acd620dmr658665pfq.30.1621451290507;
-        Wed, 19 May 2021 12:08:10 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:4edd:d685:2ff9:b567])
-        by smtp.gmail.com with ESMTPSA id z12sm148996pfk.45.2021.05.19.12.08.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 12:08:09 -0700 (PDT)
-Date:   Wed, 19 May 2021 12:08:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-Subject: Re: Should we do something with #git-devel on Freenode?
-Message-ID: <YKViF9OVLeA95JPH@google.com>
-References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
+        id S231629AbhESTOq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 15:14:46 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:40839 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229505AbhESTOp (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:14:45 -0400
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 5D27F5C0040
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:25 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Wed, 19 May 2021 15:13:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:subject:message-id:mime-version:content-type; s=fm1;
+         bh=XUl/bTxpA01fv3FCeZWdDD5230KcV1CCuwiOmhkURMg=; b=PO/5e7N2Pimq
+        E/ZcPuJq2se9CjXNLCaz1b7OjA6wmLFuXGQ8uDB7nIm6YAiI19zF2N63I8leG88R
+        +XqstiF6KHg7CwlBIKa5FxqCC3PdG4o2+s/0acu2mUWGfF3/36oOZzpiVjkUEeFt
+        Utlo+Hz2O568YPVji1QKShG6xpT3+1O480aakQtEahvWp7/dpfT58BrTkSenIIPl
+        LIbqxzvq+ACVqE5yuJKppvCKOjLa/ZOLurHd80fF6LLdKhUyonsbNgXIxk/M31Sf
+        qckcMN/yBdW9g2sG60H5tzEsbT6A3UNSffwLUQqgxchoQlr8lJQHFBSX6rsLGI6R
+        Dct8wAwbWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm2; bh=XUl/bTxpA01fv3FCeZWdDD5230KcV
+        1CCuwiOmhkURMg=; b=bwCLyfWs65CNk6pi9Lr8P3sLpkk+0vxfEpiTTuALf9gvs
+        55+g2qivFKfqlty7rX8pP1IdyuWh64OX9u+A0pbhQfVvbey4rzJfFjBG9eZPlvfl
+        3wEb85tTDuWGWZH/EeKY19HamNd5wx+fYjLV1g4P6VLtpZ7pmADODjzPGL0gOn3R
+        aZfWtXcVe3T//sOFmnN4B9Xg7HTDqv5QdlHxJNtZBiOhsaXK14EQXO43YV3gupZE
+        PkMB21GCIMZeMTVaTYIqvPwI6gS5cXpcvsfD+9aiU1xsq6qtB0HeeONyNQiWVVSF
+        0MKVCSaK/AU8q9ybaqSIG0e+A0O7issSPs1MbRC4A==
+X-ME-Sender: <xms:VWOlYKsTvbNe9sFwPevsijSpqIJcAnnRE6OSJc0DSbrALnLuvyp-SQ>
+    <xme:VWOlYPcdxxoH7aJmbSPxKI3IyIdgw-4M89lIeGfAF8wU6c8lTxdvCdN6h6E3CH4GT
+    CRB2btvnhUvPvRbKw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeiledgudefudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgf
+    dvvdefudevffefveffhffgkeeiffenucfkphepjeejrddukeefrdefjedrudehieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:VWOlYFwEyBSsA7CnkPy6YRHBxXNOQSiEMz1jv5A-6kWLFmaF1tsokQ>
+    <xmx:VWOlYFPvx56qOJH3s8ZydrDCAPQidqRgQ0rU4iJold5rfC5-9Rsm4g>
+    <xmx:VWOlYK887RKqCnE0ix3OUphh01g_HwE8OVS8XRrv6kQ-dzb2Im3mvw>
+    <xmx:VWOlYNIonjOh89tAT116Yahe2iIHYRg97E5tsErkstYm0jEiyuMIHQ>
+Received: from vm-mail.pks.im (x4db7259c.dyn.telefonica.de [77.183.37.156])
+        by mail.messagingengine.com (Postfix) with ESMTPA
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:24 -0400 (EDT)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 3edfda03 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Wed, 19 May 2021 19:13:19 +0000 (UTC)
+Date:   Wed, 19 May 2021 21:13:18 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/8] Speed up connectivity checks via quarantine dir
+Message-ID: <cover.1621451532.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="2u8Sv8/nWfPHBi0I"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
+--2u8Sv8/nWfPHBi0I
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
 Hi,
 
-Emily Shaffer wrote[0]:
+While analyzing push performance on gitlab.com, I've been at times
+wondering what git-receive-pack(1) is doing for so long. For some repos
+which have loads of references (~880k), even tiny pushes of less than 10
+objects took dozens of seconds to get accepted.
 
-> Seems like there's been some kerfuffle with Freenode staff and new
-> ownership[1][2][3]. What does this mean for Git project? I think #git
-> on Freenode isn't maintained by Git developers directly, right?
+One of the issues I've found is the object connectivity check, which may
+run for a significant amount of time. The root cause here is that we're
+computing connectivity via `git rev-list --not --all`: if we've got many
+refs in the repository, computing `--not --all` is hugely expensive.
 
-https://gitirc.eu/ involved a lot of work by Jan Krüger (thanks!), so
-cc-ing him since he likely knows who else is active there.
+This commit series thus implements an alternative way of computing
+reachability, which reuses information from the object quarantine
+environment. Instead of doing a refwalk, we just look iterate over all
+packed and loose quarantined objects any for each of them, we determine
+whether their immediate references are all satisfied.
 
-[...]
->                                                             We do
-> theoretically keep up #git-devel on Freenode, though it's largely
-> silent. Should we be worrying? Migrating?
+This reimplementation is paying out quite well for repos which have many
+refs. The following benchmarks for git-receive-pack(1) (added in patch
+2/8) have been performed in linux-stable.git:
 
-The main practical struggle on #git-devel has been spam.  I don't know
-that any particular IRC network is better at spam prevention than
-others.
+Test                                     v2.32.0-rc0             HEAD
+---------------------------------------------------------------------------=
+-----------------
+5400.3: receive-pack clone create        1.27(1.11+0.16)         0.02(0.01+=
+0.01) -98.4%
+5400.5: receive-pack clone update        1.27(1.13+0.13)         0.02(0.02+=
+0.00) -98.4%
+5400.7: receive-pack clone reset         0.13(0.11+0.02)         0.02(0.01+=
+0.01) -84.6%
+5400.9: receive-pack clone delete        0.02(0.01+0.01)         0.03(0.02+=
+0.01) +50.0%
+5400.11: receive-pack extrarefs create   33.01(18.80+14.43)      9.00(4.30+=
+4.65) -72.7%
+5400.13: receive-pack extrarefs update   33.13(18.85+14.50)      9.01(4.28+=
+4.67) -72.8%
+5400.15: receive-pack extrarefs reset    32.90(18.82+14.32)      9.04(4.26+=
+4.77) -72.5%
+5400.17: receive-pack extrarefs delete   9.13(4.35+4.77)         8.94(4.29+=
+4.64) -2.1%
+5400.19: receive-pack empty create       223.35(640.63+127.74)   227.55(651=
+=2E75+130.94) +1.9%
 
-It looks like most of the Freenode admins have moved to
-https://libera.chat/, so that would be a close equivalent.  Another
-alternative is OFTC <https://www.oftc.net/>, which is used by
-irc.debian.org, for example.
+These rather clearly show that the previous rev-walk has been a major
+bottleneck in the implementation.
 
-There are also other real-time chat programs such as Zulip (open
-source, used in Outreachy), Discord (used by LLVM), and Slack (used by
-Chromium); each has its benefits and flaws.
+Patrick
 
-Thanks,
-Jonathan
+Patrick Steinhardt (8):
+  perf: fix when running with TEST_OUTPUT_DIRECTORY
+  p5400: add perf tests for git-receive-pack(1)
+  tmp-objdir: expose function to retrieve path
+  packfile: have `for_each_file_in_pack_dir()` return error codes
+  object-file: allow reading loose objects without reading their
+    contents
+  connected: implement connectivity check via temporary object dirs
+  receive-pack: skip connectivity checks on delete-only commands
+  receive-pack: check connectivity via quarantined objects
 
-[0] https://lore.kernel.org/git/CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com/
-> [1] https://boingboing.net/2021/05/19/freenode-irc-staff-quit-after-new-owner-seizes-control.html
-> [2] https://gist.github.com/joepie91/df80d8d36cd9d1bde46ba018af497409
-> [3] https://fuchsnet.ch/freenode-resign-letter.txt
+ builtin/receive-pack.c       |  57 +++++++----
+ connected.c                  | 192 +++++++++++++++++++++++++++++++++++
+ connected.h                  |  19 ++++
+ midx.c                       |  22 ++--
+ object-file.c                |   9 +-
+ packfile.c                   |  26 +++--
+ packfile.h                   |  10 +-
+ t/perf/aggregate.perl        |   8 +-
+ t/perf/p5400-receive-pack.sh |  74 ++++++++++++++
+ t/perf/perf-lib.sh           |   4 +-
+ t/perf/run                   |  25 +++--
+ tmp-objdir.c                 |   7 ++
+ tmp-objdir.h                 |   5 +
+ 13 files changed, 401 insertions(+), 57 deletions(-)
+ create mode 100755 t/perf/p5400-receive-pack.sh
+
+--=20
+2.31.1
+
+
+--2u8Sv8/nWfPHBi0I
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY00ACgkQVbJhu7ck
+PpTxjA//U98RpbUZKp7kMYkyTljAEG/BFIZSz51naktUHH6kngKVjPZge0P0B4x1
+PLK+MqcY++s+MQwiG3Kz77lfp1KUwagROvDJgbPJucj1eDZyYcZLMbXvMmRC3FOu
+3rCKdKnREmHVFpm6SWNnYs9XkBGAURZrW6gK9kTSc4+lWexPr1L6R1I5bpBLkYuo
++E10LPtlGYPxeLNS5dJ56JyLMyiD56Ezj5icYX8H9fQTtyAvAAwImkF2jxpqkwOR
+hgnbwFm1iTXpPNdMDkxvKEJw/oIKxGeyOu1DsLu4LgBCJyM8vGXcWxnz0SldBvxc
+7nS+Nix3BS1O7HsZ3TqCrWLvieY9s0EtZZyzb18EMFlRydOUKfZREpFIdI3JX6qj
+/Pr3yUpu3zz+DZZNmo+dZJOxemyGZjdn6zXlFI3Stmjo5Rw9sO4jn/pakU7CzG1F
+8P/+BntAUMf2ZiF8yoDDdMTEQirewuWd1ORMGqUSKTI1qlobi2teFjJaQUQvqvSE
+pn5DA6nM58YDWA7FtyyPi7qibJV5VHoXnALMGeubZmqCwPoaYQsvHIBSeceLkBkz
+FZqh6PmCtJJbGcTlq5Pi8XNOXkzNqxN9PPqnmX0U2u8ae+cbFCfrQj83tti+Q0sE
+X9YcJWWbMAYUb+mfccIoc9EMID58CI13xv9ZkPdd/8OmfnvoMmw=
+=JWzx
+-----END PGP SIGNATURE-----
+
+--2u8Sv8/nWfPHBi0I--
