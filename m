@@ -5,55 +5,55 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DF9AC43460
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 11:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D65CC433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 11:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 533A7610CB
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 11:48:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83AA761004
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 11:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352459AbhESLuE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 07:50:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32832 "EHLO
+        id S1352480AbhESLuF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 07:50:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352416AbhESLuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 07:50:00 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67E4C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 04:48:40 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id m11so18637485lfg.3
-        for <git@vger.kernel.org>; Wed, 19 May 2021 04:48:40 -0700 (PDT)
+        with ESMTP id S1349331AbhESLuC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 07:50:02 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FA6C061760
+        for <git@vger.kernel.org>; Wed, 19 May 2021 04:48:41 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id b26so2651430lfq.4
+        for <git@vger.kernel.org>; Wed, 19 May 2021 04:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FbQncOG/KfycyARQfcu0X5g1uj2Y12NXje0qRt++RfU=;
-        b=b1Iu2Lc08rG/ZGSV5Za4Y3yzY1ptHDD991rCut1u/WX+pTABcRpdZmbpILpdqvVl8E
-         Ym9nhPPYgmQJxe6q0HpkPdcRIBkMxerBAsacsKS/OjgZpaHyDKlmohVxFS305VN9z9kr
-         5L3GVlznWvuQIl085KZmqkMzw91mLOrftC4aAKgpZ7AipcPnoT0TNn84NuSpZ+4Kq/Od
-         un7bi2tpLQ3kH15uEeHbONro3y6dTP/G8IqpVYpxKGIudNcuKkMf44oZCYBHkQtSZ7dh
-         xLBK/xx9SMG8tqB7Qsbuwe5M0CV13YKirJcuTZAiFIdNRvCdgfgv75ocaYT1yC5JOM+8
-         Hb9g==
+        bh=v7LjQ1nCHmH3DD5i6uodYrBsR+g7A7XW0vpjyrg6Y0E=;
+        b=NqmOIRuntpga9l7PIz/C6whuV8J52U2dx2+A6xnehNrGYax9rXaAG9uClmZ02IMRs8
+         4v2zVZyuhOHEJCFAcPCoMGxr+D3S0OgWc0KKvqU2Q4sMGEEWS13sUhuTyMufaB4Sykvq
+         mSnLB9v72Mhq3RaEkgtQDwKoqvvyorbnq0MJRcbLNo24q9Yuejp7BnB+HqY8Afr0G8aI
+         HOcSMNqRBSQY0GXf7Qus1E42xEW3G6DRbWin3HTb5kgdF4fViWJ4Vved03AYjDZo7MUM
+         pVmr99rmLqsjRHRq84u5YVWLRec8GexAV8V3gmpWE8RHy08n0ICZowmm1JMsfgQwX7Tw
+         CT/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FbQncOG/KfycyARQfcu0X5g1uj2Y12NXje0qRt++RfU=;
-        b=WqcpMmKYJFBXtpMlcr/8haTaVUQw+CE5heePDR/P+es++1OAx4uiaMhB1WoLS6xkbZ
-         BlvmYYt4mjsTMLxOf1s5PG1FT1wY9tGZ5jkfm1JW+1ALsK/aosKAvbfsDjYajhaE3gdx
-         dShustGtr8DebvpQZqPBPX7bgAuSvzT1txsstf06LRQ8NPVmCUhR/Iztt0KoZLKhVc3G
-         X3cUl9p7DUGh6c5RfmGTqm7L3JjXON97FTk2b7WkwNq8rptO5bNbRYyeqAS4hsrvfqcl
-         4Hrogiqm8zkjii6ivFnIp3PP++GDFBF8uEiq8hZUEC9nJ3YjvyxohriBia1W8hhSKMUZ
-         EsaA==
-X-Gm-Message-State: AOAM5320wu/SMEpNNwFzye8NjT7YVz81IH9WSjQZyXFxKeE0JhDzZsUS
-        Lw1OCqEB0uR8LCM+rHACOY0=
-X-Google-Smtp-Source: ABdhPJx07yd6odZvbj0n36REo6zSdPrUYkjdGCCXF7iCC9ZydGZAfo+Ffu2RgMnve5JcKGzAWxCFsg==
-X-Received: by 2002:a05:6512:693:: with SMTP id t19mr8251805lfe.91.1621424919352;
-        Wed, 19 May 2021 04:48:39 -0700 (PDT)
+        bh=v7LjQ1nCHmH3DD5i6uodYrBsR+g7A7XW0vpjyrg6Y0E=;
+        b=fxlEV4HtgHFNZexkt68Rr5t5zw7lEs324EbQ+aELjnNO/zKwXmEzsBEitqNMeeV8tU
+         KfV6KqzGrsj3Ry0ETdX9bOf4UMfdUdUDfiJPgx+SlFv5sj0roZo5izen7ob+++OWlN/r
+         A9zR1KdVIHEkNMBNZwqObr23AAbOPvlHfOfgA6K0LRXcdoODX2Nc++tbrmCbjr6x610f
+         hxvy1t7INuN3DxNU9Lc2am82QjcJpNyVrajP4OqGqW6n1iEAjjKe8ik5yuK5tfL0yFli
+         FipKo5c+s7V1fyXPCzuji0YCLiCWLfxgwQ3caJAXxgy/fm0zq9dQG3FwnrHmTksedU/9
+         5MKA==
+X-Gm-Message-State: AOAM533H4KT2Gj73+BOTcxZKzShkDYcVKpp0yCOAMHkmZe4+4MWWgHpn
+        bqWwRJmib9CaaIdYFE8benc=
+X-Google-Smtp-Source: ABdhPJxD6l7MZDuGgikrT3nl3nF+BJsbZoenF6o5Vd/+oegKE5HPLLB56IzkV9OmEvl7N37S5sXX7Q==
+X-Received: by 2002:a05:6512:3d1c:: with SMTP id d28mr8074044lfv.21.1621424920187;
+        Wed, 19 May 2021 04:48:40 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id o2sm1846470ljp.60.2021.05.19.04.48.38
+        by smtp.gmail.com with ESMTPSA id o2sm1846470ljp.60.2021.05.19.04.48.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 19 May 2021 04:48:39 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
@@ -64,9 +64,9 @@ Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
         git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v2 7/9] stash list: stop passing "-m" to "git log"
-Date:   Wed, 19 May 2021 14:45:50 +0300
-Message-Id: <20210519114552.4180-8-sorganov@gmail.com>
+Subject: [PATCH v2 8/9] diff-merges: rename "combined_imply_patch" to "merges_imply_patch"
+Date:   Wed, 19 May 2021 14:45:51 +0300
+Message-Id: <20210519114552.4180-9-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20210519114552.4180-1-sorganov@gmail.com>
 References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
@@ -77,44 +77,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Passing "-m" in "git log --first-parent -m" is not needed as
---first-parent implies --diff-merges=first-parent anyway. OTOH, it
-will stop being harmless once we let "-m" imply "-p".
+This is refactoring change in preparation for the next commit that
+will let -m imply -p.
 
-While we are at it, fix corresponding test description in t3903-stash
-to match what it actually tests.
+The old name doesn't match the intention to let not only -c/-cc imply
+-p, but also -m, that is not a "combined" format, so we rename the
+flag accordingly.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- builtin/stash.c  | 2 +-
- t/t3903-stash.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ diff-merges.c | 10 +++++-----
+ revision.h    |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index d68ed784d2af..fe8e97428808 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -761,7 +761,7 @@ static int list_stash(int argc, const char **argv, const char *prefix)
+diff --git a/diff-merges.c b/diff-merges.c
+index 9ca00cdd0cc6..d897fd8a2933 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -15,7 +15,7 @@ static void suppress(struct rev_info *revs)
+ 	revs->combine_merges = 0;
+ 	revs->dense_combined_merges = 0;
+ 	revs->combined_all_paths = 0;
+-	revs->combined_imply_patch = 0;
++	revs->merges_imply_patch = 0;
+ 	revs->merges_need_diff = 0;
+ }
  
- 	cp.git_cmd = 1;
- 	strvec_pushl(&cp.args, "log", "--format=%gd: %gs", "-g",
--		     "--first-parent", "-m", NULL);
-+		     "--first-parent", NULL);
- 	strvec_pushv(&cp.args, argv);
- 	strvec_push(&cp.args, ref_stash);
- 	strvec_push(&cp.args, "--");
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 5f282ecf6175..873aa56e359d 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -859,7 +859,7 @@ test_expect_success 'setup stash with index and worktree changes' '
- 	git stash
- '
- 
--test_expect_success 'stash list implies --first-parent -m' '
-+test_expect_success 'stash list -p shows simple diff' '
- 	cat >expect <<-EOF &&
- 	stash@{0}
+@@ -109,10 +109,10 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ 		set_to_default(revs);
+ 	} else if (!strcmp(arg, "-c")) {
+ 		set_combined(revs);
+-		revs->combined_imply_patch = 1;
++		revs->merges_imply_patch = 1;
+ 	} else if (!strcmp(arg, "--cc")) {
+ 		set_dense_combined(revs);
+-		revs->combined_imply_patch = 1;
++		revs->merges_imply_patch = 1;
+ 	} else if (!strcmp(arg, "--no-diff-merges")) {
+ 		suppress(revs);
+ 	} else if (!strcmp(arg, "--combined-all-paths")) {
+@@ -162,9 +162,9 @@ void diff_merges_setup_revs(struct rev_info *revs)
+ 		revs->first_parent_merges = 0;
+ 	if (revs->combined_all_paths && !revs->combine_merges)
+ 		die("--combined-all-paths makes no sense without -c or --cc");
+-	if (revs->combined_imply_patch)
++	if (revs->merges_imply_patch)
+ 		revs->diff = 1;
+-	if (revs->combined_imply_patch || revs->merges_need_diff) {
++	if (revs->merges_imply_patch || revs->merges_need_diff) {
+ 		if (!revs->diffopt.output_format)
+ 			revs->diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	}
+diff --git a/revision.h b/revision.h
+index 93aa012f518e..17698cb51aca 100644
+--- a/revision.h
++++ b/revision.h
+@@ -193,10 +193,10 @@ struct rev_info {
+ 			/* Diff-merge flags */
+ 			explicit_diff_merges: 1,
+ 			merges_need_diff: 1,
++			merges_imply_patch:1,
+ 			separate_merges: 1,
+ 			combine_merges:1,
+ 			combined_all_paths:1,
+-			combined_imply_patch:1,
+ 			dense_combined_merges:1,
+ 			first_parent_merges:1;
  
 -- 
 2.25.1
