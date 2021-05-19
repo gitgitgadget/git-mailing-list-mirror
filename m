@@ -2,178 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2F13C433ED
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 23:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A4F1C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 00:12:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 944646113C
-	for <git@archiver.kernel.org>; Tue, 18 May 2021 23:49:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E92C6100A
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 00:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235992AbhERXvG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 19:51:06 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47280 "EHLO
+        id S234330AbhESAOR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 20:14:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47288 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229969AbhERXvF (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 18 May 2021 19:51:05 -0400
+        by vger.kernel.org with ESMTP id S233554AbhESAOR (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 18 May 2021 20:14:17 -0400
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B9BD560479;
-        Tue, 18 May 2021 23:49:45 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6DD4F60479;
+        Wed, 19 May 2021 00:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1621381786;
-        bh=5yU7URgTsojw0CSyNf5WoYbIyi2oCZcC1zytXp8EYEk=;
+        s=default; t=1621383177;
+        bh=hKNSxPG7K+FUjn/jMAvoHWgW5YHpZK/esl7dT1k0RQ4=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=ntYZTlEjC4CMM86tklY5KFOOjZx6eRJJwFaH7U8YO9rJbndDr//MweIjF0Ri2JdP4
-         KwEDgQOO8SDEEmrwe+Q/EMgJA9vZLU2+UAxbGAagZRnqzqjVnXqhYAvpFLDBEwv3oq
-         Z2u5OUy4ta4QFOiPU7YpIZw3/7tp+XlMNN8WT2Zic7q3TZ4YRJ3zsDDX4m7bo5t/xm
-         0yvmBbfTIbnJHuR8YTvpxx+OoiUUEY4Cnd0ETDauIdFETuEJxVsFFBkPiAbgVXDXto
-         LQMYI/OXruZz2Rd/KrayWJSAfzciyg1+uliy5EdTS3pkufR6H7+u6OLVEeDF3WTIQl
-         u2fJIR9O/2pfESjMoEKEaTGkoAuSAki1i+tEX0gfFuTt4xmapqgzUtMVMq2jdyNGUJ
-         bc7vk5D+WeKi88O81K+T6dK44FNQuFRBGiRMuF0mm9tMuHyfvsFRYSzGH5QPDXDVPH
-         4imwfumwskcz+s7SRZSn//5R3S4uUsHMd2gmZwNxqxaY7Ej8PBc
-Date:   Tue, 18 May 2021 23:49:40 +0000
+        b=KI4vOTOZr5mH7vd750yI+vlUQ5QKHu3nzIc95mmoeJRK8Oxa9/7CZM/TCD7vCiCV/
+         GwmeKiQJxIcPkcAqRsWfFo+n1ajEi7Acqvsv7uYUjfc9KyGCx3LpUDyTS6PpRbtQ6T
+         klU5tTR484Km3IiJ7b36ApWxepd1uRNadgSJ4Pt4h9f2xYu7/0oruIhUjFvnazLrxe
+         XMdMXmO6RDl0YaZKtZ0Y24IDiztgwoRX1iU7gv3JrT0HiXKSUzRdh4C8J+SCr3P3Ai
+         Py4kE7T1PgA9ET6utVp7Daj4fsUkTn9umI3qa/UhzA/DYOsfVwoUopRAnPmydntRBl
+         kFjaQt8nsMx5yPv3LRzBTA1+09aMk/tyaCU9+cLzoF1/N7qvV6SN1j85MiiDWnj8Zj
+         Bv7JVXPX6iM5hA/3kzStRwZZUBQd/KqvHnjlS5PrMAGwKxq0CfXqGs4xZ+MgKm3+Tk
+         SpcE4DB7AEbwc7lviv5JHB091jIjNuYci4f24ZfVDhVogFt67TL
+Date:   Wed, 19 May 2021 00:12:52 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+To:     Jeff King <peff@peff.net>
+Cc:     Ben Humphreys <behumphreys@atlassian.com>,
         Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] help: colorize man pages
-Message-ID: <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
+        Christopher Schenk <christopher@cschenk.net>,
+        git@vger.kernel.org
+Subject: Re: Git 2.23.0-rc0 HTTP authentication failure - error message change
+Message-ID: <YKRYBLeIlgILfHFj@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ben Humphreys <behumphreys@atlassian.com>,
         Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
- <60a332fd22dad_14c8d4208ed@natae.notmuch>
+        Christopher Schenk <christopher@cschenk.net>, git@vger.kernel.org
+References: <YKMvePOPqjwiXeQ+@C02WD045HTDG>
+ <YKNVop80H8xSTCjz@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Al4ADeQKEOTDzgVQ"
+        protocol="application/pgp-signature"; boundary="5/ZT8EriNMNS/JgT"
 Content-Disposition: inline
-In-Reply-To: <60a332fd22dad_14c8d4208ed@natae.notmuch>
+In-Reply-To: <YKNVop80H8xSTCjz@coredump.intra.peff.net>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Al4ADeQKEOTDzgVQ
+--5/ZT8EriNMNS/JgT
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2021-05-18 at 03:22:37, Felipe Contreras wrote:
-> brian m. carlson wrote:
-> > I think we should let the user decide whether they want to set this
-> > feature themselves instead of setting it for them.  For example, I have
-> > specific colors set up with these environment variables, and I'd like
-> > Git to honor them without having to configure Git independently of less.
-> > I expect other users will expect Git's rendering of the manual pages to
-> > work like other instances of man(1) on their system as well.
+On 2021-05-18 at 05:50:26, Jeff King wrote:
+> So it is focused on the case when the credentials came in the URL,
+> before the first contact with the server (where we'd get an HTTP 401).
+> And the diff moves the negotiate check earlier in the function, before
+> we see if we already have credentials:
 >=20
-> It does respect them.
+> diff --git a/http.c b/http.c
+> index 0e31fc21bc..19c203d0ca 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1641,17 +1641,18 @@ static int handle_curl_result(struct slot_results=
+ *results)
+>  	} else if (missing_target(results))
+>  		return HTTP_MISSING_TARGET;
+>  	else if (results->http_code =3D=3D 401) {
+> +#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+> +		http_auth_methods &=3D ~CURLAUTH_GSSNEGOTIATE;
+> +		if (results->auth_avail) {
+> +			http_auth_methods &=3D results->auth_avail;
+> +			http_auth_methods_restricted =3D 1;
+> +			return HTTP_REAUTH;
+> +		}
+> +#endif
+>  		if (http_auth.username && http_auth.password) {
+>  			credential_reject(&http_auth);
+>  			return HTTP_NOAUTH;
+>  		} else {
+> -#ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
+> -			http_auth_methods &=3D ~CURLAUTH_GSSNEGOTIATE;
+> -			if (results->auth_avail) {
+> -				http_auth_methods &=3D results->auth_avail;
+> -				http_auth_methods_restricted =3D 1;
+> -			}
+> -#endif
+>  			return HTTP_REAUTH;
+>  		}
+>  	} else {
 >=20
-> This would render the man page with the color specified in the
-> environment, not the default of git.
+> So in that case, we'd clear the GSSNEGOTIATE bit and return HTTP_REAUTH,
+> and the caller will try again. Makes sense for the use case described.
 >=20
->   LESS_TERMCAP_md=3D$'\e[1;33m' LESS_TERMCAP_me=3D$'\e[m' git help git
+> But imagine we didn't get a username/password in the URL. The first
+> request will return REAUTH because of this moved code path (just as it
+> would have before, because http.auth.{username,password} are not set).
+> And then we'll get a credential from the user or from a helper and try
+> again. But this time, if we fail, we'll return HTTP_REAUTH again! We
+> never hit the "if (http_auth.username && http_auth.password)" check at
+> all. And hence we never return HTTP_NOAUTH (which gives us the more
+> useful "authentication failed" message), nor the credential_reject()
+> line (which informs helpers to stop caching a known-bad password).
 
-It still doesn't work like other instances of man(1) on the system.
-While you claimed that "that's a preference others don't share", I'm
-pretty certain that I'm not the only person who feels this way.
+I think what we'd want to do in this case is to only call HTTP_REAUTH if
+we actually cleared CURLAUTH_GSSNEGOTIATE.  Maybe something like this:
 
-There's a big difference between Git coloring a Git UI, like a diff, and
-Git coloring a separate program that already has sensible, standard
-defaults.  A user who has not configured any color settings would
-probably not want Git to render manual pages one way, cargo to render
-manual pages a second way, and still other programs to render manual
-pages in other, incompatible ways.  We need to consider not only the
-impact that our decisions have in a vacuum, but what results similar
-decisions from other projects would produce in the software ecosystem as
-a whole.
+diff --git a/http.c b/http.c
+index c83bc33a5f..e9fead8cd8 100644
+--- a/http.c
++++ b/http.c
+@@ -1650,18 +1650,18 @@ static int handle_curl_result(struct slot_results *=
+results)
+ 	} else if (missing_target(results))
+ 		return HTTP_MISSING_TARGET;
+ 	else if (results->http_code =3D=3D 401) {
++		int used_negotiate =3D 0;
+ #ifdef LIBCURL_CAN_HANDLE_AUTH_ANY
++		if (http_auth_methods & CURLAUTH_GSSNEGOTIATE)
++			used_negotiate =3D 1;
+ 		http_auth_methods &=3D ~CURLAUTH_GSSNEGOTIATE;
+-		if (results->auth_avail) {
+-			http_auth_methods &=3D results->auth_avail;
+-			http_auth_methods_restricted =3D 1;
+-			return HTTP_REAUTH;
+-		}
+ #endif
+-		if (http_auth.username && http_auth.password) {
++		if (!used_negotiate && http_auth.username && http_auth.password) {
+ 			credential_reject(&http_auth);
+ 			return HTTP_NOAUTH;
+ 		} else {
++			http_auth_methods &=3D results->auth_avail;
++			http_auth_methods_restricted =3D 1;
+ 			return HTTP_REAUTH;
+ 		}
+ 	} else {
 
-Would you consider various projects coloring their respective manual
-pages differently to be a desirable state of affairs?
+That, of course, is totally untested, and I don't have Basic auth
+fallback set up on my server with Kerberos, so I can't test it.
 
-> > Additionally, using colors poses accessibility problems.  I know someone
-> > who, due to his colorblindness, finds terminal colors distracting and
-> > hard to read, and prefers not to use them at all.
->=20
->   git -c color.ui=3Dnever help git
+> I suspect we could hack around it by pessimistically guessing that
+> GSSNEGOTIATE was the problem. But I'm worried that making that work
+> would require up to three requests (one to find out we need auth, one to
+> remove the GSSNEGOTIATE bit, and one to retry with a username/password).
+> That seems like punishing people with servers that don't even care about
+> Negotiate for no reason.
 
-Yes, but unfortunately, since you've colored the manual pages, they may
-be hard to read for the user who needs to read them to learn about your
-configuration.  This is great for you and me, who are already very
-familiar with Git and know how to do that without looking, but not great
-for the novice colorblind user.
+I think my proposal above does that, but I'm not sure.  If Negotiate
+wasn't set, we won't need to make a third request, since we'll have
+known the supported mechanisms as part of the original 401.  If they do
+support both, then three requests will be required if they have to fall
+back to Basic auth, but then they're only paying the price for the
+environment they have.
 
-For similar reasons, colorizing help output in general is unhelpful
-because users cannot find the options to disable it.
+If we aren't already reading the supported mechanisms out of the initial
+401, then we'll need the third request, but that would be silly and we
+should just avoid doing that.
 
-In general, this is made worse because Git doesn't honor the unofficial
-but widely supported NO_COLOR[0], so reading the documentation is
-obligatory.
+> So perhaps somebody can come up with something clever, but I suspect we
+> may need to just revert this for the v2.32 release, and re-break the
+> case that 1b0d9545bb8 was trying to solve.
 
-> > Even users who want to use them might find some colors to be too
-> > similar, and this patch doesn't permit them to be configured.
->=20
-> Yes it does:
->=20
->   LESS_TERMCAP_md=3D$'\e[01;38;5;33m' git help git
-
-I should clarify that the patch doesn't permit them to be configured
-using the normal Git mechanisms.  For example, unless the user sets the
-environment variables, which take effect globally, they're stuck with
-the colors that we've chosen here.  Yes, they can specify a single
-environment variable before the command, but practically nobody will do
-that.
-
-It's my argument that the user doesn't want Git manual pages to be
-colored differently than other manual pages on the system, but if you
-believe differently, then we should allow the user to configure the
-colors that are used in the Git-specific context using Git standard
-mechanisms.
-
-> > In my particular case, despite having normal color vision, because I use
-> > a transparent terminal which often results in a grey background, I find
-> > the standard terminal red to be difficult to read, and so this patch
-> > would result in a significant decrease in the readability of the manual
-> > pages for me.
->=20
-> If you have LESS_TERMCAP_md set in your environment, it won't.
-
-The problem is, I don't always.  I am on call for a set of hundreds of
-servers, only one of which has my shell configuration set up, so
-defaults here matter.  Moreover, because there are many novice users of
-Git, we should consider that for a decent number of users, they
-literally won't know where to look in our documentation to make
-changes, and therefore the defaults matter for them, too.
-
-[0] https://no-color.org/
+Yeah, I think this is the right solution for the problem until somebody
+with a suitable mixed auth environment shows up and can test.  Your
+patches seemed reasonable and, as always, well explained.
 --=20
 brian m. carlson (he/him or they/them)
 Houston, Texas, US
 
---Al4ADeQKEOTDzgVQ
+--5/ZT8EriNMNS/JgT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYKRSkwAKCRB8DEliiIei
-gUqDAP95XpBh3DefJzAeRi7LrYKjrY57az2LYuyMySV1DXqLLgEA86FJS5rYyojj
-dklKgsTlhO6pPVFjNgnKIvMB98RvUQI=
-=5rIV
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYKRYAwAKCRB8DEliiIei
+gVTvAP9EAjN5rWP89sIvKU15YwsXu52UhBTYkFt6YfStAGc41gEAry84ucsHvxWw
+ebXPOlxnQsAD/o8FE3RnB9Bsn/u9pA8=
+=BG/7
 -----END PGP SIGNATURE-----
 
---Al4ADeQKEOTDzgVQ--
+--5/ZT8EriNMNS/JgT--
