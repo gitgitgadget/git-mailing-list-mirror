@@ -2,94 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69FDDC433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42FB6C43460
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:53:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 450696135A
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:30:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C34760234
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347541AbhESObx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 10:31:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S243278AbhESOzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 10:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242007AbhESObw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 10:31:52 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B28C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 07:30:32 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id k127so12876128qkc.6
-        for <git@vger.kernel.org>; Wed, 19 May 2021 07:30:32 -0700 (PDT)
+        with ESMTP id S241229AbhESOzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 10:55:09 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C129FC06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 07:53:49 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id v8so13002985qkv.1
+        for <git@vger.kernel.org>; Wed, 19 May 2021 07:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5KKcJpekzEr3YiAshr3LdiJAZI68kHobFkJAonL4Zk8=;
-        b=bT0wyB55RWwoB9ZfKLgZ2xCx11P2QF1LfVLQ4wac4orO/wLPUWVYj3OZGxYDg/XBIu
-         Xr7nT5nlSBn6uLsldWZK6I5b44Eunmk8q8bxuVer+kTaBWr1p4RVwvGlSyfdNYmfnygj
-         /mdsTTEHL/+NQQbVnokGJ/MbmmETPhmel3umILm0FrHtU9B59Qjku8/3vZFNg50q1tqz
-         05z43qPAHVLOodXIwy3dpkkcC5Ql/ukd944QxA5nFPatbK+/UXmVXGG8seJKAThay7yF
-         hxoqKNS87amlpB/nz3b2ljuXLgVCt4uTLaAqww4V3k9Z00vmAV+VhmGOwENik7WSoAGo
-         SxZw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AwMVnFlXRSWy8QanoX/MDscqTrPXkZ73rCrR2KIo7mg=;
+        b=NEFkFUHqpAMSmT3eGQk34LpBYumW+CzNDGxYyRynyAZ9MPD6ng5wVUa6iKAPgR26b8
+         9EuVxBL5nRWEz1zB8badWWdXCIb7xKHJjOQ0WBI7KMZxUv2o9qRxVeagSEJnGe0kYGii
+         m9bZ3fu2fXqZUsp2fj45yXVTUQMEYuVC1EouJzTF8crh7FSrwk4WUXQIBY9fnkBF5pYO
+         HAF0LswFJ35q8BsfkPA4cp7oH4/p9W/Rw+9xrMj23aT4SRiRMrKkp0RN8CjiPxkQNxg6
+         on+NJGPBqXP0AC8rRg2vXqiv+1eE36Btge5YYnwbC+qqhNsoPP/I3KQf9eCylY6yZqSm
+         v91g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5KKcJpekzEr3YiAshr3LdiJAZI68kHobFkJAonL4Zk8=;
-        b=tZH0o9Wm0KJMUPBPnAmL/YeEBu4zYyBSzvMPfDFNUuooMz4XNkKi6G1Gj/6ZCknIU8
-         v4oreESfU8e0iDIl7kmAUVfHE+WWQqsvYftZn/PRhvI2cfCp3n8nU7JlUqVhnl7yryrA
-         l4zrddkrGCrkWMwY1qSxI1sxfKpW1i1PdtocSJe9r7UvycXskFTp0HvMPitkU6l8ecDW
-         0JRZvD0fZvRw88dzEjlMHp6csuVweI9bJYjF29kiPwJ8oU160izRRsgMEQRWR7EJVePm
-         /OgqPJxsslXlIgbnlnDaAZ7MsiR1fki5x9zw60/1aqEn4+uQAyK0Z1DzN8D3ZtFtI224
-         MZ+A==
-X-Gm-Message-State: AOAM533s4xjZEeM8ZdhG3DbDSR+RFhJgSV1AnoACCj2eut6E4D5LIl3P
-        U7xPioORx93p3VaUOtXBTQ0clg==
-X-Google-Smtp-Source: ABdhPJyBX2RqKEVbxlavPe4wSFsVxRrnM4olKXo1uWdbjviroFkhakzdJeKZ4bU8w0rnPwAExvWl/A==
-X-Received: by 2002:a05:620a:526:: with SMTP id h6mr12607923qkh.145.1621434631525;
-        Wed, 19 May 2021 07:30:31 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:22d:3fed:300:d76f])
-        by smtp.gmail.com with ESMTPSA id w9sm11274184qtt.59.2021.05.19.07.30.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 07:30:31 -0700 (PDT)
-Date:   Wed, 19 May 2021 10:30:29 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AwMVnFlXRSWy8QanoX/MDscqTrPXkZ73rCrR2KIo7mg=;
+        b=KOmpqVVX09oDxQ4p2ULwsSq7haxNSVOjqNXDQlhDSQRE3J/Tj8epgXl+InIUqNt97R
+         cwDxBjRL0NkKbs6aoLvVGI6wS/+QnK+FI6YfvXYrMRVuyInXH0PVbRMnt15T9X0FQQpc
+         okGeX1oY5jA73c8m7H+zqhFvGLEsCALb1+iFQzx1TGSaCt7gzMUky1QQwCaz9UHISlXO
+         N8pwe7WdDd6dHs9QXhSKATOGBJ91L0MkNll1CDsfbKFZNDNm4TRGKIcNJxtOVZ75GCoK
+         hs1MIKTzONMBWGcezarCNAi0KxHym2wIu3KNmSR2SaqgFp+4dCQ1JvCCK+UfvN0WqnFF
+         zehg==
+X-Gm-Message-State: AOAM533IflVANWc7+13wDxgw9rESjpbYfsBL5L4HP8zS51fscLdeO2pL
+        Pkgns+vCRK5Mr+QS7aw8Y8SpSLjKqDfzlw==
+X-Google-Smtp-Source: ABdhPJzjfgb5mwOW77DRVcQcTWW6zBxX6HFsD6AuBnpXpZNH8XEyvV4gYo1v2dOyHmzpaSZdJfwc0Q==
+X-Received: by 2002:a05:620a:2149:: with SMTP id m9mr13027306qkm.284.1621436028553;
+        Wed, 19 May 2021 07:53:48 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:a1ee:38d:5766:9f4f? ([2600:1700:e72:80a0:a1ee:38d:5766:9f4f])
+        by smtp.gmail.com with ESMTPSA id t203sm15161837qke.83.2021.05.19.07.53.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 May 2021 07:53:48 -0700 (PDT)
+Subject: Re: [PATCH 2/2] Revert "remote-curl: fall back to basic auth if
+ Negotiate fails"
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Greg Pflaum <greg.pflaum@pnp-hcl.com>
-Subject: Re: [PATCH] clone: clean up directory after transport_fetch_refs()
- failure
-Message-ID: <YKUhBdO1KSiLwqOZ@nand.local>
-References: <YKTzu96fN7XlpDoG@coredump.intra.peff.net>
+Cc:     Ben Humphreys <behumphreys@atlassian.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christopher Schenk <christopher@cschenk.net>,
+        git@vger.kernel.org
+References: <YKNeJ+NKUbD5ixA9@coredump.intra.peff.net>
+ <YKNeXq3JzxYWkxKl@coredump.intra.peff.net>
+ <43035278-5742-607a-57bd-971685deece8@gmail.com>
+ <YKUdRNH+uLBxAi+m@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f9a1a761-7536-c9b6-4837-d95e2e56a471@gmail.com>
+Date:   Wed, 19 May 2021 10:53:47 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
+In-Reply-To: <YKUdRNH+uLBxAi+m@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YKTzu96fN7XlpDoG@coredump.intra.peff.net>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 19, 2021 at 07:17:15AM -0400, Jeff King wrote:
-> One obvious option to fix this is to reorder the end of the function to
-> set the flag first, before cleanup code, and put the label between them.
->
-> But we can observe another small bug: the error return from
-> transport_fetch_refs() is generally "-1", and we propagate that to the
-> return value of cmd_clone(), which ultimately becomes the exit code of
-> the process. And we try to avoid transmitting negative values via exit
-> codes (only the low 8 bits are passed along as an unsigned value, though
-> in practice for "-1" this at least retains the property that it's
-> non-zero).
->
-> Instead, let's just die(). That makes us consistent with rest of the
-> code in the function. It does add a new "fatal:" line to the output, but
-> I'd argue that's a good thing:
+On 5/19/2021 10:14 AM, Jeff King wrote:
+> On Wed, May 19, 2021 at 09:58:50AM -0400, Derrick Stolee wrote:
+> 
+>>> (Note that this isn't a pure revert; the previous commit added a test
+>>> showing the regression, so we can now flip it to expect_success).
+>>
+>> Keeping the test is excellent, because it gives us a way to confirm
+>> that a second attempt at a fix is at least as good as the first.
+>>
+>> The only thing that could improve this situation is to add a test
+>> that checks the bug that the previous version introduced, so that
+>> the next round doesn't repeat the mistake. That can be deferred
+>> because it is more important that we get this fix in time for the
+>> next release candidate.
+> 
+> Re-reading what I wrote, I think "the previous commit" may be ambiguous.
+> The original commit which introduced the bug (and which we're reverting
+> here) didn't include a test at all. In patch 1/2 of this series (what
+> I'm calling "the previous commit"), I provided a test which shows the
+> regression. And now this revert shows that we fixed it (by flipping from
+> expect_failure to expect_success).
+> 
+> So I think I've already done what you're asking (if I understand it
+> correctly).
 
-This reasoning makes sense to me, and thanks for cleaning this up.
-
-    Reviewed-by: Taylor Blau <me@ttaylorr.com>
+Ah. For some reason my email client didn't thread your messages
+together, so I saw this as a one-off patch (ignoring the 2/2 part
+of the message, of course).
 
 Thanks,
-Taylor
+-Stolee
