@@ -2,249 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 450A9C433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 15:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B3D0C433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 15:52:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BF6A61019
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 15:31:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D21806124C
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 15:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241696AbhESPc6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 11:32:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55816 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354872AbhESPcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 11:32:54 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE04C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 08:31:32 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id z85-20020a1c7e580000b029017a76f3afbaso1040290wmc.2
-        for <git@vger.kernel.org>; Wed, 19 May 2021 08:31:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6V1XWGMJetLdCMPLQ0ztpXWsz13TJzyO4IGS7BgsjMQ=;
-        b=XpSErdamv/V/AjybvSrdYp5d19FaAgqIy6GvwpBUHpEiXLaHvt68AsuIvPxV/qxuRh
-         +RHDIA+1K3WOVsrSUyUGL9QPX/GGU6ltWtZ7jnVPQYBnG1vufvH63XPSShBPMX8dSIHm
-         QWNUh29b3hhOi291T8/izM9RBRFOoRnZtN6IZ7nExSCPoEZ2/81olooTfccUDYnaGo1B
-         aLEZB08Stzhe6XDJ7N7acvA1bSxEYHxz0yNAmXbel6pr2qeNBio6KUcNP+LGJYFgYVdJ
-         Afpik9bHsebkc9sT1ly+02OdZoBHD9uFQ0K62qpmvq9doTaa3DVxxwIorFD2/14pPad0
-         +KIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6V1XWGMJetLdCMPLQ0ztpXWsz13TJzyO4IGS7BgsjMQ=;
-        b=IXEt5MaH1WaZru1uQduC/nJXgVl4gh1SqueaaxgC5PdEFRotsJJV8KD7s5G8hx73oQ
-         B1VQnkNluQIWmeAApj4uGFBoh6AY9+QbtcgU5M+Pe5/JnqXod/A9ccdC3vzVr8Z5+e3E
-         cePEvSN1ACvarvVUMkJhSCOAU4KnHUf1P2BRf7zPOvevkS6v9aV50H3Wy1uQxe7aCK2V
-         G9rlPeZdTXsAMQg9+915Y5siMn+VKOdr6FDk2BBoCFG01A6iR9YIO4xwNG7zZDhB8EqR
-         r5iBrKteqkYxJG48F+1BMuDMin8kTeNReLHSmELTvBSyaZ9jjAp/bNdGMPWlyQSmxTbJ
-         +FYA==
-X-Gm-Message-State: AOAM530HcY0td2uCDBF6pdZ/IW7QBIDXQyIDHVBTtBl1sHWtYY80cWkH
-        S8JI1gaw3lCYpMm4rx93j6NXuFOvvxQ=
-X-Google-Smtp-Source: ABdhPJyhq0yFelQFV/wL41uOeCfhvaFCJXDXBMEpbGLhgTLV8fNkRPeiU8OgsPolnMSGEBR5MH3vGw==
-X-Received: by 2002:a05:600c:379a:: with SMTP id o26mr12106009wmr.86.1621438290961;
-        Wed, 19 May 2021 08:31:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g4sm20874194wmk.45.2021.05.19.08.31.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 08:31:30 -0700 (PDT)
-Message-Id: <pull.1006.v2.git.git.1621438289354.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1006.git.git.1618484566164.gitgitgadget@gmail.com>
-References: <pull.1006.git.git.1618484566164.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 19 May 2021 15:31:28 +0000
-Subject: [PATCH v2] refs: make explicit that ref_iterator_peel returns boolean
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1346928AbhESPyR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 11:54:17 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:31412 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346899AbhESPyQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 11:54:16 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14JFqrXI098651
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Wed, 19 May 2021 11:52:54 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: [Broken] t5300 fails at 2.32.0-rc0
+Date:   Wed, 19 May 2021 11:52:48 -0400
+Message-ID: <018201d74cc7$079ad730$16d08590$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AddMtyn7ITRCoXUPQpWFpv+Gl4iUHw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+Much of the t5300 tests fail on 2.32.0-rc0 on NonStop.
 
-Use -1 as error return value throughout.
+*** t5300-pack-object.sh ***
+Initialized empty Git repository in /home/git/git/t/trash directory.t5300-pack-object/.git/
+expecting success of 5300.1 'setup':
+        rm -f .git/index* &&
+        perl -e "print \"a\" x 4096;" >a &&
+        perl -e "print \"b\" x 4096;" >b &&
+        perl -e "print \"c\" x 4096;" >c &&
+        test-tool genrandom "seed a" 2097152 >a_big &&
+        test-tool genrandom "seed b" 2097152 >b_big &&
+        git update-index --add a a_big b b_big c &&
+        cat c >d && echo foo >>d && git update-index --add d &&
+        tree=$(git write-tree) &&
+        commit=$(git commit-tree $tree </dev/null) &&
+        {
+                echo $tree &&
+                echo $commit &&
+                git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)        .*/\\1/"
+        } >obj-list &&
+        {
+                git diff-tree --root -p $commit &&
+                while read object
+                do
+                        t=$(git cat-file -t $object) &&
+                        git cat-file $t $object || return 1
+                done <obj-list
+        } >expect
 
-This removes spurious differences in the GIT_TRACE_REFS output, depending on the
-ref storage backend active.
+ok 1 - setup
 
-Before, the cached ref_iterator (but only that iterator!) would return
-peel_object() output directly. No callers relied on the peel_status values
-beyond success/failure. All calls to these functions go through
-peel_iterated_oid(), which returns peel_object() as a fallback, but also
-squashing the error values.
+expecting success of 5300.2 'pack without delta':
+        packname_1=$(git pack-objects --progress --window=0 test-1 \
+                        <obj-list 2>stderr) &&
+        check_deltas stderr = 0
 
-The iteration interface already passes REF_ISSYMREF and REF_ISBROKEN through the
-flags argument, so the additional error values in enum peel_status provide no
-value.
+not ok 2 - pack without delta
+#
+#               packname_1=$(git pack-objects --progress --window=0 test-1 \
+#                               <obj-list 2>stderr) &&
+#               check_deltas stderr = 0
+#
 
-The ref iteration interface provides a separate peel() function because certain
-formats (eg. packed-refs and reftable) can store the peeled object next to the
-tag SHA1. Passing the peeled SHA1 as an optional argument to each_ref_fn maps
-more naturally to the implementation of ref databases. Changing the code in this
-way is left for a future refactoring.
+expecting success of 5300.3 'pack-objects with bogus arguments':
+        test_must_fail git pack-objects --window=0 test-1 blah blah <obj-list
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
-    refs: ref_iterator_peel returns boolean, rather than peel_status
-    
-    v2: expand commit message.
+usage: git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]
+   or: git pack-objects [<options>...] <base-name> [< <ref-list> | < <object-list>]
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1006%2Fhanwen%2Fpeel_return-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1006/hanwen/peel_return-v2
-Pull-Request: https://github.com/git/git/pull/1006
+    -q, --quiet           do not show progress meter
+    --progress            show progress meter
+    --all-progress        show progress meter during object writing phase
+    --all-progress-implied
+                          similar to --all-progress when progress meter is shown
+    --index-version <version>[,<offset>]
+                          write the pack index file in the specified idx format version
+    --max-pack-size <n>   maximum size of each output pack file
+    --local               ignore borrowed objects from alternate object store
+    --incremental         ignore packed objects
+    --window <n>          limit pack window by objects
+    --window-memory <n>   limit pack window by memory in addition to object limit
+    --depth <n>           maximum length of delta chain allowed in the resulting pack
+    --reuse-delta         reuse existing deltas
+    --reuse-object        reuse existing objects
+    --delta-base-offset   use OFS_DELTA objects
+    --threads <n>         use threads when searching for best delta matches
+    --non-empty           do not create an empty pack output
+    --revs                read revision arguments from standard input
+    --unpacked            limit the objects to those that are not yet packed
+    --all                 include objects reachable from any reference
+    --reflog              include objects referred by reflog entries
+    --indexed-objects     include objects referred to by the index
+    --stdin-packs         read packs from stdin
+    --stdout              output pack to stdout
+    --include-tag         include tag objects that refer to objects to be packed
+    --keep-unreachable    keep unreachable objects
+    --pack-loose-unreachable
+                          pack loose unreachable objects
+    --unpack-unreachable[=<time>]
+                          unpack unreachable objects newer than <time>
+    --sparse              use the sparse reachability algorithm
+    --thin                create thin packs
+    --shallow             create packs suitable for shallow fetches
+    --honor-pack-keep     ignore packs that have companion .keep file
+    --keep-pack <name>    ignore this pack
+    --compression <n>     pack compression level
+    --keep-true-parents   do not hide commits by grafts
+    --use-bitmap-index    use a bitmap index if available to speed up counting objects
+    --write-bitmap-index  write a bitmap index together with the pack index
+    --filter <args>       object filtering
+    --missing <action>    handling for missing objects
+    --exclude-promisor-objects
+                          do not pack objects in promisor packfiles
+    --delta-islands       respect islands during delta compression
+    --uri-protocol <protocol>
+                          exclude any configured uploadpack.blobpackfileuri with this protocol
 
-Range-diff vs v1:
+ok 3 - pack-objects with bogus arguments
 
- 1:  241e0ad1954b ! 1:  f1dc6c2d7fea refs: ref_iterator_peel returns boolean, rather than peel_status
-     @@ Metadata
-      Author: Han-Wen Nienhuys <hanwen@google.com>
-      
-       ## Commit message ##
-     -    refs: ref_iterator_peel returns boolean, rather than peel_status
-     +    refs: make explicit that ref_iterator_peel returns boolean
-      
-     -    Before, the cached ref_iterator would return peel_object() output directly. This
-     -    led to spurious differences in the GIT_TRACE_REFS output, depending on the ref
-     -    storage backend active.
-     +    Use -1 as error return value throughout.
-     +
-     +    This removes spurious differences in the GIT_TRACE_REFS output, depending on the
-     +    ref storage backend active.
-     +
-     +    Before, the cached ref_iterator (but only that iterator!) would return
-     +    peel_object() output directly. No callers relied on the peel_status values
-     +    beyond success/failure. All calls to these functions go through
-     +    peel_iterated_oid(), which returns peel_object() as a fallback, but also
-     +    squashing the error values.
-     +
-     +    The iteration interface already passes REF_ISSYMREF and REF_ISBROKEN through the
-     +    flags argument, so the additional error values in enum peel_status provide no
-     +    value.
-     +
-     +    The ref iteration interface provides a separate peel() function because certain
-     +    formats (eg. packed-refs and reftable) can store the peeled object next to the
-     +    tag SHA1. Passing the peeled SHA1 as an optional argument to each_ref_fn maps
-     +    more naturally to the implementation of ref databases. Changing the code in this
-     +    way is left for a future refactoring.
-      
-          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-      
-     @@ refs.c: int peel_iterated_oid(const struct object_id *base, struct object_id *pe
-       		return ref_iterator_peel(current_ref_iter, peeled);
-       
-      -	return peel_object(base, peeled);
-     -+	return !!peel_object(base, peeled);
-     ++	return peel_object(base, peeled) ? -1 : 0;
-       }
-       
-       int refs_create_symref(struct ref_store *refs,
-      
-     + ## refs/packed-backend.c ##
-     +@@ refs/packed-backend.c: static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
-     + 	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
-     + 		return -1;
-     + 	} else {
-     +-		return !!peel_object(&iter->oid, peeled);
-     ++		return peel_object(&iter->oid, peeled) ? -1 : 0;
-     + 	}
-     + }
-     + 
-     +
-       ## refs/ref-cache.c ##
-      @@ refs/ref-cache.c: static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
-       static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
-       				   struct object_id *peeled)
-       {
-      -	return peel_object(ref_iterator->oid, peeled);
-     -+	return !!peel_object(ref_iterator->oid, peeled);
-     ++	return peel_object(ref_iterator->oid, peeled) ? -1 : 0;
-       }
-       
-       static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
-     @@ refs/refs-internal.h: void base_ref_iterator_free(struct ref_iterator *iter);
-       typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
-       
-      +/*
-     -+ * Peels the current ref, returning 0 for success.
-     ++ * Peels the current ref, returning 0 for success or -1 for failure.
-      + */
-       typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
-       				 struct object_id *peeled);
+-- Brief whoami:
+NonStop developer since approximately 211288444200000000
+UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
 
- refs.c                | 2 +-
- refs/packed-backend.c | 2 +-
- refs/ref-cache.c      | 2 +-
- refs/refs-internal.h  | 3 +++
- 4 files changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 8c9490235ea6..8b9f7c3a80a0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2010,7 +2010,7 @@ int peel_iterated_oid(const struct object_id *base, struct object_id *peeled)
- 	     oideq(current_ref_iter->oid, base)))
- 		return ref_iterator_peel(current_ref_iter, peeled);
- 
--	return peel_object(base, peeled);
-+	return peel_object(base, peeled) ? -1 : 0;
- }
- 
- int refs_create_symref(struct ref_store *refs,
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index dfecdbc1db60..66cb90c79ee0 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -889,7 +889,7 @@ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
- 		return -1;
- 	} else {
--		return !!peel_object(&iter->oid, peeled);
-+		return peel_object(&iter->oid, peeled) ? -1 : 0;
- 	}
- }
- 
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 46f1e5428433..49d732f6db96 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -491,7 +491,7 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
- static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				   struct object_id *peeled)
- {
--	return peel_object(ref_iterator->oid, peeled);
-+	return peel_object(ref_iterator->oid, peeled) ? -1 : 0;
- }
- 
- static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 467f4b3c936d..3155708345fc 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -453,6 +453,9 @@ void base_ref_iterator_free(struct ref_iterator *iter);
-  */
- typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
- 
-+/*
-+ * Peels the current ref, returning 0 for success or -1 for failure.
-+ */
- typedef int ref_iterator_peel_fn(struct ref_iterator *ref_iterator,
- 				 struct object_id *peeled);
- 
-
-base-commit: bf949ade81106fbda068c1fdb2c6fd1cb1babe7e
--- 
-gitgitgadget
