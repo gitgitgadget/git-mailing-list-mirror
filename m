@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 041DCC433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA45DC43460
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3D356135F
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EF4B6135A
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231970AbhESTPC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 15:15:02 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:39831 "EHLO
+        id S231889AbhESTPD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 15:15:03 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45657 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231889AbhESTO6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:14:58 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailout.nyi.internal (Postfix) with ESMTP id 072D95C0103
-        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:38 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S231956AbhESTPB (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:15:01 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id BB3555C00E4
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:41 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 19 May 2021 15:13:38 -0400
+  by compute6.internal (MEProxy); Wed, 19 May 2021 15:13:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=fm1; bh=kri4+NReiWrG8mL6/s39X0QgR/ffmmdi2gzmlXUD
-        dZQ=; b=cO7iK8ejSsatsW3orI0gXNXzQaHRcf6OuFoMaahOa3S5nAl7sDdZ18D7
-        fIofmwcFpwl8z7/sS1RVjDCZu5QExanozx9wTje2btUW4Dr+MAnMkE6QL/bkIG2C
-        x4qFK0taJrUiF403KfPD5NNHTyVw/MwN2iKPpMEHjchBOb3rsQgKb26oxC0ul5Jo
-        wf4GhCN7rBhh5NTwUoD5OK3e6Eo/iqiKJmOcZqxwQ/b69+CM1dPiP8uk4E/Hs1xX
-        ZSoyoJsrT/Pr83Cy8rZaDO8Wm6Q2B4m6GDTeE5QGQ+npCyu231KJehD17anHhaTd
-        4QHBlGXWkw7nj83gy+qyVxDjXmGYDA==
+        :in-reply-to; s=fm1; bh=8syEP58N1OpoHFUpudab6VLfAK4BVvwzE8lkgyNe
+        anA=; b=MvfCSjDTRqQxmVxIWdHFDk+7Bka9VKrhvhz+4+xEurmeXDAWS4O9+kLH
+        Wj12swrzyZS3wI+cZ0v40vA/Ka4eicKV8ZWEm6s+LLq5Qo7HSX8j6NZymXFwXooF
+        DiG+DlkBTfy/aAkWBK7TW6SfgR0rFGf7yAhzvQ5MTDwzr7Ra7YRtXhCSlcCEL15s
+        X9Tbkr4NOuWk0+qx3DUKE3x+VZ9qVVVhv2aC8PV17r4elss7jBNDivG9e8JQSGd7
+        gt3vdR1hIszglnj+vjppfIyDNb3ayaF4TfB/mablMhgR7lvpLop8jyqhGWVy+XcQ
+        1NMHmQf7OF9S3wcm3sdx8Pl4V9PdqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=kri4+N
-        ReiWrG8mL6/s39X0QgR/ffmmdi2gzmlXUDdZQ=; b=J1VRxw0Gg1e02J1xIppeEY
-        VmNCoH/75nb2snnxuJyDqUEfJyx2BE9OlLNh0NE/g91S2Xp45s2NiAA8tvDCOIwL
-        Q5HfYZZMnEqtEOW/aPueJ4KfNMYA4n9k2382bj8KpFZ9qkpm++6q5M2de+zIcugU
-        0PF6wBdJn3RYhNX1PX3sPQSU9nPNpPQ11aAlhPuTjNAVfmQHhCgb4AzTCX/qi57u
-        g7ox9HgVdpPKMxLZFHid2S8RJq8h3Z1eLzUjupKYFTIx0jtvHVeQKb81Uwm2MJ4U
-        ca6cwL53l3mLwkYcN5+jcy8wNddGX5Yv49LFJcEgBQkC4XrTtVChE6fD1TnyjDAA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=8syEP5
+        8N1OpoHFUpudab6VLfAK4BVvwzE8lkgyNeanA=; b=pbsL4Gq/YXyYKZEIXbYoQK
+        a2941sUTF8Qq3Mn5Zd53kmfhZwkWvK0qZIPCeN/EqxbShKj5KY6WofBW5QqYGhCd
+        B09GQFplmUAUagRy2owyW+rolyUpwsPWJ3838/mOYz+ziKp1jHCLeuPbJNrHVNFb
+        VnVJBnb9va9/r7FZx8eEIQMCxnd7ZbTRldNG5nndtGvwSGNdkzQ2CXQ6Kl74mhfp
+        7xCrhM8xPqx85xbT1CZ9dyC6DPU6tv9c88VY56PiB008KNz2hU9HkDejIlRGjA+j
+        QKDzD7I1ZMt9rNJlDVfJTt2g+ExU1yeFOePO4+LGWfmUV7Z0XSJx/9xkFuzGa6PQ
         ==
-X-ME-Sender: <xms:YWOlYCZfj3XaaT4fOv1N-O8L4XufF3OensAQaXF7F3UOCkTyeTVjnQ>
-    <xme:YWOlYFbDhdCj_utEtsCs1zb5u8QKeWb6uGMkWOGeGMTykyO6mfsvYYVbhyqfpaWtN
-    W-ytJ01KRwsGxcVcw>
+X-ME-Sender: <xms:ZWOlYFXBRPtMXesNrvUVGh6JO7HMOvW6h-wzWC0vnRQIQ1IceMVAiQ>
+    <xme:ZWOlYFnLSvrtY2QLxnREXF2eSFKC3BD-53sBz7l1oi5JYn_nUlzY5xQqYqm-O8cdU
+    nJpoCExUm5k1mPF_w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeiledgudefudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
@@ -55,27 +55,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeiledgudefudcutefuodetgg
     fhvdejkedthfehvdelgfetgfdvtedthfenucfkphepjeejrddukeefrdefjedrudehieen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:YWOlYM_HG5WKsTenoqhCTRAGOZ6iU_U893lII241QWOm46dBGSQrQw>
-    <xmx:YWOlYEp5D2zKUqgOHwKbmgUFnCJ3YmEUL8osrBhjmwoRjpB8eYG7PQ>
-    <xmx:YWOlYNrkCiKhn_HlikWwNMjwzhwiOnjjm2LQBih08sTcQkLIZFz6ow>
-    <xmx:YmOlYK1IYhpU4GEAlO8H3E8HZ3xuNckyzrvttscYidsh0pp1dbdLsg>
+X-ME-Proxy: <xmx:ZWOlYBbj9l8_mxvKQaXvwEC3ZUlEN6PN8H61La7JmTEym8yZCt9YBQ>
+    <xmx:ZWOlYIXgT12DDuzEvOaFWqFrMNQ5oWtUnYMoWHBB0UGIBlE1180Wwg>
+    <xmx:ZWOlYPnamQu9CLK7TCxLUZZyxhLB5J85YUa2rS3kS1eB1DIMiM32OA>
+    <xmx:ZWOlYLwhimDSrnzY1pweCppMjg0VUAHQqdhnL3STgcFXeojky47KaA>
 Received: from vm-mail.pks.im (x4db7259c.dyn.telefonica.de [77.183.37.156])
         by mail.messagingengine.com (Postfix) with ESMTPA
-        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:37 -0400 (EDT)
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:41 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 42328069 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a6964163 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Wed, 19 May 2021 19:13:36 +0000 (UTC)
-Date:   Wed, 19 May 2021 21:13:35 +0200
+        Wed, 19 May 2021 19:13:40 +0000 (UTC)
+Date:   Wed, 19 May 2021 21:13:39 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 4/8] packfile: have `for_each_file_in_pack_dir()` return
- error codes
-Message-ID: <64a1bcf2c11d180542e06f67c451f9f90019dea4.1621451532.git.ps@pks.im>
+Subject: [PATCH 5/8] object-file: allow reading loose objects without reading
+ their contents
+Message-ID: <e26ff58e926dfc6aec15794a68981d6e455cb305.1621451532.git.ps@pks.im>
 References: <cover.1621451532.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Iq9wOyVJiYCvjD9B"
+        protocol="application/pgp-signature"; boundary="dIbtYnkcf+scgVlX"
 Content-Disposition: inline
 In-Reply-To: <cover.1621451532.git.ps@pks.im>
 Precedence: bulk
@@ -83,243 +83,75 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Iq9wOyVJiYCvjD9B
+--dIbtYnkcf+scgVlX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The function `for_each_file_in_pack_dir()` doesn't ever return error
-codes right now: any errors it hits are simply swallowed. A new user
-we're about to add would like to know what's going on though such that
-it can decide whether the call was successful or not.
+We're about to add a new implementation of the connectivity check via
+the object quarantine directory, which will directly iterate over any
+loose object via their paths. For optimization purposes, we'll want to
+skip over any loose blobs, but right now there's no easy way to read a
+loose object without also slurping in all its contents.
 
-Refactor the function to return an error code, and adapt the signature
-of the callback function to also return an error code. This enables the
-callback to abort iteration and have its error code passed through.
-Existing callers are adapted to this change, but keep ignoring errors.
+Fix this shortcoming by modifying `read_loose_object()` such that it can
+handle the case where no pointer for `contents` was passed in. If so,
+then we'll simply skip reading the loose object.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- midx.c     | 22 +++++++++++++---------
- packfile.c | 26 ++++++++++++++++----------
- packfile.h | 10 +++++-----
- 3 files changed, 34 insertions(+), 24 deletions(-)
+ object-file.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/midx.c b/midx.c
-index 21d6a05e88..f87a3d36ab 100644
---- a/midx.c
-+++ b/midx.c
-@@ -470,15 +470,15 @@ struct write_midx_context {
- 	int preferred_pack_idx;
- };
+diff --git a/object-file.c b/object-file.c
+index 884855b9df..ab695823fd 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2552,7 +2552,8 @@ int read_loose_object(const char *path,
+ 	git_zstream stream;
+ 	char hdr[MAX_HEADER_LEN];
 =20
--static void add_pack_to_midx(const char *full_path, size_t full_path_len,
--			     const char *file_name, void *data)
-+static int add_pack_to_midx(const char *full_path, size_t full_path_len,
-+			    const char *file_name, void *data)
- {
- 	struct write_midx_context *ctx =3D data;
+-	*contents =3D NULL;
++	if (contents)
++		*contents =3D NULL;
 =20
- 	if (ends_with(file_name, ".idx")) {
- 		display_progress(ctx->progress, ++ctx->pack_paths_checked);
- 		if (ctx->m && midx_contains_pack(ctx->m, file_name))
--			return;
-+			return 0;
-=20
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
-=20
-@@ -489,7 +489,7 @@ static void add_pack_to_midx(const char *full_path, siz=
-e_t full_path_len,
- 		if (!ctx->info[ctx->nr].p) {
- 			warning(_("failed to add packfile '%s'"),
- 				full_path);
--			return;
-+			return 0;
- 		}
-=20
- 		if (open_pack_index(ctx->info[ctx->nr].p)) {
-@@ -497,7 +497,7 @@ static void add_pack_to_midx(const char *full_path, siz=
-e_t full_path_len,
- 				full_path);
- 			close_pack(ctx->info[ctx->nr].p);
- 			FREE_AND_NULL(ctx->info[ctx->nr].p);
--			return;
-+			return 0;
- 		}
-=20
- 		ctx->info[ctx->nr].pack_name =3D xstrdup(file_name);
-@@ -505,6 +505,8 @@ static void add_pack_to_midx(const char *full_path, siz=
-e_t full_path_len,
- 		ctx->info[ctx->nr].expired =3D 0;
- 		ctx->nr++;
+ 	map =3D map_loose_object_1(the_repository, path, NULL, &mapsize);
+ 	if (!map) {
+@@ -2572,6 +2573,12 @@ int read_loose_object(const char *path,
+ 		goto out;
  	}
+=20
++	if (!contents) {
++		git_inflate_end(&stream);
++		ret =3D 0;
++		goto out;
++	}
 +
-+	return 0;
- }
-=20
- struct pack_midx_entry {
-@@ -1110,19 +1112,21 @@ struct clear_midx_data {
- 	const char *ext;
- };
-=20
--static void clear_midx_file_ext(const char *full_path, size_t full_path_le=
-n,
--				const char *file_name, void *_data)
-+static int clear_midx_file_ext(const char *full_path, size_t full_path_len,
-+			const char *file_name, void *_data)
- {
- 	struct clear_midx_data *data =3D _data;
-=20
- 	if (!(starts_with(file_name, "multi-pack-index-") &&
- 	      ends_with(file_name, data->ext)))
--		return;
-+		return 0;
- 	if (data->keep && !strcmp(data->keep, file_name))
--		return;
-+		return 0;
-=20
- 	if (unlink(full_path))
- 		die_errno(_("failed to remove %s"), full_path);
-+
-+	return 0;
- }
-=20
- static void clear_midx_files_ext(struct repository *r, const char *ext,
-diff --git a/packfile.c b/packfile.c
-index b79cbc8cd4..f488a214cf 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -792,14 +792,15 @@ static void report_pack_garbage(struct string_list *l=
-ist)
- 	report_helper(list, seen_bits, first, list->nr);
- }
-=20
--void for_each_file_in_pack_dir(const char *objdir,
--			       each_file_in_pack_dir_fn fn,
--			       void *data)
-+int for_each_file_in_pack_dir(const char *objdir,
-+			      each_file_in_pack_dir_fn fn,
-+			      void *data)
- {
- 	struct strbuf path =3D STRBUF_INIT;
- 	size_t dirnamelen;
- 	DIR *dir;
- 	struct dirent *de;
-+	int ret =3D 0;
-=20
- 	strbuf_addstr(&path, objdir);
- 	strbuf_addstr(&path, "/pack");
-@@ -809,7 +810,7 @@ void for_each_file_in_pack_dir(const char *objdir,
- 			error_errno("unable to open object pack directory: %s",
- 				    path.buf);
- 		strbuf_release(&path);
--		return;
-+		return -1;
- 	}
- 	strbuf_addch(&path, '/');
- 	dirnamelen =3D path.len;
-@@ -820,11 +821,14 @@ void for_each_file_in_pack_dir(const char *objdir,
- 		strbuf_setlen(&path, dirnamelen);
- 		strbuf_addstr(&path, de->d_name);
-=20
--		fn(path.buf, path.len, de->d_name, data);
-+		ret =3D fn(path.buf, path.len, de->d_name, data);
-+		if (ret)
-+			break;
- 	}
-=20
- 	closedir(dir);
- 	strbuf_release(&path);
-+	return ret;
- }
-=20
- struct prepare_pack_data {
-@@ -834,8 +838,8 @@ struct prepare_pack_data {
- 	struct multi_pack_index *m;
- };
-=20
--static void prepare_pack(const char *full_name, size_t full_name_len,
--			 const char *file_name, void *_data)
-+static int prepare_pack(const char *full_name, size_t full_name_len,
-+			const char *file_name, void *_data)
- {
- 	struct prepare_pack_data *data =3D (struct prepare_pack_data *)_data;
- 	struct packed_git *p;
-@@ -858,13 +862,13 @@ static void prepare_pack(const char *full_name, size_=
-t full_name_len,
- 	}
-=20
- 	if (!report_garbage)
--		return;
-+		return 0;
-=20
- 	if (!strcmp(file_name, "multi-pack-index"))
--		return;
-+		return 0;
- 	if (starts_with(file_name, "multi-pack-index") &&
- 	    ends_with(file_name, ".rev"))
--		return;
-+		return 0;
- 	if (ends_with(file_name, ".idx") ||
- 	    ends_with(file_name, ".rev") ||
- 	    ends_with(file_name, ".pack") ||
-@@ -874,6 +878,8 @@ static void prepare_pack(const char *full_name, size_t =
-full_name_len,
- 		string_list_append(data->garbage, full_name);
- 	else
- 		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
-+
-+	return 0;
- }
-=20
- static void prepare_packed_git_one(struct repository *r, char *objdir, int=
- local)
-diff --git a/packfile.h b/packfile.h
-index 3ae117a8ae..eac930cd27 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -39,11 +39,11 @@ const char *pack_basename(struct packed_git *p);
-=20
- struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_p=
-ath);
-=20
--typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_p=
-ath_len,
--				      const char *file_pach, void *data);
--void for_each_file_in_pack_dir(const char *objdir,
--			       each_file_in_pack_dir_fn fn,
--			       void *data);
-+typedef int each_file_in_pack_dir_fn(const char *full_path, size_t full_pa=
-th_len,
-+				     const char *file_pach, void *data);
-+int for_each_file_in_pack_dir(const char *objdir,
-+			      each_file_in_pack_dir_fn fn,
-+			      void *data);
-=20
- /* A hook to report invalid files in pack directory */
- #define PACKDIR_FILE_PACK 1
+ 	if (*type =3D=3D OBJ_BLOB && *size > big_file_threshold) {
+ 		if (check_stream_oid(&stream, hdr, *size, path, expected_oid) < 0)
+ 			goto out;
 --=20
 2.31.1
 
 
---Iq9wOyVJiYCvjD9B
+--dIbtYnkcf+scgVlX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY14ACgkQVbJhu7ck
-PpT5GA/+JUcYCvU0UsJluxTzMjwgDLjue9dpOqVVZt30MQIbKPsXR12zYJ/Fhd+g
-aFLeMpimdaC11ENV4t86NjDXif2klTXYlQQxXY/72Rzjpjyd6XuFLQfOdUKlrAh3
-uwEPs80fths+XkYmfGBzDC1Gmmbw0vZr+y3og9/MhdodnzguNlpaAU2pGChuRGXT
-iTQZQGVfR7I2mUbu4DaC9ZEQDucKCI+aUvbKBdmORGI+n+Wq9FWZksuVlYhJDSCN
-pQoqLq1Kb7w4ajiKBMj4hNK56JY3LBSYFbRuDijtZ9Rf2h/X33Wx9cEQeS1H9GnW
-QN4WMiX0diitZwiLib/TOt/e3LAPEE7Km8NkQA7dhZgejd92CFBWvHOdCUBJE1ng
-3MiUeNSYCqezU39zKlOMt/5ti0P/BiCLxqEb5i8SOdx1ytuPy56OhuKWDrslU3zt
-fvhKA76ZfvraXhLyyNFUQLNxySgFjWd4uAeSRwotkFVDNBmfIi9BulgVVs/qYsK3
-cJQzWkwLuHMfzRQIrGC2S+08FWx9vp2u96LT/WCLDJYgccuLt14uVEcoZzYOar++
-Ci/+1IBuELjlIjkFa5DCZQvy/WunaFeaF7DBnQn85tYLXVvSq3YsxgdEsRFgpDSj
-HnF8G0lxG5DUPG3HR9DwS/iBFYgVa2kdPircTRz4Vd3wgcWtBGs=
-=CS+N
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY2IACgkQVbJhu7ck
+PpSBJQ//Sb4VAn6p/3JdmNgRBg8mObPIHCEzSKdm2RiNkVhx3L7yzXNbhT5/7uxD
+ahxAXMOG8EC0qT3+uhvWRytxIsPvEG/MgkzMJlEeCONtOxfcZQaKR544TuN+WRSa
+Gz9LWqkJxN1N9WMnhL54mtAk0Om/QQvv+ZwTaeDLudJ/tZqwf1+u+olDBj5iD1Bi
+TF7oArq29cnKh1Y59YnDwA/PKm/5P0hTfXxS7TmBdBvWsVI3SQS5AbVfr2aC8+nd
+E0BasClJHiEaI63oFjUlIKyZN4b92AlfYcPXgSLIKTb6fkvxc6B9SvwxwO4m4ilZ
+ASn6A2m+PGXN5FkWbiCwsh7c2yFvcvZgUeiI2pFq7WSWnTT+W2kYsjA0qUCKbmOz
+ptTnrhUg/7uX/U6WQ9pm+f8JaFiapTeih02a3LwN0vWazKDnW8vawgrh2ztJuwyA
+Zp6u7IxP7DB8OfLk0o2VtnaQ9UKqEHMhPa+h6wNJFYBO0J7SO+Q4/IiDXxZPed7W
+wU362wX5FJfP22m9uTlF4Kt3VruO9Wd9fGhpQ7UohenUvwZ49WSV4g/8pV57v5fx
+BdKkbFJV0LPKePljlf2bthNDVapD1ohwH3aCnxUpZbQ4M/0hfDJk6wrckd+2rdmB
+FtVXCGzPP5PSlPv3q+Ot8Pli6JfyCxnp6JkcmjSbO525ZJ1C+jw=
+=nD3I
 -----END PGP SIGNATURE-----
 
---Iq9wOyVJiYCvjD9B--
+--dIbtYnkcf+scgVlX--
