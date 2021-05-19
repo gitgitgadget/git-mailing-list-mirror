@@ -7,75 +7,84 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4DD0C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 23:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4707C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 23:29:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C8F5611AD
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 23:22:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0E6460FF0
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 23:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229967AbhESXXk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 19:23:40 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59680 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229465AbhESXXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 19:23:40 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F078D224A;
-        Wed, 19 May 2021 19:22:19 -0400 (EDT)
+        id S230023AbhESXaf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 19:30:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61257 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229498AbhESXae (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 19:30:34 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D573B8534;
+        Wed, 19 May 2021 19:29:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3O/YLt7i62LsPorD1t2zOl8DfNsSLd2mVd+qJ+
-        6KhUA=; b=EGXP1/gY4OM8oQ5kxfPtNkyuQYo3uRPfiVjDTMt1UrI0CN269REz5n
-        SVgie2n/URzjaxMdzapXE3uY7SedYYNKYBR/wAb7jDNn73PHJUHDzYRanAyWhguk
-        hKU/w12IDvZbMQP/QN8ahmXgAHfYImiRswrMbcB8f80ubk33yWekM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84297D2249;
-        Wed, 19 May 2021 19:22:19 -0400 (EDT)
+        :content-type; s=sasl; bh=J4QGFu4sIQZs5MxEeFPJm+n0NtK/G4waF91b06
+        Zrcgk=; b=NmEaE4tYp+0LLmWwvocEtlIJItHBt+eCFKnZuBFvKkFlTdtum5F0f/
+        e5SycTMWvV3lhpB6Tgtr6IzOgETe5VKTzR6kT4WR0RxCmtF/AvA5wD8zanA28V0A
+        QamXIQvhdgEPOybhad1Fpc3y6t3ZpyUJRdjdhqZPVxmSeGWEY7NYQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75F9FB8533;
+        Wed, 19 May 2021 19:29:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C1D8D2248;
-        Wed, 19 May 2021 19:22:19 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F175BB8531;
+        Wed, 19 May 2021 19:29:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Git List <git@vger.kernel.org>,
-        Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-Subject: Re: Should we do something with #git-devel on Freenode?
-References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
-        <YKViF9OVLeA95JPH@google.com>
-Date:   Thu, 20 May 2021 08:22:18 +0900
-In-Reply-To: <YKViF9OVLeA95JPH@google.com> (Jonathan Nieder's message of "Wed,
-        19 May 2021 12:08:07 -0700")
-Message-ID: <xmqqv97ewbpx.fsf@gitster.g>
+To:     Christoph Anton Mitterer <calestyo@scientia.net>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: git-sh-prompt: bash: GIT_PS1_COMPRESSSPARSESTATE: unbound variable
+References: <f1fc174b10ca5bc8b54ede513bc79e3864d8e014.camel@scientia.net>
+        <xmqq4kf7cmaj.fsf@gitster.g> <xmqqzgwzb7ad.fsf@gitster.g>
+        <CABPp-BGERNLKbLA_r7i7+r+v7YK6xT00_5n9ebESb2SzLhC0Cg@mail.gmail.com>
+        <xmqqv97nb51b.fsf@gitster.g>
+        <681aefe15af98f6758f28544b96bc2eca90642f3.camel@scientia.net>
+Date:   Thu, 20 May 2021 08:29:12 +0900
+In-Reply-To: <681aefe15af98f6758f28544b96bc2eca90642f3.camel@scientia.net>
+        (Christoph Anton Mitterer's message of "Wed, 19 May 2021 19:56:53
+        +0200")
+Message-ID: <xmqqr1i2wbef.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0E447494-B8F9-11EB-A5C1-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 04FEB84E-B8FA-11EB-8FA4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Christoph Anton Mitterer <calestyo@scientia.net> writes:
 
-> It looks like most of the Freenode admins have moved to
-> https://libera.chat/, so that would be a close equivalent.  Another
-> alternative is OFTC <https://www.oftc.net/>, which is used by
-> irc.debian.org, for example.
+> Hey there.
 >
-> There are also other real-time chat programs such as Zulip (open
-> source, used in Outreachy), Discord (used by LLVM), and Slack (used by
-> Chromium); each has its benefits and flaws.
+> I think I found another case of an unbound variable:
+>
+> Completing e.g.:
+> git commit --[press TAB]
+>
+> gives:
+> $ git commit  --bash: GIT_COMPLETION_SHOW_ALL: unbound variable
 
-I usually refrain from suggesting us to side with anybody in a
-confrontation that is outside our main mission, but I do not mind
-supporting the folks who were at freenode to show appreciation for
-the service they gave us so far, by moving to where they are now.
+It seems that OMIT_SPARSESTATE would have the same issue.
 
-If all candidates offer similar level of stability and archival,
-that is.
+	if [ -z "${GIT_PS1_COMPRESSSPARSESTATE}" ] &&
+	   [ -z "${GIT_PS1_OMITSPARSESTATE}" ] &&
 
-Thanks.
+all coming from afda36db (git-prompt: include sparsity state as
+well, 2020-06-21).
+
+But I think we have already seen the fix in 5c0cbdb1 (git-prompt:
+work under set -u, 2021-05-13), which may or may not appear in the
+upcoming release.
+
+There still are unprotected mentions of GIT_PS1_SHOWUPSTREAM even
+with that fix, though.
