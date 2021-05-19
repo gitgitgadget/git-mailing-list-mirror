@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3FE8C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D9D7C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7D576135A
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CEF76108D
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231939AbhESTPK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 15:15:10 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:51613 "EHLO
+        id S231880AbhESTPP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 15:15:15 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:60011 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230298AbhESTPJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:15:09 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 43A925C018D
-        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:49 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S231972AbhESTPO (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:15:14 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 0625D5C0040
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:54 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 19 May 2021 15:13:49 -0400
+  by compute2.internal (MEProxy); Wed, 19 May 2021 15:13:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=fm1; bh=oohEfvtXETt+4nTgvdIMbiItD4RoxGuP+HUtYoAI
-        Sxc=; b=NDMgJSfhTDsfmAHJW1Hps/CFoyCxn/baf5X8FSr/Q1WdKcCayUebfIKX
-        J5woE3qbL+fSz0UgTvWYMhmWct046HOIyYLqELbcPE7moh/RU/Hq/WNTzFsIk0GD
-        S71DSFzG8Hfdpcc0P9d/HDGcMZ5DkUAKGQEUaq82reZvKV6BAYk8l5cF6s46K0fQ
-        0Y9oEFoaKd7CgLpkLB7jM6oyMAUz+nDzPlQ7rVvcGwexuaYZL45M/A5rlUnTJtHA
-        M9uLbXcnNYUTLUtL1Nf2l901k8XDUqjPhrvpVkPtnyR7RustZk0k8dS0N2lcHRe8
-        IrQ+IHS84TpjAQVWQkbl81oNT+wXcQ==
+        :in-reply-to; s=fm1; bh=QIdEtu1foRS4unYtCGZyYi595Z5wNCOF3DHhYN5j
+        2MM=; b=h9fNqZX8G16GSh9bx6tPPMhp7y30VPG2+qlLszc/xgI6wUOgp2iqBXlV
+        plGWJb6lRSoRWfPvKVGoapwdbHut34Qq+MR1khkWxebkiYFCkf5JxstkSpom2Zuu
+        Lq5KkST+yEAzBIuEveyzGfkrcxO63lKSbxIuFHKPSrbTqEkBqIutRtTl64H87Ber
+        Dae4B7Fkxjn8p77Xi5+vocsyy1tazX1AdMtG3O+jSGwUvNnl1wetfuTQDyIVBTuA
+        QzhedBNRLlpTI9dq/f91G87/sbAUhqTllepvtcrzgpOl/OhiKgh+FKg/iW6AKsVv
+        XpScVYoIjX93j+Sl5lI90P/5fMJltw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=oohEfv
-        tXETt+4nTgvdIMbiItD4RoxGuP+HUtYoAISxc=; b=h7muzR8oBZoiLUh8bKc9yO
-        BmrP+BcqwYxl2S6EB00mpGapNpuSxSL483j/+Ngv5tfc/hdzLWNWvAi+75C8E5IA
-        GIJfi9X3dagCv60V5xGialUyKgLQghwI8MFNAge9jG4+a/0gA+TmomyLgFm0BYF2
-        QQhoPTd+8LaJD2I22stzIMkOf6vEpQilyoV1uwgyK/pjYcrgU0Kd93jx85CfUmsZ
-        hKHF1hLirjC6mI59K5jKGT4pPexOoXmwMgHMY/hAjDll6enwM/guyM/mklnSZlN5
-        lQb5ghv90dHwhulIztUU0B5gimZ3WruEltWtLUEuIjJMH7n5FUtizXlBNpbLl9kg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=QIdEtu
+        1foRS4unYtCGZyYi595Z5wNCOF3DHhYN5j2MM=; b=cHEiQrVZUKtyp4WiIEGwFP
+        Fa5Z9DtZc8vjNHNZKnfHUswcDjm3+48ZoxL/ZcvjgbZDD/igWNJhV6kjhF4vrIH3
+        xFN0SLcVLyhKyyb7XhLV4M8UGdHwFkK4XvLFgJHVmx+Diym63fnOEUFODMz8NTCB
+        6bRIwpUx/EmOdpzooIE6M9s2M9OzDIs40idmAV6/MfmlzKftR3/dUSwQIZw/JKKy
+        e7bfrrtVY08bL8AN+z31iedeOz2TfifxnBlVqNBIOtD8yW8vxaXkock0RJ/xoFfW
+        cQXKdSpwVFDLCjZGx80ggOlKdycCsDfM1sDSamVN96Kps4hPWwTjtntaCfhwgXLw
         ==
-X-ME-Sender: <xms:bWOlYFEssU0QYVbTA7tfZUQlyz7tLp-dMzpg9E7lBA7okiTP7JvmZA>
-    <xme:bWOlYKXA4qLVkj9OhtPHza4wnprSK6U2I4ooVvgVuv-v0Yvwyzl4feB8NVkw-DJMa
-    O98vzIx1WLj1Fcjrw>
+X-ME-Sender: <xms:cWOlYOmwEAUfYBWzLWtAfOleXUmBR_WceZQfgDAsfHWA4BN23Gs0Cw>
+    <xme:cWOlYF3FzpO_geBG1tmPEp_Vdrc48MOVz_LlBLMlRyvP7jJtNdH9TjiGx1Lsovfgw
+    hbft8ofWapRbpupEA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeiledgudefudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
@@ -55,27 +55,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeiledgudefudcutefuodetgg
     fhvdejkedthfehvdelgfetgfdvtedthfenucfkphepjeejrddukeefrdefjedrudehieen
     ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:bWOlYHKcHLnC8Uemz9_PKzAWKsYZfm8G4mg5EVOnzeaO491wEDwBjQ>
-    <xmx:bWOlYLF0uN9plNjVezYzUAxX7RIoWg2M8wNakXLLRdcSYSdQ6BQCEw>
-    <xmx:bWOlYLV50EecUsxfNHAqKC_rJ7eA5m_0FJ_ksMFovspgwdJ-ZpkYlA>
-    <xmx:bWOlYDhwYlFCmP_r49mbvPn3lrYlvCtqt_uWDks9J93Up3sY3ZoSuw>
+X-ME-Proxy: <xmx:cWOlYMrud0P19GqxgMWPsh-EEH16ul77TY8a6OrgOMCTyy-f61_ljQ>
+    <xmx:cWOlYCmUtQ2DNiuiAEwd2eJ1s2yKDj8vQVbu5NkUJUIyiliEiiYhbw>
+    <xmx:cWOlYM2vfFkrjSmtN9C0aYqQcZoUgKkx7j8-ZM0OP2XtaPdr0D0NvA>
+    <xmx:cmOlYNDvBNp9E2jDA9oB-L1B_vwL77Zg8kQ2afD-Z2P7miNzMr9Azw>
 Received: from vm-mail.pks.im (x4db7259c.dyn.telefonica.de [77.183.37.156])
         by mail.messagingengine.com (Postfix) with ESMTPA
-        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:48 -0400 (EDT)
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:53 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9bd5f0ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6f06a1a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Wed, 19 May 2021 19:13:48 +0000 (UTC)
-Date:   Wed, 19 May 2021 21:13:47 +0200
+        Wed, 19 May 2021 19:13:52 +0000 (UTC)
+Date:   Wed, 19 May 2021 21:13:51 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 7/8] receive-pack: skip connectivity checks on delete-only
- commands
-Message-ID: <68c60aff0c77c562aba5613ccbb9ab33ad8e0e08.1621451532.git.ps@pks.im>
+Subject: [PATCH 8/8] receive-pack: check connectivity via quarantined objects
+Message-ID: <010974639c66c8f15d4dc9e4feb69eed92b52d13.1621451532.git.ps@pks.im>
 References: <cover.1621451532.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5TQG8HV8k0CeH0O0"
+        protocol="application/pgp-signature"; boundary="5Gbh1w4v2kMXnESY"
 Content-Disposition: inline
 In-Reply-To: <cover.1621451532.git.ps@pks.im>
 Precedence: bulk
@@ -83,148 +82,109 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---5TQG8HV8k0CeH0O0
+--5Gbh1w4v2kMXnESY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In the case where git-receive-pack(1) receives only commands which
-delete references, then per technical specification the client MUST NOT
-send a packfile. As a result, we know that no new objects have been
-received, which makes it a moot point to check whether all received
-objects are fully connected.
-
-Fix this by not doing a connectivity check in case there were no pushed
-objects. Given that git-rev-walk(1) with only negative references will
-not do any graph walk, no performance improvements are to be expected.
-Conceptionally, it is still the right thing to do though.
-
-The following tests were executed on linux.git and back up above
-expectation:
+Convert git-receive-pack(1) to use the new connectivity check which
+uses the quarantine directory to enumerate new objects instead of using
+references. This change significantly decreases the time required to
+accept reference updates due to the fact that we don't need to do a
+graph walk anymore. The following measurements have been executed on
+linux.git:
 
 Test                                     v2.32.0-rc0             HEAD
 ---------------------------------------------------------------------------=
 -----------------
-5400.3: receive-pack clone create        1.27(1.11+0.16)         1.26(1.12+=
-0.14) -0.8%
-5400.5: receive-pack clone update        1.27(1.13+0.13)         1.27(1.11+=
-0.16) +0.0%
-5400.7: receive-pack clone reset         0.13(0.11+0.02)         0.14(0.11+=
-0.02) +7.7%
-5400.9: receive-pack clone delete        0.02(0.01+0.01)         0.02(0.00+=
-0.01) +0.0%
-5400.11: receive-pack extrarefs create   33.01(18.80+14.43)      32.63(18.5=
-2+14.24) -1.2%
-5400.13: receive-pack extrarefs update   33.13(18.85+14.50)      32.82(18.8=
-5+14.29) -0.9%
-5400.15: receive-pack extrarefs reset    32.90(18.82+14.32)      32.70(18.7=
-6+14.20) -0.6%
-5400.17: receive-pack extrarefs delete   9.13(4.35+4.77)         8.99(4.28+=
-4.70) -1.5%
-5400.19: receive-pack empty create       223.35(640.63+127.74)   226.96(655=
-=2E16+131.93) +1.6%
+5400.3: receive-pack clone create        1.27(1.11+0.16)         0.02(0.01+=
+0.01) -98.4%
+5400.5: receive-pack clone update        1.27(1.13+0.13)         0.02(0.02+=
+0.00) -98.4%
+5400.7: receive-pack clone reset         0.13(0.11+0.02)         0.02(0.01+=
+0.01) -84.6%
+5400.9: receive-pack clone delete        0.02(0.01+0.01)         0.03(0.02+=
+0.01) +50.0%
+5400.11: receive-pack extrarefs create   33.01(18.80+14.43)      9.00(4.30+=
+4.65) -72.7%
+5400.13: receive-pack extrarefs update   33.13(18.85+14.50)      9.01(4.28+=
+4.67) -72.8%
+5400.15: receive-pack extrarefs reset    32.90(18.82+14.32)      9.04(4.26+=
+4.77) -72.5%
+5400.17: receive-pack extrarefs delete   9.13(4.35+4.77)         8.94(4.29+=
+4.64) -2.1%
+5400.19: receive-pack empty create       223.35(640.63+127.74)   227.55(651=
+=2E75+130.94) +1.9%
+
+Interestingly enough, the normal "clone" repository shows a more extreme
+improvement compared to the "extrarefs" repository, which has one
+reference per commit. While I haven't yet dived into the root cause, I
+expect that there is another location besides the connectivity check
+which does scale with the number of references.
+
+Notably, the connectivity check when pushing into an empty repository
+shows comparable performance with the previous implementation. This is
+because in both cases we're actually performing a complete graph walk to
+determine whether there are any unreachable commits.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/receive-pack.c | 49 ++++++++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 19 deletions(-)
+ builtin/receive-pack.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index a34742513a..b9263cec15 100644
+index b9263cec15..23087acad0 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -1918,11 +1918,8 @@ static void execute_commands(struct command *command=
+@@ -1937,8 +1937,12 @@ static void execute_commands(struct command *command=
 s,
- 			     struct shallow_info *si,
- 			     const struct string_list *push_options)
- {
--	struct check_connected_options opt =3D CHECK_CONNECTED_INIT;
- 	struct command *cmd;
- 	struct iterate_data data;
--	struct async muxer;
--	int err_fd =3D 0;
- 	int run_proc_receive =3D 0;
+ 	 * first place. As a result, we do not set up a quarantine environment
+ 	 * because we know no new objects will be received. And that in turn
+ 	 * means that we can skip connectivity checks here.
++	 *
++	 * Using the quarantine directory to determine connectivity may not
++	 * work with shallow clones, so let's let's play it safe for now and
++	 * fall back to the old connectivity check.
+ 	 */
+-	if (tmp_objdir) {
++	if (tmp_objdir && (si->nr_ours || si->nr_theirs)) {
+ 		struct check_connected_options opt =3D CHECK_CONNECTED_INIT;
+ 		struct async muxer;
+ 		int err_fd =3D 0;
+@@ -1960,6 +1964,10 @@ static void execute_commands(struct command *command=
+s,
 =20
- 	if (unpacker_error) {
-@@ -1931,25 +1928,39 @@ static void execute_commands(struct command *comman=
-ds,
- 		return;
+ 		if (use_sideband)
+ 			finish_async(&muxer);
++	} else if (tmp_objdir) {
++		if (check_connected_quarantine(the_repository, tmp_objdir,
++					       iterate_receive_command_list, &data))
++			set_connectivity_errors(commands, si);
  	}
 =20
--	if (use_sideband) {
--		memset(&muxer, 0, sizeof(muxer));
--		muxer.proc =3D copy_to_sideband;
--		muxer.in =3D -1;
--		if (!start_async(&muxer))
--			err_fd =3D muxer.in;
--		/* ...else, continue without relaying sideband */
--	}
--
- 	data.cmds =3D commands;
- 	data.si =3D si;
--	opt.err_fd =3D err_fd;
--	opt.progress =3D err_fd && !quiet;
--	opt.env =3D tmp_objdir_env(tmp_objdir);
--	if (check_connected(iterate_receive_command_list, &data, &opt))
--		set_connectivity_errors(commands, si);
-=20
--	if (use_sideband)
--		finish_async(&muxer);
-+	/*
-+	 * If received commands only consist of deletions, then the client MUST
-+	 * NOT send a packfile because there cannot be any new objects in the
-+	 * first place. As a result, we do not set up a quarantine environment
-+	 * because we know no new objects will be received. And that in turn
-+	 * means that we can skip connectivity checks here.
-+	 */
-+	if (tmp_objdir) {
-+		struct check_connected_options opt =3D CHECK_CONNECTED_INIT;
-+		struct async muxer;
-+		int err_fd =3D 0;
-+
-+		if (use_sideband) {
-+			memset(&muxer, 0, sizeof(muxer));
-+			muxer.proc =3D copy_to_sideband;
-+			muxer.in =3D -1;
-+			if (!start_async(&muxer))
-+				err_fd =3D muxer.in;
-+			/* ...else, continue without relaying sideband */
-+		}
-+
-+		opt.err_fd =3D err_fd;
-+		opt.progress =3D err_fd && !quiet;
-+		opt.env =3D tmp_objdir_env(tmp_objdir);
-+		if (check_connected(iterate_receive_command_list, &data, &opt))
-+			set_connectivity_errors(commands, si);
-+
-+		if (use_sideband)
-+			finish_async(&muxer);
-+	}
-=20
  	reject_updates_to_hidden(commands);
-=20
 --=20
 2.31.1
 
 
---5TQG8HV8k0CeH0O0
+--5Gbh1w4v2kMXnESY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY2oACgkQVbJhu7ck
-PpRVgg/7BgTv8AmE4jzkUuP6Jnph1U8RrxOhDEuEQAGY5kow2emFMVjcS2ORfUiZ
-JyOMXdjlpd8wdcS/ZBpUJtAWYL7LGsjPBLJGv3sJnNyZaioGfJtc/F+eUXW8o5tZ
-EP/XK17A3bJfY/9qv+41hmkqZxFXg1M3CuazFLf7eWuPI/P0eDPlVfRnR3WtAPF3
-tamtvlELQoRnRTrLprAjdRVhxSrq4TnX07jodOd9JvSE2DnnO+sJ6bdri0rbkHJP
-wQMSKbWhZZp3asGXYVYVLfvmNLjFHkO/5PYHcjjZn8CsofogTlyfdFL2VBlbLCxn
-B9I3ZmK70rXe+3ev6ffxJOGrYMUKh5cgAsAzSG+4BXliL/rGVHe/r0kkxk94IW49
-NiOuqux64A0LxcpXtiEqh2xfmGSFFOdSI+i2iaLWT+ltRDObWP/4wjv4hWxQT1xB
-bcklnosnZ2LxEWPhvVkhaFQ4bfsSlIleQLFcy0eiIpKvOK7oEDYCXcxztBjIyJNE
-fsmmYAL2+3Tj1VUEPQMeoXUreI30HI8LIDyMugBXmOlZ54xN8MwVM18yR1IRlAWM
-V3q7KtqlhaMbrVNarqA1sa2YupLJSh4szXdmLlPySIBKXjqAn+BrH4KW8mgR0poa
-fuqnUeR17/yG7XFbW2TAkebJcTcH3dW5kkLhi/jMy57fZQfOL+c=
-=X3wk
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY24ACgkQVbJhu7ck
+PpQeQg/+JZUDufWX95yqzXi/hQSQTH9SdmQ+6Sm5MuvCOfXafk+D4Vpk2t7yKQVW
+t8n5PcKJxApI7MLpdyD8sqBU16yHITi1enl28Hd8ewQwMvUz+3Qd1Ic02fudIfBL
+7aLP+o1PMA/xhsbEdagpIJv9fHpTl25t77MyDB7oFBSyPUn1uVL0GD87bzkCGbjX
+DKHNF8K9ubi14UdFIWaNN5Ww/2N+oUyjdq+Uzr1hvM01l3pJ5ZtO55VE71HlNR07
+8HDMW7FoAKk4WEbKKUkQmUfCR8tOPdIvXSgonDmGx3fCm+oRDgMNyXC5K0G7ILC1
+GoWH0Krgut4NCbUmo+Z8oV0j99U5olqEFT3DKCwFYLIyCzfEhVTxDBTorUbnA1jf
+hTY9UVXXjTcat9b3r5b/9KbuVUgwNoHdPkvMIHEEmJzJeWqWJmrGDfA13cQx5X6E
+VL3S5DudcAQRfAbcjgBTgTQQJ8W/RGlQP3LOD+SzaQOc/GwFVb9hURJdjzCuWxr8
+pSA3P5GXQ83dlcHEl/IZCLOkPomTNaYZSRoloVtXfA4ChaXdeH2DwYW4WjKsYA46
+xMCEBwcwG4uzueeQwbQ6AA3GrIovDOrDDJg6mF830wcJjVNSlvqd3tDKiVSx2vjq
+dnRNi2HQDgrfuX2bAwgVYQijYEJfX64fZMzkoO01Ugp/RtIKSPs=
+=kw3B
 -----END PGP SIGNATURE-----
 
---5TQG8HV8k0CeH0O0--
+--5Gbh1w4v2kMXnESY--
