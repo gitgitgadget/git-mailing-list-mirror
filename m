@@ -2,140 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B3DCC433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 02:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEE13C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 04:01:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFAC761369
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 02:08:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98D1861369
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 04:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234460AbhESCJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 22:09:34 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47310 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234117AbhESCJe (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 18 May 2021 22:09:34 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1875160479;
-        Wed, 19 May 2021 02:07:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1621390064;
-        bh=Oa48qbKBC5HEG1/vXqCDVASGQJcvCFAJqINXpHhyld4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YeeLBH6eko44mAFAnEPeC5E4HmSVdxG0nSVS2JETIz/8UjiKQJPwEHftoviUip1ic
-         ygvkZF1n3WM55HLWFiWMb1jILBC2Rjie5Kua8czpF6HXoI9oYehm06eSn5SqG/mTEI
-         A9QhMczL7xyZrqYuIR4HVXpowTB8cdf9FzZgyfp8vr0WuIrTVNGlZfVink6emgclSo
-         SwI84qtCu03ERimP0KRlSMJT0PgTrAz7+6pT0eVp+MBk5kxZogqmmpGo99WmNuOU9a
-         GPyhCrJo8Ff6tfMryiDo3TzGkiInDOGMMIaKRqs1Qd3HbChBmuAJ+4NYQbNKwGchUu
-         AplKgb7qdmv2FQRUGriiMnvn0/Nrq/TSML4k0APxkHv3n3z8SNUMeONa7EYCbNCPNs
-         gWLW6ZjzZNNrE73jbiWNb61QlIKX9Hh0iL0PH0+yXQgm2dkwcvAYROsK2XAoRrDEwg
-         3aDmKxN41vm+OToT4PI5pgtos4+6esfZA7Je0xzxxlixwJWNp0F
-Date:   Wed, 19 May 2021 02:07:38 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] help: colorize man pages
-Message-ID: <YKRy6oPkgS6FMSZ0@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
- <60a332fd22dad_14c8d4208ed@natae.notmuch>
- <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
- <xmqqfsyj1qe1.fsf@gitster.g>
+        id S230450AbhESECU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 00:02:20 -0400
+Received: from smtp2.mail.cwp.pnp-hcl.com ([3.219.121.237]:55662 "EHLO
+        smtp2.mail.pnp-hcl.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S229379AbhESECR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 00:02:17 -0400
+X-Greylist: delayed 880 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 May 2021 00:02:17 EDT
+X-ASG-Debug-ID: 1621395978-156ea86a5c034f0001-QuoKaX
+Received: from mailhub1.domino.cwp.pnp-hcl.com (ip-10-134-103-34.ec2.internal [10.134.103.34]) by smtp2.mail.pnp-hcl.com with ESMTP id aN0Ox91Dp52z8mhs (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO) for <git@vger.kernel.org>; Tue, 18 May 2021 23:46:18 -0400 (EDT)
+X-Barracuda-Envelope-From: greg.pflaum@pnp-hcl.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.134.103.34
+To:     git@vger.kernel.org
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="woe9A1d9o8/PoRKL"
-Content-Disposition: inline
-In-Reply-To: <xmqqfsyj1qe1.fsf@gitster.g>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Subject: [BUG] clone of large repo fails when server closes idle SSH session during
+ "Resolving deltas"
+X-KeepSent: 9ECB0D17:7C6A7258-852586DA:0014125E;
+ type=4; name=$KeepSent
+X-ASG-Orig-Subj: [BUG] clone of large repo fails when server closes idle SSH session during
+ "Resolving deltas"
+X-Mailer: HCL Notes Release 12.0 May 04, 2021
+From:   Greg Pflaum <greg.pflaum@pnp-hcl.com>
+Message-ID: <OF9ECB0D17.7C6A7258-ON852586DA.0014125E-852586DA.0014B7AB@pnp-hcl.com>
+Date:   Tue, 18 May 2021 23:46:17 -0400
+X-MIMETrack: Serialize by Router on Mailhub1/PNPHCL(Release 12.0|May 14, 2021) at 05/18/2021
+ 11:45:57 PM,
+        Serialize complete at 05/18/2021 11:45:57 PM
+Content-Type: text/plain; charset="US-ASCII"
+X-Barracuda-Connect: ip-10-134-103-34.ec2.internal[10.134.103.34]
+X-Barracuda-Start-Time: 1621395978
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://172.30.1.184:443/cgi-mod/mark.cgi
+X-Barracuda-BRTS-Status: 1
+X-Virus-Scanned: by bsmtpd at pnp-hcl.com
+X-Barracuda-Scan-Msg-Size: 3057
+X-Barracuda-Spam-Score: 0.50
+X-Barracuda-Spam-Status: No, SCORE=0.50 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=BSF_RULE7568M
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.90039
+        Rule breakdown below
+         pts rule name              description
+        ---- ---------------------- --------------------------------------------------
+        0.50 BSF_RULE7568M          Custom Rule 7568M
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Git's handling of the SSH session during "git clone" changed between Git
+2.17.0 and 2.31.1, causing cloning of a large repo to fail when the server
+closes the idle session during the "Resolving deltas" phase.
 
---woe9A1d9o8/PoRKL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In the older version, git closes the SSH session after "Receiving objects"
+and before "Resolving deltas". In the newer version, git doesn't close the
+SSH session until after "Resolving deltas" finishes. In the newer version,
+if "Resolving deltas" takes a long time (over 2 minutes for our large 
+repo)
+and the server closes the idle SSH session (60 seconds for our GitHub
+Enterprise server), git displays the error message "Connection to
+git.example.com closed by remote host", finishes resolving deltas, then 
+exits
+without checking out files.
 
-On 2021-05-19 at 01:08:54, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > In general, this is made worse because Git doesn't honor the unofficial
-> > but widely supported NO_COLOR[0], so reading the documentation is
-> > obligatory.
->=20
-> I vaguely recall that we were contacted by NO_COLOR folks to be
-> an early supporter of their cause to break the chicken-and-egg
-> problem they were hagving, and (unhelpfully) answered with "sure,
-> when we see enough people support it---otherwise we'd end up having
-> to keep essentially a dead code that supports a convention that is
-> not all that useful".
+Successful with Git 2.17.0:
 
-Yeah, I seem to recall you were somewhat negative on it at the time, but
-I do personally find it useful, and someone on Twitter reminded me of
-it just today.
+> git clone git@git.example.com:org/bigrepo.git
+Cloning into 'bigrepo'...
+remote: Enumerating objects: 260, done.
+remote: Counting objects: 100% (260/260), done.
+remote: Compressing objects: 100% (170/170), done.
+remote: Total 361839 (delta 74), reused 174 (delta 37), pack-reused 361579
+Receiving objects: 100% (361839/361839), 4.47 GiB | 36.71 MiB/s, done.
+Resolving deltas: 100% (252249/252249), done.
+Checking out files: 100% (59466/59466), done.
 
-> I wonderr if it is just a matter of hooking into want_color(), like this?
->=20
->  color.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->=20
-> diff --git c/color.c w/color.c
-> index 64f52a4f93..2516ef7275 100644
-> --- c/color.c
-> +++ w/color.c
-> @@ -373,12 +373,17 @@ int want_color_fd(int fd, int var)
->  	 * we always write the same value, but it's still wrong. This function
->  	 * is listed in .tsan-suppressions for the time being.
->  	 */
-> -
-> +	static int no_color =3D -1;
->  	static int want_auto[3] =3D { -1, -1, -1 };
-> =20
->  	if (fd < 1 || fd >=3D ARRAY_SIZE(want_auto))
->  		BUG("file descriptor out of range: %d", fd);
-> =20
-> +	if (no_color < 0)
-> +		no_color =3D !!getenv("NO_COLOR");
-> +	if (no_color)
-> +		return 0;
-> +
->  	if (var < 0)
->  		var =3D git_use_color_default;
-> =20
+Fails with Git 2.31.1:
 
-Yeah, that will probably do it.  I hadn't looked at it, but I assumed it
-would be pretty easy, and it looks like it is.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+git clone git@git.example.com:org/bigrepo.git
+Cloning into 'bigrepo'...
+remote: Enumerating objects: 363, done.
+remote: Counting objects: 100% (363/363), done.
+remote: Compressing objects: 100% (221/221), done.
+Receiving objects: 100% (361930/361930), 4.47 GiB | 36.37 MiB/s, done.
+RConnection to git.example.com closed by remote host.esolving deltas:  39% 
+(98729/252244)
+Resolving deltas: 100% (252244/252244), done.
 
---woe9A1d9o8/PoRKL
-Content-Type: application/pgp-signature; name="signature.asc"
+What did you do before the bug happened? (Steps to reproduce your issue)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+Ran "git clone git@git.example.com:org/bigrepo.git"
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYKRy6QAKCRB8DEliiIei
-gc4sAP9eg5P7KbHBQAr6yKXjUnrdkevvrsTHYwzwxQ1euFbYpwD/T9mg1D3k/3kE
-MP2ctc20Aff9TDWRbO3NpoGry61Vnwo=
-=UUx8
------END PGP SIGNATURE-----
+What did you expect to happen? (Expected behavior)
 
---woe9A1d9o8/PoRKL--
+Expected successful creation of a cloned repo.
+
+What happened instead? (Actual behavior)
+
+Repo was partially created, but files were not checked out. Branches and 
+tags
+also seem to be missing from the repo.
+
+What's different between what you expected and what actually happened?
+
+With the old Git version, cloning the repo is successful. With the newer
+version it fails.
+
+Anything else you want to add:
+
+A workaround is to configure the SSH client to prevent the server from
+seeing an idle session, by adding these lines to .ssh/config:
+
+Host git.example.com
+    # Send keep-alive message to server every 30 seconds
+    # so the server won't close an idle session.
+    ServerAliveInterval 30
+
+
+[System Info]
+git version:
+git version 2.31.1.windows.1
+cpu: x86_64
+built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 14393
+compiler info: gnuc: 10.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
