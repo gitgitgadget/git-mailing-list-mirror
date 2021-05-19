@@ -7,74 +7,74 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7D5AC433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FA5CC433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8512261355
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EE736108D
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 19:13:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231862AbhESTOs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 15:14:48 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55749 "EHLO
+        id S231926AbhESTO6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 15:14:58 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37411 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231131AbhESTOq (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:14:46 -0400
+        by vger.kernel.org with ESMTP id S229979AbhESTOw (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 May 2021 15:14:52 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 35AA35C01A4
-        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:26 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 59BE25C0105
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:32 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 19 May 2021 15:13:26 -0400
+  by compute1.internal (MEProxy); Wed, 19 May 2021 15:13:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=fm1; bh=WPwqV4cbdXpdl3f66TQVRtKa4kULWTJ9FHmjBq0R
-        X2A=; b=ZwlQ18ci/7qyNPbLRpfNshWZ6U3D3rl9gTITjyOUJ+DQnZc0CiY0MJOB
-        XBhua0NsWQO6po77k4IHTN2+4T35/7hv46XHBrEx7gj07OdV+iHySITKS3qbY5ta
-        eCuzEfk30g0R4MCS8d3ZmD2xvjEJMIPUGjF2ULA1ZH/YF31h3Ex4Iv3gx0k28jFS
-        Fuf0Vxg2cyESrNfCnPozUzpssg50qFO/VtYVLc6UY8sxsr3Hb1n+84mFjQL23KBY
-        r1EnjtYIP7/KxoAD6uF+4795caTQBsoDTpWKLJVvF9BpqtcfynHCDlSezo/zAhdB
-        6OfCx3CQqa6EGlIkVuwaTz4hs4kvQA==
+        :in-reply-to; s=fm1; bh=OM+CcW43VMgIM/sbQSc191cpo6QdgLsdz6cAA1l/
+        vYU=; b=YzNA6LiIIlmR7Qbo8Acj8Uoihf6eVkPhzG75fdlkn6rjfmzRL5m5K9Q0
+        Btd1lyifRxpAzS/1aGUyDvuukqTJKzX5tdW30vYlLmq8yawdQc9kzKPVBE3DX7Fs
+        m3qZ92Y0DChF+qJp9d9JARcUmYfitHYcJsHa8eIEOCNu9uU6lcq+SRFNe6UfkcOg
+        NDjndrrM4ixFyrKtZeNZN3V6m7E/4Q7k6YmLrmWno5SybySqW7BmZeSxzmkq3Wvp
+        SJPSWALenZczIRmWiWomsPXC0yhxgVF9/YZAcajpBPje7L7VMdLSjym5fytl8fct
+        L2uAw56iDqPb7QTUuzP9rHlXQNMjFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=WPwqV4
-        cbdXpdl3f66TQVRtKa4kULWTJ9FHmjBq0RX2A=; b=JULA/QwVatryDpB4BOiOhG
-        G430lzZIKR6RsQHqv1RwnKPE+FDOrj3kmAU/xOPDeJTgvQD+o9jzD5gceys4leCZ
-        xTvRbflQ1+olVlPkn5gsN7iIHzYOyfjEcBNAkpRSmrCpgheUsPAoWTK40omHUeAs
-        azksnbYSM45YXOmLaYQLRuylscCY6hs6cX5whu+EqXwvMEiw0ofh5pwP3egX6CXd
-        w4qqRV4HJoyO0y0gxjJ5cZGpu+zX5fJR9irpUyW1UsNc7Q25oun1a1GkptoTWHHR
-        5nnJE4wiAhoCltgMz4MW4bhcHMoKufPUaR6Y9Qfpi0GAMoru2N0TiJkiYYekSC4Q
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=OM+CcW
+        43VMgIM/sbQSc191cpo6QdgLsdz6cAA1l/vYU=; b=CNqK+vnhcOdR6F+f77L6RY
+        /6JMSZ1s9shDQCxF/39Bq6ce/8fmh3TFzazZt31AcUGHyjqjtIdrY2dsIO4DBbex
+        cbnA1T/yjXVRHihfMiUD0Rsx6dUBvxJogIDfNXKC27nSKG2IMSCYMCJfl6dgKtPl
+        QwssBhsO6M1g6VmYX3aUKtpfxucwniGFu+H5a7Dn8Yjbahy/98altlgqmsCPOBT1
+        jojRsFY+SLsg2zlwPy4UbYQIiaGApeYrAqNsK/t6YAGmQbjqB1YxVYoXfKlbFzZN
+        mvReOpTbJQxfQ4PrpMAw1tQIo0Y9cN3fcWejY/Sg8b+y4xLWODW0HoUdf8SQIsbw
         ==
-X-ME-Sender: <xms:VmOlYE5A_ppfG6Bs_b66alnzZGtT8YUHJ7s6L_SEAPYgX02t_dkp1A>
-    <xme:VmOlYF6R5Z_MoI3K96ekkXBfvwEJor6lKsdLdn-F7cP-NbNcVthiD_PCaXnPX0l_F
-    Cwo_OeQKDGjya58uw>
+X-ME-Sender: <xms:XGOlYHzBl69eSQz5j_w0uYOalenajXUcfPXFWI-iayR8cPjkAJmt1w>
+    <xme:XGOlYPTluElLZ-7lIpz8EBVgLmkF9BS2gagXEDVysAW2_g7cUgvuBJO3e4F5JDUwi
+    KOqhw2miu3IeBsqKg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdeiledgudefudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
     fhvdejkedthfehvdelgfetgfdvtedthfenucfkphepjeejrddukeefrdefjedrudehieen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:VmOlYDexYdPZi9r0oGmJhkcL-ViMLcj35ClYGFV43B7mD-j7REgunQ>
-    <xmx:VmOlYJJKZxslHiFtufpHDY0JOBqCyWk8IqTj8id3DJX7FNp_HDxFFQ>
-    <xmx:VmOlYIKw1Q5nMjkbVT4AH5n6a8FONT3FybuJODqQwq10BONrVE4bFA>
-    <xmx:VmOlYNUmTS5S8fcTRAUporXpBEq2gDF0eXFKZspuLlZ8ZPSAnWlIAw>
+X-ME-Proxy: <xmx:XGOlYBV5ow518CI42mRrJRvV-LYye_Mt1OAE3BdCrPMaJmQJOyJc2g>
+    <xmx:XGOlYBjYojS-wkdJVSw1LepRmg7Te8E9Bbnlteb9dZ2UqXnaMXmwFw>
+    <xmx:XGOlYJBW3_ki39oGVC188-zdYKCVbGVKg2LTwPhfcGfykQp3s3CkrQ>
+    <xmx:XGOlYMNf-GrQBT9mjdX-72aD5QbInd2me90Y5jqhYSQZKOgpDEt7oA>
 Received: from vm-mail.pks.im (x4db7259c.dyn.telefonica.de [77.183.37.156])
         by mail.messagingengine.com (Postfix) with ESMTPA
-        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:25 -0400 (EDT)
+        for <git@vger.kernel.org>; Wed, 19 May 2021 15:13:31 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id eb83acad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 0b1b9e74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Wed, 19 May 2021 19:13:23 +0000 (UTC)
-Date:   Wed, 19 May 2021 21:13:22 +0200
+        Wed, 19 May 2021 19:13:28 +0000 (UTC)
+Date:   Wed, 19 May 2021 21:13:27 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/8] perf: fix when running with TEST_OUTPUT_DIRECTORY
-Message-ID: <5488f0f4888fbc46378e2777d7daba1ec627b6c6.1621451532.git.ps@pks.im>
+Subject: [PATCH 2/8] p5400: add perf tests for git-receive-pack(1)
+Message-ID: <f248b41d6e2df2d34a4304e2655df8cb094483e9.1621451532.git.ps@pks.im>
 References: <cover.1621451532.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="feyBF3uU7J+OAIXi"
+        protocol="application/pgp-signature"; boundary="RRuvv8I/c8qhTYq/"
 Content-Disposition: inline
 In-Reply-To: <cover.1621451532.git.ps@pks.im>
 Precedence: bulk
@@ -82,183 +82,127 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---feyBF3uU7J+OAIXi
+--RRuvv8I/c8qhTYq/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When the TEST_OUTPUT_DIRECTORY is defined, then all test data will be
-written in that directory instead of the default directory located in
-"t/". While this works as expected for our normal tests, performance
-tests fail to locate and aggregate performance data because they don't
-know to handle TEST_OUTPUT_DIRECTORY correctly and always look at the
-default location.
-
-Fix the issue by adding a `--results-dir` parameter to "aggregate.perl"
-which identifies the directory where results are and by making the "run"
-script awake of the TEST_OUTPUT_DIRECTORY variable.
+We'll the connectivity check logic for git-receive-pack(1) in the
+following commits to make it perform better. As a preparatory step, add
+some benchmarks such that we can measure these changes.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/perf/aggregate.perl |  8 ++++++--
- t/perf/perf-lib.sh    |  4 ++--
- t/perf/run            | 25 ++++++++++++++++---------
- 3 files changed, 24 insertions(+), 13 deletions(-)
+ t/perf/p5400-receive-pack.sh | 74 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+ create mode 100755 t/perf/p5400-receive-pack.sh
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 14e4cda287..5d4964c5c6 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -58,6 +58,7 @@ sub usage {
-   Options:
-     --codespeed          * Format output for Codespeed
-     --reponame    <str>  * Send given reponame to codespeed
-+    --results-dir <str>  * Directory where test results are located
-     --sort-by     <str>  * Sort output (only "regression" criteria is supp=
-orted)
-     --subsection  <str>  * Use results from given subsection
-=20
-@@ -90,12 +91,13 @@ sub sane_backticks {
- }
-=20
- my (@dirs, %dirnames, %dirabbrevs, %prefixes, @tests,
--    $codespeed, $sortby, $subsection, $reponame);
-+    $codespeed, $sortby, $subsection, $reponame, $resultsdir);
-=20
- Getopt::Long::Configure qw/ require_order /;
-=20
- my $rc =3D GetOptions("codespeed"     =3D> \$codespeed,
- 		    "reponame=3Ds"    =3D> \$reponame,
-+		    "results-dir=3Ds" =3D> \$resultsdir,
- 		    "sort-by=3Ds"     =3D> \$sortby,
- 		    "subsection=3Ds"  =3D> \$subsection);
- usage() unless $rc;
-@@ -137,7 +139,9 @@ sub sane_backticks {
- 	@tests =3D glob "p????-*.sh";
- }
-=20
--my $resultsdir =3D "test-results";
-+if (not $resultsdir) {
-+	$resultsdir =3D "test-results";
-+}
-=20
- if (! $subsection and
-     exists $ENV{GIT_PERF_SUBSECTION} and
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 601d9f67dd..8ca6dd0297 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -45,7 +45,7 @@ export TEST_DIRECTORY TRASH_DIRECTORY GIT_BUILD_DIR GIT_T=
-EST_CMP
- MODERN_GIT=3D$GIT_BUILD_DIR/bin-wrappers/git
- export MODERN_GIT
-=20
--perf_results_dir=3D$TEST_OUTPUT_DIRECTORY/test-results
-+perf_results_dir=3D$TEST_RESULTS_DIR
- test -n "$GIT_PERF_SUBSECTION" && perf_results_dir=3D"$perf_results_dir/$G=
-IT_PERF_SUBSECTION"
- mkdir -p "$perf_results_dir"
- rm -f "$perf_results_dir"/$(basename "$0" .sh).subtests
-@@ -253,7 +253,7 @@ test_size () {
- # and does it after running everything)
- test_at_end_hook_ () {
- 	if test -z "$GIT_PERF_AGGREGATING_LATER"; then
--		( cd "$TEST_DIRECTORY"/perf && ./aggregate.perl $(basename "$0") )
-+		( cd "$TEST_DIRECTORY"/perf && ./aggregate.perl --results-dir=3D"$TEST_R=
-ESULTS_DIR" $(basename "$0") )
- 	fi
- }
-=20
-diff --git a/t/perf/run b/t/perf/run
-index c7b86104e1..03128d440a 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -188,10 +188,10 @@ run_subsection () {
-=20
- 	if test -z "$GIT_PERF_SEND_TO_CODESPEED"
- 	then
--		./aggregate.perl $codespeed_opt "$@"
-+		./aggregate.perl --results-dir=3D"$TEST_RESULTS_DIR" $codespeed_opt "$@"
- 	else
--		json_res_file=3D"test-results/$GIT_PERF_SUBSECTION/aggregate.json"
--		./aggregate.perl --codespeed "$@" | tee "$json_res_file"
-+		json_res_file=3D""$TEST_RESULTS_DIR"/$GIT_PERF_SUBSECTION/aggregate.json"
-+		./aggregate.perl --results-dir=3D"$TEST_RESULTS_DIR" --codespeed "$@" | =
-tee "$json_res_file"
- 		send_data_url=3D"$GIT_PERF_SEND_TO_CODESPEED/result/add/json/"
- 		curl -v --request POST --data-urlencode "json=3D$(cat "$json_res_file")"=
- "$send_data_url"
- 	fi
-@@ -203,10 +203,17 @@ get_var_from_env_or_config "GIT_PERF_SEND_TO_CODESPEE=
-D" "perf" "sendToCodespeed"
- cd "$(dirname $0)"
- . ../../GIT-BUILD-OPTIONS
-=20
--mkdir -p test-results
--get_subsections "perf" >test-results/run_subsections.names
-+if test -n "$TEST_OUTPUT_DIRECTORY"
-+then
-+    TEST_RESULTS_DIR=3D"$TEST_OUTPUT_DIRECTORY/test-results"
-+else
-+    TEST_RESULTS_DIR=3Dtest-results
-+fi
-=20
--if test $(wc -l <test-results/run_subsections.names) -eq 0
-+mkdir -p "$TEST_RESULTS_DIR"
-+get_subsections "perf" >"$TEST_RESULTS_DIR"/run_subsections.names
+diff --git a/t/perf/p5400-receive-pack.sh b/t/perf/p5400-receive-pack.sh
+new file mode 100755
+index 0000000000..2b0c89d977
+--- /dev/null
++++ b/t/perf/p5400-receive-pack.sh
+@@ -0,0 +1,74 @@
++#!/bin/sh
 +
-+if test $(wc -l <"$TEST_RESULTS_DIR"/run_subsections.names) -eq 0
- then
- 	if test -n "$GIT_PERF_SUBSECTION"
- 	then
-@@ -222,10 +229,10 @@ then
- 	)
- elif test -n "$GIT_PERF_SUBSECTION"
- then
--	egrep "^$GIT_PERF_SUBSECTION\$" test-results/run_subsections.names >/dev/=
-null ||
-+	egrep "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names=
- >/dev/null ||
- 		die "subsection '$GIT_PERF_SUBSECTION' not found in '$GIT_PERF_CONFIG_FI=
-LE'"
-=20
--	egrep "^$GIT_PERF_SUBSECTION\$" test-results/run_subsections.names | whil=
-e read -r subsec
-+	egrep "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names=
- | while read -r subsec
- 	do
- 		(
- 			GIT_PERF_SUBSECTION=3D"$subsec"
-@@ -243,5 +250,5 @@ else
- 			echo "=3D=3D=3D=3D=3D=3D=3D=3D Run for subsection '$GIT_PERF_SUBSECTION=
-' =3D=3D=3D=3D=3D=3D=3D=3D"
- 			run_subsection "$@"
- 		)
--	done <test-results/run_subsections.names
-+	done <"$TEST_RESULTS_DIR"/run_subsections.names
- fi
++test_description=3D"Tests performance of receive-pack"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++
++test_expect_success 'setup' '
++	# Create a main branch such that we do not have to rely on any specific
++	# branch to exist in the perf repository.
++	git switch --force-create main &&
++
++	TARGET_REPO_CLONE=3D$(pwd)/target-clone.git &&
++	git clone --bare --dissociate --branch main "$(pwd)" "$TARGET_REPO_CLONE"=
+ &&
++	TARGET_REPO_REFS=3D$(pwd)/target-refs.git &&
++	git clone --bare --dissociate --branch main "$(pwd)" "$TARGET_REPO_REFS" =
+&&
++	TARGET_REPO_EMPTY=3D$(pwd)/target-empty.git &&
++	git init --bare "$TARGET_REPO_EMPTY" &&
++
++	# Set up a pre-receive hook such that no refs will ever be changed.
++	# This easily allows multiple perf runs, but still exercises
++	# server-side reference negotiation and checking for consistency.
++	mkdir hooks &&
++	write_script hooks/pre-receive <<-EOF &&
++		#!/bin/sh
++		echo "failed in pre-receive hook"
++		exit 1
++	EOF
++	cat >config <<-EOF &&
++		[core]
++			hooksPath=3D$(pwd)/hooks
++	EOF
++	GIT_CONFIG_GLOBAL=3D"$(pwd)/config" &&
++	export GIT_CONFIG_GLOBAL &&
++
++	# Create a reference for each commit in the target repository with
++	# extra-refs. While this may be an atypical setup, biggish repositories
++	# easily end up with hundreds of thousands of refs, and this is a good
++	# enough approximation.
++	git -C "$TARGET_REPO_REFS" log --all --format=3D"tformat:create refs/comm=
+it/%h %H" |
++		git -C "$TARGET_REPO_REFS" update-ref --stdin &&
++
++	git switch --create updated &&
++	test_commit --no-tag updated
++'
++
++while read name repo
++do
++	refs=3D("create updated:new")
++
++	# If the target repository is the empty one, then the only thing we can
++	# do is to create a new branch.
++	if test "$repo" !=3D "$TARGET_REPO_EMPTY"
++	then
++		refs+=3D("update updated:main" "reset main~:main" "delete :main")
++	fi
++
++	while read desc ref
++	do
++		test_expect_success "setup $name $desc" "
++			test_must_fail git push --force '$repo' '$ref' \
++				--receive-pack=3D'tee pack | git receive-pack' 2>err &&
++			grep 'failed in pre-receive hook' err
++		"
++
++		test_perf "receive-pack $name $desc" "
++			git receive-pack '$repo' <pack >negotiation &&
++			grep 'pre-receive hook declined' negotiation
++		"
++	done < <(printf "%s\n" "${refs[@]}")
++done < <(printf "%s\n" "clone $TARGET_REPO_CLONE" "extrarefs $TARGET_REPO_=
+REFS" "empty $TARGET_REPO_EMPTY")
++
++test_done
 --=20
 2.31.1
 
 
---feyBF3uU7J+OAIXi
+--RRuvv8I/c8qhTYq/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY1EACgkQVbJhu7ck
-PpSkVhAAq/mGg97rH4aARlFKxRlbtzh3h11aOpyXz0uAOYP0JTbu/qOJbmSR7iYD
-L2qfSQ/P1x1oyRcJjiP5uQLOU7VuFp6JAn9+lQ60za84qg1mcYjF1Bqg/zzEigS0
-E2BCjklqbFXlnD3Z8mF8tuhCHO4bNj8y24B8jF7nsHnKDN5bE7dnO0Bpy7zdYpg7
-xrFBBRADA+Umi8OOIVqWLRQrIkoHekkG+cEITYUbIxWnY5+BKiV4i4M5A024Q2Dl
-wpRNALwJ9R+tBViaI4I88VKN7eFZtcnFPFvxR6Q3AEB9z4YXFuOHwmuPo4KtZcc4
-3YWc9NHRnRdZXFs5WCOX3fDyydgzd0ZMpsfClL+oo7sB29ilmP4mN4BmMjFKX//t
-RpLrvdbYw5bSMG14BISluRTWJGGb8jCdJy+6CRMitxyKYfIU1OVByLVEo5adT+rS
-czeoWD/pcdKGzqFSzOOfwEfVE4FmkUMhjtcfGr2ItmVmGnDI0BWKabZAjvT/aa4B
-cLuVnGtEJMqbUVir5a1m0fQN7/40PJoYkU83IXyjqxMFoavAJW0QcXx9E7qbOFfl
-GyJL2S3xEe/BkuMCprxYZQFb5ZssmHTVs9tPIaonKc4ZwtSRxfdtdg+ZfQD12266
-QHSSPLSp4yQr8V9Nkz0rLG1+RQb1EOJR2CywEWR1PplRPnCARJI=
-=V1kx
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmClY1YACgkQVbJhu7ck
+PpT+wBAAn6/KR13pBvbU8gBi9SmWJ1OUdF8kLK7HybtbLkISu5x4tUiOMyJHN6xH
+m4gah5hfRqSjkBIGPEc4cviJQhGp8H+RKpyr2KTWTmHjueedZMg8uH1keCLA9mb5
+8FdhrZwrr1TkcF05ewcQanv3Q++0ML01FACM/lvUu8rB0jqPtZ6TJ0o8D5mlQuz+
+98Bge1FqJ0lNQhwGfEHhoaQUd5mDImv95BrOg4vcfexBI9DHcHsfpJf6pk3qxAug
+Q26Q5nujeTL8tlnZx+BpYdIlIUs7LXxwS1/80fcZiAyHjqPIx+ZiPDhSy6gcxG1Y
+OGsU4o2cwg7lVruA2mqHAlCrmNU5yU+gaLmFa0+kIEGRZJr3xb0RmtKGMBkP+q8k
+uiEnAY0hrZBjdflDbvjd5fhq80diz+NmI1J4BjsyfSzJmbT3mmTj8q9WrepZGWKo
+6CeaT1conaOZpaXTZ0dnQxSPrzcz4FJtJgehoYzA+OefDt+SOI+H+iPhwzK8aUQu
+IzCIMP02iYIlDzAK0UCwf4EPcCNKkQk+Oi1DiTNYyAkN0ZkopXqQ0kP0pLkOci5q
+Yu7mJaDfC82Fp0Fa/pkd6iI47HWIuidCkLu2rIZIiG0sL5ryTdKFooS4nv1VJTCM
+8/9pN8tcsqxa6DvmnS4Q0JHwHLMjcbwyytzHLu4yjXrY0exG6RA=
+=24yQ
 -----END PGP SIGNATURE-----
 
---feyBF3uU7J+OAIXi--
+--RRuvv8I/c8qhTYq/--
