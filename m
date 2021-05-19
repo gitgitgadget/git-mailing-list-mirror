@@ -6,80 +6,90 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4648C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C44F5C433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 10:10:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 927FD610A1
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:57:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9504461073
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 10:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345598AbhESJ61 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 05:58:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58782 "EHLO cloud.peff.net"
+        id S1345507AbhESKME (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 06:12:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58802 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232819AbhESJ60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 05:58:26 -0400
-Received: (qmail 22546 invoked by uid 109); 19 May 2021 09:57:06 -0000
+        id S233957AbhESKMC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 06:12:02 -0400
+Received: (qmail 22774 invoked by uid 109); 19 May 2021 10:10:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 May 2021 09:57:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 May 2021 10:10:43 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17962 invoked by uid 111); 19 May 2021 09:57:09 -0000
+Received: (qmail 18057 invoked by uid 111); 19 May 2021 10:10:45 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 May 2021 05:57:09 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 May 2021 06:10:45 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 19 May 2021 05:57:06 -0400
+Date:   Wed, 19 May 2021 06:10:42 -0400
 From:   Jeff King <peff@peff.net>
-To:     Greg Pflaum <greg.pflaum@pnp-hcl.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [BUG] clone of large repo fails when server closes idle SSH
- session during "Resolving deltas"
-Message-ID: <YKTg8nYjSGpKbq8W@coredump.intra.peff.net>
-References: <OF9ECB0D17.7C6A7258-ON852586DA.0014125E-852586DA.0014B7AB@pnp-hcl.com>
- <YKTbsByUaPEuDNtR@coredump.intra.peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] help: colorize man pages
+Message-ID: <YKTkIgdJgBomzieH@coredump.intra.peff.net>
+References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
+ <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
+ <60a332fd22dad_14c8d4208ed@natae.notmuch>
+ <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
+ <87im3fqci9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YKTbsByUaPEuDNtR@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87im3fqci9.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 19, 2021 at 05:34:40AM -0400, Jeff King wrote:
+On Wed, May 19, 2021 at 11:26:12AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> Another side issue is that once the protocol conversation has finished,
-> I'm not sure if it's really useful for us to detect and complain about
-> ssh's exit code. We know the other side completed the conversation
-> successfully, and we have nothing left to ask it. So a fix for your
-> immediate pain would be to stop noticing that. I think the root issue is
-> still worth addressing, though; we are tying up network and local
-> resources with a useless to-be-closed ssh connection.
+> > There's a big difference between Git coloring a Git UI, like a diff, and
+> > Git coloring a separate program that already has sensible, standard
+> > defaults.  A user who has not configured any color settings would
+> > probably not want Git to render manual pages one way, cargo to render
+> > manual pages a second way, and still other programs to render manual
+> > pages in other, incompatible ways.  We need to consider not only the
+> > impact that our decisions have in a vacuum, but what results similar
+> > decisions from other projects would produce in the software ecosystem as
+> > a whole.
+> >
+> > Would you consider various projects coloring their respective manual
+> > pages differently to be a desirable state of affairs?
+> 
+> I think it's an important distinction that we're not coloring any manual
+> pages, it's a question of whether we invoke "man" invoked by "git help
+> <whatever>" with the exact same paramaters/options a user would get with
+> "man git-<whatever>".
+> 
+> Right now our documentation seems to suggest that we won't do any such
+> magic, but you can also set man.viewer to e.g. invoke a web browser or
+> something instead of man(1).
+> 
+> I don't think it's confusing in that context if we learn to do some "man
+> with fancy on top" in this mode.
 
-By the way, there's an interesting subtlety / bug related to this. While
-"git clone" does return a failed exit code in this case, it leaves the
-repository directory in place! And because no real error occurred with
-the clone, you can use it as usual (though I think if it's a non-bare
-clone, you'd need to run "git checkout" fill in the working tree).
+I agree that we could explain it as "man with fancy on top". But it
+makes me wonder: why is this Git's responsibility to do the fancy at
+all?
 
-Propagating the error code comes from aab179d937 (builtin/clone.c: don't
-ignore transport_fetch_refs() errors, 2020-12-03). So prior to Git
-v2.30.0, your case would kind-of work.
+I.e., if you want colorized manpages, why don't you configure man to do
+so? Sure, it's a bit of a pain to do so since it involves setting a
+bunch of obscure environment variables. But if that's what you want,
+wouldn't you want it for all manpages, whether you ran "git help log" or
+"man git-log" or "man ls"?
 
-But:
-
-  - I think that is just "clone"; a "git fetch" would always have
-    propagated the error from transport_fetch_refs()
-
-  - that commit was right to start propagating the error code from
-    transport_fetch_refs(). While in this specific case, we happened to
-    produce a useful repository directory, most other errors would not.
-
-  - there _is_ a bug in aab179d937, though. When it sees the error it
-    should clean up the repo directory. And that even happens
-    automatically via an atexit() handler. But because rather than
-    calling die() it jumps to cleanup code, it mistakenly sets the flag
-    for "leave the directory in place".
-
-  - any logic to ignore errors would have to be inside the transport
-    code (i.e., it realizes that ssh exiting non-zero isn't a big deal
-    anymore, and then transport_fetch_refs() still returns success).
+This seems like a "man" feature and not a "git" feature. And arguably
+some of it is really a "less" feature (it is trying to set "standout"
+mode for its prompt, so configuring "so" and "se" termcap entries is
+just reinterpreting that. If you like, wouldn't you want it on for all
+"less" invocations?).
 
 -Peff
