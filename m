@@ -2,102 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEE0BC433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 10:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73322C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 10:41:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1A8260FEF
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 10:36:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40DFD60234
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 10:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348135AbhESKhs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 06:37:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44338 "EHLO
+        id S245634AbhESKnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 06:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348081AbhESKhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 06:37:47 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDEBC061761
-        for <git@vger.kernel.org>; Wed, 19 May 2021 03:36:27 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id c196so4499115oib.9
-        for <git@vger.kernel.org>; Wed, 19 May 2021 03:36:27 -0700 (PDT)
+        with ESMTP id S243621AbhESKnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 06:43:11 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8F1EC06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 03:41:51 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so11357295otp.4
+        for <git@vger.kernel.org>; Wed, 19 May 2021 03:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=2lQoJmyqPXidqAOcBBcNwRIq0kwpzYdhkbru7CuodSA=;
-        b=XIeouVgunesgQtdxKNUlkSuYeyv0luViGzHZY9sY7F2YrCR4kPpPxRmts4xoGdKtG7
-         Rl6jKF0eY4NsaN0wsGcM8BA8dIbEYZsw0wCt4ASvqfRjb9q4sG+5CVAcW7EPr2NbQK2A
-         hETRV8oe+9AxL4bcH97cLWaeByfH5iwQDeiG1OtjnX8kVJ9QNSp3uFZsFksF/HQWAyzS
-         gPbKUdsUaNoDvWb6BNtqEaoagvj0+UDZQ1vD6srM4jli7CFz2IiQeW2gB07lzYCTzLKx
-         +hpPGIoyiFTqmHFuu9vMNAqLGEo0mCih3C69CTReRxygJuSWeQsI1rMyTVQyT5M45cbn
-         Wiig==
+        bh=g5GIMRDimOL4CjYynCrs2lCH2HK/K42VElakvp16hKc=;
+        b=TGJr8dhhfhmNkZrxxg+PVo3VqrO/LUKnR8+yxZp0BdwppjMEHIsSP/Sy9HWPTs6hUu
+         zDXxlHg2oC10iprbNOLxmm4KScqLughTyZ8IxiDMQYW0RnlL02+wV2AKNNmvnUJla8ro
+         V7x/JRyckj+s/+nxf+4py64uHnCp6EHuvJJTzg+ljO4r6zEJ9grUN+ESIJPeAnkSGV+l
+         RQYvFECNo79kWeBxSn9t/yZ6HaSzobXfDT2SNfLkCJKAOj528TGTmLRMfu4WWDhVEN5O
+         DjsAAQ8PHEE1/skeM7H55RA5jBudk2odv2eoG7XmXceGEny/RNzpRLZAFMcHXnQcKrlQ
+         fDXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=2lQoJmyqPXidqAOcBBcNwRIq0kwpzYdhkbru7CuodSA=;
-        b=Suc9/LOiK/dGtJ9ny4XYFNYZ5359aCpRQ4QNfxjJJVlYFoQ9FXhvYp4whLwZLdP0P1
-         IoSxoWomrhcUz6BC0wFUzqfitdMi+3GHG9AqqORL9T9zryo7s+CLXQcaHp8iL6Q/8DM1
-         imeQt+eRl05gT0j0xHiB54UBBAynBFSgOPSCMWWcdP9kV7whw3fyFK3kAxhXWlAWSNjj
-         Ro6Sn+npwaGbu7UBxb0owP0R5/++xbc+97/GgI5xsOef+8vY8Ill4kI/3RnKA4fJhwSQ
-         18znfC6iWOFdRhKiLB9Oer5M3Lb6eh9y0ZonZ6IZGzA4OrFhMs0QsWhq8K0l36K6PveG
-         jjyg==
-X-Gm-Message-State: AOAM531/qY4+MGup39p42/ZDdQ3QJQ0Ptr7rXBaH2z23Ry7NBhIGcRBN
-        2/dHo4FVaYxJMWSd5MzKT/A=
-X-Google-Smtp-Source: ABdhPJx7HHjNaND1FBACtptttm2+X7/RywMBuyyJ+BL+++liK9snfuYvc//q8VKbLQ9mpFfmjhkhpA==
-X-Received: by 2002:a54:408c:: with SMTP id i12mr7650995oii.77.1621420586584;
-        Wed, 19 May 2021 03:36:26 -0700 (PDT)
+        bh=g5GIMRDimOL4CjYynCrs2lCH2HK/K42VElakvp16hKc=;
+        b=AGG3LN7Ngromn+avhk3Fjs9/NRDilapCIvwPIq7jkEsunhkES03MoI5ymYQVP+s39s
+         W+O5+lQIX3LIHGUL6s82d6+tJ1Vnw0kj5I/+d6GQs+WK4XsF1KRLo2UsDWcVqXjJixrt
+         16aGSBcdAWZBEsMAE97WR4AeL+hCt3axmP9OAJWdzGYsepjqyiG38k3XdyO4tFdvfumE
+         iL9zZvGCz/N9JlKG1MNR+EshratE5FgmldFhOCI5d9Y9pCCTd2CLene3wRXL7gPaHs5/
+         hLwrXKayhpzq0pRGxtsAEPYoVLPkNJf0x0SWQyNC7SolsKtjUrqVCe8Wsl8Bb5EnHFUU
+         jqog==
+X-Gm-Message-State: AOAM530TArzXx1aBQLKG8MR07W1AxqKGszMVMgSgLz/PVIiUq2BKCJe4
+        eY1jvh4eTiCgRux6gEEKYVD1zEHT+kGJbg==
+X-Google-Smtp-Source: ABdhPJx3Y3dIHBmw/zRypkG7tgKnMCKngQweCHiWjUhFTFDUejUgo7Vo+MriUYSO8I5Vwtks7VHIiw==
+X-Received: by 2002:a9d:6081:: with SMTP id m1mr8557234otj.226.1621420911014;
+        Wed, 19 May 2021 03:41:51 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id n17sm4022739oij.57.2021.05.19.03.36.25
+        by smtp.gmail.com with ESMTPSA id x65sm4385471otb.59.2021.05.19.03.41.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 03:36:26 -0700 (PDT)
-Date:   Wed, 19 May 2021 05:36:24 -0500
+        Wed, 19 May 2021 03:41:50 -0700 (PDT)
+Date:   Wed, 19 May 2021 05:41:49 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Leah Neukirchen <leah@vuxu.org>
-Message-ID: <60a4ea28a3807_86a8208d5@natae.notmuch>
-In-Reply-To: <87lf8bqdv0.fsf@evledraar.gmail.com>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
- <60a332fd22dad_14c8d4208ed@natae.notmuch>
- <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
- <xmqqfsyj1qe1.fsf@gitster.g>
- <YKRy6oPkgS6FMSZ0@camp.crustytoothpaste.net>
- <xmqq1ra3z23n.fsf@gitster.g>
- <87lf8bqdv0.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH] help: colorize man pages
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Message-ID: <60a4eb6d58c05_86a8208af@natae.notmuch>
+In-Reply-To: <YKTXlTjwOUi4W+R8@coredump.intra.peff.net>
+References: <YKTXlTjwOUi4W+R8@coredump.intra.peff.net>
+Subject: RE: [PATCH] doc: explain the use of color.pager
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> This NO_COLOR=3D1 actually means something like "I do support colors, s=
-o
-> show them if it's important, but don't color things willy-nilly".
+Jeff King wrote:
+> diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
+> index d5daacb13a..e05d520a86 100644
+> --- a/Documentation/config/color.txt
+> +++ b/Documentation/config/color.txt
+> @@ -127,8 +127,9 @@ color.interactive.<slot>::
+>  	interactive commands.
+>  
+>  color.pager::
+> -	A boolean to enable/disable colored output when the pager is in
+> -	use (default is true).
+> +	A boolean to specify whether `auto` color modes should colorize
+> +	output going to the pager. Defaults to true; set this to false
+> +	if your pager does not understand ANSI color codes.
 
-In my subjective opinion most of git uses color sensibly, so we kind of
-already support NO_COLOR (turn it on, and you'd get sensible colors).
+This sounds correct to me, short, and complete. I like it.
 
-Except, my patch to colorize man pages can be considered to be coloring
-things willy-nilly.
+Acked-by: Felipe Contreras <felipe.contreras@gmail.com>
 
-So perhaps that's the only instance where we should consider caring
-about that.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+-- 
+Felipe Contreras
