@@ -2,206 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57B72C433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E760C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:23:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 355C4611AE
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:20:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C033611B0
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344905AbhESJVm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 05:21:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55252 "EHLO
+        id S239149AbhESJZI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 05:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344889AbhESJVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 05:21:41 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C09DC06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 02:20:22 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id i7so1102936ejc.5
-        for <git@vger.kernel.org>; Wed, 19 May 2021 02:20:21 -0700 (PDT)
+        with ESMTP id S237675AbhESJZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 05:25:07 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7A3C06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 02:23:48 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id m124so9003227pgm.13
+        for <git@vger.kernel.org>; Wed, 19 May 2021 02:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Ys6BluY7/aPsWg6Z7kuYa0kkNKF4gVcKWLSZfBrMbyQ=;
-        b=hRYNf0jMLN7aFqtW7s7py8oajSUdI1qvEVr4oz3tBVsEg7zwymifJckgDpQQ5M9DH5
-         JDL07X6j6+Im3yDHraEYmU7jJbmJBsCujeOZcUsEUycm71No7Nrd2/e6ybT7C+w2aRWB
-         Yfruoz6VF2gbWbKcCTmMWF72MYDLOzo12i/LV0xaSeixrgfSwUaftr8WegcB7Fi+vXg3
-         iY/uiwC/uExtdU52UC7BWmheGTD86X2WvuCoFRSW6hnJCnG6oajwxppA4Z8l/NBctGe5
-         dC4Bdpri62NsW4tCkErijU/sMpLY8Q9ZqPykHlHu/V9su2oLu49g0IAXjDnDPUjf0kg6
-         ZDPg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=V4SCINZJL+OeTeIHOdeq9Osk1pgGvR2G8O3ruWOwqVg=;
+        b=qv33j3UHb/ijBCovDWTQTck7kA+g2TyQyahmhpEyHXl2UVzEv5SUXBuEXtKi6J2gcy
+         ZeBhvZZW9n5+B07k10KzRNPPcbG0FNF9FC9TxmxAkgjb1+0d1rX6V3wn3ZBqbXsH34fX
+         sh/OAIGb2xJ0cEsr9Th7MCrJytazBrynsHMS5/k2GNfhFMO3cyrtuosmzO5R21fAQU8z
+         Nvqr8azuVOI68vAxYwaKCKGsaG/PGqFcWFCn1/JAAHTusro/Td2G61PS60Ux3U5Yn9mT
+         1lKwatDTEozPiTMXTmPL+UCzUHkhMlVAJU7Q0H+rxwOgicuTBfFOdq8x1dJNXe7hPaoE
+         T4Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Ys6BluY7/aPsWg6Z7kuYa0kkNKF4gVcKWLSZfBrMbyQ=;
-        b=MxTHFs8AndcH0LiopMUgTiFLxpPC6+iytqVDn9wRNV2c9c1i9TJLz5oT8RcHopsnUj
-         Y8W5KvV6K5ySEzqrt0IpOqIrq6obtXO4b5r5+LfjwLvC/eZvMK7pevlcJx2mz7mSkpBM
-         OMG7xa5TEdAAvKhJAb1hMRKDPxAURHBIWCpLEWuOTFYUrxe+hsMQNr2iv3HayH3SsSG4
-         8/xhKGUsy8qXFfgH+A6Bi5tSVniE+TcHKF4vBLqpe35ih3GoqWg25YBBt7gwoTxN8uIe
-         Fgtk7HPQlQypKAx1mRQ+b35eqsccMa0rPwPg+HWMTambzldFwqIiO2QiQkO+b5uI/tiv
-         do/w==
-X-Gm-Message-State: AOAM530x6/qjfbhBqhEEPh2Wnp7utyvJxI4SpNUYlOV5WtoizkZ+L//a
-        TNqk1mYSjVNAPGyHECvh/c0=
-X-Google-Smtp-Source: ABdhPJzkS7uSvELu9GOpPVpdYuvpqaEX3wWqT3aRWTZAMN3xXy4s6/p7uxvRn0hf0266HcPdmawuuw==
-X-Received: by 2002:a17:907:7654:: with SMTP id kj20mr11672626ejc.439.1621416020324;
-        Wed, 19 May 2021 02:20:20 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id m16sm2336869edq.56.2021.05.19.02.20.19
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=V4SCINZJL+OeTeIHOdeq9Osk1pgGvR2G8O3ruWOwqVg=;
+        b=aIYaOa7R7QKWCWZvyuzOLnzSYyoxp5Ra6S3RpD3G5hLa7yC0Sa8v36DPH+5hdQyzfW
+         N7ngmYRdFqD5HqEQcGX5U7Jzz05/kt3uSs8nVi7eGtG8IGkFKUg1xgi04Mg1ZGgL1a95
+         wX2r43/WAFn4bJHX7s5a38dbkiFcgq85efyxHTdp6RdwBIYt49TH3nyRUKmkaeuVlQlc
+         ujjI75e8YU1CZk0TlcJ/TI7a7wWi1ASUk4BHrB061C1iyKsNSOvaz6yG7PExXJjRcT5K
+         lQMtIC/3ctY86ZC66V27kKX5wzcfQMnCDOXOjRNqmJOQDHTWtyerdumBC7MrM9temthm
+         sDKQ==
+X-Gm-Message-State: AOAM530S+zP8QMhmGaZs8Ke8tTiNk2CN2JXuaFnlO3clK1zKYCtObOyt
+        egZU5JlviqZ1RaY+CI4/Gdo=
+X-Google-Smtp-Source: ABdhPJwZG1rWr1VWtS+CBfmJInHqYT3hJfXJqJFjpKMQL8Efd8ijP8nBYc3Y4BPNRmO8q2yH0jJCQQ==
+X-Received: by 2002:a62:e504:0:b029:2d8:3306:f171 with SMTP id n4-20020a62e5040000b02902d83306f171mr9671576pff.37.1621416227834;
+        Wed, 19 May 2021 02:23:47 -0700 (PDT)
+Received: from generichostname ([172.92.165.181])
+        by smtp.gmail.com with ESMTPSA id z25sm15859825pgu.89.2021.05.19.02.23.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 02:20:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Wed, 19 May 2021 02:23:47 -0700 (PDT)
+Date:   Wed, 19 May 2021 02:23:44 -0700
+From:   Denton Liu <liu.denton@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Leah Neukirchen <leah@vuxu.org>
-Subject: Re: [PATCH] help: colorize man pages
-Date:   Wed, 19 May 2021 10:41:44 +0200
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
-        <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
-        <60a332fd22dad_14c8d4208ed@natae.notmuch>
-        <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
-        <xmqqfsyj1qe1.fsf@gitster.g>
-        <YKRy6oPkgS6FMSZ0@camp.crustytoothpaste.net>
-        <xmqq1ra3z23n.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <xmqq1ra3z23n.fsf@gitster.g>
-Message-ID: <87lf8bqdv0.fsf@evledraar.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] stash show: don't setup default diff output format if
+ --{include,only}-untracked given
+Message-ID: <YKTZIOOe+IW41MXp@generichostname>
+References: <76dfa90a32ae926f7477d5966109f81441eb2783.1621325684.git.liu.denton@gmail.com>
+ <xmqq35uj1pmd.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq35uj1pmd.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Wed, May 19 2021, Junio C Hamano wrote:
+On Wed, May 19, 2021 at 10:25:30AM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > When `git stash show` is given no arguments, it will pass `--stat` to
+> > `git diff` by default. When any argument is given, `--stat` is no longer
+> > passed by default.
+> >
+> > When `git stash show` learned the `--include-untracked` and
+> > `--only-untracked` options, it failed to retain the same behaviour of
+> > not passing `--stat` by default.
+> >
+> > This isn't necessarily incorrect since with other arguments, they're
+> > passed through directly to `git diff` which means it wouldn't make sense
+> > to pass `--stat` as well. With `--include-untracked` and
+> > `--only-untracked`, they are handled by `git stash show` directly
+> > meaning we don't necessarily have this conflict. However, this would be
+> > unintuitive for users since the existing behaviour seems to be that if
+> > any arguments are given, `--stat` will not be given by default.
+> 
+> But even for users who do not care about the implementation, the
+> options that affect "What to show" and "How to show them" are easily
+> distinguishable at the conceptual level, no?  When showing stash
+> without telling the command what or how to show, we omit untracked
+> part by default, and we show only diffstat by default.  When we tell
+> it to show also/only untracked, it is unclear if it is confusing or
+> natural to average users if that affects how the chosen part of the
+> stash gets shown.
+> 
+> Showing untracked will be a new feature in the upcoming release, so
+> we may want to either (1) revert the whole thing before we can agree
+> on the desired behaviour or (2) clarify in the document that what to
+> show and how to show them are two orthogonal axes with their own
+> default that are orthogonal to avoid the "confusion" you are trying
+> to address with this patch.
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> On 2021-05-19 at 01:08:54, Junio C Hamano wrote:
->>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>> 
->>> > In general, this is made worse because Git doesn't honor the unofficial
->>> > but widely supported NO_COLOR[0], so reading the documentation is
->>> > obligatory.
->>> 
->>> I vaguely recall that we were contacted by NO_COLOR folks to be
->>> an early supporter of their cause to break the chicken-and-egg
->>> problem they were hagving, and (unhelpfully) answered with "sure,
->>> when we see enough people support it---otherwise we'd end up having
->>> to keep essentially a dead code that supports a convention that is
->>> not all that useful".
->>
->> Yeah, I seem to recall you were somewhat negative on it at the time, but
->> I do personally find it useful, and someone on Twitter reminded me of
->> it just today.
->>
->>> I wonderr if it is just a matter of hooking into want_color(), like this?
->>> 
->>>  color.c | 7 ++++++-
->>>  1 file changed, 6 insertions(+), 1 deletion(-)
->>> 
->>> diff --git c/color.c w/color.c
->>> index 64f52a4f93..2516ef7275 100644
->>> --- c/color.c
->>> +++ w/color.c
->>> @@ -373,12 +373,17 @@ int want_color_fd(int fd, int var)
->>>  	 * we always write the same value, but it's still wrong. This function
->>>  	 * is listed in .tsan-suppressions for the time being.
->>>  	 */
->>> -
->>> +	static int no_color = -1;
->>>  	static int want_auto[3] = { -1, -1, -1 };
->>>  
->>>  	if (fd < 1 || fd >= ARRAY_SIZE(want_auto))
->>>  		BUG("file descriptor out of range: %d", fd);
->>>  
->>> +	if (no_color < 0)
->>> +		no_color = !!getenv("NO_COLOR");
->>> +	if (no_color)
->>> +		return 0;
->>> +
->>>  	if (var < 0)
->>>  		var = git_use_color_default;
->>>  
->>
->> Yeah, that will probably do it.  I hadn't looked at it, but I assumed it
->> would be pretty easy, and it looks like it is.
->
-> Actually I doubt it satisfies the FAQ #2 of no-color.org; we
-> probably would need to go one level lower, like the original
-> proposal from 2018 did:
->
-> cf. https://lore.kernel.org/git/87efl3emlm.fsf@vuxu.org/
+I could be convinced either way and I was erring on the side of caution
+by proposing this patch. I'm okay with the status quo so we can keep the
+behaviour as is, unless someone objects in which case we should revert
+pending more discussion.
 
-[CC'd the author of that proposal]
+I'll send a follow-up patch later this week clarifying the docs.
 
-It also doesn't seem to me to satisfy their FAQ point #1, i.e. users who
-actually want no color at all can just set TERM=dumb, and we support
-that. The proposed patch is the same as having TERM=dumb set.
-
-This NO_COLOR=1 actually means something like "I do support colors, so
-show them if it's important, but don't color things willy-nilly".
-
-I'm not sure if it matters for git, the FAQ point isn't really clear on
-what the distinction is exactly. Users who want to use color for say CLI
-emacs/vim/screen/tmux "status" bars, but don't want any "normal" CLI
-program to emit them?
-
-But if we gained such a "status" bar feature the proposed 2018 patch
-would be actively going against what NO_COLOR users want, since it's our
-equivalent of TERM=dumb, not whatever NO_COLOR=1 is supposed to mean. Or
-maybe we already have that, I would think that "git add -i"'s UI would
-count.
-
-It seems like it really should have been named MOSTLY_NOT_COLOR=1 or
-ONLY_COLOR_NCURSES_LIKE_UIS=1 if I'm understanding that FAQ item
-correctly.
-
-So it would be incorrect to map it to either color.ui=never or
-color.ui=always (as "auto" will implicitly do). We'd need a new knob to
-control the granularity of coloring, something like
-color.ui=conservative.
-
-I wasn't against NO_COLOR before, but after writing the above I think I
-am. I initially assumed that it was some redundant and more "friendly"
-way of setting TERM=dumb, but rather it's some entirely subjective way
-for every program to decide if their UI elements are "text-editor"-like
-or "status bar"-like enough to warrant coloring.
-
-That's "against" in the sense that if git supported it I wouldn't care
-much, and wouldn't oppose a patch to implement it.
-
-But it seems to me to just introduce even more confusion to the *nix
-coloring landscape. For what it's apparently trying to accomplish I
-think it would be a much better thing to:
-
- 1. Have terminals/startup rc'd etc. set a TERM_ACTUAL=<old value>
-    before setting TERM=dumb. This is something POSIX et al could
-    eventually standardize, i.e. "TERM=dumb" for now, but actually I
-    support "TERM=xyz".
-
- 2. Have some "color_this" shell function/alias/wrapper to start things
-    like your editor, which would just be a one-line wrapper to start
-    that program with TERM=$TERM_ACTUAL, or those programs would learn
-    to look at TERM_ACTUAL.
-
-The user would thus get color almost nowhere in "normal" programs like
-"git status" or "ls", but would get them in emacs, vim, screet, tmux,
-htop or whatever other "big" terminal UI they run.
-
-I.e. the whole point seems to be to support the use-case of wanting
-color almost nowhere except a very small whitelist of programs, but
-trying to accomplish it with NO_COLOR means that hundreds/thousands of
-programs need to support it, as opposed to the much smaller list of
-editors/terminal multiplexers etc.
-
-Each of those programs then need to subjectively decide if their UI
-elements are "such as [...] a status bar". If they get it wrong the user
-is back to inovking them with TERM=dumb anyway.
+Thanks,
+Denton
