@@ -2,145 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEE13C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 04:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64CAFC433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 04:28:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98D1861369
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 04:01:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A07761002
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 04:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230450AbhESECU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 00:02:20 -0400
-Received: from smtp2.mail.cwp.pnp-hcl.com ([3.219.121.237]:55662 "EHLO
-        smtp2.mail.pnp-hcl.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S229379AbhESECR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 00:02:17 -0400
-X-Greylist: delayed 880 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 May 2021 00:02:17 EDT
-X-ASG-Debug-ID: 1621395978-156ea86a5c034f0001-QuoKaX
-Received: from mailhub1.domino.cwp.pnp-hcl.com (ip-10-134-103-34.ec2.internal [10.134.103.34]) by smtp2.mail.pnp-hcl.com with ESMTP id aN0Ox91Dp52z8mhs (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO) for <git@vger.kernel.org>; Tue, 18 May 2021 23:46:18 -0400 (EDT)
-X-Barracuda-Envelope-From: greg.pflaum@pnp-hcl.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.134.103.34
-To:     git@vger.kernel.org
+        id S1353263AbhESE3a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 00:29:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62190 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232007AbhESE3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 00:29:30 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 71E53D1C17;
+        Wed, 19 May 2021 00:28:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=72c7DrD+nXAZEpBrtl7Bhb2ux8r7eaIOKQxKNJ
+        ziN4s=; b=RrSxO3L1wqBnzsoWyI+lSJkkn1wJ5qiXbjA3Vu/RHpAiU5beCLAsjd
+        bELuzLWIM/+F3UdG1EZ0z++QweHgDEd7pDMOyq0o5r7Jiwi96QW/zQuvWPeTfsF/
+        Q88KoNCu1ELMj9YdTuXs5bk6yEh1tDzj+EC5qGBZ5LbEhqwcNZ2n8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6AC1ED1C16;
+        Wed, 19 May 2021 00:28:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E6530D1C15;
+        Wed, 19 May 2021 00:28:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, avarab@gmail.com
+Subject: Re: [PATCH v2 1/3] packfile-uris: support for excluding commit object
+References: <cover.1621327467.git.dyroneteng@gmail.com>
+        <73e64147b17cb382d34357c913616095b6169650.1621327467.git.dyroneteng@gmail.com>
+Date:   Wed, 19 May 2021 13:28:09 +0900
+In-Reply-To: <73e64147b17cb382d34357c913616095b6169650.1621327467.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Tue, 18 May 2021 16:49:51 +0800")
+Message-ID: <xmqq5yzfz6sm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Subject: [BUG] clone of large repo fails when server closes idle SSH session during
- "Resolving deltas"
-X-KeepSent: 9ECB0D17:7C6A7258-852586DA:0014125E;
- type=4; name=$KeepSent
-X-ASG-Orig-Subj: [BUG] clone of large repo fails when server closes idle SSH session during
- "Resolving deltas"
-X-Mailer: HCL Notes Release 12.0 May 04, 2021
-From:   Greg Pflaum <greg.pflaum@pnp-hcl.com>
-Message-ID: <OF9ECB0D17.7C6A7258-ON852586DA.0014125E-852586DA.0014B7AB@pnp-hcl.com>
-Date:   Tue, 18 May 2021 23:46:17 -0400
-X-MIMETrack: Serialize by Router on Mailhub1/PNPHCL(Release 12.0|May 14, 2021) at 05/18/2021
- 11:45:57 PM,
-        Serialize complete at 05/18/2021 11:45:57 PM
-Content-Type: text/plain; charset="US-ASCII"
-X-Barracuda-Connect: ip-10-134-103-34.ec2.internal[10.134.103.34]
-X-Barracuda-Start-Time: 1621395978
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://172.30.1.184:443/cgi-mod/mark.cgi
-X-Barracuda-BRTS-Status: 1
-X-Virus-Scanned: by bsmtpd at pnp-hcl.com
-X-Barracuda-Scan-Msg-Size: 3057
-X-Barracuda-Spam-Score: 0.50
-X-Barracuda-Spam-Status: No, SCORE=0.50 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=BSF_RULE7568M
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.90039
-        Rule breakdown below
-         pts rule name              description
-        ---- ---------------------- --------------------------------------------------
-        0.50 BSF_RULE7568M          Custom Rule 7568M
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9DD74798-B85A-11EB-902D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git's handling of the SSH session during "git clone" changed between Git
-2.17.0 and 2.31.1, causing cloning of a large repo to fail when the server
-closes the idle session during the "Resolving deltas" phase.
+Teng Long <dyroneteng@gmail.com> writes:
 
-In the older version, git closes the SSH session after "Receiving objects"
-and before "Resolving deltas". In the newer version, git doesn't close the
-SSH session until after "Resolving deltas" finishes. In the newer version,
-if "Resolving deltas" takes a long time (over 2 minutes for our large 
-repo)
-and the server closes the idle SSH session (60 seconds for our GitHub
-Enterprise server), git displays the error message "Connection to
-git.example.com closed by remote host", finishes resolving deltas, then 
-exits
-without checking out files.
+> On the server, more sophisticated means of excluding objects should be
+> supported, such as commit object. This commit introduces a new
+> configuration `uploadpack.excludeobject` for this.
 
-Successful with Git 2.17.0:
+This "should" is not justfied at all, it seems?  What is lacking in
+what we already have?  What new things does it all us to do by
+adding a new configuration variable?
 
-> git clone git@git.example.com:org/bigrepo.git
-Cloning into 'bigrepo'...
-remote: Enumerating objects: 260, done.
-remote: Counting objects: 100% (260/260), done.
-remote: Compressing objects: 100% (170/170), done.
-remote: Total 361839 (delta 74), reused 174 (delta 37), pack-reused 361579
-Receiving objects: 100% (361839/361839), 4.47 GiB | 36.71 MiB/s, done.
-Resolving deltas: 100% (252249/252249), done.
-Checking out files: 100% (59466/59466), done.
+> The old configuration `uploadpack.blobpackfileuri` is only support to
+> exclude blobs and the name has no abstract meaning, so the configruation
+> name changes, to support more object types. Compatibility issues will
+> not be considered because packfile-uris now is an experimental feature.
 
-Fails with Git 2.31.1:
+I'll let Jonathan speak up, but even for an experimental feature,
+whatever new and incompatible way to do things should have a clear
+advantage compared to the old way.  Sell the backward incomptibility
+along that line---"it is an experimental so I'll trash it" is not,
+but "by doing this it gets this much better, and migrating existing
+users won't be too taxing (it is just this simple thing)" is an
+acceptable way to justify such a change.
 
-git clone git@git.example.com:org/bigrepo.git
-Cloning into 'bigrepo'...
-remote: Enumerating objects: 363, done.
-remote: Counting objects: 100% (363/363), done.
-remote: Compressing objects: 100% (221/221), done.
-Receiving objects: 100% (361930/361930), 4.47 GiB | 36.37 MiB/s, done.
-RConnection to git.example.com closed by remote host.esolving deltas:  39% 
-(98729/252244)
-Resolving deltas: 100% (252244/252244), done.
+Note that I am not opposed to the proposed change (and I am not
+supporting it, either).  I do have a problem with the way the change
+is sold, though.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+>  builtin/pack-objects.c | 53 ++++++++++++++++++++++++++++++------------
+>  fetch-pack.c           |  5 ++++
+>  upload-pack.c          |  5 ++--
+>  3 files changed, 45 insertions(+), 18 deletions(-)
 
-Ran "git clone git@git.example.com:org/bigrepo.git"
+Even though the name of the configuration variable changed, and the
+semantics of the value of it changed, there is no documentation
+change, because...?
 
-What did you expect to happen? (Expected behavior)
+Because the original didn't even document the variable properly?  It
+may be another reason why changing it may not impact the existing
+users too much.
 
-Expected successful creation of a cloned repo.
+> @@ -132,6 +134,7 @@ struct configured_exclusion {
+>  	struct oidmap_entry e;
+>  	char *pack_hash_hex;
+>  	char *uri;
+> +	int recursively:1;
+>  };
+>  static struct oidmap configured_exclusions;
+>  
+> @@ -1291,10 +1294,16 @@ static int want_object_in_pack_one(struct packed_git *p,
+>   * and its offset in these variables.
+>   */
+>  static int want_object_in_pack(const struct object_id *oid,
+> +			       enum object_type type,
+>  			       int exclude,
+>  			       struct packed_git **found_pack,
+>  			       off_t *found_offset)
+>  {
+> +	if (exclude_until_next_commit && type != OBJ_COMMIT)
+> +		return 0;
+> +	if (type == OBJ_COMMIT)
+> +		exclude_until_next_commit = 0 ;
 
-What happened instead? (Actual behavior)
+Lose SP before the semicolon.
 
-Repo was partially created, but files were not checked out. Branches and 
-tags
-also seem to be missing from the repo.
+Our codebase does not allow statements before declarations.  Move
+all of the above down to be below the block of decls at the
+beginning of the function.
 
-What's different between what you expected and what actually happened?
+>  	int want;
+>  	struct list_head *pos;
+>  	struct multi_pack_index *m;
 
-With the old Git version, cloning the repo is successful. With the newer
-version it fails.
+> @@ -1345,6 +1354,8 @@ static int want_object_in_pack(const struct object_id *oid,
+>  						&p) &&
+>  				    *p == ':') {
+>  					oidset_insert(&excluded_by_config, oid);
+> +					if(ex->recursively && type == OBJ_COMMIT)
+> +						exclude_until_next_commit = 1;
 
-Anything else you want to add:
+This depends on a new file-scope global variable, which means two
+things.
 
-A workaround is to configure the SSH client to prevent the server from
-seeing an idle session, by adding these lines to .ssh/config:
+ * if two or more threads are deciding which object to pack and not
+   to pack, this code will horribly break, as they are traversing
+   totally different parts of the object DAG to find out which
+   objects to pack, but one thread hitting a commit to be excluded
+   and setting this flag will cause other thread skip unrelated
+   blobs and trees that it discovers, doesn't it?
 
-Host git.example.com
-    # Send keep-alive message to server every 30 seconds
-    # so the server won't close an idle session.
-    ServerAliveInterval 30
+ * even if we assume there is no concurrency and reentrancy issues
+   (e.g. by forcing single-threaded operation when this feature is
+   in use), the code _assumes_ a concrete order in which this helper
+   function gets called, namely, non-commit objects fed to this
+   helper after the helper gets a single commit object *all* belong
+   to that commit.  With the current code that feeds objects as they
+   are discovered during depth first traversal of the top-level tree
+   starting at each commit, that assumption might hold, but it feels
+   that the assumption is too much to be healty.  For example, would
+   it be possible for the bitmap code to cause this helper to be
+   called in different order (i.e. it might find it more convenent
+   to feed a tree, a blob or a tag that is unrelated to the commit
+   that was last fed to the helper)?  If so, the logic in this code
+   will constrain the caller too much.
 
+I'll stop reading for now at this place; review of the remainder may
+come at a later time, but not now.
 
-[System Info]
-git version:
-git version 2.31.1.windows.1
-cpu: x86_64
-built from commit: c5f0be26a7e3846e3b6268d1c6c4800d838c6bbb
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 14393
-compiler info: gnuc: 10.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
-
+Thanks.
