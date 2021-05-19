@@ -2,105 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1BC8C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 01:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22A55C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 01:12:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E6C76112F
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 01:08:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E216861369
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 01:12:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231301AbhESBKR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 May 2021 21:10:17 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52883 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbhESBKR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 May 2021 21:10:17 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 87D4013DE6C;
-        Tue, 18 May 2021 21:08:58 -0400 (EDT)
+        id S231422AbhESBNf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 May 2021 21:13:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53014 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231322AbhESBNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 May 2021 21:13:35 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 395A2CA5C9;
+        Tue, 18 May 2021 21:12:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=frxR3y1ksF8h3NXwQbLrZFqFmMOFE0/FcoNwxA
-        ku2+I=; b=SMq8dJ0J09scN8VvYnTxYKOR8fsgnXTvbsR/0Pz6jYrS5YH27K3wtt
-        Ia6kDgszq4LfpT6NthswpbBLE/MiPm0Br+UnwWfTqhglqlSsdvU2RzQySQ64+sPH
-        hDGSogvz25Wz+kQfWXumHUPGUI7jWjuIy+KSKXc56Tdv2Zf3+LY/o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8017013DE6B;
-        Tue, 18 May 2021 21:08:58 -0400 (EDT)
+        :content-type; s=sasl; bh=TwFByJEob3FB47gr8lA0n4ytrBn0+RJj7mEsHk
+        Rjv5g=; b=erz9spXKbULUNEqc1TCrAj5QCe/nIJ8Bx/+f3qU95syl5SKcphClvW
+        HcQOZ3HY9SV4NeWohn0+jOp1kq72b5SJG94gJF1vL/B/7Kt9K6MfwWMe/PTv4gx5
+        +1ggNhor6x/SBHXxQClR1ADFi/IfS82nwDrNxXGzaFK+PEftjGwwI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 317A2CA5C8;
+        Tue, 18 May 2021 21:12:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C960A13DE6A;
-        Tue, 18 May 2021 21:08:55 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ABA6ECA5C7;
+        Tue, 18 May 2021 21:12:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] help: colorize man pages
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
-        <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
-        <60a332fd22dad_14c8d4208ed@natae.notmuch>
-        <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
-Date:   Wed, 19 May 2021 10:08:54 +0900
-In-Reply-To: <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Tue, 18 May 2021 23:49:40 +0000")
-Message-ID: <xmqqfsyj1qe1.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Ben Humphreys <behumphreys@atlassian.com>,
+        Christopher Schenk <christopher@cschenk.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] fix v2.32.0-rc0 bug with Negotiate / HTTP_NOAUTH
+References: <YKMvePOPqjwiXeQ+@C02WD045HTDG>
+        <YKNVop80H8xSTCjz@coredump.intra.peff.net>
+        <YKNeJ+NKUbD5ixA9@coredump.intra.peff.net>
+Date:   Wed, 19 May 2021 10:12:15 +0900
+In-Reply-To: <YKNeJ+NKUbD5ixA9@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 18 May 2021 02:26:47 -0400")
+Message-ID: <xmqqbl971q8g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C8A0EEDC-B83E-11EB-A9E8-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 3FC40918-B83F-11EB-9C88-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> In general, this is made worse because Git doesn't honor the unofficial
-> but widely supported NO_COLOR[0], so reading the documentation is
-> obligatory.
+> Here are some patches. The first one adds the tests, and I think is an
+> obvious improvement.
+>
+> The second one does the revert. I'd be quite happy if somebody wants to
+> figure out how to fix it in a way that addresses the original problem,
+> and then we can replace that. But in the meantime, I think it makes
+> sense to prepare the revert, as we wouldn't want to release v2.32.0 with
+> the bug.
 
-I vaguely recall that we were contacted by NO_COLOR folks to be
-an early supporter of their cause to break the chicken-and-egg
-problem they were hagving, and (unhelpfully) answered with "sure,
-when we see enough people support it---otherwise we'd end up having
-to keep essentially a dead code that supports a convention that is
-not all that useful".
+I'll queue these directly on top of the original topic, so that even
+a merge of the branch by mistake down to maint won't break.
 
-> [0] https://no-color.org/
+I saw brian has already floated an idea to solve the original issue,
+and I'd encourage people to help finding a proper solution, but
+let's leave the actual application of such a change for the next
+cycle.
 
-I wonderr if it is just a matter of hooking into want_color(), like this?
+Thanks.
 
- color.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git c/color.c w/color.c
-index 64f52a4f93..2516ef7275 100644
---- c/color.c
-+++ w/color.c
-@@ -373,12 +373,17 @@ int want_color_fd(int fd, int var)
- 	 * we always write the same value, but it's still wrong. This function
- 	 * is listed in .tsan-suppressions for the time being.
- 	 */
--
-+	static int no_color = -1;
- 	static int want_auto[3] = { -1, -1, -1 };
- 
- 	if (fd < 1 || fd >= ARRAY_SIZE(want_auto))
- 		BUG("file descriptor out of range: %d", fd);
- 
-+	if (no_color < 0)
-+		no_color = !!getenv("NO_COLOR");
-+	if (no_color)
-+		return 0;
-+
- 	if (var < 0)
- 		var = git_use_color_default;
- 
