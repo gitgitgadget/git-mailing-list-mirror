@@ -7,66 +7,71 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDB99C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 13:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2741C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 13:58:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C96516108D
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 13:55:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B506C61074
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 13:58:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241071AbhESN5E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 09:57:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S1345075AbhESOAP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 10:00:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238625AbhESN5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 09:57:04 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DA1C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 06:55:44 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id q10so12757189qkc.5
-        for <git@vger.kernel.org>; Wed, 19 May 2021 06:55:44 -0700 (PDT)
+        with ESMTP id S231627AbhESOAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 10:00:15 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672EEC06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 06:58:55 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id f8so10132751qth.6
+        for <git@vger.kernel.org>; Wed, 19 May 2021 06:58:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Ld/w/dv2oWazETo8kiZqi3jy1Tf7jfX9HRZJl7fWGWY=;
-        b=i1YT7vZkUke1ZnHedbjIGQGR3cYVZttPGon38UWq5+PtwNPqXSKA7mNleLmmqcFmXR
-         USyiFJc/ahXvXd2OY7L45ThpalguMDbuIA4X/GRcADciVbmZ/1k2nq9khWxIbaX1YK0R
-         gjLdzcYATZgXxR5X3X1C+p9rP0s9S8zRkYmS0NS1KaQ4mFzJl+mWyLET9laD8+g97kw8
-         G1REyeMWzak71k8jEPeiVu/Y5DYl6X5VEPXaHeeA4zrKzbfFNo3S4hg0M/O7rfXWYkqX
-         oDVL0QaVYnFOEYhBFsdE8/h+wiYyCyh1AejGHZZWRD1SOS9LdlfVYL470jjZfGFloGCa
-         CllQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=L601jB5H10eJshe6JGirbvkd/viw/gkf0/WnYBGZ8gg=;
+        b=eSNPQAyFNytsFPgGvwcDQoNI9+uZp6Bxcv8OQOzpTH2cMB3x7G/tCnoeZtFAXhV2Ax
+         5mxR7od/bZxdpmEbHwynPcEWx/VXZsc2MQkJpmytcFE6iq11eyvy/l8ymycMsHSP9k3S
+         51toFxIVAf9nwtos354uq5Off2JkQ6jc+3YPbbhP3RgT+Bp0VJRcY05+fyTG5Ek5L02C
+         jIRbYCLD5SatJMEwvmjvqcZk5C0Rckm6hpcy0Seu8Cg/rImFdnseZY6+BfiG9ZbDwg8R
+         K13fLojzJ0U76FSKSDhVuMNRjMfhvZnGQcc2ScWUUkFXT7VvSsD7IoWXdRB3yNIiKN06
+         7g+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Ld/w/dv2oWazETo8kiZqi3jy1Tf7jfX9HRZJl7fWGWY=;
-        b=lCN/y4wEDJgl1oHRa8rEtm7I3C3EsJX9tJOSM7zlcUvseywTFnwYT/gUrkJNvnuotE
-         3m2PSoqza93ZwSpnxAsTrIrdwqRfwXCkWUt8Yri+tCVayDsPZQ0XZcG/WnHM0O8LDr3X
-         HvhAlRhZxRch1U2BImBDPgZupChyd2rrOAd1xzL4191unEz7yF8+LJsPZOCa8RYTfwH2
-         jJv5S+HMF5NcQt0yrIs4Qgg8FfYxbKM7VI+qu0vv9iLHgHfEgnF8HazQEUoSSYVJE9Gd
-         fAelT++/cOMKkFRAtWBdqsSO9TgtApRSSDviaiYdUqWompiq24GGPYlXD/Ibo6mK0vum
-         FTqg==
-X-Gm-Message-State: AOAM532KQln+HPq6FF0T/JSdIkcLW4iER1L4Ks16s6c7NUJoGBOuIQeA
-        RdrD/vXEatQawoC3ZFS3vyU=
-X-Google-Smtp-Source: ABdhPJytTBIUJrPeemwzHqjaZForqwffth1CUCHd9K8w5ohurRtvO/XJnEpliAZ48PLITrUjTepo0g==
-X-Received: by 2002:a05:620a:751:: with SMTP id i17mr12188393qki.87.1621432543437;
-        Wed, 19 May 2021 06:55:43 -0700 (PDT)
+        bh=L601jB5H10eJshe6JGirbvkd/viw/gkf0/WnYBGZ8gg=;
+        b=Chficjv/IIFLz986zMOMRGPu2IJy45Nk+ktWc7Xu9n7vFJFXHYAJQ3sh4T+ugp+Chh
+         8z1RMbFzY2IV/r4QD8jNCrrTirtRrtJeEVurSa0FgeiQV4xD09O2pNm1Q7GKrFAY5EKZ
+         uO6CmpVbmH02cwqjg9UCs7PulblxPqFp85gTS49Hs7KFAFPhALEpV3Hfn0MsbwjUeez+
+         PP5ko+DJcIIGJ8usno89+WRW6L0cyVN/d52p6oTRUUP0hxA1kRXMFxtSgYyIECkCTg/u
+         R5jeFEr+hUhcG+NSNq6JsXgNIXnR5im+JEE7VyDR/GCFF3bXATgMnUbyX5VzMKuZ5IZS
+         TeeQ==
+X-Gm-Message-State: AOAM531+SvPb+RbgTiRny/dGx0kaiIyGyKI2Tmonu6L9GDOmeI44JRZ/
+        WkUKl971zQEhyF0C8f0QR8s5Riv9CFV35w==
+X-Google-Smtp-Source: ABdhPJxZoBc/blczoKmwQJeZ8PaKdUGbTZ40aN4a9iKgakKrd22ga5OiY+ecUO1zT19tad/qdvagng==
+X-Received: by 2002:a05:622a:30e:: with SMTP id q14mr11250886qtw.278.1621432733722;
+        Wed, 19 May 2021 06:58:53 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:a1ee:38d:5766:9f4f? ([2600:1700:e72:80a0:a1ee:38d:5766:9f4f])
-        by smtp.gmail.com with ESMTPSA id b23sm7296707qtq.0.2021.05.19.06.55.42
+        by smtp.gmail.com with ESMTPSA id s20sm705743qke.2.2021.05.19.06.58.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 May 2021 06:55:43 -0700 (PDT)
-Subject: Re: [PATCH] fetch: improve grammar of "shallow roots" message
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        pclouds@gmail.com, gitster@pobox.com
-References: <20210518061855.57478-1-alexhenrie24@gmail.com>
+        Wed, 19 May 2021 06:58:53 -0700 (PDT)
+Subject: Re: [PATCH 2/2] Revert "remote-curl: fall back to basic auth if
+ Negotiate fails"
+To:     Jeff King <peff@peff.net>,
+        Ben Humphreys <behumphreys@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christopher Schenk <christopher@cschenk.net>,
+        git@vger.kernel.org
+References: <YKNeJ+NKUbD5ixA9@coredump.intra.peff.net>
+ <YKNeXq3JzxYWkxKl@coredump.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2b1985b6-c426-7f7a-2d6b-34977ddecc1d@gmail.com>
-Date:   Wed, 19 May 2021 09:55:40 -0400
+Message-ID: <43035278-5742-607a-57bd-971685deece8@gmail.com>
+Date:   Wed, 19 May 2021 09:58:50 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.2
 MIME-Version: 1.0
-In-Reply-To: <20210518061855.57478-1-alexhenrie24@gmail.com>
+In-Reply-To: <YKNeXq3JzxYWkxKl@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -74,11 +79,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/18/2021 2:18 AM, Alex Henrie wrote:
-> - warning(_("reject %s because shallow roots are not allowed to be updated"),
-> + warning(_("rejected %s because shallow roots are not allowed to be updated"),
+On 5/18/2021 2:27 AM, Jeff King wrote:
+> This reverts commit 1b0d9545bb85912a16b367229d414f55d140d3be.
+> 
+> That commit does fix the situation it intended to (avoiding Negotiate
+> even when the credentials were provided in the URL), but it creates a
+> more serious regression: we now never hit the conditional for "we had a
+> username and password, tried them, but the server still gave us a 401".
+> That has two bad effects:
+> 
+>  1. we never call credential_reject(), and thus a bogus credential
+>     stored by a helper will live on forever
+> 
+>  2. we never return HTTP_NOAUTH, so the error message the user gets is
+>     "The requested URL returned error: 401", instead of "Authentication
+>     failed".
+> 
+> Doing this correctly seems non-trivial, as we don't know whether the
+> Negotiate auth was a problem. Since this is a regression in the upcoming
+> v2.23.0 release (for which we're in -rc0), let's revert for now and work
+> on a fix separately.
 
-This change to past-tense makes sense to me.
+I think the revert is sufficiently justified here.
+ 
+> (Note that this isn't a pure revert; the previous commit added a test
+> showing the regression, so we can now flip it to expect_success).
+
+Keeping the test is excellent, because it gives us a way to confirm
+that a second attempt at a fix is at least as good as the first.
+
+The only thing that could improve this situation is to add a test
+that checks the bug that the previous version introduced, so that
+the next round doesn't repeat the mistake. That can be deferred
+because it is more important that we get this fix in time for the
+next release candidate.
 
 Thanks,
 -Stolee
