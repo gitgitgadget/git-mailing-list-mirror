@@ -2,129 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A517C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 07:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD79CC433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 07:39:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 548BC61244
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 07:19:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CAAB61244
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 07:39:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238088AbhESHUq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 03:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55786 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232411AbhESHUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 03:20:46 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0BA2C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 00:19:26 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id g38so16729685ybi.12
-        for <git@vger.kernel.org>; Wed, 19 May 2021 00:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mqWATnP+NwpepCYZK1slt0OUuQTZuRcpQ0cn4YhvC5I=;
-        b=NnkSUC2WgZuzoc2mOsR6C5fKyJo2MGum1QpaSdjk04A5QxckXJVQhxJ0At5011jcz3
-         u4PHMoTo4LLsVJOoxJ0xgxKa3OGPl57Fv/7xcfdeITP9KO5vu5QJTSP0ghLLwSfhvY4z
-         uEpzpEjr8jmzvwMza4y+zSuUZzYoHsezMYV50k3P/LeP9IhL8ssWBP5JZEqb4gbWKQo8
-         cATLZMe/bY7HnE1cXgRqZvwFx6+sfeMcPylUAmBTwHM3pkeC51N/XUftcqXqT13Z5eFB
-         CR0/bSej3Sf821+50ybr383L5humzz5t2KPL5zw6j1qsyZ4XNruxCxkIdx5AnfJSP3/5
-         A5wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mqWATnP+NwpepCYZK1slt0OUuQTZuRcpQ0cn4YhvC5I=;
-        b=mTlOka3r3RlVnQ1bUCge62CRvd349RFxJl8/vEUCmtKh2bZoEgsZCsmrFTk1cGsW3c
-         9nH1L9uVdglyhvPqu6H62fOopWsnCrkX0VQtrok8SPy8nj+Zfe7lcQYwPGiRcdt/3Djb
-         dIngmdf7R/GJnpiwCG/hDBrqpfVG52atF1Xh4N8Fe9WDtdBiG8IC3ITkx9syrwpj9nOD
-         TmFBf04bvlx2HGliqNWtaDK08PDLre9wRRL3KX4K+XLCmMRutrdJh2tWTi6Y8cmjp/zZ
-         /cSKGDw6tx/gTgR+UrLgkNw8KA7PlyWwWl8AsYkZQ0ca07glq3/+h1xiPdVuIHkuneSl
-         0nAg==
-X-Gm-Message-State: AOAM533UeCWAT5NKYFVmjbGyfMaZWrAlkacTjbU/Ud1yqookIOSUlICz
-        Ftc2Db90yKwCPkYOJrKbKyjtTw3zlZPFx9Jytj78a7KbvZE=
-X-Google-Smtp-Source: ABdhPJy5bRzGTKGNnLo/Xhmt2I1B7g0QL9OgqeWuJUKvuFwBEXLN8fRm2yY1YMNAT6gH4XpLMDj6i7cLmB33Al0hQy4=
-X-Received: by 2002:a25:ae12:: with SMTP id a18mr12567806ybj.155.1621408766193;
- Wed, 19 May 2021 00:19:26 -0700 (PDT)
+        id S240548AbhESHkT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 03:40:19 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60950 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240520AbhESHkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 03:40:19 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A040BCC6C6;
+        Wed, 19 May 2021 03:38:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=sWZNgutW9n7VovkBvfkqv5PoLWqLTxy+tQrFZy
+        ndIIU=; b=p1t5wXGNbo+j4M9MDenBaZ3e459g6tbVUp7dZCUVrfvtQbadOtnP+Z
+        /letGChvv933oKd6kjLrDXfnwmIBcAsAu2rxAuVLzvMRBii9VKEqPH9OYc0IGQK+
+        NCyb1ys36i663Pyf55kNkyShJyxAfNXkEhvnaZM4dDkWR5hVQ2mP4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89FA8CC6C5;
+        Wed, 19 May 2021 03:38:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05D19CC6C4;
+        Wed, 19 May 2021 03:38:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Reuven Y. via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, "Reuven Y." <robi@post.jce.ac.il>
+Subject: Re: [PATCH] docs: typo in glossary content
+References: <pull.957.git.1621406381404.gitgitgadget@gmail.com>
+Date:   Wed, 19 May 2021 16:38:48 +0900
+In-Reply-To: <pull.957.git.1621406381404.gitgitgadget@gmail.com> (Reuven
+        Y. via GitGitGadget's message of "Wed, 19 May 2021 06:39:40 +0000")
+Message-ID: <xmqqtumzxjef.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAOLTT8SHE-ok3D+oLNSWFi7KPU==VQnTMDmC4YxUyNBJKmBD8A@mail.gmail.com>
-In-Reply-To: <CAOLTT8SHE-ok3D+oLNSWFi7KPU==VQnTMDmC4YxUyNBJKmBD8A@mail.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Wed, 19 May 2021 15:19:15 +0800
-Message-ID: <CANYiYbGV1LO33piD+oMxjF83K6Nt=19Lk_8oBgzNCVcB=AokfA@mail.gmail.com>
-Subject: Re: [GSoC] Hello Git
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 400FFBB2-B875-11EB-B44C-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8818=E6=
-=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:40=E5=86=99=E9=81=93=EF=BC=9A
->
-> Hello=EF=BC=8CGit!
->
-> ### Self introduction
->
-> I'm ZheNing Hu, I am very lucky to participate in the GSoC
-> git project this year. Many people in the git community already
-> have given me a lot of help in the past few months.
-> Junio, Christian, Peff, Eric, Denton..., it's great to get along with
-> you guys! Your review and guidance have greatly benefited
-> my growth.
+"Reuven Y. via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I admire you so much that you can join the open source community at a
-very young age. I will continue to offer my help both online and
-offline, in your favorite language (Chinese of course).
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index 67c7a50b96a0..e75aed00ffe1 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -146,7 +146,7 @@ current branch integrates with) obviously do not work, as there is no
+>  	<<def_revision,revision>> and you are "merging" another
+>  	<<def_branch,branch>>'s changes that happen to be a descendant of what
+>  	you have. In such a case, you do not make a new <<def_merge,merge>>
+> -	<<def_commit,commit>> but instead just update to his
+> +	<<def_commit,commit>> but instead just update to this
+>  	revision. This will happen frequently on a
+>  	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
+>  	<<def_repository,repository>>.
 
-> In these days before GSoC, I learned some simple command
-> implementation and data structures of git, learned strict coding
-> standards and learned how to test, More importantly, I learned how
-> to communicate with these kind-hearted reviewers.
->
-> Of course, there are still many difficulties for me:
-> * My poor English sometimes can=E2=80=99t express the meaning clearly.
+Actually, "his" is what was intended by the original introduced at
+9290cd58 (Added definitions for a few words:, 2006-05-03).  
 
-There are too many differences between English and Chinese, but don't
-worry. Remember, practice is perfect. You can also practice your
-English by reviewing Git l10n in Chinese, see: "po/README.md".
+The "fast-forward" situation it describes happens when you try to
+merge somebody else's history into your history, and if you do not
+have anything of your own since the history of the other party
+forked from your history.  In such a situation, instead of creating
+a merge commit whose parents are the tip of your history and the tip
+of the history of the other party, you just update the pointer that
+points at the tip of your history (i.e. HEAD) to point at the commit
+at the tip of the history of the other party.
 
-> ### The connection between Git and the file system
->
-> I am currently studying operating system course, git as a
-> file system on top of the file system.
-> There are many differences and similarities with ordinary
-> file systems. I am very curious about this knowledge, do
-> not know if there are any relevant reading materials?
+One would refer to that commit, as "the tip of _HIS_ history", if
+one does not bother trying to be gender neutral by repeatedly saying
+"the other party".  So, "his" you touched is correct.  The
+description that leads to this part talks about two "revisions"
+(i.e. the one you have, and the other one you are merging), and
+rewriting it to "this" revision makes it unclear which one is meant.
 
-Git objects are stored in ".git/objects" directory in two forms: loose
-object and packfile.  These two types of files are deflated in zlib
-format. In order to increase the speed of traversing these objects in
-this object store, many meta files are created. For example, index
-files and reverse index files for packfiles, bitmap file, commit-graph
-files, etc.
+I do not mind neutering the expression with "the other party",
+especially since that would help reduce confusion.  How about
+phrasing
 
-Docs for these files:
+    In such a case, you do not make a new <<def_merge,merge>>
+    <<def_commit,commit>>, but instead just update your branch to
+    point at the same revision as the other party's.  This will
+    happen often ...
 
- * Documentation/technical/pack-format.txt
- * Documentation/technical/index-format.txt
- * Documentation/technical/chunk-format.txt
- * Documentation/technical/multi-pack-index.txt
- * Documentation/technical/bitmap-format.txt
- * Documentation/technical/commit-graph-format.txt
- * Documentation/technical/commit-graph.txt
+perhaps?
 
---
-Jiang Xin
+Thanks.
