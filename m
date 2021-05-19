@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D62DCC433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 12:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAC5C433ED
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 12:29:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B21EC61353
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 12:25:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 755B761353
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 12:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346387AbhESM1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 08:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41230 "EHLO
+        id S241302AbhESMaz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 08:30:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238053AbhESM1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 08:27:09 -0400
-Received: from mail-vk1-xa30.google.com (mail-vk1-xa30.google.com [IPv6:2607:f8b0:4864:20::a30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3BEC06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 05:25:50 -0700 (PDT)
-Received: by mail-vk1-xa30.google.com with SMTP id j19so2744007vkj.0
-        for <git@vger.kernel.org>; Wed, 19 May 2021 05:25:50 -0700 (PDT)
+        with ESMTP id S232850AbhESMay (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 08:30:54 -0400
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E08EC06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 05:29:33 -0700 (PDT)
+Received: by mail-ua1-x936.google.com with SMTP id 20so4362265uaf.12
+        for <git@vger.kernel.org>; Wed, 19 May 2021 05:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=7xC+nZ3kl+Xtffzr5XdWhDYvqZT22iwzlUBxhN27Ii8=;
-        b=OojkEuUpcKBFD+G9S6pBRXWEO9Ck1R2CeoxNlVSGxuguZB+1u5UgyL2ncfz3LXNC+n
-         KMPMZdMeigAViNao/mYX/2QcpAVkfVT+5xR6qi+fcbBBCSMYgLchreC72Na9hnvod+IV
-         i+DEkwHRV+gnrj8vZ6UafrazVCUnaaKUQCg9nxVamMpInDqhQbkeD79UZnDP4PNQphJd
-         JvfcfwCwsdLrchSdIMhDAcVmNnZeYzXUxUFyoy2rUJQo6DaT5HnuLTLpMjnWyYsisRuT
-         bu9SBhClaAahzbJbzmP/bkJEMvJcDL1EzMvd/6AXELeFsPXWiOw2BY7sO3Y4xVpy2lV8
-         0IDg==
+        bh=r+qDlsKPSCKQY/zG9BINTYKjdoSZTdUbFRMuErF1lYU=;
+        b=KorEBLLAIKHoT14rGeUfgzX+C1jEkDG0+LiDOOUH1UMpTKx1I2zPfDUWB67mJU7IDL
+         1LY+IqqkXbHDZftPGepSlEs4Uonvuzoy7AZysAF6hYtqLBQ4KXi9bMcBjhqXuWCCxxxO
+         0kCXibRg37PB/AnwkwQfZkWZC7UQThBEt5Ix4XVIf2yl4tC8gJDKzwTIYcf1TXyIvakN
+         67AvgHR342KzADfMUhmVz8AAJK03zFGPtuYiNJ5BkfyacyhhSYqvwmm4Z6nwrhHtPKHb
+         fgo2FYpVlAPSw3Q38uTIeagcHwrqTx0iWXluq/JFr431wSiMScy7YHPTbGw44QgRtLW2
+         KYIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7xC+nZ3kl+Xtffzr5XdWhDYvqZT22iwzlUBxhN27Ii8=;
-        b=MdNd7dy6/K5mjw3AZXWJvjrkukcvSI52c3sh7euAIPT8m0ZU05x4142Q7z7nxwG8bh
-         ERx8THGx5MHlz78NDJE2Ql6cPOu5swUeARVTF4iKllqoPX4DNPhySgyHwV8T9IUMnLff
-         h/3PvvmJy0UnPhD2AYXEw5S9M5e8vgY8PWxBkbTM+p85u2ifNaqIBJxVx+JC5OBzjJc9
-         C3RjaDYE/jDW4Ic9jbnFjTaTBRyMd8rvgaWKJoVo23rMu7U4KTNvpOYH2rmqdQyRr09u
-         tE4Sl7xAlQpAy04n393rnbmLeSPPnzNcPCxvof8GTUO4NWQUYe7Ei7g+I/xrcKMv6SI/
-         nnXw==
-X-Gm-Message-State: AOAM533hPSdti0qXVZZmAYukoAlMMkkbcPye4Q7ujIfqFrz6hpNxayEe
-        W8d9RasXHDfd9pk7VeRtIilb61G3THcV5WTsLNOoGw==
-X-Google-Smtp-Source: ABdhPJyyTPCZNxUDIyuX6k6XHPjAQXwWhUXGCBTh9AI2lRGu6gO2xx1YszJd6ghyCbdjRUXeh71MmWVmqg9jFrl4dEk=
-X-Received: by 2002:a1f:99cc:: with SMTP id b195mr12801650vke.25.1621427149156;
- Wed, 19 May 2021 05:25:49 -0700 (PDT)
+        bh=r+qDlsKPSCKQY/zG9BINTYKjdoSZTdUbFRMuErF1lYU=;
+        b=XuLu6f7ZzPMfFDpa4Ec9MqqQMU2i9eIPePwRIbW8xgD5CMHy5r97oxOYGIyLMhVk8F
+         LntMPNNbSkaYJsmQzi2HgxnY1v5O8QadOcAouZi2DBDf5/yrf+3S94cEaJZMPF5owMbR
+         JV3zrZ6tFAaUY5DV31ARfWiLgR5REVS3rWHRc4yZD3JiBASiXYTfQg67clXRAZNTBAi1
+         BXYdOCBviCpfVL9cM7oUlJHqz3B+Jb9RZwRwigAGPt6Ps8zpNw/4Vol6/S+J2uOP6kgs
+         /SIw4+rgBVTOsZ/7PZeKmATuyqsWSIQZ5cRQ4cgKGU+RWA2xDdgp4Cd1ajtBIucoz4kh
+         IYOA==
+X-Gm-Message-State: AOAM533E+XG8o2gW9tfk7Au3Cy5p6A0GCimp5dE7QaBKbxU+fXE832J2
+        JhnnmME3RX4sApe158cTJDDY70qZTb9kSxSbsOo4hw==
+X-Google-Smtp-Source: ABdhPJzrRYgBtAhZvltYy3xjy5DHraJ/qE2XjUnFxBdjlTNa12vaXGlXBm3D8pD2CSBBMNgvrKhfS9P+iewWHMQhtIU=
+X-Received: by 2002:ab0:2b01:: with SMTP id e1mr14759059uar.85.1621427372596;
+ Wed, 19 May 2021 05:29:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
- <7e8181e77d409af7595e357ad233b7781e026b78.1619710329.git.gitgitgadget@gmail.com>
- <xmqqk0okebtb.fsf@gitster.g>
-In-Reply-To: <xmqqk0okebtb.fsf@gitster.g>
+ <b2c72097e5e8985e7fdd8e3eee66cdf43d1b65c0.1619710329.git.gitgitgadget@gmail.com>
+ <xmqqbl9weabw.fsf@gitster.g>
+In-Reply-To: <xmqqbl9weabw.fsf@gitster.g>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 19 May 2021 14:25:37 +0200
-Message-ID: <CAFQ2z_MCySh2p+fL0uL8tAQhkpbnkGF6e=NOYicpAxN582aqag@mail.gmail.com>
-Subject: Re: [PATCH 1/8] refs: remove EINVAL specification from the errno
- sideband in read_raw_ref_fn
+Date:   Wed, 19 May 2021 14:29:21 +0200
+Message-ID: <CAFQ2z_MVEFpq5qJx_BwbborFmUeaGhRN4N4cN-yiS1xToEw1LA@mail.gmail.com>
+Subject: Re: [PATCH 2/8] refs/files-backend: stop setting errno from lock_ref_oid_basic
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
@@ -70,87 +69,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 30, 2021 at 4:38 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Apr 30, 2021 at 5:10 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I 100% agree with you that errno is cumbersome to use and carries
+> far less information than we want (we do not learn what operation
+> failed on what path) over a long distance.  It only is useful when
+> the callchain still knows what path was operated on.
+>
+> But...
 >
 > "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > From: Han-Wen Nienhuys <hanwen@google.com>
+> > For the copy/rename support, calls to lock_ref_oid_basic() in this file=
+ are
+> > followed by:
 > >
-> > A grep for EINVAL */*c reveals that no code inspects EINVAL after readi=
-ng
-> > references.
+> > * lock_ref_oid_basic (copy/rename rollback error path)
+> >
+> > * write_ref_to_lockfile (both in the rollback path and the success path=
+ of
+> >   copy/rename)
+> >
+> > These calls do not inspect the incoming errno. As they perform I/O, the=
+y can
+> > clobber errno. For this reason, callers cannot reliably observe the err=
+no that
+> > lock_ref_oid_basic() generated, so it is unsound for programmatic use.
 >
-> We often use a pattern (which is common) like this:
+> In the latter part of the above, "callers" refers to the callers of
+> "the copy/rename support" (aka files_copy_or_rename_ref())?
 >
->         if (some_func_in_ref_API(...) < 0) {
->                 if (errno =3D=3D ENOENT || errno =3D=3D EISDIR)
->                         ... it is OK for the file to be missing ...
->                 else
->                         ... error ...
->         }
+> Then I am not sure why "callers cannot reliably observe the errno
+> that lock_ref_oid_basic() generated" is a problem.  They will see
+> the errno from the last system call that failed, if they care.  So
+> their performing I/O is perfectly acceptable, too.
 >
-> If a piece of code currently sets EINVAL to errno manually when
-> signalling a failure by returning a negative value to communicate
-> with such a caller, we wouldn't see EINVAL mentioned, so such a grep
-> alone would not help us guarantee the correctness of an update to
-> stop assignment of EINVAL at all.  The callers must be vetted more
-> carefully than "we are happy that nobody explicitly mentions EINVAL".
-
-Sure. I looked at the callers, and documented further what I looked
-for. But how far should one go? It's a global variable, so
-transitively, almost all of the code could be observing the EINVAL
-value under very specific circumstances. But it would also be a
-terrible, fragile coding style and use of undocumented behavior.
-
-> > The files ref backend does use EINVAL so parse_loose_ref_contents() can
-> > communicate to lock_raw_ref() about garbage following the hex SHA1, or =
-a short
-> > read in files_read_raw_ref(), but the files backend does not call into
-> > refs_read_raw_ref(), so its EINVAL sideband error is unused.
+> Hence, I am not sure what change the above justifies, if any.
 >
-> This paragraph is confusing.  It says EINVAL is used to signal
-> lock_raw_ref(), and it says EINVAL is not used by the same files
-> backend.  Which is correct?  If one part of the backend uses it, and
-> other parts don't, wouldn't the backend as a whole still use it?
-
-I tried to clarify the message. files-backend.c makes assumptions
-about the errno return for files_read_raw_ref, but it's not making
-assumptions about the abstracted API in refs.h
-
-> That is because there is a codeflow like this:
+> If we can show that no caller of files_copy_or_rename_ref() uses
+> errno, it is a clear indication that lock_ref_oid_basic() is saving
+> and restoring errno for no good reason.  I think that is what was
+> done for the other two callers below.
 >
->         if (files_read_raw_ref(...)) {
->                 if (errno =3D=3D ENOENT) {
->                         ... do various things ...
->                 } else if (errno =3D=3D EISDIR) {
->                         ... do different and various things ...
->                 } else if (errno =3D=3D EINVAL && (*type & REF_ISBROKEN))=
- {
->                         ... deal with broken ref ...
->                 }
->                  ...
->         }
-
-as mentioned above, this isn't calling refs_read_raw_ref, so it's not
-affected by this patch.
-
-> > + * Return 0 on success. If the ref doesn't exist, set errno to ENOENT =
-and return
-> > + * -1. If the ref exists but is neither a symbolic ref nor an object I=
-D, it is
-> > + * broken; set REF_ISBROKEN in type, and return -1. If there is anothe=
-r error
-> > + * reading the ref, set errno appropriately and return -1.
+> So I traced what happens after the copy-rename thing gets called.
 >
-> So, this is not sufficient to let caller correctly and safely handle
-> errors.  "set REF_ISBROKEN in type, set errno to something other
-> than ENOENT or EISDIR, and then return -1" is necessary, I would
-> think.
+> refs_rename_ref(), rename_ref(), refs_copy_existing_ref() and
+> copy_existing_ref() (all in refs.c) should be the only callers of
+> the function.  All callers in builtin/branch.c and builtin/remote.c
+> of these functions (by the way, refs_X() variants do not seem to be
+> called from anywhere---are they over-engineered?) just die() when
+> they signal a failure by returning non-zero, so I think it is safe
+> and much easier to understand to justify this change like so:
+>
+>     refs/files-backend.c::lock_ref_oid_basic() tries hard to signal
+>     how it failed to its callers using errno.  The three callers of
+>     this file-scope static function are
+>
+>     * files_copy_or_rename_ref()
+>     * files_create_symref()
+>     * files_reflog_expire()
+>
+>     None of them looks at errno after seeing a negative return from
+>     lock_ref_oid_basic() to make any decision, and no caller of
+>     these three functions looks at errno after they signal a failure
+>     by returning a negative value.
 
-I tweaked the comment. Note that the function has only a handful of
-callers (and only one caller where this behavior is relevant), and
-it's changed in a follow-on patch in this series. Is it worth the
-effort to wordsmith this further?
+I stole your message here; hope that's OK. My original message tries
+to convey that if you do
+
+/* should return errno */
+int a() { .. }
+
+int b() {
+   result =3D a();
+   maybe_do_IO();
+   return result;
+}
+
+then callers of b() can't reason about the errno result of a(),
+because they can't know if an error code was generated by
+maybe_do_IO() or a(). This means that the errno result of a() is
+useless.  (This is assuming that b() doesn't inspect errno, which I
+failed to mention.)
 
 --=20
 Han-Wen Nienhuys - Google Munich
