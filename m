@@ -6,92 +6,80 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53894C433B4
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4648C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:57:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AA01610A1
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:53:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 927FD610A1
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 09:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347209AbhESJy5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 05:54:57 -0400
-Received: from coleridge.oriole.systems ([89.238.76.34]:42450 "EHLO
-        coleridge.oriole.systems" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347559AbhESJyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 05:54:19 -0400
-Date:   Wed, 19 May 2021 11:52:35 +0200
-From:   Wolfgang =?utf-8?Q?M=C3=BCller?= <wolf@oriole.systems>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] rev-parse: fix segfault with missing
- --path-format argument
-Message-ID: <20210519095235.cydjlj2qoko6xm4v@nabokov.fritz.box>
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20210516120449.661636-1-wolf@oriole.systems>
- <20210517080243.10191-1-wolf@oriole.systems>
- <20210517080243.10191-2-wolf@oriole.systems>
- <YKImcgntKHryLLfv@coredump.intra.peff.net>
+        id S1345598AbhESJ61 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 05:58:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58782 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232819AbhESJ60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 05:58:26 -0400
+Received: (qmail 22546 invoked by uid 109); 19 May 2021 09:57:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 May 2021 09:57:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17962 invoked by uid 111); 19 May 2021 09:57:09 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 May 2021 05:57:09 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 19 May 2021 05:57:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Greg Pflaum <greg.pflaum@pnp-hcl.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [BUG] clone of large repo fails when server closes idle SSH
+ session during "Resolving deltas"
+Message-ID: <YKTg8nYjSGpKbq8W@coredump.intra.peff.net>
+References: <OF9ECB0D17.7C6A7258-ON852586DA.0014125E-852586DA.0014B7AB@pnp-hcl.com>
+ <YKTbsByUaPEuDNtR@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YKImcgntKHryLLfv@coredump.intra.peff.net>
+In-Reply-To: <YKTbsByUaPEuDNtR@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-17 04:16, Jeff King wrote:
+On Wed, May 19, 2021 at 05:34:40AM -0400, Jeff King wrote:
 
-> I don't have a strong preference for one or the other. It is maybe
-> helpful to diagnose "--path-format" without an equals as an error, as
-> your patch would, rather than quietly passing it along as an unknown
-> (as the hunk above would). I dunno. That perhaps applies to the rest
-> of the options, too. :)
+> Another side issue is that once the protocol conversation has finished,
+> I'm not sure if it's really useful for us to detect and complain about
+> ssh's exit code. We know the other side completed the conversation
+> successfully, and we have nothing left to ask it. So a fix for your
+> immediate pain would be to stop noticing that. I think the root issue is
+> still worth addressing, though; we are tying up network and local
+> resources with a useless to-be-closed ssh connection.
 
-I have a very slight preference for throwing an error: that is what I
-expected to happen as a user. At the same time, passing it along as an
-unknown seems more consistent with the other options that take equals.
-I'm split on this, and would defer to what people here prefer.
+By the way, there's an interesting subtlety / bug related to this. While
+"git clone" does return a failed exit code in this case, it leaves the
+repository directory in place! And because no real error occurred with
+the clone, you can use it as usual (though I think if it's a non-bare
+clone, you'd need to run "git checkout" fill in the working tree).
 
-Short of fully migrating to the parse-options API, I do not see a
-perfect solution for this, especially since there are options that take
-optional arguments which are not delimited by equals. These seem to be
-sprinkled throughout and all error out if no argument is given.
+Propagating the error code comes from aab179d937 (builtin/clone.c: don't
+ignore transport_fetch_refs() errors, 2020-12-03). So prior to Git
+v2.30.0, your case would kind-of work.
 
-Here's a small selection:
+But:
 
-	Option                   Section in manual        Parser
+  - I think that is just "clone"; a "git fetch" would always have
+    propagated the error from transport_fetch_refs()
 
-	--default <arg>          Options for Output       manual
-	--prefix <arg>           Options for Output       manual
-	--short[=length]         Options for Output       opt_with_value
-	--path-format=[..]       Options for Files        opt_with_value
-	--git-path <path>        Options for Files        manual
-	--disambiguate=<prefix>  Options for Objects      skip_prefix
+  - that commit was right to start propagating the error code from
+    transport_fetch_refs(). While in this specific case, we happened to
+    produce a useful repository directory, most other errors would not.
 
-Out of curiosity I decided to dig around a bit, my hunch being that
-arguments without equals are older.
+  - there _is_ a bug in aab179d937, though. When it sees the error it
+    should clean up the repo directory. And that even happens
+    automatically via an atexit() handler. But because rather than
+    calling die() it jumps to cleanup code, it mistakenly sets the flag
+    for "leave the directory in place".
 
-I can trace --default back to 178cb24338 (Add 'git-rev-parse' helper
-script, 2005-06-13). That seems to be the very first version of
-git-rev-parse.
+  - any logic to ignore errors would have to be inside the transport
+    code (i.e., it realizes that ssh exiting non-zero isn't a big deal
+    anymore, and then transport_fetch_refs() still returns success).
 
-The first options with equals, --since= et al., were added in c1babb1d65
-([PATCH] Teach "git-rev-parse" about date-based cut-offs, 2005-09-20)
-
-The --short option used to be --abbrev, and was added in d50125085a
-(rev-parse: --abbrev option., 2006-01-25). Then, quite a bit later, the
-second option without equals was added in abc06822af (rev-parse: add
-option --resolve-git-dir <path>, 2011-08-15).
-
---prefix goes back to 12b9d32790 (rev-parse: add --prefix option,
-2013-06-16) and --git-path is 557bd833bb (git_path(): be aware of file
-relocation in $GIT_DIR, 2014-11-30)
-
-So it turns out that my hunch was not really correct. Maybe there's also
-a pattern that I am not seeing. Obviously this has no bearing on the
-segfault fix, but is maybe valuable information for a conversion to the
-parse-options API down the line. It was also fun to figure out, since I
-could not stop thinking about rev-parse having a bunch of different
-option semantics.
-
--- 
-Wolfgang
+-Peff
