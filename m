@@ -6,74 +6,103 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 679DCC43460
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A25D1C433B4
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:21:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 530B161355
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:15:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 872E661244
+	for <git@archiver.kernel.org>; Wed, 19 May 2021 14:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354032AbhESOQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 10:16:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59068 "EHLO cloud.peff.net"
+        id S242122AbhESOWr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 10:22:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59082 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1354029AbhESOPt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 10:15:49 -0400
-Received: (qmail 23311 invoked by uid 109); 19 May 2021 14:14:29 -0000
+        id S234654AbhESOWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 10:22:46 -0400
+Received: (qmail 23335 invoked by uid 109); 19 May 2021 14:21:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 May 2021 14:14:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 May 2021 14:21:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20331 invoked by uid 111); 19 May 2021 14:14:29 -0000
+Received: (qmail 20391 invoked by uid 111); 19 May 2021 14:21:26 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 May 2021 10:14:29 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 May 2021 10:21:26 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 19 May 2021 10:14:28 -0400
+Date:   Wed, 19 May 2021 10:21:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Ben Humphreys <behumphreys@atlassian.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christopher Schenk <christopher@cschenk.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Revert "remote-curl: fall back to basic auth if
- Negotiate fails"
-Message-ID: <YKUdRNH+uLBxAi+m@coredump.intra.peff.net>
-References: <YKNeJ+NKUbD5ixA9@coredump.intra.peff.net>
- <YKNeXq3JzxYWkxKl@coredump.intra.peff.net>
- <43035278-5742-607a-57bd-971685deece8@gmail.com>
+To:     Wolfgang =?utf-8?Q?M=C3=BCller?= <wolf@oriole.systems>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] rev-parse: fix segfault with missing
+ --path-format argument
+Message-ID: <YKUe5WD3ci3J4roO@coredump.intra.peff.net>
+References: <20210516120449.661636-1-wolf@oriole.systems>
+ <20210517080243.10191-1-wolf@oriole.systems>
+ <20210517080243.10191-2-wolf@oriole.systems>
+ <YKImcgntKHryLLfv@coredump.intra.peff.net>
+ <20210519095235.cydjlj2qoko6xm4v@nabokov.fritz.box>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <43035278-5742-607a-57bd-971685deece8@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210519095235.cydjlj2qoko6xm4v@nabokov.fritz.box>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 19, 2021 at 09:58:50AM -0400, Derrick Stolee wrote:
+On Wed, May 19, 2021 at 11:52:35AM +0200, Wolfgang Müller wrote:
 
-> > (Note that this isn't a pure revert; the previous commit added a test
-> > showing the regression, so we can now flip it to expect_success).
+> On 2021-05-17 04:16, Jeff King wrote:
 > 
-> Keeping the test is excellent, because it gives us a way to confirm
-> that a second attempt at a fix is at least as good as the first.
+> > I don't have a strong preference for one or the other. It is maybe
+> > helpful to diagnose "--path-format" without an equals as an error, as
+> > your patch would, rather than quietly passing it along as an unknown
+> > (as the hunk above would). I dunno. That perhaps applies to the rest
+> > of the options, too. :)
 > 
-> The only thing that could improve this situation is to add a test
-> that checks the bug that the previous version introduced, so that
-> the next round doesn't repeat the mistake. That can be deferred
-> because it is more important that we get this fix in time for the
-> next release candidate.
+> I have a very slight preference for throwing an error: that is what I
+> expected to happen as a user. At the same time, passing it along as an
+> unknown seems more consistent with the other options that take equals.
+> I'm split on this, and would defer to what people here prefer.
 
-Re-reading what I wrote, I think "the previous commit" may be ambiguous.
-The original commit which introduced the bug (and which we're reverting
-here) didn't include a test at all. In patch 1/2 of this series (what
-I'm calling "the previous commit"), I provided a test which shows the
-regression. And now this revert shows that we fixed it (by flipping from
-expect_failure to expect_success).
+Yeah, I don't feel strongly at all. I like consistency, but noticing
+bogus input is good, too. ;)
 
-So I think I've already done what you're asking (if I understand it
-correctly).
+> Short of fully migrating to the parse-options API, I do not see a
+> perfect solution for this, especially since there are options that take
+> optional arguments which are not delimited by equals. These seem to be
+> sprinkled throughout and all error out if no argument is given.
 
-It probably would be a little easier to follow by reverting first, and
-then adding in the expect_success test on top to future-proof us. But by
-doing it in the other order, it was easy to see the test demonstrate the
-behavior before and after the revert.
+Ultimately I think using the parse-options API would be nice. In the
+meantime, I suspect (but didn't think too hard on it) that you could get
+by with two helpers:
+
+  - rename the current opt_with_value() to opt_with_optional_value()
+    to make its assumptions clear.
+
+  - add a new helper opt_with_required_value() that accepts either:
+
+      --default <arg>
+      --default=<arg>
+      --disambiguate <arg>
+      --disambiguate=<arg>
+      etc...
+
+     and complains when the "=" is missing, or there is no extra "<arg>"
+     available.
+
+The second helper is a little tricky to write, because it sometimes
+needs to advance argv (and decrement argc) to account for the extra
+consumed arg.
+
+That's definitely something we can leave off for now, though.
+
+> So it turns out that my hunch was not really correct. Maybe there's also
+> a pattern that I am not seeing.
+
+I don't find it hard to believe that there's no obvious pattern. :) I
+would say that rev-parse is one of the messiest and most "organically
+grown" parts of Git.
+
+Thanks for digging, though. It is always nice to see contributors going
+the extra mile to figure out how their solutions fit into the bigger
+picture of the project.
 
 -Peff
