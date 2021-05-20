@@ -2,152 +2,342 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CD3C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 13:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FADC433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 14:22:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 033096121E
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 13:59:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B49656100A
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 14:22:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240414AbhETOBQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 10:01:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48464 "EHLO
+        id S233095AbhETOXx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 10:23:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243547AbhETOAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 10:00:07 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3577DC06175F
-        for <git@vger.kernel.org>; Thu, 20 May 2021 06:58:44 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id j75so16423797oih.10
-        for <git@vger.kernel.org>; Thu, 20 May 2021 06:58:44 -0700 (PDT)
+        with ESMTP id S231552AbhETOXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 10:23:52 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3F1C061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 07:22:31 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id a4so17911318wrr.2
+        for <git@vger.kernel.org>; Thu, 20 May 2021 07:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=ACtF0REr4MHiN4NcryBTBLzZRAhSTlqMhPolhqjzzn8=;
-        b=mABNC17wFDFftNAoyoraHWr1dggKqPxBt6uNUXa2GK2TkpOESSW5n01c/RjEIMOUpe
-         7yk8cRjCCw4zKaTNZoJVXR/rj0deaX/BtqtxAdQn86VWcrzMT4O9xIeFSvESvUWUHj9b
-         3aeblkOV9cns0EvwnFJgoYHAs+tV2FTdjeVumyPQDHAxqJyOZvfApsIgOqI3JLjLTCFp
-         FnZUXPJcnG2/wVvEUhVN6hG7MYWW8ggJnMgzH7yH+a9HlNGJ8tU8arCAKxdUTB/621dD
-         FCFL3a2seJS29dv7cyjx1Yb6vaxZRscX1zVvI8hZbdBTTWmAcM3zNJV068VLnqa6wIVf
-         3+WA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2Ig5KjX0GlEKL4ecNkTzcJAUQ5y8LbRj/GlkVLTEQBU=;
+        b=pUYVYanSELzERwf4Q+E3PsOsvpq9sM3tbTrqqjL14gadM1+7njWEyCrdZsYRBMD4lm
+         FNae5u+xkqZ3+nv3hLfyBix6AcPHICfG5nYVdz42g9RyvYeNzEh2kMKXm1afcu+McAo6
+         QE7eJq0OIRP6X4gXeyCj+mPLHTz1RKcfmK18IcYJigtxp89w4Go9OIYG8CFbXN2osGOJ
+         hVhU1Evd4RSEA8quz39PbZhWc3AiRWmFUHnLGvKCSryRRUfZA5Y6iU1U4QNHAEAmvA7g
+         Lh4qg7YsIKd9Zdj6u7OUgegFR2eDIISrGrju+wmOjgUN5Ax02PtaWhZm4u0eZEdBp4D0
+         Y1Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=ACtF0REr4MHiN4NcryBTBLzZRAhSTlqMhPolhqjzzn8=;
-        b=Fp7pVJiq+uvFN2O/XiSuoPkWF/0DMiik+aP6aigsHmzo6S0L0TKdt9+b8ZCmy+M1fd
-         dKgmHTpmW/0wb9/PVTB3gbbl/T/Ug1c1KOBmSjgJQwD2I2Q2kRHanh6J6YJGMCCci0BG
-         1uom+U+uk/UMxzWqIlGsZ9uRIDuqmZq85dYQr7T922ZrbzzuGTz4f0vm4OU83UuBTDj1
-         cpT7u/KE1KrPlbyOzudCVOTRYrOcUTJ1WLPmObTgywvgAFq3DmkD4sNPPGjiz6ge388Q
-         sBR6ZnzOGdlYTIVSjuI8+08XbEN2XQQUXk0RELBQnA448lO4UgmJGb5cJ6ffmGq2z6fM
-         7pPw==
-X-Gm-Message-State: AOAM530swffWMGYdPGEmQUGWEXSoUZl6Avq92yKX1lyprj4V/O9+xVuw
-        eqI6NLY2e52ScZ/guImF3Uo=
-X-Google-Smtp-Source: ABdhPJxjLDoPP1W0HEXiONxCvV8yyjBl+5A+EEHuyOanUXBMMjmKQ/ei64xMvTPtwLdUBXu9mLHQfA==
-X-Received: by 2002:a05:6808:10d0:: with SMTP id s16mr3331819ois.10.1621519123613;
-        Thu, 20 May 2021 06:58:43 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id q63sm576142oic.15.2021.05.20.06.58.42
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=2Ig5KjX0GlEKL4ecNkTzcJAUQ5y8LbRj/GlkVLTEQBU=;
+        b=n5kXfTTw/b4h9mz4CUXe0+kZuh07ZcGJV2rpq7Wgfuz2l2X3gNODvHP9MASOC1ycAN
+         uyGaYXNLStp9+JZ2E1sVrJSez10AHHVye+gSfXxClXSo7Z2o3dianH/Tofvm1wcFP/iB
+         Og6IVgkk+XO3h1T1PHTSWsnD4HSTlDXYEhbz/O7eepeFa6WzB6hEmA/n2kLICWB9sXtU
+         +P/LSazhtu8yiOBE5GPk1u4IsVQNlXJcChZ2we8yVQ6kiB0C7heprmCxWrvYWD7NaTff
+         idLH1cfC0NSDDx35L/MWyE4tqzeRrJXy4s5rHuEFVVtDca7VjXLL5wNzkHB2irrSQGRF
+         l4bg==
+X-Gm-Message-State: AOAM532AKG0ga4KLJY6H5hfaqQVjHZ8Kn7IkuubmrN2iCCfjgpqoIqKK
+        gv82rIEmX9HALx8didD/km5yYI5eR0Y=
+X-Google-Smtp-Source: ABdhPJx/3uaI9+uC+jsoGBlyo1uRk7CtRC3lzlR5P+4eoujZbLN2Zgh00Hqm3Nyg7p55vrsO9xaOKQ==
+X-Received: by 2002:adf:9c93:: with SMTP id d19mr1694879wre.17.1621520549680;
+        Thu, 20 May 2021 07:22:29 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n189sm2851736wme.9.2021.05.20.07.22.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 06:58:43 -0700 (PDT)
-Date:   Thu, 20 May 2021 08:58:41 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Leah Neukirchen <leah@vuxu.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Message-ID: <60a66b11d6ffd_2448320885@natae.notmuch>
-In-Reply-To: <842221d6-51c4-e08a-4299-c4efb8bf1dcb@gmail.com>
-References: <20210520040725.133848-1-felipe.contreras@gmail.com>
- <842221d6-51c4-e08a-4299-c4efb8bf1dcb@gmail.com>
-Subject: Re: [PATCH v4] help: colorize man pages
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Thu, 20 May 2021 07:22:28 -0700 (PDT)
+Message-Id: <pull.955.v2.git.1621520547726.gitgitgadget@gmail.com>
+In-Reply-To: <pull.955.git.1621352192238.gitgitgadget@gmail.com>
+References: <pull.955.git.1621352192238.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 20 May 2021 14:22:27 +0000
+Subject: [PATCH v2] simple-ipc: correct ifdefs when NO_PTHREADS is defined
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood wrote:
-> On 20/05/2021 05:07, Felipe Contreras wrote:
-> > We already colorize tools traditionally not colorized by default, like
-> > diff and grep. Let's do the same for man.
-> 
-> I think there is a distinction between 'diff' and 'grep' where we are 
-> generating the content and help where we are running man
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-It makes a difference for git developers, not for the user.
+Simple IPC always requires threads (in addition to various
+platform-specific IPC support).  Fix the ifdefs in the Makefile
+to define SUPPORTS_SIMPLE_IPC when appropriate.
 
-The user doesn't care how the output of `git grep` was generated, all
-she sees is that it's different from `grep`. It's in fact more
-surprising than a difference in `git help` because it's even the same
-comand.
+Previously, the Unix version of the code would only verify that
+Unix domain sockets were available.
 
-Maybe if the command was `git man` they would be equally surprising, but
-it's not, in fact, `git help` can be used to 1) output directly to the
-terminal 2) view in a browser, 3) view in info program, 4) view man page
-in woman, 5) view the man page in koqueror 6) view the man page in man.
+This problem was reported here:
+https://lore.kernel.org/git/YKN5lXs4AoK%2FJFTO@coredump.intra.peff.net/T/#m08be8f1942ea8a2c36cfee0e51cdf06489fdeafc
 
-Only in one case among many would the user expect to see man, therefore
-a colorized `git grep` is more surprising.
+Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+    simple-ipc: correct ifdefs when NO_PTHREADS is defined
+    
+    Here is V2 of this fixup. I've removed the whole file ifdefs and
+    replaced them with a simple #ifndef/#error/#endif as a warning.
+    
+    Jeff
 
-> > Our man pages don't contain many useful colors (just blue links),
-> > moreover, many people have groff SGR disabled, so they don't see any
-> > colors with man pages.
-> > 
-> > We can set the LESS variable to render bold, underlined, and standout
-> > text with colors in the less pager.
-> > 
-> > Bold is rendered as red, underlined as blue, and standout (prompt and
-> > highlighted search) as inverse magenta.
-> > 
-> > Obviously this only works when the less pager is used.
-> > 
-> > If the user has already set the LESS variable in his/her environment,
-> > that is respected, and nothing changes.
-> 
-> However if they have specified the colors they would like by using the 
-> LESS_TERMCAP_xx environment variables that the previous versions of this 
-> patch used their choice is overridden by this new patch.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-955%2Fjeffhostetler%2Ffixup-simple-ipc-no-pthreads-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-955/jeffhostetler/fixup-simple-ipc-no-pthreads-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/955
 
-That is true. We could add a check for that:
+Range-diff vs v1:
 
-  if (getenv("LESS_TERMCAP_md"))
-          return;
+ 1:  4adcf35ea6e4 ! 1:  119412f52ff5 simple-ipc: correct ifdefs when NO_PTHREADS is defined
+     @@ Makefile: ifdef NO_UNIX_SOCKETS
+      -	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
+       endif
+       
+     -+# Simple-ipc requires threads and platform-specific IPC support.
+     -+# (We group all Unix variants in the top-level else because Windows
+     -+# also defines NO_UNIX_SOCKETS.)
+     ++# Simple IPC requires threads and platform-specific IPC support.
+     ++# Only platforms that have both should include these source files
+     ++# in the build.
+     ++#
+     ++# On Windows-based systems, Simple IPC requires threads and Windows
+     ++# Named Pipes.  These are always available, so Simple IPC support
+     ++# is optional.
+     ++#
+     ++# On Unix-based systems, Simple IPC requires pthreads and Unix
+     ++# domain sockets.  So support is only enabled when both are present.
+     ++#
+       ifdef USE_WIN32_IPC
+      +	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
+       	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+     @@ Makefile: ifdef NO_UNIX_SOCKETS
+       
+       ifdef NO_ICONV
+      
+     + ## compat/simple-ipc/ipc-shared.c ##
+     +@@
+     + #include "pkt-line.h"
+     + #include "thread-utils.h"
+     + 
+     +-#ifdef SUPPORTS_SIMPLE_IPC
+     ++#ifndef SUPPORTS_SIMPLE_IPC
+     ++/*
+     ++ * This source file should only be compiled when Simple IPC is supported.
+     ++ * See the top-level Makefile.
+     ++ */
+     ++#error SUPPORTS_SIMPLE_IPC not defined
+     ++#endif
+     + 
+     + int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
+     + 		   ipc_server_application_cb *application_cb,
+     +@@ compat/simple-ipc/ipc-shared.c: int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
+     + 
+     + 	return ret;
+     + }
+     +-
+     +-#endif /* SUPPORTS_SIMPLE_IPC */
+     +
+       ## compat/simple-ipc/ipc-unix-socket.c ##
+      @@
+       #include "unix-socket.h"
+       #include "unix-stream-server.h"
+       
+     -+#ifdef SUPPORTS_SIMPLE_IPC
+     -+
+     - #ifdef NO_UNIX_SOCKETS
+     - #error compat/simple-ipc/ipc-unix-socket.c requires Unix sockets
+     +-#ifdef NO_UNIX_SOCKETS
+     +-#error compat/simple-ipc/ipc-unix-socket.c requires Unix sockets
+     ++#ifndef SUPPORTS_SIMPLE_IPC
+     ++/*
+     ++ * This source file should only be compiled when Simple IPC is supported.
+     ++ * See the top-level Makefile.
+     ++ */
+     ++#error SUPPORTS_SIMPLE_IPC not defined
+       #endif
+       
+     -+#ifdef NO_PTHREADS
+     -+#error compat/simple-ipc/ipc-unix-socket.c requires pthreads
+     -+#endif
+     -+
+       enum ipc_active_state ipc_get_active_state(const char *path)
+     - {
+     - 	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
+     -@@ compat/simple-ipc/ipc-unix-socket.c: void ipc_server_free(struct ipc_server_data *server_data)
+     - 	free(server_data->fifo_fds);
+     - 	free(server_data);
+     - }
+     -+
+     -+#endif /* SUPPORTS_SIMPLE_IPC */
+      
+       ## compat/simple-ipc/ipc-win32.c ##
+      @@
+       #include "pkt-line.h"
+       #include "thread-utils.h"
+       
+     -+#ifdef SUPPORTS_SIMPLE_IPC
+     -+
+     - #ifndef GIT_WINDOWS_NATIVE
+     - #error This file can only be compiled on Windows
+     +-#ifndef GIT_WINDOWS_NATIVE
+     +-#error This file can only be compiled on Windows
+     ++#ifndef SUPPORTS_SIMPLE_IPC
+     ++/*
+     ++ * This source file should only be compiled when Simple IPC is supported.
+     ++ * See the top-level Makefile.
+     ++ */
+     ++#error SUPPORTS_SIMPLE_IPC not defined
+       #endif
+     -@@ compat/simple-ipc/ipc-win32.c: void ipc_server_free(struct ipc_server_data *server_data)
+       
+     - 	free(server_data);
+     - }
+     -+
+     -+#endif /* SUPPORTS_SIMPLE_IPC */
+     + static int initialize_pipe_name(const char *path, wchar_t *wpath, size_t alloc)
+      
+       ## simple-ipc.h ##
+      @@
 
-However, it may not be necessary since many of the tips online set these
-variables inside a function.
 
-> I've got LESS_TERMCAP_xx set and running
-> 	LESS='Dd+r$Du+b$Ds' man git add
-> changes the output colors
+ Makefile                            | 22 ++++++++++++++++++++--
+ compat/simple-ipc/ipc-shared.c      | 10 +++++++---
+ compat/simple-ipc/ipc-unix-socket.c |  8 ++++++--
+ compat/simple-ipc/ipc-win32.c       |  8 ++++++--
+ simple-ipc.h                        |  4 ----
+ 5 files changed, 39 insertions(+), 13 deletions(-)
 
-You have them set in the environtment? Not inside a function like
-man () { ... command man "$@" } ?
+diff --git a/Makefile b/Makefile
+index 3a2d3c80a81a..ea4c0a77604d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1687,13 +1687,31 @@ ifdef NO_UNIX_SOCKETS
+ else
+ 	LIB_OBJS += unix-socket.o
+ 	LIB_OBJS += unix-stream-server.o
+-	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+-	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
+ endif
+ 
++# Simple IPC requires threads and platform-specific IPC support.
++# Only platforms that have both should include these source files
++# in the build.
++#
++# On Windows-based systems, Simple IPC requires threads and Windows
++# Named Pipes.  These are always available, so Simple IPC support
++# is optional.
++#
++# On Unix-based systems, Simple IPC requires pthreads and Unix
++# domain sockets.  So support is only enabled when both are present.
++#
+ ifdef USE_WIN32_IPC
++	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
+ 	LIB_OBJS += compat/simple-ipc/ipc-shared.o
+ 	LIB_OBJS += compat/simple-ipc/ipc-win32.o
++else
++ifndef NO_PTHREADS
++ifndef NO_UNIX_SOCKETS
++	BASIC_CFLAGS += -DSUPPORTS_SIMPLE_IPC
++	LIB_OBJS += compat/simple-ipc/ipc-shared.o
++	LIB_OBJS += compat/simple-ipc/ipc-unix-socket.o
++endif
++endif
+ endif
+ 
+ ifdef NO_ICONV
+diff --git a/compat/simple-ipc/ipc-shared.c b/compat/simple-ipc/ipc-shared.c
+index 1edec8159532..1b9d359ab681 100644
+--- a/compat/simple-ipc/ipc-shared.c
++++ b/compat/simple-ipc/ipc-shared.c
+@@ -4,7 +4,13 @@
+ #include "pkt-line.h"
+ #include "thread-utils.h"
+ 
+-#ifdef SUPPORTS_SIMPLE_IPC
++#ifndef SUPPORTS_SIMPLE_IPC
++/*
++ * This source file should only be compiled when Simple IPC is supported.
++ * See the top-level Makefile.
++ */
++#error SUPPORTS_SIMPLE_IPC not defined
++#endif
+ 
+ int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
+ 		   ipc_server_application_cb *application_cb,
+@@ -24,5 +30,3 @@ int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
+ 
+ 	return ret;
+ }
+-
+-#endif /* SUPPORTS_SIMPLE_IPC */
+diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
+index 38689b278df3..1927e6ef4bca 100644
+--- a/compat/simple-ipc/ipc-unix-socket.c
++++ b/compat/simple-ipc/ipc-unix-socket.c
+@@ -6,8 +6,12 @@
+ #include "unix-socket.h"
+ #include "unix-stream-server.h"
+ 
+-#ifdef NO_UNIX_SOCKETS
+-#error compat/simple-ipc/ipc-unix-socket.c requires Unix sockets
++#ifndef SUPPORTS_SIMPLE_IPC
++/*
++ * This source file should only be compiled when Simple IPC is supported.
++ * See the top-level Makefile.
++ */
++#error SUPPORTS_SIMPLE_IPC not defined
+ #endif
+ 
+ enum ipc_active_state ipc_get_active_state(const char *path)
+diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
+index 8f89c02037e3..8dc7bda087da 100644
+--- a/compat/simple-ipc/ipc-win32.c
++++ b/compat/simple-ipc/ipc-win32.c
+@@ -4,8 +4,12 @@
+ #include "pkt-line.h"
+ #include "thread-utils.h"
+ 
+-#ifndef GIT_WINDOWS_NATIVE
+-#error This file can only be compiled on Windows
++#ifndef SUPPORTS_SIMPLE_IPC
++/*
++ * This source file should only be compiled when Simple IPC is supported.
++ * See the top-level Makefile.
++ */
++#error SUPPORTS_SIMPLE_IPC not defined
+ #endif
+ 
+ static int initialize_pipe_name(const char *path, wchar_t *wpath, size_t alloc)
+diff --git a/simple-ipc.h b/simple-ipc.h
+index dc3606e30bd6..2c48a5ee0047 100644
+--- a/simple-ipc.h
++++ b/simple-ipc.h
+@@ -5,10 +5,6 @@
+  * See Documentation/technical/api-simple-ipc.txt
+  */
+ 
+-#if defined(GIT_WINDOWS_NATIVE) || !defined(NO_UNIX_SOCKETS)
+-#define SUPPORTS_SIMPLE_IPC
+-#endif
+-
+ #ifdef SUPPORTS_SIMPLE_IPC
+ #include "pkt-line.h"
+ 
 
-> > A new color configuration is added: `color.man` for the people that want
-> > to turn this feature off, otherwise `color.ui` is respected.
-> > Additionally, if color.pager is not enabled, this is disregarded.
-> > 
-> > Normally check_auto_color() would check the value of `color.pager`, but
-> > in this particular case it's not git the one executing the pager, but
-> 
-> s/git the one/git is not/
-
-You mean s/it's not git/git is not/
-
-Fine by me.
-
-Cheers.
-
+base-commit: bf949ade81106fbda068c1fdb2c6fd1cb1babe7e
 -- 
-Felipe Contreras
+gitgitgadget
