@@ -2,82 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B81C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EB21C43460
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:53:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D5DC613AD
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:43:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B89D6135A
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231720AbhETWpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 18:45:19 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56297 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230239AbhETWpT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 18:45:19 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2DCC413B1D3;
-        Thu, 20 May 2021 18:43:57 -0400 (EDT)
+        id S232385AbhETWyh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 18:54:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62978 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232321AbhETWyc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 18:54:32 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE560D998F;
+        Thu, 20 May 2021 18:53:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=u9C26er9/D3B+0C5dDeM1H2Q3/J7fs5koQ2LTi
-        E0Z+c=; b=BYOLVfSRtbY+QURYrlVPXZvU7a+4cNxzza7YpkFoZhxkYzg54kxtoH
-        ZDjxNVHWBtmy1sB/g4lc0sorX2QVpIEyHT6bLNWIsILMWoT4x1oAEj6vAumQ+GQZ
-        WwyzDxIUuXbNICnFWFKnTHRlPRoj9XY++Elkb0Qa1QMQC28Z51zz0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 26E9613B1D2;
-        Thu, 20 May 2021 18:43:57 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=QnwBY1ZewbSP
+        maR2PHPFrQ0xXUlWwKzsozK2RcC5MQM=; b=tKk1l2eXLZPJha8yDQMuF3DYST7K
+        OlMznIM6TMdWgRl0O+rkNR2hySh85At+5upZVXqeP6jfe4ZEmW/mD+uSPTE1RcQt
+        t5udzyVFlkb+DOCdLaVv0YnEmc60kYSLT0oHeuypjl1Oh4cns7WBR8YebP9Qc237
+        YPVdKQip2HBW/8A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BBE59D998E;
+        Thu, 20 May 2021 18:53:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6D6D313B1D1;
-        Thu, 20 May 2021 18:43:54 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32E4BD998D;
+        Thu, 20 May 2021 18:53:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (May 2021, #03; Thu, 20)
-References: <xmqqtumyulv8.fsf@gitster.g>
-        <CABPp-BGmGbX6bz6mQPgqdo4KPdtEb2u6UMznCEedUf_iA0KVrw@mail.gmail.com>
-Date:   Fri, 21 May 2021 07:43:52 +0900
-In-Reply-To: <CABPp-BGmGbX6bz6mQPgqdo4KPdtEb2u6UMznCEedUf_iA0KVrw@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 20 May 2021 01:18:12 -0700")
-Message-ID: <xmqqfsyht49j.fsf@gitster.g>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] help: fix small typo in error message
+References: <20210520074214.40903-1-jn.avila@free.fr>
+Date:   Fri, 21 May 2021 07:53:07 +0900
+In-Reply-To: <20210520074214.40903-1-jn.avila@free.fr> (=?utf-8?Q?=22Jean-?=
+ =?utf-8?Q?No=C3=ABl?= Avila"'s
+        message of "Thu, 20 May 2021 09:42:14 +0200")
+Message-ID: <xmqqbl95t3u4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DB072986-B9BC-11EB-A92A-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 25207EC2-B9BE-11EB-A256-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jean-No=C3=ABl Avila <jn.avila@free.fr> writes:
 
-> On Wed, May 19, 2021 at 8:27 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> [Graduated to 'master']
-> ...
+> Classic string concatenation while forgetting a space character.
 >
->> * en/dir-traversal (2021-05-13) 9 commits
->>   (merged to 'next' on 2021-05-14 at 316f9264c1)
->>  + dir: introduce readdir_skip_dot_and_dotdot() helper
->>  + dir: update stale description of treat_directory()
->>  ...
->
-> Did you change your mind since
-> https://lore.kernel.org/git/xmqqtumzzedd.fsf@gitster.g/, or did you
-> just accidentally merge all 9 patches instead of only the first 7?
+> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+> ---
+>  list-objects-filter-options.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-My mistake.
+Thanks.  This is a new message added in this round, so let's
+fast-track this fix down.
 
-> Sorry about this, I was going to resend corrected versions of the last
-> two patches...but I'm guessing that's just not warranted anymore?
 
-Then let me take them; I'll revert those last two in preparation.
 
-Thanks.
+> diff --git a/list-objects-filter-options.c b/list-objects-filter-option=
+s.c
+> index 96a605c8ad..fd8d59f653 100644
+> --- a/list-objects-filter-options.c
+> +++ b/list-objects-filter-options.c
+> @@ -102,7 +102,7 @@ static int gently_parse_list_objects_filter(
+>  	} else if (skip_prefix(arg, "object:type=3D", &v0)) {
+>  		int type =3D type_from_string_gently(v0, strlen(v0), 1);
+>  		if (type < 0) {
+> -			strbuf_addf(errbuf, _("'%s' for 'object:type=3D<type>' is"
+> +			strbuf_addf(errbuf, _("'%s' for 'object:type=3D<type>' is "
+>  					      "not a valid object type"), v0);
+>  			return 1;
+>  		}
