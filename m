@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAACCC43461
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82C6CC43462
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADF456135B
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A2126135C
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230445AbhETVsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 17:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42448 "EHLO
+        id S230453AbhETVso (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 17:48:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230430AbhETVsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 17:48:41 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077D8C061763
-        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:18 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id r5so26618507lfr.5
-        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:18 -0700 (PDT)
+        with ESMTP id S230430AbhETVso (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 17:48:44 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF9CC061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:20 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id v8so21657475lft.8
+        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EWzMs0tJfbY+VxvskRfJ3SIb+kYcTuW3zF2PoyGOtmc=;
-        b=gtxgDWCzCvv48iPbO+uWtt5dqYTwuBPMA4k1sI5QHVxGWdIL8XjD/UG3jEfuBXVseS
-         shFkLPxZkBk+p5YgIyb709mI4zVkqnamKy19eYBqh96s7ulJ6cEBEI8h+F7qkKZ68q4U
-         BoNpuvONApL0/6IAhex+DmL2t3RSbENy7BjcmM6QbiTETWtvzezKF+mFLAJBSd7et8Jg
-         Ty/e7E8cTiY21PSU7DU8by1bnO51DoWwbkK1p9oR+/vUBUQv1mQPapX874OoYwN0CT48
-         S+G5nlAEChs2WwIUhbteSP3q64peP8QOm7ncl3V3pVNZ2HqVlUsf77Y9mLvJwfv5RcjU
-         WVUg==
+        bh=HvGN4I9Mq2UfuOMTLnmwVYNfl7ipfkTomAHZoFPm8cE=;
+        b=G//gmsNsrtjKqpYbqBlqtodEx5/b2HHPvmMpSdkKTsHbFAPKHienkG6i1wFViN2b8O
+         EIqMHyiP0su2/KQlViOcT7AsLpUcB3C5FnOhUVHY2CHUKOHnIKS9RgUykVC+h9+bfsP+
+         smVbB625xV2H95Y7kL9Y0Kvr956hoIRYCOOkLziVPGluZHChZ33isVJ6G9vygRYZblhR
+         GKidq9eg4wORUoK648FUi0w1VW9nrcWPlZR0VFvBB3/qUSWuU1EtcD8Wn4HZojF9ActR
+         nLW61TQy17I0RkX8t5MmSEiY8Nz4kv29y6eR3tTWg0fgqAGeoZy/pICyICMmdCUOUKbH
+         7jvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EWzMs0tJfbY+VxvskRfJ3SIb+kYcTuW3zF2PoyGOtmc=;
-        b=FzvpSxk+3ke5ltNdoNDtnwlIw7BbYAP6Ic8mQKFV0e4ypMwXJZbcYnv/C2fprycw4N
-         aPJnT6XJl7ez0+tl8nXzdy35Ufsrf8M/rAG6KNZciWDfzZfZplUL+ScSdA/Sux8qkbVJ
-         VoTCeVTb3fBx1xCKlvwwdbMivJSsEktvFZA2hz7ToPYw3KUjXlnOmITRXfb8OnD7Z6i6
-         0VhQ3Fu+sZrLrdXY0EmBaBggOh4thbp36PSzHcACNpiXZ5UrxpW9ol1tfHUifRIidWBS
-         L4yX3XwEuk7IPyddnL6nXmHdbSb3rG2EqcBVqJ0WLbp71Vj6eW16xqE1hShhYIhPQt7M
-         5KDQ==
-X-Gm-Message-State: AOAM531XoFwPRdlL2IUqHRyMhEcrSswyLHpgq+sFReCFQ/dpK7MHk+E4
-        PKYR962bbrHTsFkiPSMk1ts=
-X-Google-Smtp-Source: ABdhPJxDt7UpZYku/rpyiZSEVFdOycHGhPZjjfyOsSQzEYLcRiyD72PvKCpW2QkI4tx6N/HhD3Cr3Q==
-X-Received: by 2002:ac2:5f97:: with SMTP id r23mr4448276lfe.337.1621547237406;
-        Thu, 20 May 2021 14:47:17 -0700 (PDT)
+        bh=HvGN4I9Mq2UfuOMTLnmwVYNfl7ipfkTomAHZoFPm8cE=;
+        b=PEp94C6bmXgvfqO9bLemDZ+NyPK9uJbF0CooBdLRC6Ms7eynZkPxz0i0FBKdfdEYnw
+         nl3G+5vQ7mG+m/ufKbh90z7ue7wyPmwGXOI1Q4Z2JwXYUs+O8IJ55lsnA3tsMF0KZZ0P
+         Yhsi8RWKefCypwSixzqerp9s+Xjgv1rni2YZ1W+OWEat8yjJyeTr3aODl2h2m2dbHKZ3
+         fHO9HedLGwVMxhk/w0r9ygZ1o71ztYCEJZHcMJXf65qt8/g/Ki5N+EhSB3e7z4f3akKk
+         MIZN0d2iUvcnw6HYc6261mzi+VhZO+/RePwL2mHZsUuswhloHYe3XPWv+FJCK45oQwDn
+         FDxQ==
+X-Gm-Message-State: AOAM53271+2CIAMBS+r55O9SKkuYt6NacToQ4IKjm5v4yJPH3H9kw/U4
+        /RrmrxCFk5pBs7kxiAUIyTM=
+X-Google-Smtp-Source: ABdhPJyioldWQcQZiDgJMw1oUJ1458jDQ849rPA1RR/uoJU+KFVwGEAHTeFhxTf7ADHYk4IpzPMQTQ==
+X-Received: by 2002:ac2:5977:: with SMTP id h23mr4371053lfp.596.1621547239247;
+        Thu, 20 May 2021 14:47:19 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id p2sm408414lfh.31.2021.05.20.14.47.16
+        by smtp.gmail.com with ESMTPSA id p2sm408414lfh.31.2021.05.20.14.47.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 14:47:17 -0700 (PDT)
+        Thu, 20 May 2021 14:47:18 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
@@ -66,9 +66,9 @@ Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         Jonathan Nieder <jrnieder@gmail.com>,
         huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v3 01/10] t4013: test that "-m" alone has no effect in "git log"
-Date:   Fri, 21 May 2021 00:46:54 +0300
-Message-Id: <20210520214703.27323-2-sorganov@gmail.com>
+Subject: [PATCH v3 03/10] t4013: test "git log -m --stat"
+Date:   Fri, 21 May 2021 00:46:56 +0300
+Message-Id: <20210520214703.27323-4-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20210520214703.27323-1-sorganov@gmail.com>
 References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
@@ -79,33 +79,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is to notice current behavior that we are going to change when we
-start to imply "-p" by "-m".
+This is to ensure we won't break different diff formats when we start
+to imply "-p" by "-m".
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- t/t4013-diff-various.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ t/t4013-diff-various.sh           |  1 +
+ t/t4013/diff.log_-m_--stat_master | 66 +++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+)
+ create mode 100644 t/t4013/diff.log_-m_--stat_master
 
 diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 87def81699bf..e9f67cd24351 100755
+index 1809355f9bb1..e53ca7aa503f 100755
 --- a/t/t4013-diff-various.sh
 +++ b/t/t4013-diff-various.sh
-@@ -452,6 +452,14 @@ diff-tree --stat --compact-summary initial mode
- diff-tree -R --stat --compact-summary initial mode
- EOF
- 
-+test_expect_success 'log -m matches pure log' '
-+	git log master >result &&
-+	process_diffs result >expected &&
-+	git log -m >result &&
-+	process_diffs result >actual &&
-+	test_cmp expected actual
-+'
+@@ -338,6 +338,7 @@ log -m -p master
+ log --cc -m -p master
+ log -c -m -p master
+ log -m --raw master
++log -m --stat master
+ log -SF master
+ log -S F master
+ log -SF -p master
+diff --git a/t/t4013/diff.log_-m_--stat_master b/t/t4013/diff.log_-m_--stat_master
+new file mode 100644
+index 000000000000..c7db084fd905
+--- /dev/null
++++ b/t/t4013/diff.log_-m_--stat_master
+@@ -0,0 +1,66 @@
++$ git log -m --stat master
++commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (from 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0)
++Merge: 9a6d494 c7a2ab9
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:04:00 2006 +0000
 +
- test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
- 	git log -p --diff-merges=separate master >result &&
- 	process_diffs result >expected &&
++    Merge branch 'side'
++
++ dir/sub | 2 ++
++ file0   | 3 +++
++ 2 files changed, 5 insertions(+)
++
++commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (from c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a)
++Merge: 9a6d494 c7a2ab9
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:04:00 2006 +0000
++
++    Merge branch 'side'
++
++ dir/sub | 4 ++++
++ file0   | 3 +++
++ file1   | 3 +++
++ file2   | 3 ---
++ file3   | 4 ----
++ 5 files changed, 10 insertions(+), 7 deletions(-)
++
++commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:03:00 2006 +0000
++
++    Side
++
++ dir/sub | 2 ++
++ file0   | 3 +++
++ file3   | 4 ++++
++ 3 files changed, 9 insertions(+)
++
++commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:02:00 2006 +0000
++
++    Third
++
++ dir/sub | 2 ++
++ file1   | 3 +++
++ 2 files changed, 5 insertions(+)
++
++commit 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:01:00 2006 +0000
++
++    Second
++    
++    This is the second commit.
++
++ dir/sub | 2 ++
++ file0   | 3 +++
++ file2   | 3 ---
++ 3 files changed, 5 insertions(+), 3 deletions(-)
++
++commit 444ac553ac7612cc88969031b02b3767fb8a353a
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:00:00 2006 +0000
++
++    Initial
++$
 -- 
 2.25.1
 
