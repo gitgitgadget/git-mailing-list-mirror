@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E87E2C433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CFE0C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:44:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2EEA6108D
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:42:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1001661006
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232720AbhETPnw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 11:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44194 "EHLO
+        id S232829AbhETPpo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 11:45:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232484AbhETPnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 11:43:51 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AEC1C061574
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:42:29 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id r11so19895847edt.13
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:42:29 -0700 (PDT)
+        with ESMTP id S232094AbhETPpl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 11:45:41 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA4BFC061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:44:18 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id y7so2444655eda.2
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=c2WZ4aNtTEvC/xmbWbQ6mleLioLKSIOXRZEqLCWSUGo=;
-        b=HBao55yzdVVui+XnJZUTOR+3HwpaujjX0Q6Y4hfDuMjRNeHA1tm6StYI36qZeNsZjR
-         cVV1ZAPYK/x09Mdxsj1QP3gAURnvgoQlyhMGABfGDvepPSom8nZrpvbawMMUQ3KjihrJ
-         Y3W1gUyMDjLmmh11g5l1zCZ0fQ2K7E9A9ryGlp1+8XZIG2YZP0Jf5vugBJsCQF4jPW3M
-         oN9PHQAAMaYkyuJpDuYFYYLZAlIRwrIMhTqR1ZbKunbBi2AG8jOj34s4RWx11DTmelxY
-         /DpIJbEgMpW7vEvR6g2/ZHITKbT7R+IiiOJq86XWRQtWqATz6s8xbcCrwamoCuFYyZCa
-         9oQw==
+        bh=ZO6jiFaPlAcbiJNOwrRUJNb3zbHBpzxoE6zo4u5vJ90=;
+        b=JGPD58VKMwbjJH1VfGXz6tMUXAeX68V9ZHeXu2Li/Bczq4KEf5kPhjPDicFH0IhXl7
+         jKkcVDkrZyCcGJ/4niiaeBYvGbTSHynJo7BCmO+vzT2bG7sKk08wMdJcsjn5qzX3D2uS
+         2ZzGx8316DqBVSRg2cDU94P0O5dGMIzJNCydYT/H3QOEuZORpV4BWjK/tJIjaWQ+0NNx
+         a4f2R459juOclAlWfkmf7v3oTLl6pboGV7MntFgjqgNw+GixhyyNI/2L/81jPKl4PT9V
+         0a84uUhSQs5B9NLe1mXY2LvIx2V87ZGOhjUjk7PkT2YIILMSMaRnbHx6vsi07lUyFxl9
+         gvAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=c2WZ4aNtTEvC/xmbWbQ6mleLioLKSIOXRZEqLCWSUGo=;
-        b=bkbK1U56nznFZOud3GZXhsjcjuvVak945kIMpMddt6ipLz/ySwV3+zd9pbUqbuQO+h
-         F1j1//uX7Bj7ZJAMm2rk8qsen/+XHZcl4uUktEYBffWYx1anlgJ1HPBBHhgkXSQb4903
-         Jr8Sm/qECJeUTJiOybGp714M/c3PEhMxuLOsuuRD0yIoBfPqMaaXc/FHU0p4oBSFEfVg
-         qX8kIszKIwOAoipka1kGZfZ9XLhrCQ2zI5fLG61sq1oc9dVdB8r7BCPMzQ4/Fktez3X2
-         SDIatwtm+Mm2ixc4i48llojunHREAt9FnKeu+QdoJvnnPWinOvep2ysWLdGYtV9ysMvJ
-         JqDg==
-X-Gm-Message-State: AOAM530Konm8JuUi1mUQ/da0kQR4Q5vQG4xPxsPeAZmaSTBcSO6XKEIz
-        2X5X3GTQMDajhuAEUaJMqSb6/FO/t8I2OA==
-X-Google-Smtp-Source: ABdhPJw7ZqY8kjmsGWCVNgz80pETIVJi2PiO2AIP3dAPWFren8nGDWbdWAgc4rf35to7zQQkXgNrbA==
-X-Received: by 2002:a50:ef15:: with SMTP id m21mr5563570eds.226.1621525347721;
-        Thu, 20 May 2021 08:42:27 -0700 (PDT)
+        bh=ZO6jiFaPlAcbiJNOwrRUJNb3zbHBpzxoE6zo4u5vJ90=;
+        b=UHh9bT7JDpZu65gfSCURfUsS2ssUCGGxX5+V7XuIq001MnmHEWgwYcgfIhe6vTYqpl
+         RjxANPGypmkfQRAiRpVD+R77T0tAy211m7yacBIvbWquA333pt7EDPDSRP0MGFQ91FKe
+         U/h5yAURliTmlfuIO3KNRiIGznsD9m378qxSCSaANLY82EfOz7mnfy/RfG73pSlNrA3X
+         +Z+97CajodY5eVQDfJGU5s6oXnEGBZ8R73fu3BPGgj/ehuK1beL+9vxX+2/1FxU2IAB6
+         lAOTJNsrpVy4LBxCLTTE+22lhnfRIAeJKQSG47gBEthUcTWe/d9fszUCCbAK9HfJesuR
+         dqOw==
+X-Gm-Message-State: AOAM531W+Uy9mE5IrSTLSNRzIbqLTdzDd6CgC/sf0Iz3Ja5v4dJrM7TN
+        Z572Jk2OxrjvpmrUL7Paw3B59ytb0t/bGw==
+X-Google-Smtp-Source: ABdhPJyqr+DR8GtjqgLus3h/ZR+Unexl6eCMjClyuyPYU7yvcxrvV747jHFOw52snzWNeo0qTkexWw==
+X-Received: by 2002:aa7:ca0d:: with SMTP id y13mr5781956eds.307.1621525456989;
+        Thu, 20 May 2021 08:44:16 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id f20sm1757226edu.24.2021.05.20.08.42.27
+        by smtp.gmail.com with ESMTPSA id z4sm1760345edc.1.2021.05.20.08.44.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 08:42:27 -0700 (PDT)
+        Thu, 20 May 2021 08:44:16 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2 19/21] t7003: check reflog existence only for REFFILES
-Date:   Thu, 20 May 2021 17:41:52 +0200
+Subject: Re: [PATCH v2 20/21] t4202: mark bogus head hash test with REFFILES
+Date:   Thu, 20 May 2021 17:43:16 +0200
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
  <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
- <24dcf05d8fa6172d04ca047a860ad5019aad17b7.1619519903.git.gitgitgadget@gmail.com>
+ <a33cdfda74ff55fbc8242d3486e1fd5a26ad4c00.1619519903.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <24dcf05d8fa6172d04ca047a860ad5019aad17b7.1619519903.git.gitgitgadget@gmail.com>
-Message-ID: <87h7ixpg2l.fsf@evledraar.gmail.com>
+In-reply-to: <a33cdfda74ff55fbc8242d3486e1fd5a26ad4c00.1619519903.git.gitgitgadget@gmail.com>
+Message-ID: <87eee1pfzk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,29 +79,31 @@ On Tue, Apr 27 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
+> In reftable, hashes are correctly formed by design
+>
 > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  t/t7003-filter-branch.sh | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  t/t4202-log.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-> index cf30055c88dd..e18a21895238 100755
-> --- a/t/t7003-filter-branch.sh
-> +++ b/t/t7003-filter-branch.sh
-> @@ -396,7 +396,10 @@ test_expect_success '--prune-empty is able to prune entire branch' '
->  	git branch prune-entire B &&
->  	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t B.t" prune-entire &&
->  	test_must_fail git rev-parse refs/heads/prune-entire &&
-> -	test_must_fail git reflog exists refs/heads/prune-entire
-> +	if test_have_prereq REFFILES
-> +	then
-> +		test_must_fail git reflog exists refs/heads/prune-entire
-> +	fi
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index a8c5a00d012d..3f969b01508c 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -1834,7 +1834,7 @@ test_expect_success 'log --graph --no-walk is forbidden' '
+>  	test_must_fail git log --graph --no-walk
 >  '
 >  
->  test_expect_success '--remap-to-ancestor with filename filters' '
+> -test_expect_success 'log diagnoses bogus HEAD hash' '
+> +test_expect_success REFFILES 'log diagnoses bogus HEAD hash' '
+>  	git init empty &&
+>  	test_must_fail git -C empty log 2>stderr &&
+>  	test_i18ngrep does.not.have.any.commits stderr &&
 
-Ditto chicken and egg, but isn't this conflating "we always write logs"
-v.s. reftable just behaving differently, i.e. shouldn't this be
-positively asserting that we have the log *for that branch* still after
-its deletion?
+Okey, they're correctly formed by design, but the first test here is
+just checking what happens when we do a "git log" on a repo with no
+commits. What does that have to do with reflog's guarantees that we have
+a valid-looking SHA in some entry in its database?
+
+Surely we also want to test for the same thing, the ref backend doesn't
+change that we have no commits or refs yet, no?
