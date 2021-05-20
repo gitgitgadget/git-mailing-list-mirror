@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ADAFC433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3D1C43460
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 578D960698
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FB5361184
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231215AbhETIUp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 04:20:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57182 "EHLO
+        id S231218AbhETIUq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 04:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231160AbhETIUk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231176AbhETIUk (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 20 May 2021 04:20:40 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40377C06175F
-        for <git@vger.kernel.org>; Thu, 20 May 2021 01:19:18 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id d11so16634654wrw.8
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF01C061761
+        for <git@vger.kernel.org>; Thu, 20 May 2021 01:19:19 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id u133so8608183wmg.1
         for <git@vger.kernel.org>; Thu, 20 May 2021 01:19:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=M4faH6RYNlO/pm7Bw4L8i9QvqiyCzYWNSdjahLmtu5Q=;
-        b=RXVwJmTDDl/8byXD5KcZEEoN+cQONdgJCbfplXdbT8wdgC8g46UZymKa6r7Qv7CSJ2
-         0i9mDyGaQT2ta9KC/xwam3sUaZvxfvwdhadwJDKZwPXZ9j35zqGLaAKRmgTs1KA82bET
-         0VflilLm9XI+5zwcLdk6lYYmn9hkg+atLjTDZvTbbSE37L2K+A3M76wr3hDfQ2Zde6EZ
-         2trXFxeEjsrVbbA9OzeqeBNv5X1gMZiq7UGfSddKJeH1XC20WBG9Nw0pqk6Sl5/40bW4
-         eOr5GzpvpmnHeFTDEMJ7t7U4jZfCNVOu1tZmZ88e2mvrjRxiWBGaN5lAQzGVj+mtyrKv
-         pdxA==
+        bh=AaBdfw3GdZpYoGXSbn8rz6bzLF2PZkxjP1/zYS8+YnY=;
+        b=EaeJD8w1/lq4KGDp+MG3c/L2YA/9yQH5L+YCW1h4x2Jw7k1UT05eGoSMUWmCxVcX7c
+         FY2o0zbBIE+/CbSnLt9KXmsl98oJaCtMfiwUXg1ADrakFZdeauEoIEHFT5cT+7QXhgsZ
+         q7qdb7gquNPP6bQ1IFgGbZa3v/+QY+k84HtV5BWJjH6XbDELjlg75EDbKc0SCM0sZGQ6
+         S8UZeMYw8HGU5a2Ow4OABytzpjzeMke0ZlCfjVzJRbQGzrMkuu6UOA/5HA6MwHHL4BkJ
+         HyR+yquD6iMbHrb2teINQFqadvVfBqCXoTCxJe7QEQHJMmnEbK9TfRhkGqcb7jSDhdzI
+         /Mog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=M4faH6RYNlO/pm7Bw4L8i9QvqiyCzYWNSdjahLmtu5Q=;
-        b=IkU0cREGk49kwbwvw9o2s+os1fC8ZyXm3/fB46t877IQzZHHdARnmQNNp2X/oCpg33
-         +GJXwsM3M9Hib4R0YEVtpvI8pfI8eDoXnecikL6jLX0U36IaV/Ph1fgNBx4Wr2C1ArKq
-         QObFf85KX5phkxK62so4Q88UHPAkC7U/AvqY5zLRRMma5Pg/WUiupIW6lNgX8+N2UyD2
-         Esk9DFnjmyMuG/XSLVwvQJSQ5o9wjbmffDwHj87j5HDCcD7Qo5p+/0uRKwukenwm+wPx
-         GgVCTxQBa9aRwl0uKYyop2+y98RIhuLyh+psKtKqbEaxsXwx92s3XUlTcJgZDcOxNXDm
-         E4hQ==
-X-Gm-Message-State: AOAM5318Tt0TO0i1XvUd6Hx8tGAy8zT6MzqXfPcexUdfc3NvZlvJDgtO
-        M18rsTb79gE8PbHECNQPWFMY67KsdMfTlA==
-X-Google-Smtp-Source: ABdhPJxJhQc7chkKElkwnuYxYMeJk51mzik2AZlGYUC7QCOlaxCGkdgxqxqh3xBADiPRw2bnlkC6jA==
-X-Received: by 2002:adf:ea0d:: with SMTP id q13mr3022298wrm.161.1621498756526;
-        Thu, 20 May 2021 01:19:16 -0700 (PDT)
+        bh=AaBdfw3GdZpYoGXSbn8rz6bzLF2PZkxjP1/zYS8+YnY=;
+        b=aX4GNGbA2Bsm7U7yXnll/2BF4MVJ6gKdtsqm+OzjbhZi+5Sdhf1nUi8eoinLUOtTj8
+         T0KfuT62Ha4zJD2UlELtqhPYzFN22iYKMMtD6YeHuGrLWnKMWeTfe6kma92+qWKfkfx7
+         TS6tR3LXZTEWTdXP/5DajlieX3QSBwXtZ4aDnxQhP5bDKyMokh7v3l2vXONssvGGwE6Y
+         T4QRcN1O21qPlqCSQ6rplugMkzzcz/cT/lgvMV4hWs7jW9df/hOarUfpvH6+ClN8dAXI
+         6CxRXZS194ntsFqSsF+7eaaEvG8TpJ1p9GH8TvnEKmuoaLwVybGq4VbwzYl//ucxwoWd
+         xrog==
+X-Gm-Message-State: AOAM533a0ueor13RJM1M2BJabDaN02pxQFc7s9F7eVk1a1wVSSC/bDgu
+        lMa+YTiTicnG5cWzXdNNOObMYM2r4KfYfg==
+X-Google-Smtp-Source: ABdhPJz4iu9/jJygDlPI6zi5hnJz9Npp+LO5mTedXYSnrA+EJiNd2aPiBjYXf6gI78iCwwqZm+cVCA==
+X-Received: by 2002:a05:600c:4fd6:: with SMTP id o22mr2345488wmq.83.1621498757423;
+        Thu, 20 May 2021 01:19:17 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y20sm8900004wmi.0.2021.05.20.01.19.15
+        by smtp.gmail.com with ESMTPSA id y20sm8900004wmi.0.2021.05.20.01.19.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 01:19:15 -0700 (PDT)
+        Thu, 20 May 2021 01:19:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Wong <e@80x24.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 04/10] send-email: lazily shell out to "git var"
-Date:   Thu, 20 May 2021 10:19:01 +0200
-Message-Id: <patch-04.10-acee22b77d2-20210520T081826Z-avarab@gmail.com>
+Subject: [PATCH v2 05/10] send-email: use function syntax instead of barewords
+Date:   Thu, 20 May 2021 10:19:02 +0200
+Message-Id: <patch-05.10-f317cd1c01e-20210520T081826Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0.405.g5d387561bb3
 In-Reply-To: <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
 References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com> <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
@@ -80,76 +80,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Optimize git-send-email by only shelling out to "git var" if we need
-to. This is easily done by re-inventing our own small version of
-perl's Memoize module.
-
-I suppose I could just use Memoize itself, but in a subsequent patch
-I'll be micro-optimizing send-email's use of dependencies. Using
-Memoize is a measly extra 5-10 milliseconds, but as we'll see that'll
-end up mattering for us in the end.
-
-This brings the runtime of a plain "send-email" from around ~160-170ms
-to ~140m-150ms. The runtime of the tests is around the same, or around
-~20s.
+Change calls like "__ 'foo'" to "__('foo')" so the Perl compiler
+doesn't have to guess that "__" is a function. This makes the code
+more readable.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ git-send-email.perl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 5b0b7c33ec6..9ff315f775c 100755
+index 9ff315f775c..da46925aa05 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -560,8 +560,18 @@ sub read_config {
- }
+@@ -678,7 +678,7 @@ sub is_format_patch_arg {
+ 		if (defined($format_patch)) {
+ 			return $format_patch;
+ 		}
+-		die sprintf(__ <<EOF, $f, $f);
++		die sprintf(__(<<EOF), $f, $f);
+ File '%s' exists but it could also be the range of commits
+ to produce patches for.  Please disambiguate by...
  
- my ($repoauthor, $repocommitter);
--($repoauthor) = Git::ident_person(@repo, 'author');
--($repocommitter) = Git::ident_person(@repo, 'committer');
-+{
-+	my %cache;
-+	my ($author, $committer);
-+	my $common = sub {
-+		my ($what) = @_;
-+		return $cache{$what} if exists $cache{$what};
-+		($cache{$what}) = Git::ident_person(@repo, $what);
-+		return $cache{$what};
-+	};
-+	$repoauthor = sub { $common->('author') };
-+	$repocommitter = sub { $common->('committer') };
-+}
- 
- sub parse_address_line {
- 	return map { $_->format } Mail::Address->parse($_[0]);
-@@ -749,7 +759,7 @@ sub get_patch_subject {
- 		or die sprintf(__("Failed to open for writing %s: %s"), $compose_filename, $!);
- 
- 
--	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
-+	my $tpl_sender = $sender || $repoauthor->() || $repocommitter->() || '';
- 	my $tpl_subject = $initial_subject || '';
+@@ -764,7 +764,7 @@ sub get_patch_subject {
  	my $tpl_in_reply_to = $initial_in_reply_to || '';
  	my $tpl_reply_to = $reply_to || '';
-@@ -955,7 +965,7 @@ sub file_declares_8bit_cte {
- 	$sender =~ s/^\s+|\s+$//g;
- 	($sender) = expand_aliases($sender);
- } else {
--	$sender = $repoauthor || $repocommitter || '';
-+	$sender = $repoauthor->() || $repocommitter->() || '';
- }
  
- # $sender could be an already sanitized address
-@@ -1104,7 +1114,7 @@ sub make_message_id {
- 	$uniq = "$message_id_stamp-$message_id_serial";
- 
- 	my $du_part;
--	for ($sender, $repocommitter, $repoauthor) {
-+	for ($sender, $repocommitter->(), $repoauthor->()) {
- 		$du_part = extract_valid_address(sanitize_address($_));
- 		last if (defined $du_part and $du_part ne '');
- 	}
+-	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
++	print $c <<EOT1, Git::prefix_lines("GIT: ", __(<<EOT2)), <<EOT3;
+ From $tpl_sender # This line is ignored.
+ EOT1
+ Lines beginning in "GIT:" will be removed.
 -- 
 2.32.0.rc0.405.g5d387561bb3
 
