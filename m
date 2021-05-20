@@ -7,100 +7,78 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9030CC433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 03:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE5D7C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 04:02:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6724E611BD
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 03:48:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C54B360FE6
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 04:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230185AbhETDtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 23:49:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52658 "EHLO
+        id S229449AbhETED6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 00:03:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbhETDtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 23:49:50 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E37DC061574
-        for <git@vger.kernel.org>; Wed, 19 May 2021 20:48:29 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id j75so15117738oih.10
-        for <git@vger.kernel.org>; Wed, 19 May 2021 20:48:29 -0700 (PDT)
+        with ESMTP id S229436AbhETED5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 00:03:57 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F35C061574
+        for <git@vger.kernel.org>; Wed, 19 May 2021 21:02:37 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id i9so22289913lfe.13
+        for <git@vger.kernel.org>; Wed, 19 May 2021 21:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=vY29jMqJ1gx2HUeWfboMlMNob+CKslE1fnSbMsAGz9Y=;
-        b=R+x9Ew8jRuHlCe+0Itvjytlqdn9GPy15/5S3/AUEENS8Q5lZ9H8QzFNxaYc/NZ1/gN
-         Ag8wiMnqyvposvA0Jstl1hbVswAjhtoB+chEygGTbSu99TfDz97Hqrlj9wOjT1j3tZQQ
-         o52k7A+B57Fht/sUKHLWCES6Z58X/JkfYVQKiCf+in+kg9BoAdm7Rn56OoSYIpGO8NH/
-         5fbmMY9tkWc2jerPKoW3MvgdxPJKuLp1NMx1jDSJSLycftNHvYU0RxQTASJaEzp+8nBs
-         BKz4KYzyE4srGKBy1eB7DbpuXhjesnP5RF0pw6zEMI8saAAt9cd3do3ggrMbBYH046/F
-         +FRA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qevZ8ejH0FOimheHqlS+ZW5vC6or9f2QEQlElGf1Hwk=;
+        b=mwb69iFOSqperu5NODE/cAUvqoYM2k5k1BswPBJZqJNvUn3d1WsC8iWYUZWN7bgyZL
+         a37KkcryVtDjR3xSrbD0TWbef0+QHJIPXGS5p1E/2ECoTg8OZRmJGUcKFZW2UHPsU9mS
+         5YWMoUg596/U+N/5vp9tqMV+WGCIWUlJX0X6yCFXMoaIEq+5gyBN6dQ0+8lVFYINo3zh
+         JMzi/kiI4jGAheU3ho2od695zo+UeNwb1vaMIUHphBbjZE/Q2rWN5YAQpFJacAd9Ndnf
+         WVl5ctHsR6ecWHn/6ntIyk7YkP2KnPQ3OQLowZ9hUopeo/ezr43Ss93rfi4zHFonTyOm
+         qEJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=vY29jMqJ1gx2HUeWfboMlMNob+CKslE1fnSbMsAGz9Y=;
-        b=QVtd1d7FAEnl29IgW/fWlSoa/tkouDXrPFsFBllV7bOEkzrw5IELbYXHoc4NtUmVk1
-         Vbut+H51XdPK9k6DnUCWhjidpKnav0UyVZaNXIlilsaTX/CjSiddmI1B/1ShUvgBbKPN
-         r0HBg+kXOs8eYwOw1zduNeU1yfQUrOx/DyauB1QHuie68qqzk1be2+g3wC2yQ3vvizA8
-         GslY46iaOmJNbPr28YRjtEzlHnrx/pS+hLXB3aIIIiKM6S6efUNqAQieJpNDgWxe+rTl
-         2Km7vHOQIsbfCr2HTDc3ZC9BfIfhqvGibjBN+gj1A2w73u3gi8dOffonfoulQuoHVEcP
-         EvRA==
-X-Gm-Message-State: AOAM531y/oCHwv4C3tklt294BxHMwBfCt5s45Q0rKxD3Au5L5gWNyty6
-        tT51rE3Cn4ctN1l/yN2ln9Q7DB3xkm3m9Q==
-X-Google-Smtp-Source: ABdhPJxyYhqUGReHS3/1bwR0mG+FEY+DN49XRCoHy7crOJDdIHO9iQ95S1Dm2ylaFmb/XRd0TJTbyw==
-X-Received: by 2002:aca:b856:: with SMTP id i83mr1843924oif.157.1621482508403;
-        Wed, 19 May 2021 20:48:28 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id t39sm299463ooi.42.2021.05.19.20.48.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 20:48:28 -0700 (PDT)
-Date:   Wed, 19 May 2021 22:48:26 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-Message-ID: <60a5dc0ab8e2c_2044120877@natae.notmuch>
-In-Reply-To: <xmqqpmxmulqt.fsf@gitster.g>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
- <60a332fd22dad_14c8d4208ed@natae.notmuch>
- <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
- <87im3fqci9.fsf@evledraar.gmail.com>
- <YKXBdQ36MYz2YG8s@camp.crustytoothpaste.net>
- <xmqq35uiw3bm.fsf@gitster.g>
- <60a5d20a4e134_1f37320860@natae.notmuch>
- <xmqqpmxmulqt.fsf@gitster.g>
-Subject: Re: [PATCH] help: colorize man pages
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qevZ8ejH0FOimheHqlS+ZW5vC6or9f2QEQlElGf1Hwk=;
+        b=m3Yie3hrr62gAAg3ru15+lqFQ/XXsuzwmLYrdA7edsLQeuJ9MrBw/H7V/SeBpuzv1B
+         1WL5XHy7hPMHNInTWv/NRCiXHvGkLDT8Z1oob4kyffEdYN6osy/AX0T0uMwk38yQfL6f
+         uYva6YFOZDqqR2fyjkvKohE15Vc3ZQ25Y4h0BzCO4o0sAMDCYb/W4UNMd85H2igHViP/
+         O49XXwugPYXgb0zwtYu5SzOu5nPeyMieMtsnfvV6Slui4DaPE7cweVM256XUhd6EJDOH
+         WWgjit4Cb8rA3a275TbidEKlcH0NRtaTzWageMdyudptdwAgnYmvklui1QB4PEeNu66h
+         VvwA==
+X-Gm-Message-State: AOAM531KD9tvP7oqdcqSJ/wOd9l5lx9xBR1JD3hZ7d76r5uNCOht/HfB
+        iSC27T4WCxnlnhn/jHBfFC3aQmfuF4rsVGakmpM=
+X-Google-Smtp-Source: ABdhPJwMsbIwI3CY4UFpVC8/NHp9zf/N+6YZSDYmeteRH3ovjATbE2c5Zso17LHJqOfBTvlv66RerrZdp20dkYK0sTU=
+X-Received: by 2002:a19:8c15:: with SMTP id o21mr1890639lfd.221.1621483355240;
+ Wed, 19 May 2021 21:02:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210518061855.57478-1-alexhenrie24@gmail.com> <626174ae-ff25-8f07-4d67-705bbe3f7d68@gmail.com>
+In-Reply-To: <626174ae-ff25-8f07-4d67-705bbe3f7d68@gmail.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 19 May 2021 22:02:24 -0600
+Message-ID: <CAMMLpeRxoakadrXUVGSkhP0K71GHXxt4sXvSKrB5rx8oFH60bw@mail.gmail.com>
+Subject: Re: [PATCH] fetch: improve grammar of "shallow roots" message
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > How is enabling a configuration already present in `man` out of scope,
-> > but running an *ENTIRELY* different program--such as konqueror or
-> > woman--to view man pages is not?
-> >
-> >   git help --man git
-> >
-> > Doesn't even necessarily run man *already*.
-> 
-> As an end-user, I do not expect Git to run konqueror or woman with
-> its own tweaks when it does so.  And I do not see a reason why "man"
-> should be any different.
+On Wed, May 19, 2021 at 8:22 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>
+> On 18/05/21 13.18, Alex Henrie wrote:
+>
+> > -                                     warning(_("reject %s because shallow roots are not allowed to be updated"),
+> > +                                     warning(_("rejected %s because shallow roots are not allowed to be updated"),
+>
+>  From descriptive to null-subject past tense, right?
 
-You skipped the first question: 
+I'm not sure what the best way is to describe the grammar here. I
+would say that the "ed" makes it clear that the message is a
+description of what did happen rather than an imperative command
+concerning what should happen.
 
-Do you also expect that `git diff a b` runs something similar to
-`diff a b`?
-
--- 
-Felipe Contreras
+-Alex
