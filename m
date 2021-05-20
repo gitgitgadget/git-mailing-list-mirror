@@ -7,97 +7,122 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 504A4C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 16:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6C17C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 16:45:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 20B2E61059
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 16:40:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FF386101B
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 16:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232753AbhETQmG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 12:42:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
+        id S234866AbhETQqh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 12:46:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231856AbhETQmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 12:42:06 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49D0C061574
-        for <git@vger.kernel.org>; Thu, 20 May 2021 09:40:44 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id u11so16972182oiv.1
-        for <git@vger.kernel.org>; Thu, 20 May 2021 09:40:44 -0700 (PDT)
+        with ESMTP id S234736AbhETQqg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 12:46:36 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34BFCC061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 09:45:14 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so15441870otc.6
+        for <git@vger.kernel.org>; Thu, 20 May 2021 09:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=k76pbsnrLjLv7WBWz2yDYqv9U6cmkgcWmuKtjKPDng8=;
-        b=bg4/2KV2Jyrc+8v/vIntuyMgefEWPizbXnnKJIw9SqvveuaBOIR3HuQC1BNwKsaYa1
-         48Q7WLceDT/1kqha67ujcyTbulmF2Wth8SuESKYbJ3DdBA+mrGSpQ/kLLU1SR3ieHBVr
-         EB+xg+qBbsogAffjJzYQeJpq7WK+94IIpYtDSuIbZRbEIsUtwZljY05ulTiZCdoG0BQX
-         JYk4AXQxrQYNfoVi8z3x3fUuCRPCM3kQHa7MT8Bwr3GP/zd489RufM4f7xuI+742bReq
-         NafHO9oM7xxHDZbp43U9yiAZWG2i6y/hc9CImlGQJl/8/iLJVi/wRqce7n3y7Z1nP7V0
-         BznA==
+        bh=KzPTgzz2fxxGmU9djmyhGij4ooZvXBgxs2SbJ3xONlY=;
+        b=RsiL52+oicPfvAPHL4DuRmt0q4+0Of9SzOXIO+2RTfrqEC5QXCSkdLD6m7OQDnrioN
+         zIZAG0QOC57D9jwLG8bpTbZFVBt5vxBLv5HGpZuLdiQXyyk7PNU0Cl2jQn3e3byPtstT
+         tnUHHzfkEYlbt/tQf36Pk6aUU835Dfy/d+qQsp4Df97V/AtuRmSp9258j0P88y70SWuy
+         e9gdPLS3xTgopYFUl3/MCdZukwCDW2C7aW1smonshQlRGkoegSP+XcVf6IP6hXYplUP2
+         nK3yN1U9770j8aoWx499tiUkZYgNo+ZGcQoVcZ4JFhpuYUIpYnzKF9Bwv0ZkD86Iw3eF
+         bzKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=k76pbsnrLjLv7WBWz2yDYqv9U6cmkgcWmuKtjKPDng8=;
-        b=JkgUAN02+VOXSYRHIM+HXZpFqtH/iFDyx9cOF+C/j0SScqI3SqV7pt5ISIwdDZoZZE
-         SoAi+86ymQjgwHnAXBtQgHwsSukAcp7k/wtCPgZNnOTZn4YvS5xcdZXyXs4DK5jEwrBT
-         qCAIddriKteEpcXxCBD+IIm6dhuzsO1bpf138YnciurAvhQ5khXIS5dTA2kT/tix29gw
-         i16Bb0t09U/dNrOWxicnEnGrNiX3YTejjuqroDmD8s3Fx4vApDsSu1S/jWWK5PZId9MJ
-         7/ug6jCykU+E9RNxe5y7eFEwySPKUIJaEgbkcgfws+0hCCmZ/gjx3+QCHqwHuH1FBiRb
-         zMcQ==
-X-Gm-Message-State: AOAM530yaqLRej1YBewj6w6xoLXAnrtyUFOaKwBkrhZTpA488bJl36yI
-        6mc+lL3Yn6bvn+u8gaBYdx6QRD21a1gh2BhZ3qg=
-X-Google-Smtp-Source: ABdhPJxW1trfb8ydjhC8RY34UTrcK0/RXG4nva7dp3ZoqdY/DatnWdY9tr6DERdmiI7cUd/JGp/fSsJz/74JrtkZAfk=
-X-Received: by 2002:aca:30cd:: with SMTP id w196mr3913199oiw.167.1621528844285;
- Thu, 20 May 2021 09:40:44 -0700 (PDT)
+        bh=KzPTgzz2fxxGmU9djmyhGij4ooZvXBgxs2SbJ3xONlY=;
+        b=BlNqvxkuw1qNBsfxb2NXw3EGXkOl4+dMSJS9HZ/QBLlUkd8tUJ50EgCGfE8bFFD2hO
+         UyrL5+kmmbMdjDlxJ0j5N3zifpO2YfDk2TPxb50NqhlyLoEcLL8NUzrBG/SAQCjqWKy3
+         ujvYQXtEbbbnjZ1mYvr/yPVEFRbfms8Jz+uBZrm6KbZ39FhxiVSvDQkFw1nqsxfXXcHt
+         ntcv1ynRlndJF7hxnbsihHo/ziJM/Mo7t6MsmLKMCQ6ivL7rm6mhlp+u0QE/2xQlxyMA
+         spu+/GaROan7yK97Dd9ihGnpo711gXeBT4rGqrlm1W6VQbQKEDF8UNDdaEHxBieRDVLO
+         bFlw==
+X-Gm-Message-State: AOAM530pvE0kv3wpIDBGn8ZkFAGC+H14Gb+3lrt9vvwNU/ngF77J6Hho
+        QlfczO6cvbZBaKWGW6Zy1iXXItdvupaPc0ju8uo=
+X-Google-Smtp-Source: ABdhPJwtq3PS2eYqNZwWN0Ztt9wd8D4RO7vNQib1DO4t4eQm+OMaPtAV91tWi4MycbgvhUCwdzbCbFI5zuMvsbunu6A=
+X-Received: by 2002:a9d:6b8d:: with SMTP id b13mr4563459otq.316.1621529113564;
+ Thu, 20 May 2021 09:45:13 -0700 (PDT)
 MIME-Version: 1.0
 References: <xmqqv97g2svd.fsf@gitster.g> <ab2d8b16-42db-9675-083a-efa7cfca6e4c@gmail.com>
-In-Reply-To: <ab2d8b16-42db-9675-083a-efa7cfca6e4c@gmail.com>
+ <xmqqh7iyuhlp.fsf@gitster.g> <xmqqcztmuhem.fsf@gitster.g>
+In-Reply-To: <xmqqcztmuhem.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 20 May 2021 09:40:33 -0700
-Message-ID: <CABPp-BFhsw7jMZa9TcLSKz12=0H40froS-DTRXSvMR4q006Jyw@mail.gmail.com>
+Date:   Thu, 20 May 2021 09:45:02 -0700
+Message-ID: <CABPp-BEGtrb0QjhVff57=s8-8w1CCvw9N_mAm166pzyVDcL_7g@mail.gmail.com>
 Subject: Re: [PATCH] revisions(7): clarify that most commands take a single
  revision range
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 19, 2021 at 7:28 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+On Wed, May 19, 2021 at 10:03 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On 18/05/21 18.17, Junio C Hamano wrote:
-> > +Commands that are specifically designed to take two distinct ranges
-> > +(e.g. "git range-diff R1 R2" to compare two ranges) do exist, but
-> > +they are exceptions.  Unless otherwise noted, all "git" commands
-> > +that operate on a set of commits work on a single revision range.
-> > +In other words, writing two "two-dot range notation" next to each
-> > +other, e.g.
-> > +
-> > +    $ git log A..B C..D
-> > +
-> > +does *not* specify two revision ranges for most commands.  Instead
-> > +it will name a single connected set of commits, i.e. those that are
-> > +reachable from either B or D but are reachable from neither A or C.
-> > +In a linear history like this:
-> > +
-> > +    ---A---B---o---o---C---D
-> > +
-
-Why did you snip off the immediate next part of Junio's text which said:
-
-+because A and B are reachable from C, the revision range specified
-+by these two dotted ranges is a single commit D.
-
-Is this sentence hard to parse or confusing in some way?  I thought
-this sentence would have made it pretty clear that the answer to this
-question:
-
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> So "git log A..B C..D" is same as "A..D", right?
+> > Bagas Sanjaya <bagasdotme@gmail.com> writes:
+> >
+> >> On 18/05/21 18.17, Junio C Hamano wrote:
+> >>> ...
+> >>> +In other words, writing two "two-dot range notation" next to each
+> >>> +other, e.g.
+> >>> +
+> >>> +    $ git log A..B C..D
+> >>> +
+> >>> +does *not* specify two revision ranges for most commands.  Instead
+> >>> +it will name a single connected set of commits, i.e. those that are
+> >>> +reachable from either B or D but are reachable from neither A or C.
+> >>> +In a linear history like this:
+> >>> +
+> >>> +    ---A---B---o---o---C---D
+> >>> +
+> >>
+> >> So "git log A..B C..D" is same as "A..D", right?
+> >
+> > A..B C..D is equivalent to ^A ^C B D, and in order to be part of the
+> > set it represents, a commit must not be reachable from A, must not
+> > be reachable from C, and must be reachable from B or D.
+> >
+> > In the picture, A, B and two o's are all reachable from C, therefore
+> > are not part of the set A..B C..D represents.  Neither is C, as it
+> > is reachable from C.  That leaves only D in the resulting range.
+> >
+> > A..D is a set of connected five commits, B o o C D in the above
+> > picture.
+> >
+> > So, no.
+> >
+> > The confusion we often see goes more like "The set A..B contains B
+> > (and nothing else), and C..D contains D (and nothing else), hence
+> > 'git log A..B C..D' would show B and D".  But that is not what
+> > happens because "git log" (like most other commands) takes just a
+> > "range" that is "A..B C..D", which is a set of connected commits
+> > each of whose member is reachable from one of the "positive"
+> > endpoints (like B and D) and is not reachable from any of the
+> > "negative" endpoints (like A and C).
+>
+> Well, apparently the proposed text may have failed to educate you
+> about what a "revision range" is and how it works, so it is not good
+> enough, so I'll postpone merging the change down further and see if
+> somebody else can come up with a better description.
+>
+> Thanks.
 
-was 'no', so I'm curious if that particular final sentence's wording
-could be improved.
+I think it's helpful and would have answered questions for users that
+I've had to manually explain to folks a few times, so while it may not
+be optimal, I do think your description is an improvement to the docs.
+That said, it can't hurt to see if we can find out what caused Bagas'
+confusion and see if we can improve it, but I wouldn't hold it up
+indefinitely if no better wording comes along.
