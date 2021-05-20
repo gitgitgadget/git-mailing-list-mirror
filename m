@@ -2,96 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11783C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96273C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 01:19:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1E166112F
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:49:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71D5E611AD
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 01:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbhETAum (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 20:50:42 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61040 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbhETAum (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 20:50:42 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CCA5B8DCF;
-        Wed, 19 May 2021 20:49:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vL71SgRSpKpPphZsEsfWDDie3kcUQgyWrunIrD
-        tkOMw=; b=EAXPaz/T+1eTnusblxSQVlztm3cNf4nJ1EX8CMkM9CEJBXbym9DP71
-        VRqU3nuRQMsv7q0GKhWUy0xip3cGtsImHnAQQ2yIQ8Tw5xzy7WmWRjC3BEUDF48l
-        TOGr+czZg7tsGDc91wjXaBi24ZgBlJVtWREtSeU0sZtZCDto0tapI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EB14B8DCE;
-        Wed, 19 May 2021 20:49:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D5AC7B8DCC;
-        Wed, 19 May 2021 20:49:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        id S230062AbhETBUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 21:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229498AbhETBUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 21:20:41 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B43C061574
+        for <git@vger.kernel.org>; Wed, 19 May 2021 18:19:21 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id n32-20020a9d1ea30000b02902a53d6ad4bdso13472033otn.3
+        for <git@vger.kernel.org>; Wed, 19 May 2021 18:19:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=KsCvEmWT8GvxoFyE52UqgWQqn2vGrp3s/PRgcNeUybI=;
+        b=DDglEt2KCEpTRleQ8mtoFqDmuIvV7tb18HbboS7ZQKLH1Pws6ajwPHUQKMyZik7N/E
+         EMW1Rb/eOuVKqTMKvaC0gUJHPCLtaNFFTta1NsR1BsUDm9q2EnHuUwOoR1v/J8yU9voE
+         1T6HVkl15fQBfrR8Oar/I3k22tD36cRn8Rc3k/nXnK9n25s5jMcHwHh1hmyWVKfCecfn
+         6umXOCqz7YxCbX6GtALWz9nxiDaqThtn2+Cmap/FfUKLboC0I33/afhVTfOErKUMY53L
+         kVJqAm8Y/eJPNF9gYakcnHwUYqdh+Hb1rQnMI4WnVKWlF0EqJJ5m7NPIzzTqKr2AwY/N
+         o6IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=KsCvEmWT8GvxoFyE52UqgWQqn2vGrp3s/PRgcNeUybI=;
+        b=j2ACUd+ygW0ZpZsL06KmdghClB8m2HBmk8O1eRNYR2PRDGIw8+Atd4YpLQCe9kyrJB
+         wQ3MzYMXI2KjmQu0S+pAJzM+P9bT1/9YNvEHjLVYO4kohzOC50xZjSJljp2fKsgajCnD
+         1SbttR/0NVjdCzHikKJTCMjnANRAwBHn4i6vU00Om1TVMspVfB1tSrRH4IpYGw3j1TTk
+         sU/od3tqjWpFmkre7QB9PyVDckc94Oz32U2ufkvUfMuCgk0WV520bZPmK0xB9IdNP6Jg
+         8wHJsK0zIj6bp4vQCzpXFCVbs/13TCgM1s5CDgUIDx6k/PfFBO5vtV9tP1iinHuJ5QNa
+         vnGQ==
+X-Gm-Message-State: AOAM531+YJC1ryiClxfrQTCB3UrMZHiG93nXNO06zY8yIhRTbe8ysvDV
+        YSnj2O5V7Eb2rp7Ouk1BQag=
+X-Google-Smtp-Source: ABdhPJxUpk0q67JaiyC2t+bQYezSPOSxNCTR1JshlXAgB0lm5CUn9YsbN91l1AyIqX5ebrh5ZStMYg==
+X-Received: by 2002:a9d:7997:: with SMTP id h23mr1967326otm.366.1621473560387;
+        Wed, 19 May 2021 18:19:20 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id y44sm245732ooi.0.2021.05.19.18.19.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 May 2021 18:19:19 -0700 (PDT)
+Date:   Wed, 19 May 2021 20:19:18 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
         Jeff King <peff@peff.net>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: RFC: error codes on exit
+Message-ID: <60a5b9165fd5b_1e27520848@natae.notmuch>
+In-Reply-To: <xmqqeee2w7ov.fsf@gitster.g>
 References: <YKWggLGDhTOY+lcy@google.com>
-Date:   Thu, 20 May 2021 09:49:20 +0900
-In-Reply-To: <YKWggLGDhTOY+lcy@google.com> (Jonathan Nieder's message of "Wed,
-        19 May 2021 16:34:24 -0700")
-Message-ID: <xmqqeee2w7ov.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36B7FFDE-B905-11EB-A318-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+ <xmqqeee2w7ov.fsf@gitster.g>
+Subject: Re: RFC: error codes on exit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> One kind of signal we haven't been able to make good use of is error
-> rates.  The problem is that a die() call can be an indication of
->
->  a. the user asked to do something that isn't sensible, and we kindly
->     rebuked the user
-> ...
->  e. we encountered an internal error in handling the user's
->     legitimate request
->
-> and these different cases do not all motivate the same response.
-> ...
-> In order to do this, I would like to annotate "exit" events with a
-> classification of the error.
+> > In order to do this, I would like to annotate "exit" events with a
+> > classification of the error.
+> 
+> We already have BUG() for e. and die() for everything else, and
+> "everything else" may be overly broad for your purpose.
 
-We already have BUG() for e. and die() for everything else, and
-"everything else" may be overly broad for your purpose.
+BUG() and die() can call fatal().
 
-I am sympathetic to the cause and I agree that introducing a
-finer-grained classification might be a solution.  I however am not
-sure how we can enforce developers to apply such a manually assigned
-"error code" cosistently.
+> I am sympathetic to the cause and I agree that introducing a
+> finer-grained classification might be a solution.  I however am not
+> sure how we can enforce developers to apply such a manually assigned
+> "error code" cosistently.
 
-Just to throw in a totally different alternative to see if it works
-better, I wonder if you can teach die() to report to the trace2
-stream where in the code it was called from and which vintage of Git
-it is running.
+You don't enforce developers to do this--just like you don't enforce
+developers to use advice() instead of fprintf(stderr, )... You nudge
+them in that direction, and eventually it becomes a habit.
 
-The stat collection side that cares about certain class of failures
-can have function that maps "die() at <filename>:<lineno>@<version>"
-to "what kind of die() it is".  
+Developers in other languages and stacks have no problem with this
+granularity. They do this in languages like JavaScript, C++, Ruby and
+Python regularlly. And developers dealing with HTTP have no trouble with
+error codes (like 200, 400, and 404).
 
-E.g.  blame.c:50@v2.32.0-rc0-184-gbbde7e6616" may be BUG(), while
-blame.c:2740@v2.32.0-rc0-184-gbbde7e6616 may be an user-error.
-
-That way, our developers do not have to do anything special and
-cannot do anything to screw up the classification.
+-- 
+Felipe Contreras
