@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F4D3C433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8E69C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 106F2611BD
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9FF660D07
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230486AbhETGLX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 02:11:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
+        id S230448AbhETGL1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 02:11:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230440AbhETGLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 02:11:13 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82F17C06138D
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:52 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id t206so8451469wmf.0
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:52 -0700 (PDT)
+        with ESMTP id S230417AbhETGLO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 02:11:14 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98C3C06138C
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:51 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id q5so16288710wrs.4
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QwEH6gJXv56Ut+wAlTKs18/ZFMLrtVFsYQQoVD2kgdw=;
-        b=iSK7jdcK4VaxkQ+njsuGNfoyCm7GTy27PccTLkpHm69kqX+0P6VsNNq6mDvXwdkjCn
-         y8WcuFLELSvHR+EUH80ioEkPM3DzolbpvtfTAaFyK09Hi6WG+FjP3JAQ+sWf1QM5iBZ0
-         R2ONjRWOf89YRYSa+BAzitRxqZlhIQY5aiy81f4Y2PSHPa/YVz0uVgIE/819QTALcXCP
-         BzV7A5JulI/HahuSkNPa8Pwuw2WosbWgfEWACbNha++1kwsO5aRhUBc+flmBPShlOdtb
-         +NosEykVN7qPW3tBy+sLY/N+GjBgtmRMAsbWLK0VenZKEEufORHSB8Dg2oO8nkW+NWys
-         DGoA==
+        bh=8xG2BSo/LUna7kC4NadHvqfwx1/zLIC3qNW9Kfn5ChU=;
+        b=b7BbFg9BBO/ffKq3ACD0LxShjY3vWzIzMzyyALkIX05v9RjRnTEa1N4qlNhiZUIuHm
+         rpb5qC57l3LDewOXPKylBv3YdW7L30VhOhDmiSdlhP7Vazx0zue3LdEJBp3JNWlIilKX
+         s6YGEKPhGZGFTaSJ+y/cTPr8Q3w2opNz3AV5F0bbqokoqEVHL+LsnFGnH5yHcl8qeyip
+         kRP5gUUdob5BnBWAnW0PQTxSqlBhIpKOr/e6k/pG7PEzQO4cOGDWBJoNRe/2l9nQw/uh
+         nJCvZwA7MZycBUuJ3umjrzMTPj0L+kn0ozO52Dyq7eDfYRH2n0G/wOS07QoIKhNmR301
+         AnAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QwEH6gJXv56Ut+wAlTKs18/ZFMLrtVFsYQQoVD2kgdw=;
-        b=K96S6hEjAPy8MYXB/sDF0FuTmXOxjUZbpDP0QsMO8z930u0p/1oiTxsk1LKlCs7Zhn
-         66foxq2MtauR7U1rZdpg1mvYtpoyMawOG0RfWCaRAxMRD4OxddHXzAV+ROOXytwy5EWj
-         WmZR9vyYu9KEW0zIBjlkt3QgPVnYEUtl0O4Ka8iIFiymnDwmAK9EGsGIsIWhFrKfn1js
-         SHwTBYUuhu6hvY8wBGggaEFeJ3oAqTDxBWsU6FKM/u7y1+AmV9M5RxM8HggvaR+WMmLu
-         1bp62n0upRdiEJnU3HwOLv5xlnZu/k9se3CfiE4sIaCpPZwu/h7ENaeWgVPvFRGLiAwp
-         RBxg==
-X-Gm-Message-State: AOAM533QSH4LG0IrlAW0L0PCtvxFuBE+5A0V0jNvcqKMxQGClt+KpMA2
-        BUPTuh6vVsWPaWgZG/DmCsGCimL6WQc=
-X-Google-Smtp-Source: ABdhPJwvHsu9cfr1t1a2o9lnNSw+dsvhFcHVFvcS5rlmjt8so+rTb9FB36GV39ZQI1TcnpzRMRlaiw==
-X-Received: by 2002:a05:600c:2f88:: with SMTP id t8mr1946441wmn.82.1621490991131;
-        Wed, 19 May 2021 23:09:51 -0700 (PDT)
+        bh=8xG2BSo/LUna7kC4NadHvqfwx1/zLIC3qNW9Kfn5ChU=;
+        b=njwlpdaGLH2EzOlrNPTaTGHINP3TjJsBCQa3mQCTRXa5UaB0YL8DSgdULnU38J9HDj
+         8w91OGFoYmxosyZbNV6GRQOGt4TGNsbjyMA6m5cYqb4DOPUVMxmMUoMzjovzoQ2m17iH
+         s6ag6x9+HWGTJ9vA+0swk9Y3t4ZEHfj879MmDh3mUDFiyqL1qU6eGvWnk55V8WEYLyLV
+         qw3eojaAsAKArvpKJN7sx7JYSGrzagHpctjThOX2wJ9IwC1bHTCODUUXsAG9W3wTF82R
+         q3wFLKVrAcpfwktEDHN0FP7OGKrwGzV65Udm0JVmz8pZM4LOUT9HKODu5sZG2NYgIvX+
+         E+vA==
+X-Gm-Message-State: AOAM531I1IeCqsBR9x4CUKI8DWUsJrTPfVJ+y4v4WPx1rXxUor3v0h2V
+        wdTuvp8hYotXMLWE3JbPsMUYVrL2UF4=
+X-Google-Smtp-Source: ABdhPJyM4ZdrdlbDojuuVPLd3vJuiNtueF5HLpVAfhkBTDpF498g4pPpEZ06yDRJLH5r4t/5HLiZ8Q==
+X-Received: by 2002:adf:fd45:: with SMTP id h5mr2300208wrs.383.1621490990607;
+        Wed, 19 May 2021 23:09:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o8sm1010094wrs.60.2021.05.19.23.09.50
+        by smtp.gmail.com with ESMTPSA id y14sm1805030wrr.82.2021.05.19.23.09.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 19 May 2021 23:09:50 -0700 (PDT)
-Message-Id: <886a17115f30b97fd8c021495f228a45b9f76636.1621490982.git.gitgitgadget@gmail.com>
+Message-Id: <386fd24cb0e32ff18b238e3e240307236cefab0e.1621490982.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 References: <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
         <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 May 2021 06:09:40 +0000
-Subject: [PATCH v3 12/13] merge-ort: handle interactions of caching and
- rename/rename(1to1) cases
+Date:   Thu, 20 May 2021 06:09:39 +0000
+Subject: [PATCH v3 11/13] merge-ort: add helper functions for using cached
+ renames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,75 +82,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-As documented in Documentation/technical/remembering-renames.txt, and as
-tested for in the two testcases in t6429 with "rename same file
-identically" in their description, there is one case where we need to
-have renames in one commit NOT be cached for the next commit in our
-rebase sequence -- namely, rename/rename(1to1) cases.  Rather than
-specifically trying to uncache those and fix up dir_rename_counts() to
-match (which would also be valid but more work), we simply disable the
-optimization when this really rare type of rename occurs.
+If we have a usable rename cache, then we can remove from
+relevant_sources all the paths that were cached;
+diffcore_rename_extended() can then consider an even smaller set of
+relevant_sources in its rename detection.
+
+However, when diffcore_rename_extended() is done, we will need to take
+the renames it detected and then add back in all the ones we had cached
+from before.
+
+Add helper functions for doing these two operations; the next commit
+will make use of them.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ merge-ort.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 9a229128a9a0..2cdc57e75543 100644
+index 8d4b2ec40e3d..9a229128a9a0 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -2111,6 +2111,9 @@ static int process_renames(struct merge_options *opt,
- 			VERIFY_CI(side2);
+@@ -2371,6 +2371,53 @@ static void resolve_diffpair_statuses(struct diff_queue_struct *q)
+ 	}
+ }
  
- 			if (!strcmp(pathnames[1], pathnames[2])) {
-+				struct rename_info *ri = &opt->priv->renames;
-+				int j;
++MAYBE_UNUSED
++static void prune_cached_from_relevant(struct rename_info *renames,
++				       unsigned side)
++{
++	/* Reason for this function described in add_pair() */
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
 +
- 				/* Both sides renamed the same way */
- 				assert(side1 == side2);
- 				memcpy(&side1->stages[0], &base->stages[0],
-@@ -2120,6 +2123,16 @@ static int process_renames(struct merge_options *opt,
- 				base->merged.is_null = 1;
- 				base->merged.clean = 1;
- 
-+				/*
-+				 * Disable remembering renames optimization;
-+				 * rename/rename(1to1) is incredibly rare, and
-+				 * just disabling the optimization is easier
-+				 * than purging cached_pairs,
-+				 * cached_target_names, and dir_rename_counts.
-+				 */
-+				for (j = 0; j < 3; j++)
-+					ri->merge_trees[j] = NULL;
-+
- 				/* We handled both renames, i.e. i+1 handled */
- 				i++;
- 				/* Move to next rename */
-@@ -3910,7 +3923,22 @@ static void merge_check_renames_reusable(struct merge_options *opt,
- 
- 	renames = &opti->renames;
- 	merge_trees = renames->merge_trees;
--	/* merge_trees[0..2] will only be NULL if opti is */
-+
-+	/*
-+	 * Handle case where previous merge operation did not want cache to
-+	 * take effect, e.g. because rename/rename(1to1) makes it invalid.
-+	 */
-+	if (!merge_trees[0]) {
-+		assert(!merge_trees[0] && !merge_trees[1] && !merge_trees[2]);
-+		renames->cached_pairs_valid_side = 0; /* neither side valid */
-+		return;
++	/* Remove from relevant_sources all entries in cached_pairs[side] */
++	strmap_for_each_entry(&renames->cached_pairs[side], &iter, entry) {
++		strintmap_remove(&renames->relevant_sources[side],
++				 entry->key);
 +	}
++	/* Remove from relevant_sources all entries in cached_irrelevant[side] */
++	strset_for_each_entry(&renames->cached_irrelevant[side], &iter, entry) {
++		strintmap_remove(&renames->relevant_sources[side],
++				 entry->key);
++	}
++}
++
++MAYBE_UNUSED
++static void use_cached_pairs(struct merge_options *opt,
++			     struct strmap *cached_pairs,
++			     struct diff_queue_struct *pairs)
++{
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
 +
 +	/*
-+	 * Handle other cases; note that merge_trees[0..2] will only
-+	 * be NULL if opti is, or if all three were manually set to
-+	 * NULL by e.g. rename/rename(1to1) handling.
++	 * Add to side_pairs all entries from renames->cached_pairs[side_index].
++	 * (Info in cached_irrelevant[side_index] is not relevant here.)
 +	 */
- 	assert(merge_trees[0] && merge_trees[1] && merge_trees[2]);
- 
- 	/* Check if we meet a condition for re-using cached_pairs */
++	strmap_for_each_entry(cached_pairs, &iter, entry) {
++		struct diff_filespec *one, *two;
++		const char *old_name = entry->key;
++		const char *new_name = entry->value;
++		if (!new_name)
++			new_name = old_name;
++
++		/* We don't care about oid/mode, only filenames and status */
++		one = alloc_filespec(old_name);
++		two = alloc_filespec(new_name);
++		diff_queue(pairs, one, two);
++		pairs->queue[pairs->nr-1]->status = entry->value ? 'R' : 'D';
++	}
++}
++
+ static void cache_new_pair(struct rename_info *renames,
+ 			   int side,
+ 			   char *old_path,
 -- 
 gitgitgadget
 
