@@ -2,95 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCAAC433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 02:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 526D1C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 02:45:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEDF3611BD
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 02:33:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 241756108C
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 02:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbhETC3f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 22:29:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58654 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbhETC3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 22:29:35 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2711AB9742;
-        Wed, 19 May 2021 22:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=neFnSEhG2ptBP0AdzwCD1ZuMRk3QV/53uGiWmh
-        W73Ms=; b=PFI6Cxr7St6M6bcvKvlEtzbVa/JPBgjJs5hta1TET2kAT/mAuDUPk+
-        9aLB5D3yphjHjSCE/OXLQggBc0wQSYua5w7fsJgQWuS9UFzTcP04J3NWl4VCjZak
-        CRd5Ia69bjTEFhyJXX7bY8X8PcRiLBCZca8uv/iyBigYoG5l6IyPA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20365B9740;
-        Wed, 19 May 2021 22:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A5350B973F;
-        Wed, 19 May 2021 22:28:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: RFC: error codes on exit
-References: <YKWggLGDhTOY+lcy@google.com> <xmqqeee2w7ov.fsf@gitster.g>
-        <YKXBhDbWMyB6A7z4@google.com>
-Date:   Thu, 20 May 2021 11:28:13 +0900
-In-Reply-To: <YKXBhDbWMyB6A7z4@google.com> (Jonathan Nieder's message of "Wed,
-        19 May 2021 18:55:16 -0700")
-Message-ID: <xmqqy2cauojm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 06F1326C-B913-11EB-9453-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S229583AbhETCqm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 22:46:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38808 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229505AbhETCqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 22:46:42 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81691C061574
+        for <git@vger.kernel.org>; Wed, 19 May 2021 19:45:21 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 80-20020a9d08560000b0290333e9d2b247so3058061oty.7
+        for <git@vger.kernel.org>; Wed, 19 May 2021 19:45:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=AIv9iBhiyMJIQQMZMmKnhorxA9fpoO1uRhpJGX/k/7o=;
+        b=IPYCvhIiFKw/kH/NiT8WS/gaofzG2fOsOiQTzxunx7RGR+t4Wz22gYZm+rbDr71UAg
+         OSBrfwpG0xdGYDf7mIevB5Liwd3POwt2sdswCcBL+clpQGQ89kvBPng6uFwsuxG8CvKT
+         etXG+8IGPG2ubCoMKoFgGUciR/WY0Y+qyS4QG2zW7FNsVf2N9G/O05OXGrMkZ6zErKRo
+         xBq8E14r43xYONNVULltm7wgt8ah+V1PDTYwWyWIsI7vYOyGlJR+jLQjIZBx7CznClQq
+         l0Bidz4RUUrI/zy/0p6fMGjM/jCq2kRBsNm4svnuJxov5qaN2fLQmbe7NyAEF70UBZJO
+         7K3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=AIv9iBhiyMJIQQMZMmKnhorxA9fpoO1uRhpJGX/k/7o=;
+        b=XCdJwKgSDM8qDsZpIpBDUDESNqUc2lwYrgxxB0mUZ8RDTapERk9sGQohyUO9wsSZqw
+         pAoLC0yLjItEbRmB5N8evoucmA6ATugQhkNlvkTB51X+f94kt54oCpQPVheeXlwlG6eC
+         POdjwVVBMUDHm1IoGnY8gAr3D/s34jvrY7Kd8tNIy63+3ki1buqJa4V7bjoHGBhpuRZH
+         pUVWOpJxjNn2lD8LkRnffjdbD5kPsiY3R+RJzbk7kgKK38OkmVCsU8uDy7n2mIHFvnOd
+         9VxPBSvWpimR5ZO1hY2/MWUBBnisVCPHFTJhXQFbzUTxvP2ObFm878fpGGCGx//TDeJG
+         hY6A==
+X-Gm-Message-State: AOAM530YPrVaP+6qSDZPtIF+Z2LJ3JPI+ba2hDBmYG+mXSYzPiV1TfbP
+        Z3bfje9DTQwS6xUEmpNsxygu/F+fDMvH9A==
+X-Google-Smtp-Source: ABdhPJxbyMizrysZsCAr/tKT22NMkIbA2FK/ZFMFfgPN6cyhYemPNseVO8QFNQykz4OSU32dhNjE3w==
+X-Received: by 2002:a05:6830:3115:: with SMTP id b21mr2084997ots.291.1621478720860;
+        Wed, 19 May 2021 19:45:20 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id x3sm397444otj.8.2021.05.19.19.45.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 May 2021 19:45:20 -0700 (PDT)
+Date:   Wed, 19 May 2021 21:45:18 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Message-ID: <60a5cd3ed5aaf_1e275208a0@natae.notmuch>
+In-Reply-To: <YKXBdQ36MYz2YG8s@camp.crustytoothpaste.net>
+References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
+ <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
+ <60a332fd22dad_14c8d4208ed@natae.notmuch>
+ <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
+ <87im3fqci9.fsf@evledraar.gmail.com>
+ <YKXBdQ36MYz2YG8s@camp.crustytoothpaste.net>
+Subject: Re: [PATCH] help: colorize man pages
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+brian m. carlson wrote:
+> On 2021-05-19 at 09:26:12, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote=
+:
+> > =
 
->> I am sympathetic to the cause and I agree that introducing a
->> finer-grained classification might be a solution.  I however am not
->> sure how we can enforce developers to apply such a manually assigned
->> "error code" cosistently.
->
-> I think two things you're hinting at are "what about maintainability?"
-> and "what is the migration path?"
+> > On Tue, May 18 2021, brian m. carlson wrote:
+> > =
 
-Not really.  There is not much to migrate from, and mislabeling by
-developers, or more realistically disagreement between developers
-what label is appropriate for which condition that leads to die(),
-would be a usability problem and not maintainability that I would be
-worried about.
+> > > Would you consider various projects coloring their respective manua=
+l
+> > > pages differently to be a desirable state of affairs?
+> > =
 
-> However, for analysis in aggregate (for example, to define an SLO[1])
-> that would require us to maintain a database that maps
-> <filename>:<lineno> to error code.  That database would be essentially
-> the same as patches to record the error codes, so what it would really
-> amount to is having these deployments using a permanent fork of Git.
+> > I think it's an important distinction that we're not coloring any man=
+ual
+> > pages, it's a question of whether we invoke "man" invoked by "git hel=
+p
+> > <whatever>" with the exact same paramaters/options a user would get w=
+ith
+> > "man git-<whatever>".
+> =
 
-Yes, the suggestion was to start from there to gain experience,
-because ...
+> Yes.  I would expect that if the man option is chosen, then we invoke
+> man without modification.
 
-> If we expect the error codes to not be useful to anyone else, then
-> that is the right choice to make (or rather, we'd have to use other
-> heuristics, such as having the traces record a collection of offsets
-> in the binary and a build-id so we can key off of stack trace
-> signatures).  Part of the reason I started this thread is to get a
-> sense of whether these can be useful to others.
+Do you also expect git to call diff without options?
 
-... others will find it useful if the classification matches _their_
-needs, but I suspect the "bin" a single die() location wants to be
-classfied into would end up to be different depending on what the
-log collecting entity is after.
+> The documentation says, "use the man program as usual".  "As usual"
+> implies the way the user would invoke it.
+
+The documentation can be updated.
+
+> > I don't think it's confusing in that context if we learn to do some "=
+man
+> > with fancy on top" in this mode.
+
+> It's pretty obvious that "git help commit" and "cargo help build" both
+> are intended to invoke man when used in the normal way.
+
+And I don't.
+
+I expect the output `foo help $x` to be decided by foo.
+
+If I do `python help len` and I get an error, that's fine.
+
+> > But if colors only add, but don't substract information by default
+> > that's not an issue for the color blind, correct? Or at least that's
+> > been my understanding in helping color blind user in the past (and no=
+t
+> > being color blind myself).
+> =
+
+> The problem becomes if the color is indistinguishable from other
+> elements.
+
+It is not indistiguishable; a blind person would be able to distinguish
+them. As much as they can without the patch.
+
+> It is _also_ a problem if we have two colors with sufficient contrast
+> between the foreground and background but those colors look the same an=
+d
+> there is no other distinguishing factor.
+
+There is another distinguising factor: they are *bold*, or _underlined_.
+
+> So, yes, if the colors only add information and they can otherwise be
+> distinguished, then it's fine.
+
+We are setting *bold*, _underlined_, and REVERSE.
+
+Exactly in the same way as they are set already.
+
+
+A truly colorblind person would see no difference at all.
+
+> What I don't like is when a program colors text in a certain way, I
+> can't read it, and then I can't read the help output or documentation t=
+o
+> turn it off.
+
+If you can't read `man git`, that has absolutely nothing to do with this
+patch.
+
+> I am specifically arguing against coloring our documentation
+
+We already already coloring our documentation.
+
+> and help output because it leaves users with little recourse to fix
+> the problem.
+
+man git.
+
+-- =
+
+Felipe Contreras=
