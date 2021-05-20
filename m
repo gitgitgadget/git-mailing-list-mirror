@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61DB9C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E87E2C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3441D610A2
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:41:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2EEA6108D
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232471AbhETPmv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 11:42:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43974 "EHLO
+        id S232720AbhETPnw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 11:43:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231852AbhETPmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 11:42:51 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34ACC061574
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:41:29 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id l1so26035757ejb.6
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:41:29 -0700 (PDT)
+        with ESMTP id S232484AbhETPnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 11:43:51 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AEC1C061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:42:29 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id r11so19895847edt.13
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=EyquRDaKsCpEdqZTv+NYyyJLNWOgtWS16y6eODeI/Tw=;
-        b=YEV7J4rIAaxxtUiOOSqq/KYVtFBpePoe1dN8+0p6xuKpaI8VQKLwGn9OiF96fzqcya
-         4DvNVC4UU+i7IcBgNnFA2BeJzLK2TRFZUSWf6gx84I0znx7yMC1KCn2yGVMHiM377TZe
-         +IHQrq78hZjvBiWWJG7dX/pOKuJzEqvjUmX5QJTbUKcxY8ywcf+nAK078ZYBtwrvBujg
-         23hgAiaDGcZiPsp7LxNnTyjskhaGjz+K7dTGtnzcOZVeccCx60mPJctWKo/05GZNGl9u
-         stApHXHzWyVlWdFM5tujf/xjuMMdfLdcFCznKfGdzqNeRk7MybQeSDpha5YiNQbImHUb
-         z05w==
+        bh=c2WZ4aNtTEvC/xmbWbQ6mleLioLKSIOXRZEqLCWSUGo=;
+        b=HBao55yzdVVui+XnJZUTOR+3HwpaujjX0Q6Y4hfDuMjRNeHA1tm6StYI36qZeNsZjR
+         cVV1ZAPYK/x09Mdxsj1QP3gAURnvgoQlyhMGABfGDvepPSom8nZrpvbawMMUQ3KjihrJ
+         Y3W1gUyMDjLmmh11g5l1zCZ0fQ2K7E9A9ryGlp1+8XZIG2YZP0Jf5vugBJsCQF4jPW3M
+         oN9PHQAAMaYkyuJpDuYFYYLZAlIRwrIMhTqR1ZbKunbBi2AG8jOj34s4RWx11DTmelxY
+         /DpIJbEgMpW7vEvR6g2/ZHITKbT7R+IiiOJq86XWRQtWqATz6s8xbcCrwamoCuFYyZCa
+         9oQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=EyquRDaKsCpEdqZTv+NYyyJLNWOgtWS16y6eODeI/Tw=;
-        b=bsqbwquJSAckrZu9MNIGK1vEy50N6COWg1xLi2bvb4ZQFW5Jy94FzTPf9MYAJjemqU
-         kY18unyBTugmV8tMyFGssIpvbtoqDWBgi24m8yUksog/MlG60ASoe+46q7IJW20Yfoij
-         hDt/cbQkm8Puchoh+8FxK5Gm8cqVhClwtR3ys+4j0LJmmvxn6/Yxq/KaV/GuBaQcB8s/
-         k4BcFCLm+wkRpUHh1FCE6E9yxNJ+g5qPtmBiUopyb+P48DYv47gC4oOjwP8I7vZ7EEc5
-         bK8kqXIYqGwfuK9/43WYB3X7pF6PS8iCbADUDQ4P8cLUYTtX6hFshfHT+TQGQ+cUmsMx
-         +qCg==
-X-Gm-Message-State: AOAM530JJqFxcljPy+OlJC94YUYFZsD+TW9esI5fvg9TQFPldsRp5lFl
-        2WGNyP0xYGMz4oZZi0JrBtul6lqaorCPAQ==
-X-Google-Smtp-Source: ABdhPJwrM2vBrx0wgXTC7DRlmLmEKz197k4v/bbGtZnCj7FwrsS4VnkmyuQ1oWmPK0PrpIy/iedMOg==
-X-Received: by 2002:a17:906:161b:: with SMTP id m27mr5253833ejd.89.1621525288176;
-        Thu, 20 May 2021 08:41:28 -0700 (PDT)
+        bh=c2WZ4aNtTEvC/xmbWbQ6mleLioLKSIOXRZEqLCWSUGo=;
+        b=bkbK1U56nznFZOud3GZXhsjcjuvVak945kIMpMddt6ipLz/ySwV3+zd9pbUqbuQO+h
+         F1j1//uX7Bj7ZJAMm2rk8qsen/+XHZcl4uUktEYBffWYx1anlgJ1HPBBHhgkXSQb4903
+         Jr8Sm/qECJeUTJiOybGp714M/c3PEhMxuLOsuuRD0yIoBfPqMaaXc/FHU0p4oBSFEfVg
+         qX8kIszKIwOAoipka1kGZfZ9XLhrCQ2zI5fLG61sq1oc9dVdB8r7BCPMzQ4/Fktez3X2
+         SDIatwtm+Mm2ixc4i48llojunHREAt9FnKeu+QdoJvnnPWinOvep2ysWLdGYtV9ysMvJ
+         JqDg==
+X-Gm-Message-State: AOAM530Konm8JuUi1mUQ/da0kQR4Q5vQG4xPxsPeAZmaSTBcSO6XKEIz
+        2X5X3GTQMDajhuAEUaJMqSb6/FO/t8I2OA==
+X-Google-Smtp-Source: ABdhPJw7ZqY8kjmsGWCVNgz80pETIVJi2PiO2AIP3dAPWFren8nGDWbdWAgc4rf35to7zQQkXgNrbA==
+X-Received: by 2002:a50:ef15:: with SMTP id m21mr5563570eds.226.1621525347721;
+        Thu, 20 May 2021 08:42:27 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id i5sm1803056edt.11.2021.05.20.08.41.27
+        by smtp.gmail.com with ESMTPSA id f20sm1757226edu.24.2021.05.20.08.42.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 08:41:27 -0700 (PDT)
+        Thu, 20 May 2021 08:42:27 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2 18/21] t7900: mark pack-refs tests as REFFILES
-Date:   Thu, 20 May 2021 17:40:14 +0200
+Subject: Re: [PATCH v2 19/21] t7003: check reflog existence only for REFFILES
+Date:   Thu, 20 May 2021 17:41:52 +0200
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
  <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
- <ff3b67c84c412dafaa506355e83427a731b47623.1619519903.git.gitgitgadget@gmail.com>
+ <24dcf05d8fa6172d04ca047a860ad5019aad17b7.1619519903.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <ff3b67c84c412dafaa506355e83427a731b47623.1619519903.git.gitgitgadget@gmail.com>
-Message-ID: <87k0ntpg48.fsf@evledraar.gmail.com>
+In-reply-to: <24dcf05d8fa6172d04ca047a860ad5019aad17b7.1619519903.git.gitgitgadget@gmail.com>
+Message-ID: <87h7ixpg2l.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,42 +79,29 @@ On Tue, Apr 27 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> Reftable automatically compacts tables on writes. The functionality of
-> incremental compaction is unittested in reftable/stack_test.c
-> (test_reftable_stack_auto_compaction)
->
-> In addition, pack-refs triggers a full compaction of the entire stack. This is
-> exercised in t0031-reftable.sh.
->
-> Given that git-maintenance simply calls out git-pack-refs, it seems superfluous
-> to test this further for reftable.
->
 > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  t/t7900-maintenance.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  t/t7003-filter-branch.sh | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 2412d8c5c006..6f2f55a6c51d 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -343,7 +343,7 @@ test_expect_success 'maintenance.incremental-repack.auto' '
->  	test_subcommand git multi-pack-index write --no-progress <trace-B
+> diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+> index cf30055c88dd..e18a21895238 100755
+> --- a/t/t7003-filter-branch.sh
+> +++ b/t/t7003-filter-branch.sh
+> @@ -396,7 +396,10 @@ test_expect_success '--prune-empty is able to prune entire branch' '
+>  	git branch prune-entire B &&
+>  	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t B.t" prune-entire &&
+>  	test_must_fail git rev-parse refs/heads/prune-entire &&
+> -	test_must_fail git reflog exists refs/heads/prune-entire
+> +	if test_have_prereq REFFILES
+> +	then
+> +		test_must_fail git reflog exists refs/heads/prune-entire
+> +	fi
 >  '
 >  
-> -test_expect_success 'pack-refs task' '
-> +test_expect_success REFFILES 'pack-refs task' '
->  	for n in $(test_seq 1 5)
->  	do
->  		git branch -f to-pack/$n HEAD || return 1
+>  test_expect_success '--remap-to-ancestor with filename filters' '
 
-I don't think it's superfluous to test what "git maintenance" does
-anyway, i.e. the test ends with:
-
-    test_subcommand git pack-refs --all --prune
-
-Shouldn't we test that we .. don't run that, abort, warn, whatever?
-Anyway, as with another earlier comment of mine we're going to have
-chicken & egg problems with amending these tests and then actually
-introducing reftable support, so maybe "not yet", but I worry in general
-about the loss of coverage...
+Ditto chicken and egg, but isn't this conflating "we always write logs"
+v.s. reftable just behaving differently, i.e. shouldn't this be
+positively asserting that we have the log *for that branch* still after
+its deletion?
