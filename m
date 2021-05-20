@@ -2,160 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	UNWANTED_LANGUAGE_BODY,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E10C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 310D5C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:23:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9D65610CC
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:08:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 067CE60FE5
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 22:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231287AbhETWJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 18:09:40 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56945 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231277AbhETWJi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 18:09:38 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D62DE11DE47;
-        Thu, 20 May 2021 18:08:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g2Tud61bX3dtfMpScvJVHbgmDHcJrPcXuF+/ez
-        FmoLw=; b=LrjoU6NPYgI0qwDVaAzsK2X+3wk2rGnvaiD9U9y6WZcUZBMGU8bsPm
-        3NVP27ASR6fIy6zE/ZXe0OGBiElU4LucNC8Ajt8G1qZMcm3+1LbuCILNY7LthzXU
-        n1T7ekY880SSmw5fm69Th7x1h/jdLk8QrHY0bT7FWdD4g9N3uTupU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CEA0B11DE46;
-        Thu, 20 May 2021 18:08:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S231411AbhETWY1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 18:24:27 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:51682 "EHLO
+        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231382AbhETWY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 18:24:26 -0400
+Received: from coruscant.lhuard.fr (unknown [IPv6:2a0d:e487:12f:f769:9e2d:d907:5e8f:73c3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2427811DE45;
-        Thu, 20 May 2021 18:08:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3] trace2: refactor to avoid gcc warning under -O3
-References: <xmqqim3ew905.fsf@gitster.g>
-        <patch-1.1-2e41e3e4cb-20210520T110357Z-avarab@gmail.com>
-        <YKZgZZrZdKyUk9d9@coredump.intra.peff.net>
-Date:   Fri, 21 May 2021 07:08:11 +0900
-In-Reply-To: <YKZgZZrZdKyUk9d9@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 20 May 2021 09:13:09 -0400")
-Message-ID: <xmqqk0ntt5x0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id 0020646FB72;
+        Fri, 21 May 2021 00:22:57 +0200 (CEST)
+Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
+        t=1621549380; bh=zLwHQ2Ebg6Is517npsjUEiDGGb8R4WyxEz1rSxqPX/Q=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=Ll74IyRzd4wFaB7co+PF/fqqaIOKCMJUCgJIQB43SdZlz9apztvuhg6P+5IdEtPbj
+         nkd6y7I0JxLNrhpbWh0WdWfp/KTYEYy8obUa6+j+DST8ZdX9vB0PEZeLmycxsY7LZB
+         5Z8ybP0AyBSw1N7iWm8G0fzZFH9+3THNF0t6PyLI=
+From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
+Subject: [PATCH v3 2/4] maintenance: introduce ENABLE/DISABLE for code clarity
+Date:   Fri, 21 May 2021 00:13:57 +0200
+Message-Id: <20210520221359.75615-3-lenaic@lhuard.fr>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210520221359.75615-1-lenaic@lhuard.fr>
+References: <20210509213217.449489-1-lenaic@lhuard.fr>
+ <20210520221359.75615-1-lenaic@lhuard.fr>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DEB7B0FA-B9B7-11EB-A395-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+The first parameter of `XXX_update_schedule` and alike functions is a
+boolean specifying if the tasks should be scheduled or unscheduled.
 
->> @@ -287,7 +285,7 @@ static int tr2_dst_try_unix_domain_socket(struct tr2_dst *dst,
->>  	if (tr2_dst_want_warning())
->>  		warning("trace2: could not connect to socket '%s' for '%s' tracing: %s",
->>  			path, tr2_sysenv_display_name(dst->sysenv_var),
->> -			strerror(e));
->> +			strerror(errno));
->
-> We expect the value of errno to persist across tr2_dst_want_warning()
-> and tr2_sysenv_display_name() here. The former may call getenv() and
-> atoi(). I think that's probably fine, but if we wanted to be really
-> paranoid, we'd have to preserve errno manually here, too.
+Using an `enum` with `ENABLE` and `DISABLE` values can make the code
+clearer.
 
-Being "really paranoid" consistently within the file would mean a
-change like the attached, I would think, on top of what was posted.
+Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
+---
+ builtin/gc.c | 49 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
 
-Or tr2_dst_want_warning() and tr2_sysenv_display_name() can be
-taught to preserve errno like tr2_dst_dry_uds_connect() was taught
-to do so by the patch under discussion, which may reduce the amount
-of apparent change, but constantly moving the contents of errno
-around just in case we later might want to use its value feels
-dirty.
-
-I dunno.
-
- trace2/tr2_dst.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git c/trace2/tr2_dst.c w/trace2/tr2_dst.c
-index 0031476350..f740a0a076 100644
---- c/trace2/tr2_dst.c
-+++ w/trace2/tr2_dst.c
-@@ -62,11 +62,13 @@ static int tr2_dst_try_auto_path(struct tr2_dst *dst, const char *tgt_prefix)
- 	}
- 
- 	if (fd == -1) {
-+		int saved_errno = errno;
-+
- 		if (tr2_dst_want_warning())
- 			warning("trace2: could not open '%.*s' for '%s' tracing: %s",
- 				(int) base_path_len, path.buf,
- 				tr2_sysenv_display_name(dst->sysenv_var),
--				strerror(errno));
-+				strerror(saved_errno));
- 
- 		tr2_dst_trace_disable(dst);
- 		strbuf_release(&path);
-@@ -86,6 +88,8 @@ static int tr2_dst_try_path(struct tr2_dst *dst, const char *tgt_value)
- {
- 	int fd = open(tgt_value, O_WRONLY | O_APPEND | O_CREAT, 0666);
- 	if (fd == -1) {
-+		int saved_errno = errno;
-+
- 		if (tr2_dst_want_warning())
- 			warning("trace2: could not open '%s' for '%s' tracing: %s",
- 				tgt_value,
-@@ -140,6 +144,7 @@ static int tr2_dst_try_unix_domain_socket(struct tr2_dst *dst,
- 	unsigned int uds_try = 0;
- 	int fd;
- 	const char *path = NULL;
-+	int saved_errno;
- 
- 	/*
- 	 * Allow "af_unix:[<type>:]<absolute_path>"
-@@ -193,10 +198,11 @@ static int tr2_dst_try_unix_domain_socket(struct tr2_dst *dst,
- 	}
- 
- error:
-+	saved_errno = errno;
- 	if (tr2_dst_want_warning())
- 		warning("trace2: could not connect to socket '%s' for '%s' tracing: %s",
- 			path, tr2_sysenv_display_name(dst->sysenv_var),
--			strerror(errno));
-+			strerror(saved_errno));
- 
- 	tr2_dst_trace_disable(dst);
- 	return 0;
-@@ -276,6 +282,7 @@ int tr2_dst_trace_want(struct tr2_dst *dst)
- void tr2_dst_write_line(struct tr2_dst *dst, struct strbuf *buf_line)
- {
- 	int fd = tr2_dst_get_trace_fd(dst);
-+	int saved_errno;
- 
- 	strbuf_complete_line(buf_line); /* ensure final NL on buffer */
- 
-@@ -297,9 +304,10 @@ void tr2_dst_write_line(struct tr2_dst *dst, struct strbuf *buf_line)
- 	if (write(fd, buf_line->buf, buf_line->len) >= 0)
- 		return;
- 
-+	saved_errno = errno;
- 	if (tr2_dst_want_warning())
- 		warning("unable to write trace to '%s': %s",
- 			tr2_sysenv_display_name(dst->sysenv_var),
--			strerror(errno));
-+			strerror(saved_errno));
- 	tr2_dst_trace_disable(dst);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ef7226d7bc..0caf8d45c4 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1570,19 +1570,21 @@ static char *launchctl_get_uid(void)
+ 	return xstrfmt("gui/%d", getuid());
  }
+ 
+-static int launchctl_boot_plist(int enable, const char *filename, const char *cmd)
++enum enable_or_disable {
++	DISABLE,
++	ENABLE
++};
++
++static int launchctl_boot_plist(enum enable_or_disable enable,
++				const char *filename, const char *cmd)
+ {
+ 	int result;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	char *uid = launchctl_get_uid();
+ 
+ 	strvec_split(&child.args, cmd);
+-	if (enable)
+-		strvec_push(&child.args, "bootstrap");
+-	else
+-		strvec_push(&child.args, "bootout");
+-	strvec_push(&child.args, uid);
+-	strvec_push(&child.args, filename);
++	strvec_pushl(&child.args, enable == ENABLE ? "bootstrap" : "bootout",
++		     uid, filename, NULL);
+ 
+ 	child.no_stderr = 1;
+ 	child.no_stdout = 1;
+@@ -1601,7 +1603,7 @@ static int launchctl_remove_plist(enum schedule_priority schedule, const char *c
+ 	const char *frequency = get_frequency(schedule);
+ 	char *name = launchctl_service_name(frequency);
+ 	char *filename = launchctl_service_filename(name);
+-	int result = launchctl_boot_plist(0, filename, cmd);
++	int result = launchctl_boot_plist(DISABLE, filename, cmd);
+ 	unlink(filename);
+ 	free(filename);
+ 	free(name);
+@@ -1684,8 +1686,8 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 	fclose(plist);
+ 
+ 	/* bootout might fail if not already running, so ignore */
+-	launchctl_boot_plist(0, filename, cmd);
+-	if (launchctl_boot_plist(1, filename, cmd))
++	launchctl_boot_plist(DISABLE, filename, cmd);
++	if (launchctl_boot_plist(ENABLE, filename, cmd))
+ 		die(_("failed to bootstrap service %s"), filename);
+ 
+ 	free(filename);
+@@ -1702,12 +1704,17 @@ static int launchctl_add_plists(const char *cmd)
+ 		launchctl_schedule_plist(exec_path, SCHEDULE_WEEKLY, cmd);
+ }
+ 
+-static int launchctl_update_schedule(int run_maintenance, int fd, const char *cmd)
++static int launchctl_update_schedule(enum enable_or_disable run_maintenance,
++				     int fd, const char *cmd)
+ {
+-	if (run_maintenance)
++	switch (run_maintenance) {
++	case ENABLE:
+ 		return launchctl_add_plists(cmd);
+-	else
++	case DISABLE:
+ 		return launchctl_remove_plists(cmd);
++	default:
++		BUG("invalid enable_or_disable value");
++	}
+ }
+ 
+ static char *schtasks_task_name(const char *frequency)
+@@ -1864,18 +1871,24 @@ static int schtasks_schedule_tasks(const char *cmd)
+ 		schtasks_schedule_task(exec_path, SCHEDULE_WEEKLY, cmd);
+ }
+ 
+-static int schtasks_update_schedule(int run_maintenance, int fd, const char *cmd)
++static int schtasks_update_schedule(enum enable_or_disable run_maintenance,
++				    int fd, const char *cmd)
+ {
+-	if (run_maintenance)
++	switch (run_maintenance) {
++	case ENABLE:
+ 		return schtasks_schedule_tasks(cmd);
+-	else
++	case DISABLE:
+ 		return schtasks_remove_tasks(cmd);
++	default:
++		BUG("invalid enable_or_disable value");
++	}
+ }
+ 
+ #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
+ #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
+ 
+-static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
++static int crontab_update_schedule(enum enable_or_disable run_maintenance,
++				   int fd, const char *cmd)
+ {
+ 	int result = 0;
+ 	int in_old_region = 0;
+@@ -1925,7 +1938,7 @@ static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
+ 			fprintf(cron_in, "%s\n", line.buf);
+ 	}
+ 
+-	if (run_maintenance) {
++	if (run_maintenance == ENABLE) {
+ 		struct strbuf line_format = STRBUF_INIT;
+ 		const char *exec_path = git_exec_path();
+ 
+-- 
+2.31.1
+
