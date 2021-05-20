@@ -2,104 +2,274 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19DCFC433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51231C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:49:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAF856109F
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:33:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 332916124C
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbhETIfT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 04:35:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60092 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229536AbhETIfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 04:35:18 -0400
-Received: (qmail 26467 invoked by uid 109); 20 May 2021 08:33:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 May 2021 08:33:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29107 invoked by uid 111); 20 May 2021 08:33:59 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 May 2021 04:33:59 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 20 May 2021 04:33:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] doc: explain the use of color.pager
-Message-ID: <YKYe9PZbTO1CyBOp@coredump.intra.peff.net>
-References: <YKTXlTjwOUi4W+R8@coredump.intra.peff.net>
- <YKVsw3uqb66ifzvd@google.com>
- <xmqq5yzdvrlg.fsf@gitster.g>
+        id S231397AbhETIvR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 04:51:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231163AbhETIvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 04:51:16 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90911C061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 01:49:55 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id y14so14678732wrm.13
+        for <git@vger.kernel.org>; Thu, 20 May 2021 01:49:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=33P2HMcatiUHNHDv3St0tmsxH0f2z0YEcxcnDD+M6cA=;
+        b=hsa2+VUb1iO+meoLKxHB5CNeOjb4wNA2FUVgsMEY6VF4CU6n4VHl6vQP4wdqfQPa4q
+         xYa53MnolddExoP6ksUp/mwkDFOoA8U8+njBoUfYbFS2LmuFIod2hQcvgqr2H/C3G+JW
+         fr2sU0cufm93+6VOXw1PAzcS6KypaspGqGJyeMrZFi7ej+ifK5qoTLkET3UoF7ndykWw
+         Z2OuDtVdiy0/4O3Nm5bvE1NjEmKfCdrQ/7AhZOwYSeLIBsuPubL3YZTJaSbAb+F6HG3l
+         Nc7nFULD9BC3lkRD8khlylHAPOBtZ1ru0o+B1qp06/6IYCBRgC+mIYX+YGaPH8e2tn/D
+         aRGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=33P2HMcatiUHNHDv3St0tmsxH0f2z0YEcxcnDD+M6cA=;
+        b=H6YcusXebaTWb5Xmn9Jjn31SQpc5fdB/412AKtgdB9F5fFuKOmByji+LZ2uNF7bW5f
+         O9MMWB11i/y6JDvp8uMHgYL2OPkILzcF6KRA8xKG9u9x03omdPBOGpjXOmfMXzgEtw4j
+         hkXZ9Vs01iSeS8klN0PSsJDDc/AfJj7JqXTn/ov0TaB44wpuHtwmnMFGjtd/B0LP7M29
+         BfTd6hr9thVRJQ3fZVKLGtSTu/PhuNjivorapkib8Q3KEcQ76AAnREKzqaQ/BQLD26bp
+         ruzpC8b0LMo74eFn0a9AsErKfxJqYTHBo77GO/KtDYVo+CiRRma3BiRRMUm7Hi1krI7a
+         rlzw==
+X-Gm-Message-State: AOAM533/kfNoH3h1OPi5cvf6mxEpkZOtggvzaPH64qq7Rz8aKMQlLUQD
+        LwYHHojMsT5pwV9NL7J9EeWsX2kSZSU=
+X-Google-Smtp-Source: ABdhPJw17dXo6z0wgjeB8z7BIbktSwO16rqM6mGYJk6w0E7PVuYJ/6o/Onflcfmx7TTYj8sROmm4Tg==
+X-Received: by 2002:adf:ce02:: with SMTP id p2mr3134685wrn.156.1621500594212;
+        Thu, 20 May 2021 01:49:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f14sm2316396wry.40.2021.05.20.01.49.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 May 2021 01:49:53 -0700 (PDT)
+Message-Id: <pull.958.git.1621500593126.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 20 May 2021 08:49:52 +0000
+Subject: [PATCH] [GSOC] ref-filter: add contents:raw atom
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq5yzdvrlg.fsf@gitster.g>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 20, 2021 at 03:36:59PM +0900, Junio C Hamano wrote:
+From: ZheNing Hu <adlternative@gmail.com>
 
-> > More importantly, I think I'd find a
-> > reference to the commit or a quotation from the affected user more
-> > helpful than a reference to the mailing list archive, since that would
-> > make this a bit more self-contained.
-> 
-> The original commit and its log message we ended up with did not
-> explain the motivation behind well enough.
-> 
-> The motivation from the original thread:
-> 
->       When I use a pager that escapes the escape character or highlights the
->       content itself the output of git diff without the pager should have
->       colors but not with the pager.  For example using git diff with a
->       pathspec is quite short most of the time.  For git diff I have to
->       enable paging manually and run git diff | $PAGER usually but git log
->       uses the pager automatically and should not use colors with it.
-> 
-> can be quoted as a whole, but "the point is to deal with ..." is a
-> succinct summary that is good enough for the purpose of this commit,
-> I would think.
+Add new formatting option %(contents:raw), which will
+print all the object contents without any changes.
+It will help further to migrate all cat-file formatting
+logic from cat-file to ref-filter.
 
-Thanks, I was just preparing a near-identical response.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    [GSOC] ref-filter: add contents:raw atom
+    
+    Learn from Olga's %(raw):
+    https://github.com/git/git/pull/568/commits/bf22dae7ca387dbc92c5586c92e60cd395099399
+    
+    We can add a %(contents:raw) atom to ref-filter, which can output object
+    contents without any change.
+    
+    %(contents:raw) can work on the refs which point to blob,tree,commit,tag
+    objects.
+    
+    It also support %(*contents:raw) to dereference.
+    
+    With %(cotent:raw), we can later provide support for printing the
+    content of the "raw" object for cat-file --batch.
+    
+    Why not just use Olga's %(raw)? Because %(contents) can output object
+    contents already, we can reuse it, instead of using another atom %(raw).
 
-I do think it's an important principle in general to summarize the
-content of things we link to. It's just that the summary in this case
-was so short that it was easy to look past. :)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-958%2Fadlternative%2Fref-filter-raw-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-958/adlternative/ref-filter-raw-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/958
 
-> > If I understood correctly, how about some text like the following?
-> >
-> > 	A boolean to specify whether `auto` color modes should colorize
-> > 	output going to a pager, in addition to their behavior of
-> > 	colorizing output going to a terminal. Defaults to true; [etc]
-> 
-> The variable has no control over what happens to output that
-> directly goes to a terminal, so while the additional phrase might
-> not be technically wrong per-se, I do not see why this is more clear
-> than the original.
+ ref-filter.c            | 27 +++++++++++++++++++++------
+ t/t6300-for-each-ref.sh | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 6 deletions(-)
 
-Unsurprisingly, that's my opinion, too. While writing it, I actually did
-try some longer explanations to explain from the ground up, but I
-worried it was distracting from the main point of this variable. E.g.,
-something like:
+diff --git a/ref-filter.c b/ref-filter.c
+index e2eac50d9508..fc384a194c0c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -133,7 +133,7 @@ static struct used_atom {
+ 			unsigned int nobracket : 1, push : 1, push_remote : 1;
+ 		} remote_ref;
+ 		struct {
+-			enum { C_BARE, C_BODY, C_BODY_DEP, C_LENGTH, C_LINES,
++			enum { C_RAW, C_BARE, C_BODY, C_BODY_DEP, C_LENGTH, C_LINES,
+ 			       C_SIG, C_SUB, C_SUB_SANITIZE, C_TRAILERS } option;
+ 			struct process_trailer_options trailer_opts;
+ 			unsigned int nlines;
+@@ -347,6 +347,8 @@ static int contents_atom_parser(const struct ref_format *format, struct used_ato
+ {
+ 	if (!arg)
+ 		atom->u.contents.option = C_BARE;
++	else if (!strcmp(arg, "raw"))
++		atom->u.contents.option = C_RAW;
+ 	else if (!strcmp(arg, "body"))
+ 		atom->u.contents.option = C_BODY;
+ 	else if (!strcmp(arg, "size"))
+@@ -1292,7 +1294,8 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
+ }
+ 
+ /* See grab_values */
+-static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
++static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf,
++				   unsigned long buf_size, enum object_type object_type)
+ {
+ 	int i;
+ 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
+@@ -1312,6 +1315,13 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 		    !starts_with(name, "trailers") &&
+ 		    !starts_with(name, "contents"))
+ 			continue;
++		if (atom->u.contents.option == C_RAW) {
++			v->s = xmemdupz(buf, buf_size);
++			continue;
++		}
++		if (object_type != OBJ_TAG && object_type != OBJ_COMMIT)
++			continue;
++
+ 		if (!subpos)
+ 			find_subpos(buf,
+ 				    &subpos, &sublen,
+@@ -1374,25 +1384,30 @@ static void fill_missing_values(struct atom_value *val)
+  * pointed at by the ref itself; otherwise it is the object the
+  * ref (which is a tag) refers to.
+  */
+-static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf)
++static void grab_values(struct atom_value *val, int deref, struct object *obj, struct expand_data *data)
+ {
++	void *buf = data->content;
++	unsigned long buf_size = data->size;
++
+ 	switch (obj->type) {
+ 	case OBJ_TAG:
+ 		grab_tag_values(val, deref, obj);
+-		grab_sub_body_contents(val, deref, buf);
++		grab_sub_body_contents(val, deref, buf, buf_size, obj->type);
+ 		grab_person("tagger", val, deref, buf);
+ 		break;
+ 	case OBJ_COMMIT:
+ 		grab_commit_values(val, deref, obj);
+-		grab_sub_body_contents(val, deref, buf);
++		grab_sub_body_contents(val, deref, buf, buf_size, obj->type);
+ 		grab_person("author", val, deref, buf);
+ 		grab_person("committer", val, deref, buf);
+ 		break;
+ 	case OBJ_TREE:
+ 		/* grab_tree_values(val, deref, obj, buf, sz); */
++		grab_sub_body_contents(val, deref, buf, buf_size, obj->type);
+ 		break;
+ 	case OBJ_BLOB:
+ 		/* grab_blob_values(val, deref, obj, buf, sz); */
++		grab_sub_body_contents(val, deref, buf, buf_size, obj->type);
+ 		break;
+ 	default:
+ 		die("Eh?  Object of type %d?", obj->type);
+@@ -1614,7 +1629,7 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
+ 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
+ 					       oid_to_hex(&oi->oid), ref->refname);
+ 		}
+-		grab_values(ref->value, deref, *obj, oi->content);
++		grab_values(ref->value, deref, *obj, oi);
+ 	}
+ 
+ 	grab_common_values(ref->value, deref, oi);
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 9e0214076b4d..baa3a40a70b1 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -686,6 +686,17 @@ test_atom refs/tags/signed-empty contents:body ''
+ test_atom refs/tags/signed-empty contents:signature "$sig"
+ test_atom refs/tags/signed-empty contents "$sig"
+ 
++test_expect_success 'basic atom: refs/tags/signed-empty contents:raw' '
++	git cat-file tag refs/tags/signed-empty >expected &&
++	git for-each-ref --format="%(contents:raw)" refs/tags/signed-empty >actual &&
++	sanitize_pgp <expected >expected.clean &&
++	sanitize_pgp <actual >actual.clean &&
++	echo "" >>expected.clean &&
++	test_cmp expected.clean actual.clean
++'
++
++test_atom refs/tags/signed-empty *contents:raw $(git cat-file commit HEAD)
++
+ test_atom refs/tags/signed-short subject 'subject line'
+ test_atom refs/tags/signed-short subject:sanitize 'subject-line'
+ test_atom refs/tags/signed-short contents:subject 'subject line'
+@@ -695,6 +706,15 @@ test_atom refs/tags/signed-short contents:signature "$sig"
+ test_atom refs/tags/signed-short contents "subject line
+ $sig"
+ 
++test_expect_success 'basic atom: refs/tags/signed-short contents:raw' '
++	git cat-file tag refs/tags/signed-short >expected &&
++	git for-each-ref --format="%(contents:raw)" refs/tags/signed-short >actual &&
++	sanitize_pgp <expected >expected.clean &&
++	sanitize_pgp <actual >actual.clean &&
++	echo "" >>expected.clean &&
++	test_cmp expected.clean actual.clean
++'
++
+ test_atom refs/tags/signed-long subject 'subject line'
+ test_atom refs/tags/signed-long subject:sanitize 'subject-line'
+ test_atom refs/tags/signed-long contents:subject 'subject line'
+@@ -708,6 +728,15 @@ test_atom refs/tags/signed-long contents "subject line
+ body contents
+ $sig"
+ 
++test_expect_success 'basic atom: refs/tags/signed-long contents:raw' '
++	git cat-file tag refs/tags/signed-long >expected &&
++	git for-each-ref --format="%(contents:raw)" refs/tags/signed-long >actual &&
++	sanitize_pgp <expected >expected.clean &&
++	sanitize_pgp <actual >actual.clean &&
++	echo "" >>expected.clean &&
++	test_cmp expected.clean actual.clean
++'
++
+ test_expect_success 'set up refs pointing to tree and blob' '
+ 	git update-ref refs/mytrees/first refs/heads/main^{tree} &&
+ 	git update-ref refs/myblobs/first refs/heads/main:one
+@@ -718,6 +747,7 @@ test_atom refs/mytrees/first contents:subject ""
+ test_atom refs/mytrees/first body ""
+ test_atom refs/mytrees/first contents:body ""
+ test_atom refs/mytrees/first contents:signature ""
++test_atom refs/mytrees/first contents:raw $(git cat-file tree refs/mytrees/first)
+ test_atom refs/mytrees/first contents ""
+ 
+ test_atom refs/myblobs/first subject ""
+@@ -725,6 +755,7 @@ test_atom refs/myblobs/first contents:subject ""
+ test_atom refs/myblobs/first body ""
+ test_atom refs/myblobs/first contents:body ""
+ test_atom refs/myblobs/first contents:signature ""
++test_atom refs/myblobs/first contents:raw $(git cat-file blob refs/myblobs/first)
+ test_atom refs/myblobs/first contents ""
+ 
+ test_expect_success 'set up multiple-sort tags' '
 
-  When color mode options (e.g., `color.ui`) are set to `auto`, Git by
-  default will enable color when the output is going to a terminal or to
-  a pager (since the pager itself is outputting to a terminal). This is
-  a problem if your pager doesn't faithfully relay the color codes to
-  the terminal. You can set this boolean to `false` to disable color
-  when output is going to a terminal.
-
-> So, in short, I think it would be sufficient to amend the proposed
-> log message with s/deal with/to deal with/ and nothing else.
-
-I'm happy with that.
-
--Peff
+base-commit: 97eea85a0a1ec66d356567808a1e4ca2367e0ce7
+-- 
+gitgitgadget
