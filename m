@@ -2,76 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLACK autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 436E7C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4557DC433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:36:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03CD3613BF
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:20:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2755D60FF0
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230071AbhETVVr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 17:21:47 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51388 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbhETVVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 17:21:46 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F3F811D7D2;
-        Thu, 20 May 2021 17:20:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zJKEC1eee+e8XBXp2ABs3JYXVz1+sEh3VgEqYq
-        srG+I=; b=hfQ7ClgB8MWdlrvd/f0NjgnNJ+egieWygkTJIBXJuylbbe37Hehqns
-        hktrZyFXkBgTJPS+HtdqxPpN8cOZG2xqWXSLHvohH30poFbV87hqT7lAoeXbu8xm
-        upqTOxKXQnBHas/0i1XWhgznLvzNmlavSwQpkXOc86+qgfEYG7VrI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 87CA911D7D1;
-        Thu, 20 May 2021 17:20:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B6A7E11D7D0;
-        Thu, 20 May 2021 17:20:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Git List <git@vger.kernel.org>,
-        Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-Subject: Re: Should we do something with #git-devel on Freenode?
-References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
-        <YKViF9OVLeA95JPH@google.com> <20210520071141.GZ8544@kitsune.suse.cz>
-        <YKaaBj0KmJ3K5foC@coredump.intra.peff.net>
-Date:   Fri, 21 May 2021 06:20:19 +0900
-In-Reply-To: <YKaaBj0KmJ3K5foC@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 20 May 2021 13:19:02 -0400")
-Message-ID: <xmqqwnrtt84s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230252AbhETVh7 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 20 May 2021 17:37:59 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:46361 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229972AbhETVh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 17:37:59 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14KLaU1k001795
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 20 May 2021 17:36:31 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Emily Shaffer'" <emilyshaffer@google.com>, <git@vger.kernel.org>
+Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Jeff Hostetler'" <git@jeffhostetler.com>,
+        "'Bagas Sanjaya'" <bagasdotme@gmail.com>
+References: <20210507002908.1495061-1-emilyshaffer@google.com> <20210520210546.4129620-1-emilyshaffer@google.com>
+In-Reply-To: <20210520210546.4129620-1-emilyshaffer@google.com>
+Subject: RE: [PATCH v2] tr2: log parent process name
+Date:   Thu, 20 May 2021 17:36:25 -0400
+Message-ID: <021601d74dc0$326f6620$974e3260$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2F3A39DC-B9B1-11EB-8F71-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQG/TiO1DChZ2CQV98iURtxeNF+BXKsc4fLQ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On May 20, 2021 5:06 PM, Emily Shaffer wrote:
+>To: git@vger.kernel.org
+>Cc: Emily Shaffer <emilyshaffer@google.com>; Ævar Arnfjörð Bjarmason <avarab@gmail.com>; Junio C Hamano <gitster@pobox.com>;
+>Jeff Hostetler <git@jeffhostetler.com>; Bagas Sanjaya <bagasdotme@gmail.com>
+>Subject: [PATCH v2] tr2: log parent process name
+>
+>It can be useful to tell who invoked Git - was it invoked manually by a user via CLI or script? By an IDE?  In some cases - like 'repo' tool -
+>we can influence the source code and set the GIT_TRACE2_PARENT_SID environment variable from the caller process. In 'repo''s case,
+>that parent SID is manipulated to include the string "repo", which means we can positively identify when Git was invoked by 'repo' tool.
+>However, identifying parents that way requires both that we know which tools invoke Git and that we have the ability to modify the source
+>code of those tools. It cannot scale to keep up with the various IDEs and wrappers which use Git, most of which we don't know about.
+>Learning which tools and wrappers invoke Git, and how, would give us insight to decide where to improve Git's usability and performance.
+>
+>Unfortunately, there's no cross-platform reliable way to gather the name of the parent process. If procfs is present, we can use that;
+>otherwise we will need to discover the name another way. However, the process ID should be sufficient regardless of platform.
 
-> decision. Likewise for irc. I don't think #git or even #git-devel has
-> any official status. It is simply where people doing things chose to go.
-> Now they may choose to go somewhere else, but they don't necessarily
-> have to do it as a unit.
+I like this idea, but there are some platforms where this is unlikely to work. NonStop, in particular, can initiate git - and I frequently do - from a non-POSIX environment where process name is entirely different. In fact, it is something like $ABC (always beginning with a $, which makes life very difficult for shell scripts and screws up GIT_SSH_COMMAND, but I digress). I'm going to need to plug in something very platform-specific to make this work. getppid() always returns 1 in this situation, which is extraordinarily meaningless on the platform and does not represent the actual parent.
 
-FYI I contacted https://libera.chat/ to register "as a project",
-primarily to prevent other folks squat on #git and #git-*; if we
-decide to move our bi-weekly "Git Standup" there, it may turn out to
-be useful.
+I will try to put the appropriate compat hooks in once this moves into master but I can't promise it will be particularly efficient at this stage.
 
+Regards,
+Randall
 
