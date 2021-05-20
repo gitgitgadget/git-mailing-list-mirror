@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F762C433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E75BFC43460
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E42160D07
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC627611BD
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbhETGLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 02:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55960 "EHLO
+        id S229681AbhETGLO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 02:11:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230398AbhETGLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 02:11:07 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C22C061574
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:46 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id v12so16290058wrq.6
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:46 -0700 (PDT)
+        with ESMTP id S230255AbhETGLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 02:11:08 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E26C06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:47 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id c14so14507041wrx.3
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aSc6lLOOxl/CmVODC6PGxIjqKHeGQjwJkuBiL6J0QwE=;
-        b=KjkoPomTFbUvz5bH7wI2+4SVj2FHYp9FUyhUz0dVA1ykIU7uZkUGq+8JkBXKYTVXXt
-         UuP9Ed8DDXFbx2kJFde+ZVyEevlVRgO85OuBrjoNnWPGtBMstWqc5gdUjZ8KjGtD+z1D
-         8ONFMkKlxoBJj+pkktikzZFagm+YmjQVqIGlFbfJDIwGGyVgCsilAT3jeFiIx4Jeg8WY
-         /j0H+VcCOx0/sEzvjS0H1GHtoU2Dn9ghOFbv+yIp9fKS1l2PsdsZoPEVuxwdAEHJpxJM
-         uqrnDlilIalKfCDmOshQ4ggJXRX84F6tc9kPOrTB6RBkgl6acFNnYK6BeSzLInJJ04RJ
-         EZ3g==
+        bh=gUnXWMvnUu3h+DNbCL2dlFWVnyBiQFKDUiNGfM7jfOE=;
+        b=sVHIqLvEMCmyGyeDzjtPgnxwBikcIjAlr972JdDe5HQxKXc10cujJoLaSpb9CDX14u
+         XcfjsGKqNI+l+YxVkaa27eC0IDDxaaboW3cvb/dUxMLpxrrN1pvYhhJFo2KGcN5KXs8p
+         dZzEg0rWiQEW08qg620WhYjB+RIvN4qd1A93Y5t7PuZlhp0Y5+NP4Pme6YzskT3aW6G7
+         bFV6+5vXSS8JRKufsQcXwM/6a3BKAKN1bcoPNjuEH8qCxGQk0rXS4xRWpUBlRb5yRxYO
+         Fn7hAY1x8Bx9Rzskws/Q0nM7Jc4Db/r+p415aClZqzE/qcORGkfpy9H993x0ptYdyXiW
+         SzIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aSc6lLOOxl/CmVODC6PGxIjqKHeGQjwJkuBiL6J0QwE=;
-        b=mkzDPHD8HgllbrCeGeWdrlW+vyx4rAwztbesTeJleJAVUJSxJwsTq3jvslG7xj/qK4
-         stH4XmdnEqh54kmhIsBeX4WDkNZa/dDf+xbF71msaBAPz3BWGAzCakFhU+z4ceYmZaKq
-         g1bPU33iXV1INNLM7jUNaa+yDvs1iJ5sYA+Q7YE7jUoHqMF/RzjCAmHrPwQft3xZ/DFL
-         OKvEOxg/eAD6qScuwGAOflTyhxSU2UxvC2pQQ9xaS2UQiTTkutHfmtMsSFd1bf/025S2
-         moCfcJPQdJcTdTja4iZs9MFHbJE1YYDprZMahvSOF+r1BD+Gg3kjv00wsex/rVVzckh6
-         g7cA==
-X-Gm-Message-State: AOAM532ksEL0Vo5QtJFELfn8/3zbXoJQrUsJbMuwOZzCWGUvA0WhRtFt
-        8tYAn/UnHbw6WGfzDnInuphFsgcWsLM=
-X-Google-Smtp-Source: ABdhPJzJkQaxaox29zfg2tMGLbauRfRDpB8/y5yHT/JBuIVNMYdbbG1pPYW1gk28o88dfz0J4JQFJA==
-X-Received: by 2002:adf:a54a:: with SMTP id j10mr2467656wrb.16.1621490984985;
-        Wed, 19 May 2021 23:09:44 -0700 (PDT)
+        bh=gUnXWMvnUu3h+DNbCL2dlFWVnyBiQFKDUiNGfM7jfOE=;
+        b=Oxxa15lY8U2WAwhSUoKPxsv+c5bXi+q/lUqx8TZB6PNTDt4VVVsHJ8DAOXyCYG58yR
+         s0nBx8Cxy1v2rkxc2t9w4w4GXj0/MQd/Ei4j8+xsw7+1HdEeQQyshDhi4+hae0aOIah1
+         vzpT7hdgnu5Vqw2NYZrfQnhE2hkJTvaLS2gyQhnPFYf9kIjGoWoOkPY4iimzKPBhHOBB
+         /IZMUmfCf1I4UE1lhV1cuIJT8wH8OhQ/2sAWkcUkHl6ZLSgIIPtlNTqor3TuMNIUKR3k
+         S7la/Uzt0xxOBLzbANB4IEDO60nsxtGa1zyXCXg6oWfiC5K/2EWGOGoavv+3kh+PzEqo
+         UBOA==
+X-Gm-Message-State: AOAM530N7pqIcDDHOISyIEknVfJRecW8z5LBeqW1jgFrXW+2jREr2/Ag
+        5vdiwD3droo4V7BgkX/Jnt596oXUh6A=
+X-Google-Smtp-Source: ABdhPJz8Y9nQYOrpJORYqDy+5Oj8Yn8xkgU/ddC7W3GlDWrTooqXWZiVZKen/kpn8oh3GAvCVBG+Hw==
+X-Received: by 2002:a05:6000:4d:: with SMTP id k13mr2458279wrx.98.1621490986161;
+        Wed, 19 May 2021 23:09:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q27sm1820348wrz.79.2021.05.19.23.09.44
+        by smtp.gmail.com with ESMTPSA id d141sm757151wmd.21.2021.05.19.23.09.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 23:09:44 -0700 (PDT)
-Message-Id: <4246d0193fed5ff522fb2c442bd779973701c078.1621490982.git.gitgitgadget@gmail.com>
+        Wed, 19 May 2021 23:09:45 -0700 (PDT)
+Message-Id: <cfd8cbef17f03a97b20196bebf7abc04572a79b2.1621490982.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 References: <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
         <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 May 2021 06:09:30 +0000
-Subject: [PATCH v3 02/13] Documentation/technical: describe remembering
- renames optimization
+Date:   Thu, 20 May 2021 06:09:32 +0000
+Subject: [PATCH v3 04/13] fast-rebase: write conflict state to working tree,
+ index, and HEAD
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,715 +82,109 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Remembering renames on the upstream side of history in an early merge of
-a rebase or cherry-pick for re-use in a latter merge of the same
-operation makes pretty good intuitive sense.  However, trying to show
-that it doesn't cause some subtle behavioral difference or some funny
-edge or corner case is much more involved.  And, in fact, it does
-introduce a subtle behavioral change.
+Previously, when fast-rebase hit a conflict, it simply aborted and left
+HEAD, the index, and the working tree where they were before the
+operation started.  While fast-rebase does not support restarting from a
+conflicted state, write the conflicted state out anyway as it gives us a
+way to see what the conflicts are and write tests that check for them.
 
-Document all the assumptions, special cases, and logic involved in such
-an optimization, and describe why this optimization is safe under the
-current optimizations/features/etc. -- even when the subtle behavioral
-change is triggered.
-
-Part of the point of adding this document that goes over the
-optimization in such laborious detail, is that it is possible that
-significant future changes (optimizations or feature changes) could
-interact with this optimization in interesting ways; this document is
-here to help folks making big changes sanity check that the assumptions
-and arguments underlying this optimization are still valid.  (As a side
-note, creating this document forced me to review things in sufficient
-detail that I found I was not properly caching directory-rename-induced
-renames, resulting in the code not being aware of those renames and
-causing unnecessary diffcore_rename_extended() calls in subsequent
-merges.)
-
-A subsequent commit will add several testcases based on this document
-meant to stress-test the implementation and also document the case with
-the subtle behavioral change.
+This will be important in the upcoming commits, because sequencer.c is
+only superficially integrated with merge-ort.c; in particular, it calls
+merge_switch_to_result() after EACH merge instead of only calling it at
+the end of all the sequence of merges (or when a conflict is hit).  This
+not only causes needless updates to the working copy and index, but also
+causes all intermediate data to be freed and tossed, preventing caching
+information from one merge to the next.  However, integrating
+sequencer.c more deeply with merge-ort.c is a big task, and making this
+small extension to fast-rebase.c provides us with a simple way to test
+the edge and corner cases that we want to make sure continue working.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- .../technical/remembering-renames.txt         | 669 ++++++++++++++++++
- 1 file changed, 669 insertions(+)
- create mode 100644 Documentation/technical/remembering-renames.txt
+ t/helper/test-fast-rebase.c | 51 +++++++++++++++++++++++--------------
+ 1 file changed, 32 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/technical/remembering-renames.txt b/Documentation/technical/remembering-renames.txt
-new file mode 100644
-index 000000000000..251ce477e059
---- /dev/null
-+++ b/Documentation/technical/remembering-renames.txt
-@@ -0,0 +1,669 @@
-+Rebases and cherry-picks involve a sequence of merges whose results are
-+recorded as new single-parent commits.  The first parent side of those
-+merges represent the "upstream" side, and often include a far larger set of
-+changes than the second parent side.  Traditionally, the renames on the
-+first-parent side of that sequence of merges were repeatedly re-detected
-+for every merge.  This file explains why it is safe and effective during
-+rebases and cherry-picks to remember renames on the upstream side of
-+history as an optimization, assuming all merges are automatic and clean
-+(i.e. no conflicts and not interrupted for user input or editing).
-+
-+Outline:
-+
-+  0. Assumptions
-+
-+  1. How rebasing and cherry-picking work
-+
-+  2. Why the renames on MERGE_SIDE1 in any given pick are *always* a
-+     superset of the renames on MERGE_SIDE1 for the next pick.
-+
-+  3. Why any rename on MERGE_SIDE1 in any given pick is _almost_ always also
-+     a rename on MERGE_SIDE1 for the next pick
-+
-+  4. A detailed description of the the counter-examples to #3.
-+
-+  5. Why the special cases in #4 are still fully reasonable to use to pair
-+     up files for three-way content merging in the merge machinery, and why
-+     they do not affect the correctness of the merge.
-+
-+  6. Interaction with skipping of "irrelevant" renames
-+
-+  7. Additional items that need to be cached
-+
-+  8. How directory rename detection interacts with the above and why this
-+     optimization is still safe even if merge.directoryRenames is set to
-+     "true".
-+
-+
-+=== 0. Assumptions ===
-+
-+There are two assumptions that will hold throughout this document:
-+
-+  * The upstream side where commits are transplanted to is treated as the
-+    first parent side when rebase/cherry-pick call the merge machinery
-+
-+  * All merges are fully automatic
-+
-+and a third that will hold in sections 2-5 for simplicity, that I'll later
-+address in section 8:
-+
-+  * No directory renames occur
-+
-+
-+Let me explain more about each assumption and why I include it:
-+
-+
-+The first assumption is merely for the purposes of making this document
-+clearer; the optimization implementation does not actually depend upon it.
-+However, the assumption does hold in all cases because it reflects the way
-+that both rebase and cherry-pick were implemented; and the implementation
-+of cherry-pick and rebase are not readily changeable for backwards
-+compatibility reasons (see for example the discussion of the --ours and
-+--theirs flag in the documentation of `git checkout`, particularly the
-+comments about how they behave with rebase).  The optimization avoids
-+checking first-parent-ness, though.  It checks the conditions that make the
-+optimization valid instead, so it would still continue working if someone
-+changed the parent ordering that cherry-pick and rebase use.  But making
-+this assumption does make this document much clearer and prevents me from
-+having to repeat every example twice.
-+
-+If the second assumption is violated, then the optimization simply is
-+turned off and thus isn't relevant to consider.  The second assumption can
-+also be stated as "there is no interruption for a user to resolve conflicts
-+or to just further edit or tweak files".  While real rebases and
-+cherry-picks are often interrupted (either because it's an interactive
-+rebase where the user requested to stop and edit, or because there were
-+conflicts that the user needs to resolve), the cache of renames is not
-+stored on disk, and thus is thrown away as soon as the rebase or cherry
-+pick stops for the user to resolve the operation.
-+
-+The third assumption makes sections 2-5 simpler, and allows people to
-+understand the basics of why this optimization is safe and effective, and
-+then I can go back and address the specifics in section 8.  It is probably
-+also worth noting that if directory renames do occur, then the default of
-+merge.directoryRenames being set to "conflict" means that the operation
-+will stop for users to resolve the conflicts and the cache will be thrown
-+away, and thus that there won't be an optimization to apply.  So, the only
-+reason we need to address directory renames specifically, is that some
-+users will have set merge.directoryRenames to "true" to allow the merges to
-+continue to proceed automatically.  The optimization is still safe with
-+this config setting, but we have to discuss a few more cases to show why;
-+this discussion is deferred until section 8.
-+
-+
-+=== 1. How rebasing and cherry-picking work ===
-+
-+Consider the following setup (from the git-rebase manpage):
-+
-+		     A---B---C topic
-+		    /
-+	       D---E---F---G main
-+
-+After rebasing or cherry-picking topic onto main, this will appear as:
-+
-+			     A'--B'--C' topic
-+			    /
-+	       D---E---F---G main
-+
-+The way the commits A', B', and C' are created is through a series of
-+merges, where rebase or cherry-pick sequentially uses each of the three
-+A-B-C commits in a special merge operation.  Let's label the three commits
-+in the merge operation as MERGE_BASE, MERGE_SIDE1, and MERGE_SIDE2.  For
-+this picture, the three commits for each of the three merges would be:
-+
-+To create A':
-+   MERGE_BASE:   E
-+   MERGE_SIDE1:  G
-+   MERGE_SIDE2:  A
-+
-+To create B':
-+   MERGE_BASE:   A
-+   MERGE_SIDE1:  A'
-+   MERGE_SIDE2:  B
-+
-+To create C':
-+   MERGE_BASE:   B
-+   MERGE_SIDE1:  B'
-+   MERGE_SIDE2:  C
-+
-+Sometimes, folks are surprised that these three-way merges are done.  It
-+can be useful in understanding these three-way merges to view them in a
-+slightly different light.  For example, in creating C', you can view it as
-+either:
-+
-+  * Apply the changes between B & C to B'
-+  * Apply the changes between B & B' to C
-+
-+Conceptually the two statements above are the same as a three-way merge of
-+B, B', and C, at least the parts before you decide to record a commit.
-+
-+
-+=== 2. Why the renames on MERGE_SIDE1 in any given pick are always a ===
-+===    superset of the renames on MERGE_SIDE1 for the next pick.     ===
-+
-+The merge machinery uses the filenames it is fed from MERGE_BASE,
-+MERGE_SIDE1, and MERGE_SIDE2.  It will only move content to a different
-+filename under one of three conditions:
-+
-+  * To make both pieces of a conflict available to a user during conflict
-+    resolution (examples: directory/file conflict, add/add type conflict
-+    such as symlink vs. regular file)
-+
-+  * When MERGE_SIDE1 renames the file.
-+
-+  * When MERGE_SIDE2 renames the file.
-+
-+First, let's remember what commits are involved in the first and second
-+picks of the cherry-pick or rebase sequence:
-+
-+To create A':
-+   MERGE_BASE:   E
-+   MERGE_SIDE1:  G
-+   MERGE_SIDE2:  A
-+
-+To create B':
-+   MERGE_BASE:   A
-+   MERGE_SIDE1:  A'
-+   MERGE_SIDE2:  B
-+
-+So, in particular, we need to show that the renames between E and G are a
-+superset of those between A and A'.
-+
-+A' is created by the first merge.  A' will only have renames for one of the
-+three reasons listed above.  The first case, a conflict, results in a
-+situation where the cache is dropped and thus this optimization doesn't
-+take effect, so we need not consider that case.  The third case, a rename
-+on MERGE_SIDE2 (i.e. from G to A), will show up in A' but it also shows up
-+in A -- therefore when diffing A and A' that path does not show up as a
-+rename.  The only remaining way for renames to show up in A' is for the
-+rename to come from MERGE_SIDE1.  Therefore, all renames between A and A'
-+are a subset of those between E and G.  Equivalently, all renames between E
-+and G are a superset of those between A and A'.
-+
-+
-+=== 3. Why any rename on MERGE_SIDE1 in any given pick is _almost_   ===
-+===    always also a rename on MERGE_SIDE1 for the next pick.        ===
-+
-+Let's again look at the first two picks:
-+
-+To create A':
-+   MERGE_BASE:   E
-+   MERGE_SIDE1:  G
-+   MERGE_SIDE2:  A
-+
-+To create B':
-+   MERGE_BASE:   A
-+   MERGE_SIDE1:  A'
-+   MERGE_SIDE2:  B
-+
-+Now let's look at any given rename from MERGE_SIDE1 of the first pick, i.e.
-+any given rename from E to G.  Let's use the filenames 'oldfile' and
-+'newfile' for demonstration purposes.  That first pick will function as
-+follows; when the rename is detected, the merge machinery will do a
-+three-way content merge of the following:
-+    E:oldfile
-+    G:newfile
-+    A:oldfile
-+and produce a new result:
-+    A':newfile
-+
-+Note above that I've assumed that E->A did not rename oldfile.  If that
-+side did rename, then we most likely have a rename/rename(1to2) conflict
-+that will cause the rebase or cherry-pick operation to halt and drop the
-+in-memory cache of renames and thus doesn't need to be considered further.
-+In the special case that E->A does rename the file but also renames it to
-+newfile, then there is no conflict from the renaming and the merge can
-+succeed.  In this special case, the rename is not valid to cache because
-+the second merge will find A:newfile in the MERGE_BASE.  So a
-+rename/rename(1to1) needs to be specially handled by pruning renames from
-+the cache and decrementing the dir_rename_counts in the current and leading
-+directories associated with those renames.  Or, since these are really
-+rare, one could just take the easy way out and disable the remembering
-+renames optimization when a rename/rename(1to1) happens.
-+
-+The previous paragraph handled the cases for E->A renaming oldfile, let's
-+continue assuming that oldfile is not renamed in A.
-+
-+As per the diagram for creating B', MERGE_SIDE1 involves the changes from A
-+to A'.  So, we are curious whether A:oldfile and A':newfile will be viewed
-+as renames.  Note that:
-+
-+  * There will be no A':oldfile (because there could not have been a
-+    G:oldfile as we do not do break detection in the merge machinery and
-+    G:newfile was detected as a rename, and by the construction of the
-+    rename above that merged cleanly, the merge machinery will ensure there
-+    is no 'oldfile' in the result).
-+
-+  * There will be no A:newfile (if there had been, we would have had a
-+    rename/add conflict).
-+
-+  * Clearly A:oldfile and A':newfile are "related" (A':newfile came from a
-+    clean three-way content merge involving A:oldfile).
-+
-+We can also expound on the third point above, by noting that three-way
-+content merges can also be viewed as applying the differences between the
-+base and one side to the other side.  Thus we can view A':newfile as
-+having been created by taking the changes between E:oldfile and G:newfile
-+(which were detected as being related, i.e. <50% changed) to A:oldfile.
-+
-+Thus A:oldfile and A':newfile are just as related as E:oldfile and
-+G:newfile are -- they have exactly identical differences.  Since the latter
-+were detected as renames, A:oldfile and A':newfile should also be
-+detectable as renames almost always.
-+
-+
-+=== 4. A detailed description of the counter-examples to #3.         ===
-+
-+We already noted in section 3 that rename/rename(1to1) (i.e. both sides
-+renaming a file the same way) was one counter-example.  The more
-+interesting bit, though, is why did we need to use the "almost" qualifier
-+when stating that A:oldfile and A':newfile are "almost" always detectable
-+as renames?
-+
-+Let's repeat an earlier point that section 3 made:
-+
-+  A':newfile was created by applying the changes between E:oldfile and
-+  G:newfile to A:oldfile.  The changes between E:oldfile and G:newfile were
-+  <50% of the size of E:oldfile.
-+
-+If those changes that were <50% of the size of E:oldfile are also <50% of
-+the size of A:oldfile, then A:oldfile and A':newfile will be detectable as
-+renames.  However, if there is a dramatic size reduction between E:oldfile
-+and A:oldfile (but the changes between E:oldfile, G:newfile, and A:oldfile
-+still somehow merge cleanly), then traditional rename detection would not
-+detect A:oldfile and A':newfile as renames.
-+
-+Here's an example where that can happen:
-+  * E:oldfile had 20 lines
-+  * G:newfile added 10 new lines at the beginning of the file
-+  * A:oldfile kept the first 3 lines of the file, and deleted all the rest
-+then
-+  => A':newfile would have 13 lines, 3 of which matches those in A:oldfile.
-+E:oldfile -> G:newfile would be detected as a rename, but A:oldfile and
-+A':newfile would not be.
-+
-+
-+=== 5. Why the special cases in #4 are still fully reasonable to use to    ===
-+===    pair up files for three-way content merging in the merge machinery, ===
-+===    and why they do not affect the correctness of the merge.            ===
-+
-+In the rename/rename(1to1) case, A:newfile and A':newfile are not renames
-+since they use the *same* filename.  However, files with the same filename
-+are obviously fine to pair up for three-way content merging (the merge
-+machinery has never employed break detection).  The interesting
-+counter-example case is thus not the rename/rename(1to1) case, but the case
-+where A did not rename oldfile.  That was the case that we spent most of
-+the time discussing in sections 3 and 4.  The remainder of this section
-+will be devoted to that case as well.
-+
-+So, even if A:oldfile and A':newfile aren't detectable as renames, why is
-+it still reasonable to pair them up for three-way content merging in the
-+merge machinery?  There are multiple reasons:
-+
-+  * As noted in sections 3 and 4, the diff between A:oldfile and A':newfile
-+    is *exactly* the same as the diff between E:oldfile and G:newfile.  The
-+    latter pair were detected as renames, so it seems unlikely to surprise
-+    users for us to treat A:oldfile and A':newfile as renames.
-+
-+  * In fact, "oldfile" and "newfile" were at one point detected as renames
-+    due to how they were constructed in the E..G chain.  And we used that
-+    information once already in this rebase/cherry-pick.  I think users
-+    would be unlikely to be surprised at us continuing to treat the files
-+    as renames and would quickly understand why we had done so.
-+
-+  * Marking or declaring files as renames is *not* the end goal for merges.
-+    Merges use renames to determine which files make sense to be paired up
-+    for three-way content merges.
-+
-+  * A:oldfile and A':newfile were _already_ paired up in a three-way
-+    content merge; that is how A':newfile was created.  In fact, that
-+    three-way content merge was clean.  So using them again in a later
-+    three-way content merge seems very reasonable.
-+
-+However, the above is focusing on the common scenarios.  Let's try to look
-+at all possible unusual scenarios and compare without the optimization to
-+with the optimization.  Consider the following theoretical cases; we will
-+then dive into each to determine which of them are possible,
-+and if so, what they mean:
-+
-+  1. Without the optimization, the second merge results in a conflict.
-+     With the optimization, the second merge also results in a conflict.
-+     Questions: Are the conflicts confusingly different?  Better in one case?
-+
-+  2. Without the optimization, the second merge results in NO conflict.
-+     With the optimization, the second merge also results in NO conflict.
-+     Questions: Are the merges the same?
-+
-+  3. Without the optimization, the second merge results in a conflict.
-+     With the optimization, the second merge results in NO conflict.
-+     Questions: Possible?  Bug, bugfix, or something else?
-+
-+  4. Without the optimization, the second merge results in NO conflict.
-+     With the optimization, the second merge results in a conflict.
-+     Questions: Possible?  Bug, bugfix, or something else?
-+
-+I'll consider all four cases, but out of order.
-+
-+The fourth case is impossible.  For the code without the remembering
-+renames optimization to not get a conflict, B:oldfile would need to exactly
-+match A:oldfile -- if it doesn't, there would be a modify/delete conflict.
-+If A:oldfile matches B:oldfile exactly, then a three-way content merge
-+between A:oldfile, A':newfile, and B:oldfile would have no conflict and
-+just give us the version of newfile from A' as the result.
-+
-+From the same logic as the above paragraph, the second case would indeed
-+result in identical merges.  When A:oldfile exactly matches B:oldfile, an
-+undetected rename would say, "Oh, I see one side didn't modify 'oldfile'
-+and the other side deleted it.  I'll delete it.  And I see you have this
-+brand new file named 'newfile' in A', so I'll keep it."  That gives the
-+same results as three-way content merging A:oldfile, A':newfile, and
-+B:oldfile -- a removal of oldfile with the version of newfile from A'
-+showing up in the result.
-+
-+The third case is interesting.  It means that A:oldfile and A':newfile were
-+not just similar enough, but that the changes between them did not conflict
-+with the changes between A:oldfile and B:oldfile.  This would validate our
-+hunch that the files were similar enough to be used in a three-way content
-+merge, and thus seems entirely correct for us to have used them that way.
-+(Sidenote: One particular example here may be enlightening.  Let's say that
-+B was an immediate revert of A.  B clearly would have been a clean revert
-+of A, since A was B's immediate parent.  One would assume that if you can
-+pick a commit, you should also be able to cherry-pick its immediate revert.
-+However, this is one of those funny corner cases; without this
-+optimization, we just successfully picked a commit cleanly, but we are
-+unable to cherry-pick its immediate revert due to the size differences
-+between E:oldfile and A:oldfile.)
-+
-+That leaves only the first case to consider -- when we get conflicts both
-+with or without the optimization.  Without the optimization, we'll have a
-+modify/delete conflict, where both A':newfile and B:oldfile are left in the
-+tree for the user to deal with and no hints about the potential similarity
-+between the two.  With the optimization, we'll have a three-way content
-+merged A:oldfile, A':newfile, and B:oldfile with conflict markers
-+suggesting we thought the files were related but giving the user the chance
-+to resolve.  As noted above, I don't think users will find us treating
-+'oldfile' and 'newfile' as related as a surprise since they were between E
-+and G.  In any event, though, this case shouldn't be concerning since we
-+hit a conflict in both cases, told the user what we know, and asked them to
-+resolve it.
-+
-+So, in summary, case 4 is impossible, case 2 yields the same behavior, and
-+cases 1 and 3 seem to provide as good or better behavior with the
-+optimization than without.
-+
-+
-+=== 6. Interaction with skipping of "irrelevant" renames ===
-+
-+Previous optimizations involved skipping rename detection for paths
-+considered to be "irrelevant".  See for example the following commits:
-+
-+  * 32a56dfb99 ("merge-ort: precompute subset of sources for which we
-+		need rename detection", 2021-03-11)
-+  * 2fd9eda462 ("merge-ort: precompute whether directory rename
-+		detection is needed", 2021-03-11)
-+  * 9bd342137e ("diffcore-rename: determine which relevant_sources are
-+		no longer relevant", 2021-03-13)
-+
-+Relevance is always determined by what the _other_ side of history has
-+done, in terms of modifing a file that our side renamed, or adding a
-+file to a directory which our side renamed.  This means that a path
-+that is "irrelevant" when picking the first commit of a series in a
-+rebase or cherry-pick, may suddenly become "relevant" when picking the
-+next commit.
-+
-+The upshot of this is that we can only cache rename detection results
-+for relevant paths, and need to re-check relevance in subsequent
-+commits.  If those subsequent commits have additional paths that are
-+relevant for rename detection, then we will need to redo rename
-+detection -- though we can limit it to the paths for which we have not
-+already detected renames.
-+
-+
-+=== 7. Additional items that need to be cached ===
-+
-+It turns out we have to cache more than just renames; we also cache:
-+
-+  A) non-renames (i.e. unpaired deletes)
-+  B) counts of renames within directories
-+  C) sources that were marked as RELEVANT_LOCATION, but which were
-+     downgraded to RELEVANT_NO_MORE
-+  D) the toplevel trees involved in the merge
-+
-+These are all stored in struct rename_info, and respectively appear in
-+  * cached_pairs (along side actual renames, just with a value of NULL)
-+  * dir_rename_counts
-+  * cached_irrelevant
-+  * merge_trees
-+
-+The reason for (A) comes from the irrelevant renames skipping
-+optimization discussed in section 6.  The fact that irrelevant renames
-+are skipped means we only get a subset of the potential renames
-+detected and subsequent commits may need to run rename detection on
-+the upstream side on a subset of the remaining renames (to get the
-+renames that are relevant for that later commit).  Since unpaired
-+deletes are involved in rename detection too, we don't want to
-+repeatedly check that those paths remain unpaired on the upstream side
-+with every commit we are transplanting.
-+
-+The reason for (B) is that diffcore_rename_extended() is what
-+generates the counts of renames by directory which is needed in
-+directory rename detection, and if we don't run
-+diffcore_rename_extended() again then we need to have the output from
-+it, including dir_rename_counts, from the previous run.
-+
-+The reason for (C) is that merge-ort's tree traversal will again think
-+those paths are relevant (marking them as RELEVANT_LOCATION), but the
-+fact that they were downgraded to RELEVANT_NO_MORE means that
-+dir_rename_counts already has the information we need for directory
-+rename detection.  (A path which becomes RELEVANT_CONTENT in a
-+subsequent commit will be removed from cached_irrelevant.)
-+
-+The reason for (D) is that is how we determine whether the remember
-+renames optimization can be used.  In particular, remembering that our
-+sequence of merges looks like:
-+
-+   Merge 1:
-+   MERGE_BASE:   E
-+   MERGE_SIDE1:  G
-+   MERGE_SIDE2:  A
-+   => Creates    A'
-+
-+   Merge 2:
-+   MERGE_BASE:   A
-+   MERGE_SIDE1:  A'
-+   MERGE_SIDE2:  B
-+   => Creates    B'
-+
-+It is the fact that the trees A and A' appear both in Merge 1 and in
-+Merge 2, with A as a parent of A' that allows this optimization.  So
-+we store the trees to compare with what we are asked to merge next
-+time.
-+
-+
-+=== 8. How directory rename detection interacts with the above and   ===
-+===    why this optimization is still safe even if                   ===
-+===    merge.directoryRenames is set to "true".                      ===
-+
-+As noted in the assumptions section:
-+
-+    """
-+    ...if directory renames do occur, then the default of
-+    merge.directoryRenames being set to "conflict" means that the operation
-+    will stop for users to resolve the conflicts and the cache will be
-+    thrown away, and thus that there won't be an optimization to apply.
-+    So, the only reason we need to address directory renames specifically,
-+    is that some users will have set merge.directoryRenames to "true" to
-+    allow the merges to continue to proceed automatically.
-+    """
-+
-+Let's remember that we need to look at how any given pick affects the next
-+one.  So let's again use the first two picks from the diagram in section
-+one:
-+
-+  First pick does this three-way merge:
-+    MERGE_BASE:   E
-+    MERGE_SIDE1:  G
-+    MERGE_SIDE2:  A
-+    => creates A'
-+
-+  Second pick does this three-way merge:
-+    MERGE_BASE:   A
-+    MERGE_SIDE1:  A'
-+    MERGE_SIDE2:  B
-+    => creates B'
-+
-+Now, directory rename detection exists so that if one side of history
-+renames a directory, and the other side adds a new file to the old
-+directory, then the merge (with merge.directoryRenames=true) can move the
-+file into the new directory.  There are two qualitatively different ways to
-+add a new file to an old directory: create a new file, or rename a file
-+into that directory.  Also, directory renames can be done on either side of
-+history, so there are four cases to consider:
-+
-+  * MERGE_SIDE1 renames old dir, MERGE_SIDE2 adds new file to   old dir
-+  * MERGE_SIDE1 renames old dir, MERGE_SIDE2 renames  file into old dir
-+  * MERGE_SIDE1 adds new file to   old dir, MERGE_SIDE2 renames old dir
-+  * MERGE_SIDE1 renames  file into old dir, MERGE_SIDE2 renames old dir
-+
-+One last note before we consider these four cases: There are some
-+important properties about how we implement this optimization with
-+respect to directory rename detection that we need to bear in mind
-+while considering all of these cases:
-+
-+  * rename caching occurs *after* applying directory renames
-+
-+  * a rename created by directory rename detection is recorded for the side
-+    of history that did the directory rename.
-+
-+  * dir_rename_counts, the nested map of
-+	{oldname => {newname => count}},
-+    is cached between runs as well.  This basically means that directory
-+    rename detection is also cached, though only on the side of history
-+    that we cache renames for (MERGE_SIDE1 as far as this document is
-+    concerned; see the assumptions section).  Two interesting sub-notes
-+    about these counts:
-+
-+    * If we need to perform rename-detection again on the given side (e.g.
-+      some paths are relevant for rename detection that weren't before),
-+      then we clear dir_rename_counts and recompute it, making use of
-+      cached_pairs.  The reason it is important to do this is optimizations
-+      around RELEVANT_LOCATION exist to prevent us from computing
-+      unnecessary renames for directory rename detection and from computing
-+      dir_rename_counts for irrelevant directories; but those same renames
-+      or directories may become necessary for subsequent merges.  The
-+      easiest way to "fix up" dir_rename_counts in such cases is to just
-+      recompute it.
-+
-+    * If we prune rename/rename(1to1) entries from the cache, then we also
-+      need to update dir_rename_counts to decrement the counts for the
-+      involved directory and any relevant parent directories (to undo what
-+      update_dir_rename_counts() in diffcore-rename.c incremented when the
-+      rename was initially found).  If we instead just disable the
-+      remembering renames optimization when the exceedingly rare
-+      rename/rename(1to1) cases occur, then dir_rename_counts will get
-+      re-computed the next time rename detection occurs, as noted above.
-+
-+  * the side with multiple commits to pick, is the side of history that we
-+    do NOT cache renames for.  Thus, there are no additional commits to
-+    change the number of renames in a directory, except for those done by
-+    directory rename detection (which always pad the majority).
-+
-+  * the "renames" we cache are modified slightly by any directory rename,
-+    as noted below.
-+
-+Now, with those notes out of the way, let's go through the four cases
-+in order:
-+
-+Case 1: MERGE_SIDE1 renames old dir, MERGE_SIDE2 adds new file to old dir
-+
-+  This case looks like this:
-+
-+    MERGE_BASE:   E,   Has olddir/
-+    MERGE_SIDE1:  G,   Renames olddir/ -> newdir/
-+    MERGE_SIDE2:  A,   Adds olddir/newfile
-+    => creates    A',  With newdir/newfile
-+
-+    MERGE_BASE:   A,   Has olddir/newfile
-+    MERGE_SIDE1:  A',  Has newdir/newfile
-+    MERGE_SIDE2:  B,   Modifies olddir/newfile
-+    => expected   B',  with threeway-merged newdir/newfile from above
-+
-+  In this case, with the optimization, note that after the first commit:
-+    * MERGE_SIDE1 remembers olddir/ -> newdir/
-+    * MERGE_SIDE1 has cached olddir/newfile -> newdir/newfile
-+  Given the cached rename noted above, the second merge can proceed as
-+  expected without needing to perform rename detection from A -> A'.
-+
-+Case 2: MERGE_SIDE1 renames old dir, MERGE_SIDE2 renames  file into old dir
-+
-+  This case looks like this:
-+    MERGE_BASE:   E    oldfile, olddir/
-+    MERGE_SIDE1:  G    oldfile, olddir/ -> newdir/
-+    MERGE_SIDE2:  A    oldfile -> olddir/newfile
-+    => creates    A',  With newdir/newfile representing original oldfile
-+
-+    MERGE_BASE:   A    olddir/newfile
-+    MERGE_SIDE1:  A'   newdir/newfile
-+    MERGE_SIDE2:  B    modify olddir/newfile
-+    => expected   B',  with threeway-merged newdir/newfile from above
-+
-+  In this case, with the optimization, note that after the first commit:
-+    * MERGE_SIDE1 remembers olddir/ -> newdir/
-+    * MERGE_SIDE1 has cached olddir/newfile -> newdir/newfile
-+		  (NOT oldfile -> newdir/newfile; compare to case with
-+		   (p->status == 'R' && new_path) in possibly_cache_new_pair())
-+
-+  Given the cached rename noted above, the second merge can proceed as
-+  expected without needing to perform rename detection from A -> A'.
-+
-+Case 3: MERGE_SIDE1 adds new file to   old dir, MERGE_SIDE2 renames old dir
-+
-+  This case looks like this:
-+
-+    MERGE_BASE:   E,   Has olddir/
-+    MERGE_SIDE1:  G,   Adds olddir/newfile
-+    MERGE_SIDE2:  A,   Renames olddir/ -> newdir/
-+    => creates    A',  With newdir/newfile
-+
-+    MERGE_BASE:   A,   Has newdir/, but no notion of newdir/newfile
-+    MERGE_SIDE1:  A',  Has newdir/newfile
-+    MERGE_SIDE2:  B,   Has newdir/, but no notion of newdir/newfile
-+    => expected   B',  with newdir/newfile from A'
-+
-+  In this case, with the optimization, note that after the first commit there
-+  were no renames on MERGE_SIDE1, and any renames on MERGE_SIDE2 are tossed.
-+  But the second merge didn't need any renames so this is fine.
-+
-+Case 4: MERGE_SIDE1 renames  file into old dir, MERGE_SIDE2 renames old dir
-+
-+  This case looks like this:
-+
-+    MERGE_BASE:   E,   Has olddir/
-+    MERGE_SIDE1:  G,   Renames oldfile -> olddir/newfile
-+    MERGE_SIDE2:  A,   Renames olddir/ -> newdir/
-+    => creates    A',  With newdir/newfile representing original oldfile
-+
-+    MERGE_BASE:   A,   Has oldfile
-+    MERGE_SIDE1:  A',  Has newdir/newfile
-+    MERGE_SIDE2:  B,   Modifies oldfile
-+    => expected   B',  with threeway-merged newdir/newfile from above
-+
-+  In this case, with the optimization, note that after the first commit:
-+    * MERGE_SIDE1 remembers oldfile -> newdir/newfile
-+		  (NOT oldfile -> olddir/newfile; compare to case of second
-+		   block under p->status == 'R' in possibly_cache_new_pair())
-+    * MERGE_SIDE2 renames are tossed because only MERGE_SIDE1 is remembered
-+
-+  Given the cached rename noted above, the second merge can proceed as
-+  expected without needing to perform rename detection from A -> A'.
-+
-+Finally, I'll just note here that interactions with the
-+skip-irrelevant-renames optimization means we sometimes don't detect
-+renames for any files within a directory that was renamed, in which
-+case we will not have been able to detect any rename for the directory
-+itself.  In such a case, we do not know whether the directory was
-+renamed; we want to be careful to avoid cacheing some kind of "this
-+directory was not renamed" statement.  If we did, then a subsequent
-+commit being rebased could add a file to the old directory, and the
-+user would expect it to end up in the correct directory -- something
-+our erroneous "this directory was not renamed" cache would preclude.
+diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+index 39fb7f41e8c1..fc2d46090434 100644
+--- a/t/helper/test-fast-rebase.c
++++ b/t/helper/test-fast-rebase.c
+@@ -91,7 +91,6 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
+ 	struct object_id head;
+ 	struct lock_file lock = LOCK_INIT;
+-	int clean = 1;
+ 	struct strvec rev_walk_args = STRVEC_INIT;
+ 	struct rev_info revs;
+ 	struct commit *commit;
+@@ -176,11 +175,10 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 		free((char*)merge_opt.ancestor);
+ 		merge_opt.ancestor = NULL;
+ 		if (!result.clean)
+-			die("Aborting: Hit a conflict and restarting is not implemented.");
++			break;
+ 		last_picked_commit = commit;
+ 		last_commit = create_commit(result.tree, commit, last_commit);
+ 	}
+-	fprintf(stderr, "\nDone.\n");
+ 	/* TODO: There should be some kind of rev_info_free(&revs) call... */
+ 	memset(&revs, 0, sizeof(revs));
+ 
+@@ -189,24 +187,39 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	if (result.clean < 0)
+ 		exit(128);
+ 
+-	strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
+-		    oid_to_hex(&last_picked_commit->object.oid),
+-		    oid_to_hex(&last_commit->object.oid));
+-	if (update_ref(reflog_msg.buf, branch_name.buf,
+-		       &last_commit->object.oid,
+-		       &last_picked_commit->object.oid,
+-		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+-		error(_("could not update %s"), argv[4]);
+-		die("Failed to update %s", argv[4]);
++	if (result.clean) {
++		fprintf(stderr, "\nDone.\n");
++		strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
++			    oid_to_hex(&last_picked_commit->object.oid),
++			    oid_to_hex(&last_commit->object.oid));
++		if (update_ref(reflog_msg.buf, branch_name.buf,
++			       &last_commit->object.oid,
++			       &last_picked_commit->object.oid,
++			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
++			error(_("could not update %s"), argv[4]);
++			die("Failed to update %s", argv[4]);
++		}
++		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
++			die(_("unable to update HEAD"));
++		strbuf_release(&reflog_msg);
++		strbuf_release(&branch_name);
++
++		prime_cache_tree(the_repository, the_repository->index,
++				 result.tree);
++	} else {
++		fprintf(stderr, "\nAborting: Hit a conflict.\n");
++		strbuf_addf(&reflog_msg, "rebase progress up to %s",
++			    oid_to_hex(&last_picked_commit->object.oid));
++		if (update_ref(reflog_msg.buf, "HEAD",
++			       &last_commit->object.oid,
++			       &head,
++			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
++			error(_("could not update %s"), argv[4]);
++			die("Failed to update %s", argv[4]);
++		}
+ 	}
+-	if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
+-		die(_("unable to update HEAD"));
+-	strbuf_release(&reflog_msg);
+-	strbuf_release(&branch_name);
+-
+-	prime_cache_tree(the_repository, the_repository->index, result.tree);
+ 	if (write_locked_index(&the_index, &lock,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 		die(_("unable to write %s"), get_index_file());
+-	return (clean == 0);
++	return (result.clean == 0);
+ }
 -- 
 gitgitgadget
 
