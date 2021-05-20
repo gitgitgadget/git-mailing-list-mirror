@@ -2,170 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2756CC433ED
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 23:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1392AC433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F37DF60FE3
-	for <git@archiver.kernel.org>; Wed, 19 May 2021 23:34:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4C5961074
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbhESXfu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 19:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
+        id S230048AbhETALN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 20:11:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbhESXft (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 19:35:49 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF99FC061574
-        for <git@vger.kernel.org>; Wed, 19 May 2021 16:34:28 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id k15so10540440pgb.10
-        for <git@vger.kernel.org>; Wed, 19 May 2021 16:34:28 -0700 (PDT)
+        with ESMTP id S229498AbhETALN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 20:11:13 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3D73C061574
+        for <git@vger.kernel.org>; Wed, 19 May 2021 17:09:51 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id v13-20020a4ac00d0000b029020b43b918eeso3400333oop.9
+        for <git@vger.kernel.org>; Wed, 19 May 2021 17:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=V2h+T684TN5n6PXdkxPo3V8LoifzBkBd6hIXCMKHuBc=;
-        b=Lgg3xuuOIWRe5LBs5jg7twtzcIoE2XPN7XxVECEp6DmMAM0czn6PbZgHa4u+UsQj26
-         HM0sJpguw6jawLWI5jCmD8lEV1tfyXmbsXZT44u4WqqHXmKrowgEK160YlvEhPGxKInP
-         58BFYhKYTvJBeyQvNC6o6stDv13xEQSJPjKKyNOjmn3fpODtMnDYToZfeOW/g+1aYfxa
-         mPvIq3ev2G/ABi82wHSgSR4Cwves3s0ZFDkJEyFXLlHRhgJhippHu3kRNNXjOuw3iRbc
-         L226oNUeGR1BpmLBYfl4R5NETI+jDeXjwEzU9XcR+1zxYKu4JmX36mwlw86HOHGYgHju
-         1IBQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=D11VcPKg4432XB1YFQdA4xb/+HbqjRkHlqUdzCOCbEY=;
+        b=N0kxWQEUHu+0zqB8mECS1UOpUctaFwAGNf5SgWFi93Ev4pa2KizCHmNC79ir6n4wqw
+         6lo6HFpW9vJOmQeHJ0wu8wn/EVVlnWRnFMadX5mXcnN3OqSPZmvK4ZqR5GxIwxm8GvZu
+         gHEXj1mANIPNALXpfjjBbRTWwRUGZQmue9o/tz8TSTEdGoQWva5B6GQCZ7ihVa/rvFn+
+         NYlN/Zn3aJg7t5TpM1CjwkQZYq8kQG1sI1f15vdQe1vJAyJ0+kU9tdPiMzEqDlvSYUet
+         SZ2H46E98zw+6sz4sWqZO05m91oA8KRM/vPPR7W8EUuKxjh5qQjFTPto4rJYRvBEj95D
+         Vn0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=V2h+T684TN5n6PXdkxPo3V8LoifzBkBd6hIXCMKHuBc=;
-        b=kKiOa7AEoIWpOmV4UELbXvo8pguSLo3VraUF/zx+J8RnxB4k7rKPNM3wGl3agkFXE3
-         ghH/elZMtmrPrafsvycdOBTgprKNGt4T2hdDKLP5ybn0fskc701rvU561SB0wOxKkUfv
-         JdP+flMy9u9Xy7DRii4s0sOvB1+iBIU27cXrKgLTTXaFsqQpOP7WsA+6AwPmr8/v62d8
-         RF3DNy4xA6p8X3Gz7u4f70pgkkiU9uuQrRIRdbI1L8B3M2Z0Z+uk9KFul55Bj8iWNonv
-         aKLegAyzB7ZexAfLwYiT6CuWFSKz3vM5wMSIMk5w4kIv98VBTYQZ5QGDcI5sjeeTeBSv
-         lbUQ==
-X-Gm-Message-State: AOAM531iHiGrhRc7L2OhL8MNhKEvTFVj7vf4M3vsYLFDb1lS4tuzW8nS
-        +yqHgZQkX+pmxZF3OQlAPEqLkh6dbe8=
-X-Google-Smtp-Source: ABdhPJy7l2ZTTPHZPMQCMhzifUciM0WzzUXRff0121E+gSOYgOFQWHMJqpP2VmPN4ganc52ur74DTg==
-X-Received: by 2002:a63:5c1:: with SMTP id 184mr1625596pgf.75.1621467267718;
-        Wed, 19 May 2021 16:34:27 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:4edd:d685:2ff9:b567])
-        by smtp.gmail.com with ESMTPSA id i197sm351578pgc.13.2021.05.19.16.34.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 16:34:26 -0700 (PDT)
-Date:   Wed, 19 May 2021 16:34:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Josh Steadmon <steadmon@google.com>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: RFC: error codes on exit
-Message-ID: <YKWggLGDhTOY+lcy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=D11VcPKg4432XB1YFQdA4xb/+HbqjRkHlqUdzCOCbEY=;
+        b=GTAxg5yTtCDqYeUd2QcbtC32GGPKnPXL9qUueg7Kcq3T5qfd4B5QeCdoccfcbB2bUN
+         uQSX5hr6QLsd0altR2PRDsuWDJLoVExarstq5RV2v5ej8b/dcIts9cxr4QBaZlQaU1Zf
+         datpG45SZUaX/EcIJSfoYrIR4ATUedZtNpgDhJj5pzDaJ8yo+EPzDxcNSuPxojklKT24
+         4f+lba3rTpF4ydt31cwogdE+DFlnce9GhQw1zQBr9LXj0ew05NsL+3Ra2LGh8p/2JOLs
+         xLL8MuJCOlRShN9dbvhNz4iBTlH59KEnEF1j/N/mKccUj1YWwg1q62fTNxBwaJYF184t
+         ZQ7Q==
+X-Gm-Message-State: AOAM530j/UVShJ5bFhclq9S7Ltn2THwtPpJruU/PgOWFHcwnCtY82Foj
+        xw7PKVPc9xrIoXcheBt/RAPNE+mN6W5CjCWJIYo=
+X-Google-Smtp-Source: ABdhPJwmokG6czpVoY9b1Eo8kxnvCxFxDsNh8V4hf9Qe7FrSac0IVDcKuzGaGjycnd2EOqi2kGejDQtlqHxcoMd6Rmc=
+X-Received: by 2002:a4a:b301:: with SMTP id m1mr16957ooo.7.1621469391069; Wed,
+ 19 May 2021 17:09:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <f1fc174b10ca5bc8b54ede513bc79e3864d8e014.camel@scientia.net>
+ <xmqq4kf7cmaj.fsf@gitster.g> <xmqqzgwzb7ad.fsf@gitster.g> <CABPp-BGERNLKbLA_r7i7+r+v7YK6xT00_5n9ebESb2SzLhC0Cg@mail.gmail.com>
+ <xmqqv97nb51b.fsf@gitster.g> <681aefe15af98f6758f28544b96bc2eca90642f3.camel@scientia.net>
+ <xmqqr1i2wbef.fsf@gitster.g>
+In-Reply-To: <xmqqr1i2wbef.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 19 May 2021 17:09:40 -0700
+Message-ID: <CABPp-BFY41YrO1cVNxGJG2rSXb=Y0EY3t7Y9x+ENAKmA0=oreA@mail.gmail.com>
+Subject: Re: git-sh-prompt: bash: GIT_PS1_COMPRESSSPARSESTATE: unbound variable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christoph Anton Mitterer <calestyo@scientia.net>,
+        Git Mailing List <git@vger.kernel.org>, ville.skytta@iki.fi
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, May 19, 2021 at 4:29 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christoph Anton Mitterer <calestyo@scientia.net> writes:
+>
+> > Hey there.
+> >
+> > I think I found another case of an unbound variable:
+> >
+> > Completing e.g.:
+> > git commit --[press TAB]
+> >
+> > gives:
+> > $ git commit  --bash: GIT_COMPLETION_SHOW_ALL: unbound variable
 
-(Danger, jrn is wading into error handling again...)
+That particular case was fixed by Ville Skytt=C3=A4 in commit c5c0548d793e
+(completion: audit and guard $GIT_* against unset use, 2021-04-08).
 
-At $DAYJOB we are setting up some alerting for some bot fleets and
-developer workstations, using trace2 as the data source.  Having
-trace2 has been great --- combined with gradual weekly rollouts of
-"next", it helps us to understand quickly when a change is creating a
-regression for users, which hopefully improves the quality of Git for
-everyone.
+> It seems that OMIT_SPARSESTATE would have the same issue.
+>
+>         if [ -z "${GIT_PS1_COMPRESSSPARSESTATE}" ] &&
+>            [ -z "${GIT_PS1_OMITSPARSESTATE}" ] &&
+>
+> all coming from afda36db (git-prompt: include sparsity state as
+> well, 2020-06-21).
+>
+> But I think we have already seen the fix in 5c0cbdb1 (git-prompt:
+> work under set -u, 2021-05-13), which may or may not appear in the
+> upcoming release.
 
-One kind of signal we haven't been able to make good use of is error
-rates.  The problem is that a die() call can be an indication of
+Yeah, I fixed the ones I introduced in git-prompt.sh --
+GIT_PS1_COMPRESSSPARSESTATE and GIT_PS1_OMITSPARSESTATE.
 
- a. the user asked to do something that isn't sensible, and we kindly
-    rebuked the user
+> There still are unprotected mentions of GIT_PS1_SHOWUPSTREAM even
+> with that fix, though.
 
- b. we contacted a server, and the server was not happy with our
-    request
+Yeah, neither my fix (which was only trying to fix the problems I
+introduced in git-prompt.sh) nor Ville's fix (which was focused on
+git-completion.bash) caught that one.
 
- c. the local Git repository is corrupt
-
- d. we ran out of resources (e.g., disk space)
-
- e. we encountered an internal error in handling the user's
-    legitimate request
-
-and these different cases do not all motivate the same response.
-(E.g., if (c) affects just a single bot but produces a high error rate
-from that bot, we shouldn't be alarmed; if (d) is happening on a bot,
-then we should look into giving it more disk; if (e) is increasing
-significantly during a rollout then we should roll back quickly.)
-
-In order to do this, I would like to annotate "exit" events with a
-classification of the error.  I'm not too opinionated about what that
-classification looks like (bikeshedding welcome!) --- e.g., something
-like the enumeration at
-https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto
-is likely to work fine.
-
-(I'm particularly fond of how that maps to HTTP statuses.  See also
-https://github.com/abseil/abseil-cpp/blob/HEAD/absl/status/status.h
-for an example of using that kind of enumeration within a single
-process.)
-
-The API could look something like
-
-	--- a/cache.h
-	+++ b/cache.h
-	@@ -590,6 +590,15 @@ int is_git_directory(const char *path);
-	  */
-	 int is_nonbare_repository_dir(struct strbuf *path);
-
-	+enum git_error_code {
-	+	/*
-	+	 * Not an error (= HTTP 200)
-	+	 */
-	+	OK = 0,
-	+};
-	+NORETURN void fatal(enum git_error_code code, const char *err, ...)
-	+	__attribute__((format (printf, 2, 3)));
-	+
-	 #define READ_GITFILE_ERR_STAT_FAILED 1
-	 #define READ_GITFILE_ERR_NOT_A_FILE 2
-	 #define READ_GITFILE_ERR_OPEN_FAILED 3
-
-(with new error codes added when they first get used) and a typical
-caller could look like
-
-	Subject: xsize_t: tag "cannot handle files this big" as a failed precondition
-
-	Unlike retriable errors, failed preconditions indicate that some
-	aspect of the state needs to be changed in order to recover.  Mark
-	this error as such to make signals from monitoring in controlled
-	environments (e.g., bot fleets or corporate installations of Git)
-	easier to understand.
-
-	Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-[...]
-	+       /*
-	+        * The system is not in a state required for the operation to succeed.
-	+        * For example, a file on disk is larger than we can handle.
-	+        * (= HTTP 400)
-	+        */
-	+       FAILED_PRECONDITION = 9,
-[...]
-	 static inline size_t xsize_t(off_t len)
-	 {
-		if (len < 0 || len > SIZE_MAX)
-	-               die("Cannot handle files this big");
-	+               fatal(FAILED_PRECONDITION, "Cannot handle files this big");
-
-Further down the line I can imagine making use of git_error_code
-elsewhere for e.g. some limited retries of the corresponding
-transaction when we fail to lock a file.
-
-Thoughts?  Good idea?  Bad idea?
-
-Thanks,
-Jonathan
+Do you want to make a patch for that, Christoph?  If not, #leftoverbits?
