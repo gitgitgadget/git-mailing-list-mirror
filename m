@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0EA5C433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3376BC433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB3BC610CC
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FBC660D07
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230361AbhETGLH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 02:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55954 "EHLO
+        id S230441AbhETGLN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 02:11:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230255AbhETGLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 02:11:06 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DBF7C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:45 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id n2so16372501wrm.0
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:45 -0700 (PDT)
+        with ESMTP id S230365AbhETGLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 02:11:07 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B9BC06175F
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:46 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id z17so16274179wrq.7
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zXSwx3+sF61LG1Vzw98++skHdpw2Mzzq9AIj1bC/DAg=;
-        b=ZYXQRf4vU85754fwo1j8CGvb/43lj2pIo+I01z6hAxgeuxjyJ49LjQar/FBuG/DDDh
-         TFS87h65dPazRXwyQxhPs8OcXCNcoEq7a9cu8sndUmLL2EH2pZjrFFWo6gBq26aHm00Y
-         dZ0Jz0TaqcLt9RwE8BwS8lLqsqyLMIHvvzAgXWDnK8QNAnSve2wZUPKPCu5gP8oBX4UC
-         sxspcjwYZq4jbxIFZoLA0pIknutaONZ3Je1x1bMtj4deYeLEna/TZH2VldMPj7ymbY/r
-         Y09L7cnp3EEZlwbIWS4ArnOtziPgBsdcqGh6fBcDR/aKIDJ4wFkb6ycbcQjxFx0oDAaS
-         m8Cg==
+        bh=xXgdDHvUd75yXjM8blIM7wuwHKtZQ9KdEC4eYenxuok=;
+        b=Ez74KwLrXulikXysLQNVkTpz91mii5mUvAoPSjeFaZGzNCLiu1Aubkn4DxIf0h4UtT
+         Zx0rI802YNA5pJyLxtfthFHjQyONBB3t0TtIkW5fRHogiKuPtHbzZ6FCrVO/+E/gq6E4
+         kUSCqoOQBx2nAVUTIke+x/rIG5YTzd86Zg/rN1bIoUyVTADY8J7+i87nwNZWeUt4lqEh
+         T9CIJCjIQ+q4lMdyYxAL2wTSJtEvTsrfCdduF2oYldCMZyAvQ8ycmqk8GYKbjkrXF78K
+         XN8hYZyb5OciCUn2cwn7n3McyrpdGUoU9DC2FZXYlEJ/qcd2SXA8MkWh3kO8Kits1+WE
+         guoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zXSwx3+sF61LG1Vzw98++skHdpw2Mzzq9AIj1bC/DAg=;
-        b=tAfQa7uusBI8kkokRWTODTbkq68W/TG5i2lsSwnDpnc95aXpwKdfqu1eSimDpqSFKr
-         QCX9SOqRZwrQ1qMKzUUtMNZWLAn6ua2RXg1iOp7D6tkc7J7Y1lyrOl5gGTxqhuVAzrbj
-         JTUU95VIJL1dZOCkLPr93FeciJHnuN00HURmFRAeqDd6mH62z+pPPuw+4yO554F7c8xK
-         7NRSY+lzBQEpWiJWzoSe2JUpuCTv8t3Bli6pYesOpRoIIwbfPQS/lWS0JYZNCTze4W/X
-         CJ03qS8jH2oKzCojLt+46LN7qXOYbOy61pNFprAe86gJf+8TTcatcSpDQ8ldAjF+5wGp
-         t7Sw==
-X-Gm-Message-State: AOAM532jkOQ9DSdUcvJVmyatTGuV6En3BUPzmKMjB1eH6W6J3BSDYNQ+
-        3sfDe2xLrx5IHcSLo9DWMkRrycT+IkA=
-X-Google-Smtp-Source: ABdhPJyysehvv78uotmMPbIp544CBho2fbJPmLymOkbRrpekFEOxt35uIVeSUeWxZFLyigR1qTd9qg==
-X-Received: by 2002:adf:c002:: with SMTP id z2mr2422152wre.100.1621490984291;
-        Wed, 19 May 2021 23:09:44 -0700 (PDT)
+        bh=xXgdDHvUd75yXjM8blIM7wuwHKtZQ9KdEC4eYenxuok=;
+        b=czrq82bYb45ooYbuK620KFlHDAdo2BFgy8QZoslvKNYgLN5uu/pXayyxKmPCiNPiQw
+         xh37p0k3w536dlFjEeYfRQojsqgSpjIqi4SX2s13gDHdV2tSt0jH55O8dVVrICRm1bXr
+         W6gGERG1djnFEKmtbstCKyG3VqwtylMA6FDpyhJkk374rzS11JE0pMEUIQZDKEnHYS+J
+         aqx/5lx/CXoGB5XwmLtvW2i2OB7t0BHl3WDEraBBdFOmFyY2+AY36gXmPG0aFND//aRv
+         /boBQ1re0hnWIRkiNwa0RTyjBFg8DlQnXYzflZTsAUygOpTyb385d3F2n/1WrybQanu2
+         A6YA==
+X-Gm-Message-State: AOAM532zaTHpy1jSxNpa3rARGC2RkcV2FyALUpIBKUriSHkFaJCdm9Rl
+        konlkRnknUTo+F3iwIAJoYsPGexa4sk=
+X-Google-Smtp-Source: ABdhPJzyS2F/P0QJthyYYB21pVBtlXtzdHeWC2wEUNwAt+xADBJEuxidR8AepGGCf3uthZZsx2FExA==
+X-Received: by 2002:a5d:6d04:: with SMTP id e4mr1451598wrq.344.1621490985532;
+        Wed, 19 May 2021 23:09:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a17sm1747097wrt.53.2021.05.19.23.09.43
+        by smtp.gmail.com with ESMTPSA id p14sm1676717wrm.70.2021.05.19.23.09.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 23:09:43 -0700 (PDT)
-Message-Id: <129136a10c9d37c9cd3d875dfbbd91c452c37554.1621490982.git.gitgitgadget@gmail.com>
+        Wed, 19 May 2021 23:09:45 -0700 (PDT)
+Message-Id: <22b121ae1143eed7ae4fce8a40dbbe583db64a69.1621490982.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 References: <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
         <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 May 2021 06:09:29 +0000
-Subject: [PATCH v3 01/13] t6423: rename file within directory that other side
- renamed
+Date:   Thu, 20 May 2021 06:09:31 +0000
+Subject: [PATCH v3 03/13] fast-rebase: change assert() to BUG()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,97 +81,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Add a new testcase where one side of history renames:
-   olddir/ -> newdir/
-and the other side of history renames:
-   olddir/a -> olddir/alpha
+assert() can succinctly document expectations for the code, and do so in
+a way that may be useful to future folks trying to refactor the code and
+change basic assumptions; it allows them to more quickly find some
+places where their violations of previous assumptions trips things up.
 
-When using merge.directoryRenames=true, it seems logical to expect the
-file to end up at newdir/alpha.  Unfortunately, both merge-recursive and
-merge-ort currently see this as a rename/rename conflict:
-
-   olddir/a -> newdir/a
-vs.
-   olddir/a -> newdir/alpha
-
-Suggesting that there's some extra logic we probably want to add
-somewhere to allow this case to run without triggering a conflict.  For
-now simply document this known issue.
+Unfortunately, assert() can surround a function call with important
+side-effects, which is a huge mistake since some users will compile with
+assertions disabled.  I've had to debug such mistakes before in other
+codebases, so I should know better.  Luckily, this was only in test
+code, but it's still very embarrassing.  Change an assert() to an if
+(...) BUG (...).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6423-merge-rename-directories.sh | 58 +++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ t/helper/test-fast-rebase.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 7134769149fc..be84d22419d9 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -4966,6 +4966,64 @@ test_expect_success '12g: Testcase with two kinds of "relevant" renames' '
- 	)
- '
+diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+index 373212256a66..39fb7f41e8c1 100644
+--- a/t/helper/test-fast-rebase.c
++++ b/t/helper/test-fast-rebase.c
+@@ -124,7 +124,8 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	assert(oideq(&onto->object.oid, &head));
  
-+# Testcase 12h, Testcase with two kinds of "relevant" renames
-+#   Commit O: olddir/{a_1, b}
-+#   Commit A: newdir/{a_2, b}
-+#   Commit B: olddir/{alpha_1, b}
-+#   Expected: newdir/{alpha_2, b}
-+
-+test_setup_12h () {
-+	test_create_repo 12h &&
-+	(
-+		cd 12h &&
-+
-+		mkdir olddir &&
-+		test_seq 3 8 >olddir/a &&
-+		>olddir/b &&
-+		git add olddir &&
-+		git commit -m orig &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git switch A &&
-+		test_seq 3 10 >olddir/a &&
-+		git add olddir/a &&
-+		git mv olddir newdir &&
-+		git commit -m A &&
-+
-+		git switch B &&
-+
-+		git mv olddir/a olddir/alpha &&
-+		git commit -m B
-+	)
-+}
-+
-+test_expect_failure '12h: renaming a file within a renamed directory' '
-+	test_setup_12h &&
-+	(
-+		cd 12h &&
-+
-+		git checkout A^0 &&
-+
-+		test_might_fail git -c merge.directoryRenames=true merge -s recursive B^0 &&
-+
-+		git ls-files >tracked &&
-+		test_line_count = 2 tracked &&
-+
-+		test_path_is_missing olddir/a &&
-+		test_path_is_file newdir/alpha &&
-+		test_path_is_file newdir/b &&
-+
-+		git rev-parse >actual \
-+			HEAD:newdir/alpha  HEAD:newdir/b &&
-+		git rev-parse >expect \
-+			A:newdir/a         O:oldir/b &&
-+		test_cmp expect actual
-+	)
-+'
-+
- ###########################################################################
- # SECTION 13: Checking informational and conflict messages
- #
+ 	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+-	assert(repo_read_index(the_repository) >= 0);
++	if (repo_read_index(the_repository) < 0)
++		BUG("Could not read index");
+ 
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	revs.verbose_header = 1;
 -- 
 gitgitgadget
 
