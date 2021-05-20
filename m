@@ -2,80 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UNPARSEABLE_RELAY autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7B9EC43460
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 14:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 765F6C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:00:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96EE5613AA
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 14:41:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 441B660FE6
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242367AbhETOme (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 10:42:34 -0400
-Received: from mail-ej1-f46.google.com ([209.85.218.46]:35493 "EHLO
-        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243132AbhETOlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 10:41:06 -0400
-Received: by mail-ej1-f46.google.com with SMTP id k14so22223813eji.2
-        for <git@vger.kernel.org>; Thu, 20 May 2021 07:39:45 -0700 (PDT)
+        id S231286AbhETPBe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 11:01:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34444 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230450AbhETPBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 11:01:33 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A31C061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:00:12 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id l1so25807551ejb.6
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:00:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3imv30Oq5Q81Dnc/7PSKbHbOhwKlfUBZ7QZNHBZyEJ8=;
+        b=queE9wqH+SEna7PxS6VNy/P41R3YK6UId6m59gwm6ZHxMGbE79/rhfDzs/2GSU6t5C
+         9EboPg+j9d6cPHxg+dqpXzWX02QJRSW+EYyKdIv5tlZCaQmZgBzXETWW5jVnVXpSxqHk
+         ev5BHK+wHoXWdu9/pjbpG4Va54M2RmrQvhkO2r3yZLBTu9HMVBdj96KZXA20EUH3IZg4
+         d/hUux3svdhJdIOITOhCYpBbYWjSPM2rkZBw5xLfCTK/2TVzvhUnhNWMPphghrHqlUmK
+         Z1QL1e1Lmq/ldyOX20BBi6W0Pp8btBHLjN6rX2+YS7NtmClMI8OOxJefMbUVxZSOCfnP
+         07nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=HnbT/Sx3NnVr43ioYEhDqRPHehbQUY7BgehOgfpAkwc=;
-        b=HJcnh2gV7innLL8c1NnE4Sd0ebYERKufPmRaParGtJtc5l7TN+1xwUEZFGCiRnOpxg
-         xCXc+CqhXYOdBI6vkqVr5wP5KwugZw3028hF+UlJlN8DQxmeR9zhOmaMfRFV/nMzgnKF
-         U7niGWQVzZVDBHEse9L44zDI9FpDN5ReC106liNdwx0MAlM+fNN1yeJ3SIMQTfXyzHZB
-         eO9fVPDATzDJDtR/h5C9aajsBPpntNlirsD9wyrS70B4MsFA0eC0MBBQJQN/ao9n4ExI
-         ++RS1a3BkRhSeChXlHPWtnTGKd/R7vz1fx8DnWjlBPDiU5dHn0tAmsQjDj0suj+3wg/+
-         Vntg==
-X-Gm-Message-State: AOAM530rBe3eaw5Ors2Fu/w+LLEjpKscNevmBPx4mqSWc4Z6f8bGwenS
-        ndpbLtRgQZFSS59+d/XexLk=
-X-Google-Smtp-Source: ABdhPJwqCXM9lKP7Hdo6tYFzNibReNdYeLsz4lMN4wMAqZpVC8HcR4Y1zkWpgBvf6Tp5jFEo/SWcQg==
-X-Received: by 2002:a17:906:b74e:: with SMTP id fx14mr4995340ejb.104.1621521584498;
-        Thu, 20 May 2021 07:39:44 -0700 (PDT)
-Received: from rhea.home.vuxu.org ([2a01:4f8:c010:17cd:ea6a:64ff:fe4d:ff9e])
-        by smtp.gmail.com with ESMTPSA id g11sm1673639edt.85.2021.05.20.07.39.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 07:39:43 -0700 (PDT)
-Received: from localhost (rhea.home.vuxu.org [local])
-        by rhea.home.vuxu.org (OpenSMTPD) with ESMTPA id e87d70be;
-        Thu, 20 May 2021 14:39:42 +0000 (UTC)
-From:   Leah Neukirchen <leah@vuxu.org>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4] help: colorize man pages
-References: <20210520040725.133848-1-felipe.contreras@gmail.com>
-Date:   Thu, 20 May 2021 16:39:42 +0200
-In-Reply-To: <20210520040725.133848-1-felipe.contreras@gmail.com> (Felipe
-        Contreras's message of "Wed, 19 May 2021 23:07:25 -0500")
-Message-ID: <875yzda2q9.fsf@vuxu.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3imv30Oq5Q81Dnc/7PSKbHbOhwKlfUBZ7QZNHBZyEJ8=;
+        b=hpxMERgT32Vu7r09iH3zHQeeXXlNOuRKpdIaKSKjIOIzrtUMg2I/VNpgQ+V9voSs/l
+         Mav7FH8+GnxMOUyEdD2yqFSXQNJ6ww7LrP0KpLuEW1OXKO+UUEdlJT7oLBJV7iLTQsLi
+         jo2G7GkIdcw79bAmMV44pqxuhZsOOpGZsigPN9JgBeiSG3KoGDNclNHXf6CYwEWpS7xX
+         D8wrhPO/cBMOIX80UxN6A0cI7A/2IwMPrx4Bzf1+4KiKkFxTykxA5d45ZL8kXTZrjjEs
+         krpTV8hl9XkzqQo/lHWcF632G3YyFczwFnEYrb2GxTs4ljs/va8g3wZl8vZ4U8NmzulR
+         VK7A==
+X-Gm-Message-State: AOAM530sm4P6IwGIKIbTMlY+op0X5drG/Vww0MEQ3N+m7s0D6vRTQKp9
+        G7+36ToPnpUcOunCPf7z+8ZnlOzMy3y7jYz9K8c=
+X-Google-Smtp-Source: ABdhPJwxV5/Y0HzMElDyZD8c6emJKHJpMilJORqCt3QOb8h2o6IN1pZVSDvk6/kykX2eBRJzhq9WU+afim6mpJeiZhM=
+X-Received: by 2002:a17:906:18b2:: with SMTP id c18mr5097506ejf.160.1621522810102;
+ Thu, 20 May 2021 08:00:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAOLTT8SHE-ok3D+oLNSWFi7KPU==VQnTMDmC4YxUyNBJKmBD8A@mail.gmail.com>
+ <CAP8UFD0qQg9vfuDvjrc5amnw8w7NFBLEaJUwEksV08HBdFJ7LA@mail.gmail.com>
+ <CAOLTT8TRqn5=SqEEnHdFaYi1U5XJXM_MrULfPVzAGPH9AjXk-w@mail.gmail.com>
+ <CAP8UFD2_PWKzwuYACH2MkjzCqO4VWm1EwReOZjgnsXAgpFcZtA@mail.gmail.com> <CAOLTT8QO6RsScmvxrvNo5SisWtm9BhfPiK3T8Ez-exwMwOUT_Q@mail.gmail.com>
+In-Reply-To: <CAOLTT8QO6RsScmvxrvNo5SisWtm9BhfPiK3T8Ez-exwMwOUT_Q@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 20 May 2021 16:59:59 +0200
+Message-ID: <CAP8UFD2FuGDqiDUpZohvn9WnBqGwTfak6AfB4pGuh7ATY6o4rA@mail.gmail.com>
+Subject: Re: [GSoC] Hello Git
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jiang Xin <worldhello.net@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, May 20, 2021 at 10:09 AM ZheNing Hu <adlternative@gmail.com> wrote:
 
-> So, in order for this change to have any effect:
+> Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=
+=9C=8820=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=884:00=E5=86=99=E9=81=
+=93=EF=BC=9A
+> > > Before that, we have to make ref-filter support "%(contents:raw)"
+> > > (similar to Olga's "%(raw)") and "%(rest)".
+> >
+> > Yeah, please take a look, if you haven't already, at
+> > https://github.com/git/git/pull/568 where Olga already worked on that.
+> > It would likely help if you can reuse her work.
 >
->  1. The user must use less
->  2. Not have the LESS variable set
->  3. Have color.ui enabled
->  4. Not have color.pager disabled
->  5. Not have color.man disabled
->  6. Not have NO_COLOR set
->  7. Not have git with stdout directed to a file
+> I have check them, I want to use "%(contents:raw)" instead of %(raw),
+> https://github.com/gitgitgadget/git/pull/958 tell the reason,
+> I will submit it later.
 
-I can't review the code thoroughly right now, but if it works as
-described here, +1 from me.
-
--- 
-Leah Neukirchen  <leah@vuxu.org>  https://leahneukirchen.org
+Great, thanks!
