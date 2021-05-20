@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 260D6C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 222E9C43461
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 057EB60FEE
+	by mail.kernel.org (Postfix) with ESMTP id 035FC60FEE
 	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:47:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbhETVsq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 17:48:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42474 "EHLO
+        id S230472AbhETVsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 17:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbhETVso (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 17:48:44 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB207C061574
-        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:22 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id b12so14389044ljp.1
-        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:22 -0700 (PDT)
+        with ESMTP id S230461AbhETVsp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 17:48:45 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADA21C061761
+        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:23 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id c10so5637996lfm.0
+        for <git@vger.kernel.org>; Thu, 20 May 2021 14:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FJ1w7idvQFx2geKfGCvkNfGNY/IV3ti4dyZkMsKjReY=;
-        b=Suw/O5GAYqQcHVkhwF0VYadVrZs41l22oKcTTATJFo6tl9mNPE0VFka8dT1LmZlK6E
-         SSmwXRDUfde/b9OxImWAxUyi3Y/1Sw2+OTo4tcS3gqxdsBB1SSEXlDrYMICqIuPaPKhw
-         vVlckPv+5hBjdt9gd/7UlnWnn/dSbg82msAgjVoilVLC+WGIcZSgfM+MB/IrgvboxGF7
-         kUGS5JTjVZaQKEkRW2MDSo1pIAfDAEYYKxXHS7yl9Bd6G2PISa9zsmDuOZKiVvE3BWM5
-         zVA9p6/yjf+iNtaDMbn/FVt9zptjxC3fDhk/kfAZer/19OPKode09Z4BiGzkzVbpmtPf
-         L7cA==
+        bh=q5WLGyQxJ+bSbUwGFcCKinvSLjoeHjsRBqjWo58Znlc=;
+        b=CJIHi3hhRg0fqBDhx7hbkO0jvgDfyxvcg0X+7Xp0bTT0nNl7+mODToJEh0IN3G4V85
+         /6gHXOOokYVjnzBHh0963m/5W2YFCEDNHePfyAU2Jb3xsiyDjlwvgklnsb4mNBE3yO29
+         C5ORb1tu+MUYL1l6BfGJnYfULosdEYvVFpKB1xfLc6agyep3CXcSa5ryX1le6wPf2oLy
+         afI1NdvAtpwM4/awpAs2S7+O9c1LCsJyejrsWpkzprSuhhgJGDNac1SWbnsEHuI0xOCj
+         uQMSll9UOsvUO+nYT+1vyOAlTRx4gil2VtFKTiQCwSgJ16oRJF+yn5JpFBxG7xbmE/HF
+         yKvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FJ1w7idvQFx2geKfGCvkNfGNY/IV3ti4dyZkMsKjReY=;
-        b=traMw/i5TzjXZMDdwy9tJA7v1td4ZGjPMGVPd5N5Pbe0k4uOQvVhhSEf42Y0czLZm0
-         iXckuYMK5ylI7zCQZpNOhevVb6Q2ZsGmucTeXxlwl1DkvFbVBU2x2GEmx2xg5z+rxT/p
-         7bDGqMlWMxbPsT35HOe7I6aYF4TzCJwvs2j0wJN1HsAZwnyf/erb58YWf8s/Q/Nd45dv
-         +l9Z7+6j3x8aIRbju8CpbU2yQIctqy6n5gagXzq9SCqONkMq+wpUyqTbzXW3JCiG+Deh
-         r5uHrrhRI73eeDDZbeEe0NunaZOG9SDXMte95qsYH5shUEg4G3ZbUMVTkcNffX1o1Hiv
-         IM7g==
-X-Gm-Message-State: AOAM533tRhKisYqR/hTdZVA2bDdrtwevR0RyVHWJ1U2xFVHaEQak6n/E
-        asa7v1Pz3tDx5saCvNfmC/KhhCe1L3U=
-X-Google-Smtp-Source: ABdhPJwKHHr+pFXYWc0PQiIteSZXidu3rFhFcq7/CQsvTpN15umUTYAvj+8F+s/uSBEeF8KZZHIMsA==
-X-Received: by 2002:a05:651c:1408:: with SMTP id u8mr4388829lje.401.1621547241149;
-        Thu, 20 May 2021 14:47:21 -0700 (PDT)
+        bh=q5WLGyQxJ+bSbUwGFcCKinvSLjoeHjsRBqjWo58Znlc=;
+        b=VZRN+3VBwG2Q6xGy8OUgtPMQ4ivxpZJwLYzmKWDfYkrn6lnT+TKhysbWwm84Pi5qFc
+         bch1pYUrEj7FMdc2ErGpfw6tcZ3G8Dm7eRGxVz5grVM4L8gbx4pyu3Adn9BoN6JiCuwi
+         yZIeFuIN3DoawbUECAx2lQPWckSGt43KnO6q/mR4ZYSqKbw5Kv9YO8tfa+a/wnsvSji7
+         YgS134giW+AbeW4NJe8A3b3LFvw//WLZ6mRCXWDvB2MVr+S2g3Dc2uuezbRqab1LOFps
+         j4m8U8DQUdZfMK3/wuH8oA8jjqBwaHJIh5vLSD7sgRCGAshr36YJIOL3JpdOacHocKBt
+         yTUw==
+X-Gm-Message-State: AOAM533q7tj03AfmpUUxWbkiKO5H4JP+JfmYknCRJUcg2NcqUgUfG7BE
+        n1ZrheL8GunXRKmQd7J0Kx0=
+X-Google-Smtp-Source: ABdhPJwcNcYwLanAijy8BaDh3ML8oerXdKcBYS+TnlWXF+1Jbm9wEsgse8vq0lE+IDLKh+Ul0s7IXw==
+X-Received: by 2002:a05:6512:1295:: with SMTP id u21mr4622107lfs.584.1621547242107;
+        Thu, 20 May 2021 14:47:22 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id p2sm408414lfh.31.2021.05.20.14.47.20
+        by smtp.gmail.com with ESMTPSA id p2sm408414lfh.31.2021.05.20.14.47.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 14:47:20 -0700 (PDT)
+        Thu, 20 May 2021 14:47:21 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
@@ -66,9 +66,9 @@ Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         Jonathan Nieder <jrnieder@gmail.com>,
         huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v3 05/10] t4013: test "git diff-index -m"
-Date:   Fri, 21 May 2021 00:46:58 +0300
-Message-Id: <20210520214703.27323-6-sorganov@gmail.com>
+Subject: [PATCH v3 06/10] diff-merges: move specific diff-index "-m" handling to diff-index
+Date:   Fri, 21 May 2021 00:46:59 +0300
+Message-Id: <20210520214703.27323-7-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20210520214703.27323-1-sorganov@gmail.com>
 References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
@@ -79,38 +79,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
--m in "git diff-index" means "match missing", that differs
-from its meaning in "git diff". Let's check it in diff-index.
+Move specific handling of "-m" for diff-index to diff-index.c, so
+diff-merges is left to handle only diff for merges options.
+
+Being a better design by itself, this is especially essential in
+preparation for letting -m imply -p, as "diff-index -m" obviously
+should not imply -p, as it's entirely unrelated.
+
+To handle this, in addition to moving specific diff-index "-m" code
+out of diff-merges, we introduce new
+
+  diff_merges_suppress_options_parsing()
+
+and call it before generic options processing in cmd_diff_index().
+
+This new diff_merges_suppress_options_parsing() could then be reused
+and called before invocations of setup_revisions() for other commands
+that don't need --diff-merges options, but that's outside of the scope
+of these patch series.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- t/t4013-diff-various.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ builtin/diff-index.c |  9 +++++++++
+ diff-merges.c        | 25 +++++++++++++------------
+ diff-merges.h        |  2 ++
+ 3 files changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index bdc23b1180b0..e561a8e48521 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -494,6 +494,19 @@ test_expect_success 'git config log.diffMerges first-parent vs -m' '
- 	test_cmp expected actual
- '
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 176fe7ff2b4e..cf09559e422d 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -2,6 +2,7 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "diff.h"
++#include "diff-merges.h"
+ #include "commit.h"
+ #include "revision.h"
+ #include "builtin.h"
+@@ -27,6 +28,12 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 	rev.abbrev = 0;
+ 	prefix = precompose_argv_prefix(argc, argv, prefix);
  
-+# -m in "git diff-index" means "match missing", that differs
-+# from its meaning in "git diff". Let's check it in diff-index.
-+# The line in the output for removed file should disappear when
-+# we provide -m in diff-index.
-+test_expect_success 'git diff-index -m' '
-+	rm -f file1 &&
-+	git diff-index HEAD >without-m &&
-+	lines_count=$(wc -l <without-m) &&
-+	git diff-index -m HEAD >with-m &&
-+	git restore file1 &&
-+	test_line_count = $((lines_count - 1)) with-m
-+'
++	/*
++	 * We need no diff for merges options, and we need to avoid conflict
++	 * with our own meaning of "-m".
++	 */
++	diff_merges_suppress_options_parsing();
 +
- test_expect_success 'log -S requires an argument' '
- 	test_must_fail git log -S
- '
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+@@ -35,6 +42,8 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 			option |= DIFF_INDEX_CACHED;
+ 		else if (!strcmp(arg, "--merge-base"))
+ 			option |= DIFF_INDEX_MERGE_BASE;
++		else if (!strcmp(arg, "-m"))
++			rev.match_missing = 1;
+ 		else
+ 			usage(diff_cache_usage);
+ 	}
+diff --git a/diff-merges.c b/diff-merges.c
+index f3a9daed7e05..9ca00cdd0cc6 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -6,6 +6,7 @@ typedef void (*diff_merges_setup_func_t)(struct rev_info *);
+ static void set_separate(struct rev_info *revs);
+ 
+ static diff_merges_setup_func_t set_to_default = set_separate;
++static int suppress_parsing;
+ 
+ static void suppress(struct rev_info *revs)
+ {
+@@ -30,17 +31,6 @@ static void set_first_parent(struct rev_info *revs)
+ 	revs->first_parent_merges = 1;
+ }
+ 
+-static void set_m(struct rev_info *revs)
+-{
+-	/*
+-	 * To "diff-index", "-m" means "match missing", and to the "log"
+-	 * family of commands, it means "show default diff for merges". Set
+-	 * both fields appropriately.
+-	 */
+-	set_to_default(revs);
+-	revs->match_missing = 1;
+-}
+-
+ static void set_combined(struct rev_info *revs)
+ {
+ 	suppress(revs);
+@@ -101,14 +91,22 @@ int diff_merges_config(const char *value)
+ 	return 0;
+ }
+ 
++void diff_merges_suppress_options_parsing(void)
++{
++	suppress_parsing = 1;
++}
++
+ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ {
+ 	int argcount = 1;
+ 	const char *optarg;
+ 	const char *arg = argv[0];
+ 
++	if (suppress_parsing)
++		return 0;
++
+ 	if (!strcmp(arg, "-m")) {
+-		set_m(revs);
++		set_to_default(revs);
+ 	} else if (!strcmp(arg, "-c")) {
+ 		set_combined(revs);
+ 		revs->combined_imply_patch = 1;
+@@ -155,6 +153,9 @@ void diff_merges_set_dense_combined_if_unset(struct rev_info *revs)
+ 
+ void diff_merges_setup_revs(struct rev_info *revs)
+ {
++	if (suppress_parsing)
++		return;
++
+ 	if (revs->combine_merges == 0)
+ 		revs->dense_combined_merges = 0;
+ 	if (revs->separate_merges == 0)
+diff --git a/diff-merges.h b/diff-merges.h
+index 09d9a6c9a4fb..b5d57f6563e3 100644
+--- a/diff-merges.h
++++ b/diff-merges.h
+@@ -11,6 +11,8 @@ struct rev_info;
+ 
+ int diff_merges_config(const char *value);
+ 
++void diff_merges_suppress_options_parsing(void);
++
+ int diff_merges_parse_opts(struct rev_info *revs, const char **argv);
+ 
+ void diff_merges_suppress(struct rev_info *revs);
 -- 
 2.25.1
 
