@@ -2,232 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C73D0C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11783C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:49:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A57246112F
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:49:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1E166112F
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 00:49:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbhETAuZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 20:50:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41194 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbhETAuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 20:50:25 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2094C061574
-        for <git@vger.kernel.org>; Wed, 19 May 2021 17:49:04 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id x15so14805809oic.13
-        for <git@vger.kernel.org>; Wed, 19 May 2021 17:49:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GQnFSKYkANWeRSMO1m2pxtRUPRC7b/xemTB4OtuAndA=;
-        b=Y7EOsrQAF9fFcwOUgfI5oUx+spECqoDSkIQkiOhHYf+n9fUCPdhCiStQ3BkC1+cjnN
-         /4EY3hW7+zpbk9ii2pwNEG0IcAvX/FA1pFbu+fz7CwxMQR6XVknhAMamWJw+URen8v9l
-         /dN/t2VbVTAtxTF/j0dHNMBXMBw5ZehnvFtLfSjbCoTvAHijH1XXwMKS3cRrij6pGy3K
-         r/neSIfuaOlAieorUWtvHdc5xxXg1zRPjKAfy1tGuVi8Rt0IWCmVKnAXQh2qTKaHUKi6
-         iPDVcd/X/rQnb2J1DzpNFFhDpWDbjR8B6SD+2UIZ0nl8NOlEkwEl1C2zdg51Tlc5c/8M
-         YsXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GQnFSKYkANWeRSMO1m2pxtRUPRC7b/xemTB4OtuAndA=;
-        b=E/7GQuOZHITNHAHlfNTW8MS8YCQ6EP7qyOnjzFqsxNNKI5vyVlEfA/lk9bMCSjI1Mf
-         U/y/pmsl8RR3e9Pb1kDTFdNOTrbvdgTYWUOOxxHDaSXPGqltze+8lfwPAxbz5rsW6aaS
-         dIV8BKGMIjNiuwMP40vdDEzkSRnJpG0nYFmAsMmG1zCec6yR+UxpVdxXq/+Mriglr+/9
-         lPgKBEsnNbEKc82aYyTuwuRcSlf6smGZxw4E80nDAXQYp/9D4/z/+iKTXZ+YyAxeCyV+
-         XfDCxFHbof3WGBWSJMi66ab5Pxd6XMggKzo/K1uZapkTd70pCOnH5do5EetA5cXLiUjA
-         4QAQ==
-X-Gm-Message-State: AOAM532LDPEHQM86T+ToYvPD34BFW+EjyAsivlc7tHckpJd5yY8oIgFj
-        fGIkdNC2pK5vKWSql7Rrk73Im6zl1VTWddOMYfk+CK6Q1mQ=
-X-Google-Smtp-Source: ABdhPJxkmyshhu4Bn1qMZT45QYuVvgiZfoEv+E9aVEYdOdr+gxZgz2i2v3VoZIo4uApbqRnXiWFSontzDLGQznFFHqw=
-X-Received: by 2002:aca:3e05:: with SMTP id l5mr1533626oia.39.1621471744028;
- Wed, 19 May 2021 17:49:04 -0700 (PDT)
+        id S230049AbhETAum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 20:50:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61040 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229498AbhETAum (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 20:50:42 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CCA5B8DCF;
+        Wed, 19 May 2021 20:49:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vL71SgRSpKpPphZsEsfWDDie3kcUQgyWrunIrD
+        tkOMw=; b=EAXPaz/T+1eTnusblxSQVlztm3cNf4nJ1EX8CMkM9CEJBXbym9DP71
+        VRqU3nuRQMsv7q0GKhWUy0xip3cGtsImHnAQQ2yIQ8Tw5xzy7WmWRjC3BEUDF48l
+        TOGr+czZg7tsGDc91wjXaBi24ZgBlJVtWREtSeU0sZtZCDto0tapI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5EB14B8DCE;
+        Wed, 19 May 2021 20:49:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D5AC7B8DCC;
+        Wed, 19 May 2021 20:49:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: RFC: error codes on exit
+References: <YKWggLGDhTOY+lcy@google.com>
+Date:   Thu, 20 May 2021 09:49:20 +0900
+In-Reply-To: <YKWggLGDhTOY+lcy@google.com> (Jonathan Nieder's message of "Wed,
+        19 May 2021 16:34:24 -0700")
+Message-ID: <xmqqeee2w7ov.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.859.git.1616621553.gitgitgadget@gmail.com>
- <pull.859.v2.git.1620094339.gitgitgadget@gmail.com> <02d517f052a35a952c726e7e941650ce424abb85.1620094339.git.gitgitgadget@gmail.com>
- <df8260bf-0990-a2df-86be-0059ca561751@gmail.com>
-In-Reply-To: <df8260bf-0990-a2df-86be-0059ca561751@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 19 May 2021 17:48:53 -0700
-Message-ID: <CABPp-BH79AC+k99djq28my=3VyyszR4=uRhSU8Ouy=P9WmiSCw@mail.gmail.com>
-Subject: Re: [PATCH v2 07/13] merge-ort: populate caches of rename detection results
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 36B7FFDE-B905-11EB-A318-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 17, 2021 at 6:51 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 5/3/21 10:12 PM, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Fill in cache_pairs, cached_target_names, and cached_irrelevant based on
-> > rename detection results.  Future commits will make use of these values.
->
-> Thank you for continuing to break this down into nice-sized pieces.
->
-> > +static void possibly_cache_new_pair(struct rename_info *renames,
-> > +                                 struct diff_filepair *p,
-> > +                                 unsigned side,
-> > +                                 char *new_path)
-> > +{
-> > +     char *old_value;
-> > +     int dir_renamed_side = 0;
-> > +
-> > +     if (new_path) {
-> > +             /*
-> > +              * Directory renames happen on the other side of history from
-> > +              * the side that adds new files to the old directory.
-> > +              */
-> > +             dir_renamed_side = 3 - side;
->
-> Neat trick. Side is in { 1, 2 } so this makes sense.
->
-> > +     } else {
-> > +             int val = strintmap_get(&renames->relevant_sources[side],
-> > +                                     p->one->path);
-> > +             if (val == RELEVANT_NO_MORE) {
-> > +                     assert(p->status == 'D');
-> > +                     strset_add(&renames->cached_irrelevant[side],
-> > +                                p->one->path);
->
-> Ok, I see a transition here from a relevant side to an
-> irrelevant one.
->
-> > +             }
-> > +             if (val <= 0)
-> > +                     return;
-> > +     }
-> > +
-> > +     if (p->status == 'D') {
-> > +             /*
-> > +              * If we already had this delete, we'll just set it's value
-> > +              * to NULL again, so no harm.
-> > +              */
-> > +             strmap_put(&renames->cached_pairs[side], p->one->path, NULL);
-> > +     } else if (p->status == 'R') {
-> > +             if (new_path) {
-> > +                     new_path = xstrdup(new_path);
-> > +                     old_value = strmap_put(&renames->cached_pairs[dir_renamed_side],
-> > +                                            p->two->path, new_path);
-> > +                     strset_add(&renames->cached_target_names[dir_renamed_side],
-> > +                                new_path);
-> > +                     assert(!old_value);
->
-> This assert implies that p->status == 'R' only if this is the
-> first side (and first commit) to show a rename, right?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Um, this assert implies that p->two->path was not already found in
-renames->cached_pairs[dir_renamed_side].
-
+> One kind of signal we haven't been able to make good use of is error
+> rates.  The problem is that a die() call can be an indication of
 >
-> > +             }
-> > +             if (!new_path)
-> > +                     new_path = p->two->path;
-> > +             new_path = xstrdup(new_path);
+>  a. the user asked to do something that isn't sensible, and we kindly
+>     rebuked the user
+> ...
+>  e. we encountered an internal error in handling the user's
+>     legitimate request
 >
-> If new_path was provided as non-NULL, then this is the second
-> time we are dup-ing it. However, that seems correct because we
-> want a different copy or every time we add it to the cached_pairs
-> and cached_target_names data.
->
-> > +             old_value = strmap_put(&renames->cached_pairs[side],
-> > +                                    p->one->path, new_path);
-> > +             strset_add(&renames->cached_target_names[side],
-> > +                        new_path);
->
-> Since we appear to be doing this in multiple places, would this
-> be a good place for a helper method? We could have it take a
-> `const char *new_path` and have the helper manage the `xstrdup()`
-> so we never forget to do that exactly once per insert to these
-> sets.
+> and these different cases do not all motivate the same response.
+> ...
+> In order to do this, I would like to annotate "exit" events with a
+> classification of the error.
 
-Makes sense.
+We already have BUG() for e. and die() for everything else, and
+"everything else" may be overly broad for your purpose.
 
-> > +             free(old_value);
-> > +     } else if (p->status == 'A' && new_path) {
-> > +             new_path = xstrdup(new_path);
-> > +             old_value = strmap_put(&renames->cached_pairs[dir_renamed_side],
-> > +                                    p->two->path, new_path);
-> > +             strset_add(&renames->cached_target_names[dir_renamed_side],
-> > +                        new_path);
-> > +             assert(!old_value);
->
-> And here's the third instance, making the "three is many" rule
-> kick in. A helper method would help make this easier. You can
-> also have a parameter corresponding to whether you need to
-> free() the old_value or assert it is NULL.
+I am sympathetic to the cause and I agree that introducing a
+finer-grained classification might be a solution.  I however am not
+sure how we can enforce developers to apply such a manually assigned
+"error code" cosistently.
 
-Yep, I'll add a helper.
+Just to throw in a totally different alternative to see if it works
+better, I wonder if you can teach die() to report to the trace2
+stream where in the code it was called from and which vintage of Git
+it is running.
 
->
-> > +     }
-> > +}
-> > +
-> >  static int compare_pairs(const void *a_, const void *b_)
-> >  {
-> >       const struct diff_filepair *a = *((const struct diff_filepair **)a_);
-> > @@ -2415,6 +2474,7 @@ static int collect_renames(struct merge_options *opt,
-> >               char *new_path; /* non-NULL only with directory renames */
-> >
-> >               if (p->status != 'A' && p->status != 'R') {
-> > +                     possibly_cache_new_pair(renames, p, side_index, NULL);
-> >                       diff_free_filepair(p);
-> >                       continue;
-> >               }
-> > @@ -2426,11 +2486,11 @@ static int collect_renames(struct merge_options *opt,
-> >                                                     &collisions,
-> >                                                     &clean);
-> >
-> > +             possibly_cache_new_pair(renames, p, side_index, new_path);
-> >               if (p->status != 'R' && !new_path) {
-> >                       diff_free_filepair(p);
-> >                       continue;
-> >               }
-> > -
->
-> nit: this deletion seems unnecessary.
+The stat collection side that cares about certain class of failures
+can have function that maps "die() at <filename>:<lineno>@<version>"
+to "what kind of die() it is".  
 
-Will fix.
+E.g.  blame.c:50@v2.32.0-rc0-184-gbbde7e6616" may be BUG(), while
+blame.c:2740@v2.32.0-rc0-184-gbbde7e6616 may be an user-error.
 
-> >               if (new_path)
-> >                       apply_directory_rename_modifications(opt, p, new_path);
-> >
-> > @@ -3701,8 +3761,16 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
-> >                                        NULL, 1);
-> >               strmap_init_with_options(&renames->dir_renames[i],
-> >                                        NULL, 0);
-> > +             /*
-> > +              * relevant_sources uses -1 for the default, because we need
-> > +              * to be able to distinguish not-in-strintmap from valid
-> > +              * relevant_source values from enum file_rename_relevance.
-> > +              * In particular, possibly_cache_new_pair() expects a negative
-> > +              * value for not-found entries.
-> > +              */
-> >               strintmap_init_with_options(&renames->relevant_sources[i],
-> > -                                         0, NULL, 0);
-> > +                                         -1 /* explicitly invalid */,
-> > +                                         NULL, 0);
-> >               strmap_init_with_options(&renames->cached_pairs[i],
-> >                                        NULL, 1);
-> >               strset_init_with_options(&renames->cached_irrelevant[i],
-> >
->
-> Functionally looks good. I just had some nits about organization.
-
-As always, thanks for the review and the helpful suggestions!
+That way, our developers do not have to do anything special and
+cannot do anything to screw up the classification.
