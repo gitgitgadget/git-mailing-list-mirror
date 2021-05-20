@@ -2,123 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLACK autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5A3DC433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 17:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14AFEC433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 17:19:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83AB26105A
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 17:04:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E36C561279
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 17:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234763AbhETRGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 13:06:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60814 "EHLO cloud.peff.net"
+        id S231730AbhETRUZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 13:20:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60820 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233986AbhETRGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 13:06:19 -0400
-Received: (qmail 28740 invoked by uid 109); 20 May 2021 17:04:58 -0000
+        id S231391AbhETRUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 13:20:25 -0400
+Received: (qmail 28772 invoked by uid 109); 20 May 2021 17:19:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 May 2021 17:04:58 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 May 2021 17:19:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1016 invoked by uid 111); 20 May 2021 17:04:58 -0000
+Received: (qmail 1102 invoked by uid 111); 20 May 2021 17:19:03 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 May 2021 13:04:58 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 May 2021 13:19:03 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 20 May 2021 13:04:57 -0400
+Date:   Thu, 20 May 2021 13:19:02 -0400
 From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/8] p5400: add perf tests for git-receive-pack(1)
-Message-ID: <YKaWuYy+iz3qhBad@coredump.intra.peff.net>
-References: <cover.1621451532.git.ps@pks.im>
- <f248b41d6e2df2d34a4304e2655df8cb094483e9.1621451532.git.ps@pks.im>
+To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Git List <git@vger.kernel.org>,
+        Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+Subject: Re: Should we do something with #git-devel on Freenode?
+Message-ID: <YKaaBj0KmJ3K5foC@coredump.intra.peff.net>
+References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
+ <YKViF9OVLeA95JPH@google.com>
+ <20210520071141.GZ8544@kitsune.suse.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f248b41d6e2df2d34a4304e2655df8cb094483e9.1621451532.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210520071141.GZ8544@kitsune.suse.cz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 19, 2021 at 09:13:27PM +0200, Patrick Steinhardt wrote:
+On Thu, May 20, 2021 at 09:11:41AM +0200, Michal Suchánek wrote:
 
-> +while read name repo
-> +do
-> +	refs=("create updated:new")
+> > It looks like most of the Freenode admins have moved to
+> > https://libera.chat/, so that would be a close equivalent.  Another
+> > alternative is OFTC <https://www.oftc.net/>, which is used by
+> > irc.debian.org, for example.
+> > 
+> > There are also other real-time chat programs such as Zulip (open
+> > source, used in Outreachy), Discord (used by LLVM), and Slack (used by
+> > Chromium); each has its benefits and flaws.
+> 
+> Or Matrix used by Mozilla, GNOME, and others.
+> 
+> Unlike the others Matrix intends to be not just a chat application
+> (opensource or proprietary) but open standard which has multiple
+> implementetions of both the server and the client.
+> 
+> In that way it is the most flexible option allowing communication
+> between people with different UX preferences.
 
-This (and the other array manipulation below) is a bash-ism. Presumably
-you've got TEST_SHELL_PATH pointed at bash. Without that, on a system
-where /bin/sh is dash, the script chokes here.
+I don't have much of an opinion either way, as I do not usually use the
+irc channel at all. And my comment is perhaps more about #git than
+#git-devel.
 
-For your purposes here, I think you can get by with just a single string
-with newlines in it. Or even a file (see below).
+But I would say that the decision to move to another application would
+be one that can be made by individual people. I.e., the reason people
+come to freenode #git to ask questions is because there are useful
+people hanging out there who will answer them. And likewise to
+#git-devel, because that's where the people who can have useful
+discussions are.
 
-> +	while read desc ref
-> +	do
-> +		test_expect_success "setup $name $desc" "
-> +			test_must_fail git push --force '$repo' '$ref' \
-> +				--receive-pack='tee pack | git receive-pack' 2>err &&
-> +			grep 'failed in pre-receive hook' err
-> +		"
+So if there is a critical mass of useful people that will hang out on
+the Matrix equivalent of #git (or whatever other tool), then that may
+become a new place. And people who want to do that should let people
+know where they can be found (whatever happens, I'd appreciate a PR to
+https://github.com/git/git-scm.com updating the "Community" page).
 
-This inverts the double- and single- quotes from our usual style. So if
-$repo is "foo", you are creating a string that has:
-
-  test_must_fail git push --force 'foo' ...
-
-in it, and then the test harness will eval that string. That will fail
-if $repo itself contains a single quote. Pretty unlikely, but I think it
-contains the absolute path.
-
-The usual style is:
-
-  test_expect_success "setup $name $desc" '
-	test_must_fail git push --force "$repo" "$ref" \
-	...etc...
-  '
-
-where the variables are dereferenced inside the eval'd snippet. So no
-quoting is necessary, no matter what's in the variables.
-
-> +		test_perf "receive-pack $name $desc" "
-> +			git receive-pack '$repo' <pack >negotiation &&
-> +			grep 'pre-receive hook declined' negotiation
-> +		"
-
-Likewise here, but note that test_perf is tricky! It runs the snippet in
-a sub-process. You have to export $repo to make it visible (you can use
-test_export, but you don't need to; there's some discussing in
-t/perf/README).
-
-> +	done < <(printf "%s\n" "${refs[@]}")
-> +done < <(printf "%s\n" "clone $TARGET_REPO_CLONE" "extrarefs $TARGET_REPO_REFS" "empty $TARGET_REPO_EMPTY")
-
-These process substitutions are also bash-isms. I guess you're trying to
-avoid putting the while on the right-hand side of a pipe like:
-
-  printf "%s\n" ... |
-  while read ...
-
-which is good, because they set variables and those values don't
-reliably make it out of the pipeline. If you stick the contents of $refs
-into a file, then you can just do:
-
-  while read ...
-  do
-     ...
-  done <ref-descs
-
-For the outer one, a here-doc is probably a bit simpler:
-
-  while read ...
-  do
-     ...
-  done <<-EOF
-  clone $TARGET_REPO_CLONE
-  extrarefs $TARGET_REPO_REFS
-  empty $TARGET_REPO_EMPTY
-  EOF
+Of course there's value in coordinating. Everybody _can_ hang out on
+their favorite venues and eventually talk to each other, but it's much
+easier if everybody agrees where to go. :) I think Emily's question is
+more "where do folks who hang out on #git-devel want to hang out now".
+And that's why I say my comments are probably more relevant for #git
+(where devs don't need to coordinate as much; useful people can just
+hang out and help folks with questions).
 
 -Peff
+
+PS A lot of this may reflect my view that there is no "official"
+structure for a lot of Git. We all used gmane as an archive because it
+was the best option at the time. Then it got worse, and Eric made
+public-inbox because it was what he wanted. And we all used it because
+it was so good. But there never needed to be any official adoption
+decision. Likewise for irc. I don't think #git or even #git-devel has
+any official status. It is simply where people doing things chose to go.
+Now they may choose to go somewhere else, but they don't necessarily
+have to do it as a unit.
