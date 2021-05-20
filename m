@@ -2,108 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD97C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 05:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 581C9C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 05:03:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BC9760E0C
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 05:02:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A7A3611BE
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 05:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229534AbhETFDs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 01:03:48 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61817 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbhETFDs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 01:03:48 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E4708D3DC4;
-        Thu, 20 May 2021 01:02:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xGO65wLLrOSCWp/po8wwS/1XrIkkWbOtWgPbFj
-        yBQcI=; b=mfekA/F8Ut482iaO3Ckq4Jfqd3nZmaI8h8osTfDL8cPbdtLxypdkhs
-        HHGEcA+/UGrKAhzp3XitbZ/ds5+uZwZih1qkCCshCat1x8pgcyAvgYCl11MiQEoq
-        vog2kM2Aa2VcHXFgHhiB2siyartxLZNwRYN6bSDcOKZZd8pfWdOpg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB43AD3DC3;
-        Thu, 20 May 2021 01:02:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 59630D3DC2;
-        Thu, 20 May 2021 01:02:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] revisions(7): clarify that most commands take a single
- revision range
-References: <xmqqv97g2svd.fsf@gitster.g>
-        <ab2d8b16-42db-9675-083a-efa7cfca6e4c@gmail.com>
-        <xmqqh7iyuhlp.fsf@gitster.g>
-Date:   Thu, 20 May 2021 14:02:25 +0900
-In-Reply-To: <xmqqh7iyuhlp.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        20 May 2021 13:58:10 +0900")
-Message-ID: <xmqqcztmuhem.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230008AbhETFFC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 01:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41090 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229458AbhETFFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 01:05:01 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF665C061574
+        for <git@vger.kernel.org>; Wed, 19 May 2021 22:03:39 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id h20-20020a17090aa894b029015db8f3969eso4000509pjq.3
+        for <git@vger.kernel.org>; Wed, 19 May 2021 22:03:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tRstYsb3rmGTf4JdbjxgJ638OGZHx7hpq8b37WyjnqA=;
+        b=Otxn5J6XjPiNv46o+QGZgY7cPZuBvZcPS+15988ppEWnxilsbfFZsc6R31xJt05CtE
+         991Om+6HWThsTrSYZaCqgKMiMln7IkrIRChYs8tkSN6dNdCgF2WdJc/9Ev5uXJ/VoIVr
+         D1gYEk3kCcA3FR1DDOYix3/znihMfK/SA9SC/qO8VHDqRccvckRAcifjVpeIAwfSJkqL
+         LJ+knGhVCkbggzF1FfxZYOEIpTS2yXxPM/NR5AuJActpjmS2DsA0mag/kSKNsl645P1B
+         NX9YdI/M5VwcKXtTBiFp8wyfFyLjheI/mZ17EDf/dV34yMnXJrpGZcq63pdzENZe/gOR
+         PV9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tRstYsb3rmGTf4JdbjxgJ638OGZHx7hpq8b37WyjnqA=;
+        b=i0roSgXXBBAA/3TfSftbdCh6Tg6WShycP/ILDyGztRAwRmsm+hUYjsXRrRErZhSyXh
+         3WSQUZgDEcmrvG9QY5Jefb0UMZyAwgHjx443ryNyn0nxWlLscPMiAHZztjNaX48UdyE/
+         Lzot+ALrCj1IM9l7oJZqD54iu19Ofl2YnbCXHYJJtFPh23xCQ1NAjeBoWQANVwh8enW8
+         oHycJKHPIC6xNBQI4gbLk7jTWCGcwRMM5C3TGTT5t79LtKslZKMpquOe53CipJnw3jtW
+         OfWaAWhsVBIE16HUVGf7sJgShZoAfGQsMX/TNe4miY/TU1CaeyQzaV+nzcf6IuQatIIS
+         t6EA==
+X-Gm-Message-State: AOAM5316KPy8+Zp3r4kEe1+381gkfAXQM03CSgvjcoIJYYwQi9y5X0u0
+        sPtQfPzI5k70iBa93SqslUWd6zf+688ewg==
+X-Google-Smtp-Source: ABdhPJx7a8yjNsZ1al8wOo4an+lRjxVRX22XM6N0OLCxqIkkZT/sUtEQ2z6VoSlGNWXkZoIh40SGNQ==
+X-Received: by 2002:a17:90a:b294:: with SMTP id c20mr3131981pjr.236.1621487019445;
+        Wed, 19 May 2021 22:03:39 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-15.three.co.id. [180.214.232.15])
+        by smtp.gmail.com with ESMTPSA id w74sm797825pfd.209.2021.05.19.22.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 May 2021 22:03:39 -0700 (PDT)
+Subject: Re: [PATCH] fetch: improve grammar of "shallow roots" message
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20210518061855.57478-1-alexhenrie24@gmail.com>
+ <626174ae-ff25-8f07-4d67-705bbe3f7d68@gmail.com>
+ <CAMMLpeRxoakadrXUVGSkhP0K71GHXxt4sXvSKrB5rx8oFH60bw@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <72f5226c-142a-f4a1-64c6-46ef647adbb5@gmail.com>
+Date:   Thu, 20 May 2021 12:03:36 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 91FA0C0C-B928-11EB-A3FD-D152C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAMMLpeRxoakadrXUVGSkhP0K71GHXxt4sXvSKrB5rx8oFH60bw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Bagas Sanjaya <bagasdotme@gmail.com> writes:
->
->> On 18/05/21 18.17, Junio C Hamano wrote:
->>> ...
->>> +In other words, writing two "two-dot range notation" next to each
->>> +other, e.g.
->>> +
->>> +    $ git log A..B C..D
->>> +
->>> +does *not* specify two revision ranges for most commands.  Instead
->>> +it will name a single connected set of commits, i.e. those that are
->>> +reachable from either B or D but are reachable from neither A or C.
->>> +In a linear history like this:
->>> +
->>> +    ---A---B---o---o---C---D
->>> +
+On 20/05/21 11.02, Alex Henrie wrote:
+> On Wed, May 19, 2021 at 8:22 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
 >>
->> So "git log A..B C..D" is same as "A..D", right?
->
-> A..B C..D is equivalent to ^A ^C B D, and in order to be part of the
-> set it represents, a commit must not be reachable from A, must not
-> be reachable from C, and must be reachable from B or D.
->
-> In the picture, A, B and two o's are all reachable from C, therefore
-> are not part of the set A..B C..D represents.  Neither is C, as it
-> is reachable from C.  That leaves only D in the resulting range.
->
-> A..D is a set of connected five commits, B o o C D in the above
-> picture.
->
-> So, no.
->
-> The confusion we often see goes more like "The set A..B contains B
-> (and nothing else), and C..D contains D (and nothing else), hence
-> 'git log A..B C..D' would show B and D".  But that is not what
-> happens because "git log" (like most other commands) takes just a
-> "range" that is "A..B C..D", which is a set of connected commits
-> each of whose member is reachable from one of the "positive"
-> endpoints (like B and D) and is not reachable from any of the
-> "negative" endpoints (like A and C).
+>> On 18/05/21 13.18, Alex Henrie wrote:
+>>
+>>> -                                     warning(_("reject %s because shallow roots are not allowed to be updated"),
+>>> +                                     warning(_("rejected %s because shallow roots are not allowed to be updated"),
+>>
+>>   From descriptive to null-subject past tense, right?
+> 
+> I'm not sure what the best way is to describe the grammar here. I
+> would say that the "ed" makes it clear that the message is a
+> description of what did happen rather than an imperative command
+> concerning what should happen.
+> 
+> -Alex
+> 
 
-Well, apparently the proposed text may have failed to educate you
-about what a "revision range" is and how it works, so it is not good
-enough, so I'll postpone merging the change down further and see if
-somebody else can come up with a better description.
+Looks OK.
 
-Thanks.
+So the error had happened, and we needed to express the situation.
+Because it happened on the past, using past tense was obviously the
+right thing.
+
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+-- 
+An old man doll... just what I always wanted! - Clara
