@@ -2,72 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1460FC433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65B78C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:37:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E320D6121E
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:28:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A055611AD
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232965AbhETPaF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 11:30:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41110 "EHLO
+        id S231758AbhETPir (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 11:38:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239185AbhETPaE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 11:30:04 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8D23C061761
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:28:42 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id r11so19837437edt.13
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:28:42 -0700 (PDT)
+        with ESMTP id S229978AbhETPiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 11:38:46 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C37A8C061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:37:24 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id s22so25794372ejv.12
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=5sYnVxcY5UlXwjNIOJAVgLoWfJY4TPkCaurla0NbMKY=;
-        b=asS5wQdRwDMK1ep++ADC/rO5XYcx+o5Kvi4IjV6AmIpGHagj+eefMgN3ULdw4ZKJs4
-         YaExou7vzppmHiabbbM6b7Xz0Yag7Ax2M9Efe9mgVhn1F3Ckq1TYtuhrwPMCpnmt9yg+
-         w42Y8HyRXle62gMwKhZ4o0Lp0xHdLPQTL1r6kS9bXhpIuhBryzuPfENe/9AczLKF8Bg/
-         UeKShdnnIx7jP/F/H869JIRNrQnoYy8tR28ydjqfxXInrwBR3AW/x8loQwGhxnH2G8lW
-         Azy+Da4ST5o1ma7ImXfcU+Y7xbg0vpuVpm8cdrj/iC+OpJMtby1xxacE0ct9chdK07QR
-         7NZw==
+        bh=6SRm60UvoIFNNiHWyl/sAcyW+SdMiMYI6X8eBObM6bI=;
+        b=moI7maQGjGIiCK090uC/lKGDHC/gmSE5ZB5Iph/1qUNV96tUp3mCXcPl5JeWRqe/Fm
+         DPoCnUEwv5kDI3fCUNORwODoDwktvGHaS6Oxf2U4dx2zgc7AUHeQ51u8dFuWfnj9fwuK
+         hLk3+EWFQqBK5FRhal6nxRcBxXtHv9wFOMX1kUgFSoEAeUQebjyvYX6SsvRpB4kry/qw
+         nouL0/fvnOzGYuGh3c7M/Fo4EMUElKKMtYy4Jxjc1UD0H3X+5Gvy3xT697RtvsiWUkA4
+         2IRlvJzWg6h7vhNp2m1ouvUle9I/mNkRHMf5AKfWxyI9QCEvBP5kTD8rogf2cVqWqC1D
+         dD1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=5sYnVxcY5UlXwjNIOJAVgLoWfJY4TPkCaurla0NbMKY=;
-        b=B2SYinY7M+pLy7hG+XFFYncuiCkutVgXUnE0P0Rz4GW8q8k3Ng7AHQMNtKO+J+vdCN
-         Y3R6GFmFzoGs6JqM3XzcO+mBQ3x3NE66757ITra5zSQ2fSlZPIiNTHqw6EQ5jya/kLGB
-         7uSdzl1AhzyWJozkcu6NH6fMj3TLS4tfCbemeLE0PmaBI7EwhQi7VbXLmPwiJ/GmAgTD
-         zNjwClZx7saz7UneJI/oCbPr7HTqhaNPYuayBGDUjH1ItsLCojr3P5G0bXGhHN8A2Y79
-         hcmYo9EUyB0gLXfBdPl7HmdHjbZyr+vWpt0NhnWZu5MK8WLoD59Lcc8G3PcbkEZHcVY6
-         Y8Hw==
-X-Gm-Message-State: AOAM531OXqwkHZaR1BkaRl/aIpFrePhmGi+x13SBMPymIa4Nz97bWfzm
-        UsywAIVI8ue+b66rSSBXG6R0RJibgS2tnw==
-X-Google-Smtp-Source: ABdhPJyQ4DQHOlx6qtITivQiy1yiJt6qAH3Yc2Lzjw5ajTOLfBsqD8mGuLWQc8jE8VJJqFKOnBGCQg==
-X-Received: by 2002:aa7:ccc6:: with SMTP id y6mr5628872edt.303.1621524520959;
-        Thu, 20 May 2021 08:28:40 -0700 (PDT)
+        bh=6SRm60UvoIFNNiHWyl/sAcyW+SdMiMYI6X8eBObM6bI=;
+        b=T8RdYKT/VjbhFf4RPED9cWQGEkBxvhWykOmcQA98suyEzYaU1kDSJS1AHfU+d8mW/T
+         kz781nV2kNWGTaFEmHIjHZhf71mJsgjKVzi0SGNLuh2kdfpdmLSjqqYLOLIuIqbyEyNM
+         uMTwmZ3HKeymWEKIMpTiiZCJ8JmgZOy6UxO3wGBfQ7ni0l51BVMOtz1bc5zbFWjsJIo+
+         etP+nHPdtMJZLZuJH5RibAE4i2LefsZTVsUkyfkvn3+OibCvA+kkVMB7uGdVs5eBlquk
+         OR71u2jT6WXsUxsbSKM7FeM2gJv4jEA+HGsUfkAYqcbYb45/IcG/8O+VXbQG1Ck53fP7
+         D5pw==
+X-Gm-Message-State: AOAM531PTeGCEhDOWJSVH9T9h9GAt8eXC9frxWa+qnxr2XHO6CBl0V4w
+        lPleIgRV9FyUv33e1uDhCmviptBQzQkAog==
+X-Google-Smtp-Source: ABdhPJy/6faKSanqyEqRy6y8eiUYYu9oZ1AG/cPUSc6jbEsZbk6KQcF0tfjy0zEpf9XAz17SEp9/8A==
+X-Received: by 2002:a17:907:217b:: with SMTP id rl27mr5353849ejb.421.1621525043115;
+        Thu, 20 May 2021 08:37:23 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id t20sm1551510ejc.61.2021.05.20.08.28.40
+        by smtp.gmail.com with ESMTPSA id o8sm1563198ejm.18.2021.05.20.08.37.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 08:28:40 -0700 (PDT)
+        Thu, 20 May 2021 08:37:22 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2 12/21] t5304: use "reflog expire --all" to clear the
- reflog
-Date:   Thu, 20 May 2021 17:27:23 +0200
+Subject: Re: [PATCH v2 15/21] t1414: mark corruption test with REFFILES
+Date:   Thu, 20 May 2021 17:31:28 +0200
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
  <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
- <d8e80d83b6f8ee929b187aaffd5f37c3c981b50b.1619519903.git.gitgitgadget@gmail.com>
+ <0d3b18cd35423dadd35d55073bd7230bfc908fee.1619519903.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <d8e80d83b6f8ee929b187aaffd5f37c3c981b50b.1619519903.git.gitgitgadget@gmail.com>
-Message-ID: <87sg2hpgpk.fsf@evledraar.gmail.com>
+In-reply-to: <0d3b18cd35423dadd35d55073bd7230bfc908fee.1619519903.git.gitgitgadget@gmail.com>
+Message-ID: <87pmxlpgb1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,36 +79,47 @@ On Tue, Apr 27 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> This is more explicit, and reduces the depency between test functions. It also
-> is more amenable to use with reftable, which has no concept of (non)existence of
-> a reflog
-
-Sounds good in principle, but:
-
-> @@ -94,9 +94,7 @@ test_expect_success 'prune: prune unreachable heads' '
->  test_expect_success 'prune: do not prune detached HEAD with no reflog' '
->  	git checkout --detach --quiet &&
->  	git commit --allow-empty -m "detached commit" &&
-> -	# verify that there is no reflogs
-> -	# (should be removed and disabled by previous test)
-> -	test_path_is_missing .git/logs &&
-> +	git reflog expire --all &&
->  	git prune -n >prune_actual &&
->  	test_must_be_empty prune_actual
+> The reftable format guarantees that reflog entries are well-formed
+>
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  t/t1414-reflog-walk.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
+> index 80d94704d012..72a5ac61a520 100755
+> --- a/t/t1414-reflog-walk.sh
+> +++ b/t/t1414-reflog-walk.sh
+> @@ -119,7 +119,7 @@ test_expect_success 'min/max age uses entry date to limit' '
+>  	test_cmp expect actual
 >  '
+>  
+> -test_expect_success 'walk prefers reflog to ref tip' '
+> +test_expect_success REFFILES 'walk prefers reflog to ref tip' '
+>  	head=$(git rev-parse HEAD) &&
+>  	one=$(git rev-parse one) &&
+>  	ident="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE" &&
 
-Isn't the point of the existing test to check that there isn't an
-existing reflog, not to just expire it if we find it, or does expire
---all return non-zero if none was found ?
+Isn't the point of this test added in 7cf686b9a8 (t1414: document some
+reflog-walk oddities, 2017-07-07) to test what we do not when the reflog
+isn't well formed, but when the reflog and branch history disagree about
+what the latest tip is?
 
-> @@ -104,6 +102,7 @@ test_expect_success 'prune: do not prune detached HEAD with no reflog' '
->  test_expect_success 'prune: prune former HEAD after checking out branch' '
->  	head_oid=$(git rev-parse HEAD) &&
->  	git checkout --quiet main &&
-> +	git reflog expire --all &&
->  	git prune -v >prune_actual &&
->  	grep "$head_oid" prune_actual
->  '
+Perhaps reftable is going to guarantee that that'll never happen via
+some transaction mechanism (I'm not sure), but if I'm right then I think
+it's worth at least calling out that difference in the commit message
+and/or modified test description.
 
-Just skimming this I'm perplexed why this needs expiring now, as opposed
-to being s/file/command/ changes like the rest...
+Not a big deal, but this also makes me somewhat question the name
+"REFFILES" as a prereq if we really mean (as we are in the first test
+that uses this) "we don't need this under reftable, specifically".
+
+Maybe I'm overthinking things and it's stupid to split these up, as we
+have no other planned ref backend, but for any such future test backend
+/ readability I'd find it much easier to grok if we clearly
+deliniate/use REFFILES for tests that really are testing the ref files
+backend specifically, v.s. say a !REFTABLE for things that we're
+skipping because REFTABLE in particular makes certain guarantees we can
+count on. Say that the reflog and branch is never out of sync.
+
+Of course this also uses ref .. files, anyway, just food for thought.
