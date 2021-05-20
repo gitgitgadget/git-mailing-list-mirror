@@ -2,448 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44184C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86BA6C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:37:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 289A861186
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5ABC661184
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230452AbhETGL1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 02:11:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56008 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230442AbhETGLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 02:11:14 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25AD6C061574
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:53 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id r12so16307177wrp.1
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=RNtzNLn2KfR8/8PpFgHulutxuCBd8xnKkYWJTHqQXY0=;
-        b=JTs/xAEihKgw0qy0wsBu3CwzOMXnt1Ozmji+Xl6AKkckL9w6NaBRpQ6s/H0s5ad56x
-         Md3e5PiuvL0ElO9LPeesrve8DNrm8X5Wvvixnhgw3sVLFUEQW3J2c3eBa2UH+TAaSjHY
-         faYbXP5mThgLQ3Frq6A02lxZefh8R8vHkDcB8AFHu26uOzPTn3cZwFCqe8DtFXAb3Vmd
-         94cn/csdfoUGAEGOeQmK0MIfXYG7Vaxg/whgeMxT0jcCvOAgExJ8nFAA/EoTc01c+VtP
-         7M2KztxTuVWN2rgJT9mSAMnN1R2xETUP0dT3Zm5SugbZkvJ9tvrvZdnjwFRhfIX08Qop
-         +cSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=RNtzNLn2KfR8/8PpFgHulutxuCBd8xnKkYWJTHqQXY0=;
-        b=TmreK2SB524UOIHd3k0Bes1qxZ1jjhF3vgD494ZMGw8d8Mgf4o95EvvAZDEO6RzXZY
-         lO910oD8KsznoY2rep80H5k0VKBZFnQg4+14JCVqSrEacj6cIGOReTIh8cj7OxTaYL7x
-         PznRD3u2fe7gYf06/ZvtwT5c4jNU1z1iQ4ERX28kmRNmP1CXPHI95kAfw5OHO5ry9Kpz
-         ouqPOSkiTgbD+ImV4srcuuPQXGQ7mIEnl2b4hzKisOBh0SWhRuYSM4qPfVK3O52nqQcq
-         AqwskdXkJ2snlH2I1SLWB1wqh65rorY1/N/RzMjtwI9VxceJ12gkpiJsVHU4QkYYgoh8
-         gfMA==
-X-Gm-Message-State: AOAM530GCveHhyuscAZR/AMaEbeiZvAPy/MXoQKMzMM8PIGc80MbrDa/
-        yvLgTm7Dr4minaPqXmXtpEqk/uKnQY4=
-X-Google-Smtp-Source: ABdhPJwEE8OEnny/mADqjaiIKPxZKaUFJghNBwrm+76CI8DyqnPg68ObKt2wRPYLE/C/9M+y4px2EA==
-X-Received: by 2002:adf:e4c4:: with SMTP id v4mr2386915wrm.346.1621490991690;
-        Wed, 19 May 2021 23:09:51 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v12sm1761892wru.73.2021.05.19.23.09.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 23:09:51 -0700 (PDT)
-Message-Id: <76e253793c9a1d7fdd1836d5e4db26dabd3d713a.1621490982.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
-References: <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
-        <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 May 2021 06:09:41 +0000
-Subject: [PATCH v3 13/13] merge-ort, diffcore-rename: employ cached renames
- when possible
+        id S229681AbhETGiW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 02:38:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51224 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229534AbhETGiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 02:38:21 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 328E2BADFF;
+        Thu, 20 May 2021 02:37:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rRJF5b+3yOGCr8vh4xiBVzGaEzud6c3H7pzPzW
+        HnGFQ=; b=O9xBjriE/Iugy7bB4KOt7rp1N2vB1wJNugh71LkFTbgZjk82bawx3T
+        c1IsxuBbcZbkVP13fvs9bERoHY106syP3dKtJzUaRh4mDFrx7fzYmPDnhOOfmhF5
+        Q1u7hS/nPd2GJ5RZLJmCB4/L6KXkW51N96zniXas7vIhQjxXsqcrM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2809BBADFE;
+        Thu, 20 May 2021 02:37:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A1410BADFD;
+        Thu, 20 May 2021 02:36:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] doc: explain the use of color.pager
+References: <YKTXlTjwOUi4W+R8@coredump.intra.peff.net>
+        <YKVsw3uqb66ifzvd@google.com>
+Date:   Thu, 20 May 2021 15:36:59 +0900
+In-Reply-To: <YKVsw3uqb66ifzvd@google.com> (Jonathan Nieder's message of "Wed,
+        19 May 2021 12:53:39 -0700")
+Message-ID: <xmqq5yzdvrlg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C786431A-B935-11EB-9833-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-When there are many renames between the old base of a series of commits
-and the new base, the way sequencer.c, merge-recursive.c, and
-diffcore-rename.c have traditionally split the work resulted in
-redetecting the same renames with each and every commit being
-transplanted.  To address this, the last several commits have been
-creating a cache of rename detection results, determining when it was
-safe to use such a cache in subsequent merge operations, adding helper
-functions, and so on.  See the previous half dozen commit messages for
-additional discussion of this optimization, particularly the message a
-few commits ago entitled "add code to check for whether cached renames
-can be reused".  This commit finally ties all of that work together,
-modifying the merge algorithm to make use of these cached renames.
+>> The current documentation for color.pager is technically correct, but
+>> slightly misleading and doesn't really clarify the purpose of the
+>> variable. As explained in the original thread which added it:
+>>
+>>   https://lore.kernel.org/git/E1G6zPH-00062L-Je@moooo.ath.cx/
+>>
+>> the point is deal with pagers that don't understand colors.
+>
+> Missing "to" before "deal".
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
+Will locally amend.
 
-                            Before                  After
-    no-renames:        5.665 s ±  0.129 s     5.622 s ±  0.059 s
-    mega-renames:     11.435 s ±  0.158 s    10.127 s ±  0.073 s
-    just-one-mega:   494.2  ms ±  6.1  ms   500.3  ms ±  3.8  ms
+> More importantly, I think I'd find a
+> reference to the commit or a quotation from the affected user more
+> helpful than a reference to the mailing list archive, since that would
+> make this a bit more self-contained.
 
-That's a fairly small improvement, but mostly because the previous
-optimizations were so effective for these particular testcases; this
-optimization only kicks in when the others don't.  If we undid the
-basename-guided rename detection and skip-irrelevant-renames
-optimizations, then we'd see that this series by itself improved
-performance as follows:
+The original commit and its log message we ended up with did not
+explain the motivation behind well enough.
 
-                   Before Basename Series   After Just This Series
-    no-renames:      13.815 s ±  0.062 s      5.697 s ±  0.080 s
-    mega-renames:  1799.937 s ±  0.493 s    205.709 s ±  0.457 s
+The motivation from the original thread:
 
-Since this optimization kicks in to help accelerate cases where the
-previous optimizations do not apply, this last comparison shows that
-this cached-renames optimization has the potential to help signficantly
-in cases that don't meet the requirements for the other optimizations to
-be effective.
+      When I use a pager that escapes the escape character or highlights the
+      content itself the output of git diff without the pager should have
+      colors but not with the pager.  For example using git diff with a
+      pathspec is quite short most of the time.  For git diff I have to
+      enable paging manually and run git diff | $PAGER usually but git log
+      uses the pager automatically and should not use colors with it.
 
-The changes made in this optimization also lay some important groundwork
-for a future optimization around having collect_merge_info() avoid
-recursing into subtrees in more cases.
+can be quoted as a whole, but "the point is to deal with ..." is a
+succinct summary that is good enough for the purpose of this commit,
+I would think.
 
-However, for this optimization to be effective, merge_switch_to_result()
-should only be called when the rebase or cherry-pick operation has
-either completed or hit a case where the user needs to resolve a
-conflict or edit the result.  If it is called after every commit, as
-sequencer.c does, then the working tree and index are needlessly updated
-with every commit and the cached metadata is tossed, defeating this
-optimization.  Refactoring sequencer.c to only call
-merge_switch_to_result() at the end of the operation is a bigger
-undertaking, and the practical benefits of this optimization will not be
-realized until that work is performed.  Since `test-tool fast-rebase`
-only updates at the end of the operation, it was used to obtain the
-timings above.
+>> +	A boolean to specify whether `auto` color modes should colorize
+>> +	output going to the pager. Defaults to true; set this to false
+>> +	if your pager does not understand ANSI color codes.
+>
+> I quite like the "set this to false if your pager does not understand
+> ANSI color codes" part --- short and to the point.
+>
+> The sentence before takes me long enough to understand that I don't
+> think we've gotten the wording right yet.  Before I suggest some
+> wording, let's make sure I understand the behavior correctly:
+>
+> - unlike other color.* settings, this can only be "true" or "false".
+>   It cannot be "auto".
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diffcore-rename.c                        | 22 +++++++++--
- diffcore.h                               |  3 +-
- merge-ort.c                              | 47 ++++++++++++++++++++---
- t/t6429-merge-sequence-rename-caching.sh | 48 ++++++++++++++----------
- 4 files changed, 90 insertions(+), 30 deletions(-)
+Correct.
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 963ca582216b..3375e24659ea 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -568,7 +568,8 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
- static void initialize_dir_rename_info(struct dir_rename_info *info,
- 				       struct strintmap *relevant_sources,
- 				       struct strintmap *dirs_removed,
--				       struct strmap *dir_rename_count)
-+				       struct strmap *dir_rename_count,
-+				       struct strmap *cached_pairs)
- {
- 	struct hashmap_iter iter;
- 	struct strmap_entry *entry;
-@@ -633,6 +634,17 @@ static void initialize_dir_rename_info(struct dir_rename_info *info,
- 					 rename_dst[i].p->two->path);
- 	}
- 
-+	/* Add cached_pairs to counts */
-+	strmap_for_each_entry(cached_pairs, &iter, entry) {
-+		const char *old_name = entry->key;
-+		const char *new_name = entry->value;
-+		if (!new_name)
-+			/* known delete; ignore it */
-+			continue;
-+
-+		update_dir_rename_counts(info, dirs_removed, old_name, new_name);
-+	}
-+
- 	/*
- 	 * Now we collapse
- 	 *    dir_rename_count: old_directory -> {new_directory -> count}
-@@ -1247,7 +1259,8 @@ static void handle_early_known_dir_renames(struct dir_rename_info *info,
- void diffcore_rename_extended(struct diff_options *options,
- 			      struct strintmap *relevant_sources,
- 			      struct strintmap *dirs_removed,
--			      struct strmap *dir_rename_count)
-+			      struct strmap *dir_rename_count,
-+			      struct strmap *cached_pairs)
- {
- 	int detect_rename = options->detect_rename;
- 	int minimum_score = options->rename_score;
-@@ -1363,7 +1376,8 @@ void diffcore_rename_extended(struct diff_options *options,
- 		/* Preparation for basename-driven matching. */
- 		trace2_region_enter("diff", "dir rename setup", options->repo);
- 		initialize_dir_rename_info(&info, relevant_sources,
--					   dirs_removed, dir_rename_count);
-+					   dirs_removed, dir_rename_count,
-+					   cached_pairs);
- 		trace2_region_leave("diff", "dir rename setup", options->repo);
- 
- 		/* Utilize file basenames to quickly find renames. */
-@@ -1560,5 +1574,5 @@ void diffcore_rename_extended(struct diff_options *options,
- 
- void diffcore_rename(struct diff_options *options)
- {
--	diffcore_rename_extended(options, NULL, NULL, NULL);
-+	diffcore_rename_extended(options, NULL, NULL, NULL, NULL);
- }
-diff --git a/diffcore.h b/diffcore.h
-index f5c6de4841ed..533b30e21e7f 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -181,7 +181,8 @@ void diffcore_rename(struct diff_options *);
- void diffcore_rename_extended(struct diff_options *options,
- 			      struct strintmap *relevant_sources,
- 			      struct strintmap *dirs_removed,
--			      struct strmap *dir_rename_count);
-+			      struct strmap *dir_rename_count,
-+			      struct strmap *cached_pairs);
- void diffcore_merge_broken(void);
- void diffcore_pickaxe(struct diff_options *);
- void diffcore_order(const char *orderfile);
-diff --git a/merge-ort.c b/merge-ort.c
-index 2cdc57e75543..142d44d74d63 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -764,15 +764,48 @@ static void add_pair(struct merge_options *opt,
- 	struct rename_info *renames = &opt->priv->renames;
- 	int names_idx = is_add ? side : 0;
- 
--	if (!is_add) {
-+	if (is_add) {
-+		if (strset_contains(&renames->cached_target_names[side],
-+				    pathname))
-+			return;
-+	} else {
- 		unsigned content_relevant = (match_mask == 0);
- 		unsigned location_relevant = (dir_rename_mask == 0x07);
- 
-+		/*
-+		 * If pathname is found in cached_irrelevant[side] due to
-+		 * previous pick but for this commit content is relevant,
-+		 * then we need to remove it from cached_irrelevant.
-+		 */
-+		if (content_relevant)
-+			/* strset_remove is no-op if strset doesn't have key */
-+			strset_remove(&renames->cached_irrelevant[side],
-+				      pathname);
-+
-+		/*
-+		 * We do not need to re-detect renames for paths that we already
-+		 * know the pairing, i.e. for cached_pairs (or
-+		 * cached_irrelevant).  However, handle_deferred_entries() needs
-+		 * to loop over the union of keys from relevant_sources[side] and
-+		 * cached_pairs[side], so for simplicity we set relevant_sources
-+		 * for all the cached_pairs too and then strip them back out in
-+		 * prune_cached_from_relevant() at the beginning of
-+		 * detect_regular_renames().
-+		 */
- 		if (content_relevant || location_relevant) {
- 			/* content_relevant trumps location_relevant */
- 			strintmap_set(&renames->relevant_sources[side], pathname,
- 				      content_relevant ? RELEVANT_CONTENT : RELEVANT_LOCATION);
- 		}
-+
-+		/*
-+		 * Avoid creating pair if we've already cached rename results.
-+		 * Note that we do this after setting relevant_sources[side]
-+		 * as noted in the comment above.
-+		 */
-+		if (strmap_contains(&renames->cached_pairs[side], pathname) ||
-+		    strset_contains(&renames->cached_irrelevant[side], pathname))
-+			return;
- 	}
- 
- 	one = alloc_filespec(pathname);
-@@ -2360,7 +2393,9 @@ static inline int possible_side_renames(struct rename_info *renames,
- static inline int possible_renames(struct rename_info *renames)
- {
- 	return possible_side_renames(renames, 1) ||
--	       possible_side_renames(renames, 2);
-+	       possible_side_renames(renames, 2) ||
-+	       !strmap_empty(&renames->cached_pairs[1]) ||
-+	       !strmap_empty(&renames->cached_pairs[2]);
- }
- 
- static void resolve_diffpair_statuses(struct diff_queue_struct *q)
-@@ -2384,7 +2419,6 @@ static void resolve_diffpair_statuses(struct diff_queue_struct *q)
- 	}
- }
- 
--MAYBE_UNUSED
- static void prune_cached_from_relevant(struct rename_info *renames,
- 				       unsigned side)
- {
-@@ -2404,7 +2438,6 @@ static void prune_cached_from_relevant(struct rename_info *renames,
- 	}
- }
- 
--MAYBE_UNUSED
- static void use_cached_pairs(struct merge_options *opt,
- 			     struct strmap *cached_pairs,
- 			     struct diff_queue_struct *pairs)
-@@ -2507,6 +2540,7 @@ static void detect_regular_renames(struct merge_options *opt,
- 	struct diff_options diff_opts;
- 	struct rename_info *renames = &opt->priv->renames;
- 
-+	prune_cached_from_relevant(renames, side_index);
- 	if (!possible_side_renames(renames, side_index)) {
- 		/*
- 		 * No rename detection needed for this side, but we still need
-@@ -2535,7 +2569,8 @@ static void detect_regular_renames(struct merge_options *opt,
- 	diffcore_rename_extended(&diff_opts,
- 				 &renames->relevant_sources[side_index],
- 				 &renames->dirs_removed[side_index],
--				 &renames->dir_rename_count[side_index]);
-+				 &renames->dir_rename_count[side_index],
-+				 &renames->cached_pairs[side_index]);
- 	trace2_region_leave("diff", "diffcore_rename", opt->repo);
- 	resolve_diffpair_statuses(&diff_queued_diff);
- 
-@@ -2643,6 +2678,8 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	trace2_region_enter("merge", "regular renames", opt->repo);
- 	detect_regular_renames(opt, MERGE_SIDE1);
- 	detect_regular_renames(opt, MERGE_SIDE2);
-+	use_cached_pairs(opt, &renames->cached_pairs[1], &renames->pairs[1]);
-+	use_cached_pairs(opt, &renames->cached_pairs[2], &renames->pairs[2]);
- 	trace2_region_leave("merge", "regular renames", opt->repo);
- 
- 	trace2_region_enter("merge", "directory renames", opt->repo);
-diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-index f47d8924ee73..035edc40b1eb 100755
---- a/t/t6429-merge-sequence-rename-caching.sh
-+++ b/t/t6429-merge-sequence-rename-caching.sh
-@@ -101,10 +101,10 @@ test_expect_success 'caching renames does not preclude finding new ones' '
- # dramatic change in size of the file, but remembering the rename and
- # reusing it is reasonable too.
- #
--# Rename detection (diffcore_rename_extended()) will run twice here; it is
--# not needed on the topic side of history for either of the two commits
--# being merged, but it is needed on the upstream side of history for each
--# commit being picked.
-+# We do test here that we expect rename detection to only be run once total
-+# (the topic side of history doesn't need renames, and with caching we
-+# should be able to only run rename detection on the upstream side one
-+# time.)
- test_expect_success 'cherry-pick both a commit and its immediate revert' '
- 	test_create_repo pick-commit-and-its-immediate-revert &&
- 	(
-@@ -140,11 +140,11 @@ test_expect_success 'cherry-pick both a commit and its immediate revert' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test_might_fail test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		test-tool fast-rebase --onto HEAD upstream~1 topic &&
- 		#git cherry-pick upstream~1..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
--		test_line_count = 2 calls
-+		test_line_count = 1 calls
- 	)
- '
- 
-@@ -304,9 +304,11 @@ test_expect_success 'rename same file identically, then add file to old dir' '
- # Here we are just concerned that cached renames might prevent us from seeing
- # the rename conflict, and we want to ensure that we do get a conflict.
- #
--# While at it, also test that we do rename detection three times.  We have to
--# detect renames on the upstream side of history once for each merge, plus
--# Topic_2 has renames.
-+# While at it, though, we do test that we only try to detect renames 2
-+# times and not three.  (The first merge needs to detect renames on the
-+# upstream side.  Traditionally, the second merge would need to detect
-+# renames on both sides of history, but our caching of upstream renames
-+# should avoid the need to re-detect upstream renames.)
- #
- test_expect_success 'cached dir rename does not prevent noticing later conflict' '
- 	test_create_repo dir-rename-cache-not-occluding-later-conflict &&
-@@ -357,7 +359,7 @@ test_expect_success 'cached dir rename does not prevent noticing later conflict'
- 		grep CONFLICT..rename/rename output &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
--		test_line_count = 3 calls
-+		test_line_count = 2 calls
- 	)
- '
- 
-@@ -412,10 +414,17 @@ test_setup_upstream_rename () {
- # commit to mess up its location either.  We want to make sure that
- # olddir/newfile doesn't exist in the result and that newdir/newfile does.
- #
--# We also expect rename detection to occur three times.  Although it is
--# typically needed two times per commit, there are no deleted files on the
--# topic side of history, so we only need to detect renames on the upstream
--# side for each of the 3 commits we need to pick.
-+# We also test that we only do rename detection twice.  We never need
-+# rename detection on the topic side of history, but we do need it twice on
-+# the upstream side of history.  For the first topic commit, we only need
-+# the
-+#   relevant-rename -> renamed
-+# rename, because olddir is unmodified by Topic_1.  For Topic_2, however,
-+# the new file being added to olddir means files that were previously
-+# irrelevant for rename detection are now relevant, forcing us to repeat
-+# rename detection for the paths we don't already have cached.  Topic_3 also
-+# tweaks olddir/newfile, but the renames in olddir/ will have been cached
-+# from the second rename detection run.
- #
- test_expect_success 'dir rename unneeded, then add new file to old dir' '
- 	test_setup_upstream_rename dir-rename-unneeded-until-new-file &&
-@@ -450,7 +459,7 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
--		test_line_count = 3 calls &&
-+		test_line_count = 2 calls &&
- 
- 		git ls-files >tracked &&
- 		test_line_count = 5 tracked &&
-@@ -516,7 +525,7 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
--		test_line_count = 4 calls &&
-+		test_line_count = 3 calls &&
- 
- 		test_path_is_missing somefile &&
- 		test_path_is_missing olddir/newfile &&
-@@ -648,9 +657,8 @@ test_expect_success 'caching renames only on upstream side, part 1' '
- # for the wrong side of history.
- #
- #
--# This testcase should only need three calls to diffcore_rename_extended(),
--# because there are no renames on the topic side of history for picking
--# Topic_2.
-+# This testcase should only need two calls to diffcore_rename_extended(),
-+# both for the first merge, one for each side of history.
- #
- test_expect_success 'caching renames only on upstream side, part 2' '
- 	test_setup_topic_rename cache-renames-only-upstream-rename-file &&
-@@ -677,7 +685,7 @@ test_expect_success 'caching renames only on upstream side, part 2' '
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
--		test_line_count = 3 calls &&
-+		test_line_count = 2 calls &&
- 
- 		git ls-files >tracked &&
- 		test_line_count = 4 tracked &&
--- 
-gitgitgadget
+> - in other color.* settings, "auto" means "colors are used only when
+>   stderr goes to a terminal".  A pager typically ultimately writes to
+>   a terminal, but (1) it's not guaranteed to (e.g., xless writes to
+>   its own window instead) and (2) more importantly for us, it's not
+>   guaranteed to write terminal escapes as is.
+
+Correct---color.pager is about telling Git about the pager's capability.
+
+> - so this setting can be used to answer "for the sake of evaluating
+>   color settings, should we treat output that is going to a pager as
+>   going to a terminal?"
+
+I am not sure if that is the easiest-to-explain way to view it.
+It's more like "color.diff says 'auto', so we'd color it when the
+output is going to tty and the terminal is not dumb.  We'd also
+color it when our output is not directly going to tty (because we
+are writing to a pipe whose other end is being read by the pager)
+but we know we are talking to a pager, BUT the pager may not be able
+to handle coloured output correctly---so we need a way to say "no,
+even though our output goes to the pager, we cannot colour the
+output".
+
+> If I understood correctly, how about some text like the following?
+>
+> 	A boolean to specify whether `auto` color modes should colorize
+> 	output going to a pager, in addition to their behavior of
+> 	colorizing output going to a terminal. Defaults to true; [etc]
+
+The variable has no control over what happens to output that
+directly goes to a terminal, so while the additional phrase might
+not be technically wrong per-se, I do not see why this is more clear
+than the original.
+
+So, in short, I think it would be sufficient to amend the proposed
+log message with s/deal with/to deal with/ and nothing else.
+
+Thanks.
