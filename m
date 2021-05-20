@@ -2,79 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B44B1C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 03:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9E03C433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 03:34:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85BB06109F
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 03:28:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A47DA61184
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 03:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbhETDaI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 May 2021 23:30:08 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53373 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhETDaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 May 2021 23:30:08 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3B0FD1467BB;
-        Wed, 19 May 2021 23:28:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rZUNk3vYTkK3jTzb89tZw21w/KU7aKevhZwEEB
-        rqfhs=; b=YZM+PaQDbyAh6EGvkacx8XAeuYZ5pMqhp4VXVxqRXYzlZxYZmMJfXs
-        8vzhaQmIXh3jgUUr50WNolTk63XdrNQSzmBRfoMdk2IGEAb48pa5HRfB2aThGnsu
-        /MKGVSkLaaNOGx2yWnKDJ/TPPEUeyb8ooLKuFSyk+ENq1MMC2V/48=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 339EE1467BA;
-        Wed, 19 May 2021 23:28:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7A1A01467B5;
-        Wed, 19 May 2021 23:28:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH] help: colorize man pages
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
-        <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
-        <60a332fd22dad_14c8d4208ed@natae.notmuch>
-        <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
-        <87im3fqci9.fsf@evledraar.gmail.com>
-        <YKXBdQ36MYz2YG8s@camp.crustytoothpaste.net>
-        <xmqq35uiw3bm.fsf@gitster.g> <60a5d20a4e134_1f37320860@natae.notmuch>
-Date:   Thu, 20 May 2021 12:28:42 +0900
-In-Reply-To: <60a5d20a4e134_1f37320860@natae.notmuch> (Felipe Contreras's
-        message of "Wed, 19 May 2021 22:05:46 -0500")
-Message-ID: <xmqqpmxmulqt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230185AbhETDfi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 May 2021 23:35:38 -0400
+Received: from mslow1.mail.gandi.net ([217.70.178.240]:49315 "EHLO
+        mslow1.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229531AbhETDfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 May 2021 23:35:37 -0400
+Received: from relay9-d.mail.gandi.net (unknown [217.70.183.199])
+        by mslow1.mail.gandi.net (Postfix) with ESMTP id 4B765CE025
+        for <git@vger.kernel.org>; Thu, 20 May 2021 03:27:17 +0000 (UTC)
+Received: (Authenticated sender: josh@joshtriplett.org)
+        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 2DA66FF803;
+        Thu, 20 May 2021 03:26:54 +0000 (UTC)
+Date:   Wed, 19 May 2021 20:26:52 -0700
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Standardized escaping to store a .git in git?
+Message-ID: <YKXW/Elvf8l780Yp@localhost>
+References: <YKV8hEAxIzolnROX@localhost>
+ <YKWDlF59jWoyE+xJ@google.com>
+ <YKWMbh/j1ZiMZiGs@localhost>
+ <YKWTGMw3nShH9VKt@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7B152FCE-B91B-11EB-A487-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YKWTGMw3nShH9VKt@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> How is enabling a configuration already present in `man` out of scope,
-> but running an *ENTIRELY* different program--such as konqueror or
-> woman--to view man pages is not?
+On Wed, May 19, 2021 at 03:37:12PM -0700, Jonathan Nieder wrote:
+> Josh Triplett wrote:
+> > Part of my motivation, here, is that I'm looking to implement one such
+> > escaping mechanism (in a tool built atop libgit2 that needs to handle
+> > and version arbitrary files), and rather than inventing something
+> > bespoke I'd love to interoperate. And since I've seen various approaches
+> > used in the wild, I didn't want to add Yet Another distinct approach
+> > before starting a design conversation about it.
 >
->   git help --man git
+> *nod* To be clear, I'm glad you brought it up, among other reasons
+> because it means this discussion becomes available in the list archive
+> for when people are wondering about the same thing in the future.
 >
-> Doesn't even necessarily run man *already*.
+> > For the storing-arbitrary-files case, these wouldn't apply.
+>
+> Can you say a little more about the storing-arbitrary-files case?
 
-As an end-user, I do not expect Git to run konqueror or woman with
-its own tweaks when it does so.  And I do not see a reason why "man"
-should be any different.
+Sure. I'm using git to record before-and-after states of running
+commands in an isolated environment, to see the differences caused by
+those commands. The "before" state includes everything the command
+needs, and the delta from "before" to "after" is exactly what the
+command changed. Some commands create git repositories; for instance,
+some software build scripts `git clone` their dependencies or other
+data. So when I go to record the "after" state, it might include a .git
+directory. And I need to record that as transparently as possible.
 
+I'd like to use git repositories so that people *can* push and pull
+data using git, inspect the repository with things like "git show", use
+"git diff", and similar.
+
+> There are some other filenames that "git fsck" also forbids, so this
+> comes down to more than figuring out how to handle ".git".
+
+Are you talking about the case-insensitive check for paths that can be
+confused with .git on some platforms, or something more than that?
