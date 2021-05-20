@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E9E4C433B4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B23C43460
 	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 382B861186
+	by mail.kernel.org (Postfix) with ESMTP id 9BA3360D07
 	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230471AbhETGLU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 02:11:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55990 "EHLO
+        id S230483AbhETGLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 02:11:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230430AbhETGLN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230431AbhETGLN (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 20 May 2021 02:11:13 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A27C0613CE
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:50 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id p7so12556297wru.10
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:50 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51119C06138B
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:51 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id h4so16253512wrt.12
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=U+nI0aMs8UeAh3GQWMw34nqe2XIdn94sxTIWqQXECps=;
-        b=uGqfjlbsn0r+KWF4NufVBqLfj3qkWZJMhkncf6V2yVtFxeHnFvAhVuAjhLsgHWEf5o
-         N1b78JyjmInvXO7jkyxJH2OGLgxxNRM9IWvGDm8yuXK61oRE6dO/KBx9UsDEPWIToj9b
-         QALIBlNJMWT5N1e6GnyAzaW3JyrAplK7LRvM8qy0FjIqDkl2gAYV6OUZWps2GqRcYVxJ
-         8pGnJgIBtAZZ6ba+HTMm93rfJpFTl8ONcmoBBdmoTDRB5rtgRHY7gtRHyXUlu0VVZzx/
-         y6mUtR63V7R5C0K9LO7sDnO3plqksyKyb0CM6DS99PijWEngYvq1jqssLWPqtx0ybNN3
-         TX7Q==
+        bh=X5utbe7IosNATLn0tkPS6v41oIqGS6ELWV+P3YPsezA=;
+        b=nL2CC4ogYPY2YtoAX9HAIaorpZhGg+ygB2GrbHAeyqJN1SaGFC9+LNSo4ujQNz4XYl
+         X79PM1xCzfDM/AwH6XCn8ZexR3i4GwVqDGqhowyvdGDSl0sr8drkshUbybW+aeOPaxim
+         dzYuLJ87w2iaB52US2k1qc42LGPH9K7NM6wBVE5k5mGu1iZTsoCGE3BonC6tjTyy9qXK
+         rDYjj6oMSfHp8w7z5x+TT++ra08XlSv/y+0uxBWVGJlSLURYdrwBGaWdOW2u7iYBM+l8
+         fe2+/8DG49PT/uCTtyNf9TW3PtMAll7EfaCefOWgwddsxz/mQ7xleT2QU2K+JJnh7O1E
+         M9ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=U+nI0aMs8UeAh3GQWMw34nqe2XIdn94sxTIWqQXECps=;
-        b=FdOdBbNNK+5z8U4yvhrQRPCYeKwi4/KoDtRD0OT+9rywe0E76IvutV2AxMapnkENhg
-         gyrokBY33PkupYNDk56oYFNtM+maipjGWef5NE7VReqnyJOVZoYTd7gCBtzfCQwnnWzx
-         NqIKLsrq3VvseeMN6QStO/m10gojtXOt6076MMVx2Ye3KOPLN00ZBAWyGuX+sL1c9pMg
-         V53lROgyrLDjrJqVyeoBBS7Js9a3jkYFit5Be2l59hzSozbu1sk5LMO/4aOfICLaEjwG
-         6BVmUSM4ITHuX0ndaFxZDG5ObAroNcbWQ2hhzbzkuTwKTHnYNj32MZabaT6Mz08ecJN5
-         DY7g==
-X-Gm-Message-State: AOAM531HtnK3zAxvLp6N6syGs9uhkxZIMq3nT0AdLG5PVqZsfmokXCDC
-        NCrLGZC0lZm7diIQNDnwrpz2DJAE25Y=
-X-Google-Smtp-Source: ABdhPJyPugTVOVFNhPLVSs8fxOBuv7AEE6Cd3MwyfiaC8xljhB/Mt83xk3mZk8KtCBgXS400uYrY8w==
-X-Received: by 2002:adf:f647:: with SMTP id x7mr2323128wrp.107.1621490989310;
-        Wed, 19 May 2021 23:09:49 -0700 (PDT)
+        bh=X5utbe7IosNATLn0tkPS6v41oIqGS6ELWV+P3YPsezA=;
+        b=GDhVJZxZI8LPld/dwmjp7PAlvfs+CC88+v1/AudX8TTyVFBuRQVmPvCUVWBUVJTfNv
+         dZ2BnVj3b3m8xVp3HNVd7EyVJcd5zVdEalkPYp1/dKTZXl+FXTmW+Reakmk2jCPDvh6B
+         L348HyLKtPgCtchqTRIVvG5xEOsqrNPRPoPxKdbXoTNTigAWPFD+uliWK4b4jRj80JC1
+         uY14f0Yz74ybReE4fyM5F4AXKWSUmRiLo2cIpXsmTRSbB0cH3MySOzI+yqa/03lrIk0L
+         HIn8GBEm/4xnjZSlWU3CLaJjiXGc1AKOMHY7aQgUGflwgiZU076tR1mS/kYTf52qPE26
+         WN/A==
+X-Gm-Message-State: AOAM531HvJ8Cjd+27JpieHEBhUkM47TdXeclN3nhZ7YqxRWD7FwQjvfD
+        OMfI/5lcY+NPD8HsRShQyCc5VPHcNW8=
+X-Google-Smtp-Source: ABdhPJzjxOX1gQpnCosv4r2EnJJE+zjyBC58Q6ZoQIvWJo2I8pANwP+TgA3Irh8pihs5trtk2eCgnw==
+X-Received: by 2002:a5d:58f2:: with SMTP id f18mr2406850wrd.249.1621490990028;
+        Wed, 19 May 2021 23:09:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p10sm1715507wrr.58.2021.05.19.23.09.48
+        by smtp.gmail.com with ESMTPSA id f1sm2043708wrr.63.2021.05.19.23.09.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 19 May 2021 23:09:49 -0700 (PDT)
-Message-Id: <441e66fb2d19af6330def8f233bc3776f6da4797.1621490982.git.gitgitgadget@gmail.com>
+Message-Id: <472a539d1809a39c0cc9dcb840288829c6df727a.1621490982.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 References: <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
         <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 May 2021 06:09:37 +0000
-Subject: [PATCH v3 09/13] merge-ort: avoid accidental API mis-use
+Date:   Thu, 20 May 2021 06:09:38 +0000
+Subject: [PATCH v3 10/13] merge-ort: preserve cached renames for the
+ appropriate side
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,76 +82,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Previously, callers of the merge-ort API could have passed an
-uninitialized value for struct merge_result *result.  However, we want
-to check result to see if it has cached renames from a previous merge
-that we can reuse; such values would be found behind result->priv.
-However, if result->priv is uninitialized, attempting to access behind
-it will give a segfault.  So, we need result->priv to be NULL (which
-will be the case if the caller does a memset(&result, 0)), or be written
-by a previous call to the merge-ort machinery.  Documenting this
-requirement may help, but despite being the person who introduced this
-requirement, I still missed it once and it did not fail in a very clear
-way and led to a long debugging session.
-
-Add a _properly_initialized field to merge_result; that value will be
-0 if the caller zero'ed the merge_result, it will be set to a very
-specific value by a previous run by the merge-ort machinery, and if it's
-uninitialized it will most likely either be 0 or some value that does
-not match the specific one we'd expect allowing us to throw a much more
-meaningful error.
+Previous commits created an in-memory cache of the results of rename
+detection, and added logic to detect when that cache could appropriately
+be used in a subsequent merge operation -- but we were still
+unconditionally clearing the cache with each new merge operation anyway.
+If it is valid to reuse the cache from one of the two sides of history,
+preserve that side.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 7 +++++++
- merge-ort.h | 2 ++
- 2 files changed, 9 insertions(+)
+ merge-ort.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index e08b60a26d20..6d2b53a4943f 100644
+index 6d2b53a4943f..8d4b2ec40e3d 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -53,6 +53,8 @@ enum merge_side {
- 	MERGE_SIDE2 = 2
- };
- 
-+static unsigned RESULT_INITIALIZED = 0x1abe11ed; /* unlikely accidental value */
-+
- struct traversal_callback_data {
- 	unsigned long mask;
- 	unsigned long dirmask;
-@@ -3760,6 +3762,10 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	assert(opt->obuf.len == 0);
- 
- 	assert(opt->priv == NULL);
-+	if (result->_properly_initialized != 0 &&
-+	    result->_properly_initialized != RESULT_INITIALIZED)
-+		BUG("struct merge_result passed to merge_incore_*recursive() must be zeroed or filled with values from a previous run");
-+	assert(!!result->priv == !!result->_properly_initialized);
- 	if (result->priv) {
- 		opt->priv = result->priv;
- 		result->priv = NULL;
-@@ -3919,6 +3925,7 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
- 	result->clean &= strmap_empty(&opt->priv->conflicted);
- 	if (!opt->priv->call_depth) {
- 		result->priv = opt->priv;
-+		result->_properly_initialized = RESULT_INITIALIZED;
- 		opt->priv = NULL;
+@@ -487,17 +487,18 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+ 	/* Free memory used by various renames maps */
+ 	for (i = MERGE_SIDE1; i <= MERGE_SIDE2; ++i) {
+ 		strintmap_func(&renames->dirs_removed[i]);
+-
+-		partial_clear_dir_rename_count(&renames->dir_rename_count[i]);
+-		if (!reinitialize)
+-			strmap_clear(&renames->dir_rename_count[i], 1);
+-
+ 		strmap_func(&renames->dir_renames[i], 0);
+-
+ 		strintmap_func(&renames->relevant_sources[i]);
+-		strset_func(&renames->cached_target_names[i]);
+-		strmap_func(&renames->cached_pairs[i], 1);
+-		strset_func(&renames->cached_irrelevant[i]);
++		if (!reinitialize)
++			assert(renames->cached_pairs_valid_side == 0);
++		if (i != renames->cached_pairs_valid_side) {
++			strset_func(&renames->cached_target_names[i]);
++			strmap_func(&renames->cached_pairs[i], 1);
++			strset_func(&renames->cached_irrelevant[i]);
++			partial_clear_dir_rename_count(&renames->dir_rename_count[i]);
++			if (!reinitialize)
++				strmap_clear(&renames->dir_rename_count[i], 1);
++		}
  	}
- }
-diff --git a/merge-ort.h b/merge-ort.h
-index d53a0a339f33..c011864ffeb1 100644
---- a/merge-ort.h
-+++ b/merge-ort.h
-@@ -29,6 +29,8 @@ struct merge_result {
- 	 * !clean) and to print "CONFLICT" messages.  Not for external use.
- 	 */
- 	void *priv;
-+	/* Also private */
-+	unsigned _properly_initialized;
- };
+ 	renames->cached_pairs_valid_side = 0;
+ 	renames->dir_rename_mask = 0;
+@@ -2456,6 +2457,7 @@ static void detect_regular_renames(struct merge_options *opt,
+ 		return;
+ 	}
  
- /*
++	partial_clear_dir_rename_count(&renames->dir_rename_count[side_index]);
+ 	repo_diff_setup(opt->repo, &diff_opts);
+ 	diff_opts.flags.recursive = 1;
+ 	diff_opts.flags.rename_empty = 0;
 -- 
 gitgitgadget
 
