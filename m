@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B31A4C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 12:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCFA0C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 12:26:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9910A611ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 12:26:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C37DD61261
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 12:26:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237828AbhETM13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 08:27:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54464 "EHLO
+        id S238372AbhETM1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 08:27:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233755AbhETM0w (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233732AbhETM0w (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 20 May 2021 08:26:52 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D8CC0AF7BB
-        for <git@vger.kernel.org>; Thu, 20 May 2021 04:23:25 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id k14so21205006eji.2
-        for <git@vger.kernel.org>; Thu, 20 May 2021 04:23:24 -0700 (PDT)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF54C0AF7B9
+        for <git@vger.kernel.org>; Thu, 20 May 2021 04:23:23 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id et19so17610360ejc.4
+        for <git@vger.kernel.org>; Thu, 20 May 2021 04:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t9/RvS8OpT98zShrRzRwb/Z5xFfD/l/sJ7ZJQVKBfKc=;
-        b=mVbTZNkZEQVUNVWIxpAuCQ4if1S5H2SYxa2kX0qiykWpEpGrz4r6gGhG5FrjvtdBGS
-         9SdWK0F6PPMIQCVZ52/qvDmuQmDpdgjhNeff1148cTh3GWbv5m1r6dCFKR3cZgvF9UIs
-         opoueuWy/1ACHlKzt9Rp0PYFMOhOHL7zXYW6d6gjDu/Kuf2OQU/enkGwN0lQYZLBmISg
-         7u4gjlFTfX0wZatfihs3vVwPL6dl6wSLjIUvlec1m1gYkFDdzrx6SdRLPSJOJCjGRWvN
-         RKQ3bKjQ3nMhDsqTHaspCU2voppjWX5F8gzGCfMQ6HgM355tnm/0gX00tSKTFtidAP6Z
-         +69g==
+        bh=2hx9NPV3qPtLVtey0KbAPnexlattqMqA/wEJ0v5UGEs=;
+        b=jYy9DnHODH+4SQf+ePzMYaAWvTJ9wK6HS31ZudwIz2lLzF3qODEYySg4kltKiBH9RN
+         2Wjj3q3xsBHEiQvVRtxeN0s/iDbQF1vyugEl55AwFBMHQ/Rq89Gri2vOI0Jy4GEvJMqg
+         PaJ3oEhrJFYyh8I85kHH953K3SLh9Dx27x5gYYJuyOvn39Ute/HOdd0E79iwcXAH0Jex
+         CUTtWxpGOi8RYFkocmCl+U8vgrbmq7RPhzDpLmdeOC5lOXKuyvAGhXpi2J15cZ/wWrlC
+         QWNJTUWKNhgSNXi4r3GUHNxUK6kDg6sLvY1psiJxw6yhd8sNT+na97L32jv/nPnGzbur
+         d91Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t9/RvS8OpT98zShrRzRwb/Z5xFfD/l/sJ7ZJQVKBfKc=;
-        b=Cgf1GC2lhPaZgt1u0lG5G+pdu9EsFj+n/0fucU6mx1qO5/I9hBZl5cUhpjsYwte87n
-         c9DJIKeqw4YZ7ENevBpGtpuCAvqCJNV9YT/qDnzKEmsVqOxbwj+AcjOK7+I76WRoUgWl
-         /en347Gxx94izDLtwCVeeZjNVnRqXIwB3l5MyGsfiJnaeum65KY1rWtpMZu3MUrZTEsM
-         214HDPfkSfc9U/JV8wmH8fy7TRGHbLkNf6GFJAjYEtU3TpNDngPd9jeB1CT5ZnN4PCvd
-         ez1HQHwr7CoESw1YctSFY/Q4FyetfII31AUUd4B0xKW0CJWOZVeBEN9RVw7YiGNaIIMI
-         qcDQ==
-X-Gm-Message-State: AOAM530pxFNUyG73kKxbvTn3b7ByV+hGQfp3qvdUT5IU513uDfmQaNRS
-        jws/y3PtwbJsxKnQi7MJxzQJvxG4hBTw4Q==
-X-Google-Smtp-Source: ABdhPJx0HYtp31wNJzaHfunzVg2WTXyVgpJn+yJXPlaC/Vvz+ucPH/5/TtwbvNwGsmJlmDHEasTLhA==
-X-Received: by 2002:a17:906:d14b:: with SMTP id br11mr4241973ejb.490.1621509803319;
-        Thu, 20 May 2021 04:23:23 -0700 (PDT)
+        bh=2hx9NPV3qPtLVtey0KbAPnexlattqMqA/wEJ0v5UGEs=;
+        b=DF+TVdOvNVIHqko3W1tfRPWYEsGwQlCPgLlX3936a512ECuG49WDNZ3BO3iQlC2R2c
+         oe7wssq3veF+Jgnrsc7rs8JNmUjYJt9sVp720diwyjxspiWj0ogfMwAw/L3Ydag7zlTf
+         E+C3tmSj1krDI6KtYEX6mdLRrAbI8HM/5YJvyh9K1d/firDMpJxeEA+8Hb+L2/lsX6Io
+         qP8SZ23Ctd/GjEaFKOsDo9qNPpPGrUH0jXiypRjS0o0gHzUVBfxus7PCzS1jGsh3J0Zh
+         G2lDZ+1QEsWLiH0dvWet2pskDPMdCos6dsxkK2pnvGDyQpBmWNyxnG6L/Ht9ghDY44Je
+         +aPA==
+X-Gm-Message-State: AOAM5331B82MCe5GbZXcAbywRcHR0XgnCZ1a+L7fgxB3rzCeVl+ujMGy
+        M5mlv0it4wggOXtaJ1M7qXf88BtOjYyVOg==
+X-Google-Smtp-Source: ABdhPJwCCm+K33yfujZ9ENFu2pY3dLisUufMolocJYKW00m6JwPhB1ROJJluJOR2jTa3V3kyqjU9+Q==
+X-Received: by 2002:a17:906:5d0c:: with SMTP id g12mr4125329ejt.447.1621509801435;
+        Thu, 20 May 2021 04:23:21 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id jy21sm1243273ejc.13.2021.05.20.04.23.22
+        by smtp.gmail.com with ESMTPSA id jy21sm1243273ejc.13.2021.05.20.04.23.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 04:23:22 -0700 (PDT)
+        Thu, 20 May 2021 04:23:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 10/17] object-file.c: add missing braces to loose_object_info()
-Date:   Thu, 20 May 2021 13:23:04 +0200
-Message-Id: <patch-10.17-5d31d7e1a5-20210520T111610Z-avarab@gmail.com>
+Subject: [PATCH v3 08/17] cache.h: move object functions to object-store.h
+Date:   Thu, 20 May 2021 13:23:02 +0200
+Message-Id: <patch-08.17-12dd453879-20210520T111610Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0.406.g73369325f8d
 In-Reply-To: <cover-00.17-0000000000-20210520T111610Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210328T025618Z-avarab@gmail.com> <cover-00.17-0000000000-20210520T111610Z-avarab@gmail.com>
@@ -76,61 +76,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the formatting in loose_object_info() to conform with our usual
-coding style:
-
-    When there are multiple arms to a conditional and some of them
-    require braces, enclose even a single line block in braces for
-    consistency -- Documentation/CodingGuidelines
-
-This formatting-only change makes a subsequent commit easier to read.
+Move the declaration of some ancient object functions added in
+e.g. c4483576b8d (Add "unpack_sha1_header()" helper function,
+2005-06-01) from cache.h to object-store.h. This continues work
+started in cbd53a2193d (object-store: move object access functions to
+object-store.h, 2018-05-15).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- object-file.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ cache.h        | 10 ----------
+ object-store.h |  9 +++++++++
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 527f435381..115054389c 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1450,17 +1450,20 @@ static int loose_object_info(struct repository *r,
- 		if (unpack_loose_header_to_strbuf(&stream, map, mapsize, hdr, sizeof(hdr), &hdrbuf) < 0)
- 			status = error(_("unable to unpack %s header with --allow-unknown-type"),
- 				       oid_to_hex(oid));
--	} else if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
-+	} else if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0) {
- 		status = error(_("unable to unpack %s header"),
- 			       oid_to_hex(oid));
--	if (status < 0)
--		; /* Do nothing */
--	else if (hdrbuf.len) {
-+	}
+diff --git a/cache.h b/cache.h
+index ba04ff8bd3..32ea1ea047 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1302,16 +1302,6 @@ char *xdg_cache_home(const char *filename);
+ 
+ int git_open_cloexec(const char *name, int flags);
+ #define git_open(name) git_open_cloexec(name, O_RDONLY)
+-int unpack_loose_header(git_zstream *stream, unsigned char *map, unsigned long mapsize, void *buffer, unsigned long bufsiz);
+-int parse_loose_header(const char *hdr, unsigned long *sizep);
+-
+-int check_object_signature(struct repository *r, const struct object_id *oid,
+-			   void *buf, unsigned long size, const char *type);
+-
+-int finalize_object_file(const char *tmpfile, const char *filename);
+-
+-/* Helper to check and "touch" a file */
+-int check_and_freshen_file(const char *fn, int freshen);
+ 
+ extern const signed char hexval_table[256];
+ static inline unsigned int hexval(unsigned char c)
+diff --git a/object-store.h b/object-store.h
+index ec32c23dcb..9117115a50 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -477,4 +477,13 @@ int for_each_object_in_pack(struct packed_git *p,
+ int for_each_packed_object(each_packed_object_fn, void *,
+ 			   enum for_each_object_flags flags);
+ 
++int unpack_loose_header(git_zstream *stream, unsigned char *map,
++			unsigned long mapsize, void *buffer,
++			unsigned long bufsiz);
++int parse_loose_header(const char *hdr, unsigned long *sizep);
++int check_object_signature(struct repository *r, const struct object_id *oid,
++			   void *buf, unsigned long size, const char *type);
++int finalize_object_file(const char *tmpfile, const char *filename);
++int check_and_freshen_file(const char *fn, int freshen);
 +
-+	if (status < 0) {
-+		/* Do nothing */
-+	} else if (hdrbuf.len) {
- 		if ((status = parse_loose_header(hdrbuf.buf, oi, flags)) < 0)
- 			status = error(_("unable to parse %s header with --allow-unknown-type"),
- 				       oid_to_hex(oid));
--	} else if ((status = parse_loose_header(hdr, oi, flags)) < 0)
-+	} else if ((status = parse_loose_header(hdr, oi, flags)) < 0) {
- 		status = error(_("unable to parse %s header"), oid_to_hex(oid));
-+	}
- 
- 	if (status >= 0 && oi->contentp) {
- 		*oi->contentp = unpack_loose_rest(&stream, hdr,
-@@ -1469,8 +1472,9 @@ static int loose_object_info(struct repository *r,
- 			git_inflate_end(&stream);
- 			status = -1;
- 		}
--	} else
-+	} else {
- 		git_inflate_end(&stream);
-+	}
- 
- 	munmap(map, mapsize);
- 	if (status && oi->typep)
+ #endif /* OBJECT_STORE_H */
 -- 
 2.32.0.rc0.406.g73369325f8d
 
