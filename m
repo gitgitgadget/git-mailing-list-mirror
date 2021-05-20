@@ -8,67 +8,67 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73207C433B4
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B46FCC433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:22:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F657611AB
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:14:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C67C60698
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 15:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243670AbhETPPm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 11:15:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37784 "EHLO
+        id S243912AbhETPXf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 11:23:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232067AbhETPPl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 11:15:41 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FBBC061574
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:14:20 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id o5so10843091edc.5
-        for <git@vger.kernel.org>; Thu, 20 May 2021 08:14:20 -0700 (PDT)
+        with ESMTP id S243826AbhETPXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 11:23:10 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C54C06138E
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:21:48 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id y7so2349483eda.2
+        for <git@vger.kernel.org>; Thu, 20 May 2021 08:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=YdqLm4Hzzh5N8/06+RnzmZs8PlgzXW+bsXIsQ+vruFY=;
-        b=bpzc4RWm6DTe2Zc87LA7WZL0RPZCHrN0I8hkiaq0sIcSzwi9mlgPMEW9INdmhImLnn
-         zKUb+kOu/rUZ58Q3avdcQPg9JNlMrdoN5gNh1+dU2mCA15FH3PcqQJ+BuywzYO7PVif0
-         ScVRA80tEZF6KzuXwFIE4QAm2GWPymc3RQfnyluAO5+L7f8Gj/sY/AE6HsfWvRahXW9R
-         KCQ4r1RatxOw9O3gkcuDs52ya2MSghh7JRKc31/J+H1SPxSAb7053nM+wT0tbWLHzP2j
-         hdiDscyzptWFBxIrQ0l9bePfKBdmrsBK685NiUs0Sb0awO/KrLxjJlDtAXMqjm740adp
-         Gk7Q==
+        bh=lHr1CuIUs9ZAyrYm3HpPJaGnohQX5P78/4Gf/To/x3A=;
+        b=uVq5xBtmNTQkAlyn61fH8rxHCcg794cZ00BZt+FsYPxUtA0UFUJ2NffMttdS2ebNPU
+         OiZr037BZWJxO6DdUG+JZ1qZSULbiYE7jxAfheeFZESAhmVxdSt0O10BqBfzLTGTpyPi
+         229PqirXANR6FOKDfZiMf1uIf3IDdLA8wBPBoIkvB1WiUCHzEgMffmcWXJN2p91sH+dS
+         PZMIFJQKlr6Wm95X/jXACvnODi/Tx3wGX+yoLL4XBAOC7fuwungV6+411P6iNLDWwTOH
+         LLiCYUQWafmvTCHmMkGpAW1QSNUBEwb/j/xJqE4NzoO/tcCGNTRboCqLu28uMv8Gmpor
+         t7kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=YdqLm4Hzzh5N8/06+RnzmZs8PlgzXW+bsXIsQ+vruFY=;
-        b=X6JmgkphCWrbJr3aAXjN/HX0/sa1UFkNDa5d7OIL2qQQ7ipcwIXTMERjYeyx0pejf5
-         onz/xCJTUPVD9R09/1aQRKVL4GHgWjdgWoVwEdhSnPklaRx23JxdbBTFtigfKvv13CRQ
-         DOyMz1yLo+vLRUxyHUcTRWimIE6OOtTV2McuijkKquI+DLX4xpRoCGXJmkQPy7XyGFFy
-         O6AyykroE/NKrX3lnKW/4vYQMbzfEjyq2a8PYnpydKwoSlUUyo52iNnxqhmXzQeLt8Ap
-         2pP0VA4WMeIUxpeeoJXRYNcS5ANQDo/rhPDwWD8F+J0MPE27FGsxemmhw8U3F+gDNIvc
-         C/aA==
-X-Gm-Message-State: AOAM531jR2LDAjTkygy3iELbvQcso/Y0Bh52Cib5YpwXnRDFq3HGUET0
-        dog8mkQdeKPvao5/LjeCoeHxcWUzfwOETQ==
-X-Google-Smtp-Source: ABdhPJz9YEvRV8R+/tNC5G4l+hSkc2nKtTY6pOSusS/lZPK5njIuxPv9R2iLwGGftVXjfCbCXWhTLA==
-X-Received: by 2002:aa7:c485:: with SMTP id m5mr5384648edq.230.1621523658391;
-        Thu, 20 May 2021 08:14:18 -0700 (PDT)
+        bh=lHr1CuIUs9ZAyrYm3HpPJaGnohQX5P78/4Gf/To/x3A=;
+        b=GuMIlPd39e2CNzTvCLHQvAAZTikhEDTZwLkY661aDjwtWwBDud1nCUlW6m9WhqekJT
+         Im64gfJzh374IyDNuGhaZmYenOJjhBskJZ6llqluCxtvSGVOdAZ93h6UJm0YKFvmtin2
+         q9VFbE3myLSnMr7um97DwIBx97UULioRMGV7b7Vk00Fy1iNMbJarv1pEaDvxeP5PSCR1
+         neyOSUn6yq6+E/OjGCzFY4TBGdY6qYKvzb1VQUlN+YMt/2a0u3Flm4CdNeaE3hQkTA8n
+         pFf4yXcZhwEiVA7j3VhYgXyNcmEM623GP4GOYteLB3pqS0hcMku3o94yinbaOXC/mMkH
+         BZfA==
+X-Gm-Message-State: AOAM533DqN/uIeWZNd3dr75QKV8CwMI1dNsQgoI6YgepviYT8I2gvTIb
+        YoEAvUfURHDR3Z0JBjhaBhWhfoIzU6DGvA==
+X-Google-Smtp-Source: ABdhPJyO0TlUlxawGtvwwqdtT36GO0F5/UpuBBD7854Koj5zW5i6uWMRzsE2AwnE/vurV23K/89+Og==
+X-Received: by 2002:a50:fd9a:: with SMTP id o26mr5444997edt.76.1621524106840;
+        Thu, 20 May 2021 08:21:46 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id i5sm1561180ejv.120.2021.05.20.08.14.17
+        by smtp.gmail.com with ESMTPSA id g23sm1373163ejb.15.2021.05.20.08.21.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 08:14:17 -0700 (PDT)
+        Thu, 20 May 2021 08:21:46 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2 03/21] t9300: check ref existence using test-helper
- rather than a file system check
-Date:   Thu, 20 May 2021 17:11:36 +0200
+Subject: Re: [PATCH v2 05/21] t1401-symbolic-ref: avoid direct filesystem
+ access
+Date:   Thu, 20 May 2021 17:20:08 +0200
 References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
  <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
- <c5855b0caa7320c8b3f1ad5c5904ae73b1decb97.1619519903.git.gitgitgadget@gmail.com>
+ <248d9ffe79272c7a6efef64512d72ccb9a91349a.1619519903.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <c5855b0caa7320c8b3f1ad5c5904ae73b1decb97.1619519903.git.gitgitgadget@gmail.com>
-Message-ID: <874kexqvxy.fsf@evledraar.gmail.com>
+In-reply-to: <248d9ffe79272c7a6efef64512d72ccb9a91349a.1619519903.git.gitgitgadget@gmail.com>
+Message-ID: <871ra1qvli.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -82,32 +82,98 @@ On Tue, Apr 27 2021, Han-Wen Nienhuys via GitGitGadget wrote:
 >
 > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  t/t9300-fast-import.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  t/t1401-symbolic-ref.sh | 34 +++++++++++++++++-----------------
+>  1 file changed, 17 insertions(+), 17 deletions(-)
 >
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index 5c47ac4465cb..1aea943bef72 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -392,7 +392,7 @@ test_expect_success 'B: accept branch name "TEMP_TAG"' '
->  		git gc
->  		git prune" &&
->  	git fast-import <input &&
-> -	test -f .git/TEMP_TAG &&
-> +	test $(test-tool ref-store main resolve-ref TEMP_TAG 0 | cut -f1 -d " " ) != "$ZERO_OID" &&
->  	test $(git rev-parse main) = $(git rev-parse TEMP_TAG^)
+> diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+> index a4ebb0b65fec..315a62f78019 100755
+> --- a/t/t1401-symbolic-ref.sh
+> +++ b/t/t1401-symbolic-ref.sh
+> @@ -3,21 +3,20 @@
+>  test_description='basic symbolic-ref tests'
+>  . ./test-lib.sh
+>  
+> -# If the tests munging HEAD fail, they can break detection of
+> -# the git repo, meaning that further tests will operate on
+> -# the surrounding git repo instead of the trash directory.
+> -reset_to_sane() {
+> -	echo ref: refs/heads/foo >.git/HEAD
+> -}
+> -
+> -test_expect_success 'symbolic-ref writes HEAD' '
+> +test_expect_success 'setup' '
+>  	git symbolic-ref HEAD refs/heads/foo &&
+> -	echo ref: refs/heads/foo >expect &&
+> -	test_cmp expect .git/HEAD
+> +	test_commit file &&
+> +	"$TAR" cf .git.tar .git/
 >  '
+>  
+> -test_expect_success 'symbolic-ref reads HEAD' '
+> -	echo refs/heads/foo >expect &&
+> +reset_to_sane() {
+> +	rm -rf .git &&
+> +	"$TAR" xf .git.tar
+> +}
+> +
+> +test_expect_success 'symbolic-ref read/write roundtrip' '
+> +	git symbolic-ref HEAD refs/heads/read-write-roundtrip &&
+> +	echo refs/heads/read-write-roundtrip >expect &&
+>  	git symbolic-ref HEAD >actual &&
+>  	test_cmp expect actual
+>  '
+> @@ -25,12 +24,13 @@ test_expect_success 'symbolic-ref reads HEAD' '
+>  test_expect_success 'symbolic-ref refuses non-ref for HEAD' '
+>  	test_must_fail git symbolic-ref HEAD foo
+>  '
+> +
+>  reset_to_sane
+>  
+>  test_expect_success 'symbolic-ref refuses bare sha1' '
+> -	echo content >file && git add file && git commit -m one &&
+>  	test_must_fail git symbolic-ref HEAD $(git rev-parse HEAD)
+>  '
+> +
+>  reset_to_sane
+>  
+>  test_expect_success 'HEAD cannot be removed' '
+> @@ -42,16 +42,16 @@ reset_to_sane
+>  test_expect_success 'symbolic-ref can be deleted' '
+>  	git symbolic-ref NOTHEAD refs/heads/foo &&
+>  	git symbolic-ref -d NOTHEAD &&
+> -	test_path_is_file .git/refs/heads/foo &&
+> -	test_path_is_missing .git/NOTHEAD
+> +	git rev-parse refs/heads/foo &&
+> +	test_must_fail git symbolic-ref NOTHEAD
+>  '
+>  reset_to_sane
+>  
+>  test_expect_success 'symbolic-ref can delete dangling symref' '
+>  	git symbolic-ref NOTHEAD refs/heads/missing &&
+>  	git symbolic-ref -d NOTHEAD &&
+> -	test_path_is_missing .git/refs/heads/missing &&
+> -	test_path_is_missing .git/NOTHEAD
+> +	test_must_fail git rev-parse refs/heads/missing &&
+> +	test_must_fail git symbolic-ref NOTHEAD
+>  '
+>  reset_to_sane
 
-We have resolve-ref and verify-ref in the helper, why not a few-line
-"exists-ref" or similar instead of needing to parse this out with
-shell/cut/test?
+You do end up needing to refactor some rather nasty patterns in this
+series, so this isn't on you initially...
 
-I haven't tested, but in resolve-ref we do this:
+But since we're encountering this "reset_to_sane" pattern, can't we just
+as easily fix it up with something more obvious than replacing an echo
+to a specific ref with a tarring up and untarring of the whole .git each
+time?
 
-        printf("%s %s 0x%x\n", oid_to_hex(&oid), ref ? ref : "(null)", flags);
-        return ref ? 0 : 1;
+I.e. something like:
 
-So re my earlier question about "ref" being NULL or not, isn't this
-going to be reflected by the exit code of resolve-ref already? I.e. any
-"exists-ref" would just be a convenience wrapper equivalent to a
-"--quiet" flag for resolve-ref, no?
+   # setup the .git initially
+
+Then:
+
+   test_when_finished "rm -rf copy" &&
+   git clone . copy &&
+   # munge the repo and use "git -C copy" for the tests"
+
+?
