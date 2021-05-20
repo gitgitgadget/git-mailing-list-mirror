@@ -6,74 +6,119 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F100C433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 16:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5A3DC433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 17:04:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 641246101E
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 16:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83AB26105A
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 17:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232840AbhETQy5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 12:54:57 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:43949 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232199AbhETQy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 12:54:56 -0400
-Received: by mail-ed1-f47.google.com with SMTP id s6so20164920edu.10
-        for <git@vger.kernel.org>; Thu, 20 May 2021 09:53:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1ActCasgI8hHTjwiPDp8bVjF8zPhgD38rLeQhYdrB38=;
-        b=PYetLTMd/jq1ycxJYOwys+f69HzPyZrOZG4ZGQ0Sb8LBEIEO5pkRTY+YKDFtlUjJ6k
-         GbcaJ+GTcJNtVTgMC8bVCVwwRy/VdEBk9DcqGLvpz9OT4BFhfzWS5rAqZiqaiOXMf7/+
-         QXOxQtfbEv96vHOUy/klL/6FJR1LkxbDRd2WyN34ToXPYY4X8INBc8WqLtWMq1f2sOaI
-         ZPJ32TO2Lib4r8Q+DzYvQDBc4Wsm/h1GCXz7WP3tMtcscb+WsIauIoPg6TEkTE6e/C0H
-         r8wifEAVs2Ufbl7NifZNBkVmaN8q3zuGlTxgXtdUaFW8uebGe7zUWPTV2DbZ0fBobVQi
-         hl/w==
-X-Gm-Message-State: AOAM5301hPXwB4+WdxlnySSeKWAbur3sVBM5SYz2Y6bwBp0lJXOxzz/y
-        8a/7fmmNJ2g5XAy7rNJk09PbTg14VNAtz2HSBrQ=
-X-Google-Smtp-Source: ABdhPJzT3E94J3te5Jk+qQyc7AUk1qY9/EMZQ9TcVlv6VFcoibQndbhcTdDjzVTRSu/t6+onSBbFsg91UTkfLBDs01U=
-X-Received: by 2002:a05:6402:152:: with SMTP id s18mr5828313edu.221.1621529614232;
- Thu, 20 May 2021 09:53:34 -0700 (PDT)
+        id S234763AbhETRGU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 13:06:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60814 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233986AbhETRGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 13:06:19 -0400
+Received: (qmail 28740 invoked by uid 109); 20 May 2021 17:04:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 May 2021 17:04:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1016 invoked by uid 111); 20 May 2021 17:04:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 May 2021 13:04:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 20 May 2021 13:04:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/8] p5400: add perf tests for git-receive-pack(1)
+Message-ID: <YKaWuYy+iz3qhBad@coredump.intra.peff.net>
+References: <cover.1621451532.git.ps@pks.im>
+ <f248b41d6e2df2d34a4304e2655df8cb094483e9.1621451532.git.ps@pks.im>
 MIME-Version: 1.0
-References: <xmqqv97g2svd.fsf@gitster.g> <ab2d8b16-42db-9675-083a-efa7cfca6e4c@gmail.com>
- <xmqqh7iyuhlp.fsf@gitster.g> <xmqqcztmuhem.fsf@gitster.g> <CABPp-BEGtrb0QjhVff57=s8-8w1CCvw9N_mAm166pzyVDcL_7g@mail.gmail.com>
-In-Reply-To: <CABPp-BEGtrb0QjhVff57=s8-8w1CCvw9N_mAm166pzyVDcL_7g@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 20 May 2021 12:53:23 -0400
-Message-ID: <CAPig+cR_rNKoY385vp3ZyQ73O1HEbysLSCMpVCG=MT9ebSNiyA@mail.gmail.com>
-Subject: Re: [PATCH] revisions(7): clarify that most commands take a single
- revision range
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f248b41d6e2df2d34a4304e2655df8cb094483e9.1621451532.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 20, 2021 at 12:45 PM Elijah Newren <newren@gmail.com> wrote:
-> On Wed, May 19, 2021 at 10:03 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > Well, apparently the proposed text may have failed to educate you
-> > about what a "revision range" is and how it works, so it is not good
-> > enough, so I'll postpone merging the change down further and see if
-> > somebody else can come up with a better description.
-> >
-> > Thanks.
->
-> I think it's helpful and would have answered questions for users that
-> I've had to manually explain to folks a few times, so while it may not
-> be optimal, I do think your description is an improvement to the docs.
-> That said, it can't hurt to see if we can find out what caused Bagas'
-> confusion and see if we can improve it, but I wouldn't hold it up
-> indefinitely if no better wording comes along.
+On Wed, May 19, 2021 at 09:13:27PM +0200, Patrick Steinhardt wrote:
 
-For what it's worth, as a person who is far from being a
-revision-range expert (and who doesn't typically think about them), I
-found the proposed text illuminating and clearly written. I learned
-from it. So, I agree with Elijah[1] that it is a good improvement to
-have (even if it's not perfect for every reader).
+> +while read name repo
+> +do
+> +	refs=("create updated:new")
 
-[1]: Extended LInear Jump AHead
+This (and the other array manipulation below) is a bash-ism. Presumably
+you've got TEST_SHELL_PATH pointed at bash. Without that, on a system
+where /bin/sh is dash, the script chokes here.
+
+For your purposes here, I think you can get by with just a single string
+with newlines in it. Or even a file (see below).
+
+> +	while read desc ref
+> +	do
+> +		test_expect_success "setup $name $desc" "
+> +			test_must_fail git push --force '$repo' '$ref' \
+> +				--receive-pack='tee pack | git receive-pack' 2>err &&
+> +			grep 'failed in pre-receive hook' err
+> +		"
+
+This inverts the double- and single- quotes from our usual style. So if
+$repo is "foo", you are creating a string that has:
+
+  test_must_fail git push --force 'foo' ...
+
+in it, and then the test harness will eval that string. That will fail
+if $repo itself contains a single quote. Pretty unlikely, but I think it
+contains the absolute path.
+
+The usual style is:
+
+  test_expect_success "setup $name $desc" '
+	test_must_fail git push --force "$repo" "$ref" \
+	...etc...
+  '
+
+where the variables are dereferenced inside the eval'd snippet. So no
+quoting is necessary, no matter what's in the variables.
+
+> +		test_perf "receive-pack $name $desc" "
+> +			git receive-pack '$repo' <pack >negotiation &&
+> +			grep 'pre-receive hook declined' negotiation
+> +		"
+
+Likewise here, but note that test_perf is tricky! It runs the snippet in
+a sub-process. You have to export $repo to make it visible (you can use
+test_export, but you don't need to; there's some discussing in
+t/perf/README).
+
+> +	done < <(printf "%s\n" "${refs[@]}")
+> +done < <(printf "%s\n" "clone $TARGET_REPO_CLONE" "extrarefs $TARGET_REPO_REFS" "empty $TARGET_REPO_EMPTY")
+
+These process substitutions are also bash-isms. I guess you're trying to
+avoid putting the while on the right-hand side of a pipe like:
+
+  printf "%s\n" ... |
+  while read ...
+
+which is good, because they set variables and those values don't
+reliably make it out of the pipeline. If you stick the contents of $refs
+into a file, then you can just do:
+
+  while read ...
+  do
+     ...
+  done <ref-descs
+
+For the outer one, a here-doc is probably a bit simpler:
+
+  while read ...
+  do
+     ...
+  done <<-EOF
+  clone $TARGET_REPO_CLONE
+  extrarefs $TARGET_REPO_REFS
+  empty $TARGET_REPO_EMPTY
+  EOF
+
+-Peff
