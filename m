@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3D1C43460
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFDAC433ED
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FB5361184
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56B38610A2
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 08:19:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231218AbhETIUq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 04:20:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57184 "EHLO
+        id S230447AbhETIUs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 04:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231176AbhETIUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 04:20:40 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF01C061761
+        with ESMTP id S230339AbhETIUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 04:20:41 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10D0C061574
         for <git@vger.kernel.org>; Thu, 20 May 2021 01:19:19 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id u133so8608183wmg.1
-        for <git@vger.kernel.org>; Thu, 20 May 2021 01:19:18 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id a4so16701047wrr.2
+        for <git@vger.kernel.org>; Thu, 20 May 2021 01:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AaBdfw3GdZpYoGXSbn8rz6bzLF2PZkxjP1/zYS8+YnY=;
-        b=EaeJD8w1/lq4KGDp+MG3c/L2YA/9yQH5L+YCW1h4x2Jw7k1UT05eGoSMUWmCxVcX7c
-         FY2o0zbBIE+/CbSnLt9KXmsl98oJaCtMfiwUXg1ADrakFZdeauEoIEHFT5cT+7QXhgsZ
-         q7qdb7gquNPP6bQ1IFgGbZa3v/+QY+k84HtV5BWJjH6XbDELjlg75EDbKc0SCM0sZGQ6
-         S8UZeMYw8HGU5a2Ow4OABytzpjzeMke0ZlCfjVzJRbQGzrMkuu6UOA/5HA6MwHHL4BkJ
-         HyR+yquD6iMbHrb2teINQFqadvVfBqCXoTCxJe7QEQHJMmnEbK9TfRhkGqcb7jSDhdzI
-         /Mog==
+        bh=ZrrdEqMCRDF5/Q5A0hIEtL3208jmftOezmToY775kEg=;
+        b=eBw1MNWw1PDT9rtN6SOw8jiLTMn0LhUOZxWXdTjp8Hda0/Z9aOhoFz4MBbhTUAn8aV
+         yekMfckvIJjpi1esTQgR7jeTh3CPST3BmpN9CoFlMoNTX75opaf8FXT8sb7y0e75+ZaT
+         rA/QQVRnZ6B7Gs5DbOXjgRINJ9vhwh+JANft2CQwvb7GYWNHGYCdKOWuoLFws9srfKr0
+         wGChvF1VsCivJ++2Ah6YPfGQgBcmUsxUpdFOkoiFpehzEB0iL/fF70vDD7V6mhx/Tpw9
+         WPkvYVSSnJvnV/gb9clgIl9LFBOT89EfqyT+UHHymXZX2b0TaAVmYLDCF+Jr9mYN4fqU
+         J2Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AaBdfw3GdZpYoGXSbn8rz6bzLF2PZkxjP1/zYS8+YnY=;
-        b=aX4GNGbA2Bsm7U7yXnll/2BF4MVJ6gKdtsqm+OzjbhZi+5Sdhf1nUi8eoinLUOtTj8
-         T0KfuT62Ha4zJD2UlELtqhPYzFN22iYKMMtD6YeHuGrLWnKMWeTfe6kma92+qWKfkfx7
-         TS6tR3LXZTEWTdXP/5DajlieX3QSBwXtZ4aDnxQhP5bDKyMokh7v3l2vXONssvGGwE6Y
-         T4QRcN1O21qPlqCSQ6rplugMkzzcz/cT/lgvMV4hWs7jW9df/hOarUfpvH6+ClN8dAXI
-         6CxRXZS194ntsFqSsF+7eaaEvG8TpJ1p9GH8TvnEKmuoaLwVybGq4VbwzYl//ucxwoWd
-         xrog==
-X-Gm-Message-State: AOAM533a0ueor13RJM1M2BJabDaN02pxQFc7s9F7eVk1a1wVSSC/bDgu
-        lMa+YTiTicnG5cWzXdNNOObMYM2r4KfYfg==
-X-Google-Smtp-Source: ABdhPJz4iu9/jJygDlPI6zi5hnJz9Npp+LO5mTedXYSnrA+EJiNd2aPiBjYXf6gI78iCwwqZm+cVCA==
-X-Received: by 2002:a05:600c:4fd6:: with SMTP id o22mr2345488wmq.83.1621498757423;
-        Thu, 20 May 2021 01:19:17 -0700 (PDT)
+        bh=ZrrdEqMCRDF5/Q5A0hIEtL3208jmftOezmToY775kEg=;
+        b=WCZHhi66B5btX8xfExsZsiq+hRuB2CxAUDAd8iDuqWDyyqRBp9fCW7nCcyJSa6+42+
+         //O0dcVTH36iGxYTuDD9dh9F/Eo/j7xYLa1kgR3cSBk2W89xycuG6fkaQQ1UcyY7V2F0
+         PO66KIY2aGMZWX+uinMuZuqujqIfSATuXnzOZVlsY9O1CYwDe5YjdMfKuwgxtkHvW4kC
+         ZTFfafTv8iI0zDtBY6BDrNmIA/9p+qvIlfb5xJo0OqMCc2ug6OHHF4zR4CM7etDjJuKF
+         EpFXFJ215aAQp4CVDwOatVUj4kw5TT/5L0ikIEVvvYMSNBWedDEmuhF+V4Lp3uy3jJzd
+         Ln/Q==
+X-Gm-Message-State: AOAM530tFkp1gKZBYCk7gWd9g9m/a/WckRIpVLVaqRyfdRc7oeeTnKIZ
+        ddd/NqndS+FywT5SFFfSv23mi+whTV8/xw==
+X-Google-Smtp-Source: ABdhPJzrgOBSaYMj8+9sLktCymwp/bT6KO/pTgTGdW9s3QHuFqWeeHe7gCOzGvN4MtUemqBhXegjkQ==
+X-Received: by 2002:a5d:62d0:: with SMTP id o16mr3087111wrv.164.1621498758281;
+        Thu, 20 May 2021 01:19:18 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y20sm8900004wmi.0.2021.05.20.01.19.16
+        by smtp.gmail.com with ESMTPSA id y20sm8900004wmi.0.2021.05.20.01.19.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 01:19:16 -0700 (PDT)
+        Thu, 20 May 2021 01:19:17 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Wong <e@80x24.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 05/10] send-email: use function syntax instead of barewords
-Date:   Thu, 20 May 2021 10:19:02 +0200
-Message-Id: <patch-05.10-f317cd1c01e-20210520T081826Z-avarab@gmail.com>
+Subject: [PATCH v2 06/10] send-email: get rid of indirect object syntax
+Date:   Thu, 20 May 2021 10:19:03 +0200
+Message-Id: <patch-06.10-fc27024f838-20210520T081826Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0.405.g5d387561bb3
 In-Reply-To: <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
 References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com> <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
@@ -80,37 +80,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change calls like "__ 'foo'" to "__('foo')" so the Perl compiler
-doesn't have to guess that "__" is a function. This makes the code
-more readable.
+Change indirect object syntax such as "new X ARGS" to
+"X->new(ARGS)". This allows perl to see what "new" is at compile-time
+without having loaded Term::ReadLine. This doesn't matter now, but
+will in a subsequent commit when we start lazily loading it.
+
+Let's do the same for the adjacent "FakeTerm" package for consistency,
+even though we're not going to conditionally load it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-send-email.perl | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 9ff315f775c..da46925aa05 100755
+index da46925aa05..f9c780ceed6 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -678,7 +678,7 @@ sub is_format_patch_arg {
- 		if (defined($format_patch)) {
- 			return $format_patch;
- 		}
--		die sprintf(__ <<EOF, $f, $f);
-+		die sprintf(__(<<EOF), $f, $f);
- File '%s' exists but it could also be the range of commits
- to produce patches for.  Please disambiguate by...
+@@ -194,11 +194,11 @@ sub format_2822_time {
+ my @repo = $repo ? ($repo) : ();
+ my $term = eval {
+ 	$ENV{"GIT_SEND_EMAIL_NOTTY"}
+-		? new Term::ReadLine 'git-send-email', \*STDIN, \*STDOUT
+-		: new Term::ReadLine 'git-send-email';
++		? Term::ReadLine->new('git-send-email', \*STDIN, \*STDOUT)
++		: Term::ReadLine->new('git-send-email');
+ };
+ if ($@) {
+-	$term = new FakeTerm "$@: going non-interactive";
++	$term = FakeTerm->new("$@: going non-interactive");
+ }
  
-@@ -764,7 +764,7 @@ sub get_patch_subject {
- 	my $tpl_in_reply_to = $initial_in_reply_to || '';
- 	my $tpl_reply_to = $reply_to || '';
- 
--	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
-+	print $c <<EOT1, Git::prefix_lines("GIT: ", __(<<EOT2)), <<EOT3;
- From $tpl_sender # This line is ignored.
- EOT1
- Lines beginning in "GIT:" will be removed.
+ # Behavior modification variables
 -- 
 2.32.0.rc0.405.g5d387561bb3
 
