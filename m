@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E75BFC43460
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A980CC433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC627611BD
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89A46611BD
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 06:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbhETGLO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 02:11:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55966 "EHLO
+        id S230444AbhETGLP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 02:11:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230255AbhETGLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 02:11:08 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E26C06175F
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:47 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id c14so14507041wrx.3
-        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:47 -0700 (PDT)
+        with ESMTP id S230421AbhETGLJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 02:11:09 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687A9C061574
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:48 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id x8so16285038wrq.9
+        for <git@vger.kernel.org>; Wed, 19 May 2021 23:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gUnXWMvnUu3h+DNbCL2dlFWVnyBiQFKDUiNGfM7jfOE=;
-        b=sVHIqLvEMCmyGyeDzjtPgnxwBikcIjAlr972JdDe5HQxKXc10cujJoLaSpb9CDX14u
-         XcfjsGKqNI+l+YxVkaa27eC0IDDxaaboW3cvb/dUxMLpxrrN1pvYhhJFo2KGcN5KXs8p
-         dZzEg0rWiQEW08qg620WhYjB+RIvN4qd1A93Y5t7PuZlhp0Y5+NP4Pme6YzskT3aW6G7
-         bFV6+5vXSS8JRKufsQcXwM/6a3BKAKN1bcoPNjuEH8qCxGQk0rXS4xRWpUBlRb5yRxYO
-         Fn7hAY1x8Bx9Rzskws/Q0nM7Jc4Db/r+p415aClZqzE/qcORGkfpy9H993x0ptYdyXiW
-         SzIg==
+        bh=zzncxfd2GFP0CVbZYqWbe1+8/Gt1hVggfGB4JOH8NyA=;
+        b=WIptKEiZOkm2K2BVEpPxSQCp+nIghfgkL9qiUcgXi/io+Oma8piYTgRCprZV+mdZwm
+         WWgsn8gIDdfQu/YLfiCMsuud6xd+OjcQbjP822Ul6LdqBj379LNsXsxEWKbUpdA3GEcW
+         urbi44MQSxgpYbpvYrwtmQBDcIiE1MG5KqZzmwhEnzwDZp+XhjEJvccCzNaK8J/rztRe
+         V2INUr1C9Vtg7/r3tm2vK7TAoY7Cnn+t7E+KMZYe0uIBRVQJBbcaJW5qAJjz0rl1x4c2
+         HY4l40zxddHTnxgC/Ifz/IBZEcKCJRfWrHEP2QqlLkCy8ybsCqonzn9gtQmZycwIzVjY
+         RHaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gUnXWMvnUu3h+DNbCL2dlFWVnyBiQFKDUiNGfM7jfOE=;
-        b=Oxxa15lY8U2WAwhSUoKPxsv+c5bXi+q/lUqx8TZB6PNTDt4VVVsHJ8DAOXyCYG58yR
-         s0nBx8Cxy1v2rkxc2t9w4w4GXj0/MQd/Ei4j8+xsw7+1HdEeQQyshDhi4+hae0aOIah1
-         vzpT7hdgnu5Vqw2NYZrfQnhE2hkJTvaLS2gyQhnPFYf9kIjGoWoOkPY4iimzKPBhHOBB
-         /IZMUmfCf1I4UE1lhV1cuIJT8wH8OhQ/2sAWkcUkHl6ZLSgIIPtlNTqor3TuMNIUKR3k
-         S7la/Uzt0xxOBLzbANB4IEDO60nsxtGa1zyXCXg6oWfiC5K/2EWGOGoavv+3kh+PzEqo
-         UBOA==
-X-Gm-Message-State: AOAM530N7pqIcDDHOISyIEknVfJRecW8z5LBeqW1jgFrXW+2jREr2/Ag
-        5vdiwD3droo4V7BgkX/Jnt596oXUh6A=
-X-Google-Smtp-Source: ABdhPJz8Y9nQYOrpJORYqDy+5Oj8Yn8xkgU/ddC7W3GlDWrTooqXWZiVZKen/kpn8oh3GAvCVBG+Hw==
-X-Received: by 2002:a05:6000:4d:: with SMTP id k13mr2458279wrx.98.1621490986161;
+        bh=zzncxfd2GFP0CVbZYqWbe1+8/Gt1hVggfGB4JOH8NyA=;
+        b=bVm0+iuMEeNSv67Z6yquj9BJ0Ka74nfWJsJgw5j+EjKsSSTy3dTubGK60RPE0cFoYB
+         c4XvAbUTCb+dj7RmJ/AcoVqvM8aoIGAfLtQqHxZSfM8v+aGFllJmfFI/lMIjXXO/+nq9
+         UZmP5Lw0zF/47PGiHJPH4cS65T45fe4xMB2ddgJ/GygsPgJDtZLizQw/lyWtMzoOwT3X
+         6O7clRAp1mHvs2SK5c7+v/xcGu0S/NP4ItVCqCxGTh1IsItpakGY2RdUXYzkMzlcKJPo
+         hInf67t9Bo/pnnL7Lfdh1VhneT1wxUlwA77EBHK43Qs/6f0fQqitr8UIsNo42W0x9co5
+         A3aw==
+X-Gm-Message-State: AOAM532EMHBuPltRwussmWx1BXOmKlu2s3ypdkegtwB5fiEF4edmGLpD
+        SJLED59yQZMSGeDmH/inZWeIEFPPLEY=
+X-Google-Smtp-Source: ABdhPJylKhv5eorq61BNldEqtF3rSaXVG+OoSFrSakSjh6mPhu0dR+BcpY4Zilt60uYNonOLIjWU7Q==
+X-Received: by 2002:a5d:5257:: with SMTP id k23mr2374837wrc.328.1621490986887;
         Wed, 19 May 2021 23:09:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d141sm757151wmd.21.2021.05.19.23.09.45
+        by smtp.gmail.com with ESMTPSA id z12sm1755563wrv.68.2021.05.19.23.09.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 May 2021 23:09:45 -0700 (PDT)
-Message-Id: <cfd8cbef17f03a97b20196bebf7abc04572a79b2.1621490982.git.gitgitgadget@gmail.com>
+        Wed, 19 May 2021 23:09:46 -0700 (PDT)
+Message-Id: <f1c20da12744f5eb0e960d3da21c7c96c3dd22c2.1621490982.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 References: <pull.859.v2.git.1620094339.gitgitgadget@gmail.com>
         <pull.859.v3.git.1621490982.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 May 2021 06:09:32 +0000
-Subject: [PATCH v3 04/13] fast-rebase: write conflict state to working tree,
- index, and HEAD
+Date:   Thu, 20 May 2021 06:09:33 +0000
+Subject: [PATCH v3 05/13] t6429: testcases for remembering renames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,109 +81,743 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Previously, when fast-rebase hit a conflict, it simply aborted and left
-HEAD, the index, and the working tree where they were before the
-operation started.  While fast-rebase does not support restarting from a
-conflicted state, write the conflicted state out anyway as it gives us a
-way to see what the conflicts are and write tests that check for them.
-
-This will be important in the upcoming commits, because sequencer.c is
-only superficially integrated with merge-ort.c; in particular, it calls
-merge_switch_to_result() after EACH merge instead of only calling it at
-the end of all the sequence of merges (or when a conflict is hit).  This
-not only causes needless updates to the working copy and index, but also
-causes all intermediate data to be freed and tossed, preventing caching
-information from one merge to the next.  However, integrating
-sequencer.c more deeply with merge-ort.c is a big task, and making this
-small extension to fast-rebase.c provides us with a simple way to test
-the edge and corner cases that we want to make sure continue working.
+We will soon be adding an optimization that caches (in memory only,
+never written to disk) upstream renames during a sequence of merges such
+as occurs during a cherry-pick or rebase operation.  Add several tests
+meant to stress such an implementation to ensure it does the right
+thing, and include a test whose outcome we will later change due to this
+optimization as well.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/helper/test-fast-rebase.c | 51 +++++++++++++++++++++++--------------
- 1 file changed, 32 insertions(+), 19 deletions(-)
+ .../technical/remembering-renames.txt         |  14 +-
+ t/t6429-merge-sequence-rename-caching.sh      | 692 ++++++++++++++++++
+ 2 files changed, 700 insertions(+), 6 deletions(-)
+ create mode 100755 t/t6429-merge-sequence-rename-caching.sh
 
-diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
-index 39fb7f41e8c1..fc2d46090434 100644
---- a/t/helper/test-fast-rebase.c
-+++ b/t/helper/test-fast-rebase.c
-@@ -91,7 +91,6 @@ int cmd__fast_rebase(int argc, const char **argv)
- 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
- 	struct object_id head;
- 	struct lock_file lock = LOCK_INIT;
--	int clean = 1;
- 	struct strvec rev_walk_args = STRVEC_INIT;
- 	struct rev_info revs;
- 	struct commit *commit;
-@@ -176,11 +175,10 @@ int cmd__fast_rebase(int argc, const char **argv)
- 		free((char*)merge_opt.ancestor);
- 		merge_opt.ancestor = NULL;
- 		if (!result.clean)
--			die("Aborting: Hit a conflict and restarting is not implemented.");
-+			break;
- 		last_picked_commit = commit;
- 		last_commit = create_commit(result.tree, commit, last_commit);
- 	}
--	fprintf(stderr, "\nDone.\n");
- 	/* TODO: There should be some kind of rev_info_free(&revs) call... */
- 	memset(&revs, 0, sizeof(revs));
+diff --git a/Documentation/technical/remembering-renames.txt b/Documentation/technical/remembering-renames.txt
+index 251ce477e059..2fd5cc88e0b8 100644
+--- a/Documentation/technical/remembering-renames.txt
++++ b/Documentation/technical/remembering-renames.txt
+@@ -214,12 +214,14 @@ in-memory cache of renames and thus doesn't need to be considered further.
+ In the special case that E->A does rename the file but also renames it to
+ newfile, then there is no conflict from the renaming and the merge can
+ succeed.  In this special case, the rename is not valid to cache because
+-the second merge will find A:newfile in the MERGE_BASE.  So a
+-rename/rename(1to1) needs to be specially handled by pruning renames from
+-the cache and decrementing the dir_rename_counts in the current and leading
+-directories associated with those renames.  Or, since these are really
+-rare, one could just take the easy way out and disable the remembering
+-renames optimization when a rename/rename(1to1) happens.
++the second merge will find A:newfile in the MERGE_BASE (see also the new
++testcases in t6429 with "rename same file identically" in their
++description).  So a rename/rename(1to1) needs to be specially handled by
++pruning renames from the cache and decrementing the dir_rename_counts in
++the current and leading directories associated with those renames.  Or,
++since these are really rare, one could just take the easy way out and
++disable the remembering renames optimization when a rename/rename(1to1)
++happens.
  
-@@ -189,24 +187,39 @@ int cmd__fast_rebase(int argc, const char **argv)
- 	if (result.clean < 0)
- 		exit(128);
- 
--	strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
--		    oid_to_hex(&last_picked_commit->object.oid),
--		    oid_to_hex(&last_commit->object.oid));
--	if (update_ref(reflog_msg.buf, branch_name.buf,
--		       &last_commit->object.oid,
--		       &last_picked_commit->object.oid,
--		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
--		error(_("could not update %s"), argv[4]);
--		die("Failed to update %s", argv[4]);
-+	if (result.clean) {
-+		fprintf(stderr, "\nDone.\n");
-+		strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
-+			    oid_to_hex(&last_picked_commit->object.oid),
-+			    oid_to_hex(&last_commit->object.oid));
-+		if (update_ref(reflog_msg.buf, branch_name.buf,
-+			       &last_commit->object.oid,
-+			       &last_picked_commit->object.oid,
-+			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
-+			error(_("could not update %s"), argv[4]);
-+			die("Failed to update %s", argv[4]);
-+		}
-+		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
-+			die(_("unable to update HEAD"));
-+		strbuf_release(&reflog_msg);
-+		strbuf_release(&branch_name);
+ The previous paragraph handled the cases for E->A renaming oldfile, let's
+ continue assuming that oldfile is not renamed in A.
+diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
+new file mode 100755
+index 000000000000..f47d8924ee73
+--- /dev/null
++++ b/t/t6429-merge-sequence-rename-caching.sh
+@@ -0,0 +1,692 @@
++#!/bin/sh
 +
-+		prime_cache_tree(the_repository, the_repository->index,
-+				 result.tree);
-+	} else {
-+		fprintf(stderr, "\nAborting: Hit a conflict.\n");
-+		strbuf_addf(&reflog_msg, "rebase progress up to %s",
-+			    oid_to_hex(&last_picked_commit->object.oid));
-+		if (update_ref(reflog_msg.buf, "HEAD",
-+			       &last_commit->object.oid,
-+			       &head,
-+			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
-+			error(_("could not update %s"), argv[4]);
-+			die("Failed to update %s", argv[4]);
-+		}
- 	}
--	if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
--		die(_("unable to update HEAD"));
--	strbuf_release(&reflog_msg);
--	strbuf_release(&branch_name);
--
--	prime_cache_tree(the_repository, the_repository->index, result.tree);
- 	if (write_locked_index(&the_index, &lock,
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		die(_("unable to write %s"), get_index_file());
--	return (clean == 0);
-+	return (result.clean == 0);
- }
++test_description="remember regular & dir renames in sequence of merges"
++
++. ./test-lib.sh
++
++#
++# NOTE 1: this testfile tends to not only rename files, but modify on both
++#         sides; without modifying on both sides, optimizations can kick in
++#         which make rename detection irrelevant or trivial.  We want to make
++#         sure that we are triggering rename caching rather than rename
++#         bypassing.
++#
++# NOTE 2: this testfile uses 'test-tool fast-rebase' instead of either
++#         cherry-pick or rebase.  sequencer.c is only superficially
++#         integrated with merge-ort; it calls merge_switch_to_result()
++#         after EACH merge, which updates the index and working copy AND
++#         throws away the cached results (because merge_switch_to_result()
++#         is only supposed to be called at the end of the sequence).
++#         Integrating them more deeply is a big task, so for now the tests
++#         use 'test-tool fast-rebase'.
++#
++
++
++#
++# In the following simple testcase:
++#   Base:     numbers_1, values_1
++#   Upstream: numbers_2, values_2
++#   Topic_1:  sequence_3
++#   Topic_2:  scruples_3
++# or, in english, rename numbers -> sequence in the first commit, and rename
++# values -> scruples in the second commit.
++#
++# This shouldn't be a challenge, it's just verifying that cached renames isn't
++# preventing us from finding new renames.
++#
++test_expect_success 'caching renames does not preclude finding new ones' '
++	test_create_repo caching-renames-and-new-renames &&
++	(
++		cd caching-renames-and-new-renames &&
++
++		test_seq 2 10 >numbers &&
++		test_seq 2 10 >values &&
++		git add numbers values &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq 1 10 >numbers &&
++		test_seq 1 10 >values &&
++		git add numbers values &&
++		git commit -m "Tweaked both files" &&
++
++		git switch topic &&
++
++		test_seq 2 12 >numbers &&
++		git add numbers &&
++		git mv numbers sequence &&
++		git commit -m A &&
++
++		test_seq 2 12 >values &&
++		git add values &&
++		git mv values scruples &&
++		git commit -m B &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream~1..topic
++
++		git ls-files >tracked-files &&
++		test_line_count = 2 tracked-files &&
++		test_seq 1 12 >expect &&
++		test_cmp expect sequence &&
++		test_cmp expect scruples
++	)
++'
++
++#
++# In the following testcase:
++#   Base:     numbers_1
++#   Upstream: rename numbers_1 -> sequence_2
++#   Topic_1:  numbers_3
++#   Topic_2:  numbers_1
++# or, in english, the first commit on the topic branch modifies numbers by
++# shrinking it (dramatically) and the second commit on topic reverts its
++# parent.
++#
++# Can git apply both patches?
++#
++# Traditional cherry-pick/rebase will fail to apply the second commit, the
++# one that reverted its parent, because despite detecting the rename from
++# 'numbers' to 'sequence' for the first commit, it fails to detect that
++# rename when picking the second commit.  That's "reasonable" given the
++# dramatic change in size of the file, but remembering the rename and
++# reusing it is reasonable too.
++#
++# Rename detection (diffcore_rename_extended()) will run twice here; it is
++# not needed on the topic side of history for either of the two commits
++# being merged, but it is needed on the upstream side of history for each
++# commit being picked.
++test_expect_success 'cherry-pick both a commit and its immediate revert' '
++	test_create_repo pick-commit-and-its-immediate-revert &&
++	(
++		cd pick-commit-and-its-immediate-revert &&
++
++		test_seq 11 30 >numbers &&
++		git add numbers &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq 1 30 >numbers &&
++		git add numbers &&
++		git mv numbers sequence &&
++		git commit -m "Renamed (and modified) numbers -> sequence" &&
++
++		git switch topic &&
++
++		test_seq 11 13 >numbers &&
++		git add numbers &&
++		git commit -m A &&
++
++		git revert HEAD &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test_might_fail test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream~1..topic &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 2 calls
++	)
++'
++
++#
++# In the following testcase:
++#   Base:     sequence_1
++#   Upstream: rename sequence_1 -> values_2
++#   Topic_1:  rename sequence_1 -> values_3
++#   Topic_2:  add unrelated sequence_4
++# or, in english, both sides rename sequence -> values, and then the second
++# commit on the topic branch adds an unrelated file called sequence.
++#
++# This testcase presents no problems for git traditionally, but having both
++# sides do the same rename in effect "uses it up" and if it remains cached,
++# could cause a spurious rename/add conflict.
++#
++test_expect_success 'rename same file identically, then reintroduce it' '
++	test_create_repo rename-rename-1to1-then-add-old-filename &&
++	(
++		cd rename-rename-1to1-then-add-old-filename &&
++
++		test_seq 3 8 >sequence &&
++		git add sequence &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq 1 8 >sequence &&
++		git add sequence &&
++		git mv sequence values &&
++		git commit -m "Renamed (and modified) sequence -> values" &&
++
++		git switch topic &&
++
++		test_seq 3 10 >sequence &&
++		git add sequence &&
++		git mv sequence values &&
++		git commit -m A &&
++
++		test_write_lines A B C D E F G H I J >sequence &&
++		git add sequence &&
++		git commit -m B &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream~1..topic &&
++
++		git ls-files >tracked &&
++		test_line_count = 2 tracked &&
++		test_path_is_file values &&
++		test_path_is_file sequence &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 2 calls
++	)
++'
++
++#
++# In the following testcase:
++#   Base:     olddir/{valuesZ_1, valuesY_1, valuesX_1}
++#   Upstream: rename olddir/valuesZ_1 -> dirA/valuesZ_2
++#             rename olddir/valuesY_1 -> dirA/valuesY_2
++#             rename olddir/valuesX_1 -> dirB/valuesX_2
++#   Topic_1:  rename olddir/valuesZ_1 -> dirA/valuesZ_3
++#             rename olddir/valuesY_1 -> dirA/valuesY_3
++#   Topic_2:  add olddir/newfile
++#   Expected Pick1: dirA/{valuesZ, valuesY}, dirB/valuesX
++#   Expected Pick2: dirA/{valuesZ, valuesY}, dirB/{valuesX, newfile}
++#
++# This testcase presents no problems for git traditionally, but having both
++# sides do the same renames in effect "use it up" but if the renames remain
++# cached, the directory rename could put newfile in the wrong directory.
++#
++test_expect_success 'rename same file identically, then add file to old dir' '
++	test_create_repo rename-rename-1to1-then-add-file-to-old-dir &&
++	(
++		cd rename-rename-1to1-then-add-file-to-old-dir &&
++
++		mkdir olddir/ &&
++		test_seq 3 8 >olddir/valuesZ &&
++		test_seq 3 8 >olddir/valuesY &&
++		test_seq 3 8 >olddir/valuesX &&
++		git add olddir &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq 1 8 >olddir/valuesZ &&
++		test_seq 1 8 >olddir/valuesY &&
++		test_seq 1 8 >olddir/valuesX &&
++		git add olddir &&
++		mkdir dirA &&
++		git mv olddir/valuesZ olddir/valuesY dirA &&
++		git mv olddir/ dirB/ &&
++		git commit -m "Renamed (and modified) values*" &&
++
++		git switch topic &&
++
++		test_seq 3 10 >olddir/valuesZ &&
++		test_seq 3 10 >olddir/valuesY &&
++		git add olddir &&
++		mkdir dirA &&
++		git mv olddir/valuesZ olddir/valuesY dirA &&
++		git commit -m A &&
++
++		>olddir/newfile &&
++		git add olddir/newfile &&
++		git commit -m B &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++		git config merge.directoryRenames true &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream~1..topic &&
++
++		git ls-files >tracked &&
++		test_line_count = 4 tracked &&
++		test_path_is_file dirA/valuesZ &&
++		test_path_is_file dirA/valuesY &&
++		test_path_is_file dirB/valuesX &&
++		test_path_is_file dirB/newfile &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 3 calls
++	)
++'
++
++#
++# In the following testcase, upstream renames a directory, and the topic branch
++# first adds a file to the directory, then later renames the directory
++# differently:
++#   Base:     olddir/a
++#             olddir/b
++#   Upstream: rename olddir/ -> newdir/
++#   Topic_1:  add olddir/newfile
++#   Topic_2:  rename olddir/ -> otherdir/
++#
++# Here we are just concerned that cached renames might prevent us from seeing
++# the rename conflict, and we want to ensure that we do get a conflict.
++#
++# While at it, also test that we do rename detection three times.  We have to
++# detect renames on the upstream side of history once for each merge, plus
++# Topic_2 has renames.
++#
++test_expect_success 'cached dir rename does not prevent noticing later conflict' '
++	test_create_repo dir-rename-cache-not-occluding-later-conflict &&
++	(
++		cd dir-rename-cache-not-occluding-later-conflict &&
++
++		mkdir olddir &&
++		test_seq 3 10 >olddir/a &&
++		test_seq 3 10 >olddir/b &&
++		git add olddir &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq 3 10 >olddir/a &&
++		test_seq 3 10 >olddir/b &&
++		git add olddir &&
++		git mv olddir newdir &&
++		git commit -m "Dir renamed" &&
++
++		git switch topic &&
++
++		>olddir/newfile &&
++		git add olddir/newfile &&
++		git commit -m A &&
++
++		test_seq 1 8 >olddir/a &&
++		test_seq 1 8 >olddir/b &&
++		git add olddir &&
++		git mv olddir otherdir &&
++		git commit -m B &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++		git config merge.directoryRenames true &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test_must_fail test-tool fast-rebase --onto HEAD upstream~1 topic >output &&
++		#git cherry-pick upstream..topic &&
++
++		grep CONFLICT..rename/rename output &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 3 calls
++	)
++'
++
++# Helper for the next two tests
++test_setup_upstream_rename () {
++	test_create_repo $1 &&
++	(
++		cd $1 &&
++
++		test_seq 3 8 >somefile &&
++		test_seq 3 8 >relevant-rename &&
++		git add somefile relevant-rename &&
++		mkdir olddir &&
++		test_write_lines a b c d e f g >olddir/a &&
++		test_write_lines z y x w v u t >olddir/b &&
++		git add olddir &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq 1 8 >somefile &&
++		test_seq 1 8 >relevant-rename &&
++		git add somefile relevant-rename &&
++		git mv relevant-rename renamed &&
++		echo h >>olddir/a &&
++		echo s >>olddir/b &&
++		git add olddir &&
++		git mv olddir newdir &&
++		git commit -m "Dir renamed"
++	)
++}
++
++#
++# In the following testcase, upstream renames a file in the toplevel directory
++# as well as its only directory:
++#   Base:     relevant-rename_1
++#             somefile
++#             olddir/a
++#             olddir/b
++#   Upstream: rename relevant-rename_1 -> renamed_2
++#             rename olddir/           -> newdir/
++#   Topic_1:  relevant-rename_3
++#   Topic_2:  olddir/newfile_1
++#   Topic_3:  olddir/newfile_2
++#
++# In this testcase, since the first commit being picked only modifies a
++# file in the toplevel directory, the directory rename is irrelevant for
++# that first merge.  However, we need to notice the directory rename for
++# the merge that picks the second commit, and we don't want the third
++# commit to mess up its location either.  We want to make sure that
++# olddir/newfile doesn't exist in the result and that newdir/newfile does.
++#
++# We also expect rename detection to occur three times.  Although it is
++# typically needed two times per commit, there are no deleted files on the
++# topic side of history, so we only need to detect renames on the upstream
++# side for each of the 3 commits we need to pick.
++#
++test_expect_success 'dir rename unneeded, then add new file to old dir' '
++	test_setup_upstream_rename dir-rename-unneeded-until-new-file &&
++	(
++		cd dir-rename-unneeded-until-new-file &&
++
++		git switch topic &&
++
++		test_seq 3 10 >relevant-rename &&
++		git add relevant-rename &&
++		git commit -m A &&
++
++		echo foo >olddir/newfile &&
++		git add olddir/newfile &&
++		git commit -m B &&
++
++		echo bar >>olddir/newfile &&
++		git add olddir/newfile &&
++		git commit -m C &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++		git config merge.directoryRenames true &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream..topic &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 3 calls &&
++
++		git ls-files >tracked &&
++		test_line_count = 5 tracked &&
++		test_path_is_missing olddir/newfile &&
++		test_path_is_file newdir/newfile
++	)
++'
++
++#
++# The following testcase is *very* similar to the last one, but instead of
++# adding a new olddir/newfile, it renames somefile -> olddir/newfile:
++#   Base:     relevant-rename_1
++#             somefile_1
++#             olddir/a
++#             olddir/b
++#   Upstream: rename relevant-rename_1 -> renamed_2
++#             rename olddir/           -> newdir/
++#   Topic_1:  relevant-rename_3
++#   Topic_2:  rename somefile -> olddir/newfile_2
++#   Topic_3:  modify olddir/newfile_3
++#
++# In this testcase, since the first commit being picked only modifies a
++# file in the toplevel directory, the directory rename is irrelevant for
++# that first merge.  However, we need to notice the directory rename for
++# the merge that picks the second commit, and we don't want the third
++# commit to mess up its location either.  We want to make sure that
++# neither somefile or olddir/newfile exists in the result and that
++# newdir/newfile does.
++#
++# This testcase needs one more call to rename detection than the last
++# testcase, because of the somefile -> olddir/newfile rename in Topic_2.
++test_expect_success 'dir rename unneeded, then rename existing file into old dir' '
++	test_setup_upstream_rename dir-rename-unneeded-until-file-moved-inside &&
++	(
++		cd dir-rename-unneeded-until-file-moved-inside &&
++
++		git switch topic &&
++
++		test_seq 3 10 >relevant-rename &&
++		git add relevant-rename &&
++		git commit -m A &&
++
++		test_seq 1 10 >somefile &&
++		git add somefile &&
++		git mv somefile olddir/newfile &&
++		git commit -m B &&
++
++		test_seq 1 12 >olddir/newfile &&
++		git add olddir/newfile &&
++		git commit -m C &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++		git config merge.directoryRenames true &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream..topic &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 4 calls &&
++
++		test_path_is_missing somefile &&
++		test_path_is_missing olddir/newfile &&
++		test_path_is_file newdir/newfile &&
++		git ls-files >tracked &&
++		test_line_count = 4 tracked
++	)
++'
++
++# Helper for the next two tests
++test_setup_topic_rename () {
++	test_create_repo $1 &&
++	(
++		cd $1 &&
++
++		test_seq 3 8 >somefile &&
++		mkdir olddir &&
++		test_seq 3 8 >olddir/a &&
++		echo b >olddir/b &&
++		git add olddir somefile &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch topic &&
++		test_seq 1 8 >somefile &&
++		test_seq 1 8 >olddir/a &&
++		git add somefile olddir/a &&
++		git mv olddir newdir &&
++		git commit -m "Dir renamed" &&
++
++		test_seq 1 10 >somefile &&
++		git add somefile &&
++		mkdir olddir &&
++		>olddir/unrelated-file &&
++		git add olddir &&
++		git commit -m "Unrelated file in recreated old dir"
++	)
++}
++
++#
++# In the following testcase, the first commit on the topic branch renames
++# a directory, while the second recreates the old directory and places a
++# file into it:
++#   Base:     somefile
++#             olddir/a
++#             olddir/b
++#   Upstream: olddir/newfile
++#   Topic_1:  somefile_2
++#             rename olddir/ -> newdir/
++#   Topic_2:  olddir/unrelated-file
++#
++# Note that the first pick should merge:
++#   Base:     somefile
++#             olddir/{a,b}
++#   Upstream: olddir/newfile
++#   Topic_1:  rename olddir/ -> newdir/
++# For which the expected result (assuming merge.directoryRenames=true) is
++# clearly:
++#   Result:   somefile
++#             newdir/{a, b, newfile}
++#
++# While the second pick does the following three-way merge:
++#   Base (Topic_1):           somefile
++#                             newdir/{a,b}
++#   Upstream (Result from 1): same files as base, but adds newdir/newfile
++#   Topic_2:                  same files as base, but adds olddir/unrelated-file
++#
++# The second merge is pretty trivial; upstream adds newdir/newfile, and
++# topic_2 adds olddir/unrelated-file.  We're just testing that we don't
++# accidentally cache directory renames somehow and rename
++# olddir/unrelated-file to newdir/unrelated-file.
++#
++# This testcase should only need one call to diffcore_rename_extended().
++test_expect_success 'caching renames only on upstream side, part 1' '
++	test_setup_topic_rename cache-renames-only-upstream-add-file &&
++	(
++		cd cache-renames-only-upstream-add-file &&
++
++		git switch upstream &&
++
++		>olddir/newfile &&
++		git add olddir/newfile &&
++		git commit -m "Add newfile" &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++
++		git config merge.directoryRenames true &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream..topic &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 1 calls &&
++
++		git ls-files >tracked &&
++		test_line_count = 5 tracked &&
++		test_path_is_missing newdir/unrelated-file &&
++		test_path_is_file olddir/unrelated-file &&
++		test_path_is_file newdir/newfile &&
++		test_path_is_file newdir/b &&
++		test_path_is_file newdir/a &&
++		test_path_is_file somefile
++	)
++'
++
++#
++# The following testcase is *very* similar to the last one, but instead of
++# adding a new olddir/newfile, it renames somefile -> olddir/newfile:
++#   Base:     somefile
++#             olddir/a
++#             olddir/b
++#   Upstream: somefile_1 -> olddir/newfile
++#   Topic_1:  rename olddir/ -> newdir/
++#             somefile_2
++#   Topic_2:  olddir/unrelated-file
++#             somefile_3
++#
++# Much like the previous test, this case is actually trivial and we are just
++# making sure there isn't some spurious directory rename caching going on
++# for the wrong side of history.
++#
++#
++# This testcase should only need three calls to diffcore_rename_extended(),
++# because there are no renames on the topic side of history for picking
++# Topic_2.
++#
++test_expect_success 'caching renames only on upstream side, part 2' '
++	test_setup_topic_rename cache-renames-only-upstream-rename-file &&
++	(
++		cd cache-renames-only-upstream-rename-file &&
++
++		git switch upstream &&
++
++		git mv somefile olddir/newfile &&
++		git commit -m "Add newfile" &&
++
++		#
++		# Actual testing
++		#
++
++		git switch upstream &&
++
++		git config merge.directoryRenames true &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
++		export GIT_TRACE2_PERF &&
++
++		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		#git cherry-pick upstream..topic &&
++
++		grep region_enter.*diffcore_rename trace.output >calls &&
++		test_line_count = 3 calls &&
++
++		git ls-files >tracked &&
++		test_line_count = 4 tracked &&
++		test_path_is_missing newdir/unrelated-file &&
++		test_path_is_file olddir/unrelated-file &&
++		test_path_is_file newdir/newfile &&
++		test_path_is_file newdir/b &&
++		test_path_is_file newdir/a
++	)
++'
++
++test_done
 -- 
 gitgitgadget
 
