@@ -2,71 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4557DC433ED
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F505C433B4
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:36:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2755D60FF0
-	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:36:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D8A760FDC
+	for <git@archiver.kernel.org>; Thu, 20 May 2021 21:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbhETVh7 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 20 May 2021 17:37:59 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:46361 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbhETVh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 17:37:59 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14KLaU1k001795
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 20 May 2021 17:36:31 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Emily Shaffer'" <emilyshaffer@google.com>, <git@vger.kernel.org>
-Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Jeff Hostetler'" <git@jeffhostetler.com>,
-        "'Bagas Sanjaya'" <bagasdotme@gmail.com>
-References: <20210507002908.1495061-1-emilyshaffer@google.com> <20210520210546.4129620-1-emilyshaffer@google.com>
-In-Reply-To: <20210520210546.4129620-1-emilyshaffer@google.com>
-Subject: RE: [PATCH v2] tr2: log parent process name
-Date:   Thu, 20 May 2021 17:36:25 -0400
-Message-ID: <021601d74dc0$326f6620$974e3260$@nexbridge.com>
+        id S230257AbhETViC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 17:38:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230255AbhETViB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 17:38:01 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F6FC061761
+        for <git@vger.kernel.org>; Thu, 20 May 2021 14:36:40 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d16so13341548pfn.12
+        for <git@vger.kernel.org>; Thu, 20 May 2021 14:36:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=oEezTJI7K6K39XDsNUrqXiIvyJAqRWwuHJKvObvVLkA=;
+        b=YkCT5MUi6wdCkR+M0nMTCj0/0ePS9WRn5wIsgy7iI78QwMcP8UdCY72vbmHnE6zakb
+         T8A+LRnJTo8TVcrtW4WRHZkOwVB/2Jd+O4cARt6wIzHCl58pI4OTKGYnb14hHAG3jJEe
+         VsiGoLwWhQGM8152Boz9Vp8LrgHwXjB4mKSVteYaw7LLhNouFw3gtRswnOQuncGsFPF3
+         eDoaIud/wD1erwU+VEzo4U1j1PbV3yix1Uw7HccOdLT5xcio08nQp6WyVUUWQpTh5SYI
+         RAf9ZBIkcE3wr6lVs/MOHryzi4NcWGIpsqPUlit77JnJRRYkzavljzCjYh0qpqlqtvZS
+         Mepg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=oEezTJI7K6K39XDsNUrqXiIvyJAqRWwuHJKvObvVLkA=;
+        b=PndQwNDP1vyEL+7DxZQXDqhtMA6AfTEMJv37w0H7e52DgYUjFqcykItMJ8EZigwRph
+         K8TcUTnQkXI3Fb8ARQgfFN99xPEXsXEgNEW5r9dLogmCnFiViRUy52yl+g7m43oiR09u
+         fbYLeYBhn+0Uhu/ukucX5HJ9jFQGpAibhF39lPRBRQ00AGEOCAmaWbn9a6t3aH9Bavxk
+         fj7aNb/YSgKCGyzKR86LFkPvoHKPIe5LNOzbfPrHa+hhbJewkLeeWX/lqKiFwMcyPUQO
+         sn0E08WZcke8IT/D+jn2KrrcVkFjaSU+HAvyIGDJYK5IMzfKK4vc0OGT3Hh+vQcBtHB1
+         KJvQ==
+X-Gm-Message-State: AOAM530+iNus5R0PM7oke3YzKgIKs4u33aDIBb6IwgLnqBpMNwzuAhs8
+        IYyzbNqZPK62tXVfOGKqesDuh994e+4=
+X-Google-Smtp-Source: ABdhPJwqEwaR3XI8F2wf2akQ+cbnnt/pX+sYHy0AyZnIHwvlUD4Z3rflFtkWSyQ/wd5rN4bFqfbqkw==
+X-Received: by 2002:a63:d30e:: with SMTP id b14mr6515580pgg.237.1621546599665;
+        Thu, 20 May 2021 14:36:39 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:ec75:d356:9cf2:6ea1])
+        by smtp.gmail.com with ESMTPSA id h4sm8428713pjc.12.2021.05.20.14.36.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 May 2021 14:36:39 -0700 (PDT)
+Date:   Thu, 20 May 2021 14:36:36 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help: fix small typo in error message
+Message-ID: <YKbWZMTW2Evux1VR@google.com>
+References: <20210520074214.40903-1-jn.avila@free.fr>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQG/TiO1DChZ2CQV98iURtxeNF+BXKsc4fLQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210520074214.40903-1-jn.avila@free.fr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 20, 2021 5:06 PM, Emily Shaffer wrote:
->To: git@vger.kernel.org
->Cc: Emily Shaffer <emilyshaffer@google.com>; Ævar Arnfjörð Bjarmason <avarab@gmail.com>; Junio C Hamano <gitster@pobox.com>;
->Jeff Hostetler <git@jeffhostetler.com>; Bagas Sanjaya <bagasdotme@gmail.com>
->Subject: [PATCH v2] tr2: log parent process name
+(cc: pks)
+Jean-Noël Avila wrote:
+
+> Classic string concatenation while forgetting a space character.
 >
->It can be useful to tell who invoked Git - was it invoked manually by a user via CLI or script? By an IDE?  In some cases - like 'repo' tool -
->we can influence the source code and set the GIT_TRACE2_PARENT_SID environment variable from the caller process. In 'repo''s case,
->that parent SID is manipulated to include the string "repo", which means we can positively identify when Git was invoked by 'repo' tool.
->However, identifying parents that way requires both that we know which tools invoke Git and that we have the ability to modify the source
->code of those tools. It cannot scale to keep up with the various IDEs and wrappers which use Git, most of which we don't know about.
->Learning which tools and wrappers invoke Git, and how, would give us insight to decide where to improve Git's usability and performance.
->
->Unfortunately, there's no cross-platform reliable way to gather the name of the parent process. If procfs is present, we can use that;
->otherwise we will need to discover the name another way. However, the process ID should be sufficient regardless of platform.
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+[...]
+> -			strbuf_addf(errbuf, _("'%s' for 'object:type=<type>' is"
+> +			strbuf_addf(errbuf, _("'%s' for 'object:type=<type>' is "
+>  					      "not a valid object type"), v0);
 
-I like this idea, but there are some platforms where this is unlikely to work. NonStop, in particular, can initiate git - and I frequently do - from a non-POSIX environment where process name is entirely different. In fact, it is something like $ABC (always beginning with a $, which makes life very difficult for shell scripts and screws up GIT_SSH_COMMAND, but I digress). I'm going to need to plug in something very platform-specific to make this work. getppid() always returns 1 in this situation, which is extraordinarily meaningless on the platform and does not represent the actual parent.
+Good catch!
 
-I will try to put the appropriate compat hooks in once this moves into master but I can't promise it will be particularly efficient at this stage.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Regards,
-Randall
-
+Thanks.
