@@ -2,152 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3134C433B4
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 10:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DCC3C433ED
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 10:04:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B85476135A
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 10:04:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B77F6109F
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 10:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231795AbhEUKFk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 06:05:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38028 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237209AbhEUKEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 06:04:45 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 588D6C0612F2
-        for <git@vger.kernel.org>; Fri, 21 May 2021 02:59:31 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id f22so6174915pfn.0
-        for <git@vger.kernel.org>; Fri, 21 May 2021 02:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=bS+oaoc1Hxw/4djmPgx0BV5MEmKCjmhLTde9JpyBbjo=;
-        b=AzT0b38iJ2gy9gvwMs1NvYQVyi0fR45+EN/OAGRTzvHHO3GY02s5dnqPndoglBje6K
-         OM0B//qIWnIWYKbHCw/zdFHrs/APVYe2qhZ/ZF35VGvvsU6gtuLkyYtQU49Vowmam6We
-         PDy6deOczmQs7jBfzfsz2iEcFUL4rZOW83Qh17pGTGHYgxJFzri6l2qiiYgH40vd6AgA
-         yrUzD0s/gunnELISuw72pgTi9VMpS7gY+D83neg/ER/qGn5aiDegJ+ral+LCzJMXsP9L
-         rFfWViBZtrzHkZBpvKucD4vR6miCVP4Y1yfkYl6C+c8lgPSabHfCyojiKW2EHSLOhHM0
-         dCJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=bS+oaoc1Hxw/4djmPgx0BV5MEmKCjmhLTde9JpyBbjo=;
-        b=qwn80MUFJRnrUkgQH6tOvVt8DyxTM8/sYeHdEtDsVb3npaOgsRhsk9UQbopH94FHD6
-         lg5hjt6A5E20BcHPt3EV/r2YEKwlBZOTLT6LmGpgM6eX0r6nXp+hH1ja4hh5q8/WmL8u
-         4VZmLX6CBgutH4pvIHaRBrDIqEIxYaULnhvfYcK/ehxQ7aHEskQNu3oagYbXe8ZILQl9
-         x068YNf39V+jqPKGlwRzOuYb0CfoP4cWH71hj1a2eWoWnvV0nMSCwOxL/w6lw6HmEP/u
-         G70fpSdNTHC8A9G8+jgm5mI0W1iSBcMEms1eJ3AZt7orf9sffMRMwjKBKiQ6VcbDbynY
-         vkPA==
-X-Gm-Message-State: AOAM530bQo0zwBqvoAwERSazAqBRnkbMtwaHo/+mHbtna5NkPooH8CUK
-        6Iml6fOA8W02/8p0Y7qzXeC/mqkrHf48cnwC
-X-Google-Smtp-Source: ABdhPJy3p7PtS/Qk5fh9XqtX/kkD3gVbcYueXCzUO9pUyGiP9zK5FMESa/0zHW3Qhcwt8MEZjiVpEg==
-X-Received: by 2002:a63:2686:: with SMTP id m128mr8898467pgm.406.1621591170867;
-        Fri, 21 May 2021 02:59:30 -0700 (PDT)
-Received: from [192.168.43.80] (subs32-116-206-28-41.three.co.id. [116.206.28.41])
-        by smtp.gmail.com with ESMTPSA id jz7sm8568430pjb.32.2021.05.21.02.59.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 May 2021 02:59:30 -0700 (PDT)
-Subject: Re: [PATCH v3 4/4] maintenance: optionally use systemd timers on
- Linux
-To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <20210509213217.449489-1-lenaic@lhuard.fr>
- <20210520221359.75615-1-lenaic@lhuard.fr>
- <20210520221359.75615-5-lenaic@lhuard.fr>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <715d8115-641b-5c06-d514-36911eb169ef@gmail.com>
-Date:   Fri, 21 May 2021 16:59:26 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        id S231735AbhEUKGU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 06:06:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33236 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229704AbhEUKGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 06:06:19 -0400
+Received: (qmail 3165 invoked by uid 109); 21 May 2021 10:04:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 May 2021 10:04:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8047 invoked by uid 111); 21 May 2021 10:04:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 May 2021 06:04:56 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 May 2021 06:04:53 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Siavash <siavash.askari.nasr@gmail.com>, git@vger.kernel.org
+Subject: Re: [Bug] git-credential-netrc.perl is not built and is not
+ available in `exec-path`
+Message-ID: <YKeFxcTDp4tHSRu8@coredump.intra.peff.net>
+References: <87k0nt3f8i.fsf@gmail.com>
+ <YKcTFDgW4etXFpOR@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-In-Reply-To: <20210520221359.75615-5-lenaic@lhuard.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YKcTFDgW4etXFpOR@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/05/21 05.13, Lénaïc Huard wrote:
-> The existing mechanism for scheduling background maintenance is done
-> through cron. On Linux systems managed by systemd, systemd provides an
-> alternative to schedule recurring tasks: systemd timers.
-> 
-> The main motivations to implement systemd timers in addition to cron
-> are:
-> * cron is optional and Linux systems running systemd might not have it
->    installed.
-> * The execution of `crontab -l` can tell us if cron is installed but not
->    if the daemon is actually running.
-> * With systemd, each service is run in its own cgroup and its logs are
->    tagged by the service inside journald. With cron, all scheduled tasks
->    are running in the cron daemon cgroup and all the logs of the
->    user-scheduled tasks are pretended to belong to the system cron
->    service.
->    Concretely, a user that doesn’t have access to the system logs won’t
->    have access to the log of its own tasks scheduled by cron whereas he
->    will have access to the log of its own tasks scheduled by systemd
->    timer.
+On Fri, May 21, 2021 at 01:55:32AM +0000, brian m. carlson wrote:
 
-For gender neutrality, we can use he/she instead.
+> On 2021-05-20 at 09:51:25, Siavash wrote:
+> > 
+> > which is located in `contrib/credential/netrc`.
+> > 
+> > If I'm not mistaken, it's because it sets the `SCRIPT_PERL` environment variable here:
+> > https://github.com/git/git/blob/88dd4282d949cdafff516650c1be8aaf4d67983f/contrib/credential/netrc/Makefile#L13
+> > 
+> > But the Git Makefile un-sets environment variables here:
+> > https://github.com/git/git/blob/88dd4282d949cdafff516650c1be8aaf4d67983f/Makefile#L587
+> > 
+> > Also credential helpers in `contrib/credential` are not present in the
+> > output of `git help -a`, is that a bug?
+> 
+> Things in contrib are not built by default because they don't
+> necessarily work everywhere.  For example, the osxkeychain credential
+> helper won't compile on Linux because the requisite shared libraries
+> are specific to macOS.  You'll need to compile them manually and install
+> them in a suitable location.
 
->    Although `cron` attempts to send email, that email may go unseen by
->    the user because these days, local mailboxes are not heavily used
->    anymore.
-> 
-> In order to schedule git maintenance, we need two unit template files:
-> * ~/.config/systemd/user/git-maintenance@.service
->    to define the command to be started by systemd and
-> * ~/.config/systemd/user/git-maintenance@.timer
->    to define the schedule at which the command should be run.
-> 
-> Those units are templates that are parameterized by the frequency.
-> 
-> Based on those templates, 3 timers are started:
-> * git-maintenance@hourly.timer
-> * git-maintenance@daily.timer
-> * git-maintenance@weekly.timer
-> 
-> The command launched by those three timers are the same as with the
-> other scheduling methods:
-> 
-> git for-each-repo --config=maintenance.repo maintenance run
-> --schedule=%i
-> 
-> with the full path for git to ensure that the version of git launched
-> for the scheduled maintenance is the same as the one used to run
-> `maintenance start`.
-> 
+I agree with this, but just following up with a bit of a devil's
+advocate: why not put osxkeychain into a regular "make install", but
+make it conditional via a Makefile knob, like we do for other
+platform-specific features?
 
-Wouldn't it be `/path/to/git for-each-repo <options>...`?
+The big reason most helpers are in contrib/ is because I wanted them to
+be true third-party contributions that do not share any code with Git.
+That avoids licensing questions when linking with libraries, and puts
+them on an equal footing for people who want to implement a helper for
+their favorite obscure tool.
 
-> The timer unit contains `Persistent=true` so that, if the computer is
-> powered down when a maintenance task should run, the task will be run
-> when the computer is back powered on.
-> 
+It has lead to a somewhat funny situation, though. I don't really
+consider osxkeychain well maintained. It's not built nor tested as part
+our regular build. I wrote it long ago, but I never actually _used_ it
+day-to-day, as I've never had a mac. It doesn't seem to have gotten any
+commits since 2013.
 
-The title for this patch implied that users running Linux can choose
-between classic crontab or systemd timers. However, the intent of this
-patch is we add support for systemd timers. So let's say the title
-should be "maintenance: add support for systemd timers on Linux".
+And yet, my impression is that basically every Git user on macOS is
+using it every day, because both Apple Git and homebrew build it by
+default (and I think at least in the case of Apple Git, it's hard-coded
+into the config). A little scary, but nobody seems to have complained. :)
 
--- 
-An old man doll... just what I always wanted! - Clara
+I wonder if we could build it and run it through t0303 as part of the
+mac CI process (though I recall at the time that it was really finicky
+for automated testing; it wouldn't even run over an ssh session).
+
+Likewise, we probably could be building and testing the libsecret ones
+via the Linux CI job (I don't use those either myself, but presumably
+they pass t0303).
+
+> Note that that location can be someplace like ~/bin, if that's in your
+> PATH.  For example, since the Debian packages don't yet ship the
+> libsecret credential helper, I've built it and placed it there.  Now
+> that I've done that, git help -a shows git credential-libsecret as an
+> option.
+
+One curiosity is that:
+
+  cd contrib/credential/netrc
+  make install
+
+builds and installs into .../libexec/git-core. And we don't seem to
+include that in "git help -a" (it's not listed in our generated command
+list, but nor is it an "external command" found in the $PATH).
+
+-Peff
