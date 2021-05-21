@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3660C04FF3
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B22A9C04FF3
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:52:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0D92613E1
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:51:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F392613EE
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229638AbhEUWw2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 18:52:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42630 "EHLO
+        id S229940AbhEUWxk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 18:53:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbhEUWw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 18:52:27 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0BEC061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:51:04 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id t24so5628827oiw.3
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:51:04 -0700 (PDT)
+        with ESMTP id S229512AbhEUWxi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 18:53:38 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C04C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:52:13 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id t24so5631310oiw.3
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:52:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=Qh7QRofjKUoProwi9LUnQtvfbcrtVuBS067kNo+16Mo=;
-        b=pxC0Cn+YtQuj83do3DhATBun6JqkmU1oPbhqdLy1SEd2muSH7CkrRLqbJ3VG08q0v7
-         hanNiv2ukhxECHLUAI18hcB2UiTEJFzc2PmnIjN+NjcrkF90eBQ9MCeMPMp8rtFa8ea7
-         4CUGN3hpDh3yHIgwcPUJ5OjYlBWQfE4PHVopubQle+xi2NpZD4r84bkR+cB0QXzf4Dp6
-         YGarw/GeKVWLI6w7tttEL6tAQvH6FYHvqNHAUqBhMU0VF+HoHCJNgqFURzRRZoVnsLr/
-         upA1MBfjcDBQFffwKFmgovyqn/nfXcL3liHAO8a7uz4L0/XCuKnojqSQlrO3rsRwKXVN
-         WxPQ==
+        bh=WfBbTbw/BArBBQU0o62uw11b+0fJOu+9cbwKO1tf6DI=;
+        b=ABOr+P9n0zXnxRXmNoFtHByasVBjQJWng/sImj9KW3qOVUSMJspun2m7W1v2PsaX9I
+         EbTPxk/hUS86UZ2Mqr+aRApbGI4XWOuLEaCFmKkkjf0cs2Ko89d0R4ztv9D+qlnA5y9X
+         2LfdYbgTX6OmrOP+RKlNcxwdVHmMsTALCO3oTH213RVlngXTLp5qK1o1rIaEaXJQqEkm
+         NgBWTtiiqp8BXHeeeUh3IeGetCdZmzlsruxVkLc2OL34jud+6gGAO3FOXA75bz8tnlSa
+         o27ILR5FvLHceeW9Wjfrac+ngcfECp6yMlWKVHlirS2DR7NmY39zquQHrznBzmSxSjIg
+         4CzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=Qh7QRofjKUoProwi9LUnQtvfbcrtVuBS067kNo+16Mo=;
-        b=B1ikfu6KJVrU5L5RCqq+Ugd2FmzzCAMoAwcO7ooaaLvhYH8TAQ9jn4zrcxuMz0tFRR
-         yDcWhdTbMAXNmne7tlTqIKr2IbjngmrVeOjpJwb0rxgXFcLjVRtV/hQZyprCJgNFUtCx
-         AZk1bX2fhbUiQ4KizSj4PpN9MMbfnQL7QiHzHtAJm26Jpyt/38ZXDCv4sZD3B/yi/Rgn
-         6r4C3kQ1CJTKJuPU++bC5MPsCm9wGKHSy4RbPGY07G8vdUQR5omiPuNRK1R0lWaYZIvM
-         FH850YBBfWU2ypIQwxkgnAba1R1aJTjwVkSdDqm5gaTan9ArjX+6ZnzJzhCSzR2ptgKY
-         QOEw==
-X-Gm-Message-State: AOAM532IkK2J24XRjx8P6u20TMygiJqmpGHFJWEQ95iceeQnDEWNKtxl
-        Zu4huKIKoCHrR6AAQ8hukXk=
-X-Google-Smtp-Source: ABdhPJzq2eTLOk6jDxko0O00qd4B4Qsk5lHGHjgoEBiYK3O+2NDCCu5JOxXlzgZfyZJ5gkYu7CU9Uw==
-X-Received: by 2002:aca:bc02:: with SMTP id m2mr3739039oif.154.1621637463680;
-        Fri, 21 May 2021 15:51:03 -0700 (PDT)
+        bh=WfBbTbw/BArBBQU0o62uw11b+0fJOu+9cbwKO1tf6DI=;
+        b=WsZYekGnFInmoKGwA8jSZaid79ODP5mzFWAH5l/8TID/3S4vHiLgHiELIahL2f81Ij
+         by7uQDFaVbpw3TxOROi7btKkB6dB9POy7pxaelnaaTvz6FAexeVsMUYHPjIo/ap/PIAP
+         ApGeCDd5/pOhWTDQTSReZNWyhinFRsB2zsE3bpkB2+MAWznZb2XiUt2k3r0/e3QxPuKp
+         tR8MW+Pp//bp5KFRhrGLWtsryx3NqXS+qqmU7P7NDgKN5Erb5qOX35lUkoBvSYelqheT
+         WQKBWkIqSddaSHGcsQ+XHKmDZ9ArzqjB1iPeGTOFLe9pzV8tVbXUO9/W3QaZ7RZ9mn2e
+         NLpw==
+X-Gm-Message-State: AOAM531aHZ1vyOb/r8SJAWMkhYwSDVugvCkJO9vTyHdng9e34ls4yV1q
+        NcKYHZW6pQ5Jkj5QzsN4t5Y=
+X-Google-Smtp-Source: ABdhPJzKU5kIBIfefdC6rcLVRWmJVsSrYOb2ozudD75mqT0LY2ZcRbFylSeODBkLjjUlgfzrnyYNjA==
+X-Received: by 2002:a54:4e82:: with SMTP id c2mr3859904oiy.137.1621637533261;
+        Fri, 21 May 2021 15:52:13 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id w10sm1433592oou.35.2021.05.21.15.51.02
+        by smtp.gmail.com with ESMTPSA id u24sm1575503otg.73.2021.05.21.15.52.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 15:51:03 -0700 (PDT)
-Date:   Fri, 21 May 2021 17:51:02 -0500
+        Fri, 21 May 2021 15:52:12 -0700 (PDT)
+Date:   Fri, 21 May 2021 17:52:11 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
 Cc:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
@@ -63,50 +63,40 @@ Cc:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <60a83956270be_81ac020848@natae.notmuch>
-In-Reply-To: <20210521224452.530852-1-felipe.contreras@gmail.com>
+Message-ID: <60a8399b8a0b8_81ac02084c@natae.notmuch>
+In-Reply-To: <20210521224452.530852-5-felipe.contreras@gmail.com>
 References: <20210521224452.530852-1-felipe.contreras@gmail.com>
-Subject: RE: [PATCH v2 00/11] doc: asciidoctor: direct man page creation and
- fixes
+ <20210521224452.530852-5-felipe.contreras@gmail.com>
+Subject: RE: [PATCH v2 04/11] doc-diff: support asciidoctor man pages
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Felipe Contreras wrote:
-> This patch series enables direct man page creation with asciidoctor, bu=
-t in addition tries to
-> minimize the difference with asciidoc+docbook.
-> =
+> From: Jeff King <peff@peff.net>
+> diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+> index 6b6bb444ac..52cf639f4d 100755
+> --- a/Documentation/doc-diff
+> +++ b/Documentation/doc-diff
+> @@ -17,10 +17,14 @@ f			force rebuild; do not rely on cached results
+>  c,clean			cleanup temporary working files
+>  from-asciidoc		use asciidoc with the 'from'-commit
+>  from-asciidoctor	use asciidoctor with the 'from'-commit
+> +from-asciidoctor-direct use asciidoctor without xmlto for 'from'-commit
+>  asciidoc		use asciidoc with both commits
+>  to-asciidoc		use asciidoc with the 'to'-commit
+>  to-asciidoctor		use asciidoctor with the 'to'-commit
+> +to-asciidoctor-direct   use asciidoctor without xmlto for 'to'-commit
+>  asciidoctor		use asciidoctor with both commits
+> +asciidoctor-direct      use asciidoctor without xml for both commits
 
-> I fixed as many issues as I could, and now the doc-diff looks very sens=
-ible. I could not find any
-> major issues, however, some minor ones still remain.
-> =
+> +cut-footer		cut away footer
 
-> On the other hand the asciidoc method has issues as well, so it's not c=
-lear which method is superior
-> at this point; both have advantages and disadvantages.
-> =
+Oops. This obviously sneaked by; doesn't belong here.
 
-> At the very least the man pages with pure asciidoctor should be quite u=
-sable now.
-> =
-
-> This series builds on top of my previous cleanups [1].
-
-I forgot to mention what changed since v1:
-
- * The option USE_ASCIIDOCTOR_MANPAGE was added
- * Jeff's patch for *asciidoctor-direct optiosn to doc-diff was added
- * Martin =C3=85gren's patch to remove -cut-footer was added
- * The format of linkgit was updated to be closer to brian's version
-   (though not quite the same)
- * A few tiny cleanups
-
--- =
-
-Felipe Contreras=
+-- 
+Felipe Contreras
