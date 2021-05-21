@@ -2,219 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7B8FC43460
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E068C433B4
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:59:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8937613DA
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:47:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 451B06008E
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231687AbhEULtA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 07:49:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33120 "EHLO
+        id S234806AbhEUMBP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 08:01:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbhEULs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 07:48:58 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FC4C061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:47:35 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 6so14006148pgk.5
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:47:35 -0700 (PDT)
+        with ESMTP id S230138AbhEUMBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 08:01:09 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F49C061763
+        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:45 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id z85-20020a1c7e580000b029017a76f3afbaso4476700wmc.2
+        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WSQn+pjI0RLpZYO7YYGmzpaojwv2heoHqbHm1XNIVFY=;
-        b=FUF/WerthEogKw1+0k97M3KXtS73WIjKdpEWRtQ+F/+jY8FlTOdFkqGHzenbkbDVvE
-         f3Z2hQnPndns3n7q5qg0SJWbLiniIfFTmIMhRf9Hb2Tz2cAWvPOrnkHrth5lLO+vmJOk
-         1mmI4gEBsoiZjD1C8RpWxDtEJuzE+wgVptbViLIbQD5m5zXIpA0R0QkXejq9tzofdqT1
-         o0BPBcnVbHjGIU4k/3Wywj7O41OWuWHtLIIz6Oe/fUw4gMM/q8kot20QDhY89Ps8YW30
-         v+2a3K/ESOpTyXyzV8TqOoOck0qesFwpNh0DAYvbsbo6tekdx2KvzlDVFwfvhpM5o/Oa
-         /kUw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tnv8/RvaEXbX/IGlvdgT6jdK85+oA3TpgnT3UjIuqEE=;
+        b=DJqtuulIFMaJcv0NaYeeZl/Bkav4zmMRilPcwbZQ87dkUgyUskvZ1K8vPo+brB+ZKa
+         JXGd7jXu675i64jeuD6KIVGsh9eFLh6z/pwsTxv3mtPx0YbMVSMZnzZ2tnDagYycpPOJ
+         pmtgWqe7UlWJC42S58x/cSqcNIpp7i+EzHNhyOj/psYsqyifLZtjxaI0ee194rgFVyhZ
+         FpA1TN4miIqTMiKkKt/uhahnc/XBqXbMhw/8guIUrxRbvOgDUzhaiXgrEr1Z268kAysD
+         Jf64AMfMh8lTtmLFrnVcWavOkIUq8qTDPJvpBqaLS3Ii+hqWojmYMXQ28lH+/RHq9sqJ
+         8HLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WSQn+pjI0RLpZYO7YYGmzpaojwv2heoHqbHm1XNIVFY=;
-        b=kguZnMEPx0KtrGliF2M2gJNZlXH1iDAxtxNwCHMRhnZGz6BmXjocBDEnNz+qspRo6F
-         E/90nxybCh4tA4I66VyCJt38OuzVAsy3guzH5wUMxtlxcvAp4Eo9EaTQWCxnhBh4gFwd
-         sSEI3JrUpj1HzEGz4TxJrIr+/bjT8jvfAr0/xwgZzPB+CoR/xBA6vafPShp6OloBrVRF
-         mzKDUr/CB+fXXmL5riAiA1iCn5MZHA69y3oAjbmxvLAaOh4d4cKQngPQ3rHJonb5mUee
-         LARZDaQYPm3BqsIzOxoQk5xrYqb81B38Llp+qc9Ig4lRTwvu6DYycEzwAEzkRttizHNX
-         9zGA==
-X-Gm-Message-State: AOAM532YxfeVCzhU1VxRB4Arp6F9RTLiFN84y5TYY26HDaPSKSsaOgJG
-        Hi9vuLyjVU8QJfzE74wSL0g=
-X-Google-Smtp-Source: ABdhPJwYwD7CuKD/Zvwyc5j+Eoh2VPYzvOp5MTl2btSaoUvJlFIdhUp4PPv+2ZCV00LSOkKmoqzP8w==
-X-Received: by 2002:a62:5288:0:b029:2e3:fd7d:267a with SMTP id g130-20020a6252880000b02902e3fd7d267amr5647929pfb.21.1621597654653;
-        Fri, 21 May 2021 04:47:34 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.121.70])
-        by smtp.gmail.com with ESMTPSA id v12sm4312997pgi.44.2021.05.21.04.47.32
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 May 2021 04:47:34 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: Bug in git submodule update --remote
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
-Date:   Fri, 21 May 2021 17:17:30 +0530
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <FCF5A210-4042-4C1B-87A5-83D916F02FCE@gmail.com>
-References: <c4b27662-1228-a1ff-26fc-637897ffc8e7@riscosopen.org>
- <EB55447C-538F-44DE-BFC0-A3BD1A970E99@gmail.com>
- <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
-To:     Ben Avison <bavison@riscosopen.org>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=tnv8/RvaEXbX/IGlvdgT6jdK85+oA3TpgnT3UjIuqEE=;
+        b=Wfire/EACSOTVqgt2NYbZhBLnQkx9Bm/45+bbFfrb5RjdbOgkBt/Uf8aVShagyq0k9
+         x6VtmnAGjrhj25XIQTlsQKhdGZEvJg5fPqgMGE/BO/oin7rHBb4BN9/+5frrGRLlhiFY
+         lGfDZtKL6RBW7khtZ1rZsFLmIAi7VLHgDlnuPb8JOg50GB+sz5NinhW6Dr5Mza2fEW2F
+         kRaUBMUGhKPo9BbW23MOaqSK8JhuuP8IhhqgIhJs8vwKg7vM/ukU6ReoiyTSe9ZUkxI/
+         5O1+qQ4FIT79CMEgFCo2TSeO0PZUv/qGgCEOUhWQt6U9sPWcVVos40eDHJAcGjZZFZ+1
+         2Eqw==
+X-Gm-Message-State: AOAM532hHrPvj+BdkkpNEjQ/imUB9ZuVsQIOAuZxoMb9GyMgKmwxti9o
+        h83g7JUs9+prN5qm+u4E1ov7WA7VkHo=
+X-Google-Smtp-Source: ABdhPJz0G0WVQVtUu3BQA3mcFIeyJL7VZA5mvq56PsPPeYnkPkvF6zHYDQf+H1gPrFaK4WIrMzxoCg==
+X-Received: by 2002:a7b:c7ca:: with SMTP id z10mr8603617wmk.185.1621598384327;
+        Fri, 21 May 2021 04:59:44 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l8sm1858651wry.55.2021.05.21.04.59.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 04:59:44 -0700 (PDT)
+Message-Id: <5a2ed3d1d701b11c241bf3855db3bb35f5e93994.1621598382.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
+References: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
+        <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 21 May 2021 11:59:30 +0000
+Subject: [PATCH v4 01/12] sparse-index: skip indexes with unmerged entries
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19-May-2021, at 20:11, Ben Avison <bavison@riscosopen.org> wrote:
->=20
-> On 19/05/2021 11:49, Atharva Raykar wrote:
->> If I understood you correctly, you'd prefer that the updating of the
->> submodule should be independent of the ref that is checked out in the
->> submodule's directory.
->>=20
->> While I am not sure of the reason why the design of 'update
->> --remote' uses the remote-tracking branch of the submodule, I can
->> imagine adding a switch like 'submodule.<name>.remote' that defaults
->> to 'origin'. Then the behaviour could be changed such that it always=20=
+From: Derrick Stolee <dstolee@microsoft.com>
 
->> pulls from the remote specified in that option.
->>=20
->> This would help make the behaviour consistent in all the cases you=20
->> mentioned, while also giving the option for a user to update the=20
->> submodule from the remote of their choice (which may not be origin).
->=20
-> I like that solution. Although, I should note that if the user has set
-> submodule.<name>.remote to something other than 'origin', they will =
-need
-> to ensure that submodule.<name>.branch is also set, or they will still
-> hit the "Unable to find current <remote>/HEAD revision in submodule"
-> error that I initially stumbled on.
->=20
-> How about an implementation like the following? I introduced a new =
-"git
-> submodule--helper" command rather than modify "print-default-remote" =
-for
-> a couple of reasons:
->=20
-> 1) "print-default-remote" is also used for "git submodule sync" (I'm =
-not
-> sure if we should change its behaviour too)
->=20
-> 2) "print-default-remote" needs to be executed from within the
-> submodule, and takes no arguments, whereas I need to parse the
-> superproject's .git/config so need to be executed from the =
-superproject
-> and take the submodule path as an argument
->=20
-> The two functions I added are heavily based on "git submodule--helper
-> remote-branch". However:
->=20
-> * Unlike with the branch name, I don't fall back to using the name for
-> the remote cached from when we read the .gitmodules file, if it isn't
-> found in .git/config. It doesn't make sense to me for the .gitmodules
-> file to include this information, as any new clones will only contain
-> "origin" remotes anyway.
->=20
-> * I removed "struct strbuf sb" since I don't think it's used.
->=20
-> Ben
+The sparse-index format is designed to be compatible with merge
+conflicts, even those outside the sparse-checkout definition. The reason
+is that when converting a full index to a sparse one, a cache entry with
+nonzero stage will not be collapsed into a sparse directory entry.
 
-Thanks for this. I am quite new around here, and I will be working
-on porting the whole of 'submodule update' to C in the coming months.
+However, this behavior was not tested, and a different behavior within
+convert_to_sparse() fails in this scenario. Specifically,
+cache_tree_update() will fail when unmerged entries exist.
+convert_to_sparse_rec() uses the cache-tree data to recursively walk the
+tree structure, but also to compute the OIDs used in the
+sparse-directory entries.
 
-Since this would modify the behaviour of the update subcommand, I
-have decided to CC my mentors (Christian and Shourya) who are more
-qualified than me to comment on this proposal.
+Add an index scan to convert_to_sparse() that will detect if these merge
+conflict entries exist and skip the conversion before trying to update
+the cache-tree. This is marked as NEEDSWORK because this can be removed
+with a suitable update to cache_tree_update() or a similar method that
+can construct a cache-tree with invalid nodes, but still allow creating
+the nodes necessary for creating sparse directory entries.
 
-I personally feel that the current behaviour where the remote used
-depends on how the submodule is checked out is odd, and I don't
-mind addressing it while doing the conversion of this functionality.
+It is possible that in the future we will not need to make such an
+update, since if we do not expand a sparse-index into a full one, this
+conversion does not need to happen. Thus, this can be deferred until the
+merge machinery is made to integrate with the sparse-index.
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 9d505a6329..25ce3c8a1d 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2444,6 +2444,41 @@ static int resolve_remote_submodule_branch(int =
-argc, const char **argv,
-> 	return 0;
-> }
->=20
-> +static const char *remote_submodule_remote(const char *path)
-> +{
-> +	const struct submodule *sub;
-> +	const char *remote =3D NULL;
-> +	char *key;
-> +
-> +	sub =3D submodule_from_path(the_repository, &null_oid, path);
-> +	if (!sub)
-> +		return NULL;
-> +
-> +	key =3D xstrfmt("submodule.%s.remote", sub->name);
-> +	repo_config_get_string_tmp(the_repository, key, &remote);
-> +	free(key);
-> +
-> +	if (!remote)
-> +		return "origin";
-> +
-> +	return remote;
-> +}
-> +
-> +static int resolve_remote_submodule_remote(int argc, const char =
-**argv,
-> +		const char *prefix)
-> +{
-> +	const char *ret;
-> +	if (argc !=3D 2)
-> +		die("submodule--helper remote-remote takes exactly one =
-arguments, got %d", argc);
-> +
-> +	ret =3D remote_submodule_remote(argv[1]);
-> +	if (!ret)
-> +		die("submodule %s doesn't exist", argv[1]);
-> +
-> +	printf("%s", ret);
-> +	return 0;
-> +}
-> +
-> static int push_check(int argc, const char **argv, const char *prefix)
-> {
-> 	struct remote *remote;
-> @@ -2770,6 +2805,7 @@ static struct cmd_struct commands[] =3D {
-> 	{"deinit", module_deinit, 0},
-> 	{"summary", module_summary, SUPPORT_SUPER_PREFIX},
-> 	{"remote-branch", resolve_remote_submodule_branch, 0},
-> +	{"remote-remote", resolve_remote_submodule_remote, 0},
-> 	{"push-check", push_check, 0},
-> 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
-> 	{"is-active", is_active, 0},
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index eb90f18229..4d0df1cf5a 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -577,7 +577,7 @@ cmd_update()
-> 				fetch_in_submodule "$sm_path" $depth ||
-> 				die "$(eval_gettext "Unable to fetch in =
-submodule path '\$sm_path'")"
-> 			fi
-> -			remote_name=3D$(sanitize_submodule_env; cd =
-"$sm_path" && git submodule--helper print-default-remote)
-> +			remote_name=3D$(git submodule--helper =
-remote-remote "$sm_path")
-> 			sha1=3D$(sanitize_submodule_env; cd "$sm_path" =
-&&
-> 				git rev-parse --verify =
-"${remote_name}/${branch}") ||
-> 			die "$(eval_gettext "Unable to find current =
-\${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ sparse-index.c                           | 18 ++++++++++++++++++
+ t/t1092-sparse-checkout-compatibility.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
+
+diff --git a/sparse-index.c b/sparse-index.c
+index 6f21397e2ee0..1b49898d0cb7 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -125,6 +125,17 @@ int set_sparse_index_config(struct repository *repo, int enable)
+ 	return res;
+ }
+ 
++static int index_has_unmerged_entries(struct index_state *istate)
++{
++	int i;
++	for (i = 0; i < istate->cache_nr; i++) {
++		if (ce_stage(istate->cache[i]))
++			return 1;
++	}
++
++	return 0;
++}
++
+ int convert_to_sparse(struct index_state *istate)
+ {
+ 	int test_env;
+@@ -161,6 +172,13 @@ int convert_to_sparse(struct index_state *istate)
+ 		return -1;
+ 	}
+ 
++	/*
++	 * NEEDSWORK: If we have unmerged entries, then stay full.
++	 * Unmerged entries prevent the cache-tree extension from working.
++	 */
++	if (index_has_unmerged_entries(istate))
++		return 0;
++
+ 	if (cache_tree_update(istate, 0)) {
+ 		warning(_("unable to update cache-tree, staying full"));
+ 		return -1;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 12e6c453024f..4f2f09b53a32 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -352,6 +352,28 @@ test_expect_success 'merge with outside renames' '
+ 	done
+ '
+ 
++# Sparse-index fails to convert the index in the
++# final 'git cherry-pick' command.
++test_expect_success 'cherry-pick with conflicts' '
++	init_repos &&
++
++	write_script edit-conflict <<-\EOF &&
++	echo $1 >conflict
++	EOF
++
++	test_all_match git checkout -b to-cherry-pick &&
++	run_on_all ../edit-conflict ABC &&
++	test_all_match git add conflict &&
++	test_all_match git commit -m "conflict to pick" &&
++
++	test_all_match git checkout -B base HEAD~1 &&
++	run_on_all ../edit-conflict DEF &&
++	test_all_match git add conflict &&
++	test_all_match git commit -m "conflict in base" &&
++
++	test_all_match test_must_fail git cherry-pick to-cherry-pick
++'
++
+ test_expect_success 'clean' '
+ 	init_repos &&
+ 
+-- 
+gitgitgadget
 
