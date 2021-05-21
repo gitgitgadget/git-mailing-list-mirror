@@ -2,89 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C90C4707E
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 20:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 567C8C04FF3
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 21:18:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18919613EA
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 20:26:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31372613EC
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 21:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbhEUU13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 16:27:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33762 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229792AbhEUU12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 16:27:28 -0400
-Received: (qmail 6330 invoked by uid 109); 21 May 2021 20:26:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 May 2021 20:26:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12837 invoked by uid 111); 21 May 2021 20:26:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 May 2021 16:26:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 May 2021 16:26:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Leah Neukirchen <leah@vuxu.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4] help: colorize man pages
-Message-ID: <YKgXXCvWYI9rjKJT@coredump.intra.peff.net>
-References: <20210520040725.133848-1-felipe.contreras@gmail.com>
- <842221d6-51c4-e08a-4299-c4efb8bf1dcb@gmail.com>
- <xmqqbl94smjb.fsf@gitster.g>
- <YKdy5jhHgG2who27@coredump.intra.peff.net>
- <60a7f57fe3301_5503920831@natae.notmuch>
+        id S229535AbhEUVUV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 17:20:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229503AbhEUVUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 17:20:20 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01967C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 14:18:56 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso7408412wmc.1
+        for <git@vger.kernel.org>; Fri, 21 May 2021 14:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:subject:to:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=yUgfyvKEkWcl1taLVC0ce0rLgkqv30cLK3ahrF0pTHs=;
+        b=rsy/z0MLiWt71wCdd+R0RpkWvi88denSMPoVXuRqsHmZJec6yPPZpzWAf8CmuE5xF0
+         BiXEMda/1HMC8Ho/80pAsBcDLBnZ/Tn6YJuSUoGmVVLJ4MRJBMWg2D0R2t4ya1HFvD85
+         SiJa4cubWXJKBsyXH2R0YXcDcfbSnfPkmnAJQXfBi9BnfdaiCUzMsLU5L9Qj6fSTF/uz
+         AJlHUcp3yrGX4Iv+BkM8l+6NKqUPBijRcHVaw8GMADc3sucXHbgTrrf1f3/kjxUrF10r
+         SRbPgR/VsHcLRdI9QpIWOBzoAhiz5dJu3MoVADa+y/RHY6bAhM9xu87UxCrNWk0XMYar
+         Zr6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=yUgfyvKEkWcl1taLVC0ce0rLgkqv30cLK3ahrF0pTHs=;
+        b=MnA5HvUudlMXl058q3gKVKo2tmHic/uP40WPhhO05PyHhYd7ZMQvd13z7ySpJo4zqZ
+         tIxr+Wytz9OtQ6GfnEDVBRNu2y58ayVi5xg0YEZdeMFU2/ZGRoZCxOrJMNn6aq1OC4yX
+         sbIiRYlZDvFZZZkmQFBeXSD1izdLaJfOGG8ilw5i3tR5H+Go/PERdTCGp/jyN1L59n9p
+         RsiQjaxzefJVyxwkMzRyyM4sHVUjp0mP/0plPbb9yA4G3bfXs6NuTE0AK1O0uDqPqljI
+         5tnNJEQC910ROgjWRzXPcA+WTgnbDU9juok068+nsnevV/1I8fLcAS/WE6YTyTw5nEoe
+         KQaw==
+X-Gm-Message-State: AOAM5339qFcGBiu8RlkrApFJPz0jpV+7nb+m+ZOjKjjiHtugfJc+/APz
+        GrKVGaSIFRh863wlbYEDJ6icT1eWmb23mA==
+X-Google-Smtp-Source: ABdhPJw6DFwEE38xN6eKhr9pm94Kk3DR24yBfnBF+8hOgn+sQI4t2gawkVEk1lzpuHlAPTbS15Wqkg==
+X-Received: by 2002:a1c:3186:: with SMTP id x128mr10108067wmx.167.1621631934387;
+        Fri, 21 May 2021 14:18:54 -0700 (PDT)
+Received: from [192.168.1.182] (host-92-30-127-152.as13285.net. [92.30.127.152])
+        by smtp.gmail.com with ESMTPSA id q10sm685757wmc.31.2021.05.21.14.18.53
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 May 2021 14:18:53 -0700 (PDT)
+From:   Aidan <aidgal2@gmail.com>
+Subject: Formatting options are ignored when tracking functions
+To:     git@vger.kernel.org
+Message-ID: <63cf407c-95bd-fdda-88ec-5eca36d24998@gmail.com>
+Date:   Fri, 21 May 2021 22:18:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <60a7f57fe3301_5503920831@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 21, 2021 at 01:01:35PM -0500, Felipe Contreras wrote:
+Git log with formatting options do not work when using -L:<funcname>:<file>
 
-> > I still don't understand what we gain by making this a Git feature,
-> 
-> What do we gain by making `git diff` output color?
+Works as intended for path
+---------------------------
+aidan@AidanLaptop:~/Repos/git$ git log --oneline -- advice.c
+a20f70478f add: warn when asked to update SKIP_WORKTREE entries
+3b990aa645 push: parse and set flag for "--force-if-includes"
+c4a09cc9cc Merge branch 'hw/advise-ng'
+---------------------------
 
-Huh? Git is outputting the diff. Who else would output the color?
+Works as intended for revision range
+---------------------------
+aidan@AidanLaptop:~/Repos/git$ git log 91e70e00ac..HEAD --oneline
+107691cb07 (HEAD -> master, origin/master, origin/HEAD) Merge branch 
+'ds/sparse-index-protections'
+2b8b1aa6ad Merge branch 'tz/c-locale-output-is-no-more'
+c69f2f8c86 Merge branch 'cs/http-use-basic-after-failed-negotiate'
+---------------------------
 
-> > Why would we do that versus saying: if you want to change the colors in
-> > the tool that Git calls, then configure the tool?
-> 
-> Once again... How?
+Does not work tracking a function
+---------------------------
+aidan@AidanLaptop:~/Repos/git$ git log -L:vadvise:advice.c --oneline
+b3b18d1621 advice: revamp advise API
+diff --git a/advice.c b/advice.c
+--- a/advice.c
++++ b/advice.c
+@@ -99,19 +141,23 @@
+-static void vadvise(const char *advice, va_list params)
++static void vadvise(const char *advice, int display_instructions,
++                   const char *key, va_list params)
+  {
+         struct strbuf buf = STRBUF_INIT;
+         const char *cp, *np;
 
-By exporting the environment variables that ask it to do so, just like
-you showed already?
+         strbuf_vaddf(&buf, advice, params);
 
-> > If you like to see colors in manpages, why not configure "man" (either
-> > by setting these environment variables all the time, or by triggering
-> > them in MANPAGER)?
-> 
-> Let me try that...
-> 
->   MANPAGER="less -Dd+r -Du+b -Ds+m" git help git
-> 
-> It doesn't work.
+---------------------------
 
-  ESC=$(printf '\33')
-  export MANCOLORS="LESS_TERMCAP_md=$ESC[31m LESS_TERMCAP_me=$ESC[0m"
-  export MANPAGER='sh -c "eval $MANCOLORS less"'
-  man ls
-  git help git
+Is this a bug or am I invoking the command incorrectly?
 
-At least on Linux, $MANPAGER is some weird limbo that is not run with
-the shell, but not just a simple command. Hence the extra layer of "sh".
-
-If I were actually planning to use this myself, I'd probably put it in a
-"manpager" script in my $PATH and just do MANPAGER=manpager.
-
--Peff
+Kind regards,
+Aidan
