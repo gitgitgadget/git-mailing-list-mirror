@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55779C433B4
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 12:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEB24C433ED
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 12:00:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35A1C613D6
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 12:00:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1838613D6
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 12:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233890AbhEUMBo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 08:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35886 "EHLO
+        id S229571AbhEUMBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 08:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234282AbhEUMBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 08:01:14 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E879BC06138D
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:48 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id x8so20804742wrq.9
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:48 -0700 (PDT)
+        with ESMTP id S234416AbhEUMBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 08:01:15 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE17DC061763
+        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:49 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id b7so10392017wmh.5
+        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Xlnwaf5kg5I86PpR29UBuzCeR2oJW7UhOX0TCCBSrvU=;
-        b=OpYoM7rQJulmw+izVMlIR2/VeynrBzfU9SdCGFsvSBCunmILEvzfGO/jaWtN4eReGa
-         qbg/vBf+SGjN+7errIZ//oy14abUzom2cEV1otpj0l47iqa39YipO9qoJJI2Rk08iHP0
-         6i4u5dytePQfmfg1GSqEgj0VrQ3Z2dBFRy3v1jGUtlo0EAnRF3sLZCMzc64bk0oYHIIj
-         lCyJPWHstoUI3y2BmKd7Nuu5f6k9Mw54zzPtaXmN5UaPyKjQOHoZDh8LJeMkGqTh8dkj
-         L7EC4UXQBDT2NhPORgdXyBtrceO4ckLFDsI8+aqWDAwk+xaox5USfmJN0CGidCnViPyr
-         wzTg==
+        bh=IKPjTUqki+7odL+EABJRxmdzP4v6AWl9RXlIatOMDLM=;
+        b=GWcqxVbAtIevRvM0kdQxvEuUHoHozSiDIaNxDoCq6NA2fnnbRe9ZJuHlsiOqRTSD4O
+         pMvEMZ5Wnr8Ymo9qEzsRi/9xHoc7kStYRdyZuHTa+fAw68hd6GDO7SP3DDk/Yoqbni87
+         rD1y+14ik2PztLGKaHcHog4eLykzpVo8gONL6n9dvqQ47ktU2ScyBw10Z5cJZmAi+AzV
+         0pvma3AoB9Rt7N4StW9cqBfOixGpoIerj1E7YndP2vXTyuEbMl6Bra1WO7T9svTpFlzQ
+         MmvJoaO+xfo85agIS93iR6P4AWZUIXxf22r8ZlWL+jYN3m0INKgqzHTDeSdznmVGuFqq
+         Ww+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Xlnwaf5kg5I86PpR29UBuzCeR2oJW7UhOX0TCCBSrvU=;
-        b=ulYWEIxw4ln0JDGYtainpSLaZSSqfkU4t8blKfz4H30qs+tErPM25DuV9+JUNEU5zE
-         vkSmFfLRCvlqYTRWrbawj8Udos/38WSnmQcQM9HMn5wiou12G8EwKtUEkIcxlydZO4tB
-         /uvrDcSHZCwmKCrOfn7+cITMfoD5qZdTSZDBbjmVpDPlfwydY4FuCpdymGVG80ghhovx
-         Gw4eZvNISM6AhlsEvOyoDKXTTaiJYRFX4oGRW5CT0LYYayvgOw3Wc0n+ESKFK941NQLG
-         ihVOx5mVSu/AP6rrTektgyjpXM6V1kNX+PmYBhv//D8MaSJscd2D+KeElXGbzkrVQXfo
-         /tIQ==
-X-Gm-Message-State: AOAM532sbgI+fK+kPgqnrOqapGh+abFWV3k1d+mWXl8eiOwu/+ugewuj
-        h4mjhyXoCjUVocBKBoM6vHkIEAzQ9ds=
-X-Google-Smtp-Source: ABdhPJzyJQCrYusKigGxlVWXuAqTpRplWdHrO+rMrvwGuRwIgX8FaThmO0Rves90uLxR33qno+T+IA==
-X-Received: by 2002:a05:6000:1189:: with SMTP id g9mr9115023wrx.385.1621598387631;
-        Fri, 21 May 2021 04:59:47 -0700 (PDT)
+        bh=IKPjTUqki+7odL+EABJRxmdzP4v6AWl9RXlIatOMDLM=;
+        b=Bwct27KtStnGYEs2sdbLoo+L0PI9p5SHX8X5CHRyQtwHvSk8VRsYZ+LBGJ6QM0/JA4
+         1guujGYPBO8a/qN6aw7svtbDLjJvvbSGCK1NvgZMsVqJyteoNY83IrpU91N4iLDmdkUD
+         BVjHS0KO+1bn7OAIWcjdLo3kLKILyI3B4QnWoM/UeLGoOke2DxGiMHqEyBLxU2dO6rEq
+         C17A3bxC7Ea3P9FMc0p0m1UXNicew2u4WtEVlBOmaDLcdWb/UmuwqGBqqm41l8a+uYEC
+         SG6/eoyAu2dUfCiaecEJZte+2/yaaU9hf+sb+9j2UEkRAcoGdtHgCULm5KAeRFMNcbt7
+         AIwQ==
+X-Gm-Message-State: AOAM531aR3J5dKtlh6YhH3kd+H+LUQ1O4/09zAczS9aHNcG0Qfjth1yp
+        GbSQJrv/NgyeVnOVT8qUiU7JE4WWvFY=
+X-Google-Smtp-Source: ABdhPJwDuYtm7f9xiRJE92M4ar0JNOefHjBjuqkYLrt+8nbFUK7C2wCs83uN4U6KBY82ZumG/83iXg==
+X-Received: by 2002:a05:600c:410a:: with SMTP id j10mr8617376wmi.5.1621598388170;
+        Fri, 21 May 2021 04:59:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x10sm1876109wrt.65.2021.05.21.04.59.47
+        by smtp.gmail.com with ESMTPSA id z12sm1924855wrv.68.2021.05.21.04.59.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 21 May 2021 04:59:47 -0700 (PDT)
-Message-Id: <e28df7f9395da33f24d6b75fa30081074ac6b801.1621598382.git.gitgitgadget@gmail.com>
+Message-Id: <2cc3a93d4434d546cf385fa2c902064748f1b2b6.1621598382.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
 References: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
         <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 May 2021 11:59:36 +0000
-Subject: [PATCH v4 07/12] unpack-trees: be careful around sparse directory
- entries
+Date:   Fri, 21 May 2021 11:59:37 +0000
+Subject: [PATCH v4 08/12] dir.c: accept a directory as part of cone-mode
+ patterns
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,50 +80,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The methods traverse_by_cache_tree() and unpack_nondirectories() have
-similar behavior in trying to demonstrate the difference between and
-index and a tree, with some differences about how they walk the index.
+When we have sparse directory entries in the index, we want to compare
+that directory against sparse-checkout patterns. Those pattern matching
+algorithms are built expecting a file path, not a directory path. This
+is especially important in the "cone mode" patterns which will match
+files that exist within the "parent directories" as well as the
+recursive directory matches.
 
-Each of these is expecting every cache entry to correspond to a file
-path. We need to skip over the sparse directory entries in the case of a
-sparse-index. Those entries are discovered in the portion that looks for
-subtrees among the cache entries by scanning the paths for slashes.
-
-Skipping these sparse directory entries will have a measurable effect
-when we relax 'git status' to work with sparse-indexes: without this
-change these methods would call call_unpack_fn() which in turn calls
-oneway_diff() and then shows these sparse directory entries as added or
-modified files.
+If path_matches_pattern_list() is given a directory, we can add a fake
+filename ("-") to the directory and get the same results as before,
+assuming we are in cone mode. Since sparse index requires cone mode
+patterns, this is an acceptable assumption.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- unpack-trees.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ dir.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index ef6a2b1c951c..22634d98e72b 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -802,6 +802,9 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
+diff --git a/dir.c b/dir.c
+index 166238e79f52..ab76ef286495 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1378,6 +1378,17 @@ enum pattern_match_result path_matches_pattern_list(
+ 	strbuf_addch(&parent_pathname, '/');
+ 	strbuf_add(&parent_pathname, pathname, pathlen);
  
- 		src[0] = o->src_index->cache[pos + i];
- 
-+		if (S_ISSPARSEDIR(src[0]->ce_mode))
-+			continue;
++	/*
++	 * Directory entries are matched if and only if a file
++	 * contained immediately within them is matched. For the
++	 * case of a directory entry, modify the path to create
++	 * a fake filename within this directory, allowing us to
++	 * use the file-base matching logic in an equivalent way.
++	 */
++	if (parent_pathname.len > 0 &&
++	    parent_pathname.buf[parent_pathname.len - 1] == '/')
++		strbuf_add(&parent_pathname, "-", 1);
 +
- 		len = ce_namelen(src[0]);
- 		new_ce_len = cache_entry_size(len);
- 
-@@ -1074,6 +1077,9 @@ static int unpack_nondirectories(int n, unsigned long mask,
- 	if (mask == dirmask && !src[0])
- 		return 0;
- 
-+	if (src[0] && S_ISSPARSEDIR(src[0]->ce_mode))
-+		return 0;
-+
- 	/*
- 	 * Ok, we've filled in up to any potential index entry in src[0],
- 	 * now do the rest.
+ 	if (hashmap_contains_path(&pl->recursive_hashmap,
+ 				  &parent_pathname)) {
+ 		result = MATCHED_RECURSIVE;
 -- 
 gitgitgadget
 
