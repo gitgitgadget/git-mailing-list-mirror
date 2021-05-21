@@ -2,185 +2,280 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E8A9C433B4
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 02:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B1CBC433B4
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 02:50:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2B7C613AC
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 02:09:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61AEA6121E
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 02:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238396AbhEUCLO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 22:11:14 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58487 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232774AbhEUCLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 22:11:13 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BCBBC292A;
-        Thu, 20 May 2021 22:09:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AO+Yec2KWKGtlPnpqP3eQjl3O+yG1AhsTHNlPB
-        eyrKI=; b=dMffiE+MBJprDOJkbpX3ihfT4ae/E9TLhynpCyiLOvFNrFd4ny/30V
-        gfa8NqULFKHW6sALeVIOvBrOzwIkdXK3BOHyMYo7O9uV1MQEEM2svYSfmGcWTFnN
-        Wch3hWOu4RrXnYazgMz/QNiGriUFMioUb0zSC+qPvy0TyJUgqmWsY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E845DC2929;
-        Thu, 20 May 2021 22:09:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 644BAC2928;
-        Thu, 20 May 2021 22:09:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v2] tr2: log parent process name
-References: <20210520210546.4129620-1-emilyshaffer@google.com>
-Date:   Fri, 21 May 2021 11:09:49 +0900
-In-Reply-To: <20210520210546.4129620-1-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Thu, 20 May 2021 14:05:46 -0700")
-Message-ID: <xmqqpmxksuqa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233608AbhEUCv6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 May 2021 22:51:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231584AbhEUCv6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 May 2021 22:51:58 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0997EC061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 19:50:35 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id f22so12234271pgb.9
+        for <git@vger.kernel.org>; Thu, 20 May 2021 19:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=W2C7yHkknS8DcGlwahJsICujPp8SkI83SXt8yOaszSw=;
+        b=pgDe8zQAr3qydQjAP+KyHMwrL5njAE4KLhO+n0YPSxIl9g7S3GrrIOaZX8EGJi4pyN
+         B8XHeBQLRTLwVzaeG26xh27q/lBUEya+2LmeBgxoCOuvJIAc0ETN8kEEtD740ISa4+h0
+         ZeiCFuAhGkgwQCCLNIF68XYe2OaQ2OEv8Dl46X7D59xbRTc6eORj5qF9JUkR9iRlWi4S
+         AEwKzGXE5PtfvCYh4pRx6goq2PIGGRYl8Tp0mC0nwOXo1g200NTX6/xs4qNnXKZ6WO45
+         jSbCRUA2Iv2WyG3yhoxHG1pA3uwJrn1ZweNRnDx7xsl/EOSBxvRZO+mfYfxQt3/6LFZM
+         XFCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=W2C7yHkknS8DcGlwahJsICujPp8SkI83SXt8yOaszSw=;
+        b=jte768p/Bo5qoAWlqM8dZtBahwuF4fVWLdAIRruPRn1leD4d7guN3l4Q998qS/V4oX
+         3OeESf1dS6UMEtVEyXm6605diQdjfrKp9C34GoVXC64l/bOOtpWRQBWZR/UBCckM0kFV
+         x+vUlWH8RVXF6jlwms3mXuquP0hTlGJikaeMmUs81znsvzHjzUcjdLVhOzCue6XxKHzB
+         aihp0dsUI57Pg59KBBfuOvIHI8Ry3xppSgcL1C4/43CzvmKSFNyNu9XrKax0g8kBObPF
+         IC6GyDU412hmk7WJYN300KT4AfcSJk33h/b3WhkpRCRi1GCmKHYg1RY+D0f40T529SeS
+         fYdA==
+X-Gm-Message-State: AOAM5329EESG5CwHtcqvG5cSWhiIZD0zP0IipccO0fTyS6HpN331EcE8
+        lXoOeF8caukgYlQFdYfgQLZ8Y32NFUY=
+X-Google-Smtp-Source: ABdhPJz9wgzjfAIct+c3wtBOcyVMcmQn1Wr0QohhV17FvtpPbkn/bn2nVu8DVrDKE5Wu4IrmzxJEBw==
+X-Received: by 2002:a62:2987:0:b029:2de:b564:648d with SMTP id p129-20020a6229870000b02902deb564648dmr8071226pfp.48.1621565434041;
+        Thu, 20 May 2021 19:50:34 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:8774:366c:ae84:8f12])
+        by smtp.gmail.com with ESMTPSA id mv15sm2957039pjb.25.2021.05.20.19.50.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 May 2021 19:50:33 -0700 (PDT)
+Date:   Thu, 20 May 2021 19:50:31 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] C99 support: remove non-HAVE_VARIADIC_MACROS code
+Message-ID: <YKcf95uQ1W7COSsf@google.com>
+References: <YHOLo36MfuTj6YeD@camp.crustytoothpaste.net>
+ <cover-0.2-00000000000-20210412T105422Z-avarab@gmail.com>
+ <patch-2.2-f12e3cad57d-20210412T105422Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9FC27B9C-B9D9-11EB-B8E4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.2-f12e3cad57d-20210412T105422Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Hi,
 
-> Unfortunately, there's no cross-platform reliable way to gather the name
-> of the parent process. If procfs is present, we can use that; otherwise
-> we will need to discover the name another way. However, the process ID
-> should be sufficient regardless of platform.
+Ævar Arnfjörð Bjarmason wrote:
 
-Not a strong objection, but I wonder if seeing random integer(s) is
-better than not having cmd_ancestry info at all.  The latter better
-signals that the platform does not yet have the "parent process
-name" feature, I would think.
+> Remove code that depend on HAVE_VARIADIC_MACROS not being set. Since
+> 765dc168882 (git-compat-util: always enable variadic macros,
+> 2021-01-28) we've unconditionally defined it to be true, and that
+> change went out with v2.31.0. This should have given packagers enough
+> time to discover whether variadic macros were an issue.
+>
+> It seems that they weren't, so let's update the coding guidelines and
+> remove all the fallback code for the non-HAVE_VARIADIC_MACROS case.
 
-> Git for Windows also gathers information about more than one parent. In
-> Linux further ancestry info can be gathered with procfs, but it's
-> unwieldy to do so. In the interest of later moving Git for Windows
-> ancestry logging to the 'cmd_ancestry' event, and in the interest of
-> later adding more ancestry to the Linux implementation - or of adding
-> this functionality to other platforms which have an easier time walking
-> the process tree - let's make 'cmd_ancestry' accept an array of
-> parentage.
+As discussed in the rest of this thread, that's a pretty short time,
+so while I would love to be able to use variadic macros
+unconditionally, I think we'd need a different rationale.
 
-Could we rephrase "more than one parent" at the beginning to
-clarify?  I initially had to wonder what "an array of parentage"
-contains (father and mother, or a sole parent and its sole parent,
-which is a sole grandparent).  Since there is no "multiple processes
-meet and spawn a single process", I take it is the latter.  Perhaps
-"more than one generation of" or something?
+That said, I want us to be ready the moment external conditions allow.
+Ideally we want it to be as simple as
 
-> +ifdef HAVE_PROCFS_LINUX
-> +	BASIC_CFLAGS += -DHAVE_PROCFS_LINUX
-> +	COMPAT_OBJS += compat/procinfo.o
-> +endif
-> +
->  ifdef HAVE_NS_GET_EXECUTABLE_PATH
->  	BASIC_CFLAGS += -DHAVE_NS_GET_EXECUTABLE_PATH
->  endif
-> diff --git a/compat/procinfo.c b/compat/procinfo.c
-> new file mode 100644
-> index 0000000000..523600673f
-> --- /dev/null
-> +++ b/compat/procinfo.c
-> @@ -0,0 +1,53 @@
-> +#include "cache.h"
-> +
-> +#include "strbuf.h"
-> +#include "trace2.h"
-> +
-> +char *get_process_name(int pid)
-> +{
-> +#ifdef HAVE_PROCFS_LINUX
-> +	struct strbuf procfs_path = STRBUF_INIT;
-> +	struct strbuf out = STRBUF_INIT;
-> +	/* try to use procfs if it's present. */
-> +	strbuf_addf(&procfs_path, "/proc/%d/comm", pid);
-> +	if (!strbuf_read_file(&out, procfs_path.buf, 0))
-> +	{
+	git grep --name-only -e HAVE_VARIADIC_MACROS |
+	xargs unifdef -m -DHAVE_VARIADIC_MACROS=1
 
-Place this opening brace at the end of the previous line.
+plus removing the #define; is there anything we need to do in advance
+to make that work well?  Let's see.
 
-> +		/* All done with file reads, clean up early */
-> +		strbuf_release(&procfs_path);
-> +		return strbuf_detach(&out, NULL);
-> +	}
-> +#endif
-> +
-> +	/* NEEDSWORK: add non-procfs implementations here. */
-> +	return NULL;
-> +}
+[...]
+> --- a/trace.h
+> +++ b/trace.h
+> @@ -126,66 +126,6 @@ void trace_command_performance(const char **argv);
+>  void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
+>  uint64_t trace_performance_enter(void);
+>  
+> -#ifndef HAVE_VARIADIC_MACROS
+> -
+> -/**
+> - * Prints a formatted message, similar to printf.
+> - */
+> -__attribute__((format (printf, 1, 2)))
+> -void trace_printf(const char *format, ...);
 
-> +void trace2_collect_process_info(enum trace2_process_info_reason reason)
-> +{
-> +	if (!trace2_is_enabled())
-> +		return;
-> +
-> +	/* someday we may want to write something extra here, but not today */
-> +	if (reason == TRACE2_PROCESS_INFO_EXIT)
-> +		return;
-> +
-> +	if (reason == TRACE2_PROCESS_INFO_STARTUP)
-> +	{
+This removes the documentation for these functions and doesn't add it
+back on the #else side.  So I think we'd want the following
+preparatory patch.
 
-Ditto.
+Thanks,
+Jonathan
 
-> +		/*
-> +		 * NEEDSWORK: we could do the entire ptree in an array instead,
-> +		 * see compat/win32/trace2_win32_process_info.c.
-> +		 */
-> +		char *names[2];
-> +		names[0] = get_process_name(getppid());
-> +		names[1] = NULL;
-> +
-> +		if (!names[0])
-> +			return;
+-- >8 --
+Subject: trace: move comments to variadic macro variant of trace functions
 
-OK, so if there is no name given, we do not show pid as a
-placeholder.
+Nowadays compilers not having variadic macros are the exception.  Move
+API documentation to the declarations used in the common case.
 
-> +		trace2_cmd_ancestry((const char**)names);
-> +
-> +		free(names[0]);
-> +	}
-> +
-> +	return;
-> +}
-> diff --git a/config.mak.uname b/config.mak.uname
-> index cb443b4e02..7ad110a1d2 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -58,6 +58,7 @@ ifeq ($(uname_S),Linux)
->  	FREAD_READS_DIRECTORIES = UnfortunatelyYes
->  	BASIC_CFLAGS += -DHAVE_SYSINFO
->  	PROCFS_EXECUTABLE_PATH = /proc/self/exe
-> +	HAVE_PROCFS_LINUX = YesPlease
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ trace.h | 79 +++++++++++++++++++++++++++------------------------------
+ 1 file changed, 38 insertions(+), 41 deletions(-)
 
-Have all Linux instances procfs enabled and mounted?  It might be
-that we need to detect this at runtime anyway?
-
-    ... goes and thinks ...
-
-Ah, OK, that "try reading from proc/%d/comm" is the runtime
-detection, so it is only this Makefile variable is slightly
-misnamed (it is not "HAVE" but "is worth checking for it").
-
-Makes sense.
+diff --git a/trace.h b/trace.h
+index 0dbbad0e41..fc7eb0bc72 100644
+--- a/trace.h
++++ b/trace.h
+@@ -128,56 +128,22 @@ uint64_t trace_performance_enter(void);
+ 
+ #ifndef HAVE_VARIADIC_MACROS
+ 
+-/**
+- * Prints a formatted message, similar to printf.
+- */
++/* Fallback implementation that does not add file:line. */
++
+ __attribute__((format (printf, 1, 2)))
+ void trace_printf(const char *format, ...);
+ 
+ __attribute__((format (printf, 2, 3)))
+ void trace_printf_key(struct trace_key *key, const char *format, ...);
+ 
+-/**
+- * Prints a formatted message, followed by a quoted list of arguments.
+- */
+ __attribute__((format (printf, 2, 3)))
+ void trace_argv_printf(const char **argv, const char *format, ...);
+ 
+-/**
+- * Prints the strbuf, without additional formatting (i.e. doesn't
+- * choke on `%` or even `\0`).
+- */
+ void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
+-/**
+- * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
+- *
+- * Example:
+- * ------------
+- * uint64_t t = 0;
+- * for (;;) {
+- * 	// ignore
+- * t -= getnanotime();
+- * // code section to measure
+- * t += getnanotime();
+- * // ignore
+- * }
+- * trace_performance(t, "frotz");
+- * ------------
+- */
+ __attribute__((format (printf, 2, 3)))
+ void trace_performance(uint64_t nanos, const char *format, ...);
+ 
+-/**
+- * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
+- *
+- * Example:
+- * ------------
+- * uint64_t start = getnanotime();
+- * // code section to measure
+- * trace_performance_since(start, "foobar");
+- * ------------
+- */
+ __attribute__((format (printf, 2, 3)))
+ void trace_performance_since(uint64_t start, const char *format, ...);
+ 
+@@ -186,11 +152,6 @@ void trace_performance_leave(const char *format, ...);
+ 
+ #else
+ 
+-/*
+- * Macros to add file:line - see above for C-style declarations of how these
+- * should be used.
+- */
+-
+ /*
+  * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
+  * default is __FILE__, as it is consistent with assert(), and static function
+@@ -227,8 +188,14 @@ void trace_performance_leave(const char *format, ...);
+ 					    __VA_ARGS__);		    \
+ 	} while (0)
+ 
++/**
++ * Prints a formatted message, similar to printf.
++ */
+ #define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
+ 
++/**
++ * Prints a formatted message, followed by a quoted list of arguments.
++ */
+ #define trace_argv_printf(argv, ...)					    \
+ 	do {								    \
+ 		if (trace_pass_fl(&trace_default_key))			    \
+@@ -236,12 +203,32 @@ void trace_performance_leave(const char *format, ...);
+ 					    argv, __VA_ARGS__);		    \
+ 	} while (0)
+ 
++/**
++ * Prints the strbuf, without additional formatting (i.e. doesn't
++ * choke on `%` or even `\0`).
++ */
+ #define trace_strbuf(key, data)						    \
+ 	do {								    \
+ 		if (trace_pass_fl(key))					    \
+ 			trace_strbuf_fl(TRACE_CONTEXT, __LINE__, key, data);\
+ 	} while (0)
+ 
++/**
++ * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
++ *
++ * Example:
++ * ------------
++ * uint64_t t = 0;
++ * for (;;) {
++ * 	// ignore
++ * t -= getnanotime();
++ * // code section to measure
++ * t += getnanotime();
++ * // ignore
++ * }
++ * trace_performance(t, "frotz");
++ * ------------
++ */
+ #define trace_performance(nanos, ...)					    \
+ 	do {								    \
+ 		if (trace_pass_fl(&trace_perf_key))			    \
+@@ -249,6 +236,16 @@ void trace_performance_leave(const char *format, ...);
+ 					     __VA_ARGS__);		    \
+ 	} while (0)
+ 
++/**
++ * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
++ *
++ * Example:
++ * ------------
++ * uint64_t start = getnanotime();
++ * // code section to measure
++ * trace_performance_since(start, "foobar");
++ * ------------
++ */
+ #define trace_performance_since(start, ...)				    \
+ 	do {								    \
+ 		if (trace_pass_fl(&trace_perf_key))			    \
+-- 
+2.31.1.818.g46aad6cb9e
 
