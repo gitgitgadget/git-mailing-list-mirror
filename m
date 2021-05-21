@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 742ECC4707A
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4848C47076
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:38:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43FDE61164
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:36:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98FD561164
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235466AbhEUSiA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 14:38:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
+        id S238766AbhEUSja (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 14:39:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235293AbhEUSiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 14:38:00 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E315C061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 11:36:35 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id f18so1694451ejq.10
-        for <git@vger.kernel.org>; Fri, 21 May 2021 11:36:35 -0700 (PDT)
+        with ESMTP id S238803AbhEUSj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 14:39:29 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25CAC061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 11:38:05 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id x15so20487464oic.13
+        for <git@vger.kernel.org>; Fri, 21 May 2021 11:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=506EfvPDHHcXb8qO0KUJs/xBVdlpApB+2n/E/CdH+Gw=;
-        b=OQucEpjCgX7PDAHjHkgyDiXHQc5ntgmB+K8pxIOn8OAOh5PeQyYzLAGKbf/KDTdTns
-         pYEd3M3V0tE3t0kHrpMOE+vY/g6zjopCZCLE8CS8uDUQkLH80rvt+/Md0uGMg3Q7o2UG
-         i0eBELQI54hih9SnB2OJIDBJ1szHat9AS6afmhzwJLJqdU+V+otYZQ91/FMqCUohIYcV
-         ABkVkc6PWYt3IVQvPjPVubMGgVDwKPfIPzUMPMqM6R4gi5K68SqmHkitF06Hith0twvL
-         y9okr4K+Vb2ErgI+I/D3b1R1Dq0f51KhQadpAgV+Egl68xGxSUeSFu60TJUOPJlTPZDw
-         9DeA==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=fN7ITp12lgBL/dANz+cRW9dd4t0gk2yH2t3UXo0mxXo=;
+        b=bKeoEJwP3RW6asi3QdyjwAIGvFQZThIcDYo1YKlGBvu3Dq4vsUI6sD3sNr7gYp1Xzh
+         G7DgwhlBVDvVnHR2ooJFo6CgnRoOxrnpp+2UgOYs2BPBE0DNpux0n3klErPc66Bew27E
+         rT6Smh8aKP5LI9lCjo+hH/YHGFe6Gm9AY9sP1z5/jve+Z44IJdiDu9Pcq4ZKB286cumg
+         FJiUrkEi0VgrHkyJHH8TEU2KcJLacdoP05smNGYY8gydmP465YyeAJ4IsPvPnTnjphct
+         aqR5aNreCqQsx+vxHTAefhcwCb3vaHbTXryN0F/BkHgbA2ljIrvmpZkLFhxsUk7IevQn
+         0Y1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=506EfvPDHHcXb8qO0KUJs/xBVdlpApB+2n/E/CdH+Gw=;
-        b=fPFI7XtXpmmVUYhf7wQOXrsKuNZFnDRPkiYDpV6kzSTdBEyZ83cPU7Ti5PQxGsS4uy
-         srbK46mYVFkH3999ubdCBcr9pBuQhWRQRcd0qyPgBZ8ImUvau6mbbj+KpuVUiemmHoH+
-         q1bAdTBla6PJkKnFqMXIVuHvtwr0GPdsTQxi6u+S62vapGddD2HE3SCLKHVuaqVUPvow
-         5DtIkvAX4fRuIrvUwP9Tp2zxlD0rbgQ3vZ6us533SJWOcskYVi4xdhVRU86aTqcMfxe2
-         cRbfqwPpFE3Afjvzm1rUYxDx9+21bUaZlRfrB0tAQnYw3nr6jR5oo+S1Z56hcY7iLg4P
-         H1Yw==
-X-Gm-Message-State: AOAM531VFDQk0e7lCS6adiql2U76kiDDHwneot9SKYqMn9NToa7TW7Cm
-        AiLYt2o3GPuLV5yu3yUP6y+uptGhyD5tD/USuDU=
-X-Google-Smtp-Source: ABdhPJytMbJt/Y5t8zbRSLlw7pqOiyzLHHLXIk5UTKwKMWglMHaWpduRBrqDskKJh8nmIisJ/wfAoDb/BM8ecfSmCA8=
-X-Received: by 2002:a17:906:2a56:: with SMTP id k22mr11873018eje.551.1621622194204;
- Fri, 21 May 2021 11:36:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <c4b27662-1228-a1ff-26fc-637897ffc8e7@riscosopen.org>
- <EB55447C-538F-44DE-BFC0-A3BD1A970E99@gmail.com> <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
- <FCF5A210-4042-4C1B-87A5-83D916F02FCE@gmail.com>
-In-Reply-To: <FCF5A210-4042-4C1B-87A5-83D916F02FCE@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 21 May 2021 20:36:23 +0200
-Message-ID: <CAP8UFD39ShCZRxUN7iHFUSQxO=EL18hhpbNN86SAnASHgxe6sQ@mail.gmail.com>
-Subject: Re: Bug in git submodule update --remote
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     Ben Avison <bavison@riscosopen.org>, git <git@vger.kernel.org>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=fN7ITp12lgBL/dANz+cRW9dd4t0gk2yH2t3UXo0mxXo=;
+        b=c7j0s44z9JDJD3vyn+8O14T+91zQNpMWP6cAFgriZttNFQwL00UW7KOo1/42H45ya3
+         op2ffEuTG1sbOGMXShvnZrfZXETUfVBnL3I7pqBN7q2AS7KbtRfuCTssadoa1I+Sm/Cc
+         vqmT62V/yk0g55yfQ1kFc2bJ0JDt/kO8Nw2PHWq40ZN6MZjB3EE+nn/3kKl6CPkWzxXF
+         8CrodSQ+2Zk4/ajI2tyIF/bts0QR0HIQEeygqYiLI+aZBsc8G42a4G2G2JkpcmoXDfJf
+         dTTP5rw8Orx2Xo8hG42PYejIg/bR4tSB291jP8x3Ybyr0zKXau5ZhBd/1ERluhu43fTH
+         E9Og==
+X-Gm-Message-State: AOAM532l93jdF18qKu5nSlzTHJLY4jcsqwmMIQDmWXj4Y+D3J51fn3l6
+        bjm8SFb0nlErJIyA7kfmm+4=
+X-Google-Smtp-Source: ABdhPJy4jvSxstNDQNDLwHiAt85tD+LvDC4eztq/qFxjNUEZvbyXlKfutZjQUXsbftLaSNhi8vBmjg==
+X-Received: by 2002:aca:f2c1:: with SMTP id q184mr3123871oih.29.1621622285205;
+        Fri, 21 May 2021 11:38:05 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id t26sm1258485oth.14.2021.05.21.11.38.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 11:38:04 -0700 (PDT)
+Date:   Fri, 21 May 2021 13:38:03 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
+Message-ID: <60a7fe0b2dd8d_558062087@natae.notmuch>
+In-Reply-To: <YKaaBj0KmJ3K5foC@coredump.intra.peff.net>
+References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
+ <YKViF9OVLeA95JPH@google.com>
+ <20210520071141.GZ8544@kitsune.suse.cz>
+ <YKaaBj0KmJ3K5foC@coredump.intra.peff.net>
+Subject: Re: Should we do something with #git-devel on Freenode?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 21, 2021 at 1:47 PM Atharva Raykar <raykar.ath@gmail.com> wrote:
->
-> On 19-May-2021, at 20:11, Ben Avison <bavison@riscosopen.org> wrote:
+Jeff King wrote:
+> Of course there's value in coordinating. Everybody _can_ hang out on
+> their favorite venues and eventually talk to each other, but it's much
+> easier if everybody agrees where to go. :)
 
-> > I like that solution. Although, I should note that if the user has set
-> > submodule.<name>.remote to something other than 'origin', they will need
-> > to ensure that submodule.<name>.branch is also set, or they will still
-> > hit the "Unable to find current <remote>/HEAD revision in submodule"
-> > error that I initially stumbled on.
-> >
-> > How about an implementation like the following? I introduced a new "git
-> > submodule--helper" command rather than modify "print-default-remote" for
-> > a couple of reasons:
+I don't think it works that way.
 
-First thanks for taking a look at improving git submodule and for
-doing so by introducing most of the new code in submodule--helper!
+I "everybody" agrees to move to Discord, many old-timers won't. Same
+with Gitter. And if most people were on IRC, many youngsters wouldn't
+come.
 
-[...]
+There's a limit to how many chat applications you are willing juggle,
+and adding one more just to chat with git developers is something many
+people won't do.
 
-> Since this would modify the behaviour of the update subcommand, I
-> have decided to CC my mentors (Christian and Shourya) who are more
-> qualified than me to comment on this proposal.
-
-As commit f0a96e8d's author is Dscho (Johannes Schindelin) and as he
-was helped by Philippe Blain, let me CC them too. They might know the
-reasons for this behavior better than us.
+-- 
+Felipe Contreras
