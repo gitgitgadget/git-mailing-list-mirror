@@ -2,206 +2,549 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AC2CC47076
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 19:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF47CC4707D
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 19:15:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68B4E613B6
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 19:02:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2CCE613DB
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 19:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236550AbhEUTED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 15:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47288 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbhEUTEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 15:04:00 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B598C061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 12:02:35 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id ne24-20020a17090b3758b029015f2dafecb0so6508272pjb.4
-        for <git@vger.kernel.org>; Fri, 21 May 2021 12:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=k1iEJdPFR/jRWhgWpEyfENLOy3GnPbUDMsv96+qKcDI=;
-        b=Iu9yj+w2WvCF3MxuujuyiN92ZxgSRNxH6PbEzf3GGBTkl524uyMY/YJ6tpazUbfqwH
-         OUTfmYQjf3+u9LaRIb0YXQHxnSyEgXjHXwVkHhkOYfAcIB4YMNv8J7fQav3vOfnao8lo
-         jRtjZkLyCMHeX3p5QY8fHIahCxf16S/GZzZZ4Gu2iullj8zZX5mKem5qe0DChIFYAYba
-         M/aMcCugXNq1wARvh8ci8hVsIgnBa9ycZrDEz4ZB8E5mB+J4FWg7F0wMgJdfU5B1hdnT
-         P1s73WYh1j5/P0ji/JRC1BeVb19O+pqBncD4dc1rfIluWXxdf771hwTX2uXKHvRq5ABE
-         AlnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=k1iEJdPFR/jRWhgWpEyfENLOy3GnPbUDMsv96+qKcDI=;
-        b=PknyHWlV5un2Ss7qSVLQOls6eh56swbY7HzBdjfNets5m1wm4/tWfEpfcao0EwSH19
-         xqYabOh4YQWCaUBSmvytaXPvzgri7FsMxd4IFbnkuour7mDSzsO5AltQRv4FSm5PY8/a
-         eC+Xk+zOiJUFRqnN6Cgixjs1+IfyX8dMeLlHokEPSEtQl/E3rEur7pNCh+fAQpRFFzem
-         FFdLeT5bqtIdYrILKmcGKlXGm5zRblGC2T6Z+Han121u9Fh33Khx3Vl7+S6uh1mpZ6tm
-         n9Bp1x6WNDZwb487bBhWoq1ZyAizX1yLryAxlen2OcOh1rf70UbbCvUnpmKCgpBOm9j/
-         owhw==
-X-Gm-Message-State: AOAM532TO/W5O0eP9mCz3CkDjw2umYgSkN2gCqyzH8/nqoTdOh73Qevh
-        779TdL/aElgiWvtFs9QcGTsKUQ==
-X-Google-Smtp-Source: ABdhPJxErQEKo0spd7/exO5cN2gLfF94rYvIkSLkimCQ9AajNptAl5dgu9I0uhPZvSwmoozATsft9w==
-X-Received: by 2002:a17:902:bd0b:b029:ef:8970:281c with SMTP id p11-20020a170902bd0bb02900ef8970281cmr13365326pls.35.1621623754999;
-        Fri, 21 May 2021 12:02:34 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:ec87:8dd2:f844:6cda])
-        by smtp.gmail.com with ESMTPSA id t19sm4756709pfq.116.2021.05.21.12.02.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 12:02:34 -0700 (PDT)
-Date:   Fri, 21 May 2021 12:02:29 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
+        id S235821AbhEUTQq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 15:16:46 -0400
+Received: from siwi.pair.com ([209.68.5.199]:42885 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235851AbhEUTQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 15:16:41 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 1D3D63F40E6;
+        Fri, 21 May 2021 15:15:17 -0400 (EDT)
+Received: from azhci-node1.azhci.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id CD4223F40D9;
+        Fri, 21 May 2021 15:15:16 -0400 (EDT)
 Subject: Re: [PATCH v2] tr2: log parent process name
-Message-ID: <YKgDxahhwK/zYznH@google.com>
+To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
 References: <20210520210546.4129620-1-emilyshaffer@google.com>
- <xmqqpmxksuqa.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <1e3bb53e-895b-f571-1c03-a6ae6499746d@jeffhostetler.com>
+Date:   Fri, 21 May 2021 15:15:16 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpmxksuqa.fsf@gitster.g>
+In-Reply-To: <20210520210546.4129620-1-emilyshaffer@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 21, 2021 at 11:09:49AM +0900, Junio C Hamano wrote:
+
+
+On 5/20/21 5:05 PM, Emily Shaffer wrote:
+> It can be useful to tell who invoked Git - was it invoked manually by a
+> user via CLI or script? By an IDE?  In some cases - like 'repo' tool -
+> we can influence the source code and set the GIT_TRACE2_PARENT_SID
+> environment variable from the caller process. In 'repo''s case, that
+> parent SID is manipulated to include the string "repo", which means we
+> can positively identify when Git was invoked by 'repo' tool. However,
+> identifying parents that way requires both that we know which tools
+> invoke Git and that we have the ability to modify the source code of
+> those tools. It cannot scale to keep up with the various IDEs and
+> wrappers which use Git, most of which we don't know about. Learning
+> which tools and wrappers invoke Git, and how, would give us insight to
+> decide where to improve Git's usability and performance.
 > 
-> Emily Shaffer <emilyshaffer@google.com> writes:
+> Unfortunately, there's no cross-platform reliable way to gather the name
+> of the parent process. If procfs is present, we can use that; otherwise
+> we will need to discover the name another way. However, the process ID
+> should be sufficient regardless of platform.
 > 
-> > Unfortunately, there's no cross-platform reliable way to gather the name
-> > of the parent process. If procfs is present, we can use that; otherwise
-> > we will need to discover the name another way. However, the process ID
-> > should be sufficient regardless of platform.
+> Git for Windows gathers similar information and logs it as a "data_json"
+> event. However, since "data_json" has a variable format, it is difficult
+> to parse effectively in some languages; instead, let's pursue a
+> dedicated "cmd_ancestry" event to record information about the ancestry
+> of the current process and a consistent, parseable way.
 > 
-> Not a strong objection, but I wonder if seeing random integer(s) is
-> better than not having cmd_ancestry info at all.  The latter better
-> signals that the platform does not yet have the "parent process
-> name" feature, I would think.
+> Git for Windows also gathers information about more than one parent. In
+> Linux further ancestry info can be gathered with procfs, but it's
+> unwieldy to do so. In the interest of later moving Git for Windows
+> ancestry logging to the 'cmd_ancestry' event, and in the interest of
+> later adding more ancestry to the Linux implementation - or of adding
+> this functionality to other platforms which have an easier time walking
+> the process tree - let's make 'cmd_ancestry' accept an array of
+> parentage.
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> ---
+> 
+> Hi folks, the comments I received in v1 were of two varieties:
+> 1) "There are better ways to make this platform-safe", and
+> 2) "Your commit message doesn't convince me".
+> Since I sent v1, though, I also learned a little more about procfs, and
+> about the trace2 structure overall, so there are some pretty significant
+> differences from v1:
+> 
+> - I took a look at Jeff H's advice on using a "data_json" event to log
+>    this and decided it would be a little more flexible to add a new event
+>    instead. If we want, it'd be feasible to then shoehorn the GfW parent
+>    tree stuff into this new event too. Doing it this way is definitely
+>    easier to parse for Google's trace analysis system (which for now
+>    completely skips "data_json" as it's polymorphic), and also - I think
+>    - means that we can add more fields later on if we need to (thread
+>    info, different fields than just /proc/n/comm like exec path, argv,
+>    whatever).
 
-Hm, we could; I guess then analyzers could still correlate "all these
-things were called by some kind of wrapper, even if we don't know if
-that was an IDE or a script or just the user or what, we can guess based
-on other heuristics". Ok.
+I could argue both sides of this, so I guess it is fine either way.
+
+In GFW I log a array of argv[0] strings in a generic "data_json" event.
+I could also log additional "data_json" events with more structured
+data if needed.
+
+On the other hand, you're proposing a "cmd_ancestry" event with a
+single array of strings.  You would have to expand the call signature
+of the trace2_cmd_ancestry() API to add additional data and inside
+tr2_tgt_event.c add additional fields to the JSON being composed.
+
+So both are about equal.
+
+(I'll avoid the temptation to make a snarky comment about fixing
+your post processing. :-) :-) :-) )
+
+It really doesn't matter one way or the other.
+
+> - Jonathan N also pointed out to me that /proc/n/comm exists, and logs
+>    the "command name" - excluding argv, excluding path, etc. It seems
+
+So you're trying to log argv[0] of the process and not the full
+command line.  That's what I'm doing.
+
+>    like this is a little more safe about excluding personal information
+>    from the traces which take the form of "myscript.sh
+>    --password=hunter2", but would still be worrisome for something like
+>    "mysupersecretproject.sh". I'm not sure whether that means we still
+>    want to guard it with a config flag, though.
+
+You might check whether you get the name of the script or just get
+a lot of entries with just "/usr/bin/bash".
+
+There's lots of PII in the data stream to worry about.
+The name of the command is just one aspect, but I digress.
+
+> - I also added a lot to the commit message; hopefully it's not too
+>    rambly, but I hoped to explain why just setting GIT_TRACE2_PARENT_SID
+>    wasn't going to cut it.
+> - As for testing, I followed the lead of GfW's parentage info - "this
+>    isn't portable so writing tests for it will suck, just scrub it from
+>    the tests". Maybe it makes sense to do some more
+>    platform-specific-ness in the test suite instead? I wasn't sure.
+
+yeah, that's probably best.  Unless you can tokenize it properly
+so that you can predict the results in a HEREDOC in the test source.
+
+For example, you might try to test tracing a command (where a top-level
+"git foo" (SPACE form) spawns a "git-foo" (DASHED form) and check the
+output for the child.
 
 > 
-> > Git for Windows also gathers information about more than one parent. In
-> > Linux further ancestry info can be gathered with procfs, but it's
-> > unwieldy to do so. In the interest of later moving Git for Windows
-> > ancestry logging to the 'cmd_ancestry' event, and in the interest of
-> > later adding more ancestry to the Linux implementation - or of adding
-> > this functionality to other platforms which have an easier time walking
-> > the process tree - let's make 'cmd_ancestry' accept an array of
-> > parentage.
+> Thanks, all.
+>   - Emily
 > 
-> Could we rephrase "more than one parent" at the beginning to
-> clarify?  I initially had to wonder what "an array of parentage"
-> contains (father and mother, or a sole parent and its sole parent,
-> which is a sole grandparent).  Since there is no "multiple processes
-> meet and spawn a single process", I take it is the latter.  Perhaps
-> "more than one generation of" or something?
-
-Good point, will refer to "more than one generation". Thanks.
-
-> > +	if (!strbuf_read_file(&out, procfs_path.buf, 0))
-> > +	{
+>   Makefile                  |  5 ++++
+>   compat/procinfo.c         | 53 +++++++++++++++++++++++++++++++++++++++
+>   config.mak.uname          |  1 +
+>   git-compat-util.h         |  6 +++++
+>   t/t0210/scrub_normal.perl |  6 +++++
+>   t/t0211/scrub_perf.perl   |  5 ++++
+>   t/t0212/parse_events.perl |  5 +++-
+>   trace2.c                  | 13 ++++++++++
+>   trace2.h                  | 12 ++++++++-
+>   trace2/tr2_tgt.h          |  3 +++
+>   trace2/tr2_tgt_event.c    | 21 ++++++++++++++++
+>   trace2/tr2_tgt_normal.c   | 19 ++++++++++++++
+>   trace2/tr2_tgt_perf.c     | 16 ++++++++++++
+>   13 files changed, 163 insertions(+), 2 deletions(-)
+>   create mode 100644 compat/procinfo.c
 > 
-> Place this opening brace at the end of the previous line.
+> diff --git a/Makefile b/Makefile
+> index 93664d6714..330e4fa011 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1889,6 +1889,11 @@ ifneq ($(PROCFS_EXECUTABLE_PATH),)
+>   	BASIC_CFLAGS += '-DPROCFS_EXECUTABLE_PATH="$(procfs_executable_path_SQ)"'
+>   endif
+>   
+> +ifdef HAVE_PROCFS_LINUX
+> +	BASIC_CFLAGS += -DHAVE_PROCFS_LINUX
+> +	COMPAT_OBJS += compat/procinfo.o
+> +endif
+> +
+>   ifdef HAVE_NS_GET_EXECUTABLE_PATH
+>   	BASIC_CFLAGS += -DHAVE_NS_GET_EXECUTABLE_PATH
+>   endif
+> diff --git a/compat/procinfo.c b/compat/procinfo.c
+> new file mode 100644
+> index 0000000000..523600673f
+> --- /dev/null
+> +++ b/compat/procinfo.c
+> @@ -0,0 +1,53 @@
+> +#include "cache.h"
+> +
+> +#include "strbuf.h"
+> +#include "trace2.h"
+> +
+> +char *get_process_name(int pid)
+> +{
+> +#ifdef HAVE_PROCFS_LINUX
+> +	struct strbuf procfs_path = STRBUF_INIT;
+> +	struct strbuf out = STRBUF_INIT;
+> +	/* try to use procfs if it's present. */
+> +	strbuf_addf(&procfs_path, "/proc/%d/comm", pid);
+> +	if (!strbuf_read_file(&out, procfs_path.buf, 0))
+> +	{
+> +		/* All done with file reads, clean up early */
+> +		strbuf_release(&procfs_path);
+> +		return strbuf_detach(&out, NULL);
+> +	}
+> +#endif
+> +
+> +	/* NEEDSWORK: add non-procfs implementations here. */
+> +	return NULL;
+> +}
+> +
+> +void trace2_collect_process_info(enum trace2_process_info_reason reason)
+> +{
+> +	if (!trace2_is_enabled())
+> +		return;
+> +
+> +	/* someday we may want to write something extra here, but not today */
+> +	if (reason == TRACE2_PROCESS_INFO_EXIT)
+> +		return;
+> +
+> +	if (reason == TRACE2_PROCESS_INFO_STARTUP)
+> +	{
+> +		/*
+> +		 * NEEDSWORK: we could do the entire ptree in an array instead,
+> +		 * see compat/win32/trace2_win32_process_info.c.
+> +		 */
+> +		char *names[2];
+> +		names[0] = get_process_name(getppid());
+> +		names[1] = NULL;
 
-Will polish up this and others for v3, hopefully today.
-> > +		if (!names[0])
-> > +			return;
+You're only logging 1 parent.  That's fine to get started.
+
+I'm logging IIRC 10 parents on GFW.  That might seem overkill,
+but there are lots of intermediate parents that hide what is
+happening.  For example, a "git push" might spawn "git remote-https"
+which spawns "git-remote-https" which spawn "git send-pack" which
+spawns "git pack-objects".
+
+And that doesn't include who called push.
+
+And it's not uncommon to see 2 or 3 "bash" entries in the array
+because of the bash scripts being run.
+
+> +
+> +		if (!names[0])
+> +			return;
+> +
+> +		trace2_cmd_ancestry((const char**)names);
+> +
+> +		free(names[0]);
+> +	}
+> +
+> +	return;
+> +}
+> diff --git a/config.mak.uname b/config.mak.uname
+> index cb443b4e02..7ad110a1d2 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -58,6 +58,7 @@ ifeq ($(uname_S),Linux)
+>   	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+>   	BASIC_CFLAGS += -DHAVE_SYSINFO
+>   	PROCFS_EXECUTABLE_PATH = /proc/self/exe
+> +	HAVE_PROCFS_LINUX = YesPlease
+>   endif
+>   ifeq ($(uname_S),GNU/kFreeBSD)
+>   	HAVE_ALLOCA_H = YesPlease
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index a508dbe5a3..cc7d5d8a2a 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1382,4 +1382,10 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
+>   
+>   void sleep_millisec(int millisec);
+>   
+> +/*
+> + * Convert PID to process name (as would show in top/task manager). Returns
+> + * NULL if unimplemented - be sure to check for NULL at callsite.
+> + */
+> +char *get_process_name(int pid);
+> +
+>   #endif
+> diff --git a/t/t0210/scrub_normal.perl b/t/t0210/scrub_normal.perl
+> index c65d1a815e..7cc4de392a 100644
+> --- a/t/t0210/scrub_normal.perl
+> +++ b/t/t0210/scrub_normal.perl
+> @@ -42,6 +42,12 @@
+>   	# so just omit it for testing purposes.
+>   	# print "cmd_path _EXE_\n";
+>       }
+> +    elsif ($line =~ m/^cmd_ancestry/) {
+> +	# 'cmd_ancestry' is not implemented everywhere, so for portability's
+> +	# sake, skip it when parsing normal.
+> +	#
+> +	# print "$line";
+> +    }
+>       else {
+>   	print "$line";
+>       }
+> diff --git a/t/t0211/scrub_perf.perl b/t/t0211/scrub_perf.perl
+> index 351af7844e..d164b750ff 100644
+> --- a/t/t0211/scrub_perf.perl
+> +++ b/t/t0211/scrub_perf.perl
+> @@ -44,6 +44,11 @@
+>   	# $tokens[$col_rest] = "_EXE_";
+>   	goto SKIP_LINE;
+>       }
+> +    elsif ($tokens[$col_event] =~ m/cmd_ancestry/) {
+> +	# 'cmd_ancestry' is platform-specific and not implemented everywhere,
+> +	# so skip it.
+> +	goto SKIP_LINE;
+> +    }
+>       elsif ($tokens[$col_event] =~ m/child_exit/) {
+>   	$tokens[$col_rest] =~ s/ pid:\d* / pid:_PID_ /;
+>       }
+> diff --git a/t/t0212/parse_events.perl b/t/t0212/parse_events.perl
+> index 6584bb5634..b6408560c0 100644
+> --- a/t/t0212/parse_events.perl
+> +++ b/t/t0212/parse_events.perl
+> @@ -132,7 +132,10 @@
+>   	# just omit it for testing purposes.
+>   	# $processes->{$sid}->{'path'} = "_EXE_";
+>       }
+> -
+> +    elsif ($event eq 'cmd_ancestry') {
+> +	# 'cmd_ancestry' is platform-specific and not implemented everywhere, so
+> +	# just skip it for testing purposes.
+> +    }
+>       elsif ($event eq 'cmd_name') {
+>   	$processes->{$sid}->{'name'} = $line->{'name'};
+>   	$processes->{$sid}->{'hierarchy'} = $line->{'hierarchy'};
+> diff --git a/trace2.c b/trace2.c
+> index 256120c7fd..b9b154ac44 100644
+> --- a/trace2.c
+> +++ b/trace2.c
+> @@ -260,6 +260,19 @@ void trace2_cmd_path_fl(const char *file, int line, const char *pathname)
+>   			tgt_j->pfn_command_path_fl(file, line, pathname);
+>   }
+>   
+> +void trace2_cmd_ancestry_fl(const char *file, int line, const char **parent_names)
+> +{
+> +	struct tr2_tgt *tgt_j;
+> +	int j;
+> +
+> +	if (!trace2_enabled)
+> +		return;
+> +
+> +	for_each_wanted_builtin (j, tgt_j)
+> +		if (tgt_j->pfn_command_ancestry_fl)
+> +			tgt_j->pfn_command_ancestry_fl(file, line, parent_names);
+> +}
+> +
+>   void trace2_cmd_name_fl(const char *file, int line, const char *name)
+>   {
+>   	struct tr2_tgt *tgt_j;
+> diff --git a/trace2.h b/trace2.h
+> index ede18c2e06..23743ac62b 100644
+> --- a/trace2.h
+> +++ b/trace2.h
+> @@ -133,6 +133,16 @@ void trace2_cmd_path_fl(const char *file, int line, const char *pathname);
+>   
+>   #define trace2_cmd_path(p) trace2_cmd_path_fl(__FILE__, __LINE__, (p))
+>   
+> +/*
+> + * Emit an 'ancestry' event with the process name of the current process's
+> + * parent process.
+> + * This gives post-processors a way to determine what invoked the command and
+> + * learn more about usage patterns.
+> + */
+> +void trace2_cmd_ancestry_fl(const char *file, int line, const char **parent_names);
+> +
+> +#define trace2_cmd_ancestry(v) trace2_cmd_ancestry_fl(__FILE__, __LINE__, (v))
+> +
+>   /*
+>    * Emit a 'cmd_name' event with the canonical name of the command.
+>    * This gives post-processors a simple field to identify the command
+> @@ -492,7 +502,7 @@ enum trace2_process_info_reason {
+>   	TRACE2_PROCESS_INFO_EXIT,
+>   };
+>   
+> -#if defined(GIT_WINDOWS_NATIVE)
+> +#if ( defined(GIT_WINDOWS_NATIVE) || defined(HAVE_PROCFS_LINUX) )
+>   void trace2_collect_process_info(enum trace2_process_info_reason reason);
+>   #else
+>   #define trace2_collect_process_info(reason) \
+> diff --git a/trace2/tr2_tgt.h b/trace2/tr2_tgt.h
+> index 7b90469212..1f66fd6573 100644
+> --- a/trace2/tr2_tgt.h
+> +++ b/trace2/tr2_tgt.h
+> @@ -27,6 +27,8 @@ typedef void(tr2_tgt_evt_error_va_fl_t)(const char *file, int line,
+>   
+>   typedef void(tr2_tgt_evt_command_path_fl_t)(const char *file, int line,
+>   					    const char *command_path);
+> +typedef void(tr2_tgt_evt_command_ancestry_fl_t)(const char *file, int line,
+> +						const char **parent_names);
+>   typedef void(tr2_tgt_evt_command_name_fl_t)(const char *file, int line,
+>   					    const char *name,
+>   					    const char *hierarchy);
+> @@ -108,6 +110,7 @@ struct tr2_tgt {
+>   	tr2_tgt_evt_atexit_t                    *pfn_atexit;
+>   	tr2_tgt_evt_error_va_fl_t               *pfn_error_va_fl;
+>   	tr2_tgt_evt_command_path_fl_t           *pfn_command_path_fl;
+> +	tr2_tgt_evt_command_ancestry_fl_t	*pfn_command_ancestry_fl;
+>   	tr2_tgt_evt_command_name_fl_t           *pfn_command_name_fl;
+>   	tr2_tgt_evt_command_mode_fl_t           *pfn_command_mode_fl;
+>   	tr2_tgt_evt_alias_fl_t                  *pfn_alias_fl;
+> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+> index 6353e8ad91..578a9a5287 100644
+> --- a/trace2/tr2_tgt_event.c
+> +++ b/trace2/tr2_tgt_event.c
+> @@ -261,6 +261,26 @@ static void fn_command_path_fl(const char *file, int line, const char *pathname)
+>   	jw_release(&jw);
+>   }
+>   
+> +static void fn_command_ancestry_fl(const char *file, int line, const char **parent_names)
+> +{
+> +	const char *event_name = "cmd_ancestry";
+> +	const char *parent_name = NULL;
+> +	struct json_writer jw = JSON_WRITER_INIT;
+> +
+> +	jw_object_begin(&jw, 0);
+> +	event_fmt_prepare(event_name, file, line, NULL, &jw);
+> +	jw_object_inline_begin_array(&jw, "ancestry");
+> +
+> +	while ((parent_name = *parent_names++))
+> +		jw_array_string(&jw, parent_name);
+
+You're building the array with the immediate parent in a[0]
+and the grandparent in a[1], and etc.  This is the same as
+I did in GFW.
+
+Perhaps state this in the docs somewhere.
+
+> +
+> +	jw_end(&jw); /* 'ancestry' array */
+> +	jw_end(&jw); /* event object */
+> +
+> +	tr2_dst_write_line(&tr2dst_event, &jw.json);
+> +	jw_release(&jw);
+> +}
+> +
+>   static void fn_command_name_fl(const char *file, int line, const char *name,
+>   			       const char *hierarchy)
+>   {
+> @@ -584,6 +604,7 @@ struct tr2_tgt tr2_tgt_event = {
+>   	fn_atexit,
+>   	fn_error_va_fl,
+>   	fn_command_path_fl,
+> +	fn_command_ancestry_fl,
+>   	fn_command_name_fl,
+>   	fn_command_mode_fl,
+>   	fn_alias_fl,
+> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+> index 31b602c171..a5751c8864 100644
+> --- a/trace2/tr2_tgt_normal.c
+> +++ b/trace2/tr2_tgt_normal.c
+> @@ -160,6 +160,24 @@ static void fn_command_path_fl(const char *file, int line, const char *pathname)
+>   	strbuf_release(&buf_payload);
+>   }
+>   
+> +static void fn_command_ancestry_fl(const char *file, int line, const char **parent_names)
+> +{
+> +	const char *parent_name = NULL;
+> +	struct strbuf buf_payload = STRBUF_INIT;
+> +
+> +	/* cmd_ancestry parent <- grandparent <- great-grandparent */
+> +	strbuf_addstr(&buf_payload, "cmd_ancestry ");
+> +	while ((parent_name = *parent_names++)) {
+> +		strbuf_addstr(&buf_payload, parent_name);
+
+Did you want to quote each parent's name?
+
+> +		/* if we'll write another one after this, add a delimiter */
+> +		if (parent_names && *parent_names)
+> +			strbuf_addstr(&buf_payload, " <- ");
+> +	}
+> +
+> +	normal_io_write_fl(file, line, &buf_payload);
+> +	strbuf_release(&buf_payload);
+> +}
+> +
+>   static void fn_command_name_fl(const char *file, int line, const char *name,
+>   			       const char *hierarchy)
+>   {
+> @@ -306,6 +324,7 @@ struct tr2_tgt tr2_tgt_normal = {
+>   	fn_atexit,
+>   	fn_error_va_fl,
+>   	fn_command_path_fl,
+> +	fn_command_ancestry_fl,
+>   	fn_command_name_fl,
+>   	fn_command_mode_fl,
+>   	fn_alias_fl,
+> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+> index a8018f18cc..af4d65a0a5 100644
+> --- a/trace2/tr2_tgt_perf.c
+> +++ b/trace2/tr2_tgt_perf.c
+> @@ -253,6 +253,21 @@ static void fn_command_path_fl(const char *file, int line, const char *pathname)
+>   	strbuf_release(&buf_payload);
+>   }
+>   
+> +static void fn_command_ancestry_fl(const char *file, int line, const char **parent_names)
+> +{
+> +	const char *event_name = "cmd_ancestry";
+> +	struct strbuf buf_payload = STRBUF_INIT;
+> +
+> +	strbuf_addstr(&buf_payload, "ancestry:[");
+> +	/* It's not an argv but the rules are basically the same. */
+> +	sq_append_quote_argv_pretty(&buf_payload, parent_names);
+
+This will have whitespace delimiters between the quoted strings
+rather than commas.  Just checking if that's what you wanted.
+
+I'm not sure it matters, since this stream is intended for human
+parsing.
+
+> +	strbuf_addch(&buf_payload, ']');
+> +
+> +	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
+> +			 &buf_payload);
+> +	strbuf_release(&buf_payload);
+> +}
+> +
+>   static void fn_command_name_fl(const char *file, int line, const char *name,
+>   			       const char *hierarchy)
+>   {
+> @@ -532,6 +547,7 @@ struct tr2_tgt tr2_tgt_perf = {
+>   	fn_atexit,
+>   	fn_error_va_fl,
+>   	fn_command_path_fl,
+> +	fn_command_ancestry_fl,
+>   	fn_command_name_fl,
+>   	fn_command_mode_fl,
+>   	fn_alias_fl,
 > 
-> OK, so if there is no name given, we do not show pid as a
-> placeholder.
 
-Based on your suggestion above I think it will make sense to show pid as
-placeholder after all, though. So I will change that for v3.
+We should update Documentation/technical/api-trace2.txt too.
 
-> >  	PROCFS_EXECUTABLE_PATH = /proc/self/exe
-> > +	HAVE_PROCFS_LINUX = YesPlease
-> 
-> Have all Linux instances procfs enabled and mounted?  It might be
-> that we need to detect this at runtime anyway?
-> 
->     ... goes and thinks ...
-> 
-> Ah, OK, that "try reading from proc/%d/comm" is the runtime
-> detection, so it is only this Makefile variable is slightly
-> misnamed (it is not "HAVE" but "is worth checking for it").
-
-I wonder what is better. "MAYBE_PROCFS_LINUX"? I don't see any other
-vars in config.mak.uname that indicate "pretty sure but not totally
-sure" in a quick scan. However, right above this line we seem to feel
-certain in our guess about "PROCFS_EXECUTABLE_PATH"...
-
-...but when it is used in exec-cmd.c:git_get_exec_path_procfs(), invoked
-by exec-cmd.c:git_get_exec_path(), we're very tolerant to faults if it's
-not there:
-
-  static int git_get_exec_path(struct strbuf *buf, const char *argv0)
-  {
-  	/*
-  	 * [snip]
-  	 * Each of these functions returns 0 on success, so evaluation will stop
-  	 * after the first successful method.
-  	 */
-  	if (
-  #ifdef HAVE_BSD_KERN_PROC_SYSCTL
-  		git_get_exec_path_bsd_sysctl(buf) &&
-  #endif /* HAVE_BSD_KERN_PROC_SYSCTL */
-  
-  #ifdef HAVE_NS_GET_EXECUTABLE_PATH
-  		git_get_exec_path_darwin(buf) &&
-  #endif /* HAVE_NS_GET_EXECUTABLE_PATH */
-  
-  #ifdef PROCFS_EXECUTABLE_PATH
-  		git_get_exec_path_procfs(buf) &&  /*** <- OK if fails ***/
-  #endif /* PROCFS_EXECUTABLE_PATH */
-  
-  #ifdef HAVE_WPGMPTR
-  		git_get_exec_path_wpgmptr(buf) &&
-  #endif /* HAVE_WPGMPTR */
-  
-  		git_get_exec_path_from_argv0(buf, argv0)) {
-  		return -1;
-  	}
-  
-  [snip]
-  
-  #ifdef PROCFS_EXECUTABLE_PATH
-  /*
-   * Resolves the executable path by examining a procfs symlink.
-   *
-   * Returns 0 on success, -1 on failure.
-   */
-  static int git_get_exec_path_procfs(struct strbuf *buf)
-  {
-  	if (strbuf_realpath(buf, PROCFS_EXECUTABLE_PATH, 0)) {
-  		trace_printf(
-  			"trace: resolved executable path from procfs: %s\n",
-  			buf->buf);
-  		return 0;
-  	}
-  	return -1;
-  }
-  #endif /* PROCFS_EXECUTABLE_PATH */
-
-
-So it seems this other procfs bit takes the "probably but not
-definitely" step and is tolerant at runtime as well. Which doesn't help
-me much to decide how to rename HAVE_PROCFS_LINUX.
-
-I'll switch it to MAYBE_PROCFS_LINUX for v3 unless someone yells, I
-guess.
-
- - Emily
+Thanks,
+Jeff
