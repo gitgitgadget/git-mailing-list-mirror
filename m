@@ -2,193 +2,219 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A282C433ED
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7B8FC43460
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:47:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8F91613DD
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:39:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8937613DA
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 11:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232592AbhEULkn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 07:40:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59458 "EHLO
+        id S231687AbhEULtA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 07:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbhEULkm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 07:40:42 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CDEBC061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:39:18 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id s22so29770950ejv.12
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:39:18 -0700 (PDT)
+        with ESMTP id S229915AbhEULs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 07:48:58 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FC4C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 04:47:35 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id 6so14006148pgk.5
+        for <git@vger.kernel.org>; Fri, 21 May 2021 04:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=jyDTtRv5CSKtxEJeQy1y9cr+qBIB6HYkgXupXXfoykU=;
-        b=ia3Vi8VUYVhW9TW15XD6Pdt4uUFvXndBwJkYfQ2gPVd8rwrSEogHau2I4fR1FVL7sY
-         5xVQctgigeGPq51UOAiw7NU9OzB/rd1NT1cG+t6Umq/HK0vaPh29ro5isE/b0U70PEFd
-         kg93pRY9W2qzhGfs59IWiUKNbvlLx/AJTtI2N3prWl0S1/CAcBM+8ef3y9/A8vjOA9vG
-         b40NfSAOsDrGQpzRPScLdVcYs0HjNUWJEkY8vahmtTYXVoo0aHo35MjhC/QYs/MhzNP2
-         +hui0vZ+WgnxGtC038vO0SvQJjWDkGn65OE19mLiwN65mzKFXrTT6Nc7X2CA1KIUchqo
-         S6PA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=WSQn+pjI0RLpZYO7YYGmzpaojwv2heoHqbHm1XNIVFY=;
+        b=FUF/WerthEogKw1+0k97M3KXtS73WIjKdpEWRtQ+F/+jY8FlTOdFkqGHzenbkbDVvE
+         f3Z2hQnPndns3n7q5qg0SJWbLiniIfFTmIMhRf9Hb2Tz2cAWvPOrnkHrth5lLO+vmJOk
+         1mmI4gEBsoiZjD1C8RpWxDtEJuzE+wgVptbViLIbQD5m5zXIpA0R0QkXejq9tzofdqT1
+         o0BPBcnVbHjGIU4k/3Wywj7O41OWuWHtLIIz6Oe/fUw4gMM/q8kot20QDhY89Ps8YW30
+         v+2a3K/ESOpTyXyzV8TqOoOck0qesFwpNh0DAYvbsbo6tekdx2KvzlDVFwfvhpM5o/Oa
+         /kUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=jyDTtRv5CSKtxEJeQy1y9cr+qBIB6HYkgXupXXfoykU=;
-        b=tYb4T/58YDDZ8ZU44yfdwLq497HOEATKPHzvYIYVB1n1btKME4AgUzcwJLrkINfm6K
-         qfxokOPxfDfZBtzI05y6NU+JK+rueZW2p8WQPevITtGUc/vKobMlcM7Dah28MTKkWyM6
-         djMTp8ItdG5t1alKvOSfWlrgoxsIpw4Xg0hyw4coljV8Mj0HXwoM7hN3esYLwIbMRGR/
-         c7UVnTMEMlwpEuTKJh2dFFBLEO/vBUjkFKmAP1uhpwi/o1xambJYJW4NXZC6PbmYaq4J
-         hZJgPlTuyu9mgQSoC2Ej4aB9AGm+sg082jpX3jzvy/gILe39sAcljQqdSQuXUwM8fqJ0
-         8hng==
-X-Gm-Message-State: AOAM530pgRdFeumwMDUNt61Y9BOv+zOIrieS7PU+7pkSH8bVV9frZtGr
-        a1aAp++eu05GG5E6qoACSZwhi0l3je8=
-X-Google-Smtp-Source: ABdhPJycshhxELCKhk4eQh/43Wo4QWPTxX5P6SygVHhR/9WJg5b5ezzgdwhfeZIQ/ueGKl2p9WiSMA==
-X-Received: by 2002:a17:906:d89:: with SMTP id m9mr10306826eji.191.1621597156439;
-        Fri, 21 May 2021 04:39:16 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id g13sm3396109ejz.24.2021.05.21.04.39.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 04:39:15 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 0/8] Speed up connectivity checks via quarantine dir
-Date:   Fri, 21 May 2021 13:20:58 +0200
-References: <cover.1621451532.git.ps@pks.im>
- <YKaTUItbQ1pyMrrW@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YKaTUItbQ1pyMrrW@coredump.intra.peff.net>
-Message-ID: <87zgwonwnw.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=WSQn+pjI0RLpZYO7YYGmzpaojwv2heoHqbHm1XNIVFY=;
+        b=kguZnMEPx0KtrGliF2M2gJNZlXH1iDAxtxNwCHMRhnZGz6BmXjocBDEnNz+qspRo6F
+         E/90nxybCh4tA4I66VyCJt38OuzVAsy3guzH5wUMxtlxcvAp4Eo9EaTQWCxnhBh4gFwd
+         sSEI3JrUpj1HzEGz4TxJrIr+/bjT8jvfAr0/xwgZzPB+CoR/xBA6vafPShp6OloBrVRF
+         mzKDUr/CB+fXXmL5riAiA1iCn5MZHA69y3oAjbmxvLAaOh4d4cKQngPQ3rHJonb5mUee
+         LARZDaQYPm3BqsIzOxoQk5xrYqb81B38Llp+qc9Ig4lRTwvu6DYycEzwAEzkRttizHNX
+         9zGA==
+X-Gm-Message-State: AOAM532YxfeVCzhU1VxRB4Arp6F9RTLiFN84y5TYY26HDaPSKSsaOgJG
+        Hi9vuLyjVU8QJfzE74wSL0g=
+X-Google-Smtp-Source: ABdhPJwYwD7CuKD/Zvwyc5j+Eoh2VPYzvOp5MTl2btSaoUvJlFIdhUp4PPv+2ZCV00LSOkKmoqzP8w==
+X-Received: by 2002:a62:5288:0:b029:2e3:fd7d:267a with SMTP id g130-20020a6252880000b02902e3fd7d267amr5647929pfb.21.1621597654653;
+        Fri, 21 May 2021 04:47:34 -0700 (PDT)
+Received: from atharva-on-air.dlink ([119.82.121.70])
+        by smtp.gmail.com with ESMTPSA id v12sm4312997pgi.44.2021.05.21.04.47.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 May 2021 04:47:34 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: Bug in git submodule update --remote
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
+Date:   Fri, 21 May 2021 17:17:30 +0530
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FCF5A210-4042-4C1B-87A5-83D916F02FCE@gmail.com>
+References: <c4b27662-1228-a1ff-26fc-637897ffc8e7@riscosopen.org>
+ <EB55447C-538F-44DE-BFC0-A3BD1A970E99@gmail.com>
+ <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
+To:     Ben Avison <bavison@riscosopen.org>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 19-May-2021, at 20:11, Ben Avison <bavison@riscosopen.org> wrote:
+>=20
+> On 19/05/2021 11:49, Atharva Raykar wrote:
+>> If I understood you correctly, you'd prefer that the updating of the
+>> submodule should be independent of the ref that is checked out in the
+>> submodule's directory.
+>>=20
+>> While I am not sure of the reason why the design of 'update
+>> --remote' uses the remote-tracking branch of the submodule, I can
+>> imagine adding a switch like 'submodule.<name>.remote' that defaults
+>> to 'origin'. Then the behaviour could be changed such that it always=20=
 
-On Thu, May 20 2021, Jeff King wrote:
+>> pulls from the remote specified in that option.
+>>=20
+>> This would help make the behaviour consistent in all the cases you=20
+>> mentioned, while also giving the option for a user to update the=20
+>> submodule from the remote of their choice (which may not be origin).
+>=20
+> I like that solution. Although, I should note that if the user has set
+> submodule.<name>.remote to something other than 'origin', they will =
+need
+> to ensure that submodule.<name>.branch is also set, or they will still
+> hit the "Unable to find current <remote>/HEAD revision in submodule"
+> error that I initially stumbled on.
+>=20
+> How about an implementation like the following? I introduced a new =
+"git
+> submodule--helper" command rather than modify "print-default-remote" =
+for
+> a couple of reasons:
+>=20
+> 1) "print-default-remote" is also used for "git submodule sync" (I'm =
+not
+> sure if we should change its behaviour too)
+>=20
+> 2) "print-default-remote" needs to be executed from within the
+> submodule, and takes no arguments, whereas I need to parse the
+> superproject's .git/config so need to be executed from the =
+superproject
+> and take the submodule path as an argument
+>=20
+> The two functions I added are heavily based on "git submodule--helper
+> remote-branch". However:
+>=20
+> * Unlike with the branch name, I don't fall back to using the name for
+> the remote cached from when we read the .gitmodules file, if it isn't
+> found in .git/config. It doesn't make sense to me for the .gitmodules
+> file to include this information, as any new clones will only contain
+> "origin" remotes anyway.
+>=20
+> * I removed "struct strbuf sb" since I don't think it's used.
+>=20
+> Ben
 
-> On Wed, May 19, 2021 at 09:13:18PM +0200, Patrick Steinhardt wrote:
->
->> One of the issues I've found is the object connectivity check, which may
->> run for a significant amount of time. The root cause here is that we're
->> computing connectivity via `git rev-list --not --all`: if we've got many
->> refs in the repository, computing `--not --all` is hugely expensive.
->> 
->> This commit series thus implements an alternative way of computing
->> reachability, which reuses information from the object quarantine
->> environment. Instead of doing a refwalk, we just look iterate over all
->> packed and loose quarantined objects any for each of them, we determine
->> whether their immediate references are all satisfied.
->
-> If I am reading the patches correctly, your definition of "satisfied"
-> is: the referenced object exists already on the receiving side.
->
-> But that's subtly different from the current rule, which is: the object
-> must be reachable from the current ref tips. The invariant that Git has
-> traditionally tried to maintain (for a repo not to be corrupt) is only
-> that we have the complete graph of objects reachable from the tips.
->
-> If we have an unreachable tree in the object database which references
-> blobs we don't have, that doesn't make the repository corrupt. And with
-> the current code, we would not accept a push that references that tree
-> (unless it also pushes the necessary blobs). But after your patch, we
-> would, and that would _make_ the repository corrupt.
->
-> I will say that:
->
->   1. Modern versions of git-repack and git-prune try to keep even
->      unreachable parts of the graph complete (if we are keeping object X
->      that refers to Y, then we try to keep Y, too). But I don't know how
->      foolproof it is (certainly the traversal we do there is "best
->      effort"; if there's a missing reference that exists, we don't
->      bail).
->
->   2. This is not the only place that just checks object existence in the
->      name of speed. When updating a ref, for example, we only check that
->      the tip object exists.
+Thanks for this. I am quite new around here, and I will be working
+on porting the whole of 'submodule update' to C in the coming months.
 
-Hopefull you mean "when we update a ref locally", i.e. update-ref, not
-receive-pack.
+Since this would modify the behaviour of the update subcommand, I
+have decided to CC my mentors (Christian and Shourya) who are more
+qualified than me to comment on this proposal.
 
-I think that's fine, and we should consider these corruption detections
-to have two different classes, there's the local update-ref, mktag
-etc. which typically only do skin-deep checking, and the full check we
-want to do in receive-pack and other transport.fsckObjects.
+I personally feel that the current behaviour where the remote used
+depends on how the submodule is checked out is odd, and I don't
+mind addressing it while doing the conversion of this functionality.
 
-It's fine in practice for the "local" case to be fast and loose, but
-when you're accepting foreign objects over the network we should always
-be as paranoid as possible, both to prevent accidental corruption and
-deliberate attack.
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 9d505a6329..25ce3c8a1d 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2444,6 +2444,41 @@ static int resolve_remote_submodule_branch(int =
+argc, const char **argv,
+> 	return 0;
+> }
+>=20
+> +static const char *remote_submodule_remote(const char *path)
+> +{
+> +	const struct submodule *sub;
+> +	const char *remote =3D NULL;
+> +	char *key;
+> +
+> +	sub =3D submodule_from_path(the_repository, &null_oid, path);
+> +	if (!sub)
+> +		return NULL;
+> +
+> +	key =3D xstrfmt("submodule.%s.remote", sub->name);
+> +	repo_config_get_string_tmp(the_repository, key, &remote);
+> +	free(key);
+> +
+> +	if (!remote)
+> +		return "origin";
+> +
+> +	return remote;
+> +}
+> +
+> +static int resolve_remote_submodule_remote(int argc, const char =
+**argv,
+> +		const char *prefix)
+> +{
+> +	const char *ret;
+> +	if (argc !=3D 2)
+> +		die("submodule--helper remote-remote takes exactly one =
+arguments, got %d", argc);
+> +
+> +	ret =3D remote_submodule_remote(argv[1]);
+> +	if (!ret)
+> +		die("submodule %s doesn't exist", argv[1]);
+> +
+> +	printf("%s", ret);
+> +	return 0;
+> +}
+> +
+> static int push_check(int argc, const char **argv, const char *prefix)
+> {
+> 	struct remote *remote;
+> @@ -2770,6 +2805,7 @@ static struct cmd_struct commands[] =3D {
+> 	{"deinit", module_deinit, 0},
+> 	{"summary", module_summary, SUPPORT_SUPER_PREFIX},
+> 	{"remote-branch", resolve_remote_submodule_branch, 0},
+> +	{"remote-remote", resolve_remote_submodule_remote, 0},
+> 	{"push-check", push_check, 0},
+> 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+> 	{"is-active", is_active, 0},
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index eb90f18229..4d0df1cf5a 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -577,7 +577,7 @@ cmd_update()
+> 				fetch_in_submodule "$sm_path" $depth ||
+> 				die "$(eval_gettext "Unable to fetch in =
+submodule path '\$sm_path'")"
+> 			fi
+> -			remote_name=3D$(sanitize_submodule_env; cd =
+"$sm_path" && git submodule--helper print-default-remote)
+> +			remote_name=3D$(git submodule--helper =
+remote-remote "$sm_path")
+> 			sha1=3D$(sanitize_submodule_env; cd "$sm_path" =
+&&
+> 				git rev-parse --verify =
+"${remote_name}/${branch}") ||
+> 			die "$(eval_gettext "Unable to find current =
+\${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
 
-None of that goes against what you're saying, just a bit of an
-elaboration.
-
-> [...]
-> There's another related change here that is actually a tightening of the
-> rules. The current code checks that the ref tips proposed by the sender
-> are valid.  If there are objects in the pack not needed for the ref
-> update, their connectivity isn't checked (though normal senders would
-> obviously avoid sending extra objects for no reason). Your "iterate over
-> all quarantined objects" makes that stricter.
->
-> I'm of two minds there:
->
->   1. We could easily keep the original rule by just traversing the
->      object graph starting from the ref tips, as we do now, but ending
->      the traversal any time we hit an object that we already have
->      outside the quarantine.
->
->   2. This tightening is actually important if we want to avoid letting
->      people _intentionally_ introduce the unreachable-but-incomplete
->      scenario. Without it, an easy denial-of-service corruption against
->      a repository you can push to is:
->
->        - push an update to change a ref from X to Y. Include all objects
-> 	 necessary for X..Y, but _also_ include a tree T which points to
-> 	 a missing blob B. This will be accepted by the current rules
-> 	 (but not by your patch).
->
->        - push an update to change the ref from Y to C, where C is a
-> 	 commit whose root tree is T. Your patch allows this (because we
-> 	 already have T in the repository). But the resulting repository
-> 	 is corrupt (the ref now points to an incomplete object graph).
-
-We should also consider not closing the door to some future
-optimizations and features by being overly strict with #2 here. Maybe
-I've misunderstood things, but I think tightening it would prevent
-things like:
-
- A. I'm pushing a ref update for X..Y, the server is at X, but I happen
-    to have a pack (e.g. from an earlier pull) that contains objects
-    from W..Y. The server doesn't need W..X, but I just sent the whole
-    W..Y set over saying "please update to Y".
-
- B. I got halfway with patches to make clients aid servers with
-    server-side corruption of objects (the root cause was some NFS
-    shenanigans + our non-fsync()-ing). A server would have an empty
-    loose object, to recover I needed to manually scp it from a
-    client->server. This happened a few times at odd hours.
-
-    With the not-accepted core.checkCollisions patch I hacked up for
-    related reasons[1] I found that we were actually quite close to
-    learning a mode on the server-side where we'd just blindly accept
-    such objects (the client would also need to learn to do a hail-mary
-    push).
-
-    Strictly speaking we could support such a recovery mode while still
-    having the #2 under discussion here (only accepting such objects if
-    our own repo is corrupt), but I thought it was rather neat that it
-    would naturally fall out of the general rule that we didn't care
-    about "redundant" objects + my tweaks to make the "there's a
-    collision" check less anal (in that case it was a false alarm, our
-    local object was corrupt, but not the one the remote end tried to
-    send).
-
-1. https://lore.kernel.org/git/20181113201910.11518-1-avarab@gmail.com/
