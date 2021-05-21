@@ -2,94 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D03EC433ED
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B046C433ED
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:37:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 837E06135A
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:34:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CE4B6135A
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236557AbhEUJfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 05:35:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33172 "EHLO cloud.peff.net"
+        id S236603AbhEUJic (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 05:38:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33190 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236053AbhEUJfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 05:35:42 -0400
-Received: (qmail 2869 invoked by uid 109); 21 May 2021 09:34:19 -0000
+        id S235864AbhEUJib (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 05:38:31 -0400
+Received: (qmail 2914 invoked by uid 109); 21 May 2021 09:37:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 May 2021 09:34:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 May 2021 09:37:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7825 invoked by uid 111); 21 May 2021 09:34:21 -0000
+Received: (qmail 7871 invoked by uid 111); 21 May 2021 09:37:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 May 2021 05:34:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 May 2021 05:37:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 May 2021 05:34:18 -0400
+Date:   Fri, 21 May 2021 05:37:06 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3] trace2: refactor to avoid gcc warning under -O3
-Message-ID: <YKd+mtQuW9Yz0qwh@coredump.intra.peff.net>
-References: <xmqqim3ew905.fsf@gitster.g>
- <patch-1.1-2e41e3e4cb-20210520T110357Z-avarab@gmail.com>
- <YKZgZZrZdKyUk9d9@coredump.intra.peff.net>
- <xmqqk0ntt5x0.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Gregory Anders <greg@gpanders.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 00/10] send-email: various optimizations to speed up
+ by >2x
+Message-ID: <YKd/QkWJtmeUJE8T@coredump.intra.peff.net>
+References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
+ <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
+ <YKYdeom6SgAHqojm@coredump.intra.peff.net>
+ <xmqqv97drmge.fsf@gitster.g>
+ <875yzcpo52.fsf@evledraar.gmail.com>
+ <YKd5xSw1bZbQXaAe@coredump.intra.peff.net>
+ <8735ugphge.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqk0ntt5x0.fsf@gitster.g>
+In-Reply-To: <8735ugphge.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 21, 2021 at 07:08:11AM +0900, Junio C Hamano wrote:
+On Fri, May 21, 2021 at 11:24:00AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> @@ -287,7 +285,7 @@ static int tr2_dst_try_unix_domain_socket(struct tr2_dst *dst,
-> >>  	if (tr2_dst_want_warning())
-> >>  		warning("trace2: could not connect to socket '%s' for '%s' tracing: %s",
-> >>  			path, tr2_sysenv_display_name(dst->sysenv_var),
-> >> -			strerror(e));
-> >> +			strerror(errno));
+> > Using a non-flattened structure would have prevented this (we'd sensibly
+> > get undef when trying to access the missing second element of the
+> > array). But I do agree the flattened structure is more perl-ish.
+> > Probably you'd want to insert an explicit "undef" into the list. The
+> > most perl-ish I could come up with is:
 > >
-> > We expect the value of errno to persist across tr2_dst_want_warning()
-> > and tr2_sysenv_display_name() here. The former may call getenv() and
-> > atoi(). I think that's probably fine, but if we wanted to be really
-> > paranoid, we'd have to preserve errno manually here, too.
+> >   my (@kv) = map { my ($k, $v) = split /\n/, $_, 2;
+> >                    ($k, $v)
+> >                  } split /\0/, $data;
+> >
+> > I notice that $known_keys then becomes a non-flat representation. You'd
+> > either want to turn that back into a zero-length array there, or store
+> > the "undef" and handle it appropriately (it can be a synonym for "true",
+> > though that is just an optimization at this point).
+> >
+> > -Peff
 > 
-> Being "really paranoid" consistently within the file would mean a
-> change like the attached, I would think, on top of what was posted.
+> Ah yes, that's indeed a bug. I'd forgetten about the empty value case.
 > 
-> Or tr2_dst_want_warning() and tr2_sysenv_display_name() can be
-> taught to preserve errno like tr2_dst_dry_uds_connect() was taught
-> to do so by the patch under discussion, which may reduce the amount
-> of apparent change, but constantly moving the contents of errno
-> around just in case we later might want to use its value feels
-> dirty.
-> 
-> I dunno.
-> 
->  trace2/tr2_dst.c | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+> For what it's worth you can slightly golf that as (split /\n/, $_,
+> 2)[0,1], but I think in this case your version is better than that, it's
+> more obvious what we're trying to do in always returning the $v.
 
-Ah, yeah. I didn't look to see if there were existing cases of the same
-thing.
+Heh. Thanks, I almost invited you to golf it because I was curious if we
+could continue to do it in one line. I see I didn't need to ask. :)
 
-I could go either way on this kind of saved_errno thing in general (the
-tr2 functions called in between are really quite unlikely to set errno
-(I am not even sure if getenv() and atoi() can, so this really might
-just be future-proofing in case those tr2 functions get more
-complicated).
-
-But seeing that there are other cases of the same, I definitely think it
-is not something that should be in Ævar's patch. It is a cleanup we
-could do on top if we cared to.
+Yours is clever and I'm glad to be enlightened, but I agree the
+two-liner is probably more obvious (perhaps even a comment like
+"bool-only values omit the newline and become undef" is worth it).
 
 -Peff
