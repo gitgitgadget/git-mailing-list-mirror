@@ -5,66 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 597E0C04FF3
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B89B6C4707A
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:37:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 37320613D8
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:37:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F2E86128A
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbhEUWic (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 18:38:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39448 "EHLO
+        id S230051AbhEUWid (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 18:38:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229990AbhEUWib (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 18:38:31 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD779C061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:37:06 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id b25so21168474oic.0
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:37:06 -0700 (PDT)
+        with ESMTP id S229990AbhEUWic (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 18:38:32 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77CA9C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:37:08 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id r26-20020a056830121ab02902a5ff1c9b81so19425400otp.11
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LcHlKLi9XHJ5zeaM219u//KyMDQfD2a0BXuqf+hmn8M=;
-        b=YjK7mZ2tTIqpNMsfRS7GBxnjVwM/zYX0YNwRpRdGsXI/6UhYjSqWvM6v/8yZxPr1J9
-         gFIqjwIxsN6IQRtut5wYTnVLBzR1sXz8tXHh0BYxqbpoBb7EdO+Z3WCc6RD0ElTcscP4
-         6z1yEC8Z3gnidmm54HjRvRn+1SYURvjZhTzAWKSvcjWobdh2u137wEN3O+HEPW8aoK2w
-         JgZjNNz+rblYu7AC70Tr9R8n+3U303bw4zRxCRFqtYxM17IWIZ2CWnJefUDU2yMUMANk
-         B5h4EZYRzfEfaw2+FOir26dM96fo6lf/nRWiwxO31WRzS0OghpCCLRDEVYy4QGKofNUm
-         Sc4g==
+        bh=ZY08OiHT1yl6uv7E2pgFnP7wdYDcAdVofYB9KZKxJz0=;
+        b=RtlYQMey3OHgZPGCEOT0lUayyolOD2YsZPeDRA9hxWuF1bkTYoQBiTBtwp1+CyKhzq
+         1CfvzccWEqAXLgQyrNAfbRRZzOwT8BBYqSuONGWnfKcRAd2LY6Y9zOz/fXO25r8VndjU
+         CcfhdaDK/9SvuGD1pwezsNxK+iAdHEZsH9/RIlscuMiKhpMi0O3aZGNtmS4ARcOTFROY
+         praZ4H/UIw0E5XIrd+7//2hpAlviK50q9hYq43Ipayw2OfMAXUSq+RaaaXbf/XuC0DSo
+         fDcVhAgbkO1GWGVD3qrBEPPItk+aYeTBpSPC2OfbLExsRoY6JZkBmGhLDp6WihXEISfU
+         /vog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LcHlKLi9XHJ5zeaM219u//KyMDQfD2a0BXuqf+hmn8M=;
-        b=KFIbKQFBp05BtK/v3kyBkcdDn1B4B8dHnGU99alUSkNHJ0cuIEZUR3cewuf54JEhCo
-         tchesLArf6akVAT3lKIk+I/Ogza4tkvhapy+gmssHOm4NXxAWR3wZT7t003zx34YWHIk
-         xr12FTzC9HTywbnU7fyXmBzsTJn1IkAslpfjM1c6GCRbMYS7ySiEb7byHq4spdfdTHcP
-         h+EDAW4M8AU5Hl1YcZ8hK4/Ou+kEIrZu3fEHemYF9yTn1i7l3Oy6BMLQJqnT1tHN02Xw
-         kL+wqJ2RKjx+h73OVFVq2AREXefxSw0tiZvorfATZ1md9ui5p+K4qSyA2QcLY3z/dDYn
-         NQuA==
-X-Gm-Message-State: AOAM5309AOZ4aPLyq92Q1+ICNNU+C85SL5OBSDIqCJSm/FMaBv0box1n
-        T+GdbfwoIwL7Uvjl3Xg7oh0bpmIdsu3EVQ==
-X-Google-Smtp-Source: ABdhPJzOFDcn8GgCfHltCke4arhqigRtXVpzr+ZeN95wvuJJNNAYxAf9B79hWstm3WJbsXq8iAfomQ==
-X-Received: by 2002:aca:44a:: with SMTP id 71mr3656863oie.39.1621636626017;
-        Fri, 21 May 2021 15:37:06 -0700 (PDT)
+        bh=ZY08OiHT1yl6uv7E2pgFnP7wdYDcAdVofYB9KZKxJz0=;
+        b=h/yy4M540Sz97rypZslk5cu2WL7oaGCER7/sblYqMcwRBGHg1t1u7a622Y9VcUx2Jb
+         Xzb7sGnYntrVLSBu38qszQBYEtQ0iOsmbbdCbFHDw9M/3Ue5ezPXBf2TVRGM18+8IC+T
+         bqKl/RMhrtAa/mRitm/5lzmeNUyw3GRgocmx1N9WVn5szrL09SQ7eHBPSp4eTCT/7an3
+         Tu4knO99AHuYAkrVGudjqRuS4WroDvIpK6hURVWYz+vDZVW86P6kWenhk+YMAWUt42eH
+         EwU7gIFFfcJKpaaPhaTUq9H8JFI+8KOS5OFuxHrT+SHc9iE3m3UohV/qppiEM4RnkTOW
+         hPnQ==
+X-Gm-Message-State: AOAM530MDfekfqWWlizA/9d50W1367/fTCdmmKdkmUEgTv9gvM3jkE/b
+        O6kUyCxgiUl7pJRRRmmlUtknr8Ei4KELeQ==
+X-Google-Smtp-Source: ABdhPJykp93hphR0ZHVTCpI/FarNa0u9wOtMBt2rLzSm9Uws/TPgb94m6PWLIN9NPN+Dr7zqugifQw==
+X-Received: by 2002:a05:6830:1251:: with SMTP id s17mr10355388otp.81.1621636627610;
+        Fri, 21 May 2021 15:37:07 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id p1sm1609375otk.58.2021.05.21.15.37.05
+        by smtp.gmail.com with ESMTPSA id n5sm1567695otq.69.2021.05.21.15.37.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 15:37:05 -0700 (PDT)
+        Fri, 21 May 2021 15:37:07 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 02/12] doc: use --stringparam in xmlto
-Date:   Fri, 21 May 2021 17:36:51 -0500
-Message-Id: <20210521223701.526547-3-felipe.contreras@gmail.com>
+Subject: [PATCH v2 03/12] doc: simplify version passing
+Date:   Fri, 21 May 2021 17:36:52 -0500
+Message-Id: <20210521223701.526547-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0
 In-Reply-To: <20210521223701.526547-1-felipe.contreras@gmail.com>
 References: <20210521223701.526547-1-felipe.contreras@gmail.com>
@@ -74,69 +74,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 50d9bbba92 (Documentation: Avoid use of xmlto --stringparam,
-2009-12-04) introduced manpage-base-url.xsl because ancient versions of
-xmlto did not have --stringparam.
+The code to pass the version of the man page comes from 2007:
+7ef195ba3e (Documentation: Add version information to man pages,
+2007-03-25). However, both asciidoc and asciidoctor already do this by
+default.
 
-However, that was more than ten years ago, no need for that complexity
-anymore.
+Asciidoctor doesn't read manversion, but there's no need since both
+tools just join mansource and manversion.
+
+Let's do that ourselves and get rid of a bunch of code.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/.gitignore              |  1 -
- Documentation/Makefile                |  8 ++------
- Documentation/manpage-base-url.xsl.in | 10 ----------
- 3 files changed, 2 insertions(+), 17 deletions(-)
- delete mode 100644 Documentation/manpage-base-url.xsl.in
+ Documentation/Makefile                  |  3 +--
+ Documentation/asciidoc.conf             | 19 -------------------
+ Documentation/asciidoctor-extensions.rb | 17 -----------------
+ 3 files changed, 1 insertion(+), 38 deletions(-)
 
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index 9022d48355..e9f8d693b1 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -10,7 +10,6 @@ howto-index.txt
- doc.dep
- cmds-*.txt
- mergetools-*.txt
--manpage-base-url.xsl
- SubmittingPatches.txt
- tmp-doc-diff/
- GIT-ASCIIDOCFLAGS
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index bf1f66b3eb..84643a34e9 100644
+index 84643a34e9..47053c78f8 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -176,7 +176,7 @@ endif
- ifndef MAN_BASE_URL
- MAN_BASE_URL = file://$(htmldir)/
- endif
--XMLTO_EXTRA += -m manpage-base-url.xsl
-+XMLTO_EXTRA += --stringparam man.base.url.for.relative.links='$(MAN_BASE_URL)'
+@@ -137,8 +137,7 @@ ASCIIDOC_HTML = xhtml11
+ ASCIIDOC_DOCBOOK = docbook
+ ASCIIDOC_CONF = -f asciidoc.conf
+ ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
+-		-amanversion=$(GIT_VERSION) \
+-		-amanmanual='Git Manual' -amansource='Git'
++		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)'
+ ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
+ TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
+ TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 3e4c13971b..60f76f43ed 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -51,25 +51,6 @@ ifdef::doctype-manpage[]
+ endif::doctype-manpage[]
+ endif::backend-docbook[]
  
- ifdef USE_ASCIIDOCTOR
- ASCIIDOC = asciidoctor
-@@ -342,7 +342,6 @@ clean:
- 	$(RM) technical/*.html technical/api-index.txt
- 	$(RM) SubmittingPatches.txt
- 	$(RM) $(cmds_txt) $(mergetools_txt) *.made
--	$(RM) manpage-base-url.xsl
- 	$(RM) GIT-ASCIIDOCFLAGS
- 
- $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
-@@ -351,10 +350,7 @@ $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
- $(OBSOLETE_HTML): %.html : %.txto $(ASCIIDOC_DEPS)
- 	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -o $@ $<
- 
--manpage-base-url.xsl: manpage-base-url.xsl.in
--	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+-ifdef::doctype-manpage[]
+-ifdef::backend-docbook[]
+-[header]
+-template::[header-declarations]
+-<refentry>
+-<refmeta>
+-<refentrytitle>{mantitle}</refentrytitle>
+-<manvolnum>{manvolnum}</manvolnum>
+-<refmiscinfo class="source">{mansource}</refmiscinfo>
+-<refmiscinfo class="version">{manversion}</refmiscinfo>
+-<refmiscinfo class="manual">{manmanual}</refmiscinfo>
+-</refmeta>
+-<refnamediv>
+-  <refname>{manname}</refname>
+-  <refpurpose>{manpurpose}</refpurpose>
+-</refnamediv>
+-endif::backend-docbook[]
+-endif::doctype-manpage[]
 -
--%.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
-+%.1 %.5 %.7 : %.xml $(wildcard manpage*.xsl)
- 	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+ ifdef::backend-xhtml11[]
+ [attributes]
+ git-relative-html-prefix=
+diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
+index d906a00803..70a0956663 100644
+--- a/Documentation/asciidoctor-extensions.rb
++++ b/Documentation/asciidoctor-extensions.rb
+@@ -23,26 +23,9 @@ module Git
+         end
+       end
+     end
+-
+-    class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
+-      def process document, output
+-        if document.basebackend? 'docbook'
+-          mansource = document.attributes['mansource']
+-          manversion = document.attributes['manversion']
+-          manmanual = document.attributes['manmanual']
+-          new_tags = "" \
+-            "<refmiscinfo class=\"source\">#{mansource}</refmiscinfo>\n" \
+-            "<refmiscinfo class=\"version\">#{manversion}</refmiscinfo>\n" \
+-            "<refmiscinfo class=\"manual\">#{manmanual}</refmiscinfo>\n"
+-          output = output.sub(/<\/refmeta>/, new_tags + "</refmeta>")
+-        end
+-        output
+-      end
+-    end
+   end
+ end
  
- %.xml : %.txt $(ASCIIDOC_DEPS)
-diff --git a/Documentation/manpage-base-url.xsl.in b/Documentation/manpage-base-url.xsl.in
-deleted file mode 100644
-index e800904df3..0000000000
+ Asciidoctor::Extensions.register do
+   inline_macro Git::Documentation::LinkGitProcessor, :linkgit
+-  postprocessor Git::Documentation::DocumentPostProcessor
+ end
 -- 
 2.32.0.rc0
 
