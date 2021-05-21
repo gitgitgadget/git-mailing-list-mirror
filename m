@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CE81C4707E
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B35C04FF3
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:29:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFC2A61176
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:29:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9DF4613AF
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbhEUWbL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 18:31:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37740 "EHLO
+        id S230084AbhEUWbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 18:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230041AbhEUWbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 18:31:11 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB71C061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:29:47 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id z3so21078377oib.5
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:29:47 -0700 (PDT)
+        with ESMTP id S230040AbhEUWbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 18:31:12 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4D9BC061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:29:48 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id s19so21073512oic.7
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EngQxQ8pAxLlJBn/CT0/ygSPsaAUFbJgCPVI7msVSrE=;
-        b=TrfQJ8N2w/PZfUfatb1HzibtfmMUhdQ2DgiFQIJStFuGzKRXy8oK0GdeoYJYfPxyzZ
-         FOQPSoZ6MA2f+/kFqs8SUWKkbJmctFNy8cCm/NMFmwAguuXBfopKQUdtc/HYIo9hF4ck
-         t5WULQvdPK0oHehowmwVdxL/PYZ2RqUL+ZUCXvpFEMZ46AAtzKAOh4Rx+6oH/DjkOR59
-         ixH5xOuuUK29U66MgsG0Mv8PoR8jBlsY1ioV1VTjZAlnUrxHGkd2PvaP+wFHZpSBazL8
-         YQtn0n2wHZzWSvDria4AC7HvHNdez5fkXsDbh7NAe2vAbwB4zDdNW6x5m9K3OZ6GEetn
-         TB3Q==
+        bh=is0R4bXlC4saveY4qJsSXT8vZR9yttYUs3cwoxi8/XM=;
+        b=isUg3wIq/5lhQwN09bTRRCg3LzHt32z4bdEtl7vHzIlvxkr+v3IViirIAdAPckKDBX
+         0avqf3vWLQ66jvKEfiYBNgkkS21tiWWDii46fzNGvyyIY1ZxL9SgQleyGshbHha0m1Tl
+         S32C4KQ7c8lFR5aQIYr/Jn0jNPKuC+iWpkNOL6fvYZ8i1YZc+P5zjnxDY13vSkBrRZJK
+         ITF6W11CaxSMFEl1zimqU7wl+61iyWc+6pizEx47DePFlJYc1xZQAO75MEVAXyOVtExv
+         52x+eUneeIRDDbtCKTdx1ylxLz6JThAUAzKot5bk+TqcqCremMr/yDspAwdMuHAdhwsA
+         Q4UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EngQxQ8pAxLlJBn/CT0/ygSPsaAUFbJgCPVI7msVSrE=;
-        b=QYD3tsrtzNbJoh0DyWGjWn1NCRooHKXhqqXXX07UMA5Hc0/7BCGEc6658Z+WBID2IG
-         SBWgFE/oWIyx2Dw/XFmriCoQlrrH71DNx4hUimTHKLsF1kyaiFW5TeB5MPPam0HG4nlP
-         mI3IzaZvFmnXLVtoePmySMnlhGKo9Ndw5lOXlPujXh9FYqcZgqmbO3OLkjTVya5cMSiC
-         EYt4dnmlM4zerGcw0hkv1nxtumVQ4jIseoCygUOEPqYnacgpxQdjcDyFuK24lMkmqGUa
-         u4KvTRmmr0aLungL7Lzdo/IPKdyf31MclKXGhCdbOXJzw51yzNoxQ+M5/f321Ouy/8kz
-         WN7A==
-X-Gm-Message-State: AOAM532hHB7BjW2HZRh7vXmDFtXFrlS/wURcarVaXBpMaqOdLW2uYjTR
-        rrrsDnj4T8rQ7OXoO9R0CAoPpbmbec72pg==
-X-Google-Smtp-Source: ABdhPJxtCtkrRKA4z5pNaZdNtSRmI5b9VReFhB5RNjOCBvn+Q8Y3qPSXp3BIAF3Zxdufth+Vjumjig==
-X-Received: by 2002:aca:2311:: with SMTP id e17mr3708664oie.160.1621636186269;
-        Fri, 21 May 2021 15:29:46 -0700 (PDT)
+        bh=is0R4bXlC4saveY4qJsSXT8vZR9yttYUs3cwoxi8/XM=;
+        b=X5MnfGNedcz8Lqn3nMrClzFLUhniB2dugYAXtFCwWemzlY6mEch+DQYwiCEZX8d6z2
+         LNLW8BdyVrsG2LEM8SZzfekiDuW5qPWSvyKdcn0cXszt3huXZk72eFvJ16tTv3MBmB7v
+         4sSAPXVRCpP6G7LJTQodHsYLV6MD6jrE1Wxh9QsuKBnQ66qudnVO6wmZJiecmfqF84Iz
+         6hnpAohs1qsL0Bz93ahs/9ndpqGAnNh86zME21PmewWT2NaPg1p+WkgWUjLnX5rG0bUr
+         PpX45gscWlgk1+c69mDu53qZ8vHtW1JPAcspnwPPY7tpPueY/F5DYqczNbDgCw1jcSxm
+         LnLw==
+X-Gm-Message-State: AOAM532EzdRENZQ/KkkXZr7OgLeqoNqHn7qtNMNkPAHh4JaCeojqjsuS
+        Cqn02AMAtFqz/M0sm1A5cIqwiP7Th5WhPQ==
+X-Google-Smtp-Source: ABdhPJzPHkYEOe+KRVZRzfXXAv6NTIVnN//1+PPC0V6sDs0D2TxKDI3EShca2ZLimBoJ32/bG0TwDg==
+X-Received: by 2002:a05:6808:5d8:: with SMTP id d24mr3712883oij.49.1621636187903;
+        Fri, 21 May 2021 15:29:47 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id y34sm1555536ota.16.2021.05.21.15.29.45
+        by smtp.gmail.com with ESMTPSA id u6sm1578701otk.63.2021.05.21.15.29.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 15:29:45 -0700 (PDT)
+        Fri, 21 May 2021 15:29:47 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 2/5] doc: improve asciidoc dependencies
-Date:   Fri, 21 May 2021 17:29:38 -0500
-Message-Id: <20210521222941.525901-3-felipe.contreras@gmail.com>
+Subject: [PATCH v3 3/5] doc: remove unnecessary rm instances
+Date:   Fri, 21 May 2021 17:29:39 -0500
+Message-Id: <20210521222941.525901-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0
 In-Reply-To: <20210521222941.525901-1-felipe.contreras@gmail.com>
 References: <20210521222941.525901-1-felipe.contreras@gmail.com>
@@ -76,36 +76,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-asciidoc needs asciidoc.conf, asciidoctor asciidoctor-extensions.rb.
+Commits 50cff52f1a (When generating manpages, delete outdated targets
+first., 2007-08-02) and f9286765b2 (Documentation/Makefile: remove
+cmd-list.made before redirecting to it., 2007-08-06) created these rm
+instances for a very rare corner-case: building as root by mistake.
 
-Neither needs the other.
+It's odd to have workarounds here, but nowhere else in the Makefile--
+which already fails in this stuation, starting from
+Documentation/technical/.
 
+We gain nothing but complexity, so let's remove them.
+
+Comments-by: Jeff King <peff@peff.net>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/Makefile | 42 +++++++++++++++---------------------------
+ 1 file changed, 15 insertions(+), 27 deletions(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 46d9b98dac..0f59cc0853 100644
+index 0f59cc0853..73b88c3aad 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -139,7 +139,7 @@ ASCIIDOC_CONF = -f asciidoc.conf
- ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
- 		-amanversion=$(GIT_VERSION) \
- 		-amanmanual='Git Manual' -amansource='Git'
--ASCIIDOC_DEPS = asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
-+ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
- TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
- TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
- MANPAGE_XSL = manpage-normal.xsl
-@@ -194,6 +194,7 @@ ASCIIDOC_DOCBOOK = docbook5
- ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
- ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
- ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-+ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
- DBLATEX_COMMON =
- XMLTO_EXTRA += --skip-validation
- XMLTO_EXTRA += -x manpage.xsl
+@@ -296,8 +296,7 @@ docdep_prereqs = \
+ 	cmd-list.made $(cmds_txt)
+ 
+ doc.dep : $(docdep_prereqs) $(DOC_DEP_TXT) build-docdep.perl
+-	$(QUIET_GEN)$(RM) $@+ $@ && \
+-	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
++	$(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
+ 	mv $@+ $@
+ 
+ ifneq ($(MAKECMDGOALS),clean)
+@@ -318,8 +317,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
+ $(cmds_txt): cmd-list.made
+ 
+ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+-	$(QUIET_GEN)$(RM) $@ && \
+-	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
++	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
+ 	date >$@
+ 
+ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+@@ -327,7 +325,7 @@ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+ $(mergetools_txt): mergetools-list.made
+ 
+ mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
+-	$(QUIET_GEN)$(RM) $@ && \
++	$(QUIET_GEN) \
+ 	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && \
+ 		. ../git-mergetool--lib.sh && \
+ 		show_tool_names can_diff "* " || :' >mergetools-diff.txt && \
+@@ -357,30 +355,25 @@ clean:
+ 	$(RM) GIT-ASCIIDOCFLAGS
+ 
+ $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
+-	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	$(TXT_TO_HTML) -d manpage -o $@+ $< && \
++	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -d manpage -o $@+ $< && \
+ 	mv $@+ $@
+ 
+ $(OBSOLETE_HTML): %.html : %.txto $(ASCIIDOC_DEPS)
+-	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	$(TXT_TO_HTML) -o $@+ $< && \
++	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -o $@+ $< && \
+ 	mv $@+ $@
+ 
+ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+ 
+ %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+-	$(QUIET_XMLTO)$(RM) $@ && \
+-	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
++	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+ 
+ %.xml : %.txt $(ASCIIDOC_DEPS)
+-	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	$(TXT_TO_XML) -d manpage -o $@+ $< && \
++	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@+ $< && \
+ 	mv $@+ $@
+ 
+ user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+-	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	$(TXT_TO_XML) -d book -o $@+ $< && \
++	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d book -o $@+ $< && \
+ 	mv $@+ $@
+ 
+ technical/api-index.txt: technical/api-index-skel.txt \
+@@ -402,27 +395,24 @@ XSLTOPTS += --stringparam html.stylesheet docbook-xsl.css
+ XSLTOPTS += --param generate.consistent.ids 1
+ 
+ user-manual.html: user-manual.xml $(XSLT)
+-	$(QUIET_XSLTPROC)$(RM) $@+ $@ && \
+-	xsltproc $(XSLTOPTS) -o $@+ $(XSLT) $< && \
++	$(QUIET_XSLTPROC)xsltproc $(XSLTOPTS) -o $@+ $(XSLT) $< && \
+ 	mv $@+ $@
+ 
+ git.info: user-manual.texi
+ 	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split -o $@ user-manual.texi
+ 
+ user-manual.texi: user-manual.xml
+-	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+-	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
++	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
+ 	$(PERL_PATH) fix-texi.perl <$@++ >$@+ && \
+ 	rm $@++ && \
+ 	mv $@+ $@
+ 
+ user-manual.pdf: user-manual.xml
+-	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
+-	$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
++	$(QUIET_DBLATEX)$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
+ 	mv $@+ $@
+ 
+ gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
+-	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
++	$(QUIET_DB2TEXI) \
+ 	($(foreach xml,$(sort $(MAN_XML)),xsltproc -o $(xml)+ texi.xsl $(xml) && \
+ 		$(DOCBOOK2X_TEXI) --encoding=UTF-8 --to-stdout $(xml)+ && \
+ 		rm $(xml)+ &&) true) > $@++ && \
+@@ -434,13 +424,11 @@ gitman.info: gitman.texi
+ 	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate $*.texi
+ 
+ $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+-	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+-	$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
++	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
+ 	mv $@+ $@
+ 
+ howto-index.txt: howto-index.sh $(HOWTO_TXT)
+-	$(QUIET_GEN)$(RM) $@+ $@ && \
+-	'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@+ && \
++	$(QUIET_GEN)'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@+ && \
+ 	mv $@+ $@
+ 
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+@@ -450,7 +438,7 @@ WEBDOC_DEST = /pub/software/scm/git/docs
+ 
+ howto/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+ $(patsubst %.txt,%.html,$(HOWTO_TXT)): %.html : %.txt GIT-ASCIIDOCFLAGS
+-	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
++	$(QUIET_ASCIIDOC) \
+ 	sed -e '1,/^$$/d' $< | \
+ 	$(TXT_TO_HTML) - >$@+ && \
+ 	mv $@+ $@
 -- 
 2.32.0.rc0
 
