@@ -7,130 +7,105 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1B59C47076
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 141FEC4707C
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:14:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4C75613DB
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:09:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E92F0613DA
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 18:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238557AbhEUSKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 14:10:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35194 "EHLO
+        id S235306AbhEUSQB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 14:16:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbhEUSKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 14:10:42 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 555ACC061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 11:09:19 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id s19so20433750oic.7
-        for <git@vger.kernel.org>; Fri, 21 May 2021 11:09:19 -0700 (PDT)
+        with ESMTP id S235343AbhEUSP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 14:15:57 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7389C0613ED
+        for <git@vger.kernel.org>; Fri, 21 May 2021 11:14:31 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id j17-20020a4ad6d10000b02901fef5280522so4790898oot.0
+        for <git@vger.kernel.org>; Fri, 21 May 2021 11:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=jH50ug+CwaFsWvUIOOFNX7MszizIWHrCTmgm5JPrfSE=;
-        b=ZP9ZSq4q9eegapGCF9wR1sAM3onH48CsB81pngJYzizsYCfAOp8nhvXXikzitKeO67
-         /uQ4ySXp6Feevnw4GNT4HWvjCoM9Sa6ChkytYKP6512Fu/Eg4RZuRCVB53k2Yd4YHCbR
-         O64Fc1ARpapao8az/AWv8krsL0CaVFiRJm+UhWGEqlbOqbuMxCNCgfTalCwH5pqWAzpH
-         YDNiabVh1/6/nCMHjI8nbOpeb5IIabwAUb99pgNeoPK1Q0Oe32acdNFvcorEJ5KTUzAj
-         SUe2ZEtAWX2SipkWcmh0jihKlgeM3sSEzzqnL8oHXPc6XiePLWI5slA9L4fuJwtqVQ/O
-         Xkyw==
+        bh=KHY8/jJtExFUI8fXvKQnfCEA4cXPHeVWeXornq7MFQI=;
+        b=iWbONnttlLLqqlYvv6oTGkeU/IYZ3qqMtDIsCQ2Qz4yn0ZwjNXfp6KdSHu67t3R9gE
+         DHkG71Qn7snQpbDjdXnVYchfJTsL0uh57Mvs1GPiqJiuA4jkWzCdBChSfGhN/X2gTkrt
+         Sg54O6rm6KlZOmhLHLoTlxkiu3O912tgjslkwOkLEOw4EkQuMwNOE/LCf6uIEgOWGw2I
+         eIa5kKmYuMLVNb5m+L6JfOZXrhHhI2cPyANRjUWt4kgqCot0ey3NAM+dqD5UtlnAfnji
+         OfmY63gVvTWjavWMAX+QBPg0CatFEQoyPqdKG9mu7JBvScZY00bNPFh1fUu6NnV22yz5
+         WAQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=jH50ug+CwaFsWvUIOOFNX7MszizIWHrCTmgm5JPrfSE=;
-        b=NeQQqtg3WsL6MNhiaJrrUjoSIAbklRRJLlOP6mHopB4oEVPB+T7rwY1RN5QxhR1R1Q
-         6DCPthg5bMtM6CwS3Wio4HvxDM00XGo1z4Dh9QLMiMoGj+v6Wxj1oFoqpTZ0R0rTOcwE
-         XPQthorXQfYBebtOUCjwo12nN5SD3HxaqIMcCaS8jqKZpYRZFDY9SxszLLyhDanvTSeY
-         U6PG+Lr8pAT+Fw2dD53xx3yQZdM+xJViTkPE7L+sZtFj5NzaqsRDCCNIdCwKO2CDFMLC
-         xfQ7gl/iGGWTssZZviyBwIYZCQg0tuSIv3Ab2IcC1yX0V4yjw4dVCRn0EXMrvNJZHSmI
-         Rr7w==
-X-Gm-Message-State: AOAM530gK7qroEwi0F7GdWFKn0FMQh9adwQUdHQTFAZOGbXqddad6SJr
-        Hu8+DrSz0Rg9twO+7tiHH/0=
-X-Google-Smtp-Source: ABdhPJzgG22QrOOekc8N+g5Dh+2J5S/fVwS0R0g0qowmivtWcqbS6/jtNZfD5WxuqA3tBfz0RKuXUA==
-X-Received: by 2002:aca:4ed4:: with SMTP id c203mr3099473oib.51.1621620558781;
-        Fri, 21 May 2021 11:09:18 -0700 (PDT)
+        bh=KHY8/jJtExFUI8fXvKQnfCEA4cXPHeVWeXornq7MFQI=;
+        b=RMqVhrjJH7K0zmnB16da4bBrEqvZYUXK9vRrFVrzUmulW2Vw1qUmYB8WAf6kOpzJg6
+         KgBptcz+ZdJbW1Utf0ASkY3ISj+UL0Mcie80g732O6F5rIPfOlD5ds9KAxDS9K8fv9/y
+         9mMIKyVr1BjpaM/NYTF0Jucjpgv1W8Q4si4ab2xkof6/uzXkGOrSXfe1YHbgtfL9soIr
+         FAPUT4crIq3qklpbnm7gBXQghkQSuIMeRzaSprEW6jsM+Wsgl1050TfxtLdECzAW2CmP
+         bVkgE+IOKZ0okpNlLzCGh+AysiQ7QR8vaMQjwU+fubTgvvf+uhw4p11/0VCeEZ8UdixH
+         6CQg==
+X-Gm-Message-State: AOAM530GHIU7PgkmA0pTPUjhpdDaRBoJp+gdjYy2/EFAwIgOAQNDtSt7
+        kiugdoyOhsRivTFJAWmn1g0=
+X-Google-Smtp-Source: ABdhPJzJvguiVR7BLKeT+cQ0kZsqtXbYS+P3gvwJAuACuQ5B03eWyss2+Iz2mvLh9pg8tA0oKaufGg==
+X-Received: by 2002:a4a:d543:: with SMTP id q3mr9209194oos.72.1621620871250;
+        Fri, 21 May 2021 11:14:31 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id w4sm1499741otl.21.2021.05.21.11.09.17
+        by smtp.gmail.com with ESMTPSA id r10sm1257676oic.4.2021.05.21.11.14.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 11:09:17 -0700 (PDT)
-Date:   Fri, 21 May 2021 13:09:06 -0500
+        Fri, 21 May 2021 11:14:30 -0700 (PDT)
+Date:   Fri, 21 May 2021 13:14:29 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+To:     Sergey Organov <sorganov@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Leah Neukirchen <leah@vuxu.org>
-Message-ID: <60a7f7427eab6_55039208ba@natae.notmuch>
-In-Reply-To: <YKcFrbuuJrWAxXgm@camp.crustytoothpaste.net>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
- <60a332fd22dad_14c8d4208ed@natae.notmuch>
- <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
- <xmqqfsyj1qe1.fsf@gitster.g>
- <YKRy6oPkgS6FMSZ0@camp.crustytoothpaste.net>
- <xmqq1ra3z23n.fsf@gitster.g>
- <87lf8bqdv0.fsf@evledraar.gmail.com>
- <YKcFrbuuJrWAxXgm@camp.crustytoothpaste.net>
-Subject: Re: [PATCH] help: colorize man pages
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Message-ID: <60a7f88565aa8_5503920832@natae.notmuch>
+In-Reply-To: <87sg2h9m2n.fsf@osv.gnss.ru>
+References: <CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com>
+ <20210510153451.15090-1-sorganov@gmail.com>
+ <20210510153451.15090-7-sorganov@gmail.com>
+ <xmqqsg2toqik.fsf@gitster.g>
+ <xmqqo8dhool7.fsf@gitster.g>
+ <87v97pv04p.fsf@osv.gnss.ru>
+ <CABPp-BEwp5bWWaBkv-G+OAJgd+pcsB=GoMCBd+gnhK5JAAnFgQ@mail.gmail.com>
+ <YKWG0jgYXAnKUJNR@google.com>
+ <87sg2h9m2n.fsf@osv.gnss.ru>
+Subject: Re: [PATCH 6/6] diff-merges: let -m imply -p
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On 2021-05-19 at 08:41:44, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote=
-:
-> > It also doesn't seem to me to satisfy their FAQ point #1, i.e. users =
-who
-> > actually want no color at all can just set TERM=3Ddumb, and we suppor=
-t
-> > that. The proposed patch is the same as having TERM=3Ddumb set.
-> > =
+Sergey Organov wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> > This NO_COLOR=3D1 actually means something like "I do support colors,=
- so
-> > show them if it's important, but don't color things willy-nilly".
-> =
+> > I don't have a strong opinion about what the default for -m should be.
+> >
+> >> I think --cc is a lot better than -m for helping you find what users
+> >> changed when they did the merge, but I agree the format is somewhat
+> >> difficult for many users to understand.
+> 
+> I do have strong opinion. --diff-merges=1 is the only sensible
+> factory-default. Not only it has no implicit assumptions about how given
+> commit has been achieved, it's also the only format even entire Git
+> newbie might already be familiar with.
 
-> I don't agree.  The way I read it is that it means that if your program=
+I agree.
 
-> receives colored input, it is not obligated to strip it out, but it is
-> obligated not to add any.
+> Principle of least surprise is still a good thing to follow.
 
-The very example they give says otherwise:
+I could not agree more.
 
-  It is reasonable to configure certain software such as a text editor
-  to use color
-
-They are saying a text editor adding color is *fine*.
-
-> NO_COLOR=3D1 says, "I don't want color, but I have a fully functional
-> terminal I would like to use, thank you."
-
-That's not what it says.
-
-> In other words, I think in this case, the user has opted to configure
-> their editor as they like it and invoke it without NO_COLOR, but has
-> instructed other programs to not add color with NO_COLOR.
-
-That is a reasonable interpretation... until you read the next
-answer:
-
-  A user should be able to export $NO_COLOR in their shell configuration
-  file as a default, but configure a specific program in its
-  configuration file to specifically enable color.
-
-The whole point is not to configure each program to disable color, but
-have a global NO_COLOR.
-
-So I don't think your interpretation is correct.
-
--- =
-
-Felipe Contreras=
+-- 
+Felipe Contreras
