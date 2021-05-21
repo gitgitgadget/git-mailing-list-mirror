@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD4DC4707E
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B10DC4707F
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:45:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 313B5613AF
+	by mail.kernel.org (Postfix) with ESMTP id F2B70613AF
 	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbhEUWqn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 18:46:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41332 "EHLO
+        id S230146AbhEUWqo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 18:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230150AbhEUWqf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 18:46:35 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9C4C06138E
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:45:11 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so19449182otp.4
-        for <git@vger.kernel.org>; Fri, 21 May 2021 15:45:11 -0700 (PDT)
+        with ESMTP id S230157AbhEUWqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 18:46:37 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2349BC061342
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:45:13 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id s19so21104064oic.7
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=b1yCu4/hV2BR/zfanL7W8lWbqh32GElVDBuizt+GdKI=;
-        b=QGRxtl9GC6JhvcIsVe+g4Mv7XtxTzrkReSASDNjLX8ea2cK34z9nTS6Ir8262wOVym
-         W67YAtCYjScHs3Prq2HqYywFpaX8ItUB+EsN5CahmO389Sb0S6NbrADidE1DZmJ/gQdB
-         bFnQKf49Y6OjJyq4pvI2w0zXS52L2qwcwYWvvnc0LyYvdCRFmzmDBaim405Hp+eWLshb
-         udHjP34Q8bsEFofkgShPZnG9Ij5i3LmqbFHPbLK63WkqHbXMe4hEDWXoA3gq58Uf6li/
-         4Bv9VVZeZRWPeKdFgVzEbl5oVb8AGkl3Lu9aUjBFFpJBb9ghCraNorWwxg1TFGbyeHhw
-         uokQ==
+        bh=+PF8VNqX3CxWZcWikvCpbjoN5l4qx72eHU1ZnJexGhI=;
+        b=N3mB5LMfXIOHmeqeD3mBtsmH1dfB4VECYix3mImt1uvm+jo2ieIcoP9cjMtiSQMSI+
+         VKWskP3l5awX4fypURqSf858HHtTNtdlXeG4b5uL5ZRXvBS7gLnQMBqUTnbBSGdSCO0j
+         Swr3/L1swXASpxvyRJVqx1peVZ7stZhRenR+J7x8hyUMSqXKdc3RonXVAwmFlXR3D3RN
+         7kLMZ1z24Cv8VHc4lQRyFzHylNO0aVZ3l8Of/EAlIASn1WOPf4OQ+Ybiav9zz0TAKaH5
+         UR+KE5WNmG8Oc7pTx+6rpn5to7T1ZnaVGBtNk8gXoD7LP4XGbuVVKMVXeEOTpmwpdobX
+         rkDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=b1yCu4/hV2BR/zfanL7W8lWbqh32GElVDBuizt+GdKI=;
-        b=nc9t9lsJHurk8NK0nEk2QhdFWNYZNpsHKs0VR96kDCVbGbcTUY5XVufA0Wli5IA4Fc
-         M7Ku+63ACNa0FCFP5yc5LACHwJFHwntHjX8eToJm84ZguMAUtum0qVQCKqJdoP8msIyZ
-         LzHPQNgJpoZwOX2xJnJsoQITGGyxLdvoGl0oHlxrZP42L3vL/tA1KfoWzh2vLQfWoctL
-         oMasJafsuxYL2viObmN96ffk6s7ii69Rm0BJGQAcnRE6//y3/2EEG1ZVtTxAW8lw0APm
-         OpvmqWvKZSh6LrWft7s0W3NLIPBdO5ZQ36TgL/Pecl28Qvgday1PE49FkHXKu9Ad7UiH
-         lsIQ==
-X-Gm-Message-State: AOAM530xBC3kFasAOjvObBzofVBz3VLBaQzCn0zmOD/dw56xLv4kxDIS
-        oBYSR7jrbgHaXWv8sRagKu8KTo2KCkbfiQ==
-X-Google-Smtp-Source: ABdhPJzQwhc+fs8NW8h97GCh7LUqMEdx5icWB/S7Ht2ABUdvV1Gbgi9q3gZSDzH0xFi53m2JsQMFJw==
-X-Received: by 2002:a9d:77c7:: with SMTP id w7mr10264393otl.364.1621637110640;
-        Fri, 21 May 2021 15:45:10 -0700 (PDT)
+        bh=+PF8VNqX3CxWZcWikvCpbjoN5l4qx72eHU1ZnJexGhI=;
+        b=Cj0YPCxBBA+0hBF14C2peS6dRgsOUQL/GfoIelARuDX66P0Hpditve+uFeonOcYUWr
+         FY6Q5gJV91ICdg/djgxpCyctA89CDimhTWVqQ9esYpEYrqdiXMUjKy3TDYaiok4wk9SK
+         /mq5vWRGEpcNFFGfmltPe7S8PjttOrZOm3quzkFnuhLLSZP83DfGxOn8IHezFHIqByNd
+         o4ffSp78UKS5+PA2KX/fPz9sKV7uA4WsNfhY4SWZFxPjxytUutIJ9IYrCcfjUDLQvM9i
+         qGbJzK4oun+Mvt5EY0KNoFWvFEvwb3mQ45+7u8PP1Gqv+jOSogZFL+Az5czf0d+tKEgd
+         t96w==
+X-Gm-Message-State: AOAM531WnKUjdbuR6+GParVc0Zat8CtFflsOW8ctC0Fe1qQfbjrcMNVR
+        sMvMWz6saSFvE7bd5nfUwDNeBuqF/cPMUg==
+X-Google-Smtp-Source: ABdhPJzwlUJMuwUxuwq9cOQtvjy8Ta7inUL0neyx4TO+6H6trf1CYDAk3raNH4NZ8MqXeErKzElVxQ==
+X-Received: by 2002:aca:f207:: with SMTP id q7mr3830068oih.24.1621637112310;
+        Fri, 21 May 2021 15:45:12 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id o13sm1556441ote.32.2021.05.21.15.45.09
+        by smtp.gmail.com with ESMTPSA id s76sm1366847oie.50.2021.05.21.15.45.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 15:45:10 -0700 (PDT)
+        Fri, 21 May 2021 15:45:11 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
@@ -63,67 +63,50 @@ Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 09/11] doc: asciidoctor: add support for baseurl
-Date:   Fri, 21 May 2021 17:44:50 -0500
-Message-Id: <20210521224452.530852-10-felipe.contreras@gmail.com>
+Subject: [PATCH v2 10/11] doc: asciidoctor: cleanup man page hack
+Date:   Fri, 21 May 2021 17:44:51 -0500
+Message-Id: <20210521224452.530852-11-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0
 In-Reply-To: <20210521224452.530852-1-felipe.contreras@gmail.com>
 References: <20210521224452.530852-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So that we can present relative links correctly.
-
-Reduces the doc-diff:
-
-   NOTES
-  -        1. “Understanding history: What is a branch?”
-  -           file:///$HOME/share/doc/git-doc/user-manual.html#what-is-a-branch
-  +       [1]    “Understanding history: What is a branch?”
-  +              user-manual.html#what-is-a-branch
-
-   NOTES
-  -        1. “Understanding history: What is a branch?”
-  +       [1]    “Understanding history: What is a branch?”
-                 file:///$HOME/share/doc/git-doc/user-manual.html#what-is-a-branch
+There's basically nothing we need from the original
+orig_convert_inline_anchor(), so let's remove calls to it.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/Makefile                  | 1 +
- Documentation/asciidoctor-extensions.rb | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ Documentation/asciidoctor-extensions.rb | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 0c654f4ec9..c28c49dd7a 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -185,6 +185,7 @@ ASCIIDOC_DOCBOOK = docbook5
- ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
- ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
- ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-+ASCIIDOC_EXTRA += -abaseurl='$(MAN_BASE_URL)'
- ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
- DBLATEX_COMMON =
- XMLTO_EXTRA += --skip-validation
 diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index 914e6f64c8..8856f2febd 100644
+index 8856f2febd..e48a381b8f 100644
 --- a/Documentation/asciidoctor-extensions.rb
 +++ b/Documentation/asciidoctor-extensions.rb
-@@ -16,7 +16,9 @@ module Asciidoctor
+@@ -3,7 +3,6 @@ require 'asciidoctor/converter/manpage'
  
-         footnote = doc.footnotes.find { |e| e.id == node.target }
-         if !footnote
--          footnote_text = "%s\n\e.RS\n\e\\%%%s\n\e.RE" % [node.text, node.target]
-+          target = node.target
-+          target = doc.attributes['baseurl'] + target unless target.include? ':'
-+          footnote_text = "%s\n\e.RS\n\e\\%%%s\n\e.RE" % [node.text, target]
-           index = doc.counter('footnote-number')
-           footnote = Document::Footnote.new(index, node.target, footnote_text)
-           doc.register(:footnotes, footnote)
+ module Asciidoctor
+   class Converter::ManPageConverter
+-    alias orig_convert_inline_anchor convert_inline_anchor
+     def convert_inline_anchor(node)
+       case node.type
+       when :xref
+@@ -25,8 +24,10 @@ module Asciidoctor
+         end
+ 
+         "\e\\fB%s\e\\fR[%d]" % [node.text, footnote.index]
++      when :ref, :bibref
++        ''
+       else
+-        orig_convert_inline_anchor(node)
++        nil
+       end
+     end
+     alias inline_anchor convert_inline_anchor # For old versions of asciidoctor
 -- 
 2.32.0.rc0
 
