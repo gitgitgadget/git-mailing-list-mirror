@@ -2,244 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31C76C43460
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 393A2C433ED
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:13:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14E0B613AC
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:10:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17F02613BF
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 09:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235731AbhEUJLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 05:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54160 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232804AbhEUJLk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 05:11:40 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C47C061574
-        for <git@vger.kernel.org>; Fri, 21 May 2021 02:10:17 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id o5so13537429edc.5
-        for <git@vger.kernel.org>; Fri, 21 May 2021 02:10:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rxcyZhCt22tZ0A1BHtHscp5v1pvW8WKh1FMgb2ZzkrA=;
-        b=WYMx7hNL6ssuZDNwyppLzxj/pAgDZSVt8kB0hJArcbv7yarYSGgbXCXPJ3Hf20AS16
-         wFnV2qDJPubVqv6+XEHMhdlJnouetklx1Dt93Md28zL0KQEDVLS18sdOnr9l6YVFnVm1
-         ZqNy0v2awlzvDY4Pv2V7+4ZCel4ClUZhJ2BKDH8MxoHNUTsk/77cF3eaTb78ORucG0aD
-         EabqO4Fds8SF/C81ehGXPTsfNtlUBOkDbNPwp712/h4R3ZNo5IvDaqwxK9sj+381iiiK
-         lOGJc0MhHWYmG6NmMImVEiYbHvAA7HcY+QR4XnF/eFjzU98hfGeMOoaXVXwyitUMjJ63
-         EYxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rxcyZhCt22tZ0A1BHtHscp5v1pvW8WKh1FMgb2ZzkrA=;
-        b=DcYaceGZ3uBgYYYpZBAtaqS1+6FgzrubyRUPfOxg+AXHHcqBFKN67D6NPZw57GnaE2
-         lLZwJr8A7iIToULXS4VqSt5yVQ+4O0BMgjzR/FxOC38j4HN6JBuVvacF4Yj4tzGbR0aH
-         8GEtK+Cwx1SQjJYRnLdXfaeTVOpy6GPiacHBAlRzHGTdtRDcMgeW5cWMSLYy8zhYb3HJ
-         9+1zB4V7qKunEgP0zY22HJTp5DZ3q+/CpQByDi41J6jQjl7ez3zk84IPhv1gqzR5+AaR
-         NaV773Uc/ZZS8HT8XKVtuZHp8QR1h2G1N96piMRxwm3rsLnhCWnBzsbH2+jEzJvANPG/
-         tzKw==
-X-Gm-Message-State: AOAM533d1kWBGIpH+Uf6qgcO08a+xB2gPhfG7BPwuSfGEvEMNVujkFO6
-        NFJzHC4kHsndaG6P9m0SNoKBZ0tg8RQyvAY1H07+DLyJ3mCKcA==
-X-Google-Smtp-Source: ABdhPJzqKzT+onNSOd7jJGmYazf2Ovrh/pnN99dDQGk2+XDkdJvB67H3cblEbok0tJNSpB9uQ+RU2kKo9I9epZ63Ks4=
-X-Received: by 2002:a05:6402:1d2c:: with SMTP id dh12mr6705020edb.237.1621588216491;
- Fri, 21 May 2021 02:10:16 -0700 (PDT)
+        id S235809AbhEUJPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 05:15:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33130 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234287AbhEUJPF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 05:15:05 -0400
+Received: (qmail 2664 invoked by uid 109); 21 May 2021 09:13:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 May 2021 09:13:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7670 invoked by uid 111); 21 May 2021 09:13:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 May 2021 05:13:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 May 2021 05:13:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Gregory Anders <greg@gpanders.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 00/10] send-email: various optimizations to speed up
+ by >2x
+Message-ID: <YKd5xSw1bZbQXaAe@coredump.intra.peff.net>
+References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
+ <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
+ <YKYdeom6SgAHqojm@coredump.intra.peff.net>
+ <xmqqv97drmge.fsf@gitster.g>
+ <875yzcpo52.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.958.git.1621500593126.gitgitgadget@gmail.com>
- <CAP8UFD0Pzdb_9+VpeLrydu8ROdVi4ygFPk367J+NWGL0P5nXdg@mail.gmail.com> <CAOLTT8S_Bu1PG+-gVK_6iUx--YrMx2hxDCTa=5sW6UJv9Oz_0Q@mail.gmail.com>
-In-Reply-To: <CAOLTT8S_Bu1PG+-gVK_6iUx--YrMx2hxDCTa=5sW6UJv9Oz_0Q@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 21 May 2021 11:10:05 +0200
-Message-ID: <CAP8UFD1yLS9UBs0r6_GjB-K6prW7GNxR+z445HJe8cR4HYLewA@mail.gmail.com>
-Subject: Re: [PATCH] [GSOC] ref-filter: add contents:raw atom
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875yzcpo52.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 21, 2021 at 6:44 AM ZheNing Hu <adlternative@gmail.com> wrote:
->
-> Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=
-=9C=8821=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=8812:20=E5=86=99=E9=81=
-=93=EF=BC=9A
-> >
-> > On Thu, May 20, 2021 at 10:49 AM ZheNing Hu via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> > >
-> > > From: ZheNing Hu <adlternative@gmail.com>
-> > >
-> > > Add new formatting option %(contents:raw), which will
-> > > print all the object contents without any changes.
-> >
-> > Maybe you could tell how it would be different from %(contents), or in
-> > other words what are the changes that %(contents) makes.
-> >
-> > Isn't %(contents) only printing the commit message or the tag message
-> > of a commit or a tag respectively? If %(contents:raw) would print all
-> > the object contents, it could feel strange that it is actually
-> > printing more than %(contents).
->
-> Okay, some explanations are indeed missing here:
+On Fri, May 21, 2021 at 08:23:15AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-By the way I forgot to say that your patch might want to also properly
-document %(contents:raw). If the doc was updated as part of the patch,
-maybe the whole patch would be easier to understand.
+> The "performant" really doesn't matter here, we're comparing shelling
+> out to getting a small number of config keys back. So I wasn't trying to
+> optimize this.
+> 
+> Returning a flattened list is idiomatic in Perl, it means that a caller
+> can do any of:
+> 
+>     # I only care about the last value for a key, or only about
+>     # existence checks
+>     my %hash = func();
+> 
+> Or:
+> 
+>     # I want all key-values to iterate over
+>     my @kv = func();
+> 
+> Returning touples like this makes that less convenient for both, who'll
+> need to do more work to unpack them.
+> 
+> For what it's worth In Perl "return a list" means "flattened list", the
+> term "flattened list" I think comes from other languages. You'd call
+> what you're suggesting a list of arrays, or (if a top-level reference)
+> an array of arrays, AoA for short, AoH for array (ref) of hashes etc.
 
-> %(contents) will discard the metadata part of the object file,
+Yeah, I think that is reasonable. But it made me wonder how we handle
+value-less booleans, and I think there's indeed a bug.
 
-It's not clear what you mean when you talk about metadata in objects.
-Are you taking about only the headers, like the "tree XXX", "parent
-YYY", etc lines in commits, and the "object OOO", "type TTT", etc
-lines in tags? Or does it also includes the lines in tree objects that
-reference other trees or blobs?
+Try a config like this:
 
-> and only print the data contents part of it. %(contents:raw)
-> can will not discard the metadata part of the object file, this
+  $ cat >foo <<\EOF
+  [foo]
+  key-with-value = string
+  key-with-empty =
+  just-bool
+  another-key-with-value = another
+  EOF
 
-s/can//
+A regular config --list looks like:
 
->  means that it can print the "raw" content of an object.
+  $ git config --file=foo --list
+  foo.key-with-value=string
+  foo.key-with-empty=
+  foo.just-bool
+  foo.another-key-with-value=another
 
-The above seems to be changing the definition of %(contents) (as
-previously it was only the commit message of a commit or the tag
-message a tag) to explain %(contents:raw)...
+Note how "just-bool" drops the "=" to distinguish it from the empty
+string. With "-z", it looks like this:
 
-> In addition, %(contents:raw) can support print commit, blob,
-> tag, tree objects contents which %(contents) can only support
-> commit,tag objects.
+  $ git config --file=foo --list -z
+  foo.key-with-value
+  string^@foo.key-with-empty
+  ^@foo.just-bool^@foo.another-key-with-value
+  another^@
 
-...but this is saying that the definition of %(contents) actually
-doesn't change. This doesn't seem logical to me.
+The NULs separate keys, but keys are separated from their values by a
+newline. And again, just-bool omits the newline.
 
-If %(contents:raw) can support any kind of object (commit, blob, tag
-or tree) then it would be logical that %(contents) also support any
-kind of object.
+Your parser splits on newline, so for that entry we'll get only one
+string returned in the list (the key), rather than two (the key and
+value). In a flattened list, that becomes ambiguous. E.g., adapting your
+parser into a stand-alone script:
 
-So if you really want to define %(contents:raw) as the raw object
-contents, you might want to consider a preparatory patch that would
-first change the definition of %(contents) to be the object contents
-without the headers. This would keep the same output for any commit or
-tag. But for blobs and trees it would print the whole content of the
-object in the same way as `git cat-file -p` does, instead of nothing.
+  $ git config --file=foo --list -z |
+    perl -e '
+      local $/;
+      my $data = <STDIN>;
+      my (@kv) = map { split /\n/, $_, 2 } split /\0/, $data;
 
-I think this acceptable as refs rarely point to something other than
-commits, so people are not likely to rely on the fact that %(contents)
-currently prints nothing for blobs and trees.
+      while (@kv) {
+        my $k = shift @kv;
+	print "key: $k\n";
+	my $v = shift @kv;
+	print "  value: ", (defined $v ? $v : "undef"), "\n";
+      }
+    '
+  key: foo.key-with-value
+    value: string
+  key: foo.key-with-empty
+    value: 
+  key: foo.just-bool
+    value: foo.another-key-with-value
+  key: another
+    value: undef
 
-> E.g:
->
-> git for-each-ref --format=3D%(contents:raw) refs/heads/foo
->
-> will have the same output as:
->
-> git rev-parse refs/heads/foo | git cat-file --batch
+We end up misinterpreting a key as a value, and vice versa.
 
-Ok, I think that would indeed be useful.
+Using a non-flattened structure would have prevented this (we'd sensibly
+get undef when trying to access the missing second element of the
+array). But I do agree the flattened structure is more perl-ish.
+Probably you'd want to insert an explicit "undef" into the list. The
+most perl-ish I could come up with is:
 
-> > Also is %(contents:raw) supposed to print something for a blob or a
-> > tree, while I guess %(contents) is printing nothing for them?
->
-> Now my thoughts are:
-> Let %(contents) learn to print four kinds of objects.
-> and then let %(contents:raw) learn to print metadata.
-> I will split it into two patches.
+  my (@kv) = map { my ($k, $v) = split /\n/, $_, 2;
+                   ($k, $v)
+                 } split /\0/, $data;
 
-Yeah, great!
+I notice that $known_keys then becomes a non-flat representation. You'd
+either want to turn that back into a zero-length array there, or store
+the "undef" and handle it appropriately (it can be a synonym for "true",
+though that is just an optimization at this point).
 
-> > > It will help further to migrate all cat-file formatting
-> > > logic from cat-file to ref-filter.
-> > >
-> > > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> >
-> > It looks like you rewrote the patch nearly completely, but if you
-> > based your patch on, or got inspired by, Olga's work, it might be nice
-> > to acknowledge this using a trailer (for example "Based-on-patch-by:
-> > ..." or "Helped-by:...").
->
-> Okay, "Based-on-patch-by" would be more appropriate here.
-
-Nice!
-
-> > > @@ -1312,6 +1315,13 @@ static void grab_sub_body_contents(struct atom=
-_value *val, int deref, void *buf)
-> > >                     !starts_with(name, "trailers") &&
-> > >                     !starts_with(name, "contents"))
-> > >                         continue;
-> > > +               if (atom->u.contents.option =3D=3D C_RAW) {
-> > > +                       v->s =3D xmemdupz(buf, buf_size);
-> > > +                       continue;
-> > > +               }
-> > > +               if (object_type !=3D OBJ_TAG && object_type !=3D OBJ_=
-COMMIT)
-> > > +                       continue;
-> >
-> > When seeing the 2 lines above, I am guessing that, before this patch,
-> > grab_sub_body_contents() couldn't actually be called when object_type
-> > was OBJ_BLOB or OBJ_TREE, but you have made other changes elsewhere so
-> > that now it can. As only the atom->u.contents.option =3D=3D C_RAW case =
-is
-> > relevant in this case, you added this check. Let's see if I am
-> > right...
-> >
-> > >                 if (!subpos)
-> > >                         find_subpos(buf,
-> > >                                     &subpos, &sublen,
-> > > @@ -1374,25 +1384,30 @@ static void fill_missing_values(struct atom_v=
-alue *val)
-> > >   * pointed at by the ref itself; otherwise it is the object the
-> > >   * ref (which is a tag) refers to.
-> > >   */
-> > > -static void grab_values(struct atom_value *val, int deref, struct ob=
-ject *obj, void *buf)
-> > > +static void grab_values(struct atom_value *val, int deref, struct ob=
-ject *obj, struct expand_data *data)
-> > >  {
-> > > +       void *buf =3D data->content;
-> > > +       unsigned long buf_size =3D data->size;
-> > > +
-> > >         switch (obj->type) {
-> > >         case OBJ_TAG:
-> > >                 grab_tag_values(val, deref, obj);
-> > > -               grab_sub_body_contents(val, deref, buf);
-> > > +               grab_sub_body_contents(val, deref, buf, buf_size, obj=
-->type);
-> > >                 grab_person("tagger", val, deref, buf);
-> > >                 break;
-> > >         case OBJ_COMMIT:
-> > >                 grab_commit_values(val, deref, obj);
-> > > -               grab_sub_body_contents(val, deref, buf);
-> > > +               grab_sub_body_contents(val, deref, buf, buf_size, obj=
-->type);
-> > >                 grab_person("author", val, deref, buf);
-> > >                 grab_person("committer", val, deref, buf);
-> > >                 break;
-> > >         case OBJ_TREE:
-> > >                 /* grab_tree_values(val, deref, obj, buf, sz); */
-> > > +               grab_sub_body_contents(val, deref, buf, buf_size, obj=
-->type);
-> > >                 break;
-> > >         case OBJ_BLOB:
-> > >                 /* grab_blob_values(val, deref, obj, buf, sz); */
-> > > +               grab_sub_body_contents(val, deref, buf, buf_size, obj=
-->type);
-> >
-> > ...ok, I was right above. The issue now is that I wonder if
-> > grab_sub_body_contents() is still a good name for a function that can
-> > be called for a blob or a tree which does not really have a body.
->
-> Makes sense, It might be better to use the new name: grab_contents().
-
-Yeah.
+-Peff
