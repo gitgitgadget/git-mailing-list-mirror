@@ -2,164 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EB0EC47076
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 16:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B9D4C4707A
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 16:54:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E31F613AF
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 16:25:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F20CC613D8
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 16:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234461AbhEUQ0d convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 21 May 2021 12:26:33 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:21302 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232876AbhEUQ0c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 12:26:32 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14LGP22m081928
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 21 May 2021 12:25:02 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Emily Shaffer'" <emilyshaffer@google.com>
-Cc:     <git@vger.kernel.org>,
-        "=?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0_Bjarmason'?=" <avarab@gmail.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Jeff Hostetler'" <git@jeffhostetler.com>,
-        "'Bagas Sanjaya'" <bagasdotme@gmail.com>
-References: <20210507002908.1495061-1-emilyshaffer@google.com> <20210520210546.4129620-1-emilyshaffer@google.com> <021601d74dc0$326f6620$974e3260$@nexbridge.com> <YKbvgWpMngx76I5R@google.com> <025401d74e44$25db7140$719253c0$@nexbridge.com>
-In-Reply-To: <025401d74e44$25db7140$719253c0$@nexbridge.com>
-Subject: RE: [PATCH v2] tr2: log parent process name
-Date:   Fri, 21 May 2021 12:24:55 -0400
-Message-ID: <027f01d74e5d$d9866e70$8c934b50$@nexbridge.com>
+        id S237792AbhEUQzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 12:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236297AbhEUQzh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 12:55:37 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF62C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 09:54:12 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id i22so30487086lfl.10
+        for <git@vger.kernel.org>; Fri, 21 May 2021 09:54:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JH0qKo63jv7v2qinkh3WDL1K8oyqEPrmb4eyALKdQFA=;
+        b=SQehDMj/PqXYv7G7LSCH4St77DZoJ/xWOvrnfW8Fag7uFl+/37qT1Kqc1tT6I2i69A
+         Cr/cKxiIZEKfwG07EFZUxcd4llSsA9wmfRO0v7pBq8R1zMpZton4iby64sI8q1dIFe9g
+         2/gi1nkDtUE6uCN7pUEHuN+pRp5tJoCjfSRI+MElFcem0cncvn+0+wApy3O/8p7K9dV8
+         D4WXtmNHBQfwITbZGhxsMNeRY0uyRmBeoHmFwBEVGWftcfxrwzwn3WkZpwLZR3dYsx4o
+         gB8ijICVDfHoFbwWxLO09+jWK+NDWvIRQvGbFknF1OiTpfEwt15QwdyU+gmWh3TKzrRC
+         AF1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JH0qKo63jv7v2qinkh3WDL1K8oyqEPrmb4eyALKdQFA=;
+        b=MMVXJkh/mO9QgKt54f/HWUxOxt1cOzbepQFHHX4pDbM/2l7lGrlRGha/b9IIXjN42e
+         QOM9MddJ0LyVYtwZv7c5i9EiaDbE+TeNehs8V9molk5al9Xu4djGHlz2HtX+XHt4tV0T
+         C5V1zGnZdG2y4RhCDgStzsxFlEjAgkO139Tm8kIKMwFxv6Qk58k2Ep+3rUtXA431LnBz
+         HYrNPB1ON2mr2ei5zMyLjzzfJOdm/fbDcZuml3yRbeEWy4TpHDO1U4PNEoy8VR0nlRvr
+         BMt1F8UwEWbpH8eRv6q2AKAUo0yN58CX64O/xGWqJpooLZo4i0Fd/A4KrwhQ48rP8cj2
+         hDhg==
+X-Gm-Message-State: AOAM530XzkMOoANxnUmn3Z5McZ1CeCSlAS+0wbbTe8Z/BhDgIoXUvteQ
+        Qhrx9TIVZiudK5wjfGTWgskhVNlH88A9pEshi54=
+X-Google-Smtp-Source: ABdhPJzd/W0MS9hrc/hAU4VHAY9Lar9uAwNY+DBRweLbJszzhnIaWoujoYryVXGuFQbruUnTi+YjYTSUpzzwZTE4nj8=
+X-Received: by 2002:a05:6512:2283:: with SMTP id f3mr2835790lfu.148.1621616050310;
+ Fri, 21 May 2021 09:54:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQI1+egxG3zSQittuftsBVx6FuUl5gG/TiO1Aoy/7tAC+0kMaQKZ+2cXqeG8RrA=
+References: <YKWggLGDhTOY+lcy@google.com> <60a5afeeb13b4_1d8f2208a5@natae.notmuch>
+In-Reply-To: <60a5afeeb13b4_1d8f2208a5@natae.notmuch>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Fri, 21 May 2021 10:53:58 -0600
+Message-ID: <CAMMLpeScunGg5WM4N90vG+yN3tOATqhsL2iRLsJ43ksNyTx_wQ@mail.gmail.com>
+Subject: Re: RFC: error codes on exit
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Josh Steadmon <steadmon@google.com>, Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 21, 2021 9:21 AM, I wrote:
->To: 'Emily Shaffer' <emilyshaffer@google.com>
->Cc: git@vger.kernel.org; 'Ævar Arnfjörð Bjarmason' <avarab@gmail.com>; 'Junio C Hamano' <gitster@pobox.com>; 'Jeff Hostetler'
-><git@jeffhostetler.com>; 'Bagas Sanjaya' <bagasdotme@gmail.com>
->Subject: RE: [PATCH v2] tr2: log parent process name
+On Wed, May 19, 2021 at 6:40 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 >
->On May 20, 2021 7:24 PM, Emily Shaffer wrote:
->>
->>On Thu, May 20, 2021 at 05:36:25PM -0400, Randall S. Becker wrote:
->>>
->>> On May 20, 2021 5:06 PM, Emily Shaffer wrote:
->>> >To: git@vger.kernel.org
->>> >Cc: Emily Shaffer <emilyshaffer@google.com>; Ævar Arnfjörð Bjarmason
->>> ><avarab@gmail.com>; Junio C Hamano <gitster@pobox.com>; Jeff
->>> >Hostetler <git@jeffhostetler.com>; Bagas Sanjaya
->>> ><bagasdotme@gmail.com>
->>> >Subject: [PATCH v2] tr2: log parent process name
->>> >
->>> >It can be useful to tell who invoked Git - was it invoked manually
->>> >by a user via CLI or script? By an IDE?  In some cases - like 'repo'
->>> >tool - we can influence the source code and set the
->>> >GIT_TRACE2_PARENT_SID environment variable from the caller process.
->>> >In
->'repo''s
->>case, that parent SID is manipulated to include the string "repo",
->>which means we can positively identify when Git was invoked by
->'repo'
->>tool.
->>> >However, identifying parents that way requires both that we know
->>> >which tools invoke Git and that we have the ability to modify the
->>> >source code of those tools. It cannot scale to keep up with
->the various
->>IDEs and wrappers which use Git, most of which we don't know about.
->>> >Learning which tools and wrappers invoke Git, and how, would give us
->>> >insight to decide where to improve Git's usability and
->>performance.
->>> >
->>> >Unfortunately, there's no cross-platform reliable way to gather the
->>> >name of the parent process. If procfs is present, we can use that; otherwise we will need to discover the name another way.
->However,
->>the process ID should be sufficient regardless of platform.
->>>
->>> I like this idea, but there are some platforms where this is unlikely
->>> to work. NonStop, in particular, can initiate git - and I
->frequently do -
->>from a non-POSIX environment where process name is entirely different.
->>In fact, it is something like $ABC (always beginning with a
->$,
->>which makes life very difficult for shell scripts and screws up
->>GIT_SSH_COMMAND, but I digress). I'm going to need to plug in
->something
->>very platform-specific to make this work. getppid() always returns 1 in
->>this situation, which is extraordinarily meaningless on the
->platform
->>and does not represent the actual parent.
->>
->>Ok. It sounds like you're saying I should be more conservative in the
->>commit message as well as in the #ifdef scope? Do you think
->this
->>needs a reroll to made the #ifdef more aggressive, or would you rather get to it when you get to it?
+> It's good to not include many initial codes, but I would start with at
+> least three:
 >
->I'll get to it pretty quickly once it's rolled in.
->
->>It looks like the change in config.mak.uname won't affect NonStop; I
->>think also the compat/procinfo.c is probably indicative enough
->of "this
->>stuff is for procfs" that it won't look like it *should* work for
->>NonStop, which means that you should still get the stub for 'trace2_collect_process_info()'. But if you think the guards aren't
-readable
->enough I can try to move them around a little more.
->
->Guards are fine. There's just a lot more work to do for me. We need to make sure that the rendering of ancestor processes are
-generic
->enough not to be just pid_t through any interfaces where this is queried. In NonStop's case, char[25], should be sufficient for the
-short
->term, but I would prefer something longer, say char[128] to be safe for the future in which to stick the ancestor. To be completely
-unique,
->the ancestor is going to look like \node.$proc:sequence (where node is a 7 character name, proc is a 5 character name, and sequence
-is
->currently a long.
+>   OK = 0,
+>   UNKNOWN = 1,
+>   NORMAL = 2,
 
-Just so we know what's coming, the code snippet to get a parent on NonStop is as follows (roughly):
-        pid_t ossParent = getppid();
-        if (ossParent == 1) {
-                short pHandle[10];
-                short pAncestor[10];
-                short ancestorLength;
-                short error;
-                short attributes[] = { 40 }; /* MOM Process */
-                short processNameLength;
-                char processName[64];
+If you go that route, could you please pick a word other than "normal"
+to describe errors that are not entirely unexpected? I'm worried that
+someone will see "normal" and use it instead of "OK" to indicate
+success.
 
-                PROCESSHANDLE_NULLIT_(pHandle);
-                PROCESS_GETINFO_(pHandle);
-                error = PROCESS_GETINFOLIST_(,,,, pHandle,
-                        attributes, (short) sizeof(attributes)/sizeof(attributes[0]),
-                        pAncestor, (short) sizeof(pAncestor), &ancestorLength);
-                if (error) {
-                        printf("Cannot process parent. Error %d\n", error);
-                        return;
-                }
-                PROCESSHANDLE_TO_FILENAME_(pAncestor, processName, (short) sizeof(processName),
-                        &processNameLength);
-                processName[processNameLength] = '\0';
-                printf("GUARDIAN Parent %s\n", processName);
-        } else {
-                printf("OSS Parent %d\n", ossParent);
-        }
-
-Which in the test program generates
-GUARDIAN Parent \HPITUG.$:3:1100:583555076
-
-Regards,
-Randall
-
+-Alex
