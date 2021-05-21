@@ -2,280 +2,247 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B1CBC433B4
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 02:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFCE4C433ED
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 04:44:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61AEA6121E
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 02:50:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A793061261
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 04:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233608AbhEUCv6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 May 2021 22:51:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53696 "EHLO
+        id S238374AbhEUEpj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 00:45:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231584AbhEUCv6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 May 2021 22:51:58 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0997EC061574
-        for <git@vger.kernel.org>; Thu, 20 May 2021 19:50:35 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id f22so12234271pgb.9
-        for <git@vger.kernel.org>; Thu, 20 May 2021 19:50:34 -0700 (PDT)
+        with ESMTP id S237623AbhEUEpi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 00:45:38 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970CEC061574
+        for <git@vger.kernel.org>; Thu, 20 May 2021 21:44:16 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id s7so2817030iov.2
+        for <git@vger.kernel.org>; Thu, 20 May 2021 21:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=W2C7yHkknS8DcGlwahJsICujPp8SkI83SXt8yOaszSw=;
-        b=pgDe8zQAr3qydQjAP+KyHMwrL5njAE4KLhO+n0YPSxIl9g7S3GrrIOaZX8EGJi4pyN
-         B8XHeBQLRTLwVzaeG26xh27q/lBUEya+2LmeBgxoCOuvJIAc0ETN8kEEtD740ISa4+h0
-         ZeiCFuAhGkgwQCCLNIF68XYe2OaQ2OEv8Dl46X7D59xbRTc6eORj5qF9JUkR9iRlWi4S
-         AEwKzGXE5PtfvCYh4pRx6goq2PIGGRYl8Tp0mC0nwOXo1g200NTX6/xs4qNnXKZ6WO45
-         jSbCRUA2Iv2WyG3yhoxHG1pA3uwJrn1ZweNRnDx7xsl/EOSBxvRZO+mfYfxQt3/6LFZM
-         XFCA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=XuKRji13Id/B45KMAyYtbXXy7n2b20ljjeTu2294xmI=;
+        b=TuBdAo9WqN9FeyvWo8mMV0oREjansRVEIfbaw7AVl8a18IYH58g/XODjjGl1Qwf/kj
+         QWqGkBJs4iqlPzJyxLXdw+AsmOebJlcRSZqUIeMU9jT3F0HWwncy3llLAUxYY+mFx+nD
+         hz0cprQWIdNV8QRl5AYSCwDenajQHiUkzZOy1C73OMe7dr5+oHL3IOnf5nvk7eZhY7ue
+         jEuS419wp7y9AeCtTRelE9RhhoxJGIubZASUdr4vwY0Yiw+0oJxOyEEroptEaH/YskMH
+         3fAve7Ep5g2m+o51W6qKk4MM1Cb0jB42Ewdcfaa4hCm3e/HuE1fHkhFyR5hv4KO6ZJzY
+         1daQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=W2C7yHkknS8DcGlwahJsICujPp8SkI83SXt8yOaszSw=;
-        b=jte768p/Bo5qoAWlqM8dZtBahwuF4fVWLdAIRruPRn1leD4d7guN3l4Q998qS/V4oX
-         3OeESf1dS6UMEtVEyXm6605diQdjfrKp9C34GoVXC64l/bOOtpWRQBWZR/UBCckM0kFV
-         x+vUlWH8RVXF6jlwms3mXuquP0hTlGJikaeMmUs81znsvzHjzUcjdLVhOzCue6XxKHzB
-         aihp0dsUI57Pg59KBBfuOvIHI8Ry3xppSgcL1C4/43CzvmKSFNyNu9XrKax0g8kBObPF
-         IC6GyDU412hmk7WJYN300KT4AfcSJk33h/b3WhkpRCRi1GCmKHYg1RY+D0f40T529SeS
-         fYdA==
-X-Gm-Message-State: AOAM5329EESG5CwHtcqvG5cSWhiIZD0zP0IipccO0fTyS6HpN331EcE8
-        lXoOeF8caukgYlQFdYfgQLZ8Y32NFUY=
-X-Google-Smtp-Source: ABdhPJz9wgzjfAIct+c3wtBOcyVMcmQn1Wr0QohhV17FvtpPbkn/bn2nVu8DVrDKE5Wu4IrmzxJEBw==
-X-Received: by 2002:a62:2987:0:b029:2de:b564:648d with SMTP id p129-20020a6229870000b02902deb564648dmr8071226pfp.48.1621565434041;
-        Thu, 20 May 2021 19:50:34 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:8774:366c:ae84:8f12])
-        by smtp.gmail.com with ESMTPSA id mv15sm2957039pjb.25.2021.05.20.19.50.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 May 2021 19:50:33 -0700 (PDT)
-Date:   Thu, 20 May 2021 19:50:31 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] C99 support: remove non-HAVE_VARIADIC_MACROS code
-Message-ID: <YKcf95uQ1W7COSsf@google.com>
-References: <YHOLo36MfuTj6YeD@camp.crustytoothpaste.net>
- <cover-0.2-00000000000-20210412T105422Z-avarab@gmail.com>
- <patch-2.2-f12e3cad57d-20210412T105422Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=XuKRji13Id/B45KMAyYtbXXy7n2b20ljjeTu2294xmI=;
+        b=GGX/XBSPAZB//O6urLyxhP3p1rvA9MhP88utDRxrL7jU05vzJhsOAcWD2FTEX/qM8J
+         eE9dbF+PDFqZgV1kUKHdM8nHay+VOgOGjNprisrd/o/BtgJmAEA04KXffktC/hJ89Gv1
+         VEtVqAJon3X495v8V4QAOBCKp5upRWTB864vuV9jkMCJ2syGDHCtenmZacewhn+wpL1F
+         1KCPUX3wKvA6s9ww0gcSG4T35Kf4KEJYC1kRAVjk75tNKVYvxmSGw06R2Iy732cCskHP
+         ebVoJVwQY4JMzjtAX8DJtcCAyLKYw9cZnkaHYXz036ZHAylDcV1V9Gi6QKwARuUxGOev
+         8RkA==
+X-Gm-Message-State: AOAM533Gj2CAB/YdV8F8DdwgxOXRuAqBJQPQl8JHxIuWfRL1ihQmUVGw
+        +ViG+lvcomA194jU8I0eRPjZefZwCMzJF+CnHWRYE0S5zeqDqCuPo+M=
+X-Google-Smtp-Source: ABdhPJwQ38LJC5hzMxPATJ8iSc12YfsKPWys+nEbnq87mPu59RxQbV7Tb6DFzb5MHRHOIscWsJuriH2HT7eOmuJdjYY=
+X-Received: by 2002:a5d:89c5:: with SMTP id a5mr9829770iot.172.1621572255770;
+ Thu, 20 May 2021 21:44:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-2.2-f12e3cad57d-20210412T105422Z-avarab@gmail.com>
+References: <pull.958.git.1621500593126.gitgitgadget@gmail.com> <CAP8UFD0Pzdb_9+VpeLrydu8ROdVi4ygFPk367J+NWGL0P5nXdg@mail.gmail.com>
+In-Reply-To: <CAP8UFD0Pzdb_9+VpeLrydu8ROdVi4ygFPk367J+NWGL0P5nXdg@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Fri, 21 May 2021 12:43:59 +0800
+Message-ID: <CAOLTT8S_Bu1PG+-gVK_6iUx--YrMx2hxDCTa=5sW6UJv9Oz_0Q@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] ref-filter: add contents:raw atom
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Ævar Arnfjörð Bjarmason wrote:
-
-> Remove code that depend on HAVE_VARIADIC_MACROS not being set. Since
-> 765dc168882 (git-compat-util: always enable variadic macros,
-> 2021-01-28) we've unconditionally defined it to be true, and that
-> change went out with v2.31.0. This should have given packagers enough
-> time to discover whether variadic macros were an issue.
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=
+=8821=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=8812:20=E5=86=99=E9=81=93=
+=EF=BC=9A
 >
-> It seems that they weren't, so let's update the coding guidelines and
-> remove all the fallback code for the non-HAVE_VARIADIC_MACROS case.
+> On Thu, May 20, 2021 at 10:49 AM ZheNing Hu via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > Add new formatting option %(contents:raw), which will
+> > print all the object contents without any changes.
+>
+> Maybe you could tell how it would be different from %(contents), or in
+> other words what are the changes that %(contents) makes.
+>
+> Isn't %(contents) only printing the commit message or the tag message
+> of a commit or a tag respectively? If %(contents:raw) would print all
+> the object contents, it could feel strange that it is actually
+> printing more than %(contents).
+>
 
-As discussed in the rest of this thread, that's a pretty short time,
-so while I would love to be able to use variadic macros
-unconditionally, I think we'd need a different rationale.
+Okay, some explanations are indeed missing here:
 
-That said, I want us to be ready the moment external conditions allow.
-Ideally we want it to be as simple as
+%(contents) will discard the metadata part of the object file,
+and only print the data contents part of it. %(contents:raw)
+can will not discard the metadata part of the object file, this
+ means that it can print the "raw" content of an object.
 
-	git grep --name-only -e HAVE_VARIADIC_MACROS |
-	xargs unifdef -m -DHAVE_VARIADIC_MACROS=1
+In addition, %(contents:raw) can support print commit, blob,
+tag, tree objects contents which %(contents) can only support
+commit,tag objects.
 
-plus removing the #define; is there anything we need to do in advance
-to make that work well?  Let's see.
+E.g:
 
-[...]
-> --- a/trace.h
-> +++ b/trace.h
-> @@ -126,66 +126,6 @@ void trace_command_performance(const char **argv);
->  void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
->  uint64_t trace_performance_enter(void);
->  
-> -#ifndef HAVE_VARIADIC_MACROS
-> -
-> -/**
-> - * Prints a formatted message, similar to printf.
-> - */
-> -__attribute__((format (printf, 1, 2)))
-> -void trace_printf(const char *format, ...);
+git for-each-ref --format=3D%(contents:raw) refs/heads/foo
 
-This removes the documentation for these functions and doesn't add it
-back on the #else side.  So I think we'd want the following
-preparatory patch.
+will have the same output as:
 
-Thanks,
-Jonathan
+git rev-parse refs/heads/foo | git cat-file --batch
 
--- >8 --
-Subject: trace: move comments to variadic macro variant of trace functions
+> Also is %(contents:raw) supposed to print something for a blob or a
+> tree, while I guess %(contents) is printing nothing for them?
+>
 
-Nowadays compilers not having variadic macros are the exception.  Move
-API documentation to the declarations used in the common case.
+Now my thoughts are:
+Let %(contents) learn to print four kinds of objects.
+and then let %(contents:raw) learn to print metadata.
+I will split it into two patches.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- trace.h | 79 +++++++++++++++++++++++++++------------------------------
- 1 file changed, 38 insertions(+), 41 deletions(-)
+> > It will help further to migrate all cat-file formatting
+> > logic from cat-file to ref-filter.
+> >
+> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+>
+> It looks like you rewrote the patch nearly completely, but if you
+> based your patch on, or got inspired by, Olga's work, it might be nice
+> to acknowledge this using a trailer (for example "Based-on-patch-by:
+> ..." or "Helped-by:...").
+>
 
-diff --git a/trace.h b/trace.h
-index 0dbbad0e41..fc7eb0bc72 100644
---- a/trace.h
-+++ b/trace.h
-@@ -128,56 +128,22 @@ uint64_t trace_performance_enter(void);
- 
- #ifndef HAVE_VARIADIC_MACROS
- 
--/**
-- * Prints a formatted message, similar to printf.
-- */
-+/* Fallback implementation that does not add file:line. */
-+
- __attribute__((format (printf, 1, 2)))
- void trace_printf(const char *format, ...);
- 
- __attribute__((format (printf, 2, 3)))
- void trace_printf_key(struct trace_key *key, const char *format, ...);
- 
--/**
-- * Prints a formatted message, followed by a quoted list of arguments.
-- */
- __attribute__((format (printf, 2, 3)))
- void trace_argv_printf(const char **argv, const char *format, ...);
- 
--/**
-- * Prints the strbuf, without additional formatting (i.e. doesn't
-- * choke on `%` or even `\0`).
-- */
- void trace_strbuf(struct trace_key *key, const struct strbuf *data);
- 
--/**
-- * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-- *
-- * Example:
-- * ------------
-- * uint64_t t = 0;
-- * for (;;) {
-- * 	// ignore
-- * t -= getnanotime();
-- * // code section to measure
-- * t += getnanotime();
-- * // ignore
-- * }
-- * trace_performance(t, "frotz");
-- * ------------
-- */
- __attribute__((format (printf, 2, 3)))
- void trace_performance(uint64_t nanos, const char *format, ...);
- 
--/**
-- * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-- *
-- * Example:
-- * ------------
-- * uint64_t start = getnanotime();
-- * // code section to measure
-- * trace_performance_since(start, "foobar");
-- * ------------
-- */
- __attribute__((format (printf, 2, 3)))
- void trace_performance_since(uint64_t start, const char *format, ...);
- 
-@@ -186,11 +152,6 @@ void trace_performance_leave(const char *format, ...);
- 
- #else
- 
--/*
-- * Macros to add file:line - see above for C-style declarations of how these
-- * should be used.
-- */
--
- /*
-  * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
-  * default is __FILE__, as it is consistent with assert(), and static function
-@@ -227,8 +188,14 @@ void trace_performance_leave(const char *format, ...);
- 					    __VA_ARGS__);		    \
- 	} while (0)
- 
-+/**
-+ * Prints a formatted message, similar to printf.
-+ */
- #define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
- 
-+/**
-+ * Prints a formatted message, followed by a quoted list of arguments.
-+ */
- #define trace_argv_printf(argv, ...)					    \
- 	do {								    \
- 		if (trace_pass_fl(&trace_default_key))			    \
-@@ -236,12 +203,32 @@ void trace_performance_leave(const char *format, ...);
- 					    argv, __VA_ARGS__);		    \
- 	} while (0)
- 
-+/**
-+ * Prints the strbuf, without additional formatting (i.e. doesn't
-+ * choke on `%` or even `\0`).
-+ */
- #define trace_strbuf(key, data)						    \
- 	do {								    \
- 		if (trace_pass_fl(key))					    \
- 			trace_strbuf_fl(TRACE_CONTEXT, __LINE__, key, data);\
- 	} while (0)
- 
-+/**
-+ * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-+ *
-+ * Example:
-+ * ------------
-+ * uint64_t t = 0;
-+ * for (;;) {
-+ * 	// ignore
-+ * t -= getnanotime();
-+ * // code section to measure
-+ * t += getnanotime();
-+ * // ignore
-+ * }
-+ * trace_performance(t, "frotz");
-+ * ------------
-+ */
- #define trace_performance(nanos, ...)					    \
- 	do {								    \
- 		if (trace_pass_fl(&trace_perf_key))			    \
-@@ -249,6 +236,16 @@ void trace_performance_leave(const char *format, ...);
- 					     __VA_ARGS__);		    \
- 	} while (0)
- 
-+/**
-+ * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-+ *
-+ * Example:
-+ * ------------
-+ * uint64_t start = getnanotime();
-+ * // code section to measure
-+ * trace_performance_since(start, "foobar");
-+ * ------------
-+ */
- #define trace_performance_since(start, ...)				    \
- 	do {								    \
- 		if (trace_pass_fl(&trace_perf_key))			    \
--- 
-2.31.1.818.g46aad6cb9e
+Okay, "Based-on-patch-by" would be more appropriate here.
 
+> > @@ -1312,6 +1315,13 @@ static void grab_sub_body_contents(struct atom_v=
+alue *val, int deref, void *buf)
+> >                     !starts_with(name, "trailers") &&
+> >                     !starts_with(name, "contents"))
+> >                         continue;
+> > +               if (atom->u.contents.option =3D=3D C_RAW) {
+> > +                       v->s =3D xmemdupz(buf, buf_size);
+> > +                       continue;
+> > +               }
+> > +               if (object_type !=3D OBJ_TAG && object_type !=3D OBJ_CO=
+MMIT)
+> > +                       continue;
+>
+> When seeing the 2 lines above, I am guessing that, before this patch,
+> grab_sub_body_contents() couldn't actually be called when object_type
+> was OBJ_BLOB or OBJ_TREE, but you have made other changes elsewhere so
+> that now it can. As only the atom->u.contents.option =3D=3D C_RAW case is
+> relevant in this case, you added this check. Let's see if I am
+> right...
+>
+> >                 if (!subpos)
+> >                         find_subpos(buf,
+> >                                     &subpos, &sublen,
+> > @@ -1374,25 +1384,30 @@ static void fill_missing_values(struct atom_val=
+ue *val)
+> >   * pointed at by the ref itself; otherwise it is the object the
+> >   * ref (which is a tag) refers to.
+> >   */
+> > -static void grab_values(struct atom_value *val, int deref, struct obje=
+ct *obj, void *buf)
+> > +static void grab_values(struct atom_value *val, int deref, struct obje=
+ct *obj, struct expand_data *data)
+> >  {
+> > +       void *buf =3D data->content;
+> > +       unsigned long buf_size =3D data->size;
+> > +
+> >         switch (obj->type) {
+> >         case OBJ_TAG:
+> >                 grab_tag_values(val, deref, obj);
+> > -               grab_sub_body_contents(val, deref, buf);
+> > +               grab_sub_body_contents(val, deref, buf, buf_size, obj->=
+type);
+> >                 grab_person("tagger", val, deref, buf);
+> >                 break;
+> >         case OBJ_COMMIT:
+> >                 grab_commit_values(val, deref, obj);
+> > -               grab_sub_body_contents(val, deref, buf);
+> > +               grab_sub_body_contents(val, deref, buf, buf_size, obj->=
+type);
+> >                 grab_person("author", val, deref, buf);
+> >                 grab_person("committer", val, deref, buf);
+> >                 break;
+> >         case OBJ_TREE:
+> >                 /* grab_tree_values(val, deref, obj, buf, sz); */
+> > +               grab_sub_body_contents(val, deref, buf, buf_size, obj->=
+type);
+> >                 break;
+> >         case OBJ_BLOB:
+> >                 /* grab_blob_values(val, deref, obj, buf, sz); */
+> > +               grab_sub_body_contents(val, deref, buf, buf_size, obj->=
+type);
+>
+> ...ok, I was right above. The issue now is that I wonder if
+> grab_sub_body_contents() is still a good name for a function that can
+> be called for a blob or a tree which does not really have a body.
+>
+
+Makes sense, It might be better to use the new name: grab_contents().
+
+> >                 break;
+> >         default:
+> >                 die("Eh?  Object of type %d?", obj->type);
+> > @@ -1614,7 +1629,7 @@ static int get_object(struct ref_array_item *ref,=
+ int deref, struct object **obj
+> >                         return strbuf_addf_ret(err, -1, _("parse_object=
+_buffer failed on %s for %s"),
+> >                                                oid_to_hex(&oi->oid), re=
+f->refname);
+> >                 }
+> > -               grab_values(ref->value, deref, *obj, oi->content);
+> > +               grab_values(ref->value, deref, *obj, oi);
+> >         }
+> >
+> >         grab_common_values(ref->value, deref, oi);
+> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> > index 9e0214076b4d..baa3a40a70b1 100755
+> > --- a/t/t6300-for-each-ref.sh
+> > +++ b/t/t6300-for-each-ref.sh
+> > @@ -686,6 +686,17 @@ test_atom refs/tags/signed-empty contents:body ''
+> >  test_atom refs/tags/signed-empty contents:signature "$sig"
+> >  test_atom refs/tags/signed-empty contents "$sig"
+> >
+> > +test_expect_success 'basic atom: refs/tags/signed-empty contents:raw' =
+'
+> > +       git cat-file tag refs/tags/signed-empty >expected &&
+> > +       git for-each-ref --format=3D"%(contents:raw)" refs/tags/signed-=
+empty >actual &&
+> > +       sanitize_pgp <expected >expected.clean &&
+> > +       sanitize_pgp <actual >actual.clean &&
+> > +       echo "" >>expected.clean &&
+> > +       test_cmp expected.clean actual.clean
+> > +'
+>
+> For an empty tag %(contents:raw) should produce nothing, ok.
+>
+> > +test_atom refs/tags/signed-empty *contents:raw $(git cat-file commit H=
+EAD)
+>
+> Maybe use single quotes around *contents:raw?
+>
+> The rest looks good to me. Thanks!
+
+Good suggestion. thank!
+--
+ZheNing Hu
