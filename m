@@ -2,125 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA001C04FF3
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BE89C04FF3
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:29:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83E1361176
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:27:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3704461176
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 22:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhEUW3H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 18:29:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47398 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229638AbhEUW3H (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 21 May 2021 18:29:07 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D38226043F;
-        Fri, 21 May 2021 22:27:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1621636033;
-        bh=Cuz4tBy56m58uyG5jKq4gzMP8CieiuxkRaystnw3Pbs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=RhX1je3P1sF/MTjtDWwiV2VNsqZbnlzRsJo8jXV60zCqpGq53MQcTBdr/l3B4FeD9
-         VStTRMK3s/wYStbum2E9LhHkOh6rEBOk36hyrEpoTaWMdBjLFl/yk4XKB6/b6XDo67
-         7Y2RWkvnPy6k0gk1PZBEqJmmJPeuLIPbEC2jmMK9yyAgj5EI/2idU1Yqg892jnG/mP
-         GhbqREyBx+9K26pZ43DhvySmzaG8r4513rLJ11RNKvcDsBFNOqhMx2pQSJvNA/CS2f
-         U9+x6gWklaH/xFqwz7Fn9mh8IDA3IHfJT46W3zLUOc+mXpY/OavZ2TEL8STFTI+IF0
-         y5H9xfb/MEr+ZHrzpTk25RsbjkOIO4IFMuGv4F6mW8QRTeWzE1oM93thCQAxhIQiox
-         +U97LkMOr7k2ymPnobTgLX2J6NWh4iTOViHI2ifjAPBQceg/sOJXEiNi2oD6KDQTzt
-         coRRCOn3RKwkyaf8hRFcjUAthjIQoIt9Y5YGAsA7TpIxz1Js90Z
-Date:   Fri, 21 May 2021 22:27:08 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Siavash <siavash.askari.nasr@gmail.com>, git@vger.kernel.org
-Subject: Re: [Bug] git-credential-netrc.perl is not built and is not
- available in `exec-path`
-Message-ID: <YKgzvFHOcUgPjbj/@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Siavash <siavash.askari.nasr@gmail.com>,
-        git@vger.kernel.org
-References: <87k0nt3f8i.fsf@gmail.com>
- <YKcTFDgW4etXFpOR@camp.crustytoothpaste.net>
- <YKeFxcTDp4tHSRu8@coredump.intra.peff.net>
+        id S230027AbhEUWbH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 18:31:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37722 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229634AbhEUWbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 18:31:07 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBC4C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:29:43 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso19459750ote.1
+        for <git@vger.kernel.org>; Fri, 21 May 2021 15:29:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VAg1tdInp5r42EUdJDZQw8HpFRKwcaUjKn5e95Mio/8=;
+        b=On6L2d9Lc2uYz0cXxksyO4rAO7KNdFcHga+YfYqNyWMcU6khrn6iQpPj2W8tR0vC78
+         mL4gQy+lRh5GZGsBUp5NxgaSsTV91OGZiECCP5f1/OhtihypRV79pOlGd+7OJwhz70V6
+         XQVPRcBDXKuSxK7f83Vcj7pDh5v3x7BAr9fdNB/XdMFZ+zQlBh3R8rnwMHnQaLrmCsbT
+         Y26yV8nbUulIBTmRx8WpG4pnEghqSADjiU95qaw/7OCTfPFv9Q9JouEWx/kXjZpGESTE
+         /DP5KkR+q7j7q3fuqmkTiqNLkmZv2ym5QYPtycnUS1I6puTaZWsSbiH6YyYmEv/S1ayz
+         tE5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VAg1tdInp5r42EUdJDZQw8HpFRKwcaUjKn5e95Mio/8=;
+        b=Yk0FfPbGESNU7UCtwG7bGwZEhl8ZrY6MC4vTm9P3Vnbx+Rh7uRcmVnuaOftKBFZDSW
+         Xq5cXr/dXYH0CEYG1OR2XG6LqYewcr955HDseHFl0+oD0esb01M+L+MSerYBDk6AdsTL
+         nT5J26L2U0/PCDjaApUPpFBfDnokJi1cRJK7L2gxm9kB6TuINtLkOZ3tuf9ayj3bE8aF
+         ZMPSvByZ7kCgf99uSDXHxArC0/KThe/JQlA7MBGeFI7CekbFbgPHvgDTyS0zsDYhhYPR
+         ThPMYYdcFAD4Ty1mB1oYj+pzkG1Iiu97HXLwniKIGOHbQRmSQqTh418i3mMnXA/gcNgf
+         r3Tg==
+X-Gm-Message-State: AOAM532AwkZ5LEtOhEPSZG1GL3OexodNAEL7I/X0+60EFEfblMi4mYF9
+        QlWvYXiL4crlyJB9Lh9dgSihYjKFjeNkPg==
+X-Google-Smtp-Source: ABdhPJwbwh1+rrCJYk0No5255Vg+bo9vhPf8LldkAX4FG1MhCnpoeZuBtgpLlU7yhE0GUvMuZmYVAA==
+X-Received: by 2002:a9d:3674:: with SMTP id w107mr10100929otb.150.1621636182744;
+        Fri, 21 May 2021 15:29:42 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id 34sm1553644otf.38.2021.05.21.15.29.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 May 2021 15:29:42 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 0/5] doc: asciidoc cleanups
+Date:   Fri, 21 May 2021 17:29:36 -0500
+Message-Id: <20210521222941.525901-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6RbVOcX+tYfy8ZyV"
-Content-Disposition: inline
-In-Reply-To: <YKeFxcTDp4tHSRu8@coredump.intra.peff.net>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch series is an attempt to cleanup the Makefile of the documentation.
 
---6RbVOcX+tYfy8ZyV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Since v2 only certain $(RM) commands are moved from one patch to another.
 
-On 2021-05-21 at 10:04:53, Jeff King wrote:
-> On Fri, May 21, 2021 at 01:55:32AM +0000, brian m. carlson wrote:
-> > Things in contrib are not built by default because they don't
-> > necessarily work everywhere.  For example, the osxkeychain credential
-> > helper won't compile on Linux because the requisite shared libraries
-> > are specific to macOS.  You'll need to compile them manually and install
-> > them in a suitable location.
->=20
-> I agree with this, but just following up with a bit of a devil's
-> advocate: why not put osxkeychain into a regular "make install", but
-> make it conditional via a Makefile knob, like we do for other
-> platform-specific features?
+Felipe Contreras (5):
+  doc: refactor common asciidoc dependencies
+  doc: improve asciidoc dependencies
+  doc: remove unnecessary rm instances
+  doc: simplify Makefile using .DELETE_ON_ERROR
+  doc: avoid using rm directly
 
-Sure, let's do it.
+ Documentation/Makefile | 77 ++++++++++++++++--------------------------
+ 1 file changed, 29 insertions(+), 48 deletions(-)
 
-For osxkeychain, it's probably pretty simple to always build it, since
-macOS will always have the appropriate libraries if the compiler is
-installed.  I would be in favor of also building by default on Linux and
-having a Makefile knob to disable that, since the requisite libraries are
-a part of nearly every distribution and doing so will spur distros to
-ship it, which many do not.
+Range-diff against v2:
+1:  55b188c8ad = 1:  cbcaefed3e doc: refactor common asciidoc dependencies
+2:  e69d0a5b89 = 2:  1c8b0b9123 doc: improve asciidoc dependencies
+3:  4f18675ce9 < -:  ---------- doc: remove unnecessary rm instances
+-:  ---------- > 3:  3da461a55d doc: remove unnecessary rm instances
+4:  935675e070 ! 4:  a8c4c4ae26 doc: simplify Makefile using .DELETE_ON_ERROR
+    @@ Documentation/Makefile: docdep_prereqs = \
+      	cmd-list.made $(cmds_txt)
+      
+      doc.dep : $(docdep_prereqs) $(DOC_DEP_TXT) build-docdep.perl
+    --	$(QUIET_GEN)$(RM) $@+ $@ && \
+    --	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
+    +-	$(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
+     -	mv $@+ $@
+     +	$(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl >$@ $(QUIET_STDERR)
+      
+    @@ Documentation/Makefile: clean:
+      	$(RM) GIT-ASCIIDOCFLAGS
+      
+      $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
+    --	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+    --	$(TXT_TO_HTML) -d manpage -o $@+ $< && \
+    +-	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -d manpage -o $@+ $< && \
+     -	mv $@+ $@
+     +	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -d manpage -o $@ $<
+      
+      $(OBSOLETE_HTML): %.html : %.txto $(ASCIIDOC_DEPS)
+    --	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+    --	$(TXT_TO_HTML) -o $@+ $< && \
+    +-	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -o $@+ $< && \
+     -	mv $@+ $@
+     +	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -o $@ $<
+      
+    @@ Documentation/Makefile: manpage-base-url.xsl: manpage-base-url.xsl.in
+      	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+      
+      %.xml : %.txt $(ASCIIDOC_DEPS)
+    --	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+    --	$(TXT_TO_XML) -d manpage -o $@+ $< && \
+    +-	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@+ $< && \
+     -	mv $@+ $@
+     +	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@ $<
+      
+      user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+    --	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+    --	$(TXT_TO_XML) -d book -o $@+ $< && \
+    +-	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d book -o $@+ $< && \
+     -	mv $@+ $@
+     +	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d book -o $@ $<
+      
+    @@ Documentation/Makefile: XSLTOPTS += --stringparam html.stylesheet docbook-xsl.cs
+      XSLTOPTS += --param generate.consistent.ids 1
+      
+      user-manual.html: user-manual.xml $(XSLT)
+    --	$(QUIET_XSLTPROC)$(RM) $@+ $@ && \
+    --	xsltproc $(XSLTOPTS) -o $@+ $(XSLT) $< && \
+    +-	$(QUIET_XSLTPROC)xsltproc $(XSLTOPTS) -o $@+ $(XSLT) $< && \
+     -	mv $@+ $@
+     +	$(QUIET_XSLTPROC)xsltproc $(XSLTOPTS) -o $@ $(XSLT) $<
+      
+    @@ Documentation/Makefile: XSLTOPTS += --stringparam html.stylesheet docbook-xsl.cs
+      	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split -o $@ user-manual.texi
+      
+      user-manual.texi: user-manual.xml
+    --	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+    --	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
+    +-	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
+     -	$(PERL_PATH) fix-texi.perl <$@++ >$@+ && \
+     -	rm $@++ && \
+     -	mv $@+ $@
+    @@ Documentation/Makefile: XSLTOPTS += --stringparam html.stylesheet docbook-xsl.cs
+     +	rm $@+
+      
+      user-manual.pdf: user-manual.xml
+    --	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
+    --	$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
+    +-	$(QUIET_DBLATEX)$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
+     -	mv $@+ $@
+     +	$(QUIET_DBLATEX)$(DBLATEX) -o $@ $(DBLATEX_COMMON) $<
+      
+      gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
+    --	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+    -+	$(QUIET_DB2TEXI) \
+    + 	$(QUIET_DB2TEXI) \
+      	($(foreach xml,$(sort $(MAN_XML)),xsltproc -o $(xml)+ texi.xsl $(xml) && \
+      		$(DOCBOOK2X_TEXI) --encoding=UTF-8 --to-stdout $(xml)+ && \
+     -		rm $(xml)+ &&) true) > $@++ && \
+    @@ Documentation/Makefile: XSLTOPTS += --stringparam html.stylesheet docbook-xsl.cs
+      	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate $*.texi
+      
+      $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+    --	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+    --	$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
+    +-	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
+     -	mv $@+ $@
+     +	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@
+      
+      howto-index.txt: howto-index.sh $(HOWTO_TXT)
+    --	$(QUIET_GEN)$(RM) $@+ $@ && \
+    --	'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@+ && \
+    +-	$(QUIET_GEN)'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@+ && \
+     -	mv $@+ $@
+     +	$(QUIET_GEN)'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@
+      
+      $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+      	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) $*.txt
+    -@@ Documentation/Makefile: WEBDOC_DEST = /pub/software/scm/git/docs
+    - 
+    - howto/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+    +@@ Documentation/Makefile: howto/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+      $(patsubst %.txt,%.html,$(HOWTO_TXT)): %.html : %.txt GIT-ASCIIDOCFLAGS
+    --	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+    -+	$(QUIET_ASCIIDOC) \
+    + 	$(QUIET_ASCIIDOC) \
+      	sed -e '1,/^$$/d' $< | \
+     -	$(TXT_TO_HTML) - >$@+ && \
+     -	mv $@+ $@
+5:  b621f3b8e9 = 5:  2c330987b5 doc: avoid using rm directly
+-- 
+2.32.0.rc0
 
-> And yet, my impression is that basically every Git user on macOS is
-> using it every day, because both Apple Git and homebrew build it by
-> default (and I think at least in the case of Apple Git, it's hard-coded
-> into the config). A little scary, but nobody seems to have complained. :)
->=20
-> I wonder if we could build it and run it through t0303 as part of the
-> mac CI process (though I recall at the time that it was really finicky
-> for automated testing; it wouldn't even run over an ssh session).
->=20
-> Likewise, we probably could be building and testing the libsecret ones
-> via the Linux CI job (I don't use those either myself, but presumably
-> they pass t0303).
-
-Running the tests will be harder.  macOS, I believe, requires an
-interactive session to have the keychain unlocked, and on Linux, you
-require gnome-keyring or an equivalent daemon running, which practically
-means that you need a desktop session.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---6RbVOcX+tYfy8ZyV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYKgzuwAKCRB8DEliiIei
-gQB5AQDaFN9AD5UWqkxlYk9yx1ps+uXwpsboKbPefRHFGUa8YAEAkFsCSp/dL9i+
-N2jplbOUKGG9+9XLqHjUVYlNywWXago=
-=/jIp
------END PGP SIGNATURE-----
-
---6RbVOcX+tYfy8ZyV--
