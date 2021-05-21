@@ -2,191 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EB3CC433B4
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 12:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0ECDC433ED
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 13:13:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52D5B6008E
-	for <git@archiver.kernel.org>; Fri, 21 May 2021 12:00:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B98761244
+	for <git@archiver.kernel.org>; Fri, 21 May 2021 13:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235171AbhEUMB4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 May 2021 08:01:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35904 "EHLO
+        id S233231AbhEUNO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 May 2021 09:14:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234928AbhEUMBR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 May 2021 08:01:17 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A179CC061343
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:51 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id z85-20020a1c7e580000b029017a76f3afbaso4476870wmc.2
-        for <git@vger.kernel.org>; Fri, 21 May 2021 04:59:51 -0700 (PDT)
+        with ESMTP id S233142AbhEUNOQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 May 2021 09:14:16 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616E2C061574
+        for <git@vger.kernel.org>; Fri, 21 May 2021 06:12:52 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id s7so3991853iov.2
+        for <git@vger.kernel.org>; Fri, 21 May 2021 06:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HVK7x9ytblDj8iy4lmiMNtwNDpdpLC/uAkky1UzqoLw=;
-        b=XOqzglHtzCj+pcrP8LKvmXpTRnix7OchY+qr2x9x4iAd0hTCvdwPtJ+kffk/hHeCM4
-         4esCUcZ8JqeE7Fy/oSMyZPHaRKCs2D+cht0FvpbK7tQLfumL+dUzk+KYWCvVU2hcRPUl
-         2Y20COv4T9zrdQNCsJDFoPbRw52V/5MqqUjTil3qg6PBNvdJ2Q4rMOCr4aWRZdJa83sm
-         ieyl+WNVwWTLOCs2AK7juqldrlnxfX655s7/PiMjJji2RNxEi/t0zUn4Xw3nIp1xTIWi
-         43lNmgIdIlfvLkX+7t/8COfaQO4Yd8VP1dQTO1WAxS9K8P7Xu4V7iUcS0zS6ytiZJpyf
-         CTFQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lrIS2IYIekilSs2v7e0YC/Y+M3UxlT9mhCGbZuHU4oM=;
+        b=uH21fsO4OaBY0uMAYzoeEQ16iNmOWHgF4Xq3wxzSkZCL3luUGaveSdWiy3cQYX9nR8
+         uc/Q69Uyv53bMSvgDsnUXALXeoGih8W578ji2GXaS94R4wXEF2xn0x0al6Fhbfc+02zR
+         fNvLbn0MKyH7agwL5d2QuJKyNwHZxbKG+FosTgOCeTKRrcovqSucZqSe6zsm0mwThK4S
+         mGg8EVB6gkvLLhpSSOvLlloJfpnDdM0YE6zJOio1rEOM3WVn36jPeefap9bpGFxypfX4
+         L9+2QuzqjfaM/RqFnae3HJG9zVhZcpFPqqAvVUlXYKUcKlZaoeDtZ+YJqOftB3Eeo6ic
+         y2eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HVK7x9ytblDj8iy4lmiMNtwNDpdpLC/uAkky1UzqoLw=;
-        b=cpVDncmpmqmffhAvUBF8VHP6tGzrPEgZEB3LmCDtUMyw5oQXhDScIY/uujBDxMyWyv
-         Ebw11ZnSXlvRvV3KNhhplIn1vZA+KQWUx0l6Fa3Oo3ygD5vKmkOgUKnZg+Nb9yGP3Vke
-         x8pgdsobNMrFF2XtFZKduAGuOFXFKh3xM4xN2llMRguSLHNqPC3xgp2KEZhB8e5PHQB8
-         qqbffLYY6M8k2eAsZNckBU2GSi7p4ckfhic6lHmAk+dIoZQT0RXu07rvpHMrE1mCDaa9
-         srvnrVXjunJr8UC9FYisQXxSx+kCoQXScQ+6yPbvqPV3/9hGF5jyp7Hry6aTmPxHYpJS
-         WpTQ==
-X-Gm-Message-State: AOAM532ZUUn+AuI8KZEqCZyUtHnCdHa7WC4nWIE/dvL+TJa/gcmpSsWo
-        5YGEznQAdL/VFiR6BQVG3fjLp/e879Q=
-X-Google-Smtp-Source: ABdhPJxypoZG8GqvNI/26TnZOmKwUo8eKGGwIhBe1I/utl78JUMuA+zLJ3wK2giQuKqG2zNMpQ0Tqg==
-X-Received: by 2002:a7b:c1c6:: with SMTP id a6mr8556330wmj.189.1621598390284;
-        Fri, 21 May 2021 04:59:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 61sm2032096wrm.52.2021.05.21.04.59.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 May 2021 04:59:50 -0700 (PDT)
-Message-Id: <584d4b559a91213287221b9731281431fc557627.1621598382.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
-References: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
-        <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 May 2021 11:59:41 +0000
-Subject: [PATCH v4 12/12] fsmonitor: integrate with sparse index
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lrIS2IYIekilSs2v7e0YC/Y+M3UxlT9mhCGbZuHU4oM=;
+        b=lg/tEFd/JIuEoSfQW/WgHD5dUG3bXhaNBwwdzeL3wscBesmTns/4hFpFflyT1k1JMu
+         l9QHZ5F3tTaqUouWxxU0CYbfd+yZ1bwmcGA6ZiKqlEKenXMthcgiH6bmtCrjj/B35Wfs
+         T00+/3YktfReYenMbP+neHuzBqtM3XsCwsaqcR9HQMUblgEIrwXRU4iMvoK6Rst5BX8f
+         7gqxK6lACeKC5Hl/M8B2qtqX4Fey9f9znlpp8R9BAYrVbfmAqxQZIogWXN3DocODM3H3
+         Jt0JQ0ejcWhAx2vQcb4eA8ADH8QXixGsUWMuKDcXH+tcAfbmE6cY/CXGwsDuzEC1M7pD
+         BEzA==
+X-Gm-Message-State: AOAM53269BZzSBLgtO6smU9ZGR9wdu9QuMntIYyOpYhQ8IMhNEe/kzhb
+        MN2uAKzdjiLpvY/p4n0yN2LyN3YAB/gIn3IWFRE=
+X-Google-Smtp-Source: ABdhPJxF6WcyQlCIgURfF76JTfKxENvyvbjTNAu+tdRZyCZab8wBkmc/SFq/26tCrg78uUu+/NmWj/J0NyMGQ2hEPq0=
+X-Received: by 2002:a02:5409:: with SMTP id t9mr4460251jaa.50.1621602771603;
+ Fri, 21 May 2021 06:12:51 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, newren@gmail.com,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.958.git.1621500593126.gitgitgadget@gmail.com>
+ <CAP8UFD0Pzdb_9+VpeLrydu8ROdVi4ygFPk367J+NWGL0P5nXdg@mail.gmail.com>
+ <CAOLTT8S_Bu1PG+-gVK_6iUx--YrMx2hxDCTa=5sW6UJv9Oz_0Q@mail.gmail.com> <CAP8UFD1yLS9UBs0r6_GjB-K6prW7GNxR+z445HJe8cR4HYLewA@mail.gmail.com>
+In-Reply-To: <CAP8UFD1yLS9UBs0r6_GjB-K6prW7GNxR+z445HJe8cR4HYLewA@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Fri, 21 May 2021 21:12:35 +0800
+Message-ID: <CAOLTT8Q9meKiHG=TvwsW49dwWtzBNnkfT03+dQrvKDLGuLiOFg@mail.gmail.com>
+Subject: Re: [PATCH] [GSOC] ref-filter: add contents:raw atom
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=
+=8821=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=885:10=E5=86=99=E9=81=93=
+=EF=BC=9A
+>
+> > Okay, some explanations are indeed missing here:
+>
+> By the way I forgot to say that your patch might want to also properly
+> document %(contents:raw). If the doc was updated as part of the patch,
+> maybe the whole patch would be easier to understand.
+>
 
-If we need to expand a sparse-index into a full one, then the FS Monitor
-bitmap is going to be incorrect. Ensure that we start fresh at such an
-event.
+Indeed so.
 
-While this is currently a performance drawback, the eventual hope of the
-sparse-index feature is that these expansions will be rare and hence we
-will be able to keep the FS Monitor data accurate across multiple Git
-commands.
+> > %(contents) will discard the metadata part of the object file,
+>
+> It's not clear what you mean when you talk about metadata in objects.
+> Are you taking about only the headers, like the "tree XXX", "parent
+> YYY", etc lines in commits, and the "object OOO", "type TTT", etc
+> lines in tags? Or does it also includes the lines in tree objects that
+> reference other trees or blobs?
+>
 
-These tests are added to demonstrate that the behavior is the same
-across a full index and a sparse index, but also that file modifications
-to a tracked directory outside of the sparse cone will trigger
-ensure_full_index().
+Well, the metadata here only refers to the header of the commit and
+tag objects, "tree XXX", "parent YYY"...  The lines in tree objects that
+reference other trees or blobs will not output. What we have to do here
+is to simulate the behavior of `git cat-file --batch`. But we encounter a
+very serious problem here:
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- sparse-index.c              |  7 ++++++
- t/t7519-status-fsmonitor.sh | 48 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+Now we want to use for-each-ref to print a ref point to a tree:
 
-diff --git a/sparse-index.c b/sparse-index.c
-index b2b3fbd75050..32ba0d17ef7c 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -195,6 +195,10 @@ int convert_to_sparse(struct index_state *istate)
- 	cache_tree_free(&istate->cache_tree);
- 	cache_tree_update(istate, 0);
- 
-+	istate->fsmonitor_has_run_once = 0;
-+	FREE_AND_NULL(istate->fsmonitor_dirty);
-+	FREE_AND_NULL(istate->fsmonitor_last_update);
-+
- 	istate->sparse_index = 1;
- 	trace2_region_leave("index", "convert_to_sparse", istate->repo);
- 	return 0;
-@@ -291,6 +295,9 @@ void ensure_full_index(struct index_state *istate)
- 	istate->cache = full->cache;
- 	istate->cache_nr = full->cache_nr;
- 	istate->cache_alloc = full->cache_alloc;
-+	istate->fsmonitor_has_run_once = 0;
-+	FREE_AND_NULL(istate->fsmonitor_dirty);
-+	FREE_AND_NULL(istate->fsmonitor_last_update);
- 
- 	strbuf_release(&base);
- 	free(full);
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 45d025f96010..f70fe961902e 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -73,6 +73,7 @@ test_expect_success 'setup' '
- 	expect*
- 	actual*
- 	marker*
-+	trace2*
- 	EOF
- '
- 
-@@ -383,4 +384,51 @@ test_expect_success 'status succeeds after staging/unstaging' '
- 	)
- '
- 
-+# Usage:
-+# check_sparse_index_behavior [!]
-+# If "!" is supplied, then we verify that we do not call ensure_full_index
-+# during a call to 'git status'. Otherwise, we verify that we _do_ call it.
-+check_sparse_index_behavior () {
-+	git status --porcelain=v2 >expect &&
-+	git sparse-checkout init --cone --sparse-index &&
-+	git sparse-checkout set dir1 dir2 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+		git status --porcelain=v2 >actual &&
-+	test_region $1 index ensure_full_index trace2.txt &&
-+	test_cmp expect actual &&
-+	rm trace2.txt &&
-+	git sparse-checkout disable
-+}
-+
-+test_expect_success 'status succeeds with sparse index' '
-+	git reset --hard &&
-+
-+	test_config core.fsmonitor "$TEST_DIRECTORY/t7519/fsmonitor-all" &&
-+	check_sparse_index_behavior ! &&
-+
-+	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
-+	EOF
-+	git config core.fsmonitor .git/hooks/fsmonitor-test &&
-+	check_sparse_index_behavior ! &&
-+
-+	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
-+		printf "dir1/modified\0"
-+	EOF
-+	check_sparse_index_behavior ! &&
-+
-+	cp -r dir1 dir1a &&
-+	git add dir1a &&
-+	git commit -m "add dir1a" &&
-+
-+	# This one modifies outside the sparse-checkout definition
-+	# and hence we expect to expand the sparse-index.
-+	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
-+		printf "dir1a/modified\0"
-+	EOF
-+	check_sparse_index_behavior
-+'
-+
- test_done
--- 
-gitgitgadget
+git for-each-ref --format=3D"%(contents:raw)" refs/mytrees/first
+
+will output:
+
+100644 one
+
+but
+
+git cat-file tree refs/mytrees/first
+
+will output:
+
+100644 onem=EF=BF=BDc=D6=88=EF=BF=BD=EF=BF=BDq=EF=BF=BDD=EF=BF=BD=D6=A7hJ)E=
+-100644 two.t=EF=BF=BD=EF=BF=BD=EF=BF=BD0=EF=BF=BD+=EF=BF=BD=EF=BF=BDVjC=EF=
+=BF=BD=EF=BF=BDeV=EF=BF=BD=D3=88q
+
+which is the compressed data, it may contains '\0'.
+
+Whne we use `append_atom()` to add the contents of the tree object
+to the buffer, notice that it uses `strbuf_addstr()`, the underlying call
+is `strlen()`, which truncates the data we added. Can we have any good
+remedies? For example, record the length of "v->s" by "v->s_size" and
+use `strbuf_addstr(&state->stack->output, v->s, v->s_size)`?
+
+> > and only print the data contents part of it. %(contents:raw)
+> > can will not discard the metadata part of the object file, this
+>
+> s/can//
+>
+> >  means that it can print the "raw" content of an object.
+>
+> The above seems to be changing the definition of %(contents) (as
+> previously it was only the commit message of a commit or the tag
+> message a tag) to explain %(contents:raw)...
+>
+> > In addition, %(contents:raw) can support print commit, blob,
+> > tag, tree objects contents which %(contents) can only support
+> > commit,tag objects.
+>
+> ...but this is saying that the definition of %(contents) actually
+> doesn't change. This doesn't seem logical to me.
+>
+> If %(contents:raw) can support any kind of object (commit, blob, tag
+> or tree) then it would be logical that %(contents) also support any
+> kind of object.
+>
+> So if you really want to define %(contents:raw) as the raw object
+> contents, you might want to consider a preparatory patch that would
+> first change the definition of %(contents) to be the object contents
+> without the headers. This would keep the same output for any commit or
+> tag. But for blobs and trees it would print the whole content of the
+> object in the same way as `git cat-file -p` does, instead of nothing.
+>
+
+Yes, I agree with you. Another thing worth mentioning is:
+%(contents:raw) or %(contents) is not similar to "git cat-file -p foo"
+they are more like "git cat-file <type> foo" or
+"git rev-parse foo | git cat-file --batch", "git cat-file -p foo" It will
+process the original data:
+For example, a tree object, with "git cat-file -p",
+will use "ls-tree" to output all the sub-trees and blobs it connects.
+
+$ git cat-file -p refs/mytrees/first
+100644 blob 6dde63d6888cec71ea82449bd6a7684a29452d7f    one
+100644 blob f719efd430d52bcfc8566a43b2eb655688d38871    two.t
+
+but with "git cat-file <type>" will output uncompressed data:
+
+git cat-file tree refs/mytrees/first
+100644 onem=EF=BF=BDc=D6=88=EF=BF=BD=EF=BF=BDq=EF=BF=BDD=EF=BF=BD=D6=A7hJ)E=
+-100644 two.t=EF=BF=BD=EF=BF=BD=EF=BF=BD0=EF=BF=BD+=EF=BF=BD=EF=BF=BDVjC=EF=
+=BF=BD=EF=BF=BDeV=EF=BF=BD=D3=88q%
+
+> I think this acceptable as refs rarely point to something other than
+> commits, so people are not likely to rely on the fact that %(contents)
+> currently prints nothing for blobs and trees.
+>
+> > E.g:
+> >
+> > git for-each-ref --format=3D%(contents:raw) refs/heads/foo
+> >
+> > will have the same output as:
+> >
+> > git rev-parse refs/heads/foo | git cat-file --batch
+>
+> Ok, I think that would indeed be useful.
+>
+> > > Also is %(contents:raw) supposed to print something for a blob or a
+> > > tree, while I guess %(contents) is printing nothing for them?
+> >
+> > Now my thoughts are:
+> > Let %(contents) learn to print four kinds of objects.
+> > and then let %(contents:raw) learn to print metadata.
+> > I will split it into two patches.
+>
+> Yeah, great!
+>
+
+Thanks!
+--
+ZheNing Hu
