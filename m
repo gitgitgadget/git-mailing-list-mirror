@@ -2,167 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2690DC2B9F2
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 07:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E666EC2B9F2
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 08:49:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2D1F600D4
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 07:16:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B90356054E
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 08:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbhEVHLs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 03:11:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38692 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229865AbhEVHLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 03:11:47 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C8CC061574
-        for <git@vger.kernel.org>; Sat, 22 May 2021 00:10:22 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id 10so16600196pfl.1
-        for <git@vger.kernel.org>; Sat, 22 May 2021 00:10:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=f4Qj3h4Pp7J+Ym0BYi7xIuMRjmSo6laRqOg5dJtpYT8=;
-        b=imDLtiWR5Vo1B8Ecfk0R04JlUCIqx0jl3MMP8WRwP+5D75G4x0Cd3YzdVhJ5v3p1aR
-         GElMlljoqMBWSSeGVzieiwIyu+lsE2Ax9RFKWiHjquEuVhhiqvAj/AjvhTF5qQQ2ngU4
-         8c9BPetY6JYOUQW6PkAayuWAXuovqImSWPkVL0WGygw+pNAqbMI+6OtNYcpzwxJ8ZXDN
-         m39UB+tJdbzkG4JE2/Zxpa7QIWSk7XRrKjpApBwm9rk65spbbuZWdfRVp79Yk8nweqvk
-         PeJrxX4xe97LKrjB4l9VPTEInr6QVpkgSy5tyS+Wf69EPioEFM9mfVl5nRRSHDnhb4fI
-         W3cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=f4Qj3h4Pp7J+Ym0BYi7xIuMRjmSo6laRqOg5dJtpYT8=;
-        b=lAVA+d18xGLREwijevQ5Hi479g80Y+JgN7Hjo0R+npkWJk1lyahwVGmq334OA6s7xE
-         kxzj4+q1gabABhZ/t6K5hW4cQNUelRQYmaiNxHgNDsRxvuveScibhPo9EXM6pToGgWKl
-         2fLDyMFMPaDRzT6non3K2+oF+AtwQ+VhWRDtgU3LcXR4aqS4u1pZsuwcG07OcDtevcya
-         R19ySrz1LaMep4UnYmc47S7IZ+tOT3zjmoN3Qg8D4lvdEn0b9MFeTMbooF1uXzlfO5GH
-         eCmP/vOERC2VtwSY/RZjld5uDOtc9Ov5+vNUlziiryZ/DccUKL8XPq1DqPepOgQUO52s
-         9Ayw==
-X-Gm-Message-State: AOAM531H7MtFw68TAawm/tsyXqvhdig2NFag2vl5xZ9v5l6Ir4EL9Dp8
-        cQGkQ6puGyi4cTa29WczF5UPntvqKXhn6A==
-X-Google-Smtp-Source: ABdhPJy3QCRT6hg5kMyuRhUr16WJj+G1RAErKvl//lQvqWAw82egrkibJV6LoQM8Brs6x2t/g6r7Jw==
-X-Received: by 2002:a63:f245:: with SMTP id d5mr2755248pgk.416.1621667421349;
-        Sat, 22 May 2021 00:10:21 -0700 (PDT)
-Received: from athena.localdomain ([2402:800:63b8:812a:adcf:8995:bb0b:8236])
-        by smtp.gmail.com with ESMTPSA id b23sm5679298pjo.26.2021.05.22.00.10.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 May 2021 00:10:21 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] t: use configured TAR instead of tar
-Date:   Sat, 22 May 2021 14:10:08 +0700
-Message-Id: <20210522071008.26790-1-congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc0.32.g107691cb07
-In-Reply-To: <20210522062815.17083-1-congdanhqx@gmail.com>
-References: <20210522062815.17083-1-congdanhqx@gmail.com>
+        id S230111AbhEVIui (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 04:50:38 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65158 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230043AbhEVIui (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 04:50:38 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EEBC514573E;
+        Sat, 22 May 2021 04:49:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4Ft6bWtCbbopzQRk9NnF7P8yZAWHk4QrbT7kwy
+        60n3s=; b=Hg8QW7ookD+nhaAbt/5WhAt3JxqTNK75WeHQkZ46K81iVXS4M3KyRZ
+        j/3gDoQjKRQHCcPaGsv0XuSBhz3paq803Kuo5Wl3lYTAFFBbpHWV5Hv2OSrPr61K
+        JcopL4TZSdKI2ARWIn8QYsSktY/SNL9Jp1R4abbLSGvq7PbAMSz70=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D947D14573D;
+        Sat, 22 May 2021 04:49:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1BEC314573C;
+        Sat, 22 May 2021 04:49:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "H. Peter Anvin" <hpa@zytor.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Josh Steadmon <steadmon@google.com>, Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: RFC: error codes on exit
+References: <YKWggLGDhTOY+lcy@google.com>
+        <60a5afeeb13b4_1d8f2208a5@natae.notmuch>
+        <CAMMLpeScunGg5WM4N90vG+yN3tOATqhsL2iRLsJ43ksNyTx_wQ@mail.gmail.com>
+        <dc14c50d-c626-19f8-e615-52ca3c9051dc@zytor.com>
+Date:   Sat, 22 May 2021 17:49:09 +0900
+In-Reply-To: <dc14c50d-c626-19f8-e615-52ca3c9051dc@zytor.com> (H. Peter
+        Anvin's message of "Fri, 21 May 2021 16:20:01 -0700")
+Message-ID: <xmqqfsyfqhkq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 93DD31DA-BADA-11EB-9483-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Despite that tar is available everywhere, it's not required by POSIX.
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-In our build system, users are allowed to specify which tar to be used
-in Makefile knobs. Furthermore, GNU tar (gtar) is prefered when autotools
-is being used.
-
-In our testsuite, 7 out of 9 tar-required-tests use "$TAR", the other
-two use "tar".
-
-Let's change the remaining two tests to "$TAR".
-
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
-
->> knobs, and we prefer GNU tar in autotools script.
+> On 5/21/21 9:53 AM, Alex Henrie wrote:
+>> On Wed, May 19, 2021 at 6:40 PM Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>>>
+>>> It's good to not include many initial codes, but I would start with at
+>>> least three:
+>>>
+>>>    OK = 0,
+>>>    UNKNOWN = 1,
+>>>    NORMAL = 2,
+>> If you go that route, could you please pick a word other than
+>> "normal"
+>> to describe errors that are not entirely unexpected? I'm worried that
+>> someone will see "normal" and use it instead of "OK" to indicate
+>> success.
+>> 
 >
-> The last part I didn't know about---it is sad if autotools require
-> use of gtar (but since use of autoconf and autotools is not required
-> to build Git, I do not deeply care ;-)).
+> <sysexits.h>
 
-I do not care, either. Just want to add more data points for this change.
+Is the value assignment standardized across systems?
 
-I've made a grammar error with v1, and I think two "and" in a sentence is not
-good enough. Let's take this version instead.
+We want human-readable names in the source to help developers while
+we want platform neutral output in the log so that log collectors
+can do some "intelligent" things about the output.  If EX_USAGE is
+always 64 everywhere, that is great---we can emit "64" in the log
+and log collectors can take it as if they saw "EX_USAGE".  But if
+the value assignment is platform-dependent, it does not help all
+that much.
 
-Range-diff against v1:
-1:  3a8ba467fc ! 1:  724a1a7a77 t: use configured TAR instead of tar
-    @@ Commit message
-         t: use configured TAR instead of tar
-     
-         Despite that tar is available everywhere, it's not required by POSIX.
-    -    And, we're allow users to specify which tar they want to use in Makefile
-    -    knobs, and we prefer GNU tar in autotools script.
-    +
-    +    In our build system, users are allowed to specify which tar to be used
-    +    in Makefile knobs. Furthermore, GNU tar (gtar) is prefered when autotools
-    +    is being used.
-     
-         In our testsuite, 7 out of 9 tar-required-tests use "$TAR", the other
-         two use "tar".
+    Side note.  We had a similar discussion on <errno.h> and
+    strerror(); the numbers do not help without knowing which
+    platform the error came from, and strerror() output is localized
+    and not suitable for machine consumption.
 
- t/t3513-revert-submodule.sh | 4 ++--
- t/t6041-bisect-submodule.sh | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+In a sense, it is worse than we keep a central mapping between names
+programmers use to give to the new fatal() helper function and the
+string the tracing machinery will emit for these names.
 
-diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
-index 74cd96e582..8bfe3ed246 100755
---- a/t/t3513-revert-submodule.sh
-+++ b/t/t3513-revert-submodule.sh
-@@ -14,7 +14,7 @@ test_description='revert can handle submodules'
- git_revert () {
- 	git status -su >expect &&
- 	ls -1pR * >>expect &&
--	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
-+	"$TAR" cf "$TRASH_DIRECTORY/tmp.tar" * &&
- 	may_only_be_test_must_fail "$2" &&
- 	$2 git checkout "$1" &&
- 	if test -n "$2"
-@@ -23,7 +23,7 @@ git_revert () {
- 	fi &&
- 	git revert HEAD &&
- 	rm -rf * &&
--	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
-+	"$TAR" xf "$TRASH_DIRECTORY/tmp.tar" &&
- 	git status -su >actual &&
- 	ls -1pR * >>actual &&
- 	test_cmp expect actual &&
-diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
-index df1eff0fb8..82013fc903 100755
---- a/t/t6041-bisect-submodule.sh
-+++ b/t/t6041-bisect-submodule.sh
-@@ -8,7 +8,7 @@ test_description='bisect can handle submodules'
- git_bisect () {
- 	git status -su >expect &&
- 	ls -1pR * >>expect &&
--	tar cf "$TRASH_DIRECTORY/tmp.tar" * &&
-+	"$TAR" cf "$TRASH_DIRECTORY/tmp.tar" * &&
- 	GOOD=$(git rev-parse --verify HEAD) &&
- 	may_only_be_test_must_fail "$2" &&
- 	$2 git checkout "$1" &&
-@@ -25,7 +25,7 @@ git_bisect () {
- 	git bisect start &&
- 	git bisect good $GOOD &&
- 	rm -rf * &&
--	tar xf "$TRASH_DIRECTORY/tmp.tar" &&
-+	"$TAR" xf "$TRASH_DIRECTORY/tmp.tar" &&
- 	git status -su >actual &&
- 	ls -1pR * >>actual &&
- 	test_cmp expect actual &&
--- 
-2.32.0.rc0.32.g107691cb07
-
+Thanks.
