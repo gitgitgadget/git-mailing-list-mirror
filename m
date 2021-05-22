@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5847AC2B9F2
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 13:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A91C2B9FB
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 13:57:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3186561164
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 13:57:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FCA361164
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 13:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231381AbhEVN7E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 09:59:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
+        id S231342AbhEVN7G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 09:59:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231252AbhEVN6r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 09:58:47 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F756C0613ED
-        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:21 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id q5so23718469wrs.4
-        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:21 -0700 (PDT)
+        with ESMTP id S231296AbhEVN6v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 09:58:51 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0389C0613ED
+        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:26 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id d11so23701797wrw.8
+        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=N5qY1y9CfNbyDb71UAUZBNInayWHSRyciKICzyYlGNc=;
-        b=a7zIEy6p/mp+ncB6ECyifJ36s/YJC0+LOY7pwgFf3xm82nOUiFolImRqFMsV4bTDuJ
-         lnzM2+lO0Y+W64nwajljg/+nbpz5vzZUqlQJ8quCnfCxMfhkLvLU2EDPuC7uucBOOr+P
-         kdp6jq37scWOyuU3GjIXZXyUGKHtpABTaKAAaG8D1U43nlNAECXzL3CyXkFv4XpuZF6c
-         Dqm1eZANuwyalDgwKwObRUXlWo/rEcQm1VUemOrVHl3msK29o22/TZ4eNK56+nD6/S+6
-         Tz0S7MIeZLGCmru2nNw/lDngix0o+sMOz6BOZ9z77dVc3NoXa+CUsTQ8OQY4Z2rO+wDy
-         srhA==
+        bh=nljdf+Z23/6i2jJYLWQb++EzMtltI8k+RIHGIumkbeE=;
+        b=XhKI1fUcgPtJzUk9unto01nw0Hvx6TDZi+47oKl0W9/uwOXv4c9pyfqhR0UM9awyHm
+         Iwv2amXWchxoYlIGGMNIScCsxgzK7q4d42MjieHApE8UegxmAkodYdemGfMOdyxwSaFc
+         nKF1S+dvBEKZ2FGCNqMyYgTvgq4SrR76KsLE1VZM/wTQ6lc+RRWBkknv0ER+CoiDyMlw
+         7RoYHtC7yUSbW4Qj28MxUFXZaTx7FWNha9OKKNofLjdVSKVFoM52hxgXYDIrfJDKG6V6
+         fkbFSYCHwFwN1xGLoZ4iC9MgKFe/jnzrz6SDHAplzHbznSl0GY0CgrHmKRIWGAe2U7Hm
+         /+zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=N5qY1y9CfNbyDb71UAUZBNInayWHSRyciKICzyYlGNc=;
-        b=oKUUQnFho8UCeCHOfUW+n5Xkjyi4KRDnxP4xdsM6hMabyyGjrcfCNGcdqLzi+6RZS7
-         Jh4DdnCzHSMhkKyZTHn3FLAXUx/9e7K1l3ZV3iyU2h0RB4+NkkquV090a1ac25O0wcjr
-         O0WyfPZanv86oBaCAdQnBYb89/2qatvGGErV22tx6pb0900OmMjaPLD9vooh3tpod82S
-         PO8149saKpMeENTlwaqCi3pWVdBV0wXs0hRlGsMKWMP8FjgY9GFV8GONpC+NHUmbi1nc
-         ZIofMZhBIU7KXlzT1Li29L/DrfuZK+1GLtgvCrN4uS8rnz1iRpq0i+MnztptRAjRP3wF
-         Xd9Q==
-X-Gm-Message-State: AOAM531PW58YBzbqP/rG4VJyYNAqt0S3YyiTL8vhSJH52caCUcOmNVvL
-        mBG18aQSCxGUiKjDjIqrKDC7zahhsX4=
-X-Google-Smtp-Source: ABdhPJys8ICuRvCxUDSGV0hmEv8wTEeLk0TBZWGD6gLiU2Yi+63WqTn+ro5e/dLhXKKLAe/XBSCd1Q==
-X-Received: by 2002:a5d:44cb:: with SMTP id z11mr14544923wrr.159.1621691840062;
-        Sat, 22 May 2021 06:57:20 -0700 (PDT)
+        bh=nljdf+Z23/6i2jJYLWQb++EzMtltI8k+RIHGIumkbeE=;
+        b=RE2WVyimNjwMnubF+J4J2CU7x3SBP9F+2Qy7sE1Y6bXkGJgtqxYHkTR2gWLln2mn9g
+         K4h4caCYJL+bNiM+k8hOZmZFBTJXEy6S5KEXoa3i0kmiptguBzMx81Oiu9VT0GQd1DLg
+         2KrYJ6Ld1vF+Cnr819vNHDQg8y4jRV8bkIGIT2pqFvN/z97z258f1H9pQpUyY3OSMMCh
+         HWKEd2hCDvXA+0UoGa5+V0mIKWn1f2b+l+9l2KigXpKnjymh3KWfS4p3bj9zywP92Cxk
+         UyxGF6pyTMv4o8P8c7iiHE+hdXvYmc1Ta8AVEER3Il4KF6h1UEp3Co903uHT/Qmneznp
+         VxUw==
+X-Gm-Message-State: AOAM532Lc/t5henm3WkT5LzEufkNjwIDI7HM0MFcjQNwVQscq8OpUY9u
+        5L2sKpC0eFVi+Z/1XmYfm3BLvOQdfl8=
+X-Google-Smtp-Source: ABdhPJwYMpRRs4s8GaHArQY75rSWkQkhrAIcA/QrdBh3SF6pBVSPJ/o9gZCZ4lBzr64nKCKqo6jSSQ==
+X-Received: by 2002:a5d:64e4:: with SMTP id g4mr14231726wri.366.1621691845530;
+        Sat, 22 May 2021 06:57:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r1sm5420587wrt.67.2021.05.22.06.57.19
+        by smtp.gmail.com with ESMTPSA id v10sm6671149wrq.0.2021.05.22.06.57.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 May 2021 06:57:19 -0700 (PDT)
-Message-Id: <c092cdf2c8b749768a3ec9c9998dd0d2842d748f.1621691828.git.gitgitgadget@gmail.com>
+        Sat, 22 May 2021 06:57:25 -0700 (PDT)
+Message-Id: <11ea2f97def686ca7f73e6c1a3eabba341bea145.1621691828.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
 References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
         <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 22 May 2021 13:56:54 +0000
-Subject: [PATCH v2 15/28] fsmonitor--daemon: define token-ids
+Date:   Sat, 22 May 2021 13:57:03 +0000
+Subject: [PATCH v2 24/28] fsmonitor: force update index after large responses
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,148 +79,120 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to create token-ids and define the
-overall token naming scheme.
+Set the `FSMONITOR_CHANGED` bit on `istate->cache_changed` when
+FSMonitor returns a very large repsonse to ensure that the index is
+written to disk.
+
+Normally, when the FSMonitor response includes a tracked file, the
+index is always updated.  Similarly, the index might be updated when
+the response alters the untracked-cache (when enabled).  However, in
+cases where neither of those cause the index to be considered changed,
+the FSMonitor response is wasted.  Subsequent Git commands will make
+requests with the same token and receive the same response.
+
+If that response is very large, performance may suffer.  It would be
+more efficient to force update the index now (and the token in the
+index extension) in order to reduce the size of the response received
+by future commands.
+
+This was observed on Windows after a large checkout.  On Windows, the
+kernel emits events for the files that are changed as they are
+changed.  However, it might delay events for the containing
+directories until the system is more idle (or someone scans the
+directory (so it seems)).  The first status following a checkout would
+get the list of files.  The subsequent status commands would get the
+list of directories as the events trickled out.  But they would never
+catch up because the token was not advanced because the index wasn't
+updated.
+
+This list of directories caused `wt_status_collect_untracked()` to
+unnecessarily spend time actually scanning them during each command.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 116 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 115 insertions(+), 1 deletion(-)
+ fsmonitor.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 49 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index d6e35ded9f68..ecd456dc9284 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -91,6 +91,120 @@ static int do_as_client__status(void)
- 	}
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 29adf3e53ef3..22623fd228fc 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -230,6 +230,45 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ 	untracked_cache_invalidate_path(istate, name, 0);
  }
  
 +/*
-+ * Requests to and from a FSMonitor Protocol V2 provider use an opaque
-+ * "token" as a virtual timestamp.  Clients can request a summary of all
-+ * created/deleted/modified files relative to a token.  In the response,
-+ * clients receive a new token for the next (relative) request.
++ * The number of pathnames that we need to receive from FSMonitor
++ * before we force the index to be updated.
 + *
++ * Note that any pathname within the set of received paths MAY cause
++ * cache-entry or istate flag bits to be updated and thus cause the
++ * index to be updated on disk.
 + *
-+ * Token Format
-+ * ============
++ * However, the response may contain many paths (such as ignored
++ * paths) that will not update any flag bits.  And thus not force the
++ * index to be updated.  (This is fine and normal.)  It also means
++ * that the token will not be updated in the FSMonitor index
++ * extension.  So the next Git command will find the same token in the
++ * index, make the same token-relative request, and receive the same
++ * response (plus any newly changed paths).  If this response is large
++ * (and continues to grow), performance could be impacted.
 + *
-+ * The contents of the token are private and provider-specific.
++ * For example, if the user runs a build and it writes 100K object
++ * files but doesn't modify any source files, the index would not need
++ * to be updated.  The FSMonitor response (after the build and
++ * relative to a pre-build token) might be 5MB.  Each subsequent Git
++ * command will receive that same 100K/5MB response until something
++ * causes the index to be updated.  And `refresh_fsmonitor()` will
++ * have to iterate over those 100K paths each time.
 + *
-+ * For the built-in fsmonitor--daemon, we define a token as follows:
++ * Performance could be improved if we optionally force update the
++ * index after a very large response and get an updated token into
++ * the FSMonitor index extension.  This should allow subsequent
++ * commands to get smaller and more current responses.
 + *
-+ *     "builtin" ":" <token_id> ":" <sequence_nr>
++ * The value chosen here does not need to be precise.  The index
++ * will be updated automatically the first time the user touches
++ * a tracked file and causes a command like `git status` to
++ * update an mtime to be updated and/or set a flag bit.
 + *
-+ * The "builtin" prefix is used as a namespace to avoid conflicts
-+ * with other providers (such as Watchman).
-+ *
-+ * The <token_id> is an arbitrary OPAQUE string, such as a GUID,
-+ * UUID, or {timestamp,pid}.  It is used to group all filesystem
-+ * events that happened while the daemon was monitoring (and in-sync
-+ * with the filesystem).
-+ *
-+ *     Unlike FSMonitor Protocol V1, it is not defined as a timestamp
-+ *     and does not define less-than/greater-than relationships.
-+ *     (There are too many race conditions to rely on file system
-+ *     event timestamps.)
-+ *
-+ * The <sequence_nr> is a simple integer incremented whenever the
-+ * daemon needs to make its state public.  For example, if 1000 file
-+ * system events come in, but no clients have requested the data,
-+ * the daemon can continue to accumulate file changes in the same
-+ * bin and does not need to advance the sequence number.  However,
-+ * as soon as a client does arrive, the daemon needs to start a new
-+ * bin and increment the sequence number.
-+ *
-+ *     The sequence number serves as the boundary between 2 sets
-+ *     of bins -- the older ones that the client has already seen
-+ *     and the newer ones that it hasn't.
-+ *
-+ * When a new <token_id> is created, the <sequence_nr> is reset to
-+ * zero.
-+ *
-+ *
-+ * About Token Ids
-+ * ===============
-+ *
-+ * A new token_id is created:
-+ *
-+ * [1] each time the daemon is started.
-+ *
-+ * [2] any time that the daemon must re-sync with the filesystem
-+ *     (such as when the kernel drops or we miss events on a very
-+ *     active volume).
-+ *
-+ * [3] in response to a client "flush" command (for dropped event
-+ *     testing).
-+ *
-+ * When a new token_id is created, the daemon is free to discard all
-+ * cached filesystem events associated with any previous token_ids.
-+ * Events associated with a non-current token_id will never be sent
-+ * to a client.  A token_id change implicitly means that the daemon
-+ * has gap in its event history.
-+ *
-+ * Therefore, clients that present a token with a stale (non-current)
-+ * token_id will always be given a trivial response.
++ * NEEDSWORK: Does this need to be a config value?
 + */
-+struct fsmonitor_token_data {
-+	struct strbuf token_id;
-+	struct fsmonitor_batch *batch_head;
-+	struct fsmonitor_batch *batch_tail;
-+	uint64_t client_ref_count;
-+};
++static int fsmonitor_force_update_threshold = 100;
 +
-+static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
-+{
-+	static int test_env_value = -1;
-+	static uint64_t flush_count = 0;
-+	struct fsmonitor_token_data *token;
+ void refresh_fsmonitor(struct index_state *istate)
+ {
+ 	struct repository *r = istate->repo ? istate->repo : the_repository;
+@@ -363,19 +402,28 @@ void refresh_fsmonitor(struct index_state *istate)
+ 		 *
+ 		 * This updates both the cache-entries and the untracked-cache.
+ 		 */
++		int count = 0;
 +
-+	CALLOC_ARRAY(token, 1);
-+
-+	strbuf_init(&token->token_id, 0);
-+	token->batch_head = NULL;
-+	token->batch_tail = NULL;
-+	token->client_ref_count = 0;
-+
-+	if (test_env_value < 0)
-+		test_env_value = git_env_bool("GIT_TEST_FSMONITOR_TOKEN", 0);
-+
-+	if (!test_env_value) {
-+		struct timeval tv;
-+		struct tm tm;
-+		time_t secs;
-+
-+		gettimeofday(&tv, NULL);
-+		secs = tv.tv_sec;
-+		gmtime_r(&secs, &tm);
-+
-+		strbuf_addf(&token->token_id,
-+			    "%"PRIu64".%d.%4d%02d%02dT%02d%02d%02d.%06ldZ",
-+			    flush_count++,
-+			    getpid(),
-+			    tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
-+			    tm.tm_hour, tm.tm_min, tm.tm_sec,
-+			    (long)tv.tv_usec);
-+	} else {
-+		strbuf_addf(&token->token_id, "test_%08x", test_env_value++);
-+	}
-+
-+	return token;
-+}
-+
- static ipc_server_application_cb handle_client;
+ 		buf = query_result.buf;
+ 		for (i = bol; i < query_result.len; i++) {
+ 			if (buf[i] != '\0')
+ 				continue;
+ 			fsmonitor_refresh_callback(istate, buf + bol);
+ 			bol = i + 1;
++			count++;
+ 		}
+-		if (bol < query_result.len)
++		if (bol < query_result.len) {
+ 			fsmonitor_refresh_callback(istate, buf + bol);
++			count++;
++		}
  
- static int handle_client(void *data,
-@@ -281,7 +395,7 @@ static int fsmonitor_run_daemon(void)
- 
- 	pthread_mutex_init(&state.main_lock, NULL);
- 	state.error_code = 0;
--	state.current_token_data = NULL;
-+	state.current_token_data = fsmonitor_new_token_data();
- 
- 	/* Prepare to (recursively) watch the <worktree-root> directory. */
- 	strbuf_init(&state.path_worktree_watch, 0);
+ 		/* Now mark the untracked cache for fsmonitor usage */
+ 		if (istate->untracked)
+ 			istate->untracked->use_fsmonitor = 1;
++
++		if (count > fsmonitor_force_update_threshold)
++			istate->cache_changed |= FSMONITOR_CHANGED;
++
+ 	} else {
+ 		/*
+ 		 * We received a trivial response, so invalidate everything.
 -- 
 gitgitgadget
 
