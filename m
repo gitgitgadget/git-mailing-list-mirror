@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B91AFC2B9FB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C021FC47081
 	for <git@archiver.kernel.org>; Sat, 22 May 2021 13:57:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96F0261244
+	by mail.kernel.org (Postfix) with ESMTP id A55946115C
 	for <git@archiver.kernel.org>; Sat, 22 May 2021 13:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231250AbhEVN6q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 09:58:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42844 "EHLO
+        id S231255AbhEVN6r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 09:58:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbhEVN6m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 09:58:42 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1E1CC06138C
-        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:15 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id b7so11957184wmh.5
-        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:15 -0700 (PDT)
+        with ESMTP id S231191AbhEVN6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 09:58:43 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA4BC06138E
+        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:17 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id o127so12549111wmo.4
+        for <git@vger.kernel.org>; Sat, 22 May 2021 06:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+6vypO9YNjV56bGEeDxuv/2CtEcB8b9KfQqp5m+Aabk=;
-        b=RBCzG4u80jlFFFDiohN+tkbBOp0jVaY5dG2IrnR4P8UIxy+ML+UvdAqBmF+2R6++BU
-         NTzOqsuvt/YoRpekHS6RrUEQ/e80v5LkPtpJSqUsO6vz5MvzYhjyGFGCyvSjSaCqHsHJ
-         Pp0sbEilnaDhKFDcED6ulxOVxZgaHeAdg2q63tlC+MmFGfLB9vAV4Ohxl5AY1u5vIAL5
-         lzCCfW/uxIuMB5QRw7PRnxoHWVSeOFsDTkKn7ndRrB8Z86aS0AIAQZsClX5UU77mPiAU
-         lqUdVWbTT2QzF/gJzEihnXXnNIgT1AZxdrIPlSUOq1lZtuD8WfgDjQx0VtFt2T8GDwk8
-         3HNA==
+        bh=3VEHOZIwLhszB9Oy3JOIWLbqD59nCCtj2Y7uYExjmVA=;
+        b=mAQrcwtml7PhIBEc/bCPLmrhrSBQY9utRJU5KYvrcMdn6JMJTvh+VylWZ+hUiqUy1u
+         JDc0l0+En7L05QgMiVvzhthnmIEUGDxNxw5zXIkKy4gn/R3noD5+aXnZr8Tz2VKMDdzk
+         DJbWt9rNqlwsZouQVnJpzavYvRalGeU9mZWWIMZND4+79UkFroSE3xjBTFc3koF+Zfjh
+         b8dC0Th9NMoESOdnpNNfOiG74RJ/pHip8RiH37S6ar58n+sH5lWC3yxU4SJoAbSRgv6I
+         AVfRMwe3fo2C4jdDlPYfdhNt94vRdaush4snluOZm6NCjTGVUOBIDwJqjmXPWeBnv6Cv
+         RAXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+6vypO9YNjV56bGEeDxuv/2CtEcB8b9KfQqp5m+Aabk=;
-        b=eCs07GRyizTbNGf99wKpKnQjAtHPgPVECWJgnkXuu5ncoq5+9OzYybXGe4jCzCosDj
-         oaHeK5JkdxTKEB/TcgGiS3TPogqO+cosFC+096xbTmkwW+wEobZhMA1nL01ebCx3x6c9
-         +CXqt9PEuCvq/s4N0rfUJsM8Fsv5aqHR9xdOS8XV0J2tJFEo7HjP85z0GY9yvMYONLt9
-         70R1H8ifZxbE9hPlzJ91a8Dh/Gl0NdLKZxIso/pvuWl034T0QGQLf1cn92oCJBfsxNkV
-         cul2xkgYJZqs19LqdmXrqinAIcQS8w8XPsMBbLExdpQLvGb9WhtlGxPT4wuJaSxs5tTU
-         450Q==
-X-Gm-Message-State: AOAM533v+vy5nkEMy2E78+N5Sn0PnownGa6EepHb8VioDWrYquJ1yw6O
-        aqo2SLqC7IjKO8ObuWZU4VNJpwpkeNQ=
-X-Google-Smtp-Source: ABdhPJw4MsbnOEMQv65E0mYkz+WZMibOAqwUvi+8/t8O2WfLTuwOTurffQthh/wK7FFjQkUvP4USsg==
-X-Received: by 2002:a1c:2786:: with SMTP id n128mr13730418wmn.82.1621691834447;
-        Sat, 22 May 2021 06:57:14 -0700 (PDT)
+        bh=3VEHOZIwLhszB9Oy3JOIWLbqD59nCCtj2Y7uYExjmVA=;
+        b=g5gHHlgI9R2G+dhY0fYNJAbq4zsJ2DPR86gRig+PDerN6nCpaA6Ou9P2xNZaP/Hw57
+         AgjUFEdXe6rmE90S9xAoFUepdF6bLSCIsxcysPsBL296KkV4VAN7/toUApfwE+TPT8SO
+         pOhsfl0Z6xhB5iZA5DHIbQ2GSFYauNJgyhp1+JVPHNnP7FCl3Xl+cV1kkcER0isXxf6L
+         3T95QQxMM/QO89jp3SdfQNIGNrvsNMJ4aNt7ucwrCVsVocDtp3XKwmZoZhQyUlsh17z2
+         HXDZIFILgnCy40Dtotok6kFwRiCF9t5zBuFDxcTtp/PvYxKIBUQU1qZMwMhhjp/436Zl
+         PqsQ==
+X-Gm-Message-State: AOAM532ykeq16LpGV6k7AtqUJRUXuZMBnzhXywUQEvdJ5d/8X7SLPnPH
+        l164yHBapa1MwWmc1E8Ooxa7rvwZGtk=
+X-Google-Smtp-Source: ABdhPJwae0HugdH2+YpeaXvJdo9mZYkj3tnDIThBS3GxN3xMVpuKLGXG2huUWdZ0CgGjriPbFiuUbQ==
+X-Received: by 2002:a05:600c:1551:: with SMTP id f17mr10750872wmg.17.1621691835691;
+        Sat, 22 May 2021 06:57:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r11sm5596618wrp.46.2021.05.22.06.57.14
+        by smtp.gmail.com with ESMTPSA id v11sm6677184wrs.9.2021.05.22.06.57.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 May 2021 06:57:14 -0700 (PDT)
-Message-Id: <67bcf57f5948038a86c7aa99a6f56655a33eb045.1621691828.git.gitgitgadget@gmail.com>
+        Sat, 22 May 2021 06:57:15 -0700 (PDT)
+Message-Id: <f362a88632e47267f67f5d805b899485eda46eb6.1621691828.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
 References: <pull.923.git.1617291666.gitgitgadget@gmail.com>
         <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 22 May 2021 13:56:45 +0000
-Subject: [PATCH v2 06/28] config: FSMonitor is repository-specific
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 22 May 2021 13:56:47 +0000
+Subject: [PATCH v2 08/28] fsmonitor--daemon: add a built-in fsmonitor daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,90 +72,141 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Derrick Stolee <stolee@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This commit refactors `git_config_get_fsmonitor()` into the `repo_*()`
-form that takes a parameter `struct repository *r`.
+Create a built-in file system monitoring daemon that can be used by
+the existing `fsmonitor` feature (protocol API and index extension)
+to improve the performance of various Git commands, such as `status`.
 
-That change prepares for the upcoming `core.useBuiltinFSMonitor` flag which
-will be stored in the `repo_settings` struct.
+The `fsmonitor--daemon` feature builds upon the `Simple IPC` API and
+provides an alternative to hook access to existing fsmonitors such
+as `watchman`.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+This commit merely adds the new command without any functionality.
+
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/update-index.c | 4 ++--
- config.c               | 4 ++--
- config.h               | 2 +-
- fsmonitor.c            | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ .gitignore                  |  1 +
+ Makefile                    |  1 +
+ builtin.h                   |  1 +
+ builtin/fsmonitor--daemon.c | 53 +++++++++++++++++++++++++++++++++++++
+ git.c                       |  1 +
+ 5 files changed, 57 insertions(+)
+ create mode 100644 builtin/fsmonitor--daemon.c
 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 79087bccea4b..84793df8b2b6 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1214,14 +1214,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (fsmonitor > 0) {
--		if (git_config_get_fsmonitor() == 0)
-+		if (repo_config_get_fsmonitor(r) == 0)
- 			warning(_("core.fsmonitor is unset; "
- 				"set it if you really want to "
- 				"enable fsmonitor"));
- 		add_fsmonitor(&the_index);
- 		report(_("fsmonitor enabled"));
- 	} else if (!fsmonitor) {
--		if (git_config_get_fsmonitor() == 1)
-+		if (repo_config_get_fsmonitor(r) == 1)
- 			warning(_("core.fsmonitor is set; "
- 				"remove it if you really want to "
- 				"disable fsmonitor"));
-diff --git a/config.c b/config.c
-index 870d9534defc..a896f44cba1f 100644
---- a/config.c
-+++ b/config.c
-@@ -2499,9 +2499,9 @@ int git_config_get_max_percent_split_change(void)
- 	return -1; /* default value */
- }
- 
--int git_config_get_fsmonitor(void)
-+int repo_config_get_fsmonitor(struct repository *r)
- {
--	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
-+	if (repo_config_get_pathname(r, "core.fsmonitor", &core_fsmonitor))
- 		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
- 
- 	if (core_fsmonitor && !*core_fsmonitor)
-diff --git a/config.h b/config.h
-index 19a9adbaa9a3..3139de81d986 100644
---- a/config.h
-+++ b/config.h
-@@ -607,7 +607,7 @@ int git_config_get_index_threads(int *dest);
- int git_config_get_untracked_cache(void);
- int git_config_get_split_index(void);
- int git_config_get_max_percent_split_change(void);
--int git_config_get_fsmonitor(void);
-+int repo_config_get_fsmonitor(struct repository *r);
- 
- /* This dies if the configured or default date is in the future */
- int git_config_get_expiry(const char *key, const char **output);
-diff --git a/fsmonitor.c b/fsmonitor.c
-index ab9bfc60b34e..9c9b2abc9414 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -411,7 +411,7 @@ void remove_fsmonitor(struct index_state *istate)
- void tweak_fsmonitor(struct index_state *istate)
- {
- 	unsigned int i;
--	int fsmonitor_enabled = git_config_get_fsmonitor();
-+	int fsmonitor_enabled = repo_config_get_fsmonitor(istate->repo ? istate->repo : the_repository);
- 
- 	if (istate->fsmonitor_dirty) {
- 		if (fsmonitor_enabled) {
+diff --git a/.gitignore b/.gitignore
+index 3dcdb6bb5ab8..beccf34abe9e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -71,6 +71,7 @@
+ /git-format-patch
+ /git-fsck
+ /git-fsck-objects
++/git-fsmonitor--daemon
+ /git-gc
+ /git-get-tar-commit-id
+ /git-grep
+diff --git a/Makefile b/Makefile
+index 23f3b9890acd..74673acc9833 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1092,6 +1092,7 @@ BUILTIN_OBJS += builtin/fmt-merge-msg.o
+ BUILTIN_OBJS += builtin/for-each-ref.o
+ BUILTIN_OBJS += builtin/for-each-repo.o
+ BUILTIN_OBJS += builtin/fsck.o
++BUILTIN_OBJS += builtin/fsmonitor--daemon.o
+ BUILTIN_OBJS += builtin/gc.o
+ BUILTIN_OBJS += builtin/get-tar-commit-id.o
+ BUILTIN_OBJS += builtin/grep.o
+diff --git a/builtin.h b/builtin.h
+index b6ce981b7377..7554476f90a4 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -158,6 +158,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix);
+ int cmd_for_each_repo(int argc, const char **argv, const char *prefix);
+ int cmd_format_patch(int argc, const char **argv, const char *prefix);
+ int cmd_fsck(int argc, const char **argv, const char *prefix);
++int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix);
+ int cmd_gc(int argc, const char **argv, const char *prefix);
+ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
+ int cmd_grep(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+new file mode 100644
+index 000000000000..df2bad531118
+--- /dev/null
++++ b/builtin/fsmonitor--daemon.c
+@@ -0,0 +1,53 @@
++#include "builtin.h"
++#include "config.h"
++#include "parse-options.h"
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "simple-ipc.h"
++#include "khash.h"
++
++static const char * const builtin_fsmonitor__daemon_usage[] = {
++	NULL
++};
++
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++
++int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
++{
++	const char *subcmd;
++
++	struct option options[] = {
++		OPT_END()
++	};
++
++	if (argc < 2)
++		usage_with_options(builtin_fsmonitor__daemon_usage, options);
++
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_fsmonitor__daemon_usage, options);
++
++	git_config(git_default_config, NULL);
++
++	subcmd = argv[1];
++	argv--;
++	argc++;
++
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_fsmonitor__daemon_usage, 0);
++
++	die(_("Unhandled subcommand '%s'"), subcmd);
++}
++
++#else
++int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
++{
++	struct option options[] = {
++		OPT_END()
++	};
++
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(builtin_fsmonitor__daemon_usage, options);
++
++	die(_("fsmonitor--daemon not supported on this platform"));
++}
++#endif
+diff --git a/git.c b/git.c
+index b53e66567138..41980c897964 100644
+--- a/git.c
++++ b/git.c
+@@ -523,6 +523,7 @@ static struct cmd_struct commands[] = {
+ 	{ "format-patch", cmd_format_patch, RUN_SETUP },
+ 	{ "fsck", cmd_fsck, RUN_SETUP },
+ 	{ "fsck-objects", cmd_fsck, RUN_SETUP },
++	{ "fsmonitor--daemon", cmd_fsmonitor__daemon, RUN_SETUP },
+ 	{ "gc", cmd_gc, RUN_SETUP },
+ 	{ "get-tar-commit-id", cmd_get_tar_commit_id, NO_PARSEOPT },
+ 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
 -- 
 gitgitgadget
 
