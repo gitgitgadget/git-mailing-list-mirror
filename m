@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3C36C4707E
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 20:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 026A1C2B9F2
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 20:53:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C88F061164
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 20:51:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D585161164
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 20:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbhEVUv3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 16:51:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48270 "EHLO
+        id S231398AbhEVUzN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 16:55:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231351AbhEVUv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 16:51:26 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 557E1C061574
-        for <git@vger.kernel.org>; Sat, 22 May 2021 13:50:01 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso10726419otu.10
-        for <git@vger.kernel.org>; Sat, 22 May 2021 13:50:01 -0700 (PDT)
+        with ESMTP id S231372AbhEVUzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 16:55:11 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DA1C061574
+        for <git@vger.kernel.org>; Sat, 22 May 2021 13:53:46 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id f22-20020a4aeb160000b029021135f0f404so2356595ooj.6
+        for <git@vger.kernel.org>; Sat, 22 May 2021 13:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=S8Zqxb23DGUeLZe+iFbXR79cwPqxpYgcYIH2x+DQAjs=;
-        b=t4H7cxrn6sZStJNO0NtOuvOZCry7ql4StEYgA0eCqPt/B+Rl094NpikGRbxJUAXGOi
-         9p6gFIl7VZcugH8n7rfwDcSqB71NPLqHPAJ4bOkpoPILNJlsx6fz7CQh9ti0qklI2QDH
-         1RIIKBR+KC9dMT/wC2/BYZNsYW3kXIUVbX1OmekNra7DTQSnQV9EjtxiwJ9unyzI7afk
-         BZ9Em1qjm5WTr9EbX5lHYrPj3LGKYJsCPEn95AQssJDmtiD7SBK+KeqB3xjOvm0SEpQs
-         jTzHKKbr/Q8hwDOwHTWaLX8fYxoQHB0w9n6/7CwpRgR5L8dak5z6n6bGBaVBus8v6Uuw
-         Pj9A==
+        bh=l+Rw/khZPm5QBWFIoHaa/eO92wDc0AEeA2QDO4ybVA8=;
+        b=OTMU3hOPh4R3KQHdzq7A31FiG2kEGG6ngq7HfP+REj6PhrefahTcJmCsyiv7/IY4L5
+         h/uX6PR0UaxNXJsLn9CmcY7314wOv13iLou9SEpuDmbQgWuCrM0JU+Z51X6bas7S1gBg
+         u5T9cQN5rEFuQYYqfYr09JzVTT8ytJtAWWAFNXs+N/cm/odW0T35nT1Q9eaH60SUXYWB
+         fhnqj8PUvn0X8wIEJ6zrh5Bet7DF2vpYt2Ad8ma9Ywqhptulc8880JTTgYSF1Z3txswL
+         d62OiJq0GGg/PZN5u/GUAUiL668pPki+6QW1hdvo0Y3Y/C/XosewySu2DhSm6jh+t+Eq
+         qkRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=S8Zqxb23DGUeLZe+iFbXR79cwPqxpYgcYIH2x+DQAjs=;
-        b=R0B34EDEEAjZUabUgpdLyu333/+XB06AY9VtF4z6E/w1wPfoPrr5se+TU6tJywPihm
-         0nwhscQz5SKOYzYOZyvDpvCZ4Gm+aWWNk0ioyx7ZLMo7xe8aZHHS2s7b7UlBxPn15UO5
-         oGSP4UeB+NsfMgkkyJeLqgpi6hRcIrOXc9EBoW9UNRJlf5oOGoNm0yA5erB5qFGrT8F1
-         +3A98ozI2Aq5HD+SkA5uXFGlJp8dU5nVdcfyPInYpxndRlVWQMh36BHZ/kt/G8nrPAIb
-         l06JXl2vKH154hJA+z+7qcpZD7ACuIIm+DYIG5TAeTReOpf2o9nnucyhGCmka+0iYB6k
-         fc4A==
-X-Gm-Message-State: AOAM5329GkcUtWqDKBLXOK97L5RXiLs4V/UjPOyfMUcMP5k2X2Jlphjm
-        +QlKLSpYpOCYjMVxN+oItoc=
-X-Google-Smtp-Source: ABdhPJyZyoTrcd1NhNQoL6/1UVGruW0ejznLRkQ0OA10cEniFTGyxzjNbdsE/F2FiHM+s43/R3ufaQ==
-X-Received: by 2002:a9d:6d88:: with SMTP id x8mr13683303otp.35.1621716600552;
-        Sat, 22 May 2021 13:50:00 -0700 (PDT)
+        bh=l+Rw/khZPm5QBWFIoHaa/eO92wDc0AEeA2QDO4ybVA8=;
+        b=kKudR8RQ0E+mjjO6tSK1+rzBkjAJjCgDk4LSvlVEFoMeY+x/fNZDeyNWQeUuIjjFhp
+         kCLCTnvcRerEsoSBGRKHItcnzbuxFAGTUhX+WsoT5Z8WHTjKHubNTjLFdA8ob0fJxEAl
+         FT76ZiGRt0DOPrqo0/3q5eDklXJY7aFFu2LqEIc3hQP0NcOG4UrnbnU5FN1bS4TMgCVF
+         ICtwEFFt8WwtYEBHCDP4kpQ6LbAK7fUfSFnEZ6/peOUKBEl9viiwu2gisRmUoqFXz6Fy
+         VAoWxvvYu/jo1XAqnqBFjKsxxDFcBcbc0strDUgTnaN416d+whUqm1tD821wyQJorlYr
+         oBiQ==
+X-Gm-Message-State: AOAM531e+2iWzHM0eUr/LaHqGAr+xtKw0jJ2yZctJd3W8M/XMmK/cxeC
+        yDjC36CT3gmQvPoAwCkeSzI=
+X-Google-Smtp-Source: ABdhPJyYN9lq1USRMxS8NPgqHW1Gf/7LX2OvEwu6TGWOo/u8A5vNqx2vjcc6VRKz8gVv7pkDFUq6yQ==
+X-Received: by 2002:a4a:3b96:: with SMTP id s144mr13182588oos.22.1621716825819;
+        Sat, 22 May 2021 13:53:45 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id i4sm1389713oih.13.2021.05.22.13.49.59
+        by smtp.gmail.com with ESMTPSA id 88sm2048502ott.51.2021.05.22.13.53.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 May 2021 13:49:59 -0700 (PDT)
-Date:   Sat, 22 May 2021 15:49:58 -0500
+        Sat, 22 May 2021 13:53:45 -0700 (PDT)
+Date:   Sat, 22 May 2021 15:53:44 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
+To:     Philip Oakley <philipoakley@iee.email>, Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Leah Neukirchen <leah@vuxu.org>,
         "Randall S. Becker" <rsbecker@nexbridge.com>
-Message-ID: <60a96e76a4b20_857e92085c@natae.notmuch>
-In-Reply-To: <YKjU+/mGzWoqe88V@coredump.intra.peff.net>
+Message-ID: <60a96f581a80a_857e920890@natae.notmuch>
+In-Reply-To: <362a8b5b-84cf-079d-a4c7-c714ed3a2f07@iee.email>
 References: <20210520040725.133848-1-felipe.contreras@gmail.com>
  <842221d6-51c4-e08a-4299-c4efb8bf1dcb@gmail.com>
  <xmqqbl94smjb.fsf@gitster.g>
@@ -74,6 +74,7 @@ References: <20210520040725.133848-1-felipe.contreras@gmail.com>
  <YKgXXCvWYI9rjKJT@coredump.intra.peff.net>
  <60a828cebd2f1_77e4f208b2@natae.notmuch>
  <YKjU+/mGzWoqe88V@coredump.intra.peff.net>
+ <362a8b5b-84cf-079d-a4c7-c714ed3a2f07@iee.email>
 Subject: Re: [PATCH v4] help: colorize man pages
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -83,78 +84,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, May 21, 2021 at 04:40:30PM -0500, Felipe Contreras wrote:
-> 
-> > Jeff King wrote:
-> > > On Fri, May 21, 2021 at 01:01:35PM -0500, Felipe Contreras wrote:
-> > > 
-> > > > > I still don't understand what we gain by making this a Git feature,
-> > > > 
-> > > > What do we gain by making `git diff` output color?
-> > > 
-> > > Huh? Git is outputting the diff. Who else would output the color?
-> > 
-> > Do you think our users know or care which binary has the final
-> > connection to the tty?
-> 
-> Yes. If we are telling them that "git help git" is using "man", which we
-> do, then I think they should expect it to behave like "man".
+Philip Oakley wrote:
+> And we have the whole Git for Windows community who don't have `man`
+> anyway...
 
-But we are not telling them.
-
-Software is not in the business of explaining users exactly what it is
-doing. Software is in the business of being useful to users, and in
-order to do that it must remain as silent as possible while achieving
-what the user potentially wants.
-
-Unless we throw an advice("this command runs man"), then we are not
-telling them.
-
-If a dilligent user does `git help help` they might learn about this
-fact, but we didn't tell them, they found out.
-
-> Moreover, I think that if they like colorized manpages, they'd probably
-> want them when running "man" themselves.
-
-This doesn't matter.
-
-The user might have "configured" man like this:
-
-  man() {
-      LESS_TERMCAP_md=$'\e[01;31m' \
-      LESS_TERMCAP_me=$'\e[0m' \
-      LESS_TERMCAP_so=$'\e[01;44;33m' \
-      LESS_TERMCAP_se=$'\e[0m' \
-      LESS_TERMCAP_us=$'\e[01;32m' \
-      LESS_TERMCAP_ue=$'\e[0m' \
-      command man "$@"
-  }
-
-Git isn't going utilize that.
-
-Arch Linux recommends the above, and so does many online resources.
-
-So even if it's the case what you said, that they want colorized man
-pages, *and* they have man configured, that doesn't matter.
-
-In addition, not everyone is a Linux guru. Some might want colorized man
-pages, but not know how to get them.
-
-I myself only learned it was possible to configure that about a year ago
-when reading Arch Linux's installation guide. Luckily I clicked "Color
-output in console", even though I thought I already had most console
-software configured.
-
-I have 20 years of experience using Linux. Some people have less.
-
-You presume too much of our users.
-
-And you still haven't explained how they can properly configure
-colorized man pages for both man and git, in a way that works in all
-distributions.
-
-[1] https://wiki.archlinux.org/title/Color_output_in_console
+If they don't have man, then they won't be affected in any way.
 
 -- 
 Felipe Contreras
