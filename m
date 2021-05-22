@@ -7,75 +7,66 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 026A1C2B9F2
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 20:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D8C0C2B9F2
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 21:15:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D585161164
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 20:53:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D77F61019
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 21:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231398AbhEVUzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 16:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49100 "EHLO
+        id S231418AbhEVVRM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 17:17:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231372AbhEVUzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 16:55:11 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DA1C061574
-        for <git@vger.kernel.org>; Sat, 22 May 2021 13:53:46 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id f22-20020a4aeb160000b029021135f0f404so2356595ooj.6
-        for <git@vger.kernel.org>; Sat, 22 May 2021 13:53:46 -0700 (PDT)
+        with ESMTP id S231383AbhEVVRM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 17:17:12 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D57DC061574
+        for <git@vger.kernel.org>; Sat, 22 May 2021 14:15:46 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id x15so23250317oic.13
+        for <git@vger.kernel.org>; Sat, 22 May 2021 14:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=l+Rw/khZPm5QBWFIoHaa/eO92wDc0AEeA2QDO4ybVA8=;
-        b=OTMU3hOPh4R3KQHdzq7A31FiG2kEGG6ngq7HfP+REj6PhrefahTcJmCsyiv7/IY4L5
-         h/uX6PR0UaxNXJsLn9CmcY7314wOv13iLou9SEpuDmbQgWuCrM0JU+Z51X6bas7S1gBg
-         u5T9cQN5rEFuQYYqfYr09JzVTT8ytJtAWWAFNXs+N/cm/odW0T35nT1Q9eaH60SUXYWB
-         fhnqj8PUvn0X8wIEJ6zrh5Bet7DF2vpYt2Ad8ma9Ywqhptulc8880JTTgYSF1Z3txswL
-         d62OiJq0GGg/PZN5u/GUAUiL668pPki+6QW1hdvo0Y3Y/C/XosewySu2DhSm6jh+t+Eq
-         qkRg==
+        bh=SSt+sy9QHxJCDjwnW3MjBkIlxoT15+ccoyttTP0HoKQ=;
+        b=uB3qDaSUbo/bQO0sgT/D+rkL4aCj9yyLZyHFAL73znz8K4ulQ5Y72AMVMumqVbiSgf
+         BiTWs4IXM1R6OHXYieRC/X8X8rOa4413aPE5Elu8tQUrBWA0mt2+9JtkCruVkO1Ew4OZ
+         gqitWeIkTUh69Wu8d22ykM2IgO9A0U6K3m8OOxYiuAkxvYggNii92RXnVY6mszZ5425U
+         8EIPI/IsWQw/HAYXW9nf7yEcV19y1qmy6wS4koIabBDyULwiW/ln0CnRrYonP0+qQrKS
+         mZZEV6aiDbA5TJHdRyX/s0mw9wdI9iINzQfwQMbwJtTCz/qMXYEd4X7i/KdXLIuM8V/2
+         Xv4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=l+Rw/khZPm5QBWFIoHaa/eO92wDc0AEeA2QDO4ybVA8=;
-        b=kKudR8RQ0E+mjjO6tSK1+rzBkjAJjCgDk4LSvlVEFoMeY+x/fNZDeyNWQeUuIjjFhp
-         kCLCTnvcRerEsoSBGRKHItcnzbuxFAGTUhX+WsoT5Z8WHTjKHubNTjLFdA8ob0fJxEAl
-         FT76ZiGRt0DOPrqo0/3q5eDklXJY7aFFu2LqEIc3hQP0NcOG4UrnbnU5FN1bS4TMgCVF
-         ICtwEFFt8WwtYEBHCDP4kpQ6LbAK7fUfSFnEZ6/peOUKBEl9viiwu2gisRmUoqFXz6Fy
-         VAoWxvvYu/jo1XAqnqBFjKsxxDFcBcbc0strDUgTnaN416d+whUqm1tD821wyQJorlYr
-         oBiQ==
-X-Gm-Message-State: AOAM531e+2iWzHM0eUr/LaHqGAr+xtKw0jJ2yZctJd3W8M/XMmK/cxeC
-        yDjC36CT3gmQvPoAwCkeSzI=
-X-Google-Smtp-Source: ABdhPJyYN9lq1USRMxS8NPgqHW1Gf/7LX2OvEwu6TGWOo/u8A5vNqx2vjcc6VRKz8gVv7pkDFUq6yQ==
-X-Received: by 2002:a4a:3b96:: with SMTP id s144mr13182588oos.22.1621716825819;
-        Sat, 22 May 2021 13:53:45 -0700 (PDT)
+        bh=SSt+sy9QHxJCDjwnW3MjBkIlxoT15+ccoyttTP0HoKQ=;
+        b=PpYUzpXuafT5ZnItWyNY8BKNuGt/hhw9wa1vH58J42lFXKO/c6MT6BrKbQhwlIcTG9
+         Q4+PyIBE08Ei6XbRwaADCY7Vg4TPpSvcYZFztzUko1mD0nFWo8CnSj7D3XndhXF9wJAs
+         9iRMw0uwLzdodmVJvnVnFD5Lzs1FTpdPQ4tUSuIGu/uHU9LsFj5KUttKJ+SUyuab7erc
+         h0JKhpExcXyGO3F8QKW0E7wphgT2z4HUog/AjbDLv3crQvbziNSQr9cWiIZ6ABd/hwsM
+         vjV8/Ocxey1OqX1UIIvV7dcONCINn0c8+Wf0bf/0x8xG3osRbFW0MlK58whkrLYU/2AF
+         henw==
+X-Gm-Message-State: AOAM530rNStM5VYHT5KgYORdd+02cKCzdGJrLJSnu0xGGWASJEpQWIct
+        tKuStq1bUPM0Tu+kprh9dXg=
+X-Google-Smtp-Source: ABdhPJxlX7TAnatjT5JYFfeIydi4JYHwdcYANgqxfVWFJHItTibnZBTFwPIaaaiS+PJis1W2Mpqkeg==
+X-Received: by 2002:aca:ed8d:: with SMTP id l135mr6365607oih.4.1621718145378;
+        Sat, 22 May 2021 14:15:45 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id 88sm2048502ott.51.2021.05.22.13.53.44
+        by smtp.gmail.com with ESMTPSA id u201sm1863209oia.10.2021.05.22.14.15.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 May 2021 13:53:45 -0700 (PDT)
-Date:   Sat, 22 May 2021 15:53:44 -0500
+        Sat, 22 May 2021 14:15:45 -0700 (PDT)
+Date:   Sat, 22 May 2021 16:15:43 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>, Jeff King <peff@peff.net>,
+To:     Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Leah Neukirchen <leah@vuxu.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Message-ID: <60a96f581a80a_857e920890@natae.notmuch>
-In-Reply-To: <362a8b5b-84cf-079d-a4c7-c714ed3a2f07@iee.email>
-References: <20210520040725.133848-1-felipe.contreras@gmail.com>
- <842221d6-51c4-e08a-4299-c4efb8bf1dcb@gmail.com>
- <xmqqbl94smjb.fsf@gitster.g>
- <YKdy5jhHgG2who27@coredump.intra.peff.net>
- <60a7f57fe3301_5503920831@natae.notmuch>
- <YKgXXCvWYI9rjKJT@coredump.intra.peff.net>
- <60a828cebd2f1_77e4f208b2@natae.notmuch>
- <YKjU+/mGzWoqe88V@coredump.intra.peff.net>
- <362a8b5b-84cf-079d-a4c7-c714ed3a2f07@iee.email>
-Subject: Re: [PATCH v4] help: colorize man pages
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60a9747fc56de_857e9208b6@natae.notmuch>
+In-Reply-To: <YKjVZ28fxqGq7Baq@coredump.intra.peff.net>
+References: <20210522011718.541986-1-felipe.contreras@gmail.com>
+ <YKjVZ28fxqGq7Baq@coredump.intra.peff.net>
+Subject: Re: [PATCH v5] help: colorize man pages
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -84,11 +75,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley wrote:
-> And we have the whole Git for Windows community who don't have `man`
-> anyway...
+Jeff King wrote:
+> On Fri, May 21, 2021 at 08:17:18PM -0500, Felipe Contreras wrote:
+> 
+> > +	/* Add red to bold, blue to underline, and magenta to standout */
+> > +	/* No visual information is lost */
+> > +	setenv("LESS", "Dd+r$Du+b$Ds+m", 0);
+> 
+> Unlike the LESS_TERMCAP_* strategy, this completely breaks "git help"
+> on my system:
+> 
+>   $ ./git help git
+>   There is no -D option ("less --help" for help)
+> 
+>   $ man less | grep -A1 '^ *-D'
+>          -Dxcolor or --color=xcolor
+>                 [MS-DOS only] Sets the color of the text displayed.  x is a single
+> 
+> This is less 551-2 on Debian unstable.
 
-If they don't have man, then they won't be affected in any way.
+I see.
+
+Looking at their history it seems they only enabled this for non-MS-DOS
+builds in 2021.
+
+That explains why most people haven't found this yet, and are using
+LESS_TERMCAP_*.
+
+I'll revert back to LESS_TERMCAP_ and test with an ancient version of
+less.
+
+Thanks for testing.
 
 -- 
 Felipe Contreras
