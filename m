@@ -6,69 +6,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BC05C2B9F2
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 09:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E729C2B9F2
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 09:56:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F840611AD
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 09:55:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECFAE6128A
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 09:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbhEVJ4f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 05:56:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34320 "EHLO cloud.peff.net"
+        id S230221AbhEVJ6W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 05:58:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34346 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230232AbhEVJ4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 05:56:34 -0400
-Received: (qmail 9898 invoked by uid 109); 22 May 2021 09:55:09 -0000
+        id S230168AbhEVJ6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 05:58:21 -0400
+Received: (qmail 9922 invoked by uid 109); 22 May 2021 09:56:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 22 May 2021 09:55:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 22 May 2021 09:56:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17697 invoked by uid 111); 22 May 2021 09:55:10 -0000
+Received: (qmail 17723 invoked by uid 111); 22 May 2021 09:56:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 22 May 2021 05:55:10 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 22 May 2021 05:56:58 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 22 May 2021 05:55:07 -0400
+Date:   Sat, 22 May 2021 05:56:55 -0400
 From:   Jeff King <peff@peff.net>
 To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Leah Neukirchen <leah@vuxu.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4] help: colorize man pages
-Message-ID: <YKjU+/mGzWoqe88V@coredump.intra.peff.net>
-References: <20210520040725.133848-1-felipe.contreras@gmail.com>
- <842221d6-51c4-e08a-4299-c4efb8bf1dcb@gmail.com>
- <xmqqbl94smjb.fsf@gitster.g>
- <YKdy5jhHgG2who27@coredump.intra.peff.net>
- <60a7f57fe3301_5503920831@natae.notmuch>
- <YKgXXCvWYI9rjKJT@coredump.intra.peff.net>
- <60a828cebd2f1_77e4f208b2@natae.notmuch>
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] help: colorize man pages
+Message-ID: <YKjVZ28fxqGq7Baq@coredump.intra.peff.net>
+References: <20210522011718.541986-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <60a828cebd2f1_77e4f208b2@natae.notmuch>
+In-Reply-To: <20210522011718.541986-1-felipe.contreras@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 21, 2021 at 04:40:30PM -0500, Felipe Contreras wrote:
+On Fri, May 21, 2021 at 08:17:18PM -0500, Felipe Contreras wrote:
 
-> Jeff King wrote:
-> > On Fri, May 21, 2021 at 01:01:35PM -0500, Felipe Contreras wrote:
-> > 
-> > > > I still don't understand what we gain by making this a Git feature,
-> > > 
-> > > What do we gain by making `git diff` output color?
-> > 
-> > Huh? Git is outputting the diff. Who else would output the color?
-> 
-> Do you think our users know or care which binary has the final
-> connection to the tty?
+> +	/* Add red to bold, blue to underline, and magenta to standout */
+> +	/* No visual information is lost */
+> +	setenv("LESS", "Dd+r$Du+b$Ds+m", 0);
 
-Yes. If we are telling them that "git help git" is using "man", which we
-do, then I think they should expect it to behave like "man".
+Unlike the LESS_TERMCAP_* strategy, this completely breaks "git help"
+on my system:
 
-Moreover, I think that if they like colorized manpages, they'd probably
-want them when running "man" themselves.
+  $ ./git help git
+  There is no -D option ("less --help" for help)
+
+  $ man less | grep -A1 '^ *-D'
+         -Dxcolor or --color=xcolor
+                [MS-DOS only] Sets the color of the text displayed.  x is a single
+
+This is less 551-2 on Debian unstable.
 
 -Peff
