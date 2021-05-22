@@ -7,72 +7,67 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B63BC2B9F2
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 19:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FE4AC4707E
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 19:39:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60CBE61073
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 19:15:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AB33610A2
+	for <git@archiver.kernel.org>; Sat, 22 May 2021 19:39:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231377AbhEVTRV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 15:17:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56074 "EHLO
+        id S231345AbhEVTlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 15:41:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231341AbhEVTRU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 15:17:20 -0400
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59C9C061574
-        for <git@vger.kernel.org>; Sat, 22 May 2021 12:15:54 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id eb9so12221770qvb.6
-        for <git@vger.kernel.org>; Sat, 22 May 2021 12:15:54 -0700 (PDT)
+        with ESMTP id S231317AbhEVTlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 15:41:13 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E05AC061574
+        for <git@vger.kernel.org>; Sat, 22 May 2021 12:39:25 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id c10so17808705qtx.10
+        for <git@vger.kernel.org>; Sat, 22 May 2021 12:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jGgO54k9il1uJGSa1/vxJ7wVKxDKjpNRwzOluR12sUQ=;
-        b=A5LesfKtTPNxVi+gKBumAHGIwRCWlI3Il1PaB+ItD1Ix/VEcI9YParxqWFc1IsHCJE
-         o4gXRScvqHBoR7RiyeqzuI55LYSG3Ctq1z6M9+zPgbSUQe7vCxLQSuwW1HNStamvZ0WD
-         eM3PZvNFqcgtD8T9pr/iIHw1eE6b3i3DFsGNqFatpFJzE98vsMCklcAj/dE3CA3LggEG
-         IdiJ2lEuSkN/Y7VPqVsEPIRRbe8ZlD7cPqIQjwqiHf9qMpB6Yp4hrBxp3dEPfvH5+vNp
-         J02WFVd6pkuiV+14YMrCrCh4I7MPYO3s6+xuwmLWFckTlR3wUj7p1THYPo2ex0OJfAuo
-         vnHA==
+        bh=LtskkJC0eWcSzzNtpKTlx/Na8AzuwL1mAqzXbM8YlQ4=;
+        b=XedksOYfMURmoBzz3JdmzMPw1qqco0NB71o5HLfQwmiUs35JxRuyK9aAEMAqzZ+orP
+         oFEMMscDpsbT/xxsj19V3fiS7RcY2ZO29XIHMHAkRKxxhpzXu8bUFTVQ2I6rGdjDln2w
+         HhYOhHX7G9dez8fvMAhGzon4Rzr6J5cVDofjCaF1pSdrtpC2SnO77LioDPBXYYtgJO7P
+         eyX9v/b5umUYoRaQ+TYr9IoMyyCWy8u1aZFftgOHe+YwEg9gu7Nv2UvrKtiWxF7Gp35r
+         39tBcF3KTnrUKj7g+12m3Dl6Xga1lSM6njQ/5uUR5UbNQIRt4cDCYXw9AfBuIdyIQ+iU
+         XZaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=jGgO54k9il1uJGSa1/vxJ7wVKxDKjpNRwzOluR12sUQ=;
-        b=IYlobhbpcOOZMKAD7rgKRttlzSJdSrgDMmZwPy4o+7cxRaXr2889hC8PMomW092/xG
-         k7/+esmhUX6h+WxYjbsIR2a4XhU8hfLW6JoYSSsqmeKWIGWeHT8LWm5xOwqVdKUGlQ4e
-         oJ+QaCRvcTKEm7MurtuM31oRAHO3MOx2vP/aCYPS51hvSClegeJdmbVmZPed4U7o+C89
-         q3hd0kukcsigrpbjcO/khq94xIXD9NDBMG/QE/BAVBQI3Tltq8hv6ZFaWn3T4SnAH6JK
-         iklwV2dHe74c5SBcoNgayTB1sQ2ekXeMDhXuIyal+tw5HTxU3oBnqkh0gmbiynbG+b4Z
-         8jNA==
-X-Gm-Message-State: AOAM532EAzzKT7zHbhsna7wn3Xwtiph/875Ma+0FqOWiH3dUCZScMKf6
-        0Wftp6x/DugyHIrBogOc+NRDdVi9AFGVRQ==
-X-Google-Smtp-Source: ABdhPJwDfelH8WDKNLRhRt/pHTOb8wT2O9l5t34+rGPaVe1vG+0fMlPwlVpOgaJXVN6oAkCQWseDvA==
-X-Received: by 2002:ad4:42b3:: with SMTP id e19mr20968824qvr.62.1621710953747;
-        Sat, 22 May 2021 12:15:53 -0700 (PDT)
+        bh=LtskkJC0eWcSzzNtpKTlx/Na8AzuwL1mAqzXbM8YlQ4=;
+        b=lFEdBuux4lcqH3NP/p5NvKdHH2bX0IKcSsGBhtJjjDZc+lwS312LfMmLG/icHGZHrB
+         1ytpUBVGOMe+5CA0/2rzYiUXFhl6SZk5N/tMFxBbGmqYdPBvNg676YdVKPBySOaO0hoX
+         IPovLVGfPjPozxWEdwQBKGCPrALsBWBC/f0e87CDx/xlx0jJRaelGNMsqrUcpgpOmlOV
+         EcVmse/b+jYbzCyVrUIlQdSZomWIsu9HEjEK0COdYp/pcs+cWcDkol0Qwf7go63d1d4D
+         Ff0CAKqF5jkGGcPK03Etll3pYBEtWmD8iRrjf35xfCfyPtYUIZ1iClFf2d/XGWGszGWz
+         y37A==
+X-Gm-Message-State: AOAM532eE6q2Hxvnc95LGoYNrKRSgiXr5b2SszDJ8sY9TxMxkzi+vo33
+        hHq+OOr9Nge3+BiE9aY4oCU=
+X-Google-Smtp-Source: ABdhPJyzR1QD+TpmyVfCvQUaXmsddZdd/gcyfjJjs4Dq/r8UljWncfHAqXiJ1af8OvZvZDEqgxk3Ig==
+X-Received: by 2002:ac8:730d:: with SMTP id x13mr6459038qto.86.1621712363899;
+        Sat, 22 May 2021 12:39:23 -0700 (PDT)
 Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id 7sm7358448qkd.20.2021.05.22.12.15.52
+        by smtp.gmail.com with ESMTPSA id l4sm7033031qkp.48.2021.05.22.12.39.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 May 2021 12:15:53 -0700 (PDT)
+        Sat, 22 May 2021 12:39:23 -0700 (PDT)
+Subject: Re: [GSoC] My Git Dev Blog
+To:     Atharva Raykar <raykar.ath@gmail.com>, git <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+References: <35493133-2504-4CAE-B700-79EAB990DD17@gmail.com>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: Bug in git submodule update --remote
-To:     Ben Avison <bavison@riscosopen.org>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-References: <c4b27662-1228-a1ff-26fc-637897ffc8e7@riscosopen.org>
- <EB55447C-538F-44DE-BFC0-A3BD1A970E99@gmail.com>
- <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
-Message-ID: <ae3baa2a-2f30-8e8a-f3cf-d8210e7225b0@gmail.com>
-Date:   Sat, 22 May 2021 15:15:51 -0400
+Message-ID: <ee246d04-4ae3-1697-0f63-13012c95ed49@gmail.com>
+Date:   Sat, 22 May 2021 15:39:22 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.10.2
 MIME-Version: 1.0
-In-Reply-To: <a727c1af-4993-684d-d299-00bf1a47cfc7@riscosopen.org>
+In-Reply-To: <35493133-2504-4CAE-B700-79EAB990DD17@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -80,75 +75,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
+Hi Atharva,
 
-Le 2021-05-19 à 10:41, Ben Avison a écrit :
-> On 19/05/2021 11:49, Atharva Raykar wrote:
->> If I understood you correctly, you'd prefer that the updating of the
->> submodule should be independent of the ref that is checked out in the
->> submodule's directory.
->>
->> While I am not sure of the reason why the design of 'update
->> --remote' uses the remote-tracking branch of the submodule, I can
->> imagine adding a switch like 'submodule.<name>.remote' that defaults
->> to 'origin'. Then the behaviour could be changed such that it always
->> pulls from the remote specified in that option.
->>
->> This would help make the behaviour consistent in all the cases you
->> mentioned, while also giving the option for a user to update the
->> submodule from the remote of their choice (which may not be origin).
+Le 2021-05-22 à 12:42, Atharva Raykar a écrit :
+> Hi all,
 > 
-> I like that solution. 
+> As is tradition, I have started my weekly GSoC blog :)
+> 
+> Here is week 1: https://atharvaraykar.me/gitnotes/week1
+>
 
-I also think a new config is a good solution.
+I enjoyed reading your first post. About gettext, note that
+if you do not want to hardcode a specific version of gettext
+in your LDFLAGS/CFLAGS, you could use '/usr/local/opt/gettext/{include,lib}',
+or rather, the equivalent for M1 Macs, which I guess would be
+'/opt/homebrew/opt/gettext' ? Can't test as I'm on Intel...
 
-> Although, I should note that if the user has set
-> submodule.<name>.remote to something other than 'origin', they will need
-> to ensure that submodule.<name>.branch is also set, or they will still
-> hit the "Unable to find current <remote>/HEAD revision in submodule"
-> error that I initially stumbled on.
-> 
-> How about an implementation like the following? I introduced a new "git
-> submodule--helper" command rather than modify "print-default-remote" for
-> a couple of reasons:
-> 
-> 1) "print-default-remote" is also used for "git submodule sync" (I'm not
-> sure if we should change its behaviour too)
-> 
-> 2) "print-default-remote" needs to be executed from within the
-> submodule, and takes no arguments, whereas I need to parse the
-> superproject's .git/config so need to be executed from the superproject
-> and take the submodule path as an argument
-> 
-> The two functions I added are heavily based on "git submodule--helper
-> remote-branch". However:
-> 
-> * Unlike with the branch name, I don't fall back to using the name for
-> the remote cached from when we read the .gitmodules file, if it isn't
-> found in .git/config. It doesn't make sense to me for the .gitmodules
-> file to include this information, as any new clones will only contain
-> "origin" remotes anyway.
-> 
-> * I removed "struct strbuf sb" since I don't think it's used.
-> 
-> Ben
+On a second note, for your information
+the 'configure' build approach is not as well maintained as
+the Makefile-only approach, so it's good to make it work with the plain Makefile.
 
-I think that we would want to careful examine every use of 'get_default_remote'
-(and the NEEDSWORK in submodule.c:get_next_submodule)
-and decide for each one if it makes sense to respect that new config before failing
-back to 'origin'. So I'm not sure about the approach here since it just fixes the behaviour
-for 'git submodule update --remote' but not other scenarios where the user would like
-another remote than 'origin' to be used for some operations in the submodule.
-
-There was also another bug report recently [1] around the new 'clone.defaultRemoteName'
-config and 'git submodule update --remote', so it might be good to also keep that in
-mind when working on a solution.
-
-Cheers,
+Cheers and good luck for your internship,
 
 Philippe.
-P.S. I've CC'ed Emily who has plans for a big overhaul of submodule functionality
-over the next months [2] so might be interested.
 
-[1] https://lore.kernel.org/git/2d58fe40-9e8c-4653-8170-5411fd3cf6f4@www.fastmail.com/t/#u
-[2] https://lore.kernel.org/git/0fc5c0f7-52f7-fb36-f654-ff5223a8809b@gmail.com/t/#u
