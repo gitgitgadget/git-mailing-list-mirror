@@ -2,106 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A58FC47080
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 15:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 363C2C47080
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 16:39:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B696611CB
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 15:02:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0712D6117A
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 16:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231820AbhEWPDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 May 2021 11:03:25 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50217 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231771AbhEWPDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 May 2021 11:03:24 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 679C811F012;
-        Sun, 23 May 2021 11:01:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=S3z9g0MERmnBGb8oiN+WXe2oV1zKiVcFziDXN0U69HU=; b=XW/G
-        UZGFKXuh0TPshMRsBAqx7zvg7OG5ffPNxJsfXn4N8wZ6Q2/ML0SXBcx/m6nXqjpo
-        MRbjzqctTZDHmyESIXrqVgboAvGNw7HA+xXMFM09U1MnRZ+rTGSBqv+QzT3YMllz
-        n0/t9PIeJdySD4nZlma3ImYWWJbo/J/3/KHx968=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61F3911F010;
-        Sun, 23 May 2021 11:01:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A765E11F00E;
-        Sun, 23 May 2021 11:01:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>, git@vger.kernel.org
-Subject: Re: fast forward merge overwriting my code
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
-        <8f3d4d1e-18f4-ccb2-9439-80a5812c2f36@iee.email>
-Date:   Mon, 24 May 2021 00:01:53 +0900
-Message-ID: <xmqqo8d1o5ni.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231828AbhEWQlI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 May 2021 12:41:08 -0400
+Received: from mout.gmx.net ([212.227.17.20]:45235 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231815AbhEWQlH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 May 2021 12:41:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1621787964;
+        bh=O2lO+8rEXXGGM7N/II9cujvjJo5L5GNV69H6aDsCmPQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BIv4pmYIRRO38Ph/CwmnjIslmSDvz2r5P7YIB5CHVIKn9CCO7uA8Q1XyoHPe2/5HK
+         uY5yztKHRH8uTqraW2KPRp6lE7ui+FZdLtk+JR1+GXjzfdRPqj79u/GZbQIKzFZfLX
+         AUBoNjd9EZ9KAKz/mOa5AFyqlDkj/Vi13kuha7Qs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.20.198.229] ([89.1.215.198]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4Qwg-1lKyJZ3eYY-011Utt; Sun, 23
+ May 2021 18:39:23 +0200
+Date:   Sat, 22 May 2021 08:57:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?L=C3=A9na=C3=AFc_Huard?= <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 4/4] maintenance: optionally use systemd timers on
+ Linux
+In-Reply-To: <44d937a0-e876-e185-f409-a4fd61eae580@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2105220856320.57@tvgsbejvaqbjf.bet>
+References: <20210509213217.449489-1-lenaic@lhuard.fr> <20210520221359.75615-1-lenaic@lhuard.fr> <20210520221359.75615-5-lenaic@lhuard.fr> <715d8115-641b-5c06-d514-36911eb169ef@gmail.com> <44d937a0-e876-e185-f409-a4fd61eae580@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D0992298-BBD7-11EB-BBAA-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/mixed; boundary="8323328-2138201059-1621666676=:57"
+X-Provags-ID: V03:K1:B7MSVBvkEWK5l4b7wy/SLsZ/fpDlXNBqq386X6l3NoYGlBUOIUP
+ XzjoZN1Uf0pyFS8PXnOYHhjjFE4p8mbyKhtsTu9Oy8jUXMyLlBXw7vDCUJK7RG0s/CiQ+Jj
+ zGjs8a4G1rvoWYJCI0wH5Pd4aBLSEHxamXgPLjDf1whwaCql9E5KBqp35wbnljW82rLzU1T
+ kS6HPmQmdyfdHbSfOHqfw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kL+UlE+rP7U=:KzNGm0rJxlpkk8fU7bZjrr
+ tkfRHdEqxRpzX8uN+WMW4bTiMqFIu5SAptQv02tui6GToGgMWWAnaMpxaNSrqP0c3jW0HdeXQ
+ bJ1PLGYLIqERO5yf3AaYpVbmyxjzCJIosg/EViQkasfmZx8FjMdfNrx8VOzU2//JVEJo15XCR
+ 0RDkuOpmFLihlZp3NJPnhn0ReJdTdHx5jYcTCl8OtjLGZexSCGI9DkuA7IHWlW1TgGrfgPTtb
+ sZnDOV86mL4LTAB5cNjwcpUbeyuebbgjpgVpxR3Q5DQURv2YnXrBYuEpPh0r3vI8SFka47eOW
+ J15fN0u9oBJM6IfST7TXRYQ2O5Vm9wsTArqmCjqEMZBSVU1fudeBi3gxU8WyZ5FADJfTGkWQB
+ n0xgVtryh+M05NQT9s2EoCWeEaYV7IW2ATRx3iGVtLf68r2RZmCafZBaV9x5BNdE7Rf1a0sIG
+ lMjy0j/bcs2dT6G4bW65yOQR/fkJ535a3+F7oeTSqcgdhaHIYbI0M02F1kYgDkJdkp3U2P9oT
+ hyZNkIxTZDIgJDD8jvH07P3tyON0xjjZdfc6e9hqYkeYQ3hu5K+XMbpCbtnbJRGVeUTnkchyQ
+ j2ta86az2k7h1KFjA5F8HcQ8ZZztIZA2mKHgfw94QXB/mT9CNWi5FG+f1nuO2VGLbQXXJ0PrH
+ kO8azCLGSs+oegyPk+xyxABOx6bvrgnu1FGvkxrmtAqnbbDsTm1JsElK6vCaxoqN5WgM1Q0gk
+ kljRclc1b5j0GF/FvhrDqtdOfoqxbjz6z1vivyvuD043SNgsR5G3GszSB3R1zBgU5u65K/8th
+ +8pgdkXDnnYAjnr3OZCgip+RKFYlwoUX8uVk/HLwaOHro0etvdsCAnxFJ0JSf51bkb2jCj0Gc
+ pg2oOeMIl6IKiYA3WUtMg+x3P4+BaTSZnYUuEcMkeuOFhrpZ7lUstCVHkqKANZ4t7cRVMWDoc
+ c+ZREWzO9P/MRyUAPIUYAOaA1XEMpTQsrO/4b8cDkb5O7PZKeB6J/KnZZbb08GHxvfrAsqZxO
+ yeb/9PILWdbv54tsf2knd66P8xBCCrZ/AeP7v1cJBaeZr0vV26J+qvD7y3W+hIIjdwWsrbBmr
+ eFo/IiNbomwXiAVkHFX68E2QxyaPfek+bcTZO1SYnoa0MwcMeEBjsIrbA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 22/05/2021 16:48, Andre Ulrich wrote:
->> .... Then I use
->>
->> git checkout master
->>
->> and
->>
->> git merge testing
->>
->> I would expect git to tell me "hey, wait, you have changed some of the
->> first lines in the .txt file. When you merge, your code on master will
->> be altered". But git just merges everything in.
-> ...
-> maybe `git merge --no-ff testing` for use of a command line option
+--8323328-2138201059-1621666676=:57
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+On Fri, 21 May 2021, Derrick Stolee wrote:
+
+> On 5/21/2021 5:59 AM, Bagas Sanjaya wrote:
+> > On 21/05/21 05.13, L=C3=A9na=C3=AFc Huard wrote:
+> >> The existing mechanism for scheduling background maintenance is done
+> >> through cron. On Linux systems managed by systemd, systemd provides a=
+n
+> >> alternative to schedule recurring tasks: systemd timers.
+> >>
+> >> The main motivations to implement systemd timers in addition to cron
+> >> are:
+> >> * cron is optional and Linux systems running systemd might not have i=
+t
+> >> =C2=A0=C2=A0 installed.
+> >> * The execution of `crontab -l` can tell us if cron is installed but =
+not
+> >> =C2=A0=C2=A0 if the daemon is actually running.
+> >> * With systemd, each service is run in its own cgroup and its logs ar=
+e
+> >> =C2=A0=C2=A0 tagged by the service inside journald. With cron, all sc=
+heduled tasks
+> >> =C2=A0=C2=A0 are running in the cron daemon cgroup and all the logs o=
+f the
+> >> =C2=A0=C2=A0 user-scheduled tasks are pretended to belong to the syst=
+em cron
+> >> =C2=A0=C2=A0 service.
+> >> =C2=A0=C2=A0 Concretely, a user that doesn=E2=80=99t have access to t=
+he system logs won=E2=80=99t
+> >> =C2=A0=C2=A0 have access to the log of its own tasks scheduled by cro=
+n whereas he
+> >> =C2=A0=C2=A0 will have access to the log of its own tasks scheduled b=
+y systemd
+> >> =C2=A0=C2=A0 timer.
+> >
+> > For gender neutrality, we can use he/she instead.
 >
-> or setup your .gitconfig e.g. `git config --global merge.ff no`,
-> but also `git config --global pull.ff yes` if you are using `git pull`
-> (=fetch + merge)
+> Singular "they" is better. Fully accurate and less awkward.
 
-I didn't get an impression that this has anything to do with
-fast-forwarding, though.  The file in question has changes on the
-"testing" branch since it forked from "master", and the user is
-merging, i.e. the user _assumes_ that the tip of each branch suits
-his/her purpose better than the tip of the other branch, hence wants
-to take improvements on both branches incorporated into a single
-history--- which is the point of "merging" the testing branch into
-the master branch.  The result of merging might reveal that the tip
-of the other branch wasn't as great as s/he earlier thought, in
-which case s/he may want to undo the merge.  But if the result of
-merging better suites his/her purpose, it would be an improvement
-over where 'master' used to be (and it would also be an improvement
-over where 'testing' used to be), and the world makes a progress.
+I agree. If the singular they was good enough for Shakespeare, it is good
+enough for anyone. See for yourself:
+http://itre.cis.upenn.edu/~myl/languagelog/archives/002748.html
 
-In this particular case, the "master" side did not move since the
-two branches forked, so the merge was to take improvements made on
-"testing" into "master", and if the edit to the file in question
-made on "testing" were bogus, the merging operation of course will
-bring that breakage in, together with all the other changes.  Since
-the lack of any progress on the "master" side does not change this
-picture, I do not think fast-forwardness has anything to do with
-what Andre is complaining about.
+Ciao,
+Dscho
 
-"git merge" cannot be expected to inspect the file and point out
-"no, the edit they made on the testing branch is totally bogus,
-don't merge it".  That is left for humans and tools other than Git
-(like test suite) may help them.
-
-
+--8323328-2138201059-1621666676=:57--
