@@ -4,137 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E37C4707A
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 11:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A40C4707A
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 14:48:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5C0B600EF
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 11:50:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8AA8560E0B
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 14:48:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbhEWLwP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 May 2021 07:52:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46466 "EHLO
+        id S231842AbhEWOuL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 May 2021 10:50:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231731AbhEWLwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 May 2021 07:52:13 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94B9C061574
-        for <git@vger.kernel.org>; Sun, 23 May 2021 04:50:45 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id ep16-20020a17090ae650b029015d00f578a8so9570140pjb.2
-        for <git@vger.kernel.org>; Sun, 23 May 2021 04:50:45 -0700 (PDT)
+        with ESMTP id S231776AbhEWOuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 May 2021 10:50:10 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 657F1C061574
+        for <git@vger.kernel.org>; Sun, 23 May 2021 07:48:43 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id j26-20020a4adf5a0000b029020eac899f76so3952026oou.7
+        for <git@vger.kernel.org>; Sun, 23 May 2021 07:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=jhpKAoDEp9UXIZPXT6+W8HnUAsuAYwJWNd+qmWRqb0Y=;
-        b=rny98n2B1OBWv1UUMB7LOlae2zP8T//AeN1SVyEqCAH/LhskZvN1/tnupwA4J6W7ed
-         2aI2jaQe8dDEEbFj4sk15M7OeZzVuBpBMHOrdpFc8l2mfG3CWigG+euzGKuB0wpM+r9q
-         aphF5Dqdqpd0jQ89v4xgGz6cbVqCv7SfPw8qbpwbXSI3FU3sv3Caz0MJenh7HwbciL6X
-         xQatgACLkyxMiFPdhbV2i8uC0WiaXVlNkafL3QmuH7hacVDY2RjDplViskUHhksOAa1M
-         DAL2a5r614yQuvi1Z+DvxJqS/rTANZ2qM7oB/wTxnfbMEZsQ3BArarN5VKePuOYUOa/L
-         yVkA==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=C27+VglY3svLGh+vXlFRhJytI15P/s16CSTcXvPF8GA=;
+        b=dgfHBJMLXgHM9l57OGHsW7QAK/Rf32NTS7rdVudIHGQKPbrTb00HZApjqChvSH/d5Z
+         Hg+LgwbshHTftZeQiPClmNFpT910TQmDM3B6TiVnpu1ANco2IKhZl/6JMarmYqE3skYz
+         AFoKlRHLbg6DcuxHXkKYObrdYNk4Fo+P4eo4ohtjzuBs8utM0imafdWSNmagTiAwTOH/
+         ppTDR+fo60umCnCWCdR1YfFk1NLUrLLr4QG2JI7xINNX+0r2ilOeBBCzbOpB4s15OgYa
+         KKcta1UL467vJbdqQH2lc6jRbM7j/PBICAP2inQucaJC06eHw1loB8U5RTAVUdg9sv2A
+         HT9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=jhpKAoDEp9UXIZPXT6+W8HnUAsuAYwJWNd+qmWRqb0Y=;
-        b=Y82ugXJ432myQEbBsRucWXkKhnW1OU9Rz3bhkBPd2w6nAl774IiMP8mBuwWA0QUfjh
-         D9hgBkiY2N0bxkITNo1XRd3r1jkFZTy9sbR0ouc99Ci+SJl2kkWw9pkS2ELgsmGUECa0
-         MdV+zt/Kpz+Cm0CcxeF3gf0JKWdbZtt+BvL+ScblnK5M2XFJ9/Dn4P11x73Z/BiFEwjk
-         oQ5OSySIhTUiWbGaFbIVJAkWs5eiFtl5zk5oXREq8V7Y+IxAE10yfQgNWZjIiXzecUae
-         5BEEeyGlDK8GVmkvTaFNJ/+zZbrIFnIU6mkwJ7PTtbbqmFV9G18iRr0Jkg0iQ3YXos8b
-         xakg==
-X-Gm-Message-State: AOAM533gMIKiE6SUlctN1GeH+DO8GoV0QMGssN6jnViUlwvAMzEB5t2Z
-        +g3z5opIulLRKsjjdOP5QjPTvCJUZBm76H7Z
-X-Google-Smtp-Source: ABdhPJzWUK5G5h0H/waDXO6DwXk5aF2feMjTpPKUjAyH6z6aIhStgUI1I00RXhLod6YDtjU+utPiTA==
-X-Received: by 2002:a17:90a:e50e:: with SMTP id t14mr20049407pjy.101.1621770645480;
-        Sun, 23 May 2021 04:50:45 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.121.70])
-        by smtp.gmail.com with ESMTPSA id s23sm12489318pjg.15.2021.05.23.04.50.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 23 May 2021 04:50:45 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=C27+VglY3svLGh+vXlFRhJytI15P/s16CSTcXvPF8GA=;
+        b=HXutrZRqZwTCVL+5Dc/pTtwnlMCK7uU+UwZVSDPnxgyRXI9MyACCksxv9Hdp0nPspO
+         5lr7Uyk5uICDZjzyaXm9iG7HckXo6wD77yGx/rL7KW3dANczGmPlT78GEAZJgjHDmpEO
+         rYaGhhqSVCUuInnnanjOtakQFuQEL1+IlIMf8suZ5+V81rpSQo4KYmYsIyiLBOAo8zWv
+         hGWEqVWeiLZu42bUkXa1F3DgRFw1y3fs6C37i984JOvDgzY5zWTRCkYRJvbgYSxAKw3y
+         7QJj9LSZw1JSOPiC5zFx0qNv0ZA77enJjW/+v4ZegtRACXYABFynwvzYyxOmikGtMnM3
+         nsYg==
+X-Gm-Message-State: AOAM532OLIGqCH6mh51/NtmkVBRsDsbM4ABfh4FuamQYmixOa1pQ3Dq0
+        tWCO1ZSqVUpM+ikxGWR+TwV/HDWWAG7g5Q==
+X-Google-Smtp-Source: ABdhPJypxN+rceEGj0La4+Q81lwH/UXHipI5cPD2sCyiJmQIu4eXBNwTVrVxY2upUR5i0HvT0tlLhw==
+X-Received: by 2002:a05:6820:20a:: with SMTP id i10mr14988866oob.6.1621781322767;
+        Sun, 23 May 2021 07:48:42 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id f8sm2270976oos.33.2021.05.23.07.48.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 May 2021 07:48:42 -0700 (PDT)
+Date:   Sun, 23 May 2021 09:48:40 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <60aa6b48c0623_1234e6208ac@natae.notmuch>
+In-Reply-To: <6642528a-b270-5862-bfdc-7bfa22682c2f@gmail.com>
+References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
+ <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
+ <60a332fd22dad_14c8d4208ed@natae.notmuch>
+ <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
+ <xmqqfsyj1qe1.fsf@gitster.g>
+ <YKRy6oPkgS6FMSZ0@camp.crustytoothpaste.net>
+ <xmqq1ra3z23n.fsf@gitster.g>
+ <87lf8bqdv0.fsf@evledraar.gmail.com>
+ <YKcFrbuuJrWAxXgm@camp.crustytoothpaste.net>
+ <60a7f7427eab6_55039208ba@natae.notmuch>
+ <8811383b-d5f1-2b06-8ac7-47bbc5fc9d20@gmail.com>
+ <60a8243323625_77e4f208f8@natae.notmuch>
+ <636007b7-c079-f8a6-1b26-eb2a55505354@gmail.com>
+ <60a83c794ed4d_81cd4208f3@natae.notmuch>
+ <e669d76b-0bed-4eac-a942-c89b7523ca34@gmail.com>
+ <60a97c12d96a_85723208d4@natae.notmuch>
+ <6642528a-b270-5862-bfdc-7bfa22682c2f@gmail.com>
+Subject: Re: [PATCH] help: colorize man pages
+Mime-Version: 1.0
 Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [GSoC] My Git Dev Blog
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <f1fca31b-17b8-9dbb-4d46-dda8c44645c1@gmail.com>
-Date:   Sun, 23 May 2021 17:20:41 +0530
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <89EAC320-9B0B-4E16-9433-FE80B1A1DF81@gmail.com>
-References: <35493133-2504-4CAE-B700-79EAB990DD17@gmail.com>
- <f1fca31b-17b8-9dbb-4d46-dda8c44645c1@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23-May-2021, at 13:40, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+Igor Djordjevic wrote:
 > 
-> Hi Atharva,
+> On 22/05/2021 23:48, Felipe Contreras wrote:
+> > 
+> > Language is understood bit by bit. To properly understand the sentences
+> > that follow you first need to understand the sentences that preceed.
 > 
-> On 22/05/21 23.42, Atharva Raykar wrote:
->> Hi all,
->> As is tradition, I have started my weekly GSoC blog :)
->> Here is week 1: https://atharvaraykar.me/gitnotes/week1
->> I shall be sharing my progress, thoughts, experiences and any
->> information that might help future contributors in my blog.
->> After my GSoC period, I hope to convert it into a blog that
->> will help pull in and guide new contributors to Git development.
->> Any kind of feedback will be appreciated!
-> 
-> You said on your blog that you switched your development environment
-> from Linux (what the distro you used previously?) to macOS. Why did
-> you make the switch?
+> Except you can't deliberately chop and butcher mentioned sentences in 
+> order to "understand" them in isolation, as the meaning is largely 
+> determined by context - and yes, the following sentences as well.
 
-No special reason for this. My old Linux machine was due for
-an upgrade, and a new M1 Macbook has since taken its place.
+Please explain the context that makes this sentense makes ense:
 
-> Next, you mentioned that you set up emacs config for Git developers
-> (ones that contribute code to git.git). Since I use (r)vim instead
-> of emacs as my editor, what are similar configs for vim?
+  It is not reasonable to allow the user to configure a text editor to
+  not use color heavily.
 
-I don't really use Vim that much and I am not that familiar
-with how to configure it. Sorry, I don't think I can be of
-much help here. I also don't want to share tips on my blog
-that I won't be making use of.
+> The NO_COLOR[1] homepage text, read in its entirety and even if not 
+> perfect, seems clear enough for everyone who wants to understand it. 
 
-> And finally, you said that you had to deal with "header not found"
-> errors. I asked these questions:
-> 
->  1. You mentioned that in order to link against gettext on non-standard
->     path, you did:
->> ./configure "LDFLAGS=$LDFLAGS -L/opt/homebrew/Cellar/gettext/0.21/lib" \
->>     "CFLAGS=-I/opt/homebrew/Cellar/gettext/0.21/include"
->     Why did you use full path to gettext? I suspect that you can instead
->     use `LDFLAGS= $LDFLAGS -L/opt/homebrew/lib \
->     CFLAGS=-I/opt/homebrew/include`, because when you install a library
->     using homebrew, it will symlink the library location from homebrew
->     standard hierarchy (/opt/homebrew/{lib,include}) to actual location
->     (/opt/homebrew/<User>/<package>/<version>/{lib,include}).
+Yes, it is clear: software who use colors heavily should respect
+NO_COLOR.
 
-Thanks a lot! This was helpful and did work out for me. Since
-I am new to macOS (and homebrew), I did not know about this
-hierarchy. I finally decided I would update my post to use
-this along with a Makefile-only approach recommended by Philippe.
+Others on this list agree.
 
->  2. Can these procedure above for linking Git against libraries at
->     non-standard locations (such as /opt) be applicable also to Linux
->     systems? Try to adapt that procedure on your Linux system (if
->     available), with custom-compiled newer version of any of Git
->     dependencies (such as gettext).
-
-I'm not too sure, and unfortunately I don't have my old Linux
-system to verify this.
-
-> Thanks.
-> 
-> -- 
-> An old man doll... just what I always wanted! - Clara
-
+-- 
+Felipe Contreras
