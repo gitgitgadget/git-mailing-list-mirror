@@ -2,123 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1718C47080
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 18:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82769C4707A
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 18:36:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A514661263
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 18:24:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52DA661261
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 18:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231887AbhEWSW2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 May 2021 14:22:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
+        id S231856AbhEWShm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 May 2021 14:37:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbhEWSW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 May 2021 14:22:28 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927EFC061574
-        for <git@vger.kernel.org>; Sun, 23 May 2021 11:21:01 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id h21so19150521qtu.5
-        for <git@vger.kernel.org>; Sun, 23 May 2021 11:21:01 -0700 (PDT)
+        with ESMTP id S231829AbhEWShl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 May 2021 14:37:41 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859F0C061574
+        for <git@vger.kernel.org>; Sun, 23 May 2021 11:36:13 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id b25so25143437oic.0
+        for <git@vger.kernel.org>; Sun, 23 May 2021 11:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7ned0EFZCSLYNO7+L/FPwtdF2JCnepbpwJYncxof3Es=;
-        b=vM50Vc6YRC8ajLCcA1a/slRuDUuyTZp/amTwKcf/pcg8FEtW6ePhKwbc0FmkbH5bSw
-         Js5SjG/+3PZ1WtcG9uQFrcJKrPP8GVzud9c6pGy+N0URXcKE/nolMcTap24JuFx+MGkw
-         p416y82puBYdcaWfMokDniLECCE+dyzce5ThRcE5nIvgaY8Xnd6wAEusiFpHawi0ZHeB
-         Wn2z65dxMt2wlIc690QsgfIbnMGYB3vAtYvemrwt9+pcYPM1yd2Sg7HooZH/w41q89Wy
-         uVEzzGGGt+GNcraOnyv6PdWwms6jY9opnScJZpHXi01OIcbSA+E+kIg1fMHtEUF4k6hJ
-         B9Zw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=F/81jvG7jyYa8B6ZwFd1f5N5OWUqhMVokLrdhQ90Fqs=;
+        b=SV5nWymQo5/B+9D1ShBRY8zimxDBpkKS+9FLsaeijqT7ElfeSDdSlMw473azU+hrXK
+         ibCkwc/qA4CIKs9hRDvDuVLpqM+9rt1D3oAFvLUwVWmqp40Ndz+wBGEte/RRMDkGTR5I
+         9c3QUrJT3ZzSFbvIYCc2K7DtULuyAa0SL/6KCxP6sTEAeJrb6Cpq5W4vojtzpTHEMJ8n
+         MKDukaWkHyPJqaVv/yi7x/SHH8rv13XJzPrbzKWwqQ4NhMW9S5WSqXrkbgy6SO2MRbmQ
+         T5niqWT5R0u6j9IPLme67Eor34ASgCXP3Nc6j4+SwoGz0O1e9yQFRllS2q7lpSUcQj+t
+         YJzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7ned0EFZCSLYNO7+L/FPwtdF2JCnepbpwJYncxof3Es=;
-        b=hOGarM/49CDvQA1tY+EdJIoBasb1/0xK4hfE0HWZpI7BW+pGNKw0RH3a7cLe20+8qb
-         YioS+ceUHdAgECKk1J2ZgiJi/YdeoZ0mt6gj7Cjk492SOShzReOl7uLP4iWqx7If6Wd7
-         X1IFjI2YwPF41CF3sZcacleIivb5gX0AeUtGqPLImuG8W3uiLtAUhceUCHKF/GvSTEMp
-         Vy51Bgw2BBJX1BKxzR+huJxXhNJrQOUq4IejbLsi9eaDjj6GqqBKiV6GqiZSa73TTi5u
-         bUI2enJSLUgqdtuSv8PfeWysQVuP91QBthjjXxc8gb0J73OtXEb6hckXwXhX01phUEOl
-         +IQg==
-X-Gm-Message-State: AOAM530GB7LlNaMKb6fnVIK/JabDDtssCx2Nake0/pCsNbODADo24SNI
-        CBTSlaWET/UakOVUSqjEj98=
-X-Google-Smtp-Source: ABdhPJwu7/TYSQQb7YV+HT/5YULIaa5bZshKXnTvH82nyxZT9a0Q3QKb1v6Z4iHscFfNKtzmuD6R2A==
-X-Received: by 2002:aed:210f:: with SMTP id 15mr23352636qtc.149.1621794060526;
-        Sun, 23 May 2021 11:21:00 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id q21sm8129233qke.32.2021.05.23.11.20.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 May 2021 11:20:59 -0700 (PDT)
-Subject: Re: Formatting options are ignored when tracking functions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     aidgal2@gmail.com, git@vger.kernel.org,
-        Thomas Rast <tr@thomasrast.ch>
-References: <EE7D39E6-D826-49E2-AD0E-090A83DFDEC1@gmail.com>
- <xmqqczthnwuu.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <d801fe76-f40d-91ef-653e-925aba0fbdf4@gmail.com>
-Date:   Sun, 23 May 2021 14:20:58 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.2
-MIME-Version: 1.0
-In-Reply-To: <xmqqczthnwuu.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=F/81jvG7jyYa8B6ZwFd1f5N5OWUqhMVokLrdhQ90Fqs=;
+        b=dSkVK/lamDLRs9HsztweCaKujNpRmHnrnXgydEXxqIqC2Do4Bw9vuTy0hvvWKwibMh
+         ocM6osC3dYqI9i6kWWZEOSqLyzdJchLSRn7i9acYl509gB7oB2hgZSLUXKSPOJZ64ev1
+         0oo6eodU9ErOSpyGK2mqkKr3rujGN/3ploN3vRx3jBedTihWNEswaYrMhztP8A19+5qa
+         UWd7idfsPipq2dGpiZWwQRKYBijjbF0E+UvQ8pnNj+MQXrUToo8WyJITPHX0cUH3fNev
+         sjnwnEIGUT1fiMTCfkcdp6cF40uw9/Hnj3Itr0/1MuWkW+Fm7s2BmXgg0ydDNs50DBaP
+         Jytw==
+X-Gm-Message-State: AOAM5320tcGcr1Ycw8z0Lss4KFWmnFDfLu/SIEL0EMyvUwnBPcYetw3W
+        sRd7sUTpauSchV8Qjp80G1BKuVZec32s1g==
+X-Google-Smtp-Source: ABdhPJx4aaaOIsnYyd4GICzVdskWorhtd0x1uuLCDfBVSIFIvWLBmzNUvEKPHWPMa1zv6Zr2Lp5pKA==
+X-Received: by 2002:aca:2311:: with SMTP id e17mr8543565oie.160.1621794972857;
+        Sun, 23 May 2021 11:36:12 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id w15sm2380925oiw.34.2021.05.23.11.36.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 May 2021 11:36:12 -0700 (PDT)
+Date:   Sun, 23 May 2021 13:36:10 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Message-ID: <60aaa09aebce4_454920811@natae.notmuch>
+In-Reply-To: <nycvar.QRO.7.76.6.2105220856320.57@tvgsbejvaqbjf.bet>
+References: <20210509213217.449489-1-lenaic@lhuard.fr>
+ <20210520221359.75615-1-lenaic@lhuard.fr>
+ <20210520221359.75615-5-lenaic@lhuard.fr>
+ <715d8115-641b-5c06-d514-36911eb169ef@gmail.com>
+ <44d937a0-e876-e185-f409-a4fd61eae580@gmail.com>
+ <nycvar.QRO.7.76.6.2105220856320.57@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH v3 4/4] maintenance: optionally use systemd timers on
+ Linux
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin wrote:
+> On Fri, 21 May 2021, Derrick Stolee wrote:
+> =
 
-Le 2021-05-23 à 14:11, Junio C Hamano a écrit :
-> Philippe Blain <levraiphilippeblain@gmail.com> writes:
-> 
->> I believe this is working as advertised: only the first line of
->> the commit message is shown.
->> However as mentioned in the doc, the -L option also triggers patch
->> output (-p), which you can omit if you explicitely add --no-patch
->> (or shorter, -s).
-> 
-> Heh, I think "working as advertised" is not wrong per-se, but this
-> feels like a clear design mistake to me, at least at the UI level.
-> Admittedly, I've never used "log -L" in scripts and I've always used
-> it interactively, in a context that I want to see the patch output,
-> so this did not bother me so far.
-> 
-> But what commits -L decides have relevant changes and how these
-> commits are shown ought to be orthogonal.  It surely may need to run
-> the content-level diff machinery to see if each commit affects the
-> area of the code specified via the -L option, but just like "git log
-> -S<text>" can be used to find commits that change the number of
-> occurrences of <text>, and allows the users to choose to view them
-> with "-p" (but not force the --patch mode on), it should behave the
-> same way, I would think.
-> 
-> With a clear migration plan, we should be able to fix this over
-> time, I would think.
-> 
+> > On 5/21/2021 5:59 AM, Bagas Sanjaya wrote:
+> > > On 21/05/21 05.13, L=C3=A9na=C3=AFc Huard wrote:
+> > >> The existing mechanism for scheduling background maintenance is do=
+ne
+> > >> through cron. On Linux systems managed by systemd, systemd provide=
+s an
+> > >> alternative to schedule recurring tasks: systemd timers.
+> > >>
+> > >> The main motivations to implement systemd timers in addition to cr=
+on
+> > >> are:
+> > >> * cron is optional and Linux systems running systemd might not hav=
+e it
+> > >> =C2=A0=C2=A0 installed.
+> > >> * The execution of `crontab -l` can tell us if cron is installed b=
+ut not
+> > >> =C2=A0=C2=A0 if the daemon is actually running.
+> > >> * With systemd, each service is run in its own cgroup and its logs=
+ are
+> > >> =C2=A0=C2=A0 tagged by the service inside journald. With cron, all=
+ scheduled tasks
+> > >> =C2=A0=C2=A0 are running in the cron daemon cgroup and all the log=
+s of the
+> > >> =C2=A0=C2=A0 user-scheduled tasks are pretended to belong to the s=
+ystem cron
+> > >> =C2=A0=C2=A0 service.
+> > >> =C2=A0=C2=A0 Concretely, a user that doesn=E2=80=99t have access t=
+o the system logs won=E2=80=99t
+> > >> =C2=A0=C2=A0 have access to the log of its own tasks scheduled by =
+cron whereas he
+> > >> =C2=A0=C2=A0 will have access to the log of its own tasks schedule=
+d by systemd
+> > >> =C2=A0=C2=A0 timer.
+> > >
+> > > For gender neutrality, we can use he/she instead.
+> >
+> > Singular "they" is better. Fully accurate and less awkward.
+> =
 
-I agree with that. I was just pointing out that it does work as the doc
-says it should work, without implying anything about what should be the
-behaviour in an ideal world.
+> I agree.
 
-In fact in an ideal world, '-L' would support all "kinds" of diff output,
-i.e. --stat, --summary, etc.
+I disagree.
 
-I do not have a clear opinion on a migration path; if consensus can be reached
-that not implying '--patch' is a better behaviour, then changing the behaviour
-would be OK. If some people use scripts that parse 'git log -L' ouptut expecting
-that '-p' is implied, I would expect it's pretty easy to notice the breakage and
-add the now-required switch... but I'll let others be the judge of that.
+> If the singular they was good enough for Shakespeare,
 
-Cheers,
+Shakespeare:
 
-Philippe.
+ 1. Did not know gammar
+ 2. Invented words as we went along
+ 3. Was no writing prose
+
+This is not the kind of English we wish to replicate:
+
+  "This was the most unkindest cut of all."
+
+> See for yourself:
+> http://itre.cis.upenn.edu/~myl/languagelog/archives/002748.html
+
+I do not see a single instance of a singular antecedent there.
+
+Not that it matters, because unlike Shakespeare we are wriing classic
+prose style. The styles could not be more different.
+
+
+The singular they is a controversial topic[1][2], even among linguists.
+This is a software project, we must not make decrees about proper use of
+English language, especially when linguists themselves have not yet
+fully decided.
+
+If you want to use "they", go ahead, other people want to use "he/she".
+The git project should steer cleer of value judgements that one is
+_better_ than the other.
+
+Not to mention that these kinds of promulgations invite the culture war.
+
+Cheers.
+
+[1] https://time.com/5748649/word-of-year-they-merriam-webster/
+[2] https://www.theatlantic.com/culture/archive/2013/01/singular-their-af=
+front-good-writing/319329/
+
+-- =
+
+Felipe Contreras=
