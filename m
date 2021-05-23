@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4331FC47082
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 08:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A790C47080
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 08:56:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 157BF6100B
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 08:56:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1ABC9610C8
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 08:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231738AbhEWI6F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 May 2021 04:58:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36850 "EHLO
+        id S231742AbhEWI6G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 May 2021 04:58:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231721AbhEWI6A (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 May 2021 04:58:00 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A078C06138E
-        for <git@vger.kernel.org>; Sun, 23 May 2021 01:56:33 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id p7so21572312wru.10
+        with ESMTP id S231728AbhEWI6B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 May 2021 04:58:01 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019B8C06138F
+        for <git@vger.kernel.org>; Sun, 23 May 2021 01:56:34 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id q5so25280661wrs.4
         for <git@vger.kernel.org>; Sun, 23 May 2021 01:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CcqQsIoDgyi1uRVQSNdjT00K+sIWr/Tsq0tsQUXX18Y=;
-        b=qvouc1HQ6YFw8Rtyb2bA4PHMjGG7LZGgJRQnqsa8FCpOAH6l4M/1YNRdkDVi+daR3G
-         lCgTrXScCexl6vD3/lvbMNo9sRWr0EAIu1Cy9++zM9vURYk44Lr6HGjoRj1lIm3wtrbM
-         W7cNpTL/hppmMRn8yB4rcoky/ZbbTvY3G2IJgyZg6iUK7JSw4bMsBMzJgcS4vTYkx+67
-         9wdOdbeVJt62jMPbhLE8GDnoIwmiSCpkfHxxK1jwIZKqrfVTNLG50j/wvFM92tA/Zp61
-         QmbUN62uPYBtkHHQvRD1iSQiFD7F8D0VLFp6Fjj5RAKeG9askqUE3YwvBry+ZOLom0BV
-         ImzQ==
+        bh=1LRloA5jbWOWCIZFXLZ6FANZWgBZkMT0RGdVlQzw9ZQ=;
+        b=pxDIYXLXxVTi1b9fzxX7wd9GcomNfGdRVokpbbB82gE+r9svoXWdb/4jYfzZsqXFAP
+         XfBj25Nsi0TNj1v4fWOrtYhc4Ija/ymbfj0kRgct6AF9Cl+1ZfO1O9W+2TOk0tO5S74J
+         sGv16Jd/rjmCh9BIQ6EegntimFWf/DAUEHQoDRrFlA7hzTh1/+7Rl/OOcNkNlcPpebbH
+         4AQl/+imF3IafD4zc4eW52SJ67H30djMk6T7vC3Rc0o1QVg7L2c5ZqEdALxgplaICKWJ
+         yjVzns+zkfwCqpUlu9+g04B2TetCUnqo/T1nP7pI0awp7k5T4rBsZnEsduYOZagEINOD
+         K19Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CcqQsIoDgyi1uRVQSNdjT00K+sIWr/Tsq0tsQUXX18Y=;
-        b=c761z3MxeIxr9xUer8tpqzBnB5p5sYSrpeW/eO5Uv5IgqhlgQVgbHHcFoUWznx6TTl
-         4jST46gfMR19+rbWnoiI8om3j8xV9sqCM1ZvwZGPTJhElrHqKgrF/vM/dn0IxGLr9prC
-         5lFF9RauQIx6BZykAKUmJBAOWuMsR/svQ87Ez2ZOxd3K0RysSyOk0UKRs2sq/4364+ZO
-         NItXIkgo8e5JwY5HZiKzuFycQy3ixGyRm4DIQ8anj2UacjpurSKCfwiP+W9E2qEkMyXG
-         tzGTpueVYxiC22uCBat7A713IWoDzNsrHRvWtlqKrtqRU+SNUduZLFXuGVelAOJVUMEu
-         Kd/Q==
-X-Gm-Message-State: AOAM532IWabnfzY9ofLqK+iW7PHrRipzSLvnNEMCsWtApyVg9AIzVZqZ
-        Zk8ghnS4euGDxeQr54SupR8E8cDzNXAOC65F
-X-Google-Smtp-Source: ABdhPJxiWfbjoCJjs5+w3EHQZF4NSaIUXMf3BQb3BbBTMDleGhdy/I4Cvd/SKzd5Vvpaiio+uoDemA==
-X-Received: by 2002:a05:6000:1189:: with SMTP id g9mr16833973wrx.385.1621760191446;
-        Sun, 23 May 2021 01:56:31 -0700 (PDT)
+        bh=1LRloA5jbWOWCIZFXLZ6FANZWgBZkMT0RGdVlQzw9ZQ=;
+        b=GGAlB5SPu4UJILcgI5KVs1CEFYei2uy8t8bXyAatqrjPHks/mOSfOqcEydU0gvd1vK
+         R1feL0kamDdvT4prw5NXbcsRQxG/HIGvwIMPVifLVL5wgYMzm+7cbEVQ3Qk3rfuyE4sb
+         dsVlvy/vciiwrVxSuWlo0iNbvYmqtto2EeSK5pCLkbEIcNL3pa5nH8U2zImwllmSQ4bv
+         6n0qFyn53LQyF6zpHm7mCmAr1h4K8ziq0y0jhIewWkPnvnhX2PgqNTCk8H0wUTX17xNz
+         sztz34MR8LrbBMdNq4fBawwTvVGHnbFz4Uy5l1P9+Q2I6JlRO7KdHSdzf0OU6TWlkL61
+         BVjg==
+X-Gm-Message-State: AOAM5323N4JL65kqAVqKTZGXmbPs9kMmFlTcz9XvAo0iW+5B+rWcQp4H
+        ECwmsQuhWcRYopE91ySzk7ry9rU5y73B+S0A
+X-Google-Smtp-Source: ABdhPJzjR1kPELiBeuyfUOKQphqDNeCN9I3zREX7SylA+cnxUx1DlmJEzfcqlvj8ubTRvXsjH82OYA==
+X-Received: by 2002:a5d:45c6:: with SMTP id b6mr17016154wrs.333.1621760192389;
+        Sun, 23 May 2021 01:56:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s15sm9577839wrt.54.2021.05.23.01.56.30
+        by smtp.gmail.com with ESMTPSA id s15sm9577839wrt.54.2021.05.23.01.56.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 May 2021 01:56:30 -0700 (PDT)
+        Sun, 23 May 2021 01:56:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 12/13] send-email: move trivial config handling to Perl
-Date:   Sun, 23 May 2021 10:56:17 +0200
-Message-Id: <patch-12.13-950dc0f53d-20210523T085231Z-avarab@gmail.com>
+Subject: [PATCH v3 13/13] perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
+Date:   Sun, 23 May 2021 10:56:18 +0200
+Message-Id: <patch-13.13-c1d7ea664a-20210523T085231Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0.406.g05cb3eebfc
 In-Reply-To: <cover-00.13-0000000000-20210523T085231Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com> <cover-00.13-0000000000-20210523T085231Z-avarab@gmail.com>
@@ -81,170 +81,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Optimize the startup time of git-send-email by using an amended
-config_regexp() function to retrieve the list of config keys and
-values we're interested in.
+It has been pointed out[1] that cwd() invokes "pwd(1)" while getcwd()
+is a Perl-native XS function. For what we're using these for we can
+use getcwd().
 
-For boolean keys we can handle the [true|false] case ourselves, and
-the "--get" case didn't need any parsing. Let's leave "--path" and
-other "--bool" cases to "git config". I'm not bothering with the
-"undef" or "" case (true and false, respectively), let's just punt on
-those and others and have "git config --type=bool" handle it.
+The performance difference is miniscule, we're saving on the order of
+a millisecond or so, see [2] below for the benchmark. I don't think
+this matters in practice for optimizing git-send-email or perl
+execution (unlike the patches leading up to this one).
 
-This brings the runtime of "git send-email" from ~60-~70ms to a very
-steady ~40ms on my test box. We now run just one "git config"
-invocation on startup instead of 8, the exact number will differ based
-on the local sendemail.* config. I happen to have 8 of those set.
+But let's do it regardless of that, if only so we don't have to think
+about this as a low-hanging fruit anymore.
 
-This brings the runtime of t9001-send-email.sh from ~13s down to ~12s
-for me. The change there is less impressive as many of those tests set
-various config values, and we're also getting to the point of
-diminishing returns for optimizing "git send-email" itself.
+1. https://lore.kernel.org/git/20210512180517.GA11354@dcvr/
+2.
+    $ perl -MBenchmark=:all -MCwd -wE 'cmpthese(10000, { getcwd => sub { getcwd }, cwd => sub { cwd }, pwd => sub { system "pwd >/dev/null" }})'
+                (warning: too few iterations for a reliable count)
+                             Rate                  pwd                 cwd    getcwd
+    pwd                     982/s                   --                -48%     -100%
+    cwd                    1890/s                  92%                  --     -100%
+    getcwd 10000000000000000000/s 1018000000000000000% 529000000000000064%        -
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 1e9273fd4f..1ea4d9589d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -324,7 +324,11 @@ sub read_config {
- 		my $target = $config_bool_settings{$setting};
- 		my $key = "$prefix.$setting";
- 		next unless exists $known_keys->{$key};
--		my $v = Git::config_bool(@repo, $key);
-+		my $v = (@{$known_keys->{$key}} == 1 &&
-+			 (defined $known_keys->{$key}->[0] &&
-+			  $known_keys->{$key}->[0] =~ /^(?:true|false)$/s))
-+			? $known_keys->{$key}->[0] eq 'true'
-+			: Git::config_bool(@repo, $key);
- 		next unless defined $v;
- 		next if $configured->{$setting}++;
- 		$$target = $v;
-@@ -353,14 +357,12 @@ sub read_config {
- 		my $key = "$prefix.$setting";
- 		next unless exists $known_keys->{$key};
- 		if (ref($target) eq "ARRAY") {
--			my @values = Git::config(@repo, $key);
--			next unless @values;
-+			my @values = @{$known_keys->{$key}};
- 			next if $configured->{$setting}++;
- 			@$target = @values;
- 		}
- 		else {
--			my $v = Git::config(@repo, $key);
--			next unless defined $v;
-+			my $v = $known_keys->{$key}->[0];
- 			next if $configured->{$setting}++;
- 			$$target = $v;
- 		}
-@@ -371,12 +373,19 @@ sub config_regexp {
- 	my ($regex) = @_;
- 	my @ret;
- 	eval {
--		@ret = Git::command(
-+		my $ret = Git::command(
- 			'config',
--			'--name-only',
-+			'--null',
- 			'--get-regexp',
- 			$regex,
- 		);
-+		@ret = map {
-+			# We must always return ($k, $v) here, since
-+			# empty config values will be just "key\0",
-+			# not "key\nvalue\0".
-+			my ($k, $v) = split /\n/, $_, 2;
-+			($k, $v);
-+		} split /\0/, $ret;
- 		1;
- 	} or do {
- 		# If we have no keys we're OK, otherwise re-throw
-@@ -389,8 +398,10 @@ sub config_regexp {
- # parses 'bool' etc.) by only doing so for config keys that exist.
- my %known_config_keys;
- {
--	my @known_config_keys = config_regexp("^sende?mail[.]");
--	@known_config_keys{@known_config_keys} = ();
-+	my @kv = config_regexp("^sende?mail[.]");
-+	while (my ($k, $v) = splice @kv, 0, 2) {
-+		push @{$known_config_keys{$k}} => $v;
-+	}
- }
-
- # sendemail.identity yields to --identity. We must parse this
 ---
- git-send-email.perl | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ git-send-email.perl | 2 +-
+ perl/Git.pm         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 1e9273fd4f..1ea4d9589d 100755
+index 1ea4d9589d..c6af05e8a3 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -324,7 +324,11 @@ sub read_config {
- 		my $target = $config_bool_settings{$setting};
- 		my $key = "$prefix.$setting";
- 		next unless exists $known_keys->{$key};
--		my $v = Git::config_bool(@repo, $key);
-+		my $v = (@{$known_keys->{$key}} == 1 &&
-+			 (defined $known_keys->{$key}->[0] &&
-+			  $known_keys->{$key}->[0] =~ /^(?:true|false)$/s))
-+			? $known_keys->{$key}->[0] eq 'true'
-+			: Git::config_bool(@repo, $key);
- 		next unless defined $v;
- 		next if $configured->{$setting}++;
- 		$$target = $v;
-@@ -353,14 +357,12 @@ sub read_config {
- 		my $key = "$prefix.$setting";
- 		next unless exists $known_keys->{$key};
- 		if (ref($target) eq "ARRAY") {
--			my @values = Git::config(@repo, $key);
--			next unless @values;
-+			my @values = @{$known_keys->{$key}};
- 			next if $configured->{$setting}++;
- 			@$target = @values;
- 		}
- 		else {
--			my $v = Git::config(@repo, $key);
--			next unless defined $v;
-+			my $v = $known_keys->{$key}->[0];
- 			next if $configured->{$setting}++;
- 			$$target = $v;
- 		}
-@@ -371,12 +373,19 @@ sub config_regexp {
- 	my ($regex) = @_;
- 	my @ret;
- 	eval {
--		@ret = Git::command(
-+		my $ret = Git::command(
- 			'config',
--			'--name-only',
-+			'--null',
- 			'--get-regexp',
- 			$regex,
- 		);
-+		@ret = map {
-+			# We must always return ($k, $v) here, since
-+			# empty config values will be just "key\0",
-+			# not "key\nvalue\0".
-+			my ($k, $v) = split /\n/, $_, 2;
-+			($k, $v);
-+		} split /\0/, $ret;
- 		1;
- 	} or do {
- 		# If we have no keys we're OK, otherwise re-throw
-@@ -389,8 +398,10 @@ sub config_regexp {
- # parses 'bool' etc.) by only doing so for config keys that exist.
- my %known_config_keys;
- {
--	my @known_config_keys = config_regexp("^sende?mail[.]");
--	@known_config_keys{@known_config_keys} = ();
-+	my @kv = config_regexp("^sende?mail[.]");
-+	while (my ($k, $v) = splice @kv, 0, 2) {
-+		push @{$known_config_keys{$k}} => $v;
-+	}
- }
- 
- # sendemail.identity yields to --identity. We must parse this
+@@ -2007,7 +2007,7 @@ sub validate_patch {
+ 			require Cwd;
+ 			my $target = Cwd::abs_path($fn);
+ 			# The hook needs a correct cwd and GIT_DIR.
+-			my $cwd_save = Cwd::cwd();
++			my $cwd_save = Cwd::getcwd();
+ 			chdir($repo->wc_path() or $repo->repo_path())
+ 				or die("chdir: $!");
+ 			local $ENV{"GIT_DIR"} = $repo->repo_path();
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 4d048f307b..863bd80694 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -405,7 +405,7 @@ sub command_bidi_pipe {
+ 	if ($self) {
+ 		shift;
+ 		require Cwd;
+-		$cwd_save = Cwd::cwd();
++		$cwd_save = Cwd::getcwd();
+ 		_setup_git_cmd_env($self);
+ 	}
+ 	require IPC::Open2;
 -- 
 2.32.0.rc0.406.g05cb3eebfc
 
