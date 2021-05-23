@@ -2,115 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A40C4707A
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 14:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A58FC47080
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 15:02:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AA8560E0B
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 14:48:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B696611CB
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 15:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231842AbhEWOuL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 May 2021 10:50:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231776AbhEWOuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 May 2021 10:50:10 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 657F1C061574
-        for <git@vger.kernel.org>; Sun, 23 May 2021 07:48:43 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id j26-20020a4adf5a0000b029020eac899f76so3952026oou.7
-        for <git@vger.kernel.org>; Sun, 23 May 2021 07:48:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=C27+VglY3svLGh+vXlFRhJytI15P/s16CSTcXvPF8GA=;
-        b=dgfHBJMLXgHM9l57OGHsW7QAK/Rf32NTS7rdVudIHGQKPbrTb00HZApjqChvSH/d5Z
-         Hg+LgwbshHTftZeQiPClmNFpT910TQmDM3B6TiVnpu1ANco2IKhZl/6JMarmYqE3skYz
-         AFoKlRHLbg6DcuxHXkKYObrdYNk4Fo+P4eo4ohtjzuBs8utM0imafdWSNmagTiAwTOH/
-         ppTDR+fo60umCnCWCdR1YfFk1NLUrLLr4QG2JI7xINNX+0r2ilOeBBCzbOpB4s15OgYa
-         KKcta1UL467vJbdqQH2lc6jRbM7j/PBICAP2inQucaJC06eHw1loB8U5RTAVUdg9sv2A
-         HT9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=C27+VglY3svLGh+vXlFRhJytI15P/s16CSTcXvPF8GA=;
-        b=HXutrZRqZwTCVL+5Dc/pTtwnlMCK7uU+UwZVSDPnxgyRXI9MyACCksxv9Hdp0nPspO
-         5lr7Uyk5uICDZjzyaXm9iG7HckXo6wD77yGx/rL7KW3dANczGmPlT78GEAZJgjHDmpEO
-         rYaGhhqSVCUuInnnanjOtakQFuQEL1+IlIMf8suZ5+V81rpSQo4KYmYsIyiLBOAo8zWv
-         hGWEqVWeiLZu42bUkXa1F3DgRFw1y3fs6C37i984JOvDgzY5zWTRCkYRJvbgYSxAKw3y
-         7QJj9LSZw1JSOPiC5zFx0qNv0ZA77enJjW/+v4ZegtRACXYABFynwvzYyxOmikGtMnM3
-         nsYg==
-X-Gm-Message-State: AOAM532OLIGqCH6mh51/NtmkVBRsDsbM4ABfh4FuamQYmixOa1pQ3Dq0
-        tWCO1ZSqVUpM+ikxGWR+TwV/HDWWAG7g5Q==
-X-Google-Smtp-Source: ABdhPJypxN+rceEGj0La4+Q81lwH/UXHipI5cPD2sCyiJmQIu4eXBNwTVrVxY2upUR5i0HvT0tlLhw==
-X-Received: by 2002:a05:6820:20a:: with SMTP id i10mr14988866oob.6.1621781322767;
-        Sun, 23 May 2021 07:48:42 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id f8sm2270976oos.33.2021.05.23.07.48.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 May 2021 07:48:42 -0700 (PDT)
-Date:   Sun, 23 May 2021 09:48:40 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Message-ID: <60aa6b48c0623_1234e6208ac@natae.notmuch>
-In-Reply-To: <6642528a-b270-5862-bfdc-7bfa22682c2f@gmail.com>
-References: <20210518010121.1350327-1-felipe.contreras@gmail.com>
- <YKMWL0iZLVl1KTrB@camp.crustytoothpaste.net>
- <60a332fd22dad_14c8d4208ed@natae.notmuch>
- <YKRSlFcFAcHcR3uY@camp.crustytoothpaste.net>
- <xmqqfsyj1qe1.fsf@gitster.g>
- <YKRy6oPkgS6FMSZ0@camp.crustytoothpaste.net>
- <xmqq1ra3z23n.fsf@gitster.g>
- <87lf8bqdv0.fsf@evledraar.gmail.com>
- <YKcFrbuuJrWAxXgm@camp.crustytoothpaste.net>
- <60a7f7427eab6_55039208ba@natae.notmuch>
- <8811383b-d5f1-2b06-8ac7-47bbc5fc9d20@gmail.com>
- <60a8243323625_77e4f208f8@natae.notmuch>
- <636007b7-c079-f8a6-1b26-eb2a55505354@gmail.com>
- <60a83c794ed4d_81cd4208f3@natae.notmuch>
- <e669d76b-0bed-4eac-a942-c89b7523ca34@gmail.com>
- <60a97c12d96a_85723208d4@natae.notmuch>
- <6642528a-b270-5862-bfdc-7bfa22682c2f@gmail.com>
-Subject: Re: [PATCH] help: colorize man pages
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S231820AbhEWPDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 May 2021 11:03:25 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50217 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231771AbhEWPDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 May 2021 11:03:24 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 679C811F012;
+        Sun, 23 May 2021 11:01:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=S3z9g0MERmnBGb8oiN+WXe2oV1zKiVcFziDXN0U69HU=; b=XW/G
+        UZGFKXuh0TPshMRsBAqx7zvg7OG5ffPNxJsfXn4N8wZ6Q2/ML0SXBcx/m6nXqjpo
+        MRbjzqctTZDHmyESIXrqVgboAvGNw7HA+xXMFM09U1MnRZ+rTGSBqv+QzT3YMllz
+        n0/t9PIeJdySD4nZlma3ImYWWJbo/J/3/KHx968=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61F3911F010;
+        Sun, 23 May 2021 11:01:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A765E11F00E;
+        Sun, 23 May 2021 11:01:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>, git@vger.kernel.org
+Subject: Re: fast forward merge overwriting my code
+References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
+        <8f3d4d1e-18f4-ccb2-9439-80a5812c2f36@iee.email>
+Date:   Mon, 24 May 2021 00:01:53 +0900
+Message-ID: <xmqqo8d1o5ni.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0992298-BBD7-11EB-BBAA-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Igor Djordjevic wrote:
-> 
-> On 22/05/2021 23:48, Felipe Contreras wrote:
-> > 
-> > Language is understood bit by bit. To properly understand the sentences
-> > that follow you first need to understand the sentences that preceed.
-> 
-> Except you can't deliberately chop and butcher mentioned sentences in 
-> order to "understand" them in isolation, as the meaning is largely 
-> determined by context - and yes, the following sentences as well.
+Philip Oakley <philipoakley@iee.email> writes:
 
-Please explain the context that makes this sentense makes ense:
+> On 22/05/2021 16:48, Andre Ulrich wrote:
+>> .... Then I use
+>>
+>> git checkout master
+>>
+>> and
+>>
+>> git merge testing
+>>
+>> I would expect git to tell me "hey, wait, you have changed some of the
+>> first lines in the .txt file. When you merge, your code on master will
+>> be altered". But git just merges everything in.
+> ...
+> maybe `git merge --no-ff testing` for use of a command line option
+>
+> or setup your .gitconfig e.g. `git config --global merge.ff no`,
+> but also `git config --global pull.ff yes` if you are using `git pull`
+> (=fetch + merge)
 
-  It is not reasonable to allow the user to configure a text editor to
-  not use color heavily.
+I didn't get an impression that this has anything to do with
+fast-forwarding, though.  The file in question has changes on the
+"testing" branch since it forked from "master", and the user is
+merging, i.e. the user _assumes_ that the tip of each branch suits
+his/her purpose better than the tip of the other branch, hence wants
+to take improvements on both branches incorporated into a single
+history--- which is the point of "merging" the testing branch into
+the master branch.  The result of merging might reveal that the tip
+of the other branch wasn't as great as s/he earlier thought, in
+which case s/he may want to undo the merge.  But if the result of
+merging better suites his/her purpose, it would be an improvement
+over where 'master' used to be (and it would also be an improvement
+over where 'testing' used to be), and the world makes a progress.
 
-> The NO_COLOR[1] homepage text, read in its entirety and even if not 
-> perfect, seems clear enough for everyone who wants to understand it. 
+In this particular case, the "master" side did not move since the
+two branches forked, so the merge was to take improvements made on
+"testing" into "master", and if the edit to the file in question
+made on "testing" were bogus, the merging operation of course will
+bring that breakage in, together with all the other changes.  Since
+the lack of any progress on the "master" side does not change this
+picture, I do not think fast-forwardness has anything to do with
+what Andre is complaining about.
 
-Yes, it is clear: software who use colors heavily should respect
-NO_COLOR.
+"git merge" cannot be expected to inspect the file and point out
+"no, the edit they made on the testing branch is totally bogus,
+don't merge it".  That is left for humans and tools other than Git
+(like test suite) may help them.
 
-Others on this list agree.
 
--- 
-Felipe Contreras
