@@ -2,70 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6743EC2B9F2
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 23:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C2BAC47080
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 02:28:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3317F61168
-	for <git@archiver.kernel.org>; Sat, 22 May 2021 23:16:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1682461163
+	for <git@archiver.kernel.org>; Sun, 23 May 2021 02:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231447AbhEVXFf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 May 2021 19:05:35 -0400
-Received: from terminus.zytor.com ([198.137.202.136]:55187 "EHLO
-        mail.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231433AbhEVXFf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 May 2021 19:05:35 -0400
-Received: from [IPv6:2607:fb90:28c8:bb74:7057:3656:ba0c:50d1] ([IPv6:2607:fb90:28c8:bb74:7057:3656:ba0c:50d1])
-        (authenticated bits=0)
-        by mail.zytor.com (8.16.1/8.15.2) with ESMTPSA id 14MN2Zao449618
-        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-        Sat, 22 May 2021 16:02:35 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 14MN2Zao449618
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-        s=2021042801; t=1621724557;
-        bh=6fEGMjLOkasv1lNTOIDX/dmHWr3RRjnm1iguTFIY4M4=;
-        h=Date:In-Reply-To:References:Subject:To:CC:From:From;
-        b=bMD5bzK1oLErVCuwFD+4qduLTnIORiAh+wvuijgtKItuvIM6T1E0iK9lBakmvmj1O
-         kvdcaDxDPivQdstf+HvZJkwpV4vnwhZ4k0IR8u37aRLDRWchntKX00A5Lb5a4LO8OM
-         9gWOsGtiTA53JiAnh+Eb+HczIhwB57uP/s4lV6rEYAw4Om5ZgREcVirMbiiE1BQcu/
-         rztYwExgzQrWoM1C4iIblgG4X7FV6Jb1f7LiYa+FfKqEiOL20YQzPmbsyac2lSGFcy
-         65XmuSXVBl06HzjrJCebReP3wRG9JqvfRgEuJ45M2W0R3f1kuDmN5/HyQiRA3avT0e
-         cv3s24XcmEiDg==
-Date:   Sat, 22 May 2021 16:02:31 -0700
-User-Agent: K-9 Mail for Android
-In-Reply-To: <60a97d51b9a7_8572320883@natae.notmuch>
-References: <YKWggLGDhTOY+lcy@google.com> <60a5afeeb13b4_1d8f2208a5@natae.notmuch> <CAMMLpeScunGg5WM4N90vG+yN3tOATqhsL2iRLsJ43ksNyTx_wQ@mail.gmail.com> <dc14c50d-c626-19f8-e615-52ca3c9051dc@zytor.com> <xmqqfsyfqhkq.fsf@gitster.g> <60a976221c390_857e920812@natae.notmuch> <3C6468D1-3E14-4600-BC8E-86CCCB84E74C@zytor.com> <60a97d51b9a7_8572320883@natae.notmuch>
-MIME-Version: 1.0
+        id S231589AbhEWC3p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 May 2021 22:29:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36942 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231513AbhEWC3o (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 May 2021 22:29:44 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE823C061574
+        for <git@vger.kernel.org>; Sat, 22 May 2021 19:28:17 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id j17-20020a4ad6d10000b02901fef5280522so5547680oot.0
+        for <git@vger.kernel.org>; Sat, 22 May 2021 19:28:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=oWcShDCwmJi/L2oS2GPYFQZBFruWeN2za4hLC9BzP1g=;
+        b=jKUHW01g59zNWuVz82xXipLvzfdX7El71uPV00TEBDm+1LPsgVXG8awD11K/rH4p8I
+         Vdro0Oa4JT4FCFWvsfsUWHqvuGPHIFP9N/HVkj5yGVUlgQDRHAn8bsP+6A2sXlzpTBYx
+         dkqV+1itH/vTGsxV8KxdpYaReEPMOUeXsWmH2RwtoY0uhGf7WRhI2+ocfg4l4Dq+epfa
+         NeTdWovwByWW7ftLT3HRWKrewsC3aREJ8ipUR5Jsc90s5s+rVJPFvvFOCmUsLzA8CVId
+         bYshlxM3/14zm743bpS9iTe1IG1ogrOaLAMgcTl4HNDQoAEgRvCAauWuZaAKxWWSZh8x
+         vnnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=oWcShDCwmJi/L2oS2GPYFQZBFruWeN2za4hLC9BzP1g=;
+        b=QKYjNPZX7O9UyFDXracQFmpRIFA5lqYFsCrtpOIRa3VhAXEPbdehr7iSVXrKzSzZ/r
+         JPqv2uvEm555oMypjk3Q+5hfGdIQPezMRljINCyYINhZujc8zvNbJ6uBW/DrouLZ1dN3
+         e2PbRt6CTQQPCNRqS88vhx6W4ZlTMxnnzjJL7GYiB9UtcXyX5y3dxrAYRZde4uFyyNJF
+         LBmGnU5cEXSs/oLpIA6K6wiSQQm0sjGf2Z2hcJq6lMUqMPrhHy2jwSHeOUUK8hfHcdPh
+         EBm/SDe+afoBuMce6Qr4UOuLqZo+EQLEqb4O0x8bvR7LbxmwxyEeAGe+NyXOwkr7xsu9
+         pWeg==
+X-Gm-Message-State: AOAM532og4NP2lL++olx+6E0JaO1XJsiP1pqwgBf8oRI4GiBeMNd5kpk
+        unu1pMFvWAbvpLOHbq9ZWvOiueTnjQ1gZQ==
+X-Google-Smtp-Source: ABdhPJxMXaBWcYdK1F+FwPVyn64Osey/rS9TJwbNk0iR6Y508Se4K5h5sutIWN8UvitkntORnFEomQ==
+X-Received: by 2002:a4a:cb15:: with SMTP id r21mr13498300ooq.38.1621736897120;
+        Sat, 22 May 2021 19:28:17 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id l186sm1980639oih.55.2021.05.22.19.28.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 May 2021 19:28:16 -0700 (PDT)
+Date:   Sat, 22 May 2021 21:28:15 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Aidan <aidgal2@gmail.com>, git@vger.kernel.org
+Message-ID: <60a9bdbf37fb7_87b7e208f0@natae.notmuch>
+In-Reply-To: <63cf407c-95bd-fdda-88ec-5eca36d24998@gmail.com>
+References: <63cf407c-95bd-fdda-88ec-5eca36d24998@gmail.com>
+Subject: RE: Formatting options are ignored when tracking functions
+Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: RFC: error codes on exit
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-CC:     Alex Henrie <alexhenrie24@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Josh Steadmon <steadmon@google.com>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   "H. Peter Anvin" <hpa@zytor.com>
-Message-ID: <25358AF3-E6DF-49FE-9F41-2D81EE794227@zytor.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Why avoid the standard symbols?
+Aidan wrote:
+> Does not work tracking a function
+> ---------------------------
+> aidan@AidanLaptop:~/Repos/git$ git log -L:vadvise:advice.c --oneline
+> b3b18d1621 advice: revamp advise API
+> diff --git a/advice.c b/advice.c
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -99,19 +141,23 @@
+> -static void vadvise(const char *advice, va_list params)
+> +static void vadvise(const char *advice, int display_instructions,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *key, va_list params)
+>  =C2=A0{
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct strbuf buf =3D STRBU=
+F_INIT;
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *cp, *np;
+> =
 
-On May 22, 2021 2:53:21 PM PDT, Felipe Contreras <felipe=2Econtreras@gmail=
-=2Ecom> wrote:
->H=2E Peter Anvin wrote:
->> No, please use the standardized numbers when they apply=2E
->
->I wasn't talking about the numbers, but the names=2E
->
->Do you see something wrong with USAGE =3D EX__USAGE?
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 strbuf_vaddf(&buf, advice, =
+params);
+> =
 
---=20
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+> ---------------------------
+> =
+
+> Is this a bug or am I invoking the command incorrectly?
+
+According to the documentation -L implies --patch, so you need to do:
+
+  git log -L:vadvise:advice.c --oneline --no-patch
+
+I would not expect such behavior so to me that's a bug.
+
+-- =
+
+Felipe Contreras=
