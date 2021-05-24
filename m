@@ -2,207 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2427AC04FF3
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 17:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65499C2B9F7
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 17:51:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBE7561400
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 17:47:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48398613D2
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 17:51:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbhEXRsp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 13:48:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232744AbhEXRso (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 13:48:44 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72554C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 10:47:16 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id x7so9787131wrt.12
-        for <git@vger.kernel.org>; Mon, 24 May 2021 10:47:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PYNnIFlpdMYyDOkM+dtw4fikU3cdgXgGStoaLsRD834=;
-        b=JXO7hGq/TnD0QBfSaK1dUOq0PPME4KPjkzmn3ONRJ5zdakjGxL4ubwmADM2tMo9L6P
-         MVvdumOm76JARvW3I5aWNf4sixnmJxTCK8JSTk73TUh+z1oKMb/4lTj8KmpbYz/HjF2d
-         yqx4DcpJhoRFawsXsjbwifaxozMhgvveUI6yM68ijmRgoV94FqjUXZ1xNLFxgxW40jw0
-         p4Gb4XfV4M536GRvTn0NWnFsFce0xOoAqKuUKlRmPqgw54TjWcahr85WAtwZwfI78lef
-         jX+DWTe9I7qOnstWNTtMOCXvuHVsC2facuwg1F9t1UjV/GallUkMK8zfwRpauu0RCFBN
-         e/lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PYNnIFlpdMYyDOkM+dtw4fikU3cdgXgGStoaLsRD834=;
-        b=G2Y68J1Oi4EhjJsHb6Clnllu1MknaFGdWc7NDeuwpdTFBL0nApy8JOllVKscPU+WQL
-         ZGIGgVR1TbiuMNn8oUxIXoAxJWyWiZUAh+5Yic2rg+hk21b+/h4DjYUyC2Tcx+h+NNoi
-         R4svv94+p+vuozid687VGLyN/EUPnLHxHuXLyuuK/3QTHlmEbkSQwFrWPaCBHi/rXgr9
-         bWXg1n1ip2Aq9K+9gdit9gOTUENmmQNDoktty1zGF19apNUDy1dSiAlYXXfBtNHrw3Ql
-         H44Ss+dXXj7gB6i7+O21l7sUfGrR1znt3muWjOqoPHi+y6kbaTgmSPm4JvEhhQQ0NGfi
-         vb7g==
-X-Gm-Message-State: AOAM530JUArVIaSvvMAVncq5TkZdaKGA7MHUbS2aRsnpABgRpiC82fq1
-        aJE+ONl/MzpD2N7cM+mPY2JqksLwNmM=
-X-Google-Smtp-Source: ABdhPJxhIVX0Iq+C0TZbgKKpuy1g6DnHgXXYtJTu9OmkqWWkIg8AOnY+iEnN13wiO/A0HlN39DwGBA==
-X-Received: by 2002:a5d:4151:: with SMTP id c17mr23536200wrq.262.1621878434579;
-        Mon, 24 May 2021 10:47:14 -0700 (PDT)
-Received: from [192.168.5.102] ([87.116.176.212])
-        by smtp.gmail.com with ESMTPSA id c6sm6192917wrt.20.2021.05.24.10.47.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 May 2021 10:47:13 -0700 (PDT)
-Subject: Re: fast forward merge overwriting my code
-To:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
- <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
- <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
- <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <009aa860-7ffa-7105-b2fd-cf5996639a3a@gmail.com>
-Date:   Mon, 24 May 2021 19:47:06 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+        id S233695AbhEXRxY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 13:53:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54084 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233127AbhEXRxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 13:53:23 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B1225B76CD;
+        Mon, 24 May 2021 13:51:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=rwFHyvzPzohUe8yHRwm/qCgLb51hfHcQQR/C+Gc7nj4=; b=ajxK
+        YJHLCrBKfvEsUzGo6dc5IZCAwaCikfbHDINrSDGZ3GjtMHMF3c6B3hfSa+EoVuDV
+        uP5yPDV1vIJIqcKoMiMujeRDqXWVhDOz36LqDXvaPDg2uWn0u7C3nvMk/zfHSVOc
+        49CO/WUs5uM6hYYdyC+IKIXLZcEfgR7pp/lXD6k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A7E81B76CC;
+        Mon, 24 May 2021 13:51:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 20FC2B76CB;
+        Mon, 24 May 2021 13:51:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 3/5] doc: remove unnecessary rm instances
+References: <20210521222941.525901-1-felipe.contreras@gmail.com>
+        <20210521222941.525901-4-felipe.contreras@gmail.com>
+Date:   Tue, 25 May 2021 02:51:53 +0900
+Message-ID: <xmqqcztgj9za.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9C3CF32-BCB8-11EB-9E57-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On 24/05/2021 08:13, Andre Ulrich wrote:
-> 
-> So this is how we proceed:
-> - my prof has a repo on GitHub
-> - I have forked the repo
-> - I have cloned the forked repo
-> - I have created a branch 'update' in my local clone
-> - I edit a notebook on the branch 'update' and commit
-> - I push 'update' to my forked repo on GitHub
-> - I create a merge request
-> - my prof reviews the changes and accepts them (if I have done 
->   acceptable work)
-> 
-> So the last point is where we still want to do some fine tuning. 
-> Right now this looks about: my prof fetches my edits and locally 
-> checks out a branch to compare the changes with git diff. But in this 
-> diff view you can't edit the files. So you have to separately open up 
-> another window to edit the changes (lets say my prof only wants to 
-> keep some of my changes, but not all).
+> Commits 50cff52f1a (When generating manpages, delete outdated targets
+> first., 2007-08-02) and f9286765b2 (Documentation/Makefile: remove
+> cmd-list.made before redirecting to it., 2007-08-06) created these rm
+> instances for a very rare corner-case: building as root by mistake.
+>
+> It's odd to have workarounds here, but nowhere else in the Makefile--
+> which already fails in this stuation, starting from
+> Documentation/technical/.
+>
+> We gain nothing but complexity, so let's remove them.
+>
+> Comments-by: Jeff King <peff@peff.net>
 
-I think that last point highlights the issue you guys are having - 
-using `merge` for doing both (1) actual merge, but also (2) review and 
-edit at the same time, which is wrong (or very unconventional, to say 
-the least).
+This is curious.  I understand what other kinds of trailers like
+Helped-by and Suggested-by people sometimes use mean, but this one
+does not tell anything other than that this person had some comments
+on an earlier rounds, does not tell us what kind of comments they
+were and if something was done to address those comments or the
+comments were totally ignored or what.
 
-In ideal case (meaning no conflicts, no matter if 3-way merge or a 
-fast-forward one), merge should accept all the changes being merged 
-in from the side branch and incorporate them into the main branch. 
+The patch text itself, and the justification given in the second
+paragraph, both make perfect sense to me.
 
-From this basic and the most common scenario alone it is visible that 
-merge should not "keep some changes, but not all" - the very point of 
-a merge is to (try to) keep _all the changes_, period.
-
-Now, as for the "try to" part - in some cases not all changes can be 
-kept as they are, like when both branches changed same files and same 
-lines (or close to), so that's when Git hands over the resolution to 
-the user, to determine what is the desired outcome of a conflicting 
-merge.
-
-Still, even in this case, the final outcome should be considered a 
-sum of all the changes, even though some might have been altered or 
-rearranged in order to better work with each other (as different 
-branches might have done the same thing in a different way).
-
-In any case, it should not be up to the merge (process nor commit) to 
-discard (nor add!) some of the non-conflicting changes you have made on 
-your 'update' branch - it is possible to do (something usually called 
-an "evil merge", and for a reason), yet is not a good practice.
-
-As an example, imagine you have commits 1, 2 and 3 on your 'update' 
-branch, and upon merging your professor decides to accept changes 
-from commit 2 only, completely discarding changes from commits 1 and 3. 
-Your history will end up looking something like this:
-
-(1) ---X-----------M 'master'
-        \         /
-         1---2---3 'update'
-
-... where M is the merge commit, merging branch 'update' into 'master'. 
-As it is, it's reasonable to expect of M to contain all the changes 
-brought in by 1, 2 and 3 - yet it is not the case, which could be 
-rather confusing (on later history review).
-
-What would be a more common/usual scenario is, after trying a local 
-merge M and seeing some changes should not be accepted (like commits 
-1 and 3), have your professor communicate the problem with you so you 
-can fix the issues yourself, inside 'update' branch, and iteratively 
-repeat this process as long as 'update' branch is not "perfect" - at 
-which point it can be accepted _as a whole_, that is.
-
-You professor should not accept to merge your changes as long as they 
-are not all correct, and he specifically should not be using the 
-merge to correct the issues himself.
-
-Depending on your preference, he _could_ be doing the changes himself, 
-too - but again doing so through standalone commits (on your 'update' 
-branch, for example), _not_ through a merge commit.
-
-Based on example (1) above, the finally merged changes history could 
-instead look like this:
-
-(2) ---X-------------------M1 'master'
-        \                 /
-         1---2---3---4---5 'update'
-
-..., where commits 4 and 5 are fixes made on 'update' after your 
-professor's comments on commits 1, 2 and 3, and M1 is the merge which 
-finally accepts all the changes from 'update'.
-
-Alternatively, if you use rebase, you can alter problematic commits 1 
-and 3 directly instead, so the history would look something like this:
-
-(3) ---X-----------M2 'master'
-        \         /
-         1'--2'--3' 'update'
-
-..., where original commits 1 and 3 are changed in order to be 
-acceptable for the merge, becoming commits 1' and 3', while commit 2' 
-would stay the same as original commit 2. Again, merge commit M2 
-accepts all the changes as they now are (all correct).
-
-Also, if commits 1 and 3 are completely wrong and not required in the 
-first place, yet another alternative (using rebase) would be to drop 
-them altogether, ending up with a history like this:
-
-(4) ---X----M3 'master'
-        \  /
-         2" 'update'
-
-..., where commit 2" would be exactly the same as original commit 2, 
-and commits 1 and 3 are dropped from the history completely - and 
-transparently, _not_ using the merge to do so, as in original example (1)
-(and your explained scenario).
-
-I hope these examples somewhat help, the main point remaining that 
-merge should not be used to discard/disapprove certain (especially 
-non-conflicting) changes, but only to finally accept/approve _all_ 
-the changes, possibly modified in the meantime as a result of an 
-iterative review and additional work.
-
-Note that there's nothing wrong in having your professor do his own 
-local merges as part of this review process, but those should be only 
-temporary, to be discarded and not accepted until everything can be 
-merged (and accepted) as-is.
-
-Regards, Buga
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  Documentation/Makefile | 42 +++++++++++++++---------------------------
+>  1 file changed, 15 insertions(+), 27 deletions(-)
+>
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 0f59cc0853..73b88c3aad 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -296,8 +296,7 @@ docdep_prereqs = \
+>  	cmd-list.made $(cmds_txt)
+>  
+>  doc.dep : $(docdep_prereqs) $(DOC_DEP_TXT) build-docdep.perl
+> -	$(QUIET_GEN)$(RM) $@+ $@ && \
+> -	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
+> +	$(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
+>  	mv $@+ $@
+>  
+>  ifneq ($(MAKECMDGOALS),clean)
+> @@ -318,8 +317,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
+>  $(cmds_txt): cmd-list.made
+>  
+>  cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+> -	$(QUIET_GEN)$(RM) $@ && \
+> -	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
+> +	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
+>  	date >$@
+>  
+>  mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+> @@ -327,7 +325,7 @@ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+>  $(mergetools_txt): mergetools-list.made
+>  
+>  mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
+> -	$(QUIET_GEN)$(RM) $@ && \
+> +	$(QUIET_GEN) \
+>  	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && \
+>  		. ../git-mergetool--lib.sh && \
+>  		show_tool_names can_diff "* " || :' >mergetools-diff.txt && \
+> @@ -357,30 +355,25 @@ clean:
+>  	$(RM) GIT-ASCIIDOCFLAGS
+>  
+>  $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
+> -	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> -	$(TXT_TO_HTML) -d manpage -o $@+ $< && \
+> +	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -d manpage -o $@+ $< && \
+>  	mv $@+ $@
+>  
+>  $(OBSOLETE_HTML): %.html : %.txto $(ASCIIDOC_DEPS)
+> -	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> -	$(TXT_TO_HTML) -o $@+ $< && \
+> +	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -o $@+ $< && \
+>  	mv $@+ $@
+>  
+>  manpage-base-url.xsl: manpage-base-url.xsl.in
+>  	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+>  
+>  %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+> -	$(QUIET_XMLTO)$(RM) $@ && \
+> -	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+> +	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+>  
+>  %.xml : %.txt $(ASCIIDOC_DEPS)
+> -	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> -	$(TXT_TO_XML) -d manpage -o $@+ $< && \
+> +	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@+ $< && \
+>  	mv $@+ $@
+>  
+>  user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+> -	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> -	$(TXT_TO_XML) -d book -o $@+ $< && \
+> +	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d book -o $@+ $< && \
+>  	mv $@+ $@
+>  
+>  technical/api-index.txt: technical/api-index-skel.txt \
+> @@ -402,27 +395,24 @@ XSLTOPTS += --stringparam html.stylesheet docbook-xsl.css
+>  XSLTOPTS += --param generate.consistent.ids 1
+>  
+>  user-manual.html: user-manual.xml $(XSLT)
+> -	$(QUIET_XSLTPROC)$(RM) $@+ $@ && \
+> -	xsltproc $(XSLTOPTS) -o $@+ $(XSLT) $< && \
+> +	$(QUIET_XSLTPROC)xsltproc $(XSLTOPTS) -o $@+ $(XSLT) $< && \
+>  	mv $@+ $@
+>  
+>  git.info: user-manual.texi
+>  	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split -o $@ user-manual.texi
+>  
+>  user-manual.texi: user-manual.xml
+> -	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+> -	$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
+> +	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
+>  	$(PERL_PATH) fix-texi.perl <$@++ >$@+ && \
+>  	rm $@++ && \
+>  	mv $@+ $@
+>  
+>  user-manual.pdf: user-manual.xml
+> -	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
+> -	$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
+> +	$(QUIET_DBLATEX)$(DBLATEX) -o $@+ $(DBLATEX_COMMON) $< && \
+>  	mv $@+ $@
+>  
+>  gitman.texi: $(MAN_XML) cat-texi.perl texi.xsl
+> -	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+> +	$(QUIET_DB2TEXI) \
+>  	($(foreach xml,$(sort $(MAN_XML)),xsltproc -o $(xml)+ texi.xsl $(xml) && \
+>  		$(DOCBOOK2X_TEXI) --encoding=UTF-8 --to-stdout $(xml)+ && \
+>  		rm $(xml)+ &&) true) > $@++ && \
+> @@ -434,13 +424,11 @@ gitman.info: gitman.texi
+>  	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate $*.texi
+>  
+>  $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
+> -	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+> -	$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
+> +	$(QUIET_DB2TEXI)$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
+>  	mv $@+ $@
+>  
+>  howto-index.txt: howto-index.sh $(HOWTO_TXT)
+> -	$(QUIET_GEN)$(RM) $@+ $@ && \
+> -	'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@+ && \
+> +	$(QUIET_GEN)'$(SHELL_PATH_SQ)' ./howto-index.sh $(sort $(HOWTO_TXT)) >$@+ && \
+>  	mv $@+ $@
+>  
+>  $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+> @@ -450,7 +438,7 @@ WEBDOC_DEST = /pub/software/scm/git/docs
+>  
+>  howto/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+>  $(patsubst %.txt,%.html,$(HOWTO_TXT)): %.html : %.txt GIT-ASCIIDOCFLAGS
+> -	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> +	$(QUIET_ASCIIDOC) \
+>  	sed -e '1,/^$$/d' $< | \
+>  	$(TXT_TO_HTML) - >$@+ && \
+>  	mv $@+ $@
