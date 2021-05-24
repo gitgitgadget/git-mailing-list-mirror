@@ -2,131 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FE6C2B9F7
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90507C2B9F7
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:14:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60CBE613D2
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:00:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DE086140F
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbhEXXCX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 19:02:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35474 "EHLO
+        id S229554AbhEXXQE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 19:16:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhEXXCW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 19:02:22 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26904C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 16:00:53 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id s22so44024396ejv.12
-        for <git@vger.kernel.org>; Mon, 24 May 2021 16:00:53 -0700 (PDT)
+        with ESMTP id S229540AbhEXXQD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 19:16:03 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938A8C061574
+        for <git@vger.kernel.org>; Mon, 24 May 2021 16:14:32 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id z137-20020a1c7e8f0000b02901774f2a7dc4so734351wmc.0
+        for <git@vger.kernel.org>; Mon, 24 May 2021 16:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=JXkWCWjvDnKCue786e1JMhRnmaKtpuBHOXnAZHBxqt0=;
-        b=GyEwEIo6YD0YFNhHZTgDPjnTSTy7sPvi8Rwy4w+9fAMmj+mz1EXSNJ5+YH9zG/R/8V
-         vfA2ezRh0uwjAgXqzYzdSfETOn22i6/V6c6LFxyaFApA+k30sWOm8KqwUPdz6u8Vjcwa
-         RzqirUSdx0W4HttjHVwhrluWn4LlEQhgv7ytYKzDZclk3ekg+WH9XU5u8wgstJdxDm4L
-         vA3EcmnMrzyUadmnsXzS/vfbYkimy1Tjo2gZKRon1qG9Mqqf6ESNyEbgMU2+XIgIUmTx
-         BThvDcbyyg8Biynv27mr685SH9OxAOAd3wvUpvGcLuFFwZ+8sNJJM5yig4uTFaIgVxFC
-         dspA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Pvr29xZy/wopOBh/uPBx5T9D681PLAvF8bg2klAGx1Q=;
+        b=au0TnZCVROdSxb3qzjQ3OyYlMLDiT7U9fffJH5xwnXVgbMi3cFyu8qVJI3ay10huej
+         uRzNEcgthW/PK+0BoGc4txhFpLqUdrqA9JM1z2+Lh7rUDmuLS0D0eeC+AFooQAXJYJVI
+         2v8TNjv4pUlah0E9j20DpoijxVs241y+8ZetthxFpooUEy49kcugZ2q0e49M4S+tVJRO
+         8hl/vxMzpBq2gbvtBDopaW4LzvFoCajS3dafIZHlELfwLaHHNQshjwD7ijlje9az5xTQ
+         DvNE7iD0WoZ8t6EBvBEH0KijrYMc4HOS8X5JZBU58ggIoB3IC6dkREHpTND6zmqA+W2+
+         dviA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=JXkWCWjvDnKCue786e1JMhRnmaKtpuBHOXnAZHBxqt0=;
-        b=bfvY6wJfWHnhdb1kBNjZKkrc1MuabbAX9ubgPZTI362FEsDxzs/MBr/DalT9UJis3m
-         9HgucD8R41Al0K8JVeP4pntBC7LUj6QkM+lqqXCY78uutIlAb4CgBdXS1frH2NMX07Xa
-         /LOkBaS7vT91Q/+Y/yuRugxJxEEdxqF2hTs/G15zkL5iF4piGPib5+o+mKpURF7Iv3rO
-         ypGCkFQWh7tWFlxUqkZ/PCWk/h5RbT/m0hfwNFuCjD8p9pH0SI9t4da91MVVvtGXlxvY
-         h2arDKennIeENGVg6MPNZvwsvr0pBafeHkaF0flkhHVOioHQm3E7ejzv8Qmg8VVjVWn0
-         S4yw==
-X-Gm-Message-State: AOAM533LRNM5MPgVywrS9pnJr7CSw6dCS6be/cd0qCLV5GWc3KKTgv0Y
-        UZoN75PuI7h2O2wT6eeRog0=
-X-Google-Smtp-Source: ABdhPJwTxNx1SEfy8ehiPP801FJnPLdFQvdr/MnNUiS/A4cUMSuUFNpIE1741G5nfDRH8lP+Yeb5cw==
-X-Received: by 2002:a17:906:4341:: with SMTP id z1mr25885393ejm.422.1621897251624;
-        Mon, 24 May 2021 16:00:51 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id t14sm1340365edv.27.2021.05.24.16.00.51
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Pvr29xZy/wopOBh/uPBx5T9D681PLAvF8bg2klAGx1Q=;
+        b=PzOSpo8mARW9LKBOQt2Sh6YdF8XkPbU3Z6KmHQGaPaLtAscjB/w2HRZKfiOl/EiWlG
+         /gWy8cTcKZPR+F+tbyujvZ9e5icjNa4og4FqqsWQQhYAO8jJ8eyz3cON28nxRvvCdja6
+         Sbu1MNDUVT2ZHa6YMxiCDfw+zu6PFj+gE5nP22AwzRbf841Ip8wCn64Z4RroBPPBqfOP
+         DNG3NhHENr4A2ETct31shC8Ebxrli+CtbvZCKNpn+h2FVSd6fycxZ0YyDRyMG808MPvb
+         /52/vWtamg84gEgqSOhX6/7RCXUT5MUONHrHZcDOqhujC7DS7aZdzCI6sWfmVrkjlURK
+         Finw==
+X-Gm-Message-State: AOAM5331M4w8FAejtEdzOl5e239TUSdt2XXBYeN5ILVTbLVoXzHwCe4A
+        ze3x/9ZnIyhiVTgkluAc/ehrzgb92zxCsA==
+X-Google-Smtp-Source: ABdhPJxoXEB+1l7YFJj3Qh731CgckoEo7xIFSsMUqt6l51SOE2yQHoBhAoo4j8Fo32fYxXUIk0KNhQ==
+X-Received: by 2002:a05:600c:4f48:: with SMTP id m8mr1056521wmq.169.1621898071004;
+        Mon, 24 May 2021 16:14:31 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v12sm14067264wrv.76.2021.05.24.16.14.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 16:00:51 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
+        Mon, 24 May 2021 16:14:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] t1092: use GIT_PROGRESS_DELAY for consistent results
-Date:   Tue, 25 May 2021 00:57:52 +0200
-References: <pull.960.git.1621886108515.gitgitgadget@gmail.com>
- <YKwMU13DOtTIgaeP@google.com>
- <e35b5217-362f-fc4f-7396-08218a9abf63@gmail.com>
- <YKwd2e5VxVmU6zqj@nand.local>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YKwd2e5VxVmU6zqj@nand.local>
-Message-ID: <87fsybohy5.fsf@evledraar.gmail.com>
+        Robert Foss <robert.foss@linaro.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/2] send-email: pre-release fixes for v2.32.0
+Date:   Tue, 25 May 2021 01:14:23 +0200
+Message-Id: <cover-0.2-00000000000-20210524T231047Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc1.388.g81c17cd8439
+In-Reply-To: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>
+References: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The 1/2 here fixes a bug I introduced with an error message going
+missing.
 
-On Mon, May 24 2021, Taylor Blau wrote:
+The 2/2 hopefully replaces
+<bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>[1], but I have not
+tested it on Windows. I think improving the error message is better
+strategy here than working around the current Git.pm abs_path()
+behavior.
 
-> On Mon, May 24, 2021 at 04:38:18PM -0400, Derrick Stolee wrote:
->> On 5/24/21 4:28 PM, Jonathan Nieder wrote:
->> > Hm, I think this test strategy is going to be fundamentally flaky
->> > regardless: Git doesn't intend to guarantee any kind of stability in
->> > the exact stderr output it writes.
->>
->> There are no expectations that stderr is stable across
->> versions of Git. These tests don't add friction to developers
->> making new features or changing the error messages that appear
->> over stderr. It's just that these tests should catch any
->> unintended inconsistency across these modes.
->
-> I agree with Stolee that these tests are valuable for asserting that
-> output is the consistent whether or not you are using the sparse index.
->
-> I find setting GIT_PROGRESS_DELAY to a large number to a be a little
-> ugly, but there isn't an apparent better way to accomplish the same
-> thing. Of course, it would be nice to have an environment variable to
-> specify where progress meters are written to, or a global option to
-> disable progress meters altogether.
->
-> But I don't think this isolated instance should push in the direction of
-> adding support for either of the above, regardless of how easy it might
-> be.
+This has a trivial conflict with my outstanding [2] series which is
+easily solved, we just need to take the side introduced in this topic
+(i.e. abs_path isn't needed anymore).
 
-I don't see why we wouldn't just tweak GIT_PROGRESS_DELAY to support -1
-or something for "inf".
+Also, I said I'd CC Robert Foss in [3] but didn't, finally doing that
+here.
 
-It was added as a one-off (it seems for testing, but made public, so not
-in the GIT_TEST_* namespace) in 44a4693bfce (progress: create
-GIT_PROGRESS_DELAY, 2019-11-25).
+1. http://lore.kernel.org/git/bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org
+2. https://lore.kernel.org/git/cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com
+3. http://lore.kernel.org/git/87im37ojrn.fsf@evledraar.gmail.com
 
-The progress.c API will already nicely deal with this case if something
-in start_progress_delay() is made to return NULL if we pass a flag down
-to it.
+Ævar Arnfjörð Bjarmason (2):
+  send-email: fix missing error message regression
+  send-email: don't needlessly abs_path() the core.hooksPath
 
-> What would perhaps make more sense is to silence the progress meters
-> from the commands themselves. AFAICT the only command called by
-> run_on_sparse() which generates a progress meter is 'git checkout',
-> 'git merge', and 'git submodule', all of which support '--no-progress'.
-> Might it be worth passing that option instead of setting
-> GIT_PROGRESS_DELAY to a large value?
->
-> (For what it's worth, I have no strong opinion either way, so I would be
-> happy to attach my Reviewed-by to even the current version of this patch).
->
-> Thanks,
-> Taylor
+ git-send-email.perl   | 12 +++++++++++-
+ perl/Git.pm           |  3 +--
+ t/t9001-send-email.sh | 25 ++++++++++++++++++++++---
+ 3 files changed, 34 insertions(+), 6 deletions(-)
+
+-- 
+2.32.0.rc1.385.g9db524b96f7
 
