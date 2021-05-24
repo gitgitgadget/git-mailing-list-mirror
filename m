@@ -2,37 +2,36 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UNWANTED_LANGUAGE_BODY,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEC59C47080
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49162C04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D3AF611CE
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:17:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24E1F61153
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232378AbhEXHSj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 03:18:39 -0400
-Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:42172 "EHLO
+        id S232279AbhEXHZG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 03:25:06 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:42844 "EHLO
         mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232128AbhEXHSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 03:18:37 -0400
+        id S232128AbhEXHZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 03:25:05 -0400
 Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:cea:a9d0:f3e1:f159])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by mail.lhuard.fr (Postfix) with ESMTPSA id 9515547424E;
+        by mail.lhuard.fr (Postfix) with ESMTPSA id 63F3347424D;
         Mon, 24 May 2021 09:16:34 +0200 (CEST)
 Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
-        t=1621840594; bh=zLwHQ2Ebg6Is517npsjUEiDGGb8R4WyxEz1rSxqPX/Q=;
+        t=1621840594; bh=z7oA1Uspo3XW5e9wGtD8hGngk9B8g1NsQVwWyQbGFV4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=SNaCiMBuCNR3VciUSi7M+x9H0xcGl1jYAU7pSHlt5L+WpBBhnky+/UNPDL0E6b0pO
-         mAKi1YwRVcrIVt3RZF8/wAYDw/kZwpW8XG64sD9btWnexrUSYi0e+HIzjGLMLwarGF
-         hReBLb6fNBM/vaL1FueSqpFRgjOqeJbB/g712I9M=
+        b=Cu1r2q3IkXbxKoW31mbZaH8D4gxNiMSqxnHE3MvQe25hxKIFaPi1tsZBrS8Vzg09e
+         xv9qRI7ARXlmWcUvtjWwAYA9B4bqS9PZMAofeo3fds8YBDbEJpPqhvVxHif/jpQ7OP
+         GKLiyKwT92+z23NBhjlnBH5VmHQcg+uE3OkXbHaQ=
 From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -48,9 +47,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
-Subject: [PATCH v4 2/4] maintenance: introduce ENABLE/DISABLE for code clarity
-Date:   Mon, 24 May 2021 09:15:36 +0200
-Message-Id: <20210524071538.46862-3-lenaic@lhuard.fr>
+Subject: [PATCH v4 1/4] =?UTF-8?q?cache.h:=20Introduce=20a=20generic=20"xd?= =?UTF-8?q?g=5Fconfig=5Fhome=5Ffor(=E2=80=A6)"=20function?=
+Date:   Mon, 24 May 2021 09:15:35 +0200
+Message-Id: <20210524071538.46862-2-lenaic@lhuard.fr>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210524071538.46862-1-lenaic@lhuard.fr>
 References: <20210520221359.75615-1-lenaic@lhuard.fr>
@@ -62,129 +61,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first parameter of `XXX_update_schedule` and alike functions is a
-boolean specifying if the tasks should be scheduled or unscheduled.
+Current implementation of `xdg_config_home(filename)` returns
+`$XDG_CONFIG_HOME/git/$filename`, with the `git` subdirectory inserted
+between the `XDG_CONFIG_HOME` environment variable and the parameter.
 
-Using an `enum` with `ENABLE` and `DISABLE` values can make the code
-clearer.
+This patch introduces a `xdg_config_home_for(prog, filename)` function
+which is more generic. It only concatenates "$XDG_CONFIG_HOME", or
+"$HOME/.config" if the former isn’t defined, with the parameters,
+without adding `git` in between.
+
+`xdg_config_home(filename)` is now implemented by calling
+`xdg_config_home_for("git", filename)` but this new generic function can
+be used to compute the configuration directory of other programs.
 
 Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
 ---
- builtin/gc.c | 49 +++++++++++++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 18 deletions(-)
+ cache.h |  7 +++++++
+ path.c  | 13 ++++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index ef7226d7bc..0caf8d45c4 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1570,19 +1570,21 @@ static char *launchctl_get_uid(void)
- 	return xstrfmt("gui/%d", getuid());
- }
+diff --git a/cache.h b/cache.h
+index 148d9ab5f1..8a2969414a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1263,6 +1263,13 @@ int is_ntfs_dotgitattributes(const char *name);
+  */
+ int looks_like_command_line_option(const char *str);
  
--static int launchctl_boot_plist(int enable, const char *filename, const char *cmd)
-+enum enable_or_disable {
-+	DISABLE,
-+	ENABLE
-+};
++/**
++ * Return a newly allocated string with the evaluation of
++ * "$XDG_CONFIG_HOME/$prog/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
++ * "$HOME/.config/$prog/$filename". Return NULL upon error.
++ */
++char *xdg_config_home_for(const char *prog, const char *filename);
 +
-+static int launchctl_boot_plist(enum enable_or_disable enable,
-+				const char *filename, const char *cmd)
- {
- 	int result;
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	char *uid = launchctl_get_uid();
- 
- 	strvec_split(&child.args, cmd);
--	if (enable)
--		strvec_push(&child.args, "bootstrap");
--	else
--		strvec_push(&child.args, "bootout");
--	strvec_push(&child.args, uid);
--	strvec_push(&child.args, filename);
-+	strvec_pushl(&child.args, enable == ENABLE ? "bootstrap" : "bootout",
-+		     uid, filename, NULL);
- 
- 	child.no_stderr = 1;
- 	child.no_stdout = 1;
-@@ -1601,7 +1603,7 @@ static int launchctl_remove_plist(enum schedule_priority schedule, const char *c
- 	const char *frequency = get_frequency(schedule);
- 	char *name = launchctl_service_name(frequency);
- 	char *filename = launchctl_service_filename(name);
--	int result = launchctl_boot_plist(0, filename, cmd);
-+	int result = launchctl_boot_plist(DISABLE, filename, cmd);
- 	unlink(filename);
- 	free(filename);
- 	free(name);
-@@ -1684,8 +1686,8 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
- 	fclose(plist);
- 
- 	/* bootout might fail if not already running, so ignore */
--	launchctl_boot_plist(0, filename, cmd);
--	if (launchctl_boot_plist(1, filename, cmd))
-+	launchctl_boot_plist(DISABLE, filename, cmd);
-+	if (launchctl_boot_plist(ENABLE, filename, cmd))
- 		die(_("failed to bootstrap service %s"), filename);
- 
- 	free(filename);
-@@ -1702,12 +1704,17 @@ static int launchctl_add_plists(const char *cmd)
- 		launchctl_schedule_plist(exec_path, SCHEDULE_WEEKLY, cmd);
+ /**
+  * Return a newly allocated string with the evaluation of
+  * "$XDG_CONFIG_HOME/git/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
+diff --git a/path.c b/path.c
+index 7b385e5eb2..3641d4c456 100644
+--- a/path.c
++++ b/path.c
+@@ -1498,21 +1498,28 @@ int looks_like_command_line_option(const char *str)
+ 	return str && str[0] == '-';
  }
  
--static int launchctl_update_schedule(int run_maintenance, int fd, const char *cmd)
-+static int launchctl_update_schedule(enum enable_or_disable run_maintenance,
-+				     int fd, const char *cmd)
+-char *xdg_config_home(const char *filename)
++char *xdg_config_home_for(const char *prog, const char *filename)
  {
--	if (run_maintenance)
-+	switch (run_maintenance) {
-+	case ENABLE:
- 		return launchctl_add_plists(cmd);
--	else
-+	case DISABLE:
- 		return launchctl_remove_plists(cmd);
-+	default:
-+		BUG("invalid enable_or_disable value");
-+	}
+ 	const char *home, *config_home;
+ 
++	assert(prog);
+ 	assert(filename);
+ 	config_home = getenv("XDG_CONFIG_HOME");
+ 	if (config_home && *config_home)
+-		return mkpathdup("%s/git/%s", config_home, filename);
++		return mkpathdup("%s/%s/%s", config_home, prog, filename);
+ 
+ 	home = getenv("HOME");
+ 	if (home)
+-		return mkpathdup("%s/.config/git/%s", home, filename);
++		return mkpathdup("%s/.config/%s/%s", home, prog, filename);
++
+ 	return NULL;
  }
  
- static char *schtasks_task_name(const char *frequency)
-@@ -1864,18 +1871,24 @@ static int schtasks_schedule_tasks(const char *cmd)
- 		schtasks_schedule_task(exec_path, SCHEDULE_WEEKLY, cmd);
- }
- 
--static int schtasks_update_schedule(int run_maintenance, int fd, const char *cmd)
-+static int schtasks_update_schedule(enum enable_or_disable run_maintenance,
-+				    int fd, const char *cmd)
++char *xdg_config_home(const char *filename)
++{
++	return xdg_config_home_for("git", filename);
++}
++
+ char *xdg_cache_home(const char *filename)
  {
--	if (run_maintenance)
-+	switch (run_maintenance) {
-+	case ENABLE:
- 		return schtasks_schedule_tasks(cmd);
--	else
-+	case DISABLE:
- 		return schtasks_remove_tasks(cmd);
-+	default:
-+		BUG("invalid enable_or_disable value");
-+	}
- }
- 
- #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
- #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
- 
--static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
-+static int crontab_update_schedule(enum enable_or_disable run_maintenance,
-+				   int fd, const char *cmd)
- {
- 	int result = 0;
- 	int in_old_region = 0;
-@@ -1925,7 +1938,7 @@ static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
- 			fprintf(cron_in, "%s\n", line.buf);
- 	}
- 
--	if (run_maintenance) {
-+	if (run_maintenance == ENABLE) {
- 		struct strbuf line_format = STRBUF_INIT;
- 		const char *exec_path = git_exec_path();
- 
+ 	const char *home, *cache_home;
 -- 
 2.31.1
 
