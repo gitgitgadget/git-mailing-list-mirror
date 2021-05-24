@@ -8,50 +8,50 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C055C47084
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EC4AC2B9F8
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:14:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E9D361414
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BB616140B
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbhEXXQE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 19:16:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38558 "EHLO
+        id S229623AbhEXXQF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 19:16:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhEXXQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 19:16:03 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52034C061756
-        for <git@vger.kernel.org>; Mon, 24 May 2021 16:14:33 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id u133so15670653wmg.1
+        with ESMTP id S229547AbhEXXQE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 19:16:04 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A209C06138A
+        for <git@vger.kernel.org>; Mon, 24 May 2021 16:14:34 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id b7so15082291wmh.5
         for <git@vger.kernel.org>; Mon, 24 May 2021 16:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8gwIVnahlE/Z6nkMdFpXlLHCfhTjQ+ZrixUofY1K+4A=;
-        b=UFDbkHdp3VCvBrOm9QBshML/gE2+qRKhWSCR40hxepnsZF4IkJTFH3eOZx+Rot8Lpq
-         U0CIQgxa5u2vQI9wm75Y0zQRQy4kGRnn5hdadt/Smiqh3Qu23tDnWnlDcH+ntzCowIG/
-         YFBFa3r+4eMlXE0PV+MH0h5leV5p0mxsvoJe4FdGVmFQ33SztX2Ri+sGX9hizgkKIWMi
-         1UyjvZ2Pd1u8gDt1vO0WuHYSQuhL97Se9F7dF9uN1u/wwEzQfX9m1vbqSExPiza09hxk
-         sRTEcAbAdSaP054mOelx9cL5qqAp1E1nfpJtTvDAsWJvRCFXbGt95vSnkNvxzZTvBOYt
-         cvFw==
+        bh=kVXzwJG4Z6VIDWjTgt8AYwn+gFSIBYCUGr/xkh20JBc=;
+        b=IbPPqgTPoDx0+FZLUo80JgS2LMyc3WXUsaieDfkZehVWCbO/ySZbW8oM6x57EqtVNR
+         vgg6qjHen5d8PO8Dk09ulb9HeJkHhSlVQRGncErHT607zpIuEtYG614qN892U8f3SLLP
+         FMQhlC3T4FLCtnrXsEY4Feuov6cT62MbJaSKH1hDa0sHbqK/EcnRm7vk0PQy6VwjIMPu
+         p+iy1jjurEhiY0VdSX+n6ZXQekkIuykk2YdJBdxsAs/ax9+E9c5Pn0wy3+pHAUp9GI6d
+         X25y3MPfX/9iL1E5heStS9zfm5JQ56RxozURpjYd6OWX7yoGnM8jiMFFCzS5sYc1VK4M
+         qweA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8gwIVnahlE/Z6nkMdFpXlLHCfhTjQ+ZrixUofY1K+4A=;
-        b=fkR/BNsxRpy0tQ3Cb+jM/p0tKcfeLgXNweun9Ep2u3nm3cdJkDQCohSubtbXIEIqJc
-         6/6B6+A85KPsg+gMymf8YaoGpAlVVVEMvL2zLsRCXBvI5KExAC+/TEOGG8W0lTe/+9po
-         ZN0NfLYkExbGUZOdfrMACryICmimem2pLLl+YYDLPQV1SQbPF572/5MP/D4GUBw4TbFb
-         RGvZgHnZ/6VA1RCswOSiIcd9uKYoIyXuptv/BghSnOknkJYvvI2qK+MLAWIqXfCHb7BE
-         6PhWtm4HjWUGzmuxqa6c+4Vp84iDVtqDltuPNhQiKoXu464yPQ2znvk0AJjgNqPI+WQ0
-         gqiQ==
-X-Gm-Message-State: AOAM533z3qjln8oO/ems+3ptU9tA7l6t+jMi5z1li/c10kbo8wScedvJ
-        nhBPMoW6fwl2ERNk77pWSbhG8X4Nq6pvcA==
-X-Google-Smtp-Source: ABdhPJzU+wzqA3qPZ2moCH+8Y5VwX+mQnDfC5BupAvZQCGrA/wRQsrlFLkrD55W5AOQCao5NGlF5Fg==
-X-Received: by 2002:a05:600c:2909:: with SMTP id i9mr21457839wmd.116.1621898071644;
-        Mon, 24 May 2021 16:14:31 -0700 (PDT)
+        bh=kVXzwJG4Z6VIDWjTgt8AYwn+gFSIBYCUGr/xkh20JBc=;
+        b=NwjruOLEovLwlaeBUuSUrOYXHgK1Nom/qXlIZ0bcmspOmVZPqHoZ+Zyyk+jlEw6a34
+         8f/6HtgU/9vm0j/z2zajLFCL6bKf8z4N6exTrFd6L6Bbbz4XSXVkSDlHpZ/NfUtJBT97
+         GUFu35TwP5sDINu9WnpPIR7G0Ligm0D27kmtpRXJygtXI81JqEgEAfPQqoqDolvLchwI
+         6eOV3+iqFZjmsXjZOc1WNlM1w+zpltjPdP9S9n6EX2jLMd9sHhwCl/bixv1aeeR7fF/G
+         c6XXbZuMFucvhW+zj8+dqEdYYoSbe5c52OOhut7O3glmssBs1XBaAhWRD6x1RB1IZdcL
+         05XQ==
+X-Gm-Message-State: AOAM532BlmEuOwKbQHmm9IN5Qw1bG9CzVGKXMoLgUTI9jdd4ebeRJ3Rb
+        wxYagNnfHdooVYsYmnKi1xHp9i9svIrhCQ==
+X-Google-Smtp-Source: ABdhPJxnfEFu573Dxky3FE7EWJmgC6pAtvWXVCKlA4edfLCFFbukaZvFpHRMu9a7PUJAH3Bnpyc+VQ==
+X-Received: by 2002:a7b:ce0d:: with SMTP id m13mr1048054wmc.90.1621898072383;
+        Mon, 24 May 2021 16:14:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id v12sm14067264wrv.76.2021.05.24.16.14.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Robert Foss <robert.foss@linaro.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] send-email: fix missing error message regression
-Date:   Tue, 25 May 2021 01:14:24 +0200
-Message-Id: <patch-1.2-df3a2b8562d-20210524T231047Z-avarab@gmail.com>
+Subject: [PATCH 2/2] send-email: don't needlessly abs_path() the core.hooksPath
+Date:   Tue, 25 May 2021 01:14:25 +0200
+Message-Id: <patch-2.2-d097e7b0b81-20210524T231047Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.388.g81c17cd8439
 In-Reply-To: <cover-0.2-00000000000-20210524T231047Z-avarab@gmail.com>
 References: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org> <cover-0.2-00000000000-20210524T231047Z-avarab@gmail.com>
@@ -78,85 +78,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression with the "the editor exited uncleanly, aborting
-everything" error message going missing after my
-d21616c0394 (git-send-email: refactor duplicate $? checks into a
-function, 2021-04-06).
+In c8243933c74 (git-send-email: Respect core.hooksPath setting,
+2021-03-23) we started supporting core.hooksPath in "send-email". It's
+been reported that on Windows[1] doing this by calling abs_path()
+results in different canonicalizations of the absolute path.
 
-I introduced a $msg variable, but did not actually use it. This caused
-us to miss the optional error message supplied by the "do_edit"
-codepath. Fix that, and add tests to check that this works.
+This wasn't an issue in c8243933c74 itself, but was revealed by my
+ea7811b37e0 (git-send-email: improve --validate error output,
+2021-04-06) when we started emitting the path to the hook, which was
+previously only internal to git-send-email.perl.
+
+I think this change should let us have our cake and eat it too. We now
+emit a relative path for the common case where the hook is in the
+.git/hooks directory, but in the case it's an absolute path (there's
+another test for that, not seen here) we'll prefix it with $(pwd).
+
+I hope that unlike the current implementation that $(pwd) v.s. $PWD
+difference won't matter on Windows, since now the absolute path is the
+one we get from rev-parse, not the one that's been passed through
+Perl's Cwd::abs_path().
+
+1. http://lore.kernel.org/git/bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl   | 12 +++++++++++-
- t/t9001-send-email.sh | 23 +++++++++++++++++++++--
- 2 files changed, 32 insertions(+), 3 deletions(-)
+ perl/Git.pm           | 3 +--
+ t/t9001-send-email.sh | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 175da07d946..170f42fe210 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -219,8 +219,18 @@ sub system_or_msg {
- 	my $exit_code = $? >> 8;
- 	return unless $signalled or $exit_code;
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 73ebbf80cc6..df6280ebab5 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -629,8 +629,7 @@ sub hooks_path {
+ 	my ($self) = @_;
  
-+	my @sprintf_args = ($args->[0], $exit_code);
-+	if (defined $msg) {
-+		# Quiet the 'redundant' warning category, except we
-+		# need to support down to Perl 5.8, so we can't do a
-+		# "no warnings 'redundant'", since that category was
-+		# introduced in perl 5.22, and asking for it will die
-+		# on older perls.
-+		no warnings;
-+		return sprintf($msg, @sprintf_args);
-+	}
- 	return sprintf(__("fatal: command '%s' died with exit code %d"),
--		       $args->[0], $exit_code);
-+		       @sprintf_args);
+ 	my $dir = $self->command_oneline('rev-parse', '--git-path', 'hooks');
+-	my $abs = abs_path($dir);
+-	return $abs;
++	return $dir;
  }
  
- sub system_or_die {
+ =item wc_path ()
 diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 65b30353719..2acf389837c 100755
+index 2acf389837c..3b7540050ca 100755
 --- a/t/t9001-send-email.sh
 +++ b/t/t9001-send-email.sh
-@@ -644,14 +644,33 @@ test_expect_success $PREREQ 'In-Reply-To with --chain-reply-to' '
- 	test_cmp expect actual
- '
- 
-+test_set_editor "$(pwd)/fake-editor"
-+
-+test_expect_success $PREREQ 'setup erroring fake editor' '
-+	write_script fake-editor <<-\EOF
-+	echo >&2 "I am about to error"
-+	exit 1
-+	EOF
-+'
-+
-+test_expect_success $PREREQ 'fake editor dies with error' '
-+	clean_fake_sendmail &&
-+	test_must_fail git send-email \
-+		--compose --subject foo \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches 2>err &&
-+	grep "I am about to error" err &&
-+	grep "the editor exited uncleanly, aborting everything" err
-+'
-+
- test_expect_success $PREREQ 'setup fake editor' '
- 	write_script fake-editor <<-\EOF
- 	echo fake edit >>"$1"
+@@ -539,7 +539,7 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
+ 	test_path_is_file my-hooks.ran &&
+ 	cat >expect <<-EOF &&
+ 	fatal: longline.patch: rejected by sendemail-validate hook
+-	fatal: command '"'"'$(pwd)/my-hooks/sendemail-validate'"'"' died with exit code 1
++	fatal: command '"'"'my-hooks/sendemail-validate'"'"' died with exit code 1
+ 	warning: no patches were sent
  	EOF
- '
- 
--test_set_editor "$(pwd)/fake-editor"
--
- test_expect_success $PREREQ '--compose works' '
- 	clean_fake_sendmail &&
- 	git send-email \
+ 	test_cmp expect actual
 -- 
 2.32.0.rc1.385.g9db524b96f7
 
