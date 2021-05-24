@@ -2,113 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C16C2B9F7
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 20:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36838C04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 20:47:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9473F613F4
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 20:38:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C0AC61405
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 20:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233270AbhEXUju (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 16:39:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59956 "EHLO
+        id S233535AbhEXUtE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 16:49:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232676AbhEXUjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 16:39:49 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32960C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 13:38:21 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so26531244oto.0
-        for <git@vger.kernel.org>; Mon, 24 May 2021 13:38:21 -0700 (PDT)
+        with ESMTP id S233183AbhEXUtE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 16:49:04 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0C69C061574
+        for <git@vger.kernel.org>; Mon, 24 May 2021 13:47:34 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id i7so25971187ejc.5
+        for <git@vger.kernel.org>; Mon, 24 May 2021 13:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7i3P2DKk/VVzgAGgwKWmfFwL9Y5CkUcCeDzX3n1AQSo=;
-        b=Rpsz9qsJTLNzFvWyZUrElN2fyiBU2f10qTqB7zI0kG0vlE5wY/NDo/ryeO9tg/IGrJ
-         4cC87OP3+KL0o3Uem9Lk8tCw99OB1UVmGnIVWGbxhDqCIy+9j0auyA2RO1Eqvk8O1fOH
-         c10MSfekUFsY41hTtXvS3JcSqjE9GP8pj0C1fXQvzi0tFZJa6yMVYM8wp14j9zYn31+w
-         z8oCfagZtEh6ObODeFoiS2AB8WZBMGMDF0tDrIikANbxq0LV8Rxgvk6+qFdIxJtGzWy5
-         kMe9shNTr1ArRfcYvs6oWNuSKalnEOWiatXRTdA9ZPmOWHG788JloAWLhT82I6C/mhiQ
-         kBnA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=N0Io3RXLEbZz2qxVG/LtV++U+0pUO9C8jPH1AankWQU=;
+        b=nDNSg24tHSz91tdieb6KdCyHBa6B6CwMt/PGFqRsHL+fKZWTDgupfGT2oVl5bDe6N+
+         k3UjVdbnr9FtyR4lOKbbouEg9Xh0vpA9lHs5LMf6PjU9Ze+h9a59Eih3j+c51atrgZ9P
+         Ur8JKoMVk39tBYpMKspoyXAfJ7+m6LSZCphHiUYtgzuinC0I5WE9eogNhIce6susXiHE
+         GtHiRhK+sMTQqEC0CsG8iCZrZHshQN/X1nwsrujcFYYKQ4+dJx2+mqOSLXVgzS5AcZpR
+         NvbCxV94WBeGrI1FCki+LuCzBsOk12XC7J0QGkdoYig/B+I3MBm6xWC/81zUdvRVw+b0
+         Cttg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7i3P2DKk/VVzgAGgwKWmfFwL9Y5CkUcCeDzX3n1AQSo=;
-        b=ZNEMziVXCsStL6631VGetLB2nwoeDiig7YWVz2S2ZiKFmRBxrSDYQfQr9Y3bm+LXgJ
-         PJg5WK56oWbRiTOhcbFedY2dFTpx4LcCnLWrsowcNFEPJnXMM5mWQRy/CRsxl01oppOK
-         6Uem78YWrX3wfdydfYOSUWcMQGVpJXY1bm8ucDEcV3LX/tM7Gd/5jg8gzYW9jrQs/sk6
-         BSFgQ0e9Mhx2Ehi/DqGZ20rLOmWuuZ5LFMKwOusK8K+8j+R4NiJQG+bz6gbhKxzhFTHQ
-         2KA37zpTCJWbbb7M71jFJ8st8vxcFJa5zJne4kiB+hKv6pzETv/xyWsxRun5RRqo2lVK
-         GBHw==
-X-Gm-Message-State: AOAM530tAzylCByiSHRmJgCb6RbB0uAdQfvvcVRWopYM49doiHyXesPz
-        UUDNYmfl1B+UPz2qrBbPWYk=
-X-Google-Smtp-Source: ABdhPJyDe/kpnEuUd6ZhXkYgrJLAS0PyRm0y6W9MbVxJM6ypDI380BcGxkjtDJzB9wiUEcWzm0DJ9Q==
-X-Received: by 2002:a05:6830:200b:: with SMTP id e11mr20552335otp.349.1621888700378;
-        Mon, 24 May 2021 13:38:20 -0700 (PDT)
-Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:5dc8:cb50:677d:c06d])
-        by smtp.gmail.com with ESMTPSA id q1sm365850oos.32.2021.05.24.13.38.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 May 2021 13:38:19 -0700 (PDT)
-Subject: Re: [PATCH] t1092: use GIT_PROGRESS_DELAY for consistent results
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.960.git.1621886108515.gitgitgadget@gmail.com>
- <YKwMU13DOtTIgaeP@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e35b5217-362f-fc4f-7396-08218a9abf63@gmail.com>
-Date:   Mon, 24 May 2021 16:38:18 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=N0Io3RXLEbZz2qxVG/LtV++U+0pUO9C8jPH1AankWQU=;
+        b=gZWsgTHy/5Sa+5T1/saH+3wI9zJpNu+RrZFmA0s1+DbtkIa9NTTq+ywfyS+b4+2c+I
+         1wmwr+FL7rySqX0sHJ2WO0h4EsZUDJO70yr6iO1V75F5vQW01tAxK3Kyf119VEru6i+A
+         LNkIp09osNVoJaxHnNREpIwqvVZTLRdiIC9cazW3rZzQue+XoxeKkPY2qZs8SRvMiu7y
+         KxgvEbVMCAf8slwfcDawHcQNlG25/zvBbo2TT63d5sPrJxLejJSH+fuamFelhvnpQuc6
+         894lrOJA1eTmYC301u5YXdfaEa1WvYU8s4w0NwFYIw4Y/WZGyZJk+qaoMcvoFQeKOxeS
+         Uxdg==
+X-Gm-Message-State: AOAM531JS1Q+iLWg7mFLooiRv+pdMjyDOnPDg+QXRFZaR4ivL0WeqR/M
+        zAxj1cc9TTgvLvJ5PWtp6V69q+zJyxVQZcXlug8=
+X-Google-Smtp-Source: ABdhPJxVn2XjdSFj7BsHTFCEevzHzhTJfZFRBc/lOoYq1RL3I10ceUhFDDn1c/7x5HEZS374IkHAtTOqBPNVOI5JceA=
+X-Received: by 2002:a17:906:1c04:: with SMTP id k4mr24538420ejg.197.1621889253304;
+ Mon, 24 May 2021 13:47:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YKwMU13DOtTIgaeP@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAOLTT8Tu1Xvc6sJ79n6f9B6TiuKp3akTQcQcuzEe7sG-kVOXAA@mail.gmail.com>
+In-Reply-To: <CAOLTT8Tu1Xvc6sJ79n6f9B6TiuKp3akTQcQcuzEe7sG-kVOXAA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 24 May 2021 22:47:22 +0200
+Message-ID: <CAP8UFD0sG9La8zpns+9Vzz1FA3XG+OF0+gRTDLU1s16aVY1-Yg@mail.gmail.com>
+Subject: Re: [GSoC] Git Blog 1
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/24/21 4:28 PM, Jonathan Nieder wrote:
-> Hi,
-> 
-> Derrick Stolee wrote:
-> 
->> The t1092-sparse-checkout-compatibility.sh tests compare the stdout and
->> stderr for several Git commands across both full checkouts, sparse
->> checkouts with a full index, and sparse checkouts with a sparse index.
->> Since these are direct comparisons, sometimes a progress indicator can
->> flush at unpredictable points, especially on slower machines. This
->> causes the tests to be flaky.
-> 
-> Hm, I think this test strategy is going to be fundamentally flaky
-> regardless: Git doesn't intend to guarantee any kind of stability in
-> the exact stderr output it writes.
-> 
-> Could the tests be made to check more semantically meaningful
-> information such as "git ls-files -s" output instead?
+On Sun, May 23, 2021 at 12:53 PM ZheNing Hu <adlternative@gmail.com> wrote:
+>
+> My first week blog finished:
+> The web version is here:
+> https://adlternative.github.io/GSOC-Git-Blog-1/
 
-The test is comparing the same exact Git command just with
-different configurations. Any change to what Git writes to
-stderr should be consistent across these, unless there is
-an explicit reason why it would behave differently across
-these options (for example, saying "You are in a sparse
-checkout" in 'git status').
+Great!
 
-There are no expectations that stderr is stable across
-versions of Git. These tests don't add friction to developers
-making new features or changing the error messages that appear
-over stderr. It's just that these tests should catch any
-unintended inconsistency across these modes.
+See some comments below, but you don't need to update your blog post
+for each comment. Some are just remarks that might help you.
+
+> -----
+>
+> ## Week1: Git Adventure Begin
+>
+> Use Git to submit Git patches to the Git community.
+> Does it sound magical? I fell very lucky to be selected
+
+s/fell/feel/
+
+> by the Git community this year and start my Git Adventure
+> in GSoC.
+>
+> I am no stranger to Git usage, and before the start of GSoC,
+> I have learned some Git source code content, but I only saw
+> the tip of the iceberg of Git source code, there are still many
+> things that I need to explore.
+>
+> ### What happened this week
+> - In [[GSoC] Hello
+> Git](https://lore.kernel.org/git/CAOLTT8SHE-ok3D+oLNSWFi7KPU=3D=3DVQnTMDm=
+C4YxUyNBJKmBD8A@mail.gmail.com/),
+> Christian and JiangXin interacted with me.
+> - I checked Olga's patch at Christian's prompt and learned a way
+> to make `cat-file --batch` use `ref-filter` logic: Use `format_ref_array_=
+item()`
+> in `batch_object_write()`, this is indeed a good entry point. But
+> before implementing this function, we must make `ref-filter`
+> support the function of printing the original data of the object
+> (as `cat-file --batch` does). I decided to reuse the atom
+
+In your blog post it looks like a space is missing after "object" as
+we see "object(as".
+
+> `%(content:raw)` in ref-filter to implement this function.
+
+The above could be understood as saying that `%(content:raw)` already
+exists, which is not really true. Maybe you could say something like
+"I decided to add the ":raw" option to the existing `%(content)` atom
+in ref-filter.c to implement this function."
+
+> ### The difficulties I met
+> In [[PATCH] [GSOC] ref-filter: add contents:raw
+> atom](https://lore.kernel.org/git/pull.958.git.1621500593126.gitgitgadget=
+@gmail.com/),
+> I submitted a patch, which support atom `%(content:raw)`
+
+s/support/supports/
+
+or
+
+s/support/adds support for/
+
+> for `ref-filter`.
+>
+> Unfortunately, this patch has a big problem:
+> I ignored the breakage on the test. This led me to
+
+Maybe: s/the breakage on the test/a test breakage/
+
+> discover a bigger problem:
+>
+> If our references points to a blob or a tree, and  these objects may
+> be binary files,
+
+The raw content of a tree indeed contains the binary contents of the
+hashes it references, while other objects like commit and tags contain
+hashes in the hexadecimal format.
+
+> this means that we cannot use functions related
+> to `strcmp()`,`strlen()` or `strbuf_addstr()`. The possible '\0' will
+> cause the output to be truncated. We have to think of a way to make
+> `ref-filter` can accept the output of these binary content.
+
+The strbuf API has functions to deal with binary content.
+
+> So I searched for all the codes in `ref-filter.c` that buffer might be
+> truncated by '\0' and use the appropriate method to replace them.
+>
+> Just like replacing `strcmp()` with `memcmp()`, We can use `strbuf_add()`
+> instead of `strbuf_addstr()`,
+> At the same time I also wrote the equivalent `*._quote_buf_with_size()`
+> to replace `*._quote_buf()`.
+
+Nice!
+
+> I just submit it to the mailing list right now:
+> [[GSOC][RFC] ref-filter: add contents:raw atom]
+> (https://lore.kernel.org/git/pull.959.git.1621763612.gitgitgadget@gmail.c=
+om/)
+
+By the way a better title for your patch might be "[GSOC][RFC]
+ref-filter: add ':raw' option to %(contents) atom"
+
+> I don=E2=80=99t know if this is the right approach at the moment, let
+> us slowly wait for the suggestions of mentors and reviewers... ;-)
 
 Thanks,
--Stolee 
+Christian.
