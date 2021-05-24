@@ -6,69 +6,83 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA4ECC2B9F7
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 15:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65213C4708B
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 15:53:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 990EA613EA
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 15:23:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CA63613E4
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 15:53:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234266AbhEXPZY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 11:25:24 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57469 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233676AbhEXPX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 11:23:27 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C89813005D;
-        Mon, 24 May 2021 11:21:58 -0400 (EDT)
+        id S234181AbhEXPzX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 11:55:23 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54036 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234691AbhEXPxf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 11:53:35 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FCC013C4FB;
+        Mon, 24 May 2021 11:51:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=9Lxx2gW0TXkewK0NkqzTLdFE3CngRlmnV0ppnB5GC78=; b=bOqf
-        t6U5qC/rVbf6SbazzJiFRSM0R14UjxLPFRmHeB2RzdLu2ljharApwu2nKI4C6n6Y
-        ZZcdwf9hRjHGXCoqAb/zZL57856dAcwpfMUPXJcyoM2r9CPcBTwzZ1216ucmEx4I
-        gmqV/+NbsIgBCVfYKR/193dBxghiZbYjU8W2ZAI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2252113005B;
-        Mon, 24 May 2021 11:21:58 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=hFG9wjDEfabrvYek/c5cxuT3F
+        FiiF0EXRPQJiMuR9ak=; b=BCSeI9afwhCH5cho56dkzZJQ4nhkz/CpbSEzPuph6
+        oCpXtQySlQ38nxpS+/RgSnc30czW732bWRFoetvLBGxC9l+OxB5dZZH2tlu3aenJ
+        FKl24hutvBcXef1wGbJaC65l2j0tOCn71V8vl3o6CWS80UyDa82j8E3dVstvVQdF
+        mE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 386DE13C4FA;
+        Mon, 24 May 2021 11:51:58 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6795613005A;
-        Mon, 24 May 2021 11:21:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6008F13C4F6;
+        Mon, 24 May 2021 11:51:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 0/3] [GSOC][RFC] ref-filter: add contents:raw atom
-References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
-        <xmqq1r9xndjf.fsf@gitster.g> <60ab1246d2d14_1691c2083b@natae.notmuch>
-        <72ce81a2-68eb-a750-8ca1-425af3cac370@gmail.com>
-Date:   Tue, 25 May 2021 00:21:53 +0900
-Message-ID: <xmqqo8d0jgxa.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
+        <congdanhqx@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v3 4/4] maintenance: optionally use systemd timers on Linux
+References: <20210509213217.449489-1-lenaic@lhuard.fr>
+        <20210520221359.75615-1-lenaic@lhuard.fr>
+        <20210520221359.75615-5-lenaic@lhuard.fr>
+        <715d8115-641b-5c06-d514-36911eb169ef@gmail.com>
+        <44d937a0-e876-e185-f409-a4fd61eae580@gmail.com>
+        <nycvar.QRO.7.76.6.2105220856320.57@tvgsbejvaqbjf.bet>
+        <60aaa09aebce4_454920811@natae.notmuch>
+        <YKrk4dEjEm6+48ji@camp.crustytoothpaste.net>
+        <87wnrooa17.fsf@evledraar.gmail.com>
+Date:   Tue, 25 May 2021 00:51:53 +0900
+Message-ID: <xmqqim38jfja.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C61CEB2A-BCA3-11EB-921E-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F6FAF2EC-BCA7-11EB-9E10-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> I think we should go with "raw", because the payloads we discussed here
-> are unmodified. It is akin to "raw data" that is processed further to
-> produce porcelain output, such as templating engine that process raw
-> HTML into HTML pages that would be served to end user.
+> Personally I don't care whether someone submits a patch where their
+> commit message discusses an example of "he", "she", "they", "it" or
+> whatever. It's just meant as an example, and not some statement about
+> what the gender (or lack thereof) of such a user *should* be.
+>
+> It's immediately obvious what the author meant in this case, and that
+> the particular wording is arbitrary. For the purposes of discussing the
+> contribution it matters whether it's unclear or ambiguous, which it's
+> not.
 
-Oh, I can certainly live with --format='%(raw)'; I just view that
-%(contents:raw) is problematic, especially if we meant to apply it
-to trees and blobs, because they are not what %(contents) is about.
-
-Thanks.
+Nicely put.  Thanks.
