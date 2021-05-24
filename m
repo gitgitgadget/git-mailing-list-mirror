@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87451C47083
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C62C47080
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6509E610CB
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A38AC610C7
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232279AbhEXHyt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 03:54:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55508 "EHLO
+        id S232447AbhEXHyw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 03:54:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232409AbhEXHyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 03:54:43 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2443FC06138C
-        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:13 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id r12so27487977wrp.1
-        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:13 -0700 (PDT)
+        with ESMTP id S232387AbhEXHyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 03:54:41 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58F92C06138A
+        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:12 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id d11so27466802wrw.8
+        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WYjFULJOGIc0JTvqBMn8jvHhOJ9l2dnpvR9TfKTpmeU=;
-        b=ppdTDtgT17YlgcVWql/i/dfGhSuLUh9JS3PFGq48w8FHeqf92tYE9pzn6yIY236L6L
-         zTch+AA/TS/L0aWobTRw9UmgiW1wt7INNPbXMbpuR5NNL6wg55IPvwjOiHLrdX/dqnE/
-         hpvNN9IN+xqABB6qnYGVvFmYs1xrmNzUkygsma+5X782KfM1exfsyf4DntyPpveiLdNI
-         jJlHJ77Fuy+f8LIn7DZEiSz1zoGAGdTZS9PT8ah9MXvUmixBipbGNx2VLAiWrQmbjQxp
-         AGt19ok/30qt3jpegRjyilb67WsguiXJ3X1JLDGAnlgSJG//910l5Mlp5u475tEOXjYp
-         ItgQ==
+        bh=QMS0qe/boVAfFtq8AkN2SP76v6HsO9IppOQOvIxbmvY=;
+        b=ZxsJws4r28f08+LI7Jju+ZFg0GeJ4PNVFFe//suiioxzisEsJBD7H50SY/idu6zjcZ
+         U63Hle7ZaW1HwjLdx5qYl0JFeZ99S02V0h0ApPZFU6ZOQykcDaJfraPL2x34USScYGYr
+         h3Og2rzqf92aX3QCvMDcaCic8vhfKpkEr/A4UXGfMaUNv6aWDFZfFybvhQFQy8uomE2D
+         v7oR9d7Z46E9g9VJHZ9JN3D1IrRxcHJfx8wa0LU8DKn+G8yqv77CkbO0bG3eulhDdFG3
+         aMbNsn2XtpUX6VO4owP9o/XDnDiWYSpseZjVFNuFFiyCg8h3SAeLV3Q8IeFqAerxXiwL
+         mnGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WYjFULJOGIc0JTvqBMn8jvHhOJ9l2dnpvR9TfKTpmeU=;
-        b=BBmr0BbdCr6Jb6d8HzFb6orii8m6KwCRG2siyZ1nqu8jo9awg7ER2GefyRwMILU5h/
-         cDfKFq0i/ebIE9IKNpDAhfcttxiDKoD4jE/cTfzoQbM8jDz3yIkdnFdCPkzvKiq3G67s
-         RvuohQ9LWlYSE1aLLfPB0s1UKTveLk709dsAGM5GvpZl9gAiebO/Li2DmGkLtt9CXZBu
-         9iOcAI+sU1PR9h4tZkHGS/GGy72OVGI18Zshvcs5r2dq+ihYSzpXPcCIJfC9xRADhtrs
-         3ISCKbY4vnwBP9RMUjLnu1u+DGduZv1vunP/jOOKibCrcNxMiyKy9Orq5u8X56ciXD2a
-         YDlg==
-X-Gm-Message-State: AOAM5318xCREJWxbPY2qUqJXgRm3SOjRh+ONLsmE1KXmTN1gTu853QKi
-        L11aQjxnSLripolFNyY5NbNBrLO5/BCenHvS
-X-Google-Smtp-Source: ABdhPJyatld6KzcBfOg7Zd6NZ0n+4u5R7/uPf+95elVP4v+xcFHPySgOT2AJ98X0bxjhfuqAlJav2w==
-X-Received: by 2002:a05:6000:1865:: with SMTP id d5mr16875699wri.126.1621842791575;
-        Mon, 24 May 2021 00:53:11 -0700 (PDT)
+        bh=QMS0qe/boVAfFtq8AkN2SP76v6HsO9IppOQOvIxbmvY=;
+        b=smtvCtsI7AiVHcoFkY00qc09ci4AjnAKMQUWYZYN2FoMeKGnQPm5ycX4l4YnUOZ6XK
+         f4abbvu4JNPS8lTsa3d+qklErvFV/WMtYrfoXvlQ58xdEeajY7FVQtER6vRiTF85/3To
+         K9dO/MTlnvwySrEyWT9u1UCfTdrCtGRXLnHGvwYA7JbEeABAlExc/5wA4+IwuhD1ROf0
+         QenB+rSIn6uPf59y/ezB2gWuckV/czUEh1zr75JMciutvIBhFlxPYZx3D1naJ5sNOX7g
+         yWtTSCkVOstrn0Y/AIE6knTHSJnfkeFljrALYjoxsATu6fg0bF2AfJ5PCfGX5zA/paHc
+         4+AA==
+X-Gm-Message-State: AOAM531FBJNz+Otj8d9I1VR4irG4qc//IxbaIlKi1Igj5+IfuFhOOUwW
+        TAz9dTLq8FIDxSjJDpCyxyz5vXmqx+Pp9Stw
+X-Google-Smtp-Source: ABdhPJwbmiP+hmrcLywm33THB0IngtG5OhuxbY27YDJCq1PQLmuCJ88ZJCwp/gcrGLQIQ1dhYWwm8A==
+X-Received: by 2002:adf:a35a:: with SMTP id d26mr20791353wrb.147.1621842790694;
+        Mon, 24 May 2021 00:53:10 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u126sm8540459wmb.9.2021.05.24.00.53.10
+        by smtp.gmail.com with ESMTPSA id u126sm8540459wmb.9.2021.05.24.00.53.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 24 May 2021 00:53:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 07/13] send-email: lazily shell out to "git var"
-Date:   Mon, 24 May 2021 09:52:56 +0200
-Message-Id: <patch-07.13-491eefde6a2-20210524T074932Z-avarab@gmail.com>
+Subject: [PATCH v4 06/13] send-email: lazily load config for a big speedup
+Date:   Mon, 24 May 2021 09:52:55 +0200
+Message-Id: <patch-06.13-8afe8661761-20210524T074932Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.385.g46e826f1e55
 In-Reply-To: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
 References: <cover-00.13-0000000000-20210523T085231Z-avarab@gmail.com> <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
@@ -81,76 +81,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Optimize git-send-email by only shelling out to "git var" if we need
-to. This is easily done by re-inventing our own small version of
-perl's Memoize module.
+Reduce the time it takes git-send-email to get to even the most
+trivial of tasks (such as serving up its "-h" output) by first listing
+config keys that exist, and only then only call e.g. "git config
+--bool" on them if they do.
 
-I suppose I could just use Memoize itself, but in a subsequent patch
-I'll be micro-optimizing send-email's use of dependencies. Using
-Memoize is a measly extra 5-10 milliseconds, but as we'll see that'll
-end up mattering for us in the end.
-
-This brings the runtime of a plain "send-email" from around ~160-170ms
-to ~140m-150ms. The runtime of the tests is around the same, or around
+Over a lot of runs this speeds the time to "-h" up for me from ~250ms
+to ~150ms, and the runtime of t9001-send-email.sh goes from ~25s to
 ~20s.
+
+This introduces a race condition where we'll do the "wrong" thing if a
+config key were to be inserted between us discovering the list and
+calling read_config(), i.e. we won't know about the racily added
+key. In theory this is a change in behavior, in practice it doesn't
+matter.
+
+The config_regexp() function being changed here was added in
+dd84e528a34 (git-send-email: die if sendmail.* config is set,
+2020-07-23) for use by git-send-email. So we can change its odd return
+value in the case where no values are found by "git config". The
+difference in the *.pm code would matter if it was invoked in scalar
+context, but now it no longer is.
+
+Arguably this caching belongs in Git.pm itself, but in lieu of
+modifying it for all its callers let's only do this for "git
+send-email". The other big potential win would be "git svn", but
+unlike "git send-email" it doesn't check tens of config variables one
+at a time at startup (in my brief testing it doesn't check any).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ git-send-email.perl | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index d294681cf39..56bd5b0e50c 100755
+index 95a69d4c51f..d294681cf39 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -578,8 +578,18 @@ sub config_regexp {
+@@ -337,11 +337,13 @@ sub signal_handler {
+ 
+ # Read our sendemail.* config
+ sub read_config {
+-	my ($configured, $prefix) = @_;
++	my ($known_keys, $configured, $prefix) = @_;
+ 
+ 	foreach my $setting (keys %config_bool_settings) {
+ 		my $target = $config_bool_settings{$setting};
+-		my $v = Git::config_bool(@repo, "$prefix.$setting");
++		my $key = "$prefix.$setting";
++		next unless exists $known_keys->{$key};
++		my $v = Git::config_bool(@repo, $key);
+ 		next unless defined $v;
+ 		next if $configured->{$setting}++;
+ 		$$target = $v;
+@@ -349,8 +351,10 @@ sub read_config {
+ 
+ 	foreach my $setting (keys %config_path_settings) {
+ 		my $target = $config_path_settings{$setting};
++		my $key = "$prefix.$setting";
++		next unless exists $known_keys->{$key};
+ 		if (ref($target) eq "ARRAY") {
+-			my @values = Git::config_path(@repo, "$prefix.$setting");
++			my @values = Git::config_path(@repo, $key);
+ 			next unless @values;
+ 			next if $configured->{$setting}++;
+ 			@$target = @values;
+@@ -365,14 +369,16 @@ sub read_config {
+ 
+ 	foreach my $setting (keys %config_settings) {
+ 		my $target = $config_settings{$setting};
++		my $key = "$prefix.$setting";
++		next unless exists $known_keys->{$key};
+ 		if (ref($target) eq "ARRAY") {
+-			my @values = Git::config(@repo, "$prefix.$setting");
++			my @values = Git::config(@repo, $key);
+ 			next unless @values;
+ 			next if $configured->{$setting}++;
+ 			@$target = @values;
+ 		}
+ 		else {
+-			my $v = Git::config(@repo, "$prefix.$setting");
++			my $v = Git::config(@repo, $key);
+ 			next unless defined $v;
+ 			next if $configured->{$setting}++;
+ 			$$target = $v;
+@@ -398,9 +404,20 @@ sub config_regexp {
+ 	return @ret;
  }
  
- my ($repoauthor, $repocommitter);
--($repoauthor) = Git::ident_person(@repo, 'author');
--($repocommitter) = Git::ident_person(@repo, 'committer');
++# Save ourselves a lot of work of shelling out to 'git config' (it
++# parses 'bool' etc.) by only doing so for config keys that exist.
++my %known_config_keys;
 +{
-+	my %cache;
-+	my ($author, $committer);
-+	my $common = sub {
-+		my ($what) = @_;
-+		return $cache{$what} if exists $cache{$what};
-+		($cache{$what}) = Git::ident_person(@repo, $what);
-+		return $cache{$what};
-+	};
-+	$repoauthor = sub { $common->('author') };
-+	$repocommitter = sub { $common->('committer') };
++	my @known_config_keys = config_regexp("^sende?mail[.]");
++	@known_config_keys{@known_config_keys} = ();
 +}
- 
- sub parse_address_line {
- 	return map { $_->format } Mail::Address->parse($_[0]);
-@@ -767,7 +777,7 @@ sub get_patch_subject {
- 		or die sprintf(__("Failed to open for writing %s: %s"), $compose_filename, $!);
- 
- 
--	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
-+	my $tpl_sender = $sender || $repoauthor->() || $repocommitter->() || '';
- 	my $tpl_subject = $initial_subject || '';
- 	my $tpl_in_reply_to = $initial_in_reply_to || '';
- 	my $tpl_reply_to = $reply_to || '';
-@@ -973,7 +983,7 @@ sub file_declares_8bit_cte {
- 	$sender =~ s/^\s+|\s+$//g;
- 	($sender) = expand_aliases($sender);
- } else {
--	$sender = $repoauthor || $repocommitter || '';
-+	$sender = $repoauthor->() || $repocommitter->() || '';
++
+ # sendemail.identity yields to --identity. We must parse this
+ # special-case first before the rest of the config is read.
+-$identity = Git::config(@repo, "sendemail.identity");
++{
++	my $key = "sendemail.identity";
++	$identity = Git::config(@repo, $key) if exists $known_config_keys{$key};
++}
+ my $rc = GetOptions(
+ 	"identity=s" => \$identity,
+ 	"no-identity" => \$no_identity,
+@@ -411,8 +428,8 @@ sub config_regexp {
+ # Now we know enough to read the config
+ {
+     my %configured;
+-    read_config(\%configured, "sendemail.$identity") if defined $identity;
+-    read_config(\%configured, "sendemail");
++    read_config(\%known_config_keys, \%configured, "sendemail.$identity") if defined $identity;
++    read_config(\%known_config_keys, \%configured, "sendemail");
  }
  
- # $sender could be an already sanitized address
-@@ -1122,7 +1132,7 @@ sub make_message_id {
- 	$uniq = "$message_id_stamp-$message_id_serial";
+ # Begin by accumulating all the variables (defined above), that we will end up
+@@ -496,7 +513,7 @@ sub config_regexp {
+     usage();
+ }
  
- 	my $du_part;
--	for ($sender, $repocommitter, $repoauthor) {
-+	for ($sender, $repocommitter->(), $repoauthor->()) {
- 		$du_part = extract_valid_address(sanitize_address($_));
- 		last if (defined $du_part and $du_part ne '');
- 	}
+-if ($forbid_sendmail_variables && (scalar config_regexp("^sendmail[.]")) != 0) {
++if ($forbid_sendmail_variables && grep { /^sendmail/s } keys %known_config_keys) {
+ 	die __("fatal: found configuration options for 'sendmail'\n" .
+ 		"git-send-email is configured with the sendemail.* options - note the 'e'.\n" .
+ 		"Set sendemail.forbidSendmailVariables to false to disable this check.\n");
 -- 
 2.32.0.rc1.385.g46e826f1e55
 
