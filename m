@@ -2,144 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F21ABC47080
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 23:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 915AAC47080
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 01:09:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C07B1610A2
-	for <git@archiver.kernel.org>; Sun, 23 May 2021 23:58:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 648966109F
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 01:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232051AbhEXAAH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 May 2021 20:00:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47442 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232021AbhEXAAF (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 May 2021 20:00:05 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S232135AbhEXBKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 May 2021 21:10:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62316 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232098AbhEXBKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 May 2021 21:10:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A9DCF12ABE8;
+        Sun, 23 May 2021 21:09:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DmY9HANYe+4pphpJ7Mpm8gUtcfQdae8RR2YyfQ
+        bUzoo=; b=aTXIlg60q5hZ9STZhxoGBgoxHDMuR1U1nYlE36tI+jUczCEMbNtMeg
+        VPZJGQ+9eqUVXplDxDeWCSf+buhe9jxF5nscNdJbklJytF2qVjpt6duzcueA0Pfw
+        uGX4vu1izIPNJwbRgoOa9PpmBOoVK/ao2Pqj66FPfi5PkpKQGwFRc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A270312ABE4;
+        Sun, 23 May 2021 21:09:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EE0F960734;
-        Sun, 23 May 2021 23:58:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1621814288;
-        bh=yjNBrAuNuaDc7W69F6lT4qNh4IYQD5BnatdghOiLOC4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=IK7V6t39REDfLtUAQLee1J/MGB8R7b+Ywcv6paaf52frGFyQfLrhNTXkscmAN6h+J
-         lNsj/QG1V5FZnTdWVxs2XXipuFpWkBYtu7KS11so7t2QGyLgOFCsDJ3HX5EOCeyItA
-         IK192KoBL0bv8q9YNEnXN+8ydya6R62Y9dnqwK/+XQHMmsBpqHMS4Wd6wnC1UYiPcf
-         5Z+mPZOmVV1g5BKKj78wDtz+/W3Rv1FHXKb6xeZNTDWUNk8ejDFlA6WkNG1Ydvy7GN
-         vejU4VqdC3pPEhCUAz9bpD6GAWQkdsT62Sazkkz4YBPTU0daYVe0IxzlG0gn/ecgt5
-         /fRVQlgdkbEELpURftzrdmzcJ1EU0pWvPRvEiKhhEOU+E/MCyESph9mTB6WB8aKpbB
-         WTlnkhf0h9KB3jL9UDLOBO2nSrbBh6FHo1KNXUwWWXq8Pqg6IEz4BmzwPPWNygHO5r
-         lh7uu0IB+at2heCmEuieLUiemKXCwFQzBBn6CzNNm9ILMZWzMk9
-Date:   Sun, 23 May 2021 23:58:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: fast forward merge overwriting my code
-Message-ID: <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
- <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F001112ABE3;
+        Sun, 23 May 2021 21:09:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH 0/3] [GSOC][RFC] ref-filter: add contents:raw atom
+References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
+Date:   Mon, 24 May 2021 10:09:08 +0900
+In-Reply-To: <pull.959.git.1621763612.gitgitgadget@gmail.com> (ZheNing Hu via
+        GitGitGadget's message of "Sun, 23 May 2021 09:53:29 +0000")
+Message-ID: <xmqq1r9xndjf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xQMlQWWaa47R7T9a"
-Content-Disposition: inline
-In-Reply-To: <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: A5220A1C-BC2C-11EB-BB35-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---xQMlQWWaa47R7T9a
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In (a2f3241: [GSOC] ref-filter: add contents:raw atom) I did not notice the
+> ...
 
-On 2021-05-23 at 09:48:55, Johannes Sixt wrote:
-> [resending, as I forgot to include git@vger]
->=20
-> Am 22.05.21 um 17:48 schrieb Andre Ulrich:
-> > Let's say I have a .txt file on my master branch. I used
-> >=20
-> > git add .
-> >=20
-> > and
-> >=20
-> > git commit -m "blabla"
-> >=20
-> > so everything is staged and in the history. Now I check out a new branch
-> >=20
-> > git checkout -b testing
-> >=20
-> > and edit the .txt file. I add some new lines at the end, but I also
-> > change some of the already existing lines. Then again I add and commit
-> > everything. Then I use
-> >=20
-> > git checkout master
-> >=20
-> > and
-> >=20
-> > git merge testing
-> >=20
-> > I would expect git to tell me "hey, wait, you have changed some of the
-> > first lines in the .txt file. When you merge, your code on master will
-> > be altered". But git just merges everything in.
-> > Just imagine this was working code, and changing some of the first lines
-> > breaks everything in the following lines.
-> > I think I have found out what is the problem: git considers this a fast
-> > forward merge (since there were no commits on master between the
-> > creation and the merging of the test branch).
+Before going into any of these details, remember that the cover
+letter is where you first sell the series to the readers.  Why is it
+worth their time to read it?  What problem does it solve in the
+bigger picture?  Mention that we want to let "cat-file --batch" use
+the ref-filter --format logic, if that is the primary reason why we
+have these three patches, for example.
 
-Yes.  However, if Git did an actual merge, the result would be the same.
-In a three-way merge, if one side changes, and the other does not, the
-change is adopted.  A fast-forward merge just avoids the merge commit.
+I actually do not know if a modified form of %(contents) is a good
+match for this feature.  It was invented as a way to extract the
+unstructured "free text" part of structured textual objects (namely,
+commits and tags) so it is natural that it would not apply to trees
+(they are structured and there is no unstractured "free text" part)
+nor blobs (they are totally unstructured and does not even have to
+be text).
 
-> > But this is annoying. I want to be able to choose, what changes I want
-> > to keep, when I do the merge (just as in case of a 3way merge, when you
-> > can call a graphical merge tool to decide what lines to keep).
->=20
-> But in a 3-way merge, you only get to choose which changes you take if
-> there is a conflict. If, in your example, you had committed a change to
-> a different file on master before the merge, you would get a
-> non-fast-forward (3-way) merge, and still no opportunity to choose which
-> changes you take because there would be no conflict.
->=20
-> And why do you think we need a general warning "when you merge, your
-> code on master will be altered"? Why would I want to make a merge into
-> master if not to change the code on master?
+Is there another word to refer to the entire payload unadulterated?
 
-I suspect Andre has a goal here or a specific use case that we're not
-understanding.  If we got some more explanation about what's going on,
-we could probably offer a more useful response addressing that specific
-use case or goal.  It might not be a use case we support, but at least
-we could address it directly.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+> git for-each-ref --format="%(contents)" --python refs/mytrees/first
+>
+> will output a string processed by python_quote_buf_with_size(), which
+> contains'\0'. But the binary files seem to be useless after quoting. Should
+> we allow these binary files to be output in the default way with
+> strbuf_add()? If so, we can remove the first patch.
 
---xQMlQWWaa47R7T9a
-Content-Type: application/pgp-signature; name="signature.asc"
+The --language option is designed to be used to write a small script
+in the language and used like this:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+    git for-each-ref --format='
+		name=%(refname)
+		var=%(placeholder)
+                mkdir -p "$(dirname "$name")"
+		printf "%%s" "$var" >"$name"
+    ' --shell | /bin/sh
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYKrsCgAKCRB8DEliiIei
-gUIcAP989Hn1XW4uheFNU9BGtavYZKBikaOFYyGuchXCJocBqwEAuR36yWIJ2vc/
-nsHBA/tkE1qNezRw4tiGMm7VkYM3Igw=
-=J8MM
------END PGP SIGNATURE-----
+Note that %(refname) and %(placeholder) in the --format string is
+not quoted at all; the "--shell" option knows how values are quoted
+in the host language (shell) and writes single-quotes around
+%(refname).  If %(placeholder) produces something with a single-quote
+in it, that will (eh, at least "should") be quoted appropriately.
 
---xQMlQWWaa47R7T9a--
+So It does not make any sense not to quote a value that comes from
+%(placeholder), whether it is binary or not, to match the syntax of
+the host language you are making the "for-each-ref --format=" to
+write such a script in.
+
+So, "binary files seem to be useless after quoting" is a
+misunderstanding.  They are useless if you do not quote them.
+
+Thanks.
+
+P.S. I am mostly offline today, and response will be slow.
+
