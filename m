@@ -7,65 +7,66 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF7ABC04FF3
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7EAC04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:56:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDD25613E6
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:48:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A30D61406
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232814AbhEXQtj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 12:49:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35868 "EHLO
+        id S233161AbhEXQ5i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 12:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232442AbhEXQtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 12:49:39 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5425C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 09:48:10 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id y76so18357640oia.6
-        for <git@vger.kernel.org>; Mon, 24 May 2021 09:48:10 -0700 (PDT)
+        with ESMTP id S232543AbhEXQ5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 12:57:37 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1372AC061574
+        for <git@vger.kernel.org>; Mon, 24 May 2021 09:56:08 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id j75so27596990oih.10
+        for <git@vger.kernel.org>; Mon, 24 May 2021 09:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=RcYARtkX10ucPQqrhSIUfEoUk9rV17lPQ+M5VGhFBkE=;
-        b=tZ5lHu0CwcTN80HLyNBD7S57hlgI4undT7ydjMkifnOTX6u5AMvlaUTIi6zIseEDAF
-         lbFra5K1yEySf4KxVUyFOBvYnknknqLlwpHvCQESeAmDz5GsLrSOygFka0LSCivtKnKm
-         11zPRnCM0jWfvKj5bWXPp20QkkoVhDm07bpzpe2tF6JIIgigsh0IbDT4aMP2KyriCwFI
-         UzbDbFU0QNT5gM3K5S0HjY6HhSEFiDIMRRMwa0vbwp/iNQCdys1/wjOXUYi2Ex1++MEA
-         mdWWjX7dLwDLv6jfXOnwd1szAT9WM1k7eNjnfBnnSXFHPAEuphpnscI2OOFPI3QNu0/n
-         hpJg==
+        bh=KA4RPrHW59LOCn5FZ2SIGDW6hFhFVLJytwp9t0JNbho=;
+        b=vZaghsTcikTFiUR6lnNIX08INXdWZfL6dW7vUGUisSJkj5uAjqxhod0/afQrBwf8lN
+         gaBF9KWvlEdwd8pa5a+qF/LJsDWzHTM0g/eXXN2kYGJOM3ATr9Du334T4oVYbWyRW3Lt
+         iCX0LAKJO5pqjoyLvcefHQ3WiASzwDUP7hiv3MlIzPbK4EVr9gvPJFJXNsFEwY+QYr9n
+         joP7OP09B/JhYG1NdF3ULe1cGyzp1vL8Mn8K8piH1sxfoQOB3qYa5smQQg7I7M9ocau/
+         CGhw4iQQkmRJKqE1pph5JWJUOmMmDxsCnfoSnSXodhzqufr5kb4jr7SsHGZMiNwv4tPu
+         cV7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=RcYARtkX10ucPQqrhSIUfEoUk9rV17lPQ+M5VGhFBkE=;
-        b=tAycG/WHS3pNBcG5u9rcY1tAz6a2IMvShVWY6mJUMgyxFRA/lDYRUx5gev3wMCJ6gG
-         nsErsKVeSIIkuboXshRqzGys0GeuOzF6lRHT3qyDzsUUhMxVjaho3PpuaEpWDR5th2TT
-         42hYoNKlOu1hw7cNJ7/df6/7a4NpjCl/s6I63DQquhBqy1iRuZ2pdf+dGDXzcMiEwU8r
-         b17BlseL16m9Z0dVKYIwll/4N7wZBGCcKrK+C4OCbI8xj4uYkg6E0xB5eTKJbgmKXcX/
-         +cNLKqXvLL4ySo2tmprn0XlcLH3p6+rNp9rOnup6u6FG8VdiUjGwbvhjUm52T0bSJSPl
-         M1Ow==
-X-Gm-Message-State: AOAM530OTdrCW1BSealVpbQklYlSHcxS8qJVOO1S6staH6srS+NTqr2r
-        XCcRdgMEFUhYYeParsHK9Do=
-X-Google-Smtp-Source: ABdhPJz7y194NtStU4nfJmNPUehu9CyhySQdYkYftow08vIWo5LmLtu/luOzo4TV4aG/UZ7LP2FAIA==
-X-Received: by 2002:a05:6808:14c7:: with SMTP id f7mr19947oiw.63.1621874890177;
-        Mon, 24 May 2021 09:48:10 -0700 (PDT)
+        bh=KA4RPrHW59LOCn5FZ2SIGDW6hFhFVLJytwp9t0JNbho=;
+        b=McYWYF1n13nXR8FBF5OpCDvodh5yJSSDqZwBPa+G6kSO1sm1vxm3Waw9jBHjHvHwPg
+         FGXBNjdG9ykkrGSnD8J/GPH0SvunR4b5OPm1Kpizo4q0OK1+iPidbyBpl3J+4KbvWCre
+         UHgKtDTxtPswey3MLm82fsnaPay+ttvzZw51eu/7xM9CQWXeWI9giNye1tPWCsYtm+0Y
+         xRyl9x2/PPQ4CukZMATAvdpDhb2HT+3WFq+qe5tmVDCHMMD7wI2zEiC1uLOA26sOuXZA
+         +AwyguP22tQ0vH0fv+QY0/V5j3LgM/E9XYEEBpBZiVrCDfMuyTVqSBrsCsYsDcfBcJjU
+         uN5A==
+X-Gm-Message-State: AOAM531ykCz8wIFwtAqZUJd02ykaWV1lneC8AqcmBbivUfG6dFvQDD7o
+        6qrkbGZBWc07mp1lu163MHU=
+X-Google-Smtp-Source: ABdhPJwPrGTTzBXtjgfClItZ7TuEzy3sw7Ca2+cviSaKV897iGhc0fTSgKEIP1inLe23sDazLJABxg==
+X-Received: by 2002:a05:6808:619:: with SMTP id y25mr38288oih.75.1621875367464;
+        Mon, 24 May 2021 09:56:07 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id c32sm3056411otu.13.2021.05.24.09.48.09
+        by smtp.gmail.com with ESMTPSA id b18sm3190215otk.62.2021.05.24.09.56.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 09:48:09 -0700 (PDT)
-Date:   Mon, 24 May 2021 11:48:08 -0500
+        Mon, 24 May 2021 09:56:06 -0700 (PDT)
+Date:   Mon, 24 May 2021 11:56:05 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60abd8c84afed_1b2092087d@natae.notmuch>
-In-Reply-To: <87lf84o23t.fsf@evledraar.gmail.com>
-References: <xmqqtumyulv8.fsf@gitster.g>
- <60a8352c936aa_55d9020873@natae.notmuch>
- <87lf84o23t.fsf@evledraar.gmail.com>
-Subject: Re: What's cooking in git.git (May 2021, #03; Thu, 20)
+To:     Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Message-ID: <60abdaa5bae55_1b2092082c@natae.notmuch>
+In-Reply-To: <7644ac29-2a65-e186-ff40-630dd500e160@gmail.com>
+References: <20210523054454.1188757-1-felipe.contreras@gmail.com>
+ <7644ac29-2a65-e186-ff40-630dd500e160@gmail.com>
+Subject: Re: [PATCH v6] help: colorize man pages
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -74,57 +75,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Fri, May 21 2021, Felipe Contreras wrote:
-> > Junio C Hamano wrote:
-> >> Here are the topics that have been cooking.
-> >
-> >> --------------------------------------------------
-> >> [New Topics]
-> >
-> > Is this not a topic?
-> >
-> > 1. doc: asciidoc cleanups
-> > https://lore.kernel.org/git/20210514115631.503276-1-felipe.contreras@=
-gmail.com/
+Phillip Wood wrote:
+> On 23/05/2021 06:44, Felipe Contreras wrote:
 
-> These were sent around the same time as v2.32.0-rc0 went out.
+> > Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+> > Phillip Wood <phillip.wood123@gmail.com>
+> =
 
-That's v2 (of the first patch). v1 [1] was sent on May 12. The only
-difference is that one chunk of code moved from patch #4 to patch #3. It
-was good then.
+> This footer seems to have got broken between v5 and v6 - were you =
 
-> Junio tends to not pick up new things around the release freeze.
+> intending to delete it (which is fine by me) as my comments were about =
 
-And yet a patch from May 20 had no problem landing [2]. And another one
-from you [3] also from May 20.
+> the approach of the last patch?
 
-They both landed on "what's cooking" the very same day. In fact, the
-former 11 hours later.
+I was probably trying to put you in the Cc list.
 
-> I've only skimmed those topics but they seem like sensible fixes, I
-> think it's probably best to let discussion on them settle/continue,
-> and re-roll or re-send sometime after v2.32.0.
+> I'm still not convinced that git should be messing with the appearance =
 
-Sure, they don't belong on 'master', but the first patch series is ready
-for 'next' (and was ready since v2), and even if it wasn't, 'seen' is
-for proposed changes that don't qualify for 'next'.
+> of man pages but I don't think we're ever going to agree on that.
 
-I think this qualifies as a proposed change. In fact, a proposed change
-that has been reviewed, it's simple, and could not possibly introduce an
-issue (famous last words); more than can be said of many patches in
-'seen'.
+That's your opinion, and it's fine, we all have opinions.
 
-Either way, I'm just asking what's going on.
+But the interesting thing for everyone else is *why*. Why aren't you
+convinced?
+
+I still haven't heard a convincing argument regarding what makes
+`git help` fundamentally different from `git diff` _for the user_.
 
 Cheers.
-
-[1] https://lore.kernel.org/git/20210512222803.508446-1-felipe.contreras@=
-gmail.com/
-[2] https://lore.kernel.org/git/20210520210546.4129620-1-emilyshaffer@goo=
-gle.com/
-[3] https://lore.kernel.org/git/cover-00.17-0000000000-20210520T111610Z-a=
-varab@gmail.com/
 
 -- =
 
