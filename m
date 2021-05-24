@@ -2,109 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 727C7C04FF3
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 11:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD087C04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 12:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56821611CE
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 11:14:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CC6F60C3F
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 12:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232666AbhEXLP1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 07:15:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44214 "EHLO
+        id S232409AbhEXMZG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 08:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232625AbhEXLPZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 07:15:25 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5587C06138A
-        for <git@vger.kernel.org>; Mon, 24 May 2021 04:13:57 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id ot16so12698050pjb.3
-        for <git@vger.kernel.org>; Mon, 24 May 2021 04:13:57 -0700 (PDT)
+        with ESMTP id S232300AbhEXMZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 08:25:06 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EAECC061574
+        for <git@vger.kernel.org>; Mon, 24 May 2021 05:23:38 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id ot16so12794125pjb.3
+        for <git@vger.kernel.org>; Mon, 24 May 2021 05:23:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1/luphSk7G1OcM0oarvk/BAwra5cbx0hl0Kxw5h2Kuk=;
-        b=JKKu6yf90OXNvOY31/7hiGs0eW1oeSw7Ir7y+XAc3zZT1mLkdewp42tR5adw3C0SOC
-         xf7N5pbDr/5Z4NArr7gaoa/FvX7NcorBct8tYZfl/YMcVaeeWBF6rU895z2s3//HBXVz
-         mozff0IU7eJ7y2EmBzcUOqs/jBt3vaTUsGLpj00cwLgzcfNKd0hQyozDFBYqN9DUkzDq
-         KJd0jSEuiPvVVE9k0lXl41Dacc+ZacVCvNv3jGiCaaDXo+wBV41SvY+Yfo1wzrYVkeFM
-         HvZi2ddHHy1S3jdgWEYmUtb25v3msOSI8MRN6PcPN5UyvG82LBKwU6nhQvTwVrporru+
-         JrAQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=8aM7aVeOb2MzQILh38gfhyXmwgWaUCczrfui0pVpFdI=;
+        b=ra4hviNDyekPf5p0fsDLU83jyVMzBup1b65m+EQjVj4l618TXgYa1dKyIbt5ZPVkDC
+         TVrGDJxku7HK47J2vaJ1fsZTH79fdJefEkImurgIdoRNui5nAReDl9MuAAcy8LFnNfWt
+         PdRwIu8pmcfP5jcBJYZLohUc+58QeQkc2tgINBs2wZZCFBzkmt3YFiMzyV5aLjf3SdAA
+         Y7jEZjlW9QjSI9lv2KD+PjX3p1gshqRuY/Jq1cbNjlW30MImopZ8i2MSNdIFQSSH+ArS
+         99idS6piIoKnvi7Q+7pBmi6+GeAWX6TQVV5WHmumvh5DcFuqCyFGh3BJpafjXN+qAzRk
+         96FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1/luphSk7G1OcM0oarvk/BAwra5cbx0hl0Kxw5h2Kuk=;
-        b=fTbxysY8zW6bHlc5JfS0UoLUCJuhP4lSAN0oNF4y6VRSva3feVEupNZDBJ25y6dHA3
-         L/02o34Sh+ZHF7+/AqgK+xaydAnyxk3Xdp4Gdl1BbDZwcnltumGX2hLNVVaffYFOEI2w
-         xC1uEhd8d8hg9j6vPpDEiQCoZ1TsHgcN84KhI7rvoCFYV06PJbjbF4LWmyI4/1Zz0fG1
-         n9V44SZdiq9lfgTLZKJlrtzaf68LGeFlXWYXbsvFjrtrM6cnM+ntl/lnIdStSFKNuX3b
-         lZgV3ofLasf1NRtP/ANFnVhNZ7wXt20Tb3VMvaoBhdCd9nYpcPqSJoRjZOXJYUi+TbpW
-         aZsA==
-X-Gm-Message-State: AOAM530eOM9q0YYmVVjnMNI1aHZeQncvw28MgBJN69x6RvE0XVTpCFux
-        efTV5q6svzd1KTDEAOFX4XOIj9dhnsQyHg==
-X-Google-Smtp-Source: ABdhPJxeias0nrXIgQEe2dwq+v2YK3DBjsr1iIfum6TddE7Y71SH27nz0Y03EPJxwiMl5L1cYpbztA==
-X-Received: by 2002:a17:902:6b02:b029:e9:8e2:d107 with SMTP id o2-20020a1709026b02b02900e908e2d107mr25017169plk.61.1621854837145;
-        Mon, 24 May 2021 04:13:57 -0700 (PDT)
-Received: from [192.168.43.80] (subs09b-223-255-225-232.three.co.id. [223.255.225.232])
-        by smtp.gmail.com with ESMTPSA id h66sm4352399pfe.53.2021.05.24.04.13.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 May 2021 04:13:56 -0700 (PDT)
-Subject: Re: fast forward merge overwriting my code
-To:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
- <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
- <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
- <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <3b5ecbcb-5d94-e7c4-e73b-2e00acdd0232@gmail.com>
-Date:   Mon, 24 May 2021 18:13:53 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=8aM7aVeOb2MzQILh38gfhyXmwgWaUCczrfui0pVpFdI=;
+        b=Yam97PjoiM+teRZ/7n2yj1qh1ncE6wHoJ5Z6TwcqZ5R9j8zTZVT0rDG1Q8jEWosVMs
+         dOMarXpNIsrRYIQhEKu8phF5pOOH/wils77DxClJVN2M4nEJcvtSMSjpWurV+6lzuogb
+         Y29OLfESlnLJ/uqsFT9Jo+wz/OJ3qm0aojCdO+NtAww3B1f5tVNdU/IOHtLqV+Crq1mf
+         oHMsK3QgD20s+jU5Ll6Py2kmypeSMIldbHWWLHPxatPcZZoWEz10OZ00/twbqnvm/eB5
+         slOzGTqksJOKBJka+Sfo7RAm+hliPMUSUqMUKeugpX3iGfUBaTiKbLim3nFPH1f/uTJl
+         IjJA==
+X-Gm-Message-State: AOAM533p3LDPV4ZcANXrPAfS1zJOJCIdiaVmJA+pvjj7P8sb9ArnKMhy
+        1XiJW3MWxSQ6ao32d2l5I2Q=
+X-Google-Smtp-Source: ABdhPJwTD8pqAFnTo9nQxWFGusZ59xhHvV7b5JbQO+fGht8mAa841+iloi1N3CzFRFliVi95mT3o7w==
+X-Received: by 2002:a17:90a:e014:: with SMTP id u20mr24981082pjy.200.1621859017884;
+        Mon, 24 May 2021 05:23:37 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:812a:adcf:8995:bb0b:8236])
+        by smtp.gmail.com with ESMTPSA id 194sm11239845pfy.146.2021.05.24.05.23.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 May 2021 05:23:37 -0700 (PDT)
+Date:   Mon, 24 May 2021 19:23:36 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 1/4] cache.h: =?utf-8?Q?Intr?=
+ =?utf-8?B?b2R1Y2UgYSBnZW5lcmljICJ4ZGdfY29uZmlnX2hvbWVfZm9yKOKApik=?=
+ =?utf-8?Q?=22?= function
+Message-ID: <YKuayK+lmNfBoYWM@danh.dev>
+References: <20210520221359.75615-1-lenaic@lhuard.fr>
+ <20210524071538.46862-1-lenaic@lhuard.fr>
+ <20210524071538.46862-2-lenaic@lhuard.fr>
+ <120b6b5c-ab30-6985-d5af-a0b0290b864f@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <120b6b5c-ab30-6985-d5af-a0b0290b864f@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andre,
-
-On 24/05/21 13.13, Andre Ulrich wrote:
-> So the last point is where we still want to do some fine tuning. Right now this looks about: my prof fetches my edits and locally checks out a branch to compare the changes with git diff.
-> But in this diff view you can't edit the files. So you have to separately open up another window to edit the changes (lets say my prof only wants to keep some of my changes, but not all).
+On 2021-05-24 10:33:30+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> Hi Lénaïc
 > 
-> So my Question is: is there any possibility, to be able to view (and even edit, if necessary) the changed notebook in the merging process (as in my example with the 3way merge)?
-> Or is the only option to separately view the diff and edit the notebook (two seperate steps instead of one)?
-> 
-> The latter would also be acceptable, if it really is the only way. Bu it would be nice, if viewing and editing could be done in one convenient step during merging.
+> This looks fine to me. I'm not 100% sold on calling the parameter prog as
+> our program name later in the series ends up being "systemd/user" so
+> something like "subdir" might have been better but that is not worth
+> rerolling for.
 
-When you run git merge, when Git decided that automerging with 3-way
-merge can be done without conflicts, the editor will be fired up for
-you to enter commit message. Delete or comment all the message lines
-to abort the commit by "empty message" mechanism.
+I'll take the blame for that "prog".
+I didn't think very hard at the time of writing :(
 
-Now you can view diff (git diff) or edit the merged files as you
-wish. Of course, you can coordinate with author of branch you're
-merging from to get consensus. After then, git commit.
+Yes, "subdir" is definitely better.
+And it's aligned with the XDG Base Directory specifications:
 
-Similar steps can be done for merge conflicts. Git will pause merging
-process when conflicts occur, and you need to edit to resolve them.
-Again, coordinating with original branch author is helpful to decide
-the resolution.
+	A user-specific version of the configuration file may be
+	created in $XDG_CONFIG_HOME/subdir/filename
 
-Thanks.
+> On 24/05/2021 08:15, Lénaïc Huard wrote:
+> > Current implementation of `xdg_config_home(filename)` returns
+> > `$XDG_CONFIG_HOME/git/$filename`, with the `git` subdirectory inserted
+> > between the `XDG_CONFIG_HOME` environment variable and the parameter.
+> > 
+> > This patch introduces a `xdg_config_home_for(prog, filename)` function
+> > which is more generic. It only concatenates "$XDG_CONFIG_HOME", or
+> > "$HOME/.config" if the former isn’t defined, with the parameters,
+> > without adding `git` in between.
+> > 
+> > `xdg_config_home(filename)` is now implemented by calling
+> > `xdg_config_home_for("git", filename)` but this new generic function can
+> > be used to compute the configuration directory of other programs.
 
 -- 
-An old man doll... just what I always wanted! - Clara
+Danh
