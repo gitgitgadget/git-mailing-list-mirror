@@ -7,188 +7,224 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12824C2B9F7
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 675EFC2B9F7
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:36:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7AC26140B
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:23:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B87B6140B
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 23:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229926AbhEXXZ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 19:25:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
+        id S229541AbhEXXhc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 19:37:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbhEXXZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 19:25:25 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97E0C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 16:23:56 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id r11so33826239edt.13
-        for <git@vger.kernel.org>; Mon, 24 May 2021 16:23:56 -0700 (PDT)
+        with ESMTP id S229503AbhEXXhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 19:37:31 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C130BC061574
+        for <git@vger.kernel.org>; Mon, 24 May 2021 16:36:01 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id y7so16387050eda.2
+        for <git@vger.kernel.org>; Mon, 24 May 2021 16:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=uGCk91Or3rQTMt76kw6faSucGtz0agCvU46rUIC39Cc=;
-        b=iK+CKEDaQg0Y0yqxc27N25O8QH8Ve9Fzx8IrNBwidwwaRSIdDe3IcfcP+VT5jbdfZs
-         qKYyUanXuLdmNKv8a6+Q26nSyMhJ51Q2qjz6yGAYXHBkZgl7pQtaWbwErMt22LO5oE1e
-         MiSpN1w47Yj1h3dyqlZf98BsKvdxLJKzaMKSipFyyMc3EJr0FYx7xQEuuO+bj2c2beLr
-         1MZZSRUw9npN3oetPxykPB4k/hrJOClo+bbIEJMX1sHxzOUik+zVA3XqBu7i62oTZj1Y
-         vmUGIB5oQWOJY4wTuUeDwMn7pSusmundRXhp0nhVpUHwEZSfUQNKZi5D0fA6t4GnGhub
-         ublw==
+         :message-id:mime-version;
+        bh=jXPYVYGhiJUpfUOX/QR2NYrzlyeV76UBk1nkWyrCXKg=;
+        b=tli+jHRyhi8vG6LXKdqSCbVXU0F2ESXdKrWxJaNd5X3aL7w+rryh8WR9NKkoIuzKaZ
+         jRxrnmt/1sQq7hiO//YV6kkg7RJLoBYCmRuDGuhdQTEi6RVdV6+3rmDkgoJpMu7m8ZV6
+         hYuQZnWPK06d33IE2q8mzjIK4+LyuV8N8BjUod+BYrabzSOafHx70a1X3aoVMY8Y2Ef2
+         BL932+psieK2RbNHccwXu6gMqWF1zMDo/2HwLjHeOc3BflX7Z62ekfFdo7hpU8lR0PMG
+         /pHIN/opDyx4G8vF/h+ohdXgjJNaHxUxjjSCjPUzH9Svdgtb30tab3KIqKVk80Hxi45p
+         puKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=uGCk91Or3rQTMt76kw6faSucGtz0agCvU46rUIC39Cc=;
-        b=Kv6iXZ0XToSJ9pdxU39MCn+Kq6HPEPzMoUDE5HgwdkljOJOCZbkRatjIuHnd+C2psu
-         qwlIwBq69538h9RDhfwpiGLx/Xmk8AN4dG7X2DSLvxZA66C1LVOpEoQ88eHrr2i05KW0
-         X56Rtefq9HQAUrlQiqj8jAz1jnyYIjRriis1oyx3Dw1npB782TWBR2NphDXeJIayB0uK
-         wyjq7yh7UWILvK1Yyb3kHUSqO/dQYx5Snp510xheSjnxP8w9w8B6uxLrTtJqb+ACYYGe
-         moRjeS04ojNgoy3QngCIWocAvqrjXQfjqNi9BxlxQWcmQr0VjSG0LVDK916MGcpTh7H6
-         d2RQ==
-X-Gm-Message-State: AOAM532LFr1U9KivuFoQNlgiy5HvPphPDDwP4wtXwQUBeWWXt0WPOfXv
-        wlpaThl7HhKi/A+bFO9MQL/AF4OUlcu+AQ==
-X-Google-Smtp-Source: ABdhPJzNpwsPfmnWP0D0THU3UyQLPhzKfBUYjR2TzKtmKwRr//XelYQYlmVBHkC33tQRH5aCOMUIbg==
-X-Received: by 2002:a05:6402:1548:: with SMTP id p8mr28306016edx.261.1621898635031;
-        Mon, 24 May 2021 16:23:55 -0700 (PDT)
+         :in-reply-to:message-id:mime-version;
+        bh=jXPYVYGhiJUpfUOX/QR2NYrzlyeV76UBk1nkWyrCXKg=;
+        b=CxvtbMeG8QfYt0ABqjFLx7ZEk8OSG46ltBbHX1IKJjyFDp7cEABUhdYY3RoTX7JZ0/
+         +vLEUtxMvOObEm6iRuFvZjZ+hIJ3EGXDZgUiz0QZqyy4LzdSoKXXwd0980z3Zg4ImqKO
+         y7+R1SrWXtNFmOFwurQNdImecE8FK3hsXI0EGRfvZD749fERKZppR8Tv0bjI9oGD3v1d
+         XUV7WLDtorQSrk84VD/eo1JgejeLfIQx8sMJIILFwWqvVLY35egC0IVJAbAcICta+qL8
+         JUmE+yZOY6vtJfBG8sRyGTBfwLp1S9r4M/aPGgYsz4Ulf5rq9ZkFRag10DBtyWqCmXEn
+         kBww==
+X-Gm-Message-State: AOAM533Zv0U0AoOc/K1Djl/ucmMZaFmobGuLWB/bDEJduU9uxG5Wsee2
+        7//A4yK/gGp00YKyeLIt5Zk=
+X-Google-Smtp-Source: ABdhPJx462XKFHbZarBIqQAUJQGSK0j2/s3+6F1fOAyszDbuT04jH25tJpn9TFyllqEyEdnNtiTSKA==
+X-Received: by 2002:aa7:ce91:: with SMTP id y17mr27966217edv.83.1621899360324;
+        Mon, 24 May 2021 16:36:00 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id m16sm9999620edq.56.2021.05.24.16.23.54
+        by smtp.gmail.com with ESMTPSA id j4sm7135608edq.13.2021.05.24.16.35.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 16:23:54 -0700 (PDT)
+        Mon, 24 May 2021 16:35:59 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Siavash <siavash.askari.nasr@gmail.com>, git@vger.kernel.org
-Subject: Re: Renaming "non-contrib" things out of contrib/* (was "Re: [Bug]
- git-credential-netrc.perl[...]")
-Date:   Tue, 25 May 2021 01:18:28 +0200
-References: <87k0nt3f8i.fsf@gmail.com>
- <YKcTFDgW4etXFpOR@camp.crustytoothpaste.net>
- <YKeFxcTDp4tHSRu8@coredump.intra.peff.net>
- <YKgzvFHOcUgPjbj/@camp.crustytoothpaste.net>
- <YKqzj/DZU8m9AaI/@coredump.intra.peff.net>
- <60ab17018efee_1691c20832@natae.notmuch>
- <87o8d0o2or.fsf@evledraar.gmail.com>
- <60abe0b32dfa1_1b2092081d@natae.notmuch>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v2] tr2: log parent process name
+Date:   Tue, 25 May 2021 01:33:27 +0200
+References: <20210520210546.4129620-1-emilyshaffer@google.com>
+ <1e3bb53e-895b-f571-1c03-a6ae6499746d@jeffhostetler.com>
+ <YKgSc5OgVOt6HQqW@google.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <60abe0b32dfa1_1b2092081d@natae.notmuch>
-Message-ID: <87a6ojogvp.fsf@evledraar.gmail.com>
+In-reply-to: <YKgSc5OgVOt6HQqW@google.com>
+Message-ID: <877djnogbk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, May 24 2021, Felipe Contreras wrote:
+On Fri, May 21 2021, Emily Shaffer wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Sun, May 23 2021, Felipe Contreras wrote:
->>=20
->> > Jeff King wrote:
->> >
->> >> I suspect that just opening a bug report against distro packages might
->> >> get some traction (especially if it comes with a patch to create the
->> >> extra package).
->> >
->> > I have tried that; do doesn't work. If git developers have $x in
->> > "contrib" it's for a reason.
->> >
->> >> I do wonder if packagers are hesitant to reach into
->> >> contrib/,
->> >
->> > Of course they are! The word "contrib" has an obvious meaning.
->>=20
->> [Minor edit to the quoted text to inline the link]:
->>=20
->> > This is precisely the reason why I tried to graduate
->> > "contrib/completion" out of "contrib" to no avail:
->> > https://lore.kernel.org/git/1399607587-14127-1-git-send-email-felipe.c=
-ontreras@gmail.com/
->>=20
->> Seems like that patch just got no replies at the time. FWIW I'd very
->> much be for it and would encourage you to re-submit it.
->>=20
->> I'm not sure s/shared/contrib/g is the best naming though, but maybe I'm
->> contributing to needless bikeshedding by mentioning that.
+> On Fri, May 21, 2021 at 03:15:16PM -0400, Jeff Hostetler wrote:
+>> On 5/20/21 5:05 PM, Emily Shaffer wrote:
+>> > - I took a look at Jeff H's advice on using a "data_json" event to log
+>> >    this and decided it would be a little more flexible to add a new event
+>> >    instead. If we want, it'd be feasible to then shoehorn the GfW parent
+>> >    tree stuff into this new event too. Doing it this way is definitely
+>> >    easier to parse for Google's trace analysis system (which for now
+>> >    completely skips "data_json" as it's polymorphic), and also - I think
+>> >    - means that we can add more fields later on if we need to (thread
+>> >    info, different fields than just /proc/n/comm like exec path, argv,
+>> >    whatever).
+>> 
+>> I could argue both sides of this, so I guess it is fine either way.
+>> 
+>> In GFW I log a array of argv[0] strings in a generic "data_json" event.
+>> I could also log additional "data_json" events with more structured
+>> data if needed.
+>> 
+>> On the other hand, you're proposing a "cmd_ancestry" event with a
+>> single array of strings.  You would have to expand the call signature
+>> of the trace2_cmd_ancestry() API to add additional data and inside
+>> tr2_tgt_event.c add additional fields to the JSON being composed.
+>> 
+>> So both are about equal.
+>> 
+>> (I'll avoid the temptation to make a snarky comment about fixing
+>> your post processing. :-) :-) :-) )
 >
-> It is the best location because that's where completions go.
+> ;P
 >
-> You can check the location bash-completion suggests to install
-> completions to:
+> (I don't have much to add - this is an accurate summary of what I
+> thought about, too. Thanks for writing it out.)
 >
->   % pkg-config --variable=3Dcompletionsdir bash-completion
->   /usr/share/bash-completion/completions
+>> 
+>> It really doesn't matter one way or the other.
+>> 
+>> > - Jonathan N also pointed out to me that /proc/n/comm exists, and logs
+>> >    the "command name" - excluding argv, excluding path, etc. It seems
+>> 
+>> So you're trying to log argv[0] of the process and not the full
+>> command line.  That's what I'm doing.
 >
-> In the case of zsh it's /usr/share/zsh/site-functions.
+> It's close to argv[0], yeah. POSIX docs indicate it might be truncated
+> in a way that argv[0] hasn't been, but it also doesn't include the
+> leading path (as far as I've seen). For example, a long-running helper
+> script I use with mutt, right now (gaffing on line length in email to
+> help with argv clarity, sorry):
 >
-> Additionally, if you install them in your home directory, it should be
-> $XDG_DATA_HOME/bash-completion/completions.
+>   $ ps aux | grep mutt
+>   emilysh+ 4119883 0.0 0.0 6892 3600 pts/6 S+ 12:44 0:00 /bin/bash
+> /usr/local/google/home/emilyshaffer/dotfiles/open-vim-in-new-split.sh
+> /var/tmp/mutt-podkayne-413244-1263002-7433772284891386689
+>   # comm is truncated to 15ch, except apparently in the cases of some
+>   # kernel worker processes I saw with much longer names?
+>   $ cat /proc/4119883/comm
+>   open-vim-in-new
+>   # exe is a link to the executable, which means bash as this is a
+>   # script
+>   $ ls -lha /proc/4119883/exe
+>   lrwxrwxrwx 1 emilyshaffer primarygroup 0 May 21 12:44
+>   /proc/4119883/exe -> /usr/bin/bash
+>   # cmdline has the whole argv, separated on NUL so it runs together in
+>   # editor
+>   $ cat /proc/4119883/cmdline
+>   /bin/bash/usr/local/google/home/emilyshaffer/dotfiles/open-vim-in-new-split.sh/var/tmp/mutt-podkayne-413244-1263002-7433772284891386689
 >
-> $XDG_DATA_HOME is $HOME/.local/share (analogous to /usr/share).
+> Jonathan N pointed out that the process name (the thing in 'comm') can
+> also be manually manipulated by the process itself, and 'man procfs'
+> also talks about 'PR_SET_NAME' and 'PR_GET_NAME' operations in
+> 'prctl()', so that tracks. (It doesn't look like we can use prctl() to
+> find out the names of processes besides the current process, though, so
+> the procfs stuff is still needed. Dang.)
+>
+>> 
+>> >    like this is a little more safe about excluding personal information
+>> >    from the traces which take the form of "myscript.sh
+>> >    --password=hunter2", but would still be worrisome for something like
+>> >    "mysupersecretproject.sh". I'm not sure whether that means we still
+>> >    want to guard it with a config flag, though.
+>> 
+>> You might check whether you get the name of the script or just get
+>> a lot of entries with just "/usr/bin/bash".
+>
+> See above :)
+>
+>> There's lots of PII in the data stream to worry about.
+>> The name of the command is just one aspect, but I digress.
+>
+> Yes, that's what we've noticed too, so a process name isn't worrying us
+> that much more.
+>
+>> 
+>> > - I also added a lot to the commit message; hopefully it's not too
+>> >    rambly, but I hoped to explain why just setting GIT_TRACE2_PARENT_SID
+>> >    wasn't going to cut it.
+>> > - As for testing, I followed the lead of GfW's parentage info - "this
+>> >    isn't portable so writing tests for it will suck, just scrub it from
+>> >    the tests". Maybe it makes sense to do some more
+>> >    platform-specific-ness in the test suite instead? I wasn't sure.
+>> 
+>> yeah, that's probably best.  Unless you can tokenize it properly
+>> so that you can predict the results in a HEREDOC in the test source.
+>> 
+>> For example, you might try to test tracing a command (where a top-level
+>> "git foo" (SPACE form) spawns a "git-foo" (DASHED form) and check the
+>> output for the child.
+>
+> Yeah, I had trouble with even deciding when to attempt such a check or
+> not.
+>> > +	if (reason == TRACE2_PROCESS_INFO_STARTUP)
+>> > +	{
+>> > +		/*
+>> > +		 * NEEDSWORK: we could do the entire ptree in an array instead,
+>> > +		 * see compat/win32/trace2_win32_process_info.c.
+>> > +		 */
+>> > +		char *names[2];
+>> > +		names[0] = get_process_name(getppid());
+>> > +		names[1] = NULL;
+>> 
+>> You're only logging 1 parent.  That's fine to get started.
+>> 
+>> I'm logging IIRC 10 parents on GFW.  That might seem overkill,
+>> but there are lots of intermediate parents that hide what is
+>> happening.  For example, a "git push" might spawn "git remote-https"
+>> which spawns "git-remote-https" which spawn "git send-pack" which
+>> spawns "git pack-objects".
+>> 
+>> And that doesn't include who called push.
+>> 
+>> And it's not uncommon to see 2 or 3 "bash" entries in the array
+>> because of the bash scripts being run.
+>
+> Agree. But it's expensive - I didn't find a handy library call to find
+> "parent ID of given process ID", so I think we'd have to manipulate
+> procfs; and so far I only see parent ID in summary infos like
+> /proc/n/status or /proc/n/stat, which contain lots of other info too and
+> would need parsing.
 
-*Nod* I mean just because it ends up there in the FHS doesn't mean it's
- best for us to mirror that structure in git.git.
+It sounds a bit like you're fumbling your way towards (re?)discovering:
 
->> You apparently named it like that to match where distros usually install
->> it (/usr/share), but we also have docs there, locale, and the perl/
->> directory usually (well, at least on my distro) ends up there.
->
-> Distributions install them there, because that's where they are expected
-> (by bash-completion and zsh).
->
->> I wonder if just a top-level completion/* wouldn't be best, or if we
->> want to group them all together something like
->> optional/{completion,credential}/ or other name suggesting that these
->> are meant to interact with not-always-present 3rd party software. Maybe
->> integrations/* ?
->
-> extra/ is a better name.
->
-> However, there's already many things that are optional, like gitk and
-> git-gui, do they belong there too? For that matter locales are optional
-> too.
->
-> I think if such a decison to have an extra/ directory is made, it should
-> be orthogonal to the completion graduation.
+    pstree -s <pid>
 
-The line I was attempting to draw was components that optionally
-interact with optional 3rd party software.
+You can look at its implementation (or strace it) to see what it does,
+and yes, on Linux there's no handy C library for this, iterating over
+procfs is the library.
 
-The i18n framework isn't like that because we build it and interact with
-ourselves, ditto for say PCRE. Optional, but /usr/bin/git is using it.
-
-As opposed to bash/zsh completions, git will run just fine without
-either of those shells installed.
-
-The git-gui and gitk programs are also first-party software, just like
-git-send-email or whatever. We just have knobs not to build them because
-of the dependencies. It looks like we might be spinning them away from
-git.git entirely in slow-motion, but so far they're first-class
-commands.
-
->> For some of these names a general re-arrangement of contrib/* would be a
->> logical thing to follow, e.g. I think it would make sense to carve out
->> various ci/, contrib/coccinelle, Documentation/doc-diff,
->> check-builtins.sh etc. and other "only for supporting git.git
->> development" or "only called by our own Makefile(s)" into some
->> consistently named pattern.
->
-> Me too.
->
->> I'm also very much in favor of building and testing all of this software
->> by default, to the best of our ability. We've had some avoidable bitrot
->> e.g. in subtree and mw-to-git in the past, some of that is a pain to
->> test (e.g. requiring an installed MediaWiki), but we can usually
->> build/test some part of it (e.g. in that case, does it even compile as
->> Perl code?). In other cases we could compile/test things by default on
->> certain platforms if they're platform-specific.
->
-> Yeah, some spring cleaning would be good.
->
-> I'll put sending the patch in my unending to-do list.
-
-Thanks.
+Aside from the privacy, PII, usefulness of this data etc. discussions in
+this & related threads I don't think that per-se should be an issue on a
+modern Linux system. After all we'd just need to do it once on
+startup. For any sub-process we spawn we'd carry it forward after the
+initial /usr/bin/git invocation.
