@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDEFCC04FF3
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60A19C47083
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABC84610C7
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4176161151
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 07:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232416AbhEXHyo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 03:54:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55474 "EHLO
+        id S232382AbhEXHyq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 03:54:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232266AbhEXHyi (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232347AbhEXHyi (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 24 May 2021 03:54:38 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB44C061756
-        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:09 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso10889853wmh.4
-        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:09 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D82C06138A
+        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:10 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id u133so14400097wmg.1
+        for <git@vger.kernel.org>; Mon, 24 May 2021 00:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uaVkme/NdOkhzzrlmY82ejiFPLnrDxis0DwYi9zGQh8=;
-        b=fUOgEIRAca6qO/hRKgzyN5+hhWld5hPJ6LFVY70Kwp+XD37tUtGgevRgeYYlUZ1elG
-         MUY6hq2FMG7Sri9yuZnunKZj1gWt1T/rtN/kM4ZPu5oF8l+X7lJm5e5l03FkRWWslJtA
-         C0LUWmctFhQ8jIDJZGzAa+p2lO5FUo5q6rS7FdB1HuX4i7fVBLAcPmV6vFppMwx+ObPR
-         j0oAufeLLt5t4wHoq2qVynXuTj/R/CmBsWEf+ah9l0/UfKj8wD2tpjjfT6Z9OCUJG8TC
-         KDmF7vCpnsXXEia0HCqHH4wtesBrWYeDEeKZnk+nl5a1shVbDOzYq7UVLgT/rHBzqEzf
-         MuTA==
+        bh=dTN/s2phJJug/whbzoAGub3ykTCtikWBaAvewwao3XE=;
+        b=eS4U5S9pULANoWDRsrmoCwbWdlMf+nJYCix6TAJ5KCEdQcuj30oUPoFGJnZGfRBmoB
+         wxv3pkcpvmOvJOxY1ulC3VexukPPsAkL0oiTVWm/Wd6CtBZfsYkYb1krF31JZJ8rIjz9
+         49wBwx2CMy0lRgiiTz1DFE1Xnu5yLjNtvrmRBKe19MAKc512J2QigPxug2wivlNcc0IQ
+         nkIYF1oioFvMvk/sFV2UxMdcAslkiVceIyp1QFf2w2prL4iherIE+pFP+6XP0Dg+ypBi
+         Ly7NQEGb0SDYw+yHWYfsTYyPTmAZtXlRCELHLc4qhP+XppcCaNtYs2oten1C3jrSV95L
+         RX7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uaVkme/NdOkhzzrlmY82ejiFPLnrDxis0DwYi9zGQh8=;
-        b=TrTt32g2ZKwucmkuhkyBQjV4rmTdMnILrnqMhroezXiqLQOx/33q2JpHjXAT3BrhUU
-         U2pA9LgEXUIQd44PHhkfKvgj/oF8b8I7bAxfg3jhW5xnZTqoFDkq5QJ3B64fswPZMc/W
-         53TL8Xg48ZARBBIrvPy1wS4rAjjvTsxgAxFGqtrlFO+JhXNXTN51uhQJXCw09lKJZmce
-         z8k4HBfS7eW2XzdwceUk7CJVoH4fqxHgbpz1PYJ7vzDTcMj5ZUdzozNQQp/4g0yCbq/C
-         dMk3BHjYBVjbCl93nxOXwhh4QUilH7zZfIram75TSMYOt9tVfAPeexu8qNfL8UiSG6Lq
-         obNw==
-X-Gm-Message-State: AOAM5332ML3zQO36H47XT5npN46z+6N271tAv3+i9njM6hIPnrY0JTFA
-        15+RzFqSjHJg1piVTH0Yh+u4/gqnkgNifOPQ
-X-Google-Smtp-Source: ABdhPJysNWzjCPdkSMAJoecHuclGllLVvbz1cG6RiF0q3RRGE3fOtKbs/Hyvh82Hr++gRCL6g4PKvw==
-X-Received: by 2002:a7b:c847:: with SMTP id c7mr18652653wml.168.1621842787550;
-        Mon, 24 May 2021 00:53:07 -0700 (PDT)
+        bh=dTN/s2phJJug/whbzoAGub3ykTCtikWBaAvewwao3XE=;
+        b=MUPzjz6Eq96YdE3yW+KCcp7v1WSOnSpB4mKsnZsl2mtNKFQ7qgJQI4qmi82jjNsml0
+         wcofOk+oAZm/P0RY7C8BWhReNbPoQKhqX1VPrFVv4Wqpvfwq0dtzDLN6wx/7vWFiClXR
+         Plp1wOvgUfZK1vAjMnjbomFaPrRXA1COvcpciRaZx+jKAplmYlyesatfCDhw6YRBdm9K
+         d5NJjG+48CSU/KRaAyn9uaV45NS16oRlxT9IZXr64Y9UGqxi6DB4QjD4oa4oPcDZrA/9
+         etOc+/6RDrfs+Ie7vcU9Qb3awHo/tTiExWmnMaHXP+phj6CWI6Z1OwtmSifLOvMwye2+
+         5zNQ==
+X-Gm-Message-State: AOAM531gtrGvxYpibh6jPMnIcOpj5++uMYZt5T8KBfvpXRo1Ke1j89N/
+        j+H2CVZ5kBiFPfx2pKSk1m3y4qJNxwtDCbuP
+X-Google-Smtp-Source: ABdhPJxIYWtw0fiG873n1OKCJhv7b/DN8wiV099FhofB6b6kuQV9QzE58ogXdI/6mQTbkW8tQJDY7w==
+X-Received: by 2002:a1c:4043:: with SMTP id n64mr18771175wma.9.1621842788370;
+        Mon, 24 May 2021 00:53:08 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u126sm8540459wmb.9.2021.05.24.00.53.06
+        by smtp.gmail.com with ESMTPSA id u126sm8540459wmb.9.2021.05.24.00.53.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 00:53:07 -0700 (PDT)
+        Mon, 24 May 2021 00:53:08 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 02/13] send-email tests: test for boolean variables without a value
-Date:   Mon, 24 May 2021 09:52:51 +0200
-Message-Id: <patch-02.13-d27f3b48f85-20210524T074932Z-avarab@gmail.com>
+Subject: [PATCH v4 03/13] send-email: remove non-working support for "sendemail.smtpssl"
+Date:   Mon, 24 May 2021 09:52:52 +0200
+Message-Id: <patch-03.13-a7a21b75f2e-20210524T074932Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.385.g46e826f1e55
 In-Reply-To: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
 References: <cover-00.13-0000000000-20210523T085231Z-avarab@gmail.com> <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
@@ -81,69 +81,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Git.pm code does its own Perl-ifying of boolean variables, let's
-ensure that empty values = true for boolean variables, as in the C
-code.
+Remove the already dead code to support "sendemail.smtpssl" by finally
+removing the dead code supporting the configuration option.
+
+In f6bebd121ac (git-send-email: add support for TLS via
+Net::SMTP::SSL, 2008-06-25) the --smtp-ssl command-line option was
+documented as deprecated, later in 65180c66186 (List send-email config
+options in config.txt., 2009-07-22) the "sendemail.smtpssl"
+configuration option was also documented as such.
+
+Then in in 3ff15040e22 (send-email: fix regression in
+sendemail.identity parsing, 2019-05-17) I unintentionally removed
+support for it by introducing a bug in read_config().
+
+As can be seen from the diff context we've already returned unless
+$enc i defined, so it's not possible for us to reach the "elsif"
+branch here. This code was therefore already dead since Git v2.23.0.
+
+So let's just remove it. We were already 11 years into a stated
+deprecation period of this variable when 3ff15040e22 landed, now it's
+around 13. Since it hasn't worked anyway for around 2 years it looks
+like we can safely remove it.
+
+The --smtp-ssl option is still deprecated, if someone cares they can
+follow-up and remove that too, but unlike the config option that one
+could still be in use in the wild. I'm just removing this code that's
+provably unused already.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t9001-send-email.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ Documentation/config/sendemail.txt | 3 ---
+ git-send-email.perl                | 6 +-----
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 65b30353719..6bf79c816a6 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1349,6 +1349,16 @@ test_expect_success $PREREQ 'sendemail.identity: bool variable fallback' '
- 	! grep "X-Mailer" stdout
- '
+diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
+index cbc5af42fdf..50baa5d6bfb 100644
+--- a/Documentation/config/sendemail.txt
++++ b/Documentation/config/sendemail.txt
+@@ -8,9 +8,6 @@ sendemail.smtpEncryption::
+ 	See linkgit:git-send-email[1] for description.  Note that this
+ 	setting is not subject to the 'identity' mechanism.
  
-+test_expect_success $PREREQ 'sendemail.identity: bool variable without a value' '
-+	git -c sendemail.xmailer \
-+		send-email \
-+		--dry-run \
-+		--from="nobody@example.com" \
-+		$patches >stdout &&
-+	grep "To: default@example.com" stdout &&
-+	grep "X-Mailer" stdout
-+'
-+
- test_expect_success $PREREQ '--no-to overrides sendemail.to' '
- 	git send-email \
- 		--dry-run \
-@@ -2073,6 +2083,18 @@ test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=true' '
- 	do_xmailer_test 1 "--xmailer"
- '
+-sendemail.smtpssl (deprecated)::
+-	Deprecated alias for 'sendemail.smtpEncryption = ssl'.
+-
+ sendemail.smtpsslcertpath::
+ 	Path to ca-certificates (either a directory or a single file).
+ 	Set it to an empty string to disable certificate verification.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cffdfdacfb9..24d73df5a3e 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -383,11 +383,7 @@ sub read_config {
+ 		my $enc = Git::config(@repo, $setting);
+ 		return unless defined $enc;
+ 		return if $configured->{$setting}++;
+-		if (defined $enc) {
+-			$smtp_encryption = $enc;
+-		} elsif (Git::config_bool(@repo, "$prefix.smtpssl")) {
+-			$smtp_encryption = 'ssl';
+-		}
++		$smtp_encryption = $enc;
+ 	}
+ }
  
-+test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer' '
-+	test_when_finished "test_unconfig sendemail.xmailer" &&
-+	cat >>.git/config <<-\EOF &&
-+	[sendemail]
-+		xmailer
-+	EOF
-+	test_config sendemail.xmailer true &&
-+	do_xmailer_test 1 "" &&
-+	do_xmailer_test 0 "--no-xmailer" &&
-+	do_xmailer_test 1 "--xmailer"
-+'
-+
- test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=false' '
- 	test_config sendemail.xmailer false &&
- 	do_xmailer_test 0 "" &&
-@@ -2080,6 +2102,13 @@ test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=false' '
- 	do_xmailer_test 1 "--xmailer"
- '
- 
-+test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=' '
-+	test_config sendemail.xmailer "" &&
-+	do_xmailer_test 0 "" &&
-+	do_xmailer_test 0 "--no-xmailer" &&
-+	do_xmailer_test 1 "--xmailer"
-+'
-+
- test_expect_success $PREREQ 'setup expected-list' '
- 	git send-email \
- 	--dry-run \
 -- 
 2.32.0.rc1.385.g46e826f1e55
 
