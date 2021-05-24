@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD087C04FF3
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 12:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BD7EC04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 12:36:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CC6F60C3F
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 12:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30E8A613B0
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 12:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232409AbhEXMZG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 08:25:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60370 "EHLO
+        id S232548AbhEXMhu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 08:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232300AbhEXMZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 08:25:06 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EAECC061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 05:23:38 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id ot16so12794125pjb.3
-        for <git@vger.kernel.org>; Mon, 24 May 2021 05:23:38 -0700 (PDT)
+        with ESMTP id S232389AbhEXMho (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 08:37:44 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B07C061574
+        for <git@vger.kernel.org>; Mon, 24 May 2021 05:36:16 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso11081165pji.0
+        for <git@vger.kernel.org>; Mon, 24 May 2021 05:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=8aM7aVeOb2MzQILh38gfhyXmwgWaUCczrfui0pVpFdI=;
-        b=ra4hviNDyekPf5p0fsDLU83jyVMzBup1b65m+EQjVj4l618TXgYa1dKyIbt5ZPVkDC
-         TVrGDJxku7HK47J2vaJ1fsZTH79fdJefEkImurgIdoRNui5nAReDl9MuAAcy8LFnNfWt
-         PdRwIu8pmcfP5jcBJYZLohUc+58QeQkc2tgINBs2wZZCFBzkmt3YFiMzyV5aLjf3SdAA
-         Y7jEZjlW9QjSI9lv2KD+PjX3p1gshqRuY/Jq1cbNjlW30MImopZ8i2MSNdIFQSSH+ArS
-         99idS6piIoKnvi7Q+7pBmi6+GeAWX6TQVV5WHmumvh5DcFuqCyFGh3BJpafjXN+qAzRk
-         96FA==
+        bh=MvHz0ESahQl1XHyfiTV3+zW6g/Jn8f77uC6uBcvK0wU=;
+        b=qIf3ZhKho1XLBlVI/lV7KgJwCnfAcCZB5Az/aPulPGZnQfYk73fq1v84XESwGuSqSS
+         1+6y0iN/bqflVkP66kTYoraqU5E3lRF/uFW1swcOma0yJhGYPrZPNT6l/b3O53hmfkc9
+         9A0uc9eGTGvf4t6gaD9FIQt10NR02PB91GWdtOy2dvLVxgE/0Tx04Cg5pThFvKTn+c0K
+         4fUCQKbJgbzcr8OMBnkDd6xdcFmpqQTf5CMXsn9xUMPy6jQcoOabyCyaYfxbkQOlOg9h
+         gPrW8zeoDVo4pU0ZhJweVDX5hoqDILlcmTec4aNitsu8OmrqBNcYVSNLtTfS9XPVGpe/
+         FITg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=8aM7aVeOb2MzQILh38gfhyXmwgWaUCczrfui0pVpFdI=;
-        b=Yam97PjoiM+teRZ/7n2yj1qh1ncE6wHoJ5Z6TwcqZ5R9j8zTZVT0rDG1Q8jEWosVMs
-         dOMarXpNIsrRYIQhEKu8phF5pOOH/wils77DxClJVN2M4nEJcvtSMSjpWurV+6lzuogb
-         Y29OLfESlnLJ/uqsFT9Jo+wz/OJ3qm0aojCdO+NtAww3B1f5tVNdU/IOHtLqV+Crq1mf
-         oHMsK3QgD20s+jU5Ll6Py2kmypeSMIldbHWWLHPxatPcZZoWEz10OZ00/twbqnvm/eB5
-         slOzGTqksJOKBJka+Sfo7RAm+hliPMUSUqMUKeugpX3iGfUBaTiKbLim3nFPH1f/uTJl
-         IjJA==
-X-Gm-Message-State: AOAM533p3LDPV4ZcANXrPAfS1zJOJCIdiaVmJA+pvjj7P8sb9ArnKMhy
-        1XiJW3MWxSQ6ao32d2l5I2Q=
-X-Google-Smtp-Source: ABdhPJwTD8pqAFnTo9nQxWFGusZ59xhHvV7b5JbQO+fGht8mAa841+iloi1N3CzFRFliVi95mT3o7w==
-X-Received: by 2002:a17:90a:e014:: with SMTP id u20mr24981082pjy.200.1621859017884;
-        Mon, 24 May 2021 05:23:37 -0700 (PDT)
+        bh=MvHz0ESahQl1XHyfiTV3+zW6g/Jn8f77uC6uBcvK0wU=;
+        b=YSmiiEWvwUG1PQAheVDvzKA53k6PGbrNZuvjFjuA43/H8qgf6YMaRyJ52DXn7cQBZg
+         xnBvTUZ8RI/TFuWTyDNzLcryZ4nJ4yVTWCZt6t6A1hIHB5w0VOAghWhnTL3wz3Y547Og
+         7TtH09s5fC/M63/9VVotxcagq/KLFhXktkUlFKhG90ddmdF9Qq/V3fy08981W3BcJswO
+         lbqjj01mXYCJZoVrcWemeZclYGnjlj24sd/8J7Q3s6MywGDqDh1Vaq8VREtxjjWZQKI1
+         gcJstp8MhrdkVp/M/w3/Tsr6Oqne8QhLvs1i3nj+jj0xJrjPB2kITbV2OaafvYX5KYQY
+         hDDw==
+X-Gm-Message-State: AOAM530gF7+H+x1+RvswyPj/dsjOjmE+zCRRu3k6zWCbHUlTPZp2YR4E
+        t6BPdWBALLRGJxsA3q6NuyIOB3W1qyEoLx41
+X-Google-Smtp-Source: ABdhPJz3NeB1EBbdWWDEJ1aQnma2qNDMjSeqP0M0SMH1rIs2UCTYGJuMd9DV9bku8j0hFYGCl+/0TQ==
+X-Received: by 2002:a17:90a:7c4b:: with SMTP id e11mr21148312pjl.73.1621859775916;
+        Mon, 24 May 2021 05:36:15 -0700 (PDT)
 Received: from localhost ([2402:800:63b8:812a:adcf:8995:bb0b:8236])
-        by smtp.gmail.com with ESMTPSA id 194sm11239845pfy.146.2021.05.24.05.23.37
+        by smtp.gmail.com with ESMTPSA id p14sm12253351pgb.2.2021.05.24.05.36.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 05:23:37 -0700 (PDT)
-Date:   Mon, 24 May 2021 19:23:36 +0700
+        Mon, 24 May 2021 05:36:15 -0700 (PDT)
+Date:   Mon, 24 May 2021 19:36:14 +0700
 From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
 To:     Phillip Wood <phillip.wood123@gmail.com>
@@ -70,53 +70,71 @@ Cc:     =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/4] cache.h: =?utf-8?Q?Intr?=
- =?utf-8?B?b2R1Y2UgYSBnZW5lcmljICJ4ZGdfY29uZmlnX2hvbWVfZm9yKOKApik=?=
- =?utf-8?Q?=22?= function
-Message-ID: <YKuayK+lmNfBoYWM@danh.dev>
+Subject: Re: [PATCH v4 2/4] maintenance: introduce ENABLE/DISABLE for code
+ clarity
+Message-ID: <YKudvp0m3m+Yi1+m@danh.dev>
 References: <20210520221359.75615-1-lenaic@lhuard.fr>
  <20210524071538.46862-1-lenaic@lhuard.fr>
- <20210524071538.46862-2-lenaic@lhuard.fr>
- <120b6b5c-ab30-6985-d5af-a0b0290b864f@gmail.com>
+ <20210524071538.46862-3-lenaic@lhuard.fr>
+ <8e013441-08dc-fbb5-f9b9-649b2ffd78db@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <120b6b5c-ab30-6985-d5af-a0b0290b864f@gmail.com>
+In-Reply-To: <8e013441-08dc-fbb5-f9b9-649b2ffd78db@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-24 10:33:30+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
+On 2021-05-24 10:41:18+0100, Phillip Wood <phillip.wood123@gmail.com> wrote:
 > Hi Lénaïc
 > 
-> This looks fine to me. I'm not 100% sold on calling the parameter prog as
-> our program name later in the series ends up being "systemd/user" so
-> something like "subdir" might have been better but that is not worth
-> rerolling for.
-
-I'll take the blame for that "prog".
-I didn't think very hard at the time of writing :(
-
-Yes, "subdir" is definitely better.
-And it's aligned with the XDG Base Directory specifications:
-
-	A user-specific version of the configuration file may be
-	created in $XDG_CONFIG_HOME/subdir/filename
-
 > On 24/05/2021 08:15, Lénaïc Huard wrote:
-> > Current implementation of `xdg_config_home(filename)` returns
-> > `$XDG_CONFIG_HOME/git/$filename`, with the `git` subdirectory inserted
-> > between the `XDG_CONFIG_HOME` environment variable and the parameter.
+> > The first parameter of `XXX_update_schedule` and alike functions is a
+> > boolean specifying if the tasks should be scheduled or unscheduled.
 > > 
-> > This patch introduces a `xdg_config_home_for(prog, filename)` function
-> > which is more generic. It only concatenates "$XDG_CONFIG_HOME", or
-> > "$HOME/.config" if the former isn’t defined, with the parameters,
-> > without adding `git` in between.
-> > 
-> > `xdg_config_home(filename)` is now implemented by calling
-> > `xdg_config_home_for("git", filename)` but this new generic function can
-> > be used to compute the configuration directory of other programs.
+> > Using an `enum` with `ENABLE` and `DISABLE` values can make the code
+> > clearer.
+> 
+> I'm sorry to say that I'm not sure this does make the code clearer overall -
+> I wish I'd spoken up when Danh suggested it.
+> While
+> 	launchctl_boot_plist(DISABLE, filename, cmd)
+> is arguably clearer than
+> 	launchctl_boot_plist(0, filename, cmd)
+> we end up with bizarre tests like
+>  	if (enabled == ENABLED)
+> rather than
+> 	if (enabled)
+> and in the next patch we have
+> 	(enable == ENABLE && (opts->scheduler == i)) ?
+> 			ENABLE : DISABLE;
+> rather than
+> 	enable && opts->scheduler == i
+> 
+> Also looking at the next patch it seems as this one is missing some
+> conversions in maintenance_start() as it is still calling
+> update_background_schedule() with an integer rather than the new enum.
+
+Yes, in this form, I also think the change looks bizarre.
+And, it's entirely my fault.
+
+I also agree with Ævar that 0 and 1 is meant well for off/on.
+
+However, I still think
+
+ 	launchctl_boot_plist(0, filename, cmd)
+
+would require some degree on code navigation to figure out what would
+that LoC does.
+
+I'm thinking about rename the function. But, it would trigger a forever
+bikeshedding, which shouldn't be a blocker for this series.
+
+> I'd be happy to see this being dropped I'm afraid
+
+So, let's drop this patch and start a new conversation when the dust
+settled.
 
 -- 
 Danh
