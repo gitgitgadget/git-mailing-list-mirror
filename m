@@ -2,87 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65213C4708B
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 15:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06A1AC47085
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:09:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CA63613E4
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 15:53:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE8CC61378
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234181AbhEXPzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 11:55:23 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54036 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234691AbhEXPxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 11:53:35 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3FCC013C4FB;
-        Mon, 24 May 2021 11:51:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=hFG9wjDEfabrvYek/c5cxuT3F
-        FiiF0EXRPQJiMuR9ak=; b=BCSeI9afwhCH5cho56dkzZJQ4nhkz/CpbSEzPuph6
-        oCpXtQySlQ38nxpS+/RgSnc30czW732bWRFoetvLBGxC9l+OxB5dZZH2tlu3aenJ
-        FKl24hutvBcXef1wGbJaC65l2j0tOCn71V8vl3o6CWS80UyDa82j8E3dVstvVQdF
-        mE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 386DE13C4FA;
-        Mon, 24 May 2021 11:51:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6008F13C4F6;
-        Mon, 24 May 2021 11:51:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
-        <congdanhqx@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v3 4/4] maintenance: optionally use systemd timers on Linux
-References: <20210509213217.449489-1-lenaic@lhuard.fr>
-        <20210520221359.75615-1-lenaic@lhuard.fr>
-        <20210520221359.75615-5-lenaic@lhuard.fr>
-        <715d8115-641b-5c06-d514-36911eb169ef@gmail.com>
-        <44d937a0-e876-e185-f409-a4fd61eae580@gmail.com>
-        <nycvar.QRO.7.76.6.2105220856320.57@tvgsbejvaqbjf.bet>
-        <60aaa09aebce4_454920811@natae.notmuch>
-        <YKrk4dEjEm6+48ji@camp.crustytoothpaste.net>
-        <87wnrooa17.fsf@evledraar.gmail.com>
-Date:   Tue, 25 May 2021 00:51:53 +0900
-Message-ID: <xmqqim38jfja.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F6FAF2EC-BCA7-11EB-9E10-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S236321AbhEXQK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 12:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238441AbhEXQKH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 12:10:07 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73FEFC049DDB
+        for <git@vger.kernel.org>; Mon, 24 May 2021 08:44:00 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id s10-20020a05620a030ab02902e061a1661fso20661031qkm.12
+        for <git@vger.kernel.org>; Mon, 24 May 2021 08:44:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bKUlmC2w8u3rY598lwsni7pahPxnbK/uotDXrGvFFB4=;
+        b=wMcDBtxJeu4sqcMVjDPE85ygUPsk4VgzwF2+ZT5N9f8Bu0qcX/8pcLsKudyOs3MN70
+         S5+0LNnPhizchvQOkCJURIw2rPXK458xQXcgRlbt5KRN3p1I93wKos/fEx0QVYs9Ko1s
+         pXWE73d20/SI/SMEQQkYgQAiKV9VrdJ9htDkPgI68S8q6YTX+E1IU0+VhUqKFqV2YiOa
+         2FBJKRZDwrpXVitrt3n0ZALgW2fRW5m0zJB40+m7B91jaOQxN1xgRirsRE6udnODNcp3
+         m8oYhZIbULktkPsVjjffdZ5+gjz9PKHGqtvP8gpUGBnrKlKc12gvD4S8iYn9BqbV0b8x
+         Z2zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=bKUlmC2w8u3rY598lwsni7pahPxnbK/uotDXrGvFFB4=;
+        b=HQl5S1aE/Uu87GHk9B/Gwm3TeBZvVOJEjd6hXtv0qIsn//rwInBbvJaFhm4QjW9kT7
+         jPScB60qgjKyEj3RfDmtQJunuKqEQZgjqEKokZfoTcld0yiJg8H10IzzHM8SI+kA5usU
+         Mdyh9jTBejclxpWeS4FwUVFkkUCoVP0wBBfK29+0tBmeJRQpLu3ezuspD00FauNtl05z
+         NxKlpIPzWoIi9UthoUPUV5no1RL6DmHivDm8bh8apKJBzwcngq1/O8aZFr98Msmet2F4
+         dO1I1jBjAEjiu+bVuN5LGFBAh7RzmO8noVFY7fSjB6Ogi9bxrjbh1jb9JcCJqmEI4lE6
+         q8VQ==
+X-Gm-Message-State: AOAM532LppJMvz5VupK2VnnoPth9/br8sYAsVscxtstDI/yL7SQRpRi+
+        Q5nlPxCyjNbco0yjSCijiMmOfkFWtlUYnr7UefY/
+X-Google-Smtp-Source: ABdhPJyd68h7Q0wn323MqW4NQTedPNGYiW8JXJXxFhFWK7P4STjL5Q96haNNI/YZrmKw6vns5QZjSyG92uNaDkkn8cJh
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:c245:: with SMTP id
+ w5mr30752050qvh.36.1621871039448; Mon, 24 May 2021 08:43:59 -0700 (PDT)
+Date:   Mon, 24 May 2021 08:43:54 -0700
+In-Reply-To: <xmqq8s4c6fbg.fsf@gitster.g>
+Message-Id: <20210524154354.268200-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq8s4c6fbg.fsf@gitster.g>
+X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
+Subject: Re: packfile-uri.txt: fix blobPackfileUri description
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, dyroneteng@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Teng Long <dyroneteng@gmail.com> writes:
+> >
+> >> Fix the 'uploadpack.blobPackfileUri' description in packfile-uri.txt
+> >> and the correct format also can be seen in t5702.
+> >>
+> >> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> >> ---
+> >>  Documentation/technical/packfile-uri.txt | 15 ++++++++-------
+> >>  1 file changed, 8 insertions(+), 7 deletions(-)
+> >
+> > Will queue; thanks.
+> >
+> > Jonathan, how does this look?
+> 
+> Ping?
 
-> Personally I don't care whether someone submits a patch where their
-> commit message discusses an example of "he", "she", "they", "it" or
-> whatever. It's just meant as an example, and not some statement about
-> what the gender (or lack thereof) of such a user *should* be.
->
-> It's immediately obvious what the author meant in this case, and that
-> the particular wording is arbitrary. For the purposes of discussing the
-> contribution it matters whether it's unclear or ambiguous, which it's
-> not.
+Sorry, I just got back on vacation. This looks good - it's exactly the
+same as the change I approved previously [1].
 
-Nicely put.  Thanks.
+Teng Long, for future reviews, the review would go faster if you
+mentioned the changes in between versions (e.g. in this case, you
+updated the commit message following my suggestions).
+
+[1] https://lore.kernel.org/git/20210506164728.336409-1-jonathantanmy@google.com/
