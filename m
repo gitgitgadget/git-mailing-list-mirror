@@ -2,243 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DE49C04FF3
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 09:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF9E9C04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 09:50:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 434986120A
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 09:41:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A61F86113B
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 09:50:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232546AbhEXJmx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 05:42:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51710 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232528AbhEXJmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 05:42:51 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6A1C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 02:41:21 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id f6-20020a1c1f060000b0290175ca89f698so11051698wmf.5
-        for <git@vger.kernel.org>; Mon, 24 May 2021 02:41:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xH/mQ0mAbdE/ZZpOh84IiMiYIyaEUBS0ZIL2cKu2S/Q=;
-        b=n1GT2jUcUTjhejlXal/vHApYqzJuFOHbTFYlr7a2uk5k8k2c5PGRSbHUd/Z/HuGrW2
-         mP4Qb0M5pg0P0TM2F5mM0bXi3vheDGJoAnoatfpIhHH3qWBxOdHSpIwNOgixE7YD5C6k
-         k6c6muPbucpJmc8rP9tD0eoMe8eFJRYY5MOJrzXGqGf4RnjDb59Fv/nFt5tyBjs9eu8f
-         OchEnLSCqQJ3+mfe5V2tUsXg5bKG4o6E7biVlRf0v916sgjx1lszGBOaHTTBDPLiNwoW
-         KKKLqWXvKFWUeYlreXCfp4xvsqZXTlkTBlesI0j+HJT5s3/T5tXkz+BIeFJSSO+h3tUE
-         Y6jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xH/mQ0mAbdE/ZZpOh84IiMiYIyaEUBS0ZIL2cKu2S/Q=;
-        b=c8quYq3L7GcTpP93QOsRFFr4tlJ8t30zokXFY2keMGk4zUtR3UbjRQK1KqE9zrrTte
-         0VlqyPpobh5zRqGJl9t9+VGBE+kOVmoYI0gHl/iEmmBeSgxxU9CtjngQyfc+fyBhW9yZ
-         MtEA5bncrMSR9f4aoRytErWj+ubRIAvvAoIWulXcefwwfp5LU7tnzwBwh940Ny6m4WFh
-         OvvGbwO/Rwhjn8Powhl18s0SZVBVY7ezU9YpixDTetLFPIuKKSpPLaGGNH3By6xUNG8C
-         VryuLUHCodriBqCAjBYtrR6NNTlC3xTdemAcxoWDvprsMGnQ2wLydV/cO80jsbAXrXTm
-         8CSg==
-X-Gm-Message-State: AOAM533IHUPBjmeVD4etKngyqE8rszEFOEhR8UewTLuDFjwviMy8WN5U
-        FFGec/scNsSin4fu8eHQDdw=
-X-Google-Smtp-Source: ABdhPJwc7XuVxO95ECQZMShNxWAdyxm+Jz6SjrL6Wo7sseZhX4l2CDv7rPadKFq7vWSdpvuW2+oljA==
-X-Received: by 2002:a1c:4482:: with SMTP id r124mr19367637wma.42.1621849280118;
-        Mon, 24 May 2021 02:41:20 -0700 (PDT)
-Received: from [192.168.1.201] (88.22.198.146.dyn.plus.net. [146.198.22.88])
-        by smtp.googlemail.com with ESMTPSA id s11sm7323854wmf.14.2021.05.24.02.41.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 May 2021 02:41:19 -0700 (PDT)
-Subject: Re: [PATCH v4 2/4] maintenance: introduce ENABLE/DISABLE for code
- clarity
-To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20210520221359.75615-1-lenaic@lhuard.fr>
- <20210524071538.46862-1-lenaic@lhuard.fr>
- <20210524071538.46862-3-lenaic@lhuard.fr>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <8e013441-08dc-fbb5-f9b9-649b2ffd78db@gmail.com>
-Date:   Mon, 24 May 2021 10:41:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+        id S232488AbhEXJwV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 05:52:21 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:42917 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232313AbhEXJwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 05:52:20 -0400
+Received: from host-92-1-139-132.as13285.net ([92.1.139.132] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1ll7EZ-0008AQ-DJ; Mon, 24 May 2021 10:50:51 +0100
+Subject: Re: fast forward merge overwriting my code
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>, git@vger.kernel.org
+References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
+ <8f3d4d1e-18f4-ccb2-9439-80a5812c2f36@iee.email> <xmqqo8d1o5ni.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <f3f8927f-75af-c3bd-07af-5fd4b64987e9@iee.email>
+Date:   Mon, 24 May 2021 10:50:50 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-In-Reply-To: <20210524071538.46862-3-lenaic@lhuard.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqo8d1o5ni.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lénaïc
+On 23/05/2021 16:01, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.email> writes:
+>
+>> On 22/05/2021 16:48, Andre Ulrich wrote:
+>>> .... Then I use
+>>>
+>>> git checkout master
+>>>
+>>> and
+>>>
+>>> git merge testing
+>>>
+>>> I would expect git to tell me "hey, wait, you have changed some of the
+>>> first lines in the .txt file. When you merge, your code on master will
+>>> be altered". But git just merges everything in.
+>> ...
+>> maybe `git merge --no-ff testing` for use of a command line option
+>>
+>> or setup your .gitconfig e.g. `git config --global merge.ff no`,
+>> but also `git config --global pull.ff yes` if you are using `git pull`
+>> (=fetch + merge)
+> I didn't get an impression that this has anything to do with
+> fast-forwarding, though.  
 
-On 24/05/2021 08:15, Lénaïc Huard wrote:
-> The first parameter of `XXX_update_schedule` and alike functions is a
-> boolean specifying if the tasks should be scheduled or unscheduled.
-> 
-> Using an `enum` with `ENABLE` and `DISABLE` values can make the code
-> clearer.
+Andre had (in the body of the text) explicitly said that it was the fast
+forward that was the problem for him.
 
-I'm sorry to say that I'm not sure this does make the code clearer 
-overall - I wish I'd spoken up when Danh suggested it.
-While
-	launchctl_boot_plist(DISABLE, filename, cmd)
-is arguably clearer than
-	launchctl_boot_plist(0, filename, cmd)
-we end up with bizarre tests like
-  	if (enabled == ENABLED)
-rather than
-	if (enabled)
-and in the next patch we have
-	(enable == ENABLE && (opts->scheduler == i)) ?
-			ENABLE : DISABLE;
-rather than
-	enable && opts->scheduler == i
+I suspect he had a mental model / world view / weltanshauung that was
+more aligned to a swim lane model of branches (named lines of
+development) and that, possibly in a GUI, the loss two lanes was rather
+confusing.
 
-Also looking at the next patch it seems as this one is missing some 
-conversions in maintenance_start() as it is still calling 
-update_background_schedule() with an integer rather than the new enum.
+> The file in question has changes on the
+> "testing" branch since it forked from "master", and the user is
+> merging, i.e. the user _assumes_ that the tip of each branch suits
+> his/her purpose better than the tip of the other branch, hence wants
+> to take improvements on both branches incorporated into a single
+> history--- which is the point of "merging" the testing branch into
+> the master branch.  
 
-I'd be happy to see this being dropped I'm afraid
+In his description it's not always clear "also change some of the
+already existing lines" what happened elsewhere that could lead to the
+confusion. It will have been tricky for Andre, as someone new to git, to
+really know what was going on. We can't assume the new user knows what
+Git will do.
 
-Best Wishes
+> The result of merging might reveal that the tip
+> of the other branch wasn't as great as s/he earlier thought, in
+> which case s/he may want to undo the merge.  But if the result of
+> merging better suites his/her purpose, it would be an improvement
+> over where 'master' used to be (and it would also be an improvement
+> over where 'testing' used to be), and the world makes a progress.
+>
+> In this particular case, the "master" side did not move since the
+> two branches forked, so the merge was to take improvements made on
+> "testing" into "master", and if the edit to the file in question
+> made on "testing" were bogus, the merging operation of course will
+> bring that breakage in, together with all the other changes.  Since
+> the lack of any progress on the "master" side does not change this
+> picture, I do not think fast-forwardness has anything to do with
+> what Andre is complaining about.
+>
+> "git merge" cannot be expected to inspect the file and point out
+> "no, the edit they made on the testing branch is totally bogus,
+> don't merge it".  That is left for humans and tools other than Git
+> (like test suite) may help them.
+>
+>
+The changes to mental models that are needed to understand Git can take
+some time, especially for those who haven't grown up with it.
 
-Phillip
-
-> Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
-> ---
->   builtin/gc.c | 49 +++++++++++++++++++++++++++++++------------------
->   1 file changed, 31 insertions(+), 18 deletions(-)
-> 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index ef7226d7bc..0caf8d45c4 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1570,19 +1570,21 @@ static char *launchctl_get_uid(void)
->   	return xstrfmt("gui/%d", getuid());
->   }
->   
-> -static int launchctl_boot_plist(int enable, const char *filename, const char *cmd)
-> +enum enable_or_disable {
-> +	DISABLE,
-> +	ENABLE
-> +};
-> +
-> +static int launchctl_boot_plist(enum enable_or_disable enable,
-> +				const char *filename, const char *cmd)
->   {
->   	int result;
->   	struct child_process child = CHILD_PROCESS_INIT;
->   	char *uid = launchctl_get_uid();
->   
->   	strvec_split(&child.args, cmd);
-> -	if (enable)
-> -		strvec_push(&child.args, "bootstrap");
-> -	else
-> -		strvec_push(&child.args, "bootout");
-> -	strvec_push(&child.args, uid);
-> -	strvec_push(&child.args, filename);
-> +	strvec_pushl(&child.args, enable == ENABLE ? "bootstrap" : "bootout",
-> +		     uid, filename, NULL);
->   
->   	child.no_stderr = 1;
->   	child.no_stdout = 1;
-> @@ -1601,7 +1603,7 @@ static int launchctl_remove_plist(enum schedule_priority schedule, const char *c
->   	const char *frequency = get_frequency(schedule);
->   	char *name = launchctl_service_name(frequency);
->   	char *filename = launchctl_service_filename(name);
-> -	int result = launchctl_boot_plist(0, filename, cmd);
-> +	int result = launchctl_boot_plist(DISABLE, filename, cmd);
->   	unlink(filename);
->   	free(filename);
->   	free(name);
-> @@ -1684,8 +1686,8 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
->   	fclose(plist);
->   
->   	/* bootout might fail if not already running, so ignore */
-> -	launchctl_boot_plist(0, filename, cmd);
-> -	if (launchctl_boot_plist(1, filename, cmd))
-> +	launchctl_boot_plist(DISABLE, filename, cmd);
-> +	if (launchctl_boot_plist(ENABLE, filename, cmd))
->   		die(_("failed to bootstrap service %s"), filename);
->   
->   	free(filename);
-> @@ -1702,12 +1704,17 @@ static int launchctl_add_plists(const char *cmd)
->   		launchctl_schedule_plist(exec_path, SCHEDULE_WEEKLY, cmd);
->   }
->   
-> -static int launchctl_update_schedule(int run_maintenance, int fd, const char *cmd)
-> +static int launchctl_update_schedule(enum enable_or_disable run_maintenance,
-> +				     int fd, const char *cmd)
->   {
-> -	if (run_maintenance)
-> +	switch (run_maintenance) {
-> +	case ENABLE:
->   		return launchctl_add_plists(cmd);
-> -	else
-> +	case DISABLE:
->   		return launchctl_remove_plists(cmd);
-> +	default:
-> +		BUG("invalid enable_or_disable value");
-> +	}
->   }
->   
->   static char *schtasks_task_name(const char *frequency)
-> @@ -1864,18 +1871,24 @@ static int schtasks_schedule_tasks(const char *cmd)
->   		schtasks_schedule_task(exec_path, SCHEDULE_WEEKLY, cmd);
->   }
->   
-> -static int schtasks_update_schedule(int run_maintenance, int fd, const char *cmd)
-> +static int schtasks_update_schedule(enum enable_or_disable run_maintenance,
-> +				    int fd, const char *cmd)
->   {
-> -	if (run_maintenance)
-> +	switch (run_maintenance) {
-> +	case ENABLE:
->   		return schtasks_schedule_tasks(cmd);
-> -	else
-> +	case DISABLE:
->   		return schtasks_remove_tasks(cmd);
-> +	default:
-> +		BUG("invalid enable_or_disable value");
-> +	}
->   }
->   
->   #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
->   #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
->   
-> -static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
-> +static int crontab_update_schedule(enum enable_or_disable run_maintenance,
-> +				   int fd, const char *cmd)
->   {
->   	int result = 0;
->   	int in_old_region = 0;
-> @@ -1925,7 +1938,7 @@ static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
->   			fprintf(cron_in, "%s\n", line.buf);
->   	}
->   
-> -	if (run_maintenance) {
-> +	if (run_maintenance == ENABLE) {
->   		struct strbuf line_format = STRBUF_INIT;
->   		const char *exec_path = git_exec_path();
->   
-> 
-
+Philip
