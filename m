@@ -2,95 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06A1AC47085
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 438A3C04FF3
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:40:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE8CC61378
-	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:09:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 163CC61406
+	for <git@archiver.kernel.org>; Mon, 24 May 2021 16:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236321AbhEXQK5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 12:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55126 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238441AbhEXQKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 12:10:07 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73FEFC049DDB
-        for <git@vger.kernel.org>; Mon, 24 May 2021 08:44:00 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id s10-20020a05620a030ab02902e061a1661fso20661031qkm.12
-        for <git@vger.kernel.org>; Mon, 24 May 2021 08:44:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=bKUlmC2w8u3rY598lwsni7pahPxnbK/uotDXrGvFFB4=;
-        b=wMcDBtxJeu4sqcMVjDPE85ygUPsk4VgzwF2+ZT5N9f8Bu0qcX/8pcLsKudyOs3MN70
-         S5+0LNnPhizchvQOkCJURIw2rPXK458xQXcgRlbt5KRN3p1I93wKos/fEx0QVYs9Ko1s
-         pXWE73d20/SI/SMEQQkYgQAiKV9VrdJ9htDkPgI68S8q6YTX+E1IU0+VhUqKFqV2YiOa
-         2FBJKRZDwrpXVitrt3n0ZALgW2fRW5m0zJB40+m7B91jaOQxN1xgRirsRE6udnODNcp3
-         m8oYhZIbULktkPsVjjffdZ5+gjz9PKHGqtvP8gpUGBnrKlKc12gvD4S8iYn9BqbV0b8x
-         Z2zQ==
+        id S232803AbhEXQl7 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 24 May 2021 12:41:59 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:39720 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232829AbhEXQl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 12:41:58 -0400
+Received: by mail-ed1-f48.google.com with SMTP id h16so32699174edr.6
+        for <git@vger.kernel.org>; Mon, 24 May 2021 09:40:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bKUlmC2w8u3rY598lwsni7pahPxnbK/uotDXrGvFFB4=;
-        b=HQl5S1aE/Uu87GHk9B/Gwm3TeBZvVOJEjd6hXtv0qIsn//rwInBbvJaFhm4QjW9kT7
-         jPScB60qgjKyEj3RfDmtQJunuKqEQZgjqEKokZfoTcld0yiJg8H10IzzHM8SI+kA5usU
-         Mdyh9jTBejclxpWeS4FwUVFkkUCoVP0wBBfK29+0tBmeJRQpLu3ezuspD00FauNtl05z
-         NxKlpIPzWoIi9UthoUPUV5no1RL6DmHivDm8bh8apKJBzwcngq1/O8aZFr98Msmet2F4
-         dO1I1jBjAEjiu+bVuN5LGFBAh7RzmO8noVFY7fSjB6Ogi9bxrjbh1jb9JcCJqmEI4lE6
-         q8VQ==
-X-Gm-Message-State: AOAM532LppJMvz5VupK2VnnoPth9/br8sYAsVscxtstDI/yL7SQRpRi+
-        Q5nlPxCyjNbco0yjSCijiMmOfkFWtlUYnr7UefY/
-X-Google-Smtp-Source: ABdhPJyd68h7Q0wn323MqW4NQTedPNGYiW8JXJXxFhFWK7P4STjL5Q96haNNI/YZrmKw6vns5QZjSyG92uNaDkkn8cJh
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0c:c245:: with SMTP id
- w5mr30752050qvh.36.1621871039448; Mon, 24 May 2021 08:43:59 -0700 (PDT)
-Date:   Mon, 24 May 2021 08:43:54 -0700
-In-Reply-To: <xmqq8s4c6fbg.fsf@gitster.g>
-Message-Id: <20210524154354.268200-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq8s4c6fbg.fsf@gitster.g>
-X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-Subject: Re: packfile-uri.txt: fix blobPackfileUri description
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, dyroneteng@gmail.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jE9kQPvuLNAc+0S+yZb8IxR/DUvUqtTyi8Os1ZG9KYI=;
+        b=EXOvEDnqgFB4vpdT0WdA2B46ZCtCXrPNvBYh1ylYIyxNuImEX3CJC7YJ02SJGHdNVM
+         IwDJnFafNUUd4SrQkK6olNZpwD44qqBFpwuPIi4sF6E+EoUFVdrzOb9O0DQbzGHAREnf
+         Ktda8ODyOXQ1IPN9DkvhmRKXjro3+WUltXNDSTVaymA5AXA1ZmZA85zb6Wfc65aa4Lj5
+         SX/7mWPQM/uvpO4w/zwyxpLeZxw5+3pddeYl9LIG4zL5cP+/Gpw8os4N+FX+LhvlR+sG
+         ZjY9wQIO1tbdrtKV3XRZhOGLD09b+EIu4axa1hgywTt++evHrCAlIMjXbBMHa28ZRILs
+         wiRQ==
+X-Gm-Message-State: AOAM533AoQQHHggIOVq/a0Hx/uB+d6wbgZUITB5wI5/bQe/dImCAtsf2
+        +qfxXRuIKfOyhqT89elSQmKmV+0IW1/9iW6ieGGEgzcXCKG2/w==
+X-Google-Smtp-Source: ABdhPJxfOju9PES+uv/YLQmgiuLY4FgNQM6pFYZw85U8Ywe7TzE8WzrTmXVRWcUb4ZOdTwY0+baTYUFp9Eh8tZhOP3M=
+X-Received: by 2002:aa7:d3c8:: with SMTP id o8mr26471144edr.181.1621874399684;
+ Mon, 24 May 2021 09:39:59 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210520221359.75615-1-lenaic@lhuard.fr> <20210524071538.46862-1-lenaic@lhuard.fr>
+ <20210524071538.46862-5-lenaic@lhuard.fr> <87r1hwo3e3.fsf@evledraar.gmail.com>
+In-Reply-To: <87r1hwo3e3.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 24 May 2021 12:39:48 -0400
+Message-ID: <CAPig+cQSbHM1ph+hg2dkR3fBoxF2pxAh+xYe8to4yGfXOpMLMA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] maintenance: add support for systemd timers on Linux
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Teng Long <dyroneteng@gmail.com> writes:
-> >
-> >> Fix the 'uploadpack.blobPackfileUri' description in packfile-uri.txt
-> >> and the correct format also can be seen in t5702.
-> >>
-> >> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> >> ---
-> >>  Documentation/technical/packfile-uri.txt | 15 ++++++++-------
-> >>  1 file changed, 8 insertions(+), 7 deletions(-)
-> >
-> > Will queue; thanks.
-> >
-> > Jonathan, how does this look?
-> 
-> Ping?
+On Mon, May 24, 2021 at 6:03 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Mon, May 24 2021, Lénaïc Huard wrote:
+> > +test_expect_success 'start and stop Linux/systemd maintenance' '
+> > +     write_script print-args <<-\EOF &&
+> > +     printf "%s\n" "$*" >>args
+> > +     EOF
+> > +
+> > +     XDG_CONFIG_HOME="$PWD" &&
+> > +     export XDG_CONFIG_HOME &&
+> > +     rm -f args &&
+>
+> If you're going to care about cleanup here, and personally I wouldn't,
+> just call that "args" by the name "expect" instead (as is convention)
+> and clobber it every time...
+>
+> Anyway, a better way to do the cleanup is:
+>
+>     test_when_finished "rm args" &&
+>     echo this is the first time you write the file >args
+>     [the rest of the test code]
+>
+> Then you don't need to re-rm it.
 
-Sorry, I just got back on vacation. This looks good - it's exactly the
-same as the change I approved previously [1].
+A few comments:
 
-Teng Long, for future reviews, the review would go faster if you
-mentioned the changes in between versions (e.g. in this case, you
-updated the commit message following my suggestions).
+This is following an already-established pattern in this test script,
+so it would be unfortunate and out of place to change only these
+newly-added tests, thus it's probably better to follow the existing
+idiom as is done here. If someone wants to rework all this, it can be
+done later script-wide and need not be part of this series nor done by
+Lénaïc.
 
-[1] https://lore.kernel.org/git/20210506164728.336409-1-jonathantanmy@google.com/
+The name `args` is reflective of what is being captured here;
+specifically, it captures the arguments passed to the system-specific
+scheduler command. It's also the name used by all the other tests, so
+it's probably fine as-is.
+
+The git-maintenance command is invoked multiple times in a single test
+and `args` needs to be removed before each invocation since its
+content is accumulated via `>>` within the `print-args` script, which
+is necessary since that script may be run multiple times by a single
+git-maintenance command. So, `rm -f args` is not mere cleanup here;
+it's an integral part of the test, thus test_when_finished() would be
+incorrect.
