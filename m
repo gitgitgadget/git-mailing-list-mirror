@@ -2,75 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FC45C2B9F8
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 19:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82E3CC47086
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 20:02:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7263E61413
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 19:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B9BB613B6
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 20:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232547AbhEYT36 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 May 2021 15:29:58 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55478 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231722AbhEYT35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 May 2021 15:29:57 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9BD7B12F0C3;
-        Tue, 25 May 2021 15:28:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=l1y+qeABF+AR
-        UtUDj11/3mwEFp/RYX0Iv1tQ0tMkN8M=; b=k5eEqu6W8DkTyicJ8INGWcFJYeg2
-        ZHXr/UTbGU88MKQJnvMADpuUpF+5/Hh9amLZ0+tP0OT4bHu/lYDLoORMZfXzwz9F
-        ymCONO5MwZzdniqJb3SwDsn7jf2HnSs438mFoqHzzG+vwwvjMbIfouzy5UodnUy0
-        4jwJaIDLEDxmJeM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 93F3B12F0C2;
-        Tue, 25 May 2021 15:28:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E098512F0BF;
-        Tue, 25 May 2021 15:28:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>
-Subject: Re: [PATCH 2/2] send-email: don't needlessly abs_path() the
- core.hooksPath
-References: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>
-        <cover-0.2-00000000000-20210524T231047Z-avarab@gmail.com>
-        <patch-2.2-d097e7b0b81-20210524T231047Z-avarab@gmail.com>
-        <xmqqh7iripzg.fsf@gitster.g> <874kerny0e.fsf@evledraar.gmail.com>
-        <xmqq35ubgwpy.fsf@gitster.g> <87v977m2q6.fsf@evledraar.gmail.com>
-Date:   Wed, 26 May 2021 04:28:23 +0900
-In-Reply-To: <87v977m2q6.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 25 May 2021 14:09:35 +0200")
-Message-ID: <xmqq5yz6ehpk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233074AbhEYUE1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 May 2021 16:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38430 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233038AbhEYUE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 May 2021 16:04:26 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5D78C061574
+        for <git@vger.kernel.org>; Tue, 25 May 2021 13:02:56 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id p24so47996210ejb.1
+        for <git@vger.kernel.org>; Tue, 25 May 2021 13:02:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=rtMlUitFRBZsRz5yvBpPsO1oDbqYkaCPHuHMNXxP93c=;
+        b=qnt4Nbl6qENMac0q/X2zcd2Z8qte0TRdruH2w2NOOf8+quOy7yVGhzidmKk1GgOYjb
+         B7RiPXRw0gl+Bmy02M5ayHWWLI1UisqSlXMvvn0R50oCUapSYamJEjSLIQMMWFlT/GiK
+         W5xBYhFC7R2vi3944A6IOlcqnpELcVVHCBxrCqJpZtc2trTtxUwgnHn2lRsDNPmNVEk8
+         ZQC6+38ckz+3FobBhXizsYXTo5HVd/TMVjPgBnXh/F0BfFa3neih9qZNwwff9Kcp35VV
+         VRSsEx5lXT+n5BAvXRZ1TQhdzrWzicFDG6MDv28rQF+mktdKzOpkRx6FJH0D5UML3BMe
+         DizQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=rtMlUitFRBZsRz5yvBpPsO1oDbqYkaCPHuHMNXxP93c=;
+        b=p1IoboHISsL6r0RjRyVwUc6J5T71aFBOu56FIJTMKXI99Hvjt+L4nOaVVOb7GNYqjE
+         mAS7SvhEf5f0aSejC63OPKKP0mQFvhIyQdCQ4vm0JH2PNXhlAGPBLJ/R3V3q66R1Jdgg
+         FjGFI/QVrHo+MbLKyIpi4ZbqL0vJvOVxLa7ldB9Zc8WLAmUJy9nYtK9rf2a+y47uP32Y
+         Ytc408ck2CzuAnQcRUaJN9TZ9uBv2m6hFui8p9WZYiYM0h8nMhyNGe3U9XlTcO+ffjVu
+         7BUB0+/52lqVoW6Bg8RsmjC5juRvGQkN0QzEhNOdRzGjCqyAZoHpamBl30Ondzy+meu9
+         Rbyw==
+X-Gm-Message-State: AOAM533itgJdd6qfNOXx75Vb71xtmQn92RD5gaI+zrfo6KNxoxF1WQyc
+        dKU1s/izj+U2Uw6Nm9DwUs4sp9l2OlQUVVKPpNK0t2lMThubbg==
+X-Google-Smtp-Source: ABdhPJyum1pUeuGmnAKwjCoM/uHOZjEA79wtLt9uSB4XzB2XU8it2alS+DO3QPMzzFQ/xmle81BDd1Z/5CtzeITzQuU=
+X-Received: by 2002:a17:906:ca4f:: with SMTP id jx15mr17589014ejb.160.1621972974869;
+ Tue, 25 May 2021 13:02:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5FC05CF8-BD8F-11EB-A2ED-D5C30F5B5667-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 25 May 2021 22:02:43 +0200
+Message-ID: <CAP8UFD3i99kT45gpn7NhgboFDS5OoVDizYJCP7BzuFA6iu1vOA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 75
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi everyone!
 
-> But I'll leave it to you, if you are convinced and do want to take this
-> 2/2 after all I'll submit another trivial patch on top to remove the ne=
-w
-> (then unused) repo_path function, which we expect to go away anyway.
+A draft of a new Git Rev News edition is available here:
 
-Sounds good.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-75.md
+
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/500
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and me plan to publish this edition on Thursday
+May 27th.
+
+Thanks,
+Christian.
