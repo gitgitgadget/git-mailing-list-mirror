@@ -3,138 +3,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BEC7C2B9F8
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 04:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 252BDC2B9F8
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 05:03:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1347C60FDA
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 04:21:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9C89613F6
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 05:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbhEYEWk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 May 2021 00:22:40 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58588 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbhEYEWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 May 2021 00:22:39 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5C3412927E;
-        Tue, 25 May 2021 00:21:09 -0400 (EDT)
+        id S230149AbhEYFE4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 May 2021 01:04:56 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64102 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230041AbhEYFEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 May 2021 01:04:55 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90A0BCCB26;
+        Tue, 25 May 2021 01:03:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fQJP44rDz9tgJxKTq4vX9akH/jBLINyfwGP/Q4
-        dFr9Q=; b=dum2615AdKh8R9sYBKv0bTTv2dpX8o+2/p9MKJuo0s4jxIISRCAEgY
-        vwa4R3irME8WJVUWj9BHbIGjqOmQF6cktaEBemsXBVgVY3dYbvbqtfCXNyLq5kun
-        sNr2c6N8g6jysoA5gJDj7cdGcCb1nYgaa3mz4yn0guT5vCP1LgYIw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE8E912927D;
-        Tue, 25 May 2021 00:21:09 -0400 (EDT)
+        :content-type; s=sasl; bh=FQvTw67JNfgOPd4VYdhij+X/TOK5+de1x6p0In
+        yejNU=; b=uQDEYMfjMv11Cj1ymAMomHr6/bIZWFCY+/+idBP1CbmPBPF5Yrd5nk
+        MJPMMGkf1osSUcpjd4aSnWQ00UleB/4GNwcyPAzSRRVVI7hTA+XrZj24JDL8ssLU
+        FWRMcDDLXJa3KKgu80AFx0P7F9velE90g+IwjBcGxnOUlDsJZWFL4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87A77CCB25;
+        Tue, 25 May 2021 01:03:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 34E3412927C;
-        Tue, 25 May 2021 00:21:07 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19DCECCB24;
+        Tue, 25 May 2021 01:03:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, ajrhunt@google.com, peff@peff.net
-Subject: Re: [PATCH] init: fix bug regarding ~/ expansion in init.templateDir
-References: <b079bc0288429919aca482a689ee87e70b719303.1621914058.git.matheus.bernardino@usp.br>
-Date:   Tue, 25 May 2021 13:21:04 +0900
-In-Reply-To: <b079bc0288429919aca482a689ee87e70b719303.1621914058.git.matheus.bernardino@usp.br>
-        (Matheus Tavares's message of "Tue, 25 May 2021 00:41:01 -0300")
-Message-ID: <xmqqlf83h2a7.fsf@gitster.g>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH 2/3] [GSOC] ref-filter: support %(contents) for blob, tree
+References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
+        <19413cfdb1ea50de401ab958b954a550b6514688.1621763612.git.gitgitgadget@gmail.com>
+Date:   Tue, 25 May 2021 14:03:24 +0900
+In-Reply-To: <19413cfdb1ea50de401ab958b954a550b6514688.1621763612.git.gitgitgadget@gmail.com>
+        (ZheNing Hu via GitGitGadget's message of "Sun, 23 May 2021 09:53:31
+        +0000")
+Message-ID: <xmqqfsybh0bn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A059C90E-BD10-11EB-B4BC-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 890D8F64-BD16-11EB-A1E3-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> We used to read the init.templateDir setting at builtin/init-db.c using
-> a git_config() callback that, in turn, called git_config_pathname(). To
-> simplify the config reading logic at this file and plug a memory leak,
-> this was replaced by a direct call to git_config_get_value() at
-> e4de4502e6 ("init: remove git_init_db_config() while fixing leaks",
-> 2021-03-14). However, this function doesn't provide path expanding
-> semantics, like git_config_pathname() does, so paths with '~/' and
-> '~user/' are treated literally. This makes 'git init' fail to handle
-> init.templateDir paths using these constructs:
->
-> 	$ git config init.templateDir '~/templates_dir'
-> 	$ git init
-> 	'warning: templates not found in ~/templates_dir'
->
-> Replace the git_config_get_value() call by git_config_get_pathname(),
-> which does the '~/' and '~user/' expansions. Also add a regression test.
-> Note that unlike git_config_get_value(), the config cache does not own
-> the memory for the path returned by git_config_get_pathname(), so we
-> must free() it.
->
-> Reported on IRC by rkta.
->
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
-
-The patch looks like a clean regression fix.
-
-> +init_no_templatedir_env () {
-> +	(
-> +		sane_unset GIT_TEMPLATE_DIR &&
-> +		NO_SET_GIT_TEMPLATE_DIR=t &&
-> +		export NO_SET_GIT_TEMPLATE_DIR &&
-> +		git init "$1"
-
-	(
-		sane_unset GIT_TEMPLATE_DIR &&
-		NO_SET_GIT_TEMPLATE_DIR=t git init "$1"
-	)
-
-would be a shorter way to write it, but this is inheriting from the
-original that used longhand, so it is OK, I guess.  We cannot lose
-the subprocess because we do not want to lose GIT_TEMPLATE_DIR in
-tests that run after a test that uses this function.
-
-OK.  We could lose the outermost {} but let's take the patch as-is.
-
-Thanks.
-
-> +	)
-> +}
-> +
->  test_expect_success 'init with init.templatedir set' '
->  	mkdir templatedir-source &&
->  	echo Content >templatedir-source/file &&
->  	test_config_global init.templatedir "${HOME}/templatedir-source" &&
-> -	(
-> -		mkdir templatedir-set &&
-> -		cd templatedir-set &&
-> -		sane_unset GIT_TEMPLATE_DIR &&
-> -		NO_SET_GIT_TEMPLATE_DIR=t &&
-> -		export NO_SET_GIT_TEMPLATE_DIR &&
-> -		git init
-> -	) &&
-> +
-> +	init_no_templatedir_env templatedir-set &&
->  	test_cmp templatedir-source/file templatedir-set/.git/file
->  '
+> @@ -1292,7 +1326,8 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
+>  }
 >  
-> +test_expect_success 'init with init.templatedir using ~ expansion' '
-> +	mkdir -p templatedir-source &&
-> +	echo Content >templatedir-source/file &&
-> +	test_config_global init.templatedir "~/templatedir-source" &&
-> +
-> +	init_no_templatedir_env templatedir-expansion &&
-> +	test_cmp templatedir-source/file templatedir-expansion/.git/file
-> +'
-> +
->  test_expect_success 'init --bare/--shared overrides system/global config' '
->  	test_config_global core.bare false &&
->  	test_config_global core.sharedRepository 0640 &&
+>  /* See grab_values */
+> -static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+
+
+As I already said, I do not think %(contents) mixes well with this
+use for trees and blobs where you give the raw bytes, since
+%(contents) for commit and tag objects was never about the full byte
+sequence of the object.  It was to give the unstructured part meant
+for human consumption, stripping the structured "header" part of the
+object.
+
+Nevertheless, since queuing this topic breaks the build and gets in
+the way to find issues in other proposed regression fixes of higher
+importance,...
+
+> +static void grab_contents(struct atom_value *val, int deref, void *buf,
+> +			  unsigned long buf_size, enum object_type object_type)
+>  {
+> ...
+> +		switch (object_type) {
+> +		case OBJ_TAG:
+> +		case OBJ_COMMIT: {
+> ...
+> +				v->s = xmemdupz(bodypos, bodylen);
+> +			else if (atom->u.contents.option == C_LENGTH)
+> +				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)strlen(subpos));
+> ...
+
+Note that this part inherits from the original and knows how to feed
+a value to PRIuMAX with correct cast ...
+
+> +				v->s = xmemdupz(bodypos, nonsiglen);
+> +			else if (atom->u.contents.option == C_SIG)
+> ...
+> +		}
+> +		case OBJ_BLOB:
+> +		case OBJ_TREE: {
+> +			if (atom->u.contents.option == C_BARE) {
+> +				v->s_size = buf_size;
+> +				v->s = xmemdupz(buf, buf_size);
+> +			} else if (atom->u.contents.option == C_LENGTH)
+> +				v->s = xstrfmt("%"PRIuMAX, buf_size);
+
+... but this one gets sloppy, and breaks the windows-build of
+'seen'.  Fix is simple:
+
++				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)buf_size);
+
+I'll squash it in before rebuilding 'seen'.
+
