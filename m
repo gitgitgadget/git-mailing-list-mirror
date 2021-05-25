@@ -2,119 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACDDC47086
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 07:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E195C2B9F8
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 07:47:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2DB56101E
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 07:31:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01E296128B
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 07:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231803AbhEYHdH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 May 2021 03:33:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
+        id S231906AbhEYHtH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 May 2021 03:49:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231737AbhEYHdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 May 2021 03:33:02 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D659C061574
-        for <git@vger.kernel.org>; Tue, 25 May 2021 00:31:32 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 29so10938700pgu.11
-        for <git@vger.kernel.org>; Tue, 25 May 2021 00:31:32 -0700 (PDT)
+        with ESMTP id S231898AbhEYHtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 May 2021 03:49:06 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE95C061574
+        for <git@vger.kernel.org>; Tue, 25 May 2021 00:47:35 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id gb17so27758972ejc.8
+        for <git@vger.kernel.org>; Tue, 25 May 2021 00:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pIiR6pU65hWelLdLntU1bVOPwELBhmJiBGL9OsNkrh0=;
-        b=BrSzPn40r8Bng+sLe6LanFz9TaA9w7CEAgV2rs/Rfnk4m3nIvc95SlReWqTzApZcwW
-         NfT7oM7ycRSru/I5UTMtzzxwB51MIozvt0TGN7WNecrs5Fnsm+MmUEBNWwAwjTkVgXsq
-         MfyxU0kWDvyjbiKNKoTWJc96DAD90YDs21PqWEkXlcV+4UkCjp0Pf7vQOYM0zQ+uoJ74
-         aiBz3WSragCvpI4v98yMY7k/VxEHS8L2f81ZTLsDoVoHy+vBWtRu/t23jQvDRR67pIyM
-         eRxXRHW+r8G8xMyvzLG1cTkTIb/ZXKRjwl+qZwZeOA0m2EZlTvtuxhOtB2CxN4jy/xBV
-         Wp8A==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Ddj6eC5Vs3nkxTbe/fAF3AQ740xmXg4OryJK+Sj0izI=;
+        b=bWqbGuZbWzfJoXBsX+ZM+nUsIBA50wGEiWNpw/toRVmAqqotYuGslzLMQ0EHfSeUe8
+         q1/JdpfDpM8ZUjVGK0gcz5RRKHGcSeU8DlLa5HZs+bGLTO9+ALDA2//WGgs1u4Fk8c5A
+         XBUr6VQU8SLklMQ83XdiaKUDFswezQaLYf6lEof8tJfh9bhz5PF3c5DWZOIlVAoNmH0e
+         ChXektNNEGvvgZfhdyE0YRKlCMASL3VWlrCSRqm0qYLnw42uH+dN3B0yqzWl0Ux4IKh/
+         3L3G/P6a13n6edPW1VRUUX/trGHjlnYqiuiHqClFQNrFLR+jzoNO5imjR4lazHssbguF
+         MZEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pIiR6pU65hWelLdLntU1bVOPwELBhmJiBGL9OsNkrh0=;
-        b=a0Vj6VIHJpzJIAwEbmSmvya5AgNMSKBPU1zzU7tOPhHtlyzSFIx1o/jXbGEFagUypQ
-         aFC1sUziFMzi73On/fttu6RmcexqR53T+C5fnT3KiqRkdEb7lhk3rEnk4gHe8R2ecceE
-         O9n7Fts1YkciThpMxtarOGDyhw27hcQGW8549917QJoIO8YWzPVWbeZJsr6gsmUGSG2x
-         svlHf13tN/HwS/O4BVltVErtl0X9yVYVE3Gwd6Cca4YgiXKriMMPUromgmLZqek3GmhK
-         MKXXpAXpip1t6A04+V48EU5ji3eLeAxyzviseMsuVl+0qZUTLSLwRhs+4T4BU89bl5Lq
-         riVA==
-X-Gm-Message-State: AOAM532uxeC1fJlyFWMIVVjcXSFvWF/3Vm8g9BNCJ1/hT7PGeCYSDmdf
-        nLjKAfdJPiUGak4LZkq84aOzLFPfivTWgQ==
-X-Google-Smtp-Source: ABdhPJzDmzIyiZqLu38+vzGhmBDs6B/TlM9ihTXBMMcE7e45/EZkVEJc9d03UXDFHRCcg+2sGuvTWQ==
-X-Received: by 2002:a63:3c56:: with SMTP id i22mr17642555pgn.25.1621927891431;
-        Tue, 25 May 2021 00:31:31 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-75.three.co.id. [180.214.233.75])
-        by smtp.gmail.com with ESMTPSA id e29sm12701563pfm.110.2021.05.25.00.31.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 May 2021 00:31:30 -0700 (PDT)
-Subject: Re: Renaming "non-contrib" things out of contrib/* (was "Re: [Bug]
- git-credential-netrc.perl[...]")
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Siavash <siavash.askari.nasr@gmail.com>, git@vger.kernel.org
-References: <87k0nt3f8i.fsf@gmail.com>
- <YKcTFDgW4etXFpOR@camp.crustytoothpaste.net>
- <YKeFxcTDp4tHSRu8@coredump.intra.peff.net>
- <YKgzvFHOcUgPjbj/@camp.crustytoothpaste.net>
- <YKqzj/DZU8m9AaI/@coredump.intra.peff.net>
- <60ab17018efee_1691c20832@natae.notmuch> <87o8d0o2or.fsf@evledraar.gmail.com>
- <xmqqtumrfgqx.fsf@gitster.g>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <8c08ee45-d7e4-b816-e883-a18dfa69fbc1@gmail.com>
-Date:   Tue, 25 May 2021 14:31:27 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Ddj6eC5Vs3nkxTbe/fAF3AQ740xmXg4OryJK+Sj0izI=;
+        b=F9hbf9v1b8AFyFPXuQQldzKK7XnAvfzLR/UTD4jOhab6ef0mcoFHmOo+KAnIUUB3d/
+         cjPDObIujCoc97uyLrGz7NmGoqMePPolR91WMTJGyTzZE6qsQoN2ILG38K3xqUEm/Y86
+         brRCDbIzBn0X7r2V05pRD2G9J3O+KtGnHdrC+N7sfsrtzmdxA2gjfAAYGseQAqT7W6De
+         x0HDLBqPo92nsbjrzmLimYqHI8md8Bz8p4waLdHvRiMOe1rhRPKSmhZrU2eYuTxsRWTw
+         3TWJqDrFeMM6z7JMHvS5EARblhX5hpHE0S+YPfU1yW9XbkBcv6hcYJU2nTOlayPpRaNB
+         ENgw==
+X-Gm-Message-State: AOAM530Px7USYRLN1dsi5F4z6VOWGiY3hp7QE7pD1Oyw4oR4a1htn/YL
+        dvfxlJL+WFp277yYDYCsVVI=
+X-Google-Smtp-Source: ABdhPJwqJ6vChpCTUE/+nvXw5iSXHRNKQ+k0r8hfQCI1gsjFhLyeyOjSSdWBQN4HYVOQRDw7pCemrA==
+X-Received: by 2002:a17:906:ca4f:: with SMTP id jx15mr14693122ejb.160.1621928853742;
+        Tue, 25 May 2021 00:47:33 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id gb26sm9112458ejc.25.2021.05.25.00.47.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 May 2021 00:47:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] t1092: use GIT_PROGRESS_DELAY for consistent results
+Date:   Tue, 25 May 2021 09:39:02 +0200
+References: <pull.960.git.1621886108515.gitgitgadget@gmail.com>
+ <YKwMU13DOtTIgaeP@google.com>
+ <e35b5217-362f-fc4f-7396-08218a9abf63@gmail.com>
+ <YKwd2e5VxVmU6zqj@nand.local> <87fsybohy5.fsf@evledraar.gmail.com>
+ <YKxBIP4lkoPeCYvb@nand.local>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <YKxBIP4lkoPeCYvb@nand.local>
+Message-ID: <87y2c3mezw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqtumrfgqx.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/05/21 13.51, Junio C Hamano wrote:
-> I think dispelling the conception by distro people must begin with
-> an update to contrib/README where it clearly says these are
-> "contributed software" that are not part of "Git".  They are not
-> something we stand behind like what we have in the rest of the
-> source tree.
-> 
-Archlinux packagers did remove contrib/ because they don't interest
-on it [1]:
 
-> Right now the Arch Linux's git package does this:
-> 
->   find contrib/ -name '.gitignore' -delete
->   cp -a ./contrib/* "$pkgdir"/usr/share/git/
+On Mon, May 24 2021, Taylor Blau wrote:
 
-> Also, the description there is rather stale.  For example, the last
-> paragraph must go as its entirety.  The ecosystem has expanded
-> thousand-fold since the document was written, and we no longer
-> encourage people to add new things to contrib/ directory at all.  We
-> instead encourage them to write and sell their ware on their own
-> merit alone, without planning to "borrow" authority and gain undue
-> advantage over its competitors by being in the contrib/ area in our
-> tree.
-> .
-> 
+> On Tue, May 25, 2021 at 12:57:52AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> On Mon, May 24 2021, Taylor Blau wrote:
+>>
+>> > But I don't think this isolated instance should push in the direction =
+of
+>> > adding support for either of the above, regardless of how easy it might
+>> > be.
+>>
+>> I don't see why we wouldn't just tweak GIT_PROGRESS_DELAY to support -1
+>> or something for "inf".
+>
+> Ironically, I think that this already works, since we parse the value of
+> GIT_PROGRESS_DELAY as unsigned, and don't bother checking for if the
+> input is negative (since we eventually call git_parse_unsigned(), which
+> doesn't have any extra checks other than for overflow).
+>
+> So we silently convert -1 to 2^64-1, and call it a day.
 
-So basically we should deprecate contrib/, and then after next few
-releases we proceed to remove it, right?
+Well yes, it works in the sense that instead of arbitrary big value for
+delay we have the biggerest and largerest value we can manage :)
 
-[1]: https://lore.kernel.org/git/60ac51a7ecf74_1f8f720843@natae.notmuch/
+I mean why do just that when we can also do this:
 
--- 
-An old man doll... just what I always wanted! - Clara
+diff --git a/progress.c b/progress.c
+index 680c6a8bf93..191c62cbbfb 100644
+--- a/progress.c
++++ b/progress.c
+@@ -252,7 +252,13 @@ void display_progress(struct progress *progress, uint6=
+4_t n)
+ static struct progress *start_progress_delay(const char *title, uint64_t t=
+otal,
+ 					     unsigned delay, unsigned sparse)
+ {
+-	struct progress *progress =3D xmalloc(sizeof(*progress));
++	struct progress *progress;
++
++	/* GIT_PROGRESS_DELAY=3D-1 */
++	if (delay =3D=3D (unsigned)-1)
++		return NULL;
++
++	progress =3D xmalloc(sizeof(*progress));
+ 	progress->title =3D title;
+ 	progress->total =3D total;
+ 	progress->last_value =3D -1;
+
+Which will cause the progress code to abort early in that case, and IMO
+is less magical if we're going to have this GIT_PROGRESS_DELAY=3D-1 in the
+codebase and relying on the wrap-around of -1.
