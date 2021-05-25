@@ -2,161 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7754AC2B9F7
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 03:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72F01C2B9F8
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 03:54:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C9C36140A
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 03:41:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41BC461417
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 03:54:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230327AbhEYDml (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 May 2021 23:42:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41734 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230048AbhEYDmk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 May 2021 23:42:40 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA40C061574
-        for <git@vger.kernel.org>; Mon, 24 May 2021 20:41:10 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id m13so22196848qtk.13
-        for <git@vger.kernel.org>; Mon, 24 May 2021 20:41:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aR9al1COJtCUoHL/UTYPPA6O3nscuDQpLjVSLl/tGKY=;
-        b=bSXyV2Htg3bl/ymRBSzJ02cv2um4M03qfBbsKal7cwS8nVe7ciUl5+bgxwwwwtLIDW
-         iqMNwlEpEFGCe19Y3IczRl1f5czo74HZwAUVL7vjM1MAwI1YbEyyOqFI1CqNAN3tjVfg
-         nTe6b0bC0slSW/oopjQB7yqEDMAer/ojMMmrAG7FWyGZAShPm7Wv8QqWbuP+qoI0W31j
-         FUXaUP32U2SGR5sL9gFt910kRfYx89rspFs0LGAwFPYIDPCr8d7AaSBgco9sSldIFyZM
-         YD3LHKTOzjZN+DWeYpjHvm7zwZXtAgjyf2YLrv5PEeWg0Sis7JFR/EWe+eIhGvmeIBMg
-         xBBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aR9al1COJtCUoHL/UTYPPA6O3nscuDQpLjVSLl/tGKY=;
-        b=ukigfoOlC6WjtbAz9hIL62bZZyzraJevULK4Y/4Ub3+OlGWbbbIIzDLWFReuxWM/Up
-         n6nms17KnzoUYAUQFDVl4+KcAYyxZdMkxmAAQ0BS2hcflXtVq6NVPr13m9YzoQE/4KvU
-         +Btj9CyVKBRvwNVIhZOVOPk1pDbsVEDjeFiJNUeWT/qzAcsAv5JkU126SLkPVH8QV4os
-         0dKlQhWKE1ZRUhFj178iaKIddEAKCBvxM28ndOpe81JAQpqaUGj9UTO9g0ydVxnCM2VB
-         TUd0B3YKTgEN/PB68Hc82xeMjoVa+VfGY3Iif9VUSvEV/JHMrSZUeJa1yIf76JmmIKat
-         zeDw==
-X-Gm-Message-State: AOAM532HNAoI3iMwK63/WZjj3KoAjjhOnEZCOlhMtCG83HbzpgDgOQGc
-        Q+o3qtYwEJHONmkXAQW7xkAX5gkq9wbrHui7
-X-Google-Smtp-Source: ABdhPJyVEnvPtx40Ullz7enXAxcADvHPgfLEHYbzI9ofM21T5xEaX4LwD+vo+Md/iaVHpxeFcijPoQ==
-X-Received: by 2002:ac8:678b:: with SMTP id b11mr30839980qtp.150.1621914069358;
-        Mon, 24 May 2021 20:41:09 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id s20sm12449624qke.2.2021.05.24.20.41.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 May 2021 20:41:08 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     ajrhunt@google.com, peff@peff.net
-Subject: [PATCH] init: fix bug regarding ~/ expansion in init.templateDir
-Date:   Tue, 25 May 2021 00:41:01 -0300
-Message-Id: <b079bc0288429919aca482a689ee87e70b719303.1621914058.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.31.1
+        id S230387AbhEYDzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 May 2021 23:55:40 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53569 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230048AbhEYDzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 May 2021 23:55:40 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 16ACD1352B5;
+        Mon, 24 May 2021 23:54:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pYWPNqG9ET39G22HhXyjLc1Ei/xsZjuKNxYw+j
+        rZH5I=; b=kLuh+yX6euaE5zYOC0QgyIdyX64eanw3bccwY2ya8ktYHe9c8jDo6t
+        SekfK6noFY1fzCveNE6miR/l74d3HKs1idK/GgDIp2Qm6Fz3nV+AlsQn+f6Wdyx0
+        AHVtsA7I/62YjEyphM7Z1QCADa3QbdDphyN3aCLMvv0ht1/1f+YVU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0E4031352B4;
+        Mon, 24 May 2021 23:54:11 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 578EA1352B3;
+        Mon, 24 May 2021 23:54:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v3] tr2: log parent process name
+References: <20210524201007.115124-1-emilyshaffer@google.com>
+Date:   Tue, 25 May 2021 12:54:06 +0900
+In-Reply-To: <20210524201007.115124-1-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Mon, 24 May 2021 13:10:07 -0700")
+Message-ID: <xmqqpmxfh3j5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: DB70DA40-BD0C-11EB-A9F1-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We used to read the init.templateDir setting at builtin/init-db.c using
-a git_config() callback that, in turn, called git_config_pathname(). To
-simplify the config reading logic at this file and plug a memory leak,
-this was replaced by a direct call to git_config_get_value() at
-e4de4502e6 ("init: remove git_init_db_config() while fixing leaks",
-2021-03-14). However, this function doesn't provide path expanding
-semantics, like git_config_pathname() does, so paths with '~/' and
-'~user/' are treated literally. This makes 'git init' fail to handle
-init.templateDir paths using these constructs:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-	$ git config init.templateDir '~/templates_dir'
-	$ git init
-	'warning: templates not found in ~/templates_dir'
+> diff --git a/compat/procinfo.c b/compat/procinfo.c
+> new file mode 100644
+> index 0000000000..0e92fb8b7c
+> --- /dev/null
+> +++ b/compat/procinfo.c
+> @@ -0,0 +1,51 @@
+> +#include "cache.h"
+> +
+> +#include "strbuf.h"
+> +#include "trace2.h"
+> +
+> +char *get_process_name(int pid)
+> +{
+> +#ifdef HAVE_PROCFS_LINUX
+> +	struct strbuf procfs_path = STRBUF_INIT;
+> +	struct strbuf out = STRBUF_INIT;
+> +	/* try to use procfs if it's present. */
+> +	strbuf_addf(&procfs_path, "/proc/%d/comm", pid);
+> +	if (!strbuf_read_file(&out, procfs_path.buf, 0)) {
+> +		/* All done with file reads, clean up early */
+> +		strbuf_release(&procfs_path);
+> +		return strbuf_detach(&out, NULL);
+> +	}
+> +#endif
+> +
+> +	/* NEEDSWORK: add non-procfs implementations here. */
+> +	return NULL;
+> +}
 
-Replace the git_config_get_value() call by git_config_get_pathname(),
-which does the '~/' and '~user/' expansions. Also add a regression test.
-Note that unlike git_config_get_value(), the config cache does not own
-the memory for the path returned by git_config_get_pathname(), so we
-must free() it.
+Is the reason why this takes "int" and not "pid_t" because we may
+port to non-POSIX platforms that do not have pid_t defined?
 
-Reported on IRC by rkta.
+    ... goes and greps ...
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- builtin/init-db.c |  3 ++-
- t/t0001-init.sh   | 28 ++++++++++++++++++++--------
- 2 files changed, 22 insertions(+), 9 deletions(-)
+Nah, we use pid_t everywhere (including compat/mingw.c); unless
+there is a reason not to, let's use that type.
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index c19b35f1e6..2167796ff2 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -212,8 +212,9 @@ static int create_default_files(const char *template_path,
- 	 * values (since we've just potentially changed what's available on
- 	 * disk).
- 	 */
--	git_config_get_value("init.templatedir", &init_template_dir);
-+	git_config_get_pathname("init.templatedir", &init_template_dir);
- 	copy_templates(template_path, init_template_dir);
-+	free((char *)init_template_dir);
- 	git_config_clear();
- 	reset_shared_repository();
- 	git_config(git_default_config, NULL);
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 0803994874..acd662e403 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -186,21 +186,33 @@ test_expect_success 'init with --template (blank)' '
- 	test_path_is_missing template-blank/.git/info/exclude
- '
- 
-+init_no_templatedir_env () {
-+	(
-+		sane_unset GIT_TEMPLATE_DIR &&
-+		NO_SET_GIT_TEMPLATE_DIR=t &&
-+		export NO_SET_GIT_TEMPLATE_DIR &&
-+		git init "$1"
-+	)
-+}
-+
- test_expect_success 'init with init.templatedir set' '
- 	mkdir templatedir-source &&
- 	echo Content >templatedir-source/file &&
- 	test_config_global init.templatedir "${HOME}/templatedir-source" &&
--	(
--		mkdir templatedir-set &&
--		cd templatedir-set &&
--		sane_unset GIT_TEMPLATE_DIR &&
--		NO_SET_GIT_TEMPLATE_DIR=t &&
--		export NO_SET_GIT_TEMPLATE_DIR &&
--		git init
--	) &&
-+
-+	init_no_templatedir_env templatedir-set &&
- 	test_cmp templatedir-source/file templatedir-set/.git/file
- '
- 
-+test_expect_success 'init with init.templatedir using ~ expansion' '
-+	mkdir -p templatedir-source &&
-+	echo Content >templatedir-source/file &&
-+	test_config_global init.templatedir "~/templatedir-source" &&
-+
-+	init_no_templatedir_env templatedir-expansion &&
-+	test_cmp templatedir-source/file templatedir-expansion/.git/file
-+'
-+
- test_expect_success 'init --bare/--shared overrides system/global config' '
- 	test_config_global core.bare false &&
- 	test_config_global core.sharedRepository 0640 &&
--- 
-2.31.1
+> +void trace2_collect_process_info(enum trace2_process_info_reason reason)
+> +{
+> +	if (!trace2_is_enabled())
+> +		return;
+> +
+> +	/* someday we may want to write something extra here, but not today */
+> +	if (reason == TRACE2_PROCESS_INFO_EXIT)
+> +		return;
+> +
+> +	if (reason == TRACE2_PROCESS_INFO_STARTUP) {
+> +		/*
+> +		 * NEEDSWORK: we could do the entire ptree in an array instead,
+> +		 * see compat/win32/trace2_win32_process_info.c.
+> +		 */
+> +		char *names[2];
+> +		names[0] = get_process_name(getppid());
+> +		names[1] = NULL;
+
+Makes me wonder if get_process_name() is an appropriate
+abstraction; specifically, something like
+
+		const char **names = get_ancestry_names();
+                int cnt;
+		if (names)
+			trace2_cmd_ancestry(names);
+		for (cnt = 0; names[cnt]; cnt++)
+                	free((char *)names[cnt]);
+		free(names);
+
+would allow platforms to decide how many levels is easy for them to
+grab for reporting, for example (and they do not even have to have
+to assume that getting process IDs to feed get_process_name() one by
+one is the easiest way to show ancestry).
 
