@@ -4,113 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41DD0C2B9F8
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 13:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B143C4707F
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 13:34:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AEB261413
-	for <git@archiver.kernel.org>; Tue, 25 May 2021 13:18:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F20C86141B
+	for <git@archiver.kernel.org>; Tue, 25 May 2021 13:34:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233060AbhEYNUR convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 25 May 2021 09:20:17 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:42097 "EHLO
+        id S233300AbhEYNfj convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 25 May 2021 09:35:39 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:55319 "EHLO
         elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233070AbhEYNUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 May 2021 09:20:05 -0400
+        with ESMTP id S233297AbhEYNfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 May 2021 09:35:39 -0400
 X-Virus-Scanned: amavisd-new at elehost.com
 Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
         (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14PDHkkK082315
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 14PDY0R4083525
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 25 May 2021 09:17:47 -0400 (EDT)
+        Tue, 25 May 2021 09:34:01 -0400 (EDT)
         (envelope-from rsbecker@nexbridge.com)
 From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Taylor Blau'" <me@ttaylorr.com>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "=?utf-8?Q?'Jean-No=C3=ABl_AVILA'?=" <jn.avila@free.fr>,
-        <git@vger.kernel.org>
-References: <036b01d750ed$642b75c0$2c826140$@nexbridge.com> <YKwsSgtfhaGq5z8k@nand.local>
-In-Reply-To: <YKwsSgtfhaGq5z8k@nand.local>
-Subject: RE: [ANNOUNCE] Git v2.32.0-rc1 - Defect in t0301.3, t1092.6, t5300
-Date:   Tue, 25 May 2021 09:17:40 -0400
-Message-ID: <037d01d75168$5a5aaea0$0f100be0$@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Emily Shaffer'" <emilyshaffer@google.com>
+Cc:     <git@vger.kernel.org>,
+        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Jeff Hostetler'" <git@jeffhostetler.com>,
+        "'Bagas Sanjaya'" <bagasdotme@gmail.com>
+References: <20210524201007.115124-1-emilyshaffer@google.com> <xmqqpmxfh3j5.fsf@gitster.g>
+In-Reply-To: <xmqqpmxfh3j5.fsf@gitster.g>
+Subject: RE: [PATCH v3] tr2: log parent process name
+Date:   Tue, 25 May 2021 09:33:54 -0400
+Message-ID: <038801d7516a$9efb1fc0$dcf15f40$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="utf-8"
 Content-Transfer-Encoding: 8BIT
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-ca
-Thread-Index: AQL3YcCf4XS4xcUH/cdSTyimgfP8cQJPnSr7qKGP2rA=
+Thread-Index: AQJyDPZcqUUkOSfbwgArp/LyHQPVEwJGg4dBqayEmRA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 24, 2021 6:44 PM, Taylor Blau wrote:
->To: Randall S. Becker <rsbecker@nexbridge.com>
->Cc: 'Junio C Hamano' <gitster@pobox.com>; 'Jean-Noël AVILA' <jn.avila@free.fr>; git@vger.kernel.org
->Subject: Re: [ANNOUNCE] Git v2.32.0-rc1 - Defect in t0301.3, t1092.6, t5300
+On May 24, 2021 11:54 PM, Junio C Hamano wrote:
+>Emily Shaffer <emilyshaffer@google.com> writes:
 >
->On Mon, May 24, 2021 at 06:37:29PM -0400, Randall S. Becker wrote:
->> On running the test suite on NonStop, t1092 fails in subtest 6 - but
->> not when run with --verbose and -x, so I can't supply a log. This may
->> be timing related. I wanted to report this in case anyone had any
->> insight on whether there are any possible transient vulnerabilities.
+>> diff --git a/compat/procinfo.c b/compat/procinfo.c new file mode
+>> 100644 index 0000000000..0e92fb8b7c
+>> --- /dev/null
+>> +++ b/compat/procinfo.c
+>> @@ -0,0 +1,51 @@
+>> +#include "cache.h"
+>> +
+>> +#include "strbuf.h"
+>> +#include "trace2.h"
+>> +
+>> +char *get_process_name(int pid)
+>> +{
+>> +#ifdef HAVE_PROCFS_LINUX
+>> +	struct strbuf procfs_path = STRBUF_INIT;
+>> +	struct strbuf out = STRBUF_INIT;
+>> +	/* try to use procfs if it's present. */
+>> +	strbuf_addf(&procfs_path, "/proc/%d/comm", pid);
+>> +	if (!strbuf_read_file(&out, procfs_path.buf, 0)) {
+>> +		/* All done with file reads, clean up early */
+>> +		strbuf_release(&procfs_path);
+>> +		return strbuf_detach(&out, NULL);
+>> +	}
+>> +#endif
+>> +
+>> +	/* NEEDSWORK: add non-procfs implementations here. */
+>> +	return NULL;
+>> +}
 >
->The failure in t1092 sounds should be addressed by
+>Is the reason why this takes "int" and not "pid_t" because we may port to non-POSIX platforms that do not have pid_t defined?
 >
->  https://lore.kernel.org/git/pull.960.git.1621886108515.gitgitgadget@gmail.com/
+>    ... goes and greps ...
 >
->> t0301.3 often has transient failures - which has been experienced for
->> a while. Most importantly, t5300 continues to fail completely on the
->> x86 platform, but not ia64, which I previously reported.
+>Nah, we use pid_t everywhere (including compat/mingw.c); unless there is a reason not to, let's use that type.
 >
->Not sure about these, though.
+>> +void trace2_collect_process_info(enum trace2_process_info_reason
+>> +reason) {
+>> +	if (!trace2_is_enabled())
+>> +		return;
+>> +
+>> +	/* someday we may want to write something extra here, but not today */
+>> +	if (reason == TRACE2_PROCESS_INFO_EXIT)
+>> +		return;
+>> +
+>> +	if (reason == TRACE2_PROCESS_INFO_STARTUP) {
+>> +		/*
+>> +		 * NEEDSWORK: we could do the entire ptree in an array instead,
+>> +		 * see compat/win32/trace2_win32_process_info.c.
+>> +		 */
+>> +		char *names[2];
+>> +		names[0] = get_process_name(getppid());
+>> +		names[1] = NULL;
+>
+>Makes me wonder if get_process_name() is an appropriate abstraction; specifically, something like
+>
+>		const char **names = get_ancestry_names();
+>                int cnt;
+>		if (names)
+>			trace2_cmd_ancestry(names);
+>		for (cnt = 0; names[cnt]; cnt++)
+>                	free((char *)names[cnt]);
+>		free(names);
+>
+>would allow platforms to decide how many levels is easy for them to grab for reporting, for example (and they do not even have to have
+>to assume that getting process IDs to feed get_process_name() one by one is the easiest way to show ancestry).
 
-Thanks will wait for the roll on that one. We had one loggable transient failure in t1096.15:
-
-expecting success of 1092.15 'merge with outside renames':
-        init_repos &&
-
-        for type in out-to-out out-to-in in-to-out
-        do
-                test_all_match git reset --hard &&
-                test_all_match git checkout -f -b merge-$type update-deep &&
-                test_all_match git merge -m "$type" rename-$type &&
-                test_all_match git rev-parse HEAD^{tree} || return 1
-        done
-
-+ init_repos
-Updating files: 100% (14/14), done.
-HEAD is now at 5d0e8a6 initial commit
-Updating files: 100% (14/14), done.
-HEAD is now at 5d0e8a6 initial commit
-Updating files: 100% (14/14), done.
-HEAD is now at 5d0e8a6 initial commit
-Updating files: 100% (10/10), done.
-Updating files: 100% (7/7), done.
-Updating files: 100% (10/10), done.
-Updating files: 100% (7/7), done.
-+ test_all_match git reset --hard
-+ test_all_match git checkout -f -b merge-out-to-out update-deep
-+ test_all_match git merge -m out-to-out rename-out-to-out
---- full-checkout-err   2021-05-24 22:49:44 +0000
-+++ sparse-checkout-err 2021-05-24 22:49:50 +0000
-@@ -1 +0,0 @@
-Updating files: 100% (5/5), done.
-+ return 1
-error: last command exited with $?=1
-not ok 15 - merge with outside renames
-#
-#               init_repos &&
-#
-#               for type in out-to-out out-to-in in-to-out
-#               do
-#                       test_all_match git reset --hard &&
-#                       test_all_match git checkout -f -b merge-$type update-deep &&
-#                       test_all_match git merge -m "$type" rename-$type &&
-#                       test_all_match git rev-parse HEAD^{tree} || return 1
-#               done
-#
+Passing pid_t == 1 to get_process_names is non-informative. We can't tell what is really intended inside get_process_names(). Knowing that we are getting the ancestor, however, gives us an the important glue that the parent is wanted so we can interpret 1 as a non-ancestor. NonStop has pid_t defined regardless of whether it is used or relevant, so a higher-level of abstraction makes sense. The git process always has a valid pid_t, but the ancestor may not, but we do not know this at compile time. The platform code previously shared appears to be the correct technique for us. Going with get_ancestry_names() is interesting, but I think a count (how many ancestors do you want) is important (1 - just immediate, 2 - parent, grandparent, -1 - everyone). The ancestry tree can be very large (although each lookup is only about 8us). During a trace, I really would not want to care about more than 2 ancestors, typically, not the likely 8 or 10 that I can see happening in my situation (too much 
+ noise). The number of ancestors to trace probably needs to be in .git.config.
 
 
