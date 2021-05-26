@@ -6,97 +6,103 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0064C47082
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 22:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 124FDC47082
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 22:19:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB14B613B0
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 22:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCDB7613CA
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 22:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234334AbhEZWD0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 18:03:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51506 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234024AbhEZWDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 18:03:24 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D66DC061574
-        for <git@vger.kernel.org>; Wed, 26 May 2021 15:01:51 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id o27so2696764qkj.9
-        for <git@vger.kernel.org>; Wed, 26 May 2021 15:01:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=blhaY+Q4fnweo6VHU9n2AYyJ1OyBrPI2LAprNePDfoM=;
-        b=pkBzVnuMQqxpn694XSXPhISa2GOZ7+RvI7eo6TfEKVNu5BXBef7eZP2phOfTRPFZHG
-         c1Mz7hT783qR+inVZ5oXK2hFpoQHXBqwNn1dT9IJq8dKjtsnnns4LB+WZ3+XQmnFjeys
-         lqAaWKl19hYSoP/P/NyjJSvA7gI8wu6e3+nQJHXGJu5X5USn/jRrVgCuNrkbXVp17JfV
-         /D7omRu1IpXkwLZP2uzjDRFXNRbZJyYSdKVn25M4VDBXjMK0nXZ9FcSCsf5xe96edC47
-         ILq1pXJDI+KayYA1jlHGgDEafGgL44vD+KNjhDw86yA9v0nydBPX8ZZ5R7PGKEPbcCGC
-         Qfug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=blhaY+Q4fnweo6VHU9n2AYyJ1OyBrPI2LAprNePDfoM=;
-        b=to7MxLYixB0zOIWngmLoD/FJdl8R0WB+VcHudd0lHDKfizotDiSqPtCUGi8S+m3V8V
-         pbCnfYMbFxhUrdUH71msocpEstVnQKojLx52MuZCP3eLUcWm1Hh/VDyGtUP7Baz3QUo5
-         lCg81lI0EhWwJS9snMfZlResAv0ooapjscPcz2n24h6ta4k80QCf2YrzulG+v7A4wF7m
-         Y9wJsQyGB6pf5YKYi3ecqKbreFxN8H6eFjGBmUM6VufUbLQiaBV3mG7TN9WHrSC6NHtr
-         ILgLKYfysDtLASBW2U14XmI00ZkNfF4HzZlCKA6i45nCr5uV6PJ0PB0AsG9fc7VqPboA
-         0z8w==
-X-Gm-Message-State: AOAM533bpsf0qphsh12hSpBPjo4iRTEWiss3mVKiHOwFRo7x6FQ+eeC+
-        aNOtbbfVbP3wO+KydGRfSBYyE4LBRdNXjbOnxmgNyw==
-X-Google-Smtp-Source: ABdhPJx2GS5KgXx+SaMrNA0qRM3qyhK9r80nbQWQnWb95wPKdgE2ETKALEvuFSNJn0qRND1rIx0n7fLH+1Cvi7hr9ik=
-X-Received: by 2002:a05:620a:210e:: with SMTP id l14mr281841qkl.1.1622066510467;
- Wed, 26 May 2021 15:01:50 -0700 (PDT)
+        id S233800AbhEZWUa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 18:20:30 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60072 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229624AbhEZWUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 18:20:30 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0A4A2139128;
+        Wed, 26 May 2021 18:18:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=BhreXUgCm54u
+        oBAj4SRw0odDe8XfwahONoQfXyTas8k=; b=gg9gyDXuR4cLNVACk2udBPWItPT/
+        QyzUin9/rliqVCqF8XjXHd7kVwifclPEKDLTV2hKX2JM16Tjs/6PWc6yfgU7p9h4
+        nNr3Qb6rFFYrIz+VnMQhAlSDtoS5f+7WBz7EatuRSWxqTl8nqh3fyEROToS0Vol3
+        Lwt7IGuryZLAubQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 02015139127;
+        Wed, 26 May 2021 18:18:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4F4D3139125;
+        Wed, 26 May 2021 18:18:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     git@vger.kernel.org, entwicklung@pengutronix.de
+Subject: Re: time needed to rebase shortend by using --onto?
+References: <20210526100932.2hw4rbazgvd6mzff@pengutronix.de>
+Date:   Thu, 27 May 2021 07:18:52 +0900
+In-Reply-To: <20210526100932.2hw4rbazgvd6mzff@pengutronix.de> ("Uwe
+        =?utf-8?Q?Kleine-K=C3=B6nig=22's?= message of "Wed, 26 May 2021 12:09:32
+ +0200")
+Message-ID: <xmqqim35b0kz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1620145501.git.matheus.bernardino@usp.br>
- <667777053ab853ef2f94b7ba4ab39f7241d2b49c.1620145501.git.matheus.bernardino@usp.br>
- <87eedtmj7w.fsf@evledraar.gmail.com>
-In-Reply-To: <87eedtmj7w.fsf@evledraar.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 26 May 2021 19:01:39 -0300
-Message-ID: <CAHd-oW6X4cwD_yLNFONPnXXUAFPxgDoccv2SOdpeLrqmHCJB4Q@mail.gmail.com>
-Subject: Re: AIX failures on parallel checkout (new in v2.32.0-rc*)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5BF62922-BE70-11EB-AFF6-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, =C3=86var
+Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
 
-On Wed, May 26, 2021 at 3:40 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+> It rebases clean on v5.10:
 >
->     + test_checkout_workers 0 git -C various_sequential checkout --recurs=
-e-submodules B2
->     error: Your local changes to the following files would be overwritten=
- by checkout:
->             d
->             h
->             j
->     Please commit your changes or stash them before you switch branches.
->     Aborting
+> 	$ time git rebase v5.10
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Successfully rebased and updated detached HEAD.
+>
+> 	real	3m47.841s
+> 	user	1m25.706s
+> 	sys	0m11.181s
+>
+> If I start with the same rev checked out and explicitly specify the
+> merge base, the rebase process is considerably faster:
+>
+> 	$ time git rebase --onto v5.10 v5.4
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Performing inexact rename detection: 100% (36806539/36806539), done.
+> 	Successfully rebased and updated detached HEAD.
+>
+> 	real	1m20.588s
+> 	user	1m12.645s
+> 	sys	0m6.733s
+>
+> Is there some relevant complexity in the first invocation I'm not seein=
+g
+> that explains it takes more than the double time? I would have expected
+> that
+>
+> 	git rebase v5.10
+>
+> does the same as:
+>
+> 	git rebase --onto v5.10 $(git merge-base HEAD v5.10)
 
-I requested an account on the GCC farm to debug this, and the problem
-seems to be that AIX's `cp -R` defaults to following symlinks instead
-of copying them. In the above error message, 'd', 'h' and 'j' are all
-symlinks which were followed when copying the test repo, so these
-paths indeed won't match what's in the index, which makes checkout
-abort.
+There is a voodoo called fork-point detection that walks back the
+reflogs and repeatedly computes merge bases, and giving --onto to
+explicitly give a commit on which the history is transplanted should
+remove the need to do the computation, so that is a possibility.
 
-Fortunately, there is a POSIX option to force cp to copy the symlinks:
-'-P'. Adding this flag to the cp invocation at line 117 of t2080 makes
-all parallel checkout tests pass on AIX.
-
-We also already use `cp -R -P` in the test suite (at t7001), and
-without any prereq, so I guess all platforms we are testing git at do
-support this flag in cp. I'll send a patch adding the flag at t2080.
+But according to the manpage, it should not kick in for invocations
+in the above example that specify the <upstream> (the
+rebase.forkpoint configuration variable can clobber this default).
