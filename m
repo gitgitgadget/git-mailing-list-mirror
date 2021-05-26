@@ -2,108 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C71FFC47088
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C86AC47088
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:59:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9EBA96108B
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:59:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F272D61009
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:59:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234830AbhE0AAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 20:00:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
+        id S234832AbhE0ABA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 20:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232270AbhE0AAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 20:00:42 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C8DC061574
-        for <git@vger.kernel.org>; Wed, 26 May 2021 16:59:09 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id i12so2265426qtr.7
-        for <git@vger.kernel.org>; Wed, 26 May 2021 16:59:09 -0700 (PDT)
+        with ESMTP id S229870AbhE0ABA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 20:01:00 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C70CFC061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 16:59:26 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id u11so3334605oiv.1
+        for <git@vger.kernel.org>; Wed, 26 May 2021 16:59:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BKtqBAK6KoFTvrqdQTvU7fQcusgU1FwT0pcqmfU6zHw=;
-        b=KNk+9WYl3MJ88qzr8LhBIn+rukrdY6RoqiL1AQvA3V4ok+geeYUuj2jYfCHCa/Ii0g
-         +wXfZcgltYD+BvhzIlI47W9zr0sghbACynRKQRn0mL0oYkrV0gIRfLQnkdMOiodNGAZd
-         0kMYFkRFjqVnljnQsqvkQ/TcU1d0WPj73YfFwEgE7pghL0oH5uBOTJvfRzXvufIdxUG8
-         fAsQcW68/r4CUm5nqOu95+4y/jEcGLmepVJEd5VEre+HiUPFHx2AezU7FfmwjrPF06T2
-         XHaX9/+MssXHLtYMpYy2JDPR1lmR25Cm04aVESud5J8IZ6pqqLz1BDzE6x9myocb8g3U
-         4+AQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=ycD6IxxPAO/xTpcqTmqTjAvw+9AZFbj+Wx7C1f4cByw=;
+        b=sxwfnX1nIYDPCVvXIPRHGqjGdez0RSElDpohVB86igRYYQbRijyAaDWYUGl5SBV1fh
+         PEojSrOd+kRRVYdXjym2d8DhkitCpO3MNHPXTunvFQZlQDeDfxRQOATiYACYfP9OvKIw
+         Izct6kzMnPjhTV4K6ettBXWaKlbclAVK/o8Y7L/vlUbB6m6WyMZpjBS+HmmIR1ubbzoK
+         O0cDPEs0Yen55pcBDJKWTSnG+7MEhxrKTyZ8zkAqH+B2XwVppF62QGjdjRy7Yp1rr9Z7
+         kg1ne++B3jMW73BCT6+dGAdqj82Qza7Y8iRN2i9gRYsJER22HJP1YPi6/tkVMgRq9Jnz
+         Ouug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BKtqBAK6KoFTvrqdQTvU7fQcusgU1FwT0pcqmfU6zHw=;
-        b=F2Y5JKe7JWdm0XeP4k53pPXPW5JuWWFqh4G3XO3gWpJX/6p3AYTTW0hzo4ECjTFrF0
-         GS+xXu0c6VzwLckGPfZX4S+/p5dAzgxMvuuT678NhjebNzVu9E37dtOaGbb4Mh21NULV
-         o1jOAKKWvg+zKOopdDgcT3nY0d5esDJ4juemAPnLpKIHnJAinS8S04i42UfhABZ5cxSw
-         XMRfesfeIEbuxyMJ3Ub6zxZshIW7hsTM3MEHnWzyO2vd3a/oVyw4KRcfaNPkA1xcdwBT
-         gQZdB2u+RvHPi8Q1tvmjp8PA/wC9YckwASfobWQ+5l6H87LH1GYeA6O3OntwF0DAN0/Y
-         ke6Q==
-X-Gm-Message-State: AOAM5327ya+7caG3ITarsm4F4P6P0mZjvOiGQrxjwLSyOiOJTUOeAEv8
-        7sAgPauJqKQUQnKw6u4lkVo6og==
-X-Google-Smtp-Source: ABdhPJyxwvnFoS2bcJ/C/yJa+LcZZnqZSvegFYHv16XVe2PmURAWATCKNf+6wvHxi6O4+XXxONxlCQ==
-X-Received: by 2002:a05:622a:2d1:: with SMTP id a17mr713966qtx.88.1622073548576;
-        Wed, 26 May 2021 16:59:08 -0700 (PDT)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id y19sm332250qki.15.2021.05.26.16.59.06
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=ycD6IxxPAO/xTpcqTmqTjAvw+9AZFbj+Wx7C1f4cByw=;
+        b=UZhaqHpbJyBGSbYIBmijElehlLKdUXgGhskPYqzIbiYnxYKEqhke32k+3BNh3PK9Xj
+         BpNiNOaNcbxR6L6EqgZCsbO2qjPV9+0+LEKo5+jMek/LtzWxZX+p1Z64Nkl7Dwko4pK1
+         my2bkJbLsZsTK7P5icnWsZrzwYWGSNkOFu8bMMy1ZKLQh46MggmW7upN/rss3UheMRhI
+         w10v7QjdifN87+QlbNnt720AcaSecEbpVjjVYMfr57+wqiUMa1PoBRZDKEENVzgPCnTK
+         TDbxxB+QwVMfWyDuZUa6KIW4UrO7nrfgLkm7nkICLlwQFUcdIEfUHsvLHdBZmZGBC53r
+         OQZQ==
+X-Gm-Message-State: AOAM532DTnL4L2otD/qpkgJkbYzmRWdwUcyMe2ZqD83Kh9NEp23Kn2eg
+        8dK0l4uR8roov00fccQ3oX8=
+X-Google-Smtp-Source: ABdhPJxPtN1EzVoLanBCEQn57ojvd7HSDpXRmZyfgWvZORLa8Xx9jQNPfemXNQ1LvOGrfGhA5J/WHg==
+X-Received: by 2002:aca:670c:: with SMTP id z12mr3706913oix.131.1622073566145;
+        Wed, 26 May 2021 16:59:26 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id d1sm168780otu.9.2021.05.26.16.59.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 May 2021 16:59:08 -0700 (PDT)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: [PATCH] t2080: fix cp invocation to copy symlinks instead of following them
-Date:   Wed, 26 May 2021 20:58:56 -0300
-Message-Id: <5386ee606567248464d39c313ee6177862a1f337.1622071475.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.31.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 26 May 2021 16:59:25 -0700 (PDT)
+Date:   Wed, 26 May 2021 18:59:24 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
+Message-ID: <60aee0dc3a6b0_75dc20855@natae.notmuch>
+In-Reply-To: <875yz5m5hd.fsf@evledraar.gmail.com>
+References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
+ <YKViF9OVLeA95JPH@google.com>
+ <20210520071141.GZ8544@kitsune.suse.cz>
+ <YKaaBj0KmJ3K5foC@coredump.intra.peff.net>
+ <60a7fe0b2dd8d_558062087@natae.notmuch>
+ <875yz5m5hd.fsf@evledraar.gmail.com>
+Subject: Re: Should we do something with #git-devel on Freenode?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t2080 makes a few copies of a test repository and later performs a
-branch switch on each one of the copies to verify that parallel checkout
-and sequential checkout produce the same results. However, the
-repository is copied with `cp -R` which, on some systems, defaults to
-following symlinks on the directory hierarchy and copying their target
-files instead of copying the symlinks themselves. AIX is one example of
-system where this happens. Because the symlinks are not preserved, the
-copied repositories have paths that do not match what is in the index,
-causing git to abort the checkout operation that we want to test. This
-makes the test fail on these systems.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
 
-Fix this by copying the repository with the POSIX flag '-P', which
-forces cp to copy the symlinks instead of following them. Note that we
-already use this flag for other cp invocations in our test suite (see
-t7001). With this change, t2080 now passes on AIX.
+> On Fri, May 21 2021, Felipe Contreras wrote:
+> =
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- t/t2080-parallel-checkout-basics.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> > Jeff King wrote:
+> >> Of course there's value in coordinating. Everybody _can_ hang out on=
 
-diff --git a/t/t2080-parallel-checkout-basics.sh b/t/t2080-parallel-checkout-basics.sh
-index 7087818550..3e0f8c675f 100755
---- a/t/t2080-parallel-checkout-basics.sh
-+++ b/t/t2080-parallel-checkout-basics.sh
-@@ -114,7 +114,7 @@ do
- 
- 	test_expect_success "$mode checkout" '
- 		repo=various_$mode &&
--		cp -R various $repo &&
-+		cp -R -P various $repo &&
- 
- 		# The just copied files have more recent timestamps than their
- 		# associated index entries. So refresh the cached timestamps
--- 
-2.31.1
+> >> their favorite venues and eventually talk to each other, but it's mu=
+ch
+> >> easier if everybody agrees where to go. :)
+> >
+> > I don't think it works that way.
+> >
+> > I "everybody" agrees to move to Discord, many old-timers won't. Same
+> > with Gitter. And if most people were on IRC, many youngsters wouldn't=
 
+> > come.
+> >
+> > There's a limit to how many chat applications you are willing juggle,=
+
+> > and adding one more just to chat with git developers is something man=
+y
+> > people won't do.
+> =
+
+> In the case of IRC though there's many IRC-to-X gateways that allow you=
+
+> to somewhat have your cake and eat it too, e.g. there's one for
+> discord[1].
+
+I have tried some of them, they don't quite cut it for me.
+
+> I haven't tried it, but I use another channel that has an
+> irc-to-Telegram (the app) gateway[2]. It works quite well. Aside from
+> the Freenode v.s. Librechat question I wonder if there'd be interest in=
+
+> having such a thing running for #git or #git-devel.
+
+I think that would be very nice (if it works correctly).
+
+-- =
+
+Felipe Contreras=
