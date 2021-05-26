@@ -2,93 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6B3AC2B9F7
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 07:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20671C47089
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 07:49:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D9D961378
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 07:07:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED8C3613EC
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 07:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232806AbhEZHIW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 03:08:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63626 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232617AbhEZHIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 03:08:20 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0BC8C5BD7;
-        Wed, 26 May 2021 03:06:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a1lA/Iu0+SCYugLZk4v2vdrYipB6kPvt0+JGHx
-        JPJSQ=; b=YflKyQmifqC7sWsPrjDHMI1FFg21htF8Vbzykl6dlADIY0TKnfXt+S
-        k56Ss+dfvqgZCmwf1DL7NiE0gmHXB4yoZqPY3aesaGD2B3yhHci3gEPQRrcg9n0k
-        NYXxzWkR+9GEx3J3LICXM05viO8fZ7GXsX9G8ulBTn6Tw4v32pbm8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 982F7C5BD6;
-        Wed, 26 May 2021 03:06:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 23E5FC5BD4;
-        Wed, 26 May 2021 03:06:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
+        id S231530AbhEZHus (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 03:50:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54214 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230289AbhEZHur (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 03:50:47 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F57C061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 00:49:15 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id e10so87378ilu.11
+        for <git@vger.kernel.org>; Wed, 26 May 2021 00:49:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=qOa/0e2frL5pFUpo1LByfUnNUaQYoT4XnSmlBorIcmU=;
+        b=s3RnzDa+SxtVgEAK1S0GY9MRd6lS1KzmJIylMzIOJ/3V/G7b5QnJkHxx/CKjwBmBmZ
+         DJ8ZY27vEFxqfovDH5E1ufa0/75zJp8g4qk1DzYV4CeuZl7mgMWSkoBjNMFx5GT2fLcp
+         79FEYqVQ8cmftrXRv+vllAQ2HswWvJ9cl+e7F7YSTeVxNF8ikZr3uNGwIu09itd3d2DS
+         PkzEQ1kHhCUIHprhtFa8JXljwABHlXk7WUyPZhIUayjDQYEmcQmXKleDrxF2J54AxItW
+         0VAjosq6DvWiMVMikb1+vo01+EVYNho0rI8rhGvTA75VbNLFJtSJ/qE8i0v6Xeh2dKIn
+         Escg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qOa/0e2frL5pFUpo1LByfUnNUaQYoT4XnSmlBorIcmU=;
+        b=XX3ksA8cFFz7pROfgyGo0cNimlDtfl4emioWP8bUPn0z2k87GuLE/oI/EfvketI+OM
+         3/TwIm1+7uWQ0qRrRxs/Zl+0nYZWvpCRxrFcgTXiWo3CYfACCSm5Gwm18CuKnSVhyHiU
+         rxvjCQcY1NqBydcUyQo4DvkTszl7Awyd1W6OTSi+wD0GBodFiAt4Y58hY35T0s5BO4Np
+         rDUiaTd0dKa73OyRSyMMplOylsx54EmRqKZ1tQTj4RfnKVrQubN/yO1+3L0eosH0Uuw0
+         FxZ88M+jCiDMH05ZaVliWPmNotwHrxJSbXRuUFT9R15x4i30KzHaVRlVpWqQTuHY1Bdm
+         9R/A==
+X-Gm-Message-State: AOAM532etr1pWVGeZd9SIaTNQzO3lDTHXvbba2f/fE7bDnAH8uvFg1Uq
+        Ia4B/iBOoXOoBF8xiO+YZH3Z/psaeZmfJwwIJYY=
+X-Google-Smtp-Source: ABdhPJxC7swrYVrVMpBcJZ6mP4+Btl/tWDcqiwEEjOBPj1e4nZ2yWuxzEYfrRtQAYl3pJOEBWnJr05OYwINSpb42tpk=
+X-Received: by 2002:a92:d24d:: with SMTP id v13mr25833371ilg.174.1622015354690;
+ Wed, 26 May 2021 00:49:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
+ <19413cfdb1ea50de401ab958b954a550b6514688.1621763612.git.gitgitgadget@gmail.com>
+ <xmqqfsybh0bn.fsf@gitster.g> <xmqqa6ojgy9h.fsf@gitster.g> <CAOLTT8TaJm=9mQNXMGxt-bME-ynOpv4CKZvZw+yo9zNueH_VPw@mail.gmail.com>
+ <xmqqczteeo11.fsf@gitster.g>
+In-Reply-To: <xmqqczteeo11.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 26 May 2021 15:48:59 +0800
+Message-ID: <CAOLTT8RdEive+fCtO-c0fZVjpmaYi0WYMZofCE-8wd94SCrdMg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] [GSOC] ref-filter: support %(contents) for blob, tree
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
         Hariom Verma <hariom18599@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 0/3] [GSOC][RFC] ref-filter: add contents:raw atom
-References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
-        <xmqq1r9xndjf.fsf@gitster.g> <xmqq8s42cnyb.fsf@gitster.g>
-        <CAOLTT8ReZffY5gznSDD=Fgbt7YTtA5aJWX+f8Q8npcj0OwcuFQ@mail.gmail.com>
-Date:   Wed, 26 May 2021 16:06:46 +0900
-In-Reply-To: <CAOLTT8ReZffY5gznSDD=Fgbt7YTtA5aJWX+f8Q8npcj0OwcuFQ@mail.gmail.com>
-        (ZheNing Hu's message of "Wed, 26 May 2021 14:45:58 +0800")
-Message-ID: <xmqqpmxeas8p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EF6CF030-BDF0-11EB-8CE4-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8826=E6=97=
+=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=881:11=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> > So I don't know if adding %(header) will cause duplication of functions=
+.
+>
+> I do not think you can duplicate the feature of %(header) with
+> other existing placeholders.  You may want to dump the headers of
+> series of commits so that you can find if there is any commit with
+> unusal header elements, but %(tree), %(parents), etc. would by
+> definition be the known ones, so any combination of them will not be
+> a substitute.
+>
 
-> $ printf '%b' "name='a\\\0b\\\0c'\necho -e \"\$name\"" | sh | od -c
-> 0000000   a  \0   b  \0   c  \n
-> 0000006
+Well, "find if there is any commit with unusal header elements"
+is indeed one thing that may need to be done (not now).
 
-This is wrong.  In the above, the variable name does not have a NUL
-in it.  It insead has 2-byte sequence "\" and "0" in it, and you are
-letting "echo -e" to convert it into binary, which is not portable
-at all.
+I tried to build "%(header)" yesterday and found some problems:
 
-I'd suggest instead to declare that some host languages, like shell,
-are not binary-clean and either refuse to process atoms whose values
-have NUL in them.  Silently truncating strings at NUL or striping
-NULs in strings are also acceptable options if clearly documented.
-Claiming that we stuff binaries into variables of the host language,
-while not doing so and instead assigning a quoted form, is not good.
+1. These atoms are too "flat":
+"tree", "parent", "numparent", "object"... they are all part of the
+header, why not use "%(header:tree)" like "%(contents:subject)"
+does? Similarly, why not use "%(author:name)" instead of "%(authorname)"...
 
-I have not thought about Python3 very much.  For the purpose of most
-%(placeholders), it is vastly more preferrable to use str (i.e. text
-sequence type) as opposed to bytes, as you do not have to .decode()
-to use the resulting "string", but even for things like %(refname),
-it is not technically kosher to assume that the contents are UTF-8
-encoded text, as filenames used to represent refnames are merely a
-sequence of bytes except NUL, but for consistency with binary gunk,
-we might have to emit everything as bytes.  I dunno.
+2. Why is there no state machine to save the parsing state of an object?
+`parse_tag_buffer()`, `parse_commit_buffer()`, they only parse part of the
+content of the object. E.g. tag parsed "object", "type", "tag" and "taggerd=
+ate"
+in `parse_tag_buffer()`, but it did not save the starting position and leng=
+th of
+the parsed fields, which caused `grab_person()`, `grab_date()` to parse the
+object again and again. I think this may be an optimization point.
 
-> In shell or python2/3, we can replace'\0' with "\\0".
+> But nobody is asking for it right now, and your cat-file --batch
+> does not need it right away.
+>
 
-Not for shell.  We should declare that it is not supported to feed
-binary to shell.
+Or we only provide the simplest "%(header)" and "%(header:size)"
+(it can be easily supported with "%(raw)"), leaving the other feature
+to the future.
+
+> What I wanted to say in the message you are responding to was *not*
+> that you would want to add %(header) for completeness right now.
+> But thinking beyond your immediate need (i.e. the "whole thing") and
+> imagining how various pieces, including the ones that do not exist
+> yet, would fit together, would help you to avoid designing the parts
+> you immediately need in a way you would regret in the future.
+
+As I said before, many atomic designs are not very regular.
+Our ultimate goal may be we can simultaneously support:
+
+"%(raw)"
+"%(raw:header)"
+"%(raw:header:tagger)"
+"%(raw:header:tagger:eamil)"
+"%(raw:header:taggereamil)"
+"%(header:taggereamil)"
+"%(header:tagger:eamil)"
+"%(taggereamil)"
+"%(tagger:eamil)"
+...
+
+Each layer is a namespace. Of course, it may take a long
+distance to support this.
+
+Thank.
+--
+ZheNing Hu
