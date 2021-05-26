@@ -2,118 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1ECC4707F
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 00:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF5E4C47087
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 01:22:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42CF160FE3
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 00:56:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89A88613CD
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 01:22:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232617AbhEZA6F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 May 2021 20:58:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58311 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231373AbhEZA6C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 May 2021 20:58:02 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C0C2C3CAD;
-        Tue, 25 May 2021 20:56:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nnxOQbOO/IwQOJOgSLLRK4YHMgC8SNODrsrBcY
-        K5otM=; b=HvBfzZsKEcfaqRtp1jlawPMLiSW9cL/getJMuAzi9o8BMePFF/P7tp
-        cReKF1Ow/G/SfIbNtZlT9NDNAO05yjtbMtAEIN0dINavTBNHVL6j1Fa4OkuGUMYy
-        aFepCy0uFylwfOk1iBQefytV/IfeiYtYxexh6tqkuQv1zpXg+jzjM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 43781C3CAC;
-        Tue, 25 May 2021 20:56:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8ACC2C3CAB;
-        Tue, 25 May 2021 20:56:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 0/3] [GSOC][RFC] ref-filter: add contents:raw atom
-References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
-        <xmqq1r9xndjf.fsf@gitster.g>
-Date:   Wed, 26 May 2021 09:56:28 +0900
-In-Reply-To: <xmqq1r9xndjf.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        24 May 2021 10:09:08 +0900")
-Message-ID: <xmqq8s42cnyb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 34B7BC8A-BDBD-11EB-BE70-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+        id S232742AbhEZBYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 May 2021 21:24:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230505AbhEZBYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 May 2021 21:24:13 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DD03C061574
+        for <git@vger.kernel.org>; Tue, 25 May 2021 18:22:42 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id j75so32101422oih.10
+        for <git@vger.kernel.org>; Tue, 25 May 2021 18:22:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=vjjIVms9PbdsCLTw1lfpU47eqGGJ0zEPjHFfxWGKznI=;
+        b=WWrEVlJJgmkjgxxC6obEyio1N87RP30lxPOhpmM9/EDHUD9RZtDsI5IFS3acA4qH3o
+         Vn49GfPddSeYkS5tEaRrAT0PjQbET7mU3wg2zje4dXMDHkIdaQausD9pmFuEqEWWbWrW
+         33u3PD3gRH6/ue/u+Dm3eh3ZEeArRlP2N1M/plTaDs8LzbG3cQwCMckF6CZHw0O+DUwS
+         7OEffoxiJx5BzG3t6iV+ttgCYWCH/LJLKukEy6ELfVaDL6eEJrbXIdTtiE1dOLygHzFF
+         i846mqYtTLLw6TLdFkdGkKDn8BeY3KaeYoAbSRLAYjntGaml1VCWDgzCgd7o7naoNP6I
+         IJWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=vjjIVms9PbdsCLTw1lfpU47eqGGJ0zEPjHFfxWGKznI=;
+        b=OniKYq2EfD6dkO9KCavKcjlGDQerk7JHqPVxbETtqqyjaujuym0SNY8OpWenyyI68a
+         qiTELfzrGLvM5C0Sb/2l0TtDVMYKA5Ia2w/fgywGFRUxF5wB0HfdcAOtivVKqeE+/lDC
+         HqN88RxdOHDhbV+m4I8dvwcbmKKPwGk4GXm4023pqvGnxO7fefeurpME1Nj0kpts/tzK
+         DmoVT+TeqtT373tnigcEbbxUUoAhwmbpFrmxzqU5FdI8hFcxvQKDUGqZ71DItxNAo+9d
+         kZdTPE1OWEz5m/yy5yqjftAszs4AkyRAPjYPEvxzTKM+u96i8SQEloN1ESDU1lpmWNgN
+         v/dQ==
+X-Gm-Message-State: AOAM533d9nKR0RqFv/Ot1HlFcmijOLu1v2or0Z3D8KN1yeqYuD2N3pMi
+        yMdmqppmIiRl7C1m8oZg+kc=
+X-Google-Smtp-Source: ABdhPJwjAm+OT5WQJmjqb9ij7wrGBP8RpslDyqg8bwKd0k+Bz0siE0RRRTnWQsjxjGb1wdH+v+S7vg==
+X-Received: by 2002:aca:3197:: with SMTP id x145mr286245oix.23.1621992161725;
+        Tue, 25 May 2021 18:22:41 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id y34sm4128322ota.16.2021.05.25.18.22.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 May 2021 18:22:41 -0700 (PDT)
+Date:   Tue, 25 May 2021 20:22:34 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Robert Foss <robert.foss@linaro.org>
+Message-ID: <60ada2dac06de_2c7f620854@natae.notmuch>
+In-Reply-To: <874kerny0e.fsf@evledraar.gmail.com>
+References: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>
+ <cover-0.2-00000000000-20210524T231047Z-avarab@gmail.com>
+ <patch-2.2-d097e7b0b81-20210524T231047Z-avarab@gmail.com>
+ <xmqqh7iripzg.fsf@gitster.g>
+ <874kerny0e.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 2/2] send-email: don't needlessly abs_path() the
+ core.hooksPath
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Tue, May 25 2021, Junio C Hamano wrote:
+> =
 
->> git for-each-ref --format="%(contents)" --python refs/mytrees/first
->>
->> will output a string processed by python_quote_buf_with_size(), which
->> contains'\0'. But the binary files seem to be useless after quoting. Should
->> we allow these binary files to be output in the default way with
->> strbuf_add()? If so, we can remove the first patch.
->
-> The --language option is designed to be used to write a small script
-> in the language and used like this:
->
->     git for-each-ref --format='
-> 		name=%(refname)
-> 		var=%(placeholder)
->                 mkdir -p "$(dirname "$name")"
-> 		printf "%%s" "$var" >"$name"
->     ' --shell | /bin/sh
->
-> Note that %(refname) and %(placeholder) in the --format string is
-> not quoted at all; the "--shell" option knows how values are quoted
-> in the host language (shell) and writes single-quotes around
-> %(refname).  If %(placeholder) produces something with a single-quote
-> in it, that will (eh, at least "should") be quoted appropriately.
->
-> So It does not make any sense not to quote a value that comes from
-> %(placeholder), whether it is binary or not, to match the syntax of
-> the host language you are making the "for-each-ref --format=" to
-> write such a script in.
->
-> So, "binary files seem to be useless after quoting" is a
-> misunderstanding.  They are useless if you do not quote them.
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> >
+> >> In c8243933c74 (git-send-email: Respect core.hooksPath setting,
+> >> 2021-03-23) we started supporting core.hooksPath in "send-email". It=
+'s
+> >> been reported that on Windows[1] doing this by calling abs_path()
+> >> results in different canonicalizations of the absolute path.
+> >
+> > I see the author of that patch CC'ed; the change in question
+> > explains why we switched from "the hooks directory immediately under
+> > $repo->repo_path()" to "ask 'rev-parse --git-path hooks'", but it
+> > does not say why we call abs_path() on the result.  I guess that is
+> > because $repo->repo_path() has always been a result of applying the
+> > abs_path() function to something, so it was to safeguard the callers
+> > that expect an absolute path coming back from hooks_path?
+> >
+> > And that makes this change dubious, especially as a band-aid for a
+> > breakage immediately before the final release, doesn't it?  Are we
+> > convinced that the callers are OK with seeing sometimes relative
+> > paths?  Certainly the cases the tests J6t fixed are not negatively
+> > affected, but is that sufficient?  To what directory is the
+> > configuration variable supposed to be relative to, and are we sure
+> > that the user will always invoke "git send-email" from that
+> > directory?
+> =
 
-Another thing to keep in mind is that not all host languages may be
-capable of expressing a string with NUL in it.  Most notably, shell.
-The --shell quoting rule used by for-each-ref would produce an
-equivalent of the "script" produced like this:
+> The one caller is git-send-email.perl is fine with it, at least on *nix=
+,
+> this fix still needs testing on Windows.
 
-	$ tr Q '\000' >script <<\EOF
-	#!/bin/sh
-	varname='varQname'
-	echo "$varname"
-	EOF
+While I understand the reluctance to test things on Windows, sometimes we=
 
-but I do not think it would say 'var' followed by a NUL followed by
-'name'.  The NUL is likely lost when assigned to the variable.
+waste more time discussing about what couldn't potentially break there
+than the time it takes to setup a VM and just make sure.
 
-So for some host languages, binaries may be useless with or without
-quoting.  But for ones that can use strings to hold arbitrary byte
-sequence, it should be OK to let for-each-ref to quote the byte
-sequence as a string literal for the language (so that the exact
-byte sequence will end up being in the variable after assignment).
+Am I the only one that has setup a Windows VM just for tests?
 
-That reminds me of another thing.  The --python thing was written
-back when Python3 was still a distant dream and strings were the
-appropriate type for a random sequence of bytes (as opposed to
-unicode, which cannot have a random sequence of bytes).  Somebody
-needs to check if it needs any update to work with Python3.
+Also, there's ways to trigger CI runs to test this stuff aren't there?
+
+Seems like a much less painful way to leapfrog this roadblock.
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
