@@ -7,97 +7,83 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAAA0C47088
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 243E0C47082
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:52:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A39F61157
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:50:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0676D613CA
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233843AbhEZXvn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 19:51:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47318 "EHLO
+        id S233918AbhEZXyV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 19:54:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232270AbhEZXvn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 19:51:43 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41862C061574
-        for <git@vger.kernel.org>; Wed, 26 May 2021 16:50:10 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id v22so3317650oic.2
-        for <git@vger.kernel.org>; Wed, 26 May 2021 16:50:10 -0700 (PDT)
+        with ESMTP id S232270AbhEZXyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 19:54:19 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E25C061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 16:52:46 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so2697374otc.12
+        for <git@vger.kernel.org>; Wed, 26 May 2021 16:52:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0+GYZ+gW+dNY512LfeY0e+TU/4l9MG2GFl+rFliIjnk=;
-        b=p5WWXnCFf+UJScOW5I7u2Spu5dOQR4fmHARViGL8qbEkxdNQZhpI/Y+m610fiJXbEz
-         lO8oDeH4v51g4wWeszKBYpd6CMldxFa3M/ebhq9EmcCtTaUtuSvId6OL0kKQlizvkrxH
-         8W+qUAcbP8cJS0ktK8G/w4Tg5SMxX8iLX2pLOG7QrO/QhadsKGt53Vn89hg/d8tddUE6
-         chwbknm4jlnf5Ye3d5VAct0Fgq8+pIgSRPCGHH7i2RNODDNARw/yGPQyHfmkY8qJy5nR
-         Ow15W2Z9b27Qzwo62DSV5u8BGTj5BNpLCz1X/PooNiOho6OYyPfB76TRKvL/0CyxmvAI
-         LTYQ==
+         :cc;
+        bh=tRQwYVvC8gCg5Ch8qqrZsOwANLY2pKqE1ZnIQ5AfMjY=;
+        b=J0wHvNBs2JOSNtB1vAhSkg0qOhLBOnSrZ1ezXSCNqrNCaXI5ELSALEiq0hBd1HGjvq
+         mhKV5zoK46diJZdKJGirXatA1SsYb2DOjWgXp9UCwVEMwiTBneYbh92nZI4wAW4AfWur
+         zFq++rO75umiUQ1BMcoxhnQFKZsWSOCTLEUlywcSuNfiooePyeEagwTYu08tj5lVN+Ld
+         1GCnz7sneSyias7aEvquwNPJZT87su9LoEWZQGrX9Sez9E3fNi40VfnIU7rolqcHBYwA
+         +lNrcMPGY1JiyEWmL0Rc8XJiAxnMU0EgkKfpEfD3SDopydKXuXB483NeVAu3jcoR5J52
+         +HXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0+GYZ+gW+dNY512LfeY0e+TU/4l9MG2GFl+rFliIjnk=;
-        b=G5e1eSiy2UXb+HPZXDu+C6ETFNZqTtxVWiBuwgCG3d3po6NbLDAn3c/6Qhvco3SKLI
-         tEBG0NKCA8m6FiSjlIpTFbriuWGZPcskLUaQ3bs1huzlcPPT2XOblz3Naz2lambPeakG
-         VleuN8rV3jqntgOEy7Uo/c88IsKzx6lvVDkAlUMSp3p/Ae/nqkXj3ZigYLizo2uNYDYk
-         o/Z/7k74W0hB2ISfs60Y50kpDX9dBK55Uj7HNiCvJQAIp8IYa4YAvAiGAsAmgqwuqfuJ
-         fJ765lgr+d4iuaybqzZpUvyvW133uZrW1uuTphTUM2vZPh2RPkeSi7xOxMc0ymdCerBT
-         n2Bg==
-X-Gm-Message-State: AOAM531pp/CBaXJqvlZcB1jOVKDUwIrHV3J0VZ+4agHr+tGSxUe3s4ko
-        LvNbE4TnkwjQtlNLldBVjnUxF35ExIEy2JlQSH2ioGzr98s=
-X-Google-Smtp-Source: ABdhPJylOL/cr4qhFkg8bl0kscHvvaFLxcc6cv7f5bAUa2sNgfKCkCm7LyG0avcos7fxlGhvAkpD+ShFTS9Zw0bqQps=
-X-Received: by 2002:aca:3e06:: with SMTP id l6mr474787oia.147.1622073009530;
- Wed, 26 May 2021 16:50:09 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=tRQwYVvC8gCg5Ch8qqrZsOwANLY2pKqE1ZnIQ5AfMjY=;
+        b=rGdrJeed/u8neJmdnYXAJT+8rwAHEQZh3zSgh3BwEXpCntjggFLUx0h8k5/4WQAYFz
+         9wmF7MVMe2hpkI1LPvQGyK7JG7gmW5XeLmcHGM60RQihsv2eiUDOvqRNJfTrMEmpWHpA
+         OC5kBRDw2alOS8J3ZFzrfpsuhHAD0BjWKWE5NQxJsn3mqyfbqJEUEAGtC89gWqhrtT5F
+         +50zuJZiEZyGkBLFMrYtCEdAJY8UIfpscPezjVG5Rq6Eif4CmLYmKUW3RRKpGRl1sjcG
+         /LuSrSdX5xsQPNlMoag/iqkZFWpNG0HEo8uM8R0qvm7n/Vxbn6CQZ2zLHyk3/xd+Rk+A
+         iskg==
+X-Gm-Message-State: AOAM530gyxS05YdCzGLlWkxNsd+uxLYcPvJSODXJGrVVuzsc9L6YSHlU
+        Yjc/CdCyiwjlDNGVpF5RoVTv8TwvOkEHXsMWC3U=
+X-Google-Smtp-Source: ABdhPJyA9uXp7wLW0GtvMrkXCFmmHDHLF0X8lPgpmuSgD62F3DRPvDxbn/UxoP1J6gO4sHki2vKkV3XLlvUIDS3+k/w=
+X-Received: by 2002:a9d:1d45:: with SMTP id m63mr588489otm.302.1622073166108;
+ Wed, 26 May 2021 16:52:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210512040926.GN12700@kitsune.suse.cz> <609b63e48fd49_6d7da2086@natae.notmuch>
- <20210512064733.GP12700@kitsune.suse.cz> <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
- <20210512170153.GE8544@kitsune.suse.cz> <609c112066acd_71bd1208aa@natae.notmuch>
- <20210512180418.GF8544@kitsune.suse.cz> <609c2f98932f3_71bd120840@natae.notmuch>
- <20210513074622.GG8544@kitsune.suse.cz> <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
- <20210513094818.GH8544@kitsune.suse.cz>
-In-Reply-To: <20210513094818.GH8544@kitsune.suse.cz>
+References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
+ <63dca3b2-1858-6708-5fb7-5a072b7b62f3@iee.email>
+In-Reply-To: <63dca3b2-1858-6708-5fb7-5a072b7b62f3@iee.email>
 From:   Varun Varada <varuncvarada@gmail.com>
-Date:   Wed, 26 May 2021 18:49:58 -0500
-Message-ID: <CAD2i4DDY1z1ZNigRfVog1205hKBk+U5KfinzXCk-2mkaYy4cjQ@mail.gmail.com>
+Date:   Wed, 26 May 2021 18:52:34 -0500
+Message-ID: <CAD2i4DAbBiVRo2Zk_cSYbgXGmm0SMUJZxSqYWhQr3tjwHxCYHQ@mail.gmail.com>
 Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     Robert Coup <robert.coup@koordinates.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 13 May 2021 at 04:48, Michal Such=C3=A1nek <msuchanek@suse.de> wrot=
-e:
-> Yet Felipe insists that 'impact' is somehow generally bad word to use or
-> that it should be abolished solely because he finds it bad and nobody
-> objected to the alternative wording.
+On Thu, 13 May 2021 at 05:40, Philip Oakley <philipoakley@iee.email> wrote:
 >
-> Opinions on use of 'impact' differ both among the participants of this
-> discussion and authorities like authors well-known dictionaries.
+> Hi Varun,
 >
-> It looks like this is generally matter of stylistic preferences and
-> opinions. That is even if there is some slight stylistic preference for
-> not using the word 'impact' it is very hard to prove such and then it is
-> very hard to request change based only on writing style preferences.
+>
+> I've seen the rather extended discussion about word choice. However Can
+> I suggest an alternative split of the patch?
+>
+> If the patch is split between:
+> 1. Test shells
+> 2. Code comments
+> 3. Manual pages
+> 4. Guides and How to's.
+>   then it should be possible to focus on the precision aspects first,
+> and only later get into the imprecision of modern colloquial English.
+> For the manual page changes, having a direct link to a test shell or
+> code comment change would provide important support to the clarification
+> of any precision aspects of the changes.
 
-The argument is not that it is generally a bad word to use, but that
-it is generally bad to use words when they don't mean what one thinks
-they mean, especially when all evidence says otherwise.
-
-All major dictionaries define "impact" as "a strong effect" or "to
-affect strongly". This is not style, but semantics. In the same way
-that "per se" being used to mean "necessarily" is not a style issue,
-using "impact" to mean "an effect" or "to affect" is not a style
-issue.
-
-As has been stated already, the clear and substantial argument for
-this change is that it reduces the confusion that arises from
-improperly using the word "impact" in the instances without any loss
-or compromise in meaning. That is a clear win.
+I'd be happy to split it, but I'm not sure I follow what you mean by
+"precision aspects".
