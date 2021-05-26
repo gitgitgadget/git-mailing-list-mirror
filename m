@@ -2,156 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_RED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D7B5C47088
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 21:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0064C47082
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 22:01:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52732613D7
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 21:08:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB14B613B0
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 22:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbhEZVJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 17:09:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
+        id S234334AbhEZWD0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 18:03:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233897AbhEZVJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 17:09:32 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD8EC061574
-        for <git@vger.kernel.org>; Wed, 26 May 2021 14:07:59 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id j184so2557079qkd.6
-        for <git@vger.kernel.org>; Wed, 26 May 2021 14:07:59 -0700 (PDT)
+        with ESMTP id S234024AbhEZWDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 18:03:24 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D66DC061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 15:01:51 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id o27so2696764qkj.9
+        for <git@vger.kernel.org>; Wed, 26 May 2021 15:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :content-transfer-encoding;
-        bh=+SblLhUkBsD9u1PVgcT539Xdss90H8sDUmhp4KREkas=;
-        b=QuIc9G/9FDrQLxibQvE/EN5gSCCAcerc3D17zKymRZM8omAfzlTDlbV4Z4ERaOgVRu
-         BDxpcPcb7wqwgE12X86MPS67GTNW/pwxybtwEAcAdVlEIrx+rvIadJ8u8/wD067do6aF
-         kaqQb6FNPZVt7swgqsuEF4lckzlM+M2M7emh8=
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=blhaY+Q4fnweo6VHU9n2AYyJ1OyBrPI2LAprNePDfoM=;
+        b=pkBzVnuMQqxpn694XSXPhISa2GOZ7+RvI7eo6TfEKVNu5BXBef7eZP2phOfTRPFZHG
+         c1Mz7hT783qR+inVZ5oXK2hFpoQHXBqwNn1dT9IJq8dKjtsnnns4LB+WZ3+XQmnFjeys
+         lqAaWKl19hYSoP/P/NyjJSvA7gI8wu6e3+nQJHXGJu5X5USn/jRrVgCuNrkbXVp17JfV
+         /D7omRu1IpXkwLZP2uzjDRFXNRbZJyYSdKVn25M4VDBXjMK0nXZ9FcSCsf5xe96edC47
+         ILq1pXJDI+KayYA1jlHGgDEafGgL44vD+KNjhDw86yA9v0nydBPX8ZZ5R7PGKEPbcCGC
+         Qfug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding;
-        bh=+SblLhUkBsD9u1PVgcT539Xdss90H8sDUmhp4KREkas=;
-        b=poexuB9PT3JRwxsb2ue0XzjstTlKAiNc8aNqHACnPxAC2Ez1uZd80vKos3vMIBUFAE
-         yts/zjtNT76Bf/1dukli2zzaDk13tEAeAQ7uP8RS74svKAWO/72HfkhZarWqMC3RfoKu
-         zIgkct6xo40qRDaIll7Bw+bnLju58Hr8goUbMC+2P9q3050VLemRr7YdvaBfEOKQTRtI
-         1vFlqT+L9F3glDa5TdRhRugQvoOP+SuSKNAlu8s8b3CBQzVsJca9JzWoDVJrYKj3V4P0
-         NHax8zrnr1fSLmCDc4S9tbuQENdBt/zaEZlwgKIu8Cht8oAz4EXMzsHpdots9YIGZnFu
-         xj+A==
-X-Gm-Message-State: AOAM533W6v7+0VQHr4m8BIDuh1GH7nmv2mlQbqKzVoWS3HF/PjNk8LNu
-        uqv7TKUX/8J4TV9Ug281Fv3X+p+VbRl1QyeL6mg=
-X-Google-Smtp-Source: ABdhPJz25IJW73QDFJOnHayzuwmNI4nCcAGPZLnMJ5zDcXbl+iEZOLJX8Kh6wPCClpf7Gq3dwAXNpQ==
-X-Received: by 2002:ae9:f105:: with SMTP id k5mr67727qkg.63.1622063278587;
-        Wed, 26 May 2021 14:07:58 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id x10sm44888qkh.124.2021.05.26.14.07.58
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 May 2021 14:07:58 -0700 (PDT)
-Date:   Wed, 26 May 2021 17:07:56 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     git@vger.kernel.org
-Subject: patatt: end-to-end developer attestation for patches
-Message-ID: <20210526210756.ue5lfcyexz2dwfa6@nitro.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=blhaY+Q4fnweo6VHU9n2AYyJ1OyBrPI2LAprNePDfoM=;
+        b=to7MxLYixB0zOIWngmLoD/FJdl8R0WB+VcHudd0lHDKfizotDiSqPtCUGi8S+m3V8V
+         pbCnfYMbFxhUrdUH71msocpEstVnQKojLx52MuZCP3eLUcWm1Hh/VDyGtUP7Baz3QUo5
+         lCg81lI0EhWwJS9snMfZlResAv0ooapjscPcz2n24h6ta4k80QCf2YrzulG+v7A4wF7m
+         Y9wJsQyGB6pf5YKYi3ecqKbreFxN8H6eFjGBmUM6VufUbLQiaBV3mG7TN9WHrSC6NHtr
+         ILgLKYfysDtLASBW2U14XmI00ZkNfF4HzZlCKA6i45nCr5uV6PJ0PB0AsG9fc7VqPboA
+         0z8w==
+X-Gm-Message-State: AOAM533bpsf0qphsh12hSpBPjo4iRTEWiss3mVKiHOwFRo7x6FQ+eeC+
+        aNOtbbfVbP3wO+KydGRfSBYyE4LBRdNXjbOnxmgNyw==
+X-Google-Smtp-Source: ABdhPJx2GS5KgXx+SaMrNA0qRM3qyhK9r80nbQWQnWb95wPKdgE2ETKALEvuFSNJn0qRND1rIx0n7fLH+1Cvi7hr9ik=
+X-Received: by 2002:a05:620a:210e:: with SMTP id l14mr281841qkl.1.1622066510467;
+ Wed, 26 May 2021 15:01:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+References: <cover.1620145501.git.matheus.bernardino@usp.br>
+ <667777053ab853ef2f94b7ba4ab39f7241d2b49c.1620145501.git.matheus.bernardino@usp.br>
+ <87eedtmj7w.fsf@evledraar.gmail.com>
+In-Reply-To: <87eedtmj7w.fsf@evledraar.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 26 May 2021 19:01:39 -0300
+Message-ID: <CAHd-oW6X4cwD_yLNFONPnXXUAFPxgDoccv2SOdpeLrqmHCJB4Q@mail.gmail.com>
+Subject: Re: AIX failures on parallel checkout (new in v2.32.0-rc*)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, all:
+Hi, =C3=86var
 
-I would like to introduce patatt, which is a small tool/library for end-to-end
-cryptographic attestation of patches sent via email. It aims to solve the
-problem of needing to trust mail gateways, mailing list archives, or any other
-kind of inherently untrustworthy infrastructure.
+On Wed, May 26, 2021 at 3:40 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>     + test_checkout_workers 0 git -C various_sequential checkout --recurs=
+e-submodules B2
+>     error: Your local changes to the following files would be overwritten=
+ by checkout:
+>             d
+>             h
+>             j
+>     Please commit your changes or stash them before you switch branches.
+>     Aborting
 
-# How it works
+I requested an account on the GCC farm to debug this, and the problem
+seems to be that AIX's `cp -R` defaults to following symlinks instead
+of copying them. In the above error message, 'd', 'h' and 'j' are all
+symlinks which were followed when copying the test repo, so these
+paths indeed won't match what's in the index, which makes checkout
+abort.
 
-Patatt works by adding a separate header containing a cryptographic signature
-attesting the body of the message, plus the headers relevant to git commit
-operations ("From" and "Subject", specifically). The hashing and signing is
-done using a slightly adapted version of the widely used DKIM standard.
+Fortunately, there is a POSIX option to force cp to copy the symlinks:
+'-P'. Adding this flag to the cp invocation at line 117 of t2080 makes
+all parallel checkout tests pass on AIX.
 
-Since the signature is placed into its own email header, it will stay
-completely out of the way of any existing tools operating on patches (git-am,
-patchwork, stgit, quilt, etc), so patches carrying attestation will not break
-any of the existing workflows but will be picked up and checked using tools
-like b4 (starting with version 0.7).
-
-For more technical details, please see:
-https://pypi.org/project/patatt/#basic-concepts
-
-You can also watch the presentation I made to the OpenSSF developer
-attestation WG:
-https://www.youtube.com/watch?v=no6r1iUqY1A
-
-# How to start signing your patches
-
-It is very easy to start signing all your patches, especially if you use
-git-send-email.
-
-1. install patatt (e.g. with "pip install --user patatt")
-2. tell it which PGP key to use, or generate a new ed25519 key
-3. add a sendemail-validate hook
-
-See instructions here for full details:
-https://pypi.org/project/patatt/#getting-started-as-contributor
-
-# How to start verifying attestation as a project maintainer
-
-The only tool currently implementing patatt attestation is b4, and if you're
-using a workflow that relies on patches sent to mailing lists, I invite you to
-try b4 out for your needs. B4 can either work with remote public-inbox
-repositories, or fully local mailboxes. To install b4, you can use:
-
-pip install --user b4
-
-## Maintaining a project keyring
-
-Patatt/B4 can use your global GnuPG keyring for validation, or a separate
-keyring maintained as part of the project's git repository. It can be kept
-either in the main development branch, in a dedicated repository ref, or in a
-wholly external repository used just for the keyring.
-
-Please see this here for the concepts and general overview of in-git
-contributor keyrings:
-https://pypi.org/project/patatt/#in-git-pubkey-management
-
-Here is an example of b4 retrieving an attested patch series:
-
-    $ b4 am -o/tmp 20210521184811.617875-1-konstantin@linuxfoundation.org
-    Looking up https://lore.kernel.org/r/20210521184811.617875-1-konstantin%40linuxfoundation.org
-    Analyzing 3 messages in the thread
-    Checking attestation on all messages, may take a moment...
-    ---
-      ✓ [PATCH 1/3] Sign Message-Id header if present
-      ✓ [PATCH 2/3] Make header order deterministic
-      ✓ [PATCH 3/3] Release as 0.4.0
-      ---
-      ✓ Signed: openpgp/konstantin@linuxfoundation.org
-      ✓ Signed: DKIM/linuxfoundation.org
-    ---
-    Total patches: 3
-    ---
-     Link: https://lore.kernel.org/r/20210521184811.617875-1-konstantin@linuxfoundation.org
-     Base: not found
-           git am /tmp/20210521_konstantin_sign_message_id_header_if_present.mbx
-
-As you can see, b4 will validate both the DKIM signature, and the
-X-Developer-Signature header when it finds it.
-
-# Questions welcome
-
-This is still considered an experimental feature, so I would be happy to
-receive feedback about the concepts and implementation.
-
-Best regards,
--Konstantin
+We also already use `cp -R -P` in the test suite (at t7001), and
+without any prereq, so I guess all platforms we are testing git at do
+support this flag in cp. I'll send a patch adding the flag at t2080.
