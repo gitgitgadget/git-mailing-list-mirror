@@ -7,170 +7,192 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BFEDC2B9F7
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 09:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDAD1C2B9F7
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 09:22:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75A7A613D3
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 09:18:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFF5E61432
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 09:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232913AbhEZJTm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 05:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46644 "EHLO
+        id S233212AbhEZJYJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 05:24:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232412AbhEZJTm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 05:19:42 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F938C061574
-        for <git@vger.kernel.org>; Wed, 26 May 2021 02:18:11 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id n10so259543ion.8
-        for <git@vger.kernel.org>; Wed, 26 May 2021 02:18:11 -0700 (PDT)
+        with ESMTP id S232984AbhEZJYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 05:24:08 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05865C061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 02:22:37 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id e10so279211ilu.11
+        for <git@vger.kernel.org>; Wed, 26 May 2021 02:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=AuDIuJE7CU16sZPYBiC4jcg2VSTEcxwsXqaqm66VjZ4=;
-        b=Z9VS0wzBDFqpGoBCZoqD4GbkB8dNa31O/6MT9hswaTDZCZ6IJ0NQWM+T90hpVT5GOz
-         WlAnJ8pl3M0NEMRTb2eWCONFrrq+4v7j/iDKGPbyE5+29RC/bdzY1zlxdh3LAuwzGAN6
-         HZkO5hrvpAIRx/0Ky3353hYjm1RuNM/1+Ss4yiPP2NyV1wUTw2ZGny75D3GVgOs2XlZx
-         /5Tn3uLPkdTTmvT7HEW76SIFCdDUM/c9ZJ5eVB7fuzA0CIc2jogxjkhCJclSFMAXVHaj
-         eJ25dXxT1oWN3sVVy9k6gq5KSrd6yTJbzHpn6TCTz/WOeIS6vqOzjW7d7YrJp/V5hDl9
-         OEcg==
+        bh=KgBYQcSMzr+5HzznHNt+W9N9HwxhCUk6fokN0HYJO4o=;
+        b=njKsqdHkggwmnv8LLOvqfczGSLcw135104Wv31nVdEcGGf0f1gVsCQPt2hwVOwC5sg
+         SueHfBM5FrdyU+ONx0dx4p43uJBuZKKvfEjOKa88GijRi/35jro+5c0Y7PMRpN+OEyzc
+         xsjZTjpdMpmiZ0JbcrYKDHfD8bHzkh+wQfkNlYg7YigLGC+cHDv3JMeCs7jINMglHFqo
+         l6/hlLw46NWBSQYvQ5dXdXBMEftKTnNolt6fCah415ZAv29CQVCpkFfuy3xZv4NFn7sI
+         exXFAKoIxyOMEBwLT/q1kddBQMh0+EhulxHbhbSvC/S8syg0qVJxSISlTcwW4QvRyFHX
+         LLbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AuDIuJE7CU16sZPYBiC4jcg2VSTEcxwsXqaqm66VjZ4=;
-        b=AUkP5IfQKEOet4KJMIm7ktg2jVqqRI+00yH5VXIdfC7hI8BMGeYPDLevcjetlJrEVS
-         8YgZ8FN4CHWdMMMmBVmLYcchVtU1ZwKWUOvzc4bAdj08p1wCDm12/vyqx0LSze0SMAyP
-         BgX4AniuyoKOkp9fuzGlvwnx0kxPfvCWLHRlO4vycNTTOJ1fvz6TiRjMyTeydPwozjhs
-         SNbE2EAWgMayG/G5PUaVqfv31Ky43JEx5AG5V/ZQ9ScaegE+O2sWWBiQP7XeCNNz1h/g
-         ijwe/vanyO/Nb1831sjHaH5G65PD+UY3PHzc360Q0VbjXC6lkSkO0jIgicDPtyUpoDpy
-         8cfA==
-X-Gm-Message-State: AOAM533YIIH44pHWZRZyukHIP5oiJGMsQGr9XuFmhFhK0hqmyrq8GYfZ
-        LFEKfKzZmKbGU46EbPhfu+4Qw5Nn6WrQKW6aPgI=
-X-Google-Smtp-Source: ABdhPJyv8ZEhIFUcbL2gEau2ELEe1AozaEuYw6EBwHpBqrGXWTimQcZW3o1ZzM8WeLaX6GFasdNKLID8JfmNw24NamY=
-X-Received: by 2002:a05:6638:150d:: with SMTP id b13mr2170513jat.51.1622020690464;
- Wed, 26 May 2021 02:18:10 -0700 (PDT)
+        bh=KgBYQcSMzr+5HzznHNt+W9N9HwxhCUk6fokN0HYJO4o=;
+        b=hl30pov+70UdCBM8xSZkwIctvbv5vZvEpHiLe+Easktax189ZMQw04CL1D+p8kTo5M
+         da+qfnwxDBgIkcNyxX5pMrS3XCiDw9ysOofhyGgFhGwuIY0hdhJ3v1XV7iihEvIS9cCe
+         qRO3nc045JzZQ0Q6fcDEV+Dp+cBmp4/U6Cb4TfKf7+mypJxcKkD5Ko0+haUre5HscdTc
+         CpkUC9CCLQCsK9W3E7GiNE9nVubVETFOjIpWC2pVpJzZxuygnBGkeLQVtaIPwA7mTJb7
+         aVlvgn2oGoJGL/PQyLhw+beLiFIeIxLLLoayr0HlFfTRo4UzDHxGzsOBWtTVO8IU/gh5
+         YBPg==
+X-Gm-Message-State: AOAM532Pe/m3PmWcjtJtRaGnugRFxa+OlDOfbDPlaoF29ubj7POx6+v6
+        fqc0VnXgJ1Hy50GKmtDarMwBjElsu8053FXggYc=
+X-Google-Smtp-Source: ABdhPJxIfXACBPTkib1/Ypi7iM341QxxxsnZtY9iayWBmTQ8asovoKyuFYvtZQvSLPg/NhDwuDzEtRSz/ty7S2Zo+MQ=
+X-Received: by 2002:a92:c56a:: with SMTP id b10mr23163135ilj.17.1622020956330;
+ Wed, 26 May 2021 02:22:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
- <xmqq1r9xndjf.fsf@gitster.g> <xmqq8s42cnyb.fsf@gitster.g> <CAOLTT8ReZffY5gznSDD=Fgbt7YTtA5aJWX+f8Q8npcj0OwcuFQ@mail.gmail.com>
- <xmqqpmxeas8p.fsf@gitster.g>
-In-Reply-To: <xmqqpmxeas8p.fsf@gitster.g>
+References: <CAOLTT8Tu1Xvc6sJ79n6f9B6TiuKp3akTQcQcuzEe7sG-kVOXAA@mail.gmail.com>
+ <CAP8UFD0sG9La8zpns+9Vzz1FA3XG+OF0+gRTDLU1s16aVY1-Yg@mail.gmail.com>
+In-Reply-To: <CAP8UFD0sG9La8zpns+9Vzz1FA3XG+OF0+gRTDLU1s16aVY1-Yg@mail.gmail.com>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 26 May 2021 17:17:55 +0800
-Message-ID: <CAOLTT8QR_GRm4TYk0E_eazQ+unVQODc-3L+b4V5JUN5jtZR8uA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] [GSOC][RFC] ref-filter: add contents:raw atom
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>
+Date:   Wed, 26 May 2021 17:22:21 +0800
+Message-ID: <CAOLTT8R1j5m7XHHGrf9SoAEBR85yaT+tNJGzS+Pg1pcSm0csdA@mail.gmail.com>
+Subject: Re: [GSoC] Git Blog 1
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom verma <hariom18599@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8826=E6=97=
-=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=883:06=E5=86=99=E9=81=93=EF=BC=9A
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=
+=8825=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=884:47=E5=86=99=E9=81=93=
+=EF=BC=9A
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
+> On Sun, May 23, 2021 at 12:53 PM ZheNing Hu <adlternative@gmail.com> wrot=
+e:
+> >
+> > My first week blog finished:
+> > The web version is here:
+> > https://adlternative.github.io/GSOC-Git-Blog-1/
 >
-> > $ printf '%b' "name=3D'a\\\0b\\\0c'\necho -e \"\$name\"" | sh | od -c
-> > 0000000   a  \0   b  \0   c  \n
-> > 0000006
+> Great!
 >
-> This is wrong.  In the above, the variable name does not have a NUL
-> in it.  It insead has 2-byte sequence "\" and "0" in it, and you are
-> letting "echo -e" to convert it into binary, which is not portable
-> at all.
+> See some comments below, but you don't need to update your blog post
+> for each comment. Some are just remarks that might help you.
+>
+> > -----
+> >
+> > ## Week1: Git Adventure Begin
+> >
+> > Use Git to submit Git patches to the Git community.
+> > Does it sound magical? I fell very lucky to be selected
+>
+> s/fell/feel/
+>
+> > by the Git community this year and start my Git Adventure
+> > in GSoC.
+> >
+> > I am no stranger to Git usage, and before the start of GSoC,
+> > I have learned some Git source code content, but I only saw
+> > the tip of the iceberg of Git source code, there are still many
+> > things that I need to explore.
+> >
+> > ### What happened this week
+> > - In [[GSoC] Hello
+> > Git](https://lore.kernel.org/git/CAOLTT8SHE-ok3D+oLNSWFi7KPU=3D=3DVQnTM=
+DmC4YxUyNBJKmBD8A@mail.gmail.com/),
+> > Christian and JiangXin interacted with me.
+> > - I checked Olga's patch at Christian's prompt and learned a way
+> > to make `cat-file --batch` use `ref-filter` logic: Use `format_ref_arra=
+y_item()`
+> > in `batch_object_write()`, this is indeed a good entry point. But
+> > before implementing this function, we must make `ref-filter`
+> > support the function of printing the original data of the object
+> > (as `cat-file --batch` does). I decided to reuse the atom
+>
+> In your blog post it looks like a space is missing after "object" as
+> we see "object(as".
+>
+> > `%(content:raw)` in ref-filter to implement this function.
+>
+> The above could be understood as saying that `%(content:raw)` already
+> exists, which is not really true. Maybe you could say something like
+> "I decided to add the ":raw" option to the existing `%(content)` atom
+> in ref-filter.c to implement this function."
+>
+> > ### The difficulties I met
+> > In [[PATCH] [GSOC] ref-filter: add contents:raw
+> > atom](https://lore.kernel.org/git/pull.958.git.1621500593126.gitgitgadg=
+et@gmail.com/),
+> > I submitted a patch, which support atom `%(content:raw)`
+>
+> s/support/supports/
+>
+> or
+>
+> s/support/adds support for/
+>
+> > for `ref-filter`.
+> >
+> > Unfortunately, this patch has a big problem:
+> > I ignored the breakage on the test. This led me to
+>
+> Maybe: s/the breakage on the test/a test breakage/
 >
 
-Indeed I was wrong, the var name does not contain '\0'.
+Thanks for these grammatical corrections. I will apply them
+to my blog (very easy)
 
-> I'd suggest instead to declare that some host languages, like shell,
-> are not binary-clean and either refuse to process atoms whose values
-> have NUL in them.  Silently truncating strings at NUL or striping
-> NULs in strings are also acceptable options if clearly documented.
-> Claiming that we stuff binaries into variables of the host language,
-> while not doing so and instead assigning a quoted form, is not good.
+> > discover a bigger problem:
+> >
+> > If our references points to a blob or a tree, and  these objects may
+> > be binary files,
+>
+> The raw content of a tree indeed contains the binary contents of the
+> hashes it references, while other objects like commit and tags contain
+> hashes in the hexadecimal format.
+>
+> > this means that we cannot use functions related
+> > to `strcmp()`,`strlen()` or `strbuf_addstr()`. The possible '\0' will
+> > cause the output to be truncated. We have to think of a way to make
+> > `ref-filter` can accept the output of these binary content.
+>
+> The strbuf API has functions to deal with binary content.
 >
 
-Makes sense. Either choose to truncate, or choose to reject.
+Yes it is.
 
-> I have not thought about Python3 very much.  For the purpose of most
-> %(placeholders), it is vastly more preferrable to use str (i.e. text
-> sequence type) as opposed to bytes, as you do not have to .decode()
-> to use the resulting "string", but even for things like %(refname),
-> it is not technically kosher to assume that the contents are UTF-8
-> encoded text, as filenames used to represent refnames are merely a
-> sequence of bytes except NUL, but for consistency with binary gunk,
-> we might have to emit everything as bytes.  I dunno.
+> > So I searched for all the codes in `ref-filter.c` that buffer might be
+> > truncated by '\0' and use the appropriate method to replace them.
+> >
+> > Just like replacing `strcmp()` with `memcmp()`, We can use `strbuf_add(=
+)`
+> > instead of `strbuf_addstr()`,
+> > At the same time I also wrote the equivalent `*._quote_buf_with_size()`
+> > to replace `*._quote_buf()`.
 >
-> > In shell or python2/3, we can replace'\0' with "\\0".
+> Nice!
 >
-> Not for shell.  We should declare that it is not supported to feed
-> binary to shell.
+> > I just submit it to the mailing list right now:
+> > [[GSOC][RFC] ref-filter: add contents:raw atom]
+> > (https://lore.kernel.org/git/pull.959.git.1621763612.gitgitgadget@gmail=
+.com/)
+>
+> By the way a better title for your patch might be "[GSOC][RFC]
+> ref-filter: add ':raw' option to %(contents) atom"
+>
 
-Eh, it seems that we adopt a "reject" strategy.
+Good suggestion.
 
-$ git hash-object a.out -w | xargs git update-ref refs/myblobs/aoutblob
-$ git for-each-ref --format=3D"name=3D%(raw)" refs/myblobs/aoutblob
---python | python2
-  File "<stdin>", line 1
-SyntaxError: Non-ASCII character '\x8b' in file <stdin> on line 2, but
-no encoding declared;
- see http://python.org/dev/peps/pep-0263/ for details
-
-$ git for-each-ref --format=3D"name=3D%(raw)" refs/myblobs/aoutblob
---python |python3
-SyntaxError: Non-UTF-8 code starting with '\x8b' in file <stdin> on
-line 2, but no encoding declared;
- see http://python.org/dev/peps/pep-0263/ for details
-
-It seems that --python also needs to "reject", no matter python2 or python3=
-.
-What about tcl and perl?
-
-$ cat a.out | od >1.od
-$ git for-each-ref --format=3D"set name %(raw)
-puts -nonewline \$name" refs/myblobs/aoutblob --tcl | tclsh | od > 2.od
-$ diff 1.od 2.od | head
-7,12c7,12
-< 0000140 114303 000002 000000 000000 141400 001230 000000 000000
-< 0000160 000000 000010 000000 000000 000000 000003 000000 000004
-< 0000200 000000 001430 000000 000000 000000 001430 000000 000000
-< 0000220 000000 001430 000000 000000 000000 000034 000000 000000
-< 0000240 000000 000034 000000 000000 000000 000001 000000 000000
-< 0000260 000000 000001 000000 000004 000000 000000 000000 000000
----
-> 0000140 001330 000000 000000 000000 001330 000000 000000 000000
-> 0000160 000010 000000 000000 000000 000003 000000 000004 000000
-> 0000200 001430 000000 000000 000000 001430 000000 000000 000000
-> 0000220 001430 000000 000000 000000 000034 000000 000000 000000
-> 0000240 000034 000000 000000 000000 000001 000000 000000 000000
-> 0000260 000001 000000 000004 000000 000000 000000 000000 000000
-
-It seems that a.out contents passed into tcl and then the output is
-very different...
-
-But,
-
-$ cat a.out | od >1.od
-$ git for-each-ref --format=3D"\$name=3D %(raw);
-print \"\$name\"" refs/myblobs/aoutblob --perl | perl | od >6.od
-$ diff 1.od 2.od
-
-There was no error this time, so for perl, it's ok...
-The "binary security" we care about is currently only complied with
-by the Perl language.
-
-So I think we better reject them all languages together for normative.
-The clear definition of this rejection strategy is that %(raw) and --langua=
-ge
-cannot be used at the same time. If our binary data is passed to a variable
-in the host language, there may be escape errors for the host language.
+> > I don=E2=80=99t know if this is the right approach at the moment, let
+> > us slowly wait for the suggestions of mentors and reviewers... ;-)
+>
+> Thanks,
+> Christian.
 
 Thanks.
 --
