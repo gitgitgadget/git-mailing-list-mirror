@@ -2,97 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 215C8C2B9F7
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 06:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D899C2B9F7
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 06:46:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02D94613F4
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 06:07:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2546613C3
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 06:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbhEZGJU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 02:09:20 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58038 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbhEZGJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 02:09:19 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 96D53132EAA;
-        Wed, 26 May 2021 02:07:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6Jf6cuQp7QcLj6vYm2+vQIJGrz+fZAJt42C23B
-        JtWog=; b=cIew8VgPlS9s9k/ht+TdIm+5pXz2B1Chic73on/LJxMYRoz2FPiYQU
-        uJ5QDqVhT9HYJ/3c2oHt/6k1i5NjZsLCyr0VFPLtukaYje0Drj/UaOzi6xU2UDTl
-        tYyJPRwMvanSKIXi46yypOhs5P07CmQJTIgYsKc8ijA4P4gDPkdxY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8EBE2132EA9;
-        Wed, 26 May 2021 02:07:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D6094132EA7;
-        Wed, 26 May 2021 02:07:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Avar =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: CI: 'seen' minus a few passes tests, eh, almost
-References: <xmqqcztecuy7.fsf@gitster.g> <xmqqzgwiawm4.fsf@gitster.g>
-Date:   Wed, 26 May 2021 15:07:44 +0900
-In-Reply-To: <xmqqzgwiawm4.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        26 May 2021 14:32:19 +0900")
-Message-ID: <xmqqtumqauz3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232240AbhEZGrr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 02:47:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230419AbhEZGrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 02:47:47 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F03C061574
+        for <git@vger.kernel.org>; Tue, 25 May 2021 23:46:15 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id k22so9769790ioa.9
+        for <git@vger.kernel.org>; Tue, 25 May 2021 23:46:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=spsqd5PMAIvzm2a8kBWHbhTCZgYSyTSe8HaERhSsmgg=;
+        b=s1yVXVf5ZVBts+MkXssPZwbXMiMh1ZMLumhVNRkrUP1+YbbxnKsdeBHVEYVt6CPE+L
+         7t1R9Ndbd6M373MS/2VBJl4xYF1o/HHF5wnHDkYUubNmvn8Je2zROLkfbjCgJtb6BF4N
+         d+gIiXd80er+fMwJs49JFQHis0ctFUxs2yrszzChCPz+cdS60W7cVTwiWGDu8Fzh1+u0
+         0b/LNB1I0qOlPU7PjLFa9myuF9ocJaAARW7Xt89rutr3a2YdH9jDVXm1XmBTemhrmQHy
+         F5Knr2TtjSnNCkEj8lwn3TPUEfrVMF9fyUvag5A/1PR6ULp3yBDGr0rk3IPxUh64fST9
+         Yh7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=spsqd5PMAIvzm2a8kBWHbhTCZgYSyTSe8HaERhSsmgg=;
+        b=fBwbiYZ3gagdlVGrju0tF7LK6Khogsq8IXB/I3lileHzLFh0AHI9JctYi3Sz+bQVL5
+         HZypS7KPyJd2173IEZ4+dg1/GTFKNXJ6VoZboYJH07tkhMIMnzreOWnrVKcnzf1tsaeV
+         d53kLW2BewvotC9wRcZCHc1v8DcFB08n8imLW/SE9McQnI6sXT7HLyLiZSckA+P/C4Zz
+         tsD8vAMgthPtyAQM/BiyVIZf1ClzzBOtgQ4q4WlLNZxL1A1Xo2yI5LuP16eUwo4O+sNy
+         wFkPaYeR/azUUIXhdI04fTqxdumnCdR+UuIPibkQmFBlJ9o5UufRNecVIhaZND5OON2Z
+         oGng==
+X-Gm-Message-State: AOAM533Hb/zKCh80+6K4NcFl+xxUwEwTp742Rvn5i5yElBt2xkjNPLUq
+        eHjwME2snlKNxthqnGpF9TaQ4Q9Qg1DsnQ7mDx3dFDN+ZUz/yw==
+X-Google-Smtp-Source: ABdhPJw4ooF4W0Crs5RQncp3avWpSH1BJwzXlsmDSFKY64qn1n29HpBGo/X4tfrVVJ6P10vS0kjvcdhU7KTd9zvdymw=
+X-Received: by 2002:a5d:814d:: with SMTP id f13mr22837413ioo.203.1622011574387;
+ Tue, 25 May 2021 23:46:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B0A9F710-BDE8-11EB-A856-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+References: <pull.959.git.1621763612.gitgitgadget@gmail.com>
+ <xmqq1r9xndjf.fsf@gitster.g> <xmqq8s42cnyb.fsf@gitster.g>
+In-Reply-To: <xmqq8s42cnyb.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 26 May 2021 14:45:58 +0800
+Message-ID: <CAOLTT8ReZffY5gznSDD=Fgbt7YTtA5aJWX+f8Q8npcj0OwcuFQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] [GSOC][RFC] ref-filter: add contents:raw atom
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+>
+> Another thing to keep in mind is that not all host languages may be
+> capable of expressing a string with NUL in it.  Most notably, shell.
+> The --shell quoting rule used by for-each-ref would produce an
+> equivalent of the "script" produced like this:
+>
+>         $ tr Q '\000' >script <<\EOF
+>         #!/bin/sh
+>         varname='varQname'
+>         echo "$varname"
+>         EOF
+>
+> but I do not think it would say 'var' followed by a NUL followed by
+> 'name'.  The NUL is likely lost when assigned to the variable.
+>
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> It is sad that the tip of 'seen' rarely passes all tests these days.
->>
->> I excluded a few topics (chosen primarily by prejudice after looking
->> at which tests failed earlier, without locating exactly where and
->> why they fail) from 'seen' and the exclusion of them seems to have
->> made 'seen' finally pass the tests, eh, almost [*1*].
->> ...
->> Excluded are:
->>
->>   ab/fsck-unexpected-type
->>   hn/reftable
->>   hn/refs-errno-cleanup
->>   zh/ref-filter-raw-data
->>
->> ...
->> [Footnote]
->>
->> *1* Except for "git repack" segfaults only in one of the tests:
->>
->>   https://github.com/git/git/runs/2669668815?check_suite_focus=true#step:5:2846
->
-> Just with a hunch, I further excluded tb/multi-pack-bitmaps from
-> 'seen', in addition to these four topics.  It seems to pass the
-> whole test suite on both 32- and 64-bit build combinations.
->
->     https://github.com/git/git/actions/runs/877225207
->
-> Except that vs-build sometimes fails to download the sdk, that is.
+Yes, in the following example you mentioned earlier, I have also
+noticed the loss of '\0'.
 
-And https://github.com/git/git/actions/runs/877379968 tests the
-above with hn/refs-errno-cleanup added back.  The usual tests all
-seem to pass, even though vs-build fails to download the sdk.
+> >     git for-each-ref --format='
+> >               name=%(refname)
+> >               var=%(placeholder)
+> >                 mkdir -p "$(dirname "$name")"
+> >               printf "%%s" "$var" >"$name"
+> >     ' --shell | /bin/sh
+> >
 
+> So for some host languages, binaries may be useless with or without
+> quoting.  But for ones that can use strings to hold arbitrary byte
+> sequence, it should be OK to let for-each-ref to quote the byte
+> sequence as a string literal for the language (so that the exact
+> byte sequence will end up being in the variable after assignment).
+>
+
+I agree, and maybe some'\0' can be escaped appropriately to let host
+languages recognize it....
+
+> That reminds me of another thing.  The --python thing was written
+> back when Python3 was still a distant dream and strings were the
+> appropriate type for a random sequence of bytes (as opposed to
+> unicode, which cannot have a random sequence of bytes).  Somebody
+> needs to check if it needs any update to work with Python3.
+
+$ printf '%b' "name='a\\\0b\\\0c'\nprint(name)" | python2.7 | od -c
+0000000   a  \0   b  \0   c  \n
+0000006
+
+$ printf '%b' "name='a\\\0b\\\0c'\necho -e \"\$name\"" | sh | od -c
+0000000   a  \0   b  \0   c  \n
+0000006
+
+In shell or python2/3, we can replace'\0' with "\\0".
+
+In Tcl and perl, they are ok with '\0'.
+
+$ printf '%b' "set name \"a\0b\0c\"\nputs \$name" | tclsh | od -c
+0000000   '   a  \0   b  \0   c   '  \n
+0000010
+
+$ printf '%b' "\$name = 'a\0b\0c';\n print \"\$name\""  | perl | od -c
+0000000   a  \0   b  \0   c
+0000005
+
+So I currently think that a possible strategy is to modify
+`python_quote_buf_with_size()` and `sq_quote_buf_with_size()` from
+'\0' to "\\0".
+
+Thanks!
+
+--
+ZheNing Hu
