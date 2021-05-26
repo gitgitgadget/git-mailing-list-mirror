@@ -2,88 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 243E0C47082
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C71FFC47088
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:59:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0676D613CA
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:52:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EBA96108B
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 23:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233918AbhEZXyV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 19:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47882 "EHLO
+        id S234830AbhE0AAm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 20:00:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232270AbhEZXyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 19:54:19 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E25C061574
-        for <git@vger.kernel.org>; Wed, 26 May 2021 16:52:46 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so2697374otc.12
-        for <git@vger.kernel.org>; Wed, 26 May 2021 16:52:46 -0700 (PDT)
+        with ESMTP id S232270AbhE0AAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 20:00:42 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C8DC061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 16:59:09 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id i12so2265426qtr.7
+        for <git@vger.kernel.org>; Wed, 26 May 2021 16:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tRQwYVvC8gCg5Ch8qqrZsOwANLY2pKqE1ZnIQ5AfMjY=;
-        b=J0wHvNBs2JOSNtB1vAhSkg0qOhLBOnSrZ1ezXSCNqrNCaXI5ELSALEiq0hBd1HGjvq
-         mhKV5zoK46diJZdKJGirXatA1SsYb2DOjWgXp9UCwVEMwiTBneYbh92nZI4wAW4AfWur
-         zFq++rO75umiUQ1BMcoxhnQFKZsWSOCTLEUlywcSuNfiooePyeEagwTYu08tj5lVN+Ld
-         1GCnz7sneSyias7aEvquwNPJZT87su9LoEWZQGrX9Sez9E3fNi40VfnIU7rolqcHBYwA
-         +lNrcMPGY1JiyEWmL0Rc8XJiAxnMU0EgkKfpEfD3SDopydKXuXB483NeVAu3jcoR5J52
-         +HXw==
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BKtqBAK6KoFTvrqdQTvU7fQcusgU1FwT0pcqmfU6zHw=;
+        b=KNk+9WYl3MJ88qzr8LhBIn+rukrdY6RoqiL1AQvA3V4ok+geeYUuj2jYfCHCa/Ii0g
+         +wXfZcgltYD+BvhzIlI47W9zr0sghbACynRKQRn0mL0oYkrV0gIRfLQnkdMOiodNGAZd
+         0kMYFkRFjqVnljnQsqvkQ/TcU1d0WPj73YfFwEgE7pghL0oH5uBOTJvfRzXvufIdxUG8
+         fAsQcW68/r4CUm5nqOu95+4y/jEcGLmepVJEd5VEre+HiUPFHx2AezU7FfmwjrPF06T2
+         XHaX9/+MssXHLtYMpYy2JDPR1lmR25Cm04aVESud5J8IZ6pqqLz1BDzE6x9myocb8g3U
+         4+AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tRQwYVvC8gCg5Ch8qqrZsOwANLY2pKqE1ZnIQ5AfMjY=;
-        b=rGdrJeed/u8neJmdnYXAJT+8rwAHEQZh3zSgh3BwEXpCntjggFLUx0h8k5/4WQAYFz
-         9wmF7MVMe2hpkI1LPvQGyK7JG7gmW5XeLmcHGM60RQihsv2eiUDOvqRNJfTrMEmpWHpA
-         OC5kBRDw2alOS8J3ZFzrfpsuhHAD0BjWKWE5NQxJsn3mqyfbqJEUEAGtC89gWqhrtT5F
-         +50zuJZiEZyGkBLFMrYtCEdAJY8UIfpscPezjVG5Rq6Eif4CmLYmKUW3RRKpGRl1sjcG
-         /LuSrSdX5xsQPNlMoag/iqkZFWpNG0HEo8uM8R0qvm7n/Vxbn6CQZ2zLHyk3/xd+Rk+A
-         iskg==
-X-Gm-Message-State: AOAM530gyxS05YdCzGLlWkxNsd+uxLYcPvJSODXJGrVVuzsc9L6YSHlU
-        Yjc/CdCyiwjlDNGVpF5RoVTv8TwvOkEHXsMWC3U=
-X-Google-Smtp-Source: ABdhPJyA9uXp7wLW0GtvMrkXCFmmHDHLF0X8lPgpmuSgD62F3DRPvDxbn/UxoP1J6gO4sHki2vKkV3XLlvUIDS3+k/w=
-X-Received: by 2002:a9d:1d45:: with SMTP id m63mr588489otm.302.1622073166108;
- Wed, 26 May 2021 16:52:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BKtqBAK6KoFTvrqdQTvU7fQcusgU1FwT0pcqmfU6zHw=;
+        b=F2Y5JKe7JWdm0XeP4k53pPXPW5JuWWFqh4G3XO3gWpJX/6p3AYTTW0hzo4ECjTFrF0
+         GS+xXu0c6VzwLckGPfZX4S+/p5dAzgxMvuuT678NhjebNzVu9E37dtOaGbb4Mh21NULV
+         o1jOAKKWvg+zKOopdDgcT3nY0d5esDJ4juemAPnLpKIHnJAinS8S04i42UfhABZ5cxSw
+         XMRfesfeIEbuxyMJ3Ub6zxZshIW7hsTM3MEHnWzyO2vd3a/oVyw4KRcfaNPkA1xcdwBT
+         gQZdB2u+RvHPi8Q1tvmjp8PA/wC9YckwASfobWQ+5l6H87LH1GYeA6O3OntwF0DAN0/Y
+         ke6Q==
+X-Gm-Message-State: AOAM5327ya+7caG3ITarsm4F4P6P0mZjvOiGQrxjwLSyOiOJTUOeAEv8
+        7sAgPauJqKQUQnKw6u4lkVo6og==
+X-Google-Smtp-Source: ABdhPJyxwvnFoS2bcJ/C/yJa+LcZZnqZSvegFYHv16XVe2PmURAWATCKNf+6wvHxi6O4+XXxONxlCQ==
+X-Received: by 2002:a05:622a:2d1:: with SMTP id a17mr713966qtx.88.1622073548576;
+        Wed, 26 May 2021 16:59:08 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.118.149])
+        by smtp.gmail.com with ESMTPSA id y19sm332250qki.15.2021.05.26.16.59.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 May 2021 16:59:08 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: [PATCH] t2080: fix cp invocation to copy symlinks instead of following them
+Date:   Wed, 26 May 2021 20:58:56 -0300
+Message-Id: <5386ee606567248464d39c313ee6177862a1f337.1622071475.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-References: <CAD2i4DBj6fNvq=Lc3KiXJj5uBpteyKfEKp7ATOWrTE36KUeRww@mail.gmail.com>
- <63dca3b2-1858-6708-5fb7-5a072b7b62f3@iee.email>
-In-Reply-To: <63dca3b2-1858-6708-5fb7-5a072b7b62f3@iee.email>
-From:   Varun Varada <varuncvarada@gmail.com>
-Date:   Wed, 26 May 2021 18:52:34 -0500
-Message-ID: <CAD2i4DAbBiVRo2Zk_cSYbgXGmm0SMUJZxSqYWhQr3tjwHxCYHQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 13 May 2021 at 05:40, Philip Oakley <philipoakley@iee.email> wrote:
->
-> Hi Varun,
->
->
-> I've seen the rather extended discussion about word choice. However Can
-> I suggest an alternative split of the patch?
->
-> If the patch is split between:
-> 1. Test shells
-> 2. Code comments
-> 3. Manual pages
-> 4. Guides and How to's.
->   then it should be possible to focus on the precision aspects first,
-> and only later get into the imprecision of modern colloquial English.
-> For the manual page changes, having a direct link to a test shell or
-> code comment change would provide important support to the clarification
-> of any precision aspects of the changes.
+t2080 makes a few copies of a test repository and later performs a
+branch switch on each one of the copies to verify that parallel checkout
+and sequential checkout produce the same results. However, the
+repository is copied with `cp -R` which, on some systems, defaults to
+following symlinks on the directory hierarchy and copying their target
+files instead of copying the symlinks themselves. AIX is one example of
+system where this happens. Because the symlinks are not preserved, the
+copied repositories have paths that do not match what is in the index,
+causing git to abort the checkout operation that we want to test. This
+makes the test fail on these systems.
 
-I'd be happy to split it, but I'm not sure I follow what you mean by
-"precision aspects".
+Fix this by copying the repository with the POSIX flag '-P', which
+forces cp to copy the symlinks instead of following them. Note that we
+already use this flag for other cp invocations in our test suite (see
+t7001). With this change, t2080 now passes on AIX.
+
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ t/t2080-parallel-checkout-basics.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t2080-parallel-checkout-basics.sh b/t/t2080-parallel-checkout-basics.sh
+index 7087818550..3e0f8c675f 100755
+--- a/t/t2080-parallel-checkout-basics.sh
++++ b/t/t2080-parallel-checkout-basics.sh
+@@ -114,7 +114,7 @@ do
+ 
+ 	test_expect_success "$mode checkout" '
+ 		repo=various_$mode &&
+-		cp -R various $repo &&
++		cp -R -P various $repo &&
+ 
+ 		# The just copied files have more recent timestamps than their
+ 		# associated index entries. So refresh the cached timestamps
+-- 
+2.31.1
+
