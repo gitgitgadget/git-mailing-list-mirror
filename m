@@ -2,155 +2,275 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1618C47087
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 02:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D519CC2B9F7
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 04:54:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8108561430
-	for <git@archiver.kernel.org>; Wed, 26 May 2021 02:53:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9000613B9
+	for <git@archiver.kernel.org>; Wed, 26 May 2021 04:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230206AbhEZCy6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 May 2021 22:54:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44884 "EHLO
+        id S229870AbhEZEzt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 00:55:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbhEZCy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 May 2021 22:54:57 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC02C061574
-        for <git@vger.kernel.org>; Tue, 25 May 2021 19:53:27 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so30603158oth.8
-        for <git@vger.kernel.org>; Tue, 25 May 2021 19:53:27 -0700 (PDT)
+        with ESMTP id S229800AbhEZEzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 00:55:48 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1784EC061574
+        for <git@vger.kernel.org>; Tue, 25 May 2021 21:54:17 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id c12so55775pfl.3
+        for <git@vger.kernel.org>; Tue, 25 May 2021 21:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=hOFSwF123Te6WataeK5x5OwDGswzun5bz9bm0AMljX8=;
-        b=WjB9M5fhuh4A4NK6RVnTwaIvxY03s6NjdTscADpUlL9mit3PUNlJZfiGiVPYXbSvfT
-         JGVmpD1RkVdMe4LKItX8ZflWvBOLXf/lJ+3HCICYhxtFuqC8YqQfELMmMESR43Wlk2eO
-         X40Be/Wp2VHjUwkC5tp6EH7X0qsr1/Cf4rGNdAmyw7HnC67J9JOAUK++BnnShDjjTUic
-         LwW0koxi+sj4F1ALjcTctq+Jm1difmrQSgtO6eS0CI9FrmdaDCgTU3wmuURC1Cp7FaUk
-         6dgEM5/xTln021jeEeKwHo6Zi/g4cvCbuJvtbEVDpeiED67Jl5NvAdq59PE6hReVITnJ
-         DJLA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=/OjuQP9asqFP+WX5UuWSrnArdP/99fKENxcQ2n5IwVE=;
+        b=bv1rWzWsDoShiHWTbEN2/d04nbPNUsTIwi9jQ6CGyTbffOaMcGkvrcMrhDeLHLYbkZ
+         JTlllH1nuDE3F+sV9YCkqsLig3swHnCeb7C/gzFaUN3kfEW6YzbcGSBgSqHkiBS5aAZx
+         nKsHrn4XiruzE4uQMoD2Cmn6RjDAfbIyeQ46oXzZ+bg8/9vsGUkmYey5XjvofVl87wK4
+         q7sPTsFz/SUrCpFADyoz5XWuVhHXJAJNV+EHzDwTc7AOyKnIic2N9AT0kRjmlW6ZzX1B
+         SAej+0QBFdDa8Cvq0KDL1lAQtBlo+e7S7/OKAVe3+jeSns+oUQxnXLKM+pABMKy8sR2q
+         e6gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=hOFSwF123Te6WataeK5x5OwDGswzun5bz9bm0AMljX8=;
-        b=Ou2+bk2SpTAcpM3dCpRYNwb3XM7Y8xo2jsnrJ6z3C9o76Rpo128uG2rUQiRYfMREat
-         TGg0t3ZMUBsG9IJeqv7MsFbWXYfXpmrbW5VizU9171VHQShEsURBPSczuxtxkJqV6NwZ
-         cJBcBVdeYRzGe7xeJRN9eCzQ8KvcFw3fa2i1ypPLQBx9b4ukOpxnkpsJ9ZIPpEfkws4l
-         +fVXHpgFs3ZIf5XrZ637Ci/6fiBbJ6CHmW4HawGUIuMUstaInS8kKSbwH0P2au8FAryV
-         9bOBFc6aWNf84lGdD9VDi1H/RWhfV6kP99hh96px6FC4wCdaeY+jVM4ZzzZVMXW/n6IT
-         FP5w==
-X-Gm-Message-State: AOAM530CcZQWP6iYRFABobv1KCJdPifELkcWTuozmXpQIcrhlAN67SWL
-        BoT5ZHWqGdB0G1XnXrEbUw4gS7YoY7WGbA==
-X-Google-Smtp-Source: ABdhPJyaPvYKA2ru0qSngmBaYnOHtEkqgF8MVODm0sC+RlpdmkzW7a8Q8ucF087eCDQKUSkkwY1Yxw==
-X-Received: by 2002:a9d:77c7:: with SMTP id w7mr606406otl.364.1621997606618;
-        Tue, 25 May 2021 19:53:26 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id k7sm3932960ood.36.2021.05.25.19.53.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 May 2021 19:53:26 -0700 (PDT)
-Date:   Tue, 25 May 2021 21:53:24 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <60adb824bac10_2c7f620844@natae.notmuch>
-In-Reply-To: <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
- <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
- <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
- <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
-Subject: Re: fast forward merge overwriting my code
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/OjuQP9asqFP+WX5UuWSrnArdP/99fKENxcQ2n5IwVE=;
+        b=tKOWGMbZTxhYFKWGfnNZ3MsSFjRk32ZLFbqyQh1OjvgnqMO0NMBax2wUrNpfWP97IV
+         xSTqFHK8h5WMfI5dL0rjUL3pnCNACRT7BqfFvgpGQmUMlumH8wlcTD3jLm/DEc9oW9WP
+         cqpqUYN4eKZ17d8YjzPkFa6I33qAd9fPc7b7xjc5EqNUHB+iiHPAswXPSTfFiMvB0o1W
+         ZMNA7vVHpfT9F6QuOIKI2H1SDV0F4QR288x6xHzM47X2VEFGBfCkcKfyYLU0Z51bqRu4
+         0vbrbbdRdsNdhDhinC0kTZ4aaEFpif335kCPMLhfimicQlrxbTwr4akz9RNAgpVyT6g+
+         BjCQ==
+X-Gm-Message-State: AOAM531ZGBM9llFqLM+bps4P/Hc1k5LtIax7OudiDonsNhLxZhFVBta4
+        WUdVvsR0vPRSO+FofH64B8KawFM0Y2W3Bw==
+X-Google-Smtp-Source: ABdhPJz9G1Bp9/V9w4qdTGuL8kfH5mcQLeTknfizwq7T4Rjnlc8gf4wihOBANz+8cz6ICcLmq4usJA==
+X-Received: by 2002:a63:36c1:: with SMTP id d184mr22678493pga.47.1622004856107;
+        Tue, 25 May 2021 21:54:16 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-83.three.co.id. [180.214.232.83])
+        by smtp.gmail.com with ESMTPSA id k7sm3185201pjj.46.2021.05.25.21.54.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 May 2021 21:54:15 -0700 (PDT)
+Subject: Re: The top 1% of commit trailers
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+References: <60ad75ac7ffca_2ae08208b@natae.notmuch>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <24504f19-eb8e-c725-723a-22efea7c865c@gmail.com>
+Date:   Wed, 26 May 2021 11:54:12 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
+MIME-Version: 1.0
+In-Reply-To: <60ad75ac7ffca_2ae08208b@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andre Ulrich wrote:
-> So the last point is where we still want to do some fine tuning. Right  
-> now this looks about: my prof fetches my edits and locally checks out  
-> a branch to compare the changes with git diff.
-> But in this diff view you can't edit the files. So you have to  
-> separately open up another window to edit the changes (lets say my  
-> prof only wants to keep some of my changes, but not all).
+Hi Felipe,
 
-So for example after fetching your changes your professor sees this:
-
-  % git diff --cached
-  --- a/README
-  +++ b/README
-  @@ -1,5 +1,7 @@
-   This is an example document. Lot's of things to fill in.
-   
-  -[[ insert formula]]
-  +The fromula is:
-  +
-  +  y[1], mu * (1 - y[0] ** 2) * y[1] - y[0]
-   
-   This will help students jump straight in with simple examples.
-
-The professor can then open the file, fix the typo, do some other
-changes, type `git add --update`, then do `git diff --cached` again to
-see if that's the output she wants:
-
-  --- a/README
-  +++ b/README
-  @@ -1,5 +1,7 @@
-   This is an example document. Lot's of things to fill in.
-   
-  -[[ insert formula]]
-  +The formula is:
-  +
-  +  x[1], mu * (1 - x[0] ** 2) * x[1] - x[0]
-   
-   This will help students jump straight in with simple examples.
-
-
-What you are saying is that it would be better to do `git $cmd` and in
-that command you would be able to view the staged diff, edit the diff,
-and after quitting the editor the diff is applied to the stage.
-
-Essentially leaving everything ready for a commit.
-
-Sort of like a combination of: `git diff --cached`,
-`vim $problematic_file`, `git add $problematic_file`, `git diff --cached`.
-
-Correct?
-
-> So my Question is: is there any possibility, to be able to view (and  
-> even edit, if necessary) the changed notebook in the merging process  
-> (as in my example with the 3way merge)?
-> Or is the only option to separately view the diff and edit the  
-> notebook (two seperate steps instead of one)?
+On 26/05/21 05.09, Felipe Contreras wrote:
+> Hi,
 > 
-> The latter would also be acceptable, if it really is the only way. Bu  
-> it would be nice, if viewing and editing could be done in one  
-> convenient step during merging.
+> I wrote a little script [1] to get the quantiles (e.g. top 1%) of commit
+> trailers for the git.git project. Perhaps some of you are interested in
+> the result.
+> 
+> The top 1% is comprised of just two lines: Acked-by and Reviewed-by.
+> They alone account for 47% of all the lines.
+> 
+> The top 10% is shared between 16 lines, and they gather a whopping 96% of
+> the total line wealth.
+> 
+> The top 25% is shared between 33 lines, they have 98% wealth. To belong
+> on this group a line only needs to have more than 3 instances.
+> 
+> That means the bottom 75% only has 3 occurrences or less.
+> 
+> The median is 1. So 50% (in fact more than that; 100 of 155) only has one
+> occurrence.
+> 
+> Just to see this distribution visually, I plotted their frequency
+> compared with a Pareto distribution (80:20); they almost match
+> perfectly:
+> 
+> https://i.imgur.com/1wQgSlP.png
+> 
+> This should not be surprising to anyone that has studied income
+> distributions; in commit trailer lines--just like in people (and plenty
+> of other things)--the rich get richer.
+> 
+> Cheers.
+> 
+> Top 1%
+> ------
+>    1. acked-by (1945)
+>    2. reviewed-by (1729)
+> 
+> Total wealth: 47%
+> 
+> Top 10%
+> -------
+>    3. helped-by (1336)
+>    4. reported-by (960)
+>    5. mentored-by (379)
+>    6. suggested-by (281)
+>    7. cc (222)
+>    8. noticed-by (165)
+>    9. tested-by (153)
+>   10. improved-by (88)
+>   11. thanks-to (65)
+>   12. based-on-patch-by (50)
+>   13. contributions-by (43)
+>   14. co-authored-by (41)
+>   15. requested-by (28)
+>   16. original-patch-by (28)
+> 
+> Total wealth: 96%
+> 
+> Top 25%
+> -------
+>   17. inspired-by (23)
+>   18. explained-by (9)
+>   19. found-by (8)
+>   20. trivially-acked-by (7)
+>   21. commit-message-by (7)
+>   22. fixes (7)
+>   23. initial-patch-by (7)
+>   24. reported-and-tested-by (6)
+>   25. diagnosed-by (6)
+>   26. based-on-a-patch-by (6)
+>   27. liked-by (5)
+>   28. author (5)
+>   29. reference (5)
+>   30. encouraged-by (5)
+>   31. from (4)
+>   32. analyzed-by (4)
+>   33. initial-test-by (4)
+> 
+> Total wealth: 98%
+> 
+> Bottom 50%
+> ----------
+>   59. cheered-on-by (1)
+>   60. signed-off (1)
+>   61. confirmed-by (1)
+>   62. hopefully-signed-off-by (1)
+>   63. thanked-by (1)
+>   64. rediffed-against-next-by (1)
+>   65. completely-acked-by (1)
+>   66. test-proposed-by (1)
+>   67. patch-submitted-by (1)
+>   68. credit-to (1)
+>   69. deemed-obviously-correct-by (1)
+>   70. backtraced-by (1)
+>   71. tested-on-mingw-by (1)
+>   72. looks-good-by (1)
+>   73. test-updates-by (1)
+>   74. tested-on-freebsd-by (1)
+>   75. tested-on-aix-by (1)
+>   76. kind-of-noticed-by (1)
+>   77. patch-by (1)
+>   78. okay-then-by (1)
+>   79. looks-right-to-me-by (1)
+>   80. reviewd-by (1)
+>   81. wished-for-by (1)
+>   82. acked-and-tested-by (1)
+>   83. re-suggested-by (1)
+>   84. originally-submitted-by (1)
+>   85. looks-fine-to-me-by (1)
+>   86. based-on-patch-from (1)
+>   87. see (1)
+>   88. initial-version-by (1)
+>   89. worriedly-acked-by (1)
+>   90. initial-fix-by (1)
+>   91. mentored-and-acked-by (1)
+>   92. x-gentoo-bug (1)
+>   93. works-around (1)
+>   94. tipping-vote-by (1)
+>   95. debugged-by (1)
+>   96. helpd-by (1)
+>   97. heavylifting-by (1)
+>   98. inspired-by-patch-by (1)
+>   99. inspired-by-code-by (1)
+> 100. based-on-code-from (1)
+> 101. based-on-code-by (1)
+> 102. tracked-down-by (1)
+> 103. picked-from (1)
+> 104. discovered-by (1)
+> 105. improved-and-acked-by (1)
+> 106. based-on-commit-message-by (1)
+> 107. updated-by (1)
+> 108. discussion-triggered-by (1)
+> 109. sugested-by (1)
+> 110. reported-tested-and-explained-by (1)
+> 111. initial-work-by (1)
+> 112. brown-paper-bag-fixes-by (1)
+> 113. test-written-by (1)
+> 114. test-added-by (1)
+> 115. bug-spotted-and-fixed-by (1)
+> 116. inputs-from (1)
+> 117. with-suggestions-by (1)
+> 118. more-spots-found-by (1)
+> 119. message-proposed-by (1)
+> 120. revised-by (1)
+> 121. reported-and-analyzed-by (1)
+> 122. prompted-by (1)
+> 123. clarified-by (1)
+> 124. reviewed-and-improved-by (1)
+> 125. brought-to-attention-by (1)
+> 126. reminded-by (1)
+> 127. adapted-by (1)
+> 128. edited-by (1)
+> 129. hepled-by (1)
+> 130. test-adapted-from (1)
+> 131. clever-idea-by (1)
+> 132. fix-suggested-by (1)
+> 133. reported-and-suggested-by (1)
+> 134. history-dug-by (1)
+> 135. derived-from-code-by (1)
+> 136. fix-proposed-by (1)
+> 137. benchmarked-by (1)
+> 138. issue-found-by (1)
+> 139. test-provided-by (1)
+> 140. test-code-by (1)
+> 141. reported-at (1)
+> 142. signeg-off-by (1)
+> 143. wording-by (1)
+> 144. also-reported-by (1)
+> 145. issue-on-macos-explained-by (1)
+> 146. issue-on-macos-reported-by (1)
+> 147. researched-by (1)
+> 148. explanation-by (1)
+> 149. rported-by (1)
+> 150. change-id (1)
+> 151. rebased-by (1)
+> 152. inspired-by-a-patch-by (1)
+> 153. simplified-testcase-and-bisection-by (1)
+> 154. heled-by (1)
+> 155. pointed-out-by (1)
+> 156. suggestions-by (1)
+> 157. original-implementation-by (1)
+> 158. summary (1)
+> 
+> Total wealth: 1%
+> 
+> [1] https://gist.github.com/felipec/ce491d351c88e4acbdbf6bc02a47223d
+> 
 
-You are describing `git stage edit`, a subcommand I suggested back in
-2014 and went completely ignored [1].
+Why did you deliberately exclude Signed-off-by trailer? I don't see
+that trailer above.
 
-Your professor just types `git stage edit`, fixes any problems she sees,
-quits the editor, `git commit`.
-
-Done.
-
-I just rebased the patches from 2016 and they seem to work fine. If you
-are interested let me know.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/1398449567-16314-3-git-send-email-felipe.contreras@gmail.com/
+For some trailers that have only 1 occurrence, these are typos of
+intended trailers (such as heled-by and helpd-by which means
+helped-by).
 
 -- 
-Felipe Contreras
+An old man doll... just what I always wanted! - Clara
