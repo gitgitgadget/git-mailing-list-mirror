@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C39D6C4708A
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08274C47088
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A50F0613BE
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD70C613BE
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233316AbhE0AMT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 20:12:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51670 "EHLO
+        id S235124AbhE0AMV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 20:12:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235065AbhE0ALa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 20:11:30 -0400
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B152C061353
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:52 -0700 (PDT)
-Received: by mail-qv1-xf49.google.com with SMTP id x2-20020a0cda020000b02901edb4c412fdso2546737qvj.11
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:52 -0700 (PDT)
+        with ESMTP id S234877AbhE0ALf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 20:11:35 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D6BC061355
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:54 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id u13-20020a25f80d0000b029051d7fee31cfso3608481ybd.22
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ZdDKsphkbuAGRRhJWNf6o04Yx3VUr1hbdG6NAatJSo8=;
-        b=Tlk2mc/RKy0rt6XVGonwGOdredqV4+ZjskuicSzivE0SD2R6hIdSmO+txoXC5W9W7h
-         o1Qle341sg2oYRVtjn92MaclYQ4cAKRF3e57VlzZHZ85e0yUDgqBhIDUD/MI77hfCqDA
-         DRvEV27vHZovLT74bsXRF/i4ue5kyr+Mm0gQ6k8wz1OlQbz810S9f2S+zKbt86W5ECHJ
-         AAzubp2QVNN83IlwxTwRnSo9+DKwJMCB+bt5EI4TmBp49K5b/0e5h0cjEmRgxiKnd+Bi
-         voeDmMy2iWpI7mG1r3Reu312hQuhHOQx34G7sLb+R5phY99Hj7gupAVSHDPX9gBzrOos
-         iwhQ==
+        bh=EneeTqZADKMKCck0hLyFMbFE6wKTgQCUhaB2t5/Qwvo=;
+        b=eoI2LE5K2ZtBveXSxqDhJMCAx9wQQdpY8gaH1l9KJckwwm6M399hRqs8JjBBUFmgto
+         yJItAbTkgUdQB5+Sr98swa7vlXpcwLFBqKOxMnXish++i+nVQymdGmKBjrzfDK/kZ1+B
+         cD9xbp4PMNP8SWYoG4xjkaxYLrUzg0G7sCx2VBIJjxf57zyJea6QHV3lJrkvNoh2kwzO
+         nfw/k/Yh8euf/IV9uec9ZISZY6BNtrqf4r6o4sLXYYlA+l8t4U08Bb8oqleOicSCwHFv
+         ep0MsXMPNMsKHvnLa2/AOguAqMSwbKQSDLpZ0JIrj3uPUTDq/SYhKZPe+ACHwZtwba4P
+         EzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ZdDKsphkbuAGRRhJWNf6o04Yx3VUr1hbdG6NAatJSo8=;
-        b=Sow/9srLrDG2YoUZi35YtUtUgQ7OZza5Wy6MB3hTb34EF+5z2Nc0hDhqreK45xa3Ie
-         BXaHCFuTFne2fKwqahuLV5F5Qeuv/vwasbrwzKjiSD85J3fo0NzbYl1RZtPskhA8oVBC
-         8p9CgkFDz1830O64G9IMFU88raouazthdqf++vXWtDhmlz+p1K2hCY7q0IjIMDDCK7YE
-         LborZ4tgN12KXdRhkWadok5wJIro4k3/aB96fioRqWrUYNMVnQSCev4Qpqy/uNHMoaXF
-         s1a5uFPgIXlO7hIbzk9eO00tGl83jZJhbWhI4ZnV0NfOV8OUjMnYUlEBgQ/o16Vus5Fn
-         ieXA==
-X-Gm-Message-State: AOAM5339Eo8NN1BqXl+yuhvr6AmYKzhqTmGOw6gfYQeFtRJP2ndWFP47
-        tn8Ky1RW/2NjJ8S82bMubuxBpWpa9hP73T59DplMscPWtsFhj17XLFVkJFlBmDkfVuqwOGmT5jX
-        ILhw8FlI45ySJRoX+dkW+RsK3EjEt/Aj+I5aX7IxpXc2Qkw10YXaeBUHNBaGyyCpgaDj7Nk9iNg
+        bh=EneeTqZADKMKCck0hLyFMbFE6wKTgQCUhaB2t5/Qwvo=;
+        b=qhovaMx6/cgekYrOTTTPdJPLdUf1YaQLnUvH+MkBaSv8HlFFVVtiZox3llkGreK8zR
+         x7f1TDxiz1vOcWkv88++C6/SVRzA4TKG8gQraSp6qZ3mPAwtl3cbsuo+gu7qJJpgBa0/
+         5PG15S4KOxdgXhJD3QECtRv68a1R6h7P/Vbf76PvetV6RwCPjMTD79gK5Cl6wgBQ+Sc8
+         Umw4pAmeolKfxhcN8OZbcafC9FQJu6dtZgksv8EPwbLMwGv9MxiroxbeR64W1PMMZalE
+         HKY8Hx6v9btBYezSq3KQcUelhtINW/YArBuKwJWv/SbCfgBuR6F3kljZUkngoXPkjzX7
+         5E7A==
+X-Gm-Message-State: AOAM533Dhyo8+IRBOpM5IuVsuSrMbVyKEMst9fipKONRiDzgJt8LreyQ
+        rgJcUPavrLzDiNe0zvKWhCY04WSJes+N+EYN14Wf21gXsyX3D8M6TfIThZwgfpj1PXPDZull114
+        wlX3sNmKlTuYtkk0TsOtbWUwCAfwXewOfI6I8s+iafaowzsyxT7pV+fq3zgddEdHNno7LCkZYtA
         ==
-X-Google-Smtp-Source: ABdhPJw86f1W0g3hc1hkNrOwDUdFtY9ihUIg5ekBz2W0zKmWqGIh0UJIv5HWOQ6XDHZNRhCS1jy1hBRYaE6Hq57hxMY=
+X-Google-Smtp-Source: ABdhPJwXxeYsv4UnDAcnyCUOd/AdUJpUgcOzgyeyDfbxOKUR+zvO/C2hHzHcpWBOG9plEpxOSgzW+xSlYMT4kCUFO7I=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:c1a4:4d87:8b5a:d12c])
- (user=emilyshaffer job=sendgmr) by 2002:ad4:450f:: with SMTP id
- k15mr553700qvu.1.1622074191330; Wed, 26 May 2021 17:09:51 -0700 (PDT)
-Date:   Wed, 26 May 2021 17:08:45 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a25:ba0c:: with SMTP id
+ t12mr893092ybg.158.1622074193240; Wed, 26 May 2021 17:09:53 -0700 (PDT)
+Date:   Wed, 26 May 2021 17:08:46 -0700
 In-Reply-To: <20210527000856.695702-1-emilyshaffer@google.com>
-Message-Id: <20210527000856.695702-27-emilyshaffer@google.com>
+Message-Id: <20210527000856.695702-28-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210527000856.695702-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-Subject: [PATCH v9 26/37] hook: convert 'post-rewrite' hook to config
+Subject: [PATCH v9 27/37] transport: convert pre-push hook to use config
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,183 +70,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using 'hook.h' for 'post-rewrite', we simplify hook invocations by
-not needing to put together our own 'struct child_process' and we also
-learn to run hooks specified in the config as well as the hook dir.
-
-The signal handling that's being removed by this commit now takes place
-in run-command.h:run_processes_parallel(), so it is OK to remove them
-here.
+By using the hook.h:run_hooks API, pre-push hooks can be specified in
+the config as well as in the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/githooks.txt |  3 ++
- builtin/am.c               | 18 +++-----
- sequencer.c                | 85 +++++++++++++++++---------------------
- 3 files changed, 47 insertions(+), 59 deletions(-)
+ transport.c                | 59 +++++++++++---------------------------
+ 2 files changed, 20 insertions(+), 42 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 6a5ff036ff..156e4809f6 100644
+index 156e4809f6..543244ec0a 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -603,6 +603,9 @@ The hook always runs after the automatic note copying (see
- "notes.rewrite.<command>" in linkgit:git-config[1]) has happened, and
- thus has access to these notes.
+@@ -279,6 +279,9 @@ If this hook exits with a non-zero status, `git push` will abort without
+ pushing anything.  Information about why the push is rejected may be sent
+ to the user by writing to standard error.
  
-+Hooks run during 'post-rewrite' will be run in parallel, unless hook.jobs is
++Hooks executed during 'pre-push' will run in parallel, unless hook.jobs is
 +configured to 1.
 +
- The following command-specific comments apply:
+ [[pre-receive]]
+ pre-receive
+ ~~~~~~~~~~~
+diff --git a/transport.c b/transport.c
+index 6cf3da19eb..dbc7bb7820 100644
+--- a/transport.c
++++ b/transport.c
+@@ -22,6 +22,7 @@
+ #include "protocol.h"
+ #include "object-store.h"
+ #include "color.h"
++#include "hook.h"
  
- rebase::
-diff --git a/builtin/am.c b/builtin/am.c
-index d84791859c..d2534f9a1f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -469,23 +469,17 @@ static int run_applypatch_msg_hook(struct am_state *state)
-  */
- static int run_post_rewrite_hook(const struct am_state *state)
+ static int transport_use_color = -1;
+ static char transport_colors[][COLOR_MAXLEN] = {
+@@ -1196,31 +1197,15 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ static int run_pre_push_hook(struct transport *transport,
+ 			     struct ref *remote_refs)
  {
--	struct child_process cp = CHILD_PROCESS_INIT;
--	const char *hook = find_hook("post-rewrite");
-+	struct run_hooks_opt opt;
- 	int ret;
- 
--	if (!hook)
--		return 0;
-+	run_hooks_opt_init_async(&opt);
- 
--	strvec_push(&cp.args, hook);
--	strvec_push(&cp.args, "rebase");
-+	strvec_push(&opt.args, "rebase");
-+	opt.path_to_stdin = am_path(state, "rewritten");
- 
--	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
--	cp.stdout_to_stderr = 1;
--	cp.trace2_hook_name = "post-rewrite";
-+	ret = run_hooks("post-rewrite", &opt);
- 
--	ret = run_command(&cp);
--
--	close(cp.in);
-+	run_hooks_opt_clear(&opt);
- 	return ret;
- }
- 
-diff --git a/sequencer.c b/sequencer.c
-index 72234af8ed..3fa7668763 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -35,6 +35,7 @@
- #include "rebase-interactive.h"
- #include "reset.h"
- #include "hook.h"
-+#include "string-list.h"
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -1147,33 +1148,30 @@ int update_head_with_reflog(const struct commit *old_head,
- static int run_rewrite_hook(const struct object_id *oldoid,
- 			    const struct object_id *newoid)
- {
--	struct child_process proc = CHILD_PROCESS_INIT;
--	const char *argv[3];
+-	int ret = 0, x;
++	int ret = 0;
 +	struct run_hooks_opt opt;
 +	struct strbuf tmp = STRBUF_INIT;
-+	struct string_list to_stdin = STRING_LIST_INIT_DUP;
- 	int code;
--	struct strbuf sb = STRBUF_INIT;
- 
--	argv[0] = find_hook("post-rewrite");
--	if (!argv[0])
+ 	struct ref *r;
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct strbuf buf;
+-	const char *argv[4];
+-
+-	if (!(argv[0] = find_hook("pre-push")))
 -		return 0;
-+	run_hooks_opt_init_async(&opt);
- 
--	argv[1] = "amend";
--	argv[2] = NULL;
+-
+-	argv[1] = transport->remote->name;
+-	argv[2] = transport->url;
+-	argv[3] = NULL;
 -
 -	proc.argv = argv;
 -	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "post-rewrite";
+-	proc.trace2_hook_name = "pre-push";
 -
--	code = start_command(&proc);
--	if (code)
--		return code;
--	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
+-	if (start_command(&proc)) {
+-		finish_command(&proc);
+-		return -1;
+-	}
+-
 -	sigchain_push(SIGPIPE, SIG_IGN);
--	write_in_full(proc.in, sb.buf, sb.len);
--	close(proc.in);
--	strbuf_release(&sb);
++	struct string_list to_stdin = STRING_LIST_INIT_DUP;
++	run_hooks_opt_init_async(&opt);
+ 
+-	strbuf_init(&buf, 256);
++	strvec_push(&opt.args, transport->remote->name);
++	strvec_push(&opt.args, transport->url);
+ 
+ 	for (r = remote_refs; r; r = r->next) {
+ 		if (!r->peer_ref) continue;
+@@ -1229,30 +1214,20 @@ static int run_pre_push_hook(struct transport *transport,
+ 		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
+ 		if (r->status == REF_STATUS_UPTODATE) continue;
+ 
+-		strbuf_reset(&buf);
+-		strbuf_addf( &buf, "%s %s %s %s\n",
++		strbuf_reset(&tmp);
++		strbuf_addf(&tmp, "%s %s %s %s",
+ 			 r->peer_ref->name, oid_to_hex(&r->new_oid),
+ 			 r->name, oid_to_hex(&r->old_oid));
+-
+-		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+-			/* We do not mind if a hook does not read all refs. */
+-			if (errno != EPIPE)
+-				ret = -1;
+-			break;
+-		}
++		string_list_append(&to_stdin, tmp.buf);
+ 	}
+ 
+-	strbuf_release(&buf);
+-
+-	x = close(proc.in);
+-	if (!ret)
+-		ret = x;
+-
 -	sigchain_pop(SIGPIPE);
--	return finish_command(&proc);
-+	strvec_push(&opt.args, "amend");
-+
-+	strbuf_addf(&tmp,
-+		    "%s %s",
-+		    oid_to_hex(oldoid),
-+		    oid_to_hex(newoid));
-+	string_list_append(&to_stdin, tmp.buf);
-+
 +	opt.feed_pipe = pipe_from_string_list;
 +	opt.feed_pipe_ctx = &to_stdin;
-+
-+	code = run_hooks("post-rewrite", &opt);
-+
+ 
+-	x = finish_command(&proc);
+-	if (!ret)
+-		ret = x;
++	ret = run_hooks("pre-push", &opt);
 +	run_hooks_opt_clear(&opt);
 +	strbuf_release(&tmp);
 +	string_list_clear(&to_stdin, 0);
-+	return code;
+ 
+ 	return ret;
  }
- 
- void commit_post_rewrite(struct repository *r,
-@@ -4527,30 +4525,23 @@ static int pick_commits(struct repository *r,
- 		flush_rewritten_pending();
- 		if (!stat(rebase_path_rewritten_list(), &st) &&
- 				st.st_size > 0) {
--			struct child_process child = CHILD_PROCESS_INIT;
--			const char *post_rewrite_hook =
--				find_hook("post-rewrite");
--
--			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
--			child.git_cmd = 1;
--			strvec_push(&child.args, "notes");
--			strvec_push(&child.args, "copy");
--			strvec_push(&child.args, "--for-rewrite=rebase");
-+			struct child_process notes_cp = CHILD_PROCESS_INIT;
-+			struct run_hooks_opt hook_opt;
-+
-+			run_hooks_opt_init_async(&hook_opt);
-+
-+			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
-+			notes_cp.git_cmd = 1;
-+			strvec_push(&notes_cp.args, "notes");
-+			strvec_push(&notes_cp.args, "copy");
-+			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
- 			/* we don't care if this copying failed */
--			run_command(&child);
--
--			if (post_rewrite_hook) {
--				struct child_process hook = CHILD_PROCESS_INIT;
--
--				hook.in = open(rebase_path_rewritten_list(),
--					O_RDONLY);
--				hook.stdout_to_stderr = 1;
--				hook.trace2_hook_name = "post-rewrite";
--				strvec_push(&hook.args, post_rewrite_hook);
--				strvec_push(&hook.args, "rebase");
--				/* we don't care if this hook failed */
--				run_command(&hook);
--			}
-+			run_command(&notes_cp);
-+
-+			hook_opt.path_to_stdin = rebase_path_rewritten_list();
-+			strvec_push(&hook_opt.args, "rebase");
-+			run_hooks("post-rewrite", &hook_opt);
-+			run_hooks_opt_clear(&hook_opt);
- 		}
- 		apply_autostash(rebase_path_autostash());
- 
 -- 
 2.31.1.818.g46aad6cb9e-goog
 
