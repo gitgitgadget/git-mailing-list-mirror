@@ -2,139 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0115CC47089
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 11:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 333BDC47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 11:46:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA40961090
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 11:41:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1213D601FC
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 11:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234091AbhE0LnH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 07:43:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234095AbhE0LnG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 07:43:06 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 272BDC061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 04:41:33 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id o5so481847edc.5
-        for <git@vger.kernel.org>; Thu, 27 May 2021 04:41:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=8/h2gZZohIc2WC7Lb7wDB1cWNEaGHmPVJA0qAD+6o7U=;
-        b=VWfoeg5xdtYee2UPerG14fF9Giih3bYLtwT1xF486Br8577KVNfqi+R1HDTYfoArDt
-         v+pUzDcsWjP+/oaXKKwU6EZteaRnfYJNd7K/D9xhUot2Nw16FvFDXUCV8XebM90Eqxf/
-         NoxhsgbhE89Xabh7ewvLabtWde4KyRHxoT9T/QAFsDsfI2Xq4Gmj6Yc5OQUQOhd8bC/f
-         N86lFPzLeWdgN0l4Z7dIspnK7i3dsfB/uEW/TK6SHoWgMIQ6IxL8DvjlS0OFwrTdOBFL
-         ChNFvMZgjzm+64/3/yaKZjUJtvdZAnYB+CH++HhroplheQ50EVJPAmPhGsqPsiwA+2xE
-         54RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=8/h2gZZohIc2WC7Lb7wDB1cWNEaGHmPVJA0qAD+6o7U=;
-        b=qlGB+XtIq0snv8xmikO4QFbAdtqwpmvF5EwpspwasT5ra4cHBY1Ji7T/IYzmQBWN56
-         yveOguTISa6cGgJfYbzWHdBboZ6tZkbJVw3GrLhUQXeDCfQQIjEMFlfBB9klXHqbwvbW
-         wStT+6qRqaADwI9HN9d51gOtTAekqF3OmffsmdCRljMDSoNh/Bnin39Luj+ZC+38imUL
-         6A9hCeJmibGcgBNIx1vFVmntOI1/Gc4Oou+Mc9c2HQOcqR54mnYyhII+Xi7vM8qdR0lR
-         yeBe+ppBsiJi4tDrP0rktd2yC6H90QAhv4lX/vDNej7hn51EibVHzwbu36YYl4cVWB+b
-         AXNQ==
-X-Gm-Message-State: AOAM532rWXUdqTL9T/7cfbk8aMGQGzJ5MGV4mfnK9O48xfGJTgvMFLOF
-        yFgLGnsPioNxqx5Ae1ZJ3p4=
-X-Google-Smtp-Source: ABdhPJxXaNns4uTMaxm4taG5PKUkzzMph/TpSvJxT9DHvHYIWNBEIwt59fCGIHb2SxpwBOsnsf5UIA==
-X-Received: by 2002:a50:ab16:: with SMTP id s22mr3544551edc.323.1622115691557;
-        Thu, 27 May 2021 04:41:31 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id i2sm911471edc.96.2021.05.27.04.41.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 May 2021 04:41:31 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Gregory Anders <greg@gpanders.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v4 10/13] send-email: lazily load modules for a big speedup
-Date:   Thu, 27 May 2021 13:36:37 +0200
-References: <cover-00.13-0000000000-20210523T085231Z-avarab@gmail.com>
- <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
- <patch-10.13-61e3e3c93c5-20210524T074932Z-avarab@gmail.com>
- <xmqqv9759e0z.fsf@gitster.g>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <xmqqv9759e0z.fsf@gitster.g>
-Message-ID: <8735u8mmj9.fsf@evledraar.gmail.com>
+        id S233836AbhE0LsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 07:48:05 -0400
+Received: from smtp-out1.suse.de ([195.135.220.28]:55408 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233633AbhE0LsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 07:48:04 -0400
+Received: from imap.suse.de (imap-alt.suse-dmz.suse.de [192.168.254.47])
+        (using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id A7533218DD;
+        Thu, 27 May 2021 11:46:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1622115990; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=rmKBQ2mE8jg7V8E19PBNTlphDxSqS/7de7KEnq/f3Lk=;
+        b=HenWR/f5UBdbdx3BmMJFlo1X/ZmhwB4Dqf8VM8TGEZCS3cwqCAPFSzG6czcVFRGbgTQIfQ
+        fJfDNwUc1AAnuIVYAzs4jAhQskp8qjty5/my5Xfj02lks/bnLvNZQ4uM/y8QT/vEkOfixC
+        dljXfrTooMVbLzNkwEDf7L4WULCWiF0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1622115990;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=rmKBQ2mE8jg7V8E19PBNTlphDxSqS/7de7KEnq/f3Lk=;
+        b=Wil7w1U6t4gvppd9WTcVWL/kFuuJ+DPCuMAlQx7mxrBN9V10GzrZRfm+3mixDIFti/sH3q
+        adkWlLm7yK2VDyCA==
+Received: from director2.suse.de (director2.suse-dmz.suse.de [192.168.254.72])
+        by imap.suse.de (Postfix) with ESMTPSA id 98C0011A98;
+        Thu, 27 May 2021 11:46:30 +0000 (UTC)
+Date:   Thu, 27 May 2021 13:46:29 +0200
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Varun Varada <varuncvarada@gmail.com>
+Cc:     Robert Coup <robert.coup@koordinates.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
+Message-ID: <20210527114629.GD8544@kitsune.suse.cz>
+References: <20210512064733.GP12700@kitsune.suse.cz>
+ <CAD2i4DBF3Tvf62Zyh0XnNH=5ifTD2QQNL5Fx01UHMzoTn3OMVw@mail.gmail.com>
+ <20210512170153.GE8544@kitsune.suse.cz>
+ <609c112066acd_71bd1208aa@natae.notmuch>
+ <20210512180418.GF8544@kitsune.suse.cz>
+ <609c2f98932f3_71bd120840@natae.notmuch>
+ <20210513074622.GG8544@kitsune.suse.cz>
+ <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
+ <20210513094818.GH8544@kitsune.suse.cz>
+ <CAD2i4DDY1z1ZNigRfVog1205hKBk+U5KfinzXCk-2mkaYy4cjQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD2i4DDY1z1ZNigRfVog1205hKBk+U5KfinzXCk-2mkaYy4cjQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, May 26, 2021 at 06:49:58PM -0500, Varun Varada wrote:
+> On Thu, 13 May 2021 at 04:48, Michal Suchánek <msuchanek@suse.de> wrote:
+> > Yet Felipe insists that 'impact' is somehow generally bad word to use or
+> > that it should be abolished solely because he finds it bad and nobody
+> > objected to the alternative wording.
+> >
+> > Opinions on use of 'impact' differ both among the participants of this
+> > discussion and authorities like authors well-known dictionaries.
+> >
+> > It looks like this is generally matter of stylistic preferences and
+> > opinions. That is even if there is some slight stylistic preference for
+> > not using the word 'impact' it is very hard to prove such and then it is
+> > very hard to request change based only on writing style preferences.
+> 
+> The argument is not that it is generally a bad word to use, but that
+> it is generally bad to use words when they don't mean what one thinks
+> they mean, especially when all evidence says otherwise.
 
-On Thu, May 27 2021, Junio C Hamano wrote:
+Not all evidence. There are people who think the use is fine.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> -use File::Temp qw/ tempdir tempfile /;
->> -use File::Spec::Functions qw(catdir catfile);
->> ...
->> +		require File::Spec;
->> +		push @files, grep { -f $_ } map { File::Spec->catfile($f, $_) }
->>  				sort readdir $dh;
->> ...
->> -	push @files, $repo->command('format-patch', '-o', tempdir(CLEANUP =3D>=
- 1), @rev_list_opts);
->> +	require File::Temp;
->> +	push @files, $repo->command('format-patch', '-o', File::Temp::tempdir(=
-CLEANUP =3D> 1), @rev_list_opts);
->
-> I suspect I would not be the only one who finds it curious to have
-> the distinction between the use of "->" in File::Spec->catfile() and
-> "::" in File::Temp::tempdir (and all the other function calls
-> touched by this patch).
->
-> Wouldn't it be more faithful to the original to do:
->
->     require File::Spec::Functions;
->     push @files, ... map { File::Spec::Functions::catfile($f, $_) }
->
-> in the first hunk?  It would save the time readers of "git log -p"
-> has to spend on wondering why "catfile" is an oddball.
->
-> Of course "man File::Spec" would educate readers where the
-> difference comes from, but it is not immediately obvious to me why
-> we want to switch in a "lazily load for speedup" that is supposed to
-> be optimization-only, even if the class method ends up calling the
-> same underlying thing.
+> 
+> All major dictionaries define "impact" as "a strong effect" or "to
+> affect strongly". This is not style, but semantics. In the same way
 
-It was idiomatic to me so I didn't think of explaining it. Yes it looks
-odd, but it's the most straightforward and correct thing to do in this
-s/use/require/ change.
+Not all dictionaries, actually. And when there is no meaningful
+difference between "strong efffect" and "effect" using word that means
+one or the other is just style.`
 
-The reason to use the File::Spec::Functions wrapper is because you want
-File::Spec class methods in your namespace. I.e. to do catfile() instead
-of File::Spec->catfile().
+> that "per se" being used to mean "necessarily" is not a style issue,
+> using "impact" to mean "an effect" or "to affect" is not a style
+> issue.
+> 
+> As has been stated already, the clear and substantial argument for
+> this change is that it reduces the confusion that arises from
+> improperly using the word "impact" in the instances without any loss
 
-To do that requires importing the "catfile" symbol. Since we're doing a
-s/use/requires/ here we won't do that (symbols like that are
-compile-time), so we'd need to call File::Spec::Functions::catfile() as
-you point out.
+There is no final authority on 'correct' word use in English.
+Authorities and readers disagree. In some cases local language variation
+disagrees so completely that no use is correct everywhere - eg. color vs
+colour.
 
-Except the whole point of that Functions.pm package is to not need that
-fully-qualified name, so once we're doing that we might as well call
-File::Spec->catfile() instead.
+We should learn to work together with people that use different
+variant of the language rather than insist that the variant that I or my
+teacher uses is the only correct one and everyone else should use it.
 
-The implementation of File::Spec::Functions is to literally give you a
-generaler boilerplate function in your namespace that calls
-File::Spec::catfile("File::Spec", <your argument here>), which is what
-the "->" class method syntax does implicitly. Calling that wrapper
-doesn't make sense here.
+Thanks
+
+Michal
