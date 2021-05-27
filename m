@@ -2,326 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B06C8C47089
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 21:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3A0BC4707F
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 22:03:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D387613D1
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 21:59:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 941A06113B
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 22:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234435AbhE0WB1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 18:01:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37664 "EHLO
+        id S234514AbhE0WFC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 18:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229822AbhE0WB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 18:01:26 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A2CC061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 14:59:52 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lmO2e-0000hS-EY; Thu, 27 May 2021 23:59:48 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lmO2e-0007dA-5B; Thu, 27 May 2021 23:59:48 +0200
-Date:   Thu, 27 May 2021 23:59:47 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, entwicklung@pengutronix.de
-Subject: Re: time needed to rebase shortend by using --onto?
-Message-ID: <20210527215947.g2mnds6zj5uv5mjq@pengutronix.de>
-References: <20210526100932.2hw4rbazgvd6mzff@pengutronix.de>
- <CABPp-BGBY9kwqRQ+soa8=W2F+=8eQRYS3vWS_7UCC0K0qNTW1g@mail.gmail.com>
+        with ESMTP id S229672AbhE0WFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 18:05:01 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519C5C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 15:03:27 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id lz27so2336387ejb.11
+        for <git@vger.kernel.org>; Thu, 27 May 2021 15:03:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=aG93ICXJJpl6MQ59aMc2DkWp4bvllEIo+kbBhNHR5XM=;
+        b=uo2EUmno5/kN7JvgFZew37thzeLoucYofqSyDszF/JQISclw3FDTnVPfmGFsf5Lyv5
+         V7M/G6VgF2/ZRl1UrRlbKaHgW7GQLmhK4Opx0sBOSTtqJsZvIQvxEbiqiTmL6oG79mp4
+         0bMcPvvVuhttwEhWffsFm/XkM8OI1F2Fh1g3k7P2cpaBwN1RwRW2vl/l1g9NrBItXlnv
+         AfnYOJQmTLHoPTRGWKD8UX8gR5ERg7MOnkWq/dd+LbU6mXRXOZd4UkzlpcDQOwcRcq2u
+         x/nvUTRdj5UHuh+Rw1pYuXOthBtRMhrEhzzLdlsWTkkvPgZ5rhbaCRWus+WHhNGIlPVe
+         TQRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=aG93ICXJJpl6MQ59aMc2DkWp4bvllEIo+kbBhNHR5XM=;
+        b=sMzfeM4ESQ8qu++JY9A+hjH29i1gK6Vke62PlJdoPIjBAd1UagLoM2SFEaYqwLqWvQ
+         DTkZGnWAIgV21glNX3HVzdKoTsI7Y0o/uFCxkdsYkgnf7TAgoiNSrl1kjtjS+R3pI0KD
+         GlWrOZ+2hn4IhcDJTjSvwQh6eLzztz9g5ktkF5XeDt4r8OiukUz13e1Viv3iGQuscNL7
+         W1W3zFMXIZOLiCh0cetW0BKh32x7dX/TF27PqryzI0aPolBsA+CfCBn6ubexnird61QS
+         GBulCYpzEgHcYFXnV4cDHR3U2i79NqBkKeAkzajjjqlWzSmWDsc29Ur7W1pPQcukL5e2
+         /cxA==
+X-Gm-Message-State: AOAM532EVfQufYWIAQSZojgces4fpdeSKeYWFln8U3GitsBsOVKXwko2
+        IDjFmZLcyfW8aA0948fPEnM=
+X-Google-Smtp-Source: ABdhPJz8J1fQwh0M1nbkcJZsYEPWYZB+wuy6BgFYsvpDttN1Fpmvm6RbHqZolb9ugWMxKECg/uwAWg==
+X-Received: by 2002:a17:906:408d:: with SMTP id u13mr6273539ejj.128.1622153005634;
+        Thu, 27 May 2021 15:03:25 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id l6sm1757663edr.47.2021.05.27.15.03.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 May 2021 15:03:24 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+Cc:     Kevin Daudt <me@ikke.info>, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>,
+        Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Should we do something with #git-devel on Freenode?
+Date:   Thu, 27 May 2021 23:54:32 +0200
+References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
+ <YKViF9OVLeA95JPH@google.com> <20210520071141.GZ8544@kitsune.suse.cz>
+ <YKaaBj0KmJ3K5foC@coredump.intra.peff.net> <YK6XvmrtrdkJvsnI@nand.local>
+ <YK6o/j7P0JIGW0Q0@alpha> <7e9683aee2c0fea2ff77b82bfa547e15@jk.gs>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <7e9683aee2c0fea2ff77b82bfa547e15@jk.gs>
+Message-ID: <87im33ltqr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tq2eeo4n4jljzdmu"
-Content-Disposition: inline
-In-Reply-To: <CABPp-BGBY9kwqRQ+soa8=W2F+=8eQRYS3vWS_7UCC0K0qNTW1g@mail.gmail.com>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---tq2eeo4n4jljzdmu
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, May 27 2021, Jan Kr=C3=BCger wrote:
 
-Hello,
+> Here's a bit of an update on the situation.
+>
+> freenode has, indeed, scorched the earth by destroying more than 700
+> channels, simply for mentioning Libera in the topic (before they even
+> added a rule that forbids this). I was willing to wait and see how the
+> "new" freenode was going to pan out, but with stuff like this happening
+> I don't see that as an option anymore. Basically I expect freenode to
+> keep destroying community with no prior notice whenever they feel like
+> it, and who wants to stay in a place like that?
 
-On Wed, May 26, 2021 at 07:38:08AM -0700, Elijah Newren wrote:
-> On Wed, May 26, 2021 at 3:13 AM Uwe Kleine-K=F6nig
-> <u.kleine-koenig@pengutronix.de> wrote:
-> > I have a kernel topic branch containing 4 patches on top of Linux v5.4.
-> > (I didn't speak to the affected customer, so I cannot easily share the
-> > patch stack. If need be I can probably anonymize it or ask if I can
-> > publish the patches.)
-> >
-> > It rebases clean on v5.10:
-> >
-> >         $ time git rebase v5.10
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Successfully rebased and updated detached HEAD.
-> >
-> >         real    3m47.841s
-> >         user    1m25.706s
-> >         sys     0m11.181s
-> >
-> > If I start with the same rev checked out and explicitly specify the
-> > merge base, the rebase process is considerably faster:
-> >
-> >         $ time git rebase --onto v5.10 v5.4
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Performing inexact rename detection: 100% (36806539/36806539), =
-done.
-> >         Successfully rebased and updated detached HEAD.
-> >
-> >         real    1m20.588s
-> >         user    1m12.645s
-> >         sys     0m6.733s
-> >
-> > Is there some relevant complexity in the first invocation I'm not seeing
-> > that explains it takes more than the double time? I would have expected
-> > that
-> >
-> >         git rebase v5.10
-> >
-> > does the same as:
-> >
-> >         git rebase --onto v5.10 $(git merge-base HEAD v5.10)
-> >
-> > . (FTR:
-> >
-> >         $ time git merge-base HEAD v5.10
-> >         219d54332a09e8d8741c1e1982f5eae56099de85
-> >
-> >         real    0m0.158s
-> >         user    0m0.105s
-> >         sys     0m0.052s
-> >
-> > , 219d5433 is v5.4 as expected.
->=20
-> That does seem surprising, though if an automatic gc completed between
-> the two commands that could certainly explain it.  If that theory is
-> correct, it would suggest that it'd be difficult for you to reproduce;
+How have the channels been destroyed?
 
-This reproduces just fine. The repository is quite big and it is slow at
-times. With the same tree on a different machine, the rebase is quicker,
-but the factor 2 between the two different commands is visible there,
-too:
+I'm still joined on freenode and #git has ~700ish users and the
+liberachat one has ~300ish as I write this.
 
-uwe@taurus:~/gsrc/linux$ git checkout bc2e99c9c9e0d29494b1739624554e4f5f979=
-d32
-HEAD is now at bc2e99c9c9e0 [...]
+I see there was a mass action to revert topics that stated that channels
+had moved, but e.g. #git@freenode still has active discussion about git,
+among other things.
 
-uwe@taurus:~/gsrc/linux$ time git rebase v5.10
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-Successfully rebased and updated detached HEAD.
+> On 26.05.2021 22:01, Kevin Daudt wrote:
+>
+>> In the mean time, the ircops on libera helped us to register #git there
+>> pending the official namespace registration from Junio (they have a
+>> backlog, so they are working through that).
+>
+> #git on Libera is already picking up steam, though the numbers aren't
+> quite on the same level yet. However, an arbitrary quorum of regulars
+> has
+> decided that it's time to throw the switch.
+>
+> * We've moved the gitinfo bot to Libera (which required a fair bit of
+>   code rewriting to support the differences between their respective
+>   ircds);
+> * The IRC logger has moved;
+> * The old channel's topic has a link to https://gitirc.eu/fnmove.html
+>   which explains the situation.
+>
+> I expect that if anyone from freenode staff notices this, the channel
+> on freenode will get destroyed soon after...
 
-real	0m20.737s
-user	0m14.188s
-sys	0m3.767s
+I agree that ~300/~700 is quite the arbitrary quorum :)
 
-uwe@taurus:~/gsrc/linux$ git checkout bc2e99c9c9e0d29494b1739624554e4f5f979=
-d32
-HEAD is now at bc2e99c9c9e0 [...]
+I'm not going to weigh in on whatever pissing contest is going on over
+at Freenode and related networks other than to say that it seems to me
+that the goal(s) of the new owner/team or whatever is to try to prevent
+some mass adversiting of the nature of "this network is
+deprecated". "Destroying" prominent channels seems to be
+conterproductive to that goal.
 
-uwe@taurus:~/gsrc/linux$ time git rebase --onto v5.10 v5.4
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 86=
-04 and retry the command.
-Successfully rebased and updated detached HEAD.
+In any case, I agree with Jeff King's earlier comments that our primary
+goal here should not be to pick sides, but to direct our users to useful
+venues where they can get help, discuss git etc.
 
-real	0m12.129s
-user	0m7.196s
-sys	0m3.141s
-
-(This is with a slightly newer git: 2.30.2-1 from Debian)
-
-Then I repeated the test with git 2.32.0-rc1 (wgit is just calling
-bin-wrappers/git in my git working copy):
-
-uwe@taurus:~/gsrc/linux$ wgit version
-git version 2.32.0.rc1
-
-uwe@taurus:~/gsrc/linux$ wgit checkout bc2e99c9c9e0d29494b1739624554e4f5f97=
-9d32
-HEAD is now at bc2e99c9c9e0 [...]
-
-uwe@taurus:~/gsrc/linux$ time wgit rebase v5.10
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-Successfully rebased and updated detached HEAD.
-
-real	0m19.438s
-user	0m13.629s
-sys	0m3.299s
-
-uwe@taurus:~/gsrc/linux$ wgit checkout bc2e99c9c9e0d29494b1739624554e4f5f97=
-9d32
-HEAD is now at bc2e99c9c9e0 [...]
-
-uwe@taurus:~/gsrc/linux$ time wgit rebase --onto v5.10 v5.4
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-warning: inexact rename detection was skipped due to too many files.
-warning: you may want to set your merge.renamelimit variable to at least 80=
-24 and retry the command.
-Successfully rebased and updated detached HEAD.
-
-real	0m13.848s
-user	0m8.315s
-sys	0m3.182s
-
-So the surprise persists.
-
-> running again with either command would give you something closer to
-> the lower time both times.  Is that the case?  (Also, what's the
-> output of "git count-objects -v"?)
-
-After the above commands I have:
-
-	count: 3203
-	size: 17664
-	in-pack: 4763753
-	packs: 11
-	size-pack: 1273957
-	prune-packable: 19
-	garbage: 0
-	size-garbage: 0
-	alternate: /home/uwe/var/gitstore/linux.git/objects
-
-(On the repository I did this initially I have:
-
-	warning: garbage found: .git/objects/pack/pack-864148a84c0524073ed8c8aa1a7=
-6155d5c677879.pack.temp
-	warning: garbage found: /ptx/src/git/linux.git/objects/pack/tmp_pack_X9gHnq
-	count: 2652
-	size: 14640
-	in-pack: 2117015
-	packs: 8
-	size-pack: 574167
-	prune-packable: 856
-	garbage: 2
-	size-garbage: 1114236
-	alternate: /ptx/src/git/linux.git/objects
-
-(Is the garbage a reason this is so slow? Can I just remove the two
-files pointed out?)
-
-> I'd love to try this with git-2.32.0-rc1 (or even my not-yet-upstream
-> patches that optimize even further) with adding "--strategy=3Dort" to
-> your rebase command to see how much of a timing difference it makes.
-> Any chance the patches could either be published, or you could retry
-> with git-2.32.0-rc1 and add the --strategy=3Dort command line option to
-> your rebase command(s)?
-
-With --strategy=3Dort added I have:
-
-uwe@taurus:~/gsrc/linux$ time wgit rebase --strategy=3Dort v5.10
-Successfully rebased and updated detached HEAD.
-
-real	0m19.202s
-user	0m12.724s
-sys	0m2.961s
-
-[...]
-
-uwe@taurus:~/gsrc/linux$ time wgit rebase --strategy=3Dort --onto v5.10 v5.4
-Successfully rebased and updated detached HEAD.
-
-real	0m12.395s
-user	0m6.638s
-sys	0m3.284s
-
-So the warnings about inexact rename detection don't appear and it's a
-bit faster, but I still see the timing difference between these two
-commands.
-
-I assume you are still interested in seeing this branch? I think
-anonymising it shouldn't be so hard, the patches are not so big. I'll
-modify the branch to make it shareable and assuming the problem still
-reproduces with it will share it with you.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---tq2eeo4n4jljzdmu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmCwFlAACgkQwfwUeK3K
-7AnkUAf/eZyIeGi4dOrCPuANaTP0p5c/RiH4iYZIRmerk3WQvYsa+nJ4+qaVCNaX
-ZOwAW/CxOElYsTJLgFrar3Mkwrf5nuepI0eNpZuBBkD7UkKU7D04sOV2FJoIdnGB
-g8EijJs9cF3D8pWQb/fOGLng0Jx1sQkbYB4oGU6sNLZAqoSRYh0qTUTya4yZ/7xa
-XKbn9klrkniUrqq2LWLjO98PBVdpx1DR01xK8+9yY1hSQloQzX3hEUuncmFGIqbX
-LzHe8XHFQc8emrB+nDUYXLR30KVu1LlyoFf00qqEVGoohOJfgdHFG0AP9oJyr91w
-P0Btz4ZX933EHaZmU/KUOerAQ4Pbwg==
-=0w9+
------END PGP SIGNATURE-----
-
---tq2eeo4n4jljzdmu--
+I don't see why we'd advertise #git@liberachat and not #git@freenode in
+order to achieve that goal, the latter doesn't seem to be a graveyard
+and is probably still more active. I don't see why we'd need to pick
+between the two, any more than we'd pick between advertising
+#git@liberachat and the git-users mailing list. Both currently seem like
+useful venues for git users to go to get help.
