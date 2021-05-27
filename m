@@ -4,164 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E69A9C4708A
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 13:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F24EC4707F
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 14:00:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C94D7613CA
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 13:58:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12A92613C5
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 14:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235119AbhE0OA1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 10:00:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41812 "EHLO
+        id S235987AbhE0OBl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 10:01:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235206AbhE0OAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 10:00:20 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B376C061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 06:58:44 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id i13so947817edb.9
-        for <git@vger.kernel.org>; Thu, 27 May 2021 06:58:44 -0700 (PDT)
+        with ESMTP id S235576AbhE0OBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 10:01:39 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDAD5C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 07:00:03 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id v22so846912oic.2
+        for <git@vger.kernel.org>; Thu, 27 May 2021 07:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=VLZOa776GOuVMKskVxdjHXZmHFVTKX6fNTuia9t4LbY=;
-        b=cTd9cQ9PgiKe1bu1sMJEJlpiAHX2KQVpgW7f10wCQmzZhSJGVNbPSu82UEfUfda15n
-         pDOKHb29Bxk0C1FDPTTSV+psWpAhQqdgpBkiHHBj10GM2BqOrVqBETfpcXE3O0iils6s
-         8tH2u6+JuHh/q7xvn7DgQKYSopp0SXl9hh7UnxPzvCSEwzTpaJglbKKKH5GoWxIoTId6
-         uoW4OWTQxl2zSypWG3AX5py1qeuHu9LK1eM9tRilrHxV89OkkosBWQOVfcAA49tVGXg0
-         +E7rTU7uTcq2nN5AaPyq7Otd8o/jqkPbJkjDY/VnJIweRu9Up+VLbimFjc1Feb9JmNrq
-         UwAA==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=Ye0Ddd7BvEOIH0C3ZxOh6Nc20aChdTwzlV1UxA/k7sQ=;
+        b=GfRHTHbfMUZWI1foMmQGq1V2Dov3/WrkPlRkh3CW+gpBO8G5sOZlP0a7Pbct67abRA
+         6n/VEU3486YZBlKnQPA11IBGaSRvF1b46nj+PiiX4lGJInjVRxZQ8Jj6ugeYl13GGO3x
+         +L9r1Fdvx8s+WRKqrEIBfvy/Mj5CNmFGU4g9ul4WCt+6C2n4s8DCWAxsMiXE10xDCKRZ
+         r14Vqm/GzfKIlbllCK2jOd7hB9yLdDhE4pOZSnh8AxULQnvtrg7yNfflPP1Ghfc0XsVL
+         vV9JuUcPZVwP+61M3WYRIa+ob4ghmXcDKEK5AzMt0LJcN0hrSpUiX0B0DaxT/LgD621w
+         fyRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=VLZOa776GOuVMKskVxdjHXZmHFVTKX6fNTuia9t4LbY=;
-        b=jHOMeqtX4O9b6Cgz1v7mtWjyCfNx8/C0bv9/057u2UZWXP2KMVu2xxEVaDptXx+VpC
-         PMQGcgcpJv5FiSZPd9jATIvT2rT8K9Y0LN40FuT9JIrGkM5dIT2XcW/eejlkWqnNMdko
-         RaLBfF4e/8Xo+RvMGCuagDZAtQywVuL5iaP3TCeoG+lVrZGOOud2WUiqNOZbV1eSwPxe
-         ASPoZgJauax0KRb5+LAhLE+SHU9d4mjJRlEfMBOZgVTHc//8Bc+PzbE8hfWPmExLVhTz
-         feqcPMa7gUAJcZRla+3eSnmznzGiyEBM9R0rtTgXxO0nr8nG+z2L/Mm/P6Ye3tbu82rt
-         UwEw==
-X-Gm-Message-State: AOAM533FQJvhOQ0QC4VtWdb0wnT77v+6fpIHzmx2sOJfqizyd6D94asS
-        Qou0yo5qvE5I2fNE89a53xQV6ZQKBBIyVw==
-X-Google-Smtp-Source: ABdhPJwTpfJNWMVIl1Kq1msF1HvgO+h9F1wTomhYtDAV/zqzEILtNxJvsugHM1gZrsdZOlXgCJxvDA==
-X-Received: by 2002:a05:6402:4c5:: with SMTP id n5mr4180213edw.322.1622123922572;
-        Thu, 27 May 2021 06:58:42 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id sb14sm1041632ejb.106.2021.05.27.06.58.41
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=Ye0Ddd7BvEOIH0C3ZxOh6Nc20aChdTwzlV1UxA/k7sQ=;
+        b=AxedugKXwCAGp7p/3eXs9u9ofIx1oPWFa4sK1zcgO8eqcPJ6Py4HIt7Tv+u+qpUV14
+         lqoa5oBuyB/YaeXWwaguXc/U5BHZdJ0Bho+Sr9e2DbY7Gf9g5G+zL4gIZLOuxK1QW08C
+         3gS7a0HlLLf5vSQ7rttwsoHP418uK8FiO3Bae6ybjg8Awwsa1qPVsT9E6NdWCTw/PhrQ
+         exvZ0W9vxUF/katuQizL/DTNWxZGIhjhMZYk+B8qp/i4ew1NhkdfAvduuvKUBnBOMKNK
+         g+ArA/cS7aZbfbRVvu/MOFn35ju6EX8ex3w4z0f8eFOcHG5RbIw2ZrF1BwcAS+tsQVID
+         S8qw==
+X-Gm-Message-State: AOAM530yv+4YDyeP67cg0N4/IPAwOcV7kd0tmDqFoxZVVoPcpV0sTxm6
+        dow7sJ8NnW6lDadiI4Nhl+4=
+X-Google-Smtp-Source: ABdhPJzRFI/LCLyHZyWBlEA5hqXUOp5uIiBzKvqQCumfk0gQDBZ1DWMweAhDjkenOTqaMM3x49K4Yg==
+X-Received: by 2002:a05:6808:1414:: with SMTP id w20mr5396271oiv.136.1622124003140;
+        Thu, 27 May 2021 07:00:03 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id t23sm473118oij.21.2021.05.27.07.00.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 May 2021 06:58:41 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v9 00/37] propose config-based hooks
-Date:   Thu, 27 May 2021 15:36:04 +0200
-References: <20210311021037.3001235-1-emilyshaffer@google.com>
- <20210527000856.695702-1-emilyshaffer@google.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210527000856.695702-1-emilyshaffer@google.com>
-Message-ID: <87lf80l1m6.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Thu, 27 May 2021 07:00:02 -0700 (PDT)
+Date:   Thu, 27 May 2021 09:00:00 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+Message-ID: <60afa5e07bcd9_2056d2084d@natae.notmuch>
+In-Reply-To: <02bbe080-cd8a-cc7d-5dbc-9231b51c4baf@iee.email>
+References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
+ <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
+ <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
+ <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
+ <60adb824bac10_2c7f620844@natae.notmuch>
+ <da77d0a0-7fdb-e4c8-6510-87ea0294dac4@iee.email>
+ <60ae947797deb_25ba2089c@natae.notmuch>
+ <6dcc8557-9df4-9ea2-c348-f4ebf76ff446@iee.email>
+ <60aedb22c075e_4bd420896@natae.notmuch>
+ <02bbe080-cd8a-cc7d-5dbc-9231b51c4baf@iee.email>
+Subject: Re: fast forward merge overwriting my code
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Philip Oakley wrote:
+> On 27/05/2021 00:34, Felipe Contreras wrote:
+> > Yes, but that is a separate issue.
+> >
+> > Right now they are able to resolve conflicts with a jupyter mergetool.
+> 
+> I don't believe that ("resolve") is true in the sense they would like. I
+> don't think they are really 'merging' in an all-in-one `git merge`
+> sense, rather they are [trying to] splitting and patching and commenting
+> the changes.
 
-On Wed, May 26 2021, Emily Shaffer wrote:
+He explicitly mentioned a merge, but ultimately it doesn't matter, the
+mergetool can be used in other scenarios, like `git am`.
 
-> After much delay and $DAYJOB, here is v9.
->
-> - Addressed nits in reviews on v8
-> - sendemail-validate hook becomes non-parallelized; updated to use
->   =C3=86var's updated system_or_die() function
-> - changed strbuf to char* in hooks_list
->   - Attempted to do so in run_command's stdout callback, but this made
->     length protection difficult, so stuck with strbuf there.
-> - test_i18ncmp -> test_cmp
-> - Stop doing i18n lego in run_hooks()
-> - Checked that run_hooks_opt_init() is always separated by a space from
->   variable decl blocks
-> - Checked for early returns which may skip run_hooks_opt_clear(); this
->   resulted in minimizing the scope of run_hooks_opt in most places
-> - Got rid of native-hooks.txt. It was a nice idea, but not attached to a
->   large and slow series like this one.
-> - In traces, log the name of the hook (e.g. "pre-commit") instead of the
->   name of the executable (e.g. "/home/emily/check-for-debug-strings");
->   the executable name is tracelogged as part of argv anyways, and we
->   want to be able to tell which hook was responsible for invoking the
->   executable in question.
+I did try to setup those tools, nbdime does setup a merge tool [1].
 
-In v8 I had some comments about the overall approach here. I've got to
-say I'm disappointed that that's neither been replied to or in any way
-addressed:
+Cheers.
 
-    https://lore.kernel.org/git/87mtv8fww3.fsf@evledraar.gmail.com/
+[1] https://nbdime.readthedocs.io/en/latest/
 
-Also referenced in several follow-up discussions, including Junio's
-comment of "OK, Emily, I guess the ball is in your court now?":
-
-    https://lore.kernel.org/git/?q=3D87mtv8fww3.fsf%40evledraar.gmail.com
-
-Basically I think that this very large series could be easily split into
-much more digestable chunks if it were re-arranged. Right now it's
-essentially a 37 patch mix of, in order:
-
- 1. Design doc
- 2. Add "git hook" with "run", "list" etc.
- 3. Make that more fully featured, support config, legacy hooks et.c
- 4. Implement parallel hooks
- 5. Go through N existing hook callers and migrate them to "git hook run"
- 6. Some misc updates, e.g. to docs
-
-If it were instead:
-
- 1. Add "git hook run", only supports "old/legacy" .git/hooks/ hooks
- 2. Go through N existing hook callers and migrate them to "git hook run"
-
-That would be at least half of this series, and it would be much more
-narrow change that would demonstrably retain all existing
-semantics. We'd simply call our hooks via a command wrapper instead of
-via run_command(<path to name>) as we do now. So we could have that land
-and then focus on the actual behavior changes later.
-
-In earlier rounds/the above E-Mail I asked something to the effect of if
-you thought that was a good approach, whether disagreed, or just thought
-you didn't have time for it.
-
-I'm still keen to help get this in, but given the non-responses don't
-know where you stand on it. I suppose I could re-arrange this myself and
-submit an alternate "prep" series to rebase this on, but wanted to get
-your take first.
-
-Aside from the suggestion of splitting it up:
-
-In the above referenced correspondence I expressed concerns that the
-config layout you're proposing needlessly creates complexity requiring a
-"git hook list" etc. command to solve, as opposed to not having that, or
-have it by a trivial synonym for a "git config --show-origin --list"
-invocation.
-
-I'm still interested in what you think of that, as being able to
-normalize that more invites getting rid of more complexity without
-impacting the end-goal of hooks via config.
-
-But in any case such a discussion could be had later and on a smaller
-series if the refactoring of existing hook running was split up from the
-big semantic changes here, which are currently tied up with that
-refactoring.
-
-Thanks!
+-- 
+Felipe Contreras
