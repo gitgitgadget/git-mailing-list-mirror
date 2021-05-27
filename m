@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D6F1C47088
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12B18C47088
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFE45613CA
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB37C6128D
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235143AbhE0ALr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 20:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51712 "EHLO
+        id S235147AbhE0ALu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 20:11:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234503AbhE0ALT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 20:11:19 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C210BC06134A
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:38 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id k34-20020a25b2a20000b02905149e86803eso3642062ybj.9
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:38 -0700 (PDT)
+        with ESMTP id S233972AbhE0ALV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 20:11:21 -0400
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58F8C06134E
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:40 -0700 (PDT)
+Received: by mail-qv1-xf4a.google.com with SMTP id z93-20020a0ca5e60000b02901ec19d8ff47so2569216qvz.8
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=btlcOqWp2Hrr3jczh4cqmNxLjf86ggWODpJ2RlSu0+c=;
-        b=HyDy3Xk5/RcHwzvBaXH+PXNmLKMnMMsFUncX1+K9rcGfTBF5yqHrR8A6yT4/1LlBF+
-         dJObK102X1avKZLscULnvHl8J1h0kUyNMzurLbTh31wO89WBb9dZGGK4YLVU+ENdmmfJ
-         nvOU9HXHXqu5MCL4rI6sbjPnr5BpysCecjlZ81mYHLTOpdWs9PTBwhIxFrUu4mfvxFN/
-         bKgICq7XYhm/5Iz9pa55vhcmQBoqILbDrNyyhmCHI6cdKkIFZy+dAf7NNrWuM61TERRA
-         b4HTxkJm6xLecBTexssohYYSL8ta92cG22h7zH5IBcYWCEXjqpZHGOecQdmL98c/xiHV
-         BcgA==
+        bh=wnCTag5HKGK8XoqlyYcgrX7r6UraKb8JZF3vVdV1iQQ=;
+        b=fMO08spC8acMpqhB049c0oNKJhNBHktz9mXqeTIhhqbqgvPuI/MXtBRHOMeLh44anl
+         u3aop3NpKrwfmzfJBOTU0a7OMlPjixCdViOHT0cyLA8bdO9oemGq5T8PIbtsxQM/iisG
+         oavgyT1hzQwzR89E7o1V63KkicA6IwFoytdgBRyIFluydf8elSBUzZa387kUXJRsRg8B
+         0RFebfNbUMzww7cU54P8uh+SLocpNQEvNeGppeZu3BDW+6YnKo6Z7B15MMQ7/hogh+Nw
+         32By5I+VbI/wJgynjJZHAcIei5u4DcUtuv4YHGVYDreE2n2TjVddirvjiSHUNZqBidoD
+         zbpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=btlcOqWp2Hrr3jczh4cqmNxLjf86ggWODpJ2RlSu0+c=;
-        b=Ic5HSd7UW7WFtpTIa3DYUqtr2JvTOI19GbgvBMdwviD/fjPAt3nYtDJQUzLOZPaBE2
-         hO5Cr+F57ZTK0cs6wyru7n9AOFjtfvgN5p8uvlE/GWyGTBwR7xiAODcT848+ZRyyILg2
-         Gophhd9/0OdMeB+ycQv+32PWMWqoMhA9FRnF51L94qOOGXP5RgJVsMflJrq3TlNfXc1O
-         VeE+IkY8KpZpTZQfoDN1YuJSn8N6vQ9tcfUrKEWDD0tp8NLtGCWnBB8gT2Xrz6Z7hFuU
-         vIqtj2B6zjNX93bJMRdlxXJCjNQtHnGATX6cMokhFmFOnEGrEvX73GPP3LJ28IOARHF2
-         kaeg==
-X-Gm-Message-State: AOAM530Wvdv9Usky2k8L1oX4OppYne92wLu4gKTL52ud35W9Ck5JAQid
-        P/EvaUNX3j0ZYnrfJ+pH7eGQugeGuXep5Q+3CPmlLGUKA4OxImypOxByjRlvSmByyM3KEPsSwrm
-        9dku87ZfVabsTEbD6mLJEjzc79EP21IrNK7Pv1r2M9lkPaZPcBijwmzhkCkGslWHAWjyBytk4+A
+        bh=wnCTag5HKGK8XoqlyYcgrX7r6UraKb8JZF3vVdV1iQQ=;
+        b=NJUgN560gYLsYqvTQaXfg8wU3NOhrMaYrXUVYAcId2xgB1n5SjknWqL1k1Hwf+f3AL
+         sz8e+0RUkzj4jcqEti68r+DOpOZOVlxpGJtyvkvnsOXsZ0uOn2ITjn1rbCVCA/lGVo1O
+         ipH5e7Ls43J4xw5jSndkND22HgaqbPJ9yUgbZrreqdrzvY/nRUYHaxN+53OaxhYXSvPg
+         tQYlbfambXvYmpPgvZNg6h5TUwM6bhoQ5UjBckBrk9hzxQQXmwWBQln/hv9OjX1fKJxW
+         Zv6Hd72AsS+W2X+Vv3gfC7fYtgyNjO8goMjCwL9U5wRyZnat4UnYTjj6Hql6H+Pddl7w
+         qEiQ==
+X-Gm-Message-State: AOAM530PEZzeKt1MOUj2/yiEZEiu0dOkIxjl5t7JAyjLkv1q2w2UHn/t
+        5qLG4cblEocc6yhJJ1M6f7I9W5Fg3QLUzR77BgIJCro2vpVHm5XtDQIbWnI33Dp/bBptONURVTT
+        lF/PLAqX6+2i/xNc5bHKsl9sfDFqZexK2Q5p0tsU0Nz/4L04YOq1WcGylyXoRjEFWpXUE22fcoQ
         ==
-X-Google-Smtp-Source: ABdhPJxWm3lCJZh0ACxr6PJy7NH5ko5sWrGymAKqZbM9x62mrMlnRh2fM/9sY2bRn/8SDkdzb4CBzq2+kObucYNplCM=
+X-Google-Smtp-Source: ABdhPJx1eIlrQOWIDUwY2RxHkIqpyajuIKUpzdMlvqOKMthpic00dg5avMNI46f/JZ+mGzPPxLM+ZxaomIxPNluGwwA=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:c1a4:4d87:8b5a:d12c])
- (user=emilyshaffer job=sendgmr) by 2002:a25:8b12:: with SMTP id
- i18mr858896ybl.162.1622074177910; Wed, 26 May 2021 17:09:37 -0700 (PDT)
-Date:   Wed, 26 May 2021 17:08:38 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:ad4:4c45:: with SMTP id
+ cs5mr571022qvb.6.1622074179837; Wed, 26 May 2021 17:09:39 -0700 (PDT)
+Date:   Wed, 26 May 2021 17:08:39 -0700
 In-Reply-To: <20210527000856.695702-1-emilyshaffer@google.com>
-Message-Id: <20210527000856.695702-20-emilyshaffer@google.com>
+Message-Id: <20210527000856.695702-21-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210527000856.695702-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-Subject: [PATCH v9 19/37] merge: use config-based hooks for post-merge hook
+Subject: [PATCH v9 20/37] gc: use hook library for pre-auto-gc hook
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,55 +70,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach post-merge to use the hook.h library instead of the run-command.h
-library to run hooks. This means that post-merge hooks can come from the
-config as well as from the hookdir. post-merge is invoked only from
-builtin/merge.c.
+Using the hook.h library instead of the run-command.h library to run
+pre-auto-gc means that those hooks can be set up in config files, as
+well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/githooks.txt | 3 +++
- builtin/merge.c            | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ builtin/gc.c               | 9 ++++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index ec5020bfb6..c904b160dc 100644
+index c904b160dc..d77170dafb 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -242,6 +242,9 @@ save and restore any form of metadata associated with the working tree
- (e.g.: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
- for an example of how to do this.
+@@ -569,6 +569,9 @@ This hook is invoked by `git gc --auto` (see linkgit:git-gc[1]). It
+ takes no parameter, and exiting with non-zero status from this script
+ causes the `git gc --auto` to abort.
  
-+Hooks executed during 'post-merge' will run in parallel, unless hook.jobs is
++Hooks run during 'pre-auto-gc' will be run in parallel, unless hook.jobs is
 +configured to 1.
 +
- pre-push
- ~~~~~~~~
+ post-rewrite
+ ~~~~~~~~~~~~
  
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 182dea418a..7a524cb3e3 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -448,6 +448,7 @@ static void finish(struct commit *head_commit,
- 		   const struct object_id *new_head, const char *msg)
+diff --git a/builtin/gc.c b/builtin/gc.c
+index f05d2f0a1a..16890b097c 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -32,6 +32,7 @@
+ #include "remote.h"
+ #include "object-store.h"
+ #include "exec-cmd.h"
++#include "hook.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+@@ -348,6 +349,8 @@ static void add_repack_incremental_option(void)
+ 
+ static int need_to_gc(void)
  {
- 	struct strbuf reflog_message = STRBUF_INIT;
-+	struct run_hooks_opt opt;
- 	const struct object_id *head = &head_commit->object.oid;
++	struct run_hooks_opt hook_opt;
++
+ 	/*
+ 	 * Setting gc.auto to 0 or negative can disable the
+ 	 * automatic gc.
+@@ -394,8 +397,12 @@ static int need_to_gc(void)
+ 	else
+ 		return 0;
  
- 	if (!msg)
-@@ -489,7 +490,10 @@ static void finish(struct commit *head_commit,
- 	}
+-	if (run_hook_le(NULL, "pre-auto-gc", NULL))
++	run_hooks_opt_init_async(&hook_opt);
++	if (run_hooks("pre-auto-gc", &hook_opt)) {
++		run_hooks_opt_clear(&hook_opt);
+ 		return 0;
++	}
++	run_hooks_opt_clear(&hook_opt);
+ 	return 1;
+ }
  
- 	/* Run a post-merge hook */
--	run_hook_le(NULL, "post-merge", squash ? "1" : "0", NULL);
-+	run_hooks_opt_init_async(&opt);
-+	strvec_push(&opt.args, squash ? "1" : "0");
-+	run_hooks("post-merge", &opt);
-+	run_hooks_opt_clear(&opt);
- 
- 	apply_autostash(git_path_merge_autostash(the_repository));
- 	strbuf_release(&reflog_message);
 -- 
 2.31.1.818.g46aad6cb9e-goog
 
