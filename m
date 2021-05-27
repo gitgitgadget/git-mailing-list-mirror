@@ -2,153 +2,328 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25958C4707F
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 12:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4DEBC47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 12:49:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03F86613ED
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 12:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87908610A2
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 12:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234626AbhE0MGy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 08:06:54 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:49768 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234798AbhE0MGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 08:06:47 -0400
-Received: from host-92-14-216-189.as13285.net ([92.14.216.189] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1lmElE-000Aj1-6W; Thu, 27 May 2021 13:05:12 +0100
-Subject: Re: fast forward merge overwriting my code
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
- <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
- <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
- <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
- <60adb824bac10_2c7f620844@natae.notmuch>
- <da77d0a0-7fdb-e4c8-6510-87ea0294dac4@iee.email>
- <60ae947797deb_25ba2089c@natae.notmuch>
- <6dcc8557-9df4-9ea2-c348-f4ebf76ff446@iee.email>
- <60aedb22c075e_4bd420896@natae.notmuch>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <02bbe080-cd8a-cc7d-5dbc-9231b51c4baf@iee.email>
-Date:   Thu, 27 May 2021 13:05:12 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        id S235644AbhE0MvI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 08:51:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234589AbhE0MvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 08:51:08 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF2AC061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 05:49:34 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ss26so7599275ejb.5
+        for <git@vger.kernel.org>; Thu, 27 May 2021 05:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=sD2nFEdGY0iVMXzIcGRDqTWaJefDxGvhwm1xZQ+qLDY=;
+        b=C/BS8CfPY8biQqEnZiA+NomnjCk90OE3muGwd2svde8LgKsYKAiZkgVieN+sHiUVVc
+         1TPWc82RZrcYLJq3dtjPhdmU0fDYHnoVm1P36DdIT9I82lN0D+P0PkJXgjFvp8k7MMNn
+         lkFVULNny+WXyAK23Na/S3/R8g8O/Cdbcg47vf2d/rbDBQ7TiGBpu9z3TXMYoupfS8BY
+         /jvNIaTLts40a9HUNIlgLkk75ylFaE0vCxNtOunMkGrezB4OYUDHSBQAQrWs57xWHeNo
+         gjCUQtuKg/RXUOdxxZyDr5xl/cyeZtR5kuf7DcFDMY5WI7pPL4dHqdVd1Xyp7C0pfAyk
+         xTuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=sD2nFEdGY0iVMXzIcGRDqTWaJefDxGvhwm1xZQ+qLDY=;
+        b=ku0GAXGRE7f/kxiZ4IrZBlter0BONArVYEgo8YOnH520CgrmamQB+ESC8oDgObiQrV
+         cwltjJcKCfYuDD1bHoEeNAWSnyXCT+a16WtuvqvgLCLAJQC8mXyL0wtZebd0MNT8S4tv
+         dksJBg9oDmalVFAZbbkljTa1hXGseMZ6X5SE+2SHDwdbFQeslxykwlia0wO4Bqn8YZZs
+         DS+vCvl2Sa7wXRG7T5We/LuaCKONWSxCr1+qo+kDDyRRLtOmNk8zVW4etB3XaAtit/GS
+         ng0yC2aRslsZlyv09gwLhD79CnPo4sP1/UWRltb2jbVfTeAwOItT3NccAeHcZrTWynNe
+         xkVA==
+X-Gm-Message-State: AOAM532lFg4AP6jXejTHLhGS1uIiX6Bcgv12bRz59++EjrdA8prt3cGM
+        Ohhon6wVvpCMX7OOVkpf1/xKoHI5RMzSQw==
+X-Google-Smtp-Source: ABdhPJysYp/f+/qGni5WAWf6+ht+FzB3BV/SgcJgOKf/NHWxqJAf38d5SI3liScNZV2IK0I+SO7Oog==
+X-Received: by 2002:a17:906:744:: with SMTP id z4mr3664839ejb.347.1622119772536;
+        Thu, 27 May 2021 05:49:32 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id p7sm1065298edw.43.2021.05.27.05.49.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 May 2021 05:49:32 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Runaway sed memory use in test on older sed+glibc (was "Re:
+ [PATCH v6 1/3] test: add helper functions for git-bundle")
+Date:   Thu, 27 May 2021 14:19:04 +0200
+References: <87bl8xmipo.fsf@evledraar.gmail.com>
+ <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
+Message-ID: <87tumol4tg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <60aedb22c075e_4bd420896@natae.notmuch>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/05/2021 00:34, Felipe Contreras wrote:
-> Philip Oakley wrote:
->> On 26/05/2021 19:33, Felipe Contreras wrote:
->>> Philip Oakley wrote:
->>>> On 26/05/2021 03:53, Felipe Contreras wrote:
->>>>> Andre Ulrich wrote:
->>>>>> So the last point is where we still want to do some fine tuning. Right  
->>>>>> now this looks about: my prof fetches my edits and locally checks out  
->>>>>> a branch to compare the changes with git diff.
->>>>>> But in this diff view you can't edit the files. So you have to  
->>>>>> separately open up another window to edit the changes (lets say my  
->>>>>> prof only wants to keep some of my changes, but not all).
->>>>> So for example after fetching your changes your professor sees this:
->>>> Part of Andre's problem was that this diff wasn't stable because the
->>>> underlying file format is said to be json so items can move around
->>>> without issue (e.g. key value pairs swapping position) and that they
->>>> aren't really working on the json file (it may as well be binary..) but
->>>> on the jupytper notebook display view, so one step removed from the 'diff'.
->>> Andre said they use the diff view, and he wants to be able to edit it.
->>> Not sure how else would you interpret "But in this diff view you can't
->>> edit the files".
->>>
->> In
->> https://lore.kernel.org/git/20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de/
->> Abdre did say they used the special jupyter notebook diff viewer.
-> Yes, but that is a separate issue.
+
+On Thu, May 27 2021, Jiang Xin wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=
+=E5=B9=B45=E6=9C=8827=E6=97=A5=E5=91=A8=E5=9B=9B
+> =E4=B8=8A=E5=8D=882:51=E5=86=99=E9=81=93=EF=BC=9A
+>>
+>>
+>> On Mon, Jan 11 2021, Jiang Xin wrote:
+>>
+>> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>> >
+>> > Move git-bundle related functions from t5510 to a library, and this
+>> > lib
+>> > will be shared with a new testcase t6020 which finds a known
+>> > breakage of
+>> > "git-bundle".
+>> > [...]
+>> > +
+>> > +# Format the output of git commands to make a user-friendly and
+>> > stable
+>> > +# text. =C2=A0We can easily prepare the expect text without having to
+>> > worry
+>> > +# about future changes of the commit ID and spaces of the output.
+>> > +make_user_friendly_and_stable_output () {
+>> > + =C2=A0 =C2=A0 sed \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${A%${A#???????}}[0-=
+9a-f]*/<COMMIT-A>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${B%${B#???????}}[0-=
+9a-f]*/<COMMIT-B>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${C%${C#???????}}[0-=
+9a-f]*/<COMMIT-C>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${D%${D#???????}}[0-=
+9a-f]*/<COMMIT-D>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${E%${E#???????}}[0-=
+9a-f]*/<COMMIT-E>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${F%${F#???????}}[0-=
+9a-f]*/<COMMIT-F>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${G%${G#???????}}[0-=
+9a-f]*/<COMMIT-G>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${H%${H#???????}}[0-=
+9a-f]*/<COMMIT-H>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${I%${I#???????}}[0-=
+9a-f]*/<COMMIT-I>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${J%${J#???????}}[0-=
+9a-f]*/<COMMIT-J>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${K%${K#???????}}[0-=
+9a-f]*/<COMMIT-K>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${L%${L#???????}}[0-=
+9a-f]*/<COMMIT-L>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${M%${M#???????}}[0-=
+9a-f]*/<COMMIT-M>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${N%${N#???????}}[0-=
+9a-f]*/<COMMIT-N>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${O%${O#???????}}[0-=
+9a-f]*/<COMMIT-O>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${P%${P#???????}}[0-=
+9a-f]*/<COMMIT-P>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${TAG1%${TAG1#??????=
+?}}[0-9a-f]*/<TAG-1>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${TAG2%${TAG2#??????=
+?}}[0-9a-f]*/<TAG-2>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${TAG3%${TAG3#??????=
+?}}[0-9a-f]*/<TAG-3>/g" \
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/ *\$//"
+>> > +}
+>>
+>> On one of the gcc farm boxes, a i386 box (gcc45) this fails because
+>> sed
+>> gets killed after >500MB of memory use (I was just eyeballing it in
+>> htop) on the "reate bundle from special rev: main^!" test. This with
+>> GNU
+>> sed 4.2.2.
+>>
+>> I suspect this regex pattern creates some runaway behavior in sed
+>> that's
+>> since been fixed (or maybe it's the glibc regex engine?). The glibc is
+>> 2.19-18+deb8u10:
+>>
+>> =C2=A0 =C2=A0 + git bundle list-heads special-rev.bdl
+>> =C2=A0 =C2=A0 + make_user_friendly_and_stable_output
+>> =C2=A0 =C2=A0 + sed -e s/[0-9a-f]*/<COMMIT-A>/g -e s/[0-9a-f]*/<COMMIT-B=
+>/g -e
+>> s/[0-9a-f]*/<COMMIT-C>/g -e s/[0-9a-f]*/<COMMIT-D>/g -e
+>> s/[0-9a-f]*/<COMMIT-E>/g -e s/[0-9a-f]*/<COMMIT-F>/g -e
+>> s/[0-9a-f]*/<COMMIT-G>/g -e s/[0-9a-f]*/<COMMIT-H>/g -e
+>> s/[0-9a-f]*/<COMMIT-I>/g -e s/[0-9a-f]*/<COMMIT-J>/g -e
+>> s/[0-9a-f]*/<COMMIT-K>/g -e s/[0-9a-f]*/<COMMIT-L>/g -e
+>> s/[0-9a-f]*/<COMMIT-M>/g -e s/[0-9a-f]*/<COMMIT-N>/g -e
+>> s/[0-9a-f]*/<COMMIT-O>/g -e s/[0-9a-f]*/<COMMIT-P>/g -e
+>> s/[0-9a-f]*/<TAG-1>/g -e s/[0-9a-f]*/<TAG-2>/g -e
+>> s/[0-9a-f]*/<TAG-3>/g -e s/ *$//
+>> =C2=A0 =C2=A0 sed: couldn't re-allocate memory
 >
-> Right now they are able to resolve conflicts with a jupyter mergetool.
-
-I don't believe that ("resolve") is true in the sense they would like. I
-don't think they are really 'merging' in an all-in-one `git merge`
-sense, rather they are [trying to] splitting and patching and commenting
-the changes.
-
-Aside: In my previous employment it just wasn't possible to diff a
-tool's save output (MathCAD, a graphic maths whiteboard) because the
-structure of their XML file was not conventionally 'linear' -
-rearranging object position on the canvas did not move them in the file,
-you had to 'guess' (try and visualise) the objects movement and effect
-on computational order. It just wasn't worth the effort as the supplier
-didn't have useful diff tool. I Feel that Jupyter is better than that,
-but still awkward.
-
-> The tool gets rid of all the extra noise so the user is able to focus
-> only on the actual important changes. When they exit the tool, their
-> changes are properly staged.
+> I wrote a program on macOS to check memory footprint for sed and perl.
+> See:
 >
-> The problem Andre described in [1] appears when mergetool does *not*
-> run. 
+> =C2=A0 =C2=A0 https://github.com/jiangxin/compare-sed-perl
 
-Here they are (in my mind) highlighting the GitLab server side merge
-process, which only (IIUC) showing the git diff, and not the jupyter
-diff, meaning they have to fetch and then work in the jupyter tool, not Git.
+Interesting use of Go for as a /usr/bin/time -v replacement :)
 
-> In that case the user is forced to run `git diff` (jupyter difftool
-> will be used), edit the file manually with some viewer, `git add
-> --update`, and then run `git diff --cached` to verify the changes.
+After changing your int64 to int32 and digging up how to cross-compile
+Go I get similar results, it's because your test has actual short SHA-1s
+in the "-e 's///g'"'s, but notice how in the trace I have it's
+e.g. "s/[0-9a-f]*/<COMMIT-A>/g".
 
-I'd misremembered the --update option, and it possibly doesn't do what
-the user expects if they expect just the staged files (rather than all
-the tracked index files) updated to take on-board their tweaks (i.e. mid
-review)
->
-> In case an unwanted change sneaks by, the user would have to edit the
-> file again, or do `git checkout --patch` to selectively remove chunks
-> (and since this tools presents the diffs in reverse, it's
-> counterintuitive and error-prone).
-I'd agree that the whole process for such tools (because they break
-linear code conventions) is, as you say, "counter-intuitive and error-prone"
->
-> This is far from ideal.
->
->
-> The problem is that there is no `git stage edit`, in order to launch the
-> mergetool.
+That's the problem, so that Go command won't reproduce it. Anyway,
+changing the test to emit to "input" first and running this shows it:
+=20=20=20=20
+    avar@gcc45:/run/user/1632/git/t/trash directory.t6020-bundle-misc$ /usr=
+/bin/time -v sed -e 's/[0-9a-f]*/<COMMIT-A>/g' -e 's/[0-9a-f]*/<COMMIT-B>/g=
+' -e 's/[0-9a-f]*/<COMMIT-C>/g' -e 's/[0-9a-f]*/<COMMIT-D>/g' -e 's/[0-9a-f=
+]*/<COMMIT-E>/g' -e 's/[0-9a-f]*/<COMMIT-F>/g' -e 's/[0-9a-f]*/<COMMIT-G>/g=
+' -e 's/[0-9a-f]*/<COMMIT-H>/g' -e 's/[0-9a-f]*/<COMMIT-I>/g' -e 's/[0-9a-f=
+]*/<COMMIT-J>/g' -e 's/[0-9a-f]*/<COMMIT-K>/g' -e 's/[0-9a-f]*/<COMMIT-L>/g=
+' -e 's/[0-9a-f]*/<COMMIT-M>/g' -e 's/[0-9a-f]*/<COMMIT-N>/g' -e 's/[0-9a-f=
+]*/<COMMIT-O>/g' -e 's/[0-9a-f]*/<COMMIT-P>/g' -e 's/[0-9a-f]*/<TAG-1>/g' -=
+e 's/[0-9a-f]*/<TAG-2>/g' -e 's/[0-9a-f]*/<TAG-3>/g' -e 's/ *$//' <input
+    sed: couldn't re-allocate memory
+    Command exited with non-zero status 4
+            Command being timed: "sed -e s/[0-9a-f]*/<COMMIT-A>/g -e s/[0-9=
+a-f]*/<COMMIT-B>/g -e s/[0-9a-f]*/<COMMIT-C>/g -e s/[0-9a-f]*/<COMMIT-D>/g =
+-e s/[0-9a-f]*/<COMMIT-E>/g -e s/[0-9a-f]*/<COMMIT-F>/g -e s/[0-9a-f]*/<COM=
+MIT-G>/g -e s/[0-9a-f]*/<COMMIT-H>/g -e s/[0-9a-f]*/<COMMIT-I>/g -e s/[0-9a=
+-f]*/<COMMIT-J>/g -e s/[0-9a-f]*/<COMMIT-K>/g -e s/[0-9a-f]*/<COMMIT-L>/g -=
+e s/[0-9a-f]*/<COMMIT-M>/g -e s/[0-9a-f]*/<COMMIT-N>/g -e s/[0-9a-f]*/<COMM=
+IT-O>/g -e s/[0-9a-f]*/<COMMIT-P>/g -e s/[0-9a-f]*/<TAG-1>/g -e s/[0-9a-f]*=
+/<TAG-2>/g -e s/[0-9a-f]*/<TAG-3>/g -e s/ *$//"
+            User time (seconds): 130.00
+            System time (seconds): 2.42
+            Percent of CPU this job got: 100%
+            Elapsed (wall clock) time (h:mm:ss or m:ss): 2:12.41
+            Average shared text size (kbytes): 0
+            Average unshared data size (kbytes): 0
+            Average stack size (kbytes): 0
+            Average total size (kbytes): 0
+            Maximum resident set size (kbytes): 1030968
+            Average resident set size (kbytes): 0
+            Major (requiring I/O) page faults: 0
+            Minor (reclaiming a frame) page faults: 257333
+            Voluntary context switches: 1
+            Involuntary context switches: 12578
+            Swaps: 0
+            File system inputs: 0
+            File system outputs: 0
+            Socket messages sent: 0
+            Socket messages received: 0
+            Signals delivered: 0
+            Page size (bytes): 4096
+            Exit status: 4
 
-I see it the other way around (I think). I see it as Git getting out of
-the way for a period and supporting that other tool's review process,
-rather than assuming that the git-way is the-right-way.
+But no, the issue as it turns out is not Perl v.s. Sed, it's that
+there's some bug in the shellscript / tooling version (happens with both
+dash 0.5.7-4 and bash 4.3-11+deb8u2 on that box) where those expansions
+like ${A%${A#??????0?}} resolve to nothing.
 
-> I just wrote an example `git stage-edit` [2] that does launch the
-> mergetool even if there are no merge conflicts, allowing the user to
-> modify the stage directly and with no hassle.
->
-> Cheers.
->
-> [1] https://lore.kernel.org/git/20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de/
-> [2] https://dpaste.com/62XS8TTXP
->
-Hopefully, Andre can put a little information about just how the mid
-'merge/review' process actually happens, and the pain points, to avoid
-the discussion talking in thin air...
+So if we make that:
 
-There may be terminology confusion because of the way that *server based
-cooperation* goes via _Pull/Merge Requests_, when really they are
-*Review Requests*, and no one (in that situation) actually expects them
-to be accepted as-is anyway, rather they are 'returned with comments for
-rework' or 'reworked before merge'.
+        cat >input &&
+        cat input >&2 &&
+        sed -e "s/${A%${A#??????0?}}[0-9a-f]*/<COMMIT-A>/g" <input >input.t=
+mp && mv input.tmp input &&
+        cat input >&2 &&
+        sed -e "s/${B%${B#???????}}[0-9a-f]*/<COMMIT-B>/g" <input >input.tm=
+p && mv input.tmp input &&
+        cat input >&2 &&
 
-Philip
+We get things like:
+=20=20=20=20
+    + sed -e s/[0-9a-f]*/<COMMIT-A>/g
+    + mv input.tmp input
+    + cat input
+    <COMMIT-A> <COMMIT-A>r<COMMIT-A>s<COMMIT-A>/<COMMIT-A>h<COMMIT-A>s<COMM=
+IT-A>/<COMMIT-A>m<COMMIT-A>i<COMMIT-A>n<COMMIT-A>
+    + sed -e s/[0-9a-f]*/<COMMIT-B>/g
+    + mv input.tmp input
+    + cat input
+    <COMMIT-B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I<COMM=
+IT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B> <COMMIT-B><<COMMIT-B>C<CO=
+MMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<=
+COMMIT-B>><COMMIT-B>r<COMMIT-B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>=
+M<COMMIT-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B>s<COMMIT-=
+B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I<COMMIT-B>T<COMMI=
+T-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B>/<COMMIT-B><<COMMIT-B>C<COMMIT-B>O<COM=
+MIT-B>M<COMMIT-B>M<COMMIT-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-B>><C=
+OMMIT-B>h<COMMIT-B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I=
+<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B>s<COMMIT-B><<COMMIT-B=
+>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT=
+-B>A<COMMIT-B>><COMMIT-B>/<COMMIT-B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMM=
+IT-B>M<COMMIT-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B>m<CO=
+MMIT-B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I<COMMIT-B>T<=
+COMMIT-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B>i<COMMIT-B><<COMMIT-B>C<COMMIT-B>=
+O<COMMIT-B>M<COMMIT-B>M<COMMIT-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-=
+B>><COMMIT-B>n<COMMIT-B><<COMMIT-B>C<COMMIT-B>O<COMMIT-B>M<COMMIT-B>M<COMMI=
+T-B>I<COMMIT-B>T<COMMIT-B>-<COMMIT-B>A<COMMIT-B>><COMMIT-B>
+    [...]
+
+etc. I.e. it's the sed expression itself that's the issue. I.e. you
+should be able to reproduce this locally with something like:
+
+    echo 0 | sed -e 's/[0-9]*/<BEGIN>0<END>/g' -e 's/[0-9]*/<BEGIN>0<END>/g=
+' -e 's/[0-9]*/<BEGIN>0<END>/g' -e 's/[0-9]*/<BEGIN>0<END>/g' -e 's/[0-9]*/=
+<BEGIN>0<END>/g' -e 's/[0-9]*/<BEGIN>0<END>/g' -e 's/[0-9]*/<BEGIN>0<END>/g=
+' -e 's/[0-9]*/<BEGIN>0<END>/g'
+
+If not just copy the -e a few more times.
+
+Anyway, looking at this whole test file with fresh eyes this pattern
+seems very strange. You duplicated most of test_commit with this
+test_commit_setvar. It's a bit more verbosity but why not just use:
+
+    test_commit ...
+    A=3D$(git rev-parse HEAD)
+
+Or teach test_commit a --rev-parse option or something and:
+
+    A=3D$(test_commit ...)
+
+This make_user_friendly_and_stable_output then actually loses
+information, e.g. sometimes the bundle output you're testing emits
+trailing spaces, but the normalization function overzelously trims that.
+
+I think this whole thing would be much simpler with the above and then
+something like:
+=20=20=20=20
+    @@ -146,7 +126,8 @@ test_expect_success 'setup' '
+=20=20=20=20=20
+            # branch main: merge commit I & J
+            git checkout main &&
+    -       test_commit_setvar --merge I topic/1 "Merge commit I" &&
+    +       git merge --no-edit --no-ff -m"Merge commit I" topic/1 &&
+    +       I=3D$(git rev-parse HEAD) &&
+            test_commit_setvar --merge J refs/pull/2/head "Merge commit J" =
+&&
+=20=20=20=20=20
+            # branch main: commit K
+    @@ -172,18 +153,18 @@ test_expect_success 'create bundle from special r=
+ev: main^!' '
+=20=20=20=20=20
+            git bundle list-heads special-rev.bdl |
+                    make_user_friendly_and_stable_output >actual &&
+    -       cat >expect <<-\EOF &&
+    -       <COMMIT-P> refs/heads/main
+    +       cat >expect <<-EOF &&
+    +       $P refs/heads/main
+            EOF
+            test_cmp expect actual &&
+
+Or just add a --merge option to test_commit itself.
