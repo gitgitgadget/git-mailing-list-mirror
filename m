@@ -7,98 +7,92 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B5B7C4707F
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 17:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E6E6C47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 17:46:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71961613C9
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 17:35:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72FA0610C7
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 17:46:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234061AbhE0RhM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 13:37:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35110 "EHLO
+        id S233512AbhE0RsL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 13:48:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbhE0RhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 13:37:12 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD53BC061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 10:35:38 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id z3so1535129oib.5
-        for <git@vger.kernel.org>; Thu, 27 May 2021 10:35:38 -0700 (PDT)
+        with ESMTP id S229791AbhE0RsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 13:48:11 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08677C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 10:46:36 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso961018otu.10
+        for <git@vger.kernel.org>; Thu, 27 May 2021 10:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=1wG8tjCnniCswDnsZnz7nD0/gF0jX+n+F5qQHsCSaOU=;
-        b=BgnbS8hrcS66oONpeNy+mAa8X/lgcF9fcHwHDYYqXf934fy1Z9n/nO3PmSBkZvwReZ
-         PVTvIFmB+JET2T6zSDLSNLZXxDPVnXB0mC+weoWaBI7ixeaFsbVky24Hxy8Kha8hLfgW
-         DcBHMtNm9vYBWBsuWX9AAcMrhfCuSXelUzw2ycN3MMapNUZZv15T36hfmgpby/PhMWhd
-         jQdHcoZt/gEPa8vzoPaoH67OactnDqpkbBEzVBx4q8+ONFiqlzk96NdGQOJOB+054tGa
-         d68WWfGhtlOFHT+RmY4DuDSvWiHxtgD8d8oNqYDt7Q3HWCiwR7VoA3Zj/t0eC2x+xDVr
-         zF9w==
+        bh=sDo+f4XOIM7zvMpYHWphzbewOlwwW67Z4bOw8Hl2lmA=;
+        b=qwZRn3HK7KTWhfqAqTFPP+3wt38DUJOQ3K1qLvP0fqgY3tlsF9N2whgiNC+juPE24W
+         tvmmYEBQfVTjLAUw00BL4ZMpyXpP6PUWHsGKzWpALJtQoPa+nbWE+oovcRjirJ7JiRs9
+         +Ec/AS/z9gfL/Q9dVmoWSo60T/bqWbw4a3i0Mr4Tq7Ax7+zTBU1JNqZJYHlhDdO+xBDN
+         OqGViEmqq4OLQ/XIFkcBFFRgqH8JbCNBPicsIXL9vg9hyX0tO6bvQMIZRdPrKplis2gK
+         TfGRfxU5TxUlLxWOCkjSGOBB762XqLB9i5rDw9RwEHuYUTXrgew2layzomWzOxSIAjXV
+         IpYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=1wG8tjCnniCswDnsZnz7nD0/gF0jX+n+F5qQHsCSaOU=;
-        b=CrUtu3qsGupHWzxJJfPUYoXAOKecVNU46Tclm97Ig3jipeQzys3h3FcWSS1AXTTEhm
-         Jddm9P0Eg54+jJa8nTIBDLxqwIuN+0TXTlbc1fG1h6Db/7i4BI6W7j91yaesTt8a+PYY
-         Jna5liF+Lwo0vrkJv9LuEfsltBZytLLMjqMFLD7AcOadJtp3kF11px4V6bCDq6Jr1gTm
-         Ak6clQYxr4efoqhbxollLeH2KDyKCk66/Zi7+ubQ53uQywh0ytHGzg3PWh4nBQjB8w/r
-         PzjURRWDBU8qD6gdU9X/VzR4OO+cgqC+kMoABKie2p2JzjJmTNjmkuUt40Q5iu6bpqi1
-         6kxw==
-X-Gm-Message-State: AOAM532Dyegyyxj1h2NKKUJtdEsyrkL5kmuNQrNJ+RPamemHsQ3QB/ct
-        jMADATDorX5ySSNWNPcurqO3PgGCo6RIwQ==
-X-Google-Smtp-Source: ABdhPJytGhrwIVJZmgCyip7O2XjJuRwHI7tISS/Fu2WOGX7GOgc1TBNd3ZPqnmXK6UeR4VK5aeZdpg==
-X-Received: by 2002:aca:2b17:: with SMTP id i23mr3157987oik.87.1622136938264;
-        Thu, 27 May 2021 10:35:38 -0700 (PDT)
+        bh=sDo+f4XOIM7zvMpYHWphzbewOlwwW67Z4bOw8Hl2lmA=;
+        b=BsCehBxahVWhGy2hUY4UBujbOpg5axOyeMyTCrCDpSWSUr/02xjJY4qT8kvMK3QCfG
+         cXof/EoSqNAOebhEK2VxcvUHLOJS1HNV8atoeOudFVLrYh+fLKV2367FU88xSPodJay7
+         26QdmOhxuahkkIuvnC/hWMmVVu8KV4cDnN4eR/QzRRMqINu3joNLj+Kr0f57mTjoHo6Z
+         7Tjo3/QfraIiG7+J/sLeMuU0OSwQDJ5vvyQOqTaMgBn5OFb330jccY+aD+744vwFw7M8
+         FoTeQ447k3ZtWrM6E2cz9OTENk6TCly0nXCrpKJ0oU4leB3T/N7IbKcwKjKTiFwYWOwd
+         YKCw==
+X-Gm-Message-State: AOAM5338mWZNz0m3/jvkNFHyjElGSk2D0yYdqLTajYvcg6PbHv3YQgyj
+        kxVLo9Wwnj1XPqI2iiVkKjk=
+X-Google-Smtp-Source: ABdhPJz9B1iXlKfizgvypUtqduIJYF6IRVSqkFByWGhjDZh9zBA3e3OIlTxK8tVCe2laMmnPLQcSTg==
+X-Received: by 2002:a05:6830:1042:: with SMTP id b2mr3747110otp.120.1622137595436;
+        Thu, 27 May 2021 10:46:35 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id e6sm603829otr.53.2021.05.27.10.35.37
+        by smtp.gmail.com with ESMTPSA id l128sm604813oif.16.2021.05.27.10.46.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 May 2021 10:35:37 -0700 (PDT)
-Date:   Thu, 27 May 2021 12:35:36 -0500
+        Thu, 27 May 2021 10:46:34 -0700 (PDT)
+Date:   Thu, 27 May 2021 12:46:23 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Message-ID: <60afd868b68ae_2653020870@natae.notmuch>
-In-Reply-To: <YK/SZGTWd/tfSWeP@coredump.intra.peff.net>
-References: <20210521222941.525901-1-felipe.contreras@gmail.com>
- <xmqq7djoj9z9.fsf@gitster.g>
- <YK+texFSW6UurDui@coredump.intra.peff.net>
- <60afcfec2d93c_26530208ae@natae.notmuch>
- <YK/SZGTWd/tfSWeP@coredump.intra.peff.net>
-Subject: Re: [PATCH v3 0/5] doc: asciidoc cleanups
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <60afdaef95fa9_2653020894@natae.notmuch>
+In-Reply-To: <87lf80l1m6.fsf@evledraar.gmail.com>
+References: <20210311021037.3001235-1-emilyshaffer@google.com>
+ <20210527000856.695702-1-emilyshaffer@google.com>
+ <87lf80l1m6.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v9 00/37] propose config-based hooks
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> > > The "comments-by" sub-thread looked unproductive to me, so I mostly
-> > > skipped it. ;) But as the person whose name was in the trailer, I will
-> > > say that I do not care either way if it is included. It did not seem to
-> > > add anything to me. Some trailers are good for pointing later readers to
-> > > folks who may be able to help understand or debug an old commit. Some
-> > > are good for just giving credit to people who helped. "Comments-by"
-> > > didn't really seem to do either to me (and I don't feel like I
-> > > contributed much worthy of credit anyway).
-> > 
-> > But you did provide comments, and those comments resulted in changes, so
-> > the comments-by line is accurate. And for what it's worth that commit
-> > trailer line has been used 3 times already, which places it in the 3rd
-> > top decile.
-> 
-> I didn't say it was inaccurate. I just think it is not useful.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> If it were instead:
+> =
 
-I understood. I'm not saying the tag must be there because it's useful
-(I agree it's usefulness is marginal at best), I'm saying including it
-does not hurt.
+>  1. Add "git hook run", only supports "old/legacy" .git/hooks/ hooks
+>  2. Go through N existing hook callers and migrate them to "git hook ru=
+n"
 
--- 
-Felipe Contreras
+Yes please. It would make the series much easier to review, and also to
+understand what the point of it is.
+
+-- =
+
+Felipe Contreras=
