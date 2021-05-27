@@ -2,119 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6696FC4707F
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 03:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2D5C47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 04:54:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 436E5613CD
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 03:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B1B061028
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 04:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234618AbhE0DQI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 23:16:08 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61853 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234577AbhE0DQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 23:16:06 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E7CEC126BF3;
-        Wed, 26 May 2021 23:14:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZqLzTGAKHfPM
-        ZEgVyzuCHa0OoqwimNLImu1WuhTvBmc=; b=K+k6AEWI3xGcb/FtMAgx1ikx0Nqq
-        kAjZVnU+g+hasc8mACG7GdHk14OPD642vcCzft36pOKemGPkqFafZnT8MZ0hrVa9
-        mDBjHXq4s/GIFi9jZqLEWBrXJClJ2Emt1lEy4D8vTv//FfrENsnwK9ud6akxhd5R
-        9q7HJY5rVrqi9xk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E0673126BF2;
-        Wed, 26 May 2021 23:14:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DBAEB126BEF;
-        Wed, 26 May 2021 23:14:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: move builtin-only code to its own header
-References: <878s41m5nc.fsf@evledraar.gmail.com>
-        <patch-1.1-d085d59a417-20210527T005213Z-avarab@gmail.com>
-Date:   Thu, 27 May 2021 12:14:28 +0900
-In-Reply-To: <patch-1.1-d085d59a417-20210527T005213Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 27 May
- 2021 02:52:51 +0200")
-Message-ID: <xmqqa6ogamwb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233765AbhE0Ezd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 00:55:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58366 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233375AbhE0Ezd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 00:55:33 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E3BC061574
+        for <git@vger.kernel.org>; Wed, 26 May 2021 21:54:00 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 16so1899245wmj.5
+        for <git@vger.kernel.org>; Wed, 26 May 2021 21:54:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=u6XGzUx9hOGvHesZPNWVM0j4F4gzcBBLrhH5uoIxoQw=;
+        b=GOGr79v8IA/9cS+49KworXYWTmXiggO7tKl5F2+hf8psM90gK1JlKr2WtwmLPe7oWB
+         CQvV+M5jvGGmqTYiw4ENwUeuG5dDSPSXpFbRm0ZjUGpcpMADjxvehVRpwVLdm0D75kbr
+         RBxDS7qh+nIP0SkeK6F6psEbqE7+ZfXVzG8+2qlfArrIwfP6DA9nYaTTVVx8NAj21RiV
+         PH6MvgW9Znhp1prMYqL79bsLgk3A4vgjhrk+cd4qmnQermubm/MbT6KQSlzZ4/PySa3k
+         KnwmsAI9rpUqMtnU63ryKXcO5J2hQouA9153OAdaal7qhefkl6Drn/2fKsxkmTkkB3yB
+         Cegg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=u6XGzUx9hOGvHesZPNWVM0j4F4gzcBBLrhH5uoIxoQw=;
+        b=C5bU6zTzass8wZmiH6hFpkRi6NTY0/IUumjjZqwuacPIgZEQM9LuB2tVf+cAxNJa/z
+         ++Au+sn/Tej/VaYAymXvUNR4lwCHsYV1862op4zxUCMgDSRMwRVtHbvxH8BXmxq1dxPN
+         a3xKOaKhmTBnl1oOrhJDLR7KdlAo5Knkou0JRJyCPEXW6XNbw9v7KQeYeBACXxQfX1wU
+         dJXWI2KgqBehC3atQL19DRf7V/9rCjLLItnvQuh42Ey4d+RmWb1M1y1qeoWTFkbL5uL1
+         utZDpwxihTbf5sQTHZK4Vht7i1J6DVA0y0lSfGy8y8cqN9oJKnaMKnlOUw+/bhhzQfTb
+         wAww==
+X-Gm-Message-State: AOAM530IATyyHcYxyZQZVN6k+e7J+1XJ21t4J8ODj/JgHuMfW5DpXsJu
+        CiNubxKKH4t4rIhMIMKws5NXqr1Eybo=
+X-Google-Smtp-Source: ABdhPJyDmMBYdANHpgLyPEX3zMCCOkv2j+rz66MSZil9Gg7pFZa23jjjVtm8imwetXEYAB1qjbdh6g==
+X-Received: by 2002:a05:600c:4fd0:: with SMTP id o16mr6399214wmq.137.1622091238839;
+        Wed, 26 May 2021 21:53:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g6sm1297465wmg.10.2021.05.26.21.53.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 May 2021 21:53:58 -0700 (PDT)
+Message-Id: <pull.961.git.1622091237.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 27 May 2021 04:53:54 +0000
+Subject: [PATCH 0/2] Directory traversal fixes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A697E5FA-BE99-11EB-BE10-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+This is a resend of the final two patches of my series, as per
+https://lore.kernel.org/git/xmqqfsyht49j.fsf@gitster.g/. It will not merge
+cleanly unless the last two patches of en/dir-traversal-fixes are first
+reverted, as Junio suggested he'd be doing.
 
-> Move the code that's only used in builtin/pack-objects.c to a new
-> builtin/pack-objects.h header and out of pack-objects.h.
+(Corrected Reviewed-by -> Signed-off-by in the first patch, minor stylistic
+fix for the second.)
 
-I've amended the early part of the proposed log message in
-preparation for merging it to 'next' and then later down to
-'master'.
+Derrick Stolee (1):
+  dir: update stale description of treat_directory()
 
-Here is what the result looks like.
+Elijah Newren (1):
+  dir: introduce readdir_skip_dot_and_dotdot() helper
 
-Thanks.
+ builtin/clean.c    |  4 +---
+ builtin/worktree.c |  4 +---
+ diff-no-index.c    |  5 ++---
+ dir.c              | 38 ++++++++++++++++++++++----------------
+ dir.h              |  2 ++
+ entry.c            |  5 +----
+ notes-merge.c      |  5 +----
+ object-file.c      |  4 +---
+ packfile.c         |  5 +----
+ rerere.c           |  4 +---
+ worktree.c         | 12 +++---------
+ 11 files changed, 36 insertions(+), 52 deletions(-)
 
 
-Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Date:   Thu May 27 02:52:51 2021 +0200
-
-    pack-objects: move static inline from a header to its sole consumer
-   =20
-    Move the code that is only used in builtin/pack-objects.c out of
-    pack-objects.h.
-   =20
-    This fixes an issue where Solaris's SunCC hasn't been able to compile
-    git since 483fa7f42d9 (t/helper/test-bitmap.c: initial commit,
-    2021-03-31).
-   =20
-    The real origin of that issue is that in 898eba5e630 (pack-objects:
-    refer to delta objects by index instead of pointer, 2018-04-14)
-    utility functions only needed by builtin/pack-objects.c were added to
-    pack-objects.h. Since then the header has been used in a few other
-    places, but 483fa7f42d9 was the first time it was used by test helper=
-.
-   =20
-    Since Solaris is stricter about linking and the oe_get_size_slow()
-    function lives in builtin/pack-objects.c the build started failing
-    with:
-   =20
-        Undefined                       first referenced
-         symbol                             in file
-        oe_get_size_slow                    t/helper/test-bitmap.o
-        ld: fatal: symbol referencing errors. No output written to t/help=
-er/test-tool
-   =20
-    On other platforms this is presumably OK because the compiler and/or
-    linker detects that the "static inline" functions that reference
-    oe_get_size_slow() aren't used.
-   =20
-    Let's solve this by moving the relevant code from pack-objects.h to
-    builtin/pack-objects.c. This is almost entirely a code-only move, but
-    because of the early macro definitions in that file referencing some
-    of these inline functions we need to move the definition of "static
-    struct packing_data to_pack" earlier, and declare these inline
-    functions above the macros.
-   =20
-    Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
-om>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+base-commit: dd55fc0df15c338a8dbec6dec6ca6b58edc8acef
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-961%2Fnewren%2Fdirectory-traversal-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-961/newren/directory-traversal-fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/961
+-- 
+gitgitgadget
