@@ -2,100 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78C36C47089
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 04:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 051F8C47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 07:21:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4209B61073
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 04:56:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3481613D4
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 07:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234405AbhE0E6T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 00:58:19 -0400
-Received: from mout.web.de ([212.227.17.11]:35985 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233424AbhE0E6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 00:58:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1622091390;
-        bh=B4LJe0tB66z9m8+JIcM5M6C9+szmMQkxS4bUTKez36E=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=p6QwoIDWpyidw+6vxbHmYdiXf5ENNuuKI+2Oay81qwjOlsvpUlkolNC/Z2+KPAwV2
-         73Opjiv81hoZEdF16locjb9galqalDzKyd3PjLyp74FPSizODO6wsc0kUQi73CB7Nf
-         ePVXxJnU1A5ew2DVbdRfS7TVUWDIHFma2ZYPo3Ew=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MdwNg-1lBPfn3nK2-00b1wq; Thu, 27
- May 2021 06:56:29 +0200
-Date:   Thu, 27 May 2021 06:56:28 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Yuri <yuri@rawbw.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [BUG REPORT] File names that contain UTF8 characters are
- unnecessarily escaped in 'git status .' messages
-Message-ID: <20210527045628.uvesihyhtqrfyfae@tb-raspi4>
-References: <f7e2e271-dcec-2886-f33e-62778a429850@rawbw.com>
- <xmqq35u9ax5j.fsf@gitster.g>
- <6318ccec-ec96-91a8-fd65-85daf4a9a22b@rawbw.com>
+        id S233848AbhE0HXN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 03:23:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34868 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234950AbhE0HXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 03:23:08 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40167C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 00:21:36 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id t24so4232253oiw.3
+        for <git@vger.kernel.org>; Thu, 27 May 2021 00:21:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=lhnBCgL+Auz6c7OJvv497NgSQmWr5SgvnXW+idOFzrM=;
+        b=gUE6E9CiGg9iBuEBRifp3T41zjzd6xssstLSh8gGin7jW87Ae9pYOrCMxpBXpBYtt/
+         kHgH9pvda0eMLe6bFd9zQrYMIyGLWTp1c4RkS1yogU/YI++ufz8kWOD5jTHvSqCeMll+
+         iCt3xn2tr2YQKuwQUK6WlaJrjLkwba0lqjVUnYoUZPueP5Kf5LQz+qD+O13HgENl6XZV
+         kg0cacq08kAnJ0JjBagDBfrJgstv11hxLg9DWElPmgVTbmwiVZ9PTZU3Jpa1IvAmo8pz
+         VlDDyqtInxtIHH5vYNsyRo+2Fj3IwNLAd89v43mfELjGt1fMcAgOUqqHqSy2JEY3s16y
+         NSfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lhnBCgL+Auz6c7OJvv497NgSQmWr5SgvnXW+idOFzrM=;
+        b=kIHaOscBHNo/Ly/42zkAknk4bb/96IudXZokXzi26pwIPrpcvYIPRCgf4AKsTLg7xN
+         z7J4ca5LOzIWHnzwfpqsrzXhcArXtFC6QmA0zOGkqVBaPwxA1TSvdMC8uozJD8KEAUwK
+         piRGInV8ZzI1cNm3PbIx6oO+QVIWPd2ydlVFonxVQfhdFw9ZSBuPBX4YhfIK6GiVXYZu
+         VK761eDY2qLqZRjjeHjtPFCk1W9eCw+OJY+CDKy9CaFcmspuqZ+pP7xr6AETemJb0Y//
+         kMiSfsXRn0K7Xav6PNIE2l6PGk7cik9kVGghVXNwHuTjgseb2Em7pE8Hlc5BmZFz0he5
+         LMww==
+X-Gm-Message-State: AOAM530rUw66zjzIAHAWXTKfp0luf19TMUl4GgosOGZjJYJys9Qqc5wz
+        ebrKfIryjgsMW0iXMfEANsB4TGxK4Lj0Of//Qq8uaalUljM=
+X-Google-Smtp-Source: ABdhPJzhdAgFJ/ZD0nus5aTe9F+PVhRmqZYEbvK5Z5B28IFKWve/Wv9yxp6mUaKek1RM3//AhFLTeQQofuw6Cg7bfPA=
+X-Received: by 2002:aca:4bd8:: with SMTP id y207mr4635710oia.39.1622100095625;
+ Thu, 27 May 2021 00:21:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6318ccec-ec96-91a8-fd65-85daf4a9a22b@rawbw.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:YJtLDDyb1V5+mlQopkpkVd9Bx3PFSsAH8qgRiEJrJec4/UL66dW
- NSle0J34oH5+ILK0YhW7uAQ0ZhYJ8TUGvaguVcjdBf02ftkqYIYKeLxu0iYQ5YDVjRpyOgE
- pQR4BwDELfenGQdL23732ZdZ4qRIIegQ0MXaktyO1Ta9huw4sPbKBb3PqThion/myVY4tB0
- CTKdTxcm06SWCcTTzI2MA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MTowzCrO0Cs=:6qrScjgFqtfLeX7mxASf6b
- xebUJ+Z4Xpvfm2+RMdbnMHztX5YKeiGRAGrjVUyZ1HFxGUzIB7fKebZudPaGC6r2/MfMzyLAb
- Bu7TaJfwkMNAP4tsxrK6Xp+jEht+dFluRitqhFvhjgcYgOmB0vC3bAmTAPqTTBwLovs7kWRBS
- jt2xblJhwFlYrmPouLmMwrRoKZ51BL/+erxpFTv5S8eSchOg5DKSjBBamw4ToAeS36nTg8SwF
- 5augSK8oiDOquNeTH4ZtowGtBiAsGnIS3mdb2QVrt0BqDm7d0Ql64xauIHuGDpxpJ95oo/+z0
- dzSsz82H5guTn+qBz8r1xnTWwBHwhOZO6bSYiIZHWnxzVz0IHlYkyMnRysWyBEA1bdl6KeJEM
- x17T+DY5LT29IF1BTLKkh8TmOXyrL8oyBzT6X9Q8ypWLrVAOMO66mifNd2z5uOqIPJsz1u+23
- WKV/0mYjgXpmzY6dMxdJFFKh4rEqbN5JsHv7CF+Onfsogw70vO7yHJJnclfvYCjFxQZSVCu91
- J2P08RVZEqw90SItTPcXEPjSeFgguf69KgXgt/fsSnhZttkf8TFtxJ3J06V5iYuiInRftNA3X
- xYeA6UVYuSqwA2CTKBhbD9BIt0LP2G7akWeWp7V0BcD55MXAt72Ma2aRYzUTsTPoKf6JhG5Iy
- LWAyLXMpRyK28Vby83juLdPT5xI2tfuSeK1eZvFCPflY0x4YevOpHXRp9RJAvR8d1nTOIa4PN
- UamOdv19aJrb/kYk1Ln0WiRKd826S/1RKfI6V7l9kg01Kx9dlyVvFcAwecQ8vgaxBeveMnF9b
- hV3oJaaOnGrueNEwGJNH5YgXcvY9LBW6EGExxtXrCFB9mkhy5nRa79uKtnzelj6DjR6ujpaO4
- R+LyI8ygALQDHUWvlWzwZZHrc2jlDs+UyjWIULwFMgMEeqfQmFEMhfimQvI4+1jNY5YMKxb8y
- KH1wW0JIB38FIc27ztkbn/WBUykM0jrElwu4A8T0boQSnW+45Aq2E0k7aWaiqWPaRjS1J3L9+
- M5Lbx+mIX53P9OrM6rTQVRbgtpKn9VdE5bdqKHzzSvbvhvB9C8+ZytGXsNS/P2g+zUKLij5gx
- R3biqLBnQPrHugnaWN2J4mlaevyfwV3EUsb
+References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
+In-Reply-To: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 27 May 2021 00:21:24 -0700
+Message-ID: <CABPp-BEtef+EzZTAQYutU67V4-=EiXHBH7wLm1ZEE5N+_NA5Yw@mail.gmail.com>
+Subject: Re: [PATCH 0/9] send-email: various optimizations to speed up by >2x
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Gregory Anders <greg@gpanders.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 26, 2021 at 04:41:38PM -0700, Yuri wrote:
-> On 5/26/21 4:32 PM, Junio C Hamano wrote:
-> > "git config core.quotepath no"?
+Hi,
+
+On Wed, May 12, 2021 at 6:50 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> As noted in the subject this speeds up git-send-email invocations by
+> ~2x or more, and brings the very slow t9001 test from running in ~26s
+> on my box to ~12s. It's no longer consistently the slowest test I run.
 >
->
-> I didn't have the 'core.quotepath' value set. 'git config core.quotepath=
- no'
-> changed the behavior to no quoting.
->
-> So it looks like the default value of 'core.quotepath' is incorrect: it
-> should be based on terminal capabilities.
->
+> This is basically done in two ways: We lazily invoke "git config" to
+> get config, before it's very eager, and deferring Perl compilation
+> with s/use/require/g.
 
-This are 2 different things.
-If you are in a project where only ASCII names are allowed (for whatever r=
-eason),
-you may want `git config core.quotepath no`, regardless what the terminal =
-can do.
-
-(Beside that, are ther terminals that don't handle UTF-8 these days?)
-
-Any, if you prefer UTF-8 as a default,
-
-git config --global core.quotepath yes
-
-is your friend (like mine)
-
+I know I'm very late to the party, but I just wanted to comment that
+this is super cool.  Thanks for speeding this up; some really good
+finds here.
