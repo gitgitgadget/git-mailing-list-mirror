@@ -2,201 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2834AC4707F
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 19:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0671AC47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 19:51:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03F1B613B6
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 19:19:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBE536124B
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 19:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234061AbhE0TUj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 15:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58034 "EHLO
+        id S235560AbhE0TxW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 15:53:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhE0TUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 15:20:36 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95D23C061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 12:19:02 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so1222904otc.12
-        for <git@vger.kernel.org>; Thu, 27 May 2021 12:19:02 -0700 (PDT)
+        with ESMTP id S234847AbhE0TxW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 15:53:22 -0400
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97A1C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 12:51:48 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id o66-20020a4a44450000b029020d44dea886so391769ooa.5
+        for <git@vger.kernel.org>; Thu, 27 May 2021 12:51:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=Ie+2imXJ6K62FPXshZ870zxiGLquMx5w5piStvJD/1s=;
-        b=nVTOpnoSE7WQGOqzfkOJ+3W8Hts8+GYP6RCJjla9xVAmUgFgAPJMR6XG98UHQ9oJuk
-         IhrWBKbHB1FpEO55yDxLp8HifUs/9x+Pvy9Ob/Ew1WE/fyZC3ZpGsk/QOo0/z+y14ANe
-         uc1RMX4M6ASTGK6gcXYb66GWTIoPwyNaIdieUY9tyNM/H39oRCkpvfuSz/iAU9uFKm0c
-         4Il5PlJFe2ZR0zeoS/gUCRbi/k9PeP5EaLzbGQAZr2EHEjtiugA0e6ywiwgJWUcEmGWs
-         diGE/XFby6CydCW6DdaA5fEFjw6I+gUnSH/YMGhRMr3Sh8dGZhI3YSJQTM9R8m8HB3M3
-         LBiQ==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=h/D2rfPtBpMX4hXshxAGtH6+bx0w68yNUyipfNUlNvg=;
+        b=q/d7Y2jKk9gNnU0KGAX1v5v0J9GiPP8vVwlLLE75EzC0ZZPkSWky2FyMcj9p4piold
+         pPmpS32uchOPPvAh+HXVOb2GZxgaCf3jUPX6AuEJPl6//CL5iuHRwVHEQWVhX2ZWTNXj
+         bTMsz5dvM2nOPlL3qOvduEzxDVSeGh+H4SQQcSFsu+v6d8exlm1NdZaU0bV44YXeMfn5
+         KG/f3nt04qgjGNMD6mu43thqHap4CCYKyYVHc8Jby/mHQOuOQ6g0NAoXCyMlnXw08rq5
+         alGY0CEdNLHozrdI675srKo9vxH7Ye1Dy05OKkMNXgmvMx9dwH3WbjHpDs1XIdIJt5sF
+         8YXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=Ie+2imXJ6K62FPXshZ870zxiGLquMx5w5piStvJD/1s=;
-        b=nKa/dnSDegHhTNFvKPQuptOqZgjZUtev9xCTWZBk0g6R8E6y4iNIgDQRLkX1mbB7u0
-         OZv4VZAbbiPOxmuBxSdTWwMLyNAh4vmFhLHC1BraSvp16hBLmUUSyOge8ysQCkEGBY7V
-         3xfVW7UlrAfnqOjaBvcIuUtcVWDzcq3oHAadIta30XmKbdELkgY2JbNAHVLqFE8kMCsI
-         ozVrptIgx5uepUUByktYl3S4TFwAgW1nqlK1LLHU2+16jFsoi5wkcW4lmpBAVy7K04pd
-         Qqls+VxwIctxWEL0zN0ISrfbU3hSfXfsvzwNFFNIzhvPUFxL/Yldzrqj47TLnooWI2t8
-         iYLQ==
-X-Gm-Message-State: AOAM533wBKyeLHlexSclST1J6Yc+L9UHY4jP8B3hRAmtQ4nkH9wUQB6B
-        y3GrwOUst1579LUaVsv1y35hu1w+BTV5DQ==
-X-Google-Smtp-Source: ABdhPJzqVdvfd3QWL302lUfQOymscBp8fD1RBH3IrekW4ZHJrJUxVObpcPLMtm2hm/+A82+aYyTP7w==
-X-Received: by 2002:a9d:67c5:: with SMTP id c5mr4075640otn.50.1622143141935;
-        Thu, 27 May 2021 12:19:01 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=h/D2rfPtBpMX4hXshxAGtH6+bx0w68yNUyipfNUlNvg=;
+        b=fLU329YCt8BFeabBGYEkiI6AmCXyja+W39LSZxUOGzXEmVxJSKKScG9uWikmQ3hUhj
+         dcU7hUR/g9plUTcYuXWhB3vsUz5J4syTyGP/4VxVdyk4P5DDc+pmLBM1u0sbKvqZsrQa
+         wa1kx24ayZMWzkY8UCQHTOXuV8af7d6uP/L2Dh7yg3GhzJrqn5Mt20lvCTMQv3Ktzhcm
+         /JKHFZjS2emsFsjNNz5xmztbdX9DoN/okzyRlc99gCrgDqRZkT3RKF3H6eroR//PsgFL
+         7258UDVOyA3UoUk//uX09q7hMNCcBRU4Ouass5D7gUkkVnqpeuqWhw83b9RX6UyUbtSW
+         J3vg==
+X-Gm-Message-State: AOAM530f35tgc5WmMhb0q8JCH6QyWq28SHEElTRGnmzIm3kiCLbvx0M7
+        UJhPIkYfLgKHda1mlSC1jmBocwo3aNPzcg==
+X-Google-Smtp-Source: ABdhPJxIm6Uyv6QXvyWD95CiB/7GH95rG3YN13tPZeCnAl2goztMEaOv+k4YVTafwTBtR5WfQVzr6A==
+X-Received: by 2002:a4a:d052:: with SMTP id x18mr4058835oor.21.1622145108023;
+        Thu, 27 May 2021 12:51:48 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id y34sm664813ota.16.2021.05.27.12.19.01
+        by smtp.gmail.com with ESMTPSA id x63sm664006oix.47.2021.05.27.12.51.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 May 2021 12:19:01 -0700 (PDT)
-Date:   Thu, 27 May 2021 14:19:00 -0500
+        Thu, 27 May 2021 12:51:47 -0700 (PDT)
+Date:   Thu, 27 May 2021 14:51:46 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Message-ID: <60aff0a416f40_265302082c@natae.notmuch>
-In-Reply-To: <87tumol4tg.fsf@evledraar.gmail.com>
-References: <87bl8xmipo.fsf@evledraar.gmail.com>
- <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
- <87tumol4tg.fsf@evledraar.gmail.com>
-Subject: Re: Runaway sed memory use in test on older sed+glibc (was "Re:
- [PATCH v6 1/3] test: add helper functions for git-bundle")
+To:     Mathias Kunter <mathiaskunter@gmail.com>, git@vger.kernel.org
+Message-ID: <60aff85261fcf_26530208a@natae.notmuch>
+In-Reply-To: <065528bf-b496-83d3-767d-2a78e50a9edf@gmail.com>
+References: <065528bf-b496-83d3-767d-2a78e50a9edf@gmail.com>
+Subject: RE: git push doesn't use local branch name as default
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> =
+Mathias Kunter wrote:
+> Hi all,
+> 
+> at https://git-scm.com/docs/git-push#_description it says:
+> 
+> > When neither the command-line nor the configuration specify what to
+> > push, the default behavior is used, which corresponds to the simple
+> > value for push.default: the current branch is pushed to the
+> > corresponding upstream branch, but as a safety measure, the push is
+> > aborted if the upstream branch does not have the same name as the local
+> > one.
+> 
+> However, on a branch which does *not* have an upstream branch 
+> configured, the command
+> 
+> > git push <remote_name>
+> 
+> doesn't use the local branch name as default,
 
-> On Thu, May 27 2021, Jiang Xin wrote:
-> =
+Yes it does, but only on the src side of the refspec. Something like:
 
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E20=
-21=E5=B9=B45=E6=9C=8827=E6=97=A5=E5=91=A8=E5=9B=9B
-> > =E4=B8=8A=E5=8D=882:51=E5=86=99=E9=81=93=EF=BC=9A
-> >>
-> >>
-> >> On Mon, Jan 11 2021, Jiang Xin wrote:
-> >>
-> >> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >> >
-> >> > Move git-bundle related functions from t5510 to a library, and thi=
-s
-> >> > lib
-> >> > will be shared with a new testcase t6020 which finds a known
-> >> > breakage of
-> >> > "git-bundle".
-> >> > [...]
-> >> > +
-> >> > +# Format the output of git commands to make a user-friendly and
-> >> > stable
-> >> > +# text. =C2=A0We can easily prepare the expect text without havin=
-g to
-> >> > worry
-> >> > +# about future changes of the commit ID and spaces of the output.=
+  git push <remote_name> <branch_name>:
 
-> >> > +make_user_friendly_and_stable_output () {
-> >> > + =C2=A0 =C2=A0 sed \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${A%${A#???????}=
-}[0-9a-f]*/<COMMIT-A>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${B%${B#???????}=
-}[0-9a-f]*/<COMMIT-B>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${C%${C#???????}=
-}[0-9a-f]*/<COMMIT-C>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${D%${D#???????}=
-}[0-9a-f]*/<COMMIT-D>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${E%${E#???????}=
-}[0-9a-f]*/<COMMIT-E>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${F%${F#???????}=
-}[0-9a-f]*/<COMMIT-F>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${G%${G#???????}=
-}[0-9a-f]*/<COMMIT-G>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${H%${H#???????}=
-}[0-9a-f]*/<COMMIT-H>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${I%${I#???????}=
-}[0-9a-f]*/<COMMIT-I>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${J%${J#???????}=
-}[0-9a-f]*/<COMMIT-J>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${K%${K#???????}=
-}[0-9a-f]*/<COMMIT-K>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${L%${L#???????}=
-}[0-9a-f]*/<COMMIT-L>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${M%${M#???????}=
-}[0-9a-f]*/<COMMIT-M>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${N%${N#???????}=
-}[0-9a-f]*/<COMMIT-N>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${O%${O#???????}=
-}[0-9a-f]*/<COMMIT-O>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${P%${P#???????}=
-}[0-9a-f]*/<COMMIT-P>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${TAG1%${TAG1#??=
-?????}}[0-9a-f]*/<TAG-1>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${TAG2%${TAG2#??=
-?????}}[0-9a-f]*/<TAG-2>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/${TAG3%${TAG3#??=
-?????}}[0-9a-f]*/<TAG-3>/g" \
-> >> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -e "s/ *\$//"
-> >> > +}
-> >>
-> >> On one of the gcc farm boxes, a i386 box (gcc45) this fails because
-> >> sed
-> >> gets killed after >500MB of memory use (I was just eyeballing it in
-> >> htop) on the "reate bundle from special rev: main^!" test. This with=
+(invalid refspec)
 
-> >> GNU
-> >> sed 4.2.2.
-> >>
-> >> I suspect this regex pattern creates some runaway behavior in sed
-> >> that's
-> >> since been fixed (or maybe it's the glibc regex engine?). The glibc =
-is
-> >> 2.19-18+deb8u10:
-> >>
-> >> =C2=A0 =C2=A0 + git bundle list-heads special-rev.bdl
-> >> =C2=A0 =C2=A0 + make_user_friendly_and_stable_output
-> >> =C2=A0 =C2=A0 + sed -e s/[0-9a-f]*/<COMMIT-A>/g -e s/[0-9a-f]*/<COMM=
-IT-B>/g -e
-> >> s/[0-9a-f]*/<COMMIT-C>/g -e s/[0-9a-f]*/<COMMIT-D>/g -e
-> >> s/[0-9a-f]*/<COMMIT-E>/g -e s/[0-9a-f]*/<COMMIT-F>/g -e
-> >> s/[0-9a-f]*/<COMMIT-G>/g -e s/[0-9a-f]*/<COMMIT-H>/g -e
-> >> s/[0-9a-f]*/<COMMIT-I>/g -e s/[0-9a-f]*/<COMMIT-J>/g -e
-> >> s/[0-9a-f]*/<COMMIT-K>/g -e s/[0-9a-f]*/<COMMIT-L>/g -e
-> >> s/[0-9a-f]*/<COMMIT-M>/g -e s/[0-9a-f]*/<COMMIT-N>/g -e
-> >> s/[0-9a-f]*/<COMMIT-O>/g -e s/[0-9a-f]*/<COMMIT-P>/g -e
-> >> s/[0-9a-f]*/<TAG-1>/g -e s/[0-9a-f]*/<TAG-2>/g -e
-> >> s/[0-9a-f]*/<TAG-3>/g -e s/ *$//
-> >> =C2=A0 =C2=A0 sed: couldn't re-allocate memory
-> >
-> > I wrote a program on macOS to check memory footprint for sed and perl=
-.
-> > See:
-> >
-> > =C2=A0 =C2=A0 https://github.com/jiangxin/compare-sed-perl
-> =
+Note the remote side is missing, so git doesn't know where to push to.
 
-> Interesting use of Go for as a /usr/bin/time -v replacement :)
+> Note that it *does* work if the remote branch name is explicitly specified:
+> 
+> > git push <remote_name> <branch_name>
 
-Here's a Ruby version:
-https://dpaste.com/FYT2QKHJE
+In that case git assumes you mean <branch_name>:<branch_name>.
 
-I'm not sure if will be useful in this particular case, but Ruby code
-always ends up simpler ;)
+Sounds like you want to change the default to `push.default=current`.
 
--- =
+Cheers.
 
-Felipe Contreras=
+-- 
+Felipe Contreras
