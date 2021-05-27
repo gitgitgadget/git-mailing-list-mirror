@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9ABCC47082
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D6F1C47088
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7FF06128D
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFE45613CA
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235116AbhE0ALf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 20:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51676 "EHLO
+        id S235143AbhE0ALr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 20:11:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235075AbhE0ALK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 20:11:10 -0400
+        with ESMTP id S234503AbhE0ALT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 20:11:19 -0400
 Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D910AC061347
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:36 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id i8-20020a25b2080000b0290523c9c81ba5so3630663ybj.20
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C210BC06134A
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:38 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id k34-20020a25b2a20000b02905149e86803eso3642062ybj.9
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=pIxbakJrlVOPkzM2S4hipsY2erGboEvpJ+ELV0xPoXQ=;
-        b=p+I8JeRC/LUjExo1PvG7U53kcGex6CgfKpsHxee2W8JD7qu6oIwWuymBamc9WtRYM4
-         LSA0dhugDSW20jiXcwaGolFoLHRI0Hu+kfJ6esWYDl20xkv1fc1UTduwOqbY8cLBB6Zx
-         T8Dt6sNIRY2DvWgYr9oOgJc+1lZtQ+IGMhXInNZXqa1gwGSzcZChjB9xeg7IPPqnNrng
-         PJDG67m5JAK6zIcIJHhKMJyYyOGpbkHqv+4vYhxdOjXUK4V6o6NIfZZstBfPsuxoa51w
-         BJ3cJARXg+BY7k5B2WpD2RqXfDNcIqch9tGLoUPaOXu+QZZQIrTh6pDL4I+XBMLi99d0
-         dghQ==
+        bh=btlcOqWp2Hrr3jczh4cqmNxLjf86ggWODpJ2RlSu0+c=;
+        b=HyDy3Xk5/RcHwzvBaXH+PXNmLKMnMMsFUncX1+K9rcGfTBF5yqHrR8A6yT4/1LlBF+
+         dJObK102X1avKZLscULnvHl8J1h0kUyNMzurLbTh31wO89WBb9dZGGK4YLVU+ENdmmfJ
+         nvOU9HXHXqu5MCL4rI6sbjPnr5BpysCecjlZ81mYHLTOpdWs9PTBwhIxFrUu4mfvxFN/
+         bKgICq7XYhm/5Iz9pa55vhcmQBoqILbDrNyyhmCHI6cdKkIFZy+dAf7NNrWuM61TERRA
+         b4HTxkJm6xLecBTexssohYYSL8ta92cG22h7zH5IBcYWCEXjqpZHGOecQdmL98c/xiHV
+         BcgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=pIxbakJrlVOPkzM2S4hipsY2erGboEvpJ+ELV0xPoXQ=;
-        b=O6c3fNVN6lEXNvQ4HCZXXC9sLrhsXm9Y8Nb+7Loz9XVM2uZtFv5cUUsSVP0RPvhrSp
-         46uJW8wlJ+8BsO5iLekzr1gjda57M8VuTbpDjXRvOzFrS6ulJUW2f0AwcwGkeCxTn7AH
-         OvZhfXHKRpT1VV14dxyfHWRyXX/nL8hXIPbuqko2xdqy0NUK6+g1pEx72GbNSByoQloA
-         gZe4RfzPZUGIi9NghmR/GCF61+tjdRQFNKuQX85PVBzPpQireMWLPk54kBU1QTfyZp6T
-         x7G889SiBHpp+qguoETKufMAh2xdET2sC/EOTTBeV5LWaOmc08jHTZrePPzGmIoEhhGc
-         4WVg==
-X-Gm-Message-State: AOAM532rHn9XM+Ax29K20c8sBKwdwYWVaohc/t4A52PfFxUK6sQ+gAgK
-        Q62lWrWWUCtQxkIZA4NAfA0IKy6NFGyGySWFw8cqMh+I/HPVY40GOR8hjYaXANmBTg5J2JLCqj7
-        CgPj5bv34iSTDxB6z3v2py/ypMxabp5IA+GwOLN9v4LK+po0Hwa/CXW2uo2BxqdMHl3UtXTvl0Q
+        bh=btlcOqWp2Hrr3jczh4cqmNxLjf86ggWODpJ2RlSu0+c=;
+        b=Ic5HSd7UW7WFtpTIa3DYUqtr2JvTOI19GbgvBMdwviD/fjPAt3nYtDJQUzLOZPaBE2
+         hO5Cr+F57ZTK0cs6wyru7n9AOFjtfvgN5p8uvlE/GWyGTBwR7xiAODcT848+ZRyyILg2
+         Gophhd9/0OdMeB+ycQv+32PWMWqoMhA9FRnF51L94qOOGXP5RgJVsMflJrq3TlNfXc1O
+         VeE+IkY8KpZpTZQfoDN1YuJSn8N6vQ9tcfUrKEWDD0tp8NLtGCWnBB8gT2Xrz6Z7hFuU
+         vIqtj2B6zjNX93bJMRdlxXJCjNQtHnGATX6cMokhFmFOnEGrEvX73GPP3LJ28IOARHF2
+         kaeg==
+X-Gm-Message-State: AOAM530Wvdv9Usky2k8L1oX4OppYne92wLu4gKTL52ud35W9Ck5JAQid
+        P/EvaUNX3j0ZYnrfJ+pH7eGQugeGuXep5Q+3CPmlLGUKA4OxImypOxByjRlvSmByyM3KEPsSwrm
+        9dku87ZfVabsTEbD6mLJEjzc79EP21IrNK7Pv1r2M9lkPaZPcBijwmzhkCkGslWHAWjyBytk4+A
         ==
-X-Google-Smtp-Source: ABdhPJwmN8V7t0EXlsM16KZMZgOmEGFv84ot9ii4laGvlYz/3JtsFiod1BhnuAhiHR7I84ehPLfwkRptQ6yK14rItjs=
+X-Google-Smtp-Source: ABdhPJxWm3lCJZh0ACxr6PJy7NH5ko5sWrGymAKqZbM9x62mrMlnRh2fM/9sY2bRn/8SDkdzb4CBzq2+kObucYNplCM=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:c1a4:4d87:8b5a:d12c])
- (user=emilyshaffer job=sendgmr) by 2002:a25:3103:: with SMTP id
- x3mr930807ybx.8.1622074176012; Wed, 26 May 2021 17:09:36 -0700 (PDT)
-Date:   Wed, 26 May 2021 17:08:37 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a25:8b12:: with SMTP id
+ i18mr858896ybl.162.1622074177910; Wed, 26 May 2021 17:09:37 -0700 (PDT)
+Date:   Wed, 26 May 2021 17:08:38 -0700
 In-Reply-To: <20210527000856.695702-1-emilyshaffer@google.com>
-Message-Id: <20210527000856.695702-19-emilyshaffer@google.com>
+Message-Id: <20210527000856.695702-20-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210527000856.695702-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-Subject: [PATCH v9 18/37] am: convert applypatch hooks to use config
+Subject: [PATCH v9 19/37] merge: use config-based hooks for post-merge hook
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,109 +70,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach pre-applypatch, post-applypatch, and applypatch-msg to use the
-hook.h library instead of the run-command.h library. This enables use of
-hooks specified in the config, in addition to those in the hookdir.
-These three hooks are called only by builtin/am.c.
+Teach post-merge to use the hook.h library instead of the run-command.h
+library to run hooks. This means that post-merge hooks can come from the
+config as well as from the hookdir. post-merge is invoked only from
+builtin/merge.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt |  9 +++++++++
- builtin/am.c               | 21 ++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ Documentation/githooks.txt | 3 +++
+ builtin/merge.c            | 6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 4af202b366..ec5020bfb6 100644
+index ec5020bfb6..c904b160dc 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -58,6 +58,9 @@ the message file.
- The default 'applypatch-msg' hook, when enabled, runs the
- 'commit-msg' hook, if the latter is enabled.
+@@ -242,6 +242,9 @@ save and restore any form of metadata associated with the working tree
+ (e.g.: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
+ for an example of how to do this.
  
-+Hooks run during 'applypatch-msg' will not be parallelized, because hooks are
-+expected to edit the file holding the commit log message.
-+
- pre-applypatch
- ~~~~~~~~~~~~~~
- 
-@@ -73,6 +76,9 @@ make a commit if it does not pass certain test.
- The default 'pre-applypatch' hook, when enabled, runs the
- 'pre-commit' hook, if the latter is enabled.
- 
-+Hooks run during 'pre-applypatch' will be run in parallel, unless hook.jobs is
++Hooks executed during 'post-merge' will run in parallel, unless hook.jobs is
 +configured to 1.
 +
- post-applypatch
- ~~~~~~~~~~~~~~~
+ pre-push
+ ~~~~~~~~
  
-@@ -82,6 +88,9 @@ and is invoked after the patch is applied and a commit is made.
- This hook is meant primarily for notification, and cannot affect
- the outcome of `git am`.
- 
-+Hooks run during 'post-applypatch' will be run in parallel, unless hook.jobs is
-+configured to 1.
-+
- pre-commit
- ~~~~~~~~~~
- 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0b2d886c81..d84791859c 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -33,6 +33,7 @@
- #include "string-list.h"
- #include "packfile.h"
- #include "repository.h"
-+#include "hook.h"
- 
- /**
-  * Returns the length of the first line of msg.
-@@ -444,9 +445,14 @@ static void am_destroy(const struct am_state *state)
- static int run_applypatch_msg_hook(struct am_state *state)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 182dea418a..7a524cb3e3 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -448,6 +448,7 @@ static void finish(struct commit *head_commit,
+ 		   const struct object_id *new_head, const char *msg)
  {
- 	int ret;
+ 	struct strbuf reflog_message = STRBUF_INIT;
 +	struct run_hooks_opt opt;
-+
-+	run_hooks_opt_init_sync(&opt);
+ 	const struct object_id *head = &head_commit->object.oid;
  
- 	assert(state->msg);
--	ret = run_hook_le(NULL, "applypatch-msg", am_path(state, "final-commit"), NULL);
-+	strvec_push(&opt.args, am_path(state, "final-commit"));
-+	ret = run_hooks("applypatch-msg", &opt);
-+	run_hooks_opt_clear(&opt);
- 
- 	if (!ret) {
- 		FREE_AND_NULL(state->msg);
-@@ -1606,9 +1612,16 @@ static void do_commit(const struct am_state *state)
- 	struct commit_list *parents = NULL;
- 	const char *reflog_msg, *author, *committer = NULL;
- 	struct strbuf sb = STRBUF_INIT;
-+	struct run_hooks_opt hook_opt;
-+
-+	run_hooks_opt_init_async(&hook_opt);
- 
--	if (run_hook_le(NULL, "pre-applypatch", NULL))
-+	if (run_hooks("pre-applypatch", &hook_opt)) {
-+		run_hooks_opt_clear(&hook_opt);
- 		exit(1);
-+	}
-+
-+	run_hooks_opt_clear(&hook_opt);
- 
- 	if (write_cache_as_tree(&tree, 0, NULL))
- 		die(_("git write-tree failed to write a tree"));
-@@ -1659,8 +1672,10 @@ static void do_commit(const struct am_state *state)
- 		fclose(fp);
+ 	if (!msg)
+@@ -489,7 +490,10 @@ static void finish(struct commit *head_commit,
  	}
  
--	run_hook_le(NULL, "post-applypatch", NULL);
-+	run_hooks_opt_init_async(&hook_opt);
-+	run_hooks("post-applypatch", &hook_opt);
+ 	/* Run a post-merge hook */
+-	run_hook_le(NULL, "post-merge", squash ? "1" : "0", NULL);
++	run_hooks_opt_init_async(&opt);
++	strvec_push(&opt.args, squash ? "1" : "0");
++	run_hooks("post-merge", &opt);
++	run_hooks_opt_clear(&opt);
  
-+	run_hooks_opt_clear(&hook_opt);
- 	strbuf_release(&sb);
- }
- 
+ 	apply_autostash(git_path_merge_autostash(the_repository));
+ 	strbuf_release(&reflog_message);
 -- 
 2.31.1.818.g46aad6cb9e-goog
 
