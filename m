@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12B18C47088
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A79DC47088
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB37C6128D
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B84D6128D
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 00:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235147AbhE0ALu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 20:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51576 "EHLO
+        id S235153AbhE0AL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 20:11:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233972AbhE0ALV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 20:11:21 -0400
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58F8C06134E
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:40 -0700 (PDT)
-Received: by mail-qv1-xf4a.google.com with SMTP id z93-20020a0ca5e60000b02901ec19d8ff47so2569216qvz.8
-        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:40 -0700 (PDT)
+        with ESMTP id S235024AbhE0ALX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 20:11:23 -0400
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90203C06134F
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:42 -0700 (PDT)
+Received: by mail-qt1-x84a.google.com with SMTP id j19-20020ac85f930000b029021f033edf60so1663559qta.10
+        for <git@vger.kernel.org>; Wed, 26 May 2021 17:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=wnCTag5HKGK8XoqlyYcgrX7r6UraKb8JZF3vVdV1iQQ=;
-        b=fMO08spC8acMpqhB049c0oNKJhNBHktz9mXqeTIhhqbqgvPuI/MXtBRHOMeLh44anl
-         u3aop3NpKrwfmzfJBOTU0a7OMlPjixCdViOHT0cyLA8bdO9oemGq5T8PIbtsxQM/iisG
-         oavgyT1hzQwzR89E7o1V63KkicA6IwFoytdgBRyIFluydf8elSBUzZa387kUXJRsRg8B
-         0RFebfNbUMzww7cU54P8uh+SLocpNQEvNeGppeZu3BDW+6YnKo6Z7B15MMQ7/hogh+Nw
-         32By5I+VbI/wJgynjJZHAcIei5u4DcUtuv4YHGVYDreE2n2TjVddirvjiSHUNZqBidoD
-         zbpA==
+        bh=g8vUeaNpFTZY8ypWo63L8C3N26h6uVvcs49EsDCGhCs=;
+        b=MDwhTybXgB0qCAAllpB6UrQrwfytS6YOK/AXVV2jUqjd7Ruq5qdhW+FBfPit2nchFp
+         m/ZBeuTmH1hwahT9cOFHUrZSaoD8vjv1O0zPIaks/TXQ8D+LhtjP1lsXA858kpIKEUxl
+         Og5F2VNXoyU61zAr2llCTP1uFA4anH/Xf4qPS0G16iP5ymhYoveaZpOeL59udVHscu+S
+         5FOS98FjoapL97ExjFl0E1TRyPyzqDiuX0c3qCYSvavebzE2UnJSovbULmOv4xk0Uswb
+         T+4XkrOeE4I9EypOLItgiPg2sVAVOMzwbzgxX8CJM1LO0GU3SHZ4hURCMmD77mIPZWq+
+         o3Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=wnCTag5HKGK8XoqlyYcgrX7r6UraKb8JZF3vVdV1iQQ=;
-        b=NJUgN560gYLsYqvTQaXfg8wU3NOhrMaYrXUVYAcId2xgB1n5SjknWqL1k1Hwf+f3AL
-         sz8e+0RUkzj4jcqEti68r+DOpOZOVlxpGJtyvkvnsOXsZ0uOn2ITjn1rbCVCA/lGVo1O
-         ipH5e7Ls43J4xw5jSndkND22HgaqbPJ9yUgbZrreqdrzvY/nRUYHaxN+53OaxhYXSvPg
-         tQYlbfambXvYmpPgvZNg6h5TUwM6bhoQ5UjBckBrk9hzxQQXmwWBQln/hv9OjX1fKJxW
-         Zv6Hd72AsS+W2X+Vv3gfC7fYtgyNjO8goMjCwL9U5wRyZnat4UnYTjj6Hql6H+Pddl7w
-         qEiQ==
-X-Gm-Message-State: AOAM530PEZzeKt1MOUj2/yiEZEiu0dOkIxjl5t7JAyjLkv1q2w2UHn/t
-        5qLG4cblEocc6yhJJ1M6f7I9W5Fg3QLUzR77BgIJCro2vpVHm5XtDQIbWnI33Dp/bBptONURVTT
-        lF/PLAqX6+2i/xNc5bHKsl9sfDFqZexK2Q5p0tsU0Nz/4L04YOq1WcGylyXoRjEFWpXUE22fcoQ
+        bh=g8vUeaNpFTZY8ypWo63L8C3N26h6uVvcs49EsDCGhCs=;
+        b=Y5yVtB1aHDlWjyyrnm0UMa2U8x+rZ+Z6TL2KrQ9Wwf9VEjASJPBUUfOZVPLAbhs0Nk
+         v6oTYzy49XjOyBlYZaBuFqzSp6I2Qi9JlsJ8GTvyOUik24r1RRCBetadNG2Goh/QZDuN
+         TnxwSyy4Ni7CmvMcwPQsup2AMiOKlMJ29gPYneJprgpRXgsRlscBo9rssGYlMzTfK0Zx
+         6pQEIXD3/cRvhfy6Vusts4/cSOg28XXpIiwlaOY9+GObXMqFpYRbohh3wiIfhqXxOBiF
+         vvLb1xTzG6kVVNkemxc/4K9j4sdMuSut6EdFeD7+/TDeJ506q+cBSTOo9x9n+gnNDhzt
+         VpFg==
+X-Gm-Message-State: AOAM531JJWiWqcMmdkuQ7lEbHXvbK+x1Jh22bqevrUq7y0kM7R89ugaE
+        pgn42qbLknOhjjpwGCilyxQxqSztIKESwzGlRFAx4Jb+9msAna4nUPnzuiq4QHp/YWkiggz/IGR
+        c9c/s5GOFht7WHLY7MqnrgpvruCKgAVjP9tk61c9F5OOyfC5h9r6x97IFLKeWQvXWmcNINJjQvw
         ==
-X-Google-Smtp-Source: ABdhPJx1eIlrQOWIDUwY2RxHkIqpyajuIKUpzdMlvqOKMthpic00dg5avMNI46f/JZ+mGzPPxLM+ZxaomIxPNluGwwA=
+X-Google-Smtp-Source: ABdhPJw9n9uRH8P9PsSyuRAiIO/0KoBO7j82pNZmlXd3pXMLm40Mbj30oFTV0+ePJsiDlNzlECSrXWy1WBvgiNA8heA=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:c1a4:4d87:8b5a:d12c])
- (user=emilyshaffer job=sendgmr) by 2002:ad4:4c45:: with SMTP id
- cs5mr571022qvb.6.1622074179837; Wed, 26 May 2021 17:09:39 -0700 (PDT)
-Date:   Wed, 26 May 2021 17:08:39 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:eb4d:: with SMTP id
+ c13mr835540qvq.48.1622074181620; Wed, 26 May 2021 17:09:41 -0700 (PDT)
+Date:   Wed, 26 May 2021 17:08:40 -0700
 In-Reply-To: <20210527000856.695702-1-emilyshaffer@google.com>
-Message-Id: <20210527000856.695702-21-emilyshaffer@google.com>
+Message-Id: <20210527000856.695702-22-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210527000856.695702-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.1.818.g46aad6cb9e-goog
-Subject: [PATCH v9 20/37] gc: use hook library for pre-auto-gc hook
+Subject: [PATCH v9 21/37] rebase: teach pre-rebase to use hook.h
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,65 +70,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using the hook.h library instead of the run-command.h library to run
-pre-auto-gc means that those hooks can be set up in config files, as
-well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
+By using hook.h instead of run-command.h to run hooks, pre-rebase hooks
+can now be specified in the config as well as in the hookdir. pre-rebase
+is not called anywhere besides builtin/rebase.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt | 3 +++
- builtin/gc.c               | 9 ++++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ Documentation/githooks.txt |  3 +++
+ builtin/rebase.c           | 10 ++++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index c904b160dc..d77170dafb 100644
+index d77170dafb..7ae24d65ec 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -569,6 +569,9 @@ This hook is invoked by `git gc --auto` (see linkgit:git-gc[1]). It
- takes no parameter, and exiting with non-zero status from this script
- causes the `git gc --auto` to abort.
+@@ -206,6 +206,9 @@ two parameters.  The first parameter is the upstream from which
+ the series was forked.  The second parameter is the branch being
+ rebased, and is not set when rebasing the current branch.
  
-+Hooks run during 'pre-auto-gc' will be run in parallel, unless hook.jobs is
++Hooks executed during 'pre-rebase' will run in parallel, unless hook.jobs is
 +configured to 1.
 +
- post-rewrite
- ~~~~~~~~~~~~
+ post-checkout
+ ~~~~~~~~~~~~~
  
-diff --git a/builtin/gc.c b/builtin/gc.c
-index f05d2f0a1a..16890b097c 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -32,6 +32,7 @@
- #include "remote.h"
- #include "object-store.h"
- #include "exec-cmd.h"
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 12f093121d..fe9f144cad 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -28,6 +28,7 @@
+ #include "sequencer.h"
+ #include "rebase-interactive.h"
+ #include "reset.h"
 +#include "hook.h"
  
- #define FAILED_RUN "failed to run %s"
+ #define DEFAULT_REFLOG_ACTION "rebase"
  
-@@ -348,6 +349,8 @@ static void add_repack_incremental_option(void)
- 
- static int need_to_gc(void)
- {
+@@ -1313,6 +1314,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	char *squash_onto_name = NULL;
+ 	int reschedule_failed_exec = -1;
+ 	int allow_preemptive_ff = 1;
 +	struct run_hooks_opt hook_opt;
-+
- 	/*
- 	 * Setting gc.auto to 0 or negative can disable the
- 	 * automatic gc.
-@@ -394,8 +397,12 @@ static int need_to_gc(void)
- 	else
- 		return 0;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -2022,10 +2024,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	}
  
--	if (run_hook_le(NULL, "pre-auto-gc", NULL))
+ 	/* If a hook exists, give it a chance to interrupt*/
 +	run_hooks_opt_init_async(&hook_opt);
-+	if (run_hooks("pre-auto-gc", &hook_opt)) {
++	strvec_pushl(&hook_opt.args, options.upstream_arg, argc ? argv[0] : NULL, NULL);
+ 	if (!ok_to_skip_pre_rebase &&
+-	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
+-			argc ? argv[0] : NULL, NULL))
++	    run_hooks("pre-rebase", &hook_opt)) {
 +		run_hooks_opt_clear(&hook_opt);
- 		return 0;
+ 		die(_("The pre-rebase hook refused to rebase."));
 +	}
 +	run_hooks_opt_clear(&hook_opt);
- 	return 1;
- }
  
+ 	if (options.flags & REBASE_DIFFSTAT) {
+ 		struct diff_options opts;
 -- 
 2.31.1.818.g46aad6cb9e-goog
 
