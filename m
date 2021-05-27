@@ -4,84 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 051F8C47089
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 07:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 065DBC4707F
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 07:26:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3481613D4
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 07:21:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D880E613DD
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 07:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233848AbhE0HXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 03:23:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34868 "EHLO
+        id S234482AbhE0H1i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 03:27:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234950AbhE0HXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 03:23:08 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40167C061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 00:21:36 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id t24so4232253oiw.3
-        for <git@vger.kernel.org>; Thu, 27 May 2021 00:21:36 -0700 (PDT)
+        with ESMTP id S229753AbhE0H1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 03:27:36 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 727D1C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 00:26:02 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id gb17so6428613ejc.8
+        for <git@vger.kernel.org>; Thu, 27 May 2021 00:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lhnBCgL+Auz6c7OJvv497NgSQmWr5SgvnXW+idOFzrM=;
-        b=gUE6E9CiGg9iBuEBRifp3T41zjzd6xssstLSh8gGin7jW87Ae9pYOrCMxpBXpBYtt/
-         kHgH9pvda0eMLe6bFd9zQrYMIyGLWTp1c4RkS1yogU/YI++ufz8kWOD5jTHvSqCeMll+
-         iCt3xn2tr2YQKuwQUK6WlaJrjLkwba0lqjVUnYoUZPueP5Kf5LQz+qD+O13HgENl6XZV
-         kg0cacq08kAnJ0JjBagDBfrJgstv11hxLg9DWElPmgVTbmwiVZ9PTZU3Jpa1IvAmo8pz
-         VlDDyqtInxtIHH5vYNsyRo+2Fj3IwNLAd89v43mfELjGt1fMcAgOUqqHqSy2JEY3s16y
-         NSfA==
+         :cc;
+        bh=v88HozHdJUt2tN/31pAf3LZc+h1NgIruCSv+/16r6Ss=;
+        b=UE1GYSDkRXEqhH5mRu9M6dJ0uJD5Igw+ziNRqQbAXLnrW9zFGXCuLqWN759LSsX800
+         OMk9xrAG5sMw5cLx/VXGyq8wmzQ6dqIkLG3a3GBVZzOBByKeN/nO0bHOjW+LPJcMOzTl
+         gOi5pW2vBUCs20XsWpmevsXN9cQNjstLFsuE2Kznmj8A0ibhwTuemwhY7RuckQ+GslYO
+         8yNtyO1zttG8okBGSDqZMBeG7hj8zNkfzj8xw9RSM7et7F1yUhXVz5bmbFH8imwOxSU9
+         SfrF8JfM37AVacd4slzR0zUXBWkK1jEXSBxFvTytJ+vaPEEgq0QnflWa5RpsCgQkcqgH
+         VzoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lhnBCgL+Auz6c7OJvv497NgSQmWr5SgvnXW+idOFzrM=;
-        b=kIHaOscBHNo/Ly/42zkAknk4bb/96IudXZokXzi26pwIPrpcvYIPRCgf4AKsTLg7xN
-         z7J4ca5LOzIWHnzwfpqsrzXhcArXtFC6QmA0zOGkqVBaPwxA1TSvdMC8uozJD8KEAUwK
-         piRGInV8ZzI1cNm3PbIx6oO+QVIWPd2ydlVFonxVQfhdFw9ZSBuPBX4YhfIK6GiVXYZu
-         VK761eDY2qLqZRjjeHjtPFCk1W9eCw+OJY+CDKy9CaFcmspuqZ+pP7xr6AETemJb0Y//
-         kMiSfsXRn0K7Xav6PNIE2l6PGk7cik9kVGghVXNwHuTjgseb2Em7pE8Hlc5BmZFz0he5
-         LMww==
-X-Gm-Message-State: AOAM530rUw66zjzIAHAWXTKfp0luf19TMUl4GgosOGZjJYJys9Qqc5wz
-        ebrKfIryjgsMW0iXMfEANsB4TGxK4Lj0Of//Qq8uaalUljM=
-X-Google-Smtp-Source: ABdhPJzhdAgFJ/ZD0nus5aTe9F+PVhRmqZYEbvK5Z5B28IFKWve/Wv9yxp6mUaKek1RM3//AhFLTeQQofuw6Cg7bfPA=
-X-Received: by 2002:aca:4bd8:: with SMTP id y207mr4635710oia.39.1622100095625;
- Thu, 27 May 2021 00:21:35 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=v88HozHdJUt2tN/31pAf3LZc+h1NgIruCSv+/16r6Ss=;
+        b=dKYjaNOMRsniSJ//YR+3LtYlq51PpcscNPSIFNXFnQk0BpP+BCVKcma5AtLDXNy1Gt
+         CgNbsx+l+rJsJPnj+5HEj71ePiMycHAngsrl4WeHuAl+r1YOVUj+nYv94lWaIr1Yd62G
+         vnLlI5QAlBE1A46fpjs+g90S794bUh8/VP/tXytO5ovIxTUsUT2sJ6K6QWUcyywVagHB
+         7gLdKGjJUHY3kADuNXzr+IGAM/4s3+gO7eTgPpv8SVRrH+67CuYvkW0+jv+tpoJcENeH
+         GtQHIzAtMQ8acSUIZ5NijSNMdReQePN/XpYuY/CmtbF+z45UQmRz7zcttoZJLMVo3r7N
+         YzRg==
+X-Gm-Message-State: AOAM531cnEEsXNlllamAI/+CrbnFLbh9OtS89KyErcL3+iy1U5iOpuzz
+        UHUCK6551yzJ47L+ltbXmiclAxJlrQsXCBU3Dvs=
+X-Google-Smtp-Source: ABdhPJycxgQTbD0e6tRLeUorYTsA+IG+ocptbWLdIO7Slk+pZT1ecs4Cs31hYgQ3EFxTg/3eSQ8WjIllApg/ryE6qbc=
+X-Received: by 2002:a17:906:f190:: with SMTP id gs16mr455618ejb.551.1622100360954;
+ Thu, 27 May 2021 00:26:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
-In-Reply-To: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 27 May 2021 00:21:24 -0700
-Message-ID: <CABPp-BEtef+EzZTAQYutU67V4-=EiXHBH7wLm1ZEE5N+_NA5Yw@mail.gmail.com>
-Subject: Re: [PATCH 0/9] send-email: various optimizations to speed up by >2x
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Gregory Anders <greg@gpanders.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>
+References: <5386ee606567248464d39c313ee6177862a1f337.1622071475.git.matheus.bernardino@usp.br>
+In-Reply-To: <5386ee606567248464d39c313ee6177862a1f337.1622071475.git.matheus.bernardino@usp.br>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 27 May 2021 09:25:49 +0200
+Message-ID: <CAP8UFD0DoG5MR3V0eoy5LLf6mRBnthZMKjdmOiS8rhCQWRxoZw@mail.gmail.com>
+Subject: Re: [PATCH] t2080: fix cp invocation to copy symlinks instead of
+ following them
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Just a few nits that you can take into account if you reroll the patch
+for another reason, but I am not sure they are worth rerolling by
+themselves.
 
-On Wed, May 12, 2021 at 6:50 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> As noted in the subject this speeds up git-send-email invocations by
-> ~2x or more, and brings the very slow t9001 test from running in ~26s
-> on my box to ~12s. It's no longer consistently the slowest test I run.
+On Thu, May 27, 2021 at 3:27 AM Matheus Tavares
+<matheus.bernardino@usp.br> wrote:
 >
-> This is basically done in two ways: We lazily invoke "git config" to
-> get config, before it's very eager, and deferring Perl compilation
-> with s/use/require/g.
+> t2080 makes a few copies of a test repository and later performs a
+> branch switch on each one of the copies to verify that parallel checkout
+> and sequential checkout produce the same results. However, the
+> repository is copied with `cp -R` which, on some systems, defaults to
+> following symlinks on the directory hierarchy and copying their target
+> files instead of copying the symlinks themselves. AIX is one example of
+> system where this happens. Because the symlinks are not preserved, the
+> copied repositories have paths that do not match what is in the index,
+> causing git to abort the checkout operation that we want to test. This
 
-I know I'm very late to the party, but I just wanted to comment that
-this is super cool.  Thanks for speeding this up; some really good
-finds here.
+s/git/Git/
+
+> makes the test fail on these systems.
+>
+> Fix this by copying the repository with the POSIX flag '-P', which
+> forces cp to copy the symlinks instead of following them. Note that we
+> already use this flag for other cp invocations in our test suite (see
+> t7001).
+
+Maybe you could mention 00764ca10e (test: fix t7001 cp to use POSIX
+options, 2014-04-11) that also fixed t7001 in a similar way.
+
+> With this change, t2080 now passes on AIX.
+
+Thanks!
