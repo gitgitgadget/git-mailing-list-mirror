@@ -2,134 +2,259 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D752C4707F
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 22:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52B26C47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 22:47:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DE5A61222
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 22:16:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23FED61183
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 22:47:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236262AbhE0WRs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 18:17:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41268 "EHLO
+        id S234928AbhE0WtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 18:49:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236253AbhE0WRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 18:17:46 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB02BC061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 15:16:12 -0700 (PDT)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lmOIV-0002po-62; Fri, 28 May 2021 00:16:11 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1lmOIT-0001IY-Pq; Fri, 28 May 2021 00:16:09 +0200
-Date:   Fri, 28 May 2021 00:16:09 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, entwicklung@pengutronix.de
-Subject: Re: time needed to rebase shortend by using --onto?
-Message-ID: <20210527221609.khkcmohmtfliykla@pengutronix.de>
-References: <20210526100932.2hw4rbazgvd6mzff@pengutronix.de>
- <xmqqim35b0kz.fsf@gitster.g>
+        with ESMTP id S233203AbhE0WtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 18:49:15 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DAF3C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 15:47:40 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so1735711otc.12
+        for <git@vger.kernel.org>; Thu, 27 May 2021 15:47:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=otBz3UIXcgRThf6hfXz61Tk7uXt+yAQkhfo4NrzQOdU=;
+        b=IJ80Ljw0WQ5cw3t48AzMXPCt+ftNCAXPYpZpKmUmbSsThAhzrID/wKA5ForscjZzIL
+         Lp01bnJofuBpqxnttD8cqAvRoDn2WHGPUAjUorgGJ0DqzQjxySDaTybPnEFKZHcT0Qzf
+         vJG1tfxYXuHrS1g8ssvBPzIAQAHSoO54XnCqDih9Xea3D9WUplrvWN9PQHleF1sZHxYW
+         aZJcUwZE5YWbss3YAeQ1zhWPKd8Dw2r++ddTwMRrTwYpD3+YkkQ6BFhjFkAt2UWY8NVe
+         6ZDWgIWF1WrxIcpCfAZN2rOGsUoA6VbtPsdFOvnQWWZPo06LjEqg6RkKJhbXD2ym4eoa
+         wwpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=otBz3UIXcgRThf6hfXz61Tk7uXt+yAQkhfo4NrzQOdU=;
+        b=cjr8nRatzIRqgKwiY7y2Jqjxj+ducYxXA4OLf2krF+II9EVqmXtQfG9RiLXmFGAZVf
+         DdxeCIgLp4x2eVvdVXPpk7MVKGvCnYsoYwejhKy833dN63QOXj20ksGSA4rvUCGmZgu5
+         WXZNolBxlBoxjAasEAwQvcjKOEztCONawVqtBjAFhcDD4z6LUp1SI8QP2SMUi929poIa
+         CnlO5kn3+nbRgdGKTxp/FAESpoFgebdqXNZpP+pOYO1BEjSdth6OigBXIayPIhbHSWba
+         LeHSNZT013UrJSuybIBqEgrJaxs9i5j8gL4ZKK6jWeMWk1dN1XaHdN28HjiN0zc6lIy9
+         XKrQ==
+X-Gm-Message-State: AOAM5326CwLVMN1BQmieUFxqq1JOdafp2lIH2PGW7oUA4eGKL6GdY/7e
+        vHUjujfDS1nGrKiRlM+iCQhZSJXx3M8++bXJnBM=
+X-Google-Smtp-Source: ABdhPJwdn0xI+/zTjouiBQD5jazWD99ZgfvZcLbhOAXkhH43Dcs1C6y54eSfbWwz3Q7v/5K5uo9um/rDCENN7kVclPo=
+X-Received: by 2002:a9d:67c5:: with SMTP id c5mr4471707otn.162.1622155658972;
+ Thu, 27 May 2021 15:47:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nibxyw2h3isidh7y"
-Content-Disposition: inline
-In-Reply-To: <xmqqim35b0kz.fsf@gitster.g>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
+ <5055dfce32815c8c8ec250457df389d4cd02ee12.1622104642.git.gitgitgadget@gmail.com>
+ <e0842d32-a11c-91d8-3660-cffdb5639193@web.de>
+In-Reply-To: <e0842d32-a11c-91d8-3660-cffdb5639193@web.de>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 27 May 2021 15:47:27 -0700
+Message-ID: <CABPp-BH_nFJ2N6Jf64jZPNKdbwm2Yt=zo6pw-9s6S+fzo7a=pg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] merge-ort: replace string_list_df_name_compare with
+ faster alternative
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---nibxyw2h3isidh7y
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hello Junio,
-
-On Thu, May 27, 2021 at 07:18:52AM +0900, Junio C Hamano wrote:
-> Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> writes:
->=20
-> > It rebases clean on v5.10:
+On Thu, May 27, 2021 at 2:00 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> Am 27.05.21 um 10:37 schrieb Elijah Newren via GitGitGadget:
+> > From: Elijah Newren <newren@gmail.com>
 > >
-> > 	$ time git rebase v5.10
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Successfully rebased and updated detached HEAD.
+> > Gathering accumulated times from trace2 output on the mega-renames
+> > testcase, I saw the following timings (where I'm only showing a few
+> > lines to highlight the portions of interest):
 > >
-> > 	real	3m47.841s
-> > 	user	1m25.706s
-> > 	sys	0m11.181s
+> >     10.120 : label:incore_nonrecursive
+> >         4.462 : ..label:process_entries
+> >            3.143 : ....label:process_entries setup
+> >               2.988 : ......label:plist special sort
+> >            1.305 : ....label:processing
+> >         2.604 : ..label:collect_merge_info
+> >         2.018 : ..label:merge_start
+> >         1.018 : ..label:renames
 > >
-> > If I start with the same rev checked out and explicitly specify the
-> > merge base, the rebase process is considerably faster:
+> > In the above output, note that the 4.462 seconds for process_entries wa=
+s
+> > split as 3.143 seconds for "process_entries setup" and 1.305 seconds fo=
+r
+> > "processing" (and a little time for other stuff removed from the
+> > highlight).  Most of the "process_entries setup" time was spent on
+> > "plist special sort" which corresponds to the following code:
 > >
-> > 	$ time git rebase --onto v5.10 v5.4
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Performing inexact rename detection: 100% (36806539/36806539), done.
-> > 	Successfully rebased and updated detached HEAD.
+> >     trace2_region_enter("merge", "plist special sort", opt->repo);
+> >     plist.cmp =3D string_list_df_name_compare;
+> >     string_list_sort(&plist);
+> >     trace2_region_leave("merge", "plist special sort", opt->repo);
 > >
-> > 	real	1m20.588s
-> > 	user	1m12.645s
-> > 	sys	0m6.733s
+> > In other words, in a merge strategy that would be invoked by passing
+> > "-sort" to either rebase or merge, sorting an array takes more time tha=
+n
+> > anything else.  Serves me right for naming my merge strategy this way.
 > >
-> > Is there some relevant complexity in the first invocation I'm not seeing
-> > that explains it takes more than the double time? I would have expected
-> > that
+> > Rewrite the comparison function and remove as many levels of indirectio=
+n
+> > as possible (e.g. the old code had
+> >     cmp_items() ->
+> >       string_list_df_name_compare() ->
+> >         df_name_compare()
+> > now we just have sort_dirs_next_to_their_children()), and tweak it to b=
+e
+> > as optimized as possible for our specific case.  These changes reduced
+> > the time spent in "plist special sort" by ~25% in the mega-renames case=
+.
 > >
-> > 	git rebase v5.10
+> > For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
+> > performance work; instrument with trace2_region_* calls", 2020-10-28),
+> > this change improves the performance as follows:
 > >
-> > does the same as:
+> >                             Before                  After
+> >     no-renames:        5.622 s =C2=B1  0.059 s     5.235 s =C2=B1  0.04=
+2 s
+> >     mega-renames:     10.127 s =C2=B1  0.073 s     9.419 s =C2=B1  0.10=
+7 s
+> >     just-one-mega:   500.3  ms =C2=B1  3.8  ms   480.1  ms =C2=B1  3.9 =
+ ms
+>
+> Interesting.
+>
 > >
-> > 	git rebase --onto v5.10 $(git merge-base HEAD v5.10)
->=20
-> There is a voodoo called fork-point detection that walks back the
-> reflogs and repeatedly computes merge bases, and giving --onto to
-> explicitly give a commit on which the history is transplanted should
-> remove the need to do the computation, so that is a possibility.
->=20
-> But according to the manpage, it should not kick in for invocations
-> in the above example that specify the <upstream> (the
-> rebase.forkpoint configuration variable can clobber this default).
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-ort.c | 64 ++++++++++++++++++++++++++++++++++-------------------
+> >  1 file changed, 41 insertions(+), 23 deletions(-)
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index 142d44d74d63..367aec4b7def 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -2746,31 +2746,50 @@ static int detect_and_process_renames(struct me=
+rge_options *opt,
+> >
+> >  /*** Function Grouping: functions related to process_entries() ***/
+> >
+> > -static int string_list_df_name_compare(const char *one, const char *tw=
+o)
+> > +static int sort_dirs_next_to_their_children(const void *a, const void =
+*b)
+> >  {
+> > -     int onelen =3D strlen(one);
+> > -     int twolen =3D strlen(two);
+>
+> The old code scans both strings fully, while the new one stops when it
+> reaches a difference and doesn't look at any further characters.  How
+> much does that contribute to the speedup?  (I suspect a lot.)
 
-FTR: I don't have this variable set in the two repositories that show
-the different timings.
+Oh, indeed, good catch.  It appears to be responsible for essentially all o=
+f it.
 
-Best regards
-Uwe
+> >       /*
+> > -      * Here we only care that entries for D/F conflicts are
+> > -      * adjacent, in particular with the file of the D/F conflict
+> > -      * appearing before files below the corresponding directory.
+> > -      * The order of the rest of the list is irrelevant for us.
+> > +      * Here we only care that entries for directories appear adjacent
+> > +      * to and before files underneath the directory.  In other words,
+> > +      * we do not want the natural sorting of
+> > +      *     foo
+> > +      *     foo.txt
+> > +      *     foo/bar
+> > +      * Instead, we want "foo" to sort as though it were "foo/", so th=
+at
+> > +      * we instead get
+> > +      *     foo.txt
+> > +      *     foo
+> > +      *     foo/bar
+> > +      * To achieve this, we basically implement our own strcmp, except=
+ that
+> > +      * if we get to the end of either string instead of comparing NUL=
+ to
+> > +      * another character, we compare '/' to it.
+> >        *
+> > -      * To achieve this, we sort with df_name_compare and provide
+> > -      * the mode S_IFDIR so that D/F conflicts will sort correctly.
+> > -      * We use the mode S_IFDIR for everything else for simplicity,
+> > -      * since in other cases any changes in their order due to
+> > -      * sorting cause no problems for us.
+> > +      * The reason to not use df_name_compare directly was that it was
+> > +      * just too expensive, so I had to reimplement it.
+> >        */
+> > -     int cmp =3D df_name_compare(one, onelen, S_IFDIR,
+> > -                               two, twolen, S_IFDIR);
+> > -     /*
+> > -      * Now that 'foo' and 'foo/bar' compare equal, we have to make su=
+re
+> > -      * that 'foo' comes before 'foo/bar'.
+> > -      */
+> > -     if (cmp)
+> > -             return cmp;
+> > -     return onelen - twolen;
+> > +     const char *one =3D ((struct string_list_item *)a)->string;
+> > +     const char *two =3D ((struct string_list_item *)b)->string;
+>
+> Casting away const, hmm. :-/  Harmless because no actual write is
+> attempted, but still looks needlessly scary to me.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+Right, that should have been
++     const char *one =3D ((const struct string_list_item *)a)->string;
++     const char *two =3D ((const struct string_list_item *)b)->string;
+but since I was just assigning to a const char * on those lines, I'm
+not sure why it'd qualify as scary.  Regardless, I'm happy to put
+these consts back in.
 
---nibxyw2h3isidh7y
-Content-Type: application/pgp-signature; name="signature.asc"
+> > +     unsigned char c1, c2;
+> > +
+> > +     while (*one && (*one =3D=3D *two)) {
+> > +             one++;
+> > +             two++;
+> > +     }
+> > +
+> > +     c1 =3D *one;
+> > +     if (!c1)
+> > +             c1 =3D '/';
+> > +
+> > +     c2 =3D *two;
+> > +     if (!c2)
+> > +             c2 =3D '/';
+> > +
+> > +     if (c1 =3D=3D c2) {
+> > +             /* Getting here means one is a leading directory of the o=
+ther */
+> > +             return (*one) ? 1 : -1;
+> > +     }
+> > +     else
+> > +             return c1-c2;
+> >  }
+> >
+> >  static int read_oid_strbuf(struct merge_options *opt,
+> > @@ -3481,8 +3500,7 @@ static void process_entries(struct merge_options =
+*opt,
+> >       trace2_region_leave("merge", "plist copy", opt->repo);
+> >
+> >       trace2_region_enter("merge", "plist special sort", opt->repo);
+> > -     plist.cmp =3D string_list_df_name_compare;
+> > -     string_list_sort(&plist);
+> > +     QSORT(plist.items, plist.nr, sort_dirs_next_to_their_children);
+>
+> How much does the direct use of QSORT instead of string_list_sort()
+> contribute to the speedup?  (I suspect only a bit.)
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmCwGiUACgkQwfwUeK3K
-7Alkewf+MeaaWFSRSZGWRRyO8Nzhy66sLBenTuWsmakWvdQcSt+rZ6LXexlp0KVJ
-YP8yIKPlKWNeP4Lz3hTcT6kMEB21xOgGUh+p6iF+rABkYemkWNwAx3ETMg4E+3fE
-elCRIv4v3cBhafTSrJUhB/LW9cdIznUgKhFL5EbjaTCNTdazEQWJ5ApsyqC0dG8/
-0vbpcW7sYmO1M9AzWGzPkwbHj+X4463YD4xgDps8h34X2DJn9vhSShH/rZFppqsb
-5zxrH7vavpv2eEfg53euV7SZt7dVqa1U0rurB/28chyzVNuT2Nrb3V9bxoTSO1Ag
-21bB2MMzvUjbCycq5dlYNAWUwKRDAA==
-=JswX
------END PGP SIGNATURE-----
-
---nibxyw2h3isidh7y--
+Yep, I'll fix up the commit message.
