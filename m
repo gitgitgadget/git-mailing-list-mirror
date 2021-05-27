@@ -2,105 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60271C47089
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 16:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F799C47089
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 16:43:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4084C613AF
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 16:37:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0572F613AF
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 16:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236007AbhE0QjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 12:39:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50232 "EHLO
+        id S234233AbhE0QpX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 12:45:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234328AbhE0QjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 12:39:22 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9DFC061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 09:37:48 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id u11so1369951oiv.1
-        for <git@vger.kernel.org>; Thu, 27 May 2021 09:37:48 -0700 (PDT)
+        with ESMTP id S233221AbhE0QpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 12:45:22 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E7CC061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 09:43:47 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id z3so1377423oib.5
+        for <git@vger.kernel.org>; Thu, 27 May 2021 09:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=c0c7arrlBOBbEVEGUCOA7HAxCcEJJ+/mykMhkmFloxw=;
-        b=N1jnDXSzXNhxgW7NqcqLUs7MXOBQ32rp5JA0ZnmwFpkP1+zM9/2YrCNqgBMUkxaJRd
-         t0LWhEfBjJjHnMLxV+n2OuoGhKWKjr/az6f1P8mtZNXk2Yo3rdoubLo4K22K7NNJE0j8
-         WUYHd9HWIAd+Qo73RBrMT/87ERU8lpSjkbCXCTUdLdKZnkcD0N6VgxRYXBP6r9UPbBwn
-         6by7hoF1Eov845Rru5bSU0cXyMHJz3Zg7+Q4X702M5hnYRGJ5BTvCvd3rPBWkinLRpLl
-         QMy/4qSJd4BUVnZkoxgBPyyu0pIpteRgH3TetYKFPWpbywCKyL9H668x8EeaOzhJgMUJ
-         Z/3w==
+        bh=XbbxsQgAVub7hyVQLD8kSydv0Cn6OuH3DVvhcFY0vfs=;
+        b=SzwT7fTeY7BSyQ+fYz2lpPg3xhDb/wgIA+VoHhRiFsvuwA5KGJQ/sy3sk+GAUYjfjZ
+         nkBtfzhrFoGqmAzwyeKkbXeETxjKGAik5HBaFBUyGoH8fvmVwjV8HAU+hXH9ZgctQEZm
+         HGqzwMuFwRdrlJ2UU7RrF+oQbGm6R/YdvCvDEGFRmhSHiFuGMOAJ1CezFBomAk+wZ8Wd
+         skQUBmlNNCpHRdRkzNM/fU1uhFCsDP3EzS3oMGqoqr5AnMhmMTMi7Bu6WfoM1x0f45yk
+         paivVbsxgBveDEsi5pWs5BZfhZauf2nTcm5ifr2eZe7dpVSZA+esOIOcG1m7ccKofuFU
+         JJzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=c0c7arrlBOBbEVEGUCOA7HAxCcEJJ+/mykMhkmFloxw=;
-        b=oE9iOr3LOU2LsraQUXnieBvmF+8gZfplMkVwnxLNCjmyaWwCSuCJdqEFgAC+SdvO4i
-         jBO66FcB8NXC5aayNWpykYKpdwZXKtgXTcMOUnfHECOKWGfGYJpOGNmuUEhe11dPx4XT
-         ZyRv+65N5YcHNCWYoV1oh6mOuXQoNfPkOgE5JZg/itBvBROhQlt+cpEa57A7IyYm3RQM
-         vlZpccr5R9h7g9edo1ghf17jkocVMAjHJzZZxZtD2hBm0ilywq2cnmIZsXqhTmrOrh7C
-         2s/RUGKxUhtYIk+k47cxj6I32eYZg9DUBpLQ0zNj0ztsy/vwzuapTFo42TTY3FZBlxOo
-         Gwaw==
-X-Gm-Message-State: AOAM531oEAuIqyXG5MkGtDkZHIRpTeoglFDarCwl4uyL8giEllYK+Kl8
-        kbgxWdWW4O2YBM2aKRq6d1w=
-X-Google-Smtp-Source: ABdhPJzVqMNmY/+Ihcr64+cb3Uial2MUQRu1H8qWqL7Kliwo33F3Kr5zF087x/TMCoD6wornYKC02Q==
-X-Received: by 2002:aca:d547:: with SMTP id m68mr2929606oig.116.1622133468362;
-        Thu, 27 May 2021 09:37:48 -0700 (PDT)
+        bh=XbbxsQgAVub7hyVQLD8kSydv0Cn6OuH3DVvhcFY0vfs=;
+        b=tnAECJLFCQVF2PQ+qUX0BF7OVtTpkpPYVUCUgWPlwmNH/bN+cy/CUcxA8hfbfsDR4/
+         o7Jd85TR1c9XXUZ/Jmzz1VjA6Rjk/YJ/gfwLfMc5U0RoT109KRUEVEntS7S24A+h5Llq
+         OQvQ8crM0hOSwjBpEaop6NmcN3hj5izgY/5ZpTXYMDyQS+BDZvLOYUGH9c6i9ObvgjrJ
+         7Nhqv9ZZYMlynsibrL0i4eYqHlPlUsiimEVBl9AYoDii4KDWCB0ZgEpPK4d5OCbJ57UY
+         /SFELHIoBeFmS6P5pJO/f1qwDQiuaOuOde2bR4Fna4B6ecY0zoHvR99Wst39SyMMb2mP
+         gKBg==
+X-Gm-Message-State: AOAM5308TiNeumzGiPM5iTNjGcY42DOMIxZHS52Fh6rM2vkIl7EMhOsT
+        WFTk47nBjG3aI6U7HJZcr+M=
+X-Google-Smtp-Source: ABdhPJxOep41Jn/09/8ht2JhqS7zVmcR0bwUqGvYEey9kGddlran0wrlwTMImN6wB1sDSM+1lmKOyg==
+X-Received: by 2002:a05:6808:1394:: with SMTP id c20mr2886684oiw.90.1622133827311;
+        Thu, 27 May 2021 09:43:47 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id l8sm518568ooo.13.2021.05.27.09.37.47
+        by smtp.gmail.com with ESMTPSA id a14sm571117otl.52.2021.05.27.09.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 May 2021 09:37:47 -0700 (PDT)
-Date:   Thu, 27 May 2021 11:37:46 -0500
+        Thu, 27 May 2021 09:43:46 -0700 (PDT)
+Date:   Thu, 27 May 2021 11:43:45 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Message-ID: <60afcada976dc_26530208a1@natae.notmuch>
-In-Reply-To: <aa6d73f3e526f416ee1e4e332e9ca3119efba0e8.1622126603.git.gitgitgadget@gmail.com>
-References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
- <aa6d73f3e526f416ee1e4e332e9ca3119efba0e8.1622126603.git.gitgitgadget@gmail.com>
-Subject: RE: [PATCH 2/2] [GSOC] ref-filter: add %(header) atom
+To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Varun Varada <varuncvarada@gmail.com>,
+        Robert Coup <robert.coup@koordinates.com>, git@vger.kernel.org
+Message-ID: <60afcc4169433_2653020844@natae.notmuch>
+In-Reply-To: <20210527143541.GH8544@kitsune.suse.cz>
+References: <20210512170153.GE8544@kitsune.suse.cz>
+ <609c112066acd_71bd1208aa@natae.notmuch>
+ <20210512180418.GF8544@kitsune.suse.cz>
+ <609c2f98932f3_71bd120840@natae.notmuch>
+ <20210513074622.GG8544@kitsune.suse.cz>
+ <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
+ <20210513094818.GH8544@kitsune.suse.cz>
+ <CAD2i4DDY1z1ZNigRfVog1205hKBk+U5KfinzXCk-2mkaYy4cjQ@mail.gmail.com>
+ <20210527114629.GD8544@kitsune.suse.cz>
+ <60afa7d9d4ca_2056d208d9@natae.notmuch>
+ <20210527143541.GH8544@kitsune.suse.cz>
+Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu via GitGitGadget wrote:
+Michal Such=C3=A1nek wrote:
+> On Thu, May 27, 2021 at 09:08:25AM -0500, Felipe Contreras wrote:
+> > Do you have *ANY* evidence that shows a problem with "effect"?
+> =
 
-> @@ -1372,6 +1389,15 @@ static void grab_raw_data(struct atom_value *val, int deref, void *buf, unsigned
->  				    &bodypos, &bodylen, &nonsiglen,
->  				    &sigpos, &siglen);
->  
-> +		if (starts_with(name, "header")) {
-> +			size_t header_len = subpos - (const char *)buf - 1;
-> +			if (atom->u.header.option == H_BARE) {
-> +				v->s = xmemdupz(buf, header_len);
-> +			} else if (atom->u.header.option == H_LENGTH)
+> I find problem with the proposition that 'impact' should be replaced
+> with 'effect'...
 
-No need for braces in the if.
+Do not avoid the question.
 
-> +				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)header_len);
-> +			continue;
-> +		}
-> +
->  		if (atom->u.contents.option == C_SUB)
->  			v->s = copy_subject(subpos, sublen);
->  		else if (atom->u.contents.option == C_SUB_SANITIZE) {
+Answer the question being asked.
 
--- 
-Felipe Contreras
+-- =
+
+Felipe Contreras=
