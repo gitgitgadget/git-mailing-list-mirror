@@ -7,70 +7,70 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4020FC47082
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 02:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0851C47082
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 02:40:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FAF561378
-	for <git@archiver.kernel.org>; Thu, 27 May 2021 02:18:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 713F4613BE
+	for <git@archiver.kernel.org>; Thu, 27 May 2021 02:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233763AbhE0CTq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 May 2021 22:19:46 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59349 "EHLO
+        id S233054AbhE0Cl7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 May 2021 22:41:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61299 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232381AbhE0CTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 May 2021 22:19:46 -0400
+        with ESMTP id S232673AbhE0Cl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 May 2021 22:41:58 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85471BCA0B;
-        Wed, 26 May 2021 22:18:13 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B487BCAEB;
+        Wed, 26 May 2021 22:40:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a3/o1536A4K8xv08Wcgq+h/kbey2cglIXlvonS
-        +v4k8=; b=WW7W7HOKmcLHCkPc19X00z0bn7dEnx0ca5NUTkLUIgx8A8K7Yash1v
-        3CdPnhoKtKVCFXN2drCkGIsVmB0jCaB/Wr52ZPJJD00HtLDTlZ5MneHBTI+MTvJU
-        8tDaoFfxCCY1igdihuVHkso54g6Cn7TdOEyOD0fjBgsp9PpJqJujM=
+        :content-type:content-transfer-encoding; s=sasl; bh=wNaynbZahKlR
+        YNpaMK/IArIANUtasDuN/Qo7i6lSGAw=; b=oRzIPqipWtrSBci10VRkmZ7YK2qx
+        dIlh8MtDfyl8DBit8T77FtI5+6k0QsYe2ZxPdPXi3O1ghTfJuydAuUaf8dWqU8vF
+        VpMb7qF5PgB9hFSlTeZL1XLNaivZGeFAwhLzlBj9sfy0Uj6A3Aho34sAnz0yBw5I
+        Wty4WvK/ls6uG6w=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D4BBBCA0A;
-        Wed, 26 May 2021 22:18:13 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 53FE0BCAE9;
+        Wed, 26 May 2021 22:40:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.73.10.127])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 15D6FBCA07;
-        Wed, 26 May 2021 22:18:13 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4B0DBCAE8;
+        Wed, 26 May 2021 22:40:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v9 02/37] hook: introduce git-hook subcommand
-References: <20210527000856.695702-1-emilyshaffer@google.com>
-        <20210527000856.695702-3-emilyshaffer@google.com>
-Date:   Thu, 27 May 2021 11:18:12 +0900
-In-Reply-To: <20210527000856.695702-3-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Wed, 26 May 2021 17:08:21 -0700")
-Message-ID: <xmqqim34api3.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: move builtin-only code to its own header
+References: <878s41m5nc.fsf@evledraar.gmail.com>
+        <patch-1.1-d085d59a417-20210527T005213Z-avarab@gmail.com>
+Date:   Thu, 27 May 2021 11:40:25 +0900
+In-Reply-To: <patch-1.1-d085d59a417-20210527T005213Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 27 May
+ 2021 02:52:51 +0200")
+Message-ID: <xmqqeedsaoh2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C9DAE498-BE91-11EB-A4D5-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E441A922-BE94-11EB-BFC5-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> diff --git a/hook.c b/hook.c
-> new file mode 100644
-> index 0000000000..d3e28aa73a
-> --- /dev/null
-> +++ b/hook.c
-> @@ -0,0 +1,120 @@
-> +#include "cache.h"
-> +
-> +#include "hook.h"
-> +#include "config.h"
-> +
-> +void free_hook(struct hook *ptr)
+> Move the code that's only used in builtin/pack-objects.c to a new
+> builtin/pack-objects.h header and out of pack-objects.h.
+> ...
+>  builtin/pack-objects.c | 174 +++++++++++++++++++++++++++++++++++++++--
+>  pack-objects.h         | 159 -------------------------------------
+>  2 files changed, 167 insertions(+), 166 deletions(-)
 
-Should this be "static" (and be removed from hook.h)?  Even after
-the whole series, nobody outside seems to use this function.
+Neither the title or the description reflects the reality, though.
+
+move builtin-only "static inline" code from the header to its sole
+consumer?
