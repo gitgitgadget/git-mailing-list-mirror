@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74786C47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58609C47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:57:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D72E6127C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:52:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 252246127C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbhE1UyH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 16:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34052 "EHLO
+        id S229539AbhE1U7Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 16:59:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbhE1UyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 16:54:06 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99CDEC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 13:52:30 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id j26-20020a4adf5a0000b029020eac899f76so1232959oou.7
-        for <git@vger.kernel.org>; Fri, 28 May 2021 13:52:30 -0700 (PDT)
+        with ESMTP id S229482AbhE1U7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 16:59:21 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C7BC061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 13:57:44 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id s19so5528681oic.7
+        for <git@vger.kernel.org>; Fri, 28 May 2021 13:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mbZfaQ7LwvcpL1wyHlt91JDjrhcrucl9rgMrPKvOdn0=;
-        b=lJBakIw3n0FhBNbsJWfgxIZwDBefRs0jBX3NC92rtrSxC7jSGFAZiKHEZ1x1erdqDa
-         Viu39fwdQibZwZGhZUMsOr1FbNhPtFVFMiFE2DmKF0gUNIw+5VAgRstko4+Gzi7Qodek
-         XRqjw10C6cl3YP4SEncCDr0vV5fSpneHskElAFjzU9hlGJm1IzDtt8Im+Z6us76x6CYg
-         vFVjm/2zYipHFSlHg3OBs+viCsaa9DVerCjSt13RgK3UKkNeXXBIeoEkVpwBkCaEMg1S
-         pv3JIN9yvLA5LPtsp7wQ/cyAFp55nnVR0EeaCqu2na4OIPVV/88zPywO4MzSKm/ZRFpW
-         NYww==
+        bh=r1BHvxj8oW22LzrZcaw9WU5bOvTU/fpnuzser1DVvp0=;
+        b=dSclK51Goz7BI1Eumam2S79qaQG1s3CG5f8DUFPHGtO2l1KRQ+hIh+1HeoSf5DdWiW
+         4Jf9MD1zVnt1jG2+YOem2ilkS1iITLMGTJR81Bp2HW5TFFWrK7AG9ZMiSoWaGjOMjbe5
+         gcN4PtjYDowWFs13g+/leYLx0IGCO6R0hNiRw5Fx+tm3hqFbWY6F9peAZ4rGGkqyKxW6
+         XTU/kh+6Up5iz84gx9QPsETxnskXlj2SJQn9/QyzcSbZXBwQZ3aW7TBnWKuJU47Wkx3/
+         DY629zYsncboLadQaAsQ9qkXAFE1BZy637dqfJPv7QCRZX6mMHWpl9tbn9lNL90skIoS
+         Doag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mbZfaQ7LwvcpL1wyHlt91JDjrhcrucl9rgMrPKvOdn0=;
-        b=qtILobLB8poXHo1mA/VZ2uu1TProiO8H1I3tcEg+/rezFzEL/hYaCneTlQTjFVWl6l
-         QSD9hrlU9TH1/FVotSAYzLzT9ZROBTh1yuMEIqalUSzvdYmgC05RpVKoVLMPcwEezKJF
-         /0AiKovIrKyVE8aweVqeEXBIen8OQe4fvcp/C2XPEgYe5Llid4cqUuduGE7lqrsaCFRr
-         cPLpzgXrj78QsE8bjelCeGPRySZ5naXGbJTobb7YnsaVzkEfKyUjx/TiLa39yfoEnH5y
-         Cp8aukp6MXiYiOelu4SqH0jINF42SC030iFtnlfsZ5bgMLysNEOFIcfYNeZSFGAP2sba
-         gZbg==
-X-Gm-Message-State: AOAM532aFYu/fm1cEKm5P3tQqhWUjwHYzZtE6yb+/BOl4dat26iMCZPS
-        i22gpRw5HmrFPr2gPgBRKf0UYqY5b+ofVlVvcYI=
-X-Google-Smtp-Source: ABdhPJyHt5Ws+PiBFMMZxSBZnMOniAwsiP7ugg+gKKt4o1BHt+T8zUwoaprxc96p+FjNYzXaRToEgiRqvlrHUXuJSt8=
-X-Received: by 2002:a4a:b301:: with SMTP id m1mr8399792ooo.7.1622235149968;
- Fri, 28 May 2021 13:52:29 -0700 (PDT)
+        bh=r1BHvxj8oW22LzrZcaw9WU5bOvTU/fpnuzser1DVvp0=;
+        b=Wa257erAFcYFd5zFIGPplPTtsIcyQMLYwKgc2jeDYVMmz/dr0NBqbqJrZzlDu4GSiV
+         bk5YEktA2ccyYCM1KN4EyhAF6Qs1Buo+7Ayb5R4z6cs34zUommFuvtLGnEKmANXGumaP
+         8+lrxvG34q0oUkRTRpD3SySw81RrLuM3fc4wu6BYd75dzg/GT8ruQr6KgnR6rnABswsr
+         iu2mT5aZ8iyPYmHkGB8Julhm9hP4I7PPZbcwApnMqN1NEOoQvYGFGFzw+VQ45Nv7qXcR
+         Lx7GbOSjJ4+5stRPPoe1LlC2Th1ovVl17A4LRQHZzF8VZi8/UKqV3vML1M4ZT3iphg3V
+         /rQA==
+X-Gm-Message-State: AOAM532WEW8iqo0V5Ab8HYbad0uL4LXimgfm94PEbfk2PEDi6X1fMqYe
+        TrBbwZn8AqZA/iKxFq9FO8XJ7GBcErUKej5SqnU=
+X-Google-Smtp-Source: ABdhPJxlG8LyX+1bxN/2IpK13A1M0sIf3TqlcLcx3renbYXnZImO1yrxK60asWWYs9K6pPuwIhnxL1pdn/SYdoQHDPQ=
+X-Received: by 2002:aca:30cd:: with SMTP id w196mr10108019oiw.167.1622235464245;
+ Fri, 28 May 2021 13:57:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210528201014.2175179-1-felipe.contreras@gmail.com> <20210528201014.2175179-4-felipe.contreras@gmail.com>
-In-Reply-To: <20210528201014.2175179-4-felipe.contreras@gmail.com>
+References: <20210528201014.2175179-1-felipe.contreras@gmail.com> <20210528201014.2175179-5-felipe.contreras@gmail.com>
+In-Reply-To: <20210528201014.2175179-5-felipe.contreras@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 May 2021 13:52:19 -0700
-Message-ID: <CABPp-BFPXWy0GwZwT0weNs1DKMKFC4ds2tLJWcVQBOKxPMomFQ@mail.gmail.com>
-Subject: Re: [PATCH 03/11] push: reorganize setup_push_simple()
+Date:   Fri, 28 May 2021 13:57:33 -0700
+Message-ID: <CABPp-BG=496bZ78ToKK0vwmmtWDDC4qbCZfXbL+odzecy8U7vw@mail.gmail.com>
+Subject: Re: [PATCH 04/11] push: simplify setup_push_simple()
 To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Mathias Kunter <mathiaskunter@gmail.com>,
@@ -76,77 +76,52 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, May 28, 2021 at 1:10 PM Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
 >
-> Simply move the code around.
+> branch->refname can never be different from branch->merge[0]->src.
 
-Not quite, you also deleted dead code.  Made the patch a bit harder to
-read because I was trying to verify you did what the commit message
-said and it took me longer than it should have to realize that you
-were also deleting dead code.  Might be worth including that fact in
-this sentence here.
+This statement isn't true without additional qualifications.  Perhaps
+extend your commit message with "...since the 'Additional safety'
+check dies if they differ." or some other wording that qualifies why
+it's true at the point of the code in question.
 
-> No functional changes.
->
+
 > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 > ---
->  builtin/push.c | 29 ++++++++++++-----------------
->  1 file changed, 12 insertions(+), 17 deletions(-)
+>  builtin/push.c | 10 ++--------
+>  1 file changed, 2 insertions(+), 8 deletions(-)
 >
 > diff --git a/builtin/push.c b/builtin/push.c
-> index d173c39283..9c807ed707 100644
+> index 9c807ed707..73fe083682 100644
 > --- a/builtin/push.c
 > +++ b/builtin/push.c
-> @@ -225,13 +225,14 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
+> @@ -225,14 +225,10 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
 >
 >  static void setup_push_simple(struct remote *remote, struct branch *branch, int triangular)
 >  {
-> +       const char *dst;
-> +
-> +       if (!branch)
-> +               die(_(message_detached_head_die), remote->name);
-> +
->         if (triangular) {
-> -               if (!branch)
-> -                       die(_(message_detached_head_die), remote->name);
-> -               refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
-> +               dst = branch->refname;
->         } else {
-> -               if (!branch)
-> -                       die(_(message_detached_head_die), remote->name);
+> -       const char *dst;
+> -
+>         if (!branch)
+>                 die(_(message_detached_head_die), remote->name);
+>
+> -       if (triangular) {
+> -               dst = branch->refname;
+> -       } else {
+> +       if (!triangular) {
 >                 if (!branch->merge_nr || !branch->merge || !branch->remote_name)
 >                         die(_("The current branch %s has no upstream branch.\n"
 >                             "To push the current branch and set the remote as upstream, use\n"
-> @@ -243,20 +244,14 @@ static void setup_push_simple(struct remote *remote, struct branch *branch, int
->                 if (branch->merge_nr != 1)
->                         die(_("The current branch %s has multiple upstream branches, "
->                             "refusing to push."), branch->name);
-> -               if (triangular)
-> -                       die(_("You are pushing to remote '%s', which is not the upstream of\n"
-> -                             "your current branch '%s', without telling me what to push\n"
-> -                             "to update which remote branch."),
-> -                           remote->name, branch->name);
-
-This if-block is safe to delete because we're already in the !triangular case.
-
-
+> @@ -248,10 +244,8 @@ static void setup_push_simple(struct remote *remote, struct branch *branch, int
+>                 /* Additional safety */
+>                 if (strcmp(branch->refname, branch->merge[0]->src))
+>                         die_push_simple(branch, remote);
 > -
-> -               if (1) {
-> -                       /* Additional safety */
-> -                       if (strcmp(branch->refname, branch->merge[0]->src))
-> -                               die_push_simple(branch, remote);
-> -               }
->
-> -               refspec_appendf(&rs, "%s:%s", branch->refname, branch->merge[0]->src);
-> +               /* Additional safety */
-> +               if (strcmp(branch->refname, branch->merge[0]->src))
-> +                       die_push_simple(branch, remote);
-> +
-> +               dst = branch->merge[0]->src;
+> -               dst = branch->merge[0]->src;
 >         }
-> +       refspec_appendf(&rs, "%s:%s", branch->refname, dst);
+> -       refspec_appendf(&rs, "%s:%s", branch->refname, dst);
+> +       refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
 >  }
 >
 >  static int is_workflow_triangular(struct remote *remote)
 > --
 > 2.32.0.rc0
 
-Everything else is, as you say, just moving code around.
+Simple transformation allowed by the "Additional safety" check; makes sense.
