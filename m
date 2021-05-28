@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D01FDC47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C66DAC4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8F60601FD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A35E7611C9
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236660AbhE1MOO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:14:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58830 "EHLO
+        id S236324AbhE1MO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:14:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236304AbhE1MNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 08:13:36 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC85C061344
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:56 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id n5-20020a1c72050000b0290192e1f9a7e1so2273820wmc.2
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:56 -0700 (PDT)
+        with ESMTP id S236509AbhE1MNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 08:13:37 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D657C06134A
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:59 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id h3so1990185wmq.3
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7a3CoEvFbxF7c8JD6MpEyFbe4NX8fRQq+CO16EgHBa4=;
-        b=XQjY/YUTyGERBH5in3Y6Dcilgp1M4ijHRMoyYw4ON6OEbXRK5QB7Y3JVXeIZxUfd78
-         FyZJy2czkZoeHdjrkskJaZ9Qyvf+RwTm6OvZc2TGocLtErLhSvSYI4LwmdOg7WD1AOH1
-         27LNorsocPBaRI3/KvSJ+aTT9K9qOVNllGkCxsLEEP1par5UyJdE9AGkX2/y/gMIJaVx
-         kzksADYIfbG5FakUDk5lr2RcFN8Abj1gRYAkIXAx/+Lu32u1YhBmEa8/S3woECEQaqqz
-         hjWy6PY927aYdIEZMJXjiLJU95UVqYDyB1LSwT2bbF/oiT+2o7zfo24JCGEnPHwyWEeI
-         RL1Q==
+        bh=qerW7OjwcsQDxH4kajgV+Dx56Zalu/ZtqD0N2463G60=;
+        b=s2K8gQWdWqfR2ZoSmTCWGFv2enNNRW9c6TIdiLExTDK+qO13OtgJ7CZNsNVFlfptYO
+         GZuaadpD1gMooieD/FtXRG/KzMI3O4FT63okNQfKt2D4B+TPbqCfXr2UK9LG+AsGF/oa
+         Du0I0AI8lhO+29uNYoC/gkbJk7K3AiKTthFvAu/D8wQ5Bfa+BA6SvD75jhCcbCRvpKi3
+         u9L+fKAV4P6xDHeVhjlZ3zfkAZbSXxoMFcepVm5NJcIJw4K3yFzlISylNJC6mQRv6BFb
+         bzslM1i7hADP2AvHhtTmUh1eQ22G+rGJmWjaquUxwFHc+v9rq+S7xdzwWNe1cneP4ZQn
+         ddvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7a3CoEvFbxF7c8JD6MpEyFbe4NX8fRQq+CO16EgHBa4=;
-        b=UJ2EYJEW4E/SXQ1KXl5EG0Z5JiYkybWC27NfVed77mFw8xEDjfo4Yux67jZrsxPsHH
-         nBa/T9wZZUPe+ykXWw64H6Ef7jMJ8aLxSEcLX+YBAFfgv9epQveeSXQeuxyWhCVsKxnY
-         IIqJ1f++RJBkwpRx/Kt+Y/6c+OMRVWtfZvaYihhNbHBkTq1B6KLg6tw61Ym8apydpkFe
-         WUqiw3Zr18AvL0y1Gs4+2K+6Yk9A+B13mTUtdPw2+iNZVJCSmCrvw2XSsyFDCjXtwySN
-         WmCECyIlWz8yJqZ3+h7jChisY6F0k/PEbjONbCUiRQPx3vX3gpP0Tv2gvvy84O4xqQ20
-         64GQ==
-X-Gm-Message-State: AOAM533gzeCuX4NgcRAcKqsQhoWiTHrqG3Ux7T/II4n0G2Ep21AEV/mV
-        nFLt7IberJeqUnDav+l664PRFCJneGsp9g==
-X-Google-Smtp-Source: ABdhPJxz0mwxz5pYQYNKqjALxm96+f9K3DqtWHdedsB0P49wXPjOzoMCrRAOmttWge5HRSHMET+REg==
-X-Received: by 2002:a05:600c:8a9:: with SMTP id l41mr13134734wmp.73.1622203915235;
-        Fri, 28 May 2021 05:11:55 -0700 (PDT)
+        bh=qerW7OjwcsQDxH4kajgV+Dx56Zalu/ZtqD0N2463G60=;
+        b=ExwAhJPrLl1HK1lRQEP/iaZOCP78HdR4ZHjeKPNu1Ln0ND+zP5CAXbHNEaKZL1dtaU
+         uRQZecUkoDWhJ+DmqdlCaJrKyD8Z2CKC4O7jU7ZqWvCnJaAMtDepwrpQw7nqontvqNe7
+         kIrVAmpgKu+4TsVgauUxBRt+OZnKyjq0FeESVptMQiDdODVpne6O8s6jKn9tBw4UMFYW
+         dl5mvzGHx7iVcyWHPclMUb/grL+rr1c1LEVNLyU3uhzxYIUvsrsllnRM3kgsEBYvad0+
+         juSu5pE31Ebtl/cH6utp4GSqnoh++flQ05Xj2hv527d/ku5hGz92UPQCnLS3pJutXtXj
+         u9Jw==
+X-Gm-Message-State: AOAM532K8FV45Mm8g7p1tlwS3piKh0g80gHuFI0vzWzN/g8680rIhuMu
+        bXfU5YBnCXm7Q/ELl9vGbRz6wA3ARftg+g==
+X-Google-Smtp-Source: ABdhPJxQng2yf/uUwluIU6GinguMRjQ9+fxkYgSV9dwGYwEl8ZgayKtVd0lN7tnC6gdcrqSfNbSkpg==
+X-Received: by 2002:a7b:c152:: with SMTP id z18mr8232853wmi.136.1622203917832;
+        Fri, 28 May 2021 05:11:57 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.54
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:11:54 -0700 (PDT)
+        Fri, 28 May 2021 05:11:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 16/31] receive-pack: convert push-to-checkout hook to hook.h
-Date:   Fri, 28 May 2021 14:11:18 +0200
-Message-Id: <patch-16.31-a16163d4fb5-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 19/31] am: convert 'post-rewrite' hook to hook.h
+Date:   Fri, 28 May 2021 14:11:21 +0200
+Message-Id: <patch-19.31-986bfd89a54-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,128 +84,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-By using hook.h instead of run-command.h to invoke push-to-checkout,
-hooks can now be specified in the config as well as in the hookdir.
-push-to-checkout is not called anywhere but in builtin/receive-pack.c.
-
-This is the last user of the run_hook_le() API, so let's remove it
-while we're at it, since run_hook_le() itself is the last user of
-run_hook_ve() we can remove that too. The last direct user of
-run_hook_le() was removed in the commit preceding this one.
-
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/receive-pack.c | 14 ++++++++++----
- run-command.c          | 32 --------------------------------
- run-command.h          | 16 ----------------
- 3 files changed, 10 insertions(+), 52 deletions(-)
+ builtin/am.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1e0e04c62fc..5248228ebfe 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1436,12 +1436,18 @@ static const char *push_to_checkout(unsigned char *hash,
- 				    struct strvec *env,
- 				    const char *work_tree)
+diff --git a/builtin/am.c b/builtin/am.c
+index 9e9c1b5e9f2..6e4f9c80360 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -467,23 +467,15 @@ static int run_applypatch_msg_hook(struct am_state *state)
+  */
+ static int run_post_rewrite_hook(const struct am_state *state)
  {
+-	struct child_process cp = CHILD_PROCESS_INIT;
+-	const char *hook = find_hook("post-rewrite");
 +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+
- 	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
--	if (run_hook_le(env->v, push_to_checkout_hook,
--			hash_to_hex(hash), NULL))
-+	strvec_pushv(&opt.env, env->v);
-+	strvec_push(&opt.args, hash_to_hex(hash));
-+	if (run_hooks(push_to_checkout_hook, &opt)) {
-+		run_hooks_opt_clear(&opt);
- 		return "push-to-checkout hook declined";
--	else
-+	} else {
-+		run_hooks_opt_clear(&opt);
- 		return NULL;
-+	}
- }
+ 	int ret;
  
- static const char *update_worktree(unsigned char *sha1, const struct worktree *worktree)
-@@ -1465,7 +1471,7 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
- 
- 	strvec_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
- 
--	if (!find_hook(push_to_checkout_hook))
-+	if (!hook_exists(push_to_checkout_hook))
- 		retval = push_to_deploy(sha1, &env, work_tree);
- 	else
- 		retval = push_to_checkout(sha1, &env, work_tree);
-diff --git a/run-command.c b/run-command.c
-index eecdef5a0c8..95c950a4a2b 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1321,38 +1321,6 @@ int async_with_fork(void)
- #endif
- }
- 
--static int run_hook_ve(const char *const *env, const char *name, va_list args)
--{
--	struct child_process hook = CHILD_PROCESS_INIT;
--	const char *p;
--
--	p = find_hook(name);
--	if (!p)
+-	if (!hook)
 -		return 0;
 -
--	strvec_push(&hook.args, p);
--	while ((p = va_arg(args, const char *)))
--		strvec_push(&hook.args, p);
--	hook.env = env;
--	hook.no_stdin = 1;
--	hook.stdout_to_stderr = 1;
--	hook.trace2_hook_name = name;
+-	strvec_push(&cp.args, hook);
+-	strvec_push(&cp.args, "rebase");
 -
--	return run_command(&hook);
--}
--
--int run_hook_le(const char *const *env, const char *name, ...)
--{
--	va_list args;
--	int ret;
--
--	va_start(args, name);
--	ret = run_hook_ve(env, name, args);
--	va_end(args);
--
--	return ret;
--}
--
- struct io_pump {
- 	/* initialized by caller */
- 	int fd;
-diff --git a/run-command.h b/run-command.h
-index 24ab5d63c4c..748d4fc2a72 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -201,22 +201,6 @@ int finish_command_in_signal(struct child_process *);
-  */
- int run_command(struct child_process *);
+-	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+-	cp.stdout_to_stderr = 1;
+-	cp.trace2_hook_name = "post-rewrite";
++	strvec_push(&opt.args, "rebase");
++	opt.path_to_stdin = am_path(state, "rewritten");
  
--/**
-- * Run a hook.
-- * The first argument is a pathname to an index file, or NULL
-- * if the hook uses the default index file or no index is needed.
-- * The second argument is the name of the hook.
-- * The further arguments correspond to the hook arguments.
-- * The last argument has to be NULL to terminate the arguments list.
-- * If the hook does not exist or is not executable, the return
-- * value will be zero.
-- * If it is executable, the hook will be executed and the exit
-- * status of the hook is returned.
-- * On execution, .stdout_to_stderr and .no_stdin will be set.
-- */
--LAST_ARG_MUST_BE_NULL
--int run_hook_le(const char *const *env, const char *name, ...);
--
- /*
-  * Trigger an auto-gc
-  */
+-	ret = run_command(&cp);
++	ret = run_hooks("post-rewrite", &opt);
+ 
+-	close(cp.in);
++	run_hooks_opt_clear(&opt);
+ 	return ret;
+ }
+ 
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
