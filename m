@@ -2,138 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81AEFC47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 486BEC4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 11:36:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55C6D613AB
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 249616135F
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 11:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236279AbhE1J0M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 05:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
+        id S234580AbhE1LiS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 07:38:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236294AbhE1JZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 05:25:51 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE2A1C06138F
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:07 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id q5so2592245wrs.4
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:07 -0700 (PDT)
+        with ESMTP id S235185AbhE1LiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 07:38:11 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F15C061761
+        for <git@vger.kernel.org>; Fri, 28 May 2021 04:36:35 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id i12so2420433qtr.7
+        for <git@vger.kernel.org>; Fri, 28 May 2021 04:36:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fkdJxmF6FhRLfxsGl5M79qLuD3sqvanHP5RvQKO2lYU=;
-        b=eZBkgJMaFUDDCP0lRWKFkNp5P8LsrRZAub/Y/h1QjVxOX/Y0LKkRm7vClr97C73Yd6
-         ZK7+Bzf/8EAcI+9cRVd3BegFh3mfcilTmziev1JoSGiu9+kxETNeeRFuFNh9LoCf2wGp
-         ecRyaJ19N/FtSoWzA5cpB+ITPK9Ruco+BQxvvgebUJYKRvDBbPbcS+ke1HJAwKR6IWKk
-         /h5p8FDEGSwTAiV9BXyCAdBBGVENhK4xIQk6mvalIeKdKMdVew0zhu0xwB1qmMnUcaV3
-         cmcy28sxv7H6XjECoqhSyM/UbY2NUahyrt4yhCHrnjjta6INCEpvu+SO40BdSK2eA1Rq
-         qoAg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=XQwNx87o697Kbek8c7iCf/VQiOQoZTAeEKBDh83zybQ=;
+        b=LGNZn353owXI1BsZo96Lr7EZibreCD9IRTNhRQbSviHzRBijDR+JgtrCJLbng5GYft
+         3Q5n4M6iUz6qy9mAFXQrUOC33lkDyq6xdWugoe/fNmRD9rWJLuWpZb1AnmJL7I0AkQ1P
+         a9z+OuV1cyph1WuLnBCYgy+VPZppFq3UgkzEC8vW9ylLb0KAWMKFL9w0/btJHb7lOaJY
+         7YOQMh25udaYEDsNsPCZY5hJzrMj8DrgqBOLCPqjj8KsPKl+JFWFQOnUCK2VPx8t0xXl
+         Lr/p0jpVa02ZMDSXfIqKMQXX3NCOlgoikJDVPjbt0jZtlMuN/KDQMn+ACrK7arJt/EQq
+         0X4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fkdJxmF6FhRLfxsGl5M79qLuD3sqvanHP5RvQKO2lYU=;
-        b=C8mUxh9v0b1d/COcKDQ+Cyxw39hCkaobwU45bgyrSFT3TfWQVJEJuoRt3nQSa7i+s/
-         bBWwmVCIE3S2BjGt+J9rl7Lgt9fpwXK3cd5vJMMOePRjtm3kW8PpeY/GKkrwPtzOfKXn
-         IaGtjtFJ1iUpViKfVsrUxZ1z0/TlBTi4PeXkHjpZjlqc0DXE8fwWOgkBWDjNzA3ThJWY
-         6kMNclUG5xo/NLafKKwzC2ZHlooOXZOH4coeDAg8oOZ2pO9jl1ah/TxbfWNnuwcACTWt
-         VvhgIQm08DCT75/nQPuMVrIT8feOF2R/zJjKxwFu9Qkyqb7qZpSEmXUT1IncqZT29+6Y
-         c/lA==
-X-Gm-Message-State: AOAM530NKCgdj7Oc3LxXXwu4oFAWvSr1i6UPIQI62iXFt6IFtq+Fvbxx
-        l25qbV9Q0WPR/bhZIhHYRGlNI+XmaE7cOA==
-X-Google-Smtp-Source: ABdhPJwUpbz2ibhkOEaDtUo7wrlU54t/wmMdWe0UsIMfkhx2d12GESyJAsEroyUAYKvsqGczZKXHwg==
-X-Received: by 2002:a5d:4ccb:: with SMTP id c11mr1476136wrt.169.1622193846067;
-        Fri, 28 May 2021 02:24:06 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.24.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 02:24:05 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Gregory Anders <greg@gpanders.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v5 13/13] perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
-Date:   Fri, 28 May 2021 11:23:52 +0200
-Message-Id: <patch-13.13-aa3a2de7047-20210528T092228Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc1.458.gd885d4f985c
-In-Reply-To: <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
-References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com> <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=XQwNx87o697Kbek8c7iCf/VQiOQoZTAeEKBDh83zybQ=;
+        b=lncli3ktoI7nOmIu6lIezUm9CEhDNC9ipPpCqohWIq4q2J5m/FEnSYdWZ29DVriE6Y
+         M4v3OBV/uIz/MACzMpV/Rg7rqnf6L+vk8WZsY5USFLF/lkeYwVUQ10qgLilpvWcDEpW8
+         Att1vd/s4sJ381Y1P0Rki9T4BCIjXxjgEFd9V50EDI9OJTNz0Hr0qrZ7A1C7jU8Rk2fM
+         KqyluGBQSnCy9E9P2iIcbBgPPBJaxe5btS9f9k3HTbfTtSmKKuCHpf7NTeBcq8bgNDaS
+         eyBVhDt8JSMcXuqIsTsExygVD1YeMsjEZxFB13UA7jsowmlOgkhs/YGJo5om+UfVJrUD
+         mxFg==
+X-Gm-Message-State: AOAM5328hMEucTyECbRh/ui6HanQWrklX4K2o4zEa9EKQ1OrJ/QdZy4W
+        Cm28W31T94zXdc6r4wVySF8=
+X-Google-Smtp-Source: ABdhPJydkwT8Q7Ge3rXU5SWYlvmCQx2wLBaP6ZA+Oyg0maqtf2gf++UjrJUbNt65iL6USCvWlyM13Q==
+X-Received: by 2002:a05:622a:507:: with SMTP id l7mr2980439qtx.276.1622201794786;
+        Fri, 28 May 2021 04:36:34 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:f45c:45ae:1e9c:923a? ([2600:1700:e72:80a0:f45c:45ae:1e9c:923a])
+        by smtp.gmail.com with ESMTPSA id 97sm3201689qte.20.2021.05.28.04.36.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 May 2021 04:36:34 -0700 (PDT)
+Subject: Re: [PATCH v4 07/12] unpack-trees: be careful around sparse directory
+ entries
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.932.v3.git.1621017072.gitgitgadget@gmail.com>
+ <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
+ <e28df7f9395da33f24d6b75fa30081074ac6b801.1621598382.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <73d09910-6d1e-014a-ff0a-931cdb71b31b@gmail.com>
+Date:   Fri, 28 May 2021 07:36:32 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <e28df7f9395da33f24d6b75fa30081074ac6b801.1621598382.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It has been pointed out[1] that cwd() invokes "pwd(1)" while getcwd()
-is a Perl-native XS function. For what we're using these for we can
-use getcwd().
+On 5/21/2021 7:59 AM, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> The methods traverse_by_cache_tree() and unpack_nondirectories() have
+> similar behavior in trying to demonstrate the difference between and
+> index and a tree, with some differences about how they walk the index.
 
-The performance difference is miniscule, we're saving on the order of
-a millisecond or so, see [2] below for the benchmark. I don't think
-this matters in practice for optimizing git-send-email or perl
-execution (unlike the patches leading up to this one).
+As I have been working on further sparse-index integrations,
+specifically with 'git checkout', I have found an issue with this
+patch that doesn't show itself in the current t1092 test script,
+but appears later as more complicated scenarios appear.
 
-But let's do it regardless of that, if only so we don't have to think
-about this as a low-hanging fruit anymore.
+I am pursuing the correct fix (that will also make 'git checkout'
+work better) but it might be a week or two before I can send a v5
+with that fix.
 
-1. https://lore.kernel.org/git/20210512180517.GA11354@dcvr/
-2.
-    $ perl -MBenchmark=:all -MCwd -wE 'cmpthese(10000, { getcwd => sub { getcwd }, cwd => sub { cwd }, pwd => sub { system "pwd >/dev/null" }})'
-                (warning: too few iterations for a reliable count)
-                             Rate                  pwd                 cwd    getcwd
-    pwd                     982/s                   --                -48%     -100%
-    cwd                    1890/s                  92%                  --     -100%
-    getcwd 10000000000000000000/s 1018000000000000000% 529000000000000064%        -
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- git-send-email.perl | 2 +-
- perl/Git.pm         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 57911386835..0efe85c0b02 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -2020,7 +2020,7 @@ sub validate_patch {
- 			require Cwd;
- 			my $target = Cwd::abs_path($fn);
- 			# The hook needs a correct cwd and GIT_DIR.
--			my $cwd_save = Cwd::cwd();
-+			my $cwd_save = Cwd::getcwd();
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 5562c0cede2..090a7df63fc 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -405,7 +405,7 @@ sub command_bidi_pipe {
- 	if ($self) {
- 		shift;
- 		require Cwd;
--		$cwd_save = Cwd::cwd();
-+		$cwd_save = Cwd::getcwd();
- 		_setup_git_cmd_env($self);
- 	}
- 	require IPC::Open2;
--- 
-2.32.0.rc1.458.gd885d4f985c
-
+Thanks,
+-Stolee
