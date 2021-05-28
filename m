@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF9FDC4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 17:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1290FC2B9F7
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 17:22:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5BB9613B4
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 17:10:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6F5D613B4
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 17:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235671AbhE1RMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 13:12:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41290 "EHLO
+        id S231845AbhE1RY1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 13:24:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236940AbhE1RL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 13:11:56 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F2BFC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 10:10:19 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so4117525oth.8
-        for <git@vger.kernel.org>; Fri, 28 May 2021 10:10:19 -0700 (PDT)
+        with ESMTP id S229599AbhE1RY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 13:24:26 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E31A4C061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 10:22:50 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id w127so4929587oig.12
+        for <git@vger.kernel.org>; Fri, 28 May 2021 10:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=rT6AgbS2VS4QxYMuLkA2qwG5h5igYe5D/yJVwrjw80c=;
-        b=ryfx/msbEsSsjySKzTBZxo17PXqSPHtMKq9aH6g2kBmAQbZTsSKrw0dCxMTzMYcU/S
-         BOb50kpNi29mPWS24v4IyKg+LixrUB7eapyen/JS2DJfECN8Wt9UH9dAmayVY1ezFDtK
-         5LKCQTXtX1i2+ujmwtoTCPDoMHcNEjgz9jgcXR5PmMcxK93uGami77j1GXtDKzF/I/b+
-         M+8IGvKtuLA0pQrqsJWZq+gtaqxY2PiHZryuOVHhQ0rpeB7zCQvRWvI/QNvouo3NGw7o
-         +iL3qpfDuyciILDWrZcGINpQxCtjfeX30FsY6hMTlb16i43oSMUKa/ZYcLblwaLTd6tF
-         siMQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=yhScdywk4PnIZORepdj5E663b7EUA5RyXNvBYj3kzzc=;
+        b=WhZk3DF/EIaAkTsD/G0Gs4q1xZoaLx7ZDVywMJv9OuS1MkIcrBblktopGkAcpr0Pst
+         m8oWEVVzqtjQxAMLmEnaYiKzgxQluqEwZVsQfBGvcwMnnxlWAW4isASFBWgF68kU7z9m
+         yvjD0NbTRJZUn1aB2PZf6j4lMtrh8B1ZRYytuQsPyy4L68qAVVZE6YAlTaUY8rGsjY+h
+         t2lQRXYuKvqVwbZrTA02IK1S5KTIUhRpL8rXhFcvJptEJU2HD4sJDhfVjhi6QU3kN2IQ
+         RF4shOjvEPW7e2LtdnYkpCrTpJ23xyrbzsaPdG+UG7r72nH7+9c/fME6vdTXvGosM612
+         rXHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=rT6AgbS2VS4QxYMuLkA2qwG5h5igYe5D/yJVwrjw80c=;
-        b=MuhYuV06euLU0bPANuFr7NHFhGVgBmXefQ23LjLOBz9fKnG0tGZOo1zMchpxYItn//
-         dfr9ck/t1SxiHmuHoTog+r2PinzaRZlQIFG4UqUxKxG9G3sxPZSrYd3MtbkfFRfMSmut
-         PaYcz5gPx4N7bT1NHNZSGmxBl5bUu3by34/n6YfDIhfQg+uI/6Qd/oHGCR3ustO/wVVc
-         4pMy6Ojtzj8iAX9nqtNJKO0KjWyBXHjkb4CT0kC5VONfBf0Qpz2kWi8fFGBbK0wSIbIs
-         YBDwJ4ssmThY+8uB26VC2f7O7I8MhZzKzxiWofrqZXbXwY9bz0VnVvti/21LqRcN3jTW
-         YXCA==
-X-Gm-Message-State: AOAM533XBtWAS2nwTdKYdSL1aPEiy3fy76JDdVzf5OUnimLPW1Mb5H8s
-        I0OFqTkKg2y8es37eIaeyqDdDXv1HuIQPw==
-X-Google-Smtp-Source: ABdhPJxciulRtfkGqCWZj6fPQYAcjnfhJD/txQon0o0cI2jvZ5URazUg2JqH8shM54tDgr1OEXkdhw==
-X-Received: by 2002:a9d:3d4:: with SMTP id f78mr7770438otf.224.1622221818484;
-        Fri, 28 May 2021 10:10:18 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=yhScdywk4PnIZORepdj5E663b7EUA5RyXNvBYj3kzzc=;
+        b=hx81fF6BbUYZAW43JPO18uBSvCbSA+lOEI/5nBymV35nOdNBLnxWN+kyUxvdOX+KC4
+         P67i6OFEMFA7zAbPkjwnSyrgVKV48dRWgUrYBb67wms7nK9vUxNGxqL7UMzl36Yisv8J
+         DJBkrTEMy4dFQ/7aHrNPSy7b3CZ5Oq/WEAfOaH9KaPQrCI89bu/T6Bb7Afu7b0tXGBMm
+         uHCJV1gGe/dv2z0xeHEVB4ATjrPeiYynjSPgsH7JI+uP06yrQavoByABxkpAkxhpjfQj
+         lBm77opMnOtkrNp1JrausbR1baG9ubJSs5FVNA/37bUtrs784OPOTdydtY1ddg0onuZf
+         3p7A==
+X-Gm-Message-State: AOAM533/qljCraBKyqwz9ek2GQPxRsGC+9fmcP2YkJ/pWEUnaCF7hbpP
+        gGFAM36Ioljqkn5PREZvQQbza+9+vIE4hw==
+X-Google-Smtp-Source: ABdhPJyIAX6UzKiy/DDvvAT99Ork+bdiCbq8TnZflPT5r3cYcvHxndXpC6wS20twHW4Sr6ZIOFmesw==
+X-Received: by 2002:aca:120c:: with SMTP id 12mr6543836ois.42.1622222570360;
+        Fri, 28 May 2021 10:22:50 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id 65sm1258916otj.17.2021.05.28.10.10.17
+        by smtp.gmail.com with ESMTPSA id i2sm1254544oto.66.2021.05.28.10.22.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 10:10:17 -0700 (PDT)
-Date:   Fri, 28 May 2021 12:10:16 -0500
+        Fri, 28 May 2021 10:22:50 -0700 (PDT)
+Date:   Fri, 28 May 2021 12:22:48 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Mathias Kunter <mathiaskunter@gmail.com>, git@vger.kernel.org
-Message-ID: <60b123f8b0586_5190820868@natae.notmuch>
-In-Reply-To: <fcf30899-8e64-5417-f478-14d6aca72544@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Mathias Kunter <mathiaskunter@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Message-ID: <60b126e8cf42e_51908208d4@natae.notmuch>
+In-Reply-To: <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
 References: <3b9bc214-a30a-ba49-af96-7eeaf37b7bbd@gmail.com>
  <fcf30899-8e64-5417-f478-14d6aca72544@gmail.com>
-Subject: RE: git push doesn't use local branch name as default
+ <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
+Subject: Re: git push doesn't use local branch name as default
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -71,51 +74,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mathias Kunter wrote:
-> Felipe,
+Elijah Newren wrote:
+> > If there is no upstream, then there also is no "remote I normally pull
+> > from", and thus, according to the doc, `simple` should actually work
+> > like `current` in this case. Am I wrong here?
 > 
-> thanks for your reply.
+> The relevant code is
 > 
-> > Sounds like you want to change the default to `push.default=current`.
+>     return (fetch_remote && fetch_remote != remote);
 > 
-> Yes, but shouldn't `simple` pushing also work? The documentation says 
-> about `push.default=simple`:
-> 
-> > When pushing to a remote that is different from the remote you normally
-> > pull from, work as `current`.
-> 
-> If there is no upstream, then there also is no "remote I normally pull 
-> from",
+> so you only get the "current" behavior when fetch_remote is non-NULL.
 
-If there's no upstream the remote is "origin".
+fetch_remote is practically never non-NULL.
 
-> and thus, according to the doc, `simple` should actually work 
-> like `current` in this case. Am I wrong here?
+fetch_remote is remote_get(NULL), which is basically the equivalent of:
 
-Only if you are not pushing to "origin".
+remote_get(remote_for_branch(current_branch, ...));
 
-> If `simple` pushing is used, it doesn't seem to make sense for me to 
-> fallback to `current` on branches which *do* have an upstream, but to 
-> error out on branches which do *not* have an upstream.
+Typically when an upstream branch is not configured, this is the same
+as:
 
-That is not the criteria. It depends whether or not you are in a
-triangular workflow [1].
+remote_get("origin");
 
-If you pull from kernel.org, but push to github.com, then you are in a
-triangular workflow and the name of the branch is not checked.
+The only time fetch_remote is NULL is when the configured remote is
+invalid.
 
-The oposite is a centralized workflow, where you pull and push to the
-same repository, then git adds an extra check.
+So you don't get the "current" behavior when pushing to "origin".
 
-If you don't want to set `push.default`, you can alternatively rename
-your remote to something other than "origin", then your branches with no
-upstram truly would have nowhere to fetch from.
+Perhaps:
 
-But then `git fetch` without arguments will not do anything.
-
-Cheers.
-
-[1] https://felipec.wordpress.com/2014/05/11/git-triangular-workflows/
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -29,8 +29,8 @@ push.default::
+   different from the local one.
+ +
+ When pushing to a remote that is different from the remote you normally
+-pull from, work as `current`.  This is the safest option and is suited
+-for beginners.
++pull from (typically "origin"), work as `current`.  This is the safest option
++and is suited for beginners.
+ +
+ This mode has become the default in Git 2.0.
 
 -- 
 Felipe Contreras
