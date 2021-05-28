@@ -2,119 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18E0DC4708D
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C85CC4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:12:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF19E6135F
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:07:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38D23611C2
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbhE1VIz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 17:08:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37276 "EHLO
+        id S229559AbhE1VO3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 17:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbhE1VIy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 17:08:54 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B5ACC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 14:07:19 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id a13so139750oid.9
-        for <git@vger.kernel.org>; Fri, 28 May 2021 14:07:19 -0700 (PDT)
+        with ESMTP id S229481AbhE1VO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 17:14:29 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E7EC061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 14:12:53 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so4749886otc.6
+        for <git@vger.kernel.org>; Fri, 28 May 2021 14:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=53oSdmatW+NlPRXpqSeAw9mlVgOxyM4EokTFYNSpMyA=;
-        b=LcQPtqClD8+0IBtmtvUfUyYzFSr0OIoyq24xtNXSt1evieFYxLOJZ/OX61m4ELJCMf
-         sTBXb6LuNirOKDtCK7jp3JPzdk+EnKriW2tdkw5bdJ0nUUnGyNrmoMmYji3qtIKvTS67
-         NXQSE5ZpowOn+CJxX0j6NthaFvqpxlnI9x7Wa6SJl8c3L6xGlXGabuCAFD8qB7HMPDgR
-         XrfnKbCFcv8mYKqMgZyXpuMGur5f+qQcdL4ZIoZ2h5TJHZML6r5jTmnt7wmF37O1erMP
-         tPXDzkJTPIIYsi5eOA/qsidJYCqAGC1PZegiZMgUX4gedjtu0SrAS8X0Y1e/spHU9Vuf
-         LDWw==
+        h=date:from:to:cc:message-id:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=poiSkarFLlO7+vMMIbTxYiPzG53E9zJuDJiZBtMFn/A=;
+        b=eGqq2YKTWBjB/GhRde2+W5tomzKbsl8KTbOJ7/TIm6KpSUkN+AsgK3LGP9iGHmk0cQ
+         uRf1+LJE3sXTw10YL4e2g+f9pDt7eB3kNDkbXfTJsPsyaLXSbB0yjazfIiUBqkiiWLul
+         Zzx8+TwNBZ2hOBNksQVTlU0W+9oTCSy3nlZqRNa5j+nEDXm6KtfYoQx6aAs+nOvmo/aQ
+         RmqPCC7292ZxKwej8rJEoxsCKwas19qoQJwS1kY9mj5R82d1St3A8dgXSDExsvZZIWA5
+         pKQBsz9ATnWTqO18hXZV3djQ6Yw9Mr5FshyzPxVriEXmfcYxgxP/ue/OJDvn0bPDfapj
+         J7dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=53oSdmatW+NlPRXpqSeAw9mlVgOxyM4EokTFYNSpMyA=;
-        b=toaL3BP6S08LLVCytwUfgkLzYaPHQ71HZQwjlnckvaVqRvJhZCiTxk6dCl5mqdKP4V
-         eAPO265oV0UAEst7tntv44IKwjrcui5hx4F4FTJ8HZgTBPH2z0vD49ELAV5FId6vfMUS
-         TVlce5nrLLKiEWdrb0BB1dpIaVERMkqzQDcupgpuFNiRMS26iNHQ9Hzfs/eGC8NVUBbA
-         5d6S+nFicND37TMic4XAA/KfmOYM+4cQJsNXYEXMNLU1HV+Wer0Wi4WroYybjuCJMNJw
-         vEMu1Ai0QLTR0Ne/E1sPCnjiJQdsDUkQDvp//w9mL0JAZ4S6D6mVYQ2e4pziXGPg97EP
-         v/wA==
-X-Gm-Message-State: AOAM530oXvn+GkoMO2hY79FhtR04+7pEs/pRq4hdTA0Pl56jxbrgtd3k
-        lY2xwewgutjQQuPW3wAyy2TgjadJCVVStncRPw0=
-X-Google-Smtp-Source: ABdhPJzlRIRtoPzwVk7kHwiuXq78grkaK/7Dl+kWqnxo9eIFixTk9r+atZJDIEc03NwwCIID5WUNcj8W5xd1AhHXg1w=
-X-Received: by 2002:aca:30cd:: with SMTP id w196mr10135264oiw.167.1622236038421;
- Fri, 28 May 2021 14:07:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210528201014.2175179-1-felipe.contreras@gmail.com> <20210528201014.2175179-12-felipe.contreras@gmail.com>
-In-Reply-To: <20210528201014.2175179-12-felipe.contreras@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 May 2021 14:07:07 -0700
-Message-ID: <CABPp-BFsugBhk8-jkCpruFqn2W0aVjbyALwQgBYj56X9cf9vMw@mail.gmail.com>
-Subject: Re: [PATCH 11/11] doc: push: explain default=simple correctly
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Mathias Kunter <mathiaskunter@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramkumar Ramachandra <r@artagnon.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=poiSkarFLlO7+vMMIbTxYiPzG53E9zJuDJiZBtMFn/A=;
+        b=F6aX4QoshvXUdG59CCO7SxRi5AI7qVdxscAHuHJaMnybbSmanX9WPXXMKEX0GRch09
+         FOy2+Di60eg+yXZsu9eJVKrng9LNO9M5B9XYGpN/nb57FYBnxGtfwIdebbbVgyT/GTSu
+         9ENCsOanZPicTJtd+cQ86fIJ7ra1YdLDXzqBuob7EKS1rdl6FSijP4gB4L3jcHfHsskM
+         y45Ot2K3ZNxyAVSo1P8mKlrQoCc1EG9er4cshkJf7IAsr3yiKHBQClrTkJ+HCcz0Bcsp
+         ht+XO0IS7NqbLzY8c5Ahr1S75QCxRnEupfOIInLBWPMNorXjOvyE6ZgUDynRZ0v+2d/N
+         K5hw==
+X-Gm-Message-State: AOAM532fvWO3xu623PMg/qAFOczQoeMQqrbTC+YXh0Xcq/49hqHspVDk
+        CHRSvrkdMEzBIrxTGw9zRsc=
+X-Google-Smtp-Source: ABdhPJzBpE/uh+crmmRQmxbGb8qOj1rW2QVknR9WEYtQwuNatgdMRE1SybTJoMBBzNypTKUH32SwSw==
+X-Received: by 2002:a9d:491:: with SMTP id 17mr8795421otm.184.1622236372483;
+        Fri, 28 May 2021 14:12:52 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id u24sm1375487otg.73.2021.05.28.14.12.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 May 2021 14:12:52 -0700 (PDT)
+Date:   Fri, 28 May 2021 16:12:50 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Mathias Kunter <mathiaskunter@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Message-ID: <60b15cd2c4136_2183bc20893@natae.notmuch>
+References: <3b9bc214-a30a-ba49-af96-7eeaf37b7bbd@gmail.com>
+ <fcf30899-8e64-5417-f478-14d6aca72544@gmail.com>
+ <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
+ <f9f38d42-2b93-0d3b-798b-4c6f44eb111d@gmail.com>
+ <287483ba-d682-6d04-23fa-22c33ab70376@gmail.com>
+Subject: git push default doesn't make sense
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 28, 2021 at 1:10 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> Now that the code has been unconvolutized and it's clear what it's
-> actually doing, update the documentation to reflect that.
->
-> Namely; the simple mode only barfs when working on a centralized
-> workflow, and there's no configured upstream branch with the same name.
->
-> Cc: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  Documentation/config/push.txt | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-> index f2667b2689..632033638c 100644
-> --- a/Documentation/config/push.txt
-> +++ b/Documentation/config/push.txt
-> @@ -24,15 +24,14 @@ push.default::
->
->  * `tracking` - This is a deprecated synonym for `upstream`.
->
-> -* `simple` - in centralized workflow, work like `upstream` with an
-> -  added safety to refuse to push if the upstream branch's name is
-> -  different from the local one.
-> +* `simple` - pushes the current branch with the same name on the remote.
->  +
-> -When pushing to a remote that is different from the remote you normally
-> -pull from, work as `current`.  This is the safest option and is suited
-> -for beginners.
-> +If you are working on a centralized workflow (pushing to the same repository you
-> +pull from, which is typically `origin`), then you need to configure an upstream
-> +branch with the same name.
->  +
-> -This mode has become the default in Git 2.0.
-> +This mode is the default since Git 2.0, and is the safest option suited for
-> +beginners.
->
->  * `matching` - push all branches having the same name on both ends.
->    This makes the repository you are pushing to remember the set of
-> --
-> 2.32.0.rc0
+Mathias Kunter wrote:
+> However, the advised "git push <name>" command won't work on that branch 
+> with the default settings of Git. To make it work, `simple` pushing 
+> would have to use `current` behavior on a branch without upstream.
+> 
+> Please consider changing that. Thank you.
 
-Much clearer.  Well done.
+OK, after reorganizing the code to actually make it understandable [1],
+I ended up with this:
+
+	if (centralized) {
+		if (!branch->merge_nr || !branch->merge || !branch->remote_name)
+			die(_("The current branch %s has no upstream branch.\n"
+			    "To push the current branch and set the remote as upstream, use\n"
+			    "\n"
+			    "    git push --set-upstream %s %s\n"),
+			    branch->name,
+			    remote->name,
+			    branch->name);
+		if (branch->merge_nr != 1)
+			die(_("The current branch %s has multiple upstream branches, "
+			    "refusing to push."), branch->name);
+
+		/* Additional safety */
+		if (strcmp(branch->refname, branch->merge[0]->src))
+			die_push_simple(branch, remote);
+	}
+	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
+
+I agree this doesn't make sense.
+
+If this works:
+
+  git clone $central .
+  ...
+  git push
+
+Then this should too:
+
+  git clone $central .
+  git checkout -b fix-1
+  ...
+  git push
+
+Cloning automatically sets up an upstream branch for "master", and
+therore it passes the safety check of `push.default=simple`, and that is
+much more dangerous than pushing any other branch.
+
+Why do we barf with "fix-1", but not "master"? Doesn't make sense.
+
+This is what we want:
+
+	if (centralized &&
+		(branch->merge_nr && branch->merge && branch->remote_name))
+	{
+		if (branch->merge_nr != 1)
+			die(_("The current branch %s has multiple upstream branches, "
+			    "refusing to push."), branch->name);
+
+		/* Additional safety */
+		if (strcmp(branch->refname, branch->merge[0]->src))
+			die_push_simple(branch, remote);
+	}
+	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
+
+
+In other words: `simple` should be the same as `current`, except when
+there's an upstream branch configured *and* the destination branch has a
+different name.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/20210528201014.2175179-1-felipe.contreras@gmail.com/
+
+-- 
+Felipe Contreras
