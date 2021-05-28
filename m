@@ -2,272 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96042C2B9F7
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 13:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E088AC2B9F7
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 13:21:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 652DC613B4
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 13:02:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCE53611AB
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 13:21:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235709AbhE1NEN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 09:04:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42030 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234853AbhE1NEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 09:04:11 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207AEC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 06:02:35 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id g11so3238188ilq.3
-        for <git@vger.kernel.org>; Fri, 28 May 2021 06:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zBfr/5d7ZtN4LqrUlIUvgUJcPIpENJZgW8H1H15J8EM=;
-        b=H2ugpAj5so1+7u//bR9sq/TgoYaG6NK+vm5dgHUQQV+NyA3IcRb8DrczHXm6yosl2M
-         ckvqiA9iE8NfbzR2VocbZIcfg0NED+Yw5Q1boeAfs69jSUakGbnfL+w+kBQBm2ut2woF
-         r8jY0iRq1JlYuokz6Mg1/Sj4/FbOEXBu7iT9PcIw7N7nfI6jLlGPSAytRh0O+LS9IRVL
-         mpQh7cyTqqBXS/svrfRAbSCZWWHMpvvthX+Aw8XxLTizSmNtT4yabYRLSJc+X90KKrRX
-         jfr8Oi8FG1DaGkgDOZ2P59rkVSvHi/qmuQHNkNfzPldtxqVm5f0916lkpckhepvwbR7I
-         oaIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zBfr/5d7ZtN4LqrUlIUvgUJcPIpENJZgW8H1H15J8EM=;
-        b=Z4OyWYkpvitBDdy9S4oiWoKLFemhBNJK45j1453TXX5UMqVINZnQSQiObENYUVGC9F
-         tMSyUtQaEOcOlo+szRNFhbliwKlMXsbqoR9QaXW3uJiR78sZeZyR0CRd6qvMpIFY2PA6
-         TUtQP1egimM2/CEb7VmS4imXjt4eyjd+Io8MVySlcYSrExbbDs1Xoel47KB3xvHsjcvW
-         bNAs8+pM3pxdGMmEtbg6t7LUHwrLhTYsBs71Ptf8E/5Jo7sG9+9c18PhqyCVzgZBQHH3
-         Q+CfgrmC4H5jN5miZU/96uKqehDLBJgsasVl6Lx4RlRVB70w3HM6G8AS3h67oqOIdAs2
-         8xrw==
-X-Gm-Message-State: AOAM533UaeDX5vsu4JE9g8W3P7D1lfS9f9Z9sVvhXdLwqsEpcZd1FNb3
-        utd3YSiTZ0yvW04GMb8Nyp3DE6j17blJmkM4SSo=
-X-Google-Smtp-Source: ABdhPJzgIIlFiEWE9pcd9h6f9Acj+L1VGsPPl1Fw4T8x/2wGJzlHIRkxXNJtW4sApfiwLvYHT7iuJoU2Q3dho7dk3k8=
-X-Received: by 2002:a92:c7ab:: with SMTP id f11mr5787971ilk.174.1622206954466;
- Fri, 28 May 2021 06:02:34 -0700 (PDT)
+        id S235393AbhE1NXY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 09:23:24 -0400
+Received: from mout.gmx.net ([212.227.15.15]:36861 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230512AbhE1NXX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 09:23:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1622208107;
+        bh=uVouh+ux/lKNL2rClvjA7N4CNN8YnHkE/4WO+v5ghVY=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=bPXkfz6LGrowPAO2IGrYTfNzqCjh7e4L4JtbVPFqROxCrqyO12N+uT2W3qX0I81L+
+         DAj0lSAQcQJxv5+DLnpC8LvchRGJPJ0n3vK6+4ZuvRE0LVumugh4ShLo2DGlsFmYqA
+         w02qo6+sVxhIVEV+Sc7Nl9AVeZUBMdCVgky5YIhg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az54-702.icfvhty2ri0etlcdmbrxxowyfh.xx.internal.cloudapp.net
+ ([40.65.99.241]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MTiPv-1lysTv3fzR-00U5xr; Fri, 28 May 2021 15:21:47 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.32.0-rc2
+Date:   Fri, 28 May 2021 13:21:43 +0000
+Message-Id: <20210528132143.4906-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.31.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
- <b3848f24f2d3f91fc96f20b5a08cbfbe721acbd6.1622126603.git.gitgitgadget@gmail.com>
- <60afca827a28f_265302085b@natae.notmuch>
-In-Reply-To: <60afca827a28f_265302085b@natae.notmuch>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 28 May 2021 21:02:23 +0800
-Message-ID: <CAOLTT8RbVsZuAwUZ-yn_Wwnvq7qyziA=4z=skMoGdPCTdQ5KPw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] [GSOC] ref-filter: add %(raw) atom
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fcc:    Sent
+X-Provags-ID: V03:K1:n37XmYsVcO/7iZiB7y6p1rGjFrXu6KHTS1nOx6h2Dd/PU4gLjn7
+ FyQxPwmRtXhUmTeZy6FNMHlGjHrORU3eV71++E0LTmiECnpv4hts0YAx9b74HhKgOcoZ4ia
+ rEfQKfj0mzDz+z5q2z0SZ9AsIpeOzPlBZS/XH0+jKzTKeEn+SwHUr2Rj2Vus/dmO75gyk2a
+ sTjjV9MFnW4ch8mK37cRg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vml01gdY/ys=:ArLcdn5aJ3Dz3VQhGb2Awq
+ qk0znL/nVaV6NRuU/uyhtS3pOo2yg6HGTc/8bnLcGG4rhwW+cBlKW0DuqSbEIzZrFTWLyVbgP
+ Klj+X4rZikUeSk2xE246jRM6WVRoZCu5osKnS8HWqLi91MNXy6kmfUe0GS1X1YEDtjjgbqBBo
+ 9eMMzjdp4ZOXpZQBLYNnOAyZ/RUUDIH9bgzY3W9IPxhTONIhUB2bziLM7+X8T62RgxwS64P/Y
+ sPXUY1O4SGzMw1hnc3B1OMtWV6FGKPObrm//SwHroaApVUszCryvgNWvXlFp229Lz2yzQP+MQ
+ lMBS3hxxxs/G21obLutskRUnFgx1uAXBp4L80sdQBK/zLz+837cqzgILHzprNQoGSSReoSi3N
+ uBc4M6Za43laHHBfNIaOUyEwV1QQIKAbHlXuhGqapVNRmF87szmzQwQQJIMgF0ZeEv95iJLXq
+ 1MpU46ZrbyeQjXNIaP1uPWyHVtWBF7ywc5tzhNmVNqgKq6BwQ8L3MVqGbwFVxRri6m67EkA8G
+ I2qBGiXe5DONReuUgueVsjNWBQdq3IUOKHRwOD4hS/lAF+lK+st1lDb+6VMUIZE/smLb1sRRJ
+ YFYvCLNIE6NIQ3oEyyPpRx1M1D69FuQgX6j36KXVSPDccrHLJRG0RpvLoQ8kwT+3dr+Bcq8K9
+ OAK3r4cdq0rvXcoKLDcT/cMPvPH1eLnPrtdoyuGWAbKoompPs+iIta703dGa8BPT/KSaLHV88
+ UaKPCEV/5g10e/VA6SX4HiacYVH2UW4e/aNRmwvY7pwUrII4aece+dYTNyxcUlwTigpMRiTIr
+ tJG+KuQvM9jh16ZNZ9/pymbRyHFZ6B+5GBoxgvd9zRb9KEq9ffdHI5C1mxwe/MkXp/UtWfU6D
+ QwgOgQBGkoIHxXS9eHm1YD1FyjdWuOEoM5Jx0AkwQ0OyBg/HrFNAqRZq1UyVmgkeNEZvXoxtH
+ eAKUHr6z0XI9gOqrVPHUHDGPAVHF6X5Oq43kQNnBJjMWCR9ursyPI6Q/nhB8sXwrdmnCYOOdq
+ KkXed1ZHJwHU3QnbvRQEDqFkN42k66BdlyIb6gPEgcBdqUGb7m8Pwz8bmvQSdrFsitdaf52QO
+ 05tt9L/Auluf339iaIyjc+ecJlw/A3q1rrkgpuwabe4cElqK8dUQy8zICmXv552Jc0PenXnB1
+ zEZwjj+JTURCWkxA8Av5q6p5MXMixUGyZneU2l7bu6m8qI2vDxFt4EhESi9L1lOZEJuZ2gNKo
+ 16ALvmIBWyjZZrkkz
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=
-=8828=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=8812:36=E5=86=99=E9=81=93=
-=EF=BC=9A
->
-> ZheNing Hu via GitGitGadget wrote:
->
-> > +static int raw_atom_parser(const struct ref_format *format, struct use=
-d_atom *atom,
-> > +                             const char *arg, struct strbuf *err)
-> > +{
-> > +     if (!arg) {
-> > +             atom->u.raw_data.option =3D RAW_BARE;
-> > +     } else if (!strcmp(arg, "size"))
->
-> No need for braces.
->
->   if (!arg)
->     ...
->   else
->
+Dear Git users,
 
-I sometimes forget this detail, I will pay attention.
+I hereby announce that Git for Windows 2.32.0-rc2 is available from:
 
-> > @@ -1307,10 +1349,22 @@ static void grab_sub_body_contents(struct atom_=
-value *val, int deref, void *buf)
-> >                       continue;
-> >               if (deref)
-> >                       name++;
-> > -             if (strcmp(name, "body") &&
-> > -                 !starts_with(name, "subject") &&
-> > -                 !starts_with(name, "trailers") &&
-> > -                 !starts_with(name, "contents"))
-> > +
-> > +             if (starts_with(name, "raw")) {
-> > +                     if (atom->u.raw_data.option =3D=3D RAW_BARE) {
-> > +                             v->s =3D xmemdupz(buf, buf_size);
-> > +                             v->s_size =3D buf_size;
-> > +                     } else if (atom->u.raw_data.option =3D=3D RAW_LEN=
-GTH)
-> > +                             v->s =3D xstrfmt("%"PRIuMAX, (uintmax_t)b=
-uf_size);
->
-> I think it's better to be consistent: if you used braces in the if, uses
-> braces in else.
->
+    https://github.com/git-for-windows/git/releases/tag/v2.32.0-rc2.windows.1
 
-OK.
+Changes since Git for Windows v2.31.1 (March 27th 2021)
 
-> > +                     continue;
-> > +             }
->
-> > +static int memcasecmp(const void *vs1, const void *vs2, size_t n)
->
-> Why void *? We can delcare as char *.
->
-> > +{
-> > +     size_t i;
-> > +     const char *s1 =3D (const char *)vs1;
-> > +     const char *s2 =3D (const char *)vs2;
->
-> Then we avoid this extra step.
->
-> > +     for (i =3D 0; i < n; i++) {
-> > +             unsigned char u1 =3D s1[i];
-> > +             unsigned char u2 =3D s2[i];
->
-> There's no need for two entirely new variables...
->
-> > +             int U1 =3D toupper (u1);
-> > +             int U2 =3D toupper (u2);
->
-> You can do toupper(s1[i]) directly (BTW, there's an extra space: `foo(x)`=
-,
-> not `foo (x)`).
->
-> While we are at it, why keep an extra index from s1, when s1 is never
-> used again?
->
-> We can simply advance both s1 and s2:
->
->   s1++, s2++
->
-> > +             int diff =3D (UCHAR_MAX <=3D INT_MAX ? U1 - U2
-> > +                     : U1 < U2 ? -1 : U2 < U1);
->
-> I don't understand what this is supposed to achieve. Both U1 and U2 are
-> integers, pretty low integers actually.
->
-> If we get rid if that complexity we don't even need U1 or U2, just do:
->
->   diff =3D toupper(u1) - toupper(u2);
->
-> > +             if (diff)
-> > +                     return diff;
-> > +     }
-> > +     return 0;
-> > +}
->
-> All we have to do is define the end point, and then we don't need i:
->
->         static int memcasecmp(const char *s1, const char *s2, size_t n)
->         {
->                 const char *end =3D s1 + n;
->                 for (; s1 < end; s1++, s2++) {
->                         int diff =3D tolower(*s1) - tolower(*s2);
->                         if (diff)
->                                 return diff;
->                 }
->                 return 0;
->         }
->
-> (and I personally prefer lower to upper)
->
+New Features
 
-Sorry for the weird, unclean `memcasecmp()`, I referred to memcmp()
-in glibc before, and then I was afraid that my writing was not standard
-enough like "UCHAR_MAX <=3D INT_MAX", I can't consider such an
-extreme situation. So I copied it directly from gnulib:
-https://github.com/gagern/gnulib/blob/master/lib/memcasecmp.c
+  * Comes with Git v2.32.0-rc2.
+  * Comes with Git Credential Manager Core v2.0.452.3248.
+  * The installer now offers to install a Windows Terminal profile.
+  * Comes with cURL v7.77.0.
+  * Comes with PCRE2 v10.37.
+  * The experimental, built-in file system monitor is now featured as
+    an experimental option in the installer.
 
-> Check the following resource for a detailed explanation of why my
-> modified version is considered good taste:
->
-> https://github.com/felipec/linked-list-good-taste
->
+Bug Fixes
 
-OK. I will gradually standardize my code style.
+  * When testing a custom editor in the installer, we now spawn it in
+    non-elevated mode, fixing e.g. Atom when an instance is already
+    running.
+  * The meta credential-helper used by the Portable Git edition of Git
+    for Windows sometimes crashed, which has been fixed.
+  * The auto-updater no longer suggests to downgrade from -rc0 versions
+    .
 
-> >  static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_ite=
-m *a, struct ref_array_item *b)
-> >  {
-> >       struct atom_value *va, *vb;
-> > @@ -2304,6 +2382,7 @@ static int cmp_ref_sorting(struct ref_sorting *s,=
- struct ref_array_item *a, stru
-> >       int cmp_detached_head =3D 0;
-> >       cmp_type cmp_type =3D used_atom[s->atom].type;
-> >       struct strbuf err =3D STRBUF_INIT;
-> > +     size_t slen =3D 0;
-> >
-> >       if (get_ref_atom_value(a, s->atom, &va, &err))
-> >               die("%s", err.buf);
-> > @@ -2317,10 +2396,32 @@ static int cmp_ref_sorting(struct ref_sorting *=
-s, struct ref_array_item *a, stru
-> >       } else if (s->sort_flags & REF_SORTING_VERSION) {
-> >               cmp =3D versioncmp(va->s, vb->s);
-> >       } else if (cmp_type =3D=3D FIELD_STR) {
-> > -             int (*cmp_fn)(const char *, const char *);
-> > -             cmp_fn =3D s->sort_flags & REF_SORTING_ICASE
-> > -                     ? strcasecmp : strcmp;
-> > -             cmp =3D cmp_fn(va->s, vb->s);
-> > +             if (va->s_size =3D=3D ATOM_VALUE_S_SIZE_INIT &&
-> > +                 vb->s_size =3D=3D ATOM_VALUE_S_SIZE_INIT) {
-> > +                     int (*cmp_fn)(const char *, const char *);
-> > +                     cmp_fn =3D s->sort_flags & REF_SORTING_ICASE
-> > +                             ? strcasecmp : strcmp;
-> > +                     cmp =3D cmp_fn(va->s, vb->s);
-> > +             } else {
-> > +                     int (*cmp_fn)(const void *, const void *, size_t)=
-;
-> > +                     cmp_fn =3D s->sort_flags & REF_SORTING_ICASE
-> > +                             ? memcasecmp : memcmp;
-> > +
-> > +                     if (va->s_size !=3D ATOM_VALUE_S_SIZE_INIT &&
-> > +                         vb->s_size !=3D ATOM_VALUE_S_SIZE_INIT) {
-> > +                             cmp =3D cmp_fn(va->s, vb->s, va->s_size >=
- vb->s_size ?
-> > +                                    vb->s_size : va->s_size);
-> > +                     } else if (va->s_size =3D=3D ATOM_VALUE_S_SIZE_IN=
-IT) {
-> > +                             slen =3D strlen(va->s);
-> > +                             cmp =3D cmp_fn(va->s, vb->s, slen > vb->s=
-_size ?
-> > +                                          vb->s_size : slen);
-> > +                     } else {
-> > +                             slen =3D strlen(vb->s);
-> > +                             cmp =3D cmp_fn(va->s, vb->s, slen > va->s=
-_size ?
-> > +                                          slen : va->s_size);
-> > +                     }
-> > +                     cmp =3D cmp ? cmp : va->s_size - vb->s_size;
-> > +             }
->
-> This hurts my eyes. I think the complexity of this chunk warrants a
-> separate function. Then the logic would be easer to see.
->
+Git-2.32.0-rc2-64-bit.exe | 6aeaa999d894fa636ab9ac9080ef6ec44dd9a4165422cbfcfd61707376325c18
+Git-2.32.0-rc2-32-bit.exe | 70e8f7b151ff3d83b2cabcd67fa92cb24e445a5f1288711669c590c60294ffa3
+PortableGit-2.32.0-rc2-64-bit.7z.exe | ccc3c3a90a66d25dff7b79c8321bcf1cb84d8a7a35907c677616850e39efa08b
+PortableGit-2.32.0-rc2-32-bit.7z.exe | aa14f3633333097160814e14347f0b450b7f209acd07c382cd8c59a2f1142e12
+MinGit-2.32.0-rc2-64-bit.zip | f0bbff20636b9571f8824fad7ba7c5cd5b0950bd7a102e90e11b31d87eb3ca0d
+MinGit-2.32.0-rc2-32-bit.zip | 0250c8f5e6681a5ebc303b03632263302b5ba57d87fe83181727944fdaea3e06
+MinGit-2.32.0-rc2-busybox-64-bit.zip | 880ba45f0b3e9194a6f3ebd0f22b71da384edc4cd3de81c1da122ff9df327fbf
+MinGit-2.32.0-rc2-busybox-32-bit.zip | b936bd62f50cb903002d14c270568df861d93b6eb1a515f457b790e6cdf8e70f
+Git-2.32.0-rc2-64-bit.tar.bz2 | 9f43324b42be7faa6a051f823fcec1cb05616e66846d995a0183d959761c85c4
+Git-2.32.0-rc2-32-bit.tar.bz2 | 286f45e4834edd0497b75dea39a6bcde2f909f49596666fa04bdf196d5d8bf0b
 
-Fine. This piece of the situation is a bit complicated...
-
-> Cheers.
->
-> --
-> Felipe Contreras
-
-Thanks.
---
-ZheNing Hu
+Ciao,
+Johannes
