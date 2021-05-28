@@ -2,107 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63103C4707F
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 01:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C84BC4707F
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 01:32:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 319756135C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 01:26:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26ECE613B6
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 01:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235610AbhE1B2b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 May 2021 21:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56130 "EHLO
+        id S235818AbhE1Bdz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 May 2021 21:33:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233887AbhE1B2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 May 2021 21:28:30 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0207EC061574
-        for <git@vger.kernel.org>; Thu, 27 May 2021 18:26:55 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id x15so2700590oic.13
-        for <git@vger.kernel.org>; Thu, 27 May 2021 18:26:55 -0700 (PDT)
+        with ESMTP id S235598AbhE1Bdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 May 2021 21:33:53 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCB9C0613CE
+        for <git@vger.kernel.org>; Thu, 27 May 2021 18:32:19 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id j184so2686666qkd.6
+        for <git@vger.kernel.org>; Thu, 27 May 2021 18:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=k6AR0jJFNkmTmviZbY+4AqwoqQ8kDS4lAjPQInI5Orw=;
-        b=uTvL5VC8/1o/2/U1E1JCZbso6faSuu39JkwB0l3/40oZwYY4qsQqYdkrBgIsq7bx8u
-         CBvecf0hKaVS/B7VnJZksZDK/XdKH697ceoNqUzpZMP5KFy456427yaKFNnlhyHgiq/J
-         0Z81ejvy9SwjlEvAoKHKyc+TCimyCK0+CIkeZtv0IZqpPX9a48C9B8YVEvQodG9nH1dZ
-         gavaDcC92WBhsmdyd0x4j4NaGPDe1mHjj8zlViQA7WENLRP9/UcrHO8R6wrdHWS3trG2
-         o7+nf7NrCRsQUsEmybWCmzOfnvtbDRa3Oh9rvcoYS0Xa4ztM8QNu0oLpb5Ulb7NsZ+Nx
-         CRlQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vyAV31cV3PvZDqSDE7+YeZooKZx/xDcN6j/i3DBoY20=;
+        b=zTuC0Wf8VY6wPFyxuj98XGMem3VxvHu886aT8G8eQsRZ/BniHzfzjvYfe39Dbv8V1C
+         9RDLpso9LSS3AKbqTqSd1+i43UnZTuxk7bYiOVuQCH7bMSADfAJJuibdkGXXxaJPR3Lk
+         OudR7J1axe3gZhCaqfazh1Mcifure8N/cmRP2c8DUbjO5N1GBsSWMwiFu4CVkSfP6N2T
+         JfFvYd+nIYnl4L5OQLXykUEYeaq9l/RtpIf7seOhi38wwGfENWbLb0cDo7VEwvrcbJPj
+         cJ8QuKbJpAVBOj+NEERHGbeVEVj0LAtO3K/9TMPLINcgzNBYzcb6Etg2cJTXBd8SR+EY
+         OHZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=k6AR0jJFNkmTmviZbY+4AqwoqQ8kDS4lAjPQInI5Orw=;
-        b=Sv6Oq+0HI7nJX7yI4rWEfREzUDRop7oSw9duGbI3NshrMLBD5PMCWtXSfeoWt8kJD7
-         5ozijo6yMZtsaWj+Je997INQV4eDTvFcoW5sWha296dhwbk4jEOjsL9YOmUA1mxV9bZ2
-         c24NEwf0rfEwc1WZx6OMBREFIAumZTsdPgTLtfEkgLvtCRjg2XOGqPv8Xu8FAHYVkMMA
-         yyvOKnUya1zFzXtdBAkmGsswp4QuiVHFdNtOKzwY6wwBgB0fL5wVTgqoLr6rcGlN14so
-         1HcL/pShf09QOSBC/Y3SU366+eQDwOkcVoWwo9zYQK41L9ujCN3q75qv2ktxJ3JU2OS+
-         mlcw==
-X-Gm-Message-State: AOAM533dYdbbCKE/lNPneBXNKa60NCp49Y9nHe341mSm8RBasEkvnHWM
-        6zxKJcPL7lk7nuGfsLgxAqY=
-X-Google-Smtp-Source: ABdhPJxuzlrrZkD+8C5lAETQa8AdGN2F9G0M8Im+HuV4OhtMT36lyt7loskkj5zdPhmGiVfPMSV5qA==
-X-Received: by 2002:a05:6808:b08:: with SMTP id s8mr7082112oij.162.1622165215320;
-        Thu, 27 May 2021 18:26:55 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id z9sm822131oog.25.2021.05.27.18.26.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vyAV31cV3PvZDqSDE7+YeZooKZx/xDcN6j/i3DBoY20=;
+        b=qiTaZTCXccKvIbhCHr0TCqMJgIx0ac6v/ZFYX6KMakpWbfr6wNJF/Vbf9U+49SG3ZV
+         RddwMTv9umA8cpbetDNe+wBCqzXQxRTK4VKg2Bni0lD8P3aIjXXRGvgnv8DToMWo0Xmu
+         Rro+8pSlsEcFGH0i6pBPz+8sOnEjTdhwPAr7L5S0FsByHwNqqTBn4wnWIbVYiSFrMMJg
+         nthRXcRirPxl+OHLT+OWIZ8uTwVPGTMLSdbk/Y0bS4q0Lm/bYcQCmsJRQBVRcXXJ+ACk
+         uJkodhGVfChew7DL60eRw5c62C+oteFW2M5LM9nG61fTXLBKQu3y1K2hD/1/ioo3ZMJD
+         9T1A==
+X-Gm-Message-State: AOAM530Wv7Bwto/oSbu3+2qE5ThkwXdceVyId8H19IQ9F3OjRy+I+1J2
+        ukC7Te+uQLUYudeBOYPBDX3vPA==
+X-Google-Smtp-Source: ABdhPJx2rg0yzF7y38HCIgYv2gvqPu076UTGVkRMEKvCzaQBqoSRy/R97J1KDYu7vvElULFvQ9Z8jw==
+X-Received: by 2002:a05:620a:44c3:: with SMTP id y3mr1502636qkp.393.1622165538504;
+        Thu, 27 May 2021 18:32:18 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:e878:3e85:58af:261f])
+        by smtp.gmail.com with ESMTPSA id b123sm2606661qke.87.2021.05.27.18.32.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 May 2021 18:26:54 -0700 (PDT)
-Date:   Thu, 27 May 2021 20:26:53 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
-Cc:     Kevin Daudt <me@ikke.info>, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Git List <git@vger.kernel.org>
-Message-ID: <60b046dd3f5f2_40592208df@natae.notmuch>
-In-Reply-To: <87im33ltqr.fsf@evledraar.gmail.com>
-References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
- <YKViF9OVLeA95JPH@google.com>
- <20210520071141.GZ8544@kitsune.suse.cz>
- <YKaaBj0KmJ3K5foC@coredump.intra.peff.net>
- <YK6XvmrtrdkJvsnI@nand.local>
- <YK6o/j7P0JIGW0Q0@alpha>
- <7e9683aee2c0fea2ff77b82bfa547e15@jk.gs>
- <87im33ltqr.fsf@evledraar.gmail.com>
-Subject: Re: Should we do something with #git-devel on Freenode?
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Thu, 27 May 2021 18:32:18 -0700 (PDT)
+Date:   Thu, 27 May 2021 21:32:16 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/5] merge-ort: replace string_list_df_name_compare with
+ faster alternative
+Message-ID: <YLBIIL+yShDVlWo5@nand.local>
+References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
+ <5055dfce32815c8c8ec250457df389d4cd02ee12.1622104642.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5055dfce32815c8c8ec250457df389d4cd02ee12.1622104642.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Thu, May 27, 2021 at 08:37:17AM +0000, Elijah Newren via GitGitGadget wrote:
+> -static int string_list_df_name_compare(const char *one, const char *two)
+> +static int sort_dirs_next_to_their_children(const void *a, const void *b)
 
-> I don't see why we'd advertise #git@liberachat and not #git@freenode in=
+I looked at the new implementation of this function (and
+df_name_compare() to double check it) and am convinced that it's
+correctness, with the exception of one question.
 
-> order to achieve that goal, the latter doesn't seem to be a graveyard
-> and is probably still more active. I don't see why we'd need to pick
-> between the two, any more than we'd pick between advertising
-> #git@liberachat and the git-users mailing list. Both currently seem lik=
-e
-> useful venues for git users to go to get help.
+Some thoughts I had while trying to make sure this was all OK:
 
-Agreed.
+> +	const char *one = ((struct string_list_item *)a)->string;
+> +	const char *two = ((struct string_list_item *)b)->string;
+> +	unsigned char c1, c2;
+> +
+> +	while (*one && (*one == *two)) {
+> +		one++;
+> +		two++;
+> +	}
 
-The primary purpose of an IRC channel should be to help users, and if
-right now the person that could help a user is on freenode, so be it.
+Advancing 'one' and 'two' to point at either the end of 'a' (and the
+same position within 'b'), or the first place where the two have
+different characters. If 'b' is shorter than 'a', '*one != *two' will
+terminate the loop (since '*two' will be NUL, and '*one' will not).
 
-If the people with some political alignment want to emphasize
-LiberaChat, that's fine, but keep mentioning freenode.
+> +	c1 = *one;
+> +	if (!c1)
+> +		c1 = '/';
+> +
+> +	c2 = *two;
+> +	if (!c2)
+> +		c2 = '/';
 
--- =
+Store off the last character of each, or '/' if we got to the end. Hmm,
+is this right (the guard in 'df_name_compare()' read 'if (!c1 &&
+S_ISDIR(mode1))'). Suppose both strings were "foo", then both c1 and c2
+would be "/", and I think we would return -1.
 
-Felipe Contreras=
+That doesn't seem quite right to me. I think it *would* be right if we
+checked the mode of each entry before assigning c1 or c2 to '/',
+though. (Being generally unfamiliar with this area, I haven't looked to
+see whether getting access to the modes of each entry at this point is
+easy or not).
+
+> +
+> +	if (c1 == c2) {
+> +		/* Getting here means one is a leading directory of the other */
+> +		return (*one) ? 1 : -1;
+> +	}
+
+> +	else
+
+I did find this spacing awkward (would have expected '} else' or even '}
+else {'), but it hardly matters.
+
+Thanks,
+Taylor
