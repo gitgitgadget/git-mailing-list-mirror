@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B8AC4708E
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2097CC47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3858611BD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06673611C9
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236367AbhE1MN2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:13:28 -0400
+        id S236437AbhE1MNa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:13:30 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236290AbhE1MNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 08:13:21 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDBCC06174A
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:46 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id x7so3047525wrt.12
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:46 -0700 (PDT)
+        with ESMTP id S236302AbhE1MNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 08:13:23 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BFCBC061760
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:47 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id r10so3046106wrj.11
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qh1W8CHM+5quh8R+f13/jE7JfhopytkR4b/WfPwdz7g=;
-        b=odVmvP/64er/FdFtlZDDB91St65WFU8pPdorAWrVGLbq2IxuuD16MM6rsksVH+Va5i
-         Ex9rW5FdBM3KPt5J++eFvNygBZS4QNW24TevuJErDq2ROFszTlCuJfIcMRC8oLDVou3x
-         cGZt+MlLuoD5tHjWum1hznBmXG8rwy5nnERwXu6jzoD6H8SkTWIcQTjX1L4EUWl9GRoc
-         vUlKmv/fL+bYJMl3nExu/PwlRxV2W9G1xk19UkTlgoz5EsZkHiyg5/i3X43+eQ13CGoq
-         MtuitHnrx+TUgvC1VZoqW5FkuIjHdRbgOnvGmuX0gLW4gSY5PnLBK9bzcNPVeT908fyk
-         355Q==
+        bh=fMxzbAjD2oqFrcGDtoYjkHgDGiS+DZ0Z8CPr+qlbeUA=;
+        b=U/irqKXN/UVDRgcdZscjQjo2kBey53NsOhYF7uXzufyYmvct1NpPD78otDpH9SdZN1
+         Buh4oAniJr3jTh71ZLOVxuOxJvdQ0qDBgq7lK1aB4o3yJ1kJEzRrVzt6yEs2p6Lug8in
+         vGXUN79GA2MnvKREiDoiO0Mgjg6lWYW7fzij4V8CfO5YRrVLasd91M333l4sImEt59tz
+         CYi1ri78+EoaCTD19arLd56tI3tFZ6g5t6QRDSeclEXFgo7bhTx72TgFC9S7VKnNJBAu
+         wcguFpe7xMtTz2bFfpYCjzW8NNdcB5A3n9HcqEQcR/ll7MmTeY7oEY8K6NygAjoGWzjo
+         zuIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qh1W8CHM+5quh8R+f13/jE7JfhopytkR4b/WfPwdz7g=;
-        b=SHXdVyXcSwVVPx+nwQRpTqOUFH0hY4eQ2+Mu+vdylGDfk6adn7KnxnXfdHmR9CDTw6
-         PdKbvIbQ3AeV+rHwhMfBKkNY30MRlFYlEclBBekhP6LK1CpxWSba/8KIUmLabzJP8uS2
-         eCEtGQnr4NbRHPl3LI4GQO08QmI/ON1jItZyX19h5GbvXACCHfaVbUXvNvtalExWG+tg
-         n2qU+1hXfQOod426znkEirZAQ6EFBK5YkKVbuoxQHENIiliKiIGylPBD45l/Kx2/zSGs
-         8ibxPa3eIU5CuSzDjXFz3GPwyLHzmxjQH7l558l7sjk0U4s9qnErwv5FOSiCejiBxkVp
-         98eA==
-X-Gm-Message-State: AOAM532cFdcNLR2RzSCzluX1+9pJ6AV19OPixvsRKYfiaD5HouN8Zr/J
-        2sR7zaU17ORrbRGQT/zSoyf9frA7xGXLlQ==
-X-Google-Smtp-Source: ABdhPJyEkWHn1F94NIRZFKpvMJ/FOwFqUCXmLX6E2kQZ7o+5zUutq2xT9lLjqButNCTCJ0ngfmU3KQ==
-X-Received: by 2002:a5d:438c:: with SMTP id i12mr8171587wrq.44.1622203905046;
+        bh=fMxzbAjD2oqFrcGDtoYjkHgDGiS+DZ0Z8CPr+qlbeUA=;
+        b=rUal3sXpF8XxDLhUywMdoBpjULtoUHOpvAIPT2az77sYTdU/QILwtpoZVwchpYPxaX
+         8p4eCLCyihjl4m0OjGJGIktkvPh22ShOq9/mnHd9LU0CywMbloTLjEqUdkjVkis71Mtf
+         Ia3RRXblNqc1kPNRtiCBbCg8rhXvAZ2kN80Fmw+TNqRWkl3r0cim0dnT76jbgz6dZ74J
+         4VDhKOu4OuJxkL976FO1XBXO/sRSc92N49EgzHsiZkpo9ySlHpJfpp5etWvpIW55LSlD
+         Uef8x4IiQxZ1FamFLnR62S5s0OZ7qQX0ysxUCSCoierTYzB92lf+ztGW36b0My7UlUj1
+         TRcQ==
+X-Gm-Message-State: AOAM530dMyu8LfmBkl8elnB4uvnBipa/2DU3eJNpyWTf92/SJP7VQ3b3
+        0ROTS+A/N4HDvPFV3r9kmwPskKmHaiZIYQ==
+X-Google-Smtp-Source: ABdhPJx5+A6zhtg+QtXNqtKojNJQKKj+0UH2FQ9kHcjI/V0bQDmkSNWGrmYwt2C7WckhALQMIT7EXg==
+X-Received: by 2002:a5d:66cc:: with SMTP id k12mr2805026wrw.185.1622203905937;
         Fri, 28 May 2021 05:11:45 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.44
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:11:44 -0700 (PDT)
+        Fri, 28 May 2021 05:11:45 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 05/31] hook.c: add a hook_exists() wrapper and use it in bugreport.c
-Date:   Fri, 28 May 2021 14:11:07 +0200
-Message-Id: <patch-05.31-a6f0817ad81-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 06/31] gc: use hook library for pre-auto-gc hook
+Date:   Fri, 28 May 2021 14:11:08 +0200
+Message-Id: <patch-06.31-b186fde43e1-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,63 +84,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Add a boolean version of the find_hook() function for those callers
-who are only interested in checking whether the hook exists, not what
-the path to it is.
+Using the hook.h library instead of the run-command.h library to run
+pre-auto-gc means that those hooks can be set up in config files, as
+well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/bugreport.c | 2 +-
- hook.c              | 5 ++++-
- hook.h              | 5 +++++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ builtin/gc.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 596f079a7f9..941c8d5e270 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -82,7 +82,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- 	}
+diff --git a/builtin/gc.c b/builtin/gc.c
+index f05d2f0a1ac..a12641a691d 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -32,6 +32,7 @@
+ #include "remote.h"
+ #include "object-store.h"
+ #include "exec-cmd.h"
++#include "hook.h"
  
- 	for (i = 0; i < ARRAY_SIZE(hook); i++)
--		if (find_hook(hook[i]))
-+		if (hook_exists(hook[i]))
- 			strbuf_addf(hook_info, "%s\n", hook[i]);
- }
+ #define FAILED_RUN "failed to run %s"
  
-diff --git a/hook.c b/hook.c
-index 06842f50e5c..c7da273822d 100644
---- a/hook.c
-+++ b/hook.c
-@@ -36,7 +36,10 @@ const char *find_hook(const char *name)
- 	return path.buf;
- }
+@@ -348,6 +349,8 @@ static void add_repack_incremental_option(void)
  
--
-+int hook_exists(const char *name)
-+{
-+	return !!find_hook(name);
-+}
- 
- void run_hooks_opt_clear(struct run_hooks_opt *o)
+ static int need_to_gc(void)
  {
-diff --git a/hook.h b/hook.h
-index 291ee19469a..cbda7746a5d 100644
---- a/hook.h
-+++ b/hook.h
-@@ -44,6 +44,11 @@ struct hook_cb_data {
-  */
- const char *find_hook(const char *name);
- 
-+/*
-+ * A boolean version of find_hook()
-+ */
-+int hook_exists(const char *hookname);
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
 +
- void run_hooks_opt_clear(struct run_hooks_opt *o);
+ 	/*
+ 	 * Setting gc.auto to 0 or negative can disable the
+ 	 * automatic gc.
+@@ -394,8 +397,11 @@ static int need_to_gc(void)
+ 	else
+ 		return 0;
  
- /*
+-	if (run_hook_le(NULL, "pre-auto-gc", NULL))
++	if (run_hooks("pre-auto-gc", &hook_opt)) {
++		run_hooks_opt_clear(&hook_opt);
+ 		return 0;
++	}
++	run_hooks_opt_clear(&hook_opt);
+ 	return 1;
+ }
+ 
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
