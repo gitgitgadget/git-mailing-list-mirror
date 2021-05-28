@@ -2,109 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93716C47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 04:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCCBBC4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 04:39:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7298760FE8
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 04:36:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93AFD613E3
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 04:39:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbhE1EiH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 00:38:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56986 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231219AbhE1EiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 00:38:06 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 60F72143960;
-        Fri, 28 May 2021 00:36:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2Mph0oBuA4bgEfnyRpD7M/FTzSQp0blP04MwSZ
-        +KLzs=; b=hbxHzsoiII3PadmdwWSXMq+K/OZRftsprMdXxDZ29w7SMSjAHkc2kU
-        44abjN7ywA4et2e/+lg0oQuSKCFRDtsa/KSZMljFoNun0mc8DW48UVfqmV9Jr/VI
-        ytJJoh8l8NOi1FH5Lu6xfMBRfj5Lc12ewASXdKBBqCN9o6wVrrhyM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58FAA14395F;
-        Fri, 28 May 2021 00:36:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9E44714395E;
-        Fri, 28 May 2021 00:36:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 2/2] [GSOC] ref-filter: add %(header) atom
-References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
-        <aa6d73f3e526f416ee1e4e332e9ca3119efba0e8.1622126603.git.gitgitgadget@gmail.com>
-Date:   Fri, 28 May 2021 13:36:27 +0900
-In-Reply-To: <aa6d73f3e526f416ee1e4e332e9ca3119efba0e8.1622126603.git.gitgitgadget@gmail.com>
-        (ZheNing Hu via GitGitGadget's message of "Thu, 27 May 2021 14:43:22
-        +0000")
-Message-ID: <xmqqpmxb79v8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231564AbhE1Ekm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 00:40:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41956 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230299AbhE1Ekm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 00:40:42 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B609C061574
+        for <git@vger.kernel.org>; Thu, 27 May 2021 21:39:08 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id k5so1832209pjj.1
+        for <git@vger.kernel.org>; Thu, 27 May 2021 21:39:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=4MxlK/D16elbVS1UR45BGr3NhFPIedlhz/+Qbg6DgNI=;
+        b=rshO8Y420QMzHnaBMgNX8kQqC5gdpKOZsjbmNVTwJ1D+b5PH5n2zbdlzbPZv9sjbfQ
+         L/X5qmogYGgW1ObCabHLRxWJmEXUF9tih6BAX2hrB3hU/6fpQiEeilSZqIC0m2aib34x
+         TTW9S9+0ActnFoIzqG71uN5LX9EN/iGN8iN1gIxN5fCCxiXUzx7JyopxuNYWI1yegfUv
+         IbPU+HxM390jceJk4auj+kAQq7bVA1o/VQCGHrlPY78k0j58CFSqu6C9lJgt+Wppy3oc
+         G124Urxv7NyzKKxylIoA3EWhXr8cIgeLU8y73l+B4iej0iuZK1qSI+to2yZ40zBgEW9p
+         RfnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4MxlK/D16elbVS1UR45BGr3NhFPIedlhz/+Qbg6DgNI=;
+        b=JUPv1LS9hpBuMFRFBQkUTwDgw4utZ4f5BTH77ZB3YcNGoMlqwXlo2clgWpPiaCiGBZ
+         HCkIiawKsJUsmDcXQsJsMPzBm/NEAUIIsTiG9zl/oaf7Za2U9kHS9ar6zu9ETtg2NlST
+         XMg3nm4t3fJVr+uCxRGGs5Hno7q9S7VaxeHlrQVv32JsUM/SQfRYho8adYhrJ+QNaoVw
+         q+6vrvMkAdtnVOeykTfCJLCdWvFqLs/JGSwEBxDgDTjFldui1fsbQVCACW4TcF8bOhna
+         kFujJN35+MIP4D+VhxBlU7XkF+KObmoqkOP4vkfYZ5WhDmgvxPlefmH2fKlpkKuJGyQQ
+         F69w==
+X-Gm-Message-State: AOAM5300gNUu993iOQqX0WcXXKeGQStT2BmxvvR6+MGNSqE4W1mVnMMv
+        UrIqNa/LGqqiZts/h9aFhFDuzbn+Ei6KTg==
+X-Google-Smtp-Source: ABdhPJw3A88XiHqR5XSzSJ9ImmXsztPPYnjL0pK78ibJfOHGr6V9Uq6eP307j7V6oXq3joel7/jzGA==
+X-Received: by 2002:a17:902:8645:b029:fd:25ef:3df7 with SMTP id y5-20020a1709028645b02900fd25ef3df7mr6317513plt.48.1622176747244;
+        Thu, 27 May 2021 21:39:07 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-92.three.co.id. [180.214.233.92])
+        by smtp.gmail.com with ESMTPSA id y194sm3111279pfb.193.2021.05.27.21.39.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 May 2021 21:39:06 -0700 (PDT)
+Subject: Re: [BUG REPORT] File names that contain UTF8 characters are
+ unnecessarily escaped in 'git status .' messages
+To:     Yuri <yuri@rawbw.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <f7e2e271-dcec-2886-f33e-62778a429850@rawbw.com>
+ <xmqq35u9ax5j.fsf@gitster.g> <6318ccec-ec96-91a8-fd65-85daf4a9a22b@rawbw.com>
+ <20210527045628.uvesihyhtqrfyfae@tb-raspi4>
+ <YK+mWZP+sl3zXECx@coredump.intra.peff.net>
+ <4dd22f16-72f0-a28a-8be0-aec622acf0d3@rawbw.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <50e2780a-21f3-499f-7960-76bf24f550f0@gmail.com>
+Date:   Fri, 28 May 2021 11:39:03 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 45678BAC-BF6E-11EB-9CC1-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+In-Reply-To: <4dd22f16-72f0-a28a-8be0-aec622acf0d3@rawbw.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 28/05/21 03.50, Yuri wrote:
+> It's not clear from the conversation if git reads terminal capabilities 
+> at all.
+> 
+> 
+> But the default behavior, without any options set, should be to read 
+> terminal capabilities, and write non-ASCII characters verbatim when 
+> terminal supports this and escape them when terminal doesn't support them.
+> 
+> Current default behavior appears to be to always escape non-ASCII 
+> characters.
 
->  		struct {
->  			enum { RAW_BARE, RAW_LENGTH } option;
->  		} raw_data;
-> +		struct {
-> +			enum { H_BARE, H_LENGTH } option;
-> +		} header;
+So the current default is only supports ASCII, and escape other 
+characters, right?
 
-Raw does not use R_{BARE,LENGTH} and uses raw_data member.  Header
-should follow suit unless there is a compelling reason not to, no?
-
-		struct {
-			enum { HEADER_BARE, HEADER_LENGTH } option;
-		} header_data;
-
-perhaps?
-
-> @@ -1372,6 +1389,15 @@ static void grab_raw_data(struct atom_value *val, int deref, void *buf, unsigned
->  				    &bodypos, &bodylen, &nonsiglen,
->  				    &sigpos, &siglen);
->  
-> +		if (starts_with(name, "header")) {
-> +			size_t header_len = subpos - (const char *)buf - 1;
-
-Hmph, is this correct?  I would expect that the "header" part of a
-commit or a tag object excludes the blank line after the header
-fields.  In other words, the "header" would be separated by a blank
-line from the "body", and that separating blank line is not part of
-"header" or "body".
-
-Otherwise, if there is a user of %(header), it needs to be coded to
-ignore the last blank line but has to diagnose it as an error if
-there is a blank line before that.
-
-> +			if (atom->u.header.option == H_BARE) {
-> +				v->s = xmemdupz(buf, header_len);
-> +			} else if (atom->u.header.option == H_LENGTH)
-> +				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)header_len);
-> +			continue;
-> +		}
-> +
->  		if (atom->u.contents.option == C_SUB)
->  			v->s = copy_subject(subpos, sublen);
->  		else if (atom->u.contents.option == C_SUB_SANITIZE) {
+-- 
+An old man doll... just what I always wanted! - Clara
