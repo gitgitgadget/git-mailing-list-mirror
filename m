@@ -7,122 +7,128 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAA49C4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C3DDC47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:57:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C19A613DD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:43:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50EC26135C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:57:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbhE1Voj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 17:44:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45108 "EHLO
+        id S229620AbhE1V7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 17:59:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbhE1Voi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 17:44:38 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03B7AC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 14:43:01 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id j17-20020a4ad6d10000b02901fef5280522so1267075oot.0
-        for <git@vger.kernel.org>; Fri, 28 May 2021 14:43:01 -0700 (PDT)
+        with ESMTP id S229500AbhE1V7L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 17:59:11 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED1E0C061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 14:57:34 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id x15so5648601oic.13
+        for <git@vger.kernel.org>; Fri, 28 May 2021 14:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SMOcgUpgJnmj2u7ctOJMQFRAskwxg/xjMvliHS+Ua3M=;
-        b=OLO6E1IdJKwQqbakeXlGPL21gtva091/zLGsjc1BSsE1LC+n5AcotCJksIg+KcTRXG
-         1zsvouTrXjZqUuAmnvziTa1+10xL5bqbT/EBlO9p2MiRuouQ9ZfiQ80PNVhYJ4JiX4qI
-         uVxVz4Xqa/3kvltOJMfyqHnF5aOllFhAg3rsGps5W/0t3w/Zy/LN+2wW3lKAl9Yz9gf7
-         bQth3yjX5t+VXh+EgdOnu24JkKEwFN0DYchWy4LMeCP0JLfub+Ci+uDTM0NQCLM4JQGu
-         BiWGIhiMMVe0MsYnUlk8AtPFrnM8HDta3TcZo6+lMcKsYLAtlmMlOisTxqre/WNqHXgj
-         Ay9Q==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=qnyK4/+y48ncebBJnHg7JlL+J90NE3jW8NuEIKq7MuM=;
+        b=H2+CO5aAWJhOMgSZw5WgMqEW2U6hcpiQzFARlpjetsxPQN2qxnHjgT0NKyvAOd0gkZ
+         Z2cHJmIHsCvhpobxr4pbYPPB8RVgwNomYXqm4VqYf/tmrZweLE+wxdkpvTiEs0me2bUg
+         BTgIBIk/lIxpzYJi/IgCHjiVU9Z6kJSIjkIgDO2L0IfJouoYDoawn6daKy1WEY3Ge4w/
+         gh4w4hHjtw/YW1gYlMDg0jTORxXe8AexQBnvNuZlohBGxCkI3nh1/ZODXBW52yR858aG
+         FRwSqlJO+iCquSLoFP5uGJ6TFV5l5mSLNxrQjR3gps90ePeRdChYdS5UXc4GMySwbUpu
+         RDKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SMOcgUpgJnmj2u7ctOJMQFRAskwxg/xjMvliHS+Ua3M=;
-        b=h3iakMdkuGPiVVfZuqilRgG6AFKp4YGeOHjip8ub1E/raGdVq/XiQfjZCEu8zRBQyQ
-         Z9NtXaADRWJpUtMjXTfmBfWmlO4q4p0IghluzwGpHGraks/bv2yiOSYMVtGUk/tTLMZP
-         prKJjPgi5gEHm3enJ7vNMUdkVQWhUonkSL1w3ivI5X8ZE+3p71oIfPZhqSh5FBMyny2b
-         JT3R1rDSyCOjD3gK0t9g2cqBtywi0s23YJpbyVtv/AP5bNTuJphK6qE1me+MjsQ1JEVG
-         FmhWBm4TRy7iIRgsoonTuB5mo8AZH6so7EWtaaTO4VeCaxtYXFSjkrO+6iCsA+iaNCWi
-         Gv5Q==
-X-Gm-Message-State: AOAM533r6vHcCjH1xCdVqWqCBs2hm7n1Q6mr9fErXgoahLKJTmDbAZea
-        h4JM+ZHqT1QVMadFcrWRb9L9cc32ccV0C+3zX2w=
-X-Google-Smtp-Source: ABdhPJzMCO5Hy+uBe/w4vFPbk6X1wVkvNehY1Sa2s8DcgZYQn8IKOs/kQrLoQyKPz7vaxgL3wHXh7RmSCtwxBzZ0jCQ=
-X-Received: by 2002:a4a:d30e:: with SMTP id g14mr8556268oos.32.1622238181347;
- Fri, 28 May 2021 14:43:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
- <20210528201014.2175179-4-felipe.contreras@gmail.com> <CABPp-BFPXWy0GwZwT0weNs1DKMKFC4ds2tLJWcVQBOKxPMomFQ@mail.gmail.com>
- <60b1604b66329_2a3717208eb@natae.notmuch>
-In-Reply-To: <60b1604b66329_2a3717208eb@natae.notmuch>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 May 2021 14:42:50 -0700
-Message-ID: <CABPp-BG1FoBJ8-swiGHLJRqpE4iQiCNTmCi=8zzyms3bLJAcqQ@mail.gmail.com>
-Subject: Re: [PATCH 03/11] push: reorganize setup_push_simple()
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=qnyK4/+y48ncebBJnHg7JlL+J90NE3jW8NuEIKq7MuM=;
+        b=JhhKfdif2IJoQGC3/EZ/Fs16ZqG6GkzmRV0AuZdGmTf5LoqDobw9x0P9w9JnfmmUup
+         qgDUQNWYFCXOftbSzUjDmnve7UtTus2QSzMmpBw93LX5IBLtGJF2oxuEn1D0Z/3hbNUz
+         tW0S7S43pkpGj5NS2KeWGafqGMJMXHrJbhHXlDx01XWBuAmkG+PZyV11UGLIy2aXlnOg
+         T6TCCnobejbkEKgcuQy5j1b28QqSm9vrHQr+etTZygx7bBGAHwmUVMXj3njEksoTp/Pz
+         Sd4IiY63fcB/QU2iprbuNiD3HJQQ6yzBibGG2VNHYAulUdJJFlrr77VnvCgSNAYDRNVz
+         LZFQ==
+X-Gm-Message-State: AOAM533VneZbvrRpwPFxoOR9KU9MGs4LVqBFCxmCs/yKhlbYrTjaGVer
+        VZnlmtyPatQfrXl4S88ZbCo=
+X-Google-Smtp-Source: ABdhPJybTmIRal5VdnBH/CW2A484SU2h1INCNP1dQYqntIko/tQ1xvSa5adovOeOvLyQ7B048+kI7A==
+X-Received: by 2002:aca:d409:: with SMTP id l9mr7532665oig.77.1622239054342;
+        Fri, 28 May 2021 14:57:34 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id b18sm1391375otk.62.2021.05.28.14.57.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 May 2021 14:57:33 -0700 (PDT)
+Date:   Fri, 28 May 2021 16:57:32 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Mathias Kunter <mathiaskunter@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Ramkumar Ramachandra <r@artagnon.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
         Matthieu Moy <git@matthieu-moy.fr>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <60b1674ca4f58_2a3717208ec@natae.notmuch>
+In-Reply-To: <CABPp-BHs_id3kOHgBWCK0QjviuRu7Dgbq5iB7z5=RZDOX-ontA@mail.gmail.com>
+References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
+ <20210528201014.2175179-11-felipe.contreras@gmail.com>
+ <CABPp-BHs_id3kOHgBWCK0QjviuRu7Dgbq5iB7z5=RZDOX-ontA@mail.gmail.com>
+Subject: Re: [PATCH 10/11] push: flip !triangular for centralized
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 28, 2021 at 2:27 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> Elijah Newren wrote:
-> > On Fri, May 28, 2021 at 1:10 PM Felipe Contreras
-> > <felipe.contreras@gmail.com> wrote:
-> > >
-> > > Simply move the code around.
+Elijah Newren wrote:
+> On Fri, May 28, 2021 at 1:10 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 > >
-> > Not quite, you also deleted dead code.  Made the patch a bit harder to
-> > read because I was trying to verify you did what the commit message
-> > said and it took me longer than it should have to realize that you
-> > were also deleting dead code.  Might be worth including that fact in
-> > this sentence here.
->
-> OK. I thought that was obvious.
+> > Git is a *distributed* version control system, centralized workflows are
+> > the uncommon case, where we do need to do extra checks.
+> 
+> The commit message seemed slightly funny to me, though I'm not sure
+> why.
 
-It is if you are familiar with the code, or if you still remember that
-condition when you get to that point in the review, or if you happen
-to look at the right line of code while mulling it over.
-Unfortunately, I'm not familiar with this code, didn't happen to
-remember the outer if-block when I got to that point in the
-comparison, and didn't at first look back to the relevant line to
-realize this.  So I started looking elsewhere for why removing that
-condition didn't amount to functional changes and started trying to
-figure out a testcase that would give different behavior.  I suspect I
-would have realized sooner if not for the claim that you "simply moved
-code around", so I just flagged it.  Not a big deal, just something
-that I think could make it easier for other reviewers.
+I mean, in my mind I have present two facts:
 
-> Shall I update the commit message to include that fact, or shall I add a
-> separate patch to remove the dead code?
+  1. Linus Torvalds explained that the whole point of Git was to have a
+     decentralized VCS [1]. It's not just an important aspect; it's
+     crucial.
 
-I'd just tweak the commit message to mention you are just deleting
-dead code and moving code around.
+    If we never get past [the part where I explain distribution], I'd be
+    fine with that...
 
-> Either are fine by me.
->
-> > > -               if (triangular)
-> > > -                       die(_("You are pushing to remote '%s', which is not the upstream of\n"
-> > > -                             "your current branch '%s', without telling me what to push\n"
-> > > -                             "to update which remote branch."),
-> > > -                           remote->name, branch->name);
-> >
-> > This if-block is safe to delete because we're already in the !triangular case.
-> >
-> > > -
-> > > -               if (1) {
->
-> Techically this is removing dead code too.
+    If you are not distributed, you are not worth using. It's that
+    simple.
 
-Yep, true.
+    I think this is a huge issue and that *alone* should mean that every
+    single open source [project] should never use anything but a
+    distributed model...
+
+  2. Git doesn't actually have great support for "triangular workflows".
+
+So I do find it funny that the boolean is called "triangular", when
+that's supposed to be the whole point from the creator.
+
+Maybe some of that spills out into the rhetoric of the commit message.
+
+> ...I think the code is slightly easier to read and reason about since
+> it removes the double negative.  In particular, when someone reading
+> the code sees !triangular, and doesn't know or remember the meaning,
+> they have to translate that to !(remote != remote_get(NULL)).
+> centralized and !centralized do not have that same problem.  So, I
+> like the newer version.
+
+To my mind it's not a slight thing at all. Every time I read if
+(triangular) I have to stop and translate... Oh, they mean using git in
+the way it was the whole point of starting the project... So they
+actually mean not using it in that *other* way.
+
+Cheers.
+
+[1] https://www.youtube.com/watch?v=4XpnKHJAok8
+
+-- 
+Felipe Contreras
