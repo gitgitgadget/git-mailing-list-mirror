@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8B58C47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC042C47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2F79601FD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDD0D601FD
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236527AbhE1MNi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:13:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58768 "EHLO
+        id S236557AbhE1MNk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:13:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236305AbhE1MNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 08:13:24 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74DDDC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:48 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id o127so1990020wmo.4
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:48 -0700 (PDT)
+        with ESMTP id S236314AbhE1MN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 08:13:26 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 781D7C061763
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:50 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id x7so3047764wrt.12
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pFyNt4mCuC/3gswFUmq2Sq7Y3wIuCybTNd41AG0A2DM=;
-        b=kaZIOT4uHifskW4yVxe7BUpPph87FxKw/2fFwTWDQbVn5MFyzWKxyLzhllp/iccuaF
-         4+ASIs+gjJomRShSHxaO3TUbOFMc3BnGS+kF8jDJHp6iQURfgkEAq5V0gVmhFR4Br49f
-         gcc02dcxVt3R/qzKLu7xeTWkSp9QYykw5e6fxpdB4x7P56hpTQ0iPZ2Jun/hs7XEpMta
-         i1+j1EfVLzbjRV7oZ1X0Um9qTkjXgTALFf7QlxegLm4u9OhYRjeNIGKag9jL6DS2h+cO
-         KdzGDOXHFAY5kA2e/37VASgGy20mYrrh28AMRBVM6NQ4UNd1Gxh7VCEQd+NodAfL6Eu3
-         9VSg==
+        bh=wt33zWu6xIqqe9lXqz3Kx2wqMdRaDVo/yidJ8NYZxHU=;
+        b=sD5vB2YbE9eQj6fUpvBtxckXeEIE5QSJmcevDA7W06dbgDHbj4kCNVrscq7zJ4TwrS
+         JVNM4tj6CUmTyeeBAYU5MmEk7dPIVH03ebFOFr4OwXPyTzlHgSrwC9rjEAguu1BwDHlY
+         2G4DGrpx7jBbKhkvBskZuFHjhx79cfNvi9h3r9Bo/nJf/uXSBnQv06t6NuJwQoZNwRCs
+         Z3pSOFV1fllWvnX9V3JKWx3isD5iIzYWvp8Bf2yhWZ8t1cBMAMwqPkcFRQsFHfppyi7Z
+         fhzUdztdJQTWUc26pXthCszn3GVE1NpkEvSMGplWwa2HzGqJzmydCGxdrOvxms/oX+ty
+         zpUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pFyNt4mCuC/3gswFUmq2Sq7Y3wIuCybTNd41AG0A2DM=;
-        b=Vjw1B2HzhtbEt9CtBosYtw008K+Am+N80KYgskTE2wHh7oTqt/qm2BFItuzcCOMhkf
-         igiM2XuGuA1uw95c4PNYa+0A/6itJ+E+niuZve5LxtluZGSE71bXL57LaNxQmEh6tHLe
-         XOXVpx4h6zpPe/cE3jAfZCMBEDFWbrlep6N4p0ZVBJu7nHUVSxze9NKllwGAmfEjjf/L
-         OdVzGAfTdkjlF0ZHkKzMTA0QBAVvueq5ab6kb3vsRn9jGZWGnWNIs7pe3ArEdaTuLf2M
-         H6JmwfUOJ36DuN4zGSTLHy9L4/Kv4oq+5E08d0B9pHLNUwzZzO1V8ZvUXk5NthRtrTrN
-         Z8Og==
-X-Gm-Message-State: AOAM5303ttjqYf/w9TQHOEfr9u1ReJi4jHYd+Z0s1Gd5cGCiai0iElOw
-        nQvoTgIEgdeetg2HWv5P8PhReKT2xL76Yw==
-X-Google-Smtp-Source: ABdhPJwoaGTrwRvhuV3Kis9y0rX0AuOixq2nZ9CQM5RhRNPOUY9ggkKbYkWJ9WQXQPAai8BNgaVoEw==
-X-Received: by 2002:a7b:ca58:: with SMTP id m24mr13235396wml.151.1622203906769;
-        Fri, 28 May 2021 05:11:46 -0700 (PDT)
+        bh=wt33zWu6xIqqe9lXqz3Kx2wqMdRaDVo/yidJ8NYZxHU=;
+        b=mwAOCfas9JPxJXpqOpQ2GqCRxoAZjYKzPke26w4zxLoz6HXXDKf00kTx3R12qcaP0P
+         5cRtabAqaRORlu8q15zxJW7Xzu2powSy6aAi+HKXu7DnDN1tP9sPvndd5hym0nwQBCWw
+         JNnxPHJwmmaVGWtzEIndgxCCQgnTaIJCSh1mAsYwmEsNw6rT5Vu/xxXU8Uby0ET8Yv3D
+         7baCQN6pa0/KT+NdqWtRLfySTYj1vitXtDPgZA8nAk/8mJOv9FJa7di2qR+fGzcNkqvt
+         XABQuRPAroUJMllgp4zmWsXly7l3ogmoe3rqUzZfud6bWLMrEbAI3fpoc+tBhQfo4w1F
+         TnCQ==
+X-Gm-Message-State: AOAM530+sM1sD5RM6Jkhv/Qx7oFixrBMWlqchjHu4Pv7owdGCmiWpxeP
+        AV5vFPFH9gFMRtO6jJxhIPkTZOUdlGrhUA==
+X-Google-Smtp-Source: ABdhPJxxUhxHmmEDsZKh5sbJueDytKWgxJx1xiqLI2oII/enUYEZ6rV6S3DOW6SzHNTmQQNG44Xk5A==
+X-Received: by 2002:a5d:6da9:: with SMTP id u9mr8410354wrs.264.1622203908748;
+        Fri, 28 May 2021 05:11:48 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.45
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:11:46 -0700 (PDT)
+        Fri, 28 May 2021 05:11:48 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 07/31] rebase: teach pre-rebase to use hook.h
-Date:   Fri, 28 May 2021 14:11:09 +0200
-Message-Id: <patch-07.31-528402fac69-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 09/31] hooks: convert 'post-checkout' hook to hook library
+Date:   Fri, 28 May 2021 14:11:11 +0200
+Message-Id: <patch-09.31-9b32c14669b-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,51 +84,242 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Move the pre-rebase hook away from run-command.h to and over to the
-new hook.h library.
+Move the running of the 'post-checkout' hook away from run-command.h
+to the new hook.h library. For "worktree" this requires a change to it
+to run the hooks from a given directory.
+
+We could strictly speaking skip the "absolute_path" flag and just
+check if "dir" is specified, but let's split them up for clarity, as
+well as for any future user who'd like to set "dir" but not implicitly
+change the argument to an absolute path.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/rebase.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ builtin/checkout.c | 17 ++++++++++++-----
+ builtin/clone.c    |  7 +++++--
+ builtin/worktree.c | 30 ++++++++++++++----------------
+ hook.c             |  8 ++++++++
+ hook.h             |  9 +++++++++
+ read-cache.c       |  1 +
+ reset.c            | 15 +++++++++++----
+ 7 files changed, 60 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 12f093121d9..2081f6fa8db 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -28,6 +28,7 @@
- #include "sequencer.h"
- #include "rebase-interactive.h"
- #include "reset.h"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f4cd7747d35..6205ace09f6 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "diff.h"
+ #include "dir.h"
++#include "hook.h"
+ #include "ll-merge.h"
+ #include "lockfile.h"
+ #include "merge-recursive.h"
+@@ -106,13 +107,19 @@ struct branch_info {
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
+ {
+-	return run_hook_le(NULL, "post-checkout",
+-			   oid_to_hex(old_commit ? &old_commit->object.oid : null_oid()),
+-			   oid_to_hex(new_commit ? &new_commit->object.oid : null_oid()),
+-			   changed ? "1" : "0", NULL);
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	int rc;
++
+ 	/* "new_commit" can be NULL when checking out from the index before
+ 	   a commit exists. */
+-
++	strvec_pushl(&opt.args,
++		     oid_to_hex(old_commit ? &old_commit->object.oid : null_oid()),
++		     oid_to_hex(new_commit ? &new_commit->object.oid : null_oid()),
++		     changed ? "1" : "0",
++		     NULL);
++	rc = run_hooks("post-checkout", &opt);
++	run_hooks_opt_clear(&opt);
++	return rc;
+ }
+ 
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index eeb74c0217c..6687025bea5 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -32,6 +32,7 @@
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
 +#include "hook.h"
  
- #define DEFAULT_REFLOG_ACTION "rebase"
- 
-@@ -1313,6 +1314,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	char *squash_onto_name = NULL;
- 	int reschedule_failed_exec = -1;
- 	int allow_preemptive_ff = 1;
+ /*
+  * Overall FIXMEs:
+@@ -775,6 +776,7 @@ static int checkout(int submodule_progress)
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
 +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
- 	struct option builtin_rebase_options[] = {
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
-@@ -2022,10 +2024,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	}
  
- 	/* If a hook exists, give it a chance to interrupt*/
-+	strvec_pushl(&hook_opt.args, options.upstream_arg, argc ? argv[0] : NULL, NULL);
- 	if (!ok_to_skip_pre_rebase &&
--	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
--			argc ? argv[0] : NULL, NULL))
-+	    run_hooks("pre-rebase", &hook_opt)) {
-+		run_hooks_opt_clear(&hook_opt);
- 		die(_("The pre-rebase hook refused to rebase."));
-+	}
+ 	if (option_no_checkout)
+ 		return 0;
+@@ -820,8 +822,9 @@ static int checkout(int submodule_progress)
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(null_oid()),
+-			   oid_to_hex(&oid), "1", NULL);
++	strvec_pushl(&hook_opt.args, oid_to_hex(null_oid()), oid_to_hex(&oid), "1", NULL);
++	err |= run_hooks("post-checkout", &hook_opt);
 +	run_hooks_opt_clear(&hook_opt);
  
- 	if (options.flags & REBASE_DIFFSTAT) {
- 		struct diff_options opts;
+ 	if (!err && (option_recurse_submodules.nr > 0)) {
+ 		struct strvec args = STRVEC_INIT;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index b1350640fed..2ad26a76f4c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -382,22 +382,20 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
+ 	 */
+ 	if (!ret && opts->checkout) {
+-		const char *hook = find_hook("post-checkout");
+-		if (hook) {
+-			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
+-			cp.git_cmd = 0;
+-			cp.no_stdin = 1;
+-			cp.stdout_to_stderr = 1;
+-			cp.dir = path;
+-			cp.env = env;
+-			cp.argv = NULL;
+-			cp.trace2_hook_name = "post-checkout";
+-			strvec_pushl(&cp.args, absolute_path(hook),
+-				     oid_to_hex(null_oid()),
+-				     oid_to_hex(&commit->object.oid),
+-				     "1", NULL);
+-			ret = run_command(&cp);
+-		}
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++
++		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
++		strvec_pushl(&opt.args,
++			     oid_to_hex(null_oid()),
++			     oid_to_hex(&commit->object.oid),
++			     "1",
++			     NULL);
++		opt.dir = path;
++		opt.absolute_path = 1;
++
++		ret = run_hooks("post-checkout", &opt);
++
++		run_hooks_opt_clear(&opt);
+ 	}
+ 
+ 	strvec_clear(&child_env);
+diff --git a/hook.c b/hook.c
+index c7da273822d..51337f9798f 100644
+--- a/hook.c
++++ b/hook.c
+@@ -62,6 +62,7 @@ static int pick_next_hook(struct child_process *cp,
+ 	cp->env = hook_cb->options->env.v;
+ 	cp->stdout_to_stderr = 1;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
++	cp->dir = hook_cb->options->dir;
+ 
+ 	/* add command */
+ 	strvec_push(&cp->args, run_me->hook_path);
+@@ -111,6 +112,7 @@ static int notify_hook_finished(int result,
+ int run_found_hooks(const char *hook_name, const char *hook_path,
+ 		    struct run_hooks_opt *options)
+ {
++	struct strbuf abs_path = STRBUF_INIT;
+ 	struct hook my_hook = {
+ 		.hook_path = hook_path,
+ 	};
+@@ -119,6 +121,10 @@ int run_found_hooks(const char *hook_name, const char *hook_path,
+ 		.hook_name = hook_name,
+ 		.options = options,
+ 	};
++	if (options->absolute_path) {
++		strbuf_add_absolute_path(&abs_path, hook_path);
++		my_hook.hook_path = abs_path.buf;
++	}
+ 	cb_data.run_me = &my_hook;
+ 
+ 	if (options->jobs != 1)
+@@ -131,6 +137,8 @@ int run_found_hooks(const char *hook_name, const char *hook_path,
+ 				   &cb_data,
+ 				   "hook",
+ 				   hook_name);
++	if (options->absolute_path)
++		strbuf_release(&abs_path);
+ 
+ 	return cb_data.rc;
+ }
+diff --git a/hook.h b/hook.h
+index cbda7746a5d..2d7724bbb50 100644
+--- a/hook.h
++++ b/hook.h
+@@ -19,6 +19,15 @@ struct run_hooks_opt
+ 
+ 	/* Number of threads to parallelize across */
+ 	int jobs;
++
++	/* Resolve and run the "absolute_path(hook)" instead of
++	 * "hook". Used for "git worktree" hooks
++	 */
++	int absolute_path;
++
++	/* Path to initial working directory for subprocess */
++	const char *dir;
++
+ };
+ 
+ #define RUN_HOOKS_OPT_INIT { \
+diff --git a/read-cache.c b/read-cache.c
+index 1b3c2eb408b..775e970402c 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -26,6 +26,7 @@
+ #include "thread-utils.h"
+ #include "progress.h"
+ #include "sparse-index.h"
++#include "hook.h"
+ 
+ /* Mask for the name length in ce_flags in the on-disk index */
+ 
+diff --git a/reset.c b/reset.c
+index 4bea758053b..e6af33b901c 100644
+--- a/reset.c
++++ b/reset.c
+@@ -7,6 +7,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "unpack-trees.h"
++#include "hook.h"
+ 
+ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	       const char *switch_to_branch, unsigned flags,
+@@ -126,10 +127,16 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 			ret = create_symref("HEAD", switch_to_branch,
+ 					    reflog_head);
+ 	}
+-	if (run_hook)
+-		run_hook_le(NULL, "post-checkout",
+-			    oid_to_hex(orig ? orig : null_oid()),
+-			    oid_to_hex(oid), "1", NULL);
++	if (run_hook) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++		strvec_pushl(&opt.args,
++			     oid_to_hex(orig ? orig : null_oid()),
++			     oid_to_hex(oid),
++			     "1",
++			     NULL);
++		run_hooks("post-checkout", &opt);
++		run_hooks_opt_clear(&opt);
++	}
+ 
+ leave_reset_head:
+ 	strbuf_release(&msg);
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
