@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C51C47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCD8C4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0EE76108E
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1E506108E
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbhE1UMG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 16:12:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52988 "EHLO
+        id S229721AbhE1UMJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 16:12:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbhE1UMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 16:12:01 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F6DC061761
-        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:25 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id i23-20020a9d68d70000b02902dc19ed4c15so4658099oto.0
-        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:25 -0700 (PDT)
+        with ESMTP id S229607AbhE1UMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 16:12:03 -0400
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C381FC061760
+        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:26 -0700 (PDT)
+Received: by mail-oo1-xc2c.google.com with SMTP id s20-20020a4ae9940000b02902072d5df239so1214841ood.2
+        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hCVlMZmaZD9qdqc84YY4Mycvu+XQsMSNAHihq6hja7o=;
-        b=UK0yDG639t91cIhVAIXFpRqgYVPt5ULHygfkATKGTqbUUr9a9ThoTLOrRjgSjw5h8Q
-         eGZoOBmk6ZPdttnv45yNMzpzwr4PxExeboDayfmQ3/mvNUgVdYXTh89zsNRHJQJw9P2U
-         ZT+FnTIL5ewM9eSVRBjKmZEqXRajORopIMwwKfzYzlksPSJWiocg9flK/qtZGmVEdluJ
-         3OjD8/itYEYzUzIc65f5UONfyyCYBFC8GFSwF8UMwvH1BRGrDMeDsQ2CjKg/McMN5Pbr
-         xeyMkXD/hFwMvec3WqVdrmzbZAqidKuU6ArULtIYBn7TZsY5rDly6k2cKWSijB1CNjBt
-         evdQ==
+        bh=oVunPFTMfKkZWGEj5e5Bc6uT5hg2dJmu1Igf5ckFvH8=;
+        b=pJoPJI9OkipiqhxAtCuHC2yGETXR/970w4P+ibnsqgLO18+M6gFUrpITokLfaNkTon
+         +nkrHExFGXHzhKFx+j60PmOoopie6gOborlnap58Kp1r8OpzkP8M1CvIAEtAyviu6iPS
+         eg8vZlitJQ9huH6tqtkWJAVka3Jb/ooe7l9xQ2XtXCkA2xd3l7dAER1Wqr2sTvcICfWR
+         tW227ph4ShdO3Jir1gj3sLR1F8v0PoTiFqB1hmpGc0/VKJipv5FwU+z9w3Gtq/x5TvXz
+         KYFssh4M59TwnR0lijgzJX9FoStLSe+jszWki1e/KtUUhLSGi1Bp3R6NFxQlym+XEStM
+         f0NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hCVlMZmaZD9qdqc84YY4Mycvu+XQsMSNAHihq6hja7o=;
-        b=k1FUXXKrtG1W8/hsx55PeBEYRugL19Q+BVxMiCCzkrkg3w6SaQPliXD2eYXV6TJl/L
-         HMXEaahxsIsfefNqr90luWNswqyWXI03x2+FeeWHmL96D47msoWPAxs2u3qK4cW/38fq
-         FN7e/0zLRbCsK/nZaunXjsnMBssMRgpGMNYCQ42dIMU7J24FPuPbAzoTGPUwL+b1BG23
-         F9jj7YbARl10YK/yPH7tI4FEMJ/2czRbsaEyGAfLpTKeaif6Yxr2+Yqn3psLRpoOPoXW
-         jZMxx+9wuXG2zXACEd2g5GUF/zpLeFuy7OJGLmaDhaZRmg5469l2CWcifxT25HXCYzA8
-         2u7A==
-X-Gm-Message-State: AOAM530mD0V2+C8m9yyr4+aFbIIRUipUR/isj0FqQM8nRLAEgD75+8uK
-        BSCZyCifnVW8U7cAWietIQc+DnyfGrHgbQ==
-X-Google-Smtp-Source: ABdhPJxngiw6l3Ynma3FHUB8B95t1twcoxhMcMAiOUjTNYYTb88JHPAJSuL2WJd4h3g1XLhZ1u3LZQ==
-X-Received: by 2002:a9d:453:: with SMTP id 77mr8778749otc.31.1622232624357;
-        Fri, 28 May 2021 13:10:24 -0700 (PDT)
+        bh=oVunPFTMfKkZWGEj5e5Bc6uT5hg2dJmu1Igf5ckFvH8=;
+        b=MRDAcAZ4qxGsV/gFiSKmm8fupXgYOCCtxXqDv043GJQHFIbyULhJhVudfQM49flNxd
+         GH/xjS6sFml/SPG2bsDXCvP3xVTiMa0JH1tj3cU/Q9+HsGz/ory0M3Cukqw1ClIRTGvf
+         BFpODMyYcJYIdiYu/7pJI+ffMSo1waMJJxEcn8u4kDB1aUkSNi+qfolEHeKugUm16ew+
+         FEI+R3iwULo5rGCvyx+Ud5BV8jFM7O8BmszvGl/Gfb3HOSTFaVMubd2qJoz2WGoFjypz
+         wXgqlPmovRBwbbkuFPRP+h9lfjgOJlZxSdo0eV4T+rwVcpgoU6aCZctlUwbpSTrbRF5I
+         FMUg==
+X-Gm-Message-State: AOAM530+ivME0K0AYuncC12b1yUVmrKggE+CkQ0LNcXQQ9Gh3098iKyL
+        ejXzDt9jcGgVLyOZL+r+NZh7o5+HjkJHdw==
+X-Google-Smtp-Source: ABdhPJyyY1wBgyHOkOhtwoGbIEqyu0/R3HhD+Xo8WBYMUgSP5I0xP6WoQCFC7dC2gH18YPvaPFWIjA==
+X-Received: by 2002:a4a:85ca:: with SMTP id u10mr8292830ooh.80.1622232625936;
+        Fri, 28 May 2021 13:10:25 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id f21sm1330981oou.24.2021.05.28.13.10.23
+        by smtp.gmail.com with ESMTPSA id l19sm1368844otk.65.2021.05.28.13.10.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 13:10:24 -0700 (PDT)
+        Fri, 28 May 2021 13:10:25 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -67,9 +67,9 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Matthieu Moy <git@matthieu-moy.fr>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 05/11] push: remove unused code in setup_push_upstream()
-Date:   Fri, 28 May 2021 15:10:08 -0500
-Message-Id: <20210528201014.2175179-6-felipe.contreras@gmail.com>
+Subject: [PATCH 06/11] push: merge current and simple
+Date:   Fri, 28 May 2021 15:10:09 -0500
+Message-Id: <20210528201014.2175179-7-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0
 In-Reply-To: <20210528201014.2175179-1-felipe.contreras@gmail.com>
 References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
@@ -79,48 +79,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now it's not used for the simple mode.
+`current` is basically the same as `simple` except always assuming we
+are in a triangular workflow.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/push.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ builtin/push.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/builtin/push.c b/builtin/push.c
-index 73fe083682..0961826269 100644
+index 0961826269..2d6358f776 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -186,7 +186,7 @@ static const char message_detached_head_die[] =
- 	   "    git push %s HEAD:<name-of-remote-branch>\n");
- 
- static void setup_push_upstream(struct remote *remote, struct branch *branch,
--				int triangular, int simple)
-+				int triangular)
- {
- 	if (!branch)
- 		die(_(message_detached_head_die), remote->name);
-@@ -207,12 +207,6 @@ static void setup_push_upstream(struct remote *remote, struct branch *branch,
- 		      "to update which remote branch."),
- 		    remote->name, branch->name);
- 
--	if (simple) {
--		/* Additional safety */
--		if (strcmp(branch->refname, branch->merge[0]->src))
--			die_push_simple(branch, remote);
--	}
--
+@@ -210,13 +210,6 @@ static void setup_push_upstream(struct remote *remote, struct branch *branch,
  	refspec_appendf(&rs, "%s:%s", branch->refname, branch->merge[0]->src);
  }
  
-@@ -271,7 +265,7 @@ static void setup_default_push_refspecs(struct remote *remote)
- 		break;
- 
- 	case PUSH_DEFAULT_UPSTREAM:
--		setup_push_upstream(remote, branch, triangular, 0);
-+		setup_push_upstream(remote, branch, triangular);
+-static void setup_push_current(struct remote *remote, struct branch *branch)
+-{
+-	if (!branch)
+-		die(_(message_detached_head_die), remote->name);
+-	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
+-}
+-
+ static void setup_push_simple(struct remote *remote, struct branch *branch, int triangular)
+ {
+ 	if (!branch)
+@@ -269,7 +262,7 @@ static void setup_default_push_refspecs(struct remote *remote)
  		break;
  
  	case PUSH_DEFAULT_CURRENT:
+-		setup_push_current(remote, branch);
++		setup_push_simple(remote, branch, 1);
+ 		break;
+ 
+ 	case PUSH_DEFAULT_NOTHING:
 -- 
 2.32.0.rc0
 
