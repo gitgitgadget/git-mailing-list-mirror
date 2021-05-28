@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F210DC4708D
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEEDDC4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CED35613B5
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 948A06108E
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 20:10:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbhE1UML (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 16:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52998 "EHLO
+        id S229735AbhE1UMP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 16:12:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbhE1UME (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 16:12:04 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73AE8C061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:28 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id p24-20020a05683019d8b0290399e8a3aa60so103290otp.7
-        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:28 -0700 (PDT)
+        with ESMTP id S229697AbhE1UMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 16:12:07 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8E4AC061760
+        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:29 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id r26-20020a056830121ab02902a5ff1c9b81so4585919otp.11
+        for <git@vger.kernel.org>; Fri, 28 May 2021 13:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MND7CxXkCpWVTkvEAF445hC0TfdUYtEVoVLeQZV/beU=;
-        b=Nv6O9otp6vzbafN3Bs1pi3eTcalS6azvGZFiCvUI/dGvdnY5wj+s6sPGKWX2etjEIP
-         dm1JVsYwt/6C80Dgq6P+krZuSEBN9NMEUsfPKB/TKKF4bnFZ/b8UQOAcq7inbQ7/UCMh
-         mKO4mXJ/39qiTBQVPgUTok06OGKHh7lw76oeSwRSD93LUMvClkf2FV7GSJYLInrrfEE8
-         FP4lDBwYdP7lC8OLp/7iQMPTj7ESacKQAnyl9Vxh1i4F0O0AuGPkyenwKxsXU1eHa9BZ
-         Am6qmMBTBzV6gkB8jwfbHgvzX4iBGY28UupKoPaa36WxbStJ8oQy0zqE1ugasoLOD80g
-         b/PA==
+        bh=uaw2PsITaX6kekMQc3Q0etgPrhdxsg93gJ/3LYFmizI=;
+        b=dCTF31mWk4HdS2ccSmqdMCVsnnsGbWXQMdmTxvez/zrlTpXXyknvOt1Nt9ns6gv7YJ
+         PhfG9rpRQ7bH7VOKJPVfKwcZcVWHRpAKkQXv7GiJTWb5E2FcHncYiEpc1WMjJMyKHpsX
+         HpqFhbmPdOnGvoBFcAkvyhavTnmH1/qJRCCzdNjjh+6nJ9kydVASfZo+we/RLQm8Kmzi
+         yiNMJzhweRnaeNuvzFtYcyKS4OT9MJsvq3Y24M6ow+hvIqMUb/IcOku46DhN6OQJHb+a
+         fIFlNE4ZU9fJMmfFdaI1hgj4hbdJ9A4p/97PZL+8jhaqcOfVZebYjuQ5W3RW8IC4kGaf
+         RnZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MND7CxXkCpWVTkvEAF445hC0TfdUYtEVoVLeQZV/beU=;
-        b=oyFZLc1vMtH/3gaiQNGNGLDxCgC206F8zOqA1zqQv0+3o3Iapg9RsKW8RaAiE9qL66
-         cDVjft268/y7rcjPQCfLTkIUfPBQOh9YMA+dwW1d4ojTnFCMCLGxcNh90GZbCksz2aHb
-         scCPSvnJl1OBdVZKn5yQ9oqFWfLtnIYp2apLn7OGRh9+hIUgIa95OsT1oF7zhiPd+qsS
-         XWItoNZB4rfkedeP3BbhHBXe4ERkk5zyZlmOLSufizHeiQnN/tV26PGXrDx1INlGRwNT
-         yOZyUwtIAPBA8/uimgWmCKWZKSWsHCDWn65jZg5pwaz1K09TVSPzRWAZ15JlusiYKKwq
-         bKSQ==
-X-Gm-Message-State: AOAM532f0OUXyqSZNbS3XPupkQaL9XeH2x3Ilfs5mOpZFX/V1/vkw1RS
-        tSbh8NRflEtDoDQuGJ9KOPo92cGG5Rh5LQ==
-X-Google-Smtp-Source: ABdhPJwqyFtpqOGlryJx1yQ6GhGwRCALBshpdpLea0QKz8sTQn6OLeSeAhKxDLYEhsHlILbiZgNEpA==
-X-Received: by 2002:a05:6830:22d3:: with SMTP id q19mr8520732otc.258.1622232627611;
-        Fri, 28 May 2021 13:10:27 -0700 (PDT)
+        bh=uaw2PsITaX6kekMQc3Q0etgPrhdxsg93gJ/3LYFmizI=;
+        b=KS9k3yDCyojyAKqMFLMxMlDBBnkPNeRsAI7tqsu6GBXQAreQtqeqj/co/EN8SwRdZm
+         yax4414sPQvxorlVfcA/8oGEdqWfYDFp8hTHN/yy1teMTxFsSXaa6QFpYwn5UsdpVm9+
+         d8HoRgSR2XGFLQ0q7SS5uTmma9Q3eOJPifM42wp5GHTEKJtvoxy+sUic5m4VPhP8Igtf
+         PGpHunIGUbHmKJR3jcCP2AMJ9OlpCFWOiLC/tXiacrYsKvY/MNkDyBm9iOARk66TK4zd
+         AR29jTLVcLVhXvVhHWDc5+DVccaT6ARH+9YOCgvyK+GlCyCpImoIFMDdmoUYXZz1AKz7
+         wpDA==
+X-Gm-Message-State: AOAM532Gb+0MMuK8qzqQWUD2hZqmT8KABWNLRm1t7QX6ZwGWs8kvGdjk
+        YIhUgz7VK2lLREGh4QUaDutIsLaeQMX8kw==
+X-Google-Smtp-Source: ABdhPJySGCviBb4uBsLgEyde+iPRTWjfUDQg5tD/oxGpR6wz7OU9ShrZNtC9Y/1PGpBNuBYazBk60A==
+X-Received: by 2002:a9d:542:: with SMTP id 60mr8633277otw.143.1622232629078;
+        Fri, 28 May 2021 13:10:29 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id b18sm1335517otk.62.2021.05.28.13.10.26
+        by smtp.gmail.com with ESMTPSA id r2sm1329510otq.28.2021.05.28.13.10.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 13:10:27 -0700 (PDT)
+        Fri, 28 May 2021 13:10:28 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -67,9 +67,9 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Matthieu Moy <git@matthieu-moy.fr>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 07/11] push: remove redundant check
-Date:   Fri, 28 May 2021 15:10:10 -0500
-Message-Id: <20210528201014.2175179-8-felipe.contreras@gmail.com>
+Subject: [PATCH 08/11] push: fix Yoda condition
+Date:   Fri, 28 May 2021 15:10:11 -0500
+Message-Id: <20210528201014.2175179-9-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0
 In-Reply-To: <20210528201014.2175179-1-felipe.contreras@gmail.com>
 References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
@@ -79,27 +79,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If fetch_remote is NULL (i.e. the branch remote is invalid), then it
-can't possibly be same as remote, which can't be NULL.
-
-The check is redundant, and so is the extra variable.
+We want to check if remote is the same as the branch remote, not the
+other way around.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/push.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ builtin/push.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/push.c b/builtin/push.c
-index 2d6358f776..f008cd624f 100644
+index f008cd624f..2dda1724cc 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -237,8 +237,7 @@ static void setup_push_simple(struct remote *remote, struct branch *branch, int
+@@ -237,7 +237,7 @@ static void setup_push_simple(struct remote *remote, struct branch *branch, int
  
  static int is_workflow_triangular(struct remote *remote)
  {
--	struct remote *fetch_remote = remote_get(NULL);
--	return (fetch_remote && fetch_remote != remote);
-+	return remote_get(NULL) != remote;
+-	return remote_get(NULL) != remote;
++	return remote != remote_get(NULL);
  }
  
  static void setup_default_push_refspecs(struct remote *remote)
