@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51638C4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81AEFC47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28978613B6
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55C6D613AB
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236381AbhE1J0H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 05:26:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49192 "EHLO
+        id S236279AbhE1J0M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 05:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235299AbhE1JZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 05:25:49 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E88C06138D
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:05 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id j14so2584761wrq.5
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:05 -0700 (PDT)
+        with ESMTP id S236294AbhE1JZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 05:25:51 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE2A1C06138F
+        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:07 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id q5so2592245wrs.4
+        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5I+xcKLkUGBqWiPXXs25+b2vmihNkiQ1B8sYGc+SI7I=;
-        b=IeDo2WjBYgUDy19cciLhpsmpuK0HjsDy/lDvROWFvM+y9s1lLAaoClEfWzji0VlPBH
-         E/HA8Ps1OIa+oe1JHAHr+AmLugLf2LkizZLbATNxCH/WSoW0TncFdcyx8QUlv73w8bK/
-         0eu6ZBXnvD2pD7NIfGOfXET+JB939CYp43Kuuhzg3PK2bZ8zHNPiXxbuSg7ybGv3VkWk
-         c88435+7mQXUTprChJlScU2cNRmOlqRE2BTnzDe/rW9EWDwDyOvz6mN9rx+WFe8yI7rZ
-         vu0K91Lojk9zE5t64U46ZT3LNrUZRRY5ukkOaAUY4MKiwmCknLSAnlXBVJfpChKko4OF
-         I5Kg==
+        bh=fkdJxmF6FhRLfxsGl5M79qLuD3sqvanHP5RvQKO2lYU=;
+        b=eZBkgJMaFUDDCP0lRWKFkNp5P8LsrRZAub/Y/h1QjVxOX/Y0LKkRm7vClr97C73Yd6
+         ZK7+Bzf/8EAcI+9cRVd3BegFh3mfcilTmziev1JoSGiu9+kxETNeeRFuFNh9LoCf2wGp
+         ecRyaJ19N/FtSoWzA5cpB+ITPK9Ruco+BQxvvgebUJYKRvDBbPbcS+ke1HJAwKR6IWKk
+         /h5p8FDEGSwTAiV9BXyCAdBBGVENhK4xIQk6mvalIeKdKMdVew0zhu0xwB1qmMnUcaV3
+         cmcy28sxv7H6XjECoqhSyM/UbY2NUahyrt4yhCHrnjjta6INCEpvu+SO40BdSK2eA1Rq
+         qoAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5I+xcKLkUGBqWiPXXs25+b2vmihNkiQ1B8sYGc+SI7I=;
-        b=N9SYKvOVGuaweCY5PRFnExcadnB1cNOKV3q1Lo8oLOsnRyjemjfAUKp4LOxR4ajY2B
-         m7K6X7KV1cj2A5BG9yyXn7Z/gyVs0mRriv9cBj8X5gD/O/NzoQPCkxNUWX/lKZGT9obL
-         Z1FBdZLxd8vpprr7+vtwpjlu0itlxeEWNAauQ5R5uKG5TiCjoSeL2PAvHMuRwHujZkfL
-         PAupoZAP5WZVkyuz606FuRDU+LphKbuzUoE9XmvOa+ClNqRMapTQ1t6LM3RfIGg8X+98
-         v0VKMG82J0zG/knHm3PNe/M9CGbDbmWP5ffwF1ZyFak8n9JSClYq1PapESnUwjfOKB7T
-         yn+w==
-X-Gm-Message-State: AOAM532YDW6SJXC3N95QO77rgmq034f/k5jOBKndVnwmJ2N7hFNlXu0d
-        IOKDT+IgRcGGgYmaVrg56yKZa46mARk2DQ==
-X-Google-Smtp-Source: ABdhPJwXkZp93tOGBnmJpVCw06yQ5oELDfryURPpnNSxmJWzpHzEOekbpvhHmOu/NgHPjvxqEYETxQ==
-X-Received: by 2002:adf:f54a:: with SMTP id j10mr1642422wrp.383.1622193843947;
-        Fri, 28 May 2021 02:24:03 -0700 (PDT)
+        bh=fkdJxmF6FhRLfxsGl5M79qLuD3sqvanHP5RvQKO2lYU=;
+        b=C8mUxh9v0b1d/COcKDQ+Cyxw39hCkaobwU45bgyrSFT3TfWQVJEJuoRt3nQSa7i+s/
+         bBWwmVCIE3S2BjGt+J9rl7Lgt9fpwXK3cd5vJMMOePRjtm3kW8PpeY/GKkrwPtzOfKXn
+         IaGtjtFJ1iUpViKfVsrUxZ1z0/TlBTi4PeXkHjpZjlqc0DXE8fwWOgkBWDjNzA3ThJWY
+         6kMNclUG5xo/NLafKKwzC2ZHlooOXZOH4coeDAg8oOZ2pO9jl1ah/TxbfWNnuwcACTWt
+         VvhgIQm08DCT75/nQPuMVrIT8feOF2R/zJjKxwFu9Qkyqb7qZpSEmXUT1IncqZT29+6Y
+         c/lA==
+X-Gm-Message-State: AOAM530NKCgdj7Oc3LxXXwu4oFAWvSr1i6UPIQI62iXFt6IFtq+Fvbxx
+        l25qbV9Q0WPR/bhZIhHYRGlNI+XmaE7cOA==
+X-Google-Smtp-Source: ABdhPJwUpbz2ibhkOEaDtUo7wrlU54t/wmMdWe0UsIMfkhx2d12GESyJAsEroyUAYKvsqGczZKXHwg==
+X-Received: by 2002:a5d:4ccb:: with SMTP id c11mr1476136wrt.169.1622193846067;
+        Fri, 28 May 2021 02:24:06 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.24.03
+        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.24.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 02:24:03 -0700 (PDT)
+        Fri, 28 May 2021 02:24:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 11/13] perl: lazily load some common Git.pm setup code
-Date:   Fri, 28 May 2021 11:23:50 +0200
-Message-Id: <patch-11.13-66f68e38c16-20210528T092228Z-avarab@gmail.com>
+Subject: [PATCH v5 13/13] perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
+Date:   Fri, 28 May 2021 11:23:52 +0200
+Message-Id: <patch-13.13-aa3a2de7047-20210528T092228Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.458.gd885d4f985c
 In-Reply-To: <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
 References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com> <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
@@ -81,121 +81,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of unconditionally requiring modules such as File::Spec, let's
-only load them when needed. This speeds up code that only needs a
-subset of the features Git.pm provides.
+It has been pointed out[1] that cwd() invokes "pwd(1)" while getcwd()
+is a Perl-native XS function. For what we're using these for we can
+use getcwd().
 
-This brings a plain invocation of "git send-email" down from 52/37
-loaded modules under NO_GETTEXT=[|Y] to 39/18, and it now takes
-~60-~70ms instead of ~80-~90ms. The runtime of t9001-send-email.sh
-test is down to ~13s from ~15s.
+The performance difference is miniscule, we're saving on the order of
+a millisecond or so, see [2] below for the benchmark. I don't think
+this matters in practice for optimizing git-send-email or perl
+execution (unlike the patches leading up to this one).
+
+But let's do it regardless of that, if only so we don't have to think
+about this as a low-hanging fruit anymore.
+
+1. https://lore.kernel.org/git/20210512180517.GA11354@dcvr/
+2.
+    $ perl -MBenchmark=:all -MCwd -wE 'cmpthese(10000, { getcwd => sub { getcwd }, cwd => sub { cwd }, pwd => sub { system "pwd >/dev/null" }})'
+                (warning: too few iterations for a reliable count)
+                             Rate                  pwd                 cwd    getcwd
+    pwd                     982/s                   --                -48%     -100%
+    cwd                    1890/s                  92%                  --     -100%
+    getcwd 10000000000000000000/s 1018000000000000000% 529000000000000064%        -
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- perl/Git.pm | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ git-send-email.perl | 2 +-
+ perl/Git.pm         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 57911386835..0efe85c0b02 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -2020,7 +2020,7 @@ sub validate_patch {
+ 			require Cwd;
+ 			my $target = Cwd::abs_path($fn);
+ 			# The hook needs a correct cwd and GIT_DIR.
+-			my $cwd_save = Cwd::cwd();
++			my $cwd_save = Cwd::getcwd();
+ 			chdir($repo->wc_path() or $repo->repo_path())
+ 				or die("chdir: $!");
+ 			local $ENV{"GIT_DIR"} = $repo->repo_path();
 diff --git a/perl/Git.pm b/perl/Git.pm
-index 02eacef0c2a..5562c0cede2 100644
+index 5562c0cede2..090a7df63fc 100644
 --- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -11,9 +11,6 @@ package Git;
- use strict;
- use warnings $ENV{GIT_PERL_FATAL_WARNINGS} ? qw(FATAL all) : ();
- 
--use File::Temp ();
--use File::Spec ();
--
- BEGIN {
- 
- our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
-@@ -103,12 +100,9 @@ =head1 DESCRIPTION
- =cut
- 
- 
--use Carp qw(carp croak); # but croak is bad - throw instead
-+sub carp { require Carp; goto &Carp::carp }
-+sub croak { require Carp; goto &Carp::croak }
- use Git::LoadCPAN::Error qw(:try);
--use Cwd qw(abs_path cwd);
--use IPC::Open2 qw(open2);
--use Fcntl qw(SEEK_SET SEEK_CUR);
--use Time::Local qw(timegm);
- }
- 
- 
-@@ -191,13 +185,15 @@ sub repository {
- 			$dir = undef;
- 		};
- 
-+		require Cwd;
- 		if ($dir) {
-+			require File::Spec;
- 			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
--			$opts{Repository} = abs_path($dir);
-+			$opts{Repository} = Cwd::abs_path($dir);
- 
- 			# If --git-dir went ok, this shouldn't die either.
- 			my $prefix = $search->command_oneline('rev-parse', '--show-prefix');
--			$dir = abs_path($opts{Directory}) . '/';
-+			$dir = Cwd::abs_path($opts{Directory}) . '/';
- 			if ($prefix) {
- 				if (substr($dir, -length($prefix)) ne $prefix) {
- 					throw Error::Simple("rev-parse confused me - $dir does not have trailing $prefix");
-@@ -223,7 +219,7 @@ sub repository {
- 				throw Error::Simple("fatal: Not a git repository: $dir");
- 			}
- 
--			$opts{Repository} = abs_path($dir);
-+			$opts{Repository} = Cwd::abs_path($dir);
- 		}
- 
- 		delete $opts{Directory};
-@@ -408,10 +404,12 @@ sub command_bidi_pipe {
- 	my $cwd_save = undef;
+@@ -405,7 +405,7 @@ sub command_bidi_pipe {
  	if ($self) {
  		shift;
--		$cwd_save = cwd();
-+		require Cwd;
-+		$cwd_save = Cwd::cwd();
+ 		require Cwd;
+-		$cwd_save = Cwd::cwd();
++		$cwd_save = Cwd::getcwd();
  		_setup_git_cmd_env($self);
  	}
--	$pid = open2($in, $out, 'git', @_);
-+	require IPC::Open2;
-+	$pid = IPC::Open2::open2($in, $out, 'git', @_);
- 	chdir($cwd_save) if $cwd_save;
- 	return ($pid, $in, $out, join(' ', @_));
- }
-@@ -538,7 +536,8 @@ sub get_tz_offset {
- 	my $t = shift || time;
- 	my @t = localtime($t);
- 	$t[5] += 1900;
--	my $gm = timegm(@t);
-+	require Time::Local;
-+	my $gm = Time::Local::timegm(@t);
- 	my $sign = qw( + + - )[ $gm <=> $t ];
- 	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
- }
-@@ -1340,6 +1339,7 @@ sub _temp_cache {
- 		my $n = $name;
- 		$n =~ s/\W/_/g; # no strange chars
- 
-+		require File::Temp;
- 		($$temp_fd, $fname) = File::Temp::tempfile(
- 			"Git_${n}_XXXXXX", UNLINK => 1, DIR => $tmpdir,
- 			) or throw Error::Simple("couldn't open new temp file");
-@@ -1362,9 +1362,9 @@ sub temp_reset {
- 
- 	truncate $temp_fd, 0
- 		or throw Error::Simple("couldn't truncate file");
--	sysseek($temp_fd, 0, SEEK_SET) and seek($temp_fd, 0, SEEK_SET)
-+	sysseek($temp_fd, 0, Fcntl::SEEK_SET()) and seek($temp_fd, 0, Fcntl::SEEK_SET())
- 		or throw Error::Simple("couldn't seek to beginning of file");
--	sysseek($temp_fd, 0, SEEK_CUR) == 0 and tell($temp_fd) == 0
-+	sysseek($temp_fd, 0, Fcntl::SEEK_CUR()) == 0 and tell($temp_fd) == 0
- 		or throw Error::Simple("expected file position to be reset");
- }
- 
+ 	require IPC::Open2;
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
