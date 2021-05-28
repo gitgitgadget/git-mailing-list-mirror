@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29BE4C4708D
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64149C47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFCB7611BD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43AD1611C9
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:11:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236050AbhE1MNV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:13:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58742 "EHLO
+        id S236297AbhE1MNW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:13:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230256AbhE1MNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 08:13:19 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4326FC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:43 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id r10so3045910wrj.11
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:43 -0700 (PDT)
+        with ESMTP id S235255AbhE1MNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 08:13:20 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CE8C06174A
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:44 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id n4so3102883wrw.3
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=y76LIDEogVgjWLyqVhKSZu/O8Gex/gwCHP7JWyhmFoY=;
-        b=HEC6AOKB4Oa8njgeeXhIu6Q8SHnjdA1YDNs56dyr92YqORmpWNOMH3ZN9we7u3qq0l
-         L+ke7uk1JKHuyrJhAypQVQ19kbmUgBnUpxjIBk7DpjCG2pcJPCsbY0XzvidnV6M3MPZS
-         0xddC1GXgP+LDwHkZ8gWZ0ykroVgn96er9yFBGQl1zCvS2eqycrQC34MjGEfJ/HFCPdQ
-         GbJNfO+aIEmZIClMmzjsb/yz0Dr4xP+F6v+ulvv+Hubj0AiAMjfGPFx8XXO1LkAS5EG2
-         fi+ReBaKZQVizXThycSB79GNdvYJ3mQDB/fgaQTMZQ6lSUoQdeNiP74b1GXgGNE2wC3D
-         3zkA==
+        bh=MlicDSbKY3+IsStW6iHd8sEA8jZjwjf/HhdAOmz7pVM=;
+        b=Sz+DuW7e0xK3AcCcl2/Ziq0JUQ6IJCtR4TWwYVb4UWCoNo9qldxuJ4JVSV5bwu0yne
+         ro3sC+75AvM1J0P8Ve9I3tKNvFpm3m+Rw7xCdNmJ5/yDFaSeGzRhrEuZ5NidRhkLJ7Yv
+         cI3f6d3QpBzMjFrPiX4ApOFL24UjZ7c1pb1HJQZa+AThIPvbDXjrn7XafGJL/OdY9hI7
+         atG1C0A4lK8G1X8DNpXACADfio2mrg9awLxHKhwNuXtSfHmM0iExIu14u2fu4UVRoZIv
+         fofTilb5x3Uu8DI8eq14TS+VqOvJ84Ql60rKE1svdgDe+D4Q7nH6IrP85DFZ1hAZNGJ3
+         b4XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=y76LIDEogVgjWLyqVhKSZu/O8Gex/gwCHP7JWyhmFoY=;
-        b=FQV6Xnu7IRLTsze7tqb47YipQudTEhmbyQWKnUK6RrDCkk9WDCHLRjCDXr4jx71JWf
-         pDqzpnChEqPu48hN+cmllQXfiCq9vaMX0taFHD6LC11RhCMOzOF3h2y4D9IfbVKwULh2
-         iGs0yRkVRo7Mnk/gTWd8hm4UQE8FptS4DSq2NphiyYzUpCQoUbyUirbESbXpA2ltLnkj
-         DWxJAdzfgTtRbLwdM7iDbwcYY7cbNkPj0CGPByOnRojDArMPdgktIrhYE52jnH+EscDU
-         u7hdheYJKXD7Cn6SdCwXPEDVtQrc5HIAozFbQ8kGrIaptwm9kTc82g0ULL0NETCnsLd3
-         2OWg==
-X-Gm-Message-State: AOAM530zRIQRJKbXgkmDuCwSJExxgMqx0wC+BDWvesDdp7pLKM7VtmGZ
-        cXjZQFlcZY5zDBZbsAEUMWGwucU+QLNbOg==
-X-Google-Smtp-Source: ABdhPJytOP9dscC2d6EFSDR6opss4T0qQIjM73EL4lN9fFl7yDZeRViA2D6iNEdZF/h505oB82Fb7Q==
-X-Received: by 2002:a5d:508f:: with SMTP id a15mr8630178wrt.242.1622203901590;
-        Fri, 28 May 2021 05:11:41 -0700 (PDT)
+        bh=MlicDSbKY3+IsStW6iHd8sEA8jZjwjf/HhdAOmz7pVM=;
+        b=JYoy7Y16x64YnE80Eny2KK2lLJGDYf3e33d2HxboBRMw1g2Iad/JY1Qb+9HyXbkUCF
+         3R2I9LuXzqNhErEhQ+26APIN59D12wR6gdZJpzDsU0RAkuKvvP/EEGcK0Z6WxZu/2iHR
+         oGdCE/61C2Atdtza/DdmH0FZlRIG3/XLb6si9mefeQ0nYX39UJNJsPMg441WLv/AB3Ot
+         +ArUINHQ9eywM/vd/6t8AJ+TYB9WGk2g5w3JtplBBvXWHZ6y1FnviFrLaJLBobS6b87N
+         JDfHS4kBVBvcRogCbYW+ZZ6R2huNK1y0jxPMTNfvr9HA+LqZj9ta7+FQLe49hHWHAkSA
+         eGUg==
+X-Gm-Message-State: AOAM533c0atqhnSkrqWqr7dyVJkqoTGD7kEaTbihg/06/on9rbJTBodn
+        5ETRICbncIKCO1ILvfVvWCLAe7E9DcSLcw==
+X-Google-Smtp-Source: ABdhPJzUDf5ORsojsK31YQP5FfygWzu8wVQFTm4xZvQ3kuOCdCBmr4r895agmwQGVJiNnSVzrrvvsQ==
+X-Received: by 2002:adf:d081:: with SMTP id y1mr8258756wrh.179.1622203902492;
+        Fri, 28 May 2021 05:11:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.40
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:11:41 -0700 (PDT)
+        Fri, 28 May 2021 05:11:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 01/31] hooks tests: don't leave "actual" nonexisting on failure
-Date:   Fri, 28 May 2021 14:11:03 +0200
-Message-Id: <patch-01.31-8ac2efc71a0-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 02/31] gc tests: add a test for the "pre-auto-gc" hook
+Date:   Fri, 28 May 2021 14:11:04 +0200
+Message-Id: <patch-02.31-eb37693f7dc-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -82,29 +82,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Start by creating an "actual" file in a core.hooksPath test that has
-the hook echoing to the "actual" file. We later test_cmp that file to
-see what hooks were run. Having that list of files be empty if we fail
-instead of throwing an error about it being nonexistent makes for
-friendlier output, we'll see what hooks we should have run.
+Add a missing test for the behavior of the pre-auto-gc hook added in
+0b85d92661e (Documentation/hooks: add pre-auto-gc hook, 2008-04-02).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1350-config-hooks-path.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/t6500-gc.sh | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/t/t1350-config-hooks-path.sh b/t/t1350-config-hooks-path.sh
-index f1f9aee9f5d..fa9647a7c0b 100755
---- a/t/t1350-config-hooks-path.sh
-+++ b/t/t1350-config-hooks-path.sh
-@@ -5,6 +5,7 @@ test_description='Test the core.hooksPath configuration variable'
- . ./test-lib.sh
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 60d961b5260..10c7ae7f09c 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -95,6 +95,52 @@ test_expect_success 'gc --keep-largest-pack' '
+ 	)
+ '
  
- test_expect_success 'set up a pre-commit hook in core.hooksPath' '
-+	>actual &&
- 	mkdir -p .git/custom-hooks .git/hooks &&
- 	write_script .git/custom-hooks/pre-commit <<-\EOF &&
- 	echo CUSTOM >>actual
++test_expect_success 'pre-auto-gc hook can stop auto gc' '
++	cat >err.expect <<-\EOF &&
++	no gc for you
++	EOF
++
++	git init pre-auto-gc-hook &&
++	(
++		cd pre-auto-gc-hook &&
++		write_script ".git/hooks/pre-auto-gc" <<-\EOF &&
++		echo >&2 no gc for you &&
++		exit 1
++		EOF
++
++		git config gc.auto 3 &&
++		git config gc.autoDetach false &&
++
++		# We need to create two object whose sha1s start with 17
++		# since this is what git gc counts.  As it happens, these
++		# two blobs will do so.
++		test_commit "$(test_oid obj1)" &&
++		test_commit "$(test_oid obj2)" &&
++
++		git gc --auto >../out.actual 2>../err.actual
++	) &&
++	test_must_be_empty out.actual &&
++	test_cmp err.expect err.actual &&
++
++	cat >err.expect <<-\EOF &&
++	will gc for you
++	Auto packing the repository for optimum performance.
++	See "git help gc" for manual housekeeping.
++	EOF
++
++	(
++		cd pre-auto-gc-hook &&
++		write_script ".git/hooks/pre-auto-gc" <<-\EOF &&
++		echo >&2 will gc for you &&
++		exit 0
++		EOF
++		git gc --auto >../out.actual 2>../err.actual
++	) &&
++
++	test_must_be_empty out.actual &&
++	test_cmp err.expect err.actual
++'
++
+ test_expect_success 'auto gc with too many loose objects does not attempt to create bitmaps' '
+ 	test_config gc.auto 3 &&
+ 	test_config gc.autodetach false &&
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
