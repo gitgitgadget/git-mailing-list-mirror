@@ -2,127 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35D4BC47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 07:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39DFDC4708D
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 07:44:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 170C1613DA
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 07:03:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12BCE613B6
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 07:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233081AbhE1HEo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 03:04:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45404 "EHLO
+        id S235393AbhE1Hpq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 03:45:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbhE1HEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 03:04:43 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B75C061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 00:03:09 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id h20-20020a17090aa894b029015db8f3969eso1981632pjq.3
-        for <git@vger.kernel.org>; Fri, 28 May 2021 00:03:09 -0700 (PDT)
+        with ESMTP id S235185AbhE1Hpk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 03:45:40 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53193C061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 00:44:04 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id l3so3971293ejc.4
+        for <git@vger.kernel.org>; Fri, 28 May 2021 00:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=sVVxjRbOaE38ebzP2h5L0wD+NcWcNNdSUNO02SSldvg=;
-        b=lqhQwSP0xSNmUM5PAsKPAfADv9qOBys8o/ZLkDSrjKq0WirARWw6OuRyNxZkWLd3Vu
-         7IJjpLHxoiBa2cuFcFrZpOVOwU6hW632/1RPjW8SjlCrRHLNfmKBtFfUXQd+qCsFUDUj
-         TvLBuySWYxd+1YNIgV2eGz4Kw+ntDdynng2A+OB3nh7HNSgJtB8ZUG2bWC7Q7g7gVaS4
-         zTw8Lr0sphGSXXxjFuwCsi9DnLrUYqYR1FHZMrbHA5CNRKJqdiJYLnTWIpaICdmCDvoZ
-         NKJg+LuYrKIHS5daGm0N2dVTYKceCY1/G+LnkYKNdVCYCR2xBXhWG1t1JqycRrNUdojz
-         XQ5A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Y7cG7kgDYQ7ejAqoW+jsRLOWht3EcFUv6GlR6DuZQ1Q=;
+        b=Uqm7vA9qRQTzZ9JC+2F1ma8yAO6UOrx75LdHudykpgSMcbCu6/x2UzXIoSINe2M69B
+         q6i22xHaM3aapbtknD8/2nx0aJTxJn/FKp2pJvty/s7SjdtfYXTmGgBbccCkvMt19yE5
+         ehTqTbjQ+naCITqfPv2iKLd+pT/1/Isl2+k5yQ6fnDP5u3d2xHBOTANRkjVkIbRIKzBn
+         jkC0yWXwGQ6Q1Tf67coYPPFq5SBoIZy0YeikRoJLMj+kkTQuCLj+dcX0Bn3Q+3aIs/UH
+         ZKWpXSF5+7k2iI9dfnyCMTFAynunvKHdFjUgr6Wvivqqk5ttzh5OWekacfby9M45fffc
+         3ubQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=sVVxjRbOaE38ebzP2h5L0wD+NcWcNNdSUNO02SSldvg=;
-        b=KkTB9b0vRcbGtKYdciW+fR5qOyXGMLqyIBTik7/3m/ZfojdWfujIYQdKvp0GNbtxTN
-         3kT04blX6Jt1l98A5VSAgy0AbRODWWp4oEYJaN17dyxsQHqs+HaAofLKmiaIaOvOTE1P
-         tkdT61Ct1nGqcSRgektmE5PGHLRI05JnGT9r2UrJ1V3ApZ0e7gM4A+LcoYGo5zPPFhBv
-         cFPvdks1JaLfs1qB4BO9ofy9WniE7kguIY3u0L+Bv8pEvnyNzupSAQsjenmIox83p8b5
-         H5Sa6EIcsaGtU+pUO0KNsLK/RaJdrMbEKOkJSyMv6XZzCooXhJ6wPk8Z925PRmCPDImM
-         ceBA==
-X-Gm-Message-State: AOAM530vja79tuAbNRzaffJKzzPNTSgVCWMrfR+GaI40smM5U5UZJRhX
-        asagEFLSM/z5wZN9CEmchuGXpxb4k3BqNg==
-X-Google-Smtp-Source: ABdhPJxi3sfxz3+gqwVr0Bf1y4ryfTaMy1F+qPDDncD3PTso9c3lXKuRJBEPJdED4LWGiiurG3bzmA==
-X-Received: by 2002:a17:90b:4ad2:: with SMTP id mh18mr2734473pjb.148.1622185388798;
-        Fri, 28 May 2021 00:03:08 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-80.three.co.id. [180.214.232.80])
-        by smtp.gmail.com with ESMTPSA id f186sm3647310pfb.36.2021.05.28.00.03.07
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Y7cG7kgDYQ7ejAqoW+jsRLOWht3EcFUv6GlR6DuZQ1Q=;
+        b=ctFsSiuZ42+pkcakcwtccL+9vNIm5CbkQWh8p5fgr/GxxxF6XxqZCgLBH5zipvQBFS
+         KP/nNV7SDM99ygExp1awuwhJiL2JprTU7izYh63BlsZmpqogW89bebK+x8LMct8iu54L
+         ELFmLM8MrSF8mhY3GXa9AMv+q1VPBWYpu4l22ZMwiRpzYezL4e6fw09mavDEATe2q2bB
+         rKQ1fIx2kxnri+p379GZH9jID3KqINQ+BFBKJe+KQtqyxMpn3JSsgiTlvp25W8yNtXq3
+         AK19K9lXXNSQYS6U4yW9L7lI0tNDXao0PAs++PXpBsCxW/Y4728aA+XV06uBzpS0iOm3
+         +wXg==
+X-Gm-Message-State: AOAM531Sbll685lTKI3Gvlz4jg8OYY/lRqaDO18e3EoxbFBvkb0aE8wn
+        lUmA+v2nJgNe2mNVhz7VE+1ovFTYZk4=
+X-Google-Smtp-Source: ABdhPJxlRaSXsqb8VVgZZUDBtWLkgYIWbEHlk9pdIoWG1d37HiX5kyEd+PuQdjbjcsrLbY/hXINk0Q==
+X-Received: by 2002:a17:906:26db:: with SMTP id u27mr7917582ejc.532.1622187842968;
+        Fri, 28 May 2021 00:44:02 -0700 (PDT)
+Received: from ?IPv6:2a02:8388:e002:8cf0:b0b8:f178:ae9f:6d19? (2a02-8388-e002-8cf0-b0b8-f178-ae9f-6d19.cable.dynamic.v6.surfer.at. [2a02:8388:e002:8cf0:b0b8:f178:ae9f:6d19])
+        by smtp.googlemail.com with ESMTPSA id kx3sm1955859ejc.44.2021.05.28.00.44.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 May 2021 00:03:08 -0700 (PDT)
-To:     Git Users <git@vger.kernel.org>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Fetching single tag in shallow clone almost unshallow the clone
-Message-ID: <304633fd-e677-7956-6787-f60f195db9b5@gmail.com>
-Date:   Fri, 28 May 2021 14:03:05 +0700
+        Fri, 28 May 2021 00:44:02 -0700 (PDT)
+Subject: Re: git push doesn't use local branch name as default
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <3b9bc214-a30a-ba49-af96-7eeaf37b7bbd@gmail.com>
+ <fcf30899-8e64-5417-f478-14d6aca72544@gmail.com>
+ <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
+From:   Mathias Kunter <mathiaskunter@gmail.com>
+Message-ID: <f9f38d42-2b93-0d3b-798b-4c6f44eb111d@gmail.com>
+Date:   Fri, 28 May 2021 09:44:00 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+ Thunderbird/78.8.1
 MIME-Version: 1.0
+In-Reply-To: <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: de-AT
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+> you only get the "current" behavior when fetch_remote is non-NULL.
 
-I have a copy of Golang repository [1] on my local Git server on my 
-computer. I'm experimenting with fetching single tags in shallow
-clone.
+Well, then my suggestion actually is to also use the `current` behavior 
+when fetch_remote is NULL - i.e. change
 
-I begin with shallow clone the repo:
+> return (fetch_remote && fetch_remote != remote);
 
-$ git clone https://<myhost>/path/to/go.git --depth 200 golang
-$ cd golang
+to
 
-Because only one, default branch (master) is checked out on shallow 
-clone, I fetch latest release branch shallowly:
+> return (!fetch_remote || fetch_remote != remote);
 
-$ git remote set-branches --add origin release-branch.go1.16
-$ git fetch origin release-branch.go1.16 --depth 25
+I'd argue that if `simple` pushing is used, then the expected behavior 
+of the command
 
-Then I fetch single tag only, that is latest tagged release:
+> git push <remote_name>
 
-$ git fetch origin tag go1.16.4 --no-tags
-> From https://<myhost>/path/to/go
->  * [new tag]           go1.16.4   -> go1.16.4
+on a branch without upstream would actually be to use the `current` 
+behavior instead of bailing out with an error.
 
-That above worked, because the commit the tag refers to is already on 
-the clone.
 
-But when I fetch a single tag which the commit the tag refers to isn't 
-already on the clone, Git fetched almost the entire history (thus almost 
-unshallow the clone):
-
-$ git fetch origin tag go1.16.1 --no-tags
-> remote: Enumerating objects: 436644, done.
-> remote: Counting objects: 100% (427655/427655), done.
-> remote: Compressing objects: 100% (75334/75334), done.
-> remote: Total 419698 (delta 343975), reused 416121 (delta 341201), pack-reused 0
-> Receiving objects: 100% (419698/419698), 146.94 MiB | 16.06 MiB/s, done.
-> Resolving deltas: 100% (343975/343975), completed with 4892 local objects.
-> From https://gitnode.io/bagas/go
->  * [new tag]           go1.16.1   -> go1.16.1
-
-I expect that instead Git will deepen the shallow clone until the 
-specified tag.
-
-Note that I used "almost unshallow" phrase, because although almost the 
-whole history had been fetched, `.git/shallow` still exists, meant that 
-the clone was still shallow. To convert to full clone, I did `git fetch 
---unshallow`, which also fetched tags referenced on either master or 
-already configured released branches.
-
-Thanks.
-
-[1]: https://github.com/golang/go
--- 
-An old man doll... just what I always wanted! - Clara
+Am 28.05.21 um 09:00 schrieb Elijah Newren:
+> On Thu, May 27, 2021 at 11:39 PM Mathias Kunter <mathiaskunter@gmail.com> wrote:
+>>
+>> Felipe,
+>>
+>> thanks for your reply.
+>>
+>>> Sounds like you want to change the default to `push.default=current`.
+>>
+>> Yes, but shouldn't `simple` pushing also work? The documentation says
+>> about `push.default=simple`:
+>>
+>>> When pushing to a remote that is different from the remote you normally
+>>> pull from, work as `current`.
+> 
+> Perhaps this wording should be clarified to read
+> 
+> When you have a remote that you normally pull from but you are pushing
+> to a different remote then that one, then work as 'current'.
+> 
+>> If there is no upstream, then there also is no "remote I normally pull
+>> from", and thus, according to the doc, `simple` should actually work
+>> like `current` in this case. Am I wrong here?
+> 
+> The relevant code is
+> 
+>      return (fetch_remote && fetch_remote != remote);
+> 
+> so you only get the "current" behavior when fetch_remote is non-NULL.
+> 
