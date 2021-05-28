@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29500C4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 306CDC4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A0F3613B6
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0980C613B6
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236200AbhE1JZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 05:25:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
+        id S236037AbhE1JZm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 05:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236122AbhE1JZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 05:25:33 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 079F7C061760
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:23:58 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id v23so249650wrd.10
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:23:57 -0700 (PDT)
+        with ESMTP id S236093AbhE1JZf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 05:25:35 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D02C061761
+        for <git@vger.kernel.org>; Fri, 28 May 2021 02:23:59 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id z19-20020a7bc7d30000b029017521c1fb75so4187379wmk.0
+        for <git@vger.kernel.org>; Fri, 28 May 2021 02:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Sv7iNawyF3qxEolByD3bBsf8/A55eF52TTUmYN40oLo=;
-        b=JuU3HncdvSTaMDPJns7Rwm9Rbavz2ATDYIHDwN8EpQR7Z5tTAlq2EnFPq8B/9i8S7g
-         a+2aJTioj0hUdkrZB5Azeg0XIRwwgRxjVdnjRqVSRefHvhGR49nwlsEkanjxg3Aj5YAA
-         i1kTwGw53HAM4D5UMtGhjlBLXE5jbc0jhn+nROgLGeFFjg/i/z6j/RIcXatfKuBNzdCt
-         aU3leNvUcYtkwDSqM/aH0qXq/ZuZ14VySlWIXLFI0CGicIbA2I+R7tdE3WHMOH6ewJYs
-         bAk2BDY2gRkGOzvDZ4+ZA2rRkOXbIgrMHSX7hvIRELaoCT9vtyvW4yj8fwZAXfxITa+g
-         vAxA==
+        bh=IOniThVSCYtkiM3dR38e2nO2uTv+Yd9uJOvEFMzsuKs=;
+        b=PF2UIMve8wFL3JhVYybUVhA+5NvwIfg0MAi43NLEUNftaWTRpQfdFg9UwEN9Epabw/
+         4E36dSmiEv691rkrLcJWm/50jeHTe44+Q5hDOxmNrkX4kTnjbW2TR/nTzDUG0b9lCBBI
+         fEECKkK5LVrIKAxDflbUIfJ3yrEPelkmimrd+/yWe1wsrNnn6WKwe22TJrVu8z5fcpSz
+         w8EcEvCpOexUvFEji4ShqeYAoN8Jxmmzv/Y5EFLQji5Z93fsuMeln0Y1YIof+8K7+YbG
+         qe2G0CQCD2u+7Cuzdxd+gT5p2zLq+Xyly/HtXnjw/J9aiYRgM3dlMkKMGThuVmB0MHUX
+         /GEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Sv7iNawyF3qxEolByD3bBsf8/A55eF52TTUmYN40oLo=;
-        b=qqDXslrE54aC58+LeOY2c8+/rc2aU+gDc+WaGN5IFMylTFLF0mp29q5+BwcmwfBjks
-         sPqL519N7NhXFj0lr+suGvBNKX4p84f29Cb5iw9IC7WlXJDomrZxIhFhe70QP4EdMmIE
-         iPsNcBVZAbFQwELS5Dw+FyePQ8CyJxUFsNObXnjOorceRfpn7+Lk2uZu7TPD28nRqqnC
-         n9uuH+xDZhWpixsILdUJtVgx5ULaMdgTKqNey6+0+taCqkpYF1znjB19y7eBBz8I+bGA
-         47EciQ//AuWXGeTCcsXzOg0kh74Kg+ulDJKoW/ad/qoP5xFTBNUONvR3HnnaeZdMwSvE
-         Kvwg==
-X-Gm-Message-State: AOAM531vj76YeC4gwgGHES1vl9hAN9t6AR+iKYNldB0t7XcB9wHmQnjE
-        aKXbbgm/wlpx/HhV5rHPtFI8wKYkouKW9A==
-X-Google-Smtp-Source: ABdhPJz2hFPQtVsVRQg2ZaiNVlsI25w5FuqiwcSX4MoCVxI+X0l2SpM9w0i2DHVWDiFEXyMj4PsVmw==
-X-Received: by 2002:adf:f7c4:: with SMTP id a4mr7612639wrq.20.1622193836350;
-        Fri, 28 May 2021 02:23:56 -0700 (PDT)
+        bh=IOniThVSCYtkiM3dR38e2nO2uTv+Yd9uJOvEFMzsuKs=;
+        b=Vo/9cdfX8nw720uqYwea0tStmqx/ZpUURC4ZZGTZmgrZphgBbNFZFT+uZHZNiU4Xpb
+         EptB3XqptUI7KBrd1oN6bKYLNs9yCcdxm2T+um9yu28i9ZQVsqIx6ylJaOkj7yt8vOCU
+         Ye4VU+LEu+94NW7WX/wRu+voDk0eaHSYVyeDRWRm08JhzsASlKsXAOhU6pkEOorF8HGu
+         o8YbWDYqOFbqpvVrvYVsPyXxszHzzzRV2nXrilY84ngF1K11S914RF/hArPHgV60+KUK
+         3EzEWRp26X1jfdoYzT3kE8usQg6a5uKlk0mc6zHCLSy2tePI1xBvm2h5BDvqX4XOKIpK
+         qWgQ==
+X-Gm-Message-State: AOAM533E6Yabaq8TcWMvvamWurAqf1LeXlsl/3iJf10vrvdUQ1d/RuJf
+        yzYovjHvWdJRMykLV0Pg7Iw+GlQR/y7wLQ==
+X-Google-Smtp-Source: ABdhPJxjoIE6NayX5rxcWo86OQAXfjyIjDA9lXLvicKODmPlm7eX+DHrdRLaXhlihNrzN1PItzUd5A==
+X-Received: by 2002:a1c:2985:: with SMTP id p127mr7619242wmp.165.1622193838018;
+        Fri, 28 May 2021 02:23:58 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.23.55
+        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.23.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 02:23:55 -0700 (PDT)
+        Fri, 28 May 2021 02:23:57 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 02/13] send-email tests: test for boolean variables without a value
-Date:   Fri, 28 May 2021 11:23:41 +0200
-Message-Id: <patch-02.13-16277bd1082-20210528T092228Z-avarab@gmail.com>
+Subject: [PATCH v5 04/13] send-email: refactor sendemail.smtpencryption config parsing
+Date:   Fri, 28 May 2021 11:23:43 +0200
+Message-Id: <patch-04.13-961ca4c2b2a-20210528T092228Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.458.gd885d4f985c
 In-Reply-To: <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
 References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com> <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
@@ -81,69 +81,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Git.pm code does its own Perl-ifying of boolean variables, let's
-ensure that empty values = true for boolean variables, as in the C
-code.
+With the removal of the support for sendemail.smtpssl in the preceding
+commit the parsing of sendemail.smtpencryption is no longer special,
+and can by moved to %config_settings.
+
+This gets us rid of an unconditional call to Git::config(), which as
+we'll see in subsequent commits matters for startup performance.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t9001-send-email.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ git-send-email.perl | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 3b7540050ca..612de095fd7 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1368,6 +1368,16 @@ test_expect_success $PREREQ 'sendemail.identity: bool variable fallback' '
- 	! grep "X-Mailer" stdout
- '
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 9a1a4898e36..e2fe112aa50 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -287,6 +287,7 @@ sub do_edit {
+ );
  
-+test_expect_success $PREREQ 'sendemail.identity: bool variable without a value' '
-+	git -c sendemail.xmailer \
-+		send-email \
-+		--dry-run \
-+		--from="nobody@example.com" \
-+		$patches >stdout &&
-+	grep "To: default@example.com" stdout &&
-+	grep "X-Mailer" stdout
-+'
-+
- test_expect_success $PREREQ '--no-to overrides sendemail.to' '
- 	git send-email \
- 		--dry-run \
-@@ -2092,6 +2102,18 @@ test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=true' '
- 	do_xmailer_test 1 "--xmailer"
- '
+ my %config_settings = (
++    "smtpencryption" => \$smtp_encryption,
+     "smtpserver" => \$smtp_server,
+     "smtpserverport" => \$smtp_server_port,
+     "smtpserveroption" => \@smtp_server_options,
+@@ -387,14 +388,6 @@ sub read_config {
+ 			$$target = $v;
+ 		}
+ 	}
+-
+-	if (!defined $smtp_encryption) {
+-		my $setting = "$prefix.smtpencryption";
+-		my $enc = Git::config(@repo, $setting);
+-		return unless defined $enc;
+-		return if $configured->{$setting}++;
+-		$smtp_encryption = $enc;
+-	}
+ }
  
-+test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer' '
-+	test_when_finished "test_unconfig sendemail.xmailer" &&
-+	cat >>.git/config <<-\EOF &&
-+	[sendemail]
-+		xmailer
-+	EOF
-+	test_config sendemail.xmailer true &&
-+	do_xmailer_test 1 "" &&
-+	do_xmailer_test 0 "--no-xmailer" &&
-+	do_xmailer_test 1 "--xmailer"
-+'
-+
- test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=false' '
- 	test_config sendemail.xmailer false &&
- 	do_xmailer_test 0 "" &&
-@@ -2099,6 +2121,13 @@ test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=false' '
- 	do_xmailer_test 1 "--xmailer"
- '
- 
-+test_expect_success $PREREQ '--[no-]xmailer with sendemail.xmailer=' '
-+	test_config sendemail.xmailer "" &&
-+	do_xmailer_test 0 "" &&
-+	do_xmailer_test 0 "--no-xmailer" &&
-+	do_xmailer_test 1 "--xmailer"
-+'
-+
- test_expect_success $PREREQ 'setup expected-list' '
- 	git send-email \
- 	--dry-run \
+ # sendemail.identity yields to --identity. We must parse this
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
