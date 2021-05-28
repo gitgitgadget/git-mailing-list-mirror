@@ -2,122 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CFEDC4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C638C4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:27:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B2076100B
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:18:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8446613B4
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 21:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbhE1VTm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 17:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39652 "EHLO
+        id S229528AbhE1V3S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 17:29:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbhE1VTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 17:19:40 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A32C061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 14:18:05 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id b25so5624060oic.0
-        for <git@vger.kernel.org>; Fri, 28 May 2021 14:18:05 -0700 (PDT)
+        with ESMTP id S229481AbhE1V3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 17:29:18 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 018E2C061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 14:27:41 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so4804660otp.4
+        for <git@vger.kernel.org>; Fri, 28 May 2021 14:27:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u8DWX0l/1daHmdFrBEZSSv9TkI2wH9AbwYQLPNPWphY=;
-        b=ua7CBmyFKvWZ1DUgt6yzmBW9v68PmKaKKFiT2BTyExbJF4IGBzw2ImGqLAGpAUhYhm
-         amQRzCMVpXUzzSq9ERjnJ3LUOSB+GfcpIsGb5/7leiQI/gyQPl+YrhHy25sC+ldTV3AV
-         uYrFdg0m4JAfVlBUDIygdVbnqmFFy1MI1trydqzyH5skmEIrnsoZbAtFGm4i6oN5Ksr4
-         belAnYLikCyg3/zZ3tiw4FX2FI/QWSePm0ENRizUeVqjHB3t2A0b4VpjNboDeMpp5mM4
-         Ff458x0lIMgp1e8GkrmAFN3I8AViNkh1RZGY9s3lYw5WrtDFNpOuT3DaVod2LJUqKmZ1
-         tsrQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=4yYKisGm9LlGuuyj/IV+WlLpa4pb6Nu18BTaRj33aXc=;
+        b=sRI/tFT35/2hCZfWAErcnDyNOcM+cQHrfraGFrCny4gFtwq0AaJSfpwAfpj+c3jd5z
+         xws9iOHzLVhECru1eBZGx7UCHzBE0TbThLjnoleGYF1b3z1PcyyqLtIZJvETmkaK5yCw
+         WGYNSaSpTMgVgRLsO8ecOGbP90232peOPMoCMM4ypF/wx2zBJn7gj818E6nJ7f6OfnWI
+         1UbYeuaP/5CbBIGwLBjcrDH1TOEnglSNHxYws+SXY3bOPE+gFTGLgwKFw58hr3tucF3N
+         vr2W6wdUGA0LDsz6Aku3DWX3O9Xh2G0TWIy+xFtgsT7rbX1hNbpU+krGKply5xH1T7rt
+         9kxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u8DWX0l/1daHmdFrBEZSSv9TkI2wH9AbwYQLPNPWphY=;
-        b=lQSjRbiY/YYAq64Zoo54HXs7w9S2IJSevih0OgstIBTWSuTLL32JwLRa1yhy6Glj1K
-         yKCKo2tTMMc99ddfaernTvwjOL1qZ2/qVObi+Od9IHHR6Hl7kJxR+w/WadSFWWf/IXVN
-         9Ujsjc21avsDlDcyhIGvwpCQamqryKAU2mQUt9Mp+KkPYaPtM/vsgFOBF/Ao8ReJXuKU
-         mnpy/HkosaAi4+iFXVcaEoEV3WJfGc+e2jkAvGkuonHwxX6F7ZKvRpe8DLnnmnI+WWTm
-         HbZednVodVq2j+XWV46sOwJw2Cq0zF+yIDAcpUW7v5q1X0PWYyAAtb5YiTKeiHWLIoJ9
-         EjvQ==
-X-Gm-Message-State: AOAM531hUoDQ+r6Kd2Xy7fZ5BehLTlphyp0nbCISpM/C0+ceUDXH8hau
-        r4kgaaeZ1d943+fG7zzog6Wg4J81YZBH+S4vYFg=
-X-Google-Smtp-Source: ABdhPJxdBs8CRrkK+rv6iSLNLuhVNhK9nQR0QMpJy/s9H2TqGBrHWYi0fEEHw0gg462xPgmso8uysIOFcNQoYl5O3bE=
-X-Received: by 2002:aca:4bd8:: with SMTP id y207mr10525732oia.39.1622236684936;
- Fri, 28 May 2021 14:18:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
-In-Reply-To: <20210528201014.2175179-1-felipe.contreras@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 May 2021 14:17:54 -0700
-Message-ID: <CABPp-BGEtJqorUeQ4evWdmCvb=zsnkAdOn-ToG48=AYp3aUwNg@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Unconvolutize push.default=simple
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=4yYKisGm9LlGuuyj/IV+WlLpa4pb6Nu18BTaRj33aXc=;
+        b=I9XAqSOiRToNnzkbKdz094NSCq6QWsr26sCZLlG4Mgd5DAY3xa1kPlBMUMAJhKUzeX
+         yK3ITxzTSurzkVemXF5eDMM4fDNJPToOQIYjW8cvlDDEPmWHqrVVsC3olRzpMiEyMuUV
+         d0zPUs9Tfm/ec0FsmMSsocWPTwnEOL8oMHebRIzW9oBwRUvUVsYxtcy6hfYL7B4jOWsB
+         fxfW/s7KpxPp256JoupGwY7iC9HHSJ9tl2/fg/UHSKgEcEEb7hVjl7wmBu3iuu/g1+af
+         WeErg1ADqTd+gmYthfU+jVnlH6Qlsf+lLFJDSRl2UyopTOhAmfVb6cZW8PpC9FL2pAEg
+         XUlA==
+X-Gm-Message-State: AOAM532VSwzsRdzrkDQczsMJjMstYWxUhtDlqocVl7C1mQNqRzJfPCsR
+        MIqe1Sc1Kg4MHkz1i2Ihftg=
+X-Google-Smtp-Source: ABdhPJwB3FXoYw5lpd0BTGLp8hpI6/450PVhkdmwfB4QmFivjcoYwzL1qefC8otS/VS3QC7bSodufA==
+X-Received: by 2002:a05:6830:1205:: with SMTP id r5mr8907989otp.359.1622237261241;
+        Fri, 28 May 2021 14:27:41 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id a7sm1355550ooo.9.2021.05.28.14.27.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 May 2021 14:27:40 -0700 (PDT)
+Date:   Fri, 28 May 2021 16:27:39 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Mathias Kunter <mathiaskunter@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Ramkumar Ramachandra <r@artagnon.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
         Matthieu Moy <git@matthieu-moy.fr>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <60b1604b66329_2a3717208eb@natae.notmuch>
+In-Reply-To: <CABPp-BFPXWy0GwZwT0weNs1DKMKFC4ds2tLJWcVQBOKxPMomFQ@mail.gmail.com>
+References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
+ <20210528201014.2175179-4-felipe.contreras@gmail.com>
+ <CABPp-BFPXWy0GwZwT0weNs1DKMKFC4ds2tLJWcVQBOKxPMomFQ@mail.gmail.com>
+Subject: Re: [PATCH 03/11] push: reorganize setup_push_simple()
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 28, 2021 at 1:10 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+Elijah Newren wrote:
+> On Fri, May 28, 2021 at 1:10 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> >
+> > Simply move the code around.
+> 
+> Not quite, you also deleted dead code.  Made the patch a bit harder to
+> read because I was trying to verify you did what the commit message
+> said and it took me longer than it should have to realize that you
+> were also deleting dead code.  Might be worth including that fact in
+> this sentence here.
 
-Is "Unconvolutize" a convoluted synonym of simplify, untwist, or
-perhaps deconvolute?  ;-)
+OK. I thought that was obvious.
 
-> Tired of jumping through hoops trying to understand what the "simple"
-> mode does, I decided to reorganize it up for good so it's crystal
-> clear.
->
-> There are no functional changes.
+Shall I update the commit message to include that fact, or shall I add a
+separate patch to remove the dead code?
 
-A couple tweaks to some commit messages would make it easier to verify
-that you have introduced no functional changes (at least for reviewers
-like me who aren't that familiar with this code area).
+Either are fine by me.
 
-> Basically the simple mode pushes the current branch with the same name
-> on the remote.
->
-> Except... when there's no upstream branch configured with the same name.
->
-> Now the code and the documentation are clear.
+> > -               if (triangular)
+> > -                       die(_("You are pushing to remote '%s', which is not the upstream of\n"
+> > -                             "your current branch '%s', without telling me what to push\n"
+> > -                             "to update which remote branch."),
+> > -                           remote->name, branch->name);
+> 
+> This if-block is safe to delete because we're already in the !triangular case.
+> 
+> > -
+> > -               if (1) {
 
-I've read through the series and agree they do as you say.  The code
-and documentation changes look good to me.
+Techically this is removing dead code too.
 
-> This has the additional advantage of making `current` based on `simple`,
-> rather than the other way around; `current` is basically `simple`
-> but assuming we are never in a centralized workflow.
->
-> Felipe Contreras (11):
->   push: hedge code of default=simple
->   push: move code to setup_push_simple()
->   push: reorganize setup_push_simple()
->   push: simplify setup_push_simple()
->   push: remove unused code in setup_push_upstream()
->   push: merge current and simple
->   push: remove redundant check
->   push: fix Yoda condition
->   push: remove trivial function
->   push: flip !triangular for centralized
->   doc: push: explain default=simple correctly
->
->  Documentation/config/push.txt | 13 +++++-----
->  builtin/push.c                | 47 +++++++++++++++++++----------------
->  2 files changed, 31 insertions(+), 29 deletions(-)
->
-> --
-> 2.32.0.rc0
+-- 
+Felipe Contreras
