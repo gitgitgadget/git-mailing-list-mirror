@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A1D3C47087
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA0C6C4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EE11601FD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FBE4611C9
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236490AbhE1MOC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:14:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58824 "EHLO
+        id S236635AbhE1MOF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:14:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236475AbhE1MNg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236476AbhE1MNg (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 May 2021 08:13:36 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E07C06138D
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:54 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id f75-20020a1c1f4e0000b0290171001e7329so2275020wmf.1
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:54 -0700 (PDT)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E49C061342
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:55 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso4428969wmh.4
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Gu2/EP8+WZtdqS+LfCUB7epHyQjdD+jLlCHAe/9Yvvs=;
-        b=N6va65qAeuikLyMxWL+aIC1BXKEOTq3aRHYRLzmDdtDARhi1+OrhxhwpHPZ499YlE4
-         y/CAlRkH72ENBIP+3Tc7lGCbtlp/N/bKK1rZEbHfdVd7j/Xd7jjsJLbognyWNw+JT2tT
-         iYa4raUvpJgOPezg7tTKdmKsXEK/LNEIwx67t0MIPjBE9kcQ1NF9Vqnss5pOIfAeipJN
-         I7e9EhXVE7JNk4TfbTNoqCRpisXh7TES5z2yRoAcox3QGCpurYscLRIg9tABmtpn09oe
-         5QlR/rOd3EoWngdNB4zra5aP97myEo1aW+nsrcZzLGgx+3ilPgX3WYG73AWuP+HbFpQY
-         Uiug==
+        bh=p99YD4HVnPDTIi0NUGecUgtJQt+1orFFGAjsrdLOZ2A=;
+        b=RtLjtAQp9BVLaTqgVy8lXXgo6qVR456wTRzKWPEqD8FvA+lk/BEpbOBzviSG1vNmfc
+         LTqx8V5blbYOU6kUi2Jc78w07IjQ5pDaUJN0K7HHsS4jbqIYd4ax9lFelLEXB1kP9Utw
+         /PExTsErmT69X0PnA1zVVbHbiWFbj4n1+cMp0Dx/y/388v/pwOzIHRYCqHn/FamZjNVM
+         wjwfJVZzu1UEv+3utqXmoly/NLG9xEC6PdtK9LKoylTkilYyOv4S7143v+suXcm9euhb
+         NZShoE+Ht5vtudylZmYlUrjSl/jhDt76u23IRlF5qN9V/GyWF0UFuCZ/QoNGd+sXt+89
+         Rhfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Gu2/EP8+WZtdqS+LfCUB7epHyQjdD+jLlCHAe/9Yvvs=;
-        b=P5AzEyIKxauXuLO5j9aVTyHqVbYZ6WXywwKeRbQ6uKshduEinvja2gYEpGwQmDyIi3
-         9tiOfSw2CdJTMA8gei7Uku9rgBcHFKBre5KzwUsnunT15/AsuiS4KzQTtLFd8hz10mIu
-         Mu/80qeh9CWJFcB5DguqyQ1/mkxzOzcv/JfTleNsTPR5iTvzapTLQNvpOnTqyXlykcA5
-         HyqOiaUgVJMxp0twnl+YUBrC714O17zSGg7zZGDk11IwMCncq7/xBZW7svfY/Qdv84Wi
-         5gcP5t8WAOBOKmOY0bj7urFOuLPnJjTz3fhWIsQiFORf4o6LUb2FM7DN651vEsHJYcQ6
-         314w==
-X-Gm-Message-State: AOAM533muXdoiB8jRvUzvMzvNeG5S69Rwq5avEcNLWPtLWPzUR1W681m
-        m0oKoCu5d60gybUIJ3EnjRgGucA/TojRIw==
-X-Google-Smtp-Source: ABdhPJzirDWKQ4fVGyB6ous0qsrcwwZ2fDPiYeqfm1YtOXFVHkuTEQC1IzaHaVD0ZCTLFzmQE2Bb2Q==
-X-Received: by 2002:a05:600c:2056:: with SMTP id p22mr13488872wmg.146.1622203913316;
-        Fri, 28 May 2021 05:11:53 -0700 (PDT)
+        bh=p99YD4HVnPDTIi0NUGecUgtJQt+1orFFGAjsrdLOZ2A=;
+        b=qKA6EoShh9DipTO01NBuDQ8YoxJe6sFc1CNiuK/ouf5qd/X0+UKovXi4CeKznt9RT3
+         +t98QxPphwERjQBHSBljZyZlSFIEo/Q3tGJ6uMS6FIheEO/iOOSRoD7VyqdVqNsiTACe
+         NFrRTQR0vdMMi/M+oqiaYpycGES+Fml1M+nnYSvJFPLHVD90MVcqxIAl4y9A6a19RAq5
+         eWRl3slsUimKUjjbjU2O8GANsREIVxkW1p6KLg8nLH1nv9DGthrWG8OQhCmp2cyl+h0H
+         sn69XKDS95Sgd6hmd2KxXf5MhaG13r6o14Igl9vh8hWnHp9QtcqbdP6sh7kE8WfviaW3
+         roFw==
+X-Gm-Message-State: AOAM5300zz4sFh+QbWbB4xqCHm4S+UyoJswH0LlLfSaHJD+MnzC4FEVV
+        U0Ns9F/oOSjDvVjWLRNYpUlOnf8yci6u7Q==
+X-Google-Smtp-Source: ABdhPJyJ/tnDf/W8MZLFGkYNR2FHUaWaEB1Neg44gCYmDMHuGYkLgOFwNsWOn1wRsg4rP+I2fJNV6Q==
+X-Received: by 2002:a7b:cc10:: with SMTP id f16mr8429644wmh.24.1622203914208;
+        Fri, 28 May 2021 05:11:54 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.52
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:11:52 -0700 (PDT)
+        Fri, 28 May 2021 05:11:53 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 14/31] commit: use hook.h to execute hooks
-Date:   Fri, 28 May 2021 14:11:16 +0200
-Message-Id: <patch-14.31-3f3610f5ed3-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 15/31] read-cache: convert post-index-change hook to use config
+Date:   Fri, 28 May 2021 14:11:17 +0200
+Message-Id: <patch-15.31-6482a3e4cb8-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,97 +84,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Teach run_commit_hook() to call hook.h instead of run-command.h. This
-covers 'pre-commit', 'commit-msg', and
-'prepare-commit-msg'.
+By using hook.h instead of run-command.h to run, post-index-change hooks
+can now be specified in the config in addition to the hookdir.
+post-index-change is not run anywhere besides in read-cache.c.
 
-Additionally, ask the hook library - not run-command - whether any
-hooks will be run, as it's possible hooks may exist in the config but
-not the hookdir.
-
-Because all but 'post-commit' hooks are expected to make some state
-change, force all but 'post-commit' hook to run in series. 'post-commit'
-"is meant primarily for notification, and cannot affect the outcome of
-`git commit`," so it is fine to run in parallel.
+This removes the last direct user of run_hook_ve(), so we can make the
+function static now. It'll be removed entirely soon.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit.c |  2 +-
- commit.c         | 16 ++++++++++------
- sequencer.c      |  2 +-
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ read-cache.c  | 11 ++++++++---
+ run-command.c |  2 +-
+ run-command.h |  1 -
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index f1aafd67d46..dad4e565443 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1045,7 +1045,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		return 0;
- 	}
- 
--	if (!no_verify && find_hook("pre-commit")) {
-+	if (!no_verify && hook_exists("pre-commit")) {
- 		/*
- 		 * Re-read the index as pre-commit hook could have updated it,
- 		 * and write it out as a tree.  We must do this before we invoke
-diff --git a/commit.c b/commit.c
-index 8ea55a447fa..e8147a88fc6 100644
---- a/commit.c
-+++ b/commit.c
-@@ -21,6 +21,7 @@
- #include "commit-reach.h"
- #include "run-command.h"
- #include "shallow.h"
-+#include "hook.h"
- 
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -1698,22 +1699,25 @@ size_t ignore_non_trailer(const char *buf, size_t len)
- int run_commit_hook(int editor_is_used, const char *index_file,
- 		    const char *name, ...)
+diff --git a/read-cache.c b/read-cache.c
+index 775e970402c..a17bc30f870 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3132,6 +3132,7 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
  {
--	struct strvec hook_env = STRVEC_INIT;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
- 	va_list args;
-+	const char *arg;
  	int ret;
--
--	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
-+	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
+ 	int was_full = !istate->sparse_index;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
  
- 	/*
- 	 * Let the hook know that no editor will be launched.
- 	 */
- 	if (!editor_is_used)
--		strvec_push(&hook_env, "GIT_EDITOR=:");
-+		strvec_push(&opt.env, "GIT_EDITOR=:");
+ 	ret = convert_to_sparse(istate);
  
- 	va_start(args, name);
--	ret = run_hook_ve(hook_env.v, name, args);
-+	while ((arg = va_arg(args, const char *)))
-+		strvec_push(&opt.args, arg);
- 	va_end(args);
--	strvec_clear(&hook_env);
+@@ -3160,9 +3161,13 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
+ 	else
+ 		ret = close_lock_file_gently(lock);
+ 
+-	run_hook_le(NULL, "post-index-change",
+-			istate->updated_workdir ? "1" : "0",
+-			istate->updated_skipworktree ? "1" : "0", NULL);
++	strvec_pushl(&hook_opt.args,
++		     istate->updated_workdir ? "1" : "0",
++		     istate->updated_skipworktree ? "1" : "0",
++		     NULL);
++	run_hooks("post-index-change", &hook_opt);
++	run_hooks_opt_clear(&hook_opt);
 +
-+	ret = run_hooks(name, &opt);
-+	run_hooks_opt_clear(&opt);
+ 	istate->updated_workdir = 0;
+ 	istate->updated_skipworktree = 0;
  
- 	return ret;
+diff --git a/run-command.c b/run-command.c
+index 82fdf296569..eecdef5a0c8 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1321,7 +1321,7 @@ int async_with_fork(void)
+ #endif
  }
-diff --git a/sequencer.c b/sequencer.c
-index 3de479f90e1..8f46984ffb7 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1446,7 +1446,7 @@ static int try_to_commit(struct repository *r,
- 		}
- 	}
  
--	if (find_hook("prepare-commit-msg")) {
-+	if (hook_exists("prepare-commit-msg")) {
- 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
- 		if (res)
- 			goto out;
+-int run_hook_ve(const char *const *env, const char *name, va_list args)
++static int run_hook_ve(const char *const *env, const char *name, va_list args)
+ {
+ 	struct child_process hook = CHILD_PROCESS_INIT;
+ 	const char *p;
+diff --git a/run-command.h b/run-command.h
+index b58531a7eb3..24ab5d63c4c 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -216,7 +216,6 @@ int run_command(struct child_process *);
+  */
+ LAST_ARG_MUST_BE_NULL
+ int run_hook_le(const char *const *env, const char *name, ...);
+-int run_hook_ve(const char *const *env, const char *name, va_list args);
+ 
+ /*
+  * Trigger an auto-gc
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
