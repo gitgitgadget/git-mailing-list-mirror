@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E73FC4708E
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A1D3C47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 646D2611BD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EE11601FD
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:12:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236613AbhE1MNr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58798 "EHLO
+        id S236490AbhE1MOC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:14:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236429AbhE1MNa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 08:13:30 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF7BC06138B
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:53 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id n5-20020a1c72050000b0290192e1f9a7e1so2273732wmc.2
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:53 -0700 (PDT)
+        with ESMTP id S236475AbhE1MNg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 08:13:36 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E07C06138D
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:54 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id f75-20020a1c1f4e0000b0290171001e7329so2275020wmf.1
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:11:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T7r9ULGv9apYUhZVJDTU9OoHivQOcGw4trxulZmX+NM=;
-        b=r0ThF77Wp+e/BxBJwZKaGpiHnVnzvMKYAOjaUIafVZSSCYu7y4NVJBUuyhG5EH/Wvl
-         DRfTwHAJqrJcA8unSwFM1qFpdw/hfA/0y743kuKJj7WumE3c60GRm3fQ0//KO4/5fHK1
-         p3Q1u9tidbgaRntdvF6S1nYzOyhYBwAsutQwvi/4K1QTZ4VXVWS7fq4sQni/GtfJTkUX
-         42qp+TACGkOPwJm0cxYm9mPHGuSI+iNnF/XR/qW2bM6Scqmjja1C//sJj86Iq1BgXyL9
-         U2qFc5OP79bXhzq4QS5KVZ20b3oyYWTpHxwYcfqj6vPS6OXOq7bVuhr9pOC9Gq3ZiwPh
-         z4fw==
+        bh=Gu2/EP8+WZtdqS+LfCUB7epHyQjdD+jLlCHAe/9Yvvs=;
+        b=N6va65qAeuikLyMxWL+aIC1BXKEOTq3aRHYRLzmDdtDARhi1+OrhxhwpHPZ499YlE4
+         y/CAlRkH72ENBIP+3Tc7lGCbtlp/N/bKK1rZEbHfdVd7j/Xd7jjsJLbognyWNw+JT2tT
+         iYa4raUvpJgOPezg7tTKdmKsXEK/LNEIwx67t0MIPjBE9kcQ1NF9Vqnss5pOIfAeipJN
+         I7e9EhXVE7JNk4TfbTNoqCRpisXh7TES5z2yRoAcox3QGCpurYscLRIg9tABmtpn09oe
+         5QlR/rOd3EoWngdNB4zra5aP97myEo1aW+nsrcZzLGgx+3ilPgX3WYG73AWuP+HbFpQY
+         Uiug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T7r9ULGv9apYUhZVJDTU9OoHivQOcGw4trxulZmX+NM=;
-        b=QB8YoJFtxXjIBK9gmiGyQIaO4Vlaatkl+XaQfo334EjR+osdAciDWH+UKMQOmv6/Ov
-         VQBPU1wsdW+QQiOn10ui4iCCN0LweVKynzkd2z0TdiODPrBixPL8vdctzhyE6Evs2Jw/
-         8LOUKpZWJj1e+PF56YzApoY+HzbsMxtsAHU0W576XtRljbxMLRRf2BZuWSBWu9nPh3be
-         gI7Lj5UVtVo/bVqKZ5ivsjuYAnax7raPe3smfVYB/2cIue6taxjBqfUcpT+Zsx0lAgfI
-         KQWFotOJXZTe+PsfidkJ6VqSOwHskXn4CFbhuhi4dEXqO2BkjwWqwggDM8Uu1nqUBXHg
-         zy1g==
-X-Gm-Message-State: AOAM531XN+HGnsyNTXmVbKza+iLQzGmWSy6J1kgRDGQCXREQQRrrxQ5V
-        AeCyl8RaVkombWqrElUI7EeWqtN4aqg4sQ==
-X-Google-Smtp-Source: ABdhPJxAGWxH+mgigrkJLf8cwsz0+cYP7106fy7Uounwb6WpdPZ2cOix4Ip0JEHY1VOugsuFApuoBw==
-X-Received: by 2002:a1c:a50e:: with SMTP id o14mr12196711wme.78.1622203912269;
-        Fri, 28 May 2021 05:11:52 -0700 (PDT)
+        bh=Gu2/EP8+WZtdqS+LfCUB7epHyQjdD+jLlCHAe/9Yvvs=;
+        b=P5AzEyIKxauXuLO5j9aVTyHqVbYZ6WXywwKeRbQ6uKshduEinvja2gYEpGwQmDyIi3
+         9tiOfSw2CdJTMA8gei7Uku9rgBcHFKBre5KzwUsnunT15/AsuiS4KzQTtLFd8hz10mIu
+         Mu/80qeh9CWJFcB5DguqyQ1/mkxzOzcv/JfTleNsTPR5iTvzapTLQNvpOnTqyXlykcA5
+         HyqOiaUgVJMxp0twnl+YUBrC714O17zSGg7zZGDk11IwMCncq7/xBZW7svfY/Qdv84Wi
+         5gcP5t8WAOBOKmOY0bj7urFOuLPnJjTz3fhWIsQiFORf4o6LUb2FM7DN651vEsHJYcQ6
+         314w==
+X-Gm-Message-State: AOAM533muXdoiB8jRvUzvMzvNeG5S69Rwq5avEcNLWPtLWPzUR1W681m
+        m0oKoCu5d60gybUIJ3EnjRgGucA/TojRIw==
+X-Google-Smtp-Source: ABdhPJzirDWKQ4fVGyB6ous0qsrcwwZ2fDPiYeqfm1YtOXFVHkuTEQC1IzaHaVD0ZCTLFzmQE2Bb2Q==
+X-Received: by 2002:a05:600c:2056:: with SMTP id p22mr13488872wmg.146.1622203913316;
+        Fri, 28 May 2021 05:11:53 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.51
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 05:11:51 -0700 (PDT)
+        Fri, 28 May 2021 05:11:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/31] git-p4: use 'git hook' to run hooks
-Date:   Fri, 28 May 2021 14:11:15 +0200
-Message-Id: <patch-13.31-03129460fd2-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 14/31] commit: use hook.h to execute hooks
+Date:   Fri, 28 May 2021 14:11:16 +0200
+Message-Id: <patch-14.31-3f3610f5ed3-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,99 +84,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Instead of duplicating the behavior of run-command.h:run_hook_le() in
-Python, we can directly call 'git hook run'. We emulate the existence
-check with the --ignore-missing flag.
+Teach run_commit_hook() to call hook.h instead of run-command.h. This
+covers 'pre-commit', 'commit-msg', and
+'prepare-commit-msg'.
+
+Additionally, ask the hook library - not run-command - whether any
+hooks will be run, as it's possible hooks may exist in the config but
+not the hookdir.
+
+Because all but 'post-commit' hooks are expected to make some state
+change, force all but 'post-commit' hook to run in series. 'post-commit'
+"is meant primarily for notification, and cannot affect the outcome of
+`git commit`," so it is fine to run in parallel.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-p4.py | 72 ++++++-------------------------------------------------
- 1 file changed, 7 insertions(+), 65 deletions(-)
+ builtin/commit.c |  2 +-
+ commit.c         | 16 ++++++++++------
+ sequencer.c      |  2 +-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index d34a1946b75..e76d8df3139 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -207,71 +207,13 @@ def decode_path(path):
-         return path
+diff --git a/builtin/commit.c b/builtin/commit.c
+index f1aafd67d46..dad4e565443 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1045,7 +1045,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
+ 	}
  
- def run_git_hook(cmd, param=[]):
--    """Execute a hook if the hook exists."""
--    if verbose:
--        sys.stderr.write("Looking for hook: %s\n" % cmd)
--        sys.stderr.flush()
--
--    hooks_path = gitConfig("core.hooksPath")
--    if len(hooks_path) <= 0:
--        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
--
--    if not isinstance(param, list):
--        param=[param]
--
--    # resolve hook file name, OS depdenent
--    hook_file = os.path.join(hooks_path, cmd)
--    if platform.system() == 'Windows':
--        if not os.path.isfile(hook_file):
--            # look for the file with an extension
--            files = glob.glob(hook_file + ".*")
--            if not files:
--                return True
--            files.sort()
--            hook_file = files.pop()
--            while hook_file.upper().endswith(".SAMPLE"):
--                # The file is a sample hook. We don't want it
--                if len(files) > 0:
--                    hook_file = files.pop()
--                else:
--                    return True
--
--    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
--        return True
--
--    return run_hook_command(hook_file, param) == 0
--
--def run_hook_command(cmd, param):
--    """Executes a git hook command
--       cmd = the command line file to be executed. This can be
--       a file that is run by OS association.
--
--       param = a list of parameters to pass to the cmd command
--
--       On windows, the extension is checked to see if it should
--       be run with the Git for Windows Bash shell.  If there
--       is no file extension, the file is deemed a bash shell
--       and will be handed off to sh.exe. Otherwise, Windows
--       will be called with the shell to handle the file assocation.
--
--       For non Windows operating systems, the file is called
--       as an executable.
--    """
--    cli = [cmd] + param
--    use_shell = False
--    if platform.system() == 'Windows':
--        (root,ext) = os.path.splitext(cmd)
--        if ext == "":
--            exe_path = os.environ.get("EXEPATH")
--            if exe_path is None:
--                exe_path = ""
--            else:
--                exe_path = os.path.join(exe_path, "bin")
--            cli = [os.path.join(exe_path, "SH.EXE")] + cli
--        else:
--            use_shell = True
--    return subprocess.call(cli, shell=use_shell)
--
-+    """args are specified with -a <arg> -a <arg> -a <arg>"""
-+    args = ['git', 'hook', 'run', '--ignore-missing', cmd]
-+    if param:
-+        args.append("--")
-+        for p in param:
-+            args.append(p)
-+    return subprocess.call(args) == 0
+-	if (!no_verify && find_hook("pre-commit")) {
++	if (!no_verify && hook_exists("pre-commit")) {
+ 		/*
+ 		 * Re-read the index as pre-commit hook could have updated it,
+ 		 * and write it out as a tree.  We must do this before we invoke
+diff --git a/commit.c b/commit.c
+index 8ea55a447fa..e8147a88fc6 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "hook.h"
  
- def write_pipe(c, stdin):
-     if verbose:
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ 
+@@ -1698,22 +1699,25 @@ size_t ignore_non_trailer(const char *buf, size_t len)
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    const char *name, ...)
+ {
+-	struct strvec hook_env = STRVEC_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	va_list args;
++	const char *arg;
+ 	int ret;
+-
+-	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
++	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
+ 
+ 	/*
+ 	 * Let the hook know that no editor will be launched.
+ 	 */
+ 	if (!editor_is_used)
+-		strvec_push(&hook_env, "GIT_EDITOR=:");
++		strvec_push(&opt.env, "GIT_EDITOR=:");
+ 
+ 	va_start(args, name);
+-	ret = run_hook_ve(hook_env.v, name, args);
++	while ((arg = va_arg(args, const char *)))
++		strvec_push(&opt.args, arg);
+ 	va_end(args);
+-	strvec_clear(&hook_env);
++
++	ret = run_hooks(name, &opt);
++	run_hooks_opt_clear(&opt);
+ 
+ 	return ret;
+ }
+diff --git a/sequencer.c b/sequencer.c
+index 3de479f90e1..8f46984ffb7 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1446,7 +1446,7 @@ static int try_to_commit(struct repository *r,
+ 		}
+ 	}
+ 
+-	if (find_hook("prepare-commit-msg")) {
++	if (hook_exists("prepare-commit-msg")) {
+ 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
+ 		if (res)
+ 			goto out;
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
