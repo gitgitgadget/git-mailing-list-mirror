@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C02C4708D
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCE8C47087
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE7A5613E6
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D592E611C9
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236615AbhE1MOr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:14:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58872 "EHLO
+        id S236691AbhE1MOt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:14:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236595AbhE1MNq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236372AbhE1MNq (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 May 2021 08:13:46 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F91AC061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:01 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id z137-20020a1c7e8f0000b02901774f2a7dc4so6684540wmc.0
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:01 -0700 (PDT)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F2C7C06174A
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:02 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 16so1985583wmj.5
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GQQjhSTHoH4IiTKM5fGNPEQJLpMyCBbHyQthfVCwWaA=;
-        b=RoII6yVx4gSV/dsVuSszgQErZ73j/H2jw5VUnn7p0hZ73YjP2pcN6kKlL2o8cdD7yA
-         +dvj/gbXN5vlZe0pUU1WR/urfhu8M5nOkNAfXjPnb8S/kGcVTHpK1h9o8tICf37+QT8/
-         35oItRCPAQ/Z+4rPqk9o4BfwJNznLaZfBXGe8lr7VuwdC+/TuadOqmhm4LdJ8wrz+4Gq
-         gmlUrRwr0g0Y8BWy8UqVC/nL947PGO8MtPR6+S+xRVUj1W/3Nxbuyo2jxJYvPqUFPSwC
-         bFulzinqU1TnQvTyBrTlbcilM95GfTGh2dYvmtPWm1M7Xv6eE3HoZlkoH3i3gPRovSlW
-         6iuA==
+        bh=AxaKIcqgkwmJb+giZN2LbhUNw8StGAGqmg9mLvKY2e0=;
+        b=bwW0yLAHZXnxYWMYTRJHPbnZ+X7LyhPNG4PNWLQInXFrdLbphuhQZtY/vEcrsEQPYy
+         DRJJqsctc+jLUHwSfA36Cbgiq9Yh/Na1j1VaCAewk/q//cOTw+gyzeyutF0659i8wz0H
+         xyJDhZclx4VPMkfth63L/DH7pu+pd8lxy3C7SYriGSQx0ayxjGLMBmQxwMvFuLdfuVsh
+         0uRb7540dkq3BHFat9dq4cMCi17/uPnELIN2utAa8YPrUeeOwSnunDDlaKWB4fwP0mm7
+         OVw17mb3YKBeg/UvEfE+klkamfoTrBxkqQsZoMMuHM6YU1LTZotyrPGtSp4dv1douJzC
+         NyYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GQQjhSTHoH4IiTKM5fGNPEQJLpMyCBbHyQthfVCwWaA=;
-        b=CB92SO+1iaNri3QYxTf7T7haTkN0BpgG5D0W9Sea6wdvM/SH5YtIYRL/CySHJgToU8
-         2fGcw94UlxLcXbU+S5z7IXmSm57GvoIgtCadrIRJ8zo/odAp4JKl618OLo6QG6wdMifF
-         31AtZxHCRiFB3C4BG30xa6INOJADMLg6sJwMzZt0TFa0Y1/1QszXrmFHq6neAh0o3OUp
-         IXq1Rb2WNDXnbb7dcWxPpxhBC5Mp1KYEv5GjWrn1zjucffb/7VfbGwf3m/ub/6iX6Kqz
-         xL+6OYXKJnNN2o0K6tWd7WC6AT+hxDFTaknHLlNNc3JBsF00pBty2wUY9s55lGZZ9Lo9
-         Zkdg==
-X-Gm-Message-State: AOAM533b4rZYH56QdOi5bw+mhla28jBMeGLZ9zxlOZUJjTJqoJmrKs6t
-        7sJw293vpXOS+IuMDtnCBJreIAv32Gik3Q==
-X-Google-Smtp-Source: ABdhPJxGZxbcGZXRKZw8vaADo4EDFPs/7mtGLF1VyeoL0UrrnZX7Hdphvv/Bdie+m9HgrhdXa00YCA==
-X-Received: by 2002:a7b:c0cf:: with SMTP id s15mr13518986wmh.134.1622203919583;
-        Fri, 28 May 2021 05:11:59 -0700 (PDT)
+        bh=AxaKIcqgkwmJb+giZN2LbhUNw8StGAGqmg9mLvKY2e0=;
+        b=Bkbljp1+Os2+Kj3HBV3evMnaQWj1s6DWdRmlpUEPbGUfZ6WpWGMpAvGal+uG4fI2MG
+         VgHKpZLrDQEPlQBuYusWIn1H559bOyWQATrfLtjdgbBQcgIDgppKqXW/VubiAWsmCW9J
+         6wIpWaKy1B9YEALpsEgHMw7hhapl9L61hlTMwSM7p0Aj+Obsi1Wx92gYug1ifICHwlYx
+         tysZJQcMMGf3stgZ4MeXvfi/qPrfM7DCsZ+Zvj5CfPkbXA4pTCE9PV1FsjEdAhIHwEJV
+         Df5mvjeRtrzF7puECt6zucCOEr2Imkx2HGcJYozEmdKUmmVEVvYZJ7Bu4LmJlxDgMspH
+         jPfQ==
+X-Gm-Message-State: AOAM5327OI1s3ZxoLsPe9fhiNKxlYzeKSYVtmu8CPMWi1SGUCw3IpqyI
+        V+OGIb+E4zgGw02bpoj/jR7SWXp+Yla37Q==
+X-Google-Smtp-Source: ABdhPJz58iv7AB8F0yClatNJvw/kPi7kEHuCDHtFAne8QJlXfYMXvlczdm+MYG6OVqi27NtqZ/STOQ==
+X-Received: by 2002:a1c:7402:: with SMTP id p2mr13046707wmc.88.1622203920412;
+        Fri, 28 May 2021 05:12:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.58
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.11.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 28 May 2021 05:11:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 21/31] hook: provide stdin by string_list or callback
-Date:   Fri, 28 May 2021 14:11:23 +0200
-Message-Id: <patch-21.31-3748f128763-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 22/31] hook: convert 'post-rewrite' hook in sequencer.c to hook.h
+Date:   Fri, 28 May 2021 14:11:24 +0200
+Message-Id: <patch-22.31-0cf0b1fea93-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,143 +84,129 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-In cases where a hook requires only a small amount of information via
-stdin, it should be simple for users to provide a string_list alone. But
-in more complicated cases where the stdin is too large to hold in
-memory, let's provide a callback the users can populate line after line
-with instead.
+By using 'hook.h' for 'post-rewrite', we simplify hook invocations by
+not needing to put together our own 'struct child_process'.
+
+The signal handling that's being removed by this commit now takes
+place in run-command.h:run_processes_parallel(), so it is OK to remove
+them here.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- hook.c | 33 +++++++++++++++++++++++++++++++--
- hook.h | 27 +++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+), 2 deletions(-)
+ sequencer.c | 81 ++++++++++++++++++++++-------------------------------
+ 1 file changed, 34 insertions(+), 47 deletions(-)
 
-diff --git a/hook.c b/hook.c
-index 5f6335bac3f..ac5e3988fec 100644
---- a/hook.c
-+++ b/hook.c
-@@ -47,6 +47,29 @@ void run_hooks_opt_clear(struct run_hooks_opt *o)
- 	strvec_clear(&o->args);
- }
+diff --git a/sequencer.c b/sequencer.c
+index 8f46984ffb7..ec2761e47d9 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -35,6 +35,7 @@
+ #include "commit-reach.h"
+ #include "rebase-interactive.h"
+ #include "reset.h"
++#include "string-list.h"
  
-+int pipe_from_string_list(struct strbuf *pipe, void *pp_cb, void *pp_task_cb)
-+{
-+	int *item_idx;
-+	struct hook *ctx = pp_task_cb;
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct string_list *to_pipe = hook_cb->options->feed_pipe_ctx;
-+
-+	/* Bootstrap the state manager if necessary. */
-+	if (!ctx->feed_pipe_cb_data) {
-+		ctx->feed_pipe_cb_data = xmalloc(sizeof(unsigned int));
-+		*(int*)ctx->feed_pipe_cb_data = 0;
-+	}
-+
-+	item_idx = ctx->feed_pipe_cb_data;
-+
-+	if (*item_idx < to_pipe->nr) {
-+		strbuf_addf(pipe, "%s\n", to_pipe->items[*item_idx].string);
-+		(*item_idx)++;
-+		return 0;
-+	}
-+	return 1;
-+}
-+
- static int pick_next_hook(struct child_process *cp,
- 			  struct strbuf *out,
- 			  void *pp_cb,
-@@ -62,6 +85,10 @@ static int pick_next_hook(struct child_process *cp,
- 	if (hook_cb->options->path_to_stdin) {
- 		cp->no_stdin = 0;
- 		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
-+	} else if (hook_cb->options->feed_pipe) {
-+		/* ask for start_command() to make a pipe for us */
-+		cp->in = -1;
-+		cp->no_stdin = 0;
- 	} else {
- 		cp->no_stdin = 1;
- 	}
-@@ -114,7 +141,6 @@ static int notify_hook_finished(int result,
- 	return 1;
- }
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
  
--
- int run_found_hooks(const char *hook_name, const char *hook_path,
- 		    struct run_hooks_opt *options)
+@@ -1147,33 +1148,28 @@ int update_head_with_reflog(const struct commit *old_head,
+ static int run_rewrite_hook(const struct object_id *oldoid,
+ 			    const struct object_id *newoid)
  {
-@@ -139,7 +165,7 @@ int run_found_hooks(const char *hook_name, const char *hook_path,
- 	run_processes_parallel_tr2(options->jobs,
- 				   pick_next_hook,
- 				   notify_start_failure,
--				   NULL,
-+				   options->feed_pipe,
- 				   notify_hook_finished,
- 				   &cb_data,
- 				   "hook",
-@@ -157,6 +183,9 @@ int run_hooks(const char *hook_name, struct run_hooks_opt *options)
- 	if (!options)
- 		BUG("a struct run_hooks_opt must be provided to run_hooks");
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	const char *argv[3];
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct strbuf tmp = STRBUF_INIT;
++	struct string_list to_stdin = STRING_LIST_INIT_DUP;
+ 	int code;
+-	struct strbuf sb = STRBUF_INIT;
  
-+	if (options->path_to_stdin && options->feed_pipe)
-+		BUG("choose only one method to populate stdin");
+-	argv[0] = find_hook("post-rewrite");
+-	if (!argv[0])
+-		return 0;
++	strvec_push(&opt.args, "amend");
+ 
+-	argv[1] = "amend";
+-	argv[2] = NULL;
+-
+-	proc.argv = argv;
+-	proc.in = -1;
+-	proc.stdout_to_stderr = 1;
+-	proc.trace2_hook_name = "post-rewrite";
+-
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+-	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
+-	sigchain_push(SIGPIPE, SIG_IGN);
+-	write_in_full(proc.in, sb.buf, sb.len);
+-	close(proc.in);
+-	strbuf_release(&sb);
+-	sigchain_pop(SIGPIPE);
+-	return finish_command(&proc);
++	strbuf_addf(&tmp,
++		    "%s %s",
++		    oid_to_hex(oldoid),
++		    oid_to_hex(newoid));
++	string_list_append(&to_stdin, tmp.buf);
 +
- 	hook_path = find_hook(hook_name);
- 
- 	/* Care about nonexistence? Use run_found_hooks() */
-diff --git a/hook.h b/hook.h
-index 74a8c76a94c..ff1697d1087 100644
---- a/hook.h
-+++ b/hook.h
-@@ -7,6 +7,12 @@
- struct hook {
- 	/* The path to the hook */
- 	const char *hook_path;
++	opt.feed_pipe = pipe_from_string_list;
++	opt.feed_pipe_ctx = &to_stdin;
 +
-+	/*
-+	 * Use this to keep state for your feed_pipe_fn if you are using
-+	 * run_hooks_opt.feed_pipe. Otherwise, do not touch it.
-+	 */
-+	void *feed_pipe_cb_data;
- };
- 
- struct run_hooks_opt
-@@ -30,6 +36,19 @@ struct run_hooks_opt
- 
- 	/* Path to file which should be piped to stdin for each hook */
- 	const char *path_to_stdin;
++	code = run_hooks("post-rewrite", &opt);
 +
-+	/*
-+	 * Callback and state pointer to ask for more content to pipe to stdin.
-+	 * Will be called repeatedly, for each hook. See
-+	 * hook.c:pipe_from_stdin() for an example. Keep per-hook state in
-+	 * hook.feed_pipe_cb_data (per process). Keep initialization context in
-+	 * feed_pipe_ctx (shared by all processes).
-+	 *
-+	 * See 'pipe_from_string_list()' for info about how to specify a
-+	 * string_list as the stdin input instead of writing your own handler.
-+	 */
-+	feed_pipe_fn feed_pipe;
-+	void *feed_pipe_ctx;
- };
- 
- #define RUN_HOOKS_OPT_INIT { \
-@@ -38,6 +57,14 @@ struct run_hooks_opt
- 	.args = STRVEC_INIT, \
++	run_hooks_opt_clear(&opt);
++	strbuf_release(&tmp);
++	string_list_clear(&to_stdin, 0);
++	return code;
  }
  
-+/*
-+ * To specify a 'struct string_list', set 'run_hooks_opt.feed_pipe_ctx' to the
-+ * string_list and set 'run_hooks_opt.feed_pipe' to 'pipe_from_string_list()'.
-+ * This will pipe each string in the list to stdin, separated by newlines.  (Do
-+ * not inject your own newlines.)
-+ */
-+int pipe_from_string_list(struct strbuf *pipe, void *pp_cb, void *pp_task_cb);
+ void commit_post_rewrite(struct repository *r,
+@@ -4527,30 +4523,21 @@ static int pick_commits(struct repository *r,
+ 		flush_rewritten_pending();
+ 		if (!stat(rebase_path_rewritten_list(), &st) &&
+ 				st.st_size > 0) {
+-			struct child_process child = CHILD_PROCESS_INIT;
+-			const char *post_rewrite_hook =
+-				find_hook("post-rewrite");
+-
+-			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
+-			child.git_cmd = 1;
+-			strvec_push(&child.args, "notes");
+-			strvec_push(&child.args, "copy");
+-			strvec_push(&child.args, "--for-rewrite=rebase");
++			struct child_process notes_cp = CHILD_PROCESS_INIT;
++			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
 +
- /*
-  * Callback provided to feed_pipe_fn and consume_sideband_fn.
-  */
++			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
++			notes_cp.git_cmd = 1;
++			strvec_push(&notes_cp.args, "notes");
++			strvec_push(&notes_cp.args, "copy");
++			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
+ 			/* we don't care if this copying failed */
+-			run_command(&child);
+-
+-			if (post_rewrite_hook) {
+-				struct child_process hook = CHILD_PROCESS_INIT;
+-
+-				hook.in = open(rebase_path_rewritten_list(),
+-					O_RDONLY);
+-				hook.stdout_to_stderr = 1;
+-				hook.trace2_hook_name = "post-rewrite";
+-				strvec_push(&hook.args, post_rewrite_hook);
+-				strvec_push(&hook.args, "rebase");
+-				/* we don't care if this hook failed */
+-				run_command(&hook);
+-			}
++			run_command(&notes_cp);
++
++			hook_opt.path_to_stdin = rebase_path_rewritten_list();
++			strvec_push(&hook_opt.args, "rebase");
++			run_hooks("post-rewrite", &hook_opt);
++			run_hooks_opt_clear(&hook_opt);
+ 		}
+ 		apply_autostash(rebase_path_autostash());
+ 
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
