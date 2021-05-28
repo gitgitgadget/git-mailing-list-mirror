@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13F74C4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51638C4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E77A9613D1
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28978613B6
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 09:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236063AbhE1JZ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 05:25:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49258 "EHLO
+        id S236381AbhE1J0H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 05:26:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234061AbhE1JZt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235299AbhE1JZt (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 May 2021 05:25:49 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BEBC06138E
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:06 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id n2so2661315wrm.0
-        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:06 -0700 (PDT)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E88C06138D
+        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:05 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id j14so2584761wrq.5
+        for <git@vger.kernel.org>; Fri, 28 May 2021 02:24:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Gq6zEoXKs292L8hv6k3D9V64J/nM+XhRPtXaYczoB4k=;
-        b=pqGQyKOzq2MZMvgEbAgDadJ+Z+JS/jj85Xegr8GguoZU7SjKxLo7mWzo7caP+sjeTJ
-         A6LgAAdxah1uo/cmQN49xtUJa7WHVEvwW03oPCB+yvnLi8JYDYB4zMAMvTzrvxwd9AXW
-         urgxrnEKdYZ3zan+2KG3l3Eabc0t/QjIOF/YVs3nP2kl9HaWxSVXWYaSqmhdBF8XIMDU
-         eRNxSedDFV5gp435rlCMj5upGHafTIefwReC8VC5tnuLPAPtkyVu16Vwxw41/BAe9QIz
-         AujkvpBgYINbgdqu3g1OINS0t672A80+5QXvUIADuYEVTlYMouAwiS87HQ6J6FbTumYi
-         +yVA==
+        bh=5I+xcKLkUGBqWiPXXs25+b2vmihNkiQ1B8sYGc+SI7I=;
+        b=IeDo2WjBYgUDy19cciLhpsmpuK0HjsDy/lDvROWFvM+y9s1lLAaoClEfWzji0VlPBH
+         E/HA8Ps1OIa+oe1JHAHr+AmLugLf2LkizZLbATNxCH/WSoW0TncFdcyx8QUlv73w8bK/
+         0eu6ZBXnvD2pD7NIfGOfXET+JB939CYp43Kuuhzg3PK2bZ8zHNPiXxbuSg7ybGv3VkWk
+         c88435+7mQXUTprChJlScU2cNRmOlqRE2BTnzDe/rW9EWDwDyOvz6mN9rx+WFe8yI7rZ
+         vu0K91Lojk9zE5t64U46ZT3LNrUZRRY5ukkOaAUY4MKiwmCknLSAnlXBVJfpChKko4OF
+         I5Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Gq6zEoXKs292L8hv6k3D9V64J/nM+XhRPtXaYczoB4k=;
-        b=OldxibOZ5Oz5CW39KilW/jhBnzFvVBM4AbHCuz92wQuUOmzUBKoo2Os14jwead1mc2
-         Mvqn8Li8arAWMYVikKH1ulVWwe4kmkKt+k1FH5YooERhOVlfzW4nyZ0QS7fuSGSrlk8j
-         B6/C3MYj16wBzj9mEWmUopjaUgSFjLkV6fDNhVUIemRBsGDk1oBlsAeIYRzmH3pS9cYH
-         sB05erj+EiFG/HCLL09+mEeSBAB7vTbUdJQjFD3GSvJd3ezsoiKgBy9OGx+y91cbLbXt
-         LHVOFP7bIItBlErVc4jsp1ZBVf2qKiVVizckyjrm6d89mVxYFSSrCu9DQtKQ30u3PGSK
-         mxeQ==
-X-Gm-Message-State: AOAM532ASYITBxL1KN/h+DKrxwBzq2o0rKt7ryNZdIyvRt2R3RRVNl2U
-        W+Q9iECX6uQCtlePPSNMJWuIXOoL4CyUow==
-X-Google-Smtp-Source: ABdhPJxiNUgd1j/IaPYkPBIUtAL3zq/lNtoHSK+7mr9tGe/obaMub4ULCny6UB0Ymp17iFkUPy1CFA==
-X-Received: by 2002:adf:f341:: with SMTP id e1mr7844394wrp.352.1622193844907;
-        Fri, 28 May 2021 02:24:04 -0700 (PDT)
+        bh=5I+xcKLkUGBqWiPXXs25+b2vmihNkiQ1B8sYGc+SI7I=;
+        b=N9SYKvOVGuaweCY5PRFnExcadnB1cNOKV3q1Lo8oLOsnRyjemjfAUKp4LOxR4ajY2B
+         m7K6X7KV1cj2A5BG9yyXn7Z/gyVs0mRriv9cBj8X5gD/O/NzoQPCkxNUWX/lKZGT9obL
+         Z1FBdZLxd8vpprr7+vtwpjlu0itlxeEWNAauQ5R5uKG5TiCjoSeL2PAvHMuRwHujZkfL
+         PAupoZAP5WZVkyuz606FuRDU+LphKbuzUoE9XmvOa+ClNqRMapTQ1t6LM3RfIGg8X+98
+         v0VKMG82J0zG/knHm3PNe/M9CGbDbmWP5ffwF1ZyFak8n9JSClYq1PapESnUwjfOKB7T
+         yn+w==
+X-Gm-Message-State: AOAM532YDW6SJXC3N95QO77rgmq034f/k5jOBKndVnwmJ2N7hFNlXu0d
+        IOKDT+IgRcGGgYmaVrg56yKZa46mARk2DQ==
+X-Google-Smtp-Source: ABdhPJwXkZp93tOGBnmJpVCw06yQ5oELDfryURPpnNSxmJWzpHzEOekbpvhHmOu/NgHPjvxqEYETxQ==
+X-Received: by 2002:adf:f54a:: with SMTP id j10mr1642422wrp.383.1622193843947;
+        Fri, 28 May 2021 02:24:03 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.24.04
+        by smtp.gmail.com with ESMTPSA id u18sm5842009wmj.15.2021.05.28.02.24.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 May 2021 02:24:04 -0700 (PDT)
+        Fri, 28 May 2021 02:24:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 12/13] send-email: move trivial config handling to Perl
-Date:   Fri, 28 May 2021 11:23:51 +0200
-Message-Id: <patch-12.13-f605b5ae49f-20210528T092228Z-avarab@gmail.com>
+Subject: [PATCH v5 11/13] perl: lazily load some common Git.pm setup code
+Date:   Fri, 28 May 2021 11:23:50 +0200
+Message-Id: <patch-11.13-66f68e38c16-20210528T092228Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.458.gd885d4f985c
 In-Reply-To: <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
 References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com> <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
@@ -81,115 +81,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Optimize the startup time of git-send-email by using an amended
-config_regexp() function to retrieve the list of config keys and
-values we're interested in.
+Instead of unconditionally requiring modules such as File::Spec, let's
+only load them when needed. This speeds up code that only needs a
+subset of the features Git.pm provides.
 
-For boolean keys we can handle the [true|false] case ourselves, and
-the "--get" case didn't need any parsing. Let's leave "--path" and
-other "--bool" cases to "git config". I'm not bothering with the
-"undef" or "" case (true and false, respectively), let's just punt on
-those and others and have "git config --type=bool" handle it.
-
-The "grep { defined } @values" here covers a rather subtle case. For
-list values such as sendemail.to it is possible as with any other
-config key to provide a plain "-c sendemail.to", i.e. to set the key
-as a boolean true. In that case the Git::config() API will return an
-empty string, but this new parser will correctly return "undef".
-
-However, that means we can end up with "undef" in the middle of a
-list. E.g. for sendemail.smtpserveroption in conjuction with
-sendemail.smtpserver as a path this would have produce a warning. For
-most of the other keys we'd behave the same despite the subtle change
-in the value, e.g. sendemail.to would behave the same because
-Mail::Address->parse() happens to return an empty list if fed
-"undef". For the boolean values we were already prepared to handle
-these variables being initialized as undef anyway.
-
-This brings the runtime of "git send-email" from ~60-~70ms to a very
-steady ~40ms on my test box. We now run just one "git config"
-invocation on startup instead of 8, the exact number will differ based
-on the local sendemail.* config. I happen to have 8 of those set.
-
-This brings the runtime of t9001-send-email.sh from ~13s down to ~12s
-for me. The change there is less impressive as many of those tests set
-various config values, and we're also getting to the point of
-diminishing returns for optimizing "git send-email" itself.
+This brings a plain invocation of "git send-email" down from 52/37
+loaded modules under NO_GETTEXT=[|Y] to 39/18, and it now takes
+~60-~70ms instead of ~80-~90ms. The runtime of t9001-send-email.sh
+test is down to ~13s from ~15s.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ perl/Git.pm | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a8949c9d313..57911386835 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -334,7 +334,11 @@ sub read_config {
- 		my $target = $config_bool_settings{$setting};
- 		my $key = "$prefix.$setting";
- 		next unless exists $known_keys->{$key};
--		my $v = Git::config_bool(@repo, $key);
-+		my $v = (@{$known_keys->{$key}} == 1 &&
-+			 (defined $known_keys->{$key}->[0] &&
-+			  $known_keys->{$key}->[0] =~ /^(?:true|false)$/s))
-+			? $known_keys->{$key}->[0] eq 'true'
-+			: Git::config_bool(@repo, $key);
- 		next unless defined $v;
- 		next if $configured->{$setting}++;
- 		$$target = $v;
-@@ -363,13 +367,13 @@ sub read_config {
- 		my $key = "$prefix.$setting";
- 		next unless exists $known_keys->{$key};
- 		if (ref($target) eq "ARRAY") {
--			my @values = Git::config(@repo, $key);
--			next unless @values;
-+			my @values = @{$known_keys->{$key}};
-+			@values = grep { defined } @values;
- 			next if $configured->{$setting}++;
- 			@$target = @values;
- 		}
- 		else {
--			my $v = Git::config(@repo, $key);
-+			my $v = $known_keys->{$key}->[0];
- 			next unless defined $v;
- 			next if $configured->{$setting}++;
- 			$$target = $v;
-@@ -381,12 +385,19 @@ sub config_regexp {
- 	my ($regex) = @_;
- 	my @ret;
- 	eval {
--		@ret = Git::command(
-+		my $ret = Git::command(
- 			'config',
--			'--name-only',
-+			'--null',
- 			'--get-regexp',
- 			$regex,
- 		);
-+		@ret = map {
-+			# We must always return ($k, $v) here, since
-+			# empty config values will be just "key\0",
-+			# not "key\nvalue\0".
-+			my ($k, $v) = split /\n/, $_, 2;
-+			($k, $v);
-+		} split /\0/, $ret;
- 		1;
- 	} or do {
- 		# If we have no keys we're OK, otherwise re-throw
-@@ -399,8 +410,10 @@ sub config_regexp {
- # parses 'bool' etc.) by only doing so for config keys that exist.
- my %known_config_keys;
- {
--	my @known_config_keys = config_regexp("^sende?mail[.]");
--	@known_config_keys{@known_config_keys} = ();
-+	my @kv = config_regexp("^sende?mail[.]");
-+	while (my ($k, $v) = splice @kv, 0, 2) {
-+		push @{$known_config_keys{$k}} => $v;
-+	}
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 02eacef0c2a..5562c0cede2 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -11,9 +11,6 @@ package Git;
+ use strict;
+ use warnings $ENV{GIT_PERL_FATAL_WARNINGS} ? qw(FATAL all) : ();
+ 
+-use File::Temp ();
+-use File::Spec ();
+-
+ BEGIN {
+ 
+ our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
+@@ -103,12 +100,9 @@ =head1 DESCRIPTION
+ =cut
+ 
+ 
+-use Carp qw(carp croak); # but croak is bad - throw instead
++sub carp { require Carp; goto &Carp::carp }
++sub croak { require Carp; goto &Carp::croak }
+ use Git::LoadCPAN::Error qw(:try);
+-use Cwd qw(abs_path cwd);
+-use IPC::Open2 qw(open2);
+-use Fcntl qw(SEEK_SET SEEK_CUR);
+-use Time::Local qw(timegm);
  }
  
- # sendemail.identity yields to --identity. We must parse this
+ 
+@@ -191,13 +185,15 @@ sub repository {
+ 			$dir = undef;
+ 		};
+ 
++		require Cwd;
+ 		if ($dir) {
++			require File::Spec;
+ 			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
+-			$opts{Repository} = abs_path($dir);
++			$opts{Repository} = Cwd::abs_path($dir);
+ 
+ 			# If --git-dir went ok, this shouldn't die either.
+ 			my $prefix = $search->command_oneline('rev-parse', '--show-prefix');
+-			$dir = abs_path($opts{Directory}) . '/';
++			$dir = Cwd::abs_path($opts{Directory}) . '/';
+ 			if ($prefix) {
+ 				if (substr($dir, -length($prefix)) ne $prefix) {
+ 					throw Error::Simple("rev-parse confused me - $dir does not have trailing $prefix");
+@@ -223,7 +219,7 @@ sub repository {
+ 				throw Error::Simple("fatal: Not a git repository: $dir");
+ 			}
+ 
+-			$opts{Repository} = abs_path($dir);
++			$opts{Repository} = Cwd::abs_path($dir);
+ 		}
+ 
+ 		delete $opts{Directory};
+@@ -408,10 +404,12 @@ sub command_bidi_pipe {
+ 	my $cwd_save = undef;
+ 	if ($self) {
+ 		shift;
+-		$cwd_save = cwd();
++		require Cwd;
++		$cwd_save = Cwd::cwd();
+ 		_setup_git_cmd_env($self);
+ 	}
+-	$pid = open2($in, $out, 'git', @_);
++	require IPC::Open2;
++	$pid = IPC::Open2::open2($in, $out, 'git', @_);
+ 	chdir($cwd_save) if $cwd_save;
+ 	return ($pid, $in, $out, join(' ', @_));
+ }
+@@ -538,7 +536,8 @@ sub get_tz_offset {
+ 	my $t = shift || time;
+ 	my @t = localtime($t);
+ 	$t[5] += 1900;
+-	my $gm = timegm(@t);
++	require Time::Local;
++	my $gm = Time::Local::timegm(@t);
+ 	my $sign = qw( + + - )[ $gm <=> $t ];
+ 	return sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,1]);
+ }
+@@ -1340,6 +1339,7 @@ sub _temp_cache {
+ 		my $n = $name;
+ 		$n =~ s/\W/_/g; # no strange chars
+ 
++		require File::Temp;
+ 		($$temp_fd, $fname) = File::Temp::tempfile(
+ 			"Git_${n}_XXXXXX", UNLINK => 1, DIR => $tmpdir,
+ 			) or throw Error::Simple("couldn't open new temp file");
+@@ -1362,9 +1362,9 @@ sub temp_reset {
+ 
+ 	truncate $temp_fd, 0
+ 		or throw Error::Simple("couldn't truncate file");
+-	sysseek($temp_fd, 0, SEEK_SET) and seek($temp_fd, 0, SEEK_SET)
++	sysseek($temp_fd, 0, Fcntl::SEEK_SET()) and seek($temp_fd, 0, Fcntl::SEEK_SET())
+ 		or throw Error::Simple("couldn't seek to beginning of file");
+-	sysseek($temp_fd, 0, SEEK_CUR) == 0 and tell($temp_fd) == 0
++	sysseek($temp_fd, 0, Fcntl::SEEK_CUR()) == 0 and tell($temp_fd) == 0
+ 		or throw Error::Simple("expected file position to be reset");
+ }
+ 
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
