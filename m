@@ -2,127 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39DFDC4708D
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 07:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23358C4708D
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 08:01:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12BCE613B6
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 07:44:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEE5A613B6
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 08:01:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235393AbhE1Hpq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 03:45:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54692 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235185AbhE1Hpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 03:45:40 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53193C061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 00:44:04 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id l3so3971293ejc.4
-        for <git@vger.kernel.org>; Fri, 28 May 2021 00:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Y7cG7kgDYQ7ejAqoW+jsRLOWht3EcFUv6GlR6DuZQ1Q=;
-        b=Uqm7vA9qRQTzZ9JC+2F1ma8yAO6UOrx75LdHudykpgSMcbCu6/x2UzXIoSINe2M69B
-         q6i22xHaM3aapbtknD8/2nx0aJTxJn/FKp2pJvty/s7SjdtfYXTmGgBbccCkvMt19yE5
-         ehTqTbjQ+naCITqfPv2iKLd+pT/1/Isl2+k5yQ6fnDP5u3d2xHBOTANRkjVkIbRIKzBn
-         jkC0yWXwGQ6Q1Tf67coYPPFq5SBoIZy0YeikRoJLMj+kkTQuCLj+dcX0Bn3Q+3aIs/UH
-         ZKWpXSF5+7k2iI9dfnyCMTFAynunvKHdFjUgr6Wvivqqk5ttzh5OWekacfby9M45fffc
-         3ubQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Y7cG7kgDYQ7ejAqoW+jsRLOWht3EcFUv6GlR6DuZQ1Q=;
-        b=ctFsSiuZ42+pkcakcwtccL+9vNIm5CbkQWh8p5fgr/GxxxF6XxqZCgLBH5zipvQBFS
-         KP/nNV7SDM99ygExp1awuwhJiL2JprTU7izYh63BlsZmpqogW89bebK+x8LMct8iu54L
-         ELFmLM8MrSF8mhY3GXa9AMv+q1VPBWYpu4l22ZMwiRpzYezL4e6fw09mavDEATe2q2bB
-         rKQ1fIx2kxnri+p379GZH9jID3KqINQ+BFBKJe+KQtqyxMpn3JSsgiTlvp25W8yNtXq3
-         AK19K9lXXNSQYS6U4yW9L7lI0tNDXao0PAs++PXpBsCxW/Y4728aA+XV06uBzpS0iOm3
-         +wXg==
-X-Gm-Message-State: AOAM531Sbll685lTKI3Gvlz4jg8OYY/lRqaDO18e3EoxbFBvkb0aE8wn
-        lUmA+v2nJgNe2mNVhz7VE+1ovFTYZk4=
-X-Google-Smtp-Source: ABdhPJxlRaSXsqb8VVgZZUDBtWLkgYIWbEHlk9pdIoWG1d37HiX5kyEd+PuQdjbjcsrLbY/hXINk0Q==
-X-Received: by 2002:a17:906:26db:: with SMTP id u27mr7917582ejc.532.1622187842968;
-        Fri, 28 May 2021 00:44:02 -0700 (PDT)
-Received: from ?IPv6:2a02:8388:e002:8cf0:b0b8:f178:ae9f:6d19? (2a02-8388-e002-8cf0-b0b8-f178-ae9f-6d19.cable.dynamic.v6.surfer.at. [2a02:8388:e002:8cf0:b0b8:f178:ae9f:6d19])
-        by smtp.googlemail.com with ESMTPSA id kx3sm1955859ejc.44.2021.05.28.00.44.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 May 2021 00:44:02 -0700 (PDT)
-Subject: Re: git push doesn't use local branch name as default
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <3b9bc214-a30a-ba49-af96-7eeaf37b7bbd@gmail.com>
- <fcf30899-8e64-5417-f478-14d6aca72544@gmail.com>
- <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
-From:   Mathias Kunter <mathiaskunter@gmail.com>
-Message-ID: <f9f38d42-2b93-0d3b-798b-4c6f44eb111d@gmail.com>
-Date:   Fri, 28 May 2021 09:44:00 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        id S235763AbhE1IDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 04:03:07 -0400
+Received: from zoidberg.org ([88.198.6.61]:34723 "EHLO heapsort.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235474AbhE1ICq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 May 2021 04:02:46 -0400
+Received: from heapsort.de ([2a01:4f8:130:60a1::100])
+  (AUTH: LOGIN jast, SSL: TLSv1/SSLv3,128bits,DHE-RSA-AES128-GCM-SHA256)
+  by cthulhu.zoidberg.org with ESMTPSA; Fri, 28 May 2021 10:00:41 +0200
+  id 0000000000221091.60B0A32A.00001F5A
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: de-AT
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Fri, 28 May 2021 10:00:41 +0200
+From:   =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To:     "=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?=" 
+        <avarab@gmail.com>
+Cc:     Kevin Daudt <me@ikke.info>, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Should we do something with #git-devel on Freenode?
+In-Reply-To: <87im33ltqr.fsf@evledraar.gmail.com>
+ (sfid-20210528_000327_229190_A43C0CF3)
+References: <CAJoAoZ=e62sceNpcR5L5zjsj177uczTnXjcAg+BbOoOkeH8vXQ@mail.gmail.com>
+ <YKViF9OVLeA95JPH@google.com> <20210520071141.GZ8544@kitsune.suse.cz>
+ <YKaaBj0KmJ3K5foC@coredump.intra.peff.net> <YK6XvmrtrdkJvsnI@nand.local>
+ <YK6o/j7P0JIGW0Q0@alpha> <7e9683aee2c0fea2ff77b82bfa547e15@jk.gs>
+ <87im33ltqr.fsf@evledraar.gmail.com> (sfid-20210528_000327_229190_A43C0CF3)
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <b8e48d464858c0ef6da2629dab507ebc@jk.gs>
+X-Sender: jk@jk.gs
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> you only get the "current" behavior when fetch_remote is non-NULL.
-
-Well, then my suggestion actually is to also use the `current` behavior 
-when fetch_remote is NULL - i.e. change
-
-> return (fetch_remote && fetch_remote != remote);
-
-to
-
-> return (!fetch_remote || fetch_remote != remote);
-
-I'd argue that if `simple` pushing is used, then the expected behavior 
-of the command
-
-> git push <remote_name>
-
-on a branch without upstream would actually be to use the `current` 
-behavior instead of bailing out with an error.
-
-
-Am 28.05.21 um 09:00 schrieb Elijah Newren:
-> On Thu, May 27, 2021 at 11:39 PM Mathias Kunter <mathiaskunter@gmail.com> wrote:
->>
->> Felipe,
->>
->> thanks for your reply.
->>
->>> Sounds like you want to change the default to `push.default=current`.
->>
->> Yes, but shouldn't `simple` pushing also work? The documentation says
->> about `push.default=simple`:
->>
->>> When pushing to a remote that is different from the remote you normally
->>> pull from, work as `current`.
+On 27.05.2021 23:54, Ævar Arnfjörð Bjarmason wrote:
+> How have the channels been destroyed?
 > 
-> Perhaps this wording should be clarified to read
-> 
-> When you have a remote that you normally pull from but you are pushing
-> to a different remote then that one, then work as 'current'.
-> 
->> If there is no upstream, then there also is no "remote I normally pull
->> from", and thus, according to the doc, `simple` should actually work
->> like `current` in this case. Am I wrong here?
-> 
-> The relevant code is
-> 
->      return (fetch_remote && fetch_remote != remote);
-> 
-> so you only get the "current" behavior when fetch_remote is non-NULL.
-> 
+> I'm still joined on freenode and #git has ~700ish users
+
+#git was not affected, but many others were, including #git-devel...
+
+> I see there was a mass action to revert topics that stated that 
+> channels
+> had moved
+
+If that was all that had happened, I would totally agree. Unfortunately,
+they did quite a bit more than that. They made a script that
+automatically ran the following actions on channels that mentioned
+"libera" in the topic:
+
+* sent a vague message about a ToS violation to the channel;
+* dropped the registration, including the full access list;
+* set the channel to moderated;
+* removed all ops;
+* set an auto-forward to a similarly named topic channel (e.g.
+   #git-devel forwarded to ##git-devel);
+* made no attempt to give control of the topic channel to the previous
+   community, i.e. the new channel would usually end up completely
+   op-less and thus impossible to register at all. If it had been
+   squatted by unrelated people beforehand, it would stay in their
+   control.
+
+This is equivalent to utter destruction in my view. #git was only not
+affected because our message in the topic did not mention Libera by
+name. Now of course we could just consider ourselves lucky and move on,
+but personally I am deeply suspicious of a team that will do this kind
+of thing seemingly on a whim, without even letting anyone know in
+advance that this was considered a violation. Who knows what else they
+are going to do on a whim in the future?
+
+> I agree that ~300/~700 is quite the arbitrary quorum :)
+
+I misspoke - it was an arbitrary quorum of the people who spend a lot of
+time being active in #git, i.e. the people who are the most responsible
+for keeping the channel alive. And the decision wasn't about killing the
+freenode channel anyway...
+
+> I'm not going to weigh in on whatever pissing contest is going on over
+> at Freenode and related networks other than to say that it seems to me
+> that the goal(s) of the new owner/team or whatever is to try to prevent
+> some mass adversiting of the nature of "this network is
+> deprecated". "Destroying" prominent channels seems to be
+> conterproductive to that goal.
+
+And yet that is what they did.
+
+> In any case, I agree with Jeff King's earlier comments that our primary
+> goal here should not be to pick sides, but to direct our users to 
+> useful
+> venues where they can get help, discuss git etc.
+
+Sure... but several of us spoke about this and none of the particularly
+active regulars I talked to want to keep being active on freenode
+indefinitely. This will likely have effects on how active each channel
+will be. Right now, several of us are still answering questions on
+freenode, and nobody has made any attempt to shut down the channel
+there. If it gets shut down, it will not be due to our actions. Maybe
+due to our inaction, but even then there's nothing stopping others from
+keeping the channel going.
+
+I've updated my little page about this whole issue, to clarify that the
+freenode channel is not closed or anything - but I feel like it's
+relevant that several of the most active people intend on moving away
+from it, and so I think it still makes sense leaving that message out
+there. If it turns out that there is a significant fraction of active
+"helpers" that intend to stay on freenode, I'll update again to reflect
+that.
