@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D221C4708D
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 820D3C4708C
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14C1A611BD
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 610E9611C9
+	for <git@archiver.kernel.org>; Fri, 28 May 2021 12:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236709AbhE1MPF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 08:15:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58840 "EHLO
+        id S236716AbhE1MPG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 May 2021 08:15:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236475AbhE1MOE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236339AbhE1MOE (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 May 2021 08:14:04 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 166A8C061357
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:08 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id r10so3047049wrj.11
-        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:08 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6BAC061355
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:07 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id x7so3048606wrt.12
+        for <git@vger.kernel.org>; Fri, 28 May 2021 05:12:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DlAKzSA3B2Kp+0xcCtyzX097Eqwt1MMmLewOTJgUuPA=;
-        b=UZOtuW/0dzUniH6qUzE8aqVsCgBmnRnCE+4F+aDw6cpdNcrVFOOlufx+oDhlZzy/2N
-         4Y7Lov0VfGTmtutisTLhK5cVENd7kmrHHERBGCfrgTRMRhVmAkIRld31schQuzX+wmj1
-         y+9DSW/F+pEr4HP+c+Qb2nh/Hm5+WeY3wLbD+wLuWiBmp2EgMUNMfOmCiXG6GK9VvCbB
-         qDYs91VHKtJESMDNz6NqMm613w/LbaPT/bD7+sQkGXERZ6YuG3/esspmBTpZixbSXTS5
-         91J+cJ3A9UtsMoKxPozsl7To1GHSuqYjKA2K3YdSE+ImWJH9A2zBmsykM2EaYsbl/sAS
-         xJXw==
+        bh=eGU5/c5lmdTaH+JpCf05jhjFfxBSuPGEgD/+rQmcssc=;
+        b=Q9CaDNnUfg8a+F1SdddtaT2D1n5wGcFUIgv/FpXxQ7Ln9sKGKqoCKPWc8/soa8KuML
+         UlTW2V8zZtIjbJenuZ9LjKnC3uYpwZ/Dmaxk8cryrBETlCBB37G5PL3KwRCh2QEfn+JS
+         8NvbXq9ZgP5K1SWzU9tZSxdEOCquE6o+3xahkMCQZrD0jrc4DNJBLi0P4dwdoJLIJmH0
+         5UgdQE4EXZ4s6rU9Ekgw8gD3EepwdI+kX3owbE+kfC9LaBBcrE/CiGW+H/YeiODBZuML
+         /2YrplKeqcmHJDEi7Oz/KkuvjGktcBe14b5x4G8bVE1f2nvNXntzRoE+kiR7Mvp8CeOa
+         uvBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DlAKzSA3B2Kp+0xcCtyzX097Eqwt1MMmLewOTJgUuPA=;
-        b=przbxfkiye28KzYePt36UbjWa5IBxVNIP8V/2PtOmdiHzk8gze6qQtl1c2hcrYWMVF
-         bmyrGdv4RCAPll6Y8aBw5GxGvSJxzoFMTRSw0aEOkPVed4lZuxjfzaGEsSciA6t8NhyR
-         //Dk7EsDkLn5ooTAgQJ6XN+5kf7Z/cIwvoqAYMJqMsCx3VzywNZrqnwRVQR16W+aLe4p
-         w0lJyQ6A0xUvKnKpiaUB+wtZVOqqXnuNYD5u+h/V6OMpzkHlUvxUojUpbkPJvo6zIw0V
-         1Qd3RiX7z8POx6y9dCH/2716FNP6KiMAPBWKS/QG6CQdNPeurXxM+3bNGhiSUe62mhfW
-         vgvA==
-X-Gm-Message-State: AOAM531+d+Zr5zksBF2ZyA6Um9hlEYzNfHZyw26C1wo5vpKdHT4zpm+M
-        4kpRiWTciACWRgKL46nP4hASshMOOwtPMQ==
-X-Google-Smtp-Source: ABdhPJxfifGkZkgIfteRPgkbTPi1ldzYKCvhTngqG1eKGfRoduGswmjxxxog4VNJRqGNGGz87HJheA==
-X-Received: by 2002:a5d:66cc:: with SMTP id k12mr2806812wrw.185.1622203926463;
-        Fri, 28 May 2021 05:12:06 -0700 (PDT)
+        bh=eGU5/c5lmdTaH+JpCf05jhjFfxBSuPGEgD/+rQmcssc=;
+        b=q8vAPa+Ihbi7GADHt3vxFZOSe/+5S70Ilj7q4TP1iz+CBU+Ck6cF1H/kaPuwtorcml
+         NWZuj37MN+LDXPRPbApVGPMKtmyj+8Ou+4aSA9eUMH4jub6vEg6To3MIH92kvVkOBSs2
+         D9zSikbP7xZFPcZwKXzf3I1YpJlVeeZduSn7wmBiEZ70/mcBFRAFKde7AEifiQSz0347
+         MXYD+d0//4EDJeZFhL69tp31YjdTwD3X8kNNNUUlY9AYNDn13B1M6PKAcumLPDvAwjM7
+         B2PGfyCdS8gZ7VHKMHzbhAPLFI3otI6cRhXoT43ftLZLEYbdxnvlPMuzIHElC81W5/K3
+         MSUg==
+X-Gm-Message-State: AOAM533dlzkdP5sBBTQWzbN1k1Wbx2d+2czSJFKUhtOPiOFzeg7KGMVx
+        JXOs5JhPkne/8/3ceYxhlUjOdaQ1lj94YA==
+X-Google-Smtp-Source: ABdhPJyruA+8ofRDgpnvxQE13QZEew9oovm4Y//Qfkg2RRADZfH+igIB3JDhSF0odDBQB8TOR00N5g==
+X-Received: by 2002:a5d:6488:: with SMTP id o8mr6018638wri.113.1622203925560;
+        Fri, 28 May 2021 05:12:05 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.12.05
+        by smtp.gmail.com with ESMTPSA id c15sm7372269wro.21.2021.05.28.05.12.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 28 May 2021 05:12:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -69,9 +69,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 28/31] post-update: use hook.h library
-Date:   Fri, 28 May 2021 14:11:30 +0200
-Message-Id: <patch-28.31-3519068a634-20210528T110515Z-avarab@gmail.com>
+Subject: [PATCH 27/31] receive-pack: convert 'update' hook to hook.h
+Date:   Fri, 28 May 2021 14:11:29 +0200
+Message-Id: <patch-27.31-c39c608e5cc-20210528T110515Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.460.g26a014da44c
 In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com> <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
@@ -84,60 +84,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-By using run_hooks() instead of run_hook_le(), 'post-update' hooks can
-be specified in the config as well as the hookdir.
+By using hook.h to invoke the 'update' hook we closer to removing the
+hooks code in run-command.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/receive-pack.c | 26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+ builtin/receive-pack.c | 65 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 44 insertions(+), 21 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 378f8f6b5d1..b2ccdb66daa 100644
+index 5248228ebfe..378f8f6b5d1 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -1657,33 +1657,21 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- static void run_update_post_hook(struct command *commands)
- {
- 	struct command *cmd;
--	struct child_process proc = CHILD_PROCESS_INIT;
--	const char *hook;
--
--	hook = find_hook("post-update");
--	if (!hook)
--		return;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+@@ -938,33 +938,56 @@ static int run_receive_hook(struct command *commands,
+ 	return status;
+ }
  
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (cmd->error_string || cmd->did_not_exist)
- 			continue;
--		if (!proc.args.nr)
--			strvec_push(&proc.args, hook);
--		strvec_push(&proc.args, cmd->ref_name);
-+		strvec_push(&opt.args, cmd->ref_name);
- 	}
--	if (!proc.args.nr)
-+	if (!opt.args.nr)
- 		return;
+-static int run_update_hook(struct command *cmd)
++static void hook_output_to_sideband(struct strbuf *output, void *cb_data)
+ {
+-	const char *argv[5];
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	int code;
++	int keepalive_active = 0;
+ 
+-	argv[0] = find_hook("update");
+-	if (!argv[0])
+-		return 0;
++	if (keepalive_in_sec <= 0)
++		use_keepalive = KEEPALIVE_NEVER;
++	if (use_keepalive == KEEPALIVE_ALWAYS)
++		keepalive_active = 1;
+ 
+-	argv[1] = cmd->ref_name;
+-	argv[2] = oid_to_hex(&cmd->old_oid);
+-	argv[3] = oid_to_hex(&cmd->new_oid);
+-	argv[4] = NULL;
++	/* send a keepalive if there is no data to write */
++	if (keepalive_active && !output->len) {
++		static const char buf[] = "0005\1";
++		write_or_die(1, buf, sizeof(buf) - 1);
++		return;
++	}
  
 -	proc.no_stdin = 1;
 -	proc.stdout_to_stderr = 1;
 -	proc.err = use_sideband ? -1 : 0;
--	proc.trace2_hook_name = "post-update";
-+	if (use_sideband)
-+		opt.consume_sideband = hook_output_to_sideband;
+-	proc.argv = argv;
+-	proc.trace2_hook_name = "update";
++	if (use_keepalive == KEEPALIVE_AFTER_NUL && !keepalive_active) {
++		const char *first_null = memchr(output->buf, '\0', output->len);
++		if (first_null) {
++			/* The null bit is excluded. */
++			size_t before_null = first_null - output->buf;
++			size_t after_null = output->len - (before_null + 1);
++			keepalive_active = 1;
++			send_sideband(1, 2, output->buf, before_null, use_sideband);
++			send_sideband(1, 2, first_null + 1, after_null, use_sideband);
++
++			return;
++		}
++	}
++
++	send_sideband(1, 2, output->buf, output->len, use_sideband);
++}
++
++static int run_update_hook(struct command *cmd)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	int code;
++
++	strvec_pushl(&opt.args,
++		     cmd->ref_name,
++		     oid_to_hex(&cmd->old_oid),
++		     oid_to_hex(&cmd->new_oid),
++		     NULL);
  
--	if (!start_command(&proc)) {
--		if (use_sideband)
--			copy_to_sideband(proc.err, -1, NULL);
--		finish_command(&proc);
--	}
-+	run_hooks("post-update", &opt);
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+ 	if (use_sideband)
+-		copy_to_sideband(proc.err, -1, NULL);
+-	return finish_command(&proc);
++		opt.consume_sideband = hook_output_to_sideband;
++
++	code = run_hooks("update", &opt);
 +	run_hooks_opt_clear(&opt);
++	return code;
  }
  
- static void check_aliased_update_internal(struct command *cmd,
+ static struct command *find_command_by_refname(struct command *list,
 -- 
 2.32.0.rc1.458.gd885d4f985c
 
