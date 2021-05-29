@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B1D0C47082
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 14:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC3DC4708E
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 14:25:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AD0B6120A
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 14:24:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18FE46120E
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 14:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbhE2OZo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 May 2021 10:25:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35038 "EHLO
+        id S229741AbhE2O0r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 May 2021 10:26:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbhE2OZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 May 2021 10:25:43 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E58C061574
-        for <git@vger.kernel.org>; Sat, 29 May 2021 07:24:07 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id u25-20020a0568302319b02902ac3d54c25eso6380883ote.1
-        for <git@vger.kernel.org>; Sat, 29 May 2021 07:24:07 -0700 (PDT)
+        with ESMTP id S229686AbhE2O0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 May 2021 10:26:45 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCA5C061574
+        for <git@vger.kernel.org>; Sat, 29 May 2021 07:25:09 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so6357385oth.8
+        for <git@vger.kernel.org>; Sat, 29 May 2021 07:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=TgIV6Dztreh69wdJgNGBT8WSvZ5OgxM5ujaHN74g68c=;
-        b=QETtD/DcCJfFsde1UcuudSdu30t5vWFD2p1eWL7aPzgE3CKaN2rkdGyHRjqcE7Rb0f
-         xvVkySB2LMXMzlcl1oZ6dRwTIvzZq3sC7kIy2BcMBVUCBNDbJSSK6TzLSB4OE6yqR8a0
-         n/7mOic+cUMonkNhheOdXMa62PS1JEj59kkJAneK5/xITHN8x+8m653dc+j3sflDVLG9
-         Dwh6UeHDks/klUIHj9JpcnXdQyoDDCBLmqxQJe+rAPpEo6GfqWfbpq5Y5Ap2gNUSF6UD
-         dcCWWlQXQ65SEIjSVaNaaqUJywmyQzNlAGfxwlRVciYw5sxeZvEGbVLooXA/XfnyDQCf
-         mhzQ==
+        bh=q/kls+YNX/JOofvkstoIZ4p2q+coBQUdAlzfPWifHhw=;
+        b=ULrLQf2JKhARKElQfoiN7I9NLEud2QdOout9X2fVH2Nb5XbQV2/tGEy38o+Q2kcZHr
+         2LNJl5bQvl8G2LjyFxZbTVZAspzY5sqOSlCUbNPIOva3jnLsGc70bIkfJq6PdlegRPql
+         +K8dH8fMPg00Z627Bq1b+I4iX6YnLnM5GR1TsljNhF6E0c8V2y37XVnv2llmwXBGDRGJ
+         NG2dZke2OW9e1x8tpZatCVsbBqI374F0P1E9o/DSoy+YXP2FB6kkNVR1582AC23bgGgQ
+         8M0YkKdAo2hVjkSxqgzbGhk48X70l/Xslr2vC9al0iOl5CAbdASAKdj2t3+6pZmc4leV
+         Vlfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=TgIV6Dztreh69wdJgNGBT8WSvZ5OgxM5ujaHN74g68c=;
-        b=CNt3SN+raZY7XJoKvlJZEVEZtyJ6WQM2DwJD7K1JP/8nLbSbmErCP8fwqV41CGD29S
-         Pm90W7f4StVEtyFww2eZ5oPpsxeNTJRQogWYtDi6YP1rXDOJY/a4jItB/29Dtair8DvT
-         s+209dB3qP7hFVpxHrnW1iryjYSBOqQKLp6J1L4rST2ANgjlo6C/8K4ghFuQxI1y+XsU
-         nOXWnwTiuHV//RlYEXfc/HvjQFTF21rccyl/NtT5phDVwvwW4EMzM2VtID6NQ8XwmKeB
-         oJeR5UhjJAsSe4LqYR0wXKCRnLVhjgqur1gBVhm8a5EjTCAffFoQA8mFvpBByMzKbi4Z
-         xoCg==
-X-Gm-Message-State: AOAM5303RwEgX8yGl/qEd7UQlI1odzJ6uj90aAdng+YrHVHOtc/7DJfi
-        fD8pJynYE6sDiM4qVWiosDU=
-X-Google-Smtp-Source: ABdhPJy4zkIDfblzUFWPZFsFKTXLBwGZPWRUQts5QBOVEFGv2P3HZNp58VJGkVXEpx31f43TKF3CLg==
-X-Received: by 2002:a05:6830:1df7:: with SMTP id b23mr11183032otj.163.1622298246270;
-        Sat, 29 May 2021 07:24:06 -0700 (PDT)
+        bh=q/kls+YNX/JOofvkstoIZ4p2q+coBQUdAlzfPWifHhw=;
+        b=pC6C8DXVewczEfl1LJxJjcSAj7goVE2WurS8YALWYYycAE20vLad52X5urnh3VqAi7
+         SVqJQEFMR3vLTzffzNvVXkWcXQUf5RYHNHSVfU0FoTqP3LM7iqlJM2Bq40lGFYHRVmmy
+         Ev5/p74vYbEjc1DoIj/ZPvgdyciQzkYi0jta2kex511BPnPy4KBXVlGdYF9oao+pW3BX
+         +lKRSS0kYCBh/U4rHhDp7torvoRaY36h41gagYCsjHrIesuANvGaViFb2n5aI163+6qg
+         5Hzo+ngeq6nx9j/KcTKZ1YFD0JDGJYrhtCzzLAOfqR7FnTJnjv7euU/9IyiNgL/QB70S
+         A2AQ==
+X-Gm-Message-State: AOAM531HIacHGUw1ADPE0SkSKs3UoHJ90aYPwmu1lDMP/QROOJox7XSf
+        sxDDGBdMMvM6UuZ9h1fFVoY=
+X-Google-Smtp-Source: ABdhPJzoXXyIhM/cs4dw600bcp6OsiCO+Kl4YWTaYsKGE7KIsf7z1T1/UJeREQJi5/Hg9iR5AZiRBw==
+X-Received: by 2002:a9d:6ace:: with SMTP id m14mr10776138otq.207.1622298308820;
+        Sat, 29 May 2021 07:25:08 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id w6sm1806614otj.5.2021.05.29.07.24.05
+        by smtp.gmail.com with ESMTPSA id x65sm1824573otb.59.2021.05.29.07.25.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 May 2021 07:24:05 -0700 (PDT)
-Date:   Sat, 29 May 2021 09:24:04 -0500
+        Sat, 29 May 2021 07:25:08 -0700 (PDT)
+Date:   Sat, 29 May 2021 09:25:07 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
@@ -65,15 +65,15 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Eric Wong <e@80x24.org>
-Message-ID: <60b24e84658ff_2650882081a@natae.notmuch>
-In-Reply-To: <87im322c04.fsf@evledraar.gmail.com>
+Message-ID: <60b24ec34b065_2650882086e@natae.notmuch>
+In-Reply-To: <87fsy62bs1.fsf@evledraar.gmail.com>
 References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
  <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
- <patch-10.13-9f21bc6e6f2-20210528T092228Z-avarab@gmail.com>
- <60b112638fc47_4b03220885@natae.notmuch>
- <87im322c04.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH v5 10/13] send-email: lazily load modules for a big
- speedup
+ <patch-08.13-f1a879a8ae9-20210528T092228Z-avarab@gmail.com>
+ <60b116015b98a_4b03220857@natae.notmuch>
+ <87fsy62bs1.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v5 08/13] send-email: use function syntax instead of
+ barewords
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -89,71 +89,32 @@ X-Mailing-List: git@vger.kernel.org
 > =
 
 > > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> Optimize the time git-send-email takes to do even the simplest of
-> >> things (such as serving up "-h") from around ~150ms to ~80ms-~90ms b=
-y
-> >> lazily loading the modules it requires.
-> >> =
+> >> Change calls like "__ 'foo'" to "__('foo')" so the Perl compiler
+> >> doesn't have to guess that "__" is a function. This makes the code
+> >> more readable.
+> >
+> > Agreed. Ruby has something similar:
+> >
+> >   foo arg1, arg2
+> >   foo(arg1, arg2)
+> >
+> > As a C programmer I find the former a quirk of the language, and much=
 
-> >> Before this change Devel::TraceUse would report 99/97 used modules
-> >> under NO_GETTEXT=3D[|Y], respectively. Now it's 52/37. It now takes =
-~15s
-> >> to run t9001-send-email.sh, down from ~20s.
-> >> =
-
-> >> Changing File::Spec::Functions::{catdir,catfile} to invoking class
-> >> methods on File::Spec itself is idiomatic. See [1] for a more
-> >> elaborate explanation, the resulting code behaves the same way, just=
-
-> >> without the now-pointless function wrapper.
+> > harder to read.
 > >
-> > I would reference `man File::Spec` rather than an email.
-> >
-> > And while this change makes sense, I think it should be split in two.=
-
-> >
-> > Instead of doing:
-> >
-> >   -use Term::ANSIColor;
-> >   -print color("reset"), "\n";
-> >   +require Term::ANSIColor;
-> >   +print Term::ANSIColor::color("reset"), "\n";
-> >
-> > We could do this in one patch:
-> >
-> >   -print color("reset"), "\n";
-> >   +print Term::ANSIColor::color("reset"), "\n";
-> >
-> > That is just no-op noise that we can mostly ignore in the review.
-> >
-> > Then the actual change to require Term::ANSIColor selectively would b=
-e
-> > much simpler to see.
+> > If it's a function call, present it as such.
 > =
 
-> You mean do the change from imported functions in one commit, and then
-> sprinkle the "require" in another one?
+> I'm not too familiar with Ruby, but the important part here in Perl is
+> that it's not a "foo()" v.s. "foo" shortcut for a function invocation,
+> it's unambiguous whether that is a function and what its arguments are
+> until at that point in the program. Perl has dynamic grammar, you can't=
 
-Yes.
- =
+> parse it with a regular grammar without executing it.
 
-> I think it's clearer this way, you can't really assert that it worked a=
-s
-> intended (i.e. you have no more imports) without the s/use/require/g, s=
-o
-> it makes sense to do both as one atomic change.
+Yes, that is the important part, but not the only part.
 
-It is clear, but there's some noise.
-
-And I don't see how you can assert there are no more imports from this
-patch, especially when the next patch gets rid of more imports.
-
-Moreover, it's already the case that the code uses namespaces in some
-cases: Net::Domain::domainname is one you did not have to convert. You
-would be doing the same for all other instances.
-
-Cheers.
-
+I'm saying in addition it's easier to read for most git.git developers.
 
 -- =
 
