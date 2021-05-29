@@ -2,109 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92F23C4708E
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 15:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65670C4708E
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 15:24:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D29B611AB
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 15:00:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4236E611CA
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 15:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbhE2PCC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 May 2021 11:02:02 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:58801 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229636AbhE2PCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 May 2021 11:02:01 -0400
-Received: from host-92-14-216-189.as13285.net ([92.14.216.189] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1ln0Rq-0001xY-3Q; Sat, 29 May 2021 16:00:22 +0100
-To:     Git List <git@vger.kernel.org>
-Cc:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Danh Doan <congdanhqx@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Subject: [RFH] CMake: detect if being run via Visual Studio, independent of
- build generator?
-Message-ID: <013f42a4-19f4-a935-7068-db3f7ff40446@iee.email>
-Date:   Sat, 29 May 2021 16:00:21 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+        id S229718AbhE2P0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 May 2021 11:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229693AbhE2P0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 May 2021 11:26:03 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C624C061574
+        for <git@vger.kernel.org>; Sat, 29 May 2021 08:24:26 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id t22-20020a4ad0b60000b029020fe239e804so1678558oor.4
+        for <git@vger.kernel.org>; Sat, 29 May 2021 08:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=zs7tA2ES5+/L3IEgF2INOvNv9NWP9ZSDDxPNo61Q6t8=;
+        b=iTWDdo6VjqG9XjvBWv6RLAOlTzXmh1Uo6YduUR3sjiOXBnywKvgmmDAZrLnmhkP0A2
+         2vs0UI1tUksQDdDnK338u0DyOes44EYgzWR3hSQeW6xlucHMYeuW7DSEOOwUi4t4i56w
+         jE+GqPha+Rfp5U4wafydiwsL4C1jrNCXK8zDDAnEJbYLOBe5rYCPXqUYZTc9oqb7mJ/B
+         +9JjNqeWZMQsuPljxuB2g//5z4OA9N3zNLjbf4MidNF54z3g19xjOCNf1v1tHBRISJbV
+         0y4PtaoTxpr/MUIW50AUrryaS746j2QjlkbjDklLF4qavwwo2syXScdb4UCgcpAFMHyb
+         x1eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=zs7tA2ES5+/L3IEgF2INOvNv9NWP9ZSDDxPNo61Q6t8=;
+        b=F1nJpbZtBqdEiE55WQbpA+sWP1LHktZz4etE34VJJ6rjKKrKqhEDYExgxqZpfMsjAX
+         qR/wcb6sxFMNP543zLkJa/tFiwtExxm5fOp+R5zR+oWs16Zya+xh+N6y/51ReO5Gu2By
+         fpIOrstiFSWXivudC5RWGcX2De5ChoGHhPMpse6lVJmi7P1gaSagv94f+TmeE27AsG3K
+         LW/otyTolUEdpPuU5KJuv5KsgLEtKNM1nCZydV67thQGug7XNHZUJhwKX08+TsTBnziB
+         g/sqMQ9XsuqTcXxPaSuFyrpewB1OO0xyFUyAxPLB9mWK8VYhHoD+D9owzF6AFMuSm6wL
+         vSrQ==
+X-Gm-Message-State: AOAM532oEI49/h61qP2wFeZIwVwNHiRFqary3XX3JVMW34+02PEx9gZo
+        XBlf+wZdexY+S86o6VCnvmI=
+X-Google-Smtp-Source: ABdhPJwSszCgHwu1TiIQvp10+e+z/fznG7qBS59ozjGPLaigtb/L/E8YDyKcKPmdHtqpTCWGkGbZvw==
+X-Received: by 2002:a4a:4581:: with SMTP id y123mr10847319ooa.33.1622301865444;
+        Sat, 29 May 2021 08:24:25 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id r24sm1830982otk.50.2021.05.29.08.24.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 May 2021 08:24:24 -0700 (PDT)
+Date:   Sat, 29 May 2021 10:24:23 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
+Message-ID: <60b25ca7a01c2_265088208af@natae.notmuch>
+In-Reply-To: <13c63e79-27fd-58d5-9a4c-6b58c40ef4b8@gmail.com>
+References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
+ <b3848f24f2d3f91fc96f20b5a08cbfbe721acbd6.1622126603.git.gitgitgadget@gmail.com>
+ <60afca827a28f_265302085b@natae.notmuch>
+ <13c63e79-27fd-58d5-9a4c-6b58c40ef4b8@gmail.com>
+Subject: Re: [PATCH 1/2] [GSOC] ref-filter: add %(raw) atom
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-cc'ing those who've been involved with the CMake tool recently.
+Phillip Wood wrote:
+> On 27/05/2021 17:36, Felipe Contreras wrote:
+> > ZheNing Hu via GitGitGadget wrote:
+> > [...]
+> >> +static int memcasecmp(const void *vs1, const void *vs2, size_t n)
+> > 
+> > Why void *? We can delcare as char *.
+> 
+> If you look at how this function is used you'll see
+> 	int (*cmp_fn)(const void *, const void *, size_t);
+> 	cmp_fn = s->sort_flags & REF_SORTING_ICASE
+> 			? memcasecmp : memcmp;
 
-I've been looking at part of the Git-for-Windows (GfW) Visual Studio
-build process that uses the CMakeLists.txt approach [A,B], which is
-based on the git.git version. In part it's now, for an uninformed user,
-broken, in an awkward way, hence the subject line question.
+Yeah, but why?
 
-An uniformed user is expected to clone git, download Visual Studio, and
-file-open the /git directory. Visual Studio will then find the
-CMakeLists.txt and create a hidden .sln/.vcproj project ready to build.
+We know we are comparing two char *. Presumably the reason is that
+memcmp and memcasecmp use void *, but that could be remedied with:
 
-In recent times Visual Studio has added the Ninja build generator, in
-addition to it's historic visual studio generator, and made Ninja the
-default (unless specifically configured otherwise e.g. [1]). This change
-of generator breaks the detection of being in Visual Studio (using Win32
-and MSVC flags). We used these flags as a cue to pre-load the vcpkg
-libraries, but no longer. Also note Visual Studio embeds its own CMake
-version.
+	cmp_fn = (int (*)(const char *, const char *, size_t))memcmp;
 
+That way the same cmp_fn could be used for the two cases.
 
-One issue for creating an update is that the CMake file is meant to be
-OS independent, and the Ninja generator is also OS independent, so
-shouldn't be used as the indicator of working with Visual Studio.
-Likewise using the Win32 CMake flag isn't appropriate for those not
-using Visual Studio. So the issue, as best I see it, is how to decide
-when to pre-load the vcpkg libraries needed for the build.
+Either way I don't care particularly much. It also could be possible to
+use void * and do the casting in tolower().
+ 
+> > (and I personally prefer lower to upper)
+> 
+> We should be using tolower() as that is what POSIX specifies for 
+> strcasecmp() [1] which we are trying to emulate and there are cases[2] where
+> 	(tolower(c1) == tolower(c2)) != (toupper(c1) == toupper(c2))
 
-The CI for the git.git test of CMake preloads it's essential
-pre-requites (as an informed user;-) so avoids those Visual Studio
-changes to it's defaults.
+That's true.
 
-The ultimate aim is to make it as simple as possible for GfW users to
-browse the Git code, without feeling that they have taken the
-developer/contributor commitment step, which appears to scare off some
-users.
-
-Part of that simple usage is that existing Visual Studio support tools
-can expect  .sln/.vcproj files to be available to 'just work' out of the
-box. In particular (for me) Sourcetrail [2,3], with it's easy graphic
-visualisation and tracing through the code, is one target. Sourcetrail
-isn't quite there yet but..[4]
-
-This issue is tricky to test as it (pretend to be that inexperienced
-user) expects a clean VS install and no vcpkg prior install.
-
-I could be totally confused (I am feeling rather dumb on this one), but
-I'd be grateful of any help in clarifying a way out for detecting if the
-conditions are right to pre-load the vcpkg libraries. I've also raised
-an issue at [5]
-
---
-Philip
-earlier discussions at
-https://github.com/git-for-windows/git/discussions/3176
-
-[A]
-https://github.com/git/git/blob/master/contrib/buildsystems/CMakeLists.txt
-[B]
-https://github.com/git-for-windows/git/blob/main/contrib/buildsystems/CMakeLists.txt
-[1] https://github.com/microsoft/vscode-cmake-tools/issues/1084
-[2] https://github.com/CoatiSoftware/Sourcetrail
-[3]
-https://github.com/git-for-windows/git/wiki/Sourcetrail-code-viewer-and-linkage-to-Visual-Studio,-for-Git
-[4] https://github.com/CoatiSoftware/Sourcetrail/issues/1179
-[5] https://github.com/MicrosoftDocs/cpp-docs/issues/3167
+-- 
+Felipe Contreras
