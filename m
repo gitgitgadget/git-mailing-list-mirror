@@ -2,119 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A31DC4708E
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 05:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B103BC47082
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 07:11:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D8EC61004
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 05:38:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78E2F613D1
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 07:11:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbhE2FkX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 May 2021 01:40:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34756 "EHLO
+        id S229602AbhE2HM5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 May 2021 03:12:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbhE2FkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 May 2021 01:40:23 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0AE9C061574
-        for <git@vger.kernel.org>; Fri, 28 May 2021 22:38:46 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id q16so2616906pls.6
-        for <git@vger.kernel.org>; Fri, 28 May 2021 22:38:46 -0700 (PDT)
+        with ESMTP id S229559AbhE2HMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 May 2021 03:12:55 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3024C06174A
+        for <git@vger.kernel.org>; Sat, 29 May 2021 00:11:19 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id 66-20020a9d02c80000b02903615edf7c1aso5675778otl.13
+        for <git@vger.kernel.org>; Sat, 29 May 2021 00:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=42D/0mPSpm744Fr6+x5reflbTzOlJFokS/dyhHFPiV8=;
-        b=sYOV8640tv1mkLVtPDPLdrwjlaiPgOY+53qt/RyIRLIEPFCxCSo7MlyF4JkDp11frJ
-         B1iYex5Rau/1ib6JoumXK9Xu3cKaTs0wihfOtwDlXNH+ppIiqLDR6X/sMEdZHYGJkZnA
-         /TDO91aHuk98KDsTaJl1QVqSqz3t0v5J33ZgeJUvSD4qoZpQewCdJZVCaNhQrGGQ7DJv
-         MhUlovrBj3Syqwfznbx2dZIfVHwOXbkRjJHRiGkPc/t9LSWIFFwBEjylzBmJ04d3JFtB
-         0kpyxaEnDkEzYBtVI9NIG8YZpRhLlg0WfTDksATY1vIYmEz10V0sal1m4Fxlf72Toxk9
-         +WWA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8O61jYaktYVCtPUqpmmvoRMxB8a7kmLTJn6Va3fKmOE=;
+        b=uZN7KJvRdm1sNYDOlXCQNPNG6u9GiwFYwAeQSUzLO8z4VZhytwRoRWZ5k24XFBOBJB
+         kwVDHRQTU5HtA1di2mye/ExjtW3p0bZxpTE+o3xirJ3ve3bUpZk+lMaA7YwsJBhNHFl9
+         wOY/AugVBP4mjb6kA+R/4zDNxp7IM5HzzmBlWKfKAhyNLNYzrbfxanYSOfIwdGcnMjfy
+         3L6yDTLfzfOJs1Hth3lji9GAihNixkR2OI8WjgikcWVTnl/yA0dmYSlKNpyPE91Z2IxM
+         9dy3XaNFz6L9KR4+FHU0yjw8HebfwJF/ruVamDRspqKIAPgni+zyYTAywZTkc0washhW
+         oERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=42D/0mPSpm744Fr6+x5reflbTzOlJFokS/dyhHFPiV8=;
-        b=mBmpGzjZeEgwnOxrknX61psWuhIYw42x7Z/5S9H6f3iXjFoMFTqj6r9VeWIfim5UFX
-         hdE6fMu++SpiFwGrH1YeDKVly8lJ+cokHNtZc9s3DbpncgMsSoXTdyfQg9k3EFCTqTDy
-         H2jZAg+uOhy6SV4PqkOBXaDKld3FRMHR537FxBhnQinQyMJp/c3QTS5orGrvCKIxAxEp
-         LoexoY/XCkJ4IyPZgY9IkS68L3xc0RnAYM4VOOuJY8O1AOkmR5P1dpHJT8ecuWYAH991
-         gkmSYUpCneWcFs9EgJwUkqHv5CKucsC9PetCFrIYTjdZ6e3BASuFfySpEGq3oDlBF7vu
-         SXPQ==
-X-Gm-Message-State: AOAM530IE0xo4dPMlveRQNGopM4OCWXI7Hccmmr6MSqtsGs72wTqhJ77
-        /nsF+ecGc8vkdxPtswWQXH8=
-X-Google-Smtp-Source: ABdhPJxnWwldFT9zIIi6Ni5rUN6Aep4MC9BKWZtr/r4P+A44/75Iagje4P8z6OOSgxBp6Qiyskg5bQ==
-X-Received: by 2002:a17:90a:e611:: with SMTP id j17mr8439212pjy.69.1622266726207;
-        Fri, 28 May 2021 22:38:46 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-65.three.co.id. [180.214.232.65])
-        by smtp.gmail.com with ESMTPSA id hk15sm5469022pjb.53.2021.05.28.22.38.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 May 2021 22:38:45 -0700 (PDT)
-Subject: Re: [PATCH 11/11] doc: push: explain default=simple correctly
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8O61jYaktYVCtPUqpmmvoRMxB8a7kmLTJn6Va3fKmOE=;
+        b=KEXrLU/7+ithyeUrCT1sPWY9DzNv8/WdqZQgXi5XFXxiNvcmCJxLeDwKE46Z40Vw6T
+         P6LbxB+WlZcFSjrMe46Nu+cIJeABMC13Jn5COGLZ7wz7NauIvX1wRHoPaWU3H43NlFoA
+         WK0nHxwlIKImH7qRipCs8kmd5DuGxOyKZz6Tk3sNOCY3ZZnmwMmbjM+iRfJLib0t9Jwg
+         eWvwvjfLlFt/uGdYxgKpCUBuItw8V8POcvnXtx2HeIxFqpIsEM+bVFvyycSgWm6QdoTX
+         Eaqn/IoVOI3dXDb0J4dwPkgoLxg7uT9RVBmnXM8WdusU25uVBPWYyhRzqOcJSJyPRDDo
+         7rxg==
+X-Gm-Message-State: AOAM531Fh1Q+vQOCQe/lR8eMtvqc6Wg1KwkqdsbwKKFbY+MBhiFp45QU
+        lM+S28IsbS3jlSlzsF1O31fUFSb5wYQvtQ==
+X-Google-Smtp-Source: ABdhPJwL2IMZGz13mmeHuiALE3poL3iL25RpwMsfKvpaRIybfriowpUvp2c3KEfVt7XdOG0XuzdTaA==
+X-Received: by 2002:a05:6830:1103:: with SMTP id w3mr9965292otq.6.1622272279169;
+        Sat, 29 May 2021 00:11:19 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id f2sm1615656otp.77.2021.05.29.00.11.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 May 2021 00:11:18 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
         Mathias Kunter <mathiaskunter@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramkumar Ramachandra <r@artagnon.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Ramkumar Ramachandra <r@artagnon.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Matthieu Moy <git@matthieu-moy.fr>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
- <20210528201014.2175179-12-felipe.contreras@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <540e249f-6bf9-0e4f-51db-20ce3ef8e5bf@gmail.com>
-Date:   Sat, 29 May 2021 12:38:41 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/6] push: hedge code of default=simple
+Date:   Sat, 29 May 2021 02:11:10 -0500
+Message-Id: <20210529071115.1908310-2-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc0
+In-Reply-To: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210528201014.2175179-12-felipe.contreras@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/05/21 03.10, Felipe Contreras wrote:
-> diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
-> index f2667b2689..632033638c 100644
-> --- a/Documentation/config/push.txt
-> +++ b/Documentation/config/push.txt
-> @@ -24,15 +24,14 @@ push.default::
->   
->   * `tracking` - This is a deprecated synonym for `upstream`.
->   
-> -* `simple` - in centralized workflow, work like `upstream` with an
-> -  added safety to refuse to push if the upstream branch's name is
-> -  different from the local one.
-> +* `simple` - pushes the current branch with the same name on the remote.
->   +
-> -When pushing to a remote that is different from the remote you normally
-> -pull from, work as `current`.  This is the safest option and is suited
-> -for beginners.
-> +If you are working on a centralized workflow (pushing to the same repository you
-> +pull from, which is typically `origin`), then you need to configure an upstream
-> +branch with the same name.
->   +
-> -This mode has become the default in Git 2.0.
-> +This mode is the default since Git 2.0, and is the safest option suited for
-> +beginners.
->   
->   * `matching` - push all branches having the same name on both ends.
->     This makes the repository you are pushing to remember the set of
-> 
+`simple` is the most important mode so move the relevant code to its own
+function to make it easier to see what it's doing.
 
-Grammar looks OK.
+Reviewed-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/push.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
+diff --git a/builtin/push.c b/builtin/push.c
+index 194967ed79..7045e4ef0c 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -223,6 +223,14 @@ static void setup_push_current(struct remote *remote, struct branch *branch)
+ 	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
+ }
+ 
++static void setup_push_simple(struct remote *remote, struct branch *branch, int triangular)
++{
++	if (triangular)
++		setup_push_current(remote, branch);
++	else
++		setup_push_upstream(remote, branch, triangular, 1);
++}
++
+ static int is_workflow_triangular(struct remote *remote)
+ {
+ 	struct remote *fetch_remote = remote_get(NULL);
+@@ -242,10 +250,7 @@ static void setup_default_push_refspecs(struct remote *remote)
+ 
+ 	case PUSH_DEFAULT_UNSPECIFIED:
+ 	case PUSH_DEFAULT_SIMPLE:
+-		if (triangular)
+-			setup_push_current(remote, branch);
+-		else
+-			setup_push_upstream(remote, branch, triangular, 1);
++		setup_push_simple(remote, branch, triangular);
+ 		break;
+ 
+ 	case PUSH_DEFAULT_UPSTREAM:
 -- 
-An old man doll... just what I always wanted! - Clara
+2.32.0.rc0
+
