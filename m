@@ -2,152 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC95FC4708C
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 22:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A31DC4708E
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 05:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6879613E3
-	for <git@archiver.kernel.org>; Fri, 28 May 2021 22:45:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D8EC61004
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 05:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbhE1Wq7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 May 2021 18:46:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58658 "EHLO
+        id S229674AbhE2FkX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 May 2021 01:40:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbhE1Wqg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 May 2021 18:46:36 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83B92C06138B
-        for <git@vger.kernel.org>; Fri, 28 May 2021 15:44:57 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id x15so5754717oic.13
-        for <git@vger.kernel.org>; Fri, 28 May 2021 15:44:57 -0700 (PDT)
+        with ESMTP id S229456AbhE2FkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 May 2021 01:40:23 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0AE9C061574
+        for <git@vger.kernel.org>; Fri, 28 May 2021 22:38:46 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id q16so2616906pls.6
+        for <git@vger.kernel.org>; Fri, 28 May 2021 22:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=44OJa+jL4ncaei1MQXB4xZiClrJar1SjMSxuS7GPUVM=;
-        b=BBLYlMx/doHGSvueRhMzgXemjNt5UVrh/Ce1cES6M/9mL2SbxFAWctqtql2gK+8Ys6
-         MMJ4plcG62rEpWlhiU1Qb+Q8DnUCA3kYGQqpWCT/HLOob/wkXO3nFo0LK4/EqiTE5qS8
-         cKPHu+jbZKkg9IBRTBBatQWk5vQ2dVS+j+rskh4f/qst63wxKYRg63+rOLuEsLn7H23u
-         nnvc5xEqPCsqpdcsIVI/YtVDCXwMggBBU57u7/jnY3GEUYGvjYwTtAkDM+GCPz9724mw
-         yk2z7FpoPX1qxF/CDPGr6/w7/c39dlZJVabrU+HQBcaDa6L+aW2YYz85jqAjY8ZDClZu
-         lOWA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=42D/0mPSpm744Fr6+x5reflbTzOlJFokS/dyhHFPiV8=;
+        b=sYOV8640tv1mkLVtPDPLdrwjlaiPgOY+53qt/RyIRLIEPFCxCSo7MlyF4JkDp11frJ
+         B1iYex5Rau/1ib6JoumXK9Xu3cKaTs0wihfOtwDlXNH+ppIiqLDR6X/sMEdZHYGJkZnA
+         /TDO91aHuk98KDsTaJl1QVqSqz3t0v5J33ZgeJUvSD4qoZpQewCdJZVCaNhQrGGQ7DJv
+         MhUlovrBj3Syqwfznbx2dZIfVHwOXbkRjJHRiGkPc/t9LSWIFFwBEjylzBmJ04d3JFtB
+         0kpyxaEnDkEzYBtVI9NIG8YZpRhLlg0WfTDksATY1vIYmEz10V0sal1m4Fxlf72Toxk9
+         +WWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=44OJa+jL4ncaei1MQXB4xZiClrJar1SjMSxuS7GPUVM=;
-        b=dVpV8GEc8ViySeSFhb+qZ1ApBxU/odB5bsNLDGtmQYQBEzAs6jhp6uVzEdgZle75gC
-         XQPElrciaEHbEjO/pA4p6OGIR1v99KOFA/wUD4OsfxPZXmziJBO6u0jdBR28I9LKdA6c
-         nQQubqrDZHGsJJbDqJTos+6FewEty0BLlmcltbmeyhWQLsTAptW1to1n7yrodyiMSAsR
-         ISo+IyrZsDjhTsmWfNCq+looXKRp8DO6kVv3vW9h8tU9iyJgd/HFzb4n8apoAMmlBqad
-         Yg9gxNTkeagCgMUdqzM99vdbhac1mmkb7OOlomTXRfJj9kITgIK2Nl6NYET9Vg4QxxEv
-         TSAg==
-X-Gm-Message-State: AOAM533TbfUS/gTzrv5Kbbpf8Zf9iuoHFa36HcT72z09fpg+8wMIB3zZ
-        InZ28Gjn6f/Aw0zcQoSTy/1Aa8PRt8esYwcvheLQRKWb2hSJ8A==
-X-Google-Smtp-Source: ABdhPJywvwUmcsiwuvnY9xLteqKINjP6K3JV25uEji67CDcRUtUTWgHtP4dgNgDShrwyZkbHZxg5V8esbeoLCEb+Buo=
-X-Received: by 2002:a05:6808:13d5:: with SMTP id d21mr7633719oiw.31.1622241896870;
- Fri, 28 May 2021 15:44:56 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=42D/0mPSpm744Fr6+x5reflbTzOlJFokS/dyhHFPiV8=;
+        b=mBmpGzjZeEgwnOxrknX61psWuhIYw42x7Z/5S9H6f3iXjFoMFTqj6r9VeWIfim5UFX
+         hdE6fMu++SpiFwGrH1YeDKVly8lJ+cokHNtZc9s3DbpncgMsSoXTdyfQg9k3EFCTqTDy
+         H2jZAg+uOhy6SV4PqkOBXaDKld3FRMHR537FxBhnQinQyMJp/c3QTS5orGrvCKIxAxEp
+         LoexoY/XCkJ4IyPZgY9IkS68L3xc0RnAYM4VOOuJY8O1AOkmR5P1dpHJT8ecuWYAH991
+         gkmSYUpCneWcFs9EgJwUkqHv5CKucsC9PetCFrIYTjdZ6e3BASuFfySpEGq3oDlBF7vu
+         SXPQ==
+X-Gm-Message-State: AOAM530IE0xo4dPMlveRQNGopM4OCWXI7Hccmmr6MSqtsGs72wTqhJ77
+        /nsF+ecGc8vkdxPtswWQXH8=
+X-Google-Smtp-Source: ABdhPJxnWwldFT9zIIi6Ni5rUN6Aep4MC9BKWZtr/r4P+A44/75Iagje4P8z6OOSgxBp6Qiyskg5bQ==
+X-Received: by 2002:a17:90a:e611:: with SMTP id j17mr8439212pjy.69.1622266726207;
+        Fri, 28 May 2021 22:38:46 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-65.three.co.id. [180.214.232.65])
+        by smtp.gmail.com with ESMTPSA id hk15sm5469022pjb.53.2021.05.28.22.38.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 May 2021 22:38:45 -0700 (PDT)
+Subject: Re: [PATCH 11/11] doc: push: explain default=simple correctly
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Mathias Kunter <mathiaskunter@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramkumar Ramachandra <r@artagnon.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210528201014.2175179-1-felipe.contreras@gmail.com>
+ <20210528201014.2175179-12-felipe.contreras@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <540e249f-6bf9-0e4f-51db-20ce3ef8e5bf@gmail.com>
+Date:   Sat, 29 May 2021 12:38:41 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <F58C0A40-A1B4-4B47-A8EA-20FEAB011B0D@botech.co.uk>
-In-Reply-To: <F58C0A40-A1B4-4B47-A8EA-20FEAB011B0D@botech.co.uk>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 May 2021 15:44:45 -0700
-Message-ID: <CABPp-BGUxHiYLjVcqBc0qpaHpd5MZCN_6S0YpH8tKcP3GSV2Pw@mail.gmail.com>
-Subject: Re: bug report: git checkout deletes worktree file even though it is
- excluded by sparse-checkout
-To:     "Tim Renouf (open source)" <tpr.ll@botech.co.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210528201014.2175179-12-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 29/05/21 03.10, Felipe Contreras wrote:
+> diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+> index f2667b2689..632033638c 100644
+> --- a/Documentation/config/push.txt
+> +++ b/Documentation/config/push.txt
+> @@ -24,15 +24,14 @@ push.default::
+>   
+>   * `tracking` - This is a deprecated synonym for `upstream`.
+>   
+> -* `simple` - in centralized workflow, work like `upstream` with an
+> -  added safety to refuse to push if the upstream branch's name is
+> -  different from the local one.
+> +* `simple` - pushes the current branch with the same name on the remote.
+>   +
+> -When pushing to a remote that is different from the remote you normally
+> -pull from, work as `current`.  This is the safest option and is suited
+> -for beginners.
+> +If you are working on a centralized workflow (pushing to the same repository you
+> +pull from, which is typically `origin`), then you need to configure an upstream
+> +branch with the same name.
+>   +
+> -This mode has become the default in Git 2.0.
+> +This mode is the default since Git 2.0, and is the safest option suited for
+> +beginners.
+>   
+>   * `matching` - push all branches having the same name on both ends.
+>     This makes the repository you are pushing to remember the set of
+> 
 
-On Fri, May 28, 2021 at 1:46 PM Tim Renouf (open source)
-<tpr.ll@botech.co.uk> wrote:
->
-> Hi all
->
-> I have a bug report: git checkout deletes a worktree file even though it =
-is excluded by sparse-checkout, even if it is dirty.
->
-> Watch this (starting in an empty directory):
->
-> $ git init
-> Initialised empty Git repository in /mnt/amd/home/trenouf/amd/tmp/git/.gi=
-t/
-> $ echo file1 >file1; echo file2 >file2
-> $ git add file1 file2
-> $ git commit -m"commit 1"
-> [master (root-commit) 4f7035d] commit 1
->  2 files changed, 2 insertions(+)
->  create mode 100644 file1
->  create mode 100644 file2
-> $ git rm file2
-> rm 'file2'
-> $ git commit -m"rm file2"
-> [master d025c99] rm file2
->  1 file changed, 1 deletion(-)
->  delete mode 100644 file2
-> $ git checkout master~1
-> HEAD is now at 4f7035d commit 1
-> $ git sparse-checkout set /file1
-> $ ls
-> file1
-> $ echo dirty >file2
-> $ ls
-> file1  file2
-> $ git checkout master
-> Previous HEAD position was 4f7035d commit 1
-> Switched to branch 'master'
-> $ ls
-> file1
->
-> I set up sparse-checkout to include only file1, not file2. file2 is now n=
-ot in the worktree, even though it is in the commit I am checked out at. Th=
-en I create file2 with arbitrary content. Then a git checkout switching to =
-the commit where file2 is removed also deletes it from the worktree.
->
-> I assert that file2 should be left untouched by that checkout, because it=
- is excluded by sparse-checkout. I guess file2 had its skip-worktree bit se=
-t before the checkout that removed it from the index; that should stop it b=
-eing deleted in the worktree.
->
-> To be clear, I expect that last =E2=80=9Cls=E2=80=9D to still show =E2=80=
-=9Cfile1  file2=E2=80=9D.
->
-> Thank you for your attention if you have got this far.
+Grammar looks OK.
 
-Thanks for the report.  It's another example of how
-"skip-worktree-means-treat-the-file-as-matching-head" causes
-confusion.  You can find more issues with
-present-despite-skip-worktree files at
-https://lore.kernel.org/git/CABPp-BF6GpoDtMfpzf=3D3VWL_puuRH-cNV=3D9KajdF10=
-03Fe05jA@mail.gmail.com/,
-including reasons they come up more often than you'd think.
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-We do need to get these fixed up, though I don't want to step on
-Stolee's toes with his sparse-index work, and I'm hesitant to open new
-big projects until merge-ort is complete.
-
-> -tpr
->
-> [System Info]
-> git version:
-> git version 2.31.1
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Linux 5.8.0-53-generic #60~20.04.1-Ubuntu SMP Thu May 6 09:52:46 U=
-TC 2021 x86_64
-> compiler info: gnuc: 9.3
-> libc info: glibc: 2.31
-> $SHELL (typically, interactive shell): /bin/bash
+-- 
+An old man doll... just what I always wanted! - Clara
