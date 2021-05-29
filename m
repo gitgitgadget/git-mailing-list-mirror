@@ -2,125 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3374C47082
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 07:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B00E8C4708E
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 08:13:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 851B061222
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 07:45:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7645161157
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 08:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229823AbhE2HrH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 May 2021 03:47:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33604 "EHLO
+        id S229679AbhE2IP3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 May 2021 04:15:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbhE2Hq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 May 2021 03:46:59 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B305C06174A
-        for <git@vger.kernel.org>; Sat, 29 May 2021 00:45:23 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id c3so6678182oic.8
-        for <git@vger.kernel.org>; Sat, 29 May 2021 00:45:23 -0700 (PDT)
+        with ESMTP id S229597AbhE2IP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 May 2021 04:15:27 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFAAEC061574
+        for <git@vger.kernel.org>; Sat, 29 May 2021 01:13:51 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id jt22so8754159ejb.7
+        for <git@vger.kernel.org>; Sat, 29 May 2021 01:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Lcl1Afq70BkK4usgPKmXnlNk6B0W42mPK5LncaeVQW0=;
-        b=dI0SWbfapRB/W1f6mj9vcsdqG7Yrb0bUSadZ01L93iPND7aXvnfQp0ahKHfxN7+2OD
-         TMqSd977deM2A4i/CLaevOrBwiT6sSehwgQ/gtsE6PopZiCezNXzCvoyd42JgqssXK0e
-         EfGH3N7mHCIrRGF1RUsCQPRhYHTpm4hTpVJBO3Lttp9D8DxwfPin0V7HhSMkWOP17S+4
-         UVg5HDfzcFWBiqFAei+Hsj0McPMVlH7SlLUt2a4XTIYb6dc5RuvTLlAB2wGkRRtmWwMf
-         cCCeEWA/cigNsU1J3Vg9CMhmz0YcsCK++oPmRtswTL9v8N+SbFXzDErr4us+TGBn4nG/
-         Uyrw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ChpXzfuF7ByQqBXgr6gEwm1mP4GbBmaNGZK9dR5vrWk=;
+        b=qP9ipH6K9ubJtHIhE8awR8E+sKSig8iWx48NnNPj8F/9iQVpsAJVkwozlVRaULtFb/
+         z4YXZZec+txAP9BM3KlcH2TD8hxAyXJbesLLUVlaldJEZENTGYhOTL7o+RPM4GrIyzBL
+         6Oyc00p/JxLCKApjvXGuxQLCXdNtmCa+RgLdOdmXd8K97oI9TvUImiNqbdoGdmg+QDNU
+         6rr/z59MC/1RZRNFL8rYJG3xxMFR6xj8a2W8rrunimtN+XInMFCC0tUFrNd0HN4YjiXR
+         TDbrh2UnIde2TIT2uzq4sYd9Eb46/+ROKlnv9yT2cbaXaMsCvwFserhfhIf2lZ5oav8k
+         ektw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Lcl1Afq70BkK4usgPKmXnlNk6B0W42mPK5LncaeVQW0=;
-        b=I1ZpMAn8AP/WuJof4Cr4k6Ch3yVudog1UH43cr/0ztItbgMflB8xeB6jIeekLwz9F/
-         jqR6SWZSIzf1FjARypsZJNOU6jodbaiZQRRHZUVhjVfuQ0TBGgA82aZR5ZhwxKX+Lcgw
-         jTRsO7BmAybZ0/0am+utjJpTuugao6HKP7Qv0I94RNlcSdrjX9LTDHlIvSqpxEFK2x/Q
-         /fDan1QEPxf7h1XdQ+B57+ovu9qF04L6+Ea0Dojv+zCTYa2kdvFxUoCtbmuFglkpZnQ4
-         88AHLVCSTuYlAo55DzmoqK+q85GTNvOFpc28caCkFsnRSTy2BBcEQm8Fz0WBcob1oadT
-         A0hA==
-X-Gm-Message-State: AOAM532jT2Q9JIx+FHDrz3NKrlZkq2Y11m6LCnVSyQr5Aio4bNKNQ6KX
-        PxKxR6Exkdx5B+Ydu6d46YWAgiTS2NSZMw==
-X-Google-Smtp-Source: ABdhPJyVaCwVGauB6Oc+0LX049sTY6W6Tt6ikZ+mZyDa3SEluPm29si68eCJspS/dncbTOvplpL6gA==
-X-Received: by 2002:aca:ab50:: with SMTP id u77mr8440533oie.153.1622274322781;
-        Sat, 29 May 2021 00:45:22 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id a7sm1624945ooo.9.2021.05.29.00.45.22
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=ChpXzfuF7ByQqBXgr6gEwm1mP4GbBmaNGZK9dR5vrWk=;
+        b=d/sOFnE+JYdTV+KcnTNtwIsHWYXzznpM6hozAiUeO4cNdt2VYjm6xbA6rtkkJ6G0Z4
+         vUVFS7LISso1uAk8WQpuMQpQRNKg2IgrMmScfAhDSu8iX0e80djO4YfkAlQ2U5H1Veau
+         RKCB8Iv+dLh7QNIk5Tvo586jLn2O2pg8iFZ7BGCco6Y/YBtM4aeAAyNJaox5Lp0jxnC8
+         LiFC11tbAV2PssoNq/yoaqNJ7KDDF0Uk4p9tC8/NJFaZSyJyyb2Je+90bSrlXkZ0N7WW
+         iJLdVvZK7/5XZ6ZN5EAzaZAtA9GShZrjSV0GlBVJ/Ps1VfP9/LW3tVLApv+/L+8NkOy8
+         1wfw==
+X-Gm-Message-State: AOAM532aGm+X6/4Rpl5CaAGDze4GSxD4pWc+ZjPsn2lIw/ZxJf6Z13og
+        Q+ySt4lf5zauhd41u9YMakVBNYAn0vSl5g==
+X-Google-Smtp-Source: ABdhPJz7ouAz5iBtsPA9ARarpWyXHz5GLok4lRNXHRKEkLdVQhP0VZrNBPdfTAqs26eE9iWd2EWHaA==
+X-Received: by 2002:a17:906:2a1b:: with SMTP id j27mr12842915eje.370.1622276029117;
+        Sat, 29 May 2021 01:13:49 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id he37sm3191029ejc.61.2021.05.29.01.13.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 May 2021 00:45:22 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 15/15] push: rename !triangular to same_remote
-Date:   Sat, 29 May 2021 02:44:58 -0500
-Message-Id: <20210529074458.1916817-16-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc0
-In-Reply-To: <20210529071115.1908310-1-felipe.contreras@gmail.com>
-References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+        Sat, 29 May 2021 01:13:48 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Gregory Anders <greg@gpanders.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v5 10/13] send-email: lazily load modules for a big speedup
+Date:   Sat, 29 May 2021 10:12:53 +0200
+References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
+ <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
+ <patch-10.13-9f21bc6e6f2-20210528T092228Z-avarab@gmail.com>
+ <60b112638fc47_4b03220885@natae.notmuch>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <60b112638fc47_4b03220885@natae.notmuch>
+Message-ID: <87im322c04.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The typical case is what git was designed for: distributed remotes.
 
-It's only the atypical case--fetching and pushing to the same
-remote--that we need to keep an eye on.
+On Fri, May 28 2021, Felipe Contreras wrote:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/push.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Optimize the time git-send-email takes to do even the simplest of
+>> things (such as serving up "-h") from around ~150ms to ~80ms-~90ms by
+>> lazily loading the modules it requires.
+>>=20
+>> Before this change Devel::TraceUse would report 99/97 used modules
+>> under NO_GETTEXT=3D[|Y], respectively. Now it's 52/37. It now takes ~15s
+>> to run t9001-send-email.sh, down from ~20s.
+>>=20
+>> Changing File::Spec::Functions::{catdir,catfile} to invoking class
+>> methods on File::Spec itself is idiomatic. See [1] for a more
+>> elaborate explanation, the resulting code behaves the same way, just
+>> without the now-pointless function wrapper.
+>
+> I would reference `man File::Spec` rather than an email.
+>
+> And while this change makes sense, I think it should be split in two.
+>
+> Instead of doing:
+>
+>   -use Term::ANSIColor;
+>   -print color("reset"), "\n";
+>   +require Term::ANSIColor;
+>   +print Term::ANSIColor::color("reset"), "\n";
+>
+> We could do this in one patch:
+>
+>   -print color("reset"), "\n";
+>   +print Term::ANSIColor::color("reset"), "\n";
+>
+> That is just no-op noise that we can mostly ignore in the review.
+>
+> Then the actual change to require Term::ANSIColor selectively would be
+> much simpler to see.
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 2f30a97b97..f1ac531252 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -206,7 +206,7 @@ static void setup_default_push_refspecs(struct remote *remote)
- {
- 	struct branch *branch;
- 	const char *dst;
--	int triangular;
-+	int same_remote;
- 
- 	switch (push_default) {
- 	case PUSH_DEFAULT_MATCHING:
-@@ -225,20 +225,20 @@ static void setup_default_push_refspecs(struct remote *remote)
- 		die(_(message_detached_head_die), remote->name);
- 
- 	dst = branch->refname;
--	triangular = strcmp(remote->name, remote_for_branch(branch, NULL));
-+	same_remote = !strcmp(remote->name, remote_for_branch(branch, NULL));
- 
- 	switch (push_default) {
- 	default:
- 	case PUSH_DEFAULT_UNSPECIFIED:
- 	case PUSH_DEFAULT_SIMPLE:
--		if (triangular)
-+		if (!same_remote)
- 			break;
- 		if (strcmp(branch->refname, get_upstream_ref(branch, remote->name)))
- 			die_push_simple(branch, remote);
- 		break;
- 
- 	case PUSH_DEFAULT_UPSTREAM:
--		if (triangular)
-+		if (!same_remote)
- 			die(_("You are pushing to remote '%s', which is not the upstream of\n"
- 			      "your current branch '%s', without telling me what to push\n"
- 			      "to update which remote branch."),
--- 
-2.32.0.rc0
+You mean do the change from imported functions in one commit, and then
+sprinkle the "require" in another one?
 
+I think it's clearer this way, you can't really assert that it worked as
+intended (i.e. you have no more imports) without the s/use/require/g, so
+it makes sense to do both as one atomic change.
