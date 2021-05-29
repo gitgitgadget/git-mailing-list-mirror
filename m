@@ -2,199 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40291C4708F
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 08:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19B95C4708E
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 09:28:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D23F613F1
-	for <git@archiver.kernel.org>; Sat, 29 May 2021 08:34:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC41661183
+	for <git@archiver.kernel.org>; Sat, 29 May 2021 09:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbhE2Iei (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 May 2021 04:34:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbhE2Ief (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 May 2021 04:34:35 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6C9C061574
-        for <git@vger.kernel.org>; Sat, 29 May 2021 01:32:59 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id ci15so5421079ejc.10
-        for <git@vger.kernel.org>; Sat, 29 May 2021 01:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=nR8SnPMxi2/vIw5AZqPjiBRe0kOhIW9Bkjg38jifkEw=;
-        b=isyGRIzbSMZebfrZG92H8C2zWhnMj7iV02umvXKpUIYR+IxzdWAo9iqyeYqiUYrZIX
-         6x2lTzotdKadmyKP3EX7C9l6DgtfxBlMsCAgn3S8v15KkcTE44GMfqP47vEiiV0ryDzV
-         eABixtoXhz9i4Vwc3I4VQxMAyZzReY+TrZYtqXEertGXF8p6IpswfbiznGJtfvz2oZgv
-         V+4n3DUamxh4iBL1J8y0WGGlrsKyTBMSU30MS3DBq0zk5Cgi6ztSOqGhhzArzqMTQN4h
-         RVOz4N127/QmQaydMkIGi4Cnlk9FXCxecsdJMLO9YzAfhyoXNhj7hNxd/ABMqjh5d9kU
-         BedA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=nR8SnPMxi2/vIw5AZqPjiBRe0kOhIW9Bkjg38jifkEw=;
-        b=RJOfyyLGJqgE6IAEFmsTBtMPeas1nwMMhQgPXhFiOmbL+HJ4pEudoyGr5bgz/yH05X
-         DISJ1b9ABODpUjBgGodBGVyDp8maeFr9CVfFX2X9RJmfCTdlp2ifzPqdXGFSrjL2qwRv
-         GefdNwcxJQWuEaRcG33vHrU+0+U354znYPUtum7DYrpqKAV/8vt45DAuaDEx+PmyGaMx
-         3JBlR/DMnO+eehexTnQLTSyjIkE4OgBGYiu6Ol/UXUn25NlCgUMgd5DehfvXPgv991nq
-         0zfYCRjxxIVyU4DC2gP+iXDqqjJnUOiX6PWj+IRa74PDDBhP4Veat8F+bl4ySli26NEf
-         f7pw==
-X-Gm-Message-State: AOAM5337zuIS7EgKeA0R5b3fSB92Jh3eo650eGeB1DePuOmwfw5j4RQq
-        4H3KOgeFBQHUoosfj/oNvu0=
-X-Google-Smtp-Source: ABdhPJx5JMcYbvb4A1EdTqClJyyjfTP0psmlVI80VZ+8ncCJTRh/yzeXbLUs8/ip+y8aZR9619keXQ==
-X-Received: by 2002:a17:906:3615:: with SMTP id q21mr13377529ejb.414.1622277177180;
-        Sat, 29 May 2021 01:32:57 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id f10sm208519edx.60.2021.05.29.01.32.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 May 2021 01:32:56 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Gregory Anders <greg@gpanders.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 00/10] send-email: various optimizations to speed up
- by >2x
-Date:   Sat, 29 May 2021 10:19:07 +0200
-References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
- <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
- <YKYdeom6SgAHqojm@coredump.intra.peff.net> <xmqqv97drmge.fsf@gitster.g>
- <875yzcpo52.fsf@evledraar.gmail.com>
- <60b11101e5288_50514208b4@natae.notmuch>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <60b11101e5288_50514208b4@natae.notmuch>
-Message-ID: <87czta2b47.fsf@evledraar.gmail.com>
+        id S229620AbhE2J3r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 May 2021 05:29:47 -0400
+Received: from mout.web.de ([217.72.192.78]:47885 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229559AbhE2J3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 May 2021 05:29:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1622280474;
+        bh=qJ+hl4NNZC1lBh1otxujtRW+i0CUKmhm2w/VsFJ7xKQ=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=g9AsgNIW505lfb5ZvSJeFwYDEOYoR0mpVu/dP+E1dRp9JdYgF+5lGPp1KZKYlx+ah
+         xyU221vOFzI5hvIITm878WR1pu4XK2pcNkVhxC6vVUr/s181eaFfD76UCTTduWGUsg
+         5ViHLNH45UZQSuuIfj9dXvfLBSzCAsQVZiiDlthI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N2jWI-1lQ3rK0Kq4-0134QD; Sat, 29
+ May 2021 11:27:54 +0200
+Date:   Sat, 29 May 2021 11:27:52 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Yuri <yuri@rawbw.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG REPORT] File names that contain UTF8 characters are
+ unnecessarily escaped in 'git status .' messages
+Message-ID: <20210529092752.kifzqt3haddzgsob@tb-raspi4>
+References: <f7e2e271-dcec-2886-f33e-62778a429850@rawbw.com>
+ <xmqq35u9ax5j.fsf@gitster.g>
+ <6318ccec-ec96-91a8-fd65-85daf4a9a22b@rawbw.com>
+ <20210527045628.uvesihyhtqrfyfae@tb-raspi4>
+ <YK+mWZP+sl3zXECx@coredump.intra.peff.net>
+ <4dd22f16-72f0-a28a-8be0-aec622acf0d3@rawbw.com>
+ <50e2780a-21f3-499f-7960-76bf24f550f0@gmail.com>
+ <6fef4b1e-1ec7-b697-c311-59caf6408b29@rawbw.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <6fef4b1e-1ec7-b697-c311-59caf6408b29@rawbw.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:h3Kg6UEPJWzpixrvGjOROaHPGZ1dzCTdcvdKcIB3G5eIzIw11jx
+ WJlyV+0nyHtJoqZiN3NAcckYarcGoDN1CjBCtautvqSP0OAKkEtQiGa6iNas8iLawLdfR+6
+ LZSosF3XnNZHjfr6fDeAZobVpxfRddTJrXote8D6C+Ac70oH9RvlD5Q+cAyfqgQv6ck0pjd
+ 3xRPWREt3f9Giem7vYT3g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:I6ui/5XDB7g=:PguVmKWPeSzL7w2mV1+Db7
+ V2BPcgfD3eymShu3uLVVvvPcjfwZ/EoVm2nvh0nCvoZmaPmVNdU+zpYDOwvUPUC9putJT3kZz
+ 1XtGxedhhvo5rVZIRcFH1wOs0KL6FFVNlTbe+fDIvphiTrwoyz2RRmEGt+WEn1EGlKcAb8X5A
+ Y2Lrydu19I5CmSNdnWKqspAvTwdxXWJcIUy9KOVMM0vySawbHZU6DszZblHMxPXJ/UclDPePD
+ 2iW0dSWI07NvyCre6x6Tfnyw15Ln0U8vehMz3hmRu5K/akjwIer7aCcdTpqgFbAMBSMz9TBM9
+ spfRl7hGZZ/5a9aapfkL/ntj2Gq5Vjpv2KYF8blLvcYOdhHyNJl7ySD1dOYXrG6pBBWMwcM7M
+ 0/zk48rGaKdBQyibBPII4xVDaSjsTPgV+qRyjxx4AKG8Tc1QZzLT2FD3m7sGJTo9HfpF5unWe
+ IctVoI+aBY69+3jtgLTWj2lby30Kd6txgnriS6fY2fI9IjZmFDRbQ/pMJW7Kz16gdecD25apw
+ PBvD/L4d3ZLVBzH7dglgsgKNnjLUUNhYW1NUEil93zhyPMIXJ212mJEW0Hl9SEOk8G88r7ybZ
+ AAHJanDbrG3B+vHde5PLhQFY9RsvbKDUGkNCb8ZLmdbNORTUgWze1qFbEKeA6PHY69KuVZL63
+ ZTWQ97Gc2lj16WVD90sz4Nha/22JN4UWZaun6G0grYlb1xv1YXjJa4bxxi4S/Sh8skQdoD0nE
+ s38ZU1KE1Ct6hzg9Rq/Zd1P6mhTiqNOXkxh0O5e2UbZCeaYvPPbW6tz+oivp0QmEoOvLINfqE
+ w8JZjdcejTXRLSDNV5sCB+LW9yZdDCtTasX7tZzVopvdaDWZEsm0HEPWcI5lfhsYGmkxfQ/1Q
+ cIRbPISFu2miCvnEc67j9N1pWf89+TmGku70J5klChGSo6Nl9bwgM75NjKCOF02YjP7GtHMBr
+ 7baQt4ga6g+LEF9/pzZzSOEuwGnnmx7tiD9Yr5IPMF4rjkaqHnXg1ukxuS36cqtU3oKWcjWv+
+ V7G2vgIG+MMRBbMm3AK8KQKn1ymC8reIqlJLVpRFFuhJBnqrnQME0eDD1Yg+Z76hfFXeT7rfp
+ /bUCIsXpQrF7tLcNAIG/k1GyIisAInvzBEvTkTgpiPFlWJn85jyu0g0G+3f7fU8lGZJHVbWSZ
+ CnT0DZxy2MSYxBKcSBI6dWm2mTWdeGu7OqnH11n9yglOqXD4zdiMQnpwjTAPNaN+23Rnc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, May 28 2021, Felipe Contreras wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Returning a flattened list is idiomatic in Perl, it means that a caller
->> can do any of:
->>=20
->>     # I only care about the last value for a key, or only about
->>     # existence checks
->>     my %hash =3D func();
+On Thu, May 27, 2021 at 09:45:53PM -0700, Yuri wrote:
+> On 5/27/21 9:39 PM, Bagas Sanjaya wrote:
+> > So the current default is only supports ASCII, and escape other
+> > characters, right?
 >
-> I was staying on the sideline because I don't know what's idiomatic in
-> Perl, but Perl and Ruby share a lot in common (one could say Perl is the
-> grandfather of Ruby), and I do know very well what's idiomatic in Ruby.
 >
-> In perl you can do $ENV{'USER'}, and:
+> It appears this way.
 >
->   while (my ($k, $v) =3D each %ENV) {
->     print "$k =3D $v\n";
->   }
->
-> Obviously it's idiomatic to use hashes this way [1].
 
-For what it's worth idiomatic/good idea and "has an example in the perl
-documentation" unfortunately aren't always aligned. A lot of experienced
-Perl programmers avoid each() like the plague:
-http://blogs.perl.org/users/rurban/2014/04/do-not-use-each.html
+Yes, that is how it is.
 
-> It was a waste for Git::config_regexp to not do the sensible thing here.
+After reading the wiki here:
 
-FWIW we're commenting on a v2 of a series that's at v5 now, and doesn't
-use config_regexp() at all, the relevant code is inlined in
-git-send-email.perl now.
+https://wiki.gentoo.org/wiki/UTF-8
 
-> You can do exactly the same in Ruby: ENV['USER']
->
->   ENV.each { |k, v| print "#{k} =3D #{v}\n" }
->
-> And the way I would parse these configurations in Ruby is something like:
+(There are many other web pages as well)
 
->   c =3D `git config -l -z`.split("\0").map { |e| e.split("\n") }.to_h
->   c['sendemail.smtpserver']
->
-> And this just gave me an idea...
+I am not sure that there is a reliable way for Git to detect, if the
+terminal is capable of handling UTF-8.
+This should work reliable under Linux, Windows, Mac and all the supported
+Unix-ish platforms.
 
-I'd probably do it that way in Ruby, but not in Perl.
+Beside that, the outputs of git commands can be feed into other programs
+via a pipe usning  "|"  on the command line or redirectet to a file.
 
-Things that superficially look the same in two languages can have
-completely different behaviors, a "hash" isn't a single type of data
-structure in these programming languages.
+And what is a terminal ?
+We need to consider that we run programs like `less` or `more=B4 which
+need to be UTF-8 compatble.
 
-In particular Ruby doesn't have hshes in the Perl sense of the word, it
-has an ordered key-value pair structure (IIRC under the hood they're
-hashes + a double linked list).
+Most of them are probably UTF-8 compliant (and LANG is set to xx.UTF-8)
+these days.
+And most repositories have been feed with filenames encoded in  UTF-8 as w=
+ell.
 
-Thus you can use it for things like parsing a key=3D>value text file where
-the key is unique and the order is important.
+Having said that, the default could be switched some day in the future.
+Before that is "save", there may be a transition phase,
+where users are warned that the default may change.
+Scripts calling git need to use `git -c core.quotepath=3Dyes`, or no,
+whatever input they expect.
 
-In Perl hashes are only meant for key-value lookup, they are not
-ordered, and are actually actively randomly ordered for security
-reasons. In any modern version inserting a new key will have an avalance
-effect of completely changing the order. It's not even stable across
-invocations:
-=20=20=20=20
-    $ perl -wE 'my %h; for ("a".."z") { $h{$_} =3D $_; say keys %h }'
-    a
-    ab
-    bca
-    dcba
-    daebc
-    cbaedf
-    aecbfdg
-    dgfcbaeh
-    [...]
+Sorry for the longish answer.
+Changing one thing for some users may effect hundrets, thousands or millio=
+ns
+of other users later, cause surprises, need debugging and fixing effort.
 
-The other important distinction (but I'm not so sure about Ruby here) is
-that Perl doesn't have any way to pass a hash or any other structure to
-another function, everything is flattened and pushed onto the stack.
+Does someone wants to come up with a patch that anounces a possible change=
+ ?
 
-To pass a "hash" you're not passing the hash, but a "flattened" pointer
-to it on the stack.
 
-Thus passing and making use of these flattened values is idiomatic in
-Perl in a way that doesn't exist in a lot of other languages. In some
-other languages a function has to choose whether it's returning an array
-or a hash, in Perl you can just push the "flattened" items that make up
-the array on the stack, and have the caller decide if they're pushing
-those stack items into an array, or to a hash if they expect it to be
-meaningful as key-value pairs.
 
-In the context of Git's config format doing that is the perfect fit for
-config values, our config values *are* ordered, but they are also
-sort-of hashes, but whether it's "all values" or "last value wins" (or
-anything else, that's just the common ones) depends on the key/user.
-
-So by having a list of key-value pairs on the stack you can choose to
-put it into an array if you don't want to lose information, or put it
-into a hash if all you care about is "last key wins", or "I'm going to
-check for key existence".
-
-I think that in many other languages that wouldn't make any sense, and
-you'd always return a structure like:
-
-    [
-         key =3D> [zero or more values],
-        [...]
-    ]
-
-Or whatever, the caller can also unambiguously interpret those, but
-unlike Perl you'd need to write something to explicitly iterate the
-returned value (or a helper) to get it into a hash or a "flattened"
-array. In Perl it's trivial due to the "everything is on the stack"
-semantics.
-
-Anyway, all that being said the part we're talking about as a trivial
-part of this larger series. I'd much prefer to have it just land as
-"good enough" at this point. It works, we can always tweak it further
-later if there's a need to do that.
