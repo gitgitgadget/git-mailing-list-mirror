@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F8FC47092
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 13:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AB78C47091
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 13:06:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65A6D6023F
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 13:02:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2BCE610A6
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 13:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbhE3ND7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 09:03:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47002 "EHLO
+        id S229682AbhE3NHi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 09:07:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbhE3ND6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 09:03:58 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D9EC061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 06:02:20 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id l11-20020a05600c4f0bb029017a7cd488f5so4993136wmq.0
-        for <git@vger.kernel.org>; Sun, 30 May 2021 06:02:20 -0700 (PDT)
+        with ESMTP id S229500AbhE3NHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 09:07:37 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE47C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 06:05:58 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id n4so8031680wrw.3
+        for <git@vger.kernel.org>; Sun, 30 May 2021 06:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uH94hRo9Z1yfVLBpn4JUJAIAJImyaJTPPu2cdVZG/ks=;
-        b=u3Fx8+6lYAjgQTfK1LrCrk1f4XhxeTG1e+iNKGqnRJRJIEg0Q2vyOyuyIYlv2DrGD3
-         TgV5yz1fHNE915wUi1/3cLa58rKLuPMHXnry5RVSsvnbJCugZPBrYEiwHv6IuGXQeedJ
-         qv3ZPV9fh5I7WF0koz4xVh4RTElTC78SC+GtrF8XpIHcig6ZC5s9QMo+NPeiJ5sXWYHb
-         +66cFmgtu3U/0DAPAHLSo19N53UxqERv4/AOMMV+oMf65N3QMvAm4MoiP5iEZPie7kGb
-         hoHAark8AHfUL7rtAJaezYz3CMWUmM8WKiyixjmK3nYgkLpsE7hilj0Gl5e3f8jd8Ubb
-         xElg==
+        bh=9ABNt1Kw+BhABY1ISQv2d0BwO0y1bdJp2jDb8Wp+2K4=;
+        b=YWd85JI3aMhDvXeL9F30gIwqsw2rivEKdB2ilioT+t42RhSWyLMmjWnDEUx/Dtl9yv
+         eW7riWhsxvEfD9mwvPOoE4qy8x5VOXPNDYxPkpg3AIadd720XbU9gQXHvp6rKZi+P91E
+         Kzv256PmGZfmjabZj7O08lRoum73P186YHiMt5OoKcXZEkjJMugCmJbrlAnLScncwfia
+         gNj1BRL7dmn6Xeq3fxlD9mdalK3Nhn1f+E0ef5sCYFBmBFe68Sf8JiZaoEukeS4be2kL
+         LDDjAXB1hbVLg2We9M8gxcsetzhfN+QgqVfA6qsdf2OSCJjoTdvIBonzvjqA9vefUUkG
+         VRcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=uH94hRo9Z1yfVLBpn4JUJAIAJImyaJTPPu2cdVZG/ks=;
-        b=IW32s9WtcBtNT7yIdi4QRLx4AQcQh+OgnXPr7rZ5lHanQ3htY7HVxn039RPBQz3aRt
-         R8BN+gP/Csopeflq84R5/QaO7uwK13gb4NTsOokjtK2puTQK5WqlSnEdwCN8BczkCjJo
-         kdpR+XpV64sVDW00XD+Z9NengUM1bti+y8IQm3ahu4PefpJ3xieNyeCdlVr3yi4WEyEB
-         U3z52VmWUVYE4/thKtM60P25vAuKNd2SwvVq2kPYqTHyiMAZ/W/SoXdM5oCVHIKZI2b5
-         BwMgcldPXGHIqx8118ZUlznUpUFFJMPTsxZh03CODv0LfkQ9KrHdsvrxdeutXPqfiora
-         Amdg==
-X-Gm-Message-State: AOAM533CAFHEUymtnO/4tzWM7S1oJdX+qbKwCt0W8GglbEvx8c6mBo81
-        9DlidVjTbr1F9xU61ORcm1E=
-X-Google-Smtp-Source: ABdhPJwoVQay+asit6KTxMrSI5Jt2DFpdnbzfrY9+1q6fiqWjxB4LoLpt12U9aFFteZEkLxxYpGOOQ==
-X-Received: by 2002:a1c:1dd5:: with SMTP id d204mr628406wmd.140.1622379739271;
-        Sun, 30 May 2021 06:02:19 -0700 (PDT)
+        bh=9ABNt1Kw+BhABY1ISQv2d0BwO0y1bdJp2jDb8Wp+2K4=;
+        b=oTUps6QaT5DaCgqM96yOWwYWdOOKQniz2P/IImVomL8dN+DM5v8pPpcSTZkOlyL5HJ
+         JqEu60Q0vCfLtHCpmNsu0dbcAZfQWqwk9F2HW4G2oNvtxkh7Z4N0LlKfPii9nAr+Ilnj
+         cukOn7y/naJ333TU/4vHV9OGTP6k1lS72OF4mRCtEZOnu4iDRdmGtNOjhXAYnumLypMz
+         htthOc/kIx9VG3aLChcr0SF+8GLo/SuRiJzSRJ19nkYthU/6EWKTGljJYRTLTffJ8Jfr
+         6SBPHJVDvZ/3TZ/ZIsKEScv63ZYzpovGBOsuAXjIh8n4kv4MwKVJHjrL7Ls8pXsvx1h9
+         brJA==
+X-Gm-Message-State: AOAM531+p3yNuJWR5Kco/w+dyVIXaRYD0UZFB/Nn1z8Ge/XtqCkgV+Ss
+        nUAieBgGHxXJzNMkOwtAhJmybXRERks12Q==
+X-Google-Smtp-Source: ABdhPJyQRW8zrip1mxmyGbpSe0WVsRVkF0xHu2Ct2qipeLf2fE32nsIsruavzNm9Xn/hehFrAlC7hg==
+X-Received: by 2002:a5d:4f12:: with SMTP id c18mr116570wru.242.1622379956808;
+        Sun, 30 May 2021 06:05:56 -0700 (PDT)
 Received: from [192.168.1.201] (11.22.198.146.dyn.plus.net. [146.198.22.11])
-        by smtp.googlemail.com with ESMTPSA id u17sm13662313wrt.61.2021.05.30.06.02.18
+        by smtp.googlemail.com with ESMTPSA id z6sm12212141wml.29.2021.05.30.06.05.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 May 2021 06:02:18 -0700 (PDT)
+        Sun, 30 May 2021 06:05:56 -0700 (PDT)
 Subject: Re: [PATCH 1/2] [GSOC] ref-filter: add %(raw) atom
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+To:     ZheNing Hu <adlternative@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
@@ -70,14 +70,15 @@ References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
  <b3848f24f2d3f91fc96f20b5a08cbfbe721acbd6.1622126603.git.gitgitgadget@gmail.com>
  <60afca827a28f_265302085b@natae.notmuch>
  <13c63e79-27fd-58d5-9a4c-6b58c40ef4b8@gmail.com>
- <CAOLTT8QmByyue25YLTa2-=oQ00K5Cs_eoSD3_y6wRYYToa=oxQ@mail.gmail.com>
+ <60b25ca7a01c2_265088208af@natae.notmuch>
+ <CAOLTT8TEkrxAgHvkCVXZDQpn0xSQAe_y7uMF89Q4QWwVd7MDcA@mail.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <c56734ba-c819-ccfe-f255-6cc890f6feef@gmail.com>
-Date:   Sun, 30 May 2021 14:02:17 +0100
+Message-ID: <2c28515c-89b1-79dd-35a2-492eac6b7347@gmail.com>
+Date:   Sun, 30 May 2021 14:05:55 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.2
 MIME-Version: 1.0
-In-Reply-To: <CAOLTT8QmByyue25YLTa2-=oQ00K5Cs_eoSD3_y6wRYYToa=oxQ@mail.gmail.com>
+In-Reply-To: <CAOLTT8TEkrxAgHvkCVXZDQpn0xSQAe_y7uMF89Q4QWwVd7MDcA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -87,58 +88,89 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi ZheNing
 
-On 30/05/2021 07:26, ZheNing Hu wrote:
-> Phillip Wood <phillip.wood123@gmail.com> 于2021年5月29日周六 下午9:23写道：
+On 30/05/2021 07:29, ZheNing Hu wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> 于2021年5月29日周六 下午11:24写道：
 >>
->> On 27/05/2021 17:36, Felipe Contreras wrote:
->>> ZheNing Hu via GitGitGadget wrote:
->>> [...]
->>> All we have to do is define the end point, and then we don't need i:
+>> Phillip Wood wrote:
+>>> On 27/05/2021 17:36, Felipe Contreras wrote:
+>>>> ZheNing Hu via GitGitGadget wrote:
+>>>> [...]
+>>>>> +static int memcasecmp(const void *vs1, const void *vs2, size_t n)
+>>>>
+>>>> Why void *? We can delcare as char *.
 >>>
->>>        static int memcasecmp(const char *s1, const char *s2, size_t n)
->>>        {
->>>                const char *end = s1 + n;
->>>                for (; s1 < end; s1++, s2++) {
->>>                        int diff = tolower(*s1) - tolower(*s2);
->>>                        if (diff)
->>>                                return diff;
->>>                }
->>>                return 0;
->>>        }
->>>
->>> (and I personally prefer lower to upper)
+>>> If you look at how this function is used you'll see
+>>>        int (*cmp_fn)(const void *, const void *, size_t);
+>>>        cmp_fn = s->sort_flags & REF_SORTING_ICASE
+>>>                        ? memcasecmp : memcmp;
 >>
->> We should be using tolower() as that is what POSIX specifies for
->> strcasecmp() [1] which we are trying to emulate and there are cases[2] where
->>          (tolower(c1) == tolower(c2)) != (toupper(c1) == toupper(c2))
+>> Yeah, but why?
+>>
+>> We know we are comparing two char *. Presumably the reason is that
+>> memcmp and memcasecmp use void *, but that could be remedied with:
+>>
+>>          cmp_fn = (int (*)(const char *, const char *, size_t))memcmp;
+>>
+>> That way the same cmp_fn could be used for the two cases.
+>>
+>> Either way I don't care particularly much. It also could be possible to
+>> use void * and do the casting in tolower().
 >>
 > 
-> I don’t know if we overlooked a fact: This static `memcasecmp()`
-> is not a POSIX version. `tolower()` or `toupper()` are in git-compat-util.h,
-> sane_istest('\0', GIT_ALPHA) == false . So in `sane_case()`, whatever
-> `tolower()`, `toupper()`, they just return '\0' itself.
+> I agree with Phillip's point of view here:
+> It would be better for memcasecmp and memcmp to be consistent.
+> 
+>>>> (and I personally prefer lower to upper)
+>>>
+>>> We should be using tolower() as that is what POSIX specifies for
+>>> strcasecmp() [1] which we are trying to emulate and there are cases[2] where
+>>>        (tolower(c1) == tolower(c2)) != (toupper(c1) == toupper(c2))
+>>
+>> That's true.
+>>
+> 
+> How about something like this:
+> 
+>   static int memcasecmp(const void *vs1, const void *vs2, size_t n)
+>   {
+> -       size_t i;
+> -       const char *s1 = (const char *)vs1;
+> -       const char *s2 = (const char *)vs2;
+> -
+> -       for (i = 0; i < n; i++) {
+> -               unsigned char u1 = s1[i];
+> -               unsigned char u2 = s2[i];
+> -               int U1 = toupper (u1);
+> -               int U2 = toupper (u2);
+> -               int diff = (UCHAR_MAX <= INT_MAX ? U1 - U2
+> -                       : U1 < U2 ? -1 : U2 < U1);
+> +       const char *s1 = (const void *)vs1;
+> +       const char *s2 = (const void *)vs2;
 
-Well spotted, thanks for pointing that out. So memcasecmp() and 
-strcasecmp() may give different results. I'm not sure if that matters - 
-as I understand it the main use for the 'raw' atom is with `git cat-file 
---batch` which does not support sorting. Also although strcasecmp() uses 
-the current locale it does a byte-by-byte comparison so it is 
-effectively ASCII only for UTF-8 anyway.
+I think the new version looks fine apart from these casts. vs1 declared 
+as 'const void *' in the function signature so this cast does not do 
+anything. You could cast using (const char *) instead if you wanted but 
+that is not required as you can assign a 'const void *' to 'const 
+whatever *' without a cast.
 
 Best Wishes
 
 Phillip
 
->> Best Wishes
->>
->> Phillip
->>
->> [1] https://pubs.opengroup.org/onlinepubs/9699919799/
->> [2] https://en.wikipedia.org/wiki/Dotted_and_dotless_I#In_computing
->>
+> +       const char *end = s1 + n;
+> +
+> +       for (; s1 < end; s1++, s2++) {
+> +               int diff = tolower(*s1) - tolower(*s2);
+>                  if (diff)
+>                          return diff;
+>          }
+> }
+> 
+>> --
+>> Felipe Contreras
 > 
 > Thanks.
 > --
-> ZhenNing Hu
+> ZheNing Hu
 > 
 
