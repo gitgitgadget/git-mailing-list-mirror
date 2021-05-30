@@ -7,125 +7,100 @@ X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EF6BC47091
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 17:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B564C47091
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 18:19:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 152FF61108
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 17:30:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E67E761205
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 18:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229739AbhE3RcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 13:32:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48810 "EHLO
+        id S229820AbhE3SUr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 14:20:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbhE3Rb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 13:31:59 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3694C061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 10:30:20 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id z4so4031948plg.8
-        for <git@vger.kernel.org>; Sun, 30 May 2021 10:30:20 -0700 (PDT)
+        with ESMTP id S229712AbhE3SUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 14:20:46 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B9B2C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 11:19:07 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id qq22so4888067ejb.9
+        for <git@vger.kernel.org>; Sun, 30 May 2021 11:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d/jHFwnk3Tcmi+qAdkx9MJK9aoqyaLKDvsN7F0+fpM4=;
-        b=eJX16v96ngMp/52gu91LSQuY3V0PsPSgHx5Pslb6VM4a4UlcBYiZppyj5SySykdiEj
-         oDAiNZt8vj/HuOrOk5qoEOG7344Z1qeGk7L03khiVY3/FAtbqvgpvcAYPjG+ITJlAQom
-         osYptbcWN+kypd/z+JfaTvdoDafkptSXZvpQyCYJsk3r6tFLadsRdU7Lm+Uhj/nq/Tkd
-         dLdi1S5AdJ0MOH5I3X6FKhDZ0kIJXYc++ZkYqBxST3Mxgor46fYv5fu1HluSoSlMAuTx
-         djHKohlvFlCUFY/7RPh/Q204kOY7lRG+JZdaiBwBS5e3rnoRLVjnbF9A01LeJtvoakKR
-         tpiA==
+        bh=fgQHN8Pd9InC/XgrQ81/LAtUVATd2OQLaYn6dkCJVZ8=;
+        b=C56mKbshf5a4TLHVxILDqUpIkJHai0yqRh11P/AN6Y9GmEGn0m9NFEYO30A1yGTQ/M
+         SJOVQrjZFguWC41CS7IGHvPgUnLdUGR83DfCsACySp4iv7Poe59e21q6pu/ywENqlQuX
+         JEXUbKNtwZl2byKvtcNZohIgPOu6FAQ+cMWztRnSVpPGyxyZ9maxqKjArsx/EDZrZqFY
+         pcxRkl0/ywN+C9Cx27hy1YzOv76McyQz67k28J/W5B8vs2tQ9s0S/FfBx3dQgMQr49uh
+         PIOJuD0NVKMN6B2iynpQTYWjDXqvWKtqV4oCh+nXRZ69YnZcHxQZCMe9B8+x9UiZ+cWk
+         TYWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=d/jHFwnk3Tcmi+qAdkx9MJK9aoqyaLKDvsN7F0+fpM4=;
-        b=Q3IkVjOwErCFH8Q4irvG91izQbH54XgrLa7jzHJdO/bfYrke2M5ZVjtKzMmYXKZZeF
-         rfLSRA4Q/FZ4QiynqEGQ8w3Z5vvE/uxfo3uG9ekJC3mF3ghk/BweJ6uMclQs0AAYX4ON
-         0fA38KEhgm5ZaqFIEWlMVgpwAHf2Bt+EaRSnp7EyG85oqrt1AP7nt6kT6AUcku5yonXT
-         a2kI9oU3aZLtaMsnflrVTB/yCDBJ0mAb81Kr83yjzi0RgVZEkoV22xoz/NacZtVLEL7y
-         Modj9P4EtEFsCEfOCgWVPdDt9trPWhvC9/4kUBmnWJS3KPvuCEE66ZaqwBAFrzdtBvUZ
-         QARw==
-X-Gm-Message-State: AOAM532oHwhp614RTu/ncwlNK7WUQVb36+i9nLOhNpksAkNF1UhbOgfT
-        gddiGnrGyhQUo0+iFrClk5I=
-X-Google-Smtp-Source: ABdhPJxuKzwPjjX0/OJy5O+cClIJ8omc/jSYJ16FKB5sCzQ7IRfxxKKrBv1YjdiRSehdvnv/2lCFJw==
-X-Received: by 2002:a17:902:b713:b029:fd:8738:63cb with SMTP id d19-20020a170902b713b02900fd873863cbmr16748933pls.28.1622395820089;
-        Sun, 30 May 2021 10:30:20 -0700 (PDT)
-Received: from [192.168.208.38] ([49.205.84.121])
-        by smtp.gmail.com with ESMTPSA id z22sm9400750pfa.157.2021.05.30.10.30.18
+        bh=fgQHN8Pd9InC/XgrQ81/LAtUVATd2OQLaYn6dkCJVZ8=;
+        b=GngmS0VFCRNoA6awU6vi8gk3pXgeFMI2GI4YV/ouAm4PKzimUt8E2UYEkbfsBIgBTg
+         2V+VRMxUL8WUuFkfCUMhYf2Oq506T3adleAi/qLvUjCbXOyIlWBPa8HSs4Jtb3vOGHKm
+         7MXHPJnYlBGMnTZfNKjQHPPd1lR5/xCl9XSAdJWfcvQXjozBz30US6cjqlSY4twKgWVt
+         ZMS1iGs7NnGm886fr8VfZJi4EU+fQvZoWkGd77TbShxMUnqwFGt1C0R1QvJoAAzm8eEK
+         VNY/zN2s/tXUqJ4i88dcZ04xKJSg5NzfKBPiOTMR1hpp5Kt5WL5QZUUTxT3uFaqUyT17
+         lbhw==
+X-Gm-Message-State: AOAM533xxKWmu7SWRyCZevfo1YmGKuIBpR9Z8f2rgliosCTow066rfpn
+        Pc72F0/H+S6cZy9S/eYZC7s=
+X-Google-Smtp-Source: ABdhPJzJBXQDmmqE07It9jtVW592a6Why1oxwX3XLuYaMXwXboF5ZRxW2QGv9wQDYfZCQ0GxnoqnAw==
+X-Received: by 2002:a17:906:a017:: with SMTP id p23mr19609369ejy.460.1622398745904;
+        Sun, 30 May 2021 11:19:05 -0700 (PDT)
+Received: from ?IPv6:2a02:8388:e002:8cf0:25d1:fff3:8887:500f? (2a02-8388-e002-8cf0-25d1-fff3-8887-500f.cable.dynamic.v6.surfer.at. [2a02:8388:e002:8cf0:25d1:fff3:8887:500f])
+        by smtp.googlemail.com with ESMTPSA id c14sm477489ejb.2.2021.05.30.11.19.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 May 2021 10:30:19 -0700 (PDT)
-Subject: Re: [GSoC] My Git Dev Blog
-To:     Atharva Raykar <raykar.ath@gmail.com>, git <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-References: <35493133-2504-4CAE-B700-79EAB990DD17@gmail.com>
- <B932C097-1B91-4D59-9CC7-1B91C86FA1A1@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <4d51b7bf-966c-c3fc-ce1a-62c0db4af29a@gmail.com>
-Date:   Sun, 30 May 2021 23:00:10 +0530
+        Sun, 30 May 2021 11:19:05 -0700 (PDT)
+Subject: Re: [PATCH v2 6/6] doc: push: explain default=simple correctly
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramkumar Ramachandra <r@artagnon.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+ <20210529071115.1908310-7-felipe.contreras@gmail.com>
+From:   Mathias Kunter <mathiaskunter@gmail.com>
+Message-ID: <acfafe6e-b0f3-ba2e-71f0-9bcc09b9d612@gmail.com>
+Date:   Sun, 30 May 2021 20:19:03 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <B932C097-1B91-4D59-9CC7-1B91C86FA1A1@gmail.com>
+In-Reply-To: <20210529071115.1908310-7-felipe.contreras@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Language: de-AT
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Atharva,
-
-On 30/05/21 12:37 pm, Atharva Raykar wrote:
-> Hi,
+Am 29.05.21 um 09:11 schrieb Felipe Contreras:
+> Now that the code has been simplified and it's clear what it's
+> actually doing, update the documentation to reflect that.
 > 
-> On 22-May-2021, at 22:12, Atharva Raykar <raykar.ath@gmail.com> wrote:
->>
->> [...]
->> I will update this thread every week when I make a new post.
+> Namely; the simple mode only barfs when working on a centralized
+> workflow, and there's no configured upstream branch with the same name.
 > 
-> A new blog post is out at: http://atharvaraykar.me/gitnotes/week2
+> [...]
 > 
+> +* `simple` - pushes the current branch with the same name on the remote.
+> +If you are working on a centralized workflow (pushing to the same repository you
+> +pull from, which is typically `origin`), then you need to configure an upstream
+> +branch with the same name.
 
-Nice post!
+I'd like to remark that I personally find the following description of 
+`push.default=simple`, taken from the git push man page [1], easier to 
+understand:
 
-Just one suggestion. While reading, I felt that it would've been
-nice if it had a few links. For instance,
+> The current branch is pushed to the corresponding upstream branch, but
+> as a safety measure, the push is aborted if the upstream branch does not
+> have the same name as the local one.
 
-> The patch that I ended up sending this week is heavily based on
-> the work of two generations of GSoC programmers who struggled
- > over this problem.
-
-The text above could've had a link somewhere to the patch you sent
-to the mailing list:
-
-https://public-inbox.org/git/20210528081224.69163-1-raykar.ath@gmail.com/
-
-> I studied Shourya’s stalled patch, parts of which had already
-> been reviewed.
-
-... and the above text could've had a link to Shourya's patch
-series you mention:
-
-https://public-inbox.org/git/20201214231939.644175-1-periperidip@gmail.com/
-
-> In the spirit of Git being “the stupid content tracker”, I have
-> decided to actually live up to that phrase and keep a track of
-> my stupid moments in this section of my weekly reports, in the
-> hopes that there is something here to learn from.
-
-Good initiative. It indeed might turn out to be very helpful.
-I won't surprised if it even turns out to help you, sometime in the
-future ;-)
-
-> For whatever reason, I thought of the most convoluted explanations,
-> not realising that they actually don’t make any sense. Thoughts like:
-> “Is the memory buffer not having tab separated tokens? Are they
-> separated by some special whitespace character??”
-
-I could totally feel you here. Things would get better over time.
-
-Hope this helps,
-Sivaraam
+[1] https://git-scm.com/docs/git-push#_description
