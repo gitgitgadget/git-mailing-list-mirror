@@ -2,74 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEBECC47091
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E886DC47092
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:58:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89F8560C41
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:56:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B184E610A1
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbhE3V5u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 17:57:50 -0400
-Received: from shell1.rawbw.com ([198.144.192.42]:43907 "EHLO shell1.rawbw.com"
+        id S229891AbhE3V75 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 17:59:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41578 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229846AbhE3V5t (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 17:57:49 -0400
-Received: from yv.noip.me (c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76])
-        (authenticated bits=0)
-        by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 14ULu0Db091908
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Sun, 30 May 2021 14:56:00 -0700 (PDT)
-        (envelope-from yuri@rawbw.com)
-X-Authentication-Warning: shell1.rawbw.com: Host c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76] claimed to be yv.noip.me
-Subject: Re: [BUG REPORT] File names that contain UTF8 characters are
- unnecessarily escaped in 'git status .' messages
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        id S229846AbhE3V75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 17:59:57 -0400
+Received: (qmail 19040 invoked by uid 109); 30 May 2021 21:58:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 30 May 2021 21:58:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22267 invoked by uid 111); 30 May 2021 21:58:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 30 May 2021 17:58:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 30 May 2021 17:58:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Phillip Susi <phill@thesusis.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <f7e2e271-dcec-2886-f33e-62778a429850@rawbw.com>
- <xmqq35u9ax5j.fsf@gitster.g> <6318ccec-ec96-91a8-fd65-85daf4a9a22b@rawbw.com>
- <20210527045628.uvesihyhtqrfyfae@tb-raspi4>
- <YK+mWZP+sl3zXECx@coredump.intra.peff.net>
- <4dd22f16-72f0-a28a-8be0-aec622acf0d3@rawbw.com>
- <50e2780a-21f3-499f-7960-76bf24f550f0@gmail.com>
- <6fef4b1e-1ec7-b697-c311-59caf6408b29@rawbw.com>
- <20210529092752.kifzqt3haddzgsob@tb-raspi4>
- <YLQHPu0bIy4qHEWP@coredump.intra.peff.net>
-From:   Yuri <yuri@rawbw.com>
-Message-ID: <481fbc88-3e7d-6b00-0997-1a80b87a637d@rawbw.com>
-Date:   Sun, 30 May 2021 14:55:59 -0700
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Subject: Re: CoC, inclusivity etc. (was "Re: [...] systemd timers on Linux")
+Message-ID: <YLQKd5wzN5iESxvQ@coredump.intra.peff.net>
+References: <44d937a0-e876-e185-f409-a4fd61eae580@gmail.com>
+ <nycvar.QRO.7.76.6.2105220856320.57@tvgsbejvaqbjf.bet>
+ <60aaa09aebce4_454920811@natae.notmuch>
+ <YKrk4dEjEm6+48ji@camp.crustytoothpaste.net>
+ <87wnrooa17.fsf@evledraar.gmail.com>
+ <xmqqim38jfja.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2105250327550.57@tvgsbejvaqbjf.bet>
+ <87mtshn3vj.fsf@evledraar.gmail.com>
+ <YK+rmNWh+jPais9P@coredump.intra.peff.net>
+ <87h7imaowt.fsf@vps.thesusis.net>
 MIME-Version: 1.0
-In-Reply-To: <YLQHPu0bIy4qHEWP@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87h7imaowt.fsf@vps.thesusis.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5/30/21 2:44 PM, Jeff King wrote:
-> Yeah, I'm not sure how such a check would be done. On most Linux systems
-> I've seen, $LANG will mention "en_US.UTF-8" or similar. But I've no idea
-> how portable that convention is, not to mention that people may have
-> more complex setups anyway (e.g., not setting $LANG but setting some of
-> LC_*).
+On Fri, May 28, 2021 at 10:44:25AM -0400, Phillip Susi wrote:
 
+> >   - temper small corrections with positive feedback. Especially for new
+> >     contributors, being told explicitly "yes, what you're trying to do
+> >     here overall is welcome, and it all looks good except for this..."
+> >     is much more encouraging than "this part is wrong". In the latter,
+> >     they're left to guess if anybody even values the rest of the work at
+> >     all.
+> 
+> When I see only a minor nit like that I assume that by default, that
+> means there are no more serious issues, fix the typo, and resubmit.  If
+> a new contributor thinks that means they aren't welcome then I think
+> they have an expectation mismatch.
 
-When 'locale charmap' prints 'UTF-8' the terminal can be assumed to be 
-able to accept UTF-8 characters.
+Sure, that may be your intent as a reviewer. My point was that the
+recipient of the review does not always know that. Helping them
+understand those expectations is part of welcoming them into the
+community.
 
-'locale charmap', I think, determines this only based on environment 
-variables.
+And even as somebody who has been part of the community for a long time
+and understands that, it is still comforting to get actual positive
+feedback, rather than an assumed "if I did not complain, it is OK".
 
+> >   - likewise, I think it helps to give feedback on expectations for the
+> >     process. Saying explicitly "this looks good; I think with this style
+> >     change, it would be ready to get picked up" helps them understand
+> >     that the fix will get them across the finish line (as opposed to
+> >     just getting another round of fix requests).
+> 
+> That would be nice, but such comments can really only come from a
+> maintainer that plans on pushing the patch.  Most comments come from
+> bystanders and so nessesarily only consist of pointing out flaws, and
+> don't really need to be bloated with a bunch of fluff.  I prefer short,
+> and to the point communication.
 
+Yes, I hesitated a little bit on this advice for that reason: it may be
+even worse to mislead people about the state of a patch series, if you
+the reviewer and the maintainer do not agree. IMHO it is still good for
+reviewers to try to help manage newcomers through the process, but it
+does make sense for them to be careful not to over-promise.
 
-Yuri
+> > I would even extend some of those into the code itself. Obviously we
+> > don't want to lower the bar and take incorrect code, or even typos in
+> > error messages. But I think we could stand to relax sometimes on issues
+> > of style or "I would do it like this" (and at the very least, the
+> > "temper small corrections" advice may apply).
+> 
+> Isn't saying "I would do it like this" already a tempering statement?  I
+> take that as meaning there isn't anything neccesarily wrong with what
+> you did, but you might consider this advice.
 
+Here I more meant cases where the two approaches have about the same
+value. If your "I would do it like this" can be backed up with reasons
+why it might be better (more efficient, more maintainable, and so on),
+then that's probably helpful review to give. If it can't, then I'd
+question whether it is worth the time to even bring up.
+
+There's a big gray area, of course. Saying "it would be more readable
+like this..." is sometimes a nuisance, and sometimes great advice. One
+extra complication is that new contributors are often unsure how strong
+the request is (e.g., if they disagree, do they _need_ to change it for
+the patch to be accepted, or is it OK). I'll often qualify comments with
+an explicit "I'm OK with doing it this way, but in case you really like this
+other direction, I thought I'd mention it...".
+
+Another complication with all of this advice is that sometimes new
+contributors are in a mentoring relationship with one or more reviewers
+(e.g., GSoC, Outreachy, or just people who have asked for help). And
+there the cost/benefit tradeoff is different between frustrating a new
+contributor and teaching them our style, norms, etc.
+
+-Peff
