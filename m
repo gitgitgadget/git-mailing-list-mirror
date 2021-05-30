@@ -2,116 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 346F6C47091
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8423C47092
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:28:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03B1061108
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:28:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8461D60240
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbhE3Q3m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 12:29:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35102 "EHLO
+        id S229805AbhE3QaC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 12:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbhE3Q3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 12:29:41 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91B63C061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 09:28:02 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id z3so9901079oib.5
-        for <git@vger.kernel.org>; Sun, 30 May 2021 09:28:02 -0700 (PDT)
+        with ESMTP id S229671AbhE3QaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 12:30:01 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764A5C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 09:28:22 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id j9so10632593edt.6
+        for <git@vger.kernel.org>; Sun, 30 May 2021 09:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=JK3Yf7MzVI2ByqmZWRLfFxmgjmEQYdgAPGaPJBmTc2o=;
-        b=VOkOYt+jgJEu/Zo4O4qO/vGnd07ZsQ6NC2WtCsnaz7L7UCBz0tJTa5a2E9IwGAwj9p
-         ltd9zwbj16198BkpwIPIzaSbkSmNetp79u6GMrNiUHQC3gdW/v3lu6E/kh4aQjoruYFM
-         eyWHbrg44xeJiSRvnVlNH0HwM1ofLOgEVyhevSOxLsWRyVLmeBxUIE644Tb3c5SlHThQ
-         sGK/xwPL4gn4w65z1Aa4yelj8h7JlKu8PO9KbCKolS2s2IJmy8jn+LSc6WPCvpzBbcms
-         tiy7ZPaNy78EYo5czrenur5hZNze+XzvJXBXdO6zOt5vUpCaG6dPHjrYXHCAlGt41Ups
-         s2Tg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SsRlDif4invu69UQvoiolhTawil8aoWiOuy7ngskl9o=;
+        b=IzUibS7vGL38Oy4HR+Z3UbmvGjpZomwPvA35tECO1qDWhl22E66YPtEFOl96nJY8Po
+         07diXYSK8AomhuK2s++y/t7S7b43p5jmVQmPBkZONYVuA53SckTRt+TLojPesZXECYJD
+         O11AHFFpGspe8Gxk9C7XKS3YTfKJv3bIk9WZ03pmMI3/k5H8xi9wMzkuq7a8x9W+oAf4
+         VoLnhoPyg617lKjXTVqh97O8rAvVCwgyIkuK/p86elBOxRfXw3+//SjHrWhwxG0G2nHZ
+         ZqgsnbBYw4e7+T2tWE3qvluDE98RzieYt1iTqEomLJKsimgVEoUmwHZXxFCiXBW9k8xn
+         OwMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=JK3Yf7MzVI2ByqmZWRLfFxmgjmEQYdgAPGaPJBmTc2o=;
-        b=PIfzRz+wYMgcR/Z84x8L6IhiUJrnK8xcqCgCTGPBPfKSAAuFtsb61ie/Pc9dhYmeRL
-         pq5ZiEExcKkUAJ9JQzYmk+kae3MtFbEuDYvVksohxO/I549FciqOnvN2Lb0GD2j9Hf7X
-         2zq7SQdlpG6LFV5NHxOoE3asBQaaB3HG5vKcWp61CGtT5oZH3QgdvspD2Jx2dvTMerjy
-         nS3we5LE1KhujkZCI+HPXgJw63CTbzTVmZ65NMkFMWijBPOFY4Ntjx/OSGxaf46x9bz9
-         LNPhQMHE8YkxBOZlItFgmnLQ6CmJYke9kfWTnWber8uJxW831fUE8Cb27BtBp54DKh5y
-         1FqA==
-X-Gm-Message-State: AOAM530kQ8UpCbz2RdzeqM9UId5n1XucqHjC0Z9GJ4fpsKV7ifUDvV+e
-        L9JqCLpYpjNFuK9nKLCzOp8=
-X-Google-Smtp-Source: ABdhPJwjkfgN6tv0JXbQjlGl0bP95NNGEN5HNNlr75yUzaHp3WdpWiNr+oDh6LiBG9OWRKpnCVCw5Q==
-X-Received: by 2002:a05:6808:10d:: with SMTP id b13mr1611476oie.15.1622392081921;
-        Sun, 30 May 2021 09:28:01 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id f2sm2494476otp.77.2021.05.30.09.28.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 May 2021 09:28:01 -0700 (PDT)
-Date:   Sun, 30 May 2021 11:27:59 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Mathias Kunter <mathiaskunter@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramkumar Ramachandra <r@artagnon.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <60b3bd0fb6d4c_b937208dc@natae.notmuch>
-In-Reply-To: <ad0751c3-654f-04d4-5ad1-c0aea91b46b8@iee.email>
-References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
- <ad0751c3-654f-04d4-5ad1-c0aea91b46b8@iee.email>
-Subject: Re: [PATCH v2 0/6] Unconvolutize push.default=simple
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SsRlDif4invu69UQvoiolhTawil8aoWiOuy7ngskl9o=;
+        b=DRwReVhAw9vUTXRfK9FVOvvilkk6X6TwkniliTVddSYfhtAF7YpNoZMOH4BLKc9VOf
+         1Kij9lI0F07z9C+dMz9vRQBwEnR690/P8SeiNwwfdYit1t+a14HXdzzBqz42syRVADs5
+         3q2eZFtCMhk6gh1LEUf+qLpN/8rlvCWd5GrTdOXOS0CXdfiIGMp0NvinQQp60jOBPBH/
+         jAl3zopY2jlWgxYBPE33rBhs9vvilo8RQ6Mfjr1H9Zq/0YKIoIwgX2Sql0PYk6R2lVJK
+         7M2Ru3lsExdISKdd3DrbwrIlzoKmxN4O/f7qgrsEx6H4Ovm6pQ0eZAlTXaP40wzAj24Q
+         KaQQ==
+X-Gm-Message-State: AOAM531wnJiTSaOO1lxi7aZbgrGQPdp1YyF3KxPD4ATZbWyZeuM+FKiv
+        CJxIWzIM+3fyrojCXoo+5NRSe5pOP/Y=
+X-Google-Smtp-Source: ABdhPJxFs7sbIt7JhLpTrv+qJn90C+p3QODIky9rJE+nBiRy17OPSTESfP+TLfF/WzcM+a9/ysHAqA==
+X-Received: by 2002:a05:6402:176b:: with SMTP id da11mr21792222edb.234.1622392101074;
+        Sun, 30 May 2021 09:28:21 -0700 (PDT)
+Received: from ?IPv6:2a02:8388:e002:8cf0:25d1:fff3:8887:500f? (2a02-8388-e002-8cf0-25d1-fff3-8887-500f.cable.dynamic.v6.surfer.at. [2a02:8388:e002:8cf0:25d1:fff3:8887:500f])
+        by smtp.googlemail.com with ESMTPSA id t9sm5882474edf.70.2021.05.30.09.28.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 May 2021 09:28:20 -0700 (PDT)
+Subject: Re: git push default doesn't make sense
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <3b9bc214-a30a-ba49-af96-7eeaf37b7bbd@gmail.com>
+ <fcf30899-8e64-5417-f478-14d6aca72544@gmail.com>
+ <CABPp-BEeqqGwN3=MbWCYnsyryBm3WoaX5GZyXTWy18UiYUT4zg@mail.gmail.com>
+ <f9f38d42-2b93-0d3b-798b-4c6f44eb111d@gmail.com>
+ <287483ba-d682-6d04-23fa-22c33ab70376@gmail.com>
+ <60b15cd2c4136_2183bc20893@natae.notmuch>
+From:   Mathias Kunter <mathiaskunter@gmail.com>
+Message-ID: <d9e212fa-4c6a-f6ce-eab0-8073a65e96fd@gmail.com>
+Date:   Sun, 30 May 2021 18:28:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <60b15cd2c4136_2183bc20893@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: de-AT
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley wrote:
-> On 29/05/2021 08:11, Felipe Contreras wrote:
-> > Tired of jumping through hoops trying to understand what the "simple"=
+Am 28.05.21 um 23:12 schrieb Felipe Contreras:
 
-> > mode does, I decided to reorganize it up for good so it's crystal
-> > clear.
-> >
-> > There are no functional changes.
-> >
-> > Basically the simple mode pushes the current branch with the same nam=
-e
-> > on the remote.
-> >
-> > Except... when there's no upstream branch configured with the same na=
-me.
-> >
-> > Now the code and the documentation are clear.
-> =
+> Cloning automatically sets up an upstream branch for "master", and
+> therore it passes the safety check of `push.default=simple`, and that is
+> much more dangerous than pushing any other branch.
+> 
+> Why do we barf with "fix-1", but not "master"? Doesn't make sense.
+> 
+> This is what we want:
+> 
+> 	if (centralized &&
+> 		(branch->merge_nr && branch->merge && branch->remote_name))
+> 	{
+> 		if (branch->merge_nr != 1)
+> 			die(_("The current branch %s has multiple upstream branches, "
+> 			    "refusing to push."), branch->name);
+> 
+> 		/* Additional safety */
+> 		if (strcmp(branch->refname, branch->merge[0]->src))
+> 			die_push_simple(branch, remote);
+> 	}
+> 	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
+> 
+> 
+> In other words: `simple` should be the same as `current`, except when
+> there's an upstream branch configured *and* the destination branch has a
+> different name.
 
-> Not your problem, but I do note, as a general point, that we don't
-> explain the different variants of Triangular workflow anywhere [just tw=
-o
-> mentions in gitrevisions.txt] (e.g. patch flow versus server-side
-> merges, etc.).=C2=A0
+I guess so. In particular, as a simple git user, I'd expect the 
+following to work out of the box, without having to manually adjust the 
+configuration settings:
 
-All my documentation improvements get stuck in tar, so somebody else
-would need to do that.
+   git clone ssh://originUrl .
+   git checkout -b myBranch
+   git push           # expected push to origin/myBranch, but fails
+   git push origin    # expected push to origin/myBranch, but fails
+   git remote add myRemote ssh://myRemoteUrl
+   git push myRemote  # expected push to myRemote/myBranch - works
 
-If and when they do, it will become clear the big pit in functionality
-there is.
-
--- =
-
-Felipe Contreras=
+Will your provided patch fix these failing push commands?
