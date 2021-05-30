@@ -7,76 +7,70 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 526DFC47092
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38F41C47091
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:22:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F3DD611BD
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:07:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 123BC611BD
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:22:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbhE3QJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 12:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
+        id S229800AbhE3QY0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 12:24:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbhE3QJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 12:09:19 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC61C061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 09:07:40 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so8738968otl.3
-        for <git@vger.kernel.org>; Sun, 30 May 2021 09:07:40 -0700 (PDT)
+        with ESMTP id S229683AbhE3QYZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 12:24:25 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB115C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 09:22:46 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so8763947otp.4
+        for <git@vger.kernel.org>; Sun, 30 May 2021 09:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=nv0oYB2Ma21k7vvEqMvoj52IJcYPq8Q7jFndKFf+SM8=;
-        b=sU4eUDVWG952ahmPQzmPmG1gDCTEL3NX5ipwzT2cqAuj8molAOyrpQqRTBW+zou10E
-         coV1kYeavFWwUFNMYqxAMLECYdQTIVU/g3zzG4bTctnloEKNWEpalp87xGlQLtaQQoM9
-         cCTx39uPo2bRI94LZErgXf78htUeVjOumqPCJCWu4O1doAXsUF8pgXTP/qJ4liFscjXx
-         VMH7lbuPY1aNMl8iWwArcvgn+z+3adm8Na6ayYcg2tGG9vyL7HsH1Mhx1wbMa62ph3LF
-         3uvlRtLzPs6wHrE1F1OUUduC/X3HK+4YmIzDSO1XOY4UPYRoF2CtVxswjDUtclHbHJ+/
-         KUkw==
+        bh=vd5sNN5dpnQ9D657Kxv7q83i30x+y+PGjJ4POHs0EUM=;
+        b=RH1n3Md3FHGoL58Su1183XQ+SPPFHyHMGLj+IVPORh4V5z2Muo1p4OCU6IZ0KpDvUA
+         tBpAU0EJ6R4yIoL3t7c3DVspRB0VR/CPq0vUOF8mcwWDBVtR8UYZF7Wb4I/k2EwdIrmE
+         i3ULQbC2Y+i0yVJH3+HW+kWZex1Zh0DLxiBl04g9lMTkPKmaC9INiL0iZePO8DaBv+gA
+         Z3y46hyffLDoX44OoG4rbiZsIouoWDSw+8F7KSRvkiUhStU+IQ/FaEA3CNw9Ldt32gIp
+         +gfQ+lI4SAPyW5Ar3XR2/lIyz1KevilBojakLMrL+Pl7QFgCH5+8kgoogWGiMXRv2c/A
+         9XCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=nv0oYB2Ma21k7vvEqMvoj52IJcYPq8Q7jFndKFf+SM8=;
-        b=h/fV/1lvS1QyPit+uZR1sJvZi54u+PXd+ywX8JQursIapKrNDz5Xri5MAC6gQtsx5r
-         5o46XGkgn3d59fNhIOZhIAvdfvdQXyb77jIeoR3+HHjCU/Sq3J2QVdTxzCGmy7QyrOWB
-         i7IaGFxe7Zr3ebW02sj1xa0/LVTzdTyM8h2UAETXvqn/uZtB84SQIVZ9vB+Ejnsh7u4+
-         x81zqHJZUmd9TFHJOL6lI+MJqQ8bOfikFSN/kB/m0gDnasSixym3yunSRzOGDUU82O1w
-         jjMzH9sOJclcQ36bncXCOgFGjjesPPEoia1/wHKTYuPs3w9U5EujBPlEcJfTrcZwnoll
-         7FJQ==
-X-Gm-Message-State: AOAM531rzyVJY7ETpUnqbx+HMJ5y8AZqMaFKpw9AR95kTyVFltKONkfk
-        JEC/xHAbol/hg7cnOervlPg=
-X-Google-Smtp-Source: ABdhPJwSTRbmeYVQU65ogPDEGAco1rd3JUBDMJFZGlvq0vOHqbmUV5qvP5S0bBqNlsOz50C91f1ixw==
-X-Received: by 2002:a05:6830:1556:: with SMTP id l22mr14201145otp.34.1622390859299;
-        Sun, 30 May 2021 09:07:39 -0700 (PDT)
+        bh=vd5sNN5dpnQ9D657Kxv7q83i30x+y+PGjJ4POHs0EUM=;
+        b=YJRhVc1zch+o/2qnsWUmh8jDRnwQLFQomO/CdvEMJyARxPEoiS/NlWJwkeiJeSGdCU
+         EeDBmzpKzSZw0TU2bFVqYn8t2ZH4BU9rSjee+Ca9uYwvTsRr5sDSWIiFj1sdjAOD8rdM
+         AwlgpsrkO90nOxRDPN5QVhG5jEyMJbL8L4gTO/s+5YVfauV9+Gryct0ncU2/v7IKZzhh
+         G9z61uLdMD8ne/NrPc2jzP3YhEqGv5E1XelxQB28cpjIv2nTFCKj9X9Zlxm9U52QmIYM
+         1MYX38ZfDUktlwnvrgUCyT8h9uBZpuWj4fjErrt/5GTpzsLLeT8FIu1Bf+adRHsELL+V
+         GyHw==
+X-Gm-Message-State: AOAM531qzTcUAvPp3bPFKujEAG0iLOoYKpt+XI/yaQfprWu63XWCaO6+
+        QTNUNG2nX3li1Grv3xLOYsdHEQI87G25dw==
+X-Google-Smtp-Source: ABdhPJygULq0x6jnMIsOstIRykPDnXkEd1QcENo5JlIUR9W1bqK6vI99Ity3SP9R6mIuayLBX7jV4w==
+X-Received: by 2002:a9d:7410:: with SMTP id n16mr14217055otk.262.1622391766141;
+        Sun, 30 May 2021 09:22:46 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id t16sm2272204oie.42.2021.05.30.09.07.38
+        by smtp.gmail.com with ESMTPSA id x9sm2389392oig.18.2021.05.30.09.22.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 May 2021 09:07:38 -0700 (PDT)
-Date:   Sun, 30 May 2021 11:07:37 -0500
+        Sun, 30 May 2021 09:22:45 -0700 (PDT)
+Date:   Sun, 30 May 2021 11:22:44 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Gregory Anders <greg@gpanders.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>
-Message-ID: <60b3b84967a62_b937208c@natae.notmuch>
-In-Reply-To: <877djg313c.fsf@evledraar.gmail.com>
-References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
- <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
- <YKYdeom6SgAHqojm@coredump.intra.peff.net>
- <xmqqv97drmge.fsf@gitster.g>
- <875yzcpo52.fsf@evledraar.gmail.com>
- <60b11101e5288_50514208b4@natae.notmuch>
- <87czta2b47.fsf@evledraar.gmail.com>
- <60b2557b5c7da_2650882084e@natae.notmuch>
- <877djg313c.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH v2 00/10] send-email: various optimizations to speed up by
- >2x
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Mathias Kunter <mathiaskunter@gmail.com>,
+        Ramkumar Ramachandra <r@artagnon.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60b3bbd48b00b_b937208d7@natae.notmuch>
+In-Reply-To: <87a6oc318s.fsf@evledraar.gmail.com>
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+ <87a6oc318s.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v2 0/6] Unconvolutize push.default=simple
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -91,68 +85,52 @@ X-Mailing-List: git@vger.kernel.org
 > On Sat, May 29 2021, Felipe Contreras wrote:
 > =
 
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> =
+> > Tired of jumping through hoops trying to understand what the "simple"=
 
-> >> On Fri, May 28 2021, Felipe Contreras wrote:
-> >> =
-
-> >> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> >> Returning a flattened list is idiomatic in Perl, it means that a =
-caller
-> >> >> can do any of:
-> >> >> =
-
-> >> >>     # I only care about the last value for a key, or only about
-> >> >>     # existence checks
-> >> >>     my %hash =3D func();
-> >> >
-> >> > I was staying on the sideline because I don't know what's idiomati=
-c in
-> >> > Perl, but Perl and Ruby share a lot in common (one could say Perl =
-is the
-> >> > grandfather of Ruby), and I do know very well what's idiomatic in =
-Ruby.
-> >> >
-> >> > In perl you can do $ENV{'USER'}, and:
-> >> >
-> >> >   while (my ($k, $v) =3D each %ENV) {
-> >> >     print "$k =3D $v\n";
-> >> >   }
-> >> >
-> >> > Obviously it's idiomatic to use hashes this way [1].
-> >> =
-
-> >> For what it's worth idiomatic/good idea and "has an example in the p=
-erl
-> >> documentation" unfortunately aren't always aligned. A lot of experie=
-nced
-> >> Perl programmers avoid each() like the plague:
-> >> http://blogs.perl.org/users/rurban/2014/04/do-not-use-each.html
-> >
-> > Perl is an old language, and each() was introduced in 2010, it's
-> > expected that some old-timers would not adapt to the new idioms.
+> > mode does, I decided to reorganize it up for good so it's crystal
+> > clear.
 > =
 
-> each() has been in Perl since 1987 with perl v1.0, you must be confusin=
-g
-> it with something else.
+> I'd find the end-state even more readable if this "triangular" wasn't
+> passed as a parameter but we just did the top-level dispatch based on
+> that, i.e. "simple" is really internally SIMPLE_SIMPLE and
+> SIMPLE_TRIANGULAR, why not dispatch on that? Our internal enum doesn't
+> need to 1=3D1 map to the config setting.
 
-I see. I read the each() documentation [1] too hastily:
+Yes, but where are you going to make sure you are in SIMPLE, and not in
+CURRENT? Surely you are not suggesting to modify
+git_default_push_config(), which is pretty straightforward. So we would
+need yet another enum.
 
-  When called on a hash in list context, returns a 2-element list
-  consisting of the key and value for the next element of a hash. In
-  Perl 5.12 and later only...
+I don't think there's a need for that, as you can see on the patch
+series on top of this, there's not even a need to dispatch anything.
 
-> In any case, the recommendation against it has nothing to do with its
-> age, it's that similar to strtok() it has global state.
+> Part of that's that I prefer reading code in the current "master" which=
 
-Yes, that's what I understood from the blog post you shared, but at
-least personally I never assume I can modify a hash like that. I see why
-some people need to be careful with it, but "avoid it like the plague"
-seems way too defensive programming to me.
+> is if -> die -> most of the rest of function, v.s. your end-state of if=
 
-[1] https://perldoc.perl.org/functions/each
+> -> stuff -> else -> most of the function being indented to that "else".=
+
+
+I prefer that as well, but unfortunately in this case we need to do
+something after the checks to die(). I could add a goto, but for just
+one conditional seems like it's not worth it.
+
+Either way this is a temporary thing, because in the next patch series
+the code becomes pretty quickly:
+
+  if (!triangular && strcmp(branch->refname, get_upstream_ref(branch, rem=
+ote->name)))
+          die_push_simple(branch, remote);
+
+And then:
+
+  if (triangular)
+    break;
+  if (strcmp(branch->refname, get_upstream_ref(branch, remote->name)))
+    die_push_simple(branch, remote);
+
+Cheers.
 
 -- =
 
