@@ -2,116 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC2C9C47091
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 11:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AEF7C47089
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 11:33:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8068261059
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 11:01:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A398610A0
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 11:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbhE3LCi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 07:02:38 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:12879 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229550AbhE3LCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 07:02:37 -0400
-Received: from host-92-14-216-189.as13285.net ([92.14.216.189] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1lnJBi-0007ge-8j; Sun, 30 May 2021 12:00:59 +0100
-Subject: Re: fast forward merge overwriting my code
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Andre Ulrich <andre.ulrich@smail.fh-koeln.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Pratyush Yadav <pratiy0100@gmail.com>
-References: <20210522154815.Horde.rqiNSyIc3CGJECACotWLO1T@webmail.th-koeln.de>
- <4c1c3dbc-7a89-02db-3883-b7eea644cd83@kdbg.org>
- <YKrsC9CaG/KDvDBi@camp.crustytoothpaste.net>
- <20210524061355.Horde.I7EpK9A1l-KtI_TwFo97eNd@webmail.th-koeln.de>
- <e02cabf0-adb6-49bb-b379-b12f37ca6e1a@iee.email>
- <20210524150653.Horde.3GnmG8mUdIOZDFHiOKtoxAe@webmail.th-koeln.de>
- <9e6772ba-fee6-7a7f-2ff3-246e82f96ee3@iee.email>
- <CAJDDKr4GFcV4MSUP+Ku=B1JjZieKwwwuGgsb8yssc0vg0thFQA@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <75d301b3-3cbe-da2e-6611-1bf32a187284@iee.email>
-Date:   Sun, 30 May 2021 12:00:58 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        id S229683AbhE3Lev (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 07:34:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229500AbhE3Leu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 07:34:50 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C40A7C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 04:33:10 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id s6so10092910edu.10
+        for <git@vger.kernel.org>; Sun, 30 May 2021 04:33:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=lfKcxViRAiaBUjYFuyHnoWJ1BR1Tz/ElGbAzTYU2o+c=;
+        b=U4tUi5Ngdja/pplUMjHeWBTvEz6/eJnu1zNONzRFfgnoDXAWLT4QkDtr3IS2i1Ymr/
+         QZrg94yKFolFM9/mE3nqbHqAS3HLSmv07WbIjGXk6Q1b8Rk3Ujoj9H84XkpLs3jUiJcy
+         0e2inLI1kqmw9rVum+Ayt20h7g9RdJ8sBQ2VHWHHbbWCFxmeA81yIBQgrTm3t2cPQphe
+         V8f8SDRCkZSufefBSfM44XQSO62Jwe8jRtf6CizVA35qgl9lI4i6fhz5msZPCOmlg9kw
+         trDIj/ktpE8JvNlLAz+OO5sw4dPWWz0PYDwxHMVVqhkwQgPTQbrUerKG8sUsz9kBUZae
+         jGdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=lfKcxViRAiaBUjYFuyHnoWJ1BR1Tz/ElGbAzTYU2o+c=;
+        b=mhr5nq4UkXhP3Uq4ARpgKU62WP4N92B7MSHbXLdL+3S1BBdZo39RhMN5XxjxebLF1l
+         LYstq/wNm4n+K3O60u9wTyryB32u/Qp69jrVJqRtlMPWn69LJdlLEB6GPs6noN0MbMvX
+         +rBVVggVci1036HF6olvRgPvfmTRRXN416Rj55/Pw28jJmQfcNiDSrgMQzVbc2cVa1/o
+         am8/Dw3fjfj93kdx10v369XLR6XSWdNVZnZ7rd1J2y1f+gSMmuTXTJ7s9QgnBDGI7XfH
+         VeoryqBTLw2ZL9f2sdAfJemiMJvjqCwCgSL34YpWdN4DiA8nwcBhcA7mz5UQNulDb7/v
+         vJpA==
+X-Gm-Message-State: AOAM530tr4BkDTfgAaOGOMNIHqdX5HYIGO5mC6X5XvJRzKc3KBR6j8zc
+        vT14R22ULW4e4qulv8dgNBBSlCjFjy4=
+X-Google-Smtp-Source: ABdhPJwGDJmuoBtbRhcDBgoxmMBLjUIhMT+1+L/BU2Xwwq3CG5sPydtvL3WDgc+AYbnPsxq1JbKM3w==
+X-Received: by 2002:a05:6402:35cc:: with SMTP id z12mr19748122edc.154.1622374389076;
+        Sun, 30 May 2021 04:33:09 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id o20sm5377667eds.20.2021.05.30.04.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 May 2021 04:33:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Mathias Kunter <mathiaskunter@gmail.com>,
+        Ramkumar Ramachandra <r@artagnon.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/6] Unconvolutize push.default=simple
+Date:   Sun, 30 May 2021 13:31:21 +0200
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+Message-ID: <87a6oc318s.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAJDDKr4GFcV4MSUP+Ku=B1JjZieKwwwuGgsb8yssc0vg0thFQA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/05/2021 06:31, David Aguilar wrote:
-> On Mon, May 24, 2021 at 11:51 AM Philip Oakley <philipoakley@iee.email> wrote:
->> adding Pratyush for the Git Gui stash suggestion..
->> [...]
->>>>> So my Question is: is there any possibility, to be able to view (and
->>>>> even edit, if necessary) the changed notebook in the merging process
->>>>> (as in my example with the 3way merge)?
->>>> I'm not aware of such a mechanism (as simply described) but I'm sure
->>>> there are ways to use the "staging area" view (e.g. via the Git-gui) to
->>>> selectively pick out hunks and lines that are staged (and non-selected
->>>> hunk/lines stashed) to give a testable worktree during the 'merge'.
->>> Ah ok, this could be an idea (it would requiere some more research, as
->>> I haven't used the git gui before (I want to learn everything from the
->>> scratch using the command line))
->> I commonly use the Gui when picking apart a large commit into smaller
->> ones when I'm happy that there's no overlaps. Small patches make for
->> easier merging and fault finding, and better commit messages (good
->> thesis practice)
->>
->>> But to be honest, I think even this approach might already be too
->>> cumbersome (as this selectively picking and stashing sounds like a lot
->>> of work itself).
->> Unfortunately the Git Gui doesn't have a menu for stashing remaining
->> changes, but it's simple to flip over to the terminal to stash from
->> there to do the testing, and un-stash the remainder afterwards - I'll
->> maybe suggest the gui could include that capability for these types of
->> workflows (cc Pratyush Yadav <pratiy0100@gmail.com>).
-> Tangential, and doesn't apply in this use case, but I should mention
-> that Git Cola[1] has had this feature for a while now.
 
-+1. I haven't used/tried Cola myself, so..
+On Sat, May 29 2021, Felipe Contreras wrote:
 
->
-> Cola's Stash dialog allows you to do a regular stash and the "keep
-> index" stash alluded to here. "keep index" retains whatever has
-> already been staged.
->
-> One feature unique to cola is its "stash the index" feature, which
-> will only stash stuff that you've selectively staged. That's for the
-> cases where you just want to stash away a small bit, and selectively
-> choosing the inverse is a lot of work, so instead you can select just
-> the bits you want to be stashed away and stash 'em.
+> Tired of jumping through hoops trying to understand what the "simple"
+> mode does, I decided to reorganize it up for good so it's crystal
+> clear.
 
-Sounds good.
-When I did a quick test (Git-Gui & cli) with staging one line of a two
-line change and then stashing, I found that the stash pop failed with a
-conflict (your 'lot of work') which I hadn't expected, which to me is
-totally wrong (against the spirit of the stash command).
+I'd find the end-state even more readable if this "triangular" wasn't
+passed as a parameter but we just did the top-level dispatch based on
+that, i.e. "simple" is really internally SIMPLE_SIMPLE and
+SIMPLE_TRIANGULAR, why not dispatch on that? Our internal enum doesn't
+need to 1=1 map to the config setting.
 
->
-> There's no shame in using a GUI for interactive editing. Cola is
-> designed to be driven through keyboard interactions so it's easy to
-> interactively edit the index without having to use a mouse.
->
-> Cola also has affordances that can make learning core Git easier
-> (enable its GIT_COLA_TRACE=1 mode in the environment and it'll print
-> out every git command it runs).
->
-> [1] https://git-cola.github.io/
-> [1] https://github.com/git-cola/git-cola
->
-> cheers,
-Thanks
+Part of that's that I prefer reading code in the current "master" which
+is if -> die -> most of the rest of function, v.s. your end-state of if
+-> stuff -> else -> most of the function being indented to that "else".
