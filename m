@@ -2,108 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A941FC47091
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 22:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A984C47091
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 22:23:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 837CA610A1
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 22:14:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F12CF60BBB
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 22:23:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229945AbhE3WQJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 18:16:09 -0400
-Received: from mail-ej1-f46.google.com ([209.85.218.46]:34522 "EHLO
-        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbhE3WQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 18:16:08 -0400
-Received: by mail-ej1-f46.google.com with SMTP id g8so5269222ejx.1
-        for <git@vger.kernel.org>; Sun, 30 May 2021 15:14:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Td4BfPsqMqZWSFSQQkCocH6Kt4f/IieSuskAGSGzqME=;
-        b=t8YESQQFogpNEawU7X1RjcXoFn5mNTYSSIeUQxBK8/wJPUWkFFCyrzJs8IeLjO65ss
-         GKRgOzqrg+8V81wm9C8IG9CunP/rQ4sFcRvMp7KtoKAY7FI0/t8CMOI0CyFnVHspTuEG
-         IFQBXUmaH3Ar4sp1s0gSc3bLofmQjtoasr7NslEVnQPg9oicAPDytZqvBUH0QcD0twjt
-         hV4Dz/Wus49qH/FsIWfAF1E1MIFO9jnVOW0pqjMpbpFrTcgeg891x1y4tMr/EWMLMPJ/
-         DJGF3K+RjUDb9x+sf6JPdyeGQffrC1EEKn85rhHtpNNqd/itraf59WbgDiLf6y4+gBa8
-         KhGQ==
-X-Gm-Message-State: AOAM532z/ROxif12/A+BalrmmY0EGkHOtMYacVOB4Rm7NfpPUlsiI92e
-        4JKBRTGD8YZ5gjSAeYBa+d574omcgPVafHqi7F4=
-X-Google-Smtp-Source: ABdhPJyBEOmVsbDOsCjQUc2Qhd0Dsd0qymEXKMvRCOaQ5MOV0EVPl4sUSMbSukEarDeBPPMMx2pNrquiLNj302bBYJk=
-X-Received: by 2002:a17:907:1c13:: with SMTP id nc19mr3856691ejc.168.1622412867872;
- Sun, 30 May 2021 15:14:27 -0700 (PDT)
+        id S229947AbhE3WZA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 18:25:00 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53798 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229891AbhE3WY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 18:24:59 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F248A13539B;
+        Sun, 30 May 2021 18:23:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TGpI7dqXTg7L5FUYFdznBQIQvWoUDdz5ANN4CM
+        SWcsY=; b=jHckaMpxLXP6k/POe0UP+ocIHiQMxSKD4SPJHh5bjpvpQCdoZbx73H
+        XfJ4CCPX2iea2LPL+8XAp/4DF9rVt03ZVH3RRkfTQJlZILyZcJGB2cerF/T7Ksyz
+        UVHcPv+QFo2odzkAeGe5wythZv1JqGOaBcHo8Y6nEFdVc9qbeB1h0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EAE8513539A;
+        Sun, 30 May 2021 18:23:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 40256135396;
+        Sun, 30 May 2021 18:23:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Yuri <yuri@rawbw.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG REPORT] File names that contain UTF8 characters are
+ unnecessarily escaped in 'git status .' messages
+References: <f7e2e271-dcec-2886-f33e-62778a429850@rawbw.com>
+        <xmqq35u9ax5j.fsf@gitster.g>
+        <6318ccec-ec96-91a8-fd65-85daf4a9a22b@rawbw.com>
+        <20210527045628.uvesihyhtqrfyfae@tb-raspi4>
+        <YK+mWZP+sl3zXECx@coredump.intra.peff.net>
+        <4dd22f16-72f0-a28a-8be0-aec622acf0d3@rawbw.com>
+        <50e2780a-21f3-499f-7960-76bf24f550f0@gmail.com>
+        <6fef4b1e-1ec7-b697-c311-59caf6408b29@rawbw.com>
+        <20210529092752.kifzqt3haddzgsob@tb-raspi4>
+        <YLQHPu0bIy4qHEWP@coredump.intra.peff.net>
+Date:   Mon, 31 May 2021 07:23:16 +0900
+In-Reply-To: <YLQHPu0bIy4qHEWP@coredump.intra.peff.net> (Jeff King's message
+        of "Sun, 30 May 2021 17:44:30 -0400")
+Message-ID: <xmqqmtsb2757.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.964.git.1622410962551.gitgitgadget@gmail.com>
-In-Reply-To: <pull.964.git.1622410962551.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 30 May 2021 18:14:17 -0400
-Message-ID: <CAPig+cQdfadxF-AJAFtOv2XTjoLKQ1DqCfvDm-mtqPSj6eMrcA@mail.gmail.com>
-Subject: Re: [PATCH] refactor of git_setup_gettext method
-To:     Dima Kov via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Dima Kov <dima.kovol@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A256536A-C195-11EB-B1F6-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 30, 2021 at 5:43 PM Dima Kov via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Use one "free" call at the end of the function,
-> instead of being dependent on the execution flow.
->
-> Signed-off-by: Dima Kov <dima.kovol@gmail.com>
-> ---
->     Hi. My first PR fot Git repository. I went over the code and saw that
->     maybe this part can be more clearer. Thanks.
+Jeff King <peff@peff.net> writes:
 
-Thanks for taking the time to submit a patch to the project. Your
-change looks "obviously correct", however...
+> Yes. If we're going to do anything, I think it would be to say "most
+> terminals and programs deal with high-bit characters OK these days, so
+> switching the default is more likely to fix things than break them".
 
-> diff --git a/gettext.c b/gettext.c
-> @@ -109,17 +109,14 @@ void git_setup_gettext(void)
-> -       if (!is_directory(podir)) {
-> -               free(p);
-> -               return;
-> +       if (is_directory(podir)) {
-> +               bindtextdomain("git", podir);
-> +               setlocale(LC_MESSAGES, "");
-> +               setlocale(LC_TIME, "");
-> +               init_gettext_charset("git");
-> +               textdomain("git");
->         }
->
-> -       bindtextdomain("git", podir);
-> -       setlocale(LC_MESSAGES, "");
-> -       setlocale(LC_TIME, "");
-> -       init_gettext_charset("git");
-> -       textdomain("git");
-> -
->         free(p);
-
-... "clearness" is subjective, and it turns out that this project
-generally prefers the code the way it was before this patch, and you
-will find a lot of similar code throughout the project. In particular,
-we like to get the simple cases and the error cases out of the way
-early so that we don't have to think about them again for the
-remainder of the function. Doing it this way eases cognitive load. (A
-minor side benefit is that it also saves one or more levels of
-indentation.)
-
-An alternative which is also crops up somewhat often in this project
-is to use `goto`, like this:
-
-    if (!is_directory(podir))
-        goto done;
-    bindtextdomain(...);
-    ...
-    done:
-    free(p);
-
-However, `goto` is most often used when there is a lot of cleanup to
-do or the cleanup is intricate. This specific case doesn't qualify as
-either, so the code is probably fine as-is.
+Amen to that.  The conservative setting was from v1.5.3 days in
+2007, and it would be highly disappointing if the situation hasn't
+changed in the 14 years.
