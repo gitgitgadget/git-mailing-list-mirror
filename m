@@ -7,104 +7,153 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58F97C47092
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 15:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 526DFC47092
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:07:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2BD8A611BD
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 15:54:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F3DD611BD
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 16:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229756AbhE3Pzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 11:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
+        id S229712AbhE3QJT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 12:09:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbhE3Pzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 11:55:36 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3997DC061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 08:53:58 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id b25so9895753oic.0
-        for <git@vger.kernel.org>; Sun, 30 May 2021 08:53:58 -0700 (PDT)
+        with ESMTP id S229599AbhE3QJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 12:09:19 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC61C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 09:07:40 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so8738968otl.3
+        for <git@vger.kernel.org>; Sun, 30 May 2021 09:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=zhc8+ghSDba/70Ylq0HgdfNYEpSpFm1AVAjgkOt6YDo=;
-        b=gmsp+4oCHR0LQ9OwmKMnHvH25e7BI7C06w4GOJGAold9+sX9cbi6I//zukU6llmMgb
-         Fju72KMKhSxEAolwKmTFBknw88eBF5SuA/n35Yo2XnLeRUkyuT/ZpPY2ivtdothMlFzr
-         34ZVXJxgtAikumaETl2P3Pv86xPjLntVntS6CS7I0Rkff+lGnz+zHVsfiRbfzoEAs9r7
-         5fjctr6MmOV/Zal+qBaizXes7vDSWbHW5fYkFNfcAS9l6T8mTKDiK7d87Ia0Kr1w39Og
-         Dg0EHPC1vAHcdCS/9BJfBg+bB3SXzWzDxKgahpvixP6HI1KPvou2iIQlWFluzsFcE8vE
-         CxUQ==
+        bh=nv0oYB2Ma21k7vvEqMvoj52IJcYPq8Q7jFndKFf+SM8=;
+        b=sU4eUDVWG952ahmPQzmPmG1gDCTEL3NX5ipwzT2cqAuj8molAOyrpQqRTBW+zou10E
+         coV1kYeavFWwUFNMYqxAMLECYdQTIVU/g3zzG4bTctnloEKNWEpalp87xGlQLtaQQoM9
+         cCTx39uPo2bRI94LZErgXf78htUeVjOumqPCJCWu4O1doAXsUF8pgXTP/qJ4liFscjXx
+         VMH7lbuPY1aNMl8iWwArcvgn+z+3adm8Na6ayYcg2tGG9vyL7HsH1Mhx1wbMa62ph3LF
+         3uvlRtLzPs6wHrE1F1OUUduC/X3HK+4YmIzDSO1XOY4UPYRoF2CtVxswjDUtclHbHJ+/
+         KUkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=zhc8+ghSDba/70Ylq0HgdfNYEpSpFm1AVAjgkOt6YDo=;
-        b=Tic2qtuzYx9GHtdAr7UbTmTODAU7ncfYzRd22LXh+nQG4i2HdoZ03XDaMjOLxmEW39
-         a0bKK5r8EOxWQqge+PypPtirQBuVuGbGVCt3Bo69B856tPiAY/nMUCa5ouGgj1CmRLqP
-         V+vNGTDiUb05A6Yo8apx3f5tfM9N4puOkF3qFSj8KSEw4URA2T8Tvqx+ldxPM50LGmRN
-         T3ni+BWJI8KB2Gju8r1RTwAm7Lez7YKRcooBNaxi4bnlAEMCkhUhFYKSHj55shWIbJX9
-         g5iMP1n+0IP57fB/mAlL15Hi+7e9hIuCz3f3gysmj8gQ2CPdYYLzm02KEUXRHi/xwuHH
-         FS8A==
-X-Gm-Message-State: AOAM533R4xWg3Buf0OvOAdKTEEKgkC+Tzz56LRTs7C9vANmgJ7dO9euU
-        RIC4IUUN5o3vK3/2AkqYxcI=
-X-Google-Smtp-Source: ABdhPJx2Bsz15hYImyG74ewwFmzQuYSd/0cVKPahyBieWkgJiFGxhk2Sx1wehoQr+1qB41eHkNV7qQ==
-X-Received: by 2002:a05:6808:b22:: with SMTP id t2mr14483983oij.67.1622390037379;
-        Sun, 30 May 2021 08:53:57 -0700 (PDT)
+        bh=nv0oYB2Ma21k7vvEqMvoj52IJcYPq8Q7jFndKFf+SM8=;
+        b=h/fV/1lvS1QyPit+uZR1sJvZi54u+PXd+ywX8JQursIapKrNDz5Xri5MAC6gQtsx5r
+         5o46XGkgn3d59fNhIOZhIAvdfvdQXyb77jIeoR3+HHjCU/Sq3J2QVdTxzCGmy7QyrOWB
+         i7IaGFxe7Zr3ebW02sj1xa0/LVTzdTyM8h2UAETXvqn/uZtB84SQIVZ9vB+Ejnsh7u4+
+         x81zqHJZUmd9TFHJOL6lI+MJqQ8bOfikFSN/kB/m0gDnasSixym3yunSRzOGDUU82O1w
+         jjMzH9sOJclcQ36bncXCOgFGjjesPPEoia1/wHKTYuPs3w9U5EujBPlEcJfTrcZwnoll
+         7FJQ==
+X-Gm-Message-State: AOAM531rzyVJY7ETpUnqbx+HMJ5y8AZqMaFKpw9AR95kTyVFltKONkfk
+        JEC/xHAbol/hg7cnOervlPg=
+X-Google-Smtp-Source: ABdhPJwSTRbmeYVQU65ogPDEGAco1rd3JUBDMJFZGlvq0vOHqbmUV5qvP5S0bBqNlsOz50C91f1ixw==
+X-Received: by 2002:a05:6830:1556:: with SMTP id l22mr14201145otp.34.1622390859299;
+        Sun, 30 May 2021 09:07:39 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id t14sm2334630ooh.39.2021.05.30.08.53.56
+        by smtp.gmail.com with ESMTPSA id t16sm2272204oie.42.2021.05.30.09.07.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 May 2021 08:53:56 -0700 (PDT)
-Date:   Sun, 30 May 2021 10:53:55 -0500
+        Sun, 30 May 2021 09:07:38 -0700 (PDT)
+Date:   Sun, 30 May 2021 11:07:37 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     ZheNing Hu <adlternative@gmail.com>, Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <60b3b513537ca_b8852081a@natae.notmuch>
-In-Reply-To: <CAOLTT8T0XtmpH3cHDBOfcX5nmCzfyrKby4TrFkHtA9H3dDN63A@mail.gmail.com>
-References: <CAOLTT8T0XtmpH3cHDBOfcX5nmCzfyrKby4TrFkHtA9H3dDN63A@mail.gmail.com>
-Subject: RE: [GSOC] Git Blog 2
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, Gregory Anders <greg@gpanders.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>
+Message-ID: <60b3b84967a62_b937208c@natae.notmuch>
+In-Reply-To: <877djg313c.fsf@evledraar.gmail.com>
+References: <cover-0.9-0000000000-20210512T132955Z-avarab@gmail.com>
+ <cover-00.10-00000000000-20210520T081826Z-avarab@gmail.com>
+ <YKYdeom6SgAHqojm@coredump.intra.peff.net>
+ <xmqqv97drmge.fsf@gitster.g>
+ <875yzcpo52.fsf@evledraar.gmail.com>
+ <60b11101e5288_50514208b4@natae.notmuch>
+ <87czta2b47.fsf@evledraar.gmail.com>
+ <60b2557b5c7da_2650882084e@natae.notmuch>
+ <877djg313c.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v2 00/10] send-email: various optimizations to speed up by
+ >2x
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu wrote:
-> My second week blog finished:
-> The web version is here:
-> https://adlternative.github.io/GSOC-Git-Blog-2/
-> 
-> -------
-> ## Week2: learning the slang of a new city
-> 
-> ### What happened this week
-> - In [[PATCH 1/2] [GSOC] ref-filter: add %(raw)
-> atom](https://lore.kernel.org/git/b3848f24f2d3f91fc96f20b5a08cbfbe721acbd6.1622126603.git.gitgitgadget@gmail.com/),
-> I made a license-related mistake this week. When I was
-> implementing `%(raw)` atom for ref-filter, I noticed that
-> `glibc` did not provide us with `memcasecmp()` which
-> can be used to compare two pieces of memory and
-> ignore case, so I found `memcasecmp()` implemented
-> by `gnulib` on the Internet, and copy it to git to use.
-> But unfortunately, I should not copy it so "conveniently".
-> Git use `gpl-v2` and `gunlib` use `gpl-v3`,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
 
-Minor nit: some projects are GPLv2+, and those projects are compatible
-with GPLv3, but others (like Linux and Git) are GPLv2-only, those are
-not compatible.
+> On Sat, May 29 2021, Felipe Contreras wrote:
+> =
 
-So say GPLv2-only.
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> =
 
-(In practice I don't think it matters because at this point probably
-most GPLv2 projects are GPLv2-only)
+> >> On Fri, May 28 2021, Felipe Contreras wrote:
+> >> =
 
-Cheers.
+> >> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> >> Returning a flattened list is idiomatic in Perl, it means that a =
+caller
+> >> >> can do any of:
+> >> >> =
 
--- 
-Felipe Contreras
+> >> >>     # I only care about the last value for a key, or only about
+> >> >>     # existence checks
+> >> >>     my %hash =3D func();
+> >> >
+> >> > I was staying on the sideline because I don't know what's idiomati=
+c in
+> >> > Perl, but Perl and Ruby share a lot in common (one could say Perl =
+is the
+> >> > grandfather of Ruby), and I do know very well what's idiomatic in =
+Ruby.
+> >> >
+> >> > In perl you can do $ENV{'USER'}, and:
+> >> >
+> >> >   while (my ($k, $v) =3D each %ENV) {
+> >> >     print "$k =3D $v\n";
+> >> >   }
+> >> >
+> >> > Obviously it's idiomatic to use hashes this way [1].
+> >> =
+
+> >> For what it's worth idiomatic/good idea and "has an example in the p=
+erl
+> >> documentation" unfortunately aren't always aligned. A lot of experie=
+nced
+> >> Perl programmers avoid each() like the plague:
+> >> http://blogs.perl.org/users/rurban/2014/04/do-not-use-each.html
+> >
+> > Perl is an old language, and each() was introduced in 2010, it's
+> > expected that some old-timers would not adapt to the new idioms.
+> =
+
+> each() has been in Perl since 1987 with perl v1.0, you must be confusin=
+g
+> it with something else.
+
+I see. I read the each() documentation [1] too hastily:
+
+  When called on a hash in list context, returns a 2-element list
+  consisting of the key and value for the next element of a hash. In
+  Perl 5.12 and later only...
+
+> In any case, the recommendation against it has nothing to do with its
+> age, it's that similar to strtok() it has global state.
+
+Yes, that's what I understood from the blog post you shared, but at
+least personally I never assume I can modify a hash like that. I see why
+some people need to be careful with it, but "avoid it like the plague"
+seems way too defensive programming to me.
+
+[1] https://perldoc.perl.org/functions/each
+
+-- =
+
+Felipe Contreras=
