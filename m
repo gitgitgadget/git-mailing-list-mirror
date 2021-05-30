@@ -2,57 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B80F7C47092
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1BA8C47091
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:15:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8450B610C8
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:09:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6573610CC
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 21:15:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229842AbhE3VLZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 17:11:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41470 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229805AbhE3VLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 17:11:24 -0400
-Received: (qmail 18820 invoked by uid 109); 30 May 2021 21:09:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 30 May 2021 21:09:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21830 invoked by uid 111); 30 May 2021 21:09:45 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 30 May 2021 17:09:45 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 30 May 2021 17:09:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
+        id S229912AbhE3VQn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 17:16:43 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63215 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229805AbhE3VQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 17:16:42 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40049CF11D;
+        Sun, 30 May 2021 17:15:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=EOw6WF0x42l5cscCE+elmz4MHmudUc7fOpc1E0qvdc4=; b=kvcT
+        K7i9js3YX3jk88zrqGYsjRznjC4INDB0qLUr9luIgr2ElTQ/JT2wpcPJvAILdYiz
+        NO/tzo19c/oqXP8PYrupqNjnakPuC3ZvhEDZUn78/CDDf94dUscp7rEf5AQjGh/+
+        Kcq5WnKfh98xHWeloj4GgBzh3Gi4RCfxU6wvV6Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C4EECF11B;
+        Sun, 30 May 2021 17:15:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10E0FCF118;
+        Sun, 30 May 2021 17:15:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
         Hariom Verma <hariom18599@gmail.com>,
         ZheNing Hu <adlternative@gmail.com>
 Subject: Re: [PATCH] [GSOC] cat-file: fix --batch report changed-type bug
-Message-ID: <YLP/GEN0qIXvWEUn@coredump.intra.peff.net>
 References: <pull.965.git.1622363366722.gitgitgadget@gmail.com>
+Date:   Mon, 31 May 2021 06:15:00 +0900
+Message-ID: <xmqqy2bv3ovf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.965.git.1622363366722.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 18D1A8AA-C18C-11EB-BABE-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 30, 2021 at 08:29:26AM +0000, ZheNing Hu via GitGitGadget wrote:
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
 > From: ZheNing Hu <adlternative@gmail.com>
-> 
+>
 > When we use `--batch` with no atoms formatting and use
 > `--batch-all-objects` at the same time (e.g.
 > `git cat-file --batch="batman" --batch-all-objects`),
 > Git will exit and report "object xxx changed type!?".
-> 
+>
 > This is because we have a format string which does not
 > contain any atoms, so skip_object_info option will be
 > set if we also use --batch-all-objects, and then
@@ -60,8 +73,27 @@ On Sun, May 30, 2021 at 08:29:26AM +0000, ZheNing Hu via GitGitGadget wrote:
 > `batch_object_write()`, it cause object type to not be
 > collected. Therefore, it reported object type has changed.
 
-Good find. I think this bug is mostly my fault, as I added the
-skip_object_info flag but never thought to use it with --batch.
+The above analysis on how these die()s get hit makes sense, but ...
+
+> So avoid checking changes in type and size when all_objects
+> and skip_object_info options are set at the same time.
+
+... it is not immediately clear how the above conclusion follows.
+
+An obvious alternative, however, is to avoid skipping object info
+when all objects is in use---but that goes directly against why this
+"skip" mechanism was added at 845de33a (cat-file: avoid noop calls
+to sha1_object_info_extended, 2016-05-18).
+
+Which makes me suspect that the solution presented here would be
+going in the right direction.
+
+There however is one curious thing about this.  The log message of
+the original commit that introduced this optimization does use the
+batch-check and batch-all-objects at the same time.  Was this
+breakage not there when the original was written and we broke it in
+a later update?  If so, with what commit?  Can that commit have
+broken other places in cat-file in a similar manner?
 
 > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
 > index 5ebf13359e83..5f9578f9b86b 100644
@@ -79,48 +111,25 @@ skip_object_info flag but never thought to use it with --batch.
 > +		if (!(opt->all_objects && data->skip_object_info)) {
 > +			if (type != data->type)
 > +				die("object %s changed type!?", oid_to_hex(oid));
+
+When skip_object_info bit is set, we know data->type and date->size
+are unusable and should not be checked, regardless of the reason why
+skip_object_info bit is set, don't we?
+
 > +			if (data->info.sizep && size != data->size)
 > +				die("object %s changed size!?", oid_to_hex(oid));
+
+Does this check need to be modified at all?  Would info.sizep ever
+be set to non-NULL if skip_object_info is set (hence we are not
+calling object-info)?
+
 > +		}
 
-Wouldn't checking data->skip_object_info be sufficient? It's only set
-when opt->all_objects is set anyway. But more importantly, it is the
-most direct root of the problem: we did not find out the type and size
-earlier, so comparing anything against data->type is useless.
+In other words, shouldn't this patch just this one liner?
 
-But that leads me to a follow-up question: what if we did give a format,
-so skip_object_info isn't set, but it didn't include the type or size?
-
-In the size code, it looks like we explicitly protect against this by
-checking if data->info.sizep is set (i.e., did we request the size from
-oid_object_info_extended). But it's not for the type.
-
-So the assumption is that we do always fill in the type, even if the
-user didn't ask for it. And that assumption is actually violated much
-earlier. These two bits of code from the setup are out of order:
-
-          if (opt->all_objects) {
-                  struct object_info empty = OBJECT_INFO_INIT;
-                  if (!memcmp(&data.info, &empty, sizeof(empty)))
-                          data.skip_object_info = 1;
-          }
-
-          /*
-           * If we are printing out the object, then always fill in the type,
-           * since we will want to decide whether or not to stream.
-           */
-          if (opt->print_contents)
-                  data.info.typep = &data.type;
-
-We should not let skip_object_info kick in at all if opt->print_contents
-is requested. And that causes other bugs outside of the spot you found.
-We look at data->type earlier in print_object_or_die() to decide whether
-or not to stream the contents, but we'll see garbage (fortunately we
-zero-initialize the expand_data struct, so it's at least predictably
-zero, and not random undefined behavior).
-
-But I think we'd want to solve it by swapping the two conditionals I
-showed above, which restores the assumption made in print_object_or_die().
+-		if (type != data->type)
++		if (data->skip_object_info && type != data->type)
+			die("object %s changed type!?", oid_to_hex(oid));
 
 > diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
 > index 5d2dc99b74ad..9b0f1ae5ef8b 100755
@@ -135,11 +144,7 @@ showed above, which restores the assumption made in print_object_or_die().
 > +	git -C all-two cat-file --batch-all-objects --batch="batman" | wc -l >actual &&
 > +	test_cmp expect actual
 > +'
-
-Is it worth testing both of these? The %(objectname) one will fail in
-the same way (because we do not need to run oid_object_info() to get the
-oid, which we already have). I'm OK doing both for better coverage, but
-it may be worth mentioning either in a comment or in the commit message
-that we expect both to fail, and why.
-
--Peff
+> +
+>  test_done
+>
+> base-commit: 5d5b1473453400224ebb126bf3947e0a3276bdf5
