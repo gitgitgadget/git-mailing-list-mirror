@@ -2,98 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8762EC47091
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 15:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58F97C47092
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 15:54:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46E26611AC
-	for <git@archiver.kernel.org>; Sun, 30 May 2021 15:24:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BD8A611BD
+	for <git@archiver.kernel.org>; Sun, 30 May 2021 15:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229683AbhE3P0d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 May 2021 11:26:33 -0400
-Received: from smtp.hosts.co.uk ([85.233.160.19]:39142 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229580AbhE3P0d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 May 2021 11:26:33 -0400
-Received: from host-92-14-216-189.as13285.net ([92.14.216.189] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1lnNJ7-0000xI-7K; Sun, 30 May 2021 16:24:53 +0100
-Subject: Re: [RFH] CMake: detect if being run via Visual Studio, independent
- of build generator?
-To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Matt Rogers <mattr94@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Danh Doan <congdanhqx@gmail.com>
-References: <013f42a4-19f4-a935-7068-db3f7ff40446@iee.email>
- <CAOjrSZtWVEUNEuJFw8WGPAW0YNccN9LWyuHZ28aKecdjd6dp=A@mail.gmail.com>
- <7aadc622-ad4f-1d7e-a956-57ab74f18096@iee.email>
- <CAKiG+9U70wXm7MtTLMUpPC_aHMp58bTtJBbP=NgoAcQQmCPSuQ@mail.gmail.com>
- <7ac2c0f4-e8ed-5676-1f81-3446e33def9c@iee.email>
- <CAKiG+9UeT70S3_jNXUbx2KCM6UDUxPKMizFX_fUiioDo-zmp+Q@mail.gmail.com>
- <CAOjrSZtRH-sqh8RJm3W00dUWTbT-xcpzDWCQFt=3CNaVnOyVWQ@mail.gmail.com>
- <953d685c-3c89-7377-ed49-b79fb4e0acb5@iee.email>
- <CAOjrSZuzgBs8camWdUjEU+JOjRYwv3MVjRgnyW50pchq6rpYsQ@mail.gmail.com>
- <CAKiG+9WwRHz-5JDPe6KL763kVfRP7vX5HgtDMiX-S1Je5+oWfg@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <e33bd72f-2095-f32d-5f4f-6137f6a12d22@iee.email>
-Date:   Sun, 30 May 2021 16:24:53 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
-MIME-Version: 1.0
-In-Reply-To: <CAKiG+9WwRHz-5JDPe6KL763kVfRP7vX5HgtDMiX-S1Je5+oWfg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+        id S229756AbhE3Pzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 May 2021 11:55:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229671AbhE3Pzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 May 2021 11:55:36 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3997DC061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 08:53:58 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id b25so9895753oic.0
+        for <git@vger.kernel.org>; Sun, 30 May 2021 08:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=zhc8+ghSDba/70Ylq0HgdfNYEpSpFm1AVAjgkOt6YDo=;
+        b=gmsp+4oCHR0LQ9OwmKMnHvH25e7BI7C06w4GOJGAold9+sX9cbi6I//zukU6llmMgb
+         Fju72KMKhSxEAolwKmTFBknw88eBF5SuA/n35Yo2XnLeRUkyuT/ZpPY2ivtdothMlFzr
+         34ZVXJxgtAikumaETl2P3Pv86xPjLntVntS6CS7I0Rkff+lGnz+zHVsfiRbfzoEAs9r7
+         5fjctr6MmOV/Zal+qBaizXes7vDSWbHW5fYkFNfcAS9l6T8mTKDiK7d87Ia0Kr1w39Og
+         Dg0EHPC1vAHcdCS/9BJfBg+bB3SXzWzDxKgahpvixP6HI1KPvou2iIQlWFluzsFcE8vE
+         CxUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=zhc8+ghSDba/70Ylq0HgdfNYEpSpFm1AVAjgkOt6YDo=;
+        b=Tic2qtuzYx9GHtdAr7UbTmTODAU7ncfYzRd22LXh+nQG4i2HdoZ03XDaMjOLxmEW39
+         a0bKK5r8EOxWQqge+PypPtirQBuVuGbGVCt3Bo69B856tPiAY/nMUCa5ouGgj1CmRLqP
+         V+vNGTDiUb05A6Yo8apx3f5tfM9N4puOkF3qFSj8KSEw4URA2T8Tvqx+ldxPM50LGmRN
+         T3ni+BWJI8KB2Gju8r1RTwAm7Lez7YKRcooBNaxi4bnlAEMCkhUhFYKSHj55shWIbJX9
+         g5iMP1n+0IP57fB/mAlL15Hi+7e9hIuCz3f3gysmj8gQ2CPdYYLzm02KEUXRHi/xwuHH
+         FS8A==
+X-Gm-Message-State: AOAM533R4xWg3Buf0OvOAdKTEEKgkC+Tzz56LRTs7C9vANmgJ7dO9euU
+        RIC4IUUN5o3vK3/2AkqYxcI=
+X-Google-Smtp-Source: ABdhPJx2Bsz15hYImyG74ewwFmzQuYSd/0cVKPahyBieWkgJiFGxhk2Sx1wehoQr+1qB41eHkNV7qQ==
+X-Received: by 2002:a05:6808:b22:: with SMTP id t2mr14483983oij.67.1622390037379;
+        Sun, 30 May 2021 08:53:57 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id t14sm2334630ooh.39.2021.05.30.08.53.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 May 2021 08:53:56 -0700 (PDT)
+Date:   Sun, 30 May 2021 10:53:55 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     ZheNing Hu <adlternative@gmail.com>, Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <60b3b513537ca_b8852081a@natae.notmuch>
+In-Reply-To: <CAOLTT8T0XtmpH3cHDBOfcX5nmCzfyrKby4TrFkHtA9H3dDN63A@mail.gmail.com>
+References: <CAOLTT8T0XtmpH3cHDBOfcX5nmCzfyrKby4TrFkHtA9H3dDN63A@mail.gmail.com>
+Subject: RE: [GSOC] Git Blog 2
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/05/2021 15:29, Sibi Siddharthan wrote:
-> On Sun, May 30, 2021 at 6:52 PM Matt Rogers <mattr94@gmail.com> wrote:
->
->> I think the best middle of the line solution would be to just provide a manual
->> knob for turning vcpkg support on/off here and offer configurations in
->> CMakePresets.json for both situations.  The only downside here is that I believe
->> a lot of IDE's are aggressive about running the cmake configuration step and may
->> try to install vcpkg even if it is unnecessary.  But automatic
->> generation can generally
->> be turned off by users I guess.
-> I agree. I would suggest vcpkg should be used by default for Windows platforms.
-> This way IDE's won't complain and command line users can straight up
-> disable this behaviour.
->
-> Thank You,
-> Sibi Siddharthan
-I think so as well.
+ZheNing Hu wrote:
+> My second week blog finished:
+> The web version is here:
+> https://adlternative.github.io/GSOC-Git-Blog-2/
+> 
+> -------
+> ## Week2: learning the slang of a new city
+> 
+> ### What happened this week
+> - In [[PATCH 1/2] [GSOC] ref-filter: add %(raw)
+> atom](https://lore.kernel.org/git/b3848f24f2d3f91fc96f20b5a08cbfbe721acbd6.1622126603.git.gitgitgadget@gmail.com/),
+> I made a license-related mistake this week. When I was
+> implementing `%(raw)` atom for ref-filter, I noticed that
+> `glibc` did not provide us with `memcasecmp()` which
+> can be used to compare two pieces of memory and
+> ignore case, so I found `memcasecmp()` implemented
+> by `gnulib` on the Internet, and copy it to git to use.
+> But unfortunately, I should not copy it so "conveniently".
+> Git use `gpl-v2` and `gunlib` use `gpl-v3`,
 
-I'd started writing (draft) in reply to Matt
+Minor nit: some projects are GPLv2+, and those projects are compatible
+with GPLv3, but others (like Linux and Git) are GPLv2-only, those are
+not compatible.
 
-"I'd agree that knowledgable users should be able to control the
-settings, however I'm against forcing less knowledgable users being
-required to add extra control option for knobs they don't yet
-understand, hence the desire to ensure a consistent (though possible
-old-fashioned/backward-compatible) settings 'that just work' that do not
-set in stone those choices, which would be the worst of both worlds!
+So say GPLv2-only.
 
-It maybe that in some ways we may have missed the boat as those project
-based CMakePresets.json presets (setting back to old defaults) could
-'annoy' the (potentially) experienced users who are simply using the new
-defaults. This doesn't affect (*) truly experience users who are setting
-their desired options directly as they would/should override the presets."
+(In practice I don't think it matters because at this point probably
+most GPLv2 projects are GPLv2-only)
 
-My other consideration is that the build process should generate enough
-of the right artefacts (e.g. a .sln etc). This is so that other typical
-tools and extensions e.g. Sourcetrail which expects the .sln, but maybe
-they'll also cope with Ninja/Cmake builds soon...
+Cheers.
 
-I'll have a go, though I'll be off-line for a while from ~Tuesday.
-
-Philip
-
-(*) - affect/effect?
-https://www.londonschool.com/nordic/blogg/whats-difference-between-affect-and-effect-and-when-should-they-be-used/
+-- 
+Felipe Contreras
