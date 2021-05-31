@@ -2,142 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3093BC47080
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 319F5C47080
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EB326052B
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:01:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10F6A600EF
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231569AbhEaRCj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:02:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48170 "EHLO
+        id S233635AbhEaRGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234988AbhEaRAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 13:00:40 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F6A3C068F93
-        for <git@vger.kernel.org>; Mon, 31 May 2021 08:14:24 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id c3so12561181oic.8
-        for <git@vger.kernel.org>; Mon, 31 May 2021 08:14:24 -0700 (PDT)
+        with ESMTP id S234748AbhEaREK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 13:04:10 -0400
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89754C068FB2
+        for <git@vger.kernel.org>; Mon, 31 May 2021 08:16:15 -0700 (PDT)
+Received: by mail-vs1-xe2d.google.com with SMTP id z15so1148446vsn.13
+        for <git@vger.kernel.org>; Mon, 31 May 2021 08:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=hp+GX+x8niVKX8ZZwUKbjOLDxKYGHf/BO8P/hPjX6vE=;
-        b=KFPzBs2znr4tQdDNSyojkT0QYFND8XxrGonZB7cFbwv82d6W66361EUL2KNgnoPw9W
-         DrgDVqvGidNE5Snnf33dmWzc0MMOiukKwTeBY2uafT5OWJAfyPDAyDWs26KNce7meuqZ
-         JjWzLpy6WY7d+HZH1uEAP9kAriiL6PBzXz9CWCRmNIBzHhqLWPrDFFBYDqIGho2bxwxq
-         9A3qTRVVrbwN72TBgxCgM1PT2uT09JY5i5P4r+q1UsH+i42NtVI8pYPoHLAWdwRlPfyr
-         WwSghqTJBxLeRciIxHofSa/a2d09CB2phukqQUe6BZn9e6rWNIflVyCPuWPYGBdn8Ots
-         jhgg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0iZPdn+m32dalPH6tuEQ1pePydHoMBmcSrnYoSGMUcY=;
+        b=p8O5KV37ThCl4jc1ke6EDCeDB8p7pH6JH7esTk4Fk3sORdOXay7doP+j1DUBOtiJBu
+         KAjqsGF/Vgo2ghSGnFa+MsP3kwcadTkgzORQi1mCyJdLUOIQpl7BprpkvPMtza9voR3A
+         ER6Tb4FEOxW8f/qY7US5lNefzTtPaiRVgE+2PwCA79hOdz7sHBYG1veLhdthFiQR+oYy
+         S/nvl7LWA5OWmK/6QNusL23qgab0vhKaeu/NO5PL7qzipjqAH2pW9OekvOxwvui0lU3Y
+         KcsTd9BQZyyVxI3HFmhSneTMudAhDNI1gKSHiPoZDALI/9tvk10dzJVjCUgfpDILIgSs
+         eMJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=hp+GX+x8niVKX8ZZwUKbjOLDxKYGHf/BO8P/hPjX6vE=;
-        b=jfWHEzebJGdXL5msQ1QklGVhIH4BtJWFwjMuhoJYVyq8buuAQZUxwVpjnVXRdVFv9I
-         m5nKAuHuDQsGuhekJMICjg+5zCFIbPozYgccpGlxRxYC2MdWN45Dqz01yT/TQgCu1CTL
-         Kt0u+PkERRicn598oIv5xyAgIpVi7uUwhXpa3/DE+pPb991nk34mIrj6JhWndV3XMkyb
-         xIC2rPBict7M5n2WOUtw1a5a0e9hsdHfCK6YYpsZEF4+S6/65dj+zLeVj1Nriy5pn4l9
-         sKUsbBBbdlSAsZPGGHEegqUdl5/5i3fjWZvfpe4+YiowZR6NtfIxiGn0VAfUNKoZSXTQ
-         klpg==
-X-Gm-Message-State: AOAM5307hQjq4gnwHYeIJsympQ6o5lGwkS0+CZXc20/0tRQtYbFRc0W/
-        To8XTXRUqJt/0sul12wIIzg=
-X-Google-Smtp-Source: ABdhPJzsaITQ780jlaVfE+U1ycVvRpnl1CYE36W0PaOVGNElPbTwjelJ5I2/+M0sl4HK2bdSVVZWIw==
-X-Received: by 2002:a05:6808:153:: with SMTP id h19mr17556830oie.117.1622474063868;
-        Mon, 31 May 2021 08:14:23 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id e83sm2818959oia.40.2021.05.31.08.14.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 08:14:23 -0700 (PDT)
-Date:   Mon, 31 May 2021 10:14:21 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Mathias Kunter <mathiaskunter@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramkumar Ramachandra <r@artagnon.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <60b4fd4db5dee_24d282088c@natae.notmuch>
-In-Reply-To: <3e5c2303-030e-928e-af57-8e2be8f3ce86@gmail.com>
-References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
- <20210529071115.1908310-7-felipe.contreras@gmail.com>
- <acfafe6e-b0f3-ba2e-71f0-9bcc09b9d612@gmail.com>
- <60b3e2ceee840_ee4c20823@natae.notmuch>
- <3e5c2303-030e-928e-af57-8e2be8f3ce86@gmail.com>
-Subject: Re: [PATCH v2 6/6] doc: push: explain default=simple correctly
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0iZPdn+m32dalPH6tuEQ1pePydHoMBmcSrnYoSGMUcY=;
+        b=YryvugkJY5UCv8nDi0T/OMIZnu6aiLLKqUTV44wLycvDhFdG7SenTC6v7qrswTfZWh
+         XfSUcBtSwAl9dxFEpVCJbojeBzjKynNBScr6rVrVe19s26p90N/tqSUBhTASdY1vWJmG
+         yhyew6UKY73nyt3HZUEQFErmhlKfZuYgBAwEb+po9Vw8yeu7Cm7V/XYHYg6PAXpgjAKf
+         uGvZwk1ZPt3j0qipn0UWqC0lzWCv3Ht+oG6pCgYDWWZHpdpBCB9MwxKOGsqpjmc1QCup
+         UbmWfLNh7xNtG+f7jBjXVBydWDnSdgv1+NiO9w5Qls02Ql+Usb88vNjgQsy1c0i6XAwq
+         8MLQ==
+X-Gm-Message-State: AOAM5309HNXjNXV0iWnmwt6Kl1L8WHmckpQfPbWq3mTRNV2Vz9PNDW/U
+        UL2y0z6993Ab/voi4cbq/LODerbDYNS5ACsiR2ShkA==
+X-Google-Smtp-Source: ABdhPJzEbSJkbVhUYWH9kNSXLN64nPdVhaswxguLGWdcUwNSr52E20EKQAJ2DWToElCiorvcDpuSs7ZTbYNxcAHgSOA=
+X-Received: by 2002:a05:6102:9c9:: with SMTP id g9mr13575289vsi.50.1622474174531;
+ Mon, 31 May 2021 08:16:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
+ <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com> <e4e8fc1d4b4f450d46dd320ffc2398515044b28a.1619519903.git.gitgitgadget@gmail.com>
+ <87y2c9pgym.fsf@evledraar.gmail.com>
+In-Reply-To: <87y2c9pgym.fsf@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 31 May 2021 17:16:03 +0200
+Message-ID: <CAFQ2z_NzRiM6u4sqLHeN9+KwzWum0PVUpcRiS0grEKGD0UqsiA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/21] t1413: use tar to save and restore entire .git directory
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mathias Kunter wrote:
-> Am 30.05.21 um 21:09 schrieb Felipe Contreras:
-> >>> The current branch is pushed to the corresponding upstream branch, but
-> >>> as a safety measure, the push is aborted if the upstream branch does not
-> >>> have the same name as the local one.
-> > 
-> > Except that isn't accurate.
-> > 
-> >    git clone $url
-> >    git checkout -b fix-1
-> >    # do commits
-> >    git push
-> > 
-> > Does that push the current branch to the corresponding upstream branch?
-> 
-> I see. Then maybe reword to something like this:
-> 
-> > The current branch is pushed to a branch with the same name on the
-> > remote, but as a safety measure, the push is aborted if a corresponding
-> > upstream branch does not have the same name as the local one.
-> 
-> In your above example, I'm in centralized workflow, but I can still push 
-> the fix-1 branch to origin without having to configure an upstream 
-> branch for it.
+On Thu, May 20, 2021 at 5:23 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-No, you can't:
+> >  test_expect_success baseline '
+>
+> So what I said in 05, but also didn't the commit messages of 05 and 06
+> get mixed up / bad fixup in a WIP version? I.e. the first commit says
+> "use symbolic ref", but it's mostly about introducing the use of this
+> tar/untar pattern.
+>
+> Whereas this continues the tarring pattern, and doesn't start using it,
+> and (presumably) is the mis-squashed commit that should have added this
+> whole tar thing after the first commit does the isolated
+> s/echo/symbolic-ref/ fix.
 
-  % git push
-  fatal: The current branch fix-1 has no upstream branch.
-  To push the current branch and set the remote as upstream, use
+I've split the commits by test file. I added a separate commit for the
+tar use here.
 
-      git push --set-upstream origin fix-1
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-Isn't that problem the one you originally described [1]?
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-The behavior doesn't change if you don't specify the remote:
-`git push` == `git push origin`.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-> So this seems to contradict with the currently proposed 
-> wording:
-> 
-> > If you are working on a centralized workflow, then you need to configure
-> > an upstream branch with the same name.
+Sitz der Gesellschaft: Hamburg
 
-My wording is correct, and that's precisely the problem.
-
-Maybe you are thinking this patch series implements the fix I proposed:
-it doesn't.
-
-The two patch series merely reorganizes the code to make it simpler and
-easier to understand. No functionality changes.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/065528bf-b496-83d3-767d-2a78e50a9edf@gmail.com
-
--- 
-Felipe Contreras
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
