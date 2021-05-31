@@ -2,127 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 137FAC47083
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18972C47082
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:20:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9AFA610E7
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:18:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED5EB610FC
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbhEaRU1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52810 "EHLO
+        id S232779AbhEaRVt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:21:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232190AbhEaRTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 13:19:49 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF4AC0431E0
-        for <git@vger.kernel.org>; Mon, 31 May 2021 08:32:36 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id b5so10293624ilc.12
-        for <git@vger.kernel.org>; Mon, 31 May 2021 08:32:36 -0700 (PDT)
+        with ESMTP id S232057AbhEaRVd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 13:21:33 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11855C034610
+        for <git@vger.kernel.org>; Mon, 31 May 2021 08:35:40 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id c31-20020a056830349fb02903a5bfa6138bso4496217otu.7
+        for <git@vger.kernel.org>; Mon, 31 May 2021 08:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BhLCBhxBzB49X39d5qQ6rJltrDl0j+V6mGLrcMH1FiM=;
-        b=rXkG+f88h7yLfojQBs/YOiNMO9xo9oCHgMEohl/o/7xJOCg6Vpnl5HvpyLf4BhVG0M
-         wKf5g69Y2HMA76YVqgnO4R06979vcTPIAzLkyP5Bupa7KQU1thRJmf3qR7NWuYJ4YFXK
-         yheEQ3cSc5HOxgNq2+Nu40Mfh+1W/aB6fyuA6N4DXpxiJvOkgTwcUV/IoX1Odwj+4/v5
-         KTHovOr6qlliKrQNRJAzcuh+IBHyYNmeWPPyMhLgVDrmzuT5CFLdBm9Y53IUE2fP1Avy
-         SOrJuxA9xO4DCY4YcXmKEmhFC0wHvDo95VnB+JnqUrhvQ83P3cEta/k7ewAc/Wj9qCcb
-         ZI7A==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=tJIa6/0fZSQ+mgCp++6h6QAtSgzHrkKMNPs/j04iCdI=;
+        b=WkJE2svU5DZlT1lCCp6nTiyR8uahGckDqBOcOyY0tvgr0o4qCAGqYB8JXiVIPT67U+
+         z28Dpu08ly9mcrNOVYZWOqYYLvadLjfrI+mjk7eeMelajVmWd8lx2bdsytsYttIjVKQ/
+         QnHbPIfXlF+d9eJazMa6vwCBAwoBfv4mWIIVHnOv4Wip2l0jRPd9qh/yZE70RxjKg5JJ
+         xiA698tasFFEB5LitywkIjPxwVrz04mrKDMYmPZs5OdWJOM8SU/j5oMHZPk3c6WPIHxb
+         u8NiUgli4iMPIKYXQqUiqdmBnZHrYj3Sr+D1MCX2kqkP4qL+cnqV1HvfcNFcVaBkSmRH
+         Bu2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BhLCBhxBzB49X39d5qQ6rJltrDl0j+V6mGLrcMH1FiM=;
-        b=jYIPOHCrS1VMZrJpMQmC1c4oxpaW1NUN7mMhZx5Kbe4VISvYusKpFPo4dqAXdD7CuL
-         fwdba7NtXU0o8PgFLMBagbcf8+vayl/gNrg4iViiWKpkSqvdQhMaua6fn+F8jRZA6CJr
-         0CG+c34QnX49sOwjTWmfIKZbMwPW0ZsO5YrLrgJQxRA84of5sVVpBbfJgywp97ckvW9z
-         rvtm2Iq6Zs+6QiE/X+xEyzge9ZsklgBob1EP2eglPPY2LLOy8KZRyvZabgdYRG1cuNcp
-         Hnz9s0AKiZe2fvvGfeImudvxip9GsfeFs9hmS5/povkgTAtMqg+cQLOExtvfXaa3J3E2
-         IRZA==
-X-Gm-Message-State: AOAM533fbbJFk4fs/d/S/xfg+547zkeAx1bsz4+2ohrGZss8qspSCZ6n
-        wEatmVOlKfV2ZZ+bSbvo7zq1zWxA3Fmi1jzQ6DhV1R0mE6AsCw==
-X-Google-Smtp-Source: ABdhPJyb5uihzC1R4eLin3cFQ+9QlnxoB70PDdDwykx/mPo+tnQVUSm0Id2Jj4s8Rv7NPaOlfPVrwHIkXC5LCLb7ggI=
-X-Received: by 2002:a92:b0b:: with SMTP id b11mr12728430ilf.301.1622475155909;
- Mon, 31 May 2021 08:32:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.965.git.1622363366722.gitgitgadget@gmail.com>
- <YLP/GEN0qIXvWEUn@coredump.intra.peff.net> <CAOLTT8Q0zbxh8X03ZmgAzHadTbE4-Af+AB3POOUF2n22u8RExw@mail.gmail.com>
- <YLT2UfCZyQIXWIOv@coredump.intra.peff.net>
-In-Reply-To: <YLT2UfCZyQIXWIOv@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 31 May 2021 23:32:24 +0800
-Message-ID: <CAOLTT8T8aJ8X4TFV51JVB-ZAH-5E_E+bAmSMs2UtJ0k3OCON_w@mail.gmail.com>
-Subject: Re: [PATCH] [GSOC] cat-file: fix --batch report changed-type bug
-To:     Jeff King <peff@peff.net>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=tJIa6/0fZSQ+mgCp++6h6QAtSgzHrkKMNPs/j04iCdI=;
+        b=RsGh87NthwTzUiOvvMN/iCmQe1xpmue7OVXHLgPL03EHj6uvS+iFTidENG/A5b6JGQ
+         iFrsZLQfipcG200D/zcx4FDQkJ47l9rto+M+umWBdvbtfHQtnXmf6uK5u4Ah9iGUOexj
+         05rpfHyRJkH52eWLtgG9Z8222qwLdopUtINvrZ831Ix6MCjCn6GNE8P4yrbkxpJw85Gc
+         oqNPKk2/XVVHy7qF68O+Y5V7qQQKPg6bYDiTO0AnYfdZXPg5214H9vIMr27e8rYiP1B/
+         f1VtVc6Rxm2VhJStxCRO4HsiVMnYHbLn26ek/fqDdnPLKoBH9EAwExLbWuoM17xx2QHL
+         jBeQ==
+X-Gm-Message-State: AOAM533/4v7tWJYHi9N+EpyRY1kryJ/WA5Y1jb7dEIVmgixNy5QL2Wyc
+        62+gZO1+51vBOHPtKgfGkfM=
+X-Google-Smtp-Source: ABdhPJwpGJ3xuqyfybiNUh4tpOL3rXs0sETZ1Ci2SDpu4+85LOxUHyTOS/APs09jJzt9BN7tXfW5iA==
+X-Received: by 2002:a05:6830:208e:: with SMTP id y14mr17309852otq.15.1622475339413;
+        Mon, 31 May 2021 08:35:39 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id l128sm2874759oif.16.2021.05.31.08.35.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 08:35:38 -0700 (PDT)
+Date:   Mon, 31 May 2021 10:35:37 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     ZheNing Hu <adlternative@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
+Message-ID: <60b50249ae62a_24d2820893@natae.notmuch>
+In-Reply-To: <CAOLTT8TEkrxAgHvkCVXZDQpn0xSQAe_y7uMF89Q4QWwVd7MDcA@mail.gmail.com>
+References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
+ <b3848f24f2d3f91fc96f20b5a08cbfbe721acbd6.1622126603.git.gitgitgadget@gmail.com>
+ <60afca827a28f_265302085b@natae.notmuch>
+ <13c63e79-27fd-58d5-9a4c-6b58c40ef4b8@gmail.com>
+ <60b25ca7a01c2_265088208af@natae.notmuch>
+ <CAOLTT8TEkrxAgHvkCVXZDQpn0xSQAe_y7uMF89Q4QWwVd7MDcA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] [GSOC] ref-filter: add %(raw) atom
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B45=E6=9C=8831=E6=97=A5=E5=91=
-=A8=E4=B8=80 =E4=B8=8B=E5=8D=8810:44=E5=86=99=E9=81=93=EF=BC=9A
->
-> > > > +test_expect_success 'cat-file --batch=3D"batman" with --batch-all-=
-objects will work' '
-> > > > +     git -C all-two cat-file --batch-all-objects --batch=3D"%(obje=
-ctname)" | wc -l >expect &&
-> > > > +     git -C all-two cat-file --batch-all-objects --batch=3D"batman=
-" | wc -l >actual &&
-> > > > +     test_cmp expect actual
-> > > > +'
-> > >
-> > > Is it worth testing both of these? The %(objectname) one will fail in
-> > > the same way (because we do not need to run oid_object_info() to get =
-the
-> > > oid, which we already have). I'm OK doing both for better coverage, b=
-ut
-> > > it may be worth mentioning either in a comment or in the commit messa=
-ge
-> > > that we expect both to fail, and why.
+ZheNing Hu wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> =E4=BA=8E2021=E5=B9=B45=E6=
+=9C=8829=E6=97=A5=E5=91=A8=E5=85=AD =E4=B8=8B=E5=8D=8811:24=E5=86=99=E9=81=
+=93=EF=BC=9A
 > >
-> > Yes, these damages need to be pointed out in the commit message.
->
-> I think what confused me here is that you are using "%(objectname)" as
-> the "expect" output, but it also exhibits the bug. So I'd expect this
-> test to pass even before your patch (though I didn't try it).
->
+> > Phillip Wood wrote:
+> > > On 27/05/2021 17:36, Felipe Contreras wrote:
+> > > > ZheNing Hu via GitGitGadget wrote:
+> > > > [...]
+> > > >> +static int memcasecmp(const void *vs1, const void *vs2, size_t =
+n)
+> > > >
+> > > > Why void *? We can delcare as char *.
+> > >
+> > > If you look at how this function is used you'll see
+> > >       int (*cmp_fn)(const void *, const void *, size_t);
+> > >       cmp_fn =3D s->sort_flags & REF_SORTING_ICASE
+> > >                       ? memcasecmp : memcmp;
+> >
+> > Yeah, but why?
+> >
+> > We know we are comparing two char *. Presumably the reason is that
+> > memcmp and memcasecmp use void *, but that could be remedied with:
+> >
+> >         cmp_fn =3D (int (*)(const char *, const char *, size_t))memcm=
+p;
+> >
+> > That way the same cmp_fn could be used for the two cases.
+> >
+> > Either way I don't care particularly much. It also could be possible =
+to
+> > use void * and do the casting in tolower().
+> >
+> =
 
-Yes, %(objectname) should not be used as the output of "expect",
-it is also a broken part.
+> I agree with Phillip's point of view here:
+> It would be better for memcasecmp and memcmp to be consistent.
 
-> Really, the symptom of the bug is that _neither_ of those cat-file
-> invocations will exit with a success code. But because they're on the
-> left-hand side of a pipe, we wouldn't even notice.
->
-> The simplest test is just:
->
->   git -C all-two cat-file --batch-all-objects --batch=3D"%(objectname)" >=
-/dev/null
->
+Fair enough.
 
-Yes, this is enough. I even think about use something like
-"!test_must_fail xxx" before... that is not necessary.
+>  static int memcasecmp(const void *vs1, const void *vs2, size_t n)
+>  {
+> -       size_t i;
+> -       const char *s1 =3D (const char *)vs1;
+> -       const char *s2 =3D (const char *)vs2;
+> -
+> -       for (i =3D 0; i < n; i++) {
+> -               unsigned char u1 =3D s1[i];
+> -               unsigned char u2 =3D s2[i];
+> -               int U1 =3D toupper (u1);
+> -               int U2 =3D toupper (u2);
+> -               int diff =3D (UCHAR_MAX <=3D INT_MAX ? U1 - U2
+> -                       : U1 < U2 ? -1 : U2 < U1);
+> +       const char *s1 =3D (const void *)vs1;
+> +       const char *s2 =3D (const void *)vs2;
 
-> which will currently fail. It would be nice to verify that its output is
-> sensible, but I'm not sure how to easily do that (it will spew a bunch
-> of binary tree data, and it cannot even be parsed reliably since we
-> haven't output the sizes).
->
-> -Peff
+vs1 is already a const void *, and there's not much point in adding
+another line:
 
-Thanks!
---
-ZheNing Hu
+	const char *s1 =3D vs1, *s2 =3D vs2;
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
