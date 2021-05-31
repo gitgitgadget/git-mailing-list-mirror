@@ -2,133 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED66C47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 07:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 579FBC4708F
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 07:53:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B870611EE
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 07:50:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27F4F60FE9
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 07:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230143AbhEaHwR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 03:52:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38908 "EHLO
+        id S230224AbhEaHzD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 03:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbhEaHwM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 03:52:12 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B751DC061574
-        for <git@vger.kernel.org>; Mon, 31 May 2021 00:50:30 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id a21so639626oiw.3
-        for <git@vger.kernel.org>; Mon, 31 May 2021 00:50:30 -0700 (PDT)
+        with ESMTP id S230070AbhEaHyz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 03:54:55 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2125C061574
+        for <git@vger.kernel.org>; Mon, 31 May 2021 00:53:14 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id h12-20020a17090aa88cb029016400fd8ad8so1490705pjq.3
+        for <git@vger.kernel.org>; Mon, 31 May 2021 00:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=5P1QJWvrGboqV06A8L/10YFhcRf6CQj8r/T3/sXmLSw=;
-        b=MILYv5PjuTU25JM8MC0nvskM9gnQxbKczs4ZJGlm4RKhiL6+G6BKWXMdds1HFZSl3N
-         iZ8w8Lcnub3mMcnXCJxUynryJT+qR/ttrXZKqJNaVtmeUPyl07iYiMsZDngQ79GHwGEv
-         UbdPvlwpOdkDlxLWBqd1LW9IDHU3gd+o60W2Zxct1Oswlk3LQHv/QLl/M5/P742hs62V
-         Wv3uB/jMJBOycQaPb5oW/7LDb0M1PtE113aO/NdVWlCCRio8JvooQuWa/R5r+Tyb5llD
-         hbgD7u9sgZNNttwpFLHOHkf+K/Ss4BIKpakx63l8bR6C7dI7Xu/oSAXXercuMj4Ij4gB
-         reQw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kQOhrnkOFLjtj05XWu1i43zS1QPJed8wLetR93Us8Yw=;
+        b=gTrYloJnWxa1BFHJvX4n9LAT1I5sbsDoI+sdkQw4R/CG7f5h71pGQA274LA4QOy0mo
+         zeLmC8GoHZdfMh5xDVBn4HJAAaE18ucZXGyiAqcPRyOHpzcskJVbWUD/Ewidmgu+GvaT
+         RMBvFBKguI/H1LpO4IvhZw31h4DlFz5bNEcEzbF6Kmn9UEEo9uPampIbe3XzIbx+qZSR
+         rTpXKYfp79GCGPAbhdcrMdeXVYlpQszA2GFlGGoow67FhZad26SE2ghXRYCA9JjZ37Iq
+         gNc0WsELWG7tOHngJZbOGpLqb6bWU1wULrrtFZnDVgy9OVWGeFgCaYDhpuXmvnd6Ix64
+         +YZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=5P1QJWvrGboqV06A8L/10YFhcRf6CQj8r/T3/sXmLSw=;
-        b=YqBlaOf+dr84GbNkdPkppZ+SP5z2Dyx1fo/1rsHKKX4W8asTtUB/uyACgerBWvmz6S
-         9/RCJfQng/L3pMCb603vRb2fjdvq4iJmd9xUkKzOVr7gxg/dBHuWLEXSQKBBO5YxtIpy
-         sWYjho/1v8ifyyTv/DBpo6kvPn1NCM0vlfirI6c49eDAkOOmNnxEIfqrBaGQnCWjr+UA
-         yOUrGKoSDJc1vUx35LfPR0QMFTnJqeoiYX/wwsUSAfbGzz7tQq8+2tGPRsVj5GsbXfO5
-         KMR1Jv91Rn80zqzY6/aZa+FvTBrJOS22/WmSNjyumKwyHuCuYNBhbvmcpBx4R3FnBJhc
-         EUFw==
-X-Gm-Message-State: AOAM530ldLwB8s2g1BrsfFG/uTYHU3MHUJ3NffmV47+EbxauT6/ttbQm
-        Nw1JGC9FEUovYQOEaRYXcaM=
-X-Google-Smtp-Source: ABdhPJylYxqbW7ki/WSMDKbOEW8RZCwNpH7pmV5HmlPZD+EkMb0QyZKMBrea+OP0m8UQG7fW/D0LBQ==
-X-Received: by 2002:a54:4113:: with SMTP id l19mr16037106oic.38.1622447430105;
-        Mon, 31 May 2021 00:50:30 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id x3sm1251144oov.7.2021.05.31.00.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 00:50:29 -0700 (PDT)
-Date:   Mon, 31 May 2021 02:50:28 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Mathias Kunter <mathiaskunter@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramkumar Ramachandra <r@artagnon.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Message-ID: <60b495442d1a0_24d2820857@natae.notmuch>
-In-Reply-To: <xmqqim2zy0jg.fsf@gitster.g>
-References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
- <20210529071115.1908310-2-felipe.contreras@gmail.com>
- <xmqqim2zy0jg.fsf@gitster.g>
-Subject: Re: [PATCH v2 1/6] push: hedge code of default=simple
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kQOhrnkOFLjtj05XWu1i43zS1QPJed8wLetR93Us8Yw=;
+        b=fSGnQtfctK6xlsX2fcT4pgF4B1lHEcCO+iimuq7/8WBGrAAYZ4DLh5KQ8qWLUlg3YN
+         8tTAcvOrjQU6MqotikkM02TMkBtw9gxQlVLBy4EYMYJEPD9NisQ+ctYs1fxFP/57ICyu
+         wYzer9XUdhbOra7l9QZge9L8zNKlEG/nBpTTMfGWAyH/2JWHZAq4lzIoph/x7OhpeBhO
+         9c9ofON/Vp+fz6cOZFt8gI86H6EnOaEYFXapsa9tXbhF5B7/Cgqf+AZwkIqsnmkWncQm
+         qcMdwEr+U7IaSQ+9V1im0wN2iSN0prRT2STXVBn4JRWHxWJ/GtnRzHYiKOT5G0y0BDfS
+         Gp8w==
+X-Gm-Message-State: AOAM533qvDe5AG5t/E9JaKYf+gtYr510+VnI7oNstfBigKX28oe9HhEO
+        9mSTWIVlL14znxTUPzU3xdakQjBhGdZEIg==
+X-Google-Smtp-Source: ABdhPJxxphdPWj/505Rw8HF1A4FHgAomAOxB6gXMa4SHgZ8REIMVPSnMCuttskI+fPyP4/WnTiyDZg==
+X-Received: by 2002:a17:902:9b8b:b029:ee:bb74:7d46 with SMTP id y11-20020a1709029b8bb02900eebb747d46mr19463386plp.65.1622447594215;
+        Mon, 31 May 2021 00:53:14 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-67.three.co.id. [180.214.233.67])
+        by smtp.gmail.com with ESMTPSA id c190sm1558898pfc.26.2021.05.31.00.53.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 31 May 2021 00:53:13 -0700 (PDT)
+Subject: Re: [BUG] gitk error - can't read "arcnos()": no such element in
+ array
+To:     Chris Packham <judge.packham@gmail.com>
+Cc:     GIT <git@vger.kernel.org>
+References: <CAFOYHZBAg7pkise8bir7Z3qApw9mJB8Z99p6z71-_T6=7rFV7w@mail.gmail.com>
+ <CAFOYHZAfQivHvs5=hGt-A1CbtwW-iJSwC1iFk7FY3wnNcVNVrQ@mail.gmail.com>
+ <aa18c448-9a74-0837-a2bb-008aab31f0e4@gmail.com>
+ <CAFOYHZA4xbnWc1d1zK-fjoDHZntQj7weDZk1r=SOJxVtKD4aOA@mail.gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <d919f68e-42a9-bd74-c16e-8d2c185b6938@gmail.com>
+Date:   Mon, 31 May 2021 14:53:11 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
+MIME-Version: 1.0
+In-Reply-To: <CAFOYHZA4xbnWc1d1zK-fjoDHZntQj7weDZk1r=SOJxVtKD4aOA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 31/05/21 14.38, Chris Packham wrote:
+>> Is your problematic repo public? If so, we can test against that.
+>>
 > 
-> > `simple` is the most important mode so move the relevant code to its own
-> > function to make it easier to see what it's doing.
+> Unfortunately not. It's actually an internal kernel tree which has a
+> different root to upstream (hence using git replace to attach upstream).
+> All of which make the history a bit funky.
 > 
-> The change and the above description makes sense to me.
+> I don't know if the problem will survive anonymisation but I can try.
 > 
-> I didn't, and still don't, understand the use of verb "to hedge" in
-> the title, though.
 
-> Apparently it isn't "to evade the risk of
-> commitment", "to protect oneself finantially", and of course not "to
-> plant, form, or trim a hedge".
+Did you mean vendor kernel tree based on Linux kernel? I think you can 
+try reproducing the issue with either Linus' tree [1] (mainline only) or 
+Greg's stable tree [2] (mainline + release branches and tags).
 
-Those appear to be the intransitive verb definitions of Merriam-Webster
-[1], there's an object in the sentence (code), so it's the transitive
-ones that are applicable:
-
- * to enclose or protect with or as if with a dense row of shrubs or low
-   trees: ENCIRCLE
- * to confine so as to prevent freedom of movement or action
-
-Some synonyms: block, border, cage, confine, coop, corral, edge, fence,
-restrict, ring, surround.
-
-I think it fits.
-
-> > Reviewed-by: Elijah Newren <newren@gmail.com>
-> 
-> I trust Elijah would complain and/or clarify if this footer is
-> inappropriate (I didn't see an explicit "You can have my
-> Reviewed-by", but only "this looks good to me", and didn't know
-> what he meant).
-
-But he did review the entire series. So I think it's safe to say he
-reviewed this patch.
-
-> I do like the change of the phrasing from triangular to same-remote
-> at the end of the extended series, by the way.  It makes the code
-> simpler to read and much easier to reason about, and it would be
-> nice to have it even before this step ;-)
-
-All right, I'll keep in mind for the next round.
-
-Cheers.
-
-[1] https://www.merriam-webster.com/dictionary/hedge
+[1]: https://github.com/torvalds/linux
+[2]: https://github.com/gregkh/linux
 
 -- 
-Felipe Contreras
+An old man doll... just what I always wanted! - Clara
