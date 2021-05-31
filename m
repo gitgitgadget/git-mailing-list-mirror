@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02E75C47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 08:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BA34C47094
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 08:11:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9A7660FEF
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 08:03:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61B0560FEF
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 08:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230257AbhEaIFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 04:05:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41846 "EHLO
+        id S230111AbhEaINX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 04:13:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbhEaIFU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 04:05:20 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07801C061574
-        for <git@vger.kernel.org>; Mon, 31 May 2021 01:03:39 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id x41-20020a05683040a9b02903b37841177eso865494ott.9
-        for <git@vger.kernel.org>; Mon, 31 May 2021 01:03:39 -0700 (PDT)
+        with ESMTP id S229640AbhEaINW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 04:13:22 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC30C061574
+        for <git@vger.kernel.org>; Mon, 31 May 2021 01:11:42 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id w127so11534040oig.12
+        for <git@vger.kernel.org>; Mon, 31 May 2021 01:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=IXhjngKih8W8K57gsK2f3WdyiVBTYPyMEKShT9K+mVU=;
-        b=A4zInqjHfcVSiZZ4lNoA0xmcY3M7AtVI4tAVG49Rh3P+dOmvh4kTBGebzriu4h94Ia
-         xsQecgqAiimI8+PU1Cmza9trBoopImmZOmdQgwcoAs1SFJ+/+c28b76zMjjtxKDSqWpV
-         uRIXbTT9Dhv8xhw5qUOGaCV/CBlaTeBeNeow3tfDwP/LvI5y5ReypDfqrBgs+maGWtNg
-         MEW5K7dUFphIrLwE6HhCTyeHCOGzW9bSeERhdW1ZBympSyVppX9Or1a0C8lqm3TRRbRL
-         qaO2/1pSzknTXzSPOLhPlte2c6Utb/V4xeF8hApGgfVz1TP2MjbOpLQuTTwGiQJWJSmL
-         o6oA==
+        bh=0lAndxS84i8rhBIzuEipv1kSEuSHGU+WG3XXySjWX+A=;
+        b=CisTKz1p+8vXev0Hkc0EGj8/7AbrvSOUjEo5y2BL2PIY0JAAXhEZ814eIB0AG2lrW0
+         MHLqSkgcUC1N2Ji8gHPWxQhMyugDYOKsEh4/pcrTJtakRqOso/ZvMo7IQ0AFP5QBjN2m
+         tBgnuiCkY7oG0vYFJWiKjeStU8o0GIfEyTgHw23cWJIR04Vnq/lda0yDekcNlNpw0Q7Q
+         l2VzLSS33bsSMp/Jfv2zZMv8KM2UPKkPxjoqiWfDZxvs/IJbxbPLybx8SDPqs/tQx494
+         MxfKXIl4tEpZVt0P7Bo8JQd8q74aswLOWJ9MMzJqlHv7tU12jy8n1abWGF1hx+Onj9d6
+         1G8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=IXhjngKih8W8K57gsK2f3WdyiVBTYPyMEKShT9K+mVU=;
-        b=gnmsmRmMpow8JKEimJNytCWe6uJscF1gObGCRAPdIR4q3VrFzJG+fCHunv80VHg3GX
-         gr46SRnuftSH2WE55h0SLuVfXlsSikmokalmm7dKKjdb1AZ1OCJlnxXTW4cPQk0csuLl
-         /lfaVDuAE2HxA+Vizih12jHdp0SFCIf0teCLkl6aI7mnv54ouCasj+QwuIfUlaxfoOrE
-         A0/wjA1MKuBPxash0XmCMoeJTkapm1xN6qXjRFyjJHwR5vnHp3zjfGKwcumG/zQped/B
-         qQtFacOwWvILT3zWycGMgs0RXbYwR00+Lm2Lt10rcMLb/oqETCcbBDxuSegbFWjJlen3
-         R9uw==
-X-Gm-Message-State: AOAM533zfA2pI8U5MrNF9c/AWa6j+7AbQmGRgZLBjYoV+sJo0kdPKnpK
-        v2hnlsIgbU6KaYn+ZYau0RI=
-X-Google-Smtp-Source: ABdhPJwLC4ypkUkuzgBLZnYVfKd0okNGZ+Fqfe0Wf64z3Qey9JBjjMk5aWGgDrwAXSbWsRjdpoHKUg==
-X-Received: by 2002:a05:6830:1196:: with SMTP id u22mr16008163otq.247.1622448219242;
-        Mon, 31 May 2021 01:03:39 -0700 (PDT)
+        bh=0lAndxS84i8rhBIzuEipv1kSEuSHGU+WG3XXySjWX+A=;
+        b=Mk45vtarv9QBqX0TpSFXMXWOB2FLJP5VYCoAyTxrhp6jhyY8tgKuo037lqsVUsmBuX
+         cR4/cSRpNuQajH20Ph1ll6xW6m4Wv4c2bwMrqrbHw5mqJ5BMnAjIVsyecEskHid6NTjQ
+         Gk1346xYmtLvb9EU87WqNR41oIi0HYN9J4vIG2/hQiUBLLewGLJiZonjxdb36YunB75Y
+         Br4ALxjs6u4dqg00Fl9s4DUMi4TggPbuaV8FaUi6hmvCeAxLeJr2rDPj9XgV4vsVZHUI
+         jf54qwW838Q78TlFTL0hoy4zOFP/LuD6ryW8tCPbRwxya6lwV2PpCcMbSI0Qq0GnvdHO
+         Gsdw==
+X-Gm-Message-State: AOAM531z892R6IazMWUAogjDmiZUhRAWJ0bhLTLX/gvEzpVm9UvwO1aK
+        jPJwoaSxbl7zd/w1MPRoG5k=
+X-Google-Smtp-Source: ABdhPJzPhJHkOHotz0nipJ5W4MccncUq+P2rTbHUxh19tFa4SdfKo5L8riVOphGrUbbepACMIuGdlw==
+X-Received: by 2002:aca:34d6:: with SMTP id b205mr13553350oia.151.1622448701183;
+        Mon, 31 May 2021 01:11:41 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id i2sm2947978oto.66.2021.05.31.01.03.38
+        by smtp.gmail.com with ESMTPSA id x65sm2947495otb.59.2021.05.31.01.11.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 01:03:38 -0700 (PDT)
-Date:   Mon, 31 May 2021 03:03:37 -0500
+        Mon, 31 May 2021 01:11:40 -0700 (PDT)
+Date:   Mon, 31 May 2021 03:11:38 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
@@ -66,12 +66,12 @@ Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
         Matthieu Moy <git@matthieu-moy.fr>
-Message-ID: <60b498599fbde_24d28208d4@natae.notmuch>
-In-Reply-To: <xmqqczt7xzm4.fsf@gitster.g>
+Message-ID: <60b49a3ae829b_24d28208fd@natae.notmuch>
+In-Reply-To: <xmqqv96zwkl0.fsf@gitster.g>
 References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
- <20210529071115.1908310-3-felipe.contreras@gmail.com>
- <xmqqczt7xzm4.fsf@gitster.g>
-Subject: Re: [PATCH v2 2/6] push: move code to setup_push_simple()
+ <20210529071115.1908310-7-felipe.contreras@gmail.com>
+ <xmqqv96zwkl0.fsf@gitster.g>
+Subject: Re: [PATCH v2 6/6] doc: push: explain default=simple correctly
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -83,29 +83,27 @@ X-Mailing-List: git@vger.kernel.org
 Junio C Hamano wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> > In order to avoid doing unnecessary things and simplify it in further
-> > patches.
-> >
-> > The code is copied exactly as-is; no functional changes.
+> > +If you are working on a centralized workflow (pushing to the same repository you
+> > +pull from, which is typically `origin`), then you need to configure an upstream
+> > +branch with the same name.
 > 
-> The title says "move" and I expected to see corresponding deletions,
-> but it seems that this (possibly temporarily) duplicates what these
-> two functions do, without removing them, which (possibly
-> temporarily) risks the two to drift apart.
+> I suspect it would be simpler to read and easier to understand to
+> bring the parethesized part front, e.g.
+> 
+>     If you are pushing to the same repository you pull from (which
+>     is typically `origin`), then you need to ...
+> 
+> as it would avoid "the project is not centralized, but I push to my
+> own repository and pull from it---what should I do?" questions.
 
-OK. Copy then.
+The top of `push.default says:
 
-> From a quick scanning of the remainder of the series, it seems that
-> 3/6 and 4/6 improve the copied code without changing the behaviour,
-> and at the end these two functions remain, so we have duplicated
-> logic for these two functions and improvements only live in one of
-> the copies (namely, in the setup_push_simple())?
+  Different values are well-suited for specific workflows; for instance,
+  in a purely central workflow (i.e. the fetch source is equal to the
+  push destination), `upstream` is probably what you want.
 
-Not quite: setup_push_upstream() was simplified too, in 5/6.
-
-Maybe I can mention that part of the code of the `simple` mode lives in
-setup_push_upstream() and by copying the code to the right function both
-can be simplified.
+We already brought up the central workflow, I think it's fine to reuse
+the concept below.
 
 -- 
 Felipe Contreras
