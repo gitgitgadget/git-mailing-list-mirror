@@ -8,66 +8,65 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBA72C47080
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D08EC47080
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:39:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D9C161108
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:39:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1000260231
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233654AbhEaRlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
+        id S233700AbhEaRlR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:41:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232968AbhEaRkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 13:40:45 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32AE2C068EFD
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:41 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id f17so5164041wmf.2
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:41 -0700 (PDT)
+        with ESMTP id S233076AbhEaRkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 13:40:46 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F316DC008741
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:42 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id s5-20020a7bc0c50000b0290147d0c21c51so327351wmh.4
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fd8GejOq01K6AoXMkukSoNdf1cFk1ikKhFJh07/m1iA=;
-        b=eWytrichn1mlzKYM7LRGfAmQ393pCPjyTe+FncLdBzAbtQbH/l6e4r3kInf3QUhaZX
-         bYAmsu+u0gBo3HWxoamO4lQs6QmnRiQDcuOXWEfc6oFyXYUyEVetCJxwO3RKzAlWU8yz
-         4wuRrRbG2m1BP8iPooDZynYFE7SkwMT1AtWJ+X44Cge1UpKOxb/EV96vSzQCsPHOVGne
-         VGctUNFXaTrYMUuROhAAxjr161n9iYCaKLoyS8oru8ybKWmDRLYZir02lKCnZ8fhsEBY
-         OLFlEmG9ny5RXsLEDq0CIcVbZ99k7gosZYce9kxiZ2ttAUBkjrt4Yv5+Ex0fFndHsPjv
-         GVoA==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=cUsN+j76mzKamDBijjtwkqu2z92gPYbkH8XM3uMWhgE=;
+        b=CJUp28VKuCw15OlChq0ETqe7//PoODpwbLh6ph9D3SG8tsseHIzjT1OcrfireOQC0G
+         qb/3iEV7hoV5CAPgoDzKgTPa0emrYuMvWAzqWelHlVPD1RpAqtNwS9cwP/Gdjl4yx72u
+         aNqrVZ+2AJ0+9CNSxndvQ6oO8/fetP2pU2o1C1eV4VrfoB3I0sbO+2K1vFfgNQKV170t
+         rkFWgUY1cXFPIplEqJIG88PAXmRQf1TnTJmZ3o72MYLqOH72qwI0MvhNpmsEoM+zXiFQ
+         BVrT4C6voCrElocBHJ3QUj48sdjli91VWAkJkVT59TkpqajdlrIv34ukagnkg0Rgr28h
+         fTng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fd8GejOq01K6AoXMkukSoNdf1cFk1ikKhFJh07/m1iA=;
-        b=kWftetMUOv3A7LAMY5cBRhPD7JQVBL2dwBYf6WhAhyLJM7H9DUSniNuZs1MMnwNYQS
-         r6U8vhjzxm5w6K44KcbBdFi8l7BvrkrqemflnlM4cjapqKf+nUTV1zFsfKSCAoDRX9Il
-         RzsKFSOAenjJmhtenLgl84qNNwqqGW4xSbnb/CniDyqtGCk1th5GG4oHb7cXXMWMUHPL
-         mUDAyDHHm+nVgkA9H3DuTbDFjST7cckkRP5Uxw3H1gW4Zy4wP3HF4TRxAlrS7ydO6ffC
-         XH1KzR++Yzd6EZ1I3cAh74LWOlnNQb1SZWqCbfapAP8Ao+5kuMdFPpSUKGXkvGP2Q1rj
-         TWiw==
-X-Gm-Message-State: AOAM533kySe5ER5j+wi4gHl4qkz15G0UkTSrUKu5GUgZ4K4iSGU1+LDx
-        /MIXXrSolNNuk1l96U3uRQ1IpcFQo/M=
-X-Google-Smtp-Source: ABdhPJyJeAoOo/jcdgVYiGOAyBH+JoTHgj3zCwDM6S4da0QXNd/8TS6FsBO6i1K9WgA5PBMJs7j+Qw==
-X-Received: by 2002:a05:600c:47d7:: with SMTP id l23mr6883733wmo.49.1622480199870;
-        Mon, 31 May 2021 09:56:39 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=cUsN+j76mzKamDBijjtwkqu2z92gPYbkH8XM3uMWhgE=;
+        b=n0WvejUl/2nLZ5JFGwfLEaOCLkV7PVEQrIHJXDKWWfRMEyw2UgoTKuJfXuwFIm/qxh
+         9y+BaZnPurR38yZWsez97lVI1ReQuX5xxAvRpohRJqAcqV2aw/VzHy+eyPUYTFeJ5F+Q
+         1mvfdJe4Cq6yrgzopybjapDKKhVaR9rkbOtr5Rk9St5m7r5lmXz+O2W1lmF2w/trnnB3
+         ylWR93q4brjUyIHUCZRy//exl6DMwLuwVRe0uzCXNM/SO0XSRQvNgVu34NA8hjCnNhLs
+         xqfdOa/n4I+S65BrMWTb72Dv5vbmBAcCq0DpUdzBPeoaOTomshBJMlzhcpFw6cNiHZdB
+         twhQ==
+X-Gm-Message-State: AOAM532g58fo3TU5VmKBKwIDbeXHgnx2o50gUdO1oy+Q9jdZPA5zgmkB
+        vCTHLWj83YvH1g7/Klqb3bmgb5rKcWE=
+X-Google-Smtp-Source: ABdhPJwln284+h6PT33C8eaGrepNcf9PGXbZ+8ujVegH+/A01322d5YCoD5b5uw/sSdxPg17M28DMg==
+X-Received: by 2002:a05:600c:35cb:: with SMTP id r11mr62017wmq.152.1622480201664;
+        Mon, 31 May 2021 09:56:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u2sm256075wrn.38.2021.05.31.09.56.39
+        by smtp.gmail.com with ESMTPSA id p6sm16085591wma.4.2021.05.31.09.56.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 09:56:39 -0700 (PDT)
-Message-Id: <6d875c6d757991c73a578933b65a569cb937546e.1622480197.git.gitgitgadget@gmail.com>
+        Mon, 31 May 2021 09:56:41 -0700 (PDT)
+Message-Id: <c898982255c19639d77c910c84557538bd104093.1622480197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 References: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
         <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 May 2021 16:56:16 +0000
-Subject: [PATCH v3 01/22] t4202: split testcase for invalid HEAD symref and
- HEAD hash
-Fcc:    Sent
+Date:   Mon, 31 May 2021 16:56:19 +0000
+Subject: [PATCH v3 04/22] t5601: read HEAD using rev-parse
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
@@ -80,40 +79,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Reftable will prohibit invalid hashes at the storage level, but
-git-symbolic-ref can still create branches ending in ".lock".
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4202-log.sh | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ t/t5601-clone.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 350cfa35936a..327991fcea49 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1834,14 +1834,18 @@ test_expect_success 'log --graph --no-walk is forbidden' '
- 	test_must_fail git log --graph --no-walk
- '
- 
--test_expect_success 'log diagnoses bogus HEAD' '
-+test_expect_success 'log diagnoses bogus HEAD hash' '
- 	git init empty &&
-+	test_when_finished "rm -rf empty" &&
- 	test_must_fail git -C empty log 2>stderr &&
- 	test_i18ngrep does.not.have.any.commits stderr &&
- 	echo 1234abcd >empty/.git/refs/heads/main &&
- 	test_must_fail git -C empty log 2>stderr &&
--	test_i18ngrep broken stderr &&
--	echo "ref: refs/heads/invalid.lock" >empty/.git/HEAD &&
-+	test_i18ngrep broken stderr'
-+
-+test_expect_success 'log diagnoses bogus HEAD symref' '
-+	git init empty &&
-+	git --git-dir empty/.git symbolic-ref HEAD refs/heads/invalid.lock &&
- 	test_must_fail git -C empty log 2>stderr &&
- 	test_i18ngrep broken stderr &&
- 	test_must_fail git -C empty log --default totally-bogus 2>stderr &&
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index c0688467e7c0..83c24fc97a7b 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -305,7 +305,8 @@ test_expect_success 'clone from original with relative alternate' '
+ test_expect_success 'clone checking out a tag' '
+ 	git clone --branch=some-tag src dst.tag &&
+ 	GIT_DIR=src/.git git rev-parse some-tag >expected &&
+-	test_cmp expected dst.tag/.git/HEAD &&
++	GIT_DIR=dst.tag/.git git rev-parse HEAD >actual &&
++	test_cmp expected actual &&
+ 	GIT_DIR=dst.tag/.git git config remote.origin.fetch >fetch.actual &&
+ 	echo "+refs/heads/*:refs/remotes/origin/*" >fetch.expected &&
+ 	test_cmp fetch.expected fetch.actual
 -- 
 gitgitgadget
 
