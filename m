@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C860C47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A54EC47080
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F3FE60231
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 369C961108
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234027AbhEaRmo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:42:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57000 "EHLO
+        id S232870AbhEaRmt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:42:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232419AbhEaRlD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232591AbhEaRlD (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 31 May 2021 13:41:03 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 557E0C008755
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D82F9C008756
         for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:50 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id z17so11553094wrq.7
+Received: by mail-wm1-x331.google.com with SMTP id z19-20020a7bc7d30000b029017521c1fb75so9224613wmk.0
         for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=CCtcrmQpghDYfxtA502AvpYUDL4oMd5ZPY1rTH3TLwI=;
-        b=CasW6mzTrHm8SG9U7BrmLnEYlcA83w4q1G9W1HQM+mBbN5qDg5GwJcnQPMbrN7JEd8
-         hRbYBqlp5PK0qC4f6NR1/2dFoJ8gSCiGP96hPeNTGGd53/CfmXBkbRV92YDObjpkiwYd
-         CZ9aua8TWG2+37bPbLv2XS1bFPvi9beo6oJk3d938xx+rmneOP42mjPsj2G5I9z8mFpS
-         4TDnZkRr8FsNK4DN2hCNsOIWhO3IMZNNlIcoXnrdGRaV4UzDXtbJdJItHOwITv48+kqQ
-         bxoZ0yJ5YnDd4Wq+XZldYd/oO9/stNuFzCLgOWoJTVvzpqrs3b8QKu430pGFDrqeqwre
-         sPjQ==
+        bh=Kz7Ad/tLVOBDrM5Ch9kTOh5dZ3P5MrWcssYmDd0evkM=;
+        b=ugCfRqeEYxt/thR0MII15kRNGVYCdqbHPohtBp327wqYmk1MU2pCetA0DTkq5hnKgm
+         uyZ07KRBlSrlc+TXEj9czaLJWKjB2E2SP1tFc0FHFG9v4Vx3GtkSVphtrNwvucN0G/EG
+         FgULhvEROSJ0dPgp729goRqnpwPxtiK5Pd7TS+rX5BibZxpP/jE6yJyQpR1gl7pExqBt
+         o3XGfX7axf5kp5GtCD6qRbbev2JFY8q1WHUGZQx4tPkAQz5BQfaxbBQNDUO0h9oL5JPU
+         FJ0Zx9T2AzKnSzRlrjtHHMXTbtNWDT3eWN15O35cA6pwfVKfgq9bg5ibbTKOAGZT4sGm
+         adrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=CCtcrmQpghDYfxtA502AvpYUDL4oMd5ZPY1rTH3TLwI=;
-        b=DIFpIFfstE9HTtbVRoeWSVT0+rg3eiGoJZTW6UbJqSmh20jj6TUHHHVBVsIxrCubUZ
-         fvlsfiVbuSgU/ZZtv3b8xZPkrQqiNveg/WflxuklRJpKMur0DNrITidVJibs6tkgRHsu
-         cHj4V8n1P7f7eqTzUNKpfXYw97w81Aph7rC0zfo5wmXIBw0K4V1HF9uccHWL2nF3AY84
-         WTeYlF3eTOUFu11w/mJc+ChxOq7VcBNFzVF/2LeVY/JiBQ+yrFQdns6bcum4ueS4Qe6P
-         AZSHpIKibapsElEntf4ujJ1/8aD9PJUZ1yWtXKtPPvz7wxY8SPCvdZ/9qVJGC/EpHcX4
-         ePLA==
-X-Gm-Message-State: AOAM533mBkEzjSctimrU7xu9i2HC41FaozUR/cHCWvYq3QBgqwjKX0Hp
-        Li+NN3xI2c+Di2OKyszPq7+fOvZW7/I=
-X-Google-Smtp-Source: ABdhPJyWskfo/91P4RkVYqOeYqHheDi9gQ+qmmrklOdB8bKXHLpFV7EHLmvBFnMF9QnLFaxBjCggkg==
-X-Received: by 2002:adf:f907:: with SMTP id b7mr23006891wrr.357.1622480209072;
+        bh=Kz7Ad/tLVOBDrM5Ch9kTOh5dZ3P5MrWcssYmDd0evkM=;
+        b=aeKgpX94LMyWL2xXIh9l7dr57Sa1aHMNoaJzCMh9K8Zel9MIyXogc1gNFInUAAOWmx
+         KCEo2XbI0AxF52ImmdZpj9MnlzNarOZGppdUC6Xfq2vPD4K7kOs8Lr76gctt04bEIwiB
+         oHAMbpZW+1Lcm65bmwk4nv5rPZvXny1CFYxxauWZYurgNv0OGTn+FK5QPt/EhUO96o2c
+         WyvIfIhLJLm1VI07aYizuzq8kZP6l/gkL3EIG0cC114pfEgZsB9rzec91bR6rWDzqBFp
+         9m7zVQlezLS3P8StAJ48fGvHyyejfCIQQBDQSJx+Vs+C226fPnXj6oOuE+/4Ev1pkgBg
+         5QxQ==
+X-Gm-Message-State: AOAM533XZbQFwY35rhRRFmHsxZb2bWUbEcR2JapZJkl+jYYmt1e8vE0I
+        CPZF6zwXoGU5veEmPu/GnJV95a1cpE0=
+X-Google-Smtp-Source: ABdhPJxnRRYWQUwwe/HNKJbkOFkin85m4FdVCBCXalAbX9NOuko1MXIW6fdYA1nk4PQz4oueG6/8kg==
+X-Received: by 2002:a05:600c:350a:: with SMTP id h10mr23112123wmq.119.1622480209605;
         Mon, 31 May 2021 09:56:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j18sm15309665wmq.27.2021.05.31.09.56.48
+        by smtp.gmail.com with ESMTPSA id 32sm345695wrs.5.2021.05.31.09.56.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 09:56:48 -0700 (PDT)
-Message-Id: <6919c15e5f9800c6f52e575f8b62993c000843ea.1622480197.git.gitgitgadget@gmail.com>
+        Mon, 31 May 2021 09:56:49 -0700 (PDT)
+Message-Id: <73f89faa3b0a45cf4ab7388b6dfeaf4d7bd881c6.1622480197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 References: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
         <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 May 2021 16:56:34 +0000
-Subject: [PATCH v3 19/22] t7900: stop checking for loose refs
+Date:   Mon, 31 May 2021 16:56:35 +0000
+Subject: [PATCH v3 20/22] t7003: check reflog existence only for REFFILES
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,29 +79,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Given that git-maintenance simply calls out git-pack-refs, it seems superfluous
-to test the functionality of pack-refs itself, as that is covered by
-t3210-pack-refs.sh.
-
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7900-maintenance.sh | 2 --
- 1 file changed, 2 deletions(-)
+ t/t7003-filter-branch.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index b93ae014ee58..58f46c77e666 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -356,8 +356,6 @@ test_expect_success 'pack-refs task' '
- 	done &&
- 	GIT_TRACE2_EVENT="$(pwd)/pack-refs.txt" \
- 		git maintenance run --task=pack-refs &&
--	ls .git/refs/heads/ >after &&
--	test_must_be_empty after &&
- 	test_subcommand git pack-refs --all --prune <pack-refs.txt
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index cf30055c88dd..e18a21895238 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -396,7 +396,10 @@ test_expect_success '--prune-empty is able to prune entire branch' '
+ 	git branch prune-entire B &&
+ 	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t B.t" prune-entire &&
+ 	test_must_fail git rev-parse refs/heads/prune-entire &&
+-	test_must_fail git reflog exists refs/heads/prune-entire
++	if test_have_prereq REFFILES
++	then
++		test_must_fail git reflog exists refs/heads/prune-entire
++	fi
  '
  
+ test_expect_success '--remap-to-ancestor with filename filters' '
 -- 
 gitgitgadget
 
