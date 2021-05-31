@@ -7,128 +7,110 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97CC0C4708F
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 09:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E29DFC47080
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 10:00:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73763611AC
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 09:59:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4A1B61263
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 10:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231239AbhEaKAp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 06:00:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
+        id S231138AbhEaKCb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 06:02:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231330AbhEaJ7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 05:59:53 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 814A6C061343
-        for <git@vger.kernel.org>; Mon, 31 May 2021 02:57:59 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id lz27so15784746ejb.11
-        for <git@vger.kernel.org>; Mon, 31 May 2021 02:57:59 -0700 (PDT)
+        with ESMTP id S231182AbhEaKCU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 06:02:20 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06EEC061574
+        for <git@vger.kernel.org>; Mon, 31 May 2021 03:00:39 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id e15so4987470plh.1
+        for <git@vger.kernel.org>; Mon, 31 May 2021 03:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=PbxRd8ULhGtFNHWVZJahoMKrYNyWQ4eYuNWJSw7lasw=;
-        b=h6gZiK8mBAkpQGxPbYGm7mjqACxNmNb5nSLuAyuuiu5SfQo1YtBWq69RE7rHOAoNt6
-         1O312hxrZR1I2pIlc37SmY52Hx9G1tIITfIchQGgMYYRtzIe3OqXZS1KVcJvikiPRitw
-         KvGcxxOfWv3uebYnsH40F4cuDWVUEaUBXeoDISwllVlq+nDuoJHlOTIYUBYzRAlJJcfw
-         vziku/UxeluuOrszp6F3pNdJjikxLC+BMfpp1a4NnF030y5FVdTpzjskW7qpRmf9aAN/
-         l25Fj2Wp2x35Z/Qg88DxoCoJi/vIvnvsIUZNdi6VPxZwnbA/ndsoo9VGNxfNzqr6UtAO
-         0qFA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=esK+VNp3gsoccmo5n+3tLWaR4WbnsxS6wR9Q81yzr+w=;
+        b=NTPylAF2cAPHCDtiE+EaJf/HwUjeGnNk6Q9qHh2sE/siSPFs8nCK8Gd/ncPV+NUmoE
+         mixJ7aXmflisoauUixquc1WSWxFhqXtVbXaGNG+LR5M+bjbgJHWLD6lsCR9s+lEXqp9c
+         Bd2AfFoOQwtMqq52sFuonMmPYKk/dOW2Ic8twYLSLhve+qU9YXU886uIGpMHLlET4HZ+
+         7w7DT/ICBipsC/evPFk4fwiUPWZFMduRaylz22zgV7OnfoElEBNvcuLSQSsotsMFKopH
+         FqErpG9cQLnM4HgCyxRQojoy3mz8hgW0qn6uXS/pzeJfFrF123rthenlxqjfOY//gb00
+         Xj2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=PbxRd8ULhGtFNHWVZJahoMKrYNyWQ4eYuNWJSw7lasw=;
-        b=inGkJ8zkdp3B0dZErrdHrK2rZYXuZmBHvs44JlPkNWnAbbpQbm+sc6fqV5DCkuIcHL
-         9fFDB+iSE+Q3E3zkdRBjeimQAvpXZWmMIWQ/o7ebLv5bvfyXGR7O34vzlflBfZTmr8Ps
-         Vm+3hmkReGvT1utwL7950gTbcCG7+P2xPEB5Xna5VrAMmUTxIiXPSzdLiwoulNityQv5
-         1GXLlrcJxOsYWFws53imrmR8VdI78+/8ugim+EQ6me/6TZGQM3YkGbhW3Kd+oXOarKSn
-         o5JpW3EzMrJihy4tG1+xQHrFmvKhKfWVyEzJwqrW3W7rS9u/hbkvoYV8FrGA44wZh6tC
-         oCNw==
-X-Gm-Message-State: AOAM533a0MjW1EtLy6jgELYA8+Bo4oWO+F4oxt6VWSXA6ab0Qtgh3c+N
-        vI1D7MvxisrGOppiqmCcsWVZr8Vf5NU=
-X-Google-Smtp-Source: ABdhPJyF0+mNPa7EYeovJviHbB6ZMOPbAY8L/wJTCPyZQ5elMH3tr5rbZ93+7hcjeIAUoeeWMkMgHw==
-X-Received: by 2002:a17:907:2bd6:: with SMTP id gv22mr5121007ejc.431.1622455078068;
-        Mon, 31 May 2021 02:57:58 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id rl12sm1757629ejb.94.2021.05.31.02.57.57
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=esK+VNp3gsoccmo5n+3tLWaR4WbnsxS6wR9Q81yzr+w=;
+        b=YtZdWInxtD7HGMVbRKc55bBSECxW2T8Ic7GZ8DhzMiu8PCq9P3BMETFloO/Oz/3doK
+         LQz7UGSosaN48yP8dzcXApIAbYJVGcTpeDBBc1OlZh65jyf83kl/MuP7nrUjC3E56Gkt
+         e1bSEDkMtNWRIi5Nflo+h+hKcRD1cQag9kHdj5tMmYGVl1B62WSJi5QkpgCMJm6xboUn
+         PxxIE3ZFvrcVYBDhGYrXWuK+b0qTY2b/7lOhYoTtdDnNfgsA/F/4X1SEYYcz/iiEQ2ch
+         mcon0gxqXuaxsiAABhwGBsIzBxzwfj+KsX8QZX9CaxGLj4SpUKVqp6SS5nLGw6Irbt34
+         QTOA==
+X-Gm-Message-State: AOAM530zLfY+TPLoUWs4GfQs1KMd8nN9YBDuWBgfYQ3PL3GuxrUfUIzm
+        UAWHxtSAfvcPNRY/tNSpks2Js98PLAo=
+X-Google-Smtp-Source: ABdhPJwCEJyBrR/M91mkJ1L0vEMJzS+8vLbih5RIf2ddLZ96ZXPkD30jkZ/hmp7BHpI9IvuikVmEdw==
+X-Received: by 2002:a17:90a:901:: with SMTP id n1mr13693660pjn.44.1622455239243;
+        Mon, 31 May 2021 03:00:39 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
+        by smtp.gmail.com with ESMTPSA id b21sm10207663pfo.47.2021.05.31.03.00.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 02:57:57 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Gregory Anders <greg@gpanders.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 00/13] send-email: various optimizations to speed up
- by >2x
-Date:   Mon, 31 May 2021 11:53:04 +0200
-References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
- <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
- <YLR4tMOvkR81+ACq@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YLR4tMOvkR81+ACq@coredump.intra.peff.net>
-Message-ID: <874kej2pjw.fsf@evledraar.gmail.com>
+        Mon, 31 May 2021 03:00:38 -0700 (PDT)
+Date:   Mon, 31 May 2021 17:00:36 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Andy AO via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Derrick Stolee <stolee@gmail.com>, Andy AO <zen96285@gmail.com>
+Subject: Re: [PATCH] describe-doc:fix a obscure error description in the git
+ log documentation
+Message-ID: <YLSzxIyULB1CcIdQ@danh.dev>
+References: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
+ <YLSGasYc4wVoOfYt@danh.dev>
+ <f34de283-d749-854a-0ed0-d4e244dc259b@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f34de283-d749-854a-0ed0-d4e244dc259b@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021-05-31 14:49:32+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+> Hi Đoàn,
+> 
+> On 31/05/21 13.47, Đoàn Trần Công Danh wrote:
+> > On 2021-05-31 06:00:56+0000, Andy AO via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> > > From: zen96285 <zen96285@gmail.com>
+> > > 
+> > > The git log documentation says "The default option is 'short'." This is wrong. After testing, the default value of '--decorate' is 'auto', not 'short'.
+> > > 
+> > > There is no difference between 'auto' and 'short' in terminal, but there is a significant difference in how they behave in the shell.The information generated by the 'short' can be saved in shell variables, while the 'auto' can't.
+> > 
+> > Please use your real name and wrap your commit message at 50
+> > characters for subject line and 72 characters for body.
+> 
+> I think the case here was Andy forwarded this patch from someone, which
+> happened to be also himself. Maybe that From: line above can be removed,
+> unless that he forwarded from other people (in which From: line must be
+> preserved).
 
-On Mon, May 31 2021, Jeff King wrote:
+Andy is using GitGitGadget bridge.
+That bridge uses its own email address (gitgitgadget@gmail.com).
 
-> On Fri, May 28, 2021 at 11:23:39AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> Hopefully the final iteration. Updates a commit message to explain why
->> I moved away from File::Spec::Functions, rebases on master, and
->> explains and deals with the "undef in config" issue Jeff King noted.
->
-> Thanks. The solution was less invasive than I feared.
->
-> I guess here:
->
->>     @@ git-send-email.perl: sub read_config {
->>      -			my @values =3D Git::config(@repo, $key);
->>      -			next unless @values;
->>      +			my @values =3D @{$known_keys->{$key}};
->>     ++			@values =3D grep { defined } @values;
->>       			next if $configured->{$setting}++;
->>       			@$target =3D @values;
->>       		}
->>       		else {
->>      -			my $v =3D Git::config(@repo, $key);
->>     --			next unless defined $v;
->>      +			my $v =3D $known_keys->{$key}->[0];
->>     + 			next unless defined $v;
->>       			next if $configured->{$setting}++;
->>       			$$target =3D $v;
->>     - 		}
->
-> we'd ignore such undef values, whereas presumably before they'd have
-> triggered an error via Git::config(). I don't think it matters all that
-> much either way, though.
+Thus, the identity in the RFC 822's header: "From" should be ignored,
+and we should use the "From: " line in body instead.
 
-They didn't error before, they were treated the same as the empty
-string.
+In principle, GitGitGadget will use the Author identity in the commit
+that was pushed into GitHub to generate such "From: " line.
+So, it's Andy's resposibility to configure correct core.name and
+core.email in Andy's machine, and create a commit with correct
+authorship. Otherwise, GitGitGadget will create above message.
 
-This is because Git.pm uses "git config --get" to retrieve them, but we
-now use "--list --null".
+Hope that help.
 
-This ultimately comes down to a limitation of git-config's one-shot CLI
-interface. You get the empty string and zero exit code for both of:
-
-    git -c foo.bar=3D config --get foo.bar
-    git -c foo.bar config --get foo.bar
-
-Ignoring them here for list values is technically a behavior change if
-we were treating this as a black box, but in reality we know that these
-could only conceivable be useful for the bool values, for list values
-like "list of e-mail addresses" it makes no sense to have that in a the
-middle of a list, and we were implicitly ignoring them anyway before
-when we processed the empty string.
+-- 
+Danh
