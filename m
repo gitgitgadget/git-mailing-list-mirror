@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A54EC47080
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9276FC47082
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 369C961108
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 752CA61108
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232870AbhEaRmt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:42:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
+        id S232591AbhEaRmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:42:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232591AbhEaRlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 13:41:03 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D82F9C008756
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:50 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id z19-20020a7bc7d30000b029017521c1fb75so9224613wmk.0
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:50 -0700 (PDT)
+        with ESMTP id S233329AbhEaRlE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 13:41:04 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC458C008759
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:51 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id o127so6575743wmo.4
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=Kz7Ad/tLVOBDrM5Ch9kTOh5dZ3P5MrWcssYmDd0evkM=;
-        b=ugCfRqeEYxt/thR0MII15kRNGVYCdqbHPohtBp327wqYmk1MU2pCetA0DTkq5hnKgm
-         uyZ07KRBlSrlc+TXEj9czaLJWKjB2E2SP1tFc0FHFG9v4Vx3GtkSVphtrNwvucN0G/EG
-         FgULhvEROSJ0dPgp729goRqnpwPxtiK5Pd7TS+rX5BibZxpP/jE6yJyQpR1gl7pExqBt
-         o3XGfX7axf5kp5GtCD6qRbbev2JFY8q1WHUGZQx4tPkAQz5BQfaxbBQNDUO0h9oL5JPU
-         FJ0Zx9T2AzKnSzRlrjtHHMXTbtNWDT3eWN15O35cA6pwfVKfgq9bg5ibbTKOAGZT4sGm
-         adrg==
+        bh=f8jhm8QsO/5/8KPSNS3WSZqG40hSn5q5psjTJDCM/qE=;
+        b=KNO5eukybtlZfcYHmUnDBbOhYiUA6qUB0ibsUSySHEnLIipC6wGRI9JWDe+YB9xCTm
+         k4gGQizqkc81lIcDrcYSSPf/42tyQODvSQH6meRzTFYnd2ukp5iLHqPWRkXHbsYbePZC
+         wiKm6GR4fVDSO4PlrX6B+g8WPCJ3GlZ5CRZcfpXjySmhB7L4LiRbjsD02Qyq2KssYiMU
+         kKVYhBO1wy7Sb1ZVZI7ZOjVe9hItAjSaFjg6sXeM8wKf6R89yqmDa4qAznnjN7BhN9h/
+         Vcy22itsuDbXiPUKdP45x6Y7YzP9IZrKD35w9e/v3pPHRrdE2nVKWqiRA4xGMm1Z3VCp
+         HXeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Kz7Ad/tLVOBDrM5Ch9kTOh5dZ3P5MrWcssYmDd0evkM=;
-        b=aeKgpX94LMyWL2xXIh9l7dr57Sa1aHMNoaJzCMh9K8Zel9MIyXogc1gNFInUAAOWmx
-         KCEo2XbI0AxF52ImmdZpj9MnlzNarOZGppdUC6Xfq2vPD4K7kOs8Lr76gctt04bEIwiB
-         oHAMbpZW+1Lcm65bmwk4nv5rPZvXny1CFYxxauWZYurgNv0OGTn+FK5QPt/EhUO96o2c
-         WyvIfIhLJLm1VI07aYizuzq8kZP6l/gkL3EIG0cC114pfEgZsB9rzec91bR6rWDzqBFp
-         9m7zVQlezLS3P8StAJ48fGvHyyejfCIQQBDQSJx+Vs+C226fPnXj6oOuE+/4Ev1pkgBg
-         5QxQ==
-X-Gm-Message-State: AOAM533XZbQFwY35rhRRFmHsxZb2bWUbEcR2JapZJkl+jYYmt1e8vE0I
-        CPZF6zwXoGU5veEmPu/GnJV95a1cpE0=
-X-Google-Smtp-Source: ABdhPJxnRRYWQUwwe/HNKJbkOFkin85m4FdVCBCXalAbX9NOuko1MXIW6fdYA1nk4PQz4oueG6/8kg==
-X-Received: by 2002:a05:600c:350a:: with SMTP id h10mr23112123wmq.119.1622480209605;
-        Mon, 31 May 2021 09:56:49 -0700 (PDT)
+        bh=f8jhm8QsO/5/8KPSNS3WSZqG40hSn5q5psjTJDCM/qE=;
+        b=fZpC5fv9azro1B9FTb63xa7iNbGmqeh4M56k3rvSOKVaxEQgrNgH1nKI1dQesxvmzq
+         iYiCnv3s1j/K741JMNXg8x3Gi8Q1iActwtMQpIbvl8GXitDU6pxd0n+b0bj+PA1X+CzB
+         ovGlGuo1PTQlM/ufr++GL64SBCirYvfSogV7Bnx+VYtf1HMKQEvxP8It18M5geZA2UHg
+         UpHoUJlAY1BcLWB5/nyLUAGVatpL6mpYALDqfJ1UWxTDe4WT/AQ1ZiKLutQj0UX5nE+u
+         QGe7o+hnyOjiz2NUveFL4CozSRjeD8CIRyrSQ10XVrDLjqPVWQbjfUJDV8ONvgljKh8t
+         gvWg==
+X-Gm-Message-State: AOAM530CPajxU35+N69eBxJzlDKVr6fBiQmMoKHFMx4Qc/hPK+rtlO1/
+        m8hJsradoaNxmUybbqr1uXcl9AHKQDQ=
+X-Google-Smtp-Source: ABdhPJzY0XsEFueueFDOXQMhyrEP5Czfcn13AC2ryafHKQ3/tdOf6s1/zf/69wl/dYQIh+Dz5qGP+Q==
+X-Received: by 2002:a7b:c44f:: with SMTP id l15mr37610wmi.151.1622480210604;
+        Mon, 31 May 2021 09:56:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 32sm345695wrs.5.2021.05.31.09.56.49
+        by smtp.gmail.com with ESMTPSA id u18sm15459506wmj.15.2021.05.31.09.56.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 09:56:49 -0700 (PDT)
-Message-Id: <73f89faa3b0a45cf4ab7388b6dfeaf4d7bd881c6.1622480197.git.gitgitgadget@gmail.com>
+        Mon, 31 May 2021 09:56:50 -0700 (PDT)
+Message-Id: <cbcbb2d78fc939e968347c2dc2ac079ab6771e97.1622480198.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 References: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
         <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 May 2021 16:56:35 +0000
-Subject: [PATCH v3 20/22] t7003: check reflog existence only for REFFILES
+Date:   Mon, 31 May 2021 16:56:37 +0000
+Subject: [PATCH v3 22/22] t1415: set REFFILES for test specific to storage
+ format
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,28 +80,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+Packing refs (and therefore checking that certain refs are not packed)
+is a property of the packed/loose ref storage. Add a comment to explain
+what the test checks.
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7003-filter-branch.sh | 5 ++++-
+ t/t1415-worktree-refs.sh | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index cf30055c88dd..e18a21895238 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -396,7 +396,10 @@ test_expect_success '--prune-empty is able to prune entire branch' '
- 	git branch prune-entire B &&
- 	git filter-branch -f --prune-empty --index-filter "git update-index --remove A.t B.t" prune-entire &&
- 	test_must_fail git rev-parse refs/heads/prune-entire &&
--	test_must_fail git reflog exists refs/heads/prune-entire
-+	if test_have_prereq REFFILES
-+	then
-+		test_must_fail git reflog exists refs/heads/prune-entire
-+	fi
+diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+index 7ab91241ab7c..66f27d0fdfc9 100755
+--- a/t/t1415-worktree-refs.sh
++++ b/t/t1415-worktree-refs.sh
+@@ -16,7 +16,10 @@ test_expect_success 'setup' '
+ 	git -C wt2 update-ref refs/worktree/foo HEAD
  '
  
- test_expect_success '--remap-to-ancestor with filename filters' '
+-test_expect_success 'refs/worktree must not be packed' '
++# The 'packed-refs' file is stored directly in .git/. This means it is global
++# to the repository, and can only contain refs that are shared across all
++# worktrees.
++test_expect_success REFFILES 'refs/worktree must not be packed' '
+ 	git pack-refs --all &&
+ 	test_path_is_missing .git/refs/tags/wt1 &&
+ 	test_path_is_file .git/refs/worktree/foo &&
 -- 
 gitgitgadget
-
