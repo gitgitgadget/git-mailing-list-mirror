@@ -2,121 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50CBBC4708F
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EB60C4708F
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:34:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AD9B61090
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:01:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 481FE610C9
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229970AbhEaGCl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 02:02:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbhEaGCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 02:02:39 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEC4C061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 23:00:59 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id m18so5549641wmq.0
-        for <git@vger.kernel.org>; Sun, 30 May 2021 23:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=UFDiDZ5cEckV1Hp9OWqmKNoNlNzC9M1wYI3KqcwKC7Q=;
-        b=JAYJte6kgv7jTNXLaGQKDGbbmdVyRVKS0fPLlg0jmFE9l0jjRhf53EIDyKVt0tkZ3C
-         jSBFWOA3p5YPto4aZL61ENbYZW1rNBBNq3rAsFLQ5WCX7AgDtYYlikdEbScMDnwkBVI5
-         EmO7sjloTc23+OVDEF4URj6qAqMz2g+xUM5b2pNwsvVxj5fBsjmyN6e1YJAFeLBT9DTo
-         7GwdBNCVT5rTuNwirBSmtTTPemCMUlcNlkXcbTHdjw28jUuTpyZnThCtoSoirbn58gzO
-         76r8uWRi2NTGplvw+LyGnBxMYaW9XRoPs4FTYYQFEhSDKRRcumJMqQU6N0XWH9bpmsPb
-         9HOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UFDiDZ5cEckV1Hp9OWqmKNoNlNzC9M1wYI3KqcwKC7Q=;
-        b=l3GoFT12p8hrK7nnfdypCanXn31op7GEjJx082pb9xk2SYY7iynkR7R4i164V0vHEu
-         PGxh+fcbGBAk2QInvM7eNblS8TSV9D9MWGTERQmIE7ay98hB7k0vMOnrICS7bDKq7Cqn
-         ETsvym/ex95vOeK6Ao1lPA195+gNtefh2gD8BTS6Fpl5gfLSofoyLKjic/9mLJw9J2bX
-         paF3QUuaYSNdT/lI8Tgf2OTxTDDvlsHX8CvEGMt67OpJUo2X9cHGpzJfcjLp0tMq+6Ok
-         /zm43uPlVSYdPeXIxexFCjDeCjXF9NVCNLNhRHcGWY9+h6/xe6gpkGnhIniejbWcFvq1
-         +V6Q==
-X-Gm-Message-State: AOAM533PkFpaf2K4OH4Z/2OheNJftBkgGvtfiM6x22/tSuYkv6fL3AFX
-        hqss0GMuhZsYdVq8HpFK1eygIvPsjLs=
-X-Google-Smtp-Source: ABdhPJzUCwcWvsK/o/5Us1jCwajzz3sk2oLXzGk70ch4hg7boTboGKgt6qfmd9ibvbMWaqIJ1Vn1sA==
-X-Received: by 2002:a1c:f70b:: with SMTP id v11mr19747335wmh.186.1622440857525;
-        Sun, 30 May 2021 23:00:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p5sm17506784wrd.25.2021.05.30.23.00.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 May 2021 23:00:57 -0700 (PDT)
-Message-Id: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
-From:   "Andy AO via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 May 2021 06:00:56 +0000
-Subject: [PATCH] describe-doc:fix a obscure error description in the git log
- documentation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S230145AbhEaGgd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 02:36:33 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54408 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230070AbhEaGgc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 02:36:32 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E085BB395C;
+        Mon, 31 May 2021 02:34:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=hMWmYdCRa9qO0QS76AE9ibRTqKm3bdizLlD/kIrqiqg=; b=ZV+0
+        R3LO8sMmuSy6xNaDwWwrsisPXO04HeEgBB4yeYOnADbrJQUYxPviQ0aSdHaNemYW
+        tXwL4/y8ntrp3VBMJc4meu+5nYKW1zKFvat6QnHXsNgqXb/SPiDZ28paYuKZlnle
+        gqP0FRg1KmKxTgBcV1hsH88gNkOpyNweDwDCyoY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D6E1FB395B;
+        Mon, 31 May 2021 02:34:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6189CB3958;
+        Mon, 31 May 2021 02:34:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 03/15] push: reorder switch cases
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+        <20210529074458.1916817-4-felipe.contreras@gmail.com>
+Date:   Mon, 31 May 2021 15:34:51 +0900
+Message-ID: <xmqqeednwgvo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Derrick Stolee <stolee@gmail.com>,
-        Andy AO <zen96285@gmail.com>, zen96285 <zen96285@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4E369D36-C1DA-11EB-B6A7-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: zen96285 <zen96285@gmail.com>
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-The git log documentation says "The default option is 'short'." This is wrong. After testing, the default value of '--decorate' is 'auto', not 'short'.
+> We want all the cases that don't do anything with a branch first, and
+> then the rest.
+>
+> Will help further patches.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin/push.c | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
+>
+> diff --git a/builtin/push.c b/builtin/push.c
+> index f4e919450d..c19321bb9d 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -254,11 +254,19 @@ static void setup_default_push_refspecs(struct remote *remote)
+>  	int triangular = is_workflow_triangular(remote);
+>  
+>  	switch (push_default) {
+> -	default:
+>  	case PUSH_DEFAULT_MATCHING:
+>  		refspec_append(&rs, ":");
+>  		return;
+>  
+> +	case PUSH_DEFAULT_NOTHING:
+> +		die(_("You didn't specify any refspecs to push, and "
+> +		    "push.default is \"nothing\"."));
+> +		return;
+> +	default:
+> +	}
+> +
+> +	switch (push_default) {
+> +	default:
 
-There is no difference between 'auto' and 'short' in terminal, but there is a significant difference in how they behave in the shell.The information generated by the 'short' can be saved in shell variables, while the 'auto' can't.
+This is not quite "reorder" but split into two.  It is not yet clear
+how it helps, but hopefully we'll find out why splitting the switch
+into two switches is a good idea soon in a later step, so the title
+needs updating to sell that aspect of the change (unless it is a
+pointless change made by mistake that the originally-single switch
+got split into two, but that is unlikely the case ;-).
 
-Signed-off-by: AndyAo Zen96285@gmail.com
----
-    describe-doc:fix a obscure error description in the git log documenta…
-    
-    The git log documentation says "The default option is 'short'." This is
-    wrong. After testing, the default value of '--decorate' is 'auto', not
-    'short'.
-    
-    There is no difference between 'auto' and 'short' in terminal, but there
-    is a significant difference in how they behave in the shell.The
-    information generated by the 'short' can be saved in shell variables,
-    while the 'auto' can't.
-    
-    Signed-off-by: AndyAo Zen96285@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1030%2FAndy-AO%2Ffix_a_obscure_error_description_in_the_git_log_documentation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1030/Andy-AO/fix_a_obscure_error_description_in_the_git_log_documentation-v1
-Pull-Request: https://github.com/git/git/pull/1030
-
- Documentation/git-log.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 1bbf865a1b2d..37a4694b060a 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -39,7 +39,7 @@ OPTIONS
- 	full ref name (including prefix) will be printed. If 'auto' is
- 	specified, then if the output is going to a terminal, the ref names
- 	are shown as if 'short' were given, otherwise no ref names are
--	shown. The default option is 'short'.
-+	shown. The default option is 'auto'.
- 
- --decorate-refs=<pattern>::
- --decorate-refs-exclude=<pattern>::
-
-base-commit: 4e42405f00ecbbee412846f48cb0253efeebe726
--- 
-gitgitgadget
+>  	case PUSH_DEFAULT_UNSPECIFIED:
+>  	case PUSH_DEFAULT_SIMPLE:
+>  		setup_push_simple(remote, branch, triangular);
+> @@ -271,11 +279,6 @@ static void setup_default_push_refspecs(struct remote *remote)
+>  	case PUSH_DEFAULT_CURRENT:
+>  		setup_push_current(remote, branch);
+>  		return;
+> -
+> -	case PUSH_DEFAULT_NOTHING:
+> -		die(_("You didn't specify any refspecs to push, and "
+> -		    "push.default is \"nothing\"."));
+> -		return;
+>  	}
+>  }
