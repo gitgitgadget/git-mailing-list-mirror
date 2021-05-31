@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF520C47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FC6BC47082
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9058661108
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F82061108
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233728AbhEaRl4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:41:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
+        id S233958AbhEaRmB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:42:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231845AbhEaRk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 13:40:56 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79EC4C008751
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:48 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id c3so11517090wrp.8
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:48 -0700 (PDT)
+        with ESMTP id S231295AbhEaRk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 13:40:59 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629E4C008753
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:49 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id n5-20020a1c72050000b0290192e1f9a7e1so331173wmc.2
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=EZ8+RtFLom/n2zNyA7TP0YFGdpmTkg6DfxkQvHRyY+4=;
-        b=bdpSbdu2pCiBfk/QYKbqb7bfO5njR0nNxODtqCBAxObpinyYeVIL+JeUrGWAw9vacE
-         u11faxStUGDtAa5/+vd+b3jqUaS90qpyqcbGwXviG+pLxUnKXnbp2yn4XYNH9gzNID4D
-         cf9mRXgVISJ+pNLdn8HHNbGnMXGoxphW8YyJZ8wyB3oUWie5NY5mE3nLnfb+MjXHfQXI
-         1s2YYf+ctPxy/6qz5DWqJBM9NKkGCXTeWhI+L/TM9oWkkMrYi8SznkBaEXP0XJ4Pgunm
-         +rAGdBSGbGhezo/KO/d8zA2oQ6Zc4C1h34WPDCN+P1ix2tFtzjrhmolp06c7hV/xoTWU
-         JqCA==
+        bh=uL61cA1LUyFw1EOOjylTHhglnmWmN3p8G2BJCEYz3cc=;
+        b=tru5jFGIueIN6ruymLy5qHD0bgfmPlJqqVm9Zzx+dL/kjSir3YPwtfsu15Gn6s9AiQ
+         frdkV9j/WrLNs6JxtWwYye8sg2fIH8Cv+aM3mR+fByQwt0ILCuHf5FvqdAtDzOhOleIl
+         5YNZlGhu6xSQwvVF9kF4Qc+V8xI5HChwGTNTaTjMy/+4wP9igpefe+tCYrBWjPbrGDLG
+         BqBde8XC6ovM+w+N6P3agv6p3Z4FvpIyb5K7H3W1YXjPxk2l2wG7ZEMHL7IuT3T7X4iY
+         UsTMeUgqUVLuJP+uNLiCgG12TwYgc15YNMEFXlMd0KnFOVM2vfYocZohsIlrAY5t59MQ
+         FmdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=EZ8+RtFLom/n2zNyA7TP0YFGdpmTkg6DfxkQvHRyY+4=;
-        b=Gz37/UqGOTUpJYqW0z9gTx26LKgM+n76EG3ffn+8XhehrasnaL+uEujzwHSvHzzDA3
-         NIS2qvLiUW3P40+2UWErVgIbi5r6Hm7fI+XxNJXj3itA9kKaXkM1UazLLobq7JGM7FTJ
-         ypKPqI3DRbvXtPTwXP7vihkZUkTuFzLLcl9EYOwZPvVIT+OApVB+y+r2PD4DQM/vFvTo
-         XtGqr/ODB52VKnVaSEI4bqNCr+oUnuyyx5WT88bQ6N//MA9HOpykzlCqgIEUutQpOrMb
-         LU+57VcRe9zfcICJm8BA35jt6oDu9Y7jPwN73rZF3TJdFWFEYhs9kKSFhFiI4GmpAwfa
-         Kj/A==
-X-Gm-Message-State: AOAM532j5YoKO5qCJrEPkm3rsYek/VUaKtDQz0Wk2ce+vG5veKDMXR+s
-        ap1rGRQkIGL1TwoTZ768uXGMyloyN4s=
-X-Google-Smtp-Source: ABdhPJyoMbRGFe3wnnOecfy9dVJAbv7LsCf//iItS1hFGE7oUElMS8vv+fL38B+D/6CsIiDPOd0kkA==
-X-Received: by 2002:adf:d209:: with SMTP id j9mr12156014wrh.328.1622480207081;
-        Mon, 31 May 2021 09:56:47 -0700 (PDT)
+        bh=uL61cA1LUyFw1EOOjylTHhglnmWmN3p8G2BJCEYz3cc=;
+        b=SawohEgeeMH2pofLwEv1ksYn7ki4Fg3olSuAiRGpP6HHPMB3gFlQpEwEZRbZtkbflD
+         ZpxYQ/4Ul8dCtbCLhEi9oraU+4yIwOY7rR36c3eIr5C969y2FUHK1y22gjHm2rnM2b2s
+         ndD/m17vV2XJbxgYnC/5cPQ/Zxi+f3v+XXV31D+aIQ59RdPHGyttlsVTOnU8WXVJrwmG
+         LLT6OBWnb7AOOleUCaBCTplJmpuyHdWdpd7W2NwUZZJnYDVS6ddjPEjtbIr/Ujady5IE
+         M4SWhdMvMjOEidz/TGg/PJmhEyywlMEXoVFb0y0CFTTjvFsw59YxCiacfdpFxiSiRmSd
+         vqEw==
+X-Gm-Message-State: AOAM531FWDS4XvSfE3JCPi+56SrECWYYkImMC+oLeAilBJtUvS6AIu2g
+        IgdQgyp66pMFKwaCMdWeuH4drp24Nt8=
+X-Google-Smtp-Source: ABdhPJwi7P07n+BuXNQK7cfwlE+Y7/uU+bTb7baVuv5ELtG4+NNdb6Yx8hCgUWXs7JFhnNBySWF5uQ==
+X-Received: by 2002:a05:600c:231a:: with SMTP id 26mr15760440wmo.92.1622480208115;
+        Mon, 31 May 2021 09:56:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l8sm266414wry.55.2021.05.31.09.56.46
+        by smtp.gmail.com with ESMTPSA id u8sm275497wrb.77.2021.05.31.09.56.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 09:56:46 -0700 (PDT)
-Message-Id: <57fcd175fa723cec194ddf776d6e209ae0f27d74.1622480197.git.gitgitgadget@gmail.com>
+        Mon, 31 May 2021 09:56:47 -0700 (PDT)
+Message-Id: <496796d4e0845516bcd971312e060507d1db3d41.1622480197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 References: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
         <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 May 2021 16:56:30 +0000
-Subject: [PATCH v3 15/22] t1407: require REFFILES for for_each_reflog test
+Date:   Mon, 31 May 2021 16:56:32 +0000
+Subject: [PATCH v3 17/22] t2017: mark --orphan/logAllRefUpdates=false test as
+ REFFILES
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,37 +80,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Add extensive comment why this test needs a REFFILES annotation.
-
-I tried forcing universal reflog creation with core.logAllRefUpdates=true, but
-that apparently also doesn't cause reflogs to be created for pseudorefs
+In reftable, there is no notion of a per-ref 'existence' of a reflog. Each
+reflog entry has its own key, so it is not possible to distinguish between
+{reflog doesn't exist,reflog exists but is empty}. This makes the logic
+in log_ref_setup() (file refs/files-backend.c), which depends on the existence
+of the reflog file infeasible.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1407-worktree-ref-store.sh | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ t/t2017-checkout-orphan.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index d3fe77751122..ad8006c81397 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -52,7 +52,14 @@ test_expect_success 'create_symref(FOO, refs/heads/main)' '
- 	test_cmp expected actual
+diff --git a/t/t2017-checkout-orphan.sh b/t/t2017-checkout-orphan.sh
+index c7adbdd39ab9..88d6992a5e1f 100755
+--- a/t/t2017-checkout-orphan.sh
++++ b/t/t2017-checkout-orphan.sh
+@@ -76,7 +76,7 @@ test_expect_success '--orphan makes reflog by default' '
+ 	git rev-parse --verify delta@{0}
  '
  
--test_expect_success 'for_each_reflog()' '
-+# Some refs (refs/bisect/*, pseudorefs) are kept per worktree, so they should
-+# only appear in the for-each-reflog output if it is called from the correct
-+# worktree, which is exercised in this test. This test is poorly written (and
-+# therefore marked REFFILES) for mulitple reasons: 1) it creates invalidly
-+# formatted log entres. 2) it uses direct FS access for creating the reflogs. 3)
-+# PSEUDO-WT and refs/bisect/random do not create reflogs by default, so it is
-+# not testing a realistic scenario.
-+test_expect_success REFFILES 'for_each_reflog()' '
- 	echo $ZERO_OID > .git/logs/PSEUDO-MAIN &&
- 	mkdir -p     .git/logs/refs/bisect &&
- 	echo $ZERO_OID > .git/logs/refs/bisect/random &&
+-test_expect_success '--orphan does not make reflog when core.logAllRefUpdates = false' '
++test_expect_success REFFILES '--orphan does not make reflog when core.logAllRefUpdates = false' '
+ 	git checkout main &&
+ 	git config core.logAllRefUpdates false &&
+ 	git checkout --orphan epsilon &&
 -- 
 gitgitgadget
 
