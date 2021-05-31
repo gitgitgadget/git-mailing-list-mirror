@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D22DFC47080
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 19:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07337C47080
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 19:52:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7CD26127C
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 19:52:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2BBD610A8
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 19:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232292AbhEaTxt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 15:53:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58540 "EHLO
+        id S232064AbhEaTxx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 15:53:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231624AbhEaTx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231652AbhEaTx2 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 31 May 2021 15:53:28 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8593BC06138F
-        for <git@vger.kernel.org>; Mon, 31 May 2021 12:51:44 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id b25so13301658oic.0
-        for <git@vger.kernel.org>; Mon, 31 May 2021 12:51:44 -0700 (PDT)
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777D8C0613ED
+        for <git@vger.kernel.org>; Mon, 31 May 2021 12:51:36 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id v22so13270755oic.2
+        for <git@vger.kernel.org>; Mon, 31 May 2021 12:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8XK9cpcF7wdu7UmhfR9mf1LNs8M7THc6tpxy3SzJQSU=;
-        b=kDkjqaSWzOdf8tZatmyBFlfACTu33MpGblwj3UYh/TdJYyKE9nf4AIC1a1Dh6qszgj
-         bW5fedPBEMpOhMt2A5k7wXOR7HnsE2tLyUaZbAh9uVXSYeTNAdlE3+cugm0FgeGBKPhr
-         Y7DCJoKdyHl+ZwM5Bdk6FaZ2v/3qL8BYac1kE0j507T5ijTcP/Ki1FA7N6XRY6fUmDp9
-         0ZmJ9ZmF/eNBlmaH+yVncrD3dS/rx3sx/rKgMdspdiUtzF5PI3TyV2aS9RTienGp8eLa
-         wFkD6pd6kOpCDTNmodvHvFB8BeAaHt4eQB71QHnyOdVVHcjytm5OfabVSC56V/lR2ZIZ
-         Es9g==
+        bh=5y+1hcx5nAvL0NKZ8rJGO72mGkp0ylm1nXlnVS7QB8E=;
+        b=BOHkJfcFV4/d7Is9l32tfUEPbnQagNLJVa0mfAwY8e01bJ0ek+fYrojsqjrekXio1p
+         oA4qVweLSBYBP9aRqKRKGx6d72gcd/yq4+MH8W5JEjI8A3o+wRjMrcC6gkAb2vYFBwWK
+         hWcWFfduwiGnbiCml4z/zgiXK3T/rL+UhUpcl+/dorBDxL2TNigeOE2Ibshylt8g4DQ4
+         QH3uxqS1RY9IFBLewtBWbnKgJMY1WH5FeyACDEUQE38/AGtvEAx4ZfJ267S45/+UIONP
+         Mak3QpAfTBjmo7IGUfdmqPcmjDL3eA3irbYVIFln6DT+a0ZXinB2yEFf3MIt4v174uly
+         fmng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8XK9cpcF7wdu7UmhfR9mf1LNs8M7THc6tpxy3SzJQSU=;
-        b=aaxKkQBrz38uTmdPp1rdEAbQu2CByBeArBMHAHwlIu11YPHcz7LoLdwmUwiDBCh0gh
-         gHPhJgdkSY4Yw9UuqL/uDZHjnvF32ULvcy07/vS6Tm3NPqrS9uaymvsH+mi4scWEejLq
-         uyNpDcP7WGetLadXnlDcHHwLN9XJ5UT9gYj3SQaIowGcI0PFnUru6Y/hO9+9sWuMNlOO
-         p/vC01WW8Fi23kHoQxyrT4FaCqBFzKW+sjgdDulKlDRnRf05hnRnFW4flYp8fLSfv0Aa
-         +qPRAzUw5HDaRGX4GGPa1lob6uel6Ks31VbgHiDzZzp7dImCnnK/kN1eT46eFh+z23eX
-         CNsw==
-X-Gm-Message-State: AOAM530Lc/fh9yTAFcn0Cd+9dpPNOv8VnYDfsXkLjAxA2SQrG2xjflu4
-        hoDWl+n+LguP6iyoSJGbs5sUno0Uo1Yhlw==
-X-Google-Smtp-Source: ABdhPJwYOU+I0qFxMKk1taQWnveI1iCxFipYO+lp+770pnVwFT4C7+/yEWCwi+kcnIAUUUtfWmslsg==
-X-Received: by 2002:aca:48f:: with SMTP id 137mr454525oie.75.1622490703709;
-        Mon, 31 May 2021 12:51:43 -0700 (PDT)
+        bh=5y+1hcx5nAvL0NKZ8rJGO72mGkp0ylm1nXlnVS7QB8E=;
+        b=DWyv7EDmLxN1op6dUT8Tiv9KGRW/KYKOjJU0WMvTQY+rPUtT6TlkLym+vLxRHrykb4
+         aFVOOEUZv6Yw9rWg2/nnq2HkrGXP+dQjLHhIoXMHTVo2wYcJ44yGq+B4Vxp4HjmhO6nr
+         6mVLxpWUQfGhvmsASRKC9+HEpg8aD+L98FVuZOk9eJTJXIwVbk3AdnI5/J844q65j8Fa
+         7DyKWuJ5Vr8YyKGvDCggYOZ/y9g/fmkb33JG9+ser3KOXMBkjJEe+hKrZHBWBygiG5+o
+         ooTwpbDHdpaB9tWLrp3fmgnJleFyWazRHfw/JB2oxLTKBChCre6u7bDfKvCCUjzsiZ4K
+         7pjA==
+X-Gm-Message-State: AOAM531urcYtxI9Mc4+Lf1ptd6KAgKc/Vm1IqzcBtWdSU3eYHjJ1AKpn
+        f/Xvt3nLIgyq5RSglBmBNYXlK36KmzIWmA==
+X-Google-Smtp-Source: ABdhPJwH3Xzw0GWbXPQPjENc16R6scLN2HGvZVDCCQZSTe+9GZS2cGELM+OA3yZgytTYfeeYeXGVLQ==
+X-Received: by 2002:aca:6505:: with SMTP id m5mr14551980oim.93.1622490695825;
+        Mon, 31 May 2021 12:51:35 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id m1sm3314170otq.12.2021.05.31.12.51.42
+        by smtp.gmail.com with ESMTPSA id c17sm3396825otn.45.2021.05.31.12.51.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 12:51:43 -0700 (PDT)
+        Mon, 31 May 2021 12:51:35 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 11/13] push: remove trivial function
-Date:   Mon, 31 May 2021 14:51:22 -0500
-Message-Id: <20210531195124.218325-12-felipe.contreras@gmail.com>
+Subject: [PATCH v2 06/13] push: make setup_push_* return the dst
+Date:   Mon, 31 May 2021 14:51:17 -0500
+Message-Id: <20210531195124.218325-7-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc0
 In-Reply-To: <20210531195124.218325-1-felipe.contreras@gmail.com>
 References: <20210531193237.216726-1-felipe.contreras@gmail.com>
@@ -76,35 +76,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's a single line that is used in a single place, and the variable has
-the same name as the function.
+All of the setup_push_* functions are appending a refspec. Do this only
+once on the parent function.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/push.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ builtin/push.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/push.c b/builtin/push.c
-index aa22d6a8e5..a873f8da92 100644
+index d9f9d20f39..933b1cc6c0 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -202,15 +202,10 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
+@@ -202,8 +202,8 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
  	return branch->merge[0]->src;
  }
  
--static int is_same_remote(struct remote *remote)
--{
--	return remote == remote_get(NULL);
--}
+-static void setup_push_upstream(struct remote *remote, struct branch *branch,
+-				int same_remote)
++static const char *setup_push_upstream(struct remote *remote, struct branch *branch,
++	int same_remote)
+ {
+ 	const char *upstream_ref;
+ 	upstream_ref = get_upstream_ref(branch, remote->name);
+@@ -212,16 +212,15 @@ static void setup_push_upstream(struct remote *remote, struct branch *branch,
+ 		      "your current branch '%s', without telling me what to push\n"
+ 		      "to update which remote branch."),
+ 		    remote->name, branch->name);
 -
- static void setup_default_push_refspecs(struct remote *remote)
+-	refspec_appendf(&rs, "%s:%s", branch->refname, upstream_ref);
++	return upstream_ref;
+ }
+ 
+-static void setup_push_current(struct remote *remote, struct branch *branch)
++static const char *setup_push_current(struct remote *remote, struct branch *branch)
+ {
+-	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
++	return branch->refname;
+ }
+ 
+-static void setup_push_simple(struct remote *remote, struct branch *branch, int same_remote)
++static const char *setup_push_simple(struct remote *remote, struct branch *branch, int same_remote)
+ {
+ 	if (same_remote) {
+ 		const char *upstream_ref;
+@@ -232,7 +231,7 @@ static void setup_push_simple(struct remote *remote, struct branch *branch, int
+ 		if (strcmp(branch->refname, upstream_ref))
+ 			die_push_simple(branch, remote);
+ 	}
+-	refspec_appendf(&rs, "%s:%s", branch->refname, branch->refname);
++	return branch->refname;
+ }
+ 
+ static int is_same_remote(struct remote *remote)
+@@ -245,6 +244,7 @@ static void setup_default_push_refspecs(struct remote *remote)
  {
  	struct branch *branch;
--	int same_remote = is_same_remote(remote);
-+	int same_remote = remote == remote_get(NULL);
- 	const char *dst;
+ 	int same_remote = is_same_remote(remote);
++	const char *dst;
  
  	switch (push_default) {
+ 	case PUSH_DEFAULT_MATCHING:
+@@ -267,17 +267,19 @@ static void setup_default_push_refspecs(struct remote *remote)
+ 	default:
+ 	case PUSH_DEFAULT_UNSPECIFIED:
+ 	case PUSH_DEFAULT_SIMPLE:
+-		setup_push_simple(remote, branch, same_remote);
+-		return;
++		dst = setup_push_simple(remote, branch, same_remote);
++		break;
+ 
+ 	case PUSH_DEFAULT_UPSTREAM:
+-		setup_push_upstream(remote, branch, same_remote);
+-		return;
++		dst = setup_push_upstream(remote, branch, same_remote);
++		break;
+ 
+ 	case PUSH_DEFAULT_CURRENT:
+-		setup_push_current(remote, branch);
+-		return;
++		dst = setup_push_current(remote, branch);
++		break;
+ 	}
++
++	refspec_appendf(&rs, "%s:%s", branch->refname, dst);
+ }
+ 
+ static const char message_advice_pull_before_push[] =
 -- 
 2.32.0.rc0
 
