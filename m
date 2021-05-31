@@ -2,87 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9944C47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48729C47082
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:47:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7532A60FF0
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:45:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 22C18610C9
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230201AbhEaGqp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 02:46:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62376 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbhEaGqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 02:46:39 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9BF8F13B0A6;
-        Mon, 31 May 2021 02:45:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=XkoGZLkfR38vKDDZKxuddTIC65lQk9gdDds9VWwyQmU=; b=tBpf
-        D1ZcRXQa1Ua7R4xE1jHZEYlZ20hQN7neY+d/qs3f0pSPy/zssMb5iHJHhaFPkTaM
-        RQr1SsGuqayfE6gRuip4aaPawC9CUrl3BVvgcskX0CNXGPuqRk6r/rUGy3N7dCAK
-        jSSTGw94Eopc5Xwe6ew8NmqH2wAJ1M+r5PCGJMQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9216513B0A5;
-        Mon, 31 May 2021 02:45:00 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.73.10.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DE10213B0A4;
-        Mon, 31 May 2021 02:44:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 11/15] push: fix Yoda condition
-References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
-        <20210529074458.1916817-12-felipe.contreras@gmail.com>
-Date:   Mon, 31 May 2021 15:44:56 +0900
-Message-ID: <xmqqwnrfv1uf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230165AbhEaGsw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 02:48:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230070AbhEaGsv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 02:48:51 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AED4C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 23:47:10 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id g18so8303552pfr.2
+        for <git@vger.kernel.org>; Sun, 30 May 2021 23:47:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=NbDjomnom/8udP04qB123NLsoY/bF3XvO/xpwO4kIsM=;
+        b=rLpAl0303uWJ9dx4d4ZIm20gqir6BQoEHaACH9wen4MZzlNS1Pk7F4GhIVXtEHR+JZ
+         8eyk1+MUq45PeqhNwI+UE6V3yZpD4f16HDlZxd7MQUC+ZlUhGfRuP00JdOC8xGpAnxob
+         Ptzb5k9EzI2um36ewyS59agVslcVJCjcZ0GSAjZ+As3enC44WPsXfnrnOvftxzckwTdZ
+         oUTHqm3qX8lp9uEqjdvpWe3NI1IU68Ju8+XSG4Z3tlahPz4OtNgH8rNWxq41yZhZa7PY
+         6tkBUCOYhiN9iuucgbUeZ3hYCZYD62RIU5MyKc/0DzLc8hXSCeRyN1oqWDLrCWbCpW6X
+         sjMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NbDjomnom/8udP04qB123NLsoY/bF3XvO/xpwO4kIsM=;
+        b=plvNt4DitT8/B5LP+38UU6+ztG1xv6hhmTLB2iABgbzJSN+IUioFkME1YFLpPYcJpU
+         7mctXojXCq+DpOhqmm2FU5m9aF1aaxcibDXYoTQVTC0Dpxt0EGOZN//jjzOPR1qVRpui
+         XHaM4W5jE5rNI6AfS+leoLYfzRl2n7jtCeLkun1Sedd9BpRJmn/l6We2G52ZzwVWgmUL
+         ds42qNcYIYyqf7O04QZXakqhdfPNOIWEYKnVVTYtbmmql/u7h04TEO3KwDZPmOgfsuj/
+         XGOG11qCAq7EHKcOWbMNRkpN1SAGzlub4lur5gIRkrr79Boj4wWK+ggRV2soQ6Zkw17e
+         xnhw==
+X-Gm-Message-State: AOAM533a/nNREzJfuqHK6n69fLua00qPmnZE3vXtFqA3IfWNWT+IMKFT
+        KEabWzrHzt0zcMNdIQ+bK1I=
+X-Google-Smtp-Source: ABdhPJyE+gdcq4NSj5TxdDKd3YQJKI1Ejapez4t9kzdlpbhsf50XYJ0+nblWAdLZQ4ncjlfgcJVd1w==
+X-Received: by 2002:a63:1e64:: with SMTP id p36mr21079118pgm.105.1622443629607;
+        Sun, 30 May 2021 23:47:09 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
+        by smtp.gmail.com with ESMTPSA id p8sm9856427pfw.165.2021.05.30.23.47.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 May 2021 23:47:08 -0700 (PDT)
+Date:   Mon, 31 May 2021 13:47:06 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Andy AO via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Derrick Stolee <stolee@gmail.com>, Andy AO <zen96285@gmail.com>
+Subject: Re: [PATCH] describe-doc:fix a obscure error description in the git
+ log documentation
+Message-ID: <YLSGasYc4wVoOfYt@danh.dev>
+References: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B71FAE7C-C1DB-11EB-B0B9-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 2021-05-31 06:00:56+0000, Andy AO via GitGitGadget <gitgitgadget@gmail.com> wrote:
+> From: zen96285 <zen96285@gmail.com>
+> 
+> The git log documentation says "The default option is 'short'." This is wrong. After testing, the default value of '--decorate' is 'auto', not 'short'.
+> 
+> There is no difference between 'auto' and 'short' in terminal, but there is a significant difference in how they behave in the shell.The information generated by the 'short' can be saved in shell variables, while the 'auto' can't.
 
-> We want to check if remote is the same as the branch remote, not the
-> other way around.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  builtin/push.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Please use your real name and wrap your commit message at 50
+characters for subject line and 72 characters for body.
 
-This is 10/15's making, and squashing them together will make both
-the entire series (because doing so means that the reviewers need to
-see one fewer step) and 10/15 (because the end result of the conversion
-is more "logical") easier to review (and later read in "git log -p").
+Let's the commit message aside.
 
->
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 7485522807..468ccc1067 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -204,7 +204,7 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
->  
->  static int is_workflow_triangular(struct remote *remote)
->  {
-> -	return remote_get(NULL) != remote;
-> +	return remote != remote_get(NULL);
->  }
->  
->  static void setup_default_push_refspecs(struct remote *remote)
+The default option is documented correctly as short.
+Please check out builtin/log.c:decorate_callback and
+builtin/log.c:parse_decoration_style.
+
+Below command print nothing in my machine:
+
+	git log --decorate -1 >/tmp/default
+	git log --decorate=short -1 >/tmp/short
+	cmp /tmp/default /tmp/short
+
+I'm curious about your config and/or command invocation.
+From the code, I can't guess which scenario that's different.
+
+I think you meant:
+
+	git log -1 >/tmp/no-decorate
+
+In that case, please check your "log.decorate" config.
+
+-- 
+Danh
