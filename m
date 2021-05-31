@@ -2,82 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C95DC4708F
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 05:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50CBBC4708F
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:01:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF8A76124B
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 05:48:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AD9B61090
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230006AbhEaFuS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 01:50:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41866 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229730AbhEaFuQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 01:50:16 -0400
-Received: (qmail 20284 invoked by uid 109); 31 May 2021 05:48:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 31 May 2021 05:48:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26622 invoked by uid 111); 31 May 2021 05:48:38 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 31 May 2021 01:48:38 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 31 May 2021 01:48:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Gregory Anders <greg@gpanders.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 00/13] send-email: various optimizations to speed up
- by >2x
-Message-ID: <YLR4tMOvkR81+ACq@coredump.intra.peff.net>
-References: <cover-00.13-00000000000-20210524T074932Z-avarab@gmail.com>
- <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        id S229970AbhEaGCl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 02:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229752AbhEaGCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 02:02:39 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CEC4C061574
+        for <git@vger.kernel.org>; Sun, 30 May 2021 23:00:59 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m18so5549641wmq.0
+        for <git@vger.kernel.org>; Sun, 30 May 2021 23:00:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=UFDiDZ5cEckV1Hp9OWqmKNoNlNzC9M1wYI3KqcwKC7Q=;
+        b=JAYJte6kgv7jTNXLaGQKDGbbmdVyRVKS0fPLlg0jmFE9l0jjRhf53EIDyKVt0tkZ3C
+         jSBFWOA3p5YPto4aZL61ENbYZW1rNBBNq3rAsFLQ5WCX7AgDtYYlikdEbScMDnwkBVI5
+         EmO7sjloTc23+OVDEF4URj6qAqMz2g+xUM5b2pNwsvVxj5fBsjmyN6e1YJAFeLBT9DTo
+         7GwdBNCVT5rTuNwirBSmtTTPemCMUlcNlkXcbTHdjw28jUuTpyZnThCtoSoirbn58gzO
+         76r8uWRi2NTGplvw+LyGnBxMYaW9XRoPs4FTYYQFEhSDKRRcumJMqQU6N0XWH9bpmsPb
+         9HOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=UFDiDZ5cEckV1Hp9OWqmKNoNlNzC9M1wYI3KqcwKC7Q=;
+        b=l3GoFT12p8hrK7nnfdypCanXn31op7GEjJx082pb9xk2SYY7iynkR7R4i164V0vHEu
+         PGxh+fcbGBAk2QInvM7eNblS8TSV9D9MWGTERQmIE7ay98hB7k0vMOnrICS7bDKq7Cqn
+         ETsvym/ex95vOeK6Ao1lPA195+gNtefh2gD8BTS6Fpl5gfLSofoyLKjic/9mLJw9J2bX
+         paF3QUuaYSNdT/lI8Tgf2OTxTDDvlsHX8CvEGMt67OpJUo2X9cHGpzJfcjLp0tMq+6Ok
+         /zm43uPlVSYdPeXIxexFCjDeCjXF9NVCNLNhRHcGWY9+h6/xe6gpkGnhIniejbWcFvq1
+         +V6Q==
+X-Gm-Message-State: AOAM533PkFpaf2K4OH4Z/2OheNJftBkgGvtfiM6x22/tSuYkv6fL3AFX
+        hqss0GMuhZsYdVq8HpFK1eygIvPsjLs=
+X-Google-Smtp-Source: ABdhPJzUCwcWvsK/o/5Us1jCwajzz3sk2oLXzGk70ch4hg7boTboGKgt6qfmd9ibvbMWaqIJ1Vn1sA==
+X-Received: by 2002:a1c:f70b:: with SMTP id v11mr19747335wmh.186.1622440857525;
+        Sun, 30 May 2021 23:00:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p5sm17506784wrd.25.2021.05.30.23.00.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 May 2021 23:00:57 -0700 (PDT)
+Message-Id: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
+From:   "Andy AO via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 31 May 2021 06:00:56 +0000
+Subject: [PATCH] describe-doc:fix a obscure error description in the git log
+ documentation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-00.13-00000000000-20210528T092228Z-avarab@gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Derrick Stolee <stolee@gmail.com>,
+        Andy AO <zen96285@gmail.com>, zen96285 <zen96285@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 28, 2021 at 11:23:39AM +0200, Ævar Arnfjörð Bjarmason wrote:
+From: zen96285 <zen96285@gmail.com>
 
-> Hopefully the final iteration. Updates a commit message to explain why
-> I moved away from File::Spec::Functions, rebases on master, and
-> explains and deals with the "undef in config" issue Jeff King noted.
+The git log documentation says "The default option is 'short'." This is wrong. After testing, the default value of '--decorate' is 'auto', not 'short'.
 
-Thanks. The solution was less invasive than I feared.
+There is no difference between 'auto' and 'short' in terminal, but there is a significant difference in how they behave in the shell.The information generated by the 'short' can be saved in shell variables, while the 'auto' can't.
 
-I guess here:
+Signed-off-by: AndyAo Zen96285@gmail.com
+---
+    describe-doc:fix a obscure error description in the git log documenta…
+    
+    The git log documentation says "The default option is 'short'." This is
+    wrong. After testing, the default value of '--decorate' is 'auto', not
+    'short'.
+    
+    There is no difference between 'auto' and 'short' in terminal, but there
+    is a significant difference in how they behave in the shell.The
+    information generated by the 'short' can be saved in shell variables,
+    while the 'auto' can't.
+    
+    Signed-off-by: AndyAo Zen96285@gmail.com
 
->     @@ git-send-email.perl: sub read_config {
->      -			my @values = Git::config(@repo, $key);
->      -			next unless @values;
->      +			my @values = @{$known_keys->{$key}};
->     ++			@values = grep { defined } @values;
->       			next if $configured->{$setting}++;
->       			@$target = @values;
->       		}
->       		else {
->      -			my $v = Git::config(@repo, $key);
->     --			next unless defined $v;
->      +			my $v = $known_keys->{$key}->[0];
->     + 			next unless defined $v;
->       			next if $configured->{$setting}++;
->       			$$target = $v;
->     - 		}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1030%2FAndy-AO%2Ffix_a_obscure_error_description_in_the_git_log_documentation-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1030/Andy-AO/fix_a_obscure_error_description_in_the_git_log_documentation-v1
+Pull-Request: https://github.com/git/git/pull/1030
 
-we'd ignore such undef values, whereas presumably before they'd have
-triggered an error via Git::config(). I don't think it matters all that
-much either way, though.
+ Documentation/git-log.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 1bbf865a1b2d..37a4694b060a 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -39,7 +39,7 @@ OPTIONS
+ 	full ref name (including prefix) will be printed. If 'auto' is
+ 	specified, then if the output is going to a terminal, the ref names
+ 	are shown as if 'short' were given, otherwise no ref names are
+-	shown. The default option is 'short'.
++	shown. The default option is 'auto'.
+ 
+ --decorate-refs=<pattern>::
+ --decorate-refs-exclude=<pattern>::
+
+base-commit: 4e42405f00ecbbee412846f48cb0253efeebe726
+-- 
+gitgitgadget
