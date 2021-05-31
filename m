@@ -2,100 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4DEEC47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 15:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52E40C47080
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 15:54:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE9ED6124C
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 15:40:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3710D61263
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 15:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233493AbhEaPmE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 11:42:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58294 "EHLO
+        id S233459AbhEaPzu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 11:55:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234913AbhEaPk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 11:40:27 -0400
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E3AC08E89D
-        for <git@vger.kernel.org>; Mon, 31 May 2021 07:27:33 -0700 (PDT)
-Received: by mail-ua1-x933.google.com with SMTP id m23so505536uao.12
-        for <git@vger.kernel.org>; Mon, 31 May 2021 07:27:33 -0700 (PDT)
+        with ESMTP id S232900AbhEaPxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 11:53:47 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9028C0612AF
+        for <git@vger.kernel.org>; Mon, 31 May 2021 07:35:40 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id d25so12162066ioe.1
+        for <git@vger.kernel.org>; Mon, 31 May 2021 07:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=RspRjlen7EkAuKt+NNGMA78sZ04pGueSt1zolAdCA2o=;
-        b=sRgR1H4VUWS2rNlHnnxDrPu4PymwG3hEYc3hDJd/WfG/2vtYtjw7ZR3SPkvTLX0vOu
-         zeWfvDyu3XCHG5iuv7lSWzljs9LcGyBwdLffb2+1kRS55lRplKpixtliVF+gPZbNLkmO
-         4xXX2LTxPU5Eic1IZ5sVS5F1EdP/SwvmBJT9wI1h2z6qceZCdmviSkioj4/Zdlf28hDq
-         Fzat4MJ0GmFjaojK7ed1odAYe+3hfeGJlg48SD/sNktmXA4GQ8gQFmloMVK/oOcocE7u
-         A/9LW+kcUH6oMhPW/U0kPWstcOZDCvOdc9x1ug6Hc3rzpRHDGRLipC+jr8Wo13hHAeHK
-         5ifA==
+        bh=kQwuEmnT6vpMn+e6XGW98US/LbzDd+UDbj1F0TsLV9k=;
+        b=uXK3H5aRsdXflpB2gQBxrxqfYSicc46B6esO7itne7NdyzWjsLa8yotdUB9VJYly4L
+         pjHyF1CgHCka3spDN/Th6xiJMv8pBubRlFbDzjhja1bvAdgE2BH6S0ffGFUIiakn07Mk
+         BboqSd6wArW5iJnNRfPB8XqxXyPnbeYyvsf/n8ogLlpXAxaC3YKQqK7eymrEbOmDBtgc
+         +1uqZbWP7EEh6PtltU7wvPuH2j4dpEfBccrN5ziVYRl9Fzt2jd4r2CPZqnKzfjkhWF2t
+         DsUI8DtLcQ6uJfDGo7454reX25TMCndbdlmu8Oce2koboalEARRzQSwcUkRZVMr+NM0J
+         rHHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RspRjlen7EkAuKt+NNGMA78sZ04pGueSt1zolAdCA2o=;
-        b=db7dPvRoptxtGP+Q6rbI/hMwGApLf/goEjHFjD0xWhFwKI4/XHC7LckTlmSfnz8Ihq
-         oX16lrmxy1K+ZpxKag9qCjlpuH4uVpCgQDK3X0Lmk+5NnF3EFssWH3IUS2FKU+jI5rVk
-         AevImEZaETqeE6KY37rF+kHA/KhllCtL61azvgR1iSrmPwzhvKlDVztaukZMIBwCUB36
-         Ag3KYa4PGlyKNra/Y66jYTkt2im+waXYvWEFg1QBh6PAx+5H/hK5a50OLTsw7s4Z+K50
-         X9Bg3oXvPw240eUEaX2xsmuRbw7BAUEVoVYVKAdslqxvGYu4GFtkq5LKhvPzmBN/K0mD
-         uZuA==
-X-Gm-Message-State: AOAM531tiCrJOxw7uvr9cwzvAKJutBKiTjO83uLS6vGFT7HLsLJTJRnE
-        +r8DuQCzHkNHdGIcUq7AKVUS0MWr3CIl7aiNFX3L4A==
-X-Google-Smtp-Source: ABdhPJxhU9Rv1UyK8rU4eahzA+V+Wke9Mx/RmztlplKOVjGtYYMlm45MtRRShJM8JDfMdQDlukG8VdNOpqvhgxLW3E8=
-X-Received: by 2002:ab0:6f90:: with SMTP id f16mr2687304uav.112.1622471252558;
- Mon, 31 May 2021 07:27:32 -0700 (PDT)
+        bh=kQwuEmnT6vpMn+e6XGW98US/LbzDd+UDbj1F0TsLV9k=;
+        b=RxQvpRrGLZqhSVPzfBvgnKZ7V9t2eImvcVsPd0sL7oKuyT8Ij3mQKhWwjEWUShsk0C
+         Lf3THv+vUU0oVhABk45i9I//HGGb9ub9HEX93TkA9YdPC7yv6bId/WAsHd03CHQ/nQT2
+         T6Xq22VoqoBmGdAAGk+t05Kc6ksmIuWEvFTrf6ZMVOct0RbhKAes+yK7EjrbFCI6LWSr
+         1wvy4eKdPiy5PYj2EMhTwqT0Eso+zkYWvZIbWx8hDGO3dOrUzuOVYDFK0l0+peP6mpuj
+         secfyLaXbm0LA46/l44ZXBOTHcgHlux8Lml18MTLAujIjoBOICVG1vAZNRiKYQbfH0Rk
+         2WOA==
+X-Gm-Message-State: AOAM5324sm5DJc3tHqZbA8Jr1jmzck/7nB1Qm3De6qR/lUpR3S/XVGar
+        OEQD9YXEdeZwXTLaS70BIfaZNE5y/bWB+CDOKF0=
+X-Google-Smtp-Source: ABdhPJwZ7t/I+8gKTvnNdS1s6qqYalcxN2WgUTfkCljdcZy6Gsi1RD1sPoB+JKcqszRG7TIrM4hjn51R6fP5YMntDmk=
+X-Received: by 2002:a02:9a17:: with SMTP id b23mr1480007jal.10.1622471739617;
+ Mon, 31 May 2021 07:35:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1008.git.git.1618829583.gitgitgadget@gmail.com>
- <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com> <24dcf05d8fa6172d04ca047a860ad5019aad17b7.1619519903.git.gitgitgadget@gmail.com>
- <87h7ixpg2l.fsf@evledraar.gmail.com>
-In-Reply-To: <87h7ixpg2l.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 31 May 2021 16:27:21 +0200
-Message-ID: <CAFQ2z_OC_mOZO5+V4qtg66FrsDy5PyyRXdECztuW8owpZ9WD-w@mail.gmail.com>
-Subject: Re: [PATCH v2 19/21] t7003: check reflog existence only for REFFILES
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
+ <pull.963.v2.git.1622379718.gitgitgadget@gmail.com> <e44a2ed0db596ab0e0f484c25facb7da7214369e.1622379718.git.gitgitgadget@gmail.com>
+ <xmqqh7ij20l8.fsf@gitster.g>
+In-Reply-To: <xmqqh7ij20l8.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 31 May 2021 22:35:28 +0800
+Message-ID: <CAOLTT8REM7tF6ojdmnsJt7-RE6a8oX4RFXVcL215YnYTx6b62w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] [GSOC] ref-filter: add %(raw) atom
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 20, 2021 at 5:42 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> > -     test_must_fail git reflog exists refs/heads/prune-entire
-> > +     if test_have_prereq REFFILES
-> > +     then
-> > +             test_must_fail git reflog exists refs/heads/prune-entire
-> > +     fi
-> >  '
-> >
-> >  test_expect_success '--remap-to-ancestor with filename filters' '
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B45=E6=9C=8831=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=888:44=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Ditto chicken and egg, but isn't this conflating "we always write logs"
-> v.s. reftable just behaving differently, i.e. shouldn't this be
-> positively asserting that we have the log *for that branch* still after
-> its deletion?
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Beyond, `--format=3D%(raw)` cannot be used with `--python`, `--shell`,
+> > `--tcl`, `--perl` because if our binary raw data is passed to a variabl=
+e
+> > in the host language, the host languages may cause escape errors.
+>
+> "may cause escape errors" just says you are not escaping correctly
+> in your code (implying that this patch is not good enough and with
+> more effort we should be able to fix it to allow binaries), but the
+> problem is the host languages may not support binaries
+> (specifically, anything with a NUL in it) at all, which is
+> fundamentally unfixable, in which case, rejecting is the only
+> sensible choice.
+>
+>     ... because the host language may not support a NUL in the variables
+>     of its string type.
+>
 
-That is a great topic to discuss on the reftable series.
+I agree. But host language not only support NUL but also some Non-ASCII
+character and Non-UTF-8 code:
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
+$ git hash-object a.out -w | xargs git update-ref refs/myblobs/aoutblob
+$ git for-each-ref --format=3D"name=3D%(raw)" refs/myblobs/aoutblob
+--python | python2
+  File "<stdin>", line 1
+SyntaxError: Non-ASCII character '\x8b' in file <stdin> on line 2, but
+no encoding declared;
+ see http://python.org/dev/peps/pep-0263/ for details
+
+$ git for-each-ref --format=3D"name=3D%(raw)" refs/myblobs/aoutblob
+--python |python3
+SyntaxError: Non-UTF-8 code starting with '\x8b' in file <stdin> on
+line 2, but no encoding declared;
+ see http://python.org/dev/peps/pep-0263/ for details
+
+> > +The raw data in a object is `raw`, For commit and tag objects, `raw` c=
+ontain
+>
+> s/contain/contains/, but more importantly, as we are not introducing
+> %(header), I do not see why we want to talk about its details.  For
+> commits and tags, just like for trees and blobs, 'raw' is the raw
+> data in the object, so beyond "The raw data of a object is %(raw)",
+> I do not think there is anything to talk about.
+>
+
+Ok, I will delete this part.
+
+> > +     const char *s =3D buf->buf;
+> > +     size_t cur_len =3D 0;
+> > +
+> > +     while ((cur_len !=3D buf->len) && (isspace(*s) || *s =3D=3D '\0')=
+) {
+> >               s++;
+> > +             cur_len++;
+>
+> Is NUL treated the same as a whitespace letter for the purpose of
+> determining if a line is empty?  WHY?
+>
+
+Well, there seems to be no correction here. But is it true that memory
+like "\0abc" is considered empty?
+
+Thanks.
 --
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+ZheNing Hu
