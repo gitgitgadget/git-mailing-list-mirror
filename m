@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0577AC47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF520C47082
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA62660231
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9058661108
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 17:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233687AbhEaRlx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 13:41:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57416 "EHLO
+        id S233728AbhEaRl4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 13:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232570AbhEaRky (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 13:40:54 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED297C00874D
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:46 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id z8so6422219wrp.12
-        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:46 -0700 (PDT)
+        with ESMTP id S231845AbhEaRk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 13:40:56 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79EC4C008751
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:48 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id c3so11517090wrp.8
+        for <git@vger.kernel.org>; Mon, 31 May 2021 09:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=6mfwQ1ZQ3qCeJT++Ml9TRrZ4/YAQ1E39joQqjbMQfbg=;
-        b=vCaKG/EOIIa3DJnakX97VmCxqkP86V4N+DvQGcNA6q+cqpgTZsPiqNT6/egnJWHXtj
-         c7sPH/qFM4L7rDGiM9HnriZYVJYa+fXxx8uxVwxozcu4nU0GodWOjh1usDI8Wc/ppNJj
-         LwbE2JR8VXMdsIDmFTS7fchf3s+Djq/5S+PQy+XJgDYtwZVrdrN6iMcrFLEFPDM7ta+q
-         mTN/K6y0C2OrE+ak96gDBbPBSQNvhvuKnx8Br5b0m+dbxid3ept7zUammymNADNGD6uw
-         KhX009qLBeNKebGV+2i65FfSMNNHYb8RzVSLwJOPZN+J1rfrpz197kLbt9Pn4mCrD79u
-         SBBw==
+        bh=EZ8+RtFLom/n2zNyA7TP0YFGdpmTkg6DfxkQvHRyY+4=;
+        b=bdpSbdu2pCiBfk/QYKbqb7bfO5njR0nNxODtqCBAxObpinyYeVIL+JeUrGWAw9vacE
+         u11faxStUGDtAa5/+vd+b3jqUaS90qpyqcbGwXviG+pLxUnKXnbp2yn4XYNH9gzNID4D
+         cf9mRXgVISJ+pNLdn8HHNbGnMXGoxphW8YyJZ8wyB3oUWie5NY5mE3nLnfb+MjXHfQXI
+         1s2YYf+ctPxy/6qz5DWqJBM9NKkGCXTeWhI+L/TM9oWkkMrYi8SznkBaEXP0XJ4Pgunm
+         +rAGdBSGbGhezo/KO/d8zA2oQ6Zc4C1h34WPDCN+P1ix2tFtzjrhmolp06c7hV/xoTWU
+         JqCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=6mfwQ1ZQ3qCeJT++Ml9TRrZ4/YAQ1E39joQqjbMQfbg=;
-        b=UpHmecENsaEO7uF9dgMt0+j+rYtF1uFZzR4RYMqeZsC8sk4eJDuKg3Ti6A4eobA0jE
-         L4BCLjE/Cf0tqnUxVpq6vh5wKcL5/VSZKTrRJ7C2fqKyZoEuXL8myQ50G4G1I+d4uyon
-         NiAUI+bD53vu8Ngehihf25iamLC1mLL16DY1trfMZcj62VR2FTGv9k2/Ju+2OacEvwzT
-         pg54VS4JBcvtDwcBcaGYBlC6xARagXJv5c0aDVsZYnoDMPZbhWznojBSZzWVLYtj+jcR
-         PpWPCf22rc7Xc89DGMzJQUdVUSYNBC2SWdAP/0ziavka3FLGvtyLreAWtb3DgXG/Uiam
-         qJvg==
-X-Gm-Message-State: AOAM530v366iZL4L9qwE/y+3cFm3zMJLBDedRleIv05KS+qPUl7zJMbD
-        P7IMDTgL7jXQCTBHef6RgBMvY19vc4E=
-X-Google-Smtp-Source: ABdhPJw84y1eM22owdU/ebZ0JiGEj4zAbJEXZcppjfHhueMnbRADXoT4/2qlytktQMmGe7vxa9oDTA==
-X-Received: by 2002:a5d:4890:: with SMTP id g16mr23282250wrq.353.1622480205607;
-        Mon, 31 May 2021 09:56:45 -0700 (PDT)
+        bh=EZ8+RtFLom/n2zNyA7TP0YFGdpmTkg6DfxkQvHRyY+4=;
+        b=Gz37/UqGOTUpJYqW0z9gTx26LKgM+n76EG3ffn+8XhehrasnaL+uEujzwHSvHzzDA3
+         NIS2qvLiUW3P40+2UWErVgIbi5r6Hm7fI+XxNJXj3itA9kKaXkM1UazLLobq7JGM7FTJ
+         ypKPqI3DRbvXtPTwXP7vihkZUkTuFzLLcl9EYOwZPvVIT+OApVB+y+r2PD4DQM/vFvTo
+         XtGqr/ODB52VKnVaSEI4bqNCr+oUnuyyx5WT88bQ6N//MA9HOpykzlCqgIEUutQpOrMb
+         LU+57VcRe9zfcICJm8BA35jt6oDu9Y7jPwN73rZF3TJdFWFEYhs9kKSFhFiI4GmpAwfa
+         Kj/A==
+X-Gm-Message-State: AOAM532j5YoKO5qCJrEPkm3rsYek/VUaKtDQz0Wk2ce+vG5veKDMXR+s
+        ap1rGRQkIGL1TwoTZ768uXGMyloyN4s=
+X-Google-Smtp-Source: ABdhPJyoMbRGFe3wnnOecfy9dVJAbv7LsCf//iItS1hFGE7oUElMS8vv+fL38B+D/6CsIiDPOd0kkA==
+X-Received: by 2002:adf:d209:: with SMTP id j9mr12156014wrh.328.1622480207081;
+        Mon, 31 May 2021 09:56:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a123sm43340wmd.2.2021.05.31.09.56.45
+        by smtp.gmail.com with ESMTPSA id l8sm266414wry.55.2021.05.31.09.56.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 May 2021 09:56:45 -0700 (PDT)
-Message-Id: <c12406ac9655d45a6eb3f408805d2a5db1c63bfa.1622480197.git.gitgitgadget@gmail.com>
+        Mon, 31 May 2021 09:56:46 -0700 (PDT)
+Message-Id: <57fcd175fa723cec194ddf776d6e209ae0f27d74.1622480197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 References: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
         <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 May 2021 16:56:27 +0000
-Subject: [PATCH v3 12/22] t5304: restyle: trim empty lines, drop ':' before >
+Date:   Mon, 31 May 2021 16:56:30 +0000
+Subject: [PATCH v3 15/22] t1407: require REFFILES for for_each_reflog test
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,249 +79,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
+Add extensive comment why this test needs a REFFILES annotation.
+
+I tried forcing universal reflog creation with core.logAllRefUpdates=true, but
+that apparently also doesn't cause reflogs to be created for pseudorefs
+
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5304-prune.sh | 74 +++++++++++++-----------------------------------
- 1 file changed, 20 insertions(+), 54 deletions(-)
+ t/t1407-worktree-ref-store.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 3475b06aeb26..15d56d3d8791 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -22,30 +22,25 @@ add_blob() {
- }
- 
- test_expect_success setup '
--
--	: > file &&
-+	>file &&
- 	git add file &&
- 	test_tick &&
- 	git commit -m initial &&
- 	git gc
--
+diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
+index d3fe77751122..ad8006c81397 100755
+--- a/t/t1407-worktree-ref-store.sh
++++ b/t/t1407-worktree-ref-store.sh
+@@ -52,7 +52,14 @@ test_expect_success 'create_symref(FOO, refs/heads/main)' '
+ 	test_cmp expected actual
  '
  
- test_expect_success 'prune stale packs' '
--
- 	orig_pack=$(echo .git/objects/pack/*.pack) &&
--	: > .git/objects/tmp_1.pack &&
--	: > .git/objects/tmp_2.pack &&
-+	>.git/objects/tmp_1.pack &&
-+	>.git/objects/tmp_2.pack &&
- 	test-tool chmtime =-86501 .git/objects/tmp_1.pack &&
- 	git prune --expire 1.day &&
- 	test_path_is_file $orig_pack &&
- 	test_path_is_file .git/objects/tmp_2.pack &&
- 	test_path_is_missing .git/objects/tmp_1.pack
--
- '
- 
- test_expect_success 'prune --expire' '
--
- 	add_blob &&
- 	git prune --expire=1.hour.ago &&
- 	verbose test $((1 + $before)) = $(git count-objects | sed "s/ .*//") &&
-@@ -54,11 +49,9 @@ test_expect_success 'prune --expire' '
- 	git prune --expire 1.day &&
- 	verbose test $before = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'gc: implicit prune --expire' '
--
- 	add_blob &&
- 	test-tool chmtime =-$((2*$week-30)) $BLOB_FILE &&
- 	git gc &&
-@@ -68,33 +61,25 @@ test_expect_success 'gc: implicit prune --expire' '
- 	git gc &&
- 	verbose test $before = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'gc: refuse to start with invalid gc.pruneExpire' '
--
- 	git config gc.pruneExpire invalid &&
- 	test_must_fail git gc
--
- '
- 
- test_expect_success 'gc: start with ok gc.pruneExpire' '
--
- 	git config gc.pruneExpire 2.days.ago &&
- 	git gc
--
- '
- 
- test_expect_success 'prune: prune nonsense parameters' '
--
- 	test_must_fail git prune garbage &&
- 	test_must_fail git prune --- &&
- 	test_must_fail git prune --no-such-option
--
- '
- 
- test_expect_success 'prune: prune unreachable heads' '
--
- 	git config core.logAllRefUpdates false &&
- 	mv .git/logs .git/logs.old &&
- 	: > file2 &&
-@@ -104,11 +89,9 @@ test_expect_success 'prune: prune unreachable heads' '
- 	git reset HEAD^ &&
- 	git prune &&
- 	test_must_fail git reset $tmp_head --
--
- '
- 
- test_expect_success 'prune: do not prune detached HEAD with no reflog' '
--
- 	git checkout --detach --quiet &&
- 	git commit --allow-empty -m "detached commit" &&
- 	# verify that there is no reflogs
-@@ -116,75 +99,61 @@ test_expect_success 'prune: do not prune detached HEAD with no reflog' '
- 	test_path_is_missing .git/logs &&
- 	git prune -n >prune_actual &&
- 	test_must_be_empty prune_actual
--
- '
- 
- test_expect_success 'prune: prune former HEAD after checking out branch' '
--
- 	head_oid=$(git rev-parse HEAD) &&
- 	git checkout --quiet main &&
- 	git prune -v >prune_actual &&
- 	grep "$head_oid" prune_actual
--
- '
- 
- test_expect_success 'prune: do not prune heads listed as an argument' '
--
--	: > file2 &&
-+	>file2 &&
- 	git add file2 &&
- 	git commit -m temporary &&
- 	tmp_head=$(git rev-list -1 HEAD) &&
- 	git reset HEAD^ &&
- 	git prune -- $tmp_head &&
- 	git reset $tmp_head --
--
- '
- 
- test_expect_success 'gc --no-prune' '
--
- 	add_blob &&
- 	test-tool chmtime =-$((5001*$day)) $BLOB_FILE &&
- 	git config gc.pruneExpire 2.days.ago &&
- 	git gc --no-prune &&
- 	verbose test 1 = $(git count-objects | sed "s/ .*//") &&
- 	test_path_is_file $BLOB_FILE
--
- '
- 
- test_expect_success 'gc respects gc.pruneExpire' '
--
- 	git config gc.pruneExpire 5002.days.ago &&
- 	git gc &&
- 	test_path_is_file $BLOB_FILE &&
- 	git config gc.pruneExpire 5000.days.ago &&
- 	git gc &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'gc --prune=<date>' '
--
- 	add_blob &&
- 	test-tool chmtime =-$((5001*$day)) $BLOB_FILE &&
- 	git gc --prune=5002.days.ago &&
- 	test_path_is_file $BLOB_FILE &&
- 	git gc --prune=5000.days.ago &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'gc --prune=never' '
--
- 	add_blob &&
- 	git gc --prune=never &&
- 	test_path_is_file $BLOB_FILE &&
- 	git gc --prune=now &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'gc respects gc.pruneExpire=never' '
--
- 	git config gc.pruneExpire never &&
- 	add_blob &&
- 	git gc &&
-@@ -192,17 +161,14 @@ test_expect_success 'gc respects gc.pruneExpire=never' '
- 	git config gc.pruneExpire now &&
- 	git gc &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'prune --expire=never' '
--
- 	add_blob &&
- 	git prune --expire=never &&
- 	test_path_is_file $BLOB_FILE &&
- 	git prune &&
- 	test_path_is_missing $BLOB_FILE
--
- '
- 
- test_expect_success 'gc: prune old objects after local clone' '
-@@ -222,16 +188,16 @@ test_expect_success 'gc: prune old objects after local clone' '
- test_expect_success 'garbage report in count-objects -v' '
- 	test_when_finished "rm -f .git/objects/pack/fake*" &&
- 	test_when_finished "rm -f .git/objects/pack/foo*" &&
--	: >.git/objects/pack/foo &&
--	: >.git/objects/pack/foo.bar &&
--	: >.git/objects/pack/foo.keep &&
--	: >.git/objects/pack/foo.pack &&
--	: >.git/objects/pack/fake.bar &&
--	: >.git/objects/pack/fake.keep &&
--	: >.git/objects/pack/fake.pack &&
--	: >.git/objects/pack/fake.idx &&
--	: >.git/objects/pack/fake2.keep &&
--	: >.git/objects/pack/fake3.idx &&
-+	>.git/objects/pack/foo &&
-+	>.git/objects/pack/foo.bar &&
-+	>.git/objects/pack/foo.keep &&
-+	>.git/objects/pack/foo.pack &&
-+	>.git/objects/pack/fake.bar &&
-+	>.git/objects/pack/fake.keep &&
-+	>.git/objects/pack/fake.pack &&
-+	>.git/objects/pack/fake.idx &&
-+	>.git/objects/pack/fake2.keep &&
-+	>.git/objects/pack/fake3.idx &&
- 	git count-objects -v 2>stderr &&
- 	grep "index file .git/objects/pack/fake.idx is too small" stderr &&
- 	grep "^warning:" stderr | sort >actual &&
-@@ -250,12 +216,12 @@ EOF
- test_expect_success 'clean pack garbage with gc' '
- 	test_when_finished "rm -f .git/objects/pack/fake*" &&
- 	test_when_finished "rm -f .git/objects/pack/foo*" &&
--	: >.git/objects/pack/foo.keep &&
--	: >.git/objects/pack/foo.pack &&
--	: >.git/objects/pack/fake.idx &&
--	: >.git/objects/pack/fake2.keep &&
--	: >.git/objects/pack/fake2.idx &&
--	: >.git/objects/pack/fake3.keep &&
-+	>.git/objects/pack/foo.keep &&
-+	>.git/objects/pack/foo.pack &&
-+	>.git/objects/pack/fake.idx &&
-+	>.git/objects/pack/fake2.keep &&
-+	>.git/objects/pack/fake2.idx &&
-+	>.git/objects/pack/fake3.keep &&
- 	git gc &&
- 	git count-objects -v 2>stderr &&
- 	grep "^warning:" stderr | sort >actual &&
+-test_expect_success 'for_each_reflog()' '
++# Some refs (refs/bisect/*, pseudorefs) are kept per worktree, so they should
++# only appear in the for-each-reflog output if it is called from the correct
++# worktree, which is exercised in this test. This test is poorly written (and
++# therefore marked REFFILES) for mulitple reasons: 1) it creates invalidly
++# formatted log entres. 2) it uses direct FS access for creating the reflogs. 3)
++# PSEUDO-WT and refs/bisect/random do not create reflogs by default, so it is
++# not testing a realistic scenario.
++test_expect_success REFFILES 'for_each_reflog()' '
+ 	echo $ZERO_OID > .git/logs/PSEUDO-MAIN &&
+ 	mkdir -p     .git/logs/refs/bisect &&
+ 	echo $ZERO_OID > .git/logs/refs/bisect/random &&
 -- 
 gitgitgadget
 
