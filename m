@@ -2,109 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48729C47082
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04DE1C4708F
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:49:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22C18610C9
-	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:47:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D26FF61374
+	for <git@archiver.kernel.org>; Mon, 31 May 2021 06:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230165AbhEaGsw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 02:48:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52834 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbhEaGsv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 02:48:51 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AED4C061574
-        for <git@vger.kernel.org>; Sun, 30 May 2021 23:47:10 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id g18so8303552pfr.2
-        for <git@vger.kernel.org>; Sun, 30 May 2021 23:47:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NbDjomnom/8udP04qB123NLsoY/bF3XvO/xpwO4kIsM=;
-        b=rLpAl0303uWJ9dx4d4ZIm20gqir6BQoEHaACH9wen4MZzlNS1Pk7F4GhIVXtEHR+JZ
-         8eyk1+MUq45PeqhNwI+UE6V3yZpD4f16HDlZxd7MQUC+ZlUhGfRuP00JdOC8xGpAnxob
-         Ptzb5k9EzI2um36ewyS59agVslcVJCjcZ0GSAjZ+As3enC44WPsXfnrnOvftxzckwTdZ
-         oUTHqm3qX8lp9uEqjdvpWe3NI1IU68Ju8+XSG4Z3tlahPz4OtNgH8rNWxq41yZhZa7PY
-         6tkBUCOYhiN9iuucgbUeZ3hYCZYD62RIU5MyKc/0DzLc8hXSCeRyN1oqWDLrCWbCpW6X
-         sjMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NbDjomnom/8udP04qB123NLsoY/bF3XvO/xpwO4kIsM=;
-        b=plvNt4DitT8/B5LP+38UU6+ztG1xv6hhmTLB2iABgbzJSN+IUioFkME1YFLpPYcJpU
-         7mctXojXCq+DpOhqmm2FU5m9aF1aaxcibDXYoTQVTC0Dpxt0EGOZN//jjzOPR1qVRpui
-         XHaM4W5jE5rNI6AfS+leoLYfzRl2n7jtCeLkun1Sedd9BpRJmn/l6We2G52ZzwVWgmUL
-         ds42qNcYIYyqf7O04QZXakqhdfPNOIWEYKnVVTYtbmmql/u7h04TEO3KwDZPmOgfsuj/
-         XGOG11qCAq7EHKcOWbMNRkpN1SAGzlub4lur5gIRkrr79Boj4wWK+ggRV2soQ6Zkw17e
-         xnhw==
-X-Gm-Message-State: AOAM533a/nNREzJfuqHK6n69fLua00qPmnZE3vXtFqA3IfWNWT+IMKFT
-        KEabWzrHzt0zcMNdIQ+bK1I=
-X-Google-Smtp-Source: ABdhPJyE+gdcq4NSj5TxdDKd3YQJKI1Ejapez4t9kzdlpbhsf50XYJ0+nblWAdLZQ4ncjlfgcJVd1w==
-X-Received: by 2002:a63:1e64:: with SMTP id p36mr21079118pgm.105.1622443629607;
-        Sun, 30 May 2021 23:47:09 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
-        by smtp.gmail.com with ESMTPSA id p8sm9856427pfw.165.2021.05.30.23.47.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 May 2021 23:47:08 -0700 (PDT)
-Date:   Mon, 31 May 2021 13:47:06 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Andy AO via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Derrick Stolee <stolee@gmail.com>, Andy AO <zen96285@gmail.com>
-Subject: Re: [PATCH] describe-doc:fix a obscure error description in the git
- log documentation
-Message-ID: <YLSGasYc4wVoOfYt@danh.dev>
-References: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
+        id S230214AbhEaGum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 02:50:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59774 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230194AbhEaGul (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 02:50:41 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92648D5763;
+        Mon, 31 May 2021 02:49:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=ozu8C1Uw7hu9SHl6lJezyh+iweecG9LPxLjebR0TBFY=; b=bVtu
+        6NvGuk/W/nQYsrXFjwhUiZUqkfsyvoI9XtXFP8ztihJvsbGikZPYceSWX8W/78xU
+        VvoefKZgClpu0VUKUMxGJjtGlFQtFl/44+AdNko0HxnER4HVc1qwOQWu4HtSZfPT
+        ldTZ/8kLhW0BVCfjXUk2iMXqnSpdmOoO+rxlIuQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 572D0D5762;
+        Mon, 31 May 2021 02:49:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.73.10.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 41ADCD575D;
+        Mon, 31 May 2021 02:49:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 13/15] push: only get triangular when needed
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+        <20210529074458.1916817-14-felipe.contreras@gmail.com>
+Date:   Mon, 31 May 2021 15:48:59 +0900
+Message-ID: <xmqqr1hnv1no.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4795DC60-C1DC-11EB-BA86-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-31 06:00:56+0000, Andy AO via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: zen96285 <zen96285@gmail.com>
-> 
-> The git log documentation says "The default option is 'short'." This is wrong. After testing, the default value of '--decorate' is 'auto', not 'short'.
-> 
-> There is no difference between 'auto' and 'short' in terminal, but there is a significant difference in how they behave in the shell.The information generated by the 'short' can be saved in shell variables, while the 'auto' can't.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Please use your real name and wrap your commit message at 50
-characters for subject line and 72 characters for body.
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin/push.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/push.c b/builtin/push.c
+> index c220f70795..818ca4c5c9 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -205,8 +205,8 @@ static const char *get_upstream_ref(struct branch *branch, const char *remote_na
+>  static void setup_default_push_refspecs(struct remote *remote)
+>  {
+>  	struct branch *branch;
+> -	int triangular = remote != remote_get(NULL);
+>  	const char *dst;
+> +	int triangular;
+>  
+>  	switch (push_default) {
+>  	case PUSH_DEFAULT_MATCHING:
+> @@ -225,6 +225,7 @@ static void setup_default_push_refspecs(struct remote *remote)
+>  		die(_(message_detached_head_die), remote->name);
+>  
+>  	dst = branch->refname;
+> +	triangular = remote != remote_get(NULL);
+>  
+>  	switch (push_default) {
+>  	default:
 
-Let's the commit message aside.
-
-The default option is documented correctly as short.
-Please check out builtin/log.c:decorate_callback and
-builtin/log.c:parse_decoration_style.
-
-Below command print nothing in my machine:
-
-	git log --decorate -1 >/tmp/default
-	git log --decorate=short -1 >/tmp/short
-	cmp /tmp/default /tmp/short
-
-I'm curious about your config and/or command invocation.
-From the code, I can't guess which scenario that's different.
-
-I think you meant:
-
-	git log -1 >/tmp/no-decorate
-
-In that case, please check your "log.decorate" config.
-
--- 
-Danh
+This is another change that got helped by an earlier split.
+Good.
