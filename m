@@ -7,216 +7,181 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA22C47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 11:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F85CC47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:04:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5080F61287
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 11:40:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 247D4613C5
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:04:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232569AbhFALmB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 07:42:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44012 "EHLO
+        id S233854AbhFAMFw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 08:05:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230288AbhFALmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 07:42:01 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08647C061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 04:40:19 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id n12so7238043pgs.13
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 04:40:18 -0700 (PDT)
+        with ESMTP id S233848AbhFAMFv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 08:05:51 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DB7DC061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 05:04:09 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id g20so5817248ejt.0
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 05:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=92NM6H8Dagk/9DDIZTIhks+FSn1vRzCn8szXwhWRzXg=;
-        b=ixpTaLLGjCibt5mZYGoQWzlXo0p28BXGG2bwVvOYem/XS9XOKmpJNJfIelJPEZSq4r
-         KrAYwipL8T9B5J6nz/7u0/xAKPraO0k9IphccgVDz8woNd/H2sXl2eI626koBtO7TN/d
-         hZ/voczMnvRY/K2FjO1mhbM2XPAH5+0ZPSfbyN2ZT9Q+uUjCYF51EMuNkNUkKzFcrjHW
-         A8yXoLF0Yy6NAW420aM3JN9FUYw+4cOHEnwxqKLUSp/YiKA0xlyPYjTx3Bi+651It3J1
-         S+A7gKlMBeefirifvx8bgphbnW+0S+qcNGSFOOQA2qG6VBpzKEVK2vOf+8urJmEuGN5n
-         a0FA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=joqGfYEJc9FSg/dHPUXAJwj9lGLoM8mH8PXUYs4ccy4=;
+        b=Jgu1BHUE8mhV3TN9FQn1VFW96yUn7tDq4dbKtXsbPu3aOWZo/9lQ/WbowpdNJ1Uz7v
+         LOYXoUFPoU10S0kV/HKZjqeVCEnorrmeAJFdXOQ10dvdzN+DFET12PJQSZURbN9Nin7U
+         yLeCDLnU4uTdstbcvL0mzY3xK2JlMlsOu1Ro5PG+g4zyNpjHiyoBFT8tI+a6Q2cixg5C
+         uQ7jjafbu2KIimoN87mpv1sfa+IvTWS3RjGJpMtaKdJrPuxZEYw5jweKJhTo84AXq752
+         F+V7bbTH+O6sXohDyKAdY/Ujhhgyvl4zhb9eZddwJEbJoyvnR+42D0N62Lso3opcBxcG
+         v0xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=92NM6H8Dagk/9DDIZTIhks+FSn1vRzCn8szXwhWRzXg=;
-        b=l0sSMzi5a8p5oa6wV/zIweZt5+4rFohmFV42Y39NBH0BiyIXtsVSnhrySW+4qVIou+
-         KQuythKJYU7RCLOnEjUYFOQE/8Ym4YzZ/Pe3qFahQTtqlGvMqOj+222tEJVbdOrD/z7Q
-         /f43TRp9fFH8pon+N8pYie+OuTclveCQthhNkdnjkKg/UcfurXTugDiln0nLdmuWJjhb
-         twbL5rfwFyW7b2C8cpM6nnCzX5Sl3htjWs3PZ7aRz+aYkprZlmDHRATXHrPSasTlgPeR
-         W3pCBk9ZWx4FPaf2jctEQSDtJX9MNd+QI26g8lLfn0J81NyDhiB7O4bv1OhyNn3eO+zX
-         BUzw==
-X-Gm-Message-State: AOAM530oegPLYOoIIVDRMw7yMpocclcVsZ8dqAmRtrigsxqjT7PUtDbC
-        UVt1WLwpUom6MY4QVfzSx2VB3dOcv64+GQ==
-X-Google-Smtp-Source: ABdhPJxLNyAyMgsX1oaHr+HgfO/Pv3P/KOLCdXpKecA9nU4vlRPsR7I6m7ZAE4UsK4gxOjxPgcoTKQ==
-X-Received: by 2002:a62:1701:0:b029:2e9:a8ed:fcce with SMTP id 1-20020a6217010000b02902e9a8edfccemr16113818pfx.19.1622547618336;
-        Tue, 01 Jun 2021 04:40:18 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
-        by smtp.gmail.com with ESMTPSA id p17sm2133266pjg.54.2021.06.01.04.40.17
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=joqGfYEJc9FSg/dHPUXAJwj9lGLoM8mH8PXUYs4ccy4=;
+        b=H2P2QqKcvIT9u3ZBDxSRqIYbGi8h7U2L89I9JSJn5LaljKA0RRvOUVIFCqezlhyl5j
+         CcovH67//aKTU60Akg9oQxd+q7xekn0/DI0G4BpPqEYoSui1skPAFm7A6qfKA7Tb9l/i
+         e3tFd61Ab6o1MqiWhUwWoYswhsY+OX0Q6QOIdplNmFZUtfLWrOCqro9OU/e7FiRfqFFO
+         SqCw4VFBJ3aXCdQAIirWCF5emEFIJAHjhNCQqKwPygMzmGp0tjuX68dBhI0M2lyS/B6U
+         nU0mUbijK+uUpWwj6Ie4wX3eYJSrPVACB8MLTJKsCqcdDHf1/+n8DyD9D1DHIhtpotXs
+         DHeA==
+X-Gm-Message-State: AOAM5310ChAkJd6WLgMgISEBUHyO0qif9Mscay/5p9AnL0tcKkp5+goR
+        XoIyv0J05OjKOa46B4xLXSo=
+X-Google-Smtp-Source: ABdhPJxGsXw4ZO5l5oE6ff1pQ8XdVtx7UcTocpMDzHd8MgWbuwpq4ZjtKBD+B5VBZgp3ELen21beag==
+X-Received: by 2002:a17:906:f6d7:: with SMTP id jo23mr9762796ejb.302.1622549047959;
+        Tue, 01 Jun 2021 05:04:07 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id m9sm7369255ejj.53.2021.06.01.05.04.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 04:40:17 -0700 (PDT)
-Date:   Tue, 1 Jun 2021 18:40:15 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: The git spring cleanup challenge
-Message-ID: <YLYcnwZQAEoSQKsG@danh.dev>
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <YLXl5+ronWhcGh13@danh.dev>
- <60b61089ba63d_e40ca20894@natae.notmuch>
+        Tue, 01 Jun 2021 05:04:07 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Runaway sed memory use in test on older sed+glibc (was "Re:
+ [PATCH v6 1/3] test: add helper functions for git-bundle")
+Date:   Tue, 01 Jun 2021 13:50:52 +0200
+References: <87bl8xmipo.fsf@evledraar.gmail.com>
+ <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
+ <87tumol4tg.fsf@evledraar.gmail.com>
+ <CANYiYbG1vVqN-De0n2Ukexh0Jn8e_b2G1CPv24T1fbYgyhKjfg@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <CANYiYbG1vVqN-De0n2Ukexh0Jn8e_b2G1CPv24T1fbYgyhKjfg@mail.gmail.com>
+Message-ID: <874keh94ga.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <60b61089ba63d_e40ca20894@natae.notmuch>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-06-01 05:48:41-0500, Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> Đoàn Trần Công Danh wrote:
-> > On 2021-06-01 01:24:01-0500, Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> > > The premise is simple: git.git developers are experts in git, and therefore
-> > > they have fine-tuned their ~/.gitconfig to a point that is pretty far
-> > > from what any newcomer will experience for a long time.
-> > > 
-> > > How long can you survive with a pristine configuration?
-> > > 
-> > > Plenty of developers take many things in their configuration for
-> > > granted, they forget what the default behavior is, or worse: they forget
-> > > they actually have configured log.decorate, and are surprised when they
-> > > discover the reason they could not reproduce a bug report.
-> > 
-> > OK, the person that forgot having log.decorate configured is me.
-> 
-> Right. That's just the most recent instance I could think of, but I'm
-> sure similar versions have happened to all of us.
-> 
-> > > Now and then I cleanup my configuration to be reminded of that fact.
-> > > 
-> > > Anybody remembers merge.defaultToUpstream, and what `git merge` without
-> > > arguments used to do? [1] What about sendemail.chainReplyTo? [2]
-> > > 
-> > > It's important that we force ourselves to experience what an
-> > > unconfigured git setup looks like, even if it's just for a little bit.
-> > > 
-> > > So the challenge is this:
-> > > 
-> > >   1. Remove all the configuration that is not essential (just leave
-> > >      user.name and user.email or equivalent)
-> > 
-> > How about alias? It's part of my muscle memory.
-> 
-> No aliases.
-> 
-> If a new user doesn't have them, neither should you.
-> 
-> All VCSs have default aliases, and I advocated for git to do the same
-> [1], but it wasn't accepted.
-> 
-> The whole point is to suffer like them.
 
-OK.
+On Tue, Jun 01 2021, Jiang Xin wrote:
 
-> 
-> > >   2. Pick 2 configurations you think you can't live without. You are not
-> > >      allowed to change them afterwards.
-> > 
-> > Something is essential when working on constantly integration tree,
-> > I don't want to make my life hard:
-> > 
-> > * rerere.enabled = true
-> > * rerere.autoupdate = true
-> 
-> If the defaults make your life hard, then shouldn't we change the
-> defaults?
-> 
-> For starters, which is the command you use? `git merge`? If so, maybe
-> `git merge` should have a --rerere option to enable rerere. There are
-> some --rerere-autoupdate, but no --rerere.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=
+=E5=B9=B45=E6=9C=8827=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=888:49=E5=
+=86=99=E9=81=93=EF=BC=9A
+>>
+>> But no, the issue as it turns out is not Perl v.s. Sed, it's that
+>> there's some bug in the shellscript / tooling version (happens with both
+>> dash 0.5.7-4 and bash 4.3-11+deb8u2 on that box) where those expansions
+>> like ${A%${A#??????0?}} resolve to nothing.
+>
+> That's the root cause.  It can be reproduced by running the following
+> test script:
+>
+> ```
+> #!/bin/sh
+> # test script: test.sh
+>
+> test_commit_setvar () {
+>         var=3D$1 &&
+>         oid=3D1234567890123456789012345678901234567890 &&
+>         eval $var=3D$oid
+> }
+>
+> test_commit_setvar A
+> echo "A: $A"
+> echo "Abbrev of A: ${A%${A#???????}}"
+> ```
+>
+> By running different version of dash, we can see that dash 0.5.7 fail the=
+ test:
+>
+> ```
+> $ /opt/dash/0.5.11/bin/dash test.sh
+> A: 1234567890123456789012345678901234567890
+> Abbrev of A: 1234567
+>
+> $ /opt/dash/0.5.7/bin/dash test.sh
+> A: 1234567890123456789012345678901234567890
+> Abbrev of A:
+> ```
+>
+> This issue can be fixed using the following example:
+>
+> ```
+> #!/bin/sh
+>
+> test_commit_setvar () {
+>         var=3D$1 &&
+>         oid=3D1234567890123456789012345678901234567890 &&
+>         suffix=3D${oid#???????} &&
+>         oid=3D${oid%$suffix} &&
+>         eval $var=3D$oid
+> }
+>
+> test_commit_setvar A
+> echo "Abbrev of A: $A"
+> ```
 
-I think both pull, merge, rebase, cherry-pick, revert, checkout,
-switch, apply, am will be affected by rerere.
+*nod*
 
-> Additionally, who doesn't want autoupdate when rerere is manually
-> enabled?
+>> Anyway, looking at this whole test file with fresh eyes this pattern
+>> seems very strange. You duplicated most of test_commit with this
+>> test_commit_setvar. It's a bit more verbosity but why not just use:
+>>
+>>     test_commit ...
+>>     A=3D$(git rev-parse HEAD)
+>
+> The function "test_commit()" in "test-lib-function.sh" always creates
+> tags and it cannot make merge commit. So I rewrite a new function
+> which reuse the scaffold of "test_commit".
 
-Dun know. I guess someone applies other people patches
-with their rerere logs.
+It's had a --no-tag since 3803a3a099 (t: add --no-tag option to
+test_commit, 2021-02-09). I also have patches in "next" to add more
+options, you can just add more, having a --merge and maybe a way to tell
+it to eval the rev-parse into a given variable seem like sensible
+additions.
 
-> If we all want autoupdate enabled (at least I do), maybe the default
-> should be flipped, so all you need in your configuration is:
-> 
->   rerere.enabled = true
-> 
-> But, if we are already on this topic... who wants rerere disabled by
-> default?
-> 
-> > Something is there to shut up advice, I can live without those
-> > configuration value, though (I don't use git-pull these days, anyway):
-> > 
-> > * pull.rebase = false
-> 
-> Can you train your fingers to type `git pull --no-rebase` for a while?
+> BTW, sorry for the late reply, will send patch later.
 
-I don't use git-pull nowaday, so, I don't care.
+My main point was that looking at this I think it's very much over the
+complexity v.s. benefit line on the "complexity" side.
 
-> 
-> > Working with patch based need:
-> > 
-> > * sendemail.smtpserver
-> > * sendemail.smtpencryption
-> > * sendemail.smtpuser
-> > * credential.helper
-> 
-> You could use msmtp instead, but fine, let's make an exception for
-> transmission of patches (credentials, SMTP, etc.) These are not options
-> that can be changed in git.gt by default.
-> 
-> But only the essentials, no sendemail.confirm.
-> 
-> > My GnuPG key is Ed25519, and gpg v2 in my machine is named gpg2, so:
-> > * gpg.program = gpg2
-> 
-> You could have an alias in your ~/bin directory:
-> 
->   ln -s /usr/bin/gpg2 ~/bin/gpg
-> 
-> That way you don't need to configure every program.
+Even if there wasn't a --no-tag just using "test_commit" with a "git tag
+-d" and "commit_X=3D$(git rev-parse HEAD)" is less magical and more
+readable.
 
-Fair!
+I.e. the mostly copy/pasted from test-lib-functions.sh function is ~70
+lines, the whole setup function is 50 lines.
 
-> But fine, this is an exception too. The location of programs is not
-> something that can be changed by default.
-> 
-> > And I would like to try new shiny features:
-> > 
-> > * feature.experimental = true
-> 
-> Interesting. I didn't know that existed, and I advocated for a
-> similar configuration: core.mode [2].
-> 
-> But if most newcomers can live without it, I'm sure you can too for a
-> bit.
+And as I noted with the whitespace getting lost in the munging the end
+result is actually less reliable than just doing a test_cmp with $(git
+rev-parse ...) instead of <COMMIT-XYZ>.
 
-The point of trying new shiny features is dogfooding ourselves and
-report bugs early, if any.
+If you were trying to avoid the whitespace warnings then see the
+"'s/Z$//'" pattern in t0000-basic.sh for how we've usually tested that,
+i.e. had a "Z" at the end mark intentional whitespace for
+test_cmp-alike.
 
-> > >   3. Every day you can add 1 additional configuration (and update it the
-> > >      next day).
-> > >   4. The moment you add a 4th configuration you lose.
-> > 
-> > So, my baseline already requires 8 key-value pairs (ignoring alias and
-> > pull.rebase). I'm lost already.
-> 
-> With the exceptions I think you only need these:
-> 
->  * rerere.enabled = true
->  * rerere.autoupdate = true
-
-OK, let's start there.
-
--- 
-Danh
+There's a big value in the test suite being mostly consistent (which it
+somewhat isn't, but we're hopefully getting there). I.e. the goal isn't
+to optimize each test file to be as small as possible, but to e.g. have
+the next person maintaining it not wondering where <COMMIT-P> comes
+from, understanding some test_commit-alike that eval's variables into
+existence, how it's subtly different (if at all) from test_commit etc.
