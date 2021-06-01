@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26ED9C47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B3DDC4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:37:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E1A46124B
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:37:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 266A8613AE
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234160AbhFAOjI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 10:39:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56258 "EHLO
+        id S234177AbhFAOjJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 10:39:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234038AbhFAOjH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 10:39:07 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067A9C061574
+        with ESMTP id S234126AbhFAOjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 10:39:08 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DA5C06174A
         for <git@vger.kernel.org>; Tue,  1 Jun 2021 07:37:26 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id n17-20020a7bc5d10000b0290169edfadac9so1751106wmk.1
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 07:37:25 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id z8so9482464wrp.12
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 07:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=oxSmTzCwyEAEwRFI3w1sHnaY3LVMGURSfqe+9AYhDr8=;
-        b=eVMHKH1Os2gPzJEbDocYdeeeNFHG62iBA5wtr1j05mJjVHmThWWxSzQdGxQMO8JzxY
-         J6G7m/nicLZUmIAlVpShdVSRAP3x2ndfAB9SdKUnnqfpzUaZG9TWcMTXen+Fq5VHswB3
-         pMxEcrLg8BwnNOYzDeL6n1GPp/jgTsHLJEhA/wrXr6qSfP7KJaO2YJ8sRLkd2z/5vDSU
-         BIGUbjvhHwPLLVuvbZLGepraieQIZ+ATiZbZ5oxKCmQG8HnanwkdZ3em/jOA+JoExvzs
-         S9QJ04hH6cwJbzPShn+/xyWZa7lqW89z2H6Dog0zKUF5o6ancCM1H5EiyQB0okj82Dok
-         HSig==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5DaEVzJW0q4b/I7s+7ljceldNG85JzStIUXJ2zS/X0E=;
+        b=gDPZ0jT6gCWZW3RLS/wPeVq4uJpfUyTrKKgRSavA7mQRJ92G5B4bnT+V8BxKAUGVap
+         B7siukwSuyc2BCZj13jldM5UmKebOUQPAsD7mRig0LFE0DpmWhozHZCVJpCT/yVkvadJ
+         wPMAGJ5BQ1JZ6YYsSogWvhCDTJyP0YUXHwQAwBenEcTBagM8jQ4BheHG7a//GLQTdHMv
+         bympMrkNToXyY+HYTAts+HbgT1sJrF0Y2+vpb96eTTiqfcfmLQrfuPSqVCktjOh25JeI
+         XzJl0gYn2u759k2k3D01kqe2sLLFtAmiN19ltxq/CdrVxSALnGdialZfz/d8gHA1YLER
+         RzYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=oxSmTzCwyEAEwRFI3w1sHnaY3LVMGURSfqe+9AYhDr8=;
-        b=YSNCy5FZBsj1i7nPGKaQv3VsWu00ZpuW+2Vb1xsQOMYLRrjLi8efbK6wKS54IAQqoZ
-         qWJyRPSRke7rJZDiq8L9nGdaAndowVD1657YM8NsMRSMFYCLbqGbj8OAi8TYFoX/JO4V
-         Ic0815JE3J2D+Ko59JwVWuHouLxwh6a1ssj3cK2/Pk4NZe0JSgX7LqRhbOY2rwtNwpVm
-         64Ra+64SgE2frKKwbnbbHK/5r7uzqC1neC/AOTKSC4AnSr9WcUhxBXDi/yIF2lbSjy1a
-         5QOG/bT0BVwpibF+zF7rwov1hErrWeuWJicY8H0lffIjnVe/oDMxXm0Y4q8vpZWQuKkS
-         kapg==
-X-Gm-Message-State: AOAM5326ISeznx6hi0fnJRNbsyiLHMT7n2bwSMkj4dA9jMQz3RHb2ovq
-        ghi8u9//bDwSV1Ro79RyOvuOMFW/jUA=
-X-Google-Smtp-Source: ABdhPJzDpNwI5eovrrV/ePVJlNTf7w8hdJJbRhgC04ovQ1vz5KKT6cm+QlyJrBZypvfNW8YZ+KZLPw==
-X-Received: by 2002:a05:600c:8a6:: with SMTP id l38mr13104397wmp.108.1622558244675;
-        Tue, 01 Jun 2021 07:37:24 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=5DaEVzJW0q4b/I7s+7ljceldNG85JzStIUXJ2zS/X0E=;
+        b=rMON34pZoxTWc4bTDsKT8wJxwQN5smAGNWCso2/jYLsRTEo6xbRaP5VybyGKIsdW6x
+         gIKzN7cistM68rERhDmx2M+l9EhaJsBzREKNlM4HDokRE60sbG0NhKHMmRoFpBHDmZa5
+         usuqixIMOb7FHEes+MhoOn55rE+iph9yDrMggZg3XtMf2uQvFpt8Op7IiBp9lojOYhGi
+         NbvYYcZa+xEDXc1UrdYoUWf6tSmQeNUfjmjPD1vl5PteABPEYHYu5fz4vCUWSuM9MUT/
+         ibMz08VZ2H15tOQqvGxmp0e36lXEM2Y6AEvXdiM06ikBVllILudXXY6zxevRtnmjhheE
+         FPaA==
+X-Gm-Message-State: AOAM530uIfAL/kByFKedgmGD25Ogb+2MHJlYJmAAzo37SYKUxCxHQTRe
+        RnfA/1LC87i2zqDG1x9qO1gFHoohXRk=
+X-Google-Smtp-Source: ABdhPJw+FpS32JOzVDcl32uEsY7+Zv/HMPiQDmE1hrFauHkhZO7x8PiuVWYXIczH+U0OPzBKbr7GUg==
+X-Received: by 2002:adf:f2ce:: with SMTP id d14mr10035401wrp.102.1622558245194;
+        Tue, 01 Jun 2021 07:37:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v18sm3787297wrb.10.2021.06.01.07.37.24
+        by smtp.gmail.com with ESMTPSA id c7sm3970038wrc.42.2021.06.01.07.37.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 01 Jun 2021 07:37:24 -0700 (PDT)
-Message-Id: <pull.966.git.1622558243.gitgitgadget@gmail.com>
+Message-Id: <97955705c22e00a718a8de7555ab7e0e401e792e.1622558243.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.966.git.1622558243.gitgitgadget@gmail.com>
+References: <pull.966.git.1622558243.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Jun 2021 14:37:21 +0000
-Subject: [PATCH 0/2] [GSOC] ref-filter: add %(raw) atom
+Date:   Tue, 01 Jun 2021 14:37:22 +0000
+Subject: [PATCH 1/2] [GSOC] ref-filter: add obj-type check in grab contents
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,33 +75,79 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood123@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
         ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to make git cat-file --batch use ref-filter logic, I add %(raw)
-atom to ref-filter.
+From: ZheNing Hu <adlternative@gmail.com>
 
-Change from last version:
+Only tag and commit objects use `grab_sub_body_contents()` to grab
+object contents in the current codebase.  We want to teach the
+function to also handle blobs and trees to get their raw data,
+without parsing a blob (whose contents looks like a commit or a tag)
+incorrectly as a commit or a tag.
 
- 1. Change is_empty() logic.
- 2. Simplify memcasecmp().
- 3. rebase on zh/ref-filter-atom-type.
+Skip the block of code that is specific to handling commits and tags
+early when the given object is of a wrong type to help later
+addition to handle other types of objects in this function.
 
-ZheNing Hu (2):
-  [GSOC] ref-filter: add obj-type check in grab contents
-  [GSOC] ref-filter: add %(raw) atom
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ ref-filter.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
- Documentation/git-for-each-ref.txt |   9 ++
- ref-filter.c                       | 164 +++++++++++++++++------
- t/t6300-for-each-ref.sh            | 207 +++++++++++++++++++++++++++++
- 3 files changed, 343 insertions(+), 37 deletions(-)
-
-
-base-commit: 1197f1a46360d3ae96bd9c15908a3a6f8e562207
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-966%2Fadlternative%2Fref-filter-raw-atom-v4-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-966/adlternative/ref-filter-raw-atom-v4-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/966
+diff --git a/ref-filter.c b/ref-filter.c
+index 4db0e40ff4c6..c0334857653a 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1356,7 +1356,8 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
+ }
+ 
+ /* See grab_values */
+-static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
++static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf,
++				   struct object *obj)
+ {
+ 	int i;
+ 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
+@@ -1371,10 +1372,13 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 			continue;
+ 		if (deref)
+ 			name++;
+-		if (strcmp(name, "body") &&
+-		    !starts_with(name, "subject") &&
+-		    !starts_with(name, "trailers") &&
+-		    !starts_with(name, "contents"))
++
++		if ((obj->type != OBJ_TAG &&
++		     obj->type != OBJ_COMMIT) ||
++		    (strcmp(name, "body") &&
++		     !starts_with(name, "subject") &&
++		     !starts_with(name, "trailers") &&
++		     !starts_with(name, "contents")))
+ 			continue;
+ 		if (!subpos)
+ 			find_subpos(buf,
+@@ -1443,12 +1447,12 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, v
+ 	switch (obj->type) {
+ 	case OBJ_TAG:
+ 		grab_tag_values(val, deref, obj);
+-		grab_sub_body_contents(val, deref, buf);
++		grab_sub_body_contents(val, deref, buf, obj);
+ 		grab_person("tagger", val, deref, buf);
+ 		break;
+ 	case OBJ_COMMIT:
+ 		grab_commit_values(val, deref, obj);
+-		grab_sub_body_contents(val, deref, buf);
++		grab_sub_body_contents(val, deref, buf, obj);
+ 		grab_person("author", val, deref, buf);
+ 		grab_person("committer", val, deref, buf);
+ 		break;
 -- 
 gitgitgadget
+
