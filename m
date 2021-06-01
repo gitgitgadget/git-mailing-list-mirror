@@ -2,69 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D67F0C4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 11:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1E68C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 11:06:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B72256128A
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 11:00:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0781613B1
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 11:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232084AbhFALCD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 07:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34960 "EHLO
+        id S233713AbhFALHx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 07:07:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230282AbhFALCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 07:02:02 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B95F7C061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 04:00:21 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id e7so982031ils.3
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 04:00:21 -0700 (PDT)
+        with ESMTP id S231219AbhFALHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 07:07:52 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8931C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 04:06:10 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id b5so12470772ilc.12
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 04:06:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=8EE1DnTiqP72kikJqIq+hcvsbojwGGKlwa5AVALkduI=;
-        b=Jl/sS1FFvnDk/2SVhun2r7tNyhBOKoj5j61iXUvaTfxm+DptFS1Y32HU1vu3KBMY4g
-         4grcTdoE2D38f20EFqreydTL3KbS1tT/xn0Kgb9g+bAVJUp/P2cHg1BCwVKDrVrdrnlU
-         6L6XpfCFCY1051J7foyTqhLZw2qHfrL2BrKc//thEgfZ4S9tYpb+/Fe6s44k8onAI6h1
-         aPPLbDIzZ7LUE6vQsatgpndFWzMgdZ+7rd7GS6yIB+hzFyX2stlKqx5scxGsdS8t4+lC
-         L+bkZCYu8lS3lmIvGNVhLz6pjE8bkqE1um1ux/E4tKAUhZOrs1QUg8u8BtyNloZ1bPgC
-         NptA==
+        bh=QM0WyjEbyqxm28EXQxRmvB1X+Sp14S8w+izDOO5SbXs=;
+        b=dSG/+pWafCakRO1OVMuOjV5kyBwUegs1+ux9Djjl8Qdj3v5Lz7bWISTUus7U+m33JA
+         i79NEXSaV1r14NUBv83TlhJup2J5yt6VdOHX7+ywmezJ9SJ1pVMUd716ZwPYptEQj8xx
+         bYCARztIG+RYlyYDRe6s79v6fvCKJPAyBWimyN8xVA3NFUDW7cpODf+uUukBVCt9j/Gm
+         H7uGmrOCuxbak1bs5bwjHmWq+vBuW8TJ+avYRCE/Nxj8cwG5zwwgeTEcR5X5BE+fEmdc
+         zUrHlGbbLIsslGErZoEcgFnvT4n6lmaXmwux4gHqQrxwJtAmmq0KQSHbxV8gPZX+la8Q
+         lcBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8EE1DnTiqP72kikJqIq+hcvsbojwGGKlwa5AVALkduI=;
-        b=lfYPKyvopKg+VpTg2ZbzageQGKkLWIxCzCWKSN9CLmZk/ehQAvMAGBOEpItT47+HYM
-         P3F6onTnb0PskcoaNXA05J8GUTA4/Pw9hIxFcA6cghMexfuLQW5cubHqbZnwkY5Gx4ba
-         esoEdU9JQDCt1LdyXiGmMgRRGhi3vDDEG8dvwd34MY+xv7NaXrUD1MUNzp3U+G+FgSO9
-         khLlNuSMnPBOtJFcWn9PZtZ4gHv5IKsWDkhVRWIDbg8Z9C1SnbmGtG9Kiqc8HO7DdyeW
-         xWwVYLAVkCMLG+SOE4zR7OOrYGVytv6UfC65WNObZM+IyjjU2PPUmRL20utmC2cmVjyD
-         ebUQ==
-X-Gm-Message-State: AOAM530KLWTC89SxxYqZXvTpYyif8z/iNRoiEmLZZagome0PENMiw+h2
-        gjCJf+lFuD8FYksK6JYyBsGA+7c2TKTSnWPBg54=
-X-Google-Smtp-Source: ABdhPJwEA3XiXlMc1oegPhj094lPGMtkEqyP9OWvSqSH8f1wpRheEOXnxdMqaOZOUcMdYdrLy8RSy2MimA5QVit8s7s=
-X-Received: by 2002:a92:b0b:: with SMTP id b11mr16080802ilf.301.1622545220770;
- Tue, 01 Jun 2021 04:00:20 -0700 (PDT)
+        bh=QM0WyjEbyqxm28EXQxRmvB1X+Sp14S8w+izDOO5SbXs=;
+        b=uCB7fRMPtHG4GV852GyqYASy/jilzMYkk5fDdo7GUnAHE0wz21guqpvvo8vYWocDPQ
+         QENjBOyda8L19XjgtJpqSU1s6KlJceiSd/JjC5W0OT6Rq5mAvGORfwMRV0i21jJntuDD
+         cqn/iaZRB+87ZOB/AjKxL78NQdgGMdPojFqK4Lsiw18diPrfTAO13hVeHMFKKXjFP8l/
+         uT3Bw5qEWYl8hS+1BnyRYvlp5Rlo9KNB0v7G4MQDVkvxj6wBCB52SThpmCOc2w1B+jbw
+         Gx5yaF2UHLmF3K8xZbwss7WW7N40qWJQ1dmmJLySUWUi68ACnTEpYU/KJXbPgdVbvEiE
+         9Ifg==
+X-Gm-Message-State: AOAM530xcD3Ob5Yv7Uk/gPkLukw7ALWZAMVM/P03vASrW4faGQvFgrTB
+        gAD8+puG3sWWVWIoTlnVytDsWuoPiOk0GNg1VYk=
+X-Google-Smtp-Source: ABdhPJzHwgIF7iq0JIc4khJvgmfiDaLXqa17m90YL7Yq2B9xI6fkyN8Wo3AKivOA252R9LFThOtqxtEjiHLSqAes+bE=
+X-Received: by 2002:a92:b0b:: with SMTP id b11mr16104070ilf.301.1622545570020;
+ Tue, 01 Jun 2021 04:06:10 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.963.git.1622126603.gitgitgadget@gmail.com>
  <pull.963.v2.git.1622379718.gitgitgadget@gmail.com> <e44a2ed0db596ab0e0f484c25facb7da7214369e.1622379718.git.gitgitgadget@gmail.com>
- <xmqqtumjy2e4.fsf@gitster.g> <CAOLTT8QFW4UrwZ+OboYqkoT-oKo1Sz3JJ-Fp8b2RWugMOy5Cug@mail.gmail.com>
- <xmqqlf7ut15w.fsf@gitster.g>
-In-Reply-To: <xmqqlf7ut15w.fsf@gitster.g>
+ <xmqqh7ij20l8.fsf@gitster.g> <CAOLTT8REM7tF6ojdmnsJt7-RE6a8oX4RFXVcL215YnYTx6b62w@mail.gmail.com>
+ <xmqqa6o9ucyc.fsf@gitster.g>
+In-Reply-To: <xmqqa6o9ucyc.fsf@gitster.g>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 1 Jun 2021 19:00:09 +0800
-Message-ID: <CAOLTT8STkD_2vhL7uCt1umgmfGBRKcuF7nWv+DpQ4H0dBSLJ0A@mail.gmail.com>
+Date:   Tue, 1 Jun 2021 19:05:58 +0800
+Message-ID: <CAOLTT8TP0kxp=MJw_kBifWjf9n69FWS8Mcxn0EZjsM69MdidHw@mail.gmail.com>
 Subject: Re: [PATCH v2 2/2] [GSOC] ref-filter: add %(raw) atom
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -72,40 +78,30 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=881=E6=97=
-=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=884:54=E5=86=99=E9=81=93=EF=BC=9A
-
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=885:54=E5=86=99=E9=81=93=EF=BC=9A
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
+> > Well, there seems to be no correction here. But is it true that memory
+> > like "\0abc" is considered empty?
 >
-> >> Doesn't this conflict with your own zh/ref-filter-atom-type topic?
-> >> Shouldn't one build on top of the other?
-> >>
-> >> Or did we find something fundamentally broken about the other topic
-> >> to make us retract it that I do not remember?
-> >>
-> >> Thanks.
-> >
-> > I am waiting for zh/ref-filter-atom-type to be merged into master. But =
-it
->
-> As you sent this that conflicts with it, clearly you are doing
-> something else that conflicts with it _without waiting_ ;-).
+> That sample has 'a' or 'b' or 'c' that are clearly not part of an
+> "empty" string and irrelevant.  After all, a string " abc" is not
+> treated as empty in the original implementation, either.
 >
 
-OK.
+In other words, we still need to look at each character of strbuf,
+instead of stopping at NUL.
 
-> > hasn't happened yet. But if I want to base the current topic on
-> > zh/ref-filter-atom-type, GGG will send past patches (zh/ref-filter-atom=
--type)
-> > repeatedly.
->
-> I thought GGG lets you say "this is based on that other branch, not
-> on the 'master' branch" to solve that exact issue?
+> You are treating a block of memory with e.g. " \000 " (SP NUL SP) as
+> an "empty line" just like you do for "   " (SP SP SP), but I think we
+> should treat it more like " \001 " or " \007 ", i.e. not an empty
+> string at all.
 
-I'm not sure...I will try it after I rebasing this topic to
-zh/ref-filter-atom-type.
-I just remember that it looked like something went wrong with my base on
-your patch last time.[1]
+OK. I understand it now: " \001 " is It=E2=80=99s like a block of space, bu=
+t it=E2=80=99s
+not truly "empty", "SP NUL SP" is same too, So the complete definition of
+"empty" here should be: All characters are SP which do not contain NUL
+or other characters.
 
-[1] https://lore.kernel.org/git/pull.870.v6.git.1613739235241.gitgitgadget@=
-gmail.com/
+Thanks.
+--
+ZheNing Hu
