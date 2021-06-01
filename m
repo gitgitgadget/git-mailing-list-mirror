@@ -2,105 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78F22C4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 09:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E548C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 09:42:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 548FA6138C
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 09:23:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA888611CA
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 09:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233422AbhFAJZD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 05:25:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41136 "EHLO
+        id S233252AbhFAJoT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 05:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231139AbhFAJZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 05:25:02 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF0EC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 02:23:21 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id h11so12248357ili.9
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 02:23:21 -0700 (PDT)
+        with ESMTP id S233160AbhFAJoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 05:44:15 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0057C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 02:42:32 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id b9so12399448ybg.10
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 02:42:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=36kHjN+z8mFXoCVHhY0k0+G+nQlKsPaJyDJADXVlkuo=;
-        b=gBnq1F0LswWxHNj2PtGzS4Xbv0EyG7oLYmjx+ICMiRVFF5ubz2R18YNhQzPVqvqJR5
-         gxXlEm6U9s8gWfScq6CCDGtHob8cfjQW0FZpTrAwLDMlK3pud3uIIsI7zc7uNzsdqEdt
-         gzbAbbYtFbvLb7o+zObdOnYAwlUvpKUW5gnwfYrskzR/pf5vQlL06ZLJsVHUNmx8UIxG
-         gVnXjZheo+N2fTNcKYAnxNF8dFKm0KrxTLwJN0G4aUjLAtueF/4WKDjdzLuDZkq5lREl
-         rKROxi7xVLWDIblkdsnSaWy/yx0nTVKs92Xsjn8CU98oIE4ODSbwBsJqljb6IOuLOYN1
-         fwgg==
+        bh=vOAuHbt39dbJTZTQZ5BImB3GSxx6bTjKiWLeHMrW7vo=;
+        b=aQJEf3ds4g5ZT7KSYsMczT/NQYFRb4cPFFrrS0ybktgVB19Bq2kd5/YBCdwNUvLPhF
+         aSQBK65Di8sA//kcBYjimGJvOiibaM2JqQKseo+70WvoGT8fMZ8A9iU9QE0cEPbeRnEl
+         NVflq4OEN05Xrkufk5QhmArkaNg1v4C/zMGDcChs8JbzhaXYquEL8HA/ZIA6InsDAROI
+         FL8K29dOkQmPH9NWN9jegbcNHrEPMGQXYEcuDTi6k/Tj7aAGp7RkIER8O8yvbG+BQnJd
+         3AU+pW+owrele6p5P38QObu703oAmS7/0OPO0+tjAtv6rNrAmtEweSK7l90Qgv0kDUaG
+         hwSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=36kHjN+z8mFXoCVHhY0k0+G+nQlKsPaJyDJADXVlkuo=;
-        b=cD11IXLNKUslm9ZR4pheDhxkxUB2HLJJJl8xHOx8Ar6Bbd8IZoyHXJJD/2wX1Jx12H
-         dvdzi90JXCw8r7QKxHAMl6ITVx1afgio3ghbtAJxM5rOVZo8eEqtO2Ay42+WAdYlIpzs
-         TRxO/7d0gpW1AAEsbm0OF85v9t6qXKy3FpYdOyGM46eEcLeNSiS6JZ+vaSvTlNccxGqQ
-         02rSArxjQyxY9tIojZiJE4YqSCm3hAwQNfnN6lbUEKsYg1TrWWwVbsSbnjZgL1JXQuos
-         y1udmmNfxN+Nw/eLQJruz4F7qXVHtxUC/glOQJd+eVh+1LG24kacn22EUPryyP4abDS3
-         rYvA==
-X-Gm-Message-State: AOAM532hg8+gki3wwS4r5rH6y5hiuJwEHcY3jJJklFT93RCliHgs8tF2
-        oOINDuNVFtQ+Qne67LahtObUfuWQijya08pXOFcpzg==
-X-Google-Smtp-Source: ABdhPJxGitzV0ubJIpfKTQMB6VWJpZJIOTV0nmtnI9xEAbwkYQALA8QftVLSkbgOv2IYaTY5excfLyy/ewmKjubi2Tc=
-X-Received: by 2002:a92:de49:: with SMTP id e9mr5998980ilr.56.1622539400881;
- Tue, 01 Jun 2021 02:23:20 -0700 (PDT)
+        bh=vOAuHbt39dbJTZTQZ5BImB3GSxx6bTjKiWLeHMrW7vo=;
+        b=qXUt2Lm7mGkVHbkBPlDlcKws/UTZPL59zHF7DGIAlHxdwMrBTowcryM3mdjs9FKgL6
+         nTCrSW/JIBUq5cV16gGyatjgxdAHXvs1cXFvcAzFX3jpo7H6ok48WmwxjxOGEsYqQzgl
+         bdCjOY0M9RhSNru95wEXe+WVnqNJZJXcRZiobkI/THc5LUFd+JLYqGTqCcZI94rQXzG2
+         vnYuBPuaziZVnieupENhcPVx+sn6SjVF5OqSUdUnzNzrOveyx0qTYA+X06P9n7Aylj5r
+         cmWo/Iql+7JX7e4tLwkzCvBkKrbrrg44y3CK+riIz0RD/Ngvf24Cc6Uu+qSMDNh0Ra0b
+         tf3g==
+X-Gm-Message-State: AOAM533iZ8Pjtj3MNXqJL8cHW31O/ePTjRUs6m17y3756+wlUQlAqkS5
+        BmdOTEWbsxBHbA/ZrGRnqJwlfSuPHyaA7FKIOk8=
+X-Google-Smtp-Source: ABdhPJypMu4zoeO035a7GZbhtLGxFOhV0tBbWBCcUByZ5HUv2sXQAY3BtkxPgxFK9j7y69ip/8lDbvMsJxDa3FcuUxk=
+X-Received: by 2002:a25:41d8:: with SMTP id o207mr29426969yba.478.1622540551050;
+ Tue, 01 Jun 2021 02:42:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1008.v2.git.git.1619519903.gitgitgadget@gmail.com>
- <pull.1008.v3.git.git.1622480197.gitgitgadget@gmail.com> <f6ab40c4e6599540da38ae5af8e574dc65909e79.1622480197.git.gitgitgadget@gmail.com>
- <51a802ff-0789-4051-6d45-5b9c6e55ba8a@gmail.com>
-In-Reply-To: <51a802ff-0789-4051-6d45-5b9c6e55ba8a@gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 1 Jun 2021 11:23:08 +0200
-Message-ID: <CAFQ2z_O2t2cDvTs0aNqB+9FVSy51CKrJxxdvu9WGg1s6gZziHw@mail.gmail.com>
-Subject: Re: [PATCH v3 07/22] t1413: use tar to save and restore entire .git directory
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <87bl8xmipo.fsf@evledraar.gmail.com> <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
+ <87tumol4tg.fsf@evledraar.gmail.com>
+In-Reply-To: <87tumol4tg.fsf@evledraar.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Tue, 1 Jun 2021 17:42:19 +0800
+Message-ID: <CANYiYbG1vVqN-De0n2Ukexh0Jn8e_b2G1CPv24T1fbYgyhKjfg@mail.gmail.com>
+Subject: Re: Runaway sed memory use in test on older sed+glibc (was "Re:
+ [PATCH v6 1/3] test: add helper functions for git-bundle")
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 1, 2021 at 6:55 AM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=E5=
+=B9=B45=E6=9C=8827=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=888:49=E5=86=
+=99=E9=81=93=EF=BC=9A
 >
-> On 31/05/21 23.56, Han-Wen Nienhuys via GitGitGadget wrote:
-> > diff --git a/t/t1413-reflog-detach.sh b/t/t1413-reflog-detach.sh
-> > index bde05208ae6a..934688a1ee82 100755
-> > --- a/t/t1413-reflog-detach.sh
-> > +++ b/t/t1413-reflog-detach.sh
-> > @@ -7,8 +7,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> >   . ./test-lib.sh
-> >
-> >   reset_state () {
-> > -     git checkout main &&
-> > -     cp saved_reflog .git/logs/HEAD
-> > +     rm -rf .git && "$TAR" xf .git-saved.tar
-> >   }
-> >
+> But no, the issue as it turns out is not Perl v.s. Sed, it's that
+> there's some bug in the shellscript / tooling version (happens with both
+> dash 0.5.7-4 and bash 4.3-11+deb8u2 on that box) where those expansions
+> like ${A%${A#??????0?}} resolve to nothing.
+
+That's the root cause.  It can be reproduced by running the following
+test script:
+
+```
+#!/bin/sh
+# test script: test.sh
+
+test_commit_setvar () {
+        var=3D$1 &&
+        oid=3D1234567890123456789012345678901234567890 &&
+        eval $var=3D$oid
+}
+
+test_commit_setvar A
+echo "A: $A"
+echo "Abbrev of A: ${A%${A#???????}}"
+```
+
+By running different version of dash, we can see that dash 0.5.7 fail the t=
+est:
+
+```
+$ /opt/dash/0.5.11/bin/dash test.sh
+A: 1234567890123456789012345678901234567890
+Abbrev of A: 1234567
+
+$ /opt/dash/0.5.7/bin/dash test.sh
+A: 1234567890123456789012345678901234567890
+Abbrev of A:
+```
+
+This issue can be fixed using the following example:
+
+```
+#!/bin/sh
+
+test_commit_setvar () {
+        var=3D$1 &&
+        oid=3D1234567890123456789012345678901234567890 &&
+        suffix=3D${oid#???????} &&
+        oid=3D${oid%$suffix} &&
+        eval $var=3D$oid
+}
+
+test_commit_setvar A
+echo "Abbrev of A: $A"
+```
+
+> Anyway, looking at this whole test file with fresh eyes this pattern
+> seems very strange. You duplicated most of test_commit with this
+> test_commit_setvar. It's a bit more verbosity but why not just use:
 >
-> Why do you do rm -rf git directory then extract tar archive to reset?
+>     test_commit ...
+>     A=3D$(git rev-parse HEAD)
 
-I'm not sure I understand your question. Are you asking why we have to
-do a reset, or why we'd use rm + tar? The rm + tar restores the former
-state reliably, so we can be sure it is correct. It's also independent
-of the storage format details.
+The function "test_commit()" in "test-lib-function.sh" always creates
+tags and it cannot make merge commit. So I rewrite a new function
+which reuse the scaffold of "test_commit".
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
+BTW, sorry for the late reply, will send patch later.
+
 --
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Jiang Xin
