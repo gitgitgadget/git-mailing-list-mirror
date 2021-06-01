@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FFADC4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7228C47093
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B983613A9
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 968416128A
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234343AbhFAPAZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 11:00:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32922 "EHLO
+        id S234363AbhFAPA1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 11:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234238AbhFAPAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 11:00:22 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121D4C061756
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 07:58:40 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id c5so3500432wrq.9
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 07:58:39 -0700 (PDT)
+        with ESMTP id S234328AbhFAPAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 11:00:24 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71CEC06174A
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 07:58:41 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id c3so14654848wrp.8
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 07:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wMVXDPLGBMLYT6OBJ2rWFehw8Rz0HAUKh3+HU5yscHk=;
-        b=Pkf213Lvk1aVJjQkS/96ika+FK2ZXakm6Yt2yyohBdzYbg8GZB1E7lytg6hbsGtjP/
-         LkGgI56Jx2DDPR50SN6gRnyJyEeX9zfNuQhAUFaAhi8mkTUa2D/GIk0r2+ZIf7Jhi02L
-         YKvrSc+mjf3WP43R4lzxqGNyj7AVcokIKEc0pdpUBiNZzoNOeojLqwLKYNe+l9/LaNhd
-         8CuOdxyaQkuCTUiyNNQBnccy3mAc/WGBt7UELb+zvaG9aygU/PrQOmtxxZVKE7Qe5zps
-         06/QPNeRtfJ/jZVd7r4GfHir1UZI1tUqpg7NxjS053yy8YfdMI2OEmkdUY1qARWL9qMR
-         4uRg==
+        bh=MxkjSxNvX20Vsj7SsSwYxyvAkMnX7kw4YWWOD/9s7zg=;
+        b=T7qhUoF07n130PRcalV4dMkfMSbwhU+MHhqqKyqtBjU8Zu4tqTfUXWgVKXSG10rQlb
+         pVyKgKsmuzXHv8z+KLJM7fW7LW87B2QNEr+otjZXipiN4XOTUgRzP9ajafS2BzkKqBiE
+         6PTWLX/t3RMtmQtI2V3XsOjYaz8OuRf7NwjJiEMfgnE04PfCR2forpVn6w3nc97cK91w
+         ee34mrvBChfkLosYlR1wHXpSRi5TfkyQFyK4wO+zjldpA4HvuUQOTV7S707ELnHc9SLt
+         02oMvKrydOD/wvULEUPMPF2cTX1B70AThkVshMddiMbFkaGciOxh299id7uDGht13wZH
+         f9Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wMVXDPLGBMLYT6OBJ2rWFehw8Rz0HAUKh3+HU5yscHk=;
-        b=CX/KF6gSgCEBRWwoV554juWjXQ84sI+JsecrHMGLalPeSkrEur6xgT4pnyFBSkFpfO
-         +FS4KEVAFuw92OL9t0GC6ebOcecCZH9GDAOGWOfHOcWManlKngMPECSHEK1htzicZm+g
-         uMjOIoMj2hrsegTEkiCE+ISuOAC/ZkA61QOoDdreuiB9rhH9Tp9qFoDihakVNKocycS/
-         aOYVWvbtsbTGsryP+fGPHkJWjwLnIGKymoROc0zlHDK4uYW3TwOkn2nn+qn5q8z7RnmD
-         972shF9KDGgnxZEGF9PRoWQwgqaipzWdGEPK9CxvIE7ivI72v1msFi5Ih4VEivTD6gBq
-         SMvQ==
-X-Gm-Message-State: AOAM530xeO6/8FLOto5CulkDQpJ8MzMROYaSjAM2zYFW2Y8QhOiPTD3P
-        ttL+KRgSY3L7Jh4K0T3MwDm6L13Xv3s=
-X-Google-Smtp-Source: ABdhPJygjIcnYpUV6FoudJbfOAcHWBw3nLyQASnlw+TLtXBpe1VThNZDrJJpSkfREO7whzLD3qZ+zg==
-X-Received: by 2002:adf:9385:: with SMTP id 5mr20250426wrp.53.1622559518708;
-        Tue, 01 Jun 2021 07:58:38 -0700 (PDT)
+        bh=MxkjSxNvX20Vsj7SsSwYxyvAkMnX7kw4YWWOD/9s7zg=;
+        b=E2VOdf4KR5fi4XK0MB6fWSa/k9Yw903FohewfRd+R6v19qkVFUArhPDqSxrTe3oJjU
+         7j9rQKkuGdDT/cr0dvRUzqGK9A+mkSvLDgm30P3GY2Dqw9nDf6ELYyp4cL5EhyMK/lae
+         d+beKZfLFFkVE79qMkCN7bK4sUfaKr1v9vhshpeid4uWaPnvBsy6HIJuPekd6u58eM6c
+         rTHp+Rccs1n+rx08U6bEhn3ev3vT/AG8ycRvkNdMFZcdZ56k5hoU0YuSFoaXfd7gAigC
+         sKycmM8ShM68fnkGVXZdmkMhiQiMycjL/qgKgkAzkYBF9Jb4ma24XQ/6lj8y4TA5x2YR
+         aG6A==
+X-Gm-Message-State: AOAM530VS3T2Pv+c53pPaQR4AqDE150lgaMXLgfpJHwXX+srWupdO91+
+        z1p7X/OYby4YgBF2FFkUyAf8e0bhpaU=
+X-Google-Smtp-Source: ABdhPJyurH/OLWjc482fQ277BciHwtmG1/76sde3S4mQ0UA8Q99LSmS97SuMXq920CoI/3YJSsLl9g==
+X-Received: by 2002:adf:f448:: with SMTP id f8mr12507450wrp.320.1622559520457;
+        Tue, 01 Jun 2021 07:58:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n6sm17616861wmq.34.2021.06.01.07.58.38
+        by smtp.gmail.com with ESMTPSA id h9sm18528483wmb.35.2021.06.01.07.58.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 07:58:38 -0700 (PDT)
-Message-Id: <38713ed482736af8d1dea4d180651fd919837109.1622559516.git.gitgitgadget@gmail.com>
+        Tue, 01 Jun 2021 07:58:40 -0700 (PDT)
+Message-Id: <7156f26ab29919344c929be540d404dce2d5fe50.1622559516.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
 References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
         <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Jun 2021 14:58:32 +0000
-Subject: [PATCH v2 2/5] diffcore-rename: avoid unnecessary strdup'ing in
- break_idx
+Date:   Tue, 01 Jun 2021 14:58:35 +0000
+Subject: [PATCH v2 5/5] merge-ort: miscellaneous touch-ups
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,34 +81,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The keys of break_idx are strings from the diff_filepairs of
-diff_queued_diff.  break_idx is only used in location_rename_dst(), and
-that usage is always before any free'ing of the pairs (and thus the
-strings in the pairs).  As such, there is no need to strdup these keys;
-we can just reuse the existing strings as-is.
-
-The merge logic doesn't make use of break detection, so this does not
-affect the performance of any of my testcases.  It was just a minor
-unrelated optimization noted in passing while looking at the code.
+Add some notes in the code about invariants with match_mask when adding
+pairs.  Also add a comment that seems to have been left out in my work
+of pushing these changes upstream.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ merge-ort.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 3375e24659ea..e333a6d64791 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -54,7 +54,7 @@ static void register_rename_src(struct diff_filepair *p)
- 	if (p->broken_pair) {
- 		if (!break_idx) {
- 			break_idx = xmalloc(sizeof(*break_idx));
--			strintmap_init(break_idx, -1);
-+			strintmap_init_with_options(break_idx, -1, NULL, 0);
- 		}
- 		strintmap_set(break_idx, p->one->path, rename_dst_nr);
- 	}
+diff --git a/merge-ort.c b/merge-ort.c
+index 14b3e14bbe47..d428b73dedd4 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -765,6 +765,7 @@ static void add_pair(struct merge_options *opt,
+ 	int names_idx = is_add ? side : 0;
+ 
+ 	if (is_add) {
++		assert(match_mask == 0 || match_mask == 6);
+ 		if (strset_contains(&renames->cached_target_names[side],
+ 				    pathname))
+ 			return;
+@@ -772,6 +773,8 @@ static void add_pair(struct merge_options *opt,
+ 		unsigned content_relevant = (match_mask == 0);
+ 		unsigned location_relevant = (dir_rename_mask == 0x07);
+ 
++		assert(match_mask == 0 || match_mask == 3 || match_mask == 5);
++
+ 		/*
+ 		 * If pathname is found in cached_irrelevant[side] due to
+ 		 * previous pick but for this commit content is relevant,
+@@ -3483,6 +3486,8 @@ static void process_entry(struct merge_options *opt,
+ 	 */
+ 	if (!ci->merged.clean)
+ 		strmap_put(&opt->priv->conflicted, path, ci);
++
++	/* Record metadata for ci->merged in dir_metadata */
+ 	record_entry_for_tree(dir_metadata, path, &ci->merged);
+ }
+ 
 -- 
 gitgitgadget
-
