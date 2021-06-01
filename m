@@ -2,193 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 066FBC4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 13:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2896C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 13:40:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB32E613C5
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 13:20:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 999CA61263
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 13:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233904AbhFANWj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 09:22:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
+        id S233823AbhFANm0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 09:42:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233064AbhFANWi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 09:22:38 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4783BC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 06:20:57 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id i4so21120952ybe.2
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 06:20:57 -0700 (PDT)
+        with ESMTP id S233584AbhFANmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 09:42:25 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2F9C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 06:40:43 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id p67-20020a4a2f460000b0290245cdf2d1a4so293998oop.8
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 06:40:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gO5KMmMCnmgOgg/TPyVCkKEHfOR+jGSB+pUq/cRnPFA=;
-        b=h8vZLPzyKibfdJ8C8mJm8H4OGLp8NHtjeD5sCX2G3fTEALn4Y9Td2zgpj1qg2POsmB
-         cfvtrWdtiGdebXVYzuZiHvWGzkiraj4fRJH7XLThT1iAxkMFGXwUBoZDpjtdZiXO3v0z
-         N6U6n49oS7dP1eTT+EPZHCzvI7XRWgkRatra5m0TXNntJutvlRRGESUIG4feq4AoZ3Bl
-         m38Ou64ir2Z7no/LZZBQs6YlUOW4HlAxZ9Nm12wXOZbNQ5AcaoVs829t3Dxk7hf6508w
-         vIrd3XIXYgHnw3CRRVLpb5ocRKJYB0oS+TuLLltxOTyWeTM1MU4GbCLUdKm8zni04O24
-         Fmbw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=JR23OeIXyq3jm5x/bPrfkcsifF7/z1mwQRNlvcEqi1g=;
+        b=csqLLXqy51+MH7SuDwS95zmlXFZCWlfcNq8IL1tfr9hGpSRajtsatYY/pEYmvcxqBf
+         4xqYdWKQi1nc64G7rlB8cy86m8kbYU4oFay9fNYGV72qSoSgzcNBAdJjTEzXGQ6SSA+B
+         nECXoPv8GAVfmZxVhknLy9QNgcKR1doghqAG+vj3L/S8EF8XlK+bcWsHllMs90aiSn4u
+         uCjQjk2Phtn7kv4vdXF+tZoyLh2ofesp5ZnbCt3hGoc3y155V3T5PspqGag+HLOMMbF6
+         NWGp7Zfhiv94B76g/eXYfu9u/b0MpBcwSTBC4nSubLHZVlfPvh8AU4nX8GS2w4+iW6II
+         /ueQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gO5KMmMCnmgOgg/TPyVCkKEHfOR+jGSB+pUq/cRnPFA=;
-        b=TVpGYURZ08M/8xAcpF3EhGkZf5n4ncTOOX3pNooAH0feXVDE/y1o1WQXM9La56pq6i
-         vQpDlHkoyCnUjum0Wmo/RQKD3eovvP6s2pxx3qLxrW1dpV8O7vvHxhofWp15uyzJBXU/
-         L7QvYXqhkSTX0XSqe7EpogJw6zemoFhxyYp5Uw36QcNs0xvKX54UbP86MQFoevf/ro3l
-         DH7NnrXU9l673iqndm+Uf+XiUp//zXh3pSeFlLdN79ja8+3w8OB4+RZiIk0EVgjAlAd8
-         XOmBhMzqTtZqQq0rxNv9llfj9D6rmEuE7svLjpy0Ihfewcc2YjftX4T3FwGdTYTGG0Np
-         jgpw==
-X-Gm-Message-State: AOAM532+OY78pAlzw5/NeTaHgcOSZ9somzt/uSmecbu27idw3nxni0A5
-        V7NkjBV+iotLpG3DnrZY4v6KnFsiXnzvUP+qs/4=
-X-Google-Smtp-Source: ABdhPJwU7gBOIqFwSV2TaxEC1F3Yoc/XXqadCJ/3HhRbclmMFF6+kD9gBY0rkHZEmX15lnSDawb3s6AfRhG83Oxy3ZA=
-X-Received: by 2002:a5b:5c6:: with SMTP id w6mr38250323ybp.279.1622553656557;
- Tue, 01 Jun 2021 06:20:56 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JR23OeIXyq3jm5x/bPrfkcsifF7/z1mwQRNlvcEqi1g=;
+        b=iLRDv9cSeASVi+gDyIzd80zcPY/2BlG94LHQhCqztL3SjaAs+SBW0/bCJb1JxJLUDJ
+         aIHSxdKvzcdWV6u3VZhEAOHQhc+eNoklGyHih3losTUOLZuA0iQHB+jFVQ3WykBcWeBp
+         uPN2/XXmOoPxq8q6s3v3fDTx0EtbGM6AnvvExWJvxXAZpOOalcELpujnh/eKkjBbi3id
+         OjlNX4E4aRg+/myUcTqnI82d9pMb26kuGGRUC6LetmE0+yUqPkPB5z9R8RMjY5b6M/MO
+         TmoMjTQa2EUTBx1IN6gAkTfZzsf7+0w7ymQvaa8MOsHuVaLErAReBtsBRawgGZpmolSM
+         Plfg==
+X-Gm-Message-State: AOAM532GzKOKdWLWbqxey6kAtmm/4NXzcV6rYx9SuBdH5NLSX84sylxD
+        /oXld/rbOapeYXLqfjuLzg9nnQp6y5QjLw==
+X-Google-Smtp-Source: ABdhPJzfLojRtpctulhPE6ZmjxaYT2U8Haw/Ofu1mdyA8uLYTHGnxzr05JwHZJFVgjLW9gXie5jDTQ==
+X-Received: by 2002:a4a:6142:: with SMTP id u2mr20297216ooe.9.1622554842198;
+        Tue, 01 Jun 2021 06:40:42 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:e430:c189:dec7:db39? ([2600:1700:e72:80a0:e430:c189:dec7:db39])
+        by smtp.gmail.com with ESMTPSA id 14sm1399231otf.51.2021.06.01.06.40.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jun 2021 06:40:41 -0700 (PDT)
+Subject: Re: Removing Partial Clone / Filtered Clone on a repo
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     git@vger.kernel.org
+References: <CAPMMpoim38J3=4pd0_fM2h=DN_PrEE_Osg2duU5Ur8WUZ5S1Pg@mail.gmail.com>
+ <032cabb2-652a-1d88-2e12-601b40a4020c@gmail.com>
+ <CAPMMpohOuXX-0YOjV46jFZFvx7mQdj0p7s8SDR4SQxj5hEhCgg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0b57cba9-3ab3-dfdf-5589-a0016eaea634@gmail.com>
+Date:   Tue, 1 Jun 2021 09:40:40 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <87bl8xmipo.fsf@evledraar.gmail.com> <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
- <87tumol4tg.fsf@evledraar.gmail.com> <CANYiYbG1vVqN-De0n2Ukexh0Jn8e_b2G1CPv24T1fbYgyhKjfg@mail.gmail.com>
- <874keh94ga.fsf@evledraar.gmail.com>
-In-Reply-To: <874keh94ga.fsf@evledraar.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 1 Jun 2021 21:20:45 +0800
-Message-ID: <CANYiYbEXiaJ-iN+wLijoKGB_ebEF3eDK8BBwtYz0unE0mKtR8w@mail.gmail.com>
-Subject: Re: Runaway sed memory use in test on older sed+glibc (was "Re:
- [PATCH v6 1/3] test: add helper functions for git-bundle")
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAPMMpohOuXX-0YOjV46jFZFvx7mQdj0p7s8SDR4SQxj5hEhCgg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=E5=
-=B9=B46=E6=9C=881=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=888:04=E5=86=
-=99=E9=81=93=EF=BC=9A
->
->
-> On Tue, Jun 01 2021, Jiang Xin wrote:
->
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=
-=E5=B9=B45=E6=9C=8827=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=888:49=E5=
-=86=99=E9=81=93=EF=BC=9A
-> >>
-> >> But no, the issue as it turns out is not Perl v.s. Sed, it's that
-> >> there's some bug in the shellscript / tooling version (happens with bo=
-th
-> >> dash 0.5.7-4 and bash 4.3-11+deb8u2 on that box) where those expansion=
-s
-> >> like ${A%${A#??????0?}} resolve to nothing.
-> >
-> > That's the root cause.  It can be reproduced by running the following
-> > test script:
-> >
-> > ```
-> > #!/bin/sh
-> > # test script: test.sh
-> >
-> > test_commit_setvar () {
-> >         var=3D$1 &&
-> >         oid=3D1234567890123456789012345678901234567890 &&
-> >         eval $var=3D$oid
-> > }
-> >
-> > test_commit_setvar A
-> > echo "A: $A"
-> > echo "Abbrev of A: ${A%${A#???????}}"
-> > ```
-> >
-> > By running different version of dash, we can see that dash 0.5.7 fail t=
-he test:
-> >
-> > ```
-> > $ /opt/dash/0.5.11/bin/dash test.sh
-> > A: 1234567890123456789012345678901234567890
-> > Abbrev of A: 1234567
-> >
-> > $ /opt/dash/0.5.7/bin/dash test.sh
-> > A: 1234567890123456789012345678901234567890
-> > Abbrev of A:
-> > ```
-> >
-> > This issue can be fixed using the following example:
-> >
-> > ```
-> > #!/bin/sh
-> >
-> > test_commit_setvar () {
-> >         var=3D$1 &&
-> >         oid=3D1234567890123456789012345678901234567890 &&
-> >         suffix=3D${oid#???????} &&
-> >         oid=3D${oid%$suffix} &&
-> >         eval $var=3D$oid
-> > }
-> >
-> > test_commit_setvar A
-> > echo "Abbrev of A: $A"
-> > ```
->
-> *nod*
->
-> >> Anyway, looking at this whole test file with fresh eyes this pattern
-> >> seems very strange. You duplicated most of test_commit with this
-> >> test_commit_setvar. It's a bit more verbosity but why not just use:
-> >>
-> >>     test_commit ...
-> >>     A=3D$(git rev-parse HEAD)
-> >
-> > The function "test_commit()" in "test-lib-function.sh" always creates
-> > tags and it cannot make merge commit. So I rewrite a new function
-> > which reuse the scaffold of "test_commit".
->
-> It's had a --no-tag since 3803a3a099 (t: add --no-tag option to
-> test_commit, 2021-02-09). I also have patches in "next" to add more
-> options, you can just add more, having a --merge and maybe a way to tell
-> it to eval the rev-parse into a given variable seem like sensible
-> additions.
->
-> > BTW, sorry for the late reply, will send patch later.
->
-> My main point was that looking at this I think it's very much over the
-> complexity v.s. benefit line on the "complexity" side.
->
-> Even if there wasn't a --no-tag just using "test_commit" with a "git tag
-> -d" and "commit_X=3D$(git rev-parse HEAD)" is less magical and more
-> readable.
->
-> I.e. the mostly copy/pasted from test-lib-functions.sh function is ~70
-> lines, the whole setup function is 50 lines.
->
-> And as I noted with the whitespace getting lost in the munging the end
-> result is actually less reliable than just doing a test_cmp with $(git
-> rev-parse ...) instead of <COMMIT-XYZ>.
->
-> If you were trying to avoid the whitespace warnings then see the
-> "'s/Z$//'" pattern in t0000-basic.sh for how we've usually tested that,
-> i.e. had a "Z" at the end mark intentional whitespace for
-> test_cmp-alike.
->
-> There's a big value in the test suite being mostly consistent (which it
-> somewhat isn't, but we're hopefully getting there). I.e. the goal isn't
-> to optimize each test file to be as small as possible, but to e.g. have
-> the next person maintaining it not wondering where <COMMIT-P> comes
-> from, understanding some test_commit-alike that eval's variables into
-> existence, how it's subtly different (if at all) from test_commit etc.
+On 6/1/2021 9:16 AM, Tao Klerks wrote:
+> On Tue, Jun 1, 2021 at 12:39 PM Derrick Stolee <stolee@gmail.com> wrote:
+> 
+>> Could you describe more about your scenario and why you want to
+>> get all objects?
+> 
+> A 13GB (with 1.2GB shallow head) repo is in that in-between spot where
+> you want to be able to get something useful to the user as fast as
+> possible (read: in less than the 4 hours it would take to download the
+> whole thing over a mediocre VPN, with corresponding risk of errors
+> partway), but where a user might later (eg overnight) want to get the
+> rest of the repo, to avoid history inconsistency issues.
 
-Will send a patch for quick fix for t6020 which is broken on older
-version of bash.
+As you describe below, the inconsistency is in terms of performance,
+not correctness. I thought it was worth a clarification.
 
-After changes on "test_commit()" of "test-lib-function.sh" has been
-merge to master branch, I will try to refactor t6020 again to remove
-`test_commit_setvar()` and reuse `test_commit()`.
+...
+> With the filtered clone there are still little edge-cases that might
+> motivate a user to "bite the bullet" and unfilter their clone,
+> however: The most obvious one I've found so far is "git blame" - it
+> loops fetch requests serially until it bottoms out, which on an older
+> poorly-factored file (hundreds or thousands of commits, each touching
+> different bits of a file) will effectively never complete, at
+> 10s/fetch. And depending on the UI tooling the user is using, they may
+> have almost no visibility into why this "git blame" (or "annotate", or
+> whatever the given UI calls it) seems to hang forever.
+
+I'm aware that the first 'git blame' on a file is a bit slow in the
+partial clone case. It's been on my list for improvement whenever I
+get the "spare" time to do it. However, if someone else wants to work
+on it I will briefly outline the approach I was going to investigate:
+
+  During the history walk for 'git blame', it might be helpful to
+  collect a batch of blobs to download in a single round trip. This
+  requires refactoring the search to walk the commit history and
+  collect a list of (commit id, blob id) pairs as if we were doing
+  a simplified history walk. We can then ask for the list of blob id's
+  in a single request and then perform the line-by-line blaming logic
+  on that list. [If we ever hit a point where we would do a rename
+  check, pause the walk and request all blobs so far and flush the
+  line-by-line diff before continuing.]
+
+This basic idea is likely difficult to implement, but would likely
+dramatically improve the first 'git blame' in a blobless clone. A
+similar approach could maybe be used by the line-log logic
+(git log -L).
+
+> You can work around this "git blame" issue for *most* situations, in
+> the case of our repo, by using a different initial filter spec, eg
+> "--filter=blob:limit=200k", which only costs you an extra 1GB or so...
+> But then you still have outliers - and in fact, the most "blameable"
+> files will tend to be the larger ones... :)
+
+I'm interested in this claim that 'the most "blameable" files will
+tend to be the larger ones.' I typically expect blame to be used on
+human-readable text files, and my initial reaction is that larger
+files are harder to use with 'git blame'.
+
+However, your 200k limit isn't so large that we can't expect _some_
+files to reach that size. Looking at the root of git.git I see a
+few files above 100k and files like diff.c reaching very close to
+200k (uncompressed). I tend to find that the files in git.git are
+smaller than the typical large project.
+ 
+> My working theory is that we should explain all the following to users:
+> * Your initial download is a nice compromise between functionality and
+> download delay
+> * You have almost all the useful history, and you have it within less
+> than an hour
+> * If you try to use "git blame" (or some other as-yet-undiscovered
+> scenarios) on a larger file, it may hang. In that case cancel, run a
+> magic command we provide which fetches all the blobs in that specific
+> file's history, and try again. (the magic command is a path-filtered
+> rev-list looking for missing objects, passed into fetch)
+> * If you ever get tired of the rare weird hangs, you have the option
+> of running *some process* that "unfilters" the repo, paying down that
+> initial compromise (and taking up a bit more HD space), eg overnight
+
+Partial clone is all about tradeoffs: you get faster clones that
+download missing objects as needed. The user behavior dictates how
+many objects are needed, so the user has the capability to adjust
+that need. The fewer objects needed locally, the faster the repo
+will be.
+
+Your concern about slow commands is noted, but also blindly
+downloading every file in history will slow the repo due to the
+full size of the objects on disk.
+
+I think there is merit to your back-filling history idea. There
+are likely benefits to the "download everything missing" concept,
+but also it would be good to design such a feature to have other
+custom knobs, such as:
+
+* Get only "recent" history, perhaps with a "--since=<date>"
+  kind of flag. This would walk commits only to a certain date,
+  then find all missing blobs reachable from their root trees.
+
+* Get only a "cone" of history. This could work especially well
+  with sparse-checkout, but other pathspecs could be used to
+  limit the walk. 
+
+...
+> Of course, if unfiltering a large repo is impractical (and if it will
+> remain so), then we will probably need to err on the side of
+> generosity in the original clone - eg 1M instead of 200k as the blob
+> filter, 3GB vs 2.5GB as the initial download - and remove the last
+> line of the explanation! If unfiltering, or refiltering, were
+> practical, then we would probably err on the size of
+> less-blobs-by-default to optimize first download.
+
+I'm glad that you have self-discovered a workaround to handle
+these cases. If we had a refiltering feature, then you could even
+start with a blobless clone to have an extremely fast initial
+clone, followed by a background job that downloads the remaining
+objects.
+
+> Over time, as we refactor the project itself to reduce the incidence
+> of megafiles, I would expect to be able to drop the
+> standard/recommended blob-size-limit too.
+
+My experience working with large repos and partial clone is
+similar: the new pain points introduced by these features make
+users aware of "repository smells" in their organization and
+they tend to self-correct by refactoring the repository. This
+is a never-ending process as repos grow, especially with many
+contributors.
+
+Thank you for sharing your experience!
+
+-Stolee
