@@ -2,117 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83D4BC4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 18:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA89C47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 18:31:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F07A610A1
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 18:15:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5257A613AE
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 18:31:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234633AbhFASQp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 14:16:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234513AbhFASQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 14:16:44 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD11C061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 11:15:03 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id q25so133954pfh.7
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 11:15:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=6JwymMnIK2C2+oRXk2mn8StjTyHivH2zTQcDLoh0LvQ=;
-        b=bh1+OsD0JDov4KFrcBFNLXwPXZeGY0ZKOMsZKB3Vx9CIo/+h/3k23RwL76U0px9Uju
-         MVkBK71Lg+qd/ozr2tukO5KC9fI9uikVlwwDERIZScDJdxcyx6PF8h5PCg7NjV9WAhme
-         7D6NVa9Y+X7rpCpvzEpCcyDZ2LhpUo3gDc1cI/hmDLDqdsFh2EnbKH/r0IKj8idv2fpJ
-         Kek3U4S5fhxWszMWosfNmYohbcM4t9wvT2e8ytIgHIbODtoFkOWOdY43GY2W1Za9Ujh7
-         CsyfqQwttoVO8BnOShDusDLDK9AJzJ1UuXtg5eKG2XoLc5yJSQaDr+twm3KgJbAIRr0K
-         LJTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=6JwymMnIK2C2+oRXk2mn8StjTyHivH2zTQcDLoh0LvQ=;
-        b=FJUdlvMRfr1xChicU/A+nCX6lCsHZRUVDGHXwRMdvx4hvM3tnb54acEwKXXscXWRUJ
-         LWh4J+jvHBN5xQ1TSXvhA2qYDhHGXMysn1v8Q2EZySBbmFMitfEVuPJVcmXL1Acl/s7m
-         jgjFYDdKrkXZOy36G9oqdykQZDoHnErX3eKMl/ahjl0BI37maxBvjjR3xkNIJFMntpQo
-         9cntrmbBIxq1CISE9ol1oGHtwQJb/g3WI7CHIYQKfz7euK83LVYndyfLNNCdNb6iS6ot
-         cbjouiZyWLgGx09MpDDklYdyPLKdiru5iH6KlbGDDKlV6Cbr7GxzeNnggCQOCr+K7G4a
-         Ge9Q==
-X-Gm-Message-State: AOAM531iXTbN/L2RfcI4tHrjnI1KsXhRMtJk8gX8wl9Q8Es0Vm+o54Ex
-        RAYwaJd0/CQz5G5PzfWpKCIxbH2d8Ox47A==
-X-Google-Smtp-Source: ABdhPJyaAZT0gNh5yhMEBuCXis8v05HsMoPkBUnuEBt4dIqGz48AL7W3FEgzIeLePlTSpTatp4noTA==
-X-Received: by 2002:a05:6a00:84f:b029:2be:3b80:e9eb with SMTP id q15-20020a056a00084fb02902be3b80e9ebmr23224522pfk.39.1622571302726;
-        Tue, 01 Jun 2021 11:15:02 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:7827:e4ca:8a0d:c895])
-        by smtp.gmail.com with ESMTPSA id p26sm2442026pfw.178.2021.06.01.11.15.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 11:15:01 -0700 (PDT)
-Date:   Tue, 1 Jun 2021 11:14:55 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 00/31] minimal restart of "config-based-hooks"
-Message-ID: <YLZ5H2Muh39Q4M5T@google.com>
-References: <87lf80l1m6.fsf@evledraar.gmail.com>
- <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
+        id S234650AbhFASc5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 14:32:57 -0400
+Received: from botech.co.uk ([81.187.226.106]:46308 "EHLO chimp.botech.co.uk"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S233397AbhFASc4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 14:32:56 -0400
+Received: from botech.co.uk ([81.187.226.106] helo=rhino.botech.co.uk)
+        by chimp.botech.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <tpr.ll@botech.co.uk>)
+        id 1lo9AT-0007pE-O8; Tue, 01 Jun 2021 19:31:09 +0100
+From:   Tim Renouf <tpr.ll@botech.co.uk>
+To:     newren@gmail.com, dstolee@microsoft.com, git@vger.kernel.org
+Cc:     Tim Renouf <tpr.ll@botech.co.uk>
+Subject: [PATCH] unpack-trees: add core.sparseCheckoutRmFiles config
+Date:   Tue,  1 Jun 2021 19:31:06 +0100
+Message-Id: <20210601183106.3084008-1-tpr.ll@botech.co.uk>
+X-Mailer: git-send-email 2.32.0.rc2.3.g151f456769
+In-Reply-To: <CABPp-BGUxHiYLjVcqBc0qpaHpd5MZCN_6S0YpH8tKcP3GSV2Pw@mail.gmail.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 28, 2021 at 02:11:02PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> After suggesting[1] an another round that the config-based-hook
-> topic[2] should take a more incremental approach to reach its end goal
-> I thought I'd try hacking that up.
-> 
-> So this is a proposed restart of that topic which if the consensus
-> favors it should replace it, and the config-based hooks topic should
-> be rebased on top of this.
+When doing a checkout (or other index merge from a tree) causes the
+removal of a path that is outside sparse-checkout, the file is removed
+from the working tree, even if it is dirty.
 
-I'm not entirely sure what you're trying to achieve by sending this
-series. It was my impression that the existing config-based-hooks topic
-was close to being ready to submit anyway (since Junio mentioned
-submitting it a couple revisions ago); rather than churning by reviewing
-a different 31-patch topic, and then re-rolling and re-reviewing a
-(reduced) config hook topic, wouldn't it be easier on everyone's time to
-do a final incremental review on the existing topic and then start in on
-bugfixes/feature patches afterwards?
+That is probably what you want if the file got there by being
+materialized in a merge conflict. But it is not what you want if you
+deliberately put the file there.
 
-It would have been nice to see a more clear discussion of patch
-organization sometime much sooner in the past year and a half since the
-project was proposed[3], like maybe in the few iterations of the design
-doc which included a rollout plan in July of last year[4]. To me, it
-seems late to be overhauling the direction like this, especially after I
-asked for opinions and approval on the direction before I started work
-in earnest.
+This commit adds the above config item, defaulting to "true" to get the
+old behavior. Set it to "false" to avoid removing such a file from the
+worktree.
 
-Anyway, I'd personally rather spend effort getting the existing series
-the last few yards to the finish line than to head most of the way back
-to the start.
+Signed-off-by: Tim Renouf <tpr.ll@botech.co.uk>
+---
+Here is a fix for my problem, hidden under a config option as it might
+not be what everyone wants (there are a few tests that rely on the
+existing behavior). I realize this is a bit of a piecemeal approach.
+Hopefully it will be superseded by the sparse-index work when that
+arrives.
 
- - Emily
+ Documentation/git-sparse-checkout.txt | 11 ++++++++
+ cache.h                               |  1 +
+ config.c                              |  5 ++++
+ environment.c                         |  1 +
+ t/t1011-read-tree-sparse-checkout.sh  | 36 +++++++++++++++++++++++++++
+ unpack-trees.c                        | 14 ++++++++---
+ 6 files changed, 64 insertions(+), 4 deletions(-)
 
-> 1. https://lore.kernel.org/git/87lf80l1m6.fsf@evledraar.gmail.com/
-> 2. https://lore.kernel.org/git/20210527000856.695702-1-emilyshaffer@google.com/
-3. https://lore.kernel.org/git/20191116011125.GG22855@google.com/
-4. https://lore.kernel.org/git/20200728222455.3023400-1-emilyshaffer@google.com/
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index a0eeaeb02e..31adb38b1d 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -111,6 +111,17 @@ the sparse-checkout file.
+ To repopulate the working directory with all files, use the
+ `git sparse-checkout disable` command.
+ 
++The `core.sparseCheckoutRmFiles` config setting determines what to do when a
++checkout (or other index merge from a tree) causes the removal of a path that
++is outside the sparse-checkout patterns but the file exists in the worktree
++anyway. The default is `true`, which causes such a file to be removed from the
++worktree, which is probably what you want to remove outside-sparse-checkout
++files that were materialized by a merge conflict. Setting it to `false` means
++that such a file is not removed, which is probably what you want if you
++deliberately have files in the outside-sparse-checkout part of a worktree.
++
++The behavior with regard to worktree files that are outside sparse-checkout
++patterns is likely to change in the future.
+ 
+ FULL PATTERN SET
+ ----------------
+diff --git a/cache.h b/cache.h
+index 6fda8091f1..19ee1cfc02 100644
+--- a/cache.h
++++ b/cache.h
+@@ -964,6 +964,7 @@ extern const char *core_fsmonitor;
+ 
+ extern int core_apply_sparse_checkout;
+ extern int core_sparse_checkout_cone;
++extern int core_sparse_checkout_rm_files;
+ 
+ /*
+  * Include broken refs in all ref iterations, which will
+diff --git a/config.c b/config.c
+index 6428393a41..dd24e753a8 100644
+--- a/config.c
++++ b/config.c
+@@ -1552,6 +1552,11 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.sparsecheckoutrmfiles")) {
++		core_sparse_checkout_rm_files = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.precomposeunicode")) {
+ 		precomposed_unicode = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index 2f27008424..cff6bbbe62 100644
+--- a/environment.c
++++ b/environment.c
+@@ -70,6 +70,7 @@ char *notes_ref_name;
+ int grafts_replace_parents = 1;
+ int core_apply_sparse_checkout;
+ int core_sparse_checkout_cone;
++int core_sparse_checkout_rm_files = 1;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
+index 24092c09a9..67690b31c3 100755
+--- a/t/t1011-read-tree-sparse-checkout.sh
++++ b/t/t1011-read-tree-sparse-checkout.sh
+@@ -280,4 +280,40 @@ test_expect_success 'checkout with --ignore-skip-worktree-bits' '
+ 	git diff --exit-code HEAD
+ '
+ 
++test_expect_success 'core.sparseCheckoutRmFiles checkout that would remove file outside sparse-checkout removes file from disk' '
++	git config core.sparseCheckout false &&
++	git checkout -f top &&
++	echo added3 >added3 &&
++	git add added3 &&
++	git commit -madded3 &&
++	git checkout top &&
++	test_path_is_missing added3 &&
++	git config core.sparseCheckout true &&
++	git config core.sparseCheckoutRmFiles true &&
++	echo init.t >.git/info/sparse-checkout &&
++	git checkout HEAD@{1} &&
++	test_path_is_missing added3 &&
++	echo dirty >added3 &&
++	git checkout top &&
++	test_path_is_missing added3
++'
++
++test_expect_success '!core.sparseCheckoutRmFiles checkout that would remove file outside sparse-checkout does not remove file from disk' '
++	git config core.sparseCheckout false &&
++	git checkout -f top &&
++	echo added4 >added4 &&
++	git add added4 &&
++	git commit -madded4 &&
++	git checkout top &&
++	test_path_is_missing added4 &&
++	git config core.sparseCheckout true &&
++	git config core.sparseCheckoutRmFiles false &&
++	echo init.t >.git/info/sparse-checkout &&
++	git checkout HEAD@{1} &&
++	test_path_is_missing added4 &&
++	echo dirty >added4 &&
++	git checkout top &&
++	test_path_is_file added4
++'
++
+ test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 9298fe1d9b..cdc3915974 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1528,7 +1528,9 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
+ 
+ 	/*
+ 	 * 1. Pretend the narrowest worktree: only unmerged entries
+-	 * are checked out
++	 * are checked out. If core.sparseCheckoutRmFiles is off, then
++	 * treat a file being removed as merged, so it does not get
++	 * removed from the worktree.
+ 	 */
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+@@ -1536,7 +1538,8 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
+ 		if (select_flag && !(ce->ce_flags & select_flag))
+ 			continue;
+ 
+-		if (!ce_stage(ce) && !(ce->ce_flags & CE_CONFLICTED))
++		if ((!ce_stage(ce) && !(ce->ce_flags & CE_CONFLICTED)) ||
++		    ((ce->ce_flags & CE_REMOVE) && !core_sparse_checkout_rm_files))
+ 			ce->ce_flags |= skip_wt_flag;
+ 		else
+ 			ce->ce_flags &= ~skip_wt_flag;
+@@ -1681,12 +1684,15 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 
+ 	if (!o->skip_sparse_checkout) {
+ 		/*
+-		 * Sparse checkout loop #2: set NEW_SKIP_WORKTREE on entries not in loop #1
++		 * Sparse checkout loop #2: set NEW_SKIP_WORKTREE on entries not in loop #1.
++		 * If !core.sparseCheckoutRmFiles, include files being removed so ones
++		 * outside sparse-checkout patterns do not get removed from the worktree.
+ 		 * If they will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
+ 		 * so apply_sparse_checkout() won't attempt to remove it from worktree
+ 		 */
++		int mask = core_sparse_checkout_rm_files ? CE_ADDED : CE_ADDED | CE_REMOVE;
+ 		mark_new_skip_worktree(o->pl, &o->result,
+-				       CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
++				       mask, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
+ 				       o->verbose_update);
+ 
+ 		ret = 0;
+-- 
+2.32.0.rc2.3.g151f456769
+
