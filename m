@@ -7,65 +7,63 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ABBCC4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37128C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:19:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0347261360
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:12:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FFCD613AD
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235096AbhFAXOj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 19:14:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59390 "EHLO
+        id S235150AbhFAXV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 19:21:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234989AbhFAXOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 19:14:37 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB1BC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 16:12:54 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id r26-20020a056830121ab02902a5ff1c9b81so819764otp.11
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 16:12:54 -0700 (PDT)
+        with ESMTP id S235116AbhFAXV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 19:21:28 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E88EC061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 16:19:45 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id d21so949141oic.11
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 16:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=hLLYwcZ/+Ttsvg1WzJIPhy88xFBslBRAVs7Kpqj8Cxs=;
-        b=fsVkCC369pKy0s7axBPCERbhb9+358wCBqS01wu5bK5qipDwTi4O+igUC8rpS7QwQL
-         2J3MfvZill3DYhGf7Sj/unap/DK1rHQlrpeQURtpT44/y2ofn1LacgPPVuWzEogD7Vm4
-         2nN8MiPuZh6JWP4xjHcF+2CYV+plR1IiH5Zv3FoASHJ98AyzYG6SfSfiKwpEOZbcsF0N
-         kL8dz9fJtS9PuJk3BxshadiNQ6tzR9ax8e9ljFm2hUiBEXIvkdnWkIOp+YBmhd1HzvxB
-         rjQOz+GOHAleQ1sWAkFix1JXcHyczwySw1oK5D/gP3r69AT04Rp/dl9bfEoG4xY8YMbs
-         Oy1A==
+        bh=kdO2raQ0a+ET9pzmkQV8elpTLvfnNClJT4yqmWXgWOM=;
+        b=Dw3vF/hBBU0jIGDXSininiCmGyj8ljQ/SiaSg+BOkU15vmVnMC9HRy0R20HSyl0sEK
+         zYTe4MGQFnUNChcc3AuwQbvOHYQewmAmBTBVu4b4b7Ifk0LG1xdqCuVUyF1UMHKWe2fh
+         1M7iuq1PYLKMTfWzn1f4G9CbPbxnH6Ay+bRS7KcOjpoGQ2h/taTiWoqjKTegfsFYfFi1
+         TL4Pmzn5bmXdlnr6RQgoGKYslZrxABdN9P7r6OcsXX79yZn1DKzSTMmRKhSNZtdJdSER
+         qlON7ZwE5IROYxNfr9LQChS77Ysw70d4odRwnw4TzVyxzu/JNEVoQk17/bZs5XC0gKTP
+         EVMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=hLLYwcZ/+Ttsvg1WzJIPhy88xFBslBRAVs7Kpqj8Cxs=;
-        b=swQqFyq6oIXHC8TXqnPz+XEbdjcukMuFKn46pEh+iQF74vhrfwaLk0sQkqJyEQO77t
-         M8X2wLe4IMe8YCv3w07DnaB92hP2n6MD2SV5NrUcKW8ZZoJVNmI5ujMMeqU8XviXOBmg
-         KtWfJbmH97o75O+7PtWvQDDapqBkKQSy5RqmffLuWI1QtEg7nqrPKVLa4D75Qd7R/yFG
-         eFAv1hSmp21zGyrHCZQ8EM90HKu/mvZVNS9MjyemG8oCdPgCQeHEPxAK06z5/cKZVMIz
-         gEZwaeLnE9RhnDmTgSRpnvYhqo4xsTxZLqs9k3p4zEuuvIZcMPatdxcjHZHAWeHAAaaZ
-         cNZA==
-X-Gm-Message-State: AOAM532FrsSqqNPUopwCC2vmiVsVEMRD7MjI5cVcv6v1a5Rr4h7gXvDD
-        Qw9M/xmVeVPmUQdQhSv2miY=
-X-Google-Smtp-Source: ABdhPJx1nRMuBaLpsZALv53Z848dinw3Qj/lh//XfGYpXIk9nfe7ydK1bwYHjgn/ntBIX0gY/wnXnw==
-X-Received: by 2002:a05:6830:2fa:: with SMTP id r26mr662607ote.325.1622589173660;
-        Tue, 01 Jun 2021 16:12:53 -0700 (PDT)
+        bh=kdO2raQ0a+ET9pzmkQV8elpTLvfnNClJT4yqmWXgWOM=;
+        b=cHgdv4SZ95mxrXaFI+74IIdZ14o4ATQ/SnxSAVBTq5wGY+MrEtlSxEAsYgOq2M+tCO
+         xrJG3utJVUENbDBX43C4PW98D9hwdjfXnXNjVXpWU3RUCmrRwNA4iC2dmQpxwKaVULJt
+         n8ulcY9GsUs7evW05O+NgFJhlWfNayXi4qFR0UJNBdW3bcYixkuBnCL9nSkXa0mpFJZ5
+         G9JVHpBSUgsjLb+hDQzx50ojm+xWVw5G5VEaQ6s+y5uIpxGlmmjogzLh3NLf/FRWFxBT
+         7nDFjgIMFOyX+3poASgERnVNUVht/O4Ou9Q5WGAmMSg/SHUpWlgQARL9BTin9a8LICoX
+         XepQ==
+X-Gm-Message-State: AOAM530snqK0mL6/ue8Yxl7gFYwnAu4RDWi3PNxshMi0b9dOtyspQNtD
+        13CUDV8XeoPHBAAnGDczu1gNZcHYKj3t8w==
+X-Google-Smtp-Source: ABdhPJxEQznk2jf2+Yl85rMEJWqL2yN0fV+vTnB5kWon/S5TUC5F2Dv9197zbvlX4D9tWMPnx1EsWw==
+X-Received: by 2002:aca:4343:: with SMTP id q64mr19751647oia.33.1622589584930;
+        Tue, 01 Jun 2021 16:19:44 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id i2sm4061245oto.66.2021.06.01.16.12.52
+        by smtp.gmail.com with ESMTPSA id u14sm3764745oif.41.2021.06.01.16.19.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 16:12:53 -0700 (PDT)
-Date:   Tue, 01 Jun 2021 18:12:52 -0500
+        Tue, 01 Jun 2021 16:19:44 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 18:19:43 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <60b6bef41791a_404420881@natae.notmuch>
-In-Reply-To: <xmqqzgw9qky5.fsf@gitster.g>
+To:     Sergey Organov <sorganov@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <60b6c08f75c1c_40442086d@natae.notmuch>
+In-Reply-To: <87wnrd6wqj.fsf@osv.gnss.ru>
 References: <60b5d281552d6_e359f20828@natae.notmuch>
- <CAJDDKr7AG_qs2ZmNCuS9zS0oqCT9cWU=CSCfxALEkGuLHBH=OQ@mail.gmail.com>
- <xmqqzgw9qky5.fsf@gitster.g>
+ <87wnrd6wqj.fsf@osv.gnss.ru>
 Subject: Re: The git spring cleanup challenge
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -75,38 +73,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> David Aguilar <davvid@gmail.com> writes:
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> > These are the configurations I've chosen:
+> >
+> >   [merge]
+> >     conflictstyle = diff3
+> >   [sendemail]
+> >     smtpserver = /usr/bin/msmtp
+> >
 > 
-> > +1 for merge.conflictstyle = diff3, rerere.enabled = true, and
-> > log.decorate = short from me. I noticed others already mentioned
-> > these.
-> 
-> As the inventor of rerere, I agree on rerere.enabled.  It was made
-> opt-in only because I thought it was somewhat risky when the feature
-> was introduced, but it has been stable and useful, and it is long
-> overdue to be enabled by default.
+> [pull]
+> 	rebase = merges
 
-Agreed.
+Can you do `git pull --rebase=merges` for a while?
 
-I personally would like some interface to see what's going on behind the
-scenes because sometimes I've made a wrong resolution that gets carried
-around and I don't know of a way to clear them (other than manually
-hunting down the cached files).
+> [push]
+> 	default = simple
 
-But this is not a deal-breaker, the feature works great.
+This is the default, you don't need it.
 
-> I do not think of any downside with conflictstyle being diff3 (and
-> think of only upside).
+> [rerere]
+> 	enabled = true
+> 	autoupdate = true
+
+We are seeing a pattern here.
+
+> [diff]
+> 	algorithm = patience
+
+Does this make a lot of difference?
+
+> [merge]
+>         conflictStyle = diff3
 
 Same here.
-
-I recall reading about issues of a GSoC student resolving conflicts and
-setting up a mergetool. And he (or she?) mentioned the advice to
-configure diff3... I didn't even remember there was anything else.
-
-I wrote vimdiff3 precisely to edit diff3 output directly, and I've never
-looked back.
 
 -- 
 Felipe Contreras
