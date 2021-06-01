@@ -7,152 +7,153 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62345C47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0342C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:22:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D2856128A
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:12:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F2D460FF0
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233409AbhFAMOA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 08:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51240 "EHLO
+        id S233064AbhFAMXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 08:23:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231201AbhFAMOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 08:14:00 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BCBC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 05:12:18 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id j75so15233136oih.10
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 05:12:18 -0700 (PDT)
+        with ESMTP id S231576AbhFAMXm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 08:23:42 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ECA2C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 05:22:00 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id d25-20020a0568300459b02902f886f7dd43so13905153otc.6
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 05:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=RjoztT8yd5nHo9Df58ZhWOvrXKS6pnmLJJ1Cp6n9CFU=;
-        b=Qj0b+PSnN4pv7LtxL30FFVnMRuO4tgeyLrMV49+Bo4w/x/mgq/zkUV2T8zFvXcRYbm
-         IMi/xs2nlPwLI/BxN4qe/vL0DFJJ3JI0BxpMYPJBVQieTTlFnaTkhg+V8fmEtEF7ObRI
-         ADmdK9fh81BRMfONqWJ9vB0Bt1eEyKsNOX1yIS88UsKrSYJtRmFO2decaNPzp4seWzG0
-         vy5fkjVNncRNxGdUpWmPZuRH0UWNQJkudtLM4UEzPnDZ8vreVj7zfSeM22nPBWRemTCi
-         UCjP3YfNk3n3P3vGzWXfwLeyqy9yWdbei7JQrz0aE81Z7iKCeGDehZJmwd4hYjlIYkem
-         NBPA==
+        bh=U3forqx8q0pkmyUMx92DXjO+X3TjjeMfVVF0sEWn9xg=;
+        b=TSvfZaGJqlzGvgMlIuEzz1oKbfFE938mPlCDz2UjBxhXuF6Fr6ikPav0JoolYRAtN6
+         XeszG49rbCk2wjHG58k6TtF/ExsRFsoVNlfjZPgF/5auRVtDJLGt6TobXrBLHtMji6sD
+         vPe/l2U/FILX2oc370iIpdjzgpt4SxnKcWnMYxmoG2bzpL+dBVvf/D3At7J7Vl00lSM/
+         NHDDnC9i1X5oaPbvToKMDnEVWO2z0mpf9mZ2s0M0lgTLbI0+CABoHd9GKDUHka2Nzls/
+         1ZDf6uQS2DwBSLAI7oIUVRQ4fKlKCUcdcBVnQ8brXVZR4TmvbDdmeuxLsD6sVYfLsICg
+         HYNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=RjoztT8yd5nHo9Df58ZhWOvrXKS6pnmLJJ1Cp6n9CFU=;
-        b=EioWuIWtzBzvyu3xtsuvmFFtY1Y4vXIIqfHJfLO1YRtvchktstzaqmvljZCwnKiJ41
-         kbDPkAM7T3gZh95q0tpNW3Zv4xrWzpPHqDjv/l4LAz3C/oQ7xC67IwznavQN7rP6iTK+
-         DZ6RjLr9c27CGFAMPJT2p6MzEEqePF94ohv3WyWBbp73mUA/ZBh1gqpPYCZ9yJK7fH1T
-         lcKHvxpZYQSAVXeN/zaaLstQDaYiS3x0lAGdXe6o3sCLtoElx9dB/BYkNKnts0jjQgMO
-         fesMtMQVFFbslhoBC2sxqqEg37UH5dWxt2g/vYH15ZjntK50PXxvG5kW6sZrhxBVsTK4
-         J+ww==
-X-Gm-Message-State: AOAM533StizvAvGrpr57g9qEODS/Oaq8aGiqXG70UU0duOWerZ/bmcOi
-        9anfRZj1vHEpaiSDqUHyY7E=
-X-Google-Smtp-Source: ABdhPJzwhestWX4hBUEdL7h0xVi5cl2ME8cBj49jPhf1/xerb1mXfxx4GAsgkTG/13bIFim7AtccQQ==
-X-Received: by 2002:aca:4a55:: with SMTP id x82mr887923oia.130.1622549538174;
-        Tue, 01 Jun 2021 05:12:18 -0700 (PDT)
+        bh=U3forqx8q0pkmyUMx92DXjO+X3TjjeMfVVF0sEWn9xg=;
+        b=V0JsTlDP8JP8EgJjfT7hBbUH9Ig/05Qd8kRZ/6zUD671MUiaLX1Bo0CAwrXUvkuHh8
+         IBtYDxxTmEV/1uOzVm3d2vFq9Rp9WK3+GMD8++pxmu6R7Ui5eNDHbExm3bIyDdrhB58H
+         ifmKmbOS/YFOm27gyLtYgdiBsj2SOf41JePQLZN+ZVuE3RQ13Sv9HBxKsyR2+bIzwRNf
+         RHDRmKVuSNp1RLlqePYHoYaWigWFXQdVnWZapdgMaheUL30Dx9Nq+dDVrYf5ZxOlSSv9
+         w4JrTWCFziw9nz6NFj42w06Y4CQpWaqKdt2v7YgOBKQN/MbLs7xNap4nN9/dYN3TiB44
+         sYlw==
+X-Gm-Message-State: AOAM533kXgMHnchVDMHqRb3LsDcJ6qBcnE3Szf4PSSOMoU5fdPHYn1i0
+        edRSwzRP3fcqcfbLizZWrcc=
+X-Google-Smtp-Source: ABdhPJxKOPwXGVXbHfC+JaszMiGmuqx5XSnmUe+FLFkepJc0tRNo50H9AHhlhdyNvC9Z2GiDTXLleg==
+X-Received: by 2002:a9d:4801:: with SMTP id c1mr11811495otf.278.1622550119766;
+        Tue, 01 Jun 2021 05:21:59 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id u24sm3690659otg.73.2021.06.01.05.12.17
+        by smtp.gmail.com with ESMTPSA id l1sm810585oos.37.2021.06.01.05.21.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 05:12:17 -0700 (PDT)
-Date:   Tue, 01 Jun 2021 07:12:16 -0500
+        Tue, 01 Jun 2021 05:21:59 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 07:21:57 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Mathias Kunter <mathiaskunter@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramkumar Ramachandra <r@artagnon.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Message-ID: <60b62420858c4_e409520828@natae.notmuch>
-In-Reply-To: <xmqqfsy1udf0.fsf@gitster.g>
-References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
- <20210529071115.1908310-7-felipe.contreras@gmail.com>
- <xmqqv96zwkl0.fsf@gitster.g>
- <60b49a3ae829b_24d28208fd@natae.notmuch>
- <xmqqfsy1udf0.fsf@gitster.g>
-Subject: Re: [PATCH v2 6/6] doc: push: explain default=simple correctly
+Cc:     git@vger.kernel.org
+Message-ID: <60b62665df1de_e40952080@natae.notmuch>
+In-Reply-To: <YLYcnwZQAEoSQKsG@danh.dev>
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <YLXl5+ronWhcGh13@danh.dev>
+ <60b61089ba63d_e40ca20894@natae.notmuch>
+ <YLYcnwZQAEoSQKsG@danh.dev>
+Subject: Re: The git spring cleanup challenge
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> >> I suspect it would be simpler to read and easier to understand to
-> >> bring the parethesized part front, e.g.
-> >> 
-> >>     If you are pushing to the same repository you pull from (which
-> >>     is typically `origin`), then you need to ...
-> >> 
-> >> as it would avoid "the project is not centralized, but I push to my
-> >> own repository and pull from it---what should I do?" questions.
-> >
-> > The top of `push.default says:
-> >
-> >   Different values are well-suited for specific workflows; for instance,
-> >   in a purely central workflow (i.e. the fetch source is equal to the
-> >   push destination), `upstream` is probably what you want.
-> >
-> > We already brought up the central workflow, I think it's fine to reuse
-> > the concept below.
-> 
-> Oh, thanks for finding another instance to be corrected.
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> On 2021-06-01 05:48:41-0500, Felipe Contreras <felipe.contreras@gmail.c=
+om> wrote:
+> > =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> > > Something is essential when working on constantly integration tree,=
 
-In fact there's many:
+> > > I don't want to make my life hard:
+> > > =
 
-  This mode only makes sense if you are pushing to the same repository
-  you would normally pull from (i.e. central workflow).
+> > > * rerere.enabled =3D true
+> > > * rerere.autoupdate =3D true
+> > =
 
-> Even in that sentence, the more important point is that upstream would
-> be appropriate if you push to the same place as you fetch from, and we
-> do not have to say "purely central" at all.
+> > If the defaults make your life hard, then shouldn't we change the
+> > defaults?
+> > =
 
-Actually, I forgot the main reason I decided to rename centralized to
-same_repo: they are not the same thing.
+> > For starters, which is the command you use? `git merge`? If so, maybe=
 
-You can have a decentralized workflow where you have multiple
-repositories configured, but every branch pulls and pushes to the same
-repository (to them, not other branches):
+> > `git merge` should have a --rerere option to enable rerere. There are=
 
-  hotfix <-> dayjob/production
-  cleanups <-> upstream/master
-  experiment-1 <-> personal/experiment-1
+> > some --rerere-autoupdate, but no --rerere.
+> =
 
-So it's more like:
+> I think both pull, merge, rebase, cherry-pick, revert, checkout,
+> switch, apply, am will be affected by rerere.
 
-  centralized = ~decentralized
-  triangular = ~two-way
+Yes, I know, but I am talking about you personally. Where do you
+absolutely need --rerere?
 
-A centralized workflow consists of a single repository where branches
-are typically two-way, but not necessarily.
+> > But fine, this is an exception too. The location of programs is not
+> > something that can be changed by default.
+> > =
 
-A decentralized workflow consists of multiple repositories where
-branches are typically triangular, but not necessarily.
+> > > And I would like to try new shiny features:
+> > > =
 
-So the triangularity is per branch, not per repository, and same_repo
-means a two-way branch, could be a centralized or decentralized
-workflow.
+> > > * feature.experimental =3D true
+> > =
 
-Therefore your proposal:
+> > Interesting. I didn't know that existed, and I advocated for a
+> > similar configuration: core.mode [2].
+> > =
 
-  If you are pushing to the same repository you pull from (which is
-  typically `origin`), then you need to ...
+> > But if most newcomers can live without it, I'm sure you can too for a=
 
-is actually better, I just had to remind myself that centralized and
-same repo are not the same thing.
+> > bit.
+> =
 
+> The point of trying new shiny features is dogfooding ourselves and
+> report bugs early, if any.
 
-Of course it would help to have a place in Documentation/ where
-trianguar and centralized are explained.
+Yes, and more developers should turn this flag on, but it's not
+*essential*, so you can live one month with it off. Either way I don't
+think it matters for the purpose of this experiment if you have it or
+not.
 
-Cheers.
+> > > >   3. Every day you can add 1 additional configuration (and update=
+ it the
+> > > >      next day).
+> > > >   4. The moment you add a 4th configuration you lose.
+> > > =
 
--- 
-Felipe Contreras
+> > > So, my baseline already requires 8 key-value pairs (ignoring alias =
+and
+> > > pull.rebase). I'm lost already.
+> > =
+
+> > With the exceptions I think you only need these:
+> > =
+
+> >  * rerere.enabled =3D true
+> >  * rerere.autoupdate =3D true
+> =
+
+> OK, let's start there.
+
+Excellent.
+
+-- =
+
+Felipe Contreras=
