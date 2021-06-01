@@ -2,69 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37128C4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9393C47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:33:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FFCD613AD
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:19:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1B66613BC
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 23:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235150AbhFAXV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 19:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60860 "EHLO
+        id S235162AbhFAXfZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 19:35:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235116AbhFAXV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 19:21:28 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E88EC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 16:19:45 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id d21so949141oic.11
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 16:19:45 -0700 (PDT)
+        with ESMTP id S234766AbhFAXfZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 19:35:25 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B931C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 16:33:43 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id i14-20020a9d624e0000b029033683c71999so887993otk.5
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 16:33:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=kdO2raQ0a+ET9pzmkQV8elpTLvfnNClJT4yqmWXgWOM=;
-        b=Dw3vF/hBBU0jIGDXSininiCmGyj8ljQ/SiaSg+BOkU15vmVnMC9HRy0R20HSyl0sEK
-         zYTe4MGQFnUNChcc3AuwQbvOHYQewmAmBTBVu4b4b7Ifk0LG1xdqCuVUyF1UMHKWe2fh
-         1M7iuq1PYLKMTfWzn1f4G9CbPbxnH6Ay+bRS7KcOjpoGQ2h/taTiWoqjKTegfsFYfFi1
-         TL4Pmzn5bmXdlnr6RQgoGKYslZrxABdN9P7r6OcsXX79yZn1DKzSTMmRKhSNZtdJdSER
-         qlON7ZwE5IROYxNfr9LQChS77Ysw70d4odRwnw4TzVyxzu/JNEVoQk17/bZs5XC0gKTP
-         EVMQ==
+        bh=wZ8iC2+6lXHX6EObOwnKlUoy6og8rE6Hg+5A5KyidCY=;
+        b=DQGK0zLfe8kQg+JbNn4egvdJ5IKWsv4FXk6J5UZzvnY7zoW7BbBRHdt6hIr6QTjWda
+         Jz3hYJ0nY+3YFJlPHEfmBUJD5thJpVLM6nnc5Vd1BbD2z8+Y0UpsgzI3V/49bLbNK7bt
+         dXULAIidE9Y70NC9YndimFhaoQPqG0fPN7pUZdxRFQXEV2Fpay7ubhmm+xFDOMH/L1pg
+         /sgug0V/AKHEOshqDnKScTNE8yEcLn9jI6tdpnHCfD60cMYBGSGlWIXPuQD9+cow/lob
+         253r0muoGO6efrV0ugWykwoID/Yk+M85ev17+wWkhY8Lc9KTNEQWWi2gR6ladBPgL/rh
+         WOPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=kdO2raQ0a+ET9pzmkQV8elpTLvfnNClJT4yqmWXgWOM=;
-        b=cHgdv4SZ95mxrXaFI+74IIdZ14o4ATQ/SnxSAVBTq5wGY+MrEtlSxEAsYgOq2M+tCO
-         xrJG3utJVUENbDBX43C4PW98D9hwdjfXnXNjVXpWU3RUCmrRwNA4iC2dmQpxwKaVULJt
-         n8ulcY9GsUs7evW05O+NgFJhlWfNayXi4qFR0UJNBdW3bcYixkuBnCL9nSkXa0mpFJZ5
-         G9JVHpBSUgsjLb+hDQzx50ojm+xWVw5G5VEaQ6s+y5uIpxGlmmjogzLh3NLf/FRWFxBT
-         7nDFjgIMFOyX+3poASgERnVNUVht/O4Ou9Q5WGAmMSg/SHUpWlgQARL9BTin9a8LICoX
-         XepQ==
-X-Gm-Message-State: AOAM530snqK0mL6/ue8Yxl7gFYwnAu4RDWi3PNxshMi0b9dOtyspQNtD
-        13CUDV8XeoPHBAAnGDczu1gNZcHYKj3t8w==
-X-Google-Smtp-Source: ABdhPJxEQznk2jf2+Yl85rMEJWqL2yN0fV+vTnB5kWon/S5TUC5F2Dv9197zbvlX4D9tWMPnx1EsWw==
-X-Received: by 2002:aca:4343:: with SMTP id q64mr19751647oia.33.1622589584930;
-        Tue, 01 Jun 2021 16:19:44 -0700 (PDT)
+        bh=wZ8iC2+6lXHX6EObOwnKlUoy6og8rE6Hg+5A5KyidCY=;
+        b=UqJzKBacUCnc+j1Ru2pFlHHs1lb2uiwwoFiPkeFEH4syOkB1ZnsgYVLYIbhV7QPHl9
+         UQxT6A7E4fJkjlhi6e39EWgf2s30xSWZE9E0ipH41kOhoz2fJ67cHNGESebmnlE01q+z
+         z63iCWrfO0eggl+Nnj31lGpdpwhEKahEygxo6I5JiQwmDoy1XY+dCkW4HRYzOxEh6Zje
+         lCuaurSgyb4J8ii28fyR3bpImrATkgRQA6/74uTXjEDv37sHuumU1s3kXOy3hBYTKuiN
+         I10GsFpZfNzCw1R0xZmFaDu8JhAxXaYF/x9nEuvPJI5o9CMgDueewsXrOPce1xpBIqrC
+         kfEQ==
+X-Gm-Message-State: AOAM533AtfUFzjcBIMllKt9x9jVyEH7CZtxPJRpFpAOD+HLkCGReiV2l
+        qfT93BnLeHmPiSl7ttY4IIU=
+X-Google-Smtp-Source: ABdhPJxGhyeuOtKo90HCjHlyxw59fAJ3AvDIjSmy6qgWG6D9Jrkn4HKPoZyf6ziZN88uA7w9UZcqsA==
+X-Received: by 2002:a05:6830:2243:: with SMTP id t3mr22954652otd.142.1622590422630;
+        Tue, 01 Jun 2021 16:33:42 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id u14sm3764745oif.41.2021.06.01.16.19.44
+        by smtp.gmail.com with ESMTPSA id r10sm3734000oic.4.2021.06.01.16.33.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 16:19:44 -0700 (PDT)
-Date:   Tue, 01 Jun 2021 18:19:43 -0500
+        Tue, 01 Jun 2021 16:33:42 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 18:33:40 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Sergey Organov <sorganov@gmail.com>,
+To:     David Aguilar <davvid@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Message-ID: <60b6c08f75c1c_40442086d@natae.notmuch>
-In-Reply-To: <87wnrd6wqj.fsf@osv.gnss.ru>
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <87wnrd6wqj.fsf@osv.gnss.ru>
-Subject: Re: The git spring cleanup challenge
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>
+Message-ID: <60b6c3d4d432b_4044208a6@natae.notmuch>
+In-Reply-To: <CAJDDKr630n7=8FqsSRXpN7fNy9ZB8FOzO=LxvfHFVrMR1=L3_A@mail.gmail.com>
+References: <20210601165254.18136-1-davvid@gmail.com>
+ <60b6873624c6f_1a702085e@natae.notmuch>
+ <CAJDDKr630n7=8FqsSRXpN7fNy9ZB8FOzO=LxvfHFVrMR1=L3_A@mail.gmail.com>
+Subject: Re: [PATCH v3] contrib/completion: fix zsh completion regression from
+ 59d85a2a05
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -73,42 +78,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+David Aguilar wrote:
+> On Tue, Jun 1, 2021 at 12:15 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> > > @@ -261,7 +261,7 @@ __git_zsh_main ()
+> > >
+> > >               (( $+opt_args[--help] )) && command='help'
+> > >
+> > > -             words=( ${orig_words[@]} )
+> > > +             words=( git ${orig_words[@]} )
+> >
+> > This is wrong. The current code is fine.
 
-> > These are the configurations I've chosen:
-> >
-> >   [merge]
-> >     conflictstyle = diff3
-> >   [sendemail]
-> >     smtpserver = /usr/bin/msmtp
-> >
+> Thanks for the detailed explanation.
 > 
-> [pull]
-> 	rebase = merges
+> Just so I'm understanding this correctly.. if this was instead..
+> 
+>     words=( git ${words[@]} )
+> 
+> (instead of orig_words like I mistakenly included in v3) would that be
+> an improvement, no-op or would it be worse?
 
-Can you do `git pull --rebase=merges` for a while?
+It would be an improvement, but it's orthogonal to the regression you
+are trying to fix.
 
-> [push]
-> 	default = simple
+I would just fix the regression for v2.32, and then afterwards try to do
+the improvement.
 
-This is the default, you don't need it.
+I have a testing framework for the zsh completion in my git-completion
+project, so I would be much more confident about this change if all the
+tests pass. Alas I have not yet merged any v2.32.0-rc* so it's not
+straightforward to run the tests now.
 
-> [rerere]
-> 	enabled = true
-> 	autoupdate = true
+> It sounds like additional changes are needed to make it properly
+> support options between "git" and the sub-command name, hence the
+> patch is fine as-is in v4, correct?
 
-We are seeing a pattern here.
+I mean there's git options, and git command options. I don't know how
+many changes are needed to make all the interactions work correctly, but
+I wouldn't have confidence in any of them so close to a release,
+especially considering git.git doesn't have any zsh tests.
 
-> [diff]
-> 	algorithm = patience
+So yes, v4 is fine.
 
-Does this make a lot of difference?
+> Hopefully in the future it can be extended to cover eg. "git -c
+> foo.bar -C some-dir <sub-command>" as well. Thanks for your patience.
 
-> [merge]
->         conflictStyle = diff3
-
-Same here.
+That will work correctly on git-completion once I merge your v4 patch
+(and v2.32).
 
 -- 
 Felipe Contreras
