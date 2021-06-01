@@ -2,94 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CB82C47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 06:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DF43C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 06:34:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 577106139A
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 06:25:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 091176139A
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 06:34:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbhFAG1R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 02:27:17 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:42003 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229477AbhFAG1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 02:27:16 -0400
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4FvMbc2HlVz5tlC;
-        Tue,  1 Jun 2021 08:25:32 +0200 (CEST)
-Subject: Re: [PATCH] builtin/fsck.c: don't conflate "int" and "enum" in
- callback
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <patch-1.1-f109a61b11-20210601T000433Z-avarab@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <de9dea3a-6138-5e2f-7dc8-8a2ddf28bb84@kdbg.org>
-Date:   Tue, 1 Jun 2021 08:25:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
-MIME-Version: 1.0
-In-Reply-To: <patch-1.1-f109a61b11-20210601T000433Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S233166AbhFAGgR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 02:36:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59068 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232906AbhFAGgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 02:36:15 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 995BAC061574
+        for <git@vger.kernel.org>; Mon, 31 May 2021 23:34:34 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id p67-20020a4a2f460000b0290245cdf2d1a4so55720oop.8
+        for <git@vger.kernel.org>; Mon, 31 May 2021 23:34:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=KEA4iXfpmQhxVo0xccoAGCy1gpe84VA4+L1T4eZz+Js=;
+        b=C+YFsE5YmR7ilG2CXGH4KzEObzptF54/1XtHlpZCT2x0ZViIGFKyVODrYg8/Jtddic
+         FsccosGEu3e5CvnsEf6x1DvpzAjf+ATL50Iq3GNDtV64F9/Ce0IxPok+Do290IBBYqJu
+         xdAb4dW2oHEzPQHJSWA3Tha2k55Iq/NHOM/2/nj6J3wjB5MaMFeI49MbI4IOutGtWper
+         we+s3m5Rz/erfInE55EBPNNvro4eOQn+TzBrU0A0FHD+vKNuVglEcgGxC4RkherrMbmf
+         qMCcFyH7dEaRHpwHjeV3v9XetJEqx1SgIZ2jyU59uDiCc4Dswnt16q2ZmeXDinfDvK5c
+         kvzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=KEA4iXfpmQhxVo0xccoAGCy1gpe84VA4+L1T4eZz+Js=;
+        b=OvmZcuv2RqNDbIkwPHky+k3h6RcvnsfolUyuQU756J+iKhUoyTvlAFLOa/xTGO8afh
+         QDooIvDeJUtGNrlHKhQ9xWwyXSZrHsJ1jmo02H16TJ/XJdtfkYM0FJlwrrBNlCTgBwW0
+         5T0nei8wNmVAfzsPaJNM59EtrvjENBTbzuufBiIkeq2U+t9ZSuJKXyE6nAgAmWnXeZb6
+         P7hnaj0if3u6I2xMN0webEteqNZWqgzSmIsZXqujxzZvicucKOjTt0Ml2livxiGaEaIb
+         evHJI5AJxz7IUYWpFQh3uskuHiTwOVP7tLERzIDSSMapPewUjOl0PBJjYjjiBpBWzhmx
+         SlTQ==
+X-Gm-Message-State: AOAM533/C4DSQijShX1Sm/pVzxyUcohQE0SVyf9mZV1F+8PpML76uZu8
+        JF74m57e0eUD8V3gRKICjFg=
+X-Google-Smtp-Source: ABdhPJwiaGkZP/LXUabVxbnpQQAXJQ2txJyQH9Mn1WqEn8UeQwTUYW+wE4ZDcffX+1Xofa8PPMLHCQ==
+X-Received: by 2002:a4a:e084:: with SMTP id w4mr18742079oos.59.1622529274012;
+        Mon, 31 May 2021 23:34:34 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id e22sm3516628otl.74.2021.05.31.23.34.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 May 2021 23:34:33 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 01:34:32 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Message-ID: <60b5d4f87f30c_e359f2085e@natae.notmuch>
+In-Reply-To: <YLWSRBJHiph+Bejo@coredump.intra.peff.net>
+References: <pull.965.git.1622363366722.gitgitgadget@gmail.com>
+ <YLP/GEN0qIXvWEUn@coredump.intra.peff.net>
+ <CAOLTT8Q0zbxh8X03ZmgAzHadTbE4-Af+AB3POOUF2n22u8RExw@mail.gmail.com>
+ <YLT2UfCZyQIXWIOv@coredump.intra.peff.net>
+ <60b509be97423_24d2820856@natae.notmuch>
+ <YLWSRBJHiph+Bejo@coredump.intra.peff.net>
+Subject: Re: [PATCH] [GSOC] cat-file: fix --batch report changed-type bug
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.06.21 um 02:05 schrieb Ævar Arnfjörð Bjarmason:
-> Fix a warning on AIX's xlc compiler that's been emitted since my
-> a1aad71601a (fsck.h: use "enum object_type" instead of "int",
-> 2021-03-28):
+Jeff King wrote:
+> On Mon, May 31, 2021 at 11:07:26AM -0500, Felipe Contreras wrote:
 > 
->     "builtin/fsck.c", line 805.32: 1506-068 (W) Operation between
->     types "int(*)(struct object*,enum object_type,void*,struct
->     fsck_options*)" and "int(*)(struct object*,int,void*,struct
->     fsck_options*)" is not allowed.
+> > Jeff King wrote:
+> > > The simplest test is just:
+> > > 
+> > >   git -C all-two cat-file --batch-all-objects --batch="%(objectname)" >/dev/null
+> > > 
+> > > which will currently fail. It would be nice to verify that its output is
+> > > sensible, but I'm not sure how to easily do that (it will spew a bunch
+> > > of binary tree data, and it cannot even be parsed reliably since we
+> > > haven't output the sizes).
+> > 
+> > I use ruby to parse binary data from git all the time:
+> > 
+> >         git log --format='%b%x00' |
+> >                 ruby -e 'ARGF.each("\0", chomp: true) { |chunk| p chunk }'
 > 
-> I.e. it complains about us assigning a function with a prototype "int"
-> where we're expecting "enum object_type". Enums are just ints in C,
-> but it seems xlc is more picky than some about conflating them at the
-> source level.
+> I doubt we'd want to add a ruby dependency to our test suite, but sure,
+> we could do the same thing with perl.
 
-Is that true? I thought compilers were allowed to use whatever data type
-is sufficient to represent all enumeration values. For this reason, you
-sometimes see
+I don't mean in the final patches, I mean while the patches are
+being developed.
 
-   enum X { A, B, X_MAX = 0x7fffffff };
+Once it's clear what the code should do, and how to verify it's doing
+what it's supposed to be doing, we can decide how the test suite should
+verify it.
 
-that ensures that an int must be used for representation of enum X. So,
-AFAICS, your patch is an actual fix, not just cosmetic.
+Ruby is great for prototyping.
 
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> This is new in v2.32.0, so sending this during the rc phase, just a
-> warning though, so unless you're using fatal warnings on that
-> OS/platform it won't impact anything, and even then it's just a minor
-> annoyance...
-> 
->  builtin/fsck.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 87a99b0108..b42b6fe21f 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -109,7 +109,8 @@ static int fsck_error_func(struct fsck_options *o,
->  
->  static struct object_array pending;
->  
-> -static int mark_object(struct object *obj, int type, void *data, struct fsck_options *options)
-> +static int mark_object(struct object *obj, enum object_type type,
-> +		       void *data, struct fsck_options *options)
->  {
->  	struct object *parent = data;
->  
-> 
-
+-- 
+Felipe Contreras
