@@ -2,221 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA89C47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 18:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EEEDC4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 19:15:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5257A613AE
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 18:31:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F5B36136E
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 19:15:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234650AbhFASc5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 14:32:57 -0400
-Received: from botech.co.uk ([81.187.226.106]:46308 "EHLO chimp.botech.co.uk"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233397AbhFASc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 14:32:56 -0400
-Received: from botech.co.uk ([81.187.226.106] helo=rhino.botech.co.uk)
-        by chimp.botech.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <tpr.ll@botech.co.uk>)
-        id 1lo9AT-0007pE-O8; Tue, 01 Jun 2021 19:31:09 +0100
-From:   Tim Renouf <tpr.ll@botech.co.uk>
-To:     newren@gmail.com, dstolee@microsoft.com, git@vger.kernel.org
-Cc:     Tim Renouf <tpr.ll@botech.co.uk>
-Subject: [PATCH] unpack-trees: add core.sparseCheckoutRmFiles config
-Date:   Tue,  1 Jun 2021 19:31:06 +0100
-Message-Id: <20210601183106.3084008-1-tpr.ll@botech.co.uk>
-X-Mailer: git-send-email 2.32.0.rc2.3.g151f456769
-In-Reply-To: <CABPp-BGUxHiYLjVcqBc0qpaHpd5MZCN_6S0YpH8tKcP3GSV2Pw@mail.gmail.com>
-References: 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S234725AbhFATQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 15:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34980 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234628AbhFATQq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 15:16:46 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F693C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 12:15:04 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 66-20020a9d02c80000b02903615edf7c1aso277194otl.13
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 12:15:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=MYXcGXlfS4leUuv24Xn+PkgdluNyV3sCc2bZoihHcK0=;
+        b=evsewkc/SR835reae17GbJ5xKwlYIW+QnkJfRJjFL7TeR26qGhR3OvyhwJLH7cW1B6
+         u9jM8Wc2J3ng/ulySjUrqT0lwCwv3Ih/5zdwdQb33hOPNLfcbForoudYUFZnEEu1mRXW
+         lkodRwtAsGNt8ChekbgvqFJwaBYu+lGvjV5+BK1wk23wsdFGKHOa3zNu6dUzONSaA9Dv
+         cryKcQiF2Fe+k4GcAWcWOrHydw/WZsfJYZ212iYt4Z+ptgsqRtVKPgyxERzRmOk7upO4
+         v9ON+98VklgkuZdutpKRIzpgfiMMBr3eNW9y9cr7fp0KlvoCwKRFTKByowszaEWsF3hZ
+         pKvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=MYXcGXlfS4leUuv24Xn+PkgdluNyV3sCc2bZoihHcK0=;
+        b=A103l+uyveuasQv6cyJZkfkFBWGOkb8+YdQbHVukOlS8vJ+lsMANmtbuysTY3qVHjz
+         EratqviqyD0l4P75keYRF3YTurTqGhflQDA9yzExiw3FX7QK4vazFbRLYxadjZX217QQ
+         8oq7cbn5ppaeDGvQAiV0EkmP9/6HBpFvxtycX0nCw6wcIroWPTiWDLhvBETQzpARpJi1
+         CxGjCQGZPYfPPTzt+e2t1ipViYiwKXrlGkFy4cVeKzLUCHtxQMAPl5rupPFuv3EPD1Tr
+         ggXCbuvlESZJZLwiB4lVHx9gDeucvBzkAT/yG+gXUzpIuTiSSA3RGQWmy7VCE1iGG+b8
+         1xGw==
+X-Gm-Message-State: AOAM530/val+NoSxkWV/2B5dkESY88WIRwi51Vf4pShwu9AlJ+8SgKaB
+        2pOGo8pxZlZ3rcXhfyGlZe2X94KGZ+h+dA==
+X-Google-Smtp-Source: ABdhPJy5MKAtXpYvQ7jFYD41tkYHSPfuH7zzcKShke+myyi8bTeP7g2Feif3Nk8QUUMFEsotkm+nYw==
+X-Received: by 2002:a9d:5a12:: with SMTP id v18mr22138359oth.306.1622574903744;
+        Tue, 01 Jun 2021 12:15:03 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id l9sm3565226oou.43.2021.06.01.12.15.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jun 2021 12:15:03 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 14:15:02 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>
+Message-ID: <60b6873624c6f_1a702085e@natae.notmuch>
+In-Reply-To: <20210601165254.18136-1-davvid@gmail.com>
+References: <20210601165254.18136-1-davvid@gmail.com>
+Subject: RE: [PATCH v3] contrib/completion: fix zsh completion regression from
+ 59d85a2a05
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When doing a checkout (or other index merge from a tree) causes the
-removal of a path that is outside sparse-checkout, the file is removed
-from the working tree, even if it is dirty.
+David Aguilar wrote:
+> A recent change to make git-completion.bash use $__git_cmd_idx
+> Add "git" to the "words" array in _git_zsh_main to guarantee
+> that "git" is at least always in the completion list.
 
-That is probably what you want if the file got there by being
-materialized in a merge conflict. But it is not what you want if you
-deliberately put the file there.
+Hm, no. The current code already guarantees "git" is always at the start
+of the completion list. In [1] I suggested to add git *if* $words is
+used instead of $orig_words.
 
-This commit adds the above config item, defaulting to "true" to get the
-old behavior. Set it to "false" to avoid removing such a file from the
-worktree.
+If you add "git" to $orig_words you end up with something like
+"git git mv", so the __git_cmd_idx is definitely not 1.
 
-Signed-off-by: Tim Renouf <tpr.ll@botech.co.uk>
----
-Here is a fix for my problem, hidden under a config option as it might
-not be what everyone wants (there are a few tests that rely on the
-existing behavior). I realize this is a bit of a piecemeal approach.
-Hopefully it will be superseded by the sparse-index work when that
-arrives.
+You should probably try to test yourself:
 
- Documentation/git-sparse-checkout.txt | 11 ++++++++
- cache.h                               |  1 +
- config.c                              |  5 ++++
- environment.c                         |  1 +
- t/t1011-read-tree-sparse-checkout.sh  | 36 +++++++++++++++++++++++++++
- unpack-trees.c                        | 14 ++++++++---
- 6 files changed, 64 insertions(+), 4 deletions(-)
+  words=( git ${words[@]} )
+  echo "$words" >> /tmp/words-log.txt
 
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index a0eeaeb02e..31adb38b1d 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -111,6 +111,17 @@ the sparse-checkout file.
- To repopulate the working directory with all files, use the
- `git sparse-checkout disable` command.
- 
-+The `core.sparseCheckoutRmFiles` config setting determines what to do when a
-+checkout (or other index merge from a tree) causes the removal of a path that
-+is outside the sparse-checkout patterns but the file exists in the worktree
-+anyway. The default is `true`, which causes such a file to be removed from the
-+worktree, which is probably what you want to remove outside-sparse-checkout
-+files that were materialized by a merge conflict. Setting it to `false` means
-+that such a file is not removed, which is probably what you want if you
-+deliberately have files in the outside-sparse-checkout part of a worktree.
-+
-+The behavior with regard to worktree files that are outside sparse-checkout
-+patterns is likely to change in the future.
- 
- FULL PATTERN SET
- ----------------
-diff --git a/cache.h b/cache.h
-index 6fda8091f1..19ee1cfc02 100644
---- a/cache.h
-+++ b/cache.h
-@@ -964,6 +964,7 @@ extern const char *core_fsmonitor;
- 
- extern int core_apply_sparse_checkout;
- extern int core_sparse_checkout_cone;
-+extern int core_sparse_checkout_rm_files;
- 
- /*
-  * Include broken refs in all ref iterations, which will
-diff --git a/config.c b/config.c
-index 6428393a41..dd24e753a8 100644
---- a/config.c
-+++ b/config.c
-@@ -1552,6 +1552,11 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.sparsecheckoutrmfiles")) {
-+		core_sparse_checkout_rm_files = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "core.precomposeunicode")) {
- 		precomposed_unicode = git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 2f27008424..cff6bbbe62 100644
---- a/environment.c
-+++ b/environment.c
-@@ -70,6 +70,7 @@ char *notes_ref_name;
- int grafts_replace_parents = 1;
- int core_apply_sparse_checkout;
- int core_sparse_checkout_cone;
-+int core_sparse_checkout_rm_files = 1;
- int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- unsigned long pack_size_limit_cfg;
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-sparse-checkout.sh
-index 24092c09a9..67690b31c3 100755
---- a/t/t1011-read-tree-sparse-checkout.sh
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -280,4 +280,40 @@ test_expect_success 'checkout with --ignore-skip-worktree-bits' '
- 	git diff --exit-code HEAD
- '
- 
-+test_expect_success 'core.sparseCheckoutRmFiles checkout that would remove file outside sparse-checkout removes file from disk' '
-+	git config core.sparseCheckout false &&
-+	git checkout -f top &&
-+	echo added3 >added3 &&
-+	git add added3 &&
-+	git commit -madded3 &&
-+	git checkout top &&
-+	test_path_is_missing added3 &&
-+	git config core.sparseCheckout true &&
-+	git config core.sparseCheckoutRmFiles true &&
-+	echo init.t >.git/info/sparse-checkout &&
-+	git checkout HEAD@{1} &&
-+	test_path_is_missing added3 &&
-+	echo dirty >added3 &&
-+	git checkout top &&
-+	test_path_is_missing added3
-+'
-+
-+test_expect_success '!core.sparseCheckoutRmFiles checkout that would remove file outside sparse-checkout does not remove file from disk' '
-+	git config core.sparseCheckout false &&
-+	git checkout -f top &&
-+	echo added4 >added4 &&
-+	git add added4 &&
-+	git commit -madded4 &&
-+	git checkout top &&
-+	test_path_is_missing added4 &&
-+	git config core.sparseCheckout true &&
-+	git config core.sparseCheckoutRmFiles false &&
-+	echo init.t >.git/info/sparse-checkout &&
-+	git checkout HEAD@{1} &&
-+	test_path_is_missing added4 &&
-+	echo dirty >added4 &&
-+	git checkout top &&
-+	test_path_is_file added4
-+'
-+
- test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9298fe1d9b..cdc3915974 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1528,7 +1528,9 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
- 
- 	/*
- 	 * 1. Pretend the narrowest worktree: only unmerged entries
--	 * are checked out
-+	 * are checked out. If core.sparseCheckoutRmFiles is off, then
-+	 * treat a file being removed as merged, so it does not get
-+	 * removed from the worktree.
- 	 */
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce = istate->cache[i];
-@@ -1536,7 +1538,8 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
- 		if (select_flag && !(ce->ce_flags & select_flag))
- 			continue;
- 
--		if (!ce_stage(ce) && !(ce->ce_flags & CE_CONFLICTED))
-+		if ((!ce_stage(ce) && !(ce->ce_flags & CE_CONFLICTED)) ||
-+		    ((ce->ce_flags & CE_REMOVE) && !core_sparse_checkout_rm_files))
- 			ce->ce_flags |= skip_wt_flag;
- 		else
- 			ce->ce_flags &= ~skip_wt_flag;
-@@ -1681,12 +1684,15 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 
- 	if (!o->skip_sparse_checkout) {
- 		/*
--		 * Sparse checkout loop #2: set NEW_SKIP_WORKTREE on entries not in loop #1
-+		 * Sparse checkout loop #2: set NEW_SKIP_WORKTREE on entries not in loop #1.
-+		 * If !core.sparseCheckoutRmFiles, include files being removed so ones
-+		 * outside sparse-checkout patterns do not get removed from the worktree.
- 		 * If they will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
- 		 * so apply_sparse_checkout() won't attempt to remove it from worktree
- 		 */
-+		int mask = core_sparse_checkout_rm_files ? CE_ADDED : CE_ADDED | CE_REMOVE;
- 		mark_new_skip_worktree(o->pl, &o->result,
--				       CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
-+				       mask, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
- 				       o->verbose_update);
- 
- 		ret = 0;
+The problem is that zsh's _arguments eats all the words it finds, so for
+example if you type:
+
+  git mv --force <tab>
+
+$words will be 'mv --force'.
+
+It's better to use $words because in case there's arguments beforehand,
+like:
+
+  git --git-dir=/tmp/test/.git mv --force
+
+$words will be 'mv --force', so we can get the proper index by just
+adding 'git' beforehand.
+
+But it doesn't work for arguments not in _arguments, like:
+
+  git --foo mv --force
+
+Which returns:
+
+  --foo mv --force
+
+And unfortunately upstream's version of the wrapper doesn't understand
+many arguments, like -c, or -C. git-completion does have all of them
+
+It's better to just leave the code as it is and just fix the regression
+by adding __git_cmd_idx=1.
+
+> Helped-by: Felipe Contreras <felipe.contreras@gmail.com>
+
+I mean I kind of wrote 2 of the 3 lines you sent, can I get a
+Suggested-by?
+
+> --- a/contrib/completion/git-completion.zsh
+> +++ b/contrib/completion/git-completion.zsh
+> @@ -251,7 +251,7 @@ __git_zsh_main ()
+>  		done
+>  		;;
+>  	(arg)
+> -		local command="${words[1]}" __git_dir
+> +		local command="${words[1]}" __git_dir __git_cmd_idx=1
+
+This is needed.
+
+>  
+>  		if (( $+opt_args[--bare] )); then
+>  			__git_dir='.'
+> @@ -261,7 +261,7 @@ __git_zsh_main ()
+>  
+>  		(( $+opt_args[--help] )) && command='help'
+>  
+> -		words=( ${orig_words[@]} )
+> +		words=( git ${orig_words[@]} )
+
+This is wrong. The current code is fine.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/60b3c2d7557bd_be762089a@natae.notmuch/
+
 -- 
-2.32.0.rc2.3.g151f456769
-
+Felipe Contreras
