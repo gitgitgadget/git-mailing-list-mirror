@@ -7,181 +7,152 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F85CC47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62345C47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:12:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 247D4613C5
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:04:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D2856128A
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233854AbhFAMFw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 08:05:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49448 "EHLO
+        id S233409AbhFAMOA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 08:14:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233848AbhFAMFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 08:05:51 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DB7DC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 05:04:09 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id g20so5817248ejt.0
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 05:04:09 -0700 (PDT)
+        with ESMTP id S231201AbhFAMOA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 08:14:00 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BCBC061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 05:12:18 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id j75so15233136oih.10
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 05:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=joqGfYEJc9FSg/dHPUXAJwj9lGLoM8mH8PXUYs4ccy4=;
-        b=Jgu1BHUE8mhV3TN9FQn1VFW96yUn7tDq4dbKtXsbPu3aOWZo/9lQ/WbowpdNJ1Uz7v
-         LOYXoUFPoU10S0kV/HKZjqeVCEnorrmeAJFdXOQ10dvdzN+DFET12PJQSZURbN9Nin7U
-         yLeCDLnU4uTdstbcvL0mzY3xK2JlMlsOu1Ro5PG+g4zyNpjHiyoBFT8tI+a6Q2cixg5C
-         uQ7jjafbu2KIimoN87mpv1sfa+IvTWS3RjGJpMtaKdJrPuxZEYw5jweKJhTo84AXq752
-         F+V7bbTH+O6sXohDyKAdY/Ujhhgyvl4zhb9eZddwJEbJoyvnR+42D0N62Lso3opcBxcG
-         v0xQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=RjoztT8yd5nHo9Df58ZhWOvrXKS6pnmLJJ1Cp6n9CFU=;
+        b=Qj0b+PSnN4pv7LtxL30FFVnMRuO4tgeyLrMV49+Bo4w/x/mgq/zkUV2T8zFvXcRYbm
+         IMi/xs2nlPwLI/BxN4qe/vL0DFJJ3JI0BxpMYPJBVQieTTlFnaTkhg+V8fmEtEF7ObRI
+         ADmdK9fh81BRMfONqWJ9vB0Bt1eEyKsNOX1yIS88UsKrSYJtRmFO2decaNPzp4seWzG0
+         vy5fkjVNncRNxGdUpWmPZuRH0UWNQJkudtLM4UEzPnDZ8vreVj7zfSeM22nPBWRemTCi
+         UCjP3YfNk3n3P3vGzWXfwLeyqy9yWdbei7JQrz0aE81Z7iKCeGDehZJmwd4hYjlIYkem
+         NBPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=joqGfYEJc9FSg/dHPUXAJwj9lGLoM8mH8PXUYs4ccy4=;
-        b=H2P2QqKcvIT9u3ZBDxSRqIYbGi8h7U2L89I9JSJn5LaljKA0RRvOUVIFCqezlhyl5j
-         CcovH67//aKTU60Akg9oQxd+q7xekn0/DI0G4BpPqEYoSui1skPAFm7A6qfKA7Tb9l/i
-         e3tFd61Ab6o1MqiWhUwWoYswhsY+OX0Q6QOIdplNmFZUtfLWrOCqro9OU/e7FiRfqFFO
-         SqCw4VFBJ3aXCdQAIirWCF5emEFIJAHjhNCQqKwPygMzmGp0tjuX68dBhI0M2lyS/B6U
-         nU0mUbijK+uUpWwj6Ie4wX3eYJSrPVACB8MLTJKsCqcdDHf1/+n8DyD9D1DHIhtpotXs
-         DHeA==
-X-Gm-Message-State: AOAM5310ChAkJd6WLgMgISEBUHyO0qif9Mscay/5p9AnL0tcKkp5+goR
-        XoIyv0J05OjKOa46B4xLXSo=
-X-Google-Smtp-Source: ABdhPJxGsXw4ZO5l5oE6ff1pQ8XdVtx7UcTocpMDzHd8MgWbuwpq4ZjtKBD+B5VBZgp3ELen21beag==
-X-Received: by 2002:a17:906:f6d7:: with SMTP id jo23mr9762796ejb.302.1622549047959;
-        Tue, 01 Jun 2021 05:04:07 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id m9sm7369255ejj.53.2021.06.01.05.04.07
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=RjoztT8yd5nHo9Df58ZhWOvrXKS6pnmLJJ1Cp6n9CFU=;
+        b=EioWuIWtzBzvyu3xtsuvmFFtY1Y4vXIIqfHJfLO1YRtvchktstzaqmvljZCwnKiJ41
+         kbDPkAM7T3gZh95q0tpNW3Zv4xrWzpPHqDjv/l4LAz3C/oQ7xC67IwznavQN7rP6iTK+
+         DZ6RjLr9c27CGFAMPJT2p6MzEEqePF94ohv3WyWBbp73mUA/ZBh1gqpPYCZ9yJK7fH1T
+         lcKHvxpZYQSAVXeN/zaaLstQDaYiS3x0lAGdXe6o3sCLtoElx9dB/BYkNKnts0jjQgMO
+         fesMtMQVFFbslhoBC2sxqqEg37UH5dWxt2g/vYH15ZjntK50PXxvG5kW6sZrhxBVsTK4
+         J+ww==
+X-Gm-Message-State: AOAM533StizvAvGrpr57g9qEODS/Oaq8aGiqXG70UU0duOWerZ/bmcOi
+        9anfRZj1vHEpaiSDqUHyY7E=
+X-Google-Smtp-Source: ABdhPJzwhestWX4hBUEdL7h0xVi5cl2ME8cBj49jPhf1/xerb1mXfxx4GAsgkTG/13bIFim7AtccQQ==
+X-Received: by 2002:aca:4a55:: with SMTP id x82mr887923oia.130.1622549538174;
+        Tue, 01 Jun 2021 05:12:18 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id u24sm3690659otg.73.2021.06.01.05.12.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 05:04:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Runaway sed memory use in test on older sed+glibc (was "Re:
- [PATCH v6 1/3] test: add helper functions for git-bundle")
-Date:   Tue, 01 Jun 2021 13:50:52 +0200
-References: <87bl8xmipo.fsf@evledraar.gmail.com>
- <20210527115226.42539-1-zhiyou.jx@alibaba-inc.com>
- <87tumol4tg.fsf@evledraar.gmail.com>
- <CANYiYbG1vVqN-De0n2Ukexh0Jn8e_b2G1CPv24T1fbYgyhKjfg@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <CANYiYbG1vVqN-De0n2Ukexh0Jn8e_b2G1CPv24T1fbYgyhKjfg@mail.gmail.com>
-Message-ID: <874keh94ga.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Tue, 01 Jun 2021 05:12:17 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 07:12:16 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Mathias Kunter <mathiaskunter@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramkumar Ramachandra <r@artagnon.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
+        Matthieu Moy <git@matthieu-moy.fr>
+Message-ID: <60b62420858c4_e409520828@natae.notmuch>
+In-Reply-To: <xmqqfsy1udf0.fsf@gitster.g>
+References: <20210529071115.1908310-1-felipe.contreras@gmail.com>
+ <20210529071115.1908310-7-felipe.contreras@gmail.com>
+ <xmqqv96zwkl0.fsf@gitster.g>
+ <60b49a3ae829b_24d28208fd@natae.notmuch>
+ <xmqqfsy1udf0.fsf@gitster.g>
+Subject: Re: [PATCH v2 6/6] doc: push: explain default=simple correctly
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> I suspect it would be simpler to read and easier to understand to
+> >> bring the parethesized part front, e.g.
+> >> 
+> >>     If you are pushing to the same repository you pull from (which
+> >>     is typically `origin`), then you need to ...
+> >> 
+> >> as it would avoid "the project is not centralized, but I push to my
+> >> own repository and pull from it---what should I do?" questions.
+> >
+> > The top of `push.default says:
+> >
+> >   Different values are well-suited for specific workflows; for instance,
+> >   in a purely central workflow (i.e. the fetch source is equal to the
+> >   push destination), `upstream` is probably what you want.
+> >
+> > We already brought up the central workflow, I think it's fine to reuse
+> > the concept below.
+> 
+> Oh, thanks for finding another instance to be corrected.
 
-On Tue, Jun 01 2021, Jiang Xin wrote:
+In fact there's many:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=
-=E5=B9=B45=E6=9C=8827=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=888:49=E5=
-=86=99=E9=81=93=EF=BC=9A
->>
->> But no, the issue as it turns out is not Perl v.s. Sed, it's that
->> there's some bug in the shellscript / tooling version (happens with both
->> dash 0.5.7-4 and bash 4.3-11+deb8u2 on that box) where those expansions
->> like ${A%${A#??????0?}} resolve to nothing.
->
-> That's the root cause.  It can be reproduced by running the following
-> test script:
->
-> ```
-> #!/bin/sh
-> # test script: test.sh
->
-> test_commit_setvar () {
->         var=3D$1 &&
->         oid=3D1234567890123456789012345678901234567890 &&
->         eval $var=3D$oid
-> }
->
-> test_commit_setvar A
-> echo "A: $A"
-> echo "Abbrev of A: ${A%${A#???????}}"
-> ```
->
-> By running different version of dash, we can see that dash 0.5.7 fail the=
- test:
->
-> ```
-> $ /opt/dash/0.5.11/bin/dash test.sh
-> A: 1234567890123456789012345678901234567890
-> Abbrev of A: 1234567
->
-> $ /opt/dash/0.5.7/bin/dash test.sh
-> A: 1234567890123456789012345678901234567890
-> Abbrev of A:
-> ```
->
-> This issue can be fixed using the following example:
->
-> ```
-> #!/bin/sh
->
-> test_commit_setvar () {
->         var=3D$1 &&
->         oid=3D1234567890123456789012345678901234567890 &&
->         suffix=3D${oid#???????} &&
->         oid=3D${oid%$suffix} &&
->         eval $var=3D$oid
-> }
->
-> test_commit_setvar A
-> echo "Abbrev of A: $A"
-> ```
+  This mode only makes sense if you are pushing to the same repository
+  you would normally pull from (i.e. central workflow).
 
-*nod*
+> Even in that sentence, the more important point is that upstream would
+> be appropriate if you push to the same place as you fetch from, and we
+> do not have to say "purely central" at all.
 
->> Anyway, looking at this whole test file with fresh eyes this pattern
->> seems very strange. You duplicated most of test_commit with this
->> test_commit_setvar. It's a bit more verbosity but why not just use:
->>
->>     test_commit ...
->>     A=3D$(git rev-parse HEAD)
->
-> The function "test_commit()" in "test-lib-function.sh" always creates
-> tags and it cannot make merge commit. So I rewrite a new function
-> which reuse the scaffold of "test_commit".
+Actually, I forgot the main reason I decided to rename centralized to
+same_repo: they are not the same thing.
 
-It's had a --no-tag since 3803a3a099 (t: add --no-tag option to
-test_commit, 2021-02-09). I also have patches in "next" to add more
-options, you can just add more, having a --merge and maybe a way to tell
-it to eval the rev-parse into a given variable seem like sensible
-additions.
+You can have a decentralized workflow where you have multiple
+repositories configured, but every branch pulls and pushes to the same
+repository (to them, not other branches):
 
-> BTW, sorry for the late reply, will send patch later.
+  hotfix <-> dayjob/production
+  cleanups <-> upstream/master
+  experiment-1 <-> personal/experiment-1
 
-My main point was that looking at this I think it's very much over the
-complexity v.s. benefit line on the "complexity" side.
+So it's more like:
 
-Even if there wasn't a --no-tag just using "test_commit" with a "git tag
--d" and "commit_X=3D$(git rev-parse HEAD)" is less magical and more
-readable.
+  centralized = ~decentralized
+  triangular = ~two-way
 
-I.e. the mostly copy/pasted from test-lib-functions.sh function is ~70
-lines, the whole setup function is 50 lines.
+A centralized workflow consists of a single repository where branches
+are typically two-way, but not necessarily.
 
-And as I noted with the whitespace getting lost in the munging the end
-result is actually less reliable than just doing a test_cmp with $(git
-rev-parse ...) instead of <COMMIT-XYZ>.
+A decentralized workflow consists of multiple repositories where
+branches are typically triangular, but not necessarily.
 
-If you were trying to avoid the whitespace warnings then see the
-"'s/Z$//'" pattern in t0000-basic.sh for how we've usually tested that,
-i.e. had a "Z" at the end mark intentional whitespace for
-test_cmp-alike.
+So the triangularity is per branch, not per repository, and same_repo
+means a two-way branch, could be a centralized or decentralized
+workflow.
 
-There's a big value in the test suite being mostly consistent (which it
-somewhat isn't, but we're hopefully getting there). I.e. the goal isn't
-to optimize each test file to be as small as possible, but to e.g. have
-the next person maintaining it not wondering where <COMMIT-P> comes
-from, understanding some test_commit-alike that eval's variables into
-existence, how it's subtly different (if at all) from test_commit etc.
+Therefore your proposal:
+
+  If you are pushing to the same repository you pull from (which is
+  typically `origin`), then you need to ...
+
+is actually better, I just had to remind myself that centralized and
+same repo are not the same thing.
+
+
+Of course it would help to have a place in Documentation/ where
+trianguar and centralized are explained.
+
+Cheers.
+
+-- 
+Felipe Contreras
