@@ -2,101 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61553C47092
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1741DC4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 13:14:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4702F61028
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 12:47:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2778610C9
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 13:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233864AbhFAMsq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 08:48:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59088 "EHLO
+        id S233768AbhFANP4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 09:15:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233758AbhFAMsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 08:48:46 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97DCCC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 05:47:03 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id r4so15104754iol.6
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 05:47:03 -0700 (PDT)
+        with ESMTP id S233064AbhFANPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 09:15:55 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FEAFC061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 06:14:14 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id x41-20020a05683040a9b02903b37841177eso4570898ott.9
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 06:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=j4I7BjupetXlGqJOB8xV8k9iAfjC8m4reCHUUXoLLuo=;
-        b=WLOn4UvXW7J8ZCLgQmER3uhKngG/cBHbF142vVfmwleDTQgJemsPVqjXebTC7XuyAY
-         nBYcVuR1jrdzqh8HagEK40qQkXIwaBGXY3tkKhNnr78EX+qiK33NTYQAS5PdPeBFz9q5
-         e05xHg0Q1HrB8dnFPpH00YN8nCwpP/rCllasgSnV9ufWTQavk29jDaOkw94T/9K4J5vP
-         nf9vb5K7ZB/24cguDMFmDhonONY5omUJFfXRAHcShR6PXpVlbG4nGxwJx29GR+aP1kRv
-         2GPXw+vVJOSRt03XRzyKtN6c3j+OZBjX2/TPpiEtB6sVek6i8u4OX04Xrm5jpP5GcdZj
-         fwhg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=ldEiEVe92OSwB5+2p45J4QZxUFrgZOvClPnb38uSduQ=;
+        b=Y3LzKxYhV0wjZTNzniWa4XGqLsYaz2OAZyDY0OTJxhv854RkFaS0dAJHjhh6nTF4mC
+         mdA02ZwosseaqHLAW5sr4Xcpzcwij5VbLbWjPLbhi+tSZlAFCSYmL13JqmdfPYxmCvmq
+         C5fPGiL4hknVeO5JpwI8f7smiu1GmzTeqy0J5Z34wQSmDVS1Bi1aNvSKaU5NQtqf4nAE
+         IbQgmMeplXWFDqhC/rQ1biwlFSuTOFqu7oVAepdC68VDAp5t1L6JbzvBdp58KYWqexvI
+         Zqzrzoxvd/zP9lqNKNuvvOx/95U62IPWUoVwYUIbHU99ZxEwqg7o1+n3QsOITJzstIgn
+         ToLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j4I7BjupetXlGqJOB8xV8k9iAfjC8m4reCHUUXoLLuo=;
-        b=adWElaQWtO5rn8TzQhpL9LoXi4LupuDm3BlUjhAQ2mJJk6ZIU/9E7MtHOsXn+m0QlH
-         s7kzBilWjtWNH+dIb0N/6wDcVVjexd3M5d5ewCpFzIuIFVn5aAXDtUYwTSUZob8JHJ5F
-         pJjsFF+P4p5wYW34SYEAkar1KPR4s7/utP3a/WJcufXUcu1PDgKpwOvAtWNfG9E/BTEp
-         AlckRmZSGhFr/fmW9/73TETh8gx5R6vNZbEPaFnHNIn8ii5LxvyzUhN8CauWSFJPuOLm
-         OL8Or1w0hZac3kkA4Tl++HVCrph2SU1Z1F/fKJbifhrynb+pdOkpy2TjKWp/R2lxHnIM
-         xo8g==
-X-Gm-Message-State: AOAM53045tARLAI2rSbXg6f8CtfWMR8P3YCjC4WfK6pTtYE1fNKnix9J
-        HBEW/757sUcwjp/o3OeLiAJwycp+Aykd8iilmY4=
-X-Google-Smtp-Source: ABdhPJy2SJ7Zdl9oqpjgsJaar0P+jzrx51OpBzbVjBR0/Wrp52eCI0tLMq7kRWD2gHXgRv3BXq+f8bkxlqM+KIDEqIY=
-X-Received: by 2002:a02:b084:: with SMTP id v4mr12885832jah.130.1622551622946;
- Tue, 01 Jun 2021 05:47:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.965.git.1622363366722.gitgitgadget@gmail.com>
- <YLP/GEN0qIXvWEUn@coredump.intra.peff.net> <CAOLTT8Q0zbxh8X03ZmgAzHadTbE4-Af+AB3POOUF2n22u8RExw@mail.gmail.com>
- <YLT2UfCZyQIXWIOv@coredump.intra.peff.net> <60b509be97423_24d2820856@natae.notmuch>
- <YLWSRBJHiph+Bejo@coredump.intra.peff.net>
-In-Reply-To: <YLWSRBJHiph+Bejo@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 1 Jun 2021 20:46:51 +0800
-Message-ID: <CAOLTT8SZxiBtxj7=B-75gVghZAp-qf_oqFGwyi7iKD61uH-vsw@mail.gmail.com>
-Subject: Re: [PATCH] [GSOC] cat-file: fix --batch report changed-type bug
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=ldEiEVe92OSwB5+2p45J4QZxUFrgZOvClPnb38uSduQ=;
+        b=pWazYoVorvwRwm9H6i5OMeSB1Z78XR1X6mlRnojqsZgy0V0bnOgEPrY0qcptT5jqGQ
+         tcjrfe2PujVpA2auC/phVqG9LGj0WtSHsMxg6EjA0QhDjZoBL+EUds5tKNA+lrE6cKFG
+         NFYPUWUhvAdkjPC0+L9xMRf1/Sq7t6f5TJfpZjMEx8XIHc8dHxwz1JqJ+v5YTVhI2DPr
+         kTzCCyHIc54KUsXAH2fjaisGKMWRkJamAo73lgSNGFjYzykC5e0exmr7r27wLcUjfZKw
+         TfJndZtLuVlpwcf57QSoT8N7Cy5SuBPmDMf4fjaV+jhcQq9rRtmOim91y/WwAvXN9Y8d
+         JEUg==
+X-Gm-Message-State: AOAM5334Jn/MvXOqIZVcB3g8pGToIBstHmbIy9K2H5ozA8h6SMsmvYdv
+        gKMxHatbSGlBPgwoQ0tNg+sYcqumR6jaBw==
+X-Google-Smtp-Source: ABdhPJxV7k7fGCWpklunG2whprED/XT+HcyKYKTbxLAuqXgR1AJsA08BJM0JdaM8TQKTsTrBFDNwjA==
+X-Received: by 2002:a05:6830:210a:: with SMTP id i10mr22468241otc.286.1622553253738;
+        Tue, 01 Jun 2021 06:14:13 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id c32sm3616537otu.13.2021.06.01.06.14.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jun 2021 06:14:13 -0700 (PDT)
+Date:   Tue, 01 Jun 2021 08:14:11 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <60b632a3d5a2c_e5b8b20876@natae.notmuch>
+In-Reply-To: <YLYn7iMA+Ne8nbJk@danh.dev>
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <YLXl5+ronWhcGh13@danh.dev>
+ <60b61089ba63d_e40ca20894@natae.notmuch>
+ <YLYcnwZQAEoSQKsG@danh.dev>
+ <60b62665df1de_e40952080@natae.notmuch>
+ <YLYn7iMA+Ne8nbJk@danh.dev>
+Subject: Re: The git spring cleanup challenge
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2021=E5=B9=B46=E6=9C=881=E6=97=A5=E5=91=
-=A8=E4=BA=8C =E4=B8=8A=E5=8D=889:49=E5=86=99=E9=81=93=EF=BC=9A
->
-> Or we could just generate the entire expected output and check it with
-> "cmp". The most robust way is probably to loop over the objects, running
-> "git cat-file" for each, but that's slow. Maybe:
->
->   git cat-file --batch-all-objects --batch-check=3D'%(objectname)' >objec=
-ts &&
->   git cat-file --batch=3D'%(objectname)' <objects >expect &&
->   git cat-file --batch-all-objects --batch=3D'%(objectname)' >actual &&
->   # not test_cmp, as it is not binary clean!
->   cmp expect actual
->
-> That feels a bit circular in that it's mostly just exercising most of
-> the same code in the "expect" and "actual" paths. The interesting part
-> is the combination of the two options, which is why I think that just
-> making sure we don't hit an error might be enough.
->
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> On 2021-06-01 07:21:57-0500, Felipe Contreras <felipe.contreras@gmail.c=
+om> wrote:
+> > Yes, I know, but I am talking about you personally. Where do you
+> > absolutely need --rerere?
+> =
 
-Such a test is also acceptable. I will add a test like this.
+> I need rerere in both of merge, rebase, cherry-pick, revert, switch, am=
 
-> -Peff
+> Don't ask me why, I use all of them in a daily basis. And rerere saves
+> me a lot of trouble.
 
---
-ZheNing Hu
+Fair enough. If you need it you need it.
+
+But probably many users would benefit from rerere too, and they don't
+even realize it exists.
+
+BTW. I've done integrations too, and I understand perfectly why you need
+it.
+
+Cheers.
+
+https://github.com/felipec/git-reintegrate
+
+-- =
+
+Felipe Contreras=
