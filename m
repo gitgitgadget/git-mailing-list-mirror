@@ -2,82 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C0E4C47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 00:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C21CC47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 00:29:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 144A0611BE
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 00:27:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D216561159
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 00:29:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232356AbhFAA2m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 May 2021 20:28:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34194 "EHLO
+        id S232358AbhFAAbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 May 2021 20:31:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232081AbhFAA2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 May 2021 20:28:41 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07649C061574
-        for <git@vger.kernel.org>; Mon, 31 May 2021 17:26:59 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id x10so5031580plg.3
-        for <git@vger.kernel.org>; Mon, 31 May 2021 17:26:59 -0700 (PDT)
+        with ESMTP id S232081AbhFAAbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 May 2021 20:31:35 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 825D9C061574
+        for <git@vger.kernel.org>; Mon, 31 May 2021 17:29:54 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id b25so13473481iot.5
+        for <git@vger.kernel.org>; Mon, 31 May 2021 17:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=c0JlXp/GaO48NPNxDN+qrQpi1xM8WWUUO6KOsuxX6sc=;
-        b=Hbl/KCCuDev2pbRfdZXUMk/nYXkgznnFeLupFPZxGkcGAwSghg9xO0lgLPLXbzQB/p
-         2CuPsK+kEEmzNcZUKE0+hdOblOyZg+OpHPRqzTs+EixCp5YTVI9KnhS+iLneFMo4MyMv
-         pPJaTFQUwYEeAv0wEt6Yew+j9OBR66w0h54SuOovrVcM//kHunQsXPfhEuOupfMlUGjW
-         34dOVh5cYDlZabFRw93yGIaLFp7gNZF82ilKlrBLLYNgxLt7Lgn6FbgnVvzJI9d7JydI
-         xf9SK3agrKLW5HGYNvZuYUg7yBCwiJYjwiY506Pr1hpDTsN641pRkybPCJ6NJwReE16r
-         V3uw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=O+iVWQRBUAKmn19D8hvDspa3WRKUac/BAP56NYSqRK8=;
+        b=c9+7Y2+diFEwwAbOGaa65uJ6TiP+c+4E9aWyhLUqY9+uVewXgsrk8NOBZ2laGPpU6i
+         8NlMUELuI6UCO/VLpkWeNI7qQvligZU5sB77MNqQ9rAM5TBXGLsxxo89iApp9uPfcx8c
+         CJh2E06YYaF9D5VVOiQeXyDvklCdSCgI/Ni5ruaQDdR7XJzX9A7awGU+QxhhxZuRCOLp
+         o/zAvaoWLaLgkHm/ph0lHxSiT7FNRo6YgjGdoctwwb22crESiwFMIAZtMTRo5mUaD8+J
+         jTrWelXdjhpFYlHE3sEZ3TuVlWmsDVhOzWzibBqC3saHwpqV8ORvPEy6BoPQQ+7PU+Gr
+         pcmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=c0JlXp/GaO48NPNxDN+qrQpi1xM8WWUUO6KOsuxX6sc=;
-        b=h6yaPcdKq/buVr0LWu781yiuyfxksjQWJIfXB57puCSvqBusBaQEeHX9J/XTjpCVul
-         kNGvxsXizGS2gebrdH4V1uJbaocGIWNZFUwE5TQhtSPhC+ZYTzs4PQ2tjeaIzvIy4mLF
-         wgo0h2oAkQbK6X3vJ0UGDPMJOA6fB+SC7KnpXGFqMwuNtxfMIS+VSKSf8MADevEFx1zy
-         wpnNpIhAiHuhT6iQ+s8VkVB4oUehGR59X2cmqCRaUXOk03VBOUpr51wa1IVrFW1P0yXe
-         3V2flXmjYC+LJM0BUH8nxu8SreDHspVm5u6ANyo+nSlvQOJEAiMnRKEZkw5jfVYIPiOG
-         lG9A==
-X-Gm-Message-State: AOAM530iOgBytVAxCpRIfeOVzHCyJyiMMOgR5yz4IWDEOQglBO2uEyWl
-        +DusmdObPiltm6kJQBKD+pteqttEBCeFYYYdMhU=
-X-Google-Smtp-Source: ABdhPJyq/EnkAXbysxygE/EjLkSOijL7TgNmSFbv1SUUaDa34oTki13MGToAkm2aLdygy/cXC763/A==
-X-Received: by 2002:a17:902:ed82:b029:ef:48c8:128e with SMTP id e2-20020a170902ed82b02900ef48c8128emr22989096plj.72.1622507219192;
-        Mon, 31 May 2021 17:26:59 -0700 (PDT)
-Received: from [192.168.2.150] (ec2-18-163-188-250.ap-east-1.compute.amazonaws.com. [18.163.188.250])
-        by smtp.gmail.com with ESMTPSA id bv3sm667795pjb.1.2021.05.31.17.26.57
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 May 2021 17:26:58 -0700 (PDT)
-From:   AndyAo <zen96285@gmail.com>
-X-Google-Original-From: AndyAo <Zen96285@gmail.com>
-To:     git@vger.kernel.org
-Subject: How to disable Git from automatically identifying and managing
- embedded git repositories?
-Message-ID: <c4d32a7b-94c5-b613-ae5e-9c18b1ffa627@gmail.com>
-Date:   Tue, 1 Jun 2021 08:26:54 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=O+iVWQRBUAKmn19D8hvDspa3WRKUac/BAP56NYSqRK8=;
+        b=iSGPqK2DyPSVum/Z/QPICrwExEk6Tye+ro5j3sNHwXGg41it7ogaJ2pxnB2Ssia2vb
+         FLLoPZp9wQ4+BBGepznAGXt+7hkefDYlBia8nkn6PWrxEYxnrZYqxoUTMUSllK8EIl4L
+         eJUOd8rqkgSrg+2tQA5JyWetxh2uXpu0MgTN6KbEjbukNifOCfEAZQQ9zrmHBlzLTphE
+         qw9dIWMH0Kpx0OdAmuEXdvumazEn8S4hJ6Ck6ppMqoDtIfczcfEYQ3fimOu8ZHXKfxNc
+         Uadr121WDan6wIwS1czHuwJf2kfMtpSKK2uCR7vvUt+hTIPcMsY4G1k/UBwiBhyax+Kp
+         fmGw==
+X-Gm-Message-State: AOAM5307GxEKwyahBnx3H6CC326UbPUuJpBF0VUZDGUU+HSSeeJFlrY2
+        +u2hLCtYy2rrMiYNxlUfabw86QEYGFKtHfvdMKo=
+X-Google-Smtp-Source: ABdhPJwv/wzNKhZLU1efw5yW5XjApWIi66SgaUwemvg0TLud6Y89cMVdiO4a4rCQ2qfpgKkQiMmqawlivK6lJj2OgNE=
+X-Received: by 2002:a05:6638:11:: with SMTP id z17mr6540892jao.102.1622507393726;
+ Mon, 31 May 2021 17:29:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAFOYHZBAg7pkise8bir7Z3qApw9mJB8Z99p6z71-_T6=7rFV7w@mail.gmail.com>
+ <CAFOYHZAfQivHvs5=hGt-A1CbtwW-iJSwC1iFk7FY3wnNcVNVrQ@mail.gmail.com>
+ <aa18c448-9a74-0837-a2bb-008aab31f0e4@gmail.com> <CAFOYHZA4xbnWc1d1zK-fjoDHZntQj7weDZk1r=SOJxVtKD4aOA@mail.gmail.com>
+ <d919f68e-42a9-bd74-c16e-8d2c185b6938@gmail.com>
+In-Reply-To: <d919f68e-42a9-bd74-c16e-8d2c185b6938@gmail.com>
+From:   Chris Packham <judge.packham@gmail.com>
+Date:   Tue, 1 Jun 2021 12:29:42 +1200
+Message-ID: <CAFOYHZAjzS+fizM+wadgFq3F6tSYu35CJOFuCWPFc5TH6Fq8vg@mail.gmail.com>
+Subject: Re: [BUG] gitk error - can't read "arcnos()": no such element in array
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     GIT <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I upgraded Git from 2.24.1.windows.2 to 2.29.2.windows.2, I noticed 
-that the embedded git repository is recognized in `git status`, and if I 
-use `git add .` will manage the embedded git repository directly as a 
-submodule, instead of just ignoring them, which is the behavior I want.
+On Mon, May 31, 2021 at 7:53 PM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>
+> On 31/05/21 14.38, Chris Packham wrote:
+> >> Is your problematic repo public? If so, we can test against that.
+> >>
+> >
+> > Unfortunately not. It's actually an internal kernel tree which has a
+> > different root to upstream (hence using git replace to attach upstream).
+> > All of which make the history a bit funky.
+> >
+> > I don't know if the problem will survive anonymisation but I can try.
+> >
+>
+> Did you mean vendor kernel tree based on Linux kernel?
 
-How do I turn this off?
+Kind of. A repo that was created in 2007 before we were using git
+properly by extracting the kernel tarballs and adding our code. So
+although it's a kernel tree it shares no common history with Linus'
+tree.
 
-Thanks.
+git fast-export/fast-import doesn't seem to like the affected repo so
+I'm not having much luck with making anything publicly available.
 
+> I think you can
+> try reproducing the issue with either Linus' tree [1] (mainline only) or
+> Greg's stable tree [2] (mainline + release branches and tags).
+>
+> [1]: https://github.com/torvalds/linux
+> [2]: https://github.com/gregkh/linux
+>
+
+I've tried a few experiments
+- cloning the "bad" repo -> no problem seen in clone
+- cloning the "bad" repo with --mirror -> no problem seen in clone
+- copying the "bad" repo -> same problem seen in copy
+
+So now that I have a copy that shows the problem I can do a few more things.
+- copy repo, remove replace refs (git replace -l | xargs git replace
+-d) -> problem remains
+- copy repo, remove replace refs and all remotes except origin ->
+problem remains
+- copy repo, run git gc -> no problem
+
+So the git gc seems to have done the trick. I'm happy enough to leave
+it there and hope that this thread is useful for future mailing list
+searchers. I'll keep a copy of the affected repo around if there is
+anything someone wants me to try.
