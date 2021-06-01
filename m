@@ -2,88 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5922DC47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 07:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B59D5C47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 07:47:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B8C26139A
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 07:28:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98E1860698
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 07:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232963AbhFAHaS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 03:30:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42886 "EHLO
+        id S233088AbhFAHss (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 03:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230326AbhFAHaR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 03:30:17 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDA97C061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 00:28:35 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso1369380pji.0
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 00:28:35 -0700 (PDT)
+        with ESMTP id S231139AbhFAHsr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 03:48:47 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810F3C061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 00:47:05 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id q15so10045104pgg.12
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 00:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=TMAbs8CwviyBRyj4Y6Sf4LUNrARToDb72Hf0JPGVYQ4=;
-        b=tFdMizxbqHUTmIjOBCK+VBwuKFYvWqGeO2j0gjrJSNnGgQ8Ib8HQnBjUbvwAbQWGw0
-         QdgHikSF+jHfK6Md9CS5EBUt11QGj+J5lhX8Ss3Z+om6+thYU/tXHTG07sTCXsQkBFD3
-         7/igOMh0pBxuhK0G718JwKwvNaIXGlsv4BIKlUrM9wohZURNRm96UBPYeuFSPi7e5BrP
-         QuRar5GN7sBVtIqLA1QKkmZBCogYHfZivpRx/SJugSxmb7xxvgFkygDIgnSnw9fWd6MW
-         EF7ZKoEfH8s4lU+WMeu/mWknkZO6I34nA7ZurqhYt72kvSnaiK5gKS/v9UXYFLOVSqEQ
-         Fegw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1U7cNMDULVhNV3cMlyOubL4FpZ+6yHzCRPq01EveFEk=;
+        b=RP6RSA9QAOnv2WXmBSXqVtNb83UyCfqvtwjb7a0AvvNCuZn1O61d1HgbOcZz0teJ/0
+         /+oa2IxXmoqlPvvXlyXQyvQAhLehHFaYfsgR7/j6y7Mgj9TBUKzsQaCNMFguORMuSC7m
+         2Nw5HKNg0RDQI15ZdVXP9zOnZcPmOeWGYo+Xy5sys+7AbpS18kUCzmJpClfDxYYs59R4
+         d0jkSYMz/AqQCLzduIyGDWZpEdnnEjELqKzX++enh0SyBN2/gg6XsLo34bxRcNso5hHM
+         5Y14Ae/hqgiL4XYQvuEEL9xzcn635RwYOM3rHzby9sJcuEkvB/3i05maeQAPmDkoqDOp
+         4/yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=TMAbs8CwviyBRyj4Y6Sf4LUNrARToDb72Hf0JPGVYQ4=;
-        b=GCQGkWrvr3sEj+zC6AfV8p11folcLwX0r2HAveTl4fpigTTJoKbj9Kj8I3EvqccIzd
-         mGsBSzfTuq/CEAxb30BIPp7IGTCUHZebo3WXuoukqZPow3d0c1QTN6iQGSUMi5SARVo0
-         dszN6sjxmrI5Q7L28ZNle0O4jNwnScRu+LmrwyAP+TdcacyRfIV4NM3FsAmvLf/HpFyQ
-         RoA2teMw3dWFFA/jnq726RnGRvmOHsdybTtTOzTFXhrZDwpnarDZgc/vBq3ZtLrM7loV
-         AKY/0FN1eWsxflFmPt3FI3KbxXduWi48l5olJQRBMWsUW2pCSNJcXZ47dUegn2QgCkwt
-         Kfzw==
-X-Gm-Message-State: AOAM5303qPGsdKoC6CtizZdDE7SX4dzJh4iSrJouCMTfQ6sAZMTOOXME
-        KdIgsky4g2yyl5UtTfmwgDvsJ4GM1ZV+7ICzTK0=
-X-Google-Smtp-Source: ABdhPJx9cGmE2JxCOlTlgJfMwJgHRXYq8rXu1jd1rk93vJuYPMH2UsZ0v7UJjW/g/UhUokg8oTGIqw==
-X-Received: by 2002:a17:90a:6005:: with SMTP id y5mr21676989pji.62.1622532514641;
-        Tue, 01 Jun 2021 00:28:34 -0700 (PDT)
-Received: from [192.168.2.150] (ec2-18-163-188-250.ap-east-1.compute.amazonaws.com. [18.163.188.250])
-        by smtp.gmail.com with ESMTPSA id 21sm12348714pfh.103.2021.06.01.00.28.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jun 2021 00:28:34 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1U7cNMDULVhNV3cMlyOubL4FpZ+6yHzCRPq01EveFEk=;
+        b=teovXYmVFNPk1dw23jVsv4zAmbpHre+5dcAYFnW3/RwNNZMWQ4O7ef4bznoN1C5vnT
+         mpPR/Xi7/qMcw/fbeyJnoA/nviSB4Iv5juyhaK400qA3v7PVwZI1psmK4scgCPeyLTw2
+         9fiWxddK6zSXxTf9q8MYb+yhhmSREsohvoNN+AsRoAbhk/8g8dnrOpi/fvTdaGte/aAJ
+         bDxMStY6u2oiY7LvOHhINbtduWO9VcC1F/LeuaefY01Bx8mDkEAbqQoL9lUyssSvmLTg
+         VxWWqGJiOG9qskzXJi4Xmuio0ylTAkkKUYGM88RYtM8SGU/AA5Ss1bGPlTSSGPTguCNI
+         w9gA==
+X-Gm-Message-State: AOAM531KS12dsxj7XGV8uF7RkTmKErmBD3WqcIMUChUHwC0PCp3z2x2T
+        LfEdmDya0JZB7nMD4JJy5i8=
+X-Google-Smtp-Source: ABdhPJwfvhNok7dREPV1lkHEVQuwfwgUk54iFM12ZLF8pXPz9/3doapfFzdF1dotYLJpPLtll2RSIg==
+X-Received: by 2002:a63:af46:: with SMTP id s6mr26972934pgo.446.1622533625081;
+        Tue, 01 Jun 2021 00:47:05 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
+        by smtp.gmail.com with ESMTPSA id u21sm12418560pfm.89.2021.06.01.00.47.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jun 2021 00:47:04 -0700 (PDT)
+Date:   Tue, 1 Jun 2021 14:47:02 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
 Subject: Re: The git spring cleanup challenge
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Message-ID: <YLXl5+ronWhcGh13@danh.dev>
 References: <60b5d281552d6_e359f20828@natae.notmuch>
-From:   Andy <rsstools02@gmail.com>
-Message-ID: <ea3a64bb-7c1e-465a-9639-aedeeb635d0a@gmail.com>
-Date:   Tue, 1 Jun 2021 15:28:30 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <60b5d281552d6_e359f20828@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm not a git developer, as I see it written on the community related page.
+On 2021-06-01 01:24:01-0500, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> Hello,
+> 
+> The premise is simple: git.git developers are experts in git, and therefore
+> they have fine-tuned their ~/.gitconfig to a point that is pretty far
+> from what any newcomer will experience for a long time.
+> 
+> How long can you survive with a pristine configuration?
+> 
+> Plenty of developers take many things in their configuration for
+> granted, they forget what the default behavior is, or worse: they forget
+> they actually have configured log.decorate, and are surprised when they
+> discover the reason they could not reproduce a bug report.
 
- > General questions or comments for the Git community can be sent to 
-the mailing list by using the email address git@vger.kernel.org .
+OK, the person that forgot having log.decorate configured is me.
 
-My understanding is that even if it's not an advanced question about the 
-details of development, but just a general question, it's still possible 
-to discuss it on this mailing list.
+> Now and then I cleanup my configuration to be reminded of that fact.
+> 
+> Anybody remembers merge.defaultToUpstream, and what `git merge` without
+> arguments used to do? [1] What about sendemail.chainReplyTo? [2]
+> 
+> It's important that we force ourselves to experience what an
+> unconfigured git setup looks like, even if it's just for a little bit.
+> 
+> So the challenge is this:
+> 
+>   1. Remove all the configuration that is not essential (just leave
+>      user.name and user.email or equivalent)
 
-At the moment my configuration file is quite short, but you mentioned 
-that the configuration files of the masters are often very long, which 
-reminds me that there is a lot of room for optimization.
+How about alias? It's part of my muscle memory.
 
-Getting out of your comfort zone is not even an easy task, and 
-understanding the problem clearly does require preventing expert bias, 
-which is not easy.
+>   2. Pick 2 configurations you think you can't live without. You are not
+>      allowed to change them afterwards.
+
+Something is essential when working on constantly integration tree,
+I don't want to make my life hard:
+
+* rerere.enabled = true
+* rerere.autoupdate = true
+
+Something is there to shut up advice, I can live without those
+configuration value, though (I don't use git-pull these days, anyway):
+
+* pull.rebase = false
+
+Working with patch based need:
+
+* sendemail.smtpserver
+* sendemail.smtpencryption
+* sendemail.smtpuser
+* credential.helper
+
+My GnuPG key is Ed25519, and gpg v2 in my machine is named gpg2, so:
+* gpg.program = gpg2
+
+And I would like to try new shiny features:
+
+* feature.experimental = true
+
+>   3. Every day you can add 1 additional configuration (and update it the
+>      next day).
+>   4. The moment you add a 4th configuration you lose.
+
+So, my baseline already requires 8 key-value pairs (ignoring alias and
+pull.rebase). I'm lost already.
+
+-- 
+Danh
