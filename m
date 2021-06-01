@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0217C4708F
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95718C47080
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA77561263
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73791613AE
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 14:58:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234188AbhFAPAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 11:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32912 "EHLO
+        id S234265AbhFAPAX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 11:00:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233797AbhFAPAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 11:00:21 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB68C061574
+        with ESMTP id S234066AbhFAPAW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 11:00:22 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D37DC06174A
         for <git@vger.kernel.org>; Tue,  1 Jun 2021 07:58:39 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id h12-20020a05600c350cb029019fae7a26cdso53985wmq.5
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 07:58:38 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id h12-20020a05600c350cb029019fae7a26cdso54004wmq.5
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 07:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=cDpMr2hKtHJjKeTIbuYRQgKcc7tc2kaw0JApypyPPoc=;
-        b=ikBvyG6LRfygGhZrfUhe9Wg9nO2zgoEbfWD6B24lJDrl7OrgrDWrXXpHW7NzPpZLEh
-         eET7eR6Jsn6FohbqmIFswyKvYdYNnIsUn1+z/IvGl9WChggDm5u7qzMtml94MtrTcK6o
-         Uqb1vvJEF3Af9HOqApaquxnWZckBTdmm0zhsjYwVTJufC0lxW/wDbnl8nlu2412Ih1LS
-         cHxoU554QH7nFwUhhEB+mKyR1H9i8Aj/zLqJYXn78NL5Cq6SJq2/Bh9HrfsS/T1eHfRN
-         jWR7Pzc+CH+Z4/sIdryANDnUBhWXnmRNeBW/5ROveC0F/jQ6lfYb0mHGjTUJ75Zbyi23
-         izZA==
+        bh=K+zEts2Wvn2HaydD+45RHzTc8z4nJBbPd9CZ4dJRpC4=;
+        b=m+8r34GiRYNTk5IL27efXSCXSJV8xNWX0lSgWukQX2IgD6IwAiDTvNor8s+aLIU186
+         RnLk0dz+sNQ9UPA63e13csX6Q+DuKbs6TpzOglMxO/zsTVIbpWJCOAbaow0oFrwCV9lf
+         EIF1rcoPSb/rI7Zn0acKyUpLmBtVqhsk401ilNP81IJz+dQpMOfxuBgdS9UHD/YyWjIW
+         1fhUnhbY0VTZL5K7jJEsxr3xRXWY01Qb4aIFw3tGSKzU7rKuf2rhEA2a6KBE8eQtFfCx
+         D778o6wqkrY9Xve2OxKnW+lPefVOlh3ya78eHU0MjK/YnR3Q5eMNkp+miywO3k6nKCLl
+         0H2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=cDpMr2hKtHJjKeTIbuYRQgKcc7tc2kaw0JApypyPPoc=;
-        b=pcAX/EMHerd6a7pFjHl8bHmmVe1RIXZZHsvFPb9gnfCfAv5GuEwY8qx/gBCBUKJDD2
-         tcOhScgtaa+Zk9y7ppon+nrIGkg/eVOWmjTVrE5o9jQV9X5kF5KrolNnCeLmBvhhOE3F
-         SPE6isIevs3/DAfFXQ3reCcSbB+osT/JBtNoEn/OwLWg79XL2wmAx5zPmVFHAciSfxPH
-         8/Wy8E416Kw3ZvYZ8SHxnY0lIVCyQKIW+IqwAqCAob8q6tAEBW5ufdcMTLfkftqjzt9N
-         ZvWwjyzxihn3J8oRTb/dNli5s9meSOICIehSzwfBbGgJGJeTFYMEihtc9PpnlD5lLGht
-         nGAw==
-X-Gm-Message-State: AOAM533g3GpYWSCkK/FkdWMXzNSgHzrq56FtU6O/KEKWLFhTU4yRcEVV
-        jUrKizCpYAnHQFXoYlgKAAalSyHr1M0=
-X-Google-Smtp-Source: ABdhPJx9LsC7vHkpd/7uPt1eHFLln8MN97ksmFsEK2HC02FGMUP9cPmbPowmEhg1ReQFlssdERtpYQ==
-X-Received: by 2002:a7b:c847:: with SMTP id c7mr27495667wml.168.1622559517615;
-        Tue, 01 Jun 2021 07:58:37 -0700 (PDT)
+        bh=K+zEts2Wvn2HaydD+45RHzTc8z4nJBbPd9CZ4dJRpC4=;
+        b=NHa/2rNf6jZF4+ar0YaEXcrQdhQDaVLX/82Wtpqb8wEHf8FlAJfBLxvguGVjpk4IWT
+         cYMe8mKz7ZJpiCTTCS8atP3ONS/IsaOxib7m9zrEnwpj2sCxfi/jFuBsyCfNJ/qRC0a0
+         Cls3E6HllZTmkeEgzqbw0b56IIcQV1E6z/LHmolG58tAZRn/3wv1EmiaSgcSn6w3+TR9
+         Zys9o2trWVZHqw1xzZE0QQiqNgXBId+NdJN/yFSNWt4zZ9tWHVEjwr75Zo4h9gfkwV1V
+         Nbv2PgAFzckiTkbYU2XFQG+RNxkuhY4ZhkIfavW4vkTUVwOH0NGErclI52uGhVgr2F5V
+         KKYQ==
+X-Gm-Message-State: AOAM533gDtDcEG0OxzyP/KORD3gLNtiGDE9gSTmdX+ToVnoIH2Tss71c
+        AIB1KT4kBD98YQY9RQZnivHPXfwUpG8=
+X-Google-Smtp-Source: ABdhPJzEHWltzCSU8yCoScNKUtjT8sxzEU45SUglfZ2rFVvUknEsz1cwoeZsvV9hF4OM0MS9e3EbbQ==
+X-Received: by 2002:a1c:f219:: with SMTP id s25mr326584wmc.31.1622559518229;
+        Tue, 01 Jun 2021 07:58:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p9sm390026wmq.48.2021.06.01.07.58.36
+        by smtp.gmail.com with ESMTPSA id c15sm3467986wrd.49.2021.06.01.07.58.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 01 Jun 2021 07:58:37 -0700 (PDT)
-Message-Id: <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
-In-Reply-To: <pull.962.git.1622104642.gitgitgadget@gmail.com>
+Message-Id: <c4a0f6a9510c6e57604e7b0c62b1216a4f5f5618.1622559516.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
 References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
+        <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Jun 2021 14:58:30 +0000
-Subject: [PATCH v2 0/5] Optimization batch 12: miscellaneous unthemed stuff
+Date:   Tue, 01 Jun 2021 14:58:31 +0000
+Subject: [PATCH v2 1/5] merge-ort: replace string_list_df_name_compare with
+ faster alternative
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,180 +74,158 @@ Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series depends on en/ort-perf-batch-11 textually, but is semantically
-independent of it.
+From: Elijah Newren <newren@gmail.com>
 
-Changes since v1 (all for the first patch):
+Gathering accumulated times from trace2 output on the mega-renames
+testcase, I saw the following timings (where I'm only showing a few
+lines to highlight the portions of interest):
 
- * Add more comments explaining the sorting function, its purpose, and how
-   its expected to be called
- * Small style fixup
- * Switch back to using string_list_sort() instead of direct QSORT()
+    10.120 : label:incore_nonrecursive
+        4.462 : ..label:process_entries
+           3.143 : ....label:process_entries setup
+              2.988 : ......label:plist special sort
+           1.305 : ....label:processing
+        2.604 : ..label:collect_merge_info
+        2.018 : ..label:merge_start
+        1.018 : ..label:renames
 
-This short series has a few optimizations, but only one of which affects the
-testcases of interest (namely, reducing our time spent on sorting an array).
-It also fixes a few comments.
+In the above output, note that the 4.462 seconds for process_entries was
+split as 3.143 seconds for "process_entries setup" and 1.305 seconds for
+"processing" (and a little time for other stuff removed from the
+highlight).  Most of the "process_entries setup" time was spent on
+"plist special sort" which corresponds to the following code:
+
+    trace2_region_enter("merge", "plist special sort", opt->repo);
+    plist.cmp = string_list_df_name_compare;
+    string_list_sort(&plist);
+    trace2_region_leave("merge", "plist special sort", opt->repo);
+
+In other words, in a merge strategy that would be invoked by passing
+"-sort" to either rebase or merge, sorting an array takes more time than
+anything else.  Serves me right for naming my merge strategy this way.
+
+Rewrite the comparison function in a way that does not require finding
+out the lengths of the strings when comparing them.  While at it, tweak
+the code for our specific case -- no need to handle a variety of modes,
+for example.  The combination of these changes reduced the time spent in
+"plist special sort" by ~25% in the mega-renames case.
 
 For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28), the
-changes in just this series improves the performance as follows:
+performance work; instrument with trace2_region_* calls", 2020-10-28),
+this change improves the performance as follows:
 
-                     Before Series           After Series
-no-renames:        5.622 s ±  0.059 s     5.235 s ±  0.042 s
-mega-renames:     10.127 s ±  0.073 s     9.419 s ±  0.107 s
-just-one-mega:   500.3  ms ±  3.8  ms   480.1  ms ±  3.9  ms
+                            Before                  After
+    no-renames:        5.622 s ±  0.059 s     5.235 s ±  0.042 s
+    mega-renames:     10.127 s ±  0.073 s     9.419 s ±  0.107 s
+    just-one-mega:   500.3  ms ±  3.8  ms   480.1  ms ±  3.9  ms
 
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 72 ++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 52 insertions(+), 20 deletions(-)
 
-As a reminder, before any merge-ort/diffcore-rename performance work, the
-performance results we started with were:
-
-no-renames-am:      6.940 s ±  0.485 s
-no-renames:        18.912 s ±  0.174 s
-mega-renames:    5964.031 s ± 10.459 s
-just-one-mega:    149.583 s ±  0.751 s
-
-
-Elijah Newren (5):
-  merge-ort: replace string_list_df_name_compare with faster alternative
-  diffcore-rename: avoid unnecessary strdup'ing in break_idx
-  diffcore-rename: enable limiting rename detection to relevant
-    destinations
-  Fix various issues found in comments
-  merge-ort: miscellaneous touch-ups
-
- diffcore-rename.c                   | 52 ++++++++++++++---
- diffcore.h                          |  2 +
- merge-ort.c                         | 86 +++++++++++++++++++++--------
- t/t6423-merge-rename-directories.sh |  2 +-
- 4 files changed, 110 insertions(+), 32 deletions(-)
-
-
-base-commit: 76e253793c9a1d7fdd1836d5e4db26dabd3d713a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-962%2Fnewren%2Fort-perf-batch-12-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-962/newren/ort-perf-batch-12-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/962
-
-Range-diff vs v1:
-
- 1:  5055dfce3281 ! 1:  c4a0f6a9510c merge-ort: replace string_list_df_name_compare with faster alternative
-     @@ Commit message
-          "-sort" to either rebase or merge, sorting an array takes more time than
-          anything else.  Serves me right for naming my merge strategy this way.
-      
-     -    Rewrite the comparison function and remove as many levels of indirection
-     -    as possible (e.g. the old code had
-     -        cmp_items() ->
-     -          string_list_df_name_compare() ->
-     -            df_name_compare()
-     -    now we just have sort_dirs_next_to_their_children()), and tweak it to be
-     -    as optimized as possible for our specific case.  These changes reduced
-     -    the time spent in "plist special sort" by ~25% in the mega-renames case.
-     +    Rewrite the comparison function in a way that does not require finding
-     +    out the lengths of the strings when comparing them.  While at it, tweak
-     +    the code for our specific case -- no need to handle a variety of modes,
-     +    for example.  The combination of these changes reduced the time spent in
-     +    "plist special sort" by ~25% in the mega-renames case.
-      
-          For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-          performance work; instrument with trace2_region_* calls", 2020-10-28),
-     @@ merge-ort.c: static int detect_and_process_renames(struct merge_options *opt,
-       /*** Function Grouping: functions related to process_entries() ***/
-       
-      -static int string_list_df_name_compare(const char *one, const char *two)
-     -+static int sort_dirs_next_to_their_children(const void *a, const void *b)
-     ++static int sort_dirs_next_to_their_children(const char *one, const char *two)
-       {
-      -	int onelen = strlen(one);
-      -	int twolen = strlen(two);
-     ++	unsigned char c1, c2;
-     ++
-       	/*
-      -	 * Here we only care that entries for D/F conflicts are
-      -	 * adjacent, in particular with the file of the D/F conflict
-      -	 * appearing before files below the corresponding directory.
-      -	 * The order of the rest of the list is irrelevant for us.
-      +	 * Here we only care that entries for directories appear adjacent
-     -+	 * to and before files underneath the directory.  In other words,
-     -+	 * we do not want the natural sorting of
-     ++	 * to and before files underneath the directory.  We can achieve
-     ++	 * that by pretending to add a trailing slash to every file and
-     ++	 * then sorting.  In other words, we do not want the natural
-     ++	 * sorting of
-      +	 *     foo
-      +	 *     foo.txt
-      +	 *     foo/bar
-     @@ merge-ort.c: static int detect_and_process_renames(struct merge_options *opt,
-      +	 * To achieve this, we basically implement our own strcmp, except that
-      +	 * if we get to the end of either string instead of comparing NUL to
-      +	 * another character, we compare '/' to it.
-     ++	 *
-     ++	 * If this unusual "sort as though '/' were appended" perplexes
-     ++	 * you, perhaps it will help to note that this is not the final
-     ++	 * sort.  write_tree() will sort again without the trailing slash
-     ++	 * magic, but just on paths immediately under a given tree.
-       	 *
-      -	 * To achieve this, we sort with df_name_compare and provide
-      -	 * the mode S_IFDIR so that D/F conflicts will sort correctly.
-     @@ merge-ort.c: static int detect_and_process_renames(struct merge_options *opt,
-      -	 * since in other cases any changes in their order due to
-      -	 * sorting cause no problems for us.
-      +	 * The reason to not use df_name_compare directly was that it was
-     -+	 * just too expensive, so I had to reimplement it.
-     ++	 * just too expensive (we don't have the string lengths handy), so
-     ++	 * I had to reimplement it.
-       	 */
-      -	int cmp = df_name_compare(one, onelen, S_IFDIR,
-      -				  two, twolen, S_IFDIR);
-     --	/*
-     ++
-     + 	/*
-      -	 * Now that 'foo' and 'foo/bar' compare equal, we have to make sure
-      -	 * that 'foo' comes before 'foo/bar'.
-     --	 */
-     ++	 * NOTE: This function will never be called with two equal strings,
-     ++	 * because it is used to sort the keys of a strmap, and strmaps have
-     ++	 * unique keys by construction.  That simplifies our c1==c2 handling
-     ++	 * below.
-     + 	 */
-      -	if (cmp)
-      -		return cmp;
-      -	return onelen - twolen;
-     -+	const char *one = ((struct string_list_item *)a)->string;
-     -+	const char *two = ((struct string_list_item *)b)->string;
-     -+	unsigned char c1, c2;
-      +
-      +	while (*one && (*one == *two)) {
-      +		one++;
-     @@ merge-ort.c: static int detect_and_process_renames(struct merge_options *opt,
-      +	if (c1 == c2) {
-      +		/* Getting here means one is a leading directory of the other */
-      +		return (*one) ? 1 : -1;
-     -+	}
-     -+	else
-     ++	} else
-      +		return c1-c2;
-       }
-       
-     @@ merge-ort.c: static void process_entries(struct merge_options *opt,
-       
-       	trace2_region_enter("merge", "plist special sort", opt->repo);
-      -	plist.cmp = string_list_df_name_compare;
-     --	string_list_sort(&plist);
-     -+	QSORT(plist.items, plist.nr, sort_dirs_next_to_their_children);
-     ++	plist.cmp = sort_dirs_next_to_their_children;
-     + 	string_list_sort(&plist);
-       	trace2_region_leave("merge", "plist special sort", opt->repo);
-       
-     - 	trace2_region_leave("merge", "process_entries setup", opt->repo);
- 2:  7212816c8d47 = 2:  38713ed48273 diffcore-rename: avoid unnecessary strdup'ing in break_idx
- 3:  19150b575058 = 3:  45e1de5fe780 diffcore-rename: enable limiting rename detection to relevant destinations
- 4:  98c9a419b313 = 4:  2f26d7e935c0 Fix various issues found in comments
- 5:  e85dad887f95 = 5:  7156f26ab299 merge-ort: miscellaneous touch-ups
-
+diff --git a/merge-ort.c b/merge-ort.c
+index 142d44d74d63..0fe2eaf02eb2 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2746,31 +2746,63 @@ static int detect_and_process_renames(struct merge_options *opt,
+ 
+ /*** Function Grouping: functions related to process_entries() ***/
+ 
+-static int string_list_df_name_compare(const char *one, const char *two)
++static int sort_dirs_next_to_their_children(const char *one, const char *two)
+ {
+-	int onelen = strlen(one);
+-	int twolen = strlen(two);
++	unsigned char c1, c2;
++
+ 	/*
+-	 * Here we only care that entries for D/F conflicts are
+-	 * adjacent, in particular with the file of the D/F conflict
+-	 * appearing before files below the corresponding directory.
+-	 * The order of the rest of the list is irrelevant for us.
++	 * Here we only care that entries for directories appear adjacent
++	 * to and before files underneath the directory.  We can achieve
++	 * that by pretending to add a trailing slash to every file and
++	 * then sorting.  In other words, we do not want the natural
++	 * sorting of
++	 *     foo
++	 *     foo.txt
++	 *     foo/bar
++	 * Instead, we want "foo" to sort as though it were "foo/", so that
++	 * we instead get
++	 *     foo.txt
++	 *     foo
++	 *     foo/bar
++	 * To achieve this, we basically implement our own strcmp, except that
++	 * if we get to the end of either string instead of comparing NUL to
++	 * another character, we compare '/' to it.
++	 *
++	 * If this unusual "sort as though '/' were appended" perplexes
++	 * you, perhaps it will help to note that this is not the final
++	 * sort.  write_tree() will sort again without the trailing slash
++	 * magic, but just on paths immediately under a given tree.
+ 	 *
+-	 * To achieve this, we sort with df_name_compare and provide
+-	 * the mode S_IFDIR so that D/F conflicts will sort correctly.
+-	 * We use the mode S_IFDIR for everything else for simplicity,
+-	 * since in other cases any changes in their order due to
+-	 * sorting cause no problems for us.
++	 * The reason to not use df_name_compare directly was that it was
++	 * just too expensive (we don't have the string lengths handy), so
++	 * I had to reimplement it.
+ 	 */
+-	int cmp = df_name_compare(one, onelen, S_IFDIR,
+-				  two, twolen, S_IFDIR);
++
+ 	/*
+-	 * Now that 'foo' and 'foo/bar' compare equal, we have to make sure
+-	 * that 'foo' comes before 'foo/bar'.
++	 * NOTE: This function will never be called with two equal strings,
++	 * because it is used to sort the keys of a strmap, and strmaps have
++	 * unique keys by construction.  That simplifies our c1==c2 handling
++	 * below.
+ 	 */
+-	if (cmp)
+-		return cmp;
+-	return onelen - twolen;
++
++	while (*one && (*one == *two)) {
++		one++;
++		two++;
++	}
++
++	c1 = *one;
++	if (!c1)
++		c1 = '/';
++
++	c2 = *two;
++	if (!c2)
++		c2 = '/';
++
++	if (c1 == c2) {
++		/* Getting here means one is a leading directory of the other */
++		return (*one) ? 1 : -1;
++	} else
++		return c1-c2;
+ }
+ 
+ static int read_oid_strbuf(struct merge_options *opt,
+@@ -3481,7 +3513,7 @@ static void process_entries(struct merge_options *opt,
+ 	trace2_region_leave("merge", "plist copy", opt->repo);
+ 
+ 	trace2_region_enter("merge", "plist special sort", opt->repo);
+-	plist.cmp = string_list_df_name_compare;
++	plist.cmp = sort_dirs_next_to_their_children;
+ 	string_list_sort(&plist);
+ 	trace2_region_leave("merge", "plist special sort", opt->repo);
+ 
 -- 
 gitgitgadget
+
