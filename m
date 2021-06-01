@@ -2,201 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1BAFC47080
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 16:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E3B3C4708F
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 17:56:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2F96613B6
-	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 16:54:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72A72611CA
+	for <git@archiver.kernel.org>; Tue,  1 Jun 2021 17:56:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233698AbhFAQ4Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 12:56:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59786 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230288AbhFAQ4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 12:56:14 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31744C061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 09:54:33 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id ce15so3542231ejb.4
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 09:54:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6fL9gyCGBqX8XiilCvFbftGPRjms7upjmKhVRubTKOc=;
-        b=hdWgb8JEZosGV+OiMbb1mba4VEX1J8EplHs6Wa57jFkXWjoyDd0RAcAeJJhXN5YAZn
-         1vSA1+RadwBZMUHxGFSYnAhGHPDKOnR5cyJv0UrFrQrWCm1t74ogri9j8+dvLCLIznMi
-         VQWWETN5Nr27ML+tNqjkZLtax0dazodX/Migbu+Y4nKVd6tBf62P8JEcAmrKiepBFttv
-         NIKvc2+vbdmm7noU5TcEDxKr/tonXOAUJlZNRLrk7oQrb8N9hHYiWqyM0uCa+ws7S03h
-         2eY9rGh5ux0sLwgBh6Ef9x9jiCeL2H/OhPzmSFtnouGufyiVIriHti8I7AzxpxpXkHOD
-         cPyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6fL9gyCGBqX8XiilCvFbftGPRjms7upjmKhVRubTKOc=;
-        b=FqvIPy69XS9wS+JjNLdxMDvFyY5QcCCB+VhB/MmvEMbO+sk0QeBSYgS8ruYfOqzsLw
-         JiRJDS0yQOA5C+ibWM8Lzy/+0/7PdymyXppKeyDg+HmjSpjQaJFZ5uodCg0C0V7BNRx+
-         k2/cs3FYsS06bWuRrX9MPyabYk4TsKORF63+IZwdGiqbSbECTuQRDFuQECfLlFH33ULL
-         DTrQirLiP1dHq08BtZxxD2HYk27e1ijS4IzrgH8qsakizdSEbHR2nv2xPPLqGOgvixgH
-         Bcug3hKWRTrTVtc1iB5josk/+n0ErUKV+Kgiv4PKh5U/b2NkU/mPIZuq1gmNiSQDGKTz
-         YTgQ==
-X-Gm-Message-State: AOAM530p4yiAz3+2BRsy1uTxlZNNCMfLW5DHedGglV/a2pDiSwuw5r9Z
-        JBOKZnT+W+JHWwBbtEur2c82/fuwhGljt0T1lf3lEvcc0Urn2I3+gyY=
-X-Google-Smtp-Source: ABdhPJz2JS8VMGFU/ZkygOMehZ1871SJC5fFXPjnOKX+ucJVRXF+w55gweHZOgEBEM61wR6ScWxTVLHt36XRd8+EUbA=
-X-Received: by 2002:a17:907:6ef:: with SMTP id yh15mr5850204ejb.151.1622566471630;
- Tue, 01 Jun 2021 09:54:31 -0700 (PDT)
+        id S233853AbhFAR6V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 13:58:21 -0400
+Received: from mout.web.de ([212.227.15.3]:39415 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231331AbhFAR6U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 13:58:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1622570194;
+        bh=2ydYGcSZsk8P5uSULUA2WsN28A6vDSPQHi+DzaFkgzo=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=TMPp2uv5jHDWnaOz5OAVURqfE5c2ndY7dXYMQhlJrbDjo4mrRF6IrO5IGVGOF7kSf
+         SFQu9f7kxIoQaw8fmqMQ7jzNp5R4Jeubu58yKtUmO1a0Ufd51WHMXZ+J9851g2NPzV
+         GIof5zX/NqTE3F7/fTzg8wIlP323S8+GDMNUZgS8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0LiFT1-1l1YTC3eLL-00nQi9; Tue, 01 Jun 2021 19:56:33 +0200
+Subject: Re: [PATCH] builtin/fsck.c: don't conflate "int" and "enum" in
+ callback
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <patch-1.1-f109a61b11-20210601T000433Z-avarab@gmail.com>
+ <de9dea3a-6138-5e2f-7dc8-8a2ddf28bb84@kdbg.org>
+ <87k0ne0zx3.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <8df5f832-adaa-7cb0-38e3-1a4b2bcff252@web.de>
+Date:   Tue, 1 Jun 2021 19:56:33 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <CAPMMpoim38J3=4pd0_fM2h=DN_PrEE_Osg2duU5Ur8WUZ5S1Pg@mail.gmail.com>
- <032cabb2-652a-1d88-2e12-601b40a4020c@gmail.com> <CAPMMpohOuXX-0YOjV46jFZFvx7mQdj0p7s8SDR4SQxj5hEhCgg@mail.gmail.com>
- <0b57cba9-3ab3-dfdf-5589-a0016eaea634@gmail.com>
-In-Reply-To: <0b57cba9-3ab3-dfdf-5589-a0016eaea634@gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 1 Jun 2021 18:54:20 +0200
-Message-ID: <CAPMMpoi_XSLJXtxGD74r-uoao+Z6Xcg8xkXuZCYix4=tBWD8rw@mail.gmail.com>
-Subject: Re: Removing Partial Clone / Filtered Clone on a repo
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87k0ne0zx3.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:mPgJ2j3c5BsBs2hIi3Qvg2ZjibVemBca6yR0UwDFH0EzEbOqmOW
+ bSo4vSqBxvBdkNkM71vWxLSABMRiAw5qQfXCIQJ7S98wuoD42za4oPBNI+mvivg5yol14cc
+ 2JLAH+GNCD+qXvtJ7+b+lY7IE5l57thRq0qL/jnyMJ2T6N3Hqz52rsUgSiyn5a2KOiei78N
+ e0hhxVY9prKPkXv8mnmgA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uJSlazV2a5o=:ntiWswh5s5iUR0Cjk8l34y
+ iUfKHhE4arq6BHaEn+WuK76R9KADxKzTRM2plaznjKJy5ywE1994szvBaQ7TH2OomzieUk6rx
+ adlJB4ML+pQcA9poWxAFGJcxI+lcmmB0mxNdNupgj2UfRoD92QvZmt13cvK3a0m2oiO6KsuG3
+ jhwo1SUPPCsiXmRMSwv4odCUrn9QqzWLpxZXewdG0JtK3DM3WBPYH7gTDT2NAeJhTym9bOfaq
+ uIa5MjFoxs6be32iryl9yjvidBQx9j4iXACE9GNQygvBMoey/oekA28faCKP1rfcFm0jQn4/d
+ ciZkH7Rx1zD8sY7YVYUtlEoxB3dAstp0oKjDr9gATa9vc0X59xdoPl57lOVnSjvtRIf7Px5NI
+ CAnN085ynD7Bgntmk09mCuOUIZBjyrIj5Ep9zl0y7f0/uRVotbNbCgZYQho86t/Cg8JtBXDVj
+ v6DjDflnURKpVrvZH5eqFQtXQaWVis/XRB31Kq4Kc6smGYPxHKF2MhI14PMagIvk6Imns1kkF
+ n+MIlhhYHVE7jHbeyOL9wsHd6t15PJHKALJs4wGbJLT6UaCyIRkwbDYGv4y1XrYxGpYJK/+rI
+ zjHOMi3TNClsSUJbJ73727L8xfUQt4EM03BmlYhPWuTpEzObidHrrWAqPpTBTMKA76bDwu5YW
+ VuYC8zq0ft91LOdHuQ6nj/FwcjivdwTHpg7z09SpZWth5DcjI+UsXEWEoy+DMu9lJnmrKZc8j
+ asmz/K1rll4AC7Xv2JLeuUbWt2+7mHbs40oMHvi19TZ0aSvRV5K/9zrBuOr3vw6cjapwi1DyZ
+ xB4dv2u0eTW37rcMfMxGw0RZuE2cGlcEoIf8Gue4c0IiQmu8SKth5aUrY76aKbIjv70+oU1Zb
+ z0CXeeA3lST+rATn2fnEQijCe7bhI1EItJfM9x2i9bliCGkfxwhxJ0qGs/LyGgPDZEXBSy5g7
+ qqA7B7le0lWLGNm4DOB59gE+3dMhcKsKcHn+vfS+RjHfcfmzZGXlecObF24n+j9mtznq0TiyV
+ 7xV63eUHXLas+++gLRYbvrrnYNRifZivizvgA2MAdl6bPXUVXvwkeRCYhA0fqd6UIcOfpDsj/
+ DHo2BhZWph5qd0cflKZoo4uediGxf9XWYpN
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 1, 2021 at 3:40 PM Derrick Stolee <stolee@gmail.com> wrote:
-> > you want to be able to get something useful to the user as fast as
-> > possible [...] but where a user might later (eg overnight) want to get the
-> > rest of the repo, to avoid history inconsistency issues.
+Am 01.06.21 um 10:04 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
-> As you describe below, the inconsistency is in terms of performance,
-> not correctness. I thought it was worth a clarification.
-
-Sorry I was not clear here - I did not mean formal correctness nor
-performance, when referring to the incentive to get the rest of the
-repo - I was referring to the fact that a medium-shallow clone (eg 15
-months of a 20-year project) provides an inconsistent perspective on
-the code history:
- * On the one hand, most of the time you have everything you need, and
-when you bump up against *available* history limits from a file or
-branch history view, it's reasonably clear that's what's happening (in
-some UI tools this is more explicit than in others).
- * On the other hand, when you happen to look at something older, it
-is easy for the history to seem to "lie", showing changes made in a
-file by a person that really *didn't* make those changes. Their commit
-just happened to be selected as the shallow graft, and so seems to
-have "added" all the files in the project. This reasonably
-intelligible when looking at file history, but extremely non-obvious
-when looking at git blame (in a medium-shallow clone).
-
-> I'm aware that the first 'git blame' on a file is a bit slow in the
-> partial clone case.
-
-Without wanting to harp on about it, it can easily be pathologically
-slow, eg in my case a random well-trafficked file has 300 in-scope
-commits, at 10 seconds per independent blob fetch - and so ends up
-taking an hour to git blame (the first time for such a file, as you
-noted).
-
-> It's been on my list for improvement whenever I
-> get the "spare" time to do it. However, if someone else wants to work
-> on it I will briefly outline the approach I was going to investigate:
-
-One reason I wasn't asking about / angling for this, particularly, is
-that I expect there will be other tools doing their own versions of
-this. I haven't tested "tig" on this, for example, but I suspect it
-doesn't do a plain git blame, given what I've seen of its instantly
-showing the file contents and  "gradually" filling in the authorship
-data. I for one rarely use plain git blame, I don't know much about
-the usage patterns of other users. Most of "my" users will be using
-Intellij IDEA, which seems to have a surprisingly solid/scalable git
-integration (but I have not yet tested this case there yet)
-
-There also other related reasons to go for a "get most of the relevant
-blobs across history" approach, specifically around tooling: there are
-lots of tools & integrations that use git libraries (or even homebrew
-implementations) rather than the git binaries / IPC, and many of those
-tend to lag *far* behind in support for things like shallow clone,
-partial clone, mailmap, core.splitindex, replace refs, etc etc. My
-current beef is with Sublime Merge, which is snappy as one could wish
-for, really lovely to use within its scope, but doesn't have any idea
-what a promisor is, and simply says "nah, no content here" when you
-look at a missing blob. (for the moment)
-
-> > the most "blameable"
-> > files will tend to be the larger ones... :)
+> On Tue, Jun 01 2021, Johannes Sixt wrote:
 >
-> I'm interested in this claim that 'the most "blameable" files will
-> tend to be the larger ones.' I typically expect blame to be used on
-> human-readable text files, and my initial reaction is that larger
-> files are harder to use with 'git blame'.
+>> Am 01.06.21 um 02:05 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>> Fix a warning on AIX's xlc compiler that's been emitted since my
+>>> a1aad71601a (fsck.h: use "enum object_type" instead of "int",
+>>> 2021-03-28):
+>>>
+>>>     "builtin/fsck.c", line 805.32: 1506-068 (W) Operation between
+>>>     types "int(*)(struct object*,enum object_type,void*,struct
+>>>     fsck_options*)" and "int(*)(struct object*,int,void*,struct
+>>>     fsck_options*)" is not allowed.
+>>>
+>>> I.e. it complains about us assigning a function with a prototype "int"
+>>> where we're expecting "enum object_type". Enums are just ints in C,
+>>> but it seems xlc is more picky than some about conflating them at the
+>>> source level.
+>>
+>> Is that true? I thought compilers were allowed to use whatever data typ=
+e
+>> is sufficient to represent all enumeration values. For this reason, you
+>> sometimes see
+>>
+>>    enum X { A, B, X_MAX =3D 0x7fffffff };
+>>
+>> that ensures that an int must be used for representation of enum X. So,
+>> AFAICS, your patch is an actual fix, not just cosmetic.
+>
+> 	The identifiers in an enumerator list are declared as constants
+> 	that have type int and may appear wherever such are
+> 	permitted. [...] Each enumerated type shall be compatible with
+> 	char,asigned integer type, or an unsigned integer type. The
+> 	choice of type is implementation-defined,110) but shall be
+> 	capable of representing the values of all the members of the
+> 	enumeration [...] Thus, the identifiers of enumeration constants
+> 	declared in the same scope shall all be distinct from each other
+> 	and from other identifiers declared in ordinary declarators
+>
+> 	--C99, 6.7.2.2 @
+>           http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf
+>
+> My reading of that is that mixing the two (which we indeed, do all over
+> the place) is guaranteed to work, we've got plenty of places where
+> e.g. enum object_type is passed to something else as an "int".
+>
+> This xlc warning in particular probably has nothing per-se to do with
+> enum v.s. int, but just that it's complaining that a function pointer
+> doesn't have exactly the expected type.
 
-Absolutely, I meant "the larger text/code files", not including other
-stuff that tends to accumulate in the higher filesize brackets. I
-meant that I, for one, in this project at least, often find myself
-using git blame (or equivalent) to "spelunk" into who touched a
-specific line, in cases where looking at the plain history is useless
-because there have been many hundreds or thousands of changes - and in
-my limited experience, files with that many reasons to change tend to
-be large.
+The object_type item OBJ_BAD has the value -1.  If it had a low positive
+value instead, GCC and Clang would warn.  Demo:
+https://godbolt.org/z/vKPdjrYsa
 
-> Your concern about slow commands is noted, but also blindly
-> downloading every file in history will slow the repo due to the
-> full size of the objects on disk.
+As you cited above, "The choice of type is implementation-defined".  You
+can use enum values as if they were integers, but that doesn't dictate
+their storage size.
 
-I have in the past claimed that "larger repo" (specifically, a deeper
-clone that gets many larger blobs) is slower, but haven't actually
-found any significant evidence to back my claim. Obviously something
-like "git gc" will be slower, but is there anything in the practical
-day-to-day that cares whether the commit depth is 10,000 commits or
-200,000 commits for a given branch, or whether you only have the blobs
-at the "tip" of the branch/project, or all the blobs in history?
-(besides GC, specifically)
+I find the lack of a warning depending on the value range disturbing.
+Perhaps it's omitted because GCC and Clang guarantee compatibility of
+such an enum and int for all prior versions (i.e. the implementation-
+defined specifics never changed).  A stricter check like xlc does is
+more useful for portability, though.
 
-> it would be good to design such a feature to have other
-> custom knobs, such as:
-> * Get only "recent" history, perhaps with a "--since=<date>"
->   kind of flag. This would walk commits only to a certain date,
->   then find all missing blobs reachable from their root trees.
+>>>
+>>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+>>> ---
+>>>
+>>> This is new in v2.32.0, so sending this during the rc phase, just a
+>>> warning though, so unless you're using fatal warnings on that
+>>> OS/platform it won't impact anything, and even then it's just a minor
+>>> annoyance...
+>>>
+>>>  builtin/fsck.c | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/builtin/fsck.c b/builtin/fsck.c
+>>> index 87a99b0108..b42b6fe21f 100644
+>>> --- a/builtin/fsck.c
+>>> +++ b/builtin/fsck.c
+>>> @@ -109,7 +109,8 @@ static int fsck_error_func(struct fsck_options *o,
+>>>
+>>>  static struct object_array pending;
+>>>
+>>> -static int mark_object(struct object *obj, int type, void *data, stru=
+ct fsck_options *options)
+>>> +static int mark_object(struct object *obj, enum object_type type,
+>>> +		       void *data, struct fsck_options *options)
+>>>  {
+>>>  	struct object *parent =3D data;
+>>>
+>>>
+>
 
-As long as you know at initial clone time that this is what you want,
-combining shallow clone with sparse clone already enables this today
-(shallow clone, set up filter, unshallow, and potentially remove
-filter). You can even do more complicated things like unshallowing
-with different increasingly-aggressive filters in multiple
-steps/fetches over different time periods. The main challenge that I
-perceive at the moment is that you're effectively locked into "one
-shot". As soon as you've retrieved the commits with blobs missing,
-"filling them in" at scale seems to be orders of magnitude more
-expensive than an equivalent clone would have been.
-
-> If we had a refiltering feature, then you could even
-> start with a blobless clone to have an extremely fast initial
-> clone, followed by a background job that downloads the remaining
-> objects.
-
-Yes please!
-
-
-I think one thing that I'm not clearly understanding yet in this
-conversation, is whether the tax on explicit and specialized blob list
-fetching could be made much lower. As far as I can tell, in a blobless
-clone with full trees we have most of the data one could want, to
-decide what blobs to request - paths, filetypes, and commit dates.
-This leaves three pain points that I am aware of:
-* Filesizes are not (afaik) available in a blobless clone. This sounds
-like a pretty deep limitation, which I'll gloss over.
-* Blob paths are available in trees, but not trivially exposed by git
-rev-list - could a new "--missing" option value make sense? Or does it
-make just as much sense to expect the caller/scripter to iterate
-ls-tree outputs? (I assume doing so would be much slower, but have not
-tested)
-* Something about the "git fetch <remote> blob-hash ..." pattern seems
-to scale very poorly - is that something that might see change in
-future, or is it a fundamental issue?
-
-
-Thanks again for the detailed feedback!
-Tao
