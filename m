@@ -2,110 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E65C47083
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 23:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED740C4708F
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 23:10:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C01BB6101C
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 23:04:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3F98613B4
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 23:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbhFBXFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 19:05:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbhFBXFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 19:05:47 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CDCC06174A
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 16:04:04 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id e27-20020a056820061bb029020da48eed5cso954914oow.10
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 16:04:04 -0700 (PDT)
+        id S229775AbhFBXLs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 19:11:48 -0400
+Received: from mail-lj1-f170.google.com ([209.85.208.170]:38717 "EHLO
+        mail-lj1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229667AbhFBXLs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 19:11:48 -0400
+Received: by mail-lj1-f170.google.com with SMTP id a4so4705576ljd.5
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 16:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=46l6bcsmL7gkcUWuZBPeDFlwBG6KKMUABlNmZJu/lGk=;
-        b=MINhQYig0KOf7KIo/Ry2WK62n7fj8a63LpreQjGPhKd09OWPEd6B7Tww90gnWzMK9f
-         hksSeYZO39s7avbAcYxsd5krzQpVIAAqr7LVl29gcQOZ8300XCqpWZTQ/AjqUi/AyBie
-         IgWhbW6hxVXfeshI+fBd8e5u551sCUsb3+j09Jdy1pFJwafT3EsotGFyFTcKfDL6aYrt
-         gQ4KYcpAHuU7Jmo3CFFDwOMYrF5xb697VoLN6tn+BruOUDcTmmjud0/PeO1E/DSAwgAT
-         OCJg3XK5+wKM1tIjG6PbZpr93mhgf2lqF8LTeWnvnRgHkNDStrns5icwakYa3W9wIdP1
-         QBGg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=aOv6pm3ew/4Hten6VwGs45zhY79Lx/KvJ04THHbqPfQ=;
+        b=u6XnHriwj7XgXr//Fe1rqxJN4z+JQ+RTCiTfytrwebdcPK4gnq0aQGl3k8Zz81wVyW
+         Sv4001E2bcVuMj0u0psW4rN4ma1UIB2qHUeFc3TvAf2gpaexhSTtMihDQgkE5Mht9gQh
+         jRVoqPxVEuIrhpVqbZG61MaMXiQJC1pH54J48/NiZvDc3W0/u+W3urvckR89Ez/Jgd/r
+         zMJItdnaQukuwQJtWOu5hpO/JbOMNglMXlg4Sb+ffo1/JN5DPYZZwE9xAWD9HwPabwWm
+         V83kudMczilcUo208KXlVORIpYiwl6qHh95NPyijZ6Kwe1dyfJW8EUYkNDq50d76oalM
+         SoLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=46l6bcsmL7gkcUWuZBPeDFlwBG6KKMUABlNmZJu/lGk=;
-        b=seJVqIH393m+stJ+9HcCICBJtwjT7hmvwaYM99vo6ncTvuKB3UnmsTrTZjA4yMV6Wb
-         vma0q9EVbxCUw66N8Ah8mezAeSS3oBd2Tog35TM1dWY/QYh8kCLER2wfy7fghJHGUl54
-         TWaMWxmQxEI0bK8Z6gNUEp+rhCNLawrS7kNfcFWNOS9zyFkY2eBSpjERIrA3psoOaKyI
-         iazEah/z4ebDKbV2K1ONHABZ49lq46A78O3n+nmavMP6v/kefLsH1CxpK77szwdneAje
-         YkelpHP65CHHOs47r5roSrKEMFP3YbE+KTAeTVYYv3LDHIraftYPAJpTeSDT1Z1Pnd0d
-         kh+g==
-X-Gm-Message-State: AOAM533RuYp6I0IRKFgdmB9n+4D7luLz0NNsxNPodDLnWIEmgNDx6qp3
-        GSe3T/XNrz50gYXl2G8PZ9A=
-X-Google-Smtp-Source: ABdhPJzPCptREcKQM7wdWFCNCtxD+j30QJmIWrishVPjev+OFJaa5TEgYfl8y/d6710mvFkxWNs1GQ==
-X-Received: by 2002:a4a:d4c7:: with SMTP id r7mr26919542oos.85.1622675043730;
-        Wed, 02 Jun 2021 16:04:03 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id b19sm284262oib.46.2021.06.02.16.04.02
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=aOv6pm3ew/4Hten6VwGs45zhY79Lx/KvJ04THHbqPfQ=;
+        b=Y1IcTiY6m5HwuLCIUvCiWFEV2rYJU6Mnx8JNEVKH9JGWbX6DtuhOlsFUvKElBpxVyA
+         PRzcff00vvXyVSpna/+XIrcxs8S1ysKoDaLB4I0HHXU/Ae5Ba21GXABVmvJV6CuJtyKZ
+         YXPKmyp8etZAHkMsJ8zdzVoP5t1TCFAf5EAo6A83bEW6uY1mAO5SJclRHAGcE7XZL4YA
+         w6w3cm5QQQwqVFzfyZZRsrouIn3raL1zBiMlPdmt0mQCfw69wOX6jvCrbveMpGPG2Ppg
+         oWFirU3qvzoGYqJR+075cBMcI0rsRTE5Gp1RmThhlYX1+JB+khiC2ajBqyEN4h1S6Qis
+         W23A==
+X-Gm-Message-State: AOAM533AOqPJqNPFqyvZXB1rnItNOE2hRTo/ue9duAA7mqMFGIjKLGp7
+        iIL5e8kGo/wUqutpgDdPqwCN+aKbHyI=
+X-Google-Smtp-Source: ABdhPJwQi57RtGRj+QIaIMNLhaUJxmhtUs6CH7OxwJFBhGoiXBgwop8L3CAMhVC6jLzsaOJahimgsg==
+X-Received: by 2002:a2e:890d:: with SMTP id d13mr1971222lji.327.1622675343527;
+        Wed, 02 Jun 2021 16:09:03 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id u1sm147208lja.99.2021.06.02.16.09.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 16:04:03 -0700 (PDT)
-Date:   Wed, 02 Jun 2021 18:04:02 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Todd Zullinger <tmz@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
-        dstolee@microsoft.com
-Message-ID: <60b80e62b782_16df0720895@natae.notmuch>
-In-Reply-To: <20210602203849.GD15354@pobox.com>
-References: <20210602001132.459705-1-rybak.a.v@gmail.com>
- <057126a2-81c4-41cf-e41a-52a24a0c9a52@gmail.com>
- <YLe4+2JKH1LYRTvv@nand.local>
- <20210602203849.GD15354@pobox.com>
-Subject: Re: [PATCH] config doc: indent descriptions of feature.* variables
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Wed, 02 Jun 2021 16:09:02 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: The git spring cleanup challenge
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+        <87wnrd6wqj.fsf@osv.gnss.ru> <60b6c08f75c1c_40442086d@natae.notmuch>
+        <87eedktq4x.fsf@osv.gnss.ru> <60b7f7e03fc64_16925f208d4@natae.notmuch>
+        <8735tzncr0.fsf@osv.gnss.ru> <60b80752a4c08_16dbed20839@natae.notmuch>
+Date:   Thu, 03 Jun 2021 02:09:01 +0300
+In-Reply-To: <60b80752a4c08_16dbed20839@natae.notmuch> (Felipe Contreras's
+        message of "Wed, 02 Jun 2021 17:33:54 -0500")
+Message-ID: <877djbkgoi.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger wrote:
-> --- a/Documentation/config/feature.txt
-> +++ b/Documentation/config/feature.txt
-> @@ -12,7 +12,7 @@ feature.*::
->  		have unintended interactions since they are so new. Please enable this
->  		setting if you are interested in providing feedback on experimental
->  		features. The new default values are:
-> -	+
-> +
->  	* `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
->  	skipping more commits at a time, reducing the number of round trips.
->  
-> @@ -20,9 +20,9 @@ feature.*::
->  		Enable config options that optimize for repos with many files in the
->  		working directory. With many files, commands such as `git status` and
->  		`git checkout` may be slow and these new defaults improve performance:
-> -	+
-> +
->  	* `index.version=4` enables path-prefix compression in the index.
-> -	+
-> +
->  	* `core.untrackedCache=true` enables the untracked cache. This setting assumes
->  	that mtime is working on your machine.
->  --
-> 
-> With the above, the man page output renders identically with
-> asciidoc (9.1.0) and asciidoctor (I tested both 2.0.10 and
-> 2.0.15).
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I can confirm the above looks fine in both.
+> Sergey Organov wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> > Sergey Organov wrote:
+>> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> >> > Sergey Organov wrote:
+>
+>> >> >> [pull]
+>> >> >> 	rebase = merges
+>> >> >
+>> >> > Can you do `git pull --rebase=merges` for a while?
+>> >> 
+>> >> I never use 'git pull' for merging, and all the time with rebasing, so
+>> >> what's the point? I mean, whenever I do 'git pull' I mean 'git pull
+>> >> --rebase', and whenever I need to merge, I exclusively use'git merge'.
+>> >
+>> > So you can remove that configuration.
+>> 
+>> Sorry, I can't, see below.
+>> 
+>> > And afterwareds set pull.rebase=true so you don't need to specify
+>> > --rebase.
+>> 
+>> I don't get it. What's the point using pull.rebase=true instead of
+>> pull.rebase=merges? The former is plain total disaster in my opinion as
+>> it silently breaks history shape.
+>
+> I think there's some confusion here.
+>
+> You said you always did `git pull --rebase`, not
+> `git pull --rebase=merges`.
 
--- 
-Felipe Contreras
+Yep, I was lazy and didn't say `git pull --rebase=merges`, sorry for
+confusion.
+
+Though in fact my phrase was meant to stress that I use rebase as
+opposed to merge, and I left the details, in fact because I thought
+--rebase=merges sounds even more confusing in this context.
+
+Thanks,
+-- Sergey Organov
