@@ -2,179 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2D98C47083
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 19:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5B78C4708F
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 20:01:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 850936135D
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 19:57:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5F0F610A8
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 20:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbhFBT7h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 15:59:37 -0400
-Received: from mail-qk1-f175.google.com ([209.85.222.175]:44950 "EHLO
-        mail-qk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbhFBT7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 15:59:36 -0400
-Received: by mail-qk1-f175.google.com with SMTP id h20so3635566qko.11
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 12:57:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=ofF3FfmXiNX+Nj6jmfuhRHs7rAv8VbtKmdk4mgVQcis=;
-        b=Fm/hjhqaXFzACqZpXnQV3UYyeuUqSXBZ7A9+XVZHpwcteyxu6GgIhhlglpEXJwkB0b
-         XweLFwO/OeuIgI2D4ysGa70IJnFmv3lAOG2aT/pdExG1IjN8OiBGrFRcAHoZMkjY65Jh
-         Fyrrtx7zqHa8rsRgtcmSMUHTp/+wempr5Rhrwz9aTXhvnvKlHIBw61E8qbCrYuzmZqwr
-         poDOJfFggTKKNPkW2fX6KZzWoYYzbjpJxGE55VBUGmHLHwb+rVUc6ioocH+1pVguepdF
-         gJmhaKN5K2EzG7/CT5JTWG1JtRg3fI5HkLzofZ0xAKriAZWSWaX7MH0ysAzEV35n3H9K
-         Je8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=ofF3FfmXiNX+Nj6jmfuhRHs7rAv8VbtKmdk4mgVQcis=;
-        b=e4MnltSEww875vEQYSr32SrORHYRwYeCBXT4D5Yor8xMFoayY1dvAd6whsC+d8HuMb
-         WcWYo25cjdl6nSLts8xKb77TtqUtTJtfApz9Q181uFjoc3JboZOuEFxatLjkWKgNpGts
-         Ixe65iEkTACSCwlFlJR1bLwj2AA5SytCU/1GovtSCqsXEwmUkO1KkJhIUsdooDJyVxso
-         Ped8fIPzoXTZmLlSxw2bDYvUIE1l1ZQHf1i6zt9TDz95tFT05niiVhPvEaAsh6p3jrhy
-         XNQdA+dTVAEHoaijxyPcVX3+HZ/yFPAV/t3ahS38SslOiS3mOqy3fIhvWqSGd9XXcL8J
-         5J+w==
-X-Gm-Message-State: AOAM530Px8tJahQ1lcSEVuOLJRSO36LLhEbt3swd2+GcEK/0G4AVvZhD
-        MqPhXppdRch6/4OYhD1EEyLTlOpj8nG4zQ==
-X-Google-Smtp-Source: ABdhPJzPjSGG/ufYjpe7OjCDeL/zAkRl0AEZIt+RG0zTEUoWRiosgZdX6KFgOLMcSjX/RWn2l8epyg==
-X-Received: by 2002:a37:de04:: with SMTP id h4mr29075862qkj.458.1622663799730;
-        Wed, 02 Jun 2021 12:56:39 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:9178:81cf:a7f0:8e5d])
-        by smtp.gmail.com with ESMTPSA id h10sm536401qka.26.2021.06.02.12.56.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 12:56:39 -0700 (PDT)
-From:   Taylor Blau <ttaylorr@github.com>
-X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
-Date:   Wed, 2 Jun 2021 15:56:38 -0400
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t: use user-specific utf-8 locale for testing
-Message-ID: <YLfiYXxQqXL7RyHC@nand.local>
-References: <20210602114646.17463-1-congdanhqx@gmail.com>
+        id S229590AbhFBUCp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 16:02:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44394 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229491AbhFBUCo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 16:02:44 -0400
+Received: (qmail 2325 invoked by uid 109); 2 Jun 2021 20:01:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Jun 2021 20:01:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20579 invoked by uid 111); 2 Jun 2021 20:01:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Jun 2021 16:01:01 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 2 Jun 2021 16:00:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/2] [GSOC] cat-file: fix --batch report changed-type bug
+Message-ID: <YLfjexczp1/HILWj@coredump.intra.peff.net>
+References: <pull.967.git.1622558157.gitgitgadget@gmail.com>
+ <495cd90dbaf43e957d03edd2fdc7449b39eee53a.1622558157.git.gitgitgadget@gmail.com>
+ <YLZXyBJ5YgGfmkKv@coredump.intra.peff.net>
+ <CAOLTT8SCeKy74cVO3K5zJ5n=0s=o9zk2ipV5wM6CHQPzRoMi5Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210602114646.17463-1-congdanhqx@gmail.com>
+In-Reply-To: <CAOLTT8SCeKy74cVO3K5zJ5n=0s=o9zk2ipV5wM6CHQPzRoMi5Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 02, 2021 at 06:46:46PM +0700, Đoàn Trần Công Danh wrote:
-> Despite being required by POSIX, locale(1) is unavailable in some
-> systems, e.g. Linux with musl libc.  Some of those systems support
-> utf-8 locale out of the box.
+On Wed, Jun 02, 2021 at 09:15:45PM +0800, ZheNing Hu wrote:
 
-Hmmph. I would have imagined that locale was available everywhere, but
-unfortunately not.
+> > The commit message hints at the root of the problem, but doesn't say it
+> > explicitly. Which is: because setting skip_object_info depends on seeing
+> > that the object_info is empty, we can't add items to it after setting
+> > that flag. And the code path for --batch does that, hence re-ordering
+> > them is the solution.
+> 
+> Um, let's rewrite the commit message, I don't know if this is accurate:
+> 
+> [GSOC] cat-file: fix --batch report changed-type bug
+> 
+> When `--batch` used with `--batch-all-objects`,
+> with some format atoms like %(objectname), %(rest)
+> or even no atoms may cause Git exit and report
+> "object xxx changed type!?".
+> 
+> E.g. `git cat-file --batch="batman" --batch-all-objects`
+> 
+> The bug was present from when the skip_object_info code
+> was initially added in 845de33a5b (cat-file: avoid
+> noop calls to sha1_object_info_extended, 2016-05-18).
+> 
+> This is because we did not get the object type through
+> oid_object_info_extended(), it's composed of two
+> situations:
+> 
+> 1. all_objects will be set to true when we use
+> `--batch-all-objects`, seeing that object_info
+> is empty, skip_object_info will be to true,
+> `oid_object_info_extended()` will not get the
+> type of the object.
+> 
+> 2. The formatting atom like %(objectname) does
+> not require oid_object_info_extended() to collect
+> object types.
+> 
+> print_contents will be set to true when we use
+> `--batch`, which can make object_info non-empty,
+> so the solution is to swap the code order of it
+> and checking if object_info is empty, which will
+> ensure that we must get the type of the object
+> when using --batch.
 
-> diff --git a/Makefile b/Makefile
-> index c3565fc0f8..4b2c24e5ea 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -398,6 +398,9 @@ all::
->  # with a different indexfile format version.  If it isn't set the index
->  # file format used is index-v[23].
->  #
-> +# Define GIT_TEST_UTF8_LOCALE to prefered utf-8 locale for testing.
-> +# If it isn't set, use the first utf-8 locale returned by "locale -a".
+I don't see any inaccuracies there. I do think we could explain it a bit
+more succinctly. I'll give my attempt, and then you can pick and choose
+which parts to include between ours. :)
 
-s/prefered/preferred
+  Subject: cat-file: handle trivial --batch format with --batch-all-objects
 
-> +#
->  # Define HAVE_CLOCK_GETTIME if your platform has clock_gettime.
->  #
->  # Define HAVE_CLOCK_MONOTONIC if your platform has CLOCK_MONOTONIC.
-> @@ -2801,6 +2804,9 @@ ifdef GIT_TEST_CMP
->  endif
->  ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
->  	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@+
-> +endif
-> +ifdef GIT_TEST_UTF8_LOCALE
-> +	@echo GIT_TEST_UTF8_LOCALE=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_UTF8_LOCALE)))'\' >>$@+
->  endif
->  	@echo NO_GETTEXT=\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\' >>$@+
->  ifdef GIT_PERF_REPEAT_COUNT
-> diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-> index 547eb3c31a..df319593f7 100644
-> --- a/t/lib-git-svn.sh
-> +++ b/t/lib-git-svn.sh
-> @@ -121,12 +121,15 @@ start_svnserve () {
->  		 --listen-host 127.0.0.1 &
->  }
->
-> -prepare_a_utf8_locale () {
-> -	a_utf8_locale=$(locale -a | sed -n '/\.[uU][tT][fF]-*8$/{
-> -	p
-> -	q
-> -}')
-> -	if test -n "$a_utf8_locale"
-> +prepare_utf8_locale () {
-> +	if test -z "$GIT_TEST_UTF8_LOCALE"
-> +	then
-> +		GIT_TEST_UTF8_LOCALE=$(locale -a | sed -n '/\.[uU][tT][fF]-*8$/{
-> +		p
-> +		q
-> +	}')
-> +	fi
+  The --batch code to print an object assumes we found out the type of
+  the object from calling oid_object_info_extended(). This is true for
+  the default format, but even in a custom format, we manually modify
+  the object_info struct to ask for the type.
 
-OK, so we bind GIT_TEST_UTF8_LOCALE to the value of $a_utf8_locale in
-the pre-image, unless the user said otherwise.
+  This assumption was broken by 845de33a5b (cat-file: avoid noop calls
+  to sha1_object_info_extended, 2016-05-18). That commit skips the call
+  to oid_object_info_extended() entirely when --batch-all-objects is in
+  use, and the custom format does not include any placeholders that
+  require calling it.
 
-> +	if test -n "$GIT_TEST_UTF8_LOCALE"
+  This results in an error when we try to confirm that the type didn't
+  change:
 
-...Then we go on to handle things like before, except we read from
-"$GIT_TEST_UTF8_LOCALE" instead of "$a_utf8_locale". Makes sense to me.
+    $ git cat-file --batch=batman --batch-all-objects
+    batman
+    fatal: object 000023961a0c02d6e21dc51ea3484ff71abf1c74 changed type!?
 
->  	then
->  		test_set_prereq UTF8
->  	else
-> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-> index 1d3fdcc997..d5563ec35f 100755
-> --- a/t/t9100-git-svn-basic.sh
-> +++ b/t/t9100-git-svn-basic.sh
-> @@ -4,21 +4,13 @@
->  #
->
->  test_description='git svn basic tests'
-> -GIT_SVN_LC_ALL=${LC_ALL:-$LANG}
->
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
->  . ./lib-git-svn.sh
->
-> -case "$GIT_SVN_LC_ALL" in
-> -*.UTF-8)
-> -	test_set_prereq UTF8
-> -	;;
-> -*)
-> -	say "# UTF-8 locale not set, some tests skipped ($GIT_SVN_LC_ALL)"
-> -	;;
-> -esac
-> +prepare_utf8_locale
+  and also has other subtle effects (e.g., we'd fail to stream a blob,
+  since we don't realize it's a blog in the first place).
 
-This change (and the omitted ones below in later hunks) look like it
-isn't changing any behavior (and just running the same code behind the
-prepare_utf8_locale function instead of inlining it).
+  We can fix this by flipping the order of the setup. The check for "do
+  we need to get the object info" must come _after_ we've decided
+  whether we need to look up the type.
 
-They all look right to me, but it may be helpful to either point it out
-in the commit message and/or prepare the separately. I'd probably err on
-the side of the former.
-
-That said, this patch looks good to me with minor touch-ups (my only
-nits are the above and the spelling mistake in the Makefile).
-
-Thanks,
-Taylor
+-Peff
