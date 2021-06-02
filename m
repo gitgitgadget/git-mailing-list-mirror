@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA19C47092
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 05:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C11C47083
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 05:42:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B900761360
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 05:31:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B69961360
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 05:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbhFBFcn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 01:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57338 "EHLO
+        id S230054AbhFBFoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 01:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229958AbhFBFce (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 01:32:34 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8606EC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 22:30:51 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id u11so1638328oiv.1
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 22:30:51 -0700 (PDT)
+        with ESMTP id S229748AbhFBFoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 01:44:00 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F323BC061574
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 22:42:17 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so1457157oth.8
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 22:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=l7t5g03d9Rnxu5uvmI8FFLVer2nlOnzqOn8qbPFmrAE=;
-        b=UvPWn2vYnM8QU9M7Nf0owkaZ7sOdvUSSKRUV2+bC9dsRgrvcEdmfslZIBgblGDjAkj
-         yCzUdxavx+HYKu8AlQeQpR6bsdqfZpdjzwyD584j1DQxX6rM6NOy+zR/nfXr1f1N49ML
-         0yTZhbPbHkKI6aSAWEWMzFPBSENvUFbVklHMMIKVfTj3QKyJZ72P6gtS2k1cGcDbYrJe
-         8xZLRw+xVqqfZJI35+0Ob6CDktCnx5Xp23PQ9EUEnZb3eZmuy4XiHyYQ5/EB3lMhql0g
-         8LGyKuF3zuXP4yvQMzw5t4BuovZ6qVXGrYnr7ZnFVrAjtv+HGLJFbuUxkAXRHhdefnbM
-         fubA==
+        bh=AGMmXo4Ac9J9/duzlPfzGCbC0tDCqibgdPFO69SX5V4=;
+        b=eGcD+Z8PHsRI+XTI0Z81NXBRD0oLx5lZaT00m6SgbhoJaKjpqO0ngEyxoJjt3CfHaK
+         5x5PD5CSPtrWk6Uz1b0SfjHW5F8WepM3p37A3YyEvztUBEBhnjYHcxzOpqxhXvS3Xnwq
+         aPGCN3bSaI46wiROjGSiGldChEP8Ikq3+uv+O878BSLCSx3qS2IEQClf1LjXPJhepAXs
+         q5VXqMIrcuqTPv8SsurxMdzyewYnTPHJgZbbv+P98Ll+5qYmeeBJ5Fb9Qpuzr/4l0M3j
+         bqnkXhejX7CVJ5guRXaXq9lsrjxpiOhXfCRpRiqEgni3qrfxEsC23ui+P5XZnubkaHbR
+         6o3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=l7t5g03d9Rnxu5uvmI8FFLVer2nlOnzqOn8qbPFmrAE=;
-        b=P6XvB/jVpvCoiEbx/RKBlhdK1NWpu8vzQMzF4gkicVE9GcW67nLwAG0mbmZmUkTezi
-         /zF3dE4cI1+pIkZScG4C9zGGNR3VTkee5gOo/sKizdkOI0+Agplc0nC4hHFqMwPKFVOr
-         LhE23asccpQbiV7b2bbKvaMJQyNkyUB/DqyQ+pX/2ztc4g35e0BEUiP+zlEnHiEpceVI
-         KQb2Czij2IPgKFAATmBYUB1uQbNXgirGgersWS/hQWFQ3eLu8jUwnVwABCXEQpyvjb0N
-         Wmu+oMRKr86u93oNRGQcsL+iODTNdYjDkHJfYhQJiREQxUrYh/sXvetZOX3cElonAe1J
-         df/Q==
-X-Gm-Message-State: AOAM530gFxGqfI0498ydcAGrC16nK+PpXsck+l0LSXO9RMUS2WAebBy8
-        8rMnSOpydR8yrt+or6+3Jfc=
-X-Google-Smtp-Source: ABdhPJxNIrRB0NYjsdIgflZDgczj6ZW+KHuNJEr2wooPnOXWDWfOZ9Dtz0nGF3Y9XhMHFWREWQEFGw==
-X-Received: by 2002:aca:2417:: with SMTP id n23mr2430514oic.111.1622611850736;
-        Tue, 01 Jun 2021 22:30:50 -0700 (PDT)
+        bh=AGMmXo4Ac9J9/duzlPfzGCbC0tDCqibgdPFO69SX5V4=;
+        b=SkJw2fJCIfM3ei8xuQUwi+wuZGDVoRJad6p4xadWChNexbezTKCe7gXcVaO+NbxfOM
+         L87rlEIzBUulQ4LE82kafSKbZIyI0jXYQR8oRfJPIPL22eTEO6o/Gg1+wcsHbHBZvMq3
+         l8P7iIB68TGMHtoBlyDj0+AgkdAQwrOgobWtj06zdHOMwJSk/K5U7oSJxX+YBHtchYY8
+         M4wWZzs4P3na3k2Wr2DU/nwd3JNmEJdK9QL/55+P41Cw6x1queBn7J76uWZm8iM+h3Ar
+         dxfFJoTQ1DRlFliKAdCFzxr2RDLS8DIwsZVl8l/juGVE6Qoy26UBJ9CEVRi8/O0eA5Hh
+         zwig==
+X-Gm-Message-State: AOAM533nFyAS7XO8M3N9OAWHYCJ63Rc4vuVul8uPI9zMoE7jBPS9v6pD
+        aiM4P5FktxRDIvU1Xyf8arE=
+X-Google-Smtp-Source: ABdhPJztwESkDfNUlFzEh6Gd69pTEn4SSeOcRGReVpq+XUo2xGBYNN/uX+aosJ4NeZStCKBp6sXvyQ==
+X-Received: by 2002:a9d:68d1:: with SMTP id i17mr12743493oto.331.1622612537381;
+        Tue, 01 Jun 2021 22:42:17 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id v19sm4334045otk.22.2021.06.01.22.30.49
+        by smtp.gmail.com with ESMTPSA id y7sm3802718oix.36.2021.06.01.22.42.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 22:30:50 -0700 (PDT)
-Date:   Wed, 02 Jun 2021 00:30:48 -0500
+        Tue, 01 Jun 2021 22:42:17 -0700 (PDT)
+Date:   Wed, 02 Jun 2021 00:42:15 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>,
+To:     Derrick Stolee <stolee@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
@@ -66,11 +67,12 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Josh Steadmon <steadmon@google.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <60b71788c0e6d_67d0208d4@natae.notmuch>
-In-Reply-To: <YLZ5H2Muh39Q4M5T@google.com>
+Message-ID: <60b71a37cb4aa_67d0208bf@natae.notmuch>
+In-Reply-To: <179668e9-008a-0b70-a193-b0a479ba0146@gmail.com>
 References: <87lf80l1m6.fsf@evledraar.gmail.com>
  <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
  <YLZ5H2Muh39Q4M5T@google.com>
+ <179668e9-008a-0b70-a193-b0a479ba0146@gmail.com>
 Subject: Re: [PATCH 00/31] minimal restart of "config-based-hooks"
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -80,71 +82,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer wrote:
-> On Fri, May 28, 2021 at 02:11:02PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
-> > =
-
-> > After suggesting[1] an another round that the config-based-hook
-> > topic[2] should take a more incremental approach to reach its end goa=
-l
-> > I thought I'd try hacking that up.
-> > =
-
-> > So this is a proposed restart of that topic which if the consensus
-> > favors it should replace it, and the config-based hooks topic should
-> > be rebased on top of this.
+Derrick Stolee wrote:
+> On 6/1/2021 2:14 PM, Emily Shaffer wrote:
+> > On Fri, May 28, 2021 at 02:11:02PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+> >>
+> >> After suggesting[1] an another round that the config-based-hook
+> >> topic[2] should take a more incremental approach to reach its end go=
+al
+> >> I thought I'd try hacking that up.
 > =
 
-> I'm not entirely sure what you're trying to achieve by sending this
-> series.
+> I think sending this complete reorganization of a long-lived topic
+> is not helpful, especially because the end-to-end diff is significant.
 
-Have a better review? By having a more reviwable series?
+The end-to-end diff is significant because it's not the full patch
+series.
 
-> It was my impression that the existing config-based-hooks topic
-> was close to being ready to submit anyway (since Junio mentioned
-> submitting it a couple revisions ago); rather than churning by reviewin=
-g
-> a different 31-patch topic, and then re-rolling and re-reviewing a
-> (reduced) config hook topic, wouldn't it be easier on everyone's time t=
-o
-> do a final incremental review on the existing topic and then start in o=
-n
-> bugfixes/feature patches afterwards?
+Give me pointers to the two branches and I'll get you a patch series on
+top of =C3=86var's that gets you *exactly* zero end-to-end diff to Emily'=
+s
+series.
 
-Not to me. I tried to review your series and I just couldn't.
+There's many paths to end up with exactly the same code.
 
-Maybe it's something about me, but the whole point of a review is to
-have as many eyes as possible on the code in order to spot any potential
-issues. If some eyes have trouble parsing the patches, that's not
-optimal.
+I do it all the time.
 
-=C3=86var's approach is easy for me to follow.
+> I've also seen messages as early as January where =C3=86var mentioned
+> wanting to review the series, but not finding the time to do so.
+> It is reasonable to expect that contributors attempt such major
+> reorganizations according to reviewers feedback, as long as the
+> reviewers are timely about delivering that feedback.
 
-> It would have been nice to see a more clear discussion of patch
-> organization sometime much sooner in the past year and a half since the=
+The Git project doesn't have deadlines.
 
-> project was proposed[3], like maybe in the few iterations of the design=
+Code should be merged when it's ready to be merged, not when it's
+convenient for $company.
 
-> doc which included a rollout plan in July of last year[4].
-
-Not all of us are being paid by a big corporation to work on Git.
-
-Some of us are doing the work on our own free time. You can't demand we
-spend our own free time on a certain patch series as soon as possible
-because it's more convenient for $corporation.
-
-Git is an open source community project.
-
-> To me, it seems late to be overhauling the direction like this,
-> especially after I asked for opinions and approval on the direction
-> before I started work in earnest.
-
-To me it's completely the opposite; it's never too late to overwhaul a
-patch series.
-
-In my opinion you should be thankful that somebody took the time to try
-to improve your series *for free*.
+I have patches that have been stuck for 7 years. Why should $company get
+a fast-path, an exception, or preferential treatment?
 
 Cheers.
 
