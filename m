@@ -2,120 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C412C47083
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 06:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16E50C47083
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 07:13:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7609B61359
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 06:53:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA83361375
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 07:13:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229753AbhFBGyv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 02:54:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47216 "EHLO
+        id S230200AbhFBHPR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 03:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbhFBGyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 02:54:50 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2140DC061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 23:53:07 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id j17-20020a4ad6d10000b02901fef5280522so347227oot.0
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 23:53:07 -0700 (PDT)
+        with ESMTP id S230099AbhFBHPQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 03:15:16 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67E2CC061574
+        for <git@vger.kernel.org>; Wed,  2 Jun 2021 00:13:33 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id u9so559630plr.1
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 00:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=TookIacmbPtozWIRKBn2w+hgR42TzyKkq50lQFG9AL0=;
-        b=dM7/+ZV7mq2xX9jtrtGNVF1FZv90kjT241OKMXSHd7KiAvpR3NhQD40ORJMKwsbhLT
-         pYP4+OSoi+6xHd+4VI01d6uoouwF2gZtdaLWWtnoXc2+Xtnd+C6BH3uVbl0BH3LulSmi
-         Qmu+hLDhnKpmO9xVdwBnD3nOH1Vob/l/MdBsSW/LQMl3V9AtEdvJcVjtumYGHOx6mo4b
-         U5YHixDj+efb6iHg32sv0OFJau1wn3fjCkGnjoUL1pQ+rRVV1Y72QFy1V+S8KCGTx3a+
-         0JSCcFMffUC5Mm0Hl40IN9GWK63eAbQ4gjtTjR0PyTZy6euYfJGXclom0m2fXV7nyr47
-         xm/Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+xO62QbArKQc6s9LnYjmAaPnqsHtwKZJQvpEwA6r5QE=;
+        b=TPxMy4nygoLcUq/f/nHE/sebJY6fob9bD+nj9AEyNOm8u+ZRWfQgRitUqeqFsGTSkb
+         BPstiJ2gx9t5RKf1DA3Gh0TydoKm6aB0LDqKTHuCj30fcJ8enrmQbWcbLEm928YPGhwP
+         jTdKH6/j7PtXBvtwudqc6Wg4ajqCIgsCXbe1kSvPymK2hxfiA2RnsrV+PAGWC/B3eIG7
+         A/SbMWNmKYlAcQT15595zwR3emUOX8jK0h4r1ubd84YJMAlQWhF1YjgXZ1368xRwNgnq
+         3ckxI+QWUWv6BDWC2IllHKFn/xijn4Ty6PpHCWXqjRGv5qvXWKWLgWUTMEb5liJtYuR4
+         DnUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=TookIacmbPtozWIRKBn2w+hgR42TzyKkq50lQFG9AL0=;
-        b=IfxW6hZH2DFSfXjNlhpAwxrRwfK2aFdHKusWNaWmeYocrJFdHHmPlKnDLg0t+isVST
-         E3ndEZ3jzP+bFAZwhtbVFYi3dmL24+e8oU4Qmx3YYIejkaXqq3chp8V5/UtZk6d0SFwR
-         CzeQaj9QOcfcm9GcXbbvyO+OrBbcvpR2wuWxLrcCTAnWlhnZHYiaZo5QFTAnW8oV3wgx
-         oLVQlco4KN7rufdwh/Ysr0DO2/n9uCbJj4TWe1O/3r/hF1R9D1l+R/PhGxBX72Za+dZh
-         ZG41QedKgePHVzo0KEsIY65ZGmEtNaSMrmJLiFJ5TWWRL6tmBMRNkGSjOOdZxj2HvzGj
-         Y8mQ==
-X-Gm-Message-State: AOAM531rwLvoowl2xwWmyqskEfpVcYwKb7+xCDaeAzyi9ogSmaiA1vZs
-        eVDiy/Vhvf1w1ZmDHlORlHQ=
-X-Google-Smtp-Source: ABdhPJwfxD2YeOkope7qBvBvutC2CwtqkXr84CKU+5UzX7cOcoStj/LTsbxOl6IcvoqpZPze/QsD3g==
-X-Received: by 2002:a4a:95c4:: with SMTP id p4mr23115213ooi.51.1622616786475;
-        Tue, 01 Jun 2021 23:53:06 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id x7sm657444ooc.23.2021.06.01.23.53.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+xO62QbArKQc6s9LnYjmAaPnqsHtwKZJQvpEwA6r5QE=;
+        b=ok+HO0K33tC6SBuYOJm4pAsVmxhSRXe34In2HUe8pPgbYvPD7mTP89xfcPockH5nmn
+         8AwxeRN2rd0mI7OAPF4DClbnFfA13KyqZVX4fATf++gwRySQ1NSc6KLrJDkVpsuz2rY+
+         0nCsRajUs/443Dtww7/4WD0rd/rKm6Y9DuKoFP/X6pXuDyZucpepyaR0TvknMCCcxC9W
+         Kfu+BBefpMPdzfg2vaTyTDPJaDEwRn2ZquA9M6HOVSMhh1DcGLkdMD2XQMXFO4JMVvG+
+         6kzCf/n9a9MItPjYV8JLMUq8Wlo0PmOjgkQ3c9F7eOctFxBlWRHugIlbH2jH3qEDZOoP
+         gSpg==
+X-Gm-Message-State: AOAM530Urg5sOui2nBKdaR1PmeIq80NWDuu1dV7ua8+buvl/x5BfqGjn
+        jrlyiaYg8dKicrrynaXH4Rk=
+X-Google-Smtp-Source: ABdhPJzDuB+pGiXs1/eSR9oSUu6k9j03e68cdE13I2rESATM5CZHPFMs7v0Ly6tVvgudks+K1xeikg==
+X-Received: by 2002:a17:90a:5911:: with SMTP id k17mr20280297pji.29.1622618012951;
+        Wed, 02 Jun 2021 00:13:32 -0700 (PDT)
+Received: from generichostname ([172.92.1.94])
+        by smtp.gmail.com with ESMTPSA id m5sm16334861pgl.75.2021.06.02.00.13.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 23:53:05 -0700 (PDT)
-Date:   Wed, 02 Jun 2021 01:53:04 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>
-Message-ID: <60b72ad0ccc57_501332083f@natae.notmuch>
-In-Reply-To: <9fb1f823-44f8-8046-adb5-d2c0fdb6b5a0@kdbg.org>
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <CAJDDKr7AG_qs2ZmNCuS9zS0oqCT9cWU=CSCfxALEkGuLHBH=OQ@mail.gmail.com>
- <xmqqzgw9qky5.fsf@gitster.g>
- <xmqqv96xqjyr.fsf@gitster.g>
- <60b6c642ba65b_4044208ca@natae.notmuch>
- <9fb1f823-44f8-8046-adb5-d2c0fdb6b5a0@kdbg.org>
-Subject: Re: The git spring cleanup challenge
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Wed, 02 Jun 2021 00:13:32 -0700 (PDT)
+Date:   Wed, 2 Jun 2021 00:13:30 -0700
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4] contrib/completion: fix zsh completion regression
+ from 59d85a2a05
+Message-ID: <YLcvmrwT/ZuMts2C@generichostname>
+References: <20210601205229.46974-1-davvid@gmail.com>
+ <60b6c57c3cac1_4044208f@natae.notmuch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <60b6c57c3cac1_4044208f@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt wrote:
-> Am 02.06.21 um 01:44 schrieb Felipe Contreras:
-> > Junio C Hamano wrote:
-> >> Junio C Hamano <gitster@pobox.com> writes:
-> >>> David Aguilar <davvid@gmail.com> writes:
-> > 
-> >>>> +1 for merge.conflictstyle = diff3, rerere.enabled = true, and
-> >>>> log.decorate = short from me. I noticed others already mentioned
-> >>>> these.
+On Tue, Jun 01, 2021 at 06:40:44PM -0500, Felipe Contreras wrote:
+> I have not tested this particular version, but I have tested similar
+> changes, and this should work:
 > 
-> Does diff3 conflict style reduce conflicts to their minimum?
+> Acked-by: Felipe Contreras <felipe.contreras@gmail.com>
 
-The objective is to resolve conflicts, not to see minimum conflicts.
+FWIW, since I was the one who introduced the bug,
 
-> >>> As the inventor of rerere, I agree on rerere.enabled.  It was made
-> >>> opt-in only because I thought it was somewhat risky when the feature
-> >>> was introduced, but it has been stable and useful, and it is long
-> >>> overdue to be enabled by default.
-> >>
-> >> Just to make sure, rerere.enabled is fine, but as I am not
-> >> comfortable to recommend rerere.autoupdate to any human users, I
-> >> would be opposed to turning it on by default.  Giving people a
-> >> choice is fine, but the default should be a safe one that offers
-> >> users a chance of final sanity checking before proceeding.
-> > 
-> > No commit is made. Doesn't `git diff --staged` offer users such chance?
-> 
-> rerere.autoupdate erases the information which files had conflicts. In
-> my workflow, the rerere database time and again does hold outdated merge
-> resolutions. I want to have an opportunity to cross-check the automatic
-> resolutions, and for that I need to know which files had conflicts.
+Acked-by: Denton Liu <liu.denton@gmail.com>
 
-Then do rerere.autoupdate=false.
-
-Defaults are not for you, they are for the majority of users.
-
-Cheers.
-
--- 
-Felipe Contreras
+Thanks for your help, David and Felipe.
