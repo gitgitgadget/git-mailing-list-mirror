@@ -2,84 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 952AEC47092
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 10:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77894C4708F
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 10:45:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79AA2613B4
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 10:31:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6247B613BA
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 10:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232829AbhFBKdL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 06:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232480AbhFBKdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 06:33:01 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B4FC061574
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 03:31:16 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id m18so1773015wrv.2
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 03:31:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=N8J+LbDFOVU1JsBtfp/PLDd9uV6TUgqCPNNokEhovRc=;
-        b=Grvl+x3wenwRnML6co8xCrX9TfyjQNdX3LhkoMoLIfcejedwyzmlBpfuqmKGfYS5aJ
-         aRZaqXNfTJ5lbz2Vj1+aUZmJvUlfRLmDmTEPesG9UJ6fKB5sdg0c2IGhHDoY0/WuTB29
-         CG69kV4RHK9kokkTqK9Z11DWtqscZFLyLB91UEd+YsxOXRyfoVi52X5e4Rda95J+kTxw
-         TvQjEJMygEybT7pPmkvS1eUthbjywG+UMS+aq8H8QYpS/9vrO58cr74i3SKQqNvPxXdP
-         2CQVNRNXDsMKlDmiGMUBpvrI8qmQiTydp/yKdRVKeZRCu8Lc8HI8dDVb3mnGXByFBsPb
-         cgzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=N8J+LbDFOVU1JsBtfp/PLDd9uV6TUgqCPNNokEhovRc=;
-        b=Tq7djy1HX9SBcA9yLahsdGnJS3h7cY9J1CAW2zZYRTGz5M1ZH++5Kj537wdq0yMoJ8
-         ++4rBSsCO/GTmeAiXpI99Lnz7A+A7MXKIcmDc1O/Bb+nxqPajuxCoJsmkUqRhTZdO2Fh
-         3CR0QfYn4h93/thctSJMkQupmqejD8ynZqD/PMV1ZBFF6i5yb1r4gFL76OQ/b9h6bFN2
-         JNSM8tRWuHDWmu0K2n/gLV7bvFt2p5ygVOSGyXG4FMFTBf+zC+qCgf+Qjz2xDIV10j3z
-         fNWiV4rVL5Mf54Zlja2Fg7CQLwPq1NQvMUbkhmOQPu6m4H9JBurkwho5NwZvxlmieBII
-         X0KQ==
-X-Gm-Message-State: AOAM531tgyA5ncetOuzXtFkl5MGJBw1C5q7PnRHPZCBKZcc/mnNWp4sX
-        0U2aZ9VwPXFrGznCDaORS4r+E7/FP72hJw==
-X-Google-Smtp-Source: ABdhPJxjqTzwBF1VJr5wqgHX/iPu9Rq/iQsRQhj7lPXmw3yJyAIfkFYEkrysmLL3xOunXzrKPiV66w==
-X-Received: by 2002:a5d:504d:: with SMTP id h13mr26414595wrt.133.1622629875269;
-        Wed, 02 Jun 2021 03:31:15 -0700 (PDT)
-Received: from ?IPv6:2a02:587:4411:d162:d4e9:1224:9013:f2e3? ([2a02:587:4411:d162:d4e9:1224:9013:f2e3])
-        by smtp.gmail.com with ESMTPSA id p20sm2205042wmq.10.2021.06.02.03.31.14
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jun 2021 03:31:14 -0700 (PDT)
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Ilias Apostolou <ilias.apostolou.zero@gmail.com>
-Subject: =?UTF-8?Q?Request_feature=3a_=e2=80=93no-submodule?=
-Message-ID: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
-Date:   Wed, 2 Jun 2021 13:31:11 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        id S230306AbhFBKrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 06:47:02 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47566 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229963AbhFBKrB (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 2 Jun 2021 06:47:01 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3F65F60400;
+        Wed,  2 Jun 2021 10:44:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1622630688;
+        bh=dpPmFC65jwZBCrCb19wuIui0oF85SWCKEfYAqrR3Woc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=TCC/r+9S+rShPlVDrkL8ntoIZcJlNsLMdmeVze7YW1ARfMfuU4hyrntxhV/0NjqJr
+         mHDAwO70eBBOffSpj7LKhUTKMhwLy/JQMrjJMMk5fHgHvAhwNwkmnupsyBPlM/BCzP
+         WeE9mWuN3jHWckIUaacEdpyo+qWdp/eqTKR/NcYCXuBwxSLDcDPQtzDUY9EQsP3mlX
+         NElJyPTSshD+zlmPIdeLSstxi6PD0z53p1nwTnNrqn4L1kFPttVFeZmym+Yg1B4YqO
+         NtQmO05kb5p/WWj7F6uir5M0lxngjO6MAqc+8MZrooKtQDVK4k11zg3paHfnvYvZy6
+         R1DeGY8Hmfeo83zFQykEjLQYMflhJ9VI6D1pfLPs99BJcsf2oUIlecvvIN9mYLeoh0
+         UyozTw/PRArUfOLxnZq5YAma8lwa+A/0MSOiVcdcYF9xvqau6IWmdQpfTs/ZdikB4K
+         KTZ/IDNKWiuY7QDq6VvBgwVwgk4B5U/qyeVXc7rHRZAPEjrPyNN
+Date:   Wed, 2 Jun 2021 10:44:41 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Somogyi Henrik <Somogyi.Henrik@eqnet.hu>
+Cc:     git@vger.kernel.org
+Subject: Re: getting git.exe for Android Studio on Windows
+Message-ID: <YLdhGa8eWs9uyh4A@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Somogyi Henrik <Somogyi.Henrik@eqnet.hu>, git@vger.kernel.org
+References: <773cf7ee-f897-a568-92be-9ee7c2813c3b@eqnet.hu>
+ <YKcI8BGHBgkanYPk@camp.crustytoothpaste.net>
+ <80336a2e-fb75-5fc1-1516-f1d1d96ff529@eqnet.hu>
+ <ba109d68-9953-569f-56a7-a2f557bf971f@eqnet.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="KuEXEJjd9zujrGUW"
+Content-Disposition: inline
+In-Reply-To: <ba109d68-9953-569f-56a7-a2f557bf971f@eqnet.hu>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git community.
 
-As you already know, git ls-files command lists all of the tracked 
-files, but submodule names are included.
+--KuEXEJjd9zujrGUW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-My team would like a –no-submodule switch to exclude those.
+On 2021-06-02 at 05:53:55, Somogyi Henrik wrote:
+> Hello Brian,
 
-Best rewards,
-Ilias Apostolou
+Hi,
 
-Github: https://github.com/LiakosC
+Please keep the list in CC so that everyone can see the discussion.  I'm
+not that familiar with Windows and may be offline for a few days soon,
+so if you CC the list you may find someone who is better able to answer
+your questions.
+
+> I have installed "Git for Windows v2.31.1".
+>=20
+> I only need the git.exe so that Android Studio can use it for dowloading a
+> sample Android app from GitHub.
+>=20
+> But now I got 4 git.exe programs:
+>=20
+> F:\programs\Git
+> 	\bin\git.exe
+> 	\cmd\git.exe
+> 	\mingw64\bin\git.exe
+> 	\mingw64\libexec\git-core\git.exe
+>=20
+> Which should I specify in Android Studio as the needed git.exe?
+
+I believe you can go to a command prompt and type "where git" and that
+should print the proper location.  If you've installed the portable
+version, I believe the one in the top-level bin directory is correct.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--KuEXEJjd9zujrGUW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYLdhGAAKCRB8DEliiIei
+gW2wAQChh75B9ubrvPoxaQIibXNN2A+7GJBxS0F8Ii44kfDRiwD+PFbrCPt6NMiv
+T9hergjewdsSZWcL4vEYrxJNbEr0QAE=
+=srKO
+-----END PGP SIGNATURE-----
+
+--KuEXEJjd9zujrGUW--
