@@ -7,67 +7,66 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3BC3C47083
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 21:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3BD0C47083
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 21:28:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8973613AE
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 21:16:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D89F3613EC
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 21:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbhFBVSk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 17:18:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45524 "EHLO
+        id S229753AbhFBV3s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 17:29:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229467AbhFBVSk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 17:18:40 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F05CFC06174A;
-        Wed,  2 Jun 2021 14:16:56 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id i8-20020a4aa1080000b0290201edd785e7so902578ool.1;
-        Wed, 02 Jun 2021 14:16:56 -0700 (PDT)
+        with ESMTP id S229721AbhFBV3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 17:29:47 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62C8C06174A
+        for <git@vger.kernel.org>; Wed,  2 Jun 2021 14:28:03 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso3770939otu.10
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 14:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=OR0vZLC69IiyT4ypo7Eh+2A/eWbHPbW4MgdKpUyG+Uw=;
-        b=AWo4Qm+h17+bQmjN2afrOjbyMxcUf9Rt/frA3X3zSzVGH+vvZ3sVsQfgy0jmeUzi8T
-         mh4+0uhpcGizcDzhnu6Zs2pPInN2vjNgk92TSH5MnpPAC8Xin2Lb6UUcnDyAo8W87b7g
-         /I4IX4HuIRxxJUj2T2T5S2dx0kE3hzGgPhA0b9YZNzCwi3KjRfOoMVDUgWKpe+QWji3y
-         DuforVJehGdkBqWJG7a0g7i4HLT2gUls5ChLOHkN9n8K1jGubVP8iqinlGKzP07CN8Q2
-         wEb5Ly0idE2JUxZNH9JNRe4CkvC/ODl5iBWKDE2wgUFgjsIGOOQty+8RdHgQevz/bOCX
-         VAwg==
+        bh=wxonV3wt+bR4lbLfVRrU/YbhbCVY+7kUprtBptpf3qY=;
+        b=frRz3FS9e0wiv3RNt37DbdnKdHObRXt6vbwALDiWbBoAByaZgXjx1TVgHbp+++EjPi
+         KZBR7F15HakTZlTqpEwh6D0CuWb6xrdPG7hjE9U8KMMhla40hBb+8VymejED+hMjSxQq
+         uFEobuVGslvCa2KTh5kYmxrjsgf6cW448TvRftmDEfkU+3ici0PtacFrcuCd37DG4qat
+         eX3ylqNKV3mFP+pA32tnkZaMJM7ginv+ZNaM+vsdgkcsefgx2rDEBerRHYpbvd8Rcbm4
+         nWs02R9qvr6z8HaMR08Ku1XtK0ObW7NnnnM/csAff02PikbQDgwNwqDHTyewVa+V7455
+         mX/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=OR0vZLC69IiyT4ypo7Eh+2A/eWbHPbW4MgdKpUyG+Uw=;
-        b=eKJ45Goz6mgTxpzMtgU6lxWFpEo9YLyf07mCSjGa3eVqs3rC13OuYX2FiqXUvpOZR4
-         N4ACJl1pGLYxLCskzkifcFGD1NbFM/z9TQCx30sMyOJvC+NgiMpsnGJ5FDR2JZ/gQh5O
-         0QtykIfU/ap7z3e6QJRqeNSflQqXwSCJWKBarqXW2TNWeq/cYmDZhkN0SOmc5GCZk/4s
-         Xi2TetsRvMXTYIDl1ZEXboAism8p8bCl+lXNqNC9QpPlC3ksgjqv8SFkOOWVYubMezFI
-         EJAtof49yahZ1iWWWAoE0303Mjyi5GoIiWXg0viMrImpj+QYYZ/DVz6DA8quWoE2dbU0
-         t4ng==
-X-Gm-Message-State: AOAM533Slb5easrdPgbCpPkvfXMYyZ3ghaMiNQ/FRajVQRStHbykQ8s1
-        Kzlwubr9MyRdc9Tgam66+GgRp7lV2aiWhw==
-X-Google-Smtp-Source: ABdhPJxo1f2+kgOVPuhkc967KnJYlFthltXeJhCzAKvT38tQoM7Ms9tBYEbybdd8g4wCPQZ9hnuqkw==
-X-Received: by 2002:a05:6820:386:: with SMTP id r6mr3191559ooj.25.1622668616258;
-        Wed, 02 Jun 2021 14:16:56 -0700 (PDT)
+        bh=wxonV3wt+bR4lbLfVRrU/YbhbCVY+7kUprtBptpf3qY=;
+        b=h8Z1k1l8hChE3ML0X7ttUcW/bkonYX73HDLdmOE8csNTrsScT63QPz9EhMgMgGf2XS
+         FNOkGFgK75swS1/bp+cjlzJzqcAKoc3fpsSN+aUesHjZpGhx1dBCR5oyddO7lQNeJn3p
+         sXO6owJiXKCbut7W1VPoZRlUTOC8SB8RpiBdTjmh6Rg3lPl+ViaVV4pZ3k7bey4lnT2m
+         colN62RNDfqe/ToFtnFq5s/KjqhIwhOZqydqNRB+wXVCMkWgUqZeT8Sdypd0NHxq4Ylj
+         JWoPtfSAv4sfi4SY5LIr4gGqjeUq5j/rSibGI/WSiCTDfddMvHBD/XgBEhNkSz9DVT46
+         e9uQ==
+X-Gm-Message-State: AOAM53133KFeidTkiQ2we2UeDnIBceN+K2izememze31Eau1FMi0YKG+
+        LwqepJyn+Yo7PcmKj0OrpEU=
+X-Google-Smtp-Source: ABdhPJzeE0xZHqeThLBD8ehELW5voiAC5xzCp0zHKY1wMdV+N5oWWQIdLttRr5LySOKQcjPIz+XvRg==
+X-Received: by 2002:a9d:741a:: with SMTP id n26mr26902848otk.223.1622669281996;
+        Wed, 02 Jun 2021 14:28:01 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id o20sm236330otl.2.2021.06.02.14.16.55
+        by smtp.gmail.com with ESMTPSA id a24sm231219otr.3.2021.06.02.14.28.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 14:16:55 -0700 (PDT)
-Date:   Wed, 02 Jun 2021 16:16:54 -0500
+        Wed, 02 Jun 2021 14:28:01 -0700 (PDT)
+Date:   Wed, 02 Jun 2021 16:28:00 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-        git@vger.kernel.org
-Cc:     Peter Zijlstra <peterz@infradead.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Jiri Kosina <trivial@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Message-ID: <60b7f54697fda_16925f2083d@natae.notmuch>
-In-Reply-To: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com>
-References: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com>
-Subject: RE: git feature request: git blame --ignore-cleanup/--ignore-trivial
+To:     Sergey Organov <sorganov@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Message-ID: <60b7f7e03fc64_16925f208d4@natae.notmuch>
+In-Reply-To: <87eedktq4x.fsf@osv.gnss.ru>
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <87wnrd6wqj.fsf@osv.gnss.ru>
+ <60b6c08f75c1c_40442086d@natae.notmuch>
+ <87eedktq4x.fsf@osv.gnss.ru>
+Subject: Re: The git spring cleanup challenge
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -76,26 +75,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mathieu Desnoyers wrote:
-> Perhaps a new git blame "--ignore-trivial" and/or "--ignore-cleanup" could solve
-> this by filtering out "trivial" and "cleanup" patches from the history it considers.
+Sergey Organov wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Sergey Organov wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >
+> >> > These are the configurations I've chosen:
+> >> >
+> >> >   [merge]
+> >> >     conflictstyle = diff3
+> >> >   [sendemail]
+> >> >     smtpserver = /usr/bin/msmtp
+> >> >
+> >> 
+> >> [pull]
+> >> 	rebase = merges
+> >
+> > Can you do `git pull --rebase=merges` for a while?
+> 
+> I never use 'git pull' for merging, and all the time with rebasing, so
+> what's the point? I mean, whenever I do 'git pull' I mean 'git pull
+> --rebase', and whenever I need to merge, I exclusively use'git merge'.
 
-While this feature would be a good addition, more often than not I need
-to look behind the latest commit regardless of whether or not it's a
-trivial one.
+So you can remove that configuration.
 
-So what I often end up doing is a `git blame --incremental`:
+And afterwareds set pull.rebase=true so you don't need to specify
+--rebase.
 
-  git blame --incremental -L100,+6 file.c | grep -o -e '^[0-9a-f]\{40\}'
+> >> [rerere]
+> >> 	enabled = true
+> >> 	autoupdate = true
+> >
+> > We are seeing a pattern here.
+> >
+> >> [diff]
+> >> 	algorithm = patience
+> >
+> > Does this make a lot of difference?
+> 
+> As far as I recall, I had some mismerges long time ago that this setting
+> affected positively, so I've tweaked it.
 
-This can be fed to `git log --stdin --oneline --no-walk` for more
-user-friendliness.
-
-Of course you could just do:
-
-  git log -L100,+6:file.c --oneline --no-patch
-
-But for some reason that's much slower on my system.
+Try running without it for a while. If you see issues then parhaps it's
+an indication that patience is a better default algorithm.
 
 Cheers.
 
