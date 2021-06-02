@@ -2,112 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D53C4708F
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 18:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1404C4708F
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 18:13:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78630610A0
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 18:04:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93846608FE
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 18:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbhFBSGa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 14:06:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59264 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbhFBSGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 14:06:30 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD1FC061574
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 11:04:46 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id u30so3280815qke.7
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 11:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QgrAQ6km9FxyFiYeiH5vdtZ2Jb0aHFyE5MJUiENkjrw=;
-        b=bUjhqdl0TPmooB0NtcGLsJmlM+SUaWS31iTaOcmf/6OZ6kGWGB6GPxEOYR2Lsy8ESl
-         pu0K86J8hOczjRvcrvd8q1LUGN2RCUMopC0S5iYZRGP+jGjv5P370qOuJahjCcOrBXLr
-         QZhPLkyr4MLsjn/H68EXhGKmN4IiwP1ZMODrs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=QgrAQ6km9FxyFiYeiH5vdtZ2Jb0aHFyE5MJUiENkjrw=;
-        b=ZmFZylbtkAPn+g0l2QWpfvYgWb5fKqcIC+WgjBd+qVJHepG7mqEazajvOUCsSMK08F
-         yisVIpcx8HyFUZx4VxU3Crg63uxmof/dotlKKp6Ob8Fsca14hqmaAhjpju2Yio+HEdq5
-         5rbCACxLyPXELy06p9qYOe9kj5LeODJP9qv9LWPPNDb1L23mDD53rooB/FJDkIT0f5T3
-         W5adYLZzmyMFoqKgHDR/ldhBPcuJb3wo/q/ZVWDgZoN6dDo4+GH72Ckg/Mk7Xmyv05AV
-         QUQPoYG5fXfIG6UkqlMsjb92mCMtYYCC4/mazVLgkO/cVo50FtvqFu4g4joFnvTekgCb
-         /p/Q==
-X-Gm-Message-State: AOAM530IkIXCvuAmiB9/SMzSX+4qKEPEGIIKiDpcqVseeyaFcjP9S/CZ
-        QUkya/AnuN2GrcFiu7L4Viv6Lnauor/RebC60zs=
-X-Google-Smtp-Source: ABdhPJzt2XXq17YoQczsheajeT9SWhS6XY0lrIn1spw7Lu4bCeu6uIUYdaD8NAjvP2zTU/fgo+5ykg==
-X-Received: by 2002:a05:620a:c45:: with SMTP id u5mr18916073qki.200.1622657086061;
-        Wed, 02 Jun 2021 11:04:46 -0700 (PDT)
-Received: from nitro.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id q13sm347110qkn.10.2021.06.02.11.04.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 11:04:45 -0700 (PDT)
-Date:   Wed, 2 Jun 2021 14:04:43 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: Re: why does git-send-email unwrap headers?
-Message-ID: <20210602180443.girwpb2ovwczywmk@nitro.local>
-References: <20210602153441.cjmey63x2vudlnk6@nitro.local>
- <YLe3k1CYMhv9LEeh@nand.local>
+        id S229583AbhFBSPB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 14:15:01 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:50549 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229491AbhFBSPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 14:15:00 -0400
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4FwHFl4gPtz5tlF;
+        Wed,  2 Jun 2021 20:13:14 +0200 (CEST)
+Subject: Re: The git spring cleanup challenge
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <CAJDDKr7AG_qs2ZmNCuS9zS0oqCT9cWU=CSCfxALEkGuLHBH=OQ@mail.gmail.com>
+ <xmqqzgw9qky5.fsf@gitster.g> <xmqqv96xqjyr.fsf@gitster.g>
+ <60b6c642ba65b_4044208ca@natae.notmuch>
+ <9fb1f823-44f8-8046-adb5-d2c0fdb6b5a0@kdbg.org> <xmqqo8co7cqe.fsf@gitster.g>
+ <YLdvJ0G19LNcbDSD@danh.dev>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f2b0c200-ff4f-da5e-ff49-c440ff0813de@kdbg.org>
+Date:   Wed, 2 Jun 2021 20:13:13 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
+In-Reply-To: <YLdvJ0G19LNcbDSD@danh.dev>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YLe3k1CYMhv9LEeh@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 02, 2021 at 12:53:39PM -0400, Taylor Blau wrote:
-> On Wed, Jun 02, 2021 at 11:34:41AM -0400, Konstantin Ryabitsev wrote:
-> > While it's not *wrong* (the 78-character limit is from a very old RFC), I'm
-> > curious if this is intentional or just an oversight.
+Am 02.06.21 um 13:44 schrieb Đoàn Trần Công Danh:
+> On 2021-06-02 20:00:25+0900, Junio C Hamano <gitster@pobox.com> wrote:
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>>
+>>> rerere.autoupdate erases the information which files had conflicts.
+>>> ... So, I'm strongly opposed to enabling it by default.
+>>
+>> Exactly.  "checkout -m" can use resolve-undo information to
+>> unresolve the conflicts, but to make effective use of it, you'd want
+>> to know which paths had conflicts to begin with.
 > 
-> My guess is that this dates back to 5012699d98 (send-email: handle
-> multiple Cc addresses when reading mbox message, 2009-02-14), which
-> unfolds all multi-line headers, probably so that parsing the header can
-> be done line-wise without having to keep track of whether you are
-> parsing a continuation line or not.
+> I don't know about this one. I had been bitten by rerere.autoupdate
+> sometimes. And I need to wipe out the rerere record to start over.
+> 
+> I guess I should turn it off, then.
 
-I think you're right, but I believe simply removing the two lines that do the
-actual unwrapping will fix this without causing any side-effects.
+You can use
 
-I.e. when parsing headers, don't "unwrap" them but merely concatenate all
-header lines to the proper header. Address parsing routines should still
-properly handle this situation, though it's less clear to me if something else
-may be affected by this change.
+   git rerere forget that/file
 
-CC'ing Ævar Arnfjörð Bjarmason, who I think is the person most poking at
-git-send-email lately.
+to erase the record for the current resolution of that/file. Then you
+can recreate the conflict using
 
--- >8 --
+   git checkout -m -- that/file
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 25be2ebd2a..4c79122f78 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1654,8 +1654,6 @@ sub process_file {
-        while(<$fh>) {
-                last if /^\s*$/;
-                if (/^\s+\S/ and @header) {
--                   chomp($header[$#header]);
--                   s/^\s+/ /;
-                        $header[$#header] .= $_;
-            } else {
-                        push(@header, $_);
+It may be necessary to run
 
--- >8 --
+   git rerere
 
--K
+at this point to save the pre-image of the conflict record, but I'm not
+sure.
+
+-- Hannes
