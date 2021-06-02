@@ -2,82 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 209E3C47083
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 15:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FDE5C47083
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 15:36:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF00F61360
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 15:29:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0948E613BF
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 15:36:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbhFBPbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 11:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52656 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbhFBPbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 11:31:32 -0400
-Received: from zeniv-ca.linux.org.uk (zeniv-ca.linux.org.uk [IPv6:2607:5300:60:148a::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DEFC061574;
-        Wed,  2 Jun 2021 08:29:47 -0700 (PDT)
-Received: from viro by zeniv-ca.linux.org.uk with local (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1loSoS-003q0F-9L; Wed, 02 Jun 2021 15:29:44 +0000
-Date:   Wed, 2 Jun 2021 15:29:44 +0000
-From:   Al Viro <viro@zeniv.linux.org.uk>
-To:     Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc:     git@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Jiri Kosina <trivial@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: git feature request: git blame --ignore-cleanup/--ignore-trivial
-Message-ID: <YLej6F24Emm7SX35@zeniv-ca.linux.org.uk>
-References: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com>
+        id S232082AbhFBPhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 11:37:42 -0400
+Received: from mail-qt1-f174.google.com ([209.85.160.174]:39441 "EHLO
+        mail-qt1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232064AbhFBPhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 11:37:40 -0400
+Received: by mail-qt1-f174.google.com with SMTP id c15so2108540qte.6
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 08:35:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=X9/fU/B/CY0VXAuTsCAKcNgpmecXttX7C9hAUiQ1gRE=;
+        b=dkB3No0zJ6cKBtnMPLfDQIG+uTkr+kbMZAMApFBx2vSKapkYf+cy8UPprXN+K++9CB
+         gMGADInGqF5CBpA5gLvV8/ZDFCK9HweLj78MmPaRgGNNWQKDz5tlJRmH52PhfnPXDgIZ
+         iNfMCOj1/arW7zjWE0BgM6y2ZJO/BkGj4QTpo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=X9/fU/B/CY0VXAuTsCAKcNgpmecXttX7C9hAUiQ1gRE=;
+        b=ftoRqJxXF/ZMbRldGZElQMTnRBDIlkSQERh5idScein3JLmpkFd7nH4nN9ERLFRfUS
+         QyhdjLGSB7EDgDMCtgE0Ze4wr1z9KM/YrvQvX94sBH8ECE271DQ8aIoPwVdd9iNM46Ok
+         STpg9yvDetBX7mg3ST7+LCbQ6XvGD5MhCm3KxEd2+Mv9uBOIuPoi2hqFxjkifeofPf0P
+         FlazEdjQJzQ005sEhdsYHP6mO5WY4yzLrn0tCqHd3QGfjygEQdXyQkx7yJyruUo8jihR
+         nlQBuzBf3f/gT6RoimNVTr50zFR6rN61EmxKdwXCQmayzmu8cRopNqm4cvlVWiKVy0ny
+         ac2Q==
+X-Gm-Message-State: AOAM532vhb0e0KhvNhnP9cdWVeEffiLxeoeaNLNvICOUjKgwG9REXG3F
+        EsEW3MoD2X4FnBMUaaLPIvwX3bQDElikzzElVvo=
+X-Google-Smtp-Source: ABdhPJzJ+Rr39mR1dZrf3MfFZDOKJIhhJYITSXuFuLEyS6Z0maY4qDfzvn9+VlflnqxaaWSEe4vveQ==
+X-Received: by 2002:ac8:588e:: with SMTP id t14mr25354995qta.39.1622648082819;
+        Wed, 02 Jun 2021 08:34:42 -0700 (PDT)
+Received: from nitro.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id g9sm44570qka.38.2021.06.02.08.34.42
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jun 2021 08:34:42 -0700 (PDT)
+Date:   Wed, 2 Jun 2021 11:34:41 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     git@vger.kernel.org
+Subject: why does git-send-email unwrap headers?
+Message-ID: <20210602153441.cjmey63x2vudlnk6@nitro.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com>
-Sender: Al Viro <viro@ftp.linux.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 02, 2021 at 11:20:35AM -0400, Mathieu Desnoyers wrote:
-> Hi,
-> 
-> Following a discussion with Peter Zijlstra about whether code cleanup
-> and functional changes done to the Linux kernel scheduler belong to separate
-> patches or should be folded together, the argument for folding cleanup
-> and function changes came to be mainly motivated by the current behavior
-> of git blame: code cleanup patches end up burying the important changes so
-> it becomes cumbersome to find them using git blame.
-> 
-> Considering the added value brought by splitting cleanups from functional changes
-> from a maintainer perspective (easier reverts) and from a reviewer perspective
-> (easier to focus on the functional changes), I think it would be good to improve
-> the git tooling to allow easily filtering out the noise from git blame.
-> 
-> Perhaps a new git blame "--ignore-trivial" and/or "--ignore-cleanup" could solve
-> this by filtering out "trivial" and "cleanup" patches from the history it considers.
-> 
-> Tagging patches as trivial and cleanup should be done in the patch commit message
-> (possibly in the title), and enforcing proper tagging of commits is already the
-> responsibility of the maintainer merging those cleanup/trivial commits into the
-> Linux kernel anyway.
-> 
-> Under the hood, I suspect it could use something similar to git log --grep=<pattern>
-> --invert-grep.
-> 
-> This should allow git blame users to easily filter out the noise and focus on the relevant
-> functional changes.
-> 
-> Any maybe the patterns associated to "cleanup" and "trivial" commits should be something
-> that can be configured through a git config file.
-> 
-> Thoughts ?
+Hello:
 
-Just an observation: quite a few subtle bugs arise from mistakes in
-what should've been a trivial cleanup.  Hell, I've seen bugs coming
-from rebase of provably no-op patches - with commit message unchanged.
-So IME this is counterproductive...
+I've noticed that when a message is sent with git-send-email, it will unwrap
+all existing headers into a single line, such that:
+
+    Some-header: This is a long header that happens to be longer than 78
+     characters and is therefore wrapped at whitespace chars to properly span
+     across multiple lines
+
+becomes:
+
+    Some-header: This is a long header that happens to be longer than 78 characters and is therefore wrapped at whitespace chars to properly span across multiple lines
+
+While it's not *wrong* (the 78-character limit is from a very old RFC), I'm
+curious if this is intentional or just an oversight.
+
+-K
