@@ -2,235 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 212DCC4708F
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 01:36:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A25C47080
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 01:37:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03149613D2
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 01:36:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E08D613B4
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 01:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbhFBBh6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Jun 2021 21:37:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34072 "EHLO
+        id S230111AbhFBBjc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Jun 2021 21:39:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229899AbhFBBh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jun 2021 21:37:57 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D89C061574
-        for <git@vger.kernel.org>; Tue,  1 Jun 2021 18:36:14 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id b15-20020a17090a550fb029015dad75163dso807249pji.0
-        for <git@vger.kernel.org>; Tue, 01 Jun 2021 18:36:14 -0700 (PDT)
+        with ESMTP id S230071AbhFBBj2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jun 2021 21:39:28 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91ADBC06174A
+        for <git@vger.kernel.org>; Tue,  1 Jun 2021 18:37:45 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id d21so1198711oic.11
+        for <git@vger.kernel.org>; Tue, 01 Jun 2021 18:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=iCzQSPKVaMjPvIezTjJccDpd8fVNHkwzTdUqp0OPEJQ=;
-        b=eTA1XJ0bFqnpINaTlXBiwzCy8xbeiVPKA8YdzWrEFaVYvVXI+UwkvcdWkUfIlyYPvU
-         1b9W1A4RfYtYcaX4/RLgUQ+knqAGQDIfMTFk9FN6tYZpsb6ZjtqWB0BHyjm9kwQddvts
-         2cGAaxMfnKiSeiM7Wn1AjXeyJDuyKmdH6Ca0ERez6uO91zRXfAtpxNPF2B5Nt2doB+uZ
-         1i9m45L0e1w1Dl+ajHl0QSJbn8MD6Nzp39Tc9okcor/jCN/vm5YQr9koZbndGnO6Ewyz
-         FI+FZtEMQfcv7xqCY0VDQNa/+qQRsJmFJLSsZczCVW4NcbujZ8aQIZZqH4KmZqxZfhC+
-         aruQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=5bLxWvhShfGyLU5ileX6hRzqi4S2YVjaZBrUikHpo3w=;
+        b=eYvtSaYAkZD/6pPnmGoKm9vRvp7qVW6FNvcLkTkMZjHNSnHkiIGFaQrPkh6mUPrXjx
+         WMuzCwXn9ZeqXbC8E60n/Elncsrg62xiTHAv4DhYrOiQgU5Xrn9ZFqq2ZB3NNgDvtSC0
+         qAZDCBARCmuUqYsLmp20Y7nJgekl0wobLp5/xpGyrtrvoLCEVMX/rVXIwuW49zxO+0ol
+         fOp0l7pBhD02qI5xMSKm0rn1U8u4V5690SisSbW55jXPdHzu2xLjfHIBD8ifBwI5xS7u
+         XkNfH2IDlMKScYCKvpw1SujX88I1kBb8GZ2q54iHMGnEl69tt71P2hOwLcJIJZgyDiJ/
+         Melg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=iCzQSPKVaMjPvIezTjJccDpd8fVNHkwzTdUqp0OPEJQ=;
-        b=JlNrr7kaKX1jVZS2jKpPtRuLr/z6rjp0fVpQhF337lnLuuRiDtwQT6Hb3jyC/3O8zy
-         ygMkhhBWCbgXgtDDuqhA6gMyWIBuLjwLa20sKrDLOiH2bt2QbGlpCCUFjG7o1olNOrHq
-         RHF2O1jUX7HWlqbh9u9POiYYgMJB9vFiT7oRBL+1MrWPFPi6rSLiIOA5hYru94oM/vo4
-         MT7oh7/oHopwOf5Jl9JrRFsX2kwK44qeJ236ypGB6rClc+EwVcpbdMcFr53Z7VahINyy
-         pk+bflfpCrOL26vJdCDpkCBiRLWWwTjxu8Y0nY+p4cdTMI58ZS9uwm7gLe1kca6LAeM7
-         o9Rw==
-X-Gm-Message-State: AOAM531lkmDyqgVOMWtfA82PDANBBWbSElIiPWOgGDDpO2gBnHmVOfon
-        0ToSxQ1FFChQMJkN12ClK50=
-X-Google-Smtp-Source: ABdhPJyuV0rKtNXiAY6wtLZBy04H4XZultgA1p7KFBJfdqx1YLgaztAtmLepvL7dBlDIFPUlL6OMrA==
-X-Received: by 2002:a17:90a:bd05:: with SMTP id y5mr27934606pjr.229.1622597774025;
-        Tue, 01 Jun 2021 18:36:14 -0700 (PDT)
-Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
-        by smtp.gmail.com with ESMTPSA id x1sm13921375pjk.37.2021.06.01.18.36.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jun 2021 18:36:13 -0700 (PDT)
-Date:   Wed, 2 Jun 2021 08:36:11 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>, gitster@pobox.com,
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5bLxWvhShfGyLU5ileX6hRzqi4S2YVjaZBrUikHpo3w=;
+        b=pfIPi/p69bJrSfjVcGMmJvsNhp2LqmmaKUvA1HQ6XMJnyICAyGJOVpOca5jTH3VB+L
+         gGuRMGeZ6ZJLqPuSjpKFB6zkUFo8iY5jIqm/Aczk6W3EMB/KOVq7R5sDcOQZvRBhF1nl
+         xIUvlfo2yqZcF44eYN7uLC3w3w3cFEaDxiM7W2mE40Lm9Dq+KTsuAC4pE8C/U4VR/oRt
+         yuT/7Wok0I9N26Hs5K7+feM+7lgx9X3WibLUYMW9f5wTij7mEBRCKJYtdbnApM8sLXpS
+         PC4rrJn+uPa6d7ySrYcLNlsw8QX46QfXy96ZmmFEwoOszeGNT/R5Cnad3do06GCC6k5+
+         OaJQ==
+X-Gm-Message-State: AOAM532MF8Zh2zZI7kIVwvNfKl8jAEkTRX4MMvA+YkzYtwy34AmtZPBk
+        ui2D0bsF/bUJGBkDIRI4dhiiqF9N5El81Q==
+X-Google-Smtp-Source: ABdhPJyKukYh6olF3AsxE3ZAgQ++mgJaQCZWWitm9IVGvDXMBh3zGZNt9Q/ZBj+Xy02g6mMXlU5mtw==
+X-Received: by 2002:a54:4398:: with SMTP id u24mr19940209oiv.81.1622597864372;
+        Tue, 01 Jun 2021 18:37:44 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:35fd:75aa:3890:f004? ([2600:1700:e72:80a0:35fd:75aa:3890:f004])
+        by smtp.gmail.com with ESMTPSA id l141sm3845339oib.44.2021.06.01.18.37.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jun 2021 18:37:44 -0700 (PDT)
+Subject: Re: bug report: git checkout deletes worktree file even though it is
+ excluded by sparse-checkout
+To:     "Tim Renouf (open source)" <tpr.ll@botech.co.uk>,
         git@vger.kernel.org
-Subject: Re: [PATCH] t2080: fix cp invocation to copy symlinks instead of
- following them
-Message-ID: <YLbgi0jQn8BJ1ue2@danh.dev>
-References: <5386ee606567248464d39c313ee6177862a1f337.1622071475.git.matheus.bernardino@usp.br>
- <87r1hsl4qb.fsf@evledraar.gmail.com>
- <871r9n2dlu.fsf@evledraar.gmail.com>
+References: <F58C0A40-A1B4-4B47-A8EA-20FEAB011B0D@botech.co.uk>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <28a211cc-f210-8ce8-e7c2-90e02ff449fd@gmail.com>
+Date:   Tue, 1 Jun 2021 21:37:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
+In-Reply-To: <F58C0A40-A1B4-4B47-A8EA-20FEAB011B0D@botech.co.uk>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <871r9n2dlu.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-05-31 16:01:01+0200, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+On 5/28/2021 4:14 PM, Tim Renouf (open source) wrote:
+> Hi all
 > 
-> On Thu, May 27 2021, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > On Wed, May 26 2021, Matheus Tavares wrote:
-> >
-> >> t2080 makes a few copies of a test repository and later performs a
-> >> branch switch on each one of the copies to verify that parallel checkout
-> >> and sequential checkout produce the same results. However, the
-> >> repository is copied with `cp -R` which, on some systems, defaults to
-> >> following symlinks on the directory hierarchy and copying their target
-> >> files instead of copying the symlinks themselves. AIX is one example of
-> >> system where this happens. Because the symlinks are not preserved, the
-> >> copied repositories have paths that do not match what is in the index,
-> >> causing git to abort the checkout operation that we want to test. This
-> >> makes the test fail on these systems.
-> >>
-> >> Fix this by copying the repository with the POSIX flag '-P', which
-> >> forces cp to copy the symlinks instead of following them. Note that we
-> >> already use this flag for other cp invocations in our test suite (see
-> >> t7001). With this change, t2080 now passes on AIX.
-> >>
-> >> Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> >> ---
-> >>  t/t2080-parallel-checkout-basics.sh | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/t/t2080-parallel-checkout-basics.sh b/t/t2080-parallel-checkout-basics.sh
-> >> index 7087818550..3e0f8c675f 100755
-> >> --- a/t/t2080-parallel-checkout-basics.sh
-> >> +++ b/t/t2080-parallel-checkout-basics.sh
-> >> @@ -114,7 +114,7 @@ do
-> >>  
-> >>  	test_expect_success "$mode checkout" '
-> >>  		repo=various_$mode &&
-> >> -		cp -R various $repo &&
-> >> +		cp -R -P various $repo &&
-> >>  
-> >>  		# The just copied files have more recent timestamps than their
-> >>  		# associated index entries. So refresh the cached timestamps
-> >
-> > Thanks for the quick fix, I can confirm that this makes the test pass on
-> > AIX 7.2.
-> 
-> There's still a failure[1] in t2082-parallel-checkout-attributes.sh
-> though, which is new in 2.32.0-rc*. The difference is in an unexpected
-> BOM:
->     
->     avar@gcc119:[/scratch/avar/git/t]perl -nle 'print unpack "H*"' trash\ directory.t2082-parallel-checkout-attributes/encoding/A.internal 
->     efbbbf74657874
->     avar@gcc119:[/scratch/avar/git/t]perl -nle 'print unpack "H*"' trash\ directory.t2082-parallel-checkout-attributes/encoding/utf8-text  
->     74657874
-> 
-> I.e. the A.internal starts with 0xefbbbf. The 2nd test of t0028*.sh also
-> fails similarly[2], so perhaps it's some old/iconv/whatever issue not
-> per-se related to any change of yours.
+> I have a bug report: git checkout deletes a worktree file even though it is excluded by sparse-checkout, even if it is dirty.
 
-The 0xefbbbf looks interesting, it's BOM for utf-8.
+...
 
-> I tried compiling with both NO_ICONV=Y and ICONV_OMITS_BOM=Y, both have
-> the same failure.
+> I set up sparse-checkout to include only file1, not file2. file2 is now not in the worktree, even though it is in the commit I am checked out at. Then I create file2 with arbitrary content. Then a git checkout switching to the commit where file2 is removed also deletes it from the worktree.
+>
+> I assert that file2 should be left untouched by that checkout, because it is excluded by sparse-checkout. I guess file2 had its skip-worktree bit set before the checkout that removed it from the index; that should stop it being deleted in the worktree.
 
-I didn't check the code-path for NO_ICONV=Y but ICONV_OMITS_BOM=Y only
-affects output of converting *to* utf-16 and utf-32.
+In this case, 'file2' exists in the index at 'master' and
+'git checkout master' made the working directory appear as
+if it was at that position with the sparse-checkout
+patterns applied.
 
-So, I think AIX iconv implementation automatically add BOM to utf-8?
+The confusion happens that Git behaves differently when a
+file exists outside the sparse-checkout patterns based on
+whether the file actually exists in the index or not. Only
+an exact path match with a sparse index entry will cause
+this deletion.
 
-Perhap we need to call skip_utf8_bom somewhere?
+This is another reason why I prefer the "cone mode" patterns:
+it is harder to get this kind of problem. You could easily
+make it happen with "folder2/file" where "folder2" is not in
+the cone mode sparse-checkout, but it's less likely in some
+way.
+ 
+> To be clear, I expect that last “ls” to still show “file1  file2”.
 
--- Danh
+I can understand this expectation. I don't think that if
+we changed this behavior that it would cause any confusion.
+That is, as long as the file disappears when no longer dirty,
+_and_ a command such as "git reset --hard" overwrites the
+file. It is important to provide ways for users to remove
+the file when they want it gone.
 
-> In any case, I think AIX test failures (or other obscure platforms I
-> test) are rather uninteresting per-se, I mainly test on these to smoke
-> out bad assumptions elsewhere. E.g. non-POSIX code, perhaps in this case
-> we're relying on some unportable iconv assumption, or maybe not...
->     
-> 
-> 1.
-> Initialized empty Git repository in /scratch/avar/git/t/trash directory.t2082-parallel-checkout-attributes/encoding/.git/
-> + cd encoding
-> + echo text
-> + 1> utf8-text
-> + write_utf16
-> + 0< utf8-text 1> utf16-text
-> checking prerequisite: NO_UTF16_BOM
-> 
-> mkdir -p "$TRASH_DIRECTORY/prereq-test-dir-NO_UTF16_BOM" &&
-> (
->         cd "$TRASH_DIRECTORY/prereq-test-dir-NO_UTF16_BOM" &&
->         test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
-> 
-> )
-> + mkdir -p /scratch/avar/git/t/trash directory.t2082-parallel-checkout-attributes/prereq-test-dir-NO_UTF16_BOM
-> + cd /scratch/avar/git/t/trash directory.t2082-parallel-checkout-attributes/prereq-test-dir-NO_UTF16_BOM
-> + printf abc
-> + iconv -f UTF-8 -t UTF-16
-> + wc -c
-> + test 6 = 6
-> prerequisite NO_UTF16_BOM ok
-> + echo A working-tree-encoding=UTF-16
-> + 1> .gitattributes
-> + cp utf16-text A
-> + cp utf8-text B
-> + git add A B .gitattributes
-> + git commit -m encoding
-> [master (root-commit) 65fa7e8] encoding
->  Author: A U Thor <author@example.com>
->  3 files changed, 3 insertions(+)
->  create mode 100644 .gitattributes
->  create mode 100644 A
->  create mode 100644 B
-> + git cat-file -p :A
-> + 1> A.internal
-> + test_cmp_bin utf8-text A.internal
-> utf8-text A.internal differ: char 1, line 1
-> error: last command exited with $?=1
-> not ok 2 - parallel-checkout with re-encoding
-> #
-> #               set_checkout_config 2 0 &&
-> #               git init encoding &&
-> #               (
-> #                       cd encoding &&
-> #                       echo text >utf8-text &&
-> #                       write_utf16 <utf8-text >utf16-text &&
-> #
-> #                       echo "A working-tree-encoding=UTF-16" >.gitattributes &&
-> #                       cp utf16-text A &&
-> #                       cp utf8-text B &&
-> #                       git add A B .gitattributes &&
-> #                       git commit -m encoding &&
-> #
-> #                       # Check that A is stored in UTF-8
-> #                       git cat-file -p :A >A.internal &&
-> #                       test_cmp_bin utf8-text A.internal &&
-> #
-> #                       rm A B &&
-> #                       test_checkout_workers 2 git checkout A B &&
-> #
-> #                       # Check that A (and only A) is re-encoded during checkout
-> #                       test_cmp_bin utf16-text A &&
-> #                       test_cmp_bin utf8-text B
-> #               )
-> #
-> 
-> 2. 
-> 
-> avar@gcc119:[/scratch/avar/git/t]perl -nle 'print unpack "H*"' trash\ directory.t0028-working-tree-encoding/test.utf8.raw  
-> 68616c6c6f20746865726521
-> 63616e20796f752072656164206d653f
-> avar@gcc119:[/scratch/avar/git/t]perl -nle 'print unpack "H*"' trash\ directory.t0028-working-tree-encoding/test.utf16.git    
-> efbbbf68616c6c6f20746865726521
-> 63616e20796f752072656164206d653f
-
--- 
-Danh
+Thanks,
+-Stolee
