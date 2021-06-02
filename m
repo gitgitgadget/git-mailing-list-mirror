@@ -2,123 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED388C4708F
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2978C4708F
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:59:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2BC561263
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:47:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9FDB613B1
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229825AbhFBLtO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 07:49:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58678 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbhFBLtN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 07:49:13 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C710BC061574
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 04:47:29 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id n4so1992840wrw.3
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 04:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=YXHyXhNoHmySoP7l8qc7CyXhXYmnYzCTwWUPkwLKLSs=;
-        b=e2TmwSjP39bN1uYQsfsfY7JVDUNpQYpX8jVzpbWj2L55TJ+jwSqBwNf7RLW4FY0VyW
-         s4QqGTHhO5bOSVOKrKxXQvaqJE3e29kTlFVIfHuUg2I6OfmSG4ZNC9JXUoWQ+bEvBGps
-         6pBXQe3UfBS35byuQIPnmIJGLJUyVFBBkx2jBQzyKCsaFmSaHUvllxQv/I2GWmHkGvE3
-         0rQGso+wQzoqV+0dNwDhYpIwb4FJr+wyBkjsQby3KLxREL4Re48mjQQ5xhy+1Nb2lS/D
-         zgWLfRBZq4GcjT+y2gGl+7AuT+ern0qWda4iCTnatUV/ocHJrUMOyNLnJ7ScrbRAMA+q
-         qNeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=YXHyXhNoHmySoP7l8qc7CyXhXYmnYzCTwWUPkwLKLSs=;
-        b=DMgUaQWloogn7G1UwI2gImIOUTYhSgI0CIU5sNXpiV7XYG7fIi5CIR1caaJAayLwWf
-         1RCtTsV191+SyDjsZZ/jPr2LE/C+wxfguoOfk6OKgSOS8/pf/SGJ1YX7uyplGXiub2kW
-         w1+4kaQd9Uy8m6OB9j9Mo3xItuvBH2D5etkWVDiJ4rVBAADZ2C50dMSJLmZWvaSRM22D
-         r2vMC2hsQTWpnC4xE7YPj+hr6ZclOZNTsk4BUk+c1B5oznTZI9q4vjSeoN8zaXsYuBc/
-         CX6BJ09H6gexA6ONVmCjy8KeBBpkjiAYnSFjThHhntYXZqeSiPw2UpF0FV97sR2Jk42g
-         cA5w==
-X-Gm-Message-State: AOAM532VWmfPyI8hDC/5ko88+Fy+1Ln+as5lp7/Nn+UY9BFHJN9YxlDR
-        KHOqjzVIi8I0IMOPBT33QEjl30ghl1k=
-X-Google-Smtp-Source: ABdhPJy5KrdIQYxG4vZ7BXwSXKxd6/y0b2RLmocUQMgbFBfJEpP+qwwW0TT0kVGu2vkFhaPZv7AuuQ==
-X-Received: by 2002:a05:6000:50d:: with SMTP id a13mr31820768wrf.130.1622634448447;
-        Wed, 02 Jun 2021 04:47:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o11sm6567991wrq.93.2021.06.02.04.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 04:47:28 -0700 (PDT)
-Message-Id: <pull.968.git.1622634446643.gitgitgadget@gmail.com>
-From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Jun 2021 11:47:26 +0000
-Subject: [PATCH] Remove warning that repack only works on non-promisor
- packfiles
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S229621AbhFBMBh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 08:01:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:39927 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229608AbhFBMBg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 08:01:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1622635188;
+        bh=y8ZCvpR0nAxWoX2K9TvROiPIoNtqJdTnH4gEMA4a7Xg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Q6ZJXbsp2WwMFobvo+UUMDoqeTtmKuUp0gbsj5ycVbMdOja9VYkwrmGjxXtgq/Mm9
+         1tWslAhivZ080cnSQT78LRv4BxkmWaXOENvWzeb5uL3jDnymufXMPSGHVVYYRmdAIW
+         edtnsaE2XJOtdPVtp0xqj6wernr00yx/QCd5udd8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.8.58] ([89.1.215.222]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdvmO-1lDhbe2JcM-00b3zs; Wed, 02
+ Jun 2021 13:59:48 +0200
+Date:   Wed, 2 Jun 2021 13:59:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?Q?Avar_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: CI: 'seen' minus a few passes tests, eh, almost
+In-Reply-To: <xmqqzgwiawm4.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2106021358410.55@tvgsbejvaqbjf.bet>
+References: <xmqqcztecuy7.fsf@gitster.g> <xmqqzgwiawm4.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ozjM8PEGu0Fioo+yv+ar5l0n+LI+CRh0+TRjjnf2nq8Z7lLoXbG
+ kRBgjTQNPBYxSfA0ctNMhiO9SBaGAIWDGyE0tjzwE4aS4Arwm7EzpOluspDrVz5d1vfth1n
+ Bs9MBOOXMmJJE3cBGEkovFaG9jymk/bJoQ1xXn3cN1As0Lov7gDkp2grsv/+KXbTAudHKAl
+ Y/PqSgrxm9PLreOh/n36Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gJ5jGMlAsFs=:xefYODUguToelu9IivTS65
+ i0hnZzI/fWMVDxBPJY2mkKJcGzJ2wFJI244/wP+6WgpgK7Qn9P9ouKoaywy5OE13RjqrvS5bX
+ WHR+fC1GB6ArgTPSLiYJ/wNueNO/oiv1RB2uSNxx1Ah05AD1MhBuzOlCW4X7CLYvlOTcBzNgz
+ rTOhXFQaDl1/7fHTs44PMCXWAI46kHbiKR9bgSf5QO3XoHfMmiZ6tx30C8BG7S1qr+ZdF+NyQ
+ 4Z3ukZCD8CIB91s8sTJzBtsuMwJSVWKit9x4WZX6XLmf1mnm/jvFLp6Dv7GyXUWILpP3QAeg7
+ rExo/s3L21dEGC+MYU457ut1Hk4DQQUi81IUMLmZ3JqHnKTiNYBjXRaLyJgfc1JyXBSW+6Gh/
+ 8oX542DcYKefTVoQ/RC+Kul72tDNHvcmygen1is/fjdOyGfdC1VvezcFzcZ8TV9z0r2DGAt8N
+ fyjvDFPflxbUPPUGDTmzdjxFw7IjKljk0FMFVhgGM0qvkgvGFbWjGVPjQR42JQwu7E8ZtV7hh
+ sxlXffrLsPFnD7Iekm3FvarlHokeEJSfKCN46ZHho/sKG0njwJgnr7chm6zxaeoJ1li8sev/E
+ f1WlxH3aGEmJisetIObwcbWZW0Whu4CUkT0mBQG13nioQhJAzK4nbLf0JzcLodRndcSrD6+cF
+ mTCBR6WBc9M2LCXbyLb4lonxMhIjqRdL7MCjWScBOYofFe0XE6opZE2+pQubm/YmhD2CiwfSd
+ dHB1/IJgT5lU5BN+YKDM5YAwHWNodnGyGMEaTj7k6IRv7+2O5UL2b60+AO8DTPY1HA3Twyrbx
+ EHTvsybLA7xbU7USdRWSmZ1etzgXvzQjsDS6Js8rSU28DoRoW973I4uHKz+EFeJ6I1Us/Ynft
+ mA2Kw/15LxgawvkN8ZZYXij4U5wIKnBchmkbjRTojWruoKYo9g8lq9HaTM1qy/Pj71c3XpKsQ
+ DZ5hfrFVmtua8MCbeKKGJPZwXJ7K6emUpFL71luoDFBmRa/S23+e3aezlWL1/mfFLYrDy6s8d
+ IjoHRPNEG++TYY2umeY5BqBzsY5BLDGZ8HoGR4h+TgaVfK0Ry8ZgdCHSnXS66moFtV2ouN7qi
+ fz/kvKvs13w84L4jwa6n6Er/fgI1ucnr/GX4cEoJiuiLbJMqeEBvf52Cw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+Hi Junio,
 
-The git-repack doc clearly states that it *does* operate on promisor
-packfiles (in a separate partition), with "-a" specified. Presumably
-the statements here are outdated, as they feature from the first doc
-in 2017 (and the repack support was added in 2018)
+On Wed, 26 May 2021, Junio C Hamano wrote:
 
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
-    Remove warning that repack only works on non-promisor packfiles
-    
-    The git-repack doc clearly states that it does operate on promisor
-    packfiles (in a separate partition), with "-a" specified. Presumably the
-    statements here are outdated, as they feature from the first doc in 2017
-    (and the repack support was added in 2018)
+> [CI failed, and was fixed...]
+>
+> Except that vs-build sometimes fails to download the sdk, that is.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-968%2FTaoK%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-968/TaoK/patch-1-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/968
+I have a patch series to help with that (at least a little bit), but I am
+holding it until after v2.32.0.
 
- Documentation/technical/partial-clone.txt | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
-
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index 0780d30caca6..a0dd7c66f247 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -242,8 +242,7 @@ remote in a specific order.
-   repository and can satisfy all such requests.
- 
- - Repack essentially treats promisor and non-promisor packfiles as 2
--  distinct partitions and does not mix them.  Repack currently only works
--  on non-promisor packfiles and loose objects.
-+  distinct partitions and does not mix them.
- 
- - Dynamic object fetching invokes fetch-pack once *for each item*
-   because most algorithms stumble upon a missing object and need to have
-@@ -273,9 +272,6 @@ to use those promisor remotes in that order."
- The user might want to work in a triangular work flow with multiple
- promisor remotes that each have an incomplete view of the repository.
- 
--- Allow repack to work on promisor packfiles (while keeping them distinct
--  from non-promisor packfiles).
--
- - Allow non-pathname-based filters to make use of packfile bitmaps (when
-   present).  This was just an omission during the initial implementation.
- 
-
-base-commit: ed125c4f07ba69c53c9f4d74ff395a4bf7854ea7
--- 
-gitgitgadget
+Ciao,
+Dscho
