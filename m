@@ -2,156 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A549DC4708F
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C0DFC47083
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:40:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89A796121D
-	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:29:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F19F160724
+	for <git@archiver.kernel.org>; Wed,  2 Jun 2021 11:40:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231652AbhFBLbF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 07:31:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231975AbhFBLbC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 07:31:02 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC7D5C061574
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 04:29:19 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id 65so480527qkg.12
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 04:29:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ktOK96fMbJBwd8HyIw4m27HfmxLCQbnf+Cahb+X79/k=;
-        b=qf5pf3dESXPL6GemqQQt18dAq5gryXa3gfERb+yrJmLKCdLHepBRYar9cZ9Ly5Nrlz
-         6Y+8p+puQFWZUtqxBbefHh9h0TjKER/ZKEudTl/IrFuHUhZLLOctO8f+ZaeVpPlU8afK
-         5IlJqp6EEPYCYmDQlECaOo/y4RF3Rhk1rdDeqLYJU37h0IxFEA06u5idv0clEmYyeYTj
-         M5dmpIgdL0w52oBANmTdbwAuk0lzBJZDki8Navj8Y1PsOQyjhRQ3z98QBga0rXwIb0Nb
-         0JQNIRBxsVoQTr4pzmTovi1PT/GFx1+VU1xITLnBTYU3yjxMK6OKt3BbmY0ZWqIG/Oye
-         misA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ktOK96fMbJBwd8HyIw4m27HfmxLCQbnf+Cahb+X79/k=;
-        b=sRcZ0ow/TgeZx7dotJUnbOwJAR+qt4jxDw7U9zWVDioRXwA0k8EzuLo242HAqYawbh
-         H4HWyUUdVWsOtqlc45R9n76HfF0JWgJpGd1EOrNEzJWf9PHf7TRBhKiPQjFKhsYY80Se
-         WB9Ta2ELXUGNwduu/WGD1uVafEmWRhJlAtJwf+q22X59KDAObGwlHz5LTk94NaSpHRjD
-         wGJihkXq42mHLezlPq+/oIGUmVVmgC6p7K4JCbNrVYnTigFXaA+3qwVLeG6s6GE3orda
-         gRsnbXQlIxy/+SPOBMYK2kXR0cIx5D/UNjBVyOaYrY0tJCpBn5yCaHQVXxRH7PuxQf1U
-         Ds9g==
-X-Gm-Message-State: AOAM530cpu0qat92/PIAEZbmfy7zvP+ijBg9PYVJslcvGTeHe8eCTcy6
-        nUyv6Tb8+Fvh7p4QeTSlbyk=
-X-Google-Smtp-Source: ABdhPJxb/+Lb+germRqnOYjD94EXKXqMa4tJE6VCl7J2UoGMbDSO3/I0pz6GSCM4yepcadSEtYuHpQ==
-X-Received: by 2002:a37:a70c:: with SMTP id q12mr2180186qke.382.1622633358903;
-        Wed, 02 Jun 2021 04:29:18 -0700 (PDT)
-Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:e0dc:47dd:9a00:5b65])
-        by smtp.gmail.com with ESMTPSA id l7sm6885878qki.135.2021.06.02.04.29.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jun 2021 04:29:18 -0700 (PDT)
-Subject: Re: [PATCH v2 1/5] merge-ort: replace string_list_df_name_compare
- with faster alternative
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
- <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
- <c4a0f6a9510c6e57604e7b0c62b1216a4f5f5618.1622559516.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <11416fb2-50f1-ebf0-e2ca-cebe64aeeeed@gmail.com>
-Date:   Wed, 2 Jun 2021 07:29:17 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
- Gecko/20100101 Thunderbird/78.10.2
+        id S229635AbhFBLmd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 07:42:33 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55781 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229482AbhFBLma (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 07:42:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1622634045;
+        bh=29LWWZI7nmRGc7cLf3qgHynk4ksSSueUL5ymrTE8viY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=HK2WoLajHJ4yb8IIK/jf/OyekrzePx3dUIOANq6C5yuj7lgb54BKfVtwkrVr+Vl1i
+         geuEcUSvukWsCQnZcAqx3dMmFzkTlFbJhLc4XAlmcr6tOpQfsy0Phc48zD4NoVcBjK
+         jpSpmT5lmTjGmjY4i7hrUDoBAUoFhVUV2OOIOqYA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.8.58] ([89.1.215.222]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9Wuk-1liv3R2uU0-005axK; Wed, 02
+ Jun 2021 13:40:45 +0200
+Date:   Wed, 2 Jun 2021 13:40:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] t9001-send-email.sh: fix expected absolute paths on
+ Windows
+In-Reply-To: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.2106021330470.55@tvgsbejvaqbjf.bet>
+References: <bb30fe2b-cd75-4782-24a6-08bb002a0367@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <c4a0f6a9510c6e57604e7b0c62b1216a4f5f5618.1622559516.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-851272454-1622634045=:55"
+X-Provags-ID: V03:K1:s15KoPwmQRLV2E3eioTcKXSCljeqnD4I7+PaF8ZXhEY5uEZg1SU
+ Ay133rumxYjlmjofCCjW8L43PIH5qpHKq62K5wkGpgKDQlw3mSNGK9R9OpHHm2V+fT/PK6+
+ b5BGRNOSq1QLc85nSVTtE/8i0q+e5zw0bhKUJRy2JxSwlKLCA9tZqfO3qFv51Sp5bToEbzh
+ uSTLZQJZvzFivfvD8sVkg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bdLmHN0w3FI=:pfnSaczwpIs569MLYCRMV5
+ 7xnp/DC6q+R7rt+CjkjUHaggfdwR8Z9v4tXYeQc6pcCWzwWcdN3fyJ426Q5keeyyn2ZeBLjZY
+ 2oKAdbiGILpSAH38NJhiqLcbffKbnYC+mdyVZFp4eRxtfVDk5IhHmY3Ewe1UbFGzanIUhpxye
+ Lu0e4Gqlxuc6MWaJRSVXC/4tA+O1Nz+NZI4pqq6AkXZ0U1VefSnZccYaxvpTM+pvquOXE5LD8
+ JoV+kI08zvGDhLlK1V3J3Mgg6KgS/+wwEhNcEemkEnhSbUPVmhsyKoCgDgoAGwAInCyNKshhT
+ rhPsvBeHRKAXe8XMlcDoXzyvv0/ksKnsZqYnqD9wyzbUi1lb0S+8jrbFR0B66IAecqiDVZNkR
+ 3+Ktsu6wqCps0MkKZdldAXeFtRDPGrE6T/whAn2FbCpHg2t1ebAEEXhMCLKXExfZiKnaiVkt0
+ vazXYJo/YO60e1dAJRpq+ZJnNNH2phEcBCv216hVkghAr3KER8nEYLNPtjonWR+mPC8vWUV6h
+ jYP/YWI9qqhVZo8iiI+UMfDGoiuHecIXh5Ty1azD2pykzNC3auw/z+yhjJmFGeugTCr1wZdHR
+ TQSZGU79jmvXiM9rORNm5q2tMhrqT3XEKeJQHbubRaQ8GAvZ27skf9J1Wauy2TtOjbU2rMEIL
+ A55vGwoCs3p4X7qZXxRDGXad27v9S32qufGR7QrYMJqS1L1TK0CNfVkUFvT9WWQX2XDGTUOFN
+ 2xB28jf8OW88HE8z7u3uJJcONZSazm6HdkvCDcO+k4EujFz2yFNeFv8PlADlFBaBcBY9ku0bN
+ Fc8tGRI6s3JmuI7MANStceeVryWIARO8D3A+o+ePtJL80z7k/aCMhUNxNpVubYQXBsEDu0iB+
+ Ws25FafoSNk03ChLQDXuk9rdNWZYaYLiKbD6ljvbt1oiC+ciVn7tkkfheRAnwXMALE//Jfg8u
+ rELDAvBKp93R0fA4s9ZtwmgeZPXLvg5tnpnRRCArtplQ2yeyhQWpe8OLLmNY61wZyhlNMdEkZ
+ nowksUxv+zZNXrs4GL3EAAp4XXLivGUANRoMzudRrEFgzWc4j8iJv60rukguKMCvWNRjzms5k
+ uh/UKlzQqMq3bO2J4RWcjNiGDGF+CtV7j3A13Lt+EK7I0/bA7Ty7hI0ag==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/1/21 10:58 AM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-...
->  	/*
-> -	 * Here we only care that entries for D/F conflicts are
-> -	 * adjacent, in particular with the file of the D/F conflict
-> -	 * appearing before files below the corresponding directory.
-> -	 * The order of the rest of the list is irrelevant for us.
-> +	 * Here we only care that entries for directories appear adjacent
-> +	 * to and before files underneath the directory.  We can achieve
-> +	 * that by pretending to add a trailing slash to every file and
-> +	 * then sorting.  In other words, we do not want the natural
-> +	 * sorting of
-> +	 *     foo
-> +	 *     foo.txt
-> +	 *     foo/bar
-> +	 * Instead, we want "foo" to sort as though it were "foo/", so that
-> +	 * we instead get
-> +	 *     foo.txt
-> +	 *     foo
-> +	 *     foo/bar
-> +	 * To achieve this, we basically implement our own strcmp, except that
-> +	 * if we get to the end of either string instead of comparing NUL to
-> +	 * another character, we compare '/' to it.
-> +	 *
-> +	 * If this unusual "sort as though '/' were appended" perplexes
-> +	 * you, perhaps it will help to note that this is not the final
-> +	 * sort.  write_tree() will sort again without the trailing slash
-> +	 * magic, but just on paths immediately under a given tree.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I find this comment to be helpful.
+--8323328-851272454-1622634045=:55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> +	 * The reason to not use df_name_compare directly was that it was
-> +	 * just too expensive (we don't have the string lengths handy), so
-> +	 * I had to reimplement it.
+Hi Hannes,
 
-Just a hyper-nit I think first person works great in commit
-messages, as the author's name is clearly listed in context.
-Here, I'd prefer "so it was reimplemented" over "so I had to
-reimplement it" as the author will not be present in context.
+On Mon, 24 May 2021, Johannes Sixt wrote:
 
-> +
-> +	while (*one && (*one == *two)) {
-> +		one++;
-> +		two++;
-> +	}
-> +
-> +	c1 = *one;
-> +	if (!c1)
-> +		c1 = '/';
-> +
-> +	c2 = *two;
-> +	if (!c2)
-> +		c2 = '/';
+> Git for Windows is a native Windows program that works with native
+> absolute paths in the drive letter style C:\dir. The auxiliary
+> infrastructure is based on MSYS2, which uses POSIX style /C/dir.
 
-While I'm making other nits on this patch, perhaps this is
-an appropriate place for some ternary operators to compress
-the vertical space in this method:
+As far as I remember, VMS is also POSIX, and it has a different path
+style. Therefore I would probably use the term "Unix style" here instead
+of "POSIX style".
 
-	c1 = *one ? *one : '/';
-	c2 = *two ? *two : '/';
+But that has nothing to do with the validity of your point: it is still
+a correct and important observation.
 
-> +	if (c1 == c2) {
-> +		/* Getting here means one is a leading directory of the other */
-> +		return (*one) ? 1 : -1;
-> +	} else
-> +		return c1-c2;
+> When we test for output of absolute paths produced by git.exe, we
+> usally have to expect C:\dir style paths. To produce such expected
+> paths, we have to use $(pwd) in the test scripts; the alternative,
+> $PWD, produces a POSIX style path. ($PWD is a shell variable, and the
+> shell is bash, an MSYS2 program, and operates in the POSIX realm.)
+>
+> There are two recently added tests that were written to expect C:\dir
+> paths. The output that is tested is produced by `git send-email`, but
+> behind the scenes, this is a Perl script, which also works in the
+> POSIX realm and produces /C/dir style output.
+>
+> In the first test case that is changed here, replace $(pwd) by $PWD
+> so that the expected path is constructed using /C/dir style.
+>
+> The second test case sets core.hooksPath to an absolute path. Since
+> the test script talks to native git.exe, it is supposed to place a
+> C:/dir style path into the configuration; therefore, keep $(pwd).
+> When this configuration value is consumed by the Perl script, it is
+> transformed to /C/dir style by the MSYS2 layer and echoed back in
+> this form in the error message. Hence, do use $PWD for the expected
+> value.
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+>  When I say "the configuration is transformed to /C/dir style", I am
+>  actually hand-waving: I can observe that a transformation must
+>  happen somewhere, but I actually do not know where the conversion
+>  really happens. "The MSYS2 layer" is my best qualified guess.
 
-nit: "c1 - c2"
+Indeed, it is the MSYS2 runtime that performs this conversion. Concretely,
+whenever you call a non-MSYS2 program from within MSYS2, command-line
+arguments that look like Unix paths are converted by replacing forward
+slashes with backslashes and by prefixing absolute paths with MSYS2' root
+directory (as a Windows style path, of course).
 
-Thanks,
--Stolee
+However, in this instance, it is a different problem, I think.
+
+Perl cannot handle Windows style paths. At least _Git's_ Perl scripts
+cannot.
+
+For example, the `PATH` variable is assumed to contain colon-separated
+directory paths in our scripts. But that is not true on Windows: the colon
+already separates the drive letter from the rest of the path, and
+therefore the separator used in `PATH` is a _semicolon_.
+
+To help with this, the MSYS2 runtime converts the command-line arguments
+and environment variables that look like path lists (such as `PATH`) and
+paths (such as `SYSTEMROOT`) from Windows style to Unix style when it
+detects that, say, MSYS2's Perl is started from a non-MSYS2 program such
+as `git.exe`.
+
+Which means that the Perl code executed in =C3=86var's tests spits out Uni=
+x
+style paths.
+
+Happily for us, the MSYS2 Bash with which Git's test suite is expected to
+be executed on Windows understands those Unix style paths very well! All
+we need to do is to use them here, and that is what your patch does,
+therefore:
+
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+Thank you,
+Dscho
+
+>
+>  t/t9001-send-email.sh | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 65b3035371..68bebc505b 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -539,15 +539,14 @@ test_expect_success $PREREQ "--validate respects r=
+elative core.hooksPath path" '
+>  	test_path_is_file my-hooks.ran &&
+>  	cat >expect <<-EOF &&
+>  	fatal: longline.patch: rejected by sendemail-validate hook
+> -	fatal: command '"'"'$(pwd)/my-hooks/sendemail-validate'"'"' died with =
+exit code 1
+> +	fatal: command '"'"'$PWD/my-hooks/sendemail-validate'"'"' died with ex=
+it code 1
+>  	warning: no patches were sent
+>  	EOF
+>  	test_cmp expect actual
+>  '
+>
+>  test_expect_success $PREREQ "--validate respects absolute core.hooksPat=
+h path" '
+> -	hooks_path=3D"$(pwd)/my-hooks" &&
+> -	test_config core.hooksPath "$hooks_path" &&
+> +	test_config core.hooksPath "$(pwd)/my-hooks" &&
+>  	test_when_finished "rm my-hooks.ran" &&
+>  	test_must_fail git send-email \
+>  		--from=3D"Example <nobody@example.com>" \
+> @@ -558,7 +557,7 @@ test_expect_success $PREREQ "--validate respects abs=
+olute core.hooksPath path" '
+>  	test_path_is_file my-hooks.ran &&
+>  	cat >expect <<-EOF &&
+>  	fatal: longline.patch: rejected by sendemail-validate hook
+> -	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit=
+ code 1
+> +	fatal: command '"'"'$PWD/my-hooks/sendemail-validate'"'"' died with ex=
+it code 1
+>  	warning: no patches were sent
+>  	EOF
+>  	test_cmp expect actual
+> --
+> 2.31.0.152.g120726e270
+>
+>
+
+--8323328-851272454-1622634045=:55--
