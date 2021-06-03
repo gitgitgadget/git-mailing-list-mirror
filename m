@@ -2,102 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A47DC47083
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 02:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCEE6C47083
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 02:34:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31F93613D8
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 02:33:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0EF5613E6
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 02:34:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbhFCCf0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 22:35:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57202 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbhFCCfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 22:35:25 -0400
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F368C06174A
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 19:33:32 -0700 (PDT)
-Received: by mail-qk1-x72f.google.com with SMTP id 76so4542397qkn.13
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 19:33:32 -0700 (PDT)
+        id S229685AbhFCCfv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 22:35:51 -0400
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:50077 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229541AbhFCCfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 22:35:51 -0400
+Received: by mail-qk1-f202.google.com with SMTP id b19-20020a05620a0893b02902e956b29f5dso3186847qka.16
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 19:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=49G0rWpxQ6tStJqjGrR0cGX+5N95n6Fstzkt2WUln0U=;
-        b=Z6Mg2cXNK69QZXoS0Fi8QE8e02GDFZCtEDlTQlvjfV6n+KBlZw25SIHhdFCnuTPn++
-         +4PEXYYRb+tcDVLbSA/lUST30+gaxWwdehJXktrRjoVKugq6DTB3zq7Ig+1YsefcVJ9n
-         lX+I/aqsgB7QjeeRqSsx10ypxMQPzK84UgPdQturShOGGsItKtxosMjrKzkUaoln5K2I
-         7UmDAKpUB5hsawRJaFf3QiL+4HUFildwauzE4DC5Vk697BrqOPOyPwyMzhZ/ltVqOmTQ
-         x1VXNuOvPuSZnRSyYOqWHcztWUQYJ+E+2uhl9w4gozjPi/MAEVrdfzeDvvweh2+prPRO
-         pWCA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=sexLMqYaeDA7TbP7Cs6qXd9GtG/InPgcUdENPCrg4cI=;
+        b=Y59vqEmHyouQI9+PPZiXtWnHv5Vyt+lPV6f8Y5CoHRh76pO03vBtf93wTVnFazz9nb
+         3709cq2TTJ5UnCCxg00TH1CPmTYa+JomuC3RQxBfOPioEzMoJEOPLoJS2Hoe2Uo7bg/o
+         B5XdNeSXyRmsW84EAyNc0RXXbovZCANP3C3zBZzAiTSPCiczXri1UOhNqnRNbhm0VIVJ
+         SEQpO07DArJWYJO0TamoGZvWCvJbS0qLdFUykGqWYfQy8q+gMTa3iLP/HBDkWuJELNsz
+         X1qhImqV9ewAWOMAHmK6v9TsYGulb+m8BAwfN2XgaAufK8PI6YUsEDs/uOYaA3tWAQYL
+         G/VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=49G0rWpxQ6tStJqjGrR0cGX+5N95n6Fstzkt2WUln0U=;
-        b=OC0z/InVclrGMzsbokDppteBiCfmwJ5luloE4bHm/8WKLGXrp0zpdi5einyM2dvmfc
-         ZvW31gCs2m08tdm30y63vlKQuKR5+rm7iGsL3qLaG0du4LersAZcaUiJ8h0mEQKJApi9
-         a2pZmrGRgR1iMPMgpnS8kpnBbpAWc74HuucUYxApGmmDLRHEVoKVJebWBgd/+Tsnbjg4
-         U2dPTXbe9G2Kbve8FzK4oNRqugLA62W3JOe4hyhYLHgaitxsFB+dQqeHtllSHvVajmxA
-         M2u66l30qxVtr4b14+tQPwmCWvDPF1Jh3Vk4e7xB6RJpIinN8KAQCg0wKE9QvFSS6dU1
-         +7jw==
-X-Gm-Message-State: AOAM531piYUrEwhLXIp38RSLnOScAO63GIxvs82MgELDeu3Woh7/Fe3s
-        MpwFSuWMpU/TFhzmcgmQW7BPlQ==
-X-Google-Smtp-Source: ABdhPJz0SeAUL3JZYJEXEbiKGVZUoepNQWtYttMa3CVCKRWpkn/PjWmjmo2tsW7spE58nmC+Vt1UVQ==
-X-Received: by 2002:a05:620a:787:: with SMTP id 7mr30358799qka.397.1622687611185;
-        Wed, 02 Jun 2021 19:33:31 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:9178:81cf:a7f0:8e5d])
-        by smtp.gmail.com with ESMTPSA id 144sm1108467qkk.103.2021.06.02.19.33.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 19:33:30 -0700 (PDT)
-Date:   Wed, 2 Jun 2021 22:33:24 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Ilias Apostolou <ilias.apostolou.zero@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Request feature: =?utf-8?B?4oCTbm8t?= =?utf-8?Q?submodule?=
-Message-ID: <YLg/dLqYFEqHZJUn@nand.local>
-References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
- <YLfqiLbpPXWXHlBi@nand.local>
- <xmqq8s3r7oma.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8s3r7oma.fsf@gitster.g>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=sexLMqYaeDA7TbP7Cs6qXd9GtG/InPgcUdENPCrg4cI=;
+        b=JG+6UZ0ZczU7o4m4u3Is65zgMU55KBo64223bhEaZpsNaA0VYodsdwBui9AB2m6joO
+         qLZGugIoM+cZeR0doCHec0GKQ3XyThq3bt6PXESGiiGsT7MDGBVFI1zc91eTxazqGtZY
+         F8ywb4Ib7OD7v737+oRn3e7mlJXOyTZT/HlUiME7YePZ+HTTOv72rMTEPXFi1T/rrmM4
+         HToBY28mTDMlUdD4KKnMmuvu/PRCubDGa1YcUia6hxIeui1OrqUpJGfdYQcu1vN3Gt+H
+         yL1xS9XRt0A4AIFdrKzXn6qAXOZSU2Lvb5M6AGy3ms//aFYbtkx9gZmsBRLrLbGjTJz+
+         naQA==
+X-Gm-Message-State: AOAM530BlKNgZl0T7IaQEtevsCDoZ0eVIN7XPfgwBO8t4Lntlx9+FK3f
+        CvCY0WfmGJhHP4QzbZyxnx8i/k5Bjs/++EbpS3hT
+X-Google-Smtp-Source: ABdhPJw/hinp+m0NrTCZkeZQYIWPSdEGAXsS35xiU0l736egGf9HZ3YalwEvpDes6J7nqJP75FkL+B4jH/dMj0ZZWWUm
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:ad4:4dcb:: with SMTP id
+ cw11mr6207109qvb.54.1622687586866; Wed, 02 Jun 2021 19:33:06 -0700 (PDT)
+Date:   Wed,  2 Jun 2021 19:33:04 -0700
+In-Reply-To: <b2c72097e5e8985e7fdd8e3eee66cdf43d1b65c0.1619710329.git.gitgitgadget@gmail.com>
+Message-Id: <20210603023304.344682-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <b2c72097e5e8985e7fdd8e3eee66cdf43d1b65c0.1619710329.git.gitgitgadget@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc0.204.g9fa02ecfa5-goog
+Subject: Re: [PATCH 2/8] refs/files-backend: stop setting errno from lock_ref_oid_basic
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, hanwenn@gmail.com, hanwen@google.com,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 03, 2021 at 09:55:57AM +0900, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > In all honesty, though this seems like a niche request for ls-files to
-> > fulfill, ls-files already has quite the collection of options, so I
-> > wouldn't be sad to see it learn how to do this, too.
->
-> I would be somewhat sad for two reasons.
+> From: Han-Wen Nienhuys <hanwen@google.com>
+> 
+> Errno is a global variable written by almost all system calls, and therefore it
+> is hard to reason about its state. It's also useless for user-visible errors, as
+> it leaves no place to report the offending file and/or syscall.
 
-Mmm, that's a convincing set of reasons to think that this is a bad
-idea. (And I was sort of on the fence about it anyway by posting the
-whole thing as a short diff instead of a polished patch).
+I don't think this paragraph is useful.
 
-> I wonder if the "attr" magic of the pathspec, that allows you to
-> choose paths based on the attributes you set on them, is what the
-> original requestor missed.
+> For the copy/rename support, calls to lock_ref_oid_basic() in this file are
+> followed by:
+> 
+> * lock_ref_oid_basic (copy/rename rollback error path)
+> 
+> * write_ref_to_lockfile (both in the rollback path and the success path of
+>   copy/rename)
+> 
+> These calls do not inspect the incoming errno. As they perform I/O, they can
+> clobber errno. For this reason, callers cannot reliably observe the errno that
+> lock_ref_oid_basic() generated, so it is unsound for programmatic use.
+> 
+> For files_create_symref() and files_reflog_expire(), grepping over callers
+> showed no callers inspecting errno.
 
-Maybe... but relying on the attr magic for this particular case would
-force the requester to set that attribute on all submodules in their
-project, and constantly keep that in-sync with their .gitmodules. So, it
-certainly make it easier to handle a request like "I don't care about
-ls-files telling me about any submodule(s) except these ones", but
-perhaps at the expense of some extra bookkeeping.
+This is probably written more clearly as follows:
 
-I might be missing something, though.
+ No call to the static function lock_ref_oid_basic() is immediately
+ followed by an errno check, so stopping setting errno is safe. But as a
+ sanity check, lock_ref_oid_basic() is used in these functions:
+ - files_copy_or_rename_ref() - here, calls are followed by error() (which
+   performs I/O) or write_ref_to_lockfile() (which calls parse_object() which
+   may perform I/O)
+ - files_create_symref() - here, calls are followed by error() or
+   create_symref_locked() (which performs I/O and does not inspect
+   errno)
+ - files_reflog_expire() - here, calls are followed by error() or
+   refs_reflog_exists() (which calls a function in a vtable that is not
+   documented to use and/or preserve errno)
 
-Thanks,
-Taylor
+ So it is safe to stop setting errno in lock_ref_oid_basic().
+
+The diff itself looks good.
