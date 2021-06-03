@@ -2,162 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EE9DC47097
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 14:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6BA0C47082
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 15:33:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34585613BA
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 14:29:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB5DA6100B
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 15:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231376AbhFCObX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 10:31:23 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:44846 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231224AbhFCObW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 10:31:22 -0400
-Received: by mail-wm1-f51.google.com with SMTP id p13-20020a05600c358db029019f44afc845so3818044wmq.3
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 07:29:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Tir52MlPX17xSyX2qj3wnjMpbIlkVplbJi9ZqMS/qjU=;
-        b=RK0CktA+YWcYyofCZ00W3d1k7RPg2KnqrkDenmnp76rVf6nBAIu3S8Tp6Qd3/bm7TE
-         T3fsrh97YTOufJaIbZwKwa5K6BTU6PTYsUTpiIjmOHDlsMUcAR8HP14E6MDQSAgEwfYo
-         lHInFkPQZNgbkMKMhmBzWTINMhQef4e0uGD4hrH01v7EFqMWkxn/prxcq4u7uuCsprFh
-         2Ghzgxr/Q2Y3kRRQ3sRizTNmD00+Gc6Pn4t+ZDCj5zTM8hkxhxqCjOCxpBzkZvw3wxfn
-         EmgxyL0+7+5XOxfwU1nqCOM9G+nt0mXi+0eeSsH5GjKj+iDqAOuOf2gC4sSiK2Pk4eB9
-         6H/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=Tir52MlPX17xSyX2qj3wnjMpbIlkVplbJi9ZqMS/qjU=;
-        b=ioVxlbKu6+DRxHC3qphy2yiz9dM4QVDH9rxA7O6zBni1ufThUmcEUAO7Vw3TX9ucID
-         +jVW9NmR547skWOT9ZJmY8i/H8S6SfwTZqtKuOOSIewkNlrYDKdvufZTWdEauPa4SYcX
-         4SmGXbQC4n+td1SqpHR/qeSvbTEmLAm+uPZAKFY8VsGxdq74oKpJCAsObBLDCxLNx7Dm
-         EypGZpT4M3lTaQPcjkkQCHllLsVQGoOV8fw2g83t8JW+/b5rhLCDBCAqkSFCVcwDpNGM
-         Cx0+uXSsZarCNYqDDYmoHBlMhHx9+iqYToI+Z6ZOnfYPyX3sAoknTQC5+fjGrjFUEaV9
-         4E4Q==
-X-Gm-Message-State: AOAM530CM2G/sSYDxzZPCd6UkFhZqSV5pAwo3+iIV4yOiNrrSxxQgCzO
-        7k0DJoKzgzTh4Nm5r4S1L0bSQ3B3KUE=
-X-Google-Smtp-Source: ABdhPJxYDI7scX0A6VmCAli0KbYPNUXQmdzuk05feebgdo3duUKNuGZgSJ4V/L2oYtqcLcr8oHROsw==
-X-Received: by 2002:a05:600c:4e90:: with SMTP id f16mr33682921wmq.116.1622730517198;
-        Thu, 03 Jun 2021 07:28:37 -0700 (PDT)
-Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
-        by smtp.gmail.com with ESMTPSA id l5sm5819625wmi.46.2021.06.03.07.28.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jun 2021 07:28:36 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: The git spring cleanup challenge
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <87bl8n73om.fsf@evledraar.gmail.com>
- <60b8b882b9dc5_1a0a2d208e9@natae.notmuch>
- <87wnrb5cvl.fsf@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <dbbb5a73-12b5-27a1-63d4-eece1e60f57b@gmail.com>
-Date:   Thu, 3 Jun 2021 15:28:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        id S229799AbhFCPfn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 11:35:43 -0400
+Received: from mail.efficios.com ([167.114.26.124]:58866 "EHLO
+        mail.efficios.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229617AbhFCPfn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 11:35:43 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mail.efficios.com (Postfix) with ESMTP id E594131C75D;
+        Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
+Received: from mail.efficios.com ([127.0.0.1])
+        by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id eJCp_a_nWEsK; Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.efficios.com (Postfix) with ESMTP id 8672F31CA04;
+        Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.efficios.com 8672F31CA04
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+        s=default; t=1622734437;
+        bh=DKp9Kn9IOFj0rAa1smoreoI1xPw87j9ngxQ24mYrJBs=;
+        h=Date:From:To:Message-ID:MIME-Version;
+        b=W0NLN8o2HF9zHyJNFN8BDFot3aaEfAH2+zoVLTmd57z+jKtE6U5EZcAprQHQ+vOCh
+         qpg93Ht8CIYSYPxeg0yDDT/rI1nuCyNBYRqYANHbfPRPUTiaWD8rracpx2KhvwfJSu
+         UT8hNkzFCWbsvoDGL7a+FM2r1YhKRCMw2YNogE+SH4P/H+/q7krRXge0Qr7YWMQ+LX
+         C+47md2mINyIRJtq1LIBfefRlwm4GwfzRGbq2jiYozeE3I0kfR+qfcjaOTOxkW3bi3
+         E0rAhytfp7wydLmIjOhz85W7ZYu7IY03t6lx3NLVFfRkJhC49qxM6PUKkkRwpl0EuD
+         0ZzqS91BP7xnA==
+X-Virus-Scanned: amavisd-new at efficios.com
+Received: from mail.efficios.com ([127.0.0.1])
+        by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 7cKoZnbOfF31; Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
+Received: from mail03.efficios.com (mail03.efficios.com [167.114.26.124])
+        by mail.efficios.com (Postfix) with ESMTP id 765FB31C813;
+        Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
+Date:   Thu, 3 Jun 2021 11:33:57 -0400 (EDT)
+From:   Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Alexander Viro <viro@zeniv.linux.org.uk>,
+        git <git@vger.kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Jiri Kosina <trivial@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Message-ID: <654904857.6915.1622734437354.JavaMail.zimbra@efficios.com>
+In-Reply-To: <YLfe+HXl4hkzs44b@nand.local>
+References: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com> <YLej6F24Emm7SX35@zeniv-ca.linux.org.uk> <YLfe+HXl4hkzs44b@nand.local>
+Subject: Re: git feature request: git blame
+ --ignore-cleanup/--ignore-trivial
 MIME-Version: 1.0
-In-Reply-To: <87wnrb5cvl.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [167.114.26.124]
+X-Mailer: Zimbra 8.8.15_GA_4018 (ZimbraWebClient - FF88 (Linux)/8.8.15_GA_4026)
+Thread-Topic: git feature request: git blame --ignore-cleanup/--ignore-trivial
+Thread-Index: XLr69/WnC7jKcuBW+k7l9LYtwadObQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+----- On Jun 2, 2021, at 3:41 PM, Taylor Blau me@ttaylorr.com wrote:
 
-On 03/06/2021 13:31, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Jun 03 2021, Felipe Contreras wrote:
-> 
->> Ævar Arnfjörð Bjarmason wrote:
->>> So I skipped the "disable most config", but for what it's worth I think
->>> I'd miss these the most, I couldn't pick just N favorites, sorry:
->>>
->>>   * diff.colorMoved=true: super useful, but I'd be vary of turning it on
->>>     by default in its current form. E.g. on gcc.git's changelog files it
->>>     has really pathological performance characteristics.
-
-Would you be able say a bit more about this so I can try and reproduce 
-it please. I'm working on some patches [1] to improve the performance of 
-`diff --color-moved` and `diff --color-moved-ws` and it would be good to 
-test them on a problematic repo. At the moment I diffing two releases of 
-git to test performance on a large diff. I just cloned the last 18 
-months of gcc.git and Changelog seems to just be appended to.
-
->> Very nice! I didn't know about it. I'll pick it for my third day.
-> 
-> It makes patch review a lot easier, and also integrates nicely with -w.
-
-I find --color-moved-ws=allow-indentation-change helpful as well (it is 
-quite a bit slower at the moment but I have some patches to bring it up 
-to the speed of the other --color-moved modes.
-
-[1] https://github.com/phillipwood/git/tree/wip/diff-color-moved-tweaks
-
-> [...]
->>>   * commit.verbose=true: so you know what you're looking at in doing in
->>>     "git commit --amend".
+> On Wed, Jun 02, 2021 at 03:29:44PM +0000, Al Viro wrote:
+>> > Any maybe the patterns associated to "cleanup" and "trivial" commits
+>> > should be something that can be configured through a git config
+>> > file.
 >>
->> Aha! My alias had `commit -v` but I would want this on all commit
->> commands.
->>
->> Moreover, I was thinking on suggesting this by default. Who would it
->> hurt?
+>> Just an observation: quite a few subtle bugs arise from mistakes in
+>> what should've been a trivial cleanup.  Hell, I've seen bugs coming
+>> from rebase of provably no-op patches - with commit message unchanged.
+>> So IME this is counterproductive...
 > 
-> E.g. "git rebase -i" with "reword" now becomes a lot more verbose, I
-> think it's a feature, but others might disagree.
+> Yes, I find excluding revisions from 'git blame' to be rarely useful,
+> exactly for this reason.
 > 
-> It also exposes various edge cases around our parsing of the diff
-> v.s. commit message content in our apply.c etc. code, e.g. say you want
-> to blindly search-replace "diff" with "difference" in your commit
-> messages. You'll now change the "diff --git" line to "difference --git",
-> and now "commit" won't detect that it's the patch part anymore, and
-> merge that diff into your commit message itself.
+> You could probably use the '--ignore-revs-file' option of 'git blame' to
+> exclude commits you consider trivial ahead of time. If you had an
+> 'Is-trivial' trailer, I would probably do something like:
 > 
-> I can't remember if we pick up on "diff --git" exactly, IIRC, but
-> anyway, whatever part of the format you need to screw with, the point
-> stands. I've run into mistakes like that in the past, one recently made
-> it to this ML.
+>  $ git log --format='%H %(trailers:key=Is-trivial)' |
+>      grep "Is-trivial: true" | cut -d" " -f1 >exclude
+>  $ git blame --ignore-revs-file exclude ...
 
-I think the problem occurs if the scissors line gets messed up when 
-editing the commit message
+Nice trick! So within a project which standardize on a "Cleanup: " prefix
+at the beginning of the patch subject, this would look like:
 
->[...] 
->>> I also have a bunch of aliases that would not be useful to a general
->>> audience, but which I find I can't live without, some of the most
->>> commonly used ones:
->>>
->>>      # Log with "less" n/p already going to the next/prev commit
->>>      log-psfd = "!f() { PAGER=\"less -p'^commit'\" git log -p --stat --full-diff $@; }; f"
->>
->> Very neat.
-> 
-> I think similar to your "git help xyz" patches having coloring, we
-> really should consider things like that by default knowing that we're
-> invoking "less". I.e. if we got over the notion that our job is just to
-> throw data over the wall to "man" or the pager without any further
-> tweaking or integration.
+git log --format='%H Subject=("%s")' file.c | grep 'Subject=(\"Cleanup: ' | cut -d" " -f1 > exclude.txt
+git blame --ignore-revs-file exclude.txt file.c
 
-Speaking personally it is not that I think that we should just throw 
-data over the all to "man" but that if colors are a good idea we should 
-be thinking about the whole ecosystem and working with distributions or 
-the man authors to ensure all programs and users benefit from it not 
-just git.
+I fully understand that in many cases having the entire set of revisions is
+needed, because even a cleanup patch could be buggy, but IMHO it's nice to
+have a way to achieve this in situations where the cleanup patches get in the
+way of figuring out the most recent behavior changes in a given area of the
+code.
 
-Best Wishes
+Thanks,
 
-Phillip
+Mathieu
+
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+http://www.efficios.com
