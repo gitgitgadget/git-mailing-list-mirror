@@ -7,115 +7,147 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB853C47080
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 04:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCB94C47082
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 04:52:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A128861207
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 04:26:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1BCD613D7
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 04:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbhFCE2a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 00:28:30 -0400
-Received: from mail-ot1-f47.google.com ([209.85.210.47]:43641 "EHLO
-        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbhFCE23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 00:28:29 -0400
-Received: by mail-ot1-f47.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso4567272otu.10
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 21:26:32 -0700 (PDT)
+        id S229661AbhFCEyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 00:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229487AbhFCEyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 00:54:23 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F492C06174A
+        for <git@vger.kernel.org>; Wed,  2 Jun 2021 21:52:26 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id e7so4355628ils.3
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 21:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6bCky5H4ZcqPBrTNOAe/y8D9rcUA9hxRGNlITIrvFww=;
-        b=n7Fpqz4Es+Om6rLYaqF6Yj1NXuDMO4fAAdAaS/n/9pX2IqY+uXk0m3KA0mu4R27URl
-         bA9q72hn7vMnOauiMEQ/g0vCvTX/NEuBNg5l/uh3PeHTY/yE1pfVNOkY05hGTKto9U6K
-         RTBbMw6ZHb4g8K7DOPyGSc3GJ0cWHoJgF207ypaER0zozGL7UoNwClWETC8FYICr/rnZ
-         gXhgyg1KEsdbjlVYIp07MrTvrT9SWK6HicHBG9FIypOsZg0r4HmrOQ9vRW7kbkZ+l961
-         f/cM8RYOdL6anVoxrpKI4YfqGTrwGcnlHZPvnGGk/lAi6T4ENuXfJ6qCNF50FKkn0Z1z
-         wz5g==
+         :cc:content-transfer-encoding;
+        bh=lLtupaiWljx5IXvhcuG9fXupWF2BhrUg7iObIkfjlIA=;
+        b=ii+iqBJyQ+BLDxomTmhSiUWbCdOiH+uXR7CJHDhsDJFofC2sNKf/ps5QxDqUnv3OOv
+         LlsIfqQ4f6ZjwJntyMZj7JJvdui9db01Luw2UM+FAx3wMc5Mzhl/dw3aD9gd2xAeXWmO
+         I+Sk34iO83mFsDFH0WK0MRwn2fclXr/L6iQtBeIrQ8RpUZ7gfPgNIv9dfOagVxeH3pS+
+         0I4cVXFlNAKexp3w9gVnAsYyOdCHyLWR1amjAI+B5PsWJxmllnyBAgovoJhPu+Tg7kel
+         QSjvaYhdlJTZ3yySZN9p4dT6ne9R937g82KjoaY+6fou+jkKdzzWaRuHR5x9KmTEoWn0
+         t5CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6bCky5H4ZcqPBrTNOAe/y8D9rcUA9hxRGNlITIrvFww=;
-        b=ebABSbZCXx0BtYc9Q0eaAyoDPVvTCmhOjrSb17wlub+h/KDhk1xiQRa3H/OAB34kSt
-         Z6Lw7L8kDxMfRaWN4we1YhQBTufLymWEG2RKG6V8iGlo9Ph8s8tKIgeqgel6elluHSVA
-         76bIOCDI3RS0pccd77SrVmgjBko77BqdQBMl9bSmAiNeO2KiNVZimatQdxm0dMl3fu2Q
-         7vxymey7T8KerB2qN5a+oc6rB2mPmuVfsKY+wIvI/Bf/gIihD9HQVpqCa5wYUgfYFWZS
-         CmvH7vSW1qPAZJG+df8lLhRzbmCXIC6zvssqzLfgDaBhrBrgNqQ9lVsTNnAllfzd6zy5
-         +SNQ==
-X-Gm-Message-State: AOAM53045i2NfYUOWdk5LdfL4SUT8LRLuTQu+trfaxH+/xVlc0hiQ1dH
-        3WWyElgyjQvfbp2cEaGP2cQc43aYLgiwJqEZtW8=
-X-Google-Smtp-Source: ABdhPJyQDLexvho3HOXJDWIMReUEeed0TMU+nfc1KOGBYPspNFVMX1Jeadj/x02UaAlP6o3BSK/P3U5JV+a0YF7i0O0=
-X-Received: by 2002:a9d:7096:: with SMTP id l22mr29014654otj.345.1622694332404;
- Wed, 02 Jun 2021 21:25:32 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=lLtupaiWljx5IXvhcuG9fXupWF2BhrUg7iObIkfjlIA=;
+        b=AMpXJhO3gYpBI+aDAoUZLLULuoe8u77p7i+67hM4HvDfyh4yK5kkXxXLQuSmLdkhk9
+         byVFHIUf+7SBtc7k9G2JHus+P5mQcai8LVb4cPAf31zuwx+1Z6+PEYhGK4DSHoHQsH65
+         XR7gp3kXEfLN1w6xMRWBnLgpyGO72DY1p4YZDOT2kBsDELKUjWtZf+JWrkQ/GPMVP0KT
+         CDVTblq7ot0FrmYbEsGbWdJfZ5rnmEyaWLVJmlC+4B7lHuvF2qo7t32k2xNlMhwMKrB0
+         KVb+vj5diBIl0iH++om82DbmYOQHQI0yAKBK8XuTucEr3Vxk3yuFm/wXNcsKRWNXmApp
+         zskA==
+X-Gm-Message-State: AOAM533ACsPqt35Jdq5yoflhAOyq8eIgfARC9KfzkecaRxppDxRBi9gH
+        wfezQ+w0lNCmmch272oUkhpLJNerd5xmXlB5w1s=
+X-Google-Smtp-Source: ABdhPJyJy5vO3nwgfwqLEVCGaTDOQ5ias5lC8aQ28+//tigpO5EFC6w8L5MYSa6AZx2GPR4a/+J8ijP/FKBg04DWqqk=
+X-Received: by 2002:a92:b0b:: with SMTP id b11mr24098472ilf.301.1622695945603;
+ Wed, 02 Jun 2021 21:52:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <60b5d281552d6_e359f20828@natae.notmuch> <87wnrd6wqj.fsf@osv.gnss.ru>
- <CABPp-BH7f+sM_POEsSSvmz_p=oEzHQcvTk_cEhTGeb-yq9fq_A@mail.gmail.com> <60b832316cfa8_187c7d20826@natae.notmuch>
-In-Reply-To: <60b832316cfa8_187c7d20826@natae.notmuch>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 2 Jun 2021 21:25:21 -0700
-Message-ID: <CABPp-BEwueg9V0PHUZ=ZUrTRpqwqN2b2b3t4owkizr75a+BDUA@mail.gmail.com>
-Subject: Re: The git spring cleanup challenge
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+References: <pull.966.git.1622558243.gitgitgadget@gmail.com>
+ <97955705c22e00a718a8de7555ab7e0e401e792e.1622558243.git.gitgitgadget@gmail.com>
+ <xmqq1r9j7l60.fsf@gitster.g>
+In-Reply-To: <xmqq1r9j7l60.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 3 Jun 2021 12:52:14 +0800
+Message-ID: <CAOLTT8TzZHsZfLtgS8G=fvE5hQzP-1PBnS8yyj41y2PtZtBh0g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] [GSOC] ref-filter: add obj-type check in grab contents
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 2, 2021 at 6:36 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=883=E6=97=
+=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=8810:10=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Elijah Newren wrote:
-> > On Tue, Jun 1, 2021 at 3:39 PM Sergey Organov <sorganov@gmail.com> wrote:
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > > [diff]
-> > >         algorithm = patience
-> >
-> > Any reason for patience vs. histogram?
+> >  /* See grab_values */
+> > -static void grab_sub_body_contents(struct atom_value *val, int deref, =
+void *buf)
+> > +static void grab_sub_body_contents(struct atom_value *val, int deref, =
+void *buf,
+> > +                                struct object *obj)
 >
-> Is histogram better than default?
+> Neither this step or the next change needs anything but type member
+> of the 'obj' (and 'buf' is coming from oi.content of the result of
+> asking about that same 'obj').
+>
+> I wonder if we should do one of the following:
+>
+>  (1) stop passing "void *buf" and instead "struct expand_data
+>      *data", and use "data->content" to access "buf", which would
+>      allow you to access "data->type" to perform the added check.
+>
+>  (2) instead of adding "struct obj *obj" to the parameters, just add
+>      "enum object_type type", as that is the only thing you need.
+>
+> Obviously (2) is with lessor impact, but if it can be done safely
+> without breaking the code [*], (1) would probably be a much more
+> preferrable direction to go in the longer term.
+>
 
-Yes, definitely.  I think diff.algorithm should default to histogram,
-personally.
+I agree with (1). In future versions of grab_sub_body_contents(), we will
+use the content of "data" more frequently instead of using the
+crude "obj". The type provided by "obj" can also be provided by
+"data". So yes, I would be very willing to let grab_sub_body_contents()
+only use "data". (delete "obj")
 
-See also commits 85551232b56e (perf: compare diff algorithms,
-2012-03-06) and c8017176ac8f (merge-ort: use histogram diff,
-2020-12-13).
+E.g.
 
-> > > [merge]
-> > >         conflictStyle = diff3
-> > >
-> >
-> > Anyway, here's my list to join in on the fun...
-> >
-> > [branch]
-> >         sort = authordate
+static void grab_sub_body_contents(struct atom_value *val, int deref,
+struct expand_data *data)
+
+Using (2), we will need more parameters to pass other object info.
+
+>     Side note [*].  A caller is allowed to choose to feed "buf" that
+>     is different from "oi.content" (perhaps buf may sometimes want
+>     to be a utf-8 recoded version of oi.content for certain types of
+>     objects) with the current system, but if we pass expand_data
+>     throughout the callchain, such a caller is broken, for example.
 >
-> Nice. I didn't know that existed.
->
-> I have `tag.sort = -version:refname`, and after a few days without I'm
-> wondering why it isn't the default.
->
-> > [alias]
-> >         brief = !git log --no-walk --abbrev=12 --pretty=reference
->
-> I find it odd that you prefer `git log --no-walk` over
-> `git show --quiet`.
 
-Why?  Both log and show require an extra flag, so why should the
-choice matter or be surprising?
+Just see the situation in front of us: grab_sub_body_contents()
+have only one caller: grab_values(). If someone need a function like
+grab_sub_body_contents() to grab another buf, they can use rewrite
+a more universal function interface:
 
-I happen to use log a lot more than show, so I think in terms of
-adding flags to git log rather than the ones I need to add to git
-show.  Not a big deal either way, though.
+static void grab_sub_body_contents(struct atom_value *val, int deref,
+struct expand_data *data)
+{
+   grab_sub_body_contents_internal(val, deref, data->content,
+data->size, data->type);
+}
 
-> > [log]
-> >         mailmap = true
->
-> Another one that I don't see why it isn't the default.
+static void grab_sub_body_contents_internal(struct atom_value *val,
+int deref, void *buf,
+                                           unsigned long buf_size,
+enum object_type type)
+{
+...
+}
 
-It is the default and has been for a couple years; see f3eda90ffc10
-(log: really flip the --mailmap default, 2019-08-01).  I just never
-cleaned up my config.
+But for the time being, the above one is sufficient.
+
+Thanks.
+--
+ZheNing Hu
