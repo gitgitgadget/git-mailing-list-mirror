@@ -2,114 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6BA0C47082
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 15:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EAB0C47096
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 16:30:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB5DA6100B
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 15:33:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C96F613E4
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 16:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbhFCPfn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 11:35:43 -0400
-Received: from mail.efficios.com ([167.114.26.124]:58866 "EHLO
-        mail.efficios.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229617AbhFCPfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 11:35:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.efficios.com (Postfix) with ESMTP id E594131C75D;
-        Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
-Received: from mail.efficios.com ([127.0.0.1])
-        by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id eJCp_a_nWEsK; Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.efficios.com (Postfix) with ESMTP id 8672F31CA04;
-        Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.efficios.com 8672F31CA04
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
-        s=default; t=1622734437;
-        bh=DKp9Kn9IOFj0rAa1smoreoI1xPw87j9ngxQ24mYrJBs=;
-        h=Date:From:To:Message-ID:MIME-Version;
-        b=W0NLN8o2HF9zHyJNFN8BDFot3aaEfAH2+zoVLTmd57z+jKtE6U5EZcAprQHQ+vOCh
-         qpg93Ht8CIYSYPxeg0yDDT/rI1nuCyNBYRqYANHbfPRPUTiaWD8rracpx2KhvwfJSu
-         UT8hNkzFCWbsvoDGL7a+FM2r1YhKRCMw2YNogE+SH4P/H+/q7krRXge0Qr7YWMQ+LX
-         C+47md2mINyIRJtq1LIBfefRlwm4GwfzRGbq2jiYozeE3I0kfR+qfcjaOTOxkW3bi3
-         E0rAhytfp7wydLmIjOhz85W7ZYu7IY03t6lx3NLVFfRkJhC49qxM6PUKkkRwpl0EuD
-         0ZzqS91BP7xnA==
-X-Virus-Scanned: amavisd-new at efficios.com
-Received: from mail.efficios.com ([127.0.0.1])
-        by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 7cKoZnbOfF31; Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
-Received: from mail03.efficios.com (mail03.efficios.com [167.114.26.124])
-        by mail.efficios.com (Postfix) with ESMTP id 765FB31C813;
-        Thu,  3 Jun 2021 11:33:57 -0400 (EDT)
-Date:   Thu, 3 Jun 2021 11:33:57 -0400 (EDT)
-From:   Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Alexander Viro <viro@zeniv.linux.org.uk>,
-        git <git@vger.kernel.org>, Peter Zijlstra <peterz@infradead.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Jiri Kosina <trivial@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Message-ID: <654904857.6915.1622734437354.JavaMail.zimbra@efficios.com>
-In-Reply-To: <YLfe+HXl4hkzs44b@nand.local>
-References: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com> <YLej6F24Emm7SX35@zeniv-ca.linux.org.uk> <YLfe+HXl4hkzs44b@nand.local>
-Subject: Re: git feature request: git blame
- --ignore-cleanup/--ignore-trivial
+        id S229837AbhFCQcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 12:32:14 -0400
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:41874 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229656AbhFCQcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 12:32:13 -0400
+Received: by mail-wr1-f52.google.com with SMTP id h8so6455831wrz.8
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 09:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KfbMo4OHPZFviIhBEBUFUD7CCPae2uLEKbGSSWVYR24=;
+        b=UAUj+yapBxKMKBbzyY6Ft17yMy4aDOlgupp6k0QSOyCSSlJ57qEudIWQwwNHcV4hq5
+         Bw2iCgLXu67hUwpZyPSGzUauqC+1XKO6rYuzXAUpuY2VkKgSo1Kikd07S2/TxRapzPKj
+         XtdFXXCOkD6XAkfQtbU37R5p9QE87g5EDlDF7amnywVLAXS4ShIBt6cfMsqcu+DFZ9gj
+         EH3TXTQi3hIbwmydLkrOlgg3eCnASWmBxSaaIvxqDsnYIQ3NiFsotxobkFYM+FzmCACZ
+         DK6flY4bJlihSgiTxbpDmKGNxjgvn7HnVzYNxgfL7a0hNMUGmMan6aLk0CB2YcUD1bUn
+         x6Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KfbMo4OHPZFviIhBEBUFUD7CCPae2uLEKbGSSWVYR24=;
+        b=EwvCtSXVXozKDyA6+5Das99lcvt3+jJ/9RlwJPSK54LRi52ExRILjJfASwimjdFlYX
+         pd32Ad8tIS1M1fm8BRaINZVRFlCn7H7iaps+lzo4J9ZzRF4g0w3k2xpFmHocabKbhAD6
+         ChnQzxfUwIZyf4fGI2CIxBD7vYPB//3C2InXZbNb6Nfb8B3kD/bLIf7Y0ouyJSykO0md
+         np3KLk9iMYKzkW2NGBu69KWN2g6/WBjoJFqtH5DtbivUUoVnazbXWX2Gbx4W3Fki/aX+
+         91ASN9EaxlhooQ00Zz86Rc/7ocoq65d64CdRosCb6VDdfIYWUq78fHX94qxtwTmpn3s5
+         UNMg==
+X-Gm-Message-State: AOAM533CI2tiTHZbaxXOQ/vrQosj6+Ls5lWcmgXfvIGW35nJsYhe8N56
+        SCHzJYygvZ6xT3jm1vWS7NImR6yZnHY=
+X-Google-Smtp-Source: ABdhPJxk2LgpTmBXhaPVmOOCZO1DoffFFvEMIm2uCZ3Wj6zTAnxR6WI3lN24cbmDM9KAVVsa4EUxJQ==
+X-Received: by 2002:adf:e109:: with SMTP id t9mr782775wrz.372.1622737768113;
+        Thu, 03 Jun 2021 09:29:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c12sm4425129wrr.90.2021.06.03.09.29.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jun 2021 09:29:27 -0700 (PDT)
+Message-Id: <pull.967.v2.git.1622737766.gitgitgadget@gmail.com>
+In-Reply-To: <pull.967.git.1622558157.gitgitgadget@gmail.com>
+References: <pull.967.git.1622558157.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 03 Jun 2021 16:29:24 +0000
+Subject: [PATCH v2 0/2] [GSOC] cat-file: fix --batch report changed-type bug
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [167.114.26.124]
-X-Mailer: Zimbra 8.8.15_GA_4018 (ZimbraWebClient - FF88 (Linux)/8.8.15_GA_4026)
-Thread-Topic: git feature request: git blame --ignore-cleanup/--ignore-trivial
-Thread-Index: XLr69/WnC7jKcuBW+k7l9LYtwadObQ==
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
------ On Jun 2, 2021, at 3:41 PM, Taylor Blau me@ttaylorr.com wrote:
+Change from last version:
 
-> On Wed, Jun 02, 2021 at 03:29:44PM +0000, Al Viro wrote:
->> > Any maybe the patterns associated to "cleanup" and "trivial" commits
->> > should be something that can be configured through a git config
->> > file.
->>
->> Just an observation: quite a few subtle bugs arise from mistakes in
->> what should've been a trivial cleanup.  Hell, I've seen bugs coming
->> from rebase of provably no-op patches - with commit message unchanged.
->> So IME this is counterproductive...
-> 
-> Yes, I find excluding revisions from 'git blame' to be rarely useful,
-> exactly for this reason.
-> 
-> You could probably use the '--ignore-revs-file' option of 'git blame' to
-> exclude commits you consider trivial ahead of time. If you had an
-> 'Is-trivial' trailer, I would probably do something like:
-> 
->  $ git log --format='%H %(trailers:key=Is-trivial)' |
->      grep "Is-trivial: true" | cut -d" " -f1 >exclude
->  $ git blame --ignore-revs-file exclude ...
+ 1. Modified the test structure under the recommendation of Peff.
+ 2. Use clearer and more concise commit message help by Peff.
 
-Nice trick! So within a project which standardize on a "Cleanup: " prefix
-at the beginning of the patch subject, this would look like:
+ZheNing Hu (2):
+  [GSOC] cat-file: handle trivial --batch format with
+    --batch-all-objects
+  [GSOC] cat-file: merge two block into one
 
-git log --format='%H Subject=("%s")' file.c | grep 'Subject=(\"Cleanup: ' | cut -d" " -f1 > exclude.txt
-git blame --ignore-revs-file exclude.txt file.c
+ builtin/cat-file.c  | 10 ++++------
+ t/t1006-cat-file.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 6 deletions(-)
 
-I fully understand that in many cases having the entire set of revisions is
-needed, because even a cleanup patch could be buggy, but IMHO it's nice to
-have a way to achieve this in situations where the cleanup patches get in the
-way of figuring out the most recent behavior changes in a given area of the
-code.
 
-Thanks,
+base-commit: 5d5b1473453400224ebb126bf3947e0a3276bdf5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-967%2Fadlternative%2Fcat-file-batch-bug-fix-v2-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-967/adlternative/cat-file-batch-bug-fix-v2-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/967
 
-Mathieu
+Range-diff vs v1:
+
+ 1:  495cd90dbaf4 ! 1:  4af3b958dd05 [GSOC] cat-file: fix --batch report changed-type bug
+     @@ Metadata
+      Author: ZheNing Hu <adlternative@gmail.com>
+      
+       ## Commit message ##
+     -    [GSOC] cat-file: fix --batch report changed-type bug
+     +    [GSOC] cat-file: handle trivial --batch format with --batch-all-objects
+      
+     -    When `--batch` used with `--batch-all-objects`,
+     -    with some format atoms like %(objectname), %(rest)
+     -    or even no atoms may cause Git exit and report
+     -    "object xxx changed type!?".
+     +    The --batch code to print an object assumes we found out the type of
+     +    the object from calling oid_object_info_extended(). This is true for
+     +    the default format, but even in a custom format, we manually modify
+     +    the object_info struct to ask for the type.
+      
+     -    E.g. `git cat-file --batch="batman" --batch-all-objects`
+     +    This assumption was broken by 845de33a5b (cat-file: avoid noop calls
+     +    to sha1_object_info_extended, 2016-05-18). That commit skips the call
+     +    to oid_object_info_extended() entirely when --batch-all-objects is in
+     +    use, and the custom format does not include any placeholders that
+     +    require calling it.
+      
+     -    This is because we did not get the object type through
+     -    oid_object_info_extended(), it's composed of two
+     -    situations:
+     +    Or when the custom format only include placeholders like %(objectname) or
+     +    %(rest), oid_object_info_extended() will not get the type of the object.
+      
+     -    1. Since object_info is empty, skip_object_info is
+     -    set to true, We skipped collecting the object type.
+     +    This results in an error when we try to confirm that the type didn't
+     +    change:
+      
+     -    2. The formatting atom like %(objectname) does not require
+     -    oid_object_info_extended() to collect object types.
+     +    $ git cat-file --batch=batman --batch-all-objects
+     +    batman
+     +    fatal: object 000023961a0c02d6e21dc51ea3484ff71abf1c74 changed type!?
+      
+     -    The correct way to deal with it is to swap the order
+     -    of setting skip_object_info and setting typep. This
+     -    will ensure that we must get the type of the object
+     -    when using --batch.
+     +    and also has other subtle effects (e.g., we'd fail to stream a blob,
+     +    since we don't realize it's a blob in the first place).
+     +
+     +    We can fix this by flipping the order of the setup. The check for "do
+     +    we need to get the object info" must come _after_ we've decided
+     +    whether we need to look up the type.
+      
+          Helped-by: Jeff King <peff@peff.net>
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+     @@ t/t1006-cat-file.sh: test_expect_success 'cat-file --unordered works' '
+       	test_cmp expect actual
+       '
+       
+     ++test_expect_success 'set up object list for --batch-all-objects tests' '
+     ++	git -C all-two cat-file --batch-all-objects --batch-check="%(objectname)" >objects
+     ++'
+     ++
+      +test_expect_success 'cat-file --batch="%(objectname)" with --batch-all-objects will work' '
+     -+	git -C all-two cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
+      +	git -C all-two cat-file --batch="%(objectname)" <objects >expect &&
+      +	git -C all-two cat-file --batch-all-objects --batch="%(objectname)" >actual &&
+      +	cmp expect actual
+ 2:  f02c1144d916 ! 2:  759451e784de  [GSOC] cat-file: merge two block into one
+     @@ Metadata
+      Author: ZheNing Hu <adlternative@gmail.com>
+      
+       ## Commit message ##
+     -     [GSOC] cat-file: merge two block into one
+     +    [GSOC] cat-file: merge two block into one
+      
+     -     Because the two "if (opt->all_objects)" block
+     -     are redundant, merge them into one, to provide
+     -     better readability.
+     +    There are two "if (opt->all_objects)" blocks next
+     +    to each other, merge them into one to provide better
+     +    readability.
+      
+          Helped-by: Jeff King <peff@peff.net>
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 
 -- 
-Mathieu Desnoyers
-EfficiOS Inc.
-http://www.efficios.com
+gitgitgadget
