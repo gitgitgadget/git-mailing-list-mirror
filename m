@@ -2,110 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FFC5C47096
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 14:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EE9DC47097
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 14:29:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 257F26138C
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 14:14:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34585613BA
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 14:29:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbhFCOQE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 10:16:04 -0400
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:36478 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbhFCOQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 10:16:03 -0400
-Received: by mail-ot1-f41.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so5876581otl.3
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 07:14:19 -0700 (PDT)
+        id S231376AbhFCObX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 10:31:23 -0400
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:44846 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231224AbhFCObW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 10:31:22 -0400
+Received: by mail-wm1-f51.google.com with SMTP id p13-20020a05600c358db029019f44afc845so3818044wmq.3
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 07:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=34b0cg1cuXn+h6Pe9//LnEhOJd1CvITd7snsszAKMLE=;
-        b=i10IUIxqRep+/859J1Fh5J3Z9ayUxaYoKJT9v9vOQGTxYRyhgfIBRpIKrFTkcA8bnD
-         zC4VrR6KJajbnCaZfmUwwZkDOJ+gIA6ZSZqI9EDsNkwlXE6/EPEvm/X/nRtH752NGsz3
-         7sIvm0tlORi0B2t3df23j4ccLvt3ra6dcs/zwCZ84zcPcQTvW7k7a/CVEeB8SQ+HuLbS
-         18Dh2319T8TCjOaEJ1KC944X0V4LIXyPGNkiNN9DqcE9AYkF7Em7bt4Yg0e+FYi6XzKX
-         PXObW+zmXG8xgPc028Rm9osjWQMTBsAdHoiyqbF+oeFfKpHcWlVobHkKsWxVXOqaZsos
-         MbfQ==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Tir52MlPX17xSyX2qj3wnjMpbIlkVplbJi9ZqMS/qjU=;
+        b=RK0CktA+YWcYyofCZ00W3d1k7RPg2KnqrkDenmnp76rVf6nBAIu3S8Tp6Qd3/bm7TE
+         T3fsrh97YTOufJaIbZwKwa5K6BTU6PTYsUTpiIjmOHDlsMUcAR8HP14E6MDQSAgEwfYo
+         lHInFkPQZNgbkMKMhmBzWTINMhQef4e0uGD4hrH01v7EFqMWkxn/prxcq4u7uuCsprFh
+         2Ghzgxr/Q2Y3kRRQ3sRizTNmD00+Gc6Pn4t+ZDCj5zTM8hkxhxqCjOCxpBzkZvw3wxfn
+         EmgxyL0+7+5XOxfwU1nqCOM9G+nt0mXi+0eeSsH5GjKj+iDqAOuOf2gC4sSiK2Pk4eB9
+         6H/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=34b0cg1cuXn+h6Pe9//LnEhOJd1CvITd7snsszAKMLE=;
-        b=TDcsYfUnRusr9ZKScnVQ53KzWAdcw7V0fW+/dHbfR0tgmOT1lyIG8R2LWCne0u6Pgv
-         OkVZy+Hu92CwqfnCq6caU5BueNtDdIlFsGXgDtZ6N7JikgKob6Xq/crHPGpB3ajkqBDG
-         +b2VgeIhtuoEq+bRIQw8KGolXs5kAcOOLWRTbEwQzCTbfiPdbt4gOlUnf77vpZbXKrdL
-         qSe//ce/yI+r/XSVXnBJyOpVmVkOfxByCriuGoFbRK/AUvcLdgH3Hrodnmv62d6LHlbh
-         z13fzm2p1oojdzd+7qKCRQ+3JpzoCjjk8gOWSpDI8zpaheUdzc872sKsTX2/vHmPOQQ1
-         ik3Q==
-X-Gm-Message-State: AOAM530gSQil9kzxI3TVH+h2NJ8jZYotAY1n+LGpPksYdfQpjVBsuZ2l
-        GdwwJRshsEWP8BDmClfqJZpzkmuPWQawBqWzTss=
-X-Google-Smtp-Source: ABdhPJz/ZH8uWChrZpgyCone2uqQypRZtUdS645jn30KY/1C8dCtFkAL+n87zEZQhR/C5Uey38iMLJmGQqg+VOJjMyA=
-X-Received: by 2002:a9d:1a8:: with SMTP id e37mr2742639ote.316.1622729598866;
- Thu, 03 Jun 2021 07:13:18 -0700 (PDT)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=Tir52MlPX17xSyX2qj3wnjMpbIlkVplbJi9ZqMS/qjU=;
+        b=ioVxlbKu6+DRxHC3qphy2yiz9dM4QVDH9rxA7O6zBni1ufThUmcEUAO7Vw3TX9ucID
+         +jVW9NmR547skWOT9ZJmY8i/H8S6SfwTZqtKuOOSIewkNlrYDKdvufZTWdEauPa4SYcX
+         4SmGXbQC4n+td1SqpHR/qeSvbTEmLAm+uPZAKFY8VsGxdq74oKpJCAsObBLDCxLNx7Dm
+         EypGZpT4M3lTaQPcjkkQCHllLsVQGoOV8fw2g83t8JW+/b5rhLCDBCAqkSFCVcwDpNGM
+         Cx0+uXSsZarCNYqDDYmoHBlMhHx9+iqYToI+Z6ZOnfYPyX3sAoknTQC5+fjGrjFUEaV9
+         4E4Q==
+X-Gm-Message-State: AOAM530CM2G/sSYDxzZPCd6UkFhZqSV5pAwo3+iIV4yOiNrrSxxQgCzO
+        7k0DJoKzgzTh4Nm5r4S1L0bSQ3B3KUE=
+X-Google-Smtp-Source: ABdhPJxYDI7scX0A6VmCAli0KbYPNUXQmdzuk05feebgdo3duUKNuGZgSJ4V/L2oYtqcLcr8oHROsw==
+X-Received: by 2002:a05:600c:4e90:: with SMTP id f16mr33682921wmq.116.1622730517198;
+        Thu, 03 Jun 2021 07:28:37 -0700 (PDT)
+Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
+        by smtp.gmail.com with ESMTPSA id l5sm5819625wmi.46.2021.06.03.07.28.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 07:28:36 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: The git spring cleanup challenge
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <87bl8n73om.fsf@evledraar.gmail.com>
+ <60b8b882b9dc5_1a0a2d208e9@natae.notmuch>
+ <87wnrb5cvl.fsf@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <dbbb5a73-12b5-27a1-63d4-eece1e60f57b@gmail.com>
+Date:   Thu, 3 Jun 2021 15:28:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
- <pull.962.v2.git.1622559516.gitgitgadget@gmail.com> <45e1de5fe7808f5297d5e33d14c239d74de33bdc.1622559516.git.gitgitgadget@gmail.com>
- <1016e500-8169-7bb3-8428-b5ea35d19630@gmail.com>
-In-Reply-To: <1016e500-8169-7bb3-8428-b5ea35d19630@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Jun 2021 07:13:08 -0700
-Message-ID: <CABPp-BHaGEKYKCbwJxYgk7mY_mx6h9dSReRn=PXEpd0xCzqsdg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] diffcore-rename: enable limiting rename detection
- to relevant destinations
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87wnrb5cvl.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 3, 2021 at 5:54 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 6/1/2021 10:58 AM, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Our former optimizations focused on limiting rename detection to a
-> > pre-specified set of relevant sources.  This was because the merge logic
-> > only had a way of knowing which sources were relevant.  However, other
-> > callers of rename detection might benefit from being able to limit
-> > rename detection to a known set of relevant destinations.  In
-> > particular, a properly implemented `git log --follow` might benefit from
-> > such an ability.
->
-> I would be interested in seeing such an improvement. It could also
-> help the batch-download of missing blobs in a partial clone situation
-> because it would only need the "deletes" portion of the diff, since we
-> only care about one "add" (we'd need that blob, too, of course).
+Hi Ævar
 
-Oh, good point.  And in order to work well with the new prefetching
-improvements (which will be the next series submitted), I should
-really rename remove_unneeded_paths_from_src() to
-remove_unneeded_paths() and add a relevant_destinations parameter and
-use it, instead of having the strset_contains() check in
-diffcore_rename_extended.
+On 03/06/2021 13:31, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Jun 03 2021, Felipe Contreras wrote:
+> 
+>> Ævar Arnfjörð Bjarmason wrote:
+>>> So I skipped the "disable most config", but for what it's worth I think
+>>> I'd miss these the most, I couldn't pick just N favorites, sorry:
+>>>
+>>>   * diff.colorMoved=true: super useful, but I'd be vary of turning it on
+>>>     by default in its current form. E.g. on gcc.git's changelog files it
+>>>     has really pathological performance characteristics.
 
-> > Since the code to implement such limiting is very similar to what we've
-> > already done, just implement it now even though we do not yet have any
-> > callers making use of this ability.
->
-> However, I'm not sure that this change is warranted without such an
-> integration. Perhaps keep this patch here on the list as a reference
-> for anyone who wants to do the `git log --follow` speedup? This person
-> can include "you in the future".
->
-> I'm just worried that without a consumer, this code has no automated
-> validation and can either be buggy now or become buggy in the future
-> before someone starts trying to use the logic.
+Would you be able say a bit more about this so I can try and reproduce 
+it please. I'm working on some patches [1] to improve the performance of 
+`diff --color-moved` and `diff --color-moved-ws` and it would be good to 
+test them on a problematic repo. At the moment I diffing two releases of 
+git to test performance on a large diff. I just cloned the last 18 
+months of gcc.git and Changelog seems to just be appended to.
 
-Fair enough; I'll pull it out.
+>> Very nice! I didn't know about it. I'll pick it for my third day.
+> 
+> It makes patch review a lot easier, and also integrates nicely with -w.
+
+I find --color-moved-ws=allow-indentation-change helpful as well (it is 
+quite a bit slower at the moment but I have some patches to bring it up 
+to the speed of the other --color-moved modes.
+
+[1] https://github.com/phillipwood/git/tree/wip/diff-color-moved-tweaks
+
+> [...]
+>>>   * commit.verbose=true: so you know what you're looking at in doing in
+>>>     "git commit --amend".
+>>
+>> Aha! My alias had `commit -v` but I would want this on all commit
+>> commands.
+>>
+>> Moreover, I was thinking on suggesting this by default. Who would it
+>> hurt?
+> 
+> E.g. "git rebase -i" with "reword" now becomes a lot more verbose, I
+> think it's a feature, but others might disagree.
+> 
+> It also exposes various edge cases around our parsing of the diff
+> v.s. commit message content in our apply.c etc. code, e.g. say you want
+> to blindly search-replace "diff" with "difference" in your commit
+> messages. You'll now change the "diff --git" line to "difference --git",
+> and now "commit" won't detect that it's the patch part anymore, and
+> merge that diff into your commit message itself.
+> 
+> I can't remember if we pick up on "diff --git" exactly, IIRC, but
+> anyway, whatever part of the format you need to screw with, the point
+> stands. I've run into mistakes like that in the past, one recently made
+> it to this ML.
+
+I think the problem occurs if the scissors line gets messed up when 
+editing the commit message
+
+>[...] 
+>>> I also have a bunch of aliases that would not be useful to a general
+>>> audience, but which I find I can't live without, some of the most
+>>> commonly used ones:
+>>>
+>>>      # Log with "less" n/p already going to the next/prev commit
+>>>      log-psfd = "!f() { PAGER=\"less -p'^commit'\" git log -p --stat --full-diff $@; }; f"
+>>
+>> Very neat.
+> 
+> I think similar to your "git help xyz" patches having coloring, we
+> really should consider things like that by default knowing that we're
+> invoking "less". I.e. if we got over the notion that our job is just to
+> throw data over the wall to "man" or the pager without any further
+> tweaking or integration.
+
+Speaking personally it is not that I think that we should just throw 
+data over the all to "man" but that if colors are a good idea we should 
+be thinking about the whole ecosystem and working with distributions or 
+the man authors to ensure all programs and users benefit from it not 
+just git.
+
+Best Wishes
+
+Phillip
