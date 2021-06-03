@@ -2,202 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4545FC47082
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 12:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EB35C47096
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 12:54:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30A8D613B1
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 12:52:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE08161406
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 12:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231210AbhFCMyU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 08:54:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50642 "EHLO
+        id S231244AbhFCM4L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 08:56:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbhFCMyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 08:54:18 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AEE3C06174A
-        for <git@vger.kernel.org>; Thu,  3 Jun 2021 05:52:33 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id s6so6953357edu.10
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 05:52:33 -0700 (PDT)
+        with ESMTP id S229958AbhFCM4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 08:56:10 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 363B3C06174A
+        for <git@vger.kernel.org>; Thu,  3 Jun 2021 05:54:11 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id 5so3133140qvk.0
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 05:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=dqfIK2LC8P9e8ng5YQFcw3NcYA58kNWqSWIZPPgr2fI=;
-        b=ftVIPix/tv9eRJvphhwtdHCB4xjux7Onl68xXgi0eSJTtzYWeTMRxuxHfoDEgwVjDc
-         V6CEyb1z6kfVYVqh7FobDDGjsdjSUTXyxt5zrwj5We5POmRjJTXv6ml1IFNMgMEMggyJ
-         l6oP/gTf9pv8irXtJz8kgSMH0qyM67jtBzwNAhdCPqM0ureOVQY5rPh0HRpfyxzlyvT/
-         ti4B6DVwchVYKnWJB0q3D7Vy+XaUEQ6qYy4j6ZSDl4MPUUjYfLwTFgYlYobf7NuNSA+0
-         8o9X38YBKMHfd7D+XxHA1LtoRoh46XK9bEIsc1vIdz0PvvOgDchFnSdu8jnP5xy+3zC0
-         OHLg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LkauhG7MA748SMkSDPo5ueurzt/23EVvJSr3pH1/spA=;
+        b=U4GIL4YCexkPl5RcTAF0SPYDP1mBYAZepvkSAErQEfa0qxFG9m1PCXE6esu8On4Ffz
+         ds7t+XyL9bglNlRJvmS4h71a5TDOz7Fk8IK6qc9a3e78I22KzVXAZTt37cs37UhC9p4l
+         5riWh/QEmPdhMMPBsTLO94eMyf0b+sUfcv1xrlX3oCl3ogThAwun/37Y1y4bSQe62jQF
+         Ei2+GNCpW5S/9xa/a1uwUMmwe5F9y2eWS9p6vcufaKO5jfZg1/pL7yT4CBhmmHhP4HPS
+         daP/3h67QDkLno9KCOHxI4H8ucPTGXVMWrKUkZkT1/T5r02s7ceVJWGU86lcCv44uznB
+         blkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=dqfIK2LC8P9e8ng5YQFcw3NcYA58kNWqSWIZPPgr2fI=;
-        b=JAsOWu8fQk9f/D3Tp8zFICgX3V5GRRYZz/77BSGm/tAcXvK5Xkj20g8/VIoCOxLG32
-         R6lokmRIMfENbCaKyRy9WfmvWIsoclO212UDnwCyBr/eTwNDkusjh6Rob0oh/MEJFS9t
-         98EJlA2cJqG+VmeJRZGoDb9tX8X0bbizrP3+Uz0I9KRd2Zd8Ep8wXLLlIz9x1M6ZwkTX
-         RSqeKygLpbKzXUA6Pxj3zxRpUVBud8A5Sax+bZQezk9VIdiif/qLjjVWHpoCrhRydAZO
-         BpTMElqxbZQlQLqRML9yrCYkWQrYZOhpAs5EGF1IvCBTOYoyWglrPb21Iwf5CiubVAJy
-         nMVg==
-X-Gm-Message-State: AOAM531mjsNJmNr4lavWB75289c1e1FvgN+YDj00+jkpohulb9M2EO2O
-        LOaJ7uN7twg8aImchXRLTRU=
-X-Google-Smtp-Source: ABdhPJxEj8xiPdfqhJFdI25hfkF4v3/S+xQGl9Q3CubGtJRi9FBjK5H76hl/J3QQKF0jJkk2hMbTyw==
-X-Received: by 2002:aa7:d610:: with SMTP id c16mr33992721edr.207.1622724752062;
-        Thu, 03 Jun 2021 05:52:32 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id v19sm1488165ejh.86.2021.06.03.05.52.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jun 2021 05:52:31 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: The git spring cleanup challenge
-Date:   Thu, 03 Jun 2021 14:31:59 +0200
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <87bl8n73om.fsf@evledraar.gmail.com>
- <60b8b882b9dc5_1a0a2d208e9@natae.notmuch>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <60b8b882b9dc5_1a0a2d208e9@natae.notmuch>
-Message-ID: <87wnrb5cvl.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LkauhG7MA748SMkSDPo5ueurzt/23EVvJSr3pH1/spA=;
+        b=W9fZSYkC2iZoQQPtwQcdBMw6rKadQaWfIUoU+ylPS68dTb5m2Cv3nuOFugLn+TUz7K
+         3lYnhQiK1eZOyxypJyXdq7cbAYE1KBagOJ7FnilX8DgQvbkkstF4MamU+5WQpByYFTHm
+         KON0013jKuWjTNQMRakt/OQOq9YFxfW0XR4Hz7eHHJ0UHEhpwqENW4IeTAZocOGLnaRs
+         oZ7sWHvgCHO6gxFfx9YGkzlrlRgV9/rWL9KhBuIAYjlMZnXLXvP0BEe10n++eH4P8CZQ
+         eCG7CVxT5iJYoxu8P8HbxvjBEGXqk5Py0d4cZqQTSZwLUQu1gFC9QrDwpP18An/OoNUB
+         2jyQ==
+X-Gm-Message-State: AOAM531ksoXkRyAEd1Wp7cKsKpVWlKUuvJ3GJ0uqZkiefbnwytUoSueE
+        oTaBDQh6oKg5eM7MOyuYJoo=
+X-Google-Smtp-Source: ABdhPJwqCHiEYLdsA/VAK36mcv6V1zNanHCW4Li5SGcX9tXXXZpGzumYu8YLjDQ5Cat3/5p6Ltgo2g==
+X-Received: by 2002:a05:6214:11b4:: with SMTP id u20mr19707500qvv.4.1622724850236;
+        Thu, 03 Jun 2021 05:54:10 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:c134:af19:92db:52e4? ([2600:1700:e72:80a0:c134:af19:92db:52e4])
+        by smtp.gmail.com with ESMTPSA id y20sm1839319qkm.5.2021.06.03.05.54.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 05:54:09 -0700 (PDT)
+Subject: Re: [PATCH v2 3/5] diffcore-rename: enable limiting rename detection
+ to relevant destinations
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.962.git.1622104642.gitgitgadget@gmail.com>
+ <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
+ <45e1de5fe7808f5297d5e33d14c239d74de33bdc.1622559516.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <1016e500-8169-7bb3-8428-b5ea35d19630@gmail.com>
+Date:   Thu, 3 Jun 2021 08:54:08 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
+In-Reply-To: <45e1de5fe7808f5297d5e33d14c239d74de33bdc.1622559516.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 6/1/2021 10:58 AM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Our former optimizations focused on limiting rename detection to a
+> pre-specified set of relevant sources.  This was because the merge logic
+> only had a way of knowing which sources were relevant.  However, other
+> callers of rename detection might benefit from being able to limit
+> rename detection to a known set of relevant destinations.  In
+> particular, a properly implemented `git log --follow` might benefit from
+> such an ability.
 
-On Thu, Jun 03 2021, Felipe Contreras wrote:
+I would be interested in seeing such an improvement. It could also
+help the batch-download of missing blobs in a partial clone situation
+because it would only need the "deletes" portion of the diff, since we
+only care about one "add" (we'd need that blob, too, of course).
+ 
+> Since the code to implement such limiting is very similar to what we've
+> already done, just implement it now even though we do not yet have any
+> callers making use of this ability.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> So I skipped the "disable most config", but for what it's worth I think
->> I'd miss these the most, I couldn't pick just N favorites, sorry:
->>=20
->>  * diff.colorMoved=3Dtrue: super useful, but I'd be vary of turning it on
->>    by default in its current form. E.g. on gcc.git's changelog files it
->>    has really pathological performance characteristics.
->
-> Very nice! I didn't know about it. I'll pick it for my third day.
+However, I'm not sure that this change is warranted without such an
+integration. Perhaps keep this patch here on the list as a reference
+for anyone who wants to do the `git log --follow` speedup? This person
+can include "you in the future".
 
-It makes patch review a lot easier, and also integrates nicely with -w.
+I'm just worried that without a consumer, this code has no automated
+validation and can either be buggy now or become buggy in the future
+before someone starts trying to use the logic.
 
->>  * merge.defaultToUpstream: ditto other discussion, should be "true" by
->>    default.
->
-> That is the default. I used it as an example of a configuration that
-> changed default (I did it in 2014).
->
-> (I just noticed the documentation of the config wasn't updated).
+Thanks,
+-Stolee
 
-Ha! Maybe it's leftover from before then, or I missed that in the
-not-updated docs more recently.
-
->>  * checkout.defaultRemote=3Dorigin: I introduced this, so I'm biased, but
->>    I find it super useful. Usually because I do "git branch -m
->>    new-branch" on master to create topics, and then "git checkout
->>    master" to get a master back (or use the existing one).
->
-> That is useful, but I don't think it's aptly named, it should be
-> something like checkout.autoUpstream. The name of the default branch
-> belongs elsewhere.
->
-> I would say core.defaultRemote.
->
-> Right now for example `git fetch` defaults to a hard-coded "origin".
-> Doesn't make much sense that the remote for automatic upstream checkout
-> can be configured, but not the one `git fetch` uses.
-
-I think there was some bikeshedding around that time. I share the
-sentiment, but worry about "core" over-configuring such a
-thing. E.g. wanting "checkout" to search a "upstream" and "origin" in
-that order (not that it supports a list right now, but could) !=3D wanting
-"init" to use "upstream" instead of "origin" by default.
-
->>  * commit.verbose=3Dtrue: so you know what you're looking at in doing in
->>    "git commit --amend".
->
-> Aha! My alias had `commit -v` but I would want this on all commit
-> commands.
->
-> Moreover, I was thinking on suggesting this by default. Who would it
-> hurt?
-
-E.g. "git rebase -i" with "reword" now becomes a lot more verbose, I
-think it's a feature, but others might disagree.
-
-It also exposes various edge cases around our parsing of the diff
-v.s. commit message content in our apply.c etc. code, e.g. say you want
-to blindly search-replace "diff" with "difference" in your commit
-messages. You'll now change the "diff --git" line to "difference --git",
-and now "commit" won't detect that it's the patch part anymore, and
-merge that diff into your commit message itself.
-
-I can't remember if we pick up on "diff --git" exactly, IIRC, but
-anyway, whatever part of the format you need to screw with, the point
-stands. I've run into mistakes like that in the past, one recently made
-it to this ML.
-
->>  * grep.patternType=3Dperl: Another personal soap box (but really, BRE
->>    anywhere sucks).
->
-> Nice. `git grep` is the #2 command I use the most, and I often need to
-> specify another regexp because the basic one doesn't understand what I'm
-> trying to do.
-
-Yeah, it should be at least ERE by default, Something for Git v3.0 ...?
-
->> I also have a bunch of aliases that would not be useful to a general
->> audience, but which I find I can't live without, some of the most
->> commonly used ones:
->>=20
->>     # Log with "less" n/p already going to the next/prev commit
->>     log-psfd =3D "!f() { PAGER=3D\"less -p'^commit'\" git log -p --stat =
---full-diff $@; }; f"
->
-> Very neat.
-
-I think similar to your "git help xyz" patches having coloring, we
-really should consider things like that by default knowing that we're
-invoking "less". I.e. if we got over the notion that our job is just to
-throw data over the wall to "man" or the pager without any further
-tweaking or integration.
-
->> Similarly rebase is "r", "--interactive" is "ri", "--abort", and
->> "--continue" are "ra" and "rc".
->
-> I have almost the same, except rbi, rbc, and rba. My 'r' is reset, but
-> since I use rebase more often I guess I should switch them up.
->
-> Theres are a couple of mine:
->
->   advance =3D merge --ff-only
->   undo =3D reset --hard @{1}
->=20=20=20
->> If anyone's interested in the rest / full set:
->> https://github.com/avar/dotfiles/blob/master/.gitconfig
->
-> Is thata private repo?
->
-> Here are mine:
->
-> https://github.com/felipec/dotfiles/blob/master/.gitconfig
-
-Yes, it was private[1]. I've made it public again.
-
-1. It used to be public, but then the security/auditing people at an
-   ex-job kept pestering me about me hardcoding =C3=BCber-secret company da=
-ta
-   in public GitHub repos.
-
-   They didn't find questions like "uh, you mean this information we
-   advertise in an MX lookup to our public nameservers?", or "yes,
-   that's my company E-Mail address in a config file, my co-workers have
-   the same info on linkedin" all that convincing. Anyway, it's back now
-   :)
