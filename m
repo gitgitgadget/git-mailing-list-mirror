@@ -2,98 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A37A7C47083
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 00:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 100E1C4708F
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 01:36:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D3A8613DC
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 00:56:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9243601FD
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 01:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbhFCA5p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 20:57:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63982 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229826AbhFCA5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 20:57:43 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D79CC37FF;
-        Wed,  2 Jun 2021 20:55:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4bBBpe4v1HJQ
-        zUvPl+GsaxX82A9mcN8c7tvbWrMcnJo=; b=tvcFEDhImLAx3fouOy20SndnM6j8
-        Pb/Jxuvt4NlyzQLjr8RXtWBDLjaDr8uZFPwp9pKd5hCP7ibgv74Rthuq32gEMqmn
-        jPhqa5zSghNb2zl9gP84E02j64bfmlkgk1JrgYTAEVoyUBRJAfMTY/E0jLjLnDna
-        7dhSr6at+IF/80M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 25E4BC37FE;
-        Wed,  2 Jun 2021 20:55:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9671BC37FC;
-        Wed,  2 Jun 2021 20:55:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Ilias Apostolou <ilias.apostolou.zero@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Request feature: =?utf-8?Q?=E2=80=93no-submodule?=
-References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
-        <YLfqiLbpPXWXHlBi@nand.local>
-Date:   Thu, 03 Jun 2021 09:55:57 +0900
-In-Reply-To: <YLfqiLbpPXWXHlBi@nand.local> (Taylor Blau's message of "Wed, 2
-        Jun 2021 16:31:04 -0400")
-Message-ID: <xmqq8s3r7oma.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 75934162-C406-11EB-BD9A-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S229813AbhFCBij (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 21:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44948 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229553AbhFCBif (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 21:38:35 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF3BC06174A
+        for <git@vger.kernel.org>; Wed,  2 Jun 2021 18:36:51 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso4262894otu.10
+        for <git@vger.kernel.org>; Wed, 02 Jun 2021 18:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=92KZvFfQ0n254J7sYmio1p/UdwNg1M/cDeFUX0kVxz8=;
+        b=WCNcLipPDXXgLsQeIhnwF03jyUb50aZI7mrYUmmfHiooYt07tWBgDNaz6zA5Dlbj0Q
+         j9C2azEcYSStaOib//BVQgYsDdrzCyP0/TEzmQMIe6aPPuJhyXRkS//x2PUvUcPwgBQx
+         0PS4Slqf1wdFsxULxntcl5LGzqI31xELZe4hYxm7/S05iN6aH2YC0x0QEmJf9up+KzrI
+         waHaqERMTCFqRTIVS2vdvIT1yAxVrW9ROJjDq8RRUydiWImkVxH9jHhuv/EdU89D56Km
+         WFTeAcU9DfO2ot8A7eE9t4FVfwi9KIQqYqO38QsUJUYOZoFSvlnxY6aGtudi4tXxOBRu
+         U0Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=92KZvFfQ0n254J7sYmio1p/UdwNg1M/cDeFUX0kVxz8=;
+        b=hZhazw9Bh2qXhzKqkwl78QOutgakOZ5HIXdpeCJslx+HCm3nkP3inP9YO0qLh5vDu9
+         Ih/PfMpnYiEjiDovDyE4tAk2ATeizcyMhWXkoyVztpNPqgfmKt1l0PIzxOevTmo1fkxW
+         1wn5chTb/d58ua0/XhCHv8wWZms7gFzGnqmmiaj9jFfsZNT8WSG4otg0hDYH/MXa4uk2
+         7dRsZ6UMXLMsEDz5m5uKrvMWJzQR3xMF4WVcgA2lOHJgHBq3VsZw+OQsDTPSxdR0ySfa
+         nYcXBcTi8Egke8qwfN08vfmyIcedss6JYCJws8/xX74ZrSS+I3I4qZle/FQZNnTSYy7u
+         c70A==
+X-Gm-Message-State: AOAM530tXes5i64ibQJA7i1QBTEfwFXr2XTbF4x8iPMZaxpD/2Ja8RaV
+        2U1kHeQIO14ZwwY4ZDd7My8=
+X-Google-Smtp-Source: ABdhPJx1hUqpqUjX5kPxcyS11dTljAz8nJngsXI3h6dl0wjI4BsErw4JgB+ATGI+JO+v6l8cG6chTQ==
+X-Received: by 2002:a9d:4046:: with SMTP id o6mr28125141oti.189.1622684211183;
+        Wed, 02 Jun 2021 18:36:51 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id q5sm391350oia.31.2021.06.02.18.36.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jun 2021 18:36:50 -0700 (PDT)
+Date:   Wed, 02 Jun 2021 20:36:49 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Message-ID: <60b832316cfa8_187c7d20826@natae.notmuch>
+In-Reply-To: <CABPp-BH7f+sM_POEsSSvmz_p=oEzHQcvTk_cEhTGeb-yq9fq_A@mail.gmail.com>
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <87wnrd6wqj.fsf@osv.gnss.ru>
+ <CABPp-BH7f+sM_POEsSSvmz_p=oEzHQcvTk_cEhTGeb-yq9fq_A@mail.gmail.com>
+Subject: Re: The git spring cleanup challenge
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Elijah Newren wrote:
+> On Tue, Jun 1, 2021 at 3:39 PM Sergey Organov <sorganov@gmail.com> wrote:
 
-> On Wed, Jun 02, 2021 at 01:31:11PM +0300, Ilias Apostolou wrote:
->> Hello Git community.
->>
->> As you already know, git ls-files command lists all of the tracked fil=
-es,
->> but submodule names are included.
->>
->> My team would like a =E2=80=93no-submodule switch to exclude those.
->
-> In all honesty, though this seems like a niche request for ls-files to
-> fulfill, ls-files already has quite the collection of options, so I
-> wouldn't be sad to see it learn how to do this, too.
+> > [diff]
+> >         algorithm = patience
+> 
+> Any reason for patience vs. histogram?
 
-I would be somewhat sad for two reasons.
+Is histogram better than default?
 
- - If "I am not interested in any submodule" in a project with
-   submodules is a common thing people would want, teaching a trick
-   only to "ls-files" is an expensive and ineffective approach, and
-   adding the option to everything would just be ugly.  "git diff
-   --no-submodule"?  "git add --no-submodule ."?
+> > [merge]
+> >         conflictStyle = diff3
+> >
+> 
+> Anyway, here's my list to join in on the fun...
+> 
+> [branch]
+>         sort = authordate
 
- - Is "not interested in any submodule" so special and fundamental,
-   or is it merely because the project the original requestor is
-   looking at happens to have an optional submodule? If the project
-   had that optional part as a subdirectory instead, would the
-   request have been not --no-submodule but something else?  What
-   happens when the project that led to the original request
-   acquires another submodule that is more interesting, or what if
-   the requestor's interest shifts and makes some submodules
-   interesting but others not?  Would the --no-submodule option
-   become totally useless in such a case?
+Nice. I didn't know that existed.
 
-I wonder if the "attr" magic of the pathspec, that allows you to
-choose paths based on the attributes you set on them, is what the
-original requestor missed.
+I have `tag.sort = -version:refname`, and after a few days without I'm
+wondering why it isn't the default.
 
+> [alias]
+>         brief = !git log --no-walk --abbrev=12 --pretty=reference
+
+I find it odd that you prefer `git log --no-walk` over
+`git show --quiet`.
+
+> [log]
+>         mailmap = true
+
+Another one that I don't see why it isn't the default.
+
+Cheers.
+
+-- 
+Felipe Contreras
