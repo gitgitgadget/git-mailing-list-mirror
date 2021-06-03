@@ -2,115 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 100E1C4708F
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 01:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AAD3C4708F
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 02:10:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9243601FD
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 01:36:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 591FC613DC
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 02:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbhFCBij (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Jun 2021 21:38:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44948 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbhFCBif (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jun 2021 21:38:35 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF3BC06174A
-        for <git@vger.kernel.org>; Wed,  2 Jun 2021 18:36:51 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso4262894otu.10
-        for <git@vger.kernel.org>; Wed, 02 Jun 2021 18:36:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=92KZvFfQ0n254J7sYmio1p/UdwNg1M/cDeFUX0kVxz8=;
-        b=WCNcLipPDXXgLsQeIhnwF03jyUb50aZI7mrYUmmfHiooYt07tWBgDNaz6zA5Dlbj0Q
-         j9C2azEcYSStaOib//BVQgYsDdrzCyP0/TEzmQMIe6aPPuJhyXRkS//x2PUvUcPwgBQx
-         0PS4Slqf1wdFsxULxntcl5LGzqI31xELZe4hYxm7/S05iN6aH2YC0x0QEmJf9up+KzrI
-         waHaqERMTCFqRTIVS2vdvIT1yAxVrW9ROJjDq8RRUydiWImkVxH9jHhuv/EdU89D56Km
-         WFTeAcU9DfO2ot8A7eE9t4FVfwi9KIQqYqO38QsUJUYOZoFSvlnxY6aGtudi4tXxOBRu
-         U0Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=92KZvFfQ0n254J7sYmio1p/UdwNg1M/cDeFUX0kVxz8=;
-        b=hZhazw9Bh2qXhzKqkwl78QOutgakOZ5HIXdpeCJslx+HCm3nkP3inP9YO0qLh5vDu9
-         Ih/PfMpnYiEjiDovDyE4tAk2ATeizcyMhWXkoyVztpNPqgfmKt1l0PIzxOevTmo1fkxW
-         1wn5chTb/d58ua0/XhCHv8wWZms7gFzGnqmmiaj9jFfsZNT8WSG4otg0hDYH/MXa4uk2
-         7dRsZ6UMXLMsEDz5m5uKrvMWJzQR3xMF4WVcgA2lOHJgHBq3VsZw+OQsDTPSxdR0ySfa
-         nYcXBcTi8Egke8qwfN08vfmyIcedss6JYCJws8/xX74ZrSS+I3I4qZle/FQZNnTSYy7u
-         c70A==
-X-Gm-Message-State: AOAM530tXes5i64ibQJA7i1QBTEfwFXr2XTbF4x8iPMZaxpD/2Ja8RaV
-        2U1kHeQIO14ZwwY4ZDd7My8=
-X-Google-Smtp-Source: ABdhPJx1hUqpqUjX5kPxcyS11dTljAz8nJngsXI3h6dl0wjI4BsErw4JgB+ATGI+JO+v6l8cG6chTQ==
-X-Received: by 2002:a9d:4046:: with SMTP id o6mr28125141oti.189.1622684211183;
-        Wed, 02 Jun 2021 18:36:51 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id q5sm391350oia.31.2021.06.02.18.36.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jun 2021 18:36:50 -0700 (PDT)
-Date:   Wed, 02 Jun 2021 20:36:49 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Elijah Newren <newren@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <60b832316cfa8_187c7d20826@natae.notmuch>
-In-Reply-To: <CABPp-BH7f+sM_POEsSSvmz_p=oEzHQcvTk_cEhTGeb-yq9fq_A@mail.gmail.com>
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <87wnrd6wqj.fsf@osv.gnss.ru>
- <CABPp-BH7f+sM_POEsSSvmz_p=oEzHQcvTk_cEhTGeb-yq9fq_A@mail.gmail.com>
-Subject: Re: The git spring cleanup challenge
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S229617AbhFCCMR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Jun 2021 22:12:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61148 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229541AbhFCCMQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jun 2021 22:12:16 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B8EF3C469B;
+        Wed,  2 Jun 2021 22:10:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NQR+XMAkARh6JEzRqPABbQKvpmeR2LuqTFo+Xw
+        C4Zgk=; b=jXat5FabS6EO7PqBYW8y3pBi+YVtT2rpp/BWYJIYIKk2PWjaB+C8to
+        I9CrYH8cEkNY5A2JP1bxbSjjHn2xWWgXvRZVkAHJVB824MyvEn06fsS4IwohnfmL
+        vooNev2wX9p+AcxsGTw8j5kuZ1Z56PaMIZ54YneCHA0Kh+vKi69l0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B090DC469A;
+        Wed,  2 Jun 2021 22:10:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3C15DC4699;
+        Wed,  2 Jun 2021 22:10:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH 1/2] [GSOC] ref-filter: add obj-type check in grab contents
+References: <pull.966.git.1622558243.gitgitgadget@gmail.com>
+        <97955705c22e00a718a8de7555ab7e0e401e792e.1622558243.git.gitgitgadget@gmail.com>
+Date:   Thu, 03 Jun 2021 11:10:31 +0900
+In-Reply-To: <97955705c22e00a718a8de7555ab7e0e401e792e.1622558243.git.gitgitgadget@gmail.com>
+        (ZheNing Hu via GitGitGadget's message of "Tue, 01 Jun 2021 14:37:22
+        +0000")
+Message-ID: <xmqq1r9j7l60.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E010FA3E-C410-11EB-A5CB-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> On Tue, Jun 1, 2021 at 3:39 PM Sergey Organov <sorganov@gmail.com> wrote:
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> > [diff]
-> >         algorithm = patience
-> 
-> Any reason for patience vs. histogram?
+>  /* See grab_values */
+> -static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+> +static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf,
+> +				   struct object *obj)
 
-Is histogram better than default?
+Neither this step or the next change needs anything but type member
+of the 'obj' (and 'buf' is coming from oi.content of the result of
+asking about that same 'obj').
 
-> > [merge]
-> >         conflictStyle = diff3
-> >
-> 
-> Anyway, here's my list to join in on the fun...
-> 
-> [branch]
->         sort = authordate
+I wonder if we should do one of the following:
 
-Nice. I didn't know that existed.
+ (1) stop passing "void *buf" and instead "struct expand_data
+     *data", and use "data->content" to access "buf", which would
+     allow you to access "data->type" to perform the added check.
 
-I have `tag.sort = -version:refname`, and after a few days without I'm
-wondering why it isn't the default.
+ (2) instead of adding "struct obj *obj" to the parameters, just add
+     "enum object_type type", as that is the only thing you need.
 
-> [alias]
->         brief = !git log --no-walk --abbrev=12 --pretty=reference
+Obviously (2) is with lessor impact, but if it can be done safely
+without breaking the code [*], (1) would probably be a much more
+preferrable direction to go in the longer term.
 
-I find it odd that you prefer `git log --no-walk` over
-`git show --quiet`.
+    Side note [*].  A caller is allowed to choose to feed "buf" that
+    is different from "oi.content" (perhaps buf may sometimes want
+    to be a utf-8 recoded version of oi.content for certain types of
+    objects) with the current system, but if we pass expand_data
+    throughout the callchain, such a caller is broken, for example.
 
-> [log]
->         mailmap = true
-
-Another one that I don't see why it isn't the default.
-
-Cheers.
-
--- 
-Felipe Contreras
