@@ -6,66 +6,69 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF0D6C47097
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 18:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76A12C47096
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 18:29:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC5CD613B8
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 18:25:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B4FE613B8
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 18:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbhFCS1k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 14:27:40 -0400
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:44978 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229835AbhFCS1j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 14:27:39 -0400
-Received: by mail-ed1-f45.google.com with SMTP id u24so8186793edy.11
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 11:25:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=P87smCWxjPydcIYTaL0H5pG/1ngY8Jr34P3pjTON4rg=;
-        b=gF5Ym4+Brq2Mncz4peKtEV88R1aFKeHHJhFj8SalGo7OUFh97+OlEy8JD+Nm21h7Qm
-         OEoFBPhXZ9dt3/cuWsY8WSXmJw+oUPQGIJ7Y3WU3bRGlSnn/z+ZUq2K7TH4sdfFefMNM
-         m634Ls0vjnqgXlnx7KnGBNJh/rtLd2oblYrAdpvBXsjEHICAFUWALfdOmJNtn5dxlVQI
-         /4a9VpwqQ+xnqz4fUoXHSf+r5n1oGcIB4MhbTUGd3HOW+773LvcezdraZTQSnjL3hWqM
-         t96VvokxFIpQogjsCEfraNUftmjhq3FYxrd6UjxsD09qLmpcQdaU3iFXpKcCTtEwARxy
-         qqqw==
-X-Gm-Message-State: AOAM5312dQIdg4QFSmRV7r/D4R06y0dVbS9bJLAiVAHW30MrWkjbkr9T
-        c87eM39vEaCAI/RBDSbQX/Jw0vJ47cY2IPBeuZ51u/R5aVUu/w==
-X-Google-Smtp-Source: ABdhPJwS3IL7kgThq117oRHBB6jcjQjxqKCkoQhIpGpgmoSXyIuJizbbE7uKK/ITBR6a+8Qto4nT+Aw7hycLAlVy6es=
-X-Received: by 2002:a50:9d8d:: with SMTP id w13mr823822ede.94.1622744753816;
- Thu, 03 Jun 2021 11:25:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com> <20210603180851.5tbnuvfb6auxrhvm@nitro.local>
-In-Reply-To: <20210603180851.5tbnuvfb6auxrhvm@nitro.local>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 3 Jun 2021 14:25:42 -0400
-Message-ID: <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
+        id S229656AbhFCSax (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 14:30:53 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:43062 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229620AbhFCSax (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 14:30:53 -0400
+X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Jun 2021 14:30:53 EDT
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 4FwvNS0TY7z1qtQl;
+        Thu,  3 Jun 2021 20:21:12 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 4FwvNS006lz1qqkT;
+        Thu,  3 Jun 2021 20:21:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id E8I2xNfYuRHS; Thu,  3 Jun 2021 20:21:10 +0200 (CEST)
+X-Auth-Info: zCsVgKe+JZZzNpAtnWgDDc/EWip9AGjyzAGGYsnITJwJfDQzXVO0aIH/ARqoZbne
+Received: from igel.home (ppp-46-244-161-251.dynamic.mnet-online.de [46.244.161.251])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Thu,  3 Jun 2021 20:21:10 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 38D142C3706; Thu,  3 Jun 2021 20:21:10 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, Git <git@vger.kernel.org>
 Subject: Re: Gmail OAuth2 in git send-email
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
+        <YLhx7nIptHUwXfBD@google.com> <878s3r73g3.fsf@evledraar.gmail.com>
+        <60b9158f92812_258801208e0@natae.notmuch>
+X-Yow:  Look DEEP into the OPENINGS!!  Do you see any ELVES or EDSELS...
+ or a HIGHBALL??...
+Date:   Thu, 03 Jun 2021 20:21:10 +0200
+In-Reply-To: <60b9158f92812_258801208e0@natae.notmuch> (Felipe Contreras's
+        message of "Thu, 03 Jun 2021 12:46:55 -0500")
+Message-ID: <874keeyfl5.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 3, 2021 at 2:09 PM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
-> On Thu, Jun 03, 2021 at 12:02:08PM +0700, Bagas Sanjaya wrote:
-> > But for users that use Gmail (like me), we must either enable 2FA and
-> > generate app-specific password for use with git send-email
->
-> Is there a general problem with this approach? Gmail has been my
-> recommendation for everyone needing a free email account -- it's still
-> possible to configure it to be perfectly usable with patch-based workflows,
-> even if it has its own ideas about web ui treading.
->
-> The fact that Gmail forces folks to enable 2fa for app passwords is an added
-> bonus in my book. :)
+On Jun 03 2021, Felipe Contreras wrote:
 
-The 2fa requirement is a problem for those of us who don't have
-smartphones or SMS. (I see now that they also offer 8-digit backup
-codes to print out for 2fa; perhaps that might be a workable option,
-though I haven't tested it.)
+> If Google requires a client secret, then it can't be used with open
+> source applications. Period.
+
+https://invent.kde.org/pim/kmailtransport/-/blob/master/src/kmailtransport/plugins/smtp/smtpjob.cpp#L31
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
