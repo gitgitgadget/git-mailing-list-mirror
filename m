@@ -2,95 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D63C47096
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 19:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 052A9C47082
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 19:02:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C1AC9613B4
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 19:01:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8430610A8
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 19:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbhFCTDf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 15:03:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47172 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFCTDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 15:03:34 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB212C06174A
-        for <git@vger.kernel.org>; Thu,  3 Jun 2021 12:01:35 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id s20-20020a4ae9940000b02902072d5df239so1647754ood.2
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 12:01:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=2eMX4VXoQd/lJ6q1QT34axIzi3U6qA0+kDgRwnxVRlc=;
-        b=DNT/W0REWa403ByPA44udQadO0aN5oSwt4+PUarIWxQqTzLgODhCbG+DF4p/6HzNc6
-         hhQICtLmHwypMHByYWGmRfb2+CqdUQ4NdkRi9VVI1wwyVniOuT/n3hlnej+XJYM3Zm/A
-         Ld6C51Djhzj8kLrNkMlhaYJES32DJ7cIMkweslaY+YnKQvuN5kNwsw+VRa5BUAtBBG5i
-         hOmhhvdtqB6d4FueYp4xs/p+qKCkUOqBE4hE2o/Q+6WXqDLJPztMJksmfxEurcviFpw3
-         LbZ6/kJO9rdgzksVvFHLxkJLPFGaGldVlyWm3gz8BfwlcuRekzWDq5kln+WcvuaQMc0z
-         h6fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=2eMX4VXoQd/lJ6q1QT34axIzi3U6qA0+kDgRwnxVRlc=;
-        b=aCf2auVhWaVU75tOitYzmov3bQfVi7xnakUVzRJurEpljCH3I6Xufq/AJUMZ3dbDx0
-         iEdcRR10DSDBcDC0gehNcmTk5SZhphZk+C1JPhNhXP47ItMR6Vw9zSu7CIo5tabMkNMJ
-         WKiagx8m+ys/Ko96HyJAAGXCGYV/UqD3+qBpip/GgS/EyXWygDWjvyEgAydSwTxClGIt
-         z8IfJmvumN6/51jDmnbIwVwi9Cb20mpdgd5RwdPkUkdkQcFkfZ7RBGWrBFPw9Z2dPApJ
-         MMA3EF9E9Xldw3OLPbHYgDe8ZyRrshkcc6mWM9Miex6RO10SQxuZE2vLmicTApcLQLhe
-         bPKQ==
-X-Gm-Message-State: AOAM531OmDLY8gYGof4BQhKQy2FhOyhyN4GT4Bk2EUcufgSxk0nOQ7F3
-        6D7DXex0mVsvxfDhLazvHY0=
-X-Google-Smtp-Source: ABdhPJzm1akrkOFReHUTetI/lJ1B8qdTvK8VklbOfCfnl2Si8aJ6qLnJRq6aqCmvoRUAaQ4tugs6Bw==
-X-Received: by 2002:a4a:e1d7:: with SMTP id n23mr607097oot.86.1622746891362;
-        Thu, 03 Jun 2021 12:01:31 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id b81sm884652oia.19.2021.06.03.12.01.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jun 2021 12:01:30 -0700 (PDT)
-Date:   Thu, 03 Jun 2021 14:01:19 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Andreas Schwab <schwab@linux-m68k.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, Git <git@vger.kernel.org>
-Message-ID: <60b926ff6ef35_39cbe920875@natae.notmuch>
-In-Reply-To: <874keeyfl5.fsf@igel.home>
-References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
- <YLhx7nIptHUwXfBD@google.com>
- <878s3r73g3.fsf@evledraar.gmail.com>
- <60b9158f92812_258801208e0@natae.notmuch>
- <874keeyfl5.fsf@igel.home>
+        id S229695AbhFCTET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 15:04:19 -0400
+Received: from smtp-out1.suse.de ([195.135.220.28]:59196 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCTES (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 15:04:18 -0400
+Received: from imap.suse.de (imap-alt.suse-dmz.suse.de [192.168.254.47])
+        (using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id EA7B821A03;
+        Thu,  3 Jun 2021 19:02:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1622746952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=XThc26DiDvLCTKGWDSmAQUpfklOFxkdvTyZGuAAkzso=;
+        b=GOfA3pMUH25yWITdL9WZ/TqBZU2MuIE2rsK/tsfmFIeHjJy/trM7LWLe6mcI6F0bYjiZ6G
+        N0tA7fPY1Mx7U/n8v5EgLrgu1o/ZFjR8iVayamtnReNfRS1I74Pg30io3WNV6aa2qqKABL
+        1e8xRRCuV7SS7QiVMpbX7ALw/GgxJYc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1622746952;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=XThc26DiDvLCTKGWDSmAQUpfklOFxkdvTyZGuAAkzso=;
+        b=NAxIPchgAU2S95aXiXzGh8oKBFMNuCfH9EjAVfxHqoUupJcVE7GRgx8PVbpUZWpDs0pEHn
+        dVN02GlcrtpaInDg==
+Received: from imap3-int (imap-alt.suse-dmz.suse.de [192.168.254.47])
+        by imap.suse.de (Postfix) with ESMTP id C98DB118DD;
+        Thu,  3 Jun 2021 19:02:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1622746952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=XThc26DiDvLCTKGWDSmAQUpfklOFxkdvTyZGuAAkzso=;
+        b=GOfA3pMUH25yWITdL9WZ/TqBZU2MuIE2rsK/tsfmFIeHjJy/trM7LWLe6mcI6F0bYjiZ6G
+        N0tA7fPY1Mx7U/n8v5EgLrgu1o/ZFjR8iVayamtnReNfRS1I74Pg30io3WNV6aa2qqKABL
+        1e8xRRCuV7SS7QiVMpbX7ALw/GgxJYc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1622746952;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=XThc26DiDvLCTKGWDSmAQUpfklOFxkdvTyZGuAAkzso=;
+        b=NAxIPchgAU2S95aXiXzGh8oKBFMNuCfH9EjAVfxHqoUupJcVE7GRgx8PVbpUZWpDs0pEHn
+        dVN02GlcrtpaInDg==
+Received: from director2.suse.de ([192.168.254.72])
+        by imap3-int with ESMTPSA
+        id NVAfMEgnuWAVOgAALh3uQQ
+        (envelope-from <msuchanek@suse.de>); Thu, 03 Jun 2021 19:02:32 +0000
+Date:   Thu, 3 Jun 2021 21:02:31 +0200
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
 Subject: Re: Gmail OAuth2 in git send-email
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+Message-ID: <20210603190231.GT8544@kitsune.suse.cz>
+References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
+ <20210603180851.5tbnuvfb6auxrhvm@nitro.local>
+ <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
+ <20210603183220.47nx7f2aazk6wy33@nitro.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210603183220.47nx7f2aazk6wy33@nitro.local>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andreas Schwab wrote:
-> On Jun 03 2021, Felipe Contreras wrote:
+On Thu, Jun 03, 2021 at 02:32:20PM -0400, Konstantin Ryabitsev wrote:
+> On Thu, Jun 03, 2021 at 02:25:42PM -0400, Eric Sunshine wrote:
+> > > The fact that Gmail forces folks to enable 2fa for app passwords is an added
+> > > bonus in my book. :)
+> > 
+> > The 2fa requirement is a problem for those of us who don't have
+> > smartphones or SMS. (I see now that they also offer 8-digit backup
+> > codes to print out for 2fa; perhaps that might be a workable option,
+> > though I haven't tested it.)
 > 
-> > If Google requires a client secret, then it can't be used with open
-> > source applications. Period.
+> I'm not going to argue too much, but I'd say that someone who's looking for
+> solution to use with git-send-email is *likely* going to have access to a
+> smartphone. :)
+
+I do have a smartphone. Due to the battery life of smartphones I don't
+have access to it most of the time.
+
 > 
-> https://invent.kde.org/pim/kmailtransport/-/blob/master/src/kmailtransport/plugins/smtp/smtpjob.cpp#L31
+> It's also possible to use TOTP without a smartphone (e.g. via a desktop app),
+> though this would largely defeat the purpose.
 
-Yes, they are doing something wrong (puting a *secret* value on a public
-place), so?
+There are also TOTP hardware tokens but I haven't tried one. I think
+that the U2F tokens are better supported anyway.
 
-If somebody were to report that to Google that app probably would get
-banned.
+If you want some sort of real security I would avoid smartphones and go
+for hardware tokens. If you want to fulfill arbitrary requiremens
+workarounds that emulate a smartphone well enough exist. For TOTP you
+don't even need an emulator, only a QR code reader (in case the site
+insists on using QR code and does not show the plaintext) and a desktop
+TOTP application.
 
--- 
-Felipe Contreras
+Thanks
+
+Michal
