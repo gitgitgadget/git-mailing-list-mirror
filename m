@@ -2,99 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0343C47096
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A55CEC47096
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:50:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4C4A613D7
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:48:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BDE8613D7
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbhFCKua (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 06:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
+        id S229801AbhFCKvz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 06:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbhFCKu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 06:50:29 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 449BBC06174A
-        for <git@vger.kernel.org>; Thu,  3 Jun 2021 03:48:45 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id o2-20020a05600c4fc2b029019a0a8f959dso3427542wmq.1
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 03:48:45 -0700 (PDT)
+        with ESMTP id S229610AbhFCKvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 06:51:54 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6151DC06174A
+        for <git@vger.kernel.org>; Thu,  3 Jun 2021 03:49:56 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id r198so4780290lff.11
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 03:49:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=upyiABi3b0UJIymqO1qa0jyDVFJTvUyYb1IdWP+VL7o=;
-        b=UV6ay3E2OFSEzmr7Y8flKJCkjeOxmYgJ1QOo8LjfeaRCp76Px4qxmoSOQV3nlactn4
-         fDO+95hTeNfpkzVXJXfx7NPTvPPiB9RKXDA3QJTEIXsBEM/VOvNHQlacP3yC+uuGskzM
-         Eh8f4kLZ8JysqWaywCY7BzpqBLzmFv/240PMR9LNz/F2JLuWc9Mhmq60RXvkIibu4Jdk
-         aLa9OTWk2ukHzyhkHBN8JaVP5TgiQeBH1GaYTtUHXRs6a4ZYq2gZ08ptGu34IK354dWz
-         X/gKthhjJCnfo7sYqvG3fL6eOjRjAGOeFz3wRTcMI9/a9cvwwdIEBnq/Ulki6NHG2t+a
-         qNjQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UIFa7NKW0kg6TLQ9BnHG9sWwYqTngHiq/hklnJr1/jY=;
+        b=LiCsFY81X6xUFh0FbsCFjco2EHdFxIhi2lAqineTWKQNm6Rtc56SxpG3dfLuXWdiKK
+         nu+StD0hOyp6f69weElDV0OhDNtjddVragwy/hYvMysSeOo33r16W1OipJfNx6+QJETF
+         nR7wybtfqLjOhQ69QpLksvU8RGTnLGjHom/DxmpvfHlEAubs5/MQd61F5WrPfT5G3Zd5
+         OEWArUwY5GtR65vzvnsZ9HWhm+50CotYaeM+9BChkuyCnO/wTSNCc1swHWtIC8tLXgwr
+         FqE89hN0SAyhh8aku+40M/JDN2WNqMGMhFBzAXhuaoge8Ndlh2dI3kgqtqAXIZx01EDh
+         DJCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=upyiABi3b0UJIymqO1qa0jyDVFJTvUyYb1IdWP+VL7o=;
-        b=Ri9yoMj94PjDQh0s24EkCSB6SIUIXisD+3qZBOewWtDl2nTA3JemY0DaDp6PFlbCrP
-         Px7r7OcgCLnppyzxrD7x8JgxDLp+E56KWdH0fyG1LfXMPSba0LBIoCgw7T4tHzML/Ah4
-         rTwExtIahW4pMgPb3P1w1I3kkWUM8CiyfWNkpuknnfgsgg2iCGomzaz7NjD877M2LKOV
-         UfpPEYpn/lCPj+SJZvgSGNHwW2XBTzOKwkP6IbTVNpJD1k+ndgW5oVIh4vNmgVlpgnwD
-         OkXwNzgFG9T6AxOeOnddr7p0vAR8jxZkk97b264D3edn4bfJdW7MuQv5i3Rim7csr0/D
-         k8Gw==
-X-Gm-Message-State: AOAM532cDBtDvdoHHmiSbqSe63oeCIMGcrIasPzQ8wKwjRS10PtG49iA
-        z8g6cHoRbnec5/I4/gRQnS2JDerGpgx0nkI1
-X-Google-Smtp-Source: ABdhPJyh7Ws5JGA5qOE0x9hbPSZBLPQg8ix9wnnzWhgF2q0/25FWSArWHFbBWMpnaZMEm1mloeTwzQ==
-X-Received: by 2002:a7b:c761:: with SMTP id x1mr9710360wmk.118.1622717323911;
-        Thu, 03 Jun 2021 03:48:43 -0700 (PDT)
-Received: from ?IPv6:2a02:587:4411:d162:1434:d44f:5b63:4717? ([2a02:587:4411:d162:1434:d44f:5b63:4717])
-        by smtp.gmail.com with ESMTPSA id q11sm2443014wmq.1.2021.06.03.03.48.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jun 2021 03:48:43 -0700 (PDT)
-Subject: =?UTF-8?Q?Re=3a_Request_feature=3a_=e2=80=93no-submodule?=
-To:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
- <YLfqiLbpPXWXHlBi@nand.local> <xmqq8s3r7oma.fsf@gitster.g>
- <YLg/dLqYFEqHZJUn@nand.local>
-From:   Ilias Apostolou <ilias.apostolou.zero@gmail.com>
-Message-ID: <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com>
-Date:   Thu, 3 Jun 2021 13:48:39 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=UIFa7NKW0kg6TLQ9BnHG9sWwYqTngHiq/hklnJr1/jY=;
+        b=GGPZnsEyX++9E5+I76MVf2sM7w1h4iS2kcX54kyr/8vwj2pn78iXJ6hP6GbdNPXj6x
+         b0QWUF4rTMyQKuH6wnJzFOMFCSVwMTbn8tS84wiPFJeRyYDEiUcZdkAvlTaIJpq6boSZ
+         sYoDvuq1nVHknvrwSkxJrfwmRHU4ev7QB0I6p0hsS3BPQFSBuKQvT+lC8B+YG1iwfMKz
+         WGQyucmitJzwRE4XRAH6GXdeXXbjsDU9Llrv82HlqMzmSq3WycEEDa5c5NYwvhsT15Xm
+         0icNTkIbJCkilnS/nfEacns7T9mMaf0OlfHhq46dkZ34dzw5JH0WMA9mfdNEZ54KjOLt
+         l5Og==
+X-Gm-Message-State: AOAM530HgvjuWgvy6tq3UtxuV+6i6TRldAR5EQRYjMoSDVW5hTP4JYBm
+        5hkLHwYAsn/skFpw0ZXpyY7CPvqA0+E=
+X-Google-Smtp-Source: ABdhPJyk8z7xsS9veOngjj9/nDjRbc7fN6hWyFaie3oNeLIvP8NUEYGdl3j9Vws/inybKXvcbhFSSA==
+X-Received: by 2002:a05:6512:3c8:: with SMTP id w8mr25776394lfp.63.1622717394512;
+        Thu, 03 Jun 2021 03:49:54 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id u13sm321217ljk.133.2021.06.03.03.49.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jun 2021 03:49:53 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: The git spring cleanup challenge
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+        <YLXl5+ronWhcGh13@danh.dev> <60b61089ba63d_e40ca20894@natae.notmuch>
+        <YLcFU+ORZTzAsyBy@danh.dev> <60b70eb930614_4abd208ad@natae.notmuch>
+        <87eedj74dr.fsf@evledraar.gmail.com>
+        <60b8a98d11d7c_1a0a2d20856@natae.notmuch>
+Date:   Thu, 03 Jun 2021 13:49:52 +0300
+In-Reply-To: <60b8a98d11d7c_1a0a2d20856@natae.notmuch> (Felipe Contreras's
+        message of "Thu, 03 Jun 2021 05:06:05 -0500")
+Message-ID: <87im2v1aun.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <YLg/dLqYFEqHZJUn@nand.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The reason we need to list all of the true files (except submodules) is 
-for code refactoring using the sed unility, for example:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-git ls-files | grep -Ev '(png$|ico$)' | xargs sed -i 's/\r\n/\n/'
 
-All of the other alternatives we could think of are very ugly.
+[...]
 
-On 3/6/2021 5:33 π.μ., Taylor Blau wrote:
-> On Thu, Jun 03, 2021 at 09:55:57AM +0900, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
->>
->>> In all honesty, though this seems like a niche request for ls-files to
->>> fulfill, ls-files already has quite the collection of options, so I
->>> wouldn't be sad to see it learn how to do this, too.
->> I would be somewhat sad for two reasons.
+>
+> For example in 3 days of doing this experiment I've typed 'g c'
+> countless of times (alias for `commit -v`). I added an alias for `ci`
+> instead, since that what other VCSs use, like Mercurial. But I don't
+> think `ci` makes sense for commit. It would be better if `co` was
+> available, but then checkout needs another alias.
 
-In my opinion, this should be a feature for "ls-files" only, since it 
-would be nice to have a clean stream of true files.
+I guess 'ci' historically means "check in", as opposed to 'co' meaning
+"check out", probably in RCS.
 
-Thank you for your replies,
-Ilias
-
+Thanks,
+-- Sergey Organov
