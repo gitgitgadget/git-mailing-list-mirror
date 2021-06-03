@@ -2,148 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C66C47082
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 19:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18FFEC47096
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 20:07:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 928E66139A
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 19:58:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEB1E611C9
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 20:07:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbhFCUAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 16:00:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45452 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229576AbhFCUAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 16:00:17 -0400
-Received: (qmail 6544 invoked by uid 109); 3 Jun 2021 19:58:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Jun 2021 19:58:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28938 invoked by uid 111); 3 Jun 2021 19:58:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Jun 2021 15:58:31 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 3 Jun 2021 15:58:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: [PATCH] t: use portable wrapper for readlink(1)
-Message-ID: <YLk0Zm2J6VOA/lks@coredump.intra.peff.net>
-References: <20170720232040.GA159617@aiede.mtv.corp.google.com>
- <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
- <87y2bv0yvl.fsf@evledraar.gmail.com>
- <YLkwCTcRT/9s8+5R@coredump.intra.peff.net>
+        id S229707AbhFCUJW convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 3 Jun 2021 16:09:22 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:34034 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCUJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 16:09:21 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 153K7Opt049493
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 3 Jun 2021 16:07:24 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>
+Cc:     "'Eric Wong'" <e@80x24.org>, "'Taylor Blau'" <me@ttaylorr.com>,
+        "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <002701d757d8$1a8d9dc0$4fa8d940$@nexbridge.com> <YLfc2+Te7Y3UY+Sm@nand.local> <YLfgy94sbmStC0mR@coredump.intra.peff.net> <20210602201150.GA29388@dcvr> <YLfmo8kl0URnGgp5@coredump.intra.peff.net> <003c01d757ee$c0664600$4132d200$@nexbridge.com> <YLkt+w9Lxyy8iLS5@coredump.intra.peff.net>
+In-Reply-To: <YLkt+w9Lxyy8iLS5@coredump.intra.peff.net>
+Subject: RE: [ANNOUNCE] Git v2.32.0-rc3 - t5300 Still Broken on NonStop ia64/x86
+Date:   Thu, 3 Jun 2021 16:07:19 -0400
+Message-ID: <009901d758b4$12016d80$36044880$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YLkwCTcRT/9s8+5R@coredump.intra.peff.net>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJ7fmH3rhE7hkXT/heyzvk47BFclgE1aUB7AUaXbccCdnI+uAIP+0KbAeZJ3jACXy+jC6lgIxtg
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 03, 2021 at 03:39:53PM -0400, Jeff King wrote:
+On June 3, 2021 3:31 PM, Peff wrote:
+>On Wed, Jun 02, 2021 at 04:34:51PM -0400, Randall S. Becker wrote:
+>
+>> >> The wrapper should apply to all platforms.  NFS (and presumably
+>> >> other network FSes) can be mounted with interrupts enabled.
+>> >
+>> >I don't mind that, as the wrapper is pretty low-cost (and one less
+>> >Makefile knob is nice). If it's widespread, though, I find it curious that nobody has run into it before now.
+>>
+>> I suspect this is because of the way the file system on NonStop behaves. It is a multi-processor platform, with multi-cores, so anything
+>can happen. If the file system is delayed for any reason, like a signal coming from a different core (EINTR has high priority), then fsync()
+>will be interrupted. EINTR is allowed on NonStop for fsync(). So it would be really great if the patch included a modification to
+>config.mak.uname to include that. This would be a timing-only issue on most other systems, probably something that would hit NFS.
+>>
+>> The patch for the config is:
+>> diff --git a/config.mak.uname b/config.mak.uname index
+>> cb443b4e02..ac3e3ca2c5 100644
+>> --- a/config.mak.uname
+>> +++ b/config.mak.uname
+>> @@ -566,6 +566,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>>         NO_REGEX = NeedsStartEnd
+>>         NO_PTHREADS = UnfortunatelyYes
+>>         FREAD_READS_DIRECTORIES = UnfortunatelyYes
+>> +       FSYNC_NEEDS_RESTART = YesPlease
+>>
+>>         # Not detected (nor checked for) by './configure'.
+>
+>Yeah, if we don't make it unconditional, then this is the obvious next step. But the more important question is: did you test this out and did
+>it fix the test breakage you saw on NonStop?
 
-> > FWIW this broke tests on AIX because we can't assume readlink(1) exists
-> > at all. See d2addc3b96 (t7800: readlink may not be available,
-> > 2016-05-31) for a workaround.
-> 
-> Hmm. So obviously we can use a fix similar to the one in t7800 (though
-> it's sufficiently complicated that I'd be tempted to wrap it in a helper
-> function). There are a few other calls that could be changed, too.
+The fix works for me and t5300 passes. I tested it without the conditional approach. While the test was running, I noticed this:
 
-Here's a patch to do that. Can you confirm that it fixes your test
-failure?
++ mkdir -p /home/git/git/t/trash directory.t5300-pack-object/prereq-test-dir-FAIL_PREREQS
++ cd /home/git/git/t/trash directory.t5300-pack-object/prereq-test-dir-FAIL_PREREQS
++ test_bool_env GIT_TEST_FAIL_PREREQS false
+error: last command exited with $?=1
+prerequisite FAIL_PREREQS not satisfied
+expecting success of 5300.32 'index-pack --threads=N or pack.threads=N warns when no pthreads':
 
--- >8 --
-Subject: [PATCH] t: use portable wrapper for readlink(1)
+This may be intended, but the error line showed in red.
 
-Not all systems have a readlink program available for use by the shell.
-This causes t3210 to fail on at least AIX. Let's provide a perl
-one-liner to do the same thing, and use it there.
+Regards,
+Randall
 
-I also updated calls in t9802. Nobody reported failure there, but it's
-the same issue. Presumably nobody actually tests with p4 on AIX in the
-first place (if it is even available there).
-
-I left the use of readlink in the "--valgrind" setup in test-lib.sh, as
-valgrind isn't available on exotic platforms anyway (and I didn't want
-to increase dependencies between test-lib.sh and test-lib-functions.sh).
-
-There's one other curious case. Commit d2addc3b96 (t7800: readlink may
-not be available, 2016-05-31) fixed a similar case. We can't use our
-wrapper function there, though, as it's inside a sub-script triggered by
-Git. It uses a slightly different technique ("ls" piped to "sed"). I
-chose not to use that here as it gives confusing "ls -l" output if the
-file is unexpectedly not a symlink (which is OK for its limited use, but
-potentially confusing for general use within the test suite). The perl
-version emits the empty string.
-
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t3210-pack-refs.sh       | 2 +-
- t/t9802-git-p4-filetype.sh | 4 ++--
- t/test-lib-functions.sh    | 6 ++++++
- 3 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 3b7cdc56ec..577f32dc71 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -253,7 +253,7 @@ test_expect_success SYMLINKS 'pack symlinked packed-refs' '
- 	git for-each-ref >all-refs-packed &&
- 	test_cmp all-refs-before all-refs-packed &&
- 	test -h .git/packed-refs &&
--	test "$(readlink .git/packed-refs)" = "my-deviant-packed-refs"
-+	test "$(test_readlink .git/packed-refs)" = "my-deviant-packed-refs"
- '
- 
- test_done
-diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
-index 94edebe272..19073c6e9f 100755
---- a/t/t9802-git-p4-filetype.sh
-+++ b/t/t9802-git-p4-filetype.sh
-@@ -263,7 +263,7 @@ test_expect_success SYMLINKS 'ensure p4 symlink parsed correctly' '
- 	(
- 		cd "$git" &&
- 		test -L symlink &&
--		test $(readlink symlink) = symlink-target
-+		test $(test_readlink symlink) = symlink-target
- 	)
- '
- 
-@@ -329,7 +329,7 @@ test_expect_success SYMLINKS 'empty symlink target' '
- 	git p4 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
--		test $(readlink empty-symlink) = target2
-+		test $(test_readlink empty-symlink) = target2
- 	)
- '
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index b823c14027..661f376077 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1692,3 +1692,9 @@ test_region () {
- 
- 	return 0
- }
-+
-+# Print the destination of symlink(s) provided as arguments. Basically
-+# the same as the readlink command, but it's not available everywhere.
-+test_readlink () {
-+	perl -le 'print readlink($_) for @ARGV' "$@"
-+}
--- 
-2.32.0.rc3.525.gfa939c0632
 
