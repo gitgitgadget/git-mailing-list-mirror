@@ -2,114 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D13CC47096
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0343C47096
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:48:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3ED43600EF
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:25:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4C4A613D7
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 10:48:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbhFCK13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 06:27:29 -0400
-Received: from smtp-out1.suse.de ([195.135.220.28]:50020 "EHLO
-        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbhFCK13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 06:27:29 -0400
-Received: from relay2.suse.de (unknown [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id 26CC4219D7;
-        Thu,  3 Jun 2021 10:25:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1622715944;
-        h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-         cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=cZJBCRtT1ELw6dkTzAbcE6+F5s7IW/n8Eb6llqxk028=;
-        b=YTwAYVBjW50Aj5sXbmFNJwKRISGcXcsnTwGmQzxCX8Zb9VNGkffyLae+TFNSsyiWa6UL4/
-        x+RLoz/viKT5pLqqvaSOt4Z2VjPgXkscYiUX0/0aRxLMteR+Z30RKtmb6FNInd8QDfJk6c
-        JR88C57Tx8L92I3I7F4RgZWTTd0p/U8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1622715944;
-        h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-         cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=cZJBCRtT1ELw6dkTzAbcE6+F5s7IW/n8Eb6llqxk028=;
-        b=WLafq4mrilE0X6kdHPDQ9nakrEN9DI1cxjIYfKBLcx4OMFFzQGCOi7Xu0x+6awyHWcpRn2
-        XqHV8t+mRDDkM8Ag==
-Received: from ds.suse.cz (ds.suse.cz [10.100.12.205])
-        by relay2.suse.de (Postfix) with ESMTP id 18FA5A3B91;
-        Thu,  3 Jun 2021 10:25:44 +0000 (UTC)
-Received: by ds.suse.cz (Postfix, from userid 10065)
-        id 408C6DA734; Thu,  3 Jun 2021 12:23:03 +0200 (CEST)
-Date:   Thu, 3 Jun 2021 12:23:03 +0200
-From:   David Sterba <dsterba@suse.cz>
-To:     Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc:     git@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Jiri Kosina <trivial@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: git feature request: git blame --ignore-cleanup/--ignore-trivial
-Message-ID: <20210603102303.GX31483@twin.jikos.cz>
-Reply-To: dsterba@suse.cz
-Mail-Followup-To: dsterba@suse.cz,
-        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-        git@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Jiri Kosina <trivial@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com>
+        id S229721AbhFCKua (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 06:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229610AbhFCKu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 06:50:29 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 449BBC06174A
+        for <git@vger.kernel.org>; Thu,  3 Jun 2021 03:48:45 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id o2-20020a05600c4fc2b029019a0a8f959dso3427542wmq.1
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 03:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=upyiABi3b0UJIymqO1qa0jyDVFJTvUyYb1IdWP+VL7o=;
+        b=UV6ay3E2OFSEzmr7Y8flKJCkjeOxmYgJ1QOo8LjfeaRCp76Px4qxmoSOQV3nlactn4
+         fDO+95hTeNfpkzVXJXfx7NPTvPPiB9RKXDA3QJTEIXsBEM/VOvNHQlacP3yC+uuGskzM
+         Eh8f4kLZ8JysqWaywCY7BzpqBLzmFv/240PMR9LNz/F2JLuWc9Mhmq60RXvkIibu4Jdk
+         aLa9OTWk2ukHzyhkHBN8JaVP5TgiQeBH1GaYTtUHXRs6a4ZYq2gZ08ptGu34IK354dWz
+         X/gKthhjJCnfo7sYqvG3fL6eOjRjAGOeFz3wRTcMI9/a9cvwwdIEBnq/Ulki6NHG2t+a
+         qNjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=upyiABi3b0UJIymqO1qa0jyDVFJTvUyYb1IdWP+VL7o=;
+        b=Ri9yoMj94PjDQh0s24EkCSB6SIUIXisD+3qZBOewWtDl2nTA3JemY0DaDp6PFlbCrP
+         Px7r7OcgCLnppyzxrD7x8JgxDLp+E56KWdH0fyG1LfXMPSba0LBIoCgw7T4tHzML/Ah4
+         rTwExtIahW4pMgPb3P1w1I3kkWUM8CiyfWNkpuknnfgsgg2iCGomzaz7NjD877M2LKOV
+         UfpPEYpn/lCPj+SJZvgSGNHwW2XBTzOKwkP6IbTVNpJD1k+ndgW5oVIh4vNmgVlpgnwD
+         OkXwNzgFG9T6AxOeOnddr7p0vAR8jxZkk97b264D3edn4bfJdW7MuQv5i3Rim7csr0/D
+         k8Gw==
+X-Gm-Message-State: AOAM532cDBtDvdoHHmiSbqSe63oeCIMGcrIasPzQ8wKwjRS10PtG49iA
+        z8g6cHoRbnec5/I4/gRQnS2JDerGpgx0nkI1
+X-Google-Smtp-Source: ABdhPJyh7Ws5JGA5qOE0x9hbPSZBLPQg8ix9wnnzWhgF2q0/25FWSArWHFbBWMpnaZMEm1mloeTwzQ==
+X-Received: by 2002:a7b:c761:: with SMTP id x1mr9710360wmk.118.1622717323911;
+        Thu, 03 Jun 2021 03:48:43 -0700 (PDT)
+Received: from ?IPv6:2a02:587:4411:d162:1434:d44f:5b63:4717? ([2a02:587:4411:d162:1434:d44f:5b63:4717])
+        by smtp.gmail.com with ESMTPSA id q11sm2443014wmq.1.2021.06.03.03.48.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jun 2021 03:48:43 -0700 (PDT)
+Subject: =?UTF-8?Q?Re=3a_Request_feature=3a_=e2=80=93no-submodule?=
+To:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
+ <YLfqiLbpPXWXHlBi@nand.local> <xmqq8s3r7oma.fsf@gitster.g>
+ <YLg/dLqYFEqHZJUn@nand.local>
+From:   Ilias Apostolou <ilias.apostolou.zero@gmail.com>
+Message-ID: <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com>
+Date:   Thu, 3 Jun 2021 13:48:39 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <30399052.5964.1622647235870.JavaMail.zimbra@efficios.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+In-Reply-To: <YLg/dLqYFEqHZJUn@nand.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 02, 2021 at 11:20:35AM -0400, Mathieu Desnoyers wrote:
-> Following a discussion with Peter Zijlstra about whether code cleanup
-> and functional changes done to the Linux kernel scheduler belong to separate
-> patches or should be folded together, the argument for folding cleanup
-> and function changes came to be mainly motivated by the current behavior
-> of git blame: code cleanup patches end up burying the important changes so
-> it becomes cumbersome to find them using git blame.
-> 
-> Considering the added value brought by splitting cleanups from functional changes
-> from a maintainer perspective (easier reverts) and from a reviewer perspective
-> (easier to focus on the functional changes), I think it would be good to improve
-> the git tooling to allow easily filtering out the noise from git blame.
-> 
-> Perhaps a new git blame "--ignore-trivial" and/or "--ignore-cleanup" could solve
-> this by filtering out "trivial" and "cleanup" patches from the history it considers.
-> 
-> Tagging patches as trivial and cleanup should be done in the patch commit message
-> (possibly in the title), and enforcing proper tagging of commits is already the
-> responsibility of the maintainer merging those cleanup/trivial commits into the
-> Linux kernel anyway.
-> 
-> Under the hood, I suspect it could use something similar to git log --grep=<pattern>
-> --invert-grep.
-> 
-> This should allow git blame users to easily filter out the noise and focus on the relevant
-> functional changes.
-> 
-> Any maybe the patterns associated to "cleanup" and "trivial" commits should be something
-> that can be configured through a git config file.
+The reason we need to list all of the true files (except submodules) is 
+for code refactoring using the sed unility, for example:
 
-As long as the subsystem policy is consistent, eg. always split cleanups
-from functional changes, and make the trivial cleanups really obvious
-either from code or mentioned in the changelog, I don't see a need for
-a tooling.
+git ls-files | grep -Ev '(png$|ico$)' | xargs sed -i 's/\r\n/\n/'
 
-Going through unrelated cleanups when digging in the git history is
-annoying and I think it's up to maintainers' and developers' decision
-what kind of cleanups are desired (because they make the code better,
-not just because they're trivial).  Mandating some sort of tagging is
-just another burden, if it's not applied consistently it won't be
-reliable so it won't help much.
+All of the other alternatives we could think of are very ugly.
+
+On 3/6/2021 5:33 π.μ., Taylor Blau wrote:
+> On Thu, Jun 03, 2021 at 09:55:57AM +0900, Junio C Hamano wrote:
+>> Taylor Blau <me@ttaylorr.com> writes:
+>>
+>>> In all honesty, though this seems like a niche request for ls-files to
+>>> fulfill, ls-files already has quite the collection of options, so I
+>>> wouldn't be sad to see it learn how to do this, too.
+>> I would be somewhat sad for two reasons.
+
+In my opinion, this should be a feature for "ls-files" only, since it 
+would be nice to have a clean stream of true files.
+
+Thank you for your replies,
+Ilias
+
