@@ -2,81 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 375D9C47082
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 22:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 795A7C47082
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 23:36:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BBA2611BF
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 22:51:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55D996140A
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 23:36:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbhFCWxA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 18:53:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54502 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFCWxA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 18:53:00 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ADE27CBDC1;
-        Thu,  3 Jun 2021 18:51:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=R8+NWy+ZWimC03dRL1rP9Nnfb7UyBToNGK8gfd
-        Pu9hs=; b=B0xIl/lF48wU9OMTCudlwXpVhd0AUl7XWBLPFCPWowewEMplpe1sze
-        scb78IyRZ2ttxAwjfmQRRETDeBaaK7EZu8/NLFZCLeYuzmDLxJ3s2e4zRDezB+G6
-        qeaQnAYq98xDPtFF0kH6a6/cUB9cJ+kvITOpgkf1RUoHlqSAlyQ2A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9376CCBDBF;
-        Thu,  3 Jun 2021 18:51:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C22DCBDBE;
-        Thu,  3 Jun 2021 18:51:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH v2 0/2] [GSOC] cat-file: fix --batch report changed-type
- bug
-References: <pull.967.git.1622558157.gitgitgadget@gmail.com>
-        <pull.967.v2.git.1622737766.gitgitgadget@gmail.com>
-Date:   Fri, 04 Jun 2021 07:51:13 +0900
-In-Reply-To: <pull.967.v2.git.1622737766.gitgitgadget@gmail.com> (ZheNing Hu
-        via GitGitGadget's message of "Thu, 03 Jun 2021 16:29:24 +0000")
-Message-ID: <xmqq7dja4l5q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229685AbhFCXhp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 19:37:45 -0400
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:43731 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCXhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 19:37:45 -0400
+Received: by mail-ej1-f52.google.com with SMTP id ci15so11678351ejc.10
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 16:35:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RgW+BYahXIFUf2sfoTSCqH0Awli+9famJ9zIQivzgqU=;
+        b=RyW8EICvsI42deJYeKA/+TFFhRt++aRfUINdKXeLfXbHCf81QzpFI7dM46OA70SWNR
+         bs3xjMBsK8luP8AIgRDSeRRDu+IvBch4mVFtSck5ftHayet1b+7lyRlteC1G1XlbQxuz
+         7uKgJLzxYFWcw22jZdPyeOdXdHzCN/mtFDNOlZBJ3yc0Gt5fRU6UjZruhImJKYuOWjzM
+         ioSHYvfdm2kU14Zy5mlbM38yRFBsXHoQknn2TTE7avvuZCAgsrS5FRXTuwAhJYrXZRob
+         iOkBAz+SIUVF1xYR1hRCADcMkhw4trHyDzvOH+xD/9L0lamQcCDezJZXEmvmuAkQhBWC
+         TeIg==
+X-Gm-Message-State: AOAM531BhL2K8FsPjGZ53IQ4ru2d8ow2CA/BBtFUrgg2vOeGj9fJVORo
+        sL2DMOLkq4PS5daB8cl73UokK5ly+XKvAQEXl7dyIFf9KfU=
+X-Google-Smtp-Source: ABdhPJxVjtymOFDgtHweHgVrrCBG7iG5p5NtftMfn+QJn8Q0MLJ0SB5+/ou0hvXJfLu+LGPSRx3jUFj25Xws5W1Wzuk=
+X-Received: by 2002:a17:906:c311:: with SMTP id s17mr1489152ejz.202.1622763343075;
+ Thu, 03 Jun 2021 16:35:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 32D664B8-C4BE-11EB-B896-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
+ <20210603180851.5tbnuvfb6auxrhvm@nitro.local> <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
+ <60b928374d90e_39cbe920835@natae.notmuch>
+In-Reply-To: <60b928374d90e_39cbe920835@natae.notmuch>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 3 Jun 2021 19:35:32 -0400
+Message-ID: <CAPig+cS74Ah3OyJPNQhvkdV6f7mkFgFQjHgfrrAE1gZsvN38RA@mail.gmail.com>
+Subject: Re: Gmail OAuth2 in git send-email
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jun 3, 2021 at 3:06 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Eric Sunshine wrote:
+> > The 2fa requirement is a problem for those of us who don't have
+> > smartphones or SMS.
+>
+> You don't need either of those with an app password:
+>
+>   https://support.google.com/mail/answer/185833/sign-in-using-app-passwords
 
-> Change from last version:
->
->  1. Modified the test structure under the recommendation of Peff.
->  2. Use clearer and more concise commit message help by Peff.
->
-> ZheNing Hu (2):
->   [GSOC] cat-file: handle trivial --batch format with
->     --batch-all-objects
->   [GSOC] cat-file: merge two block into one
->
->  builtin/cat-file.c  | 10 ++++------
->  t/t1006-cat-file.sh | 22 ++++++++++++++++++++++
->  2 files changed, 26 insertions(+), 6 deletions(-)
->
+Google requires 2fa to be enabled in order to create app passwords,
+and to enable 2fa requires a phone or a physical security device, so
+I'm afraid I don't see how your suggestion is supposed to work for
+people lacking such devices.
 
-Nicely done.  Thanks, both.
+> And of course you don't need them for the second step authentication
+> either, you can use any OTP client:
+>
+>   https://github.com/paolostivanin/OTPClient
+
+Thanks, that's an interesting bit of information, though if a person
+can't enable 2fa in the first place, then... (intentionally left
+blank)
