@@ -2,465 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BA62C47082
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 21:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 599D5C47082
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 21:35:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76952613EC
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 21:11:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41052613F8
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 21:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230106AbhFCVM4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 17:12:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbhFCVMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 17:12:55 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59709C06174A
-        for <git@vger.kernel.org>; Thu,  3 Jun 2021 14:11:10 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id g18so6710624edq.8
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 14:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZoMkLnpgXWAFi3tGQ4XmdMdwTqUCmr7MdkfMWoUysmI=;
-        b=z22XE98ImWtYoHxQFgiUbC85VIJbwNoNfUe6WeD0Rel9NqmdnYKzka43VdbQaiT9iK
-         7pp4iNEvaGOUaW1Pi9gLuGIa/eOebxitwQR2j9ASc0vdSQ6aLgwuqCH/Ha/DQI1UMoam
-         99rJTNbZRoRBvXBUaIJToIsG43qGFTT+RuLtakPA/8fuO9btXUTZPoCCge8+CN/UAKXy
-         Gj+c+K8bZPXAU0YhW1InfMWGViBFryUdQqIPiJLm6BDGUebHlRZrnqAbpc07rT+u05ND
-         HkruDIcKQ3yP7cd7Vyiaw0l2O2zwoQeA+ghIanbTNFu+ZkrzgOtPT8nNS7MnPysU4NNm
-         xW8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZoMkLnpgXWAFi3tGQ4XmdMdwTqUCmr7MdkfMWoUysmI=;
-        b=aic2oaKLroy4Vjp0Y24jwYARxQoxceozKcvaVBUULfDt8RX6Iy4jKTIGmVOgxYDB0F
-         hW5CDlWY56AIuNtSaRz7b5xOF55Mmxwy24Gn9Qh6682+V+slzYZxezfDLwz7SwHQBLd0
-         XSjSZVXdTM1+TRJQOtrNrxBRLMmSwn2OtF5INJGq6X8ZB7fb6ED2Aswd4afPfC9Kdhbi
-         OvhgnrnyDTxCUPCFdelfsFbdvpZ2v3Vk+HuZXDWwI3qywMzSyZZoWavajYCnJmx6aXrJ
-         0Zlk+CJPUxnBk0QS+2vQcbA4LRrl8UgRHgQ4u+bEkrF9GtxC8VNCZPm05HT+MgqrwpP9
-         XCMQ==
-X-Gm-Message-State: AOAM5332ckIU5YrpxREzaqUZos+UMDmmdZWS9seKs5f18CoBWNPrqsOQ
-        YNk23DDwNSOl6susXQtzHVJ8V9N/5QdZyg5yoI9G0wSmhnmAJdQeGpQ=
-X-Google-Smtp-Source: ABdhPJw6mHX9MugZRhkL5TEI4FkBLnUweZDIKevLHyGa4deUIEu5MbbzWZgl3pNfh9Sc0NlcGBCElMVqom/Zm8vG+o0=
-X-Received: by 2002:a05:6402:4cf:: with SMTP id n15mr1400073edw.162.1622754668816;
- Thu, 03 Jun 2021 14:11:08 -0700 (PDT)
+        id S230225AbhFCVg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 17:36:59 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53295 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230178AbhFCVg6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 17:36:58 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90380CAD19;
+        Thu,  3 Jun 2021 17:35:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s2Gi4KAlbo7mhHZWZbNWZjo5aNdO9C0D5qtQHd
+        gGdh8=; b=Zy9zWkgmR+FSjcray/UrjIHOsZr9xbZw8wTfRw5GthKNDXkAU6Cdxa
+        IOlw+jY0cu9E5Hqrq3uzYlJL/oz6c8tl2k9psHRScixC41/PfzjMOLeV5i+FHWRA
+        14Vo+GZ52CatLoz+tShDv2TKYczB2U4APzfUjEB5+OjjtnjoaV6eQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2DABBCAD17;
+        Thu,  3 Jun 2021 17:35:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14D61CAD12;
+        Thu,  3 Jun 2021 17:35:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 2/2] [GSOC] ref-filter: add %(raw) atom
+References: <pull.966.git.1622558243.gitgitgadget@gmail.com>
+        <5a94705cdbc101169488919e35613d723e6ec581.1622558243.git.gitgitgadget@gmail.com>
+        <xmqqsg1z65b8.fsf@gitster.g>
+        <CAOLTT8TiyAtJfcrPoBF6SECfaKOTKt24NSOtTmf84JwHrU8g1A@mail.gmail.com>
+Date:   Fri, 04 Jun 2021 06:35:06 +0900
+In-Reply-To: <CAOLTT8TiyAtJfcrPoBF6SECfaKOTKt24NSOtTmf84JwHrU8g1A@mail.gmail.com>
+        (ZheNing Hu's message of "Thu, 3 Jun 2021 13:36:21 +0800")
+Message-ID: <xmqq35ty6391.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAPMMpogCz4o3ZGYHnux_6w+uFyxV-FR0R1hFNeg1COiv0qd_0g@mail.gmail.com>
- <71e60d80-44c1-225d-3cf4-26740de2ac6d@gmail.com>
-In-Reply-To: <71e60d80-44c1-225d-3cf4-26740de2ac6d@gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 3 Jun 2021 23:10:58 +0200
-Message-ID: <CAPMMpogSepMk07HVtwO8qKaHx2SHmYVB+vnrnWwVWBNo8U5hAQ@mail.gmail.com>
-Subject: Re: Partial Clone, and a strange slow rev-list call on fetch
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000097fd8c05c3e303e9"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91FE18C4-C4B3-11EB-87CA-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---00000000000097fd8c05c3e303e9
-Content-Type: text/plain; charset="UTF-8"
+ZheNing Hu <adlternative@gmail.com> writes:
 
-On Wed, Jun 2, 2021 at 1:18 PM Derrick Stolee <stolee@gmail.com> wrote:
+>>  * We do have enumerated constants for each atom types, but this
+>>    early check and return does string comparison.
+>>
+>
+> Note that at this time we must compare strings... parse_ref_filter_atom()
+> passes string form of the atom. Code block A also requires comparing strings.
+>
+> -------------------
+> Code block A:
+>
+>         for (i = 0; i < used_atom_cnt; i++) {
+>                int len = strlen(used_atom[i].name);
+>                if (len == ep - atom && !memcmp(used_atom[i].name, atom, len))
+>                        return i;
+>        }
+> -------------------
 
-> could you re-run the scenario with GIT_TRACE2_PERF=1 which will
-> give the full Git process stack as we reach that rev-list call.
+The point is that you can piggyback existing string comparison
+(which is called "parsing") and use the parsed result (i.e. if you
+can compare with ATOM_RAW instead of adding another strcmp(), that
+can be a better solution).
 
-Sorry about the delay, I've been trying to reproduce... reproduceably :)
+> All the following replies are based on such a fact:
+> We will reuse used atoms as much as possible.
+>
+> Think about this situation:
+>
+> $ git for-each-ref --format="%(raw)" --sort="raw" --python
+>
+> Since we specified --sort="raw",`parse_sorting_atom()`
+> will be called in parse_opt_ref_sorting(), but at this time
+> we haven't parsed --<lang> yet.
 
-I now have a whole file of examples and observations, attached (I
-assume text attachments are allowed on this mailing list?), which
-should be reproducible for anyone as I was able to use the linux
-kernel repo to illustrate all cases.
+That only says using parse_sorting_atom() and relying on the check
+in the function is still too early, and does not necessarily support
+the posted patch that redundantly runs strcmp().
 
-My observations probably use incorrect terminology and/or illustrate a
-lack of understanding of the underlying intended behaviors, but here
-are the most surprising (not-intentional-seeming) ones:
- * the "rev-list" calls are normal behavior for non-promisor remotes;
-they normally complete very fast (with perhaps very little stdin
-input??)
- * they happen in "fetch.c", right after the "remote_refs" labelled
-code and within the "consume_refs" labelled code
- * for promisor remotes, these rev-list calls are normally
-(intentionally?) skipped. They are run only is there is a non-promisor
-packfile which contains a commit that is at the "tip" of one of the
-(promisor) remote's refs
- * when these rev-list calls happen, they are incredibly, strangely
-expensive (a full "git rev-list --all --objects" completes *much*
-faster)
- * even weirder, the cost of these calls appears proportional to the
-*promisor packfile sizes* - if you specify a more permissive filter at
-clone-time, and therefore have more objects actually there (not
-missing/skipped) in your promisor packfiles, then it takes up taking
-even (much) longer
- * maybe weirdest - all of this goes away when the non-promisor
-packfile gets "hidden" behind a more recent promisor packfile;
-whatever this check is supposed to do, I don't believe it is
-sound/correct.
+After parsing all the command line options, we have used_atom[]
+fully populated and we know what host language we are quoting the
+result for---and that makes a good place to check for comflicting
+requests.
 
-> This is the critical point: you first cloned without a filter,
-> and then converted the remote to a promisor remote without
-> marking the pack-files you received from that remote as promisor
-> pack-files. That means that Git needs to do some work to discover
-> which objects are reachable from promisor packs or not, and that
-> extra work is slowing you down.
+>> +static int raw_atom_parser(const struct ref_format *format, struct used_atom *atom,
+>> +                               const char *arg, struct strbuf *err)
+>> +{
+>> +       if (!arg)
+>> +               atom->u.raw_data.option = RAW_BARE;
+>> +       else if (!strcmp(arg, "size"))
+>> +               atom->u.raw_data.option = RAW_LENGTH;
+>> +       else
+>> +               return strbuf_addf_ret(err, -1, _("unrecognized %%(raw) argument: %s"), arg);
+>> +
+>> +       if (atom->u.raw_data.option == RAW_BARE && format->quote_style)
+>> +               return strbuf_addf_ret(err, -1,
+>> +                                      _("--format=%%(raw) cannot be used with ...")...);
+>> +
+>> +       return 0;
+>> +}
+>
+> It's same, "*.parser()" is below Code Block A.
+>
+> After all, the reason why this must be done here is the ref-filter
+> original logic
+> has not considered rejecting a format atom and an option.
 
-As noted above, I don't think that work is, in the version I was
-testing at least (2.31.1), correct. That said, I may well be
-misunderstanding its intent.
-
-> This does make me wonder what happens when Git repacks objects
-> created locally and then starts fetching from a promisor remote.
-
-I can confirm that *if* the locally-created non-promisor packfile
-contains a commit that is the "tip" of a (promisor) remote branch,
-then this will trigger the strange/pathological fetch performance
-issue. As soon as you add a "promisor" marker for the packfile, or as
-soon as someone else pushes new commits to the branch that then get
-fetched as new promisor packfiles in your repo, you're golden, the
-fetch process stops doing its "panic - non-promisor packfile found"
-behavior... Even though a non-promisor packfile *is still in scope!*
-(just not at the tip of a ref for that remote)
-
-Related to this, we have the other notable observation that "git
-repack" (without asking to do anything with promisors) ends up doing
-the same kind of work as the "rev-list" calls noted above, also
-proportional to the size and/or number of objects present in promisor
-packfiles; which is a little frustrating when the simplest cure to
-*other* performance issue, above, is to make all packfile promissor
-ones.
-
-> There are some challenges here, for sure. Most likely also some
-> potential gains, but it is unlikely to create a seamless
-> experience for what you are trying to do.
-
-There's one other crazy finding I should note explicitly here, which
-is that force-pushing a branch can, for reasons I cannot explain,
-cause you to redownload all the repo's commits & trees again (during
-the forced push, as a just-in-time fetch). And again (if the branch
-changes and you force-push again). And again for as long as you're
-overwriting others' changes. For the linux kernel repo without blobs,
-that's 1.09GB a pop, of purely duplicated promisor packfiles
-containing the whole (no-blob-filtered) repo. Interestingly, the
-behavior is the same regardless of your configured filter - so the
-"blob=none" behavior must be hardcoded or implied somehow in the
-codepath that produces this weird outcome.
-
-That said, so far I think everything I'm finding is manageable:
-* To avoid "non-promisor packfile" issues in the initial dual-stage
-clone, we just need to add extra promisor marker files when we
-"upgrade" the remote to a promisor remote.
-* Git repack performance will (presumably?) only affect background GC jobs
-* Any repack-originated non-promissor packfiles can be cleaned up
-(made promissor packfiles) by our tooling
-* Any weird re-downloads of the commits+trees during force-pushes
-should be OK, they would "only" cost 400MB in our repo
-
-If these are issues that someone is interested in looking into, I'd be
-very happy to work with them, but my understanding of the codebase
-(and even the language) is... poor.
-
-Thanks,
-Tao
-
---00000000000097fd8c05c3e303e9
-Content-Type: text/plain; charset="US-ASCII"; 
-	name="2021-06-03 Partial Clone Strangeness Investigations.txt"
-Content-Disposition: attachment; 
-	filename="2021-06-03 Partial Clone Strangeness Investigations.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_kphe7wd20>
-X-Attachment-Id: f_kphe7wd20
-
-CiMgCiMgVGhpcyBmaWxlIGlzIGEgbG9nIG9mIGludmVzdGlnYXRpb25zIGludG8gbm9uLW9idmlv
-dXMgYmVoYXZpb3JzIG9mICJwYXJ0aWFsIGNsb25lIiByZXBvc2l0b3JpZXMsCiMgdXNpbmcgYSAo
-d3JpdGFibGUsIHRocm93YXdheSkgZm9yayBvZiB0aGUgbGludXgga2VybmVsIGFzIHRlc3QgcmVw
-b3NpdG9yeS4KIyAKIyBUaGUgT1VUQ09NRVMgZGVzY3JpYmVkIGhlcmUgYXJlIGZvciBnaXQgMi4z
-MS4xIG9uIGZlZG9yYSBsaW51eCAzMyBhcyBvZiAyMDIxLTA2LTAzCiMgCgoKIyAtLS0tLQojIFNF
-VFVQCiMgLS0tLS0KCiMgRW5hYmxlIHBlcmYgdHJhY2luZywgaW5jbHVkaW5nIGNoaWxkIHByb2Nl
-c3MgZGV0YWlscwpleHBvcnQgR0lUX1RSQUNFMl9QRVJGPTEKCiMgU2V0IHVwIGEgc3VpdGFibGUg
-cmVhZCAmIHdyaXRhYmxlIGxpbnV4IGtlcm5lbCByZW1vdGUgVVJMCmV4cG9ydCBSRU1PVEVfVVJM
-PSJodHRwczovL2dpdGh1Yi5jb20vVGFvSy9saW51eC5naXQiCgoKCiMgLS0tLS0tLQojIE9CU0VS
-VkFUSU9OUzogCiMgIC0gcmVwb3Mgd2l0aG91dCBwcm9taXNvciBwYWNrZmlsZXMgcnVuIGEgImdp
-dCByZXYtbGlzdCIgcHJvY2VzcyBhcyBwYXJ0IG9mICJmZXRjaC5jIiwgcmlnaHQgYWZ0ZXIgdGhl
-ICJyZW1vdGVfcmVmcyIgYW5kIHdpdGhpbiB0aGUgImNvbnN1bWVfcmVmcyIgbGFiZWxsZWQgY29k
-ZSBhcmVhcwojICAtIHRoZXNlIHByb2Nlc3NlcyBhcmUgZ2VuZXJhbGx5IHZlcnkgZmFzdAojICAt
-IHRoZXNlIHByb2Nlc3NlcyAqZG9uJ3QgcnVuKiBpZiB0aGUgcGFja2ZpbGVzIGNvbnRhaW5pbmcg
-dGhlICJ0aXBzIi9yZWZzIHNoYXJlZC9mZXRjaGVkIGZyb20gdGhlIHJlbW90ZSBhcmUgYWxsIHBy
-b21pc29yIHBhY2tmaWxlcwojICAtIHRoZXNlIHByb2Nlc3NlcyAqcnVuIGRpZmZlcmVudGx5KiBp
-ZiAqYW55KiBvZiB0aGUgcGFja2ZpbGVzIGNvbnRhaW5pbmcgdGhlICJ0aXBzIi9yZWZzIHNoYXJl
-ZC9mZXRjaGVkIGZyb20gdGhlIHJlbW90ZSBhcmUgbm90IHByb21pc29yIHBhY2tmaWxlcywgYnV0
-IHRoZSByZW1vdGUgaXMgYSBwcm9taXNvcgojICAgIC0gU3BlY2lmaWNhbGx5LCB0aGUgc2FtZSBj
-aGlsZCBwcm9jZXNzZXMgZG8gcnVuLCBidXQgYW4gZXh0cmEgIi0tZXhjbHVkZS1wcm9taXNvci1v
-YmplY3RzIiBwYXJhbWV0ZXIgaXMgYWRkZWQuCiMgIC0gdGhlc2UgY2hpbGQgcHJvY2Vzc2VzLCBy
-dW5uaW5nIHdpdGggYSBwcm9taXNvciByZW1vdGUsIHJ1biB2ZXJ5IGZhc3QgaWYgcHJvbWlzb3Ig
-cGFja2ZpbGVzIGFyZSBzbWFsbAojICAtIHRoZXNlIHNhbWUgY2hpbGQgcHJvY2Vzc2VzIHJ1biB2
-ZXJ5ICpzbG93KiBpZiBwcm9taXNvciBwYWNrZmlsZXMgYXJlIGxhcmdlCiMgIC0gdGhhdCBzbG93
-bmVzcyBpcyBub3QgKnByb3BvcnRpb25hbCogdG8gcGFja2ZpbGUgc2l6ZSwgYnV0IGl0IGlzIHJl
-bGF0ZWQ7IHRoaXMgcmVsYXRpb25zaGlwIGFwcGVhcnMgdG8gYmUgbm9uLWxpbmVhcgojICAtIHRo
-YXQgc2xvd25lc3MgaXMgc3Vic3RhbnRpYWxseSBpbmNyZWFzZWQsIGZvciBleGFtcGxlLCBieSB1
-c2luZyBhICJsb29zZSIgZmlsdGVyLCBhbmQgZW5kaW5nIHVwIHdpdGggbWFueSBvciBhbGwgYmxv
-YnMgKm5vdCBtaXNzaW5nKiBmcm9tIHRoZSBwcm9taXNvciBwYWNrZmlsZQojICAtIHRoYXQgc2xv
-d25lc3Mgc2VlbXMgdG8gZGVwZW5kIGV4Y2x1c2l2ZWx5IG9uIHRoZSBzaXplL2NvbnRlbnQgb2Yg
-dGhlIHByb21pc29yIHBhY2tmaWxlczsgbm9uLXByb21pc29yIHBhY2tmaWxlcyAidHJpZ2dlciIg
-dGhlIGJlaGF2aW9yIGJ1dCBkbyBub3QgYXBwZWFyIHRvIGltcGFjdCBpdHMgc3BlZWQKIyAtLS0t
-LS0tCgoKIyBSZWd1bGFyIHNpbmdsZS1icmFuY2ggcXVpdGUtc2hhbGxvdyBjbG9uZSB3aXRob3V0
-IGNoZWNrb3V0LCBmb2xsb3dlZCBieSBhIHJlZ3VsYXIgZmV0Y2gKIyAtPiBpbiB0aGUgZmV0Y2gs
-IHRoZSAicmVtb3RlX3JlZnMiIGFuZCAiY29uc3VtZV9yZWZzIiBsYWJlbGxlZCBhcmVhcyBzcGF3
-biAiZ2l0IHJldi1saXN0IC0tb2JqZWN0cyAtLXN0ZGluIC0tbm90IC0tYWxsIC0tcXVpZXQgLS1h
-bHRlcm5hdGUtcmVmcyIgcHJvY2Vzc2VzCiMgLT4gdGhlc2UgcHJvY2Vzc2VzIGNvbXBsZXRlIGlu
-c3RhbnRhbmVvdXNseSBpbiB0aGlzIGNvbnRleHQKIyAtPiBhbiBlcXVpdmFsZW50IHByb2Nlc3Mg
-KHNhbWUgYXJncykgaXMgaW52b2tlZCBkdXJpbmcgY2xvbmUsIGFuZCBsYWJlbHMgcHJvZ3Jlc3Mg
-YXMgIkNoZWNraW5nIGNvbm5lY3Rpdml0eSIKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00i
-ICYmCiAgZ2l0IGNsb25lICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tbm8tY2hlY2tvdXQgLS1z
-aGFsbG93LXNpbmNlPTIwMTgtMDEtMDEgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgZmV0Y2gKCgoj
-IEZ1bGx5IGJsb2ItZmlsdGVyZWQgc2luZ2xlLWJyYW5jaCBxdWl0ZS1zaGFsbG93IGNsb25lIHdp
-dGhvdXQgY2hlY2tvdXQsIGZvbGxvd2VkIGJ5IGEgcmVndWxhciBmZXRjaAojIC0+ICJyZW1vdGVf
-cmVmcyIgYW5kICJjb25zdW1lX3JlZnMiIGRvbid0IGNhbGwgInJldi1saXN0IiBjaGlsZCBwcm9j
-ZXNzZXMgYXQgYWxsClRFU1RGT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9u
-ZSAkUkVNT1RFX1VSTCAkVEVTVEZPTERFUiAtLW5vLWNoZWNrb3V0IC0tc2hhbGxvdy1zaW5jZT0y
-MDE4LTAxLTAxIC0tZmlsdGVyPWJsb2I6bm9uZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBmZXRj
-aAoKIyBSZWd1bGFyIHNpbmdsZS1icmFuY2ggcXVpdGUtc2hhbGxvdyBjbG9uZSwgd2l0aCBhIGJs
-b2ItZmlsdGVyZWQgInRpcCIKIyAgKGFub3RoZXIgcmVwbyBpcyBjcmVhdGVkIGp1c3QgdG8gbW92
-ZSB0aGUgdGlwIGZvciB0aGUgcHJvbWlzb3IgcGFja2ZpbGUgdG8gYmUgY3JlYXRlZCkKIyAtPiAi
-cmVtb3RlX3JlZnMiIGFuZCAiY29uc3VtZV9yZWZzIiBkb24ndCBjYWxsICJyZXYtbGlzdCIgY2hp
-bGQgcHJvY2Vzc2VzIGF0IGFsbApURVNURk9MREVSPSJsaW51eHRlc3RfJFJBTkRPTSIgJiYKICBU
-SVBfTU9WRVJfRk9MREVSPSJsaW51eHRlc3RfJFJBTkRPTSIgJiYKICBnaXQgY2xvbmUgJFJFTU9U
-RV9VUkwgJFRFU1RGT0xERVIgLS1uby1jaGVja291dCAtLXNoYWxsb3ctc2luY2U9MjAxOC0wMS0w
-MSAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkVElQX01PVkVSX0ZPTERFUiAtLWRlcHRoPTEg
-JiYgCiAgZWNobyAiU29tZXRoaW5nICRSQU5ET00iID4gIiRUSVBfTU9WRVJfRk9MREVSL3Rlc3Rf
-ZmlsZV8kUkFORE9NIiAmJgogIGdpdCAtQyAkVElQX01PVkVSX0ZPTERFUiBhZGQgLUEgJiYKICBn
-aXQgLUMgJFRJUF9NT1ZFUl9GT0xERVIgY29tbWl0IC0tbm8tZ3BnLXNpZ24gLW0gInRlc3QgZmls
-ZSBjb21taXQiICYmCiAgZ2l0IC1DICRUSVBfTU9WRVJfRk9MREVSIHB1c2ggb3JpZ2luIEhFQUQg
-JiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29uZmlnIHJlbW90ZS5vcmlnaW4ucHJvbWlzb3IgdHJ1
-ZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBjb25maWcgcmVtb3RlLm9yaWdpbi5wYXJ0aWFsY2xv
-bmVmaWx0ZXIgYmxvYjpub25lICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZldGNoICYmCiAgZ2l0
-IC1DICRURVNURk9MREVSIGZldGNoCgojIFJlZ3VsYXIgc2luZ2xlLWJyYW5jaCBxdWl0ZS1zaGFs
-bG93IGNsb25lLCB1cGdyYWRlZCB0byBhIHByb21pc29yIHJlbW90ZQojIC0+ICJyZW1vdGVfcmVm
-cyIgYW5kICJjb25zdW1lX3JlZnMiICpkbyogY2FsbCAicmV2LWxpc3QiIGNoaWxkIHByb2Nlc3Nl
-cywgd2l0aCBhbiBleHRyYSBwYXJhbWV0ZXIKIyAtPiB0aGVzZSByZXYtbGlzdCBjaGlsZCBwcm9j
-ZXNzZXMgY29tcGxldGUgdmVyeSBmYXN0IChwcmVzdW1hYmx5IHRoZWlyIHNwZWVkIHJlbGF0ZXMg
-dG8gdGhlIHZvbHVtZSBvZiBwcm9taXNvciBwYWNrZmlsZXMgaW4gc29tZSB3YXkpClRFU1RGT0xE
-RVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkVEVTVEZP
-TERFUiAtLW5vLWNoZWNrb3V0IC0tc2hhbGxvdy1zaW5jZT0yMDE4LTAxLTAxICYmCiAgZ2l0IC1D
-ICRURVNURk9MREVSIGNvbmZpZyByZW1vdGUub3JpZ2luLnByb21pc29yIHRydWUgJiYKICBnaXQg
-LUMgJFRFU1RGT0xERVIgY29uZmlnIHJlbW90ZS5vcmlnaW4ucGFydGlhbGNsb25lZmlsdGVyIGJs
-b2I6bm9uZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBmZXRjaAoKIyBSZWd1bGFyIHNpbmdsZS1i
-cmFuY2ggcXVpdGUtc2hhbGxvdyBjbG9uZSwgd2l0aCAqc2hvcnQqIGJsb2ItZmlsdGVyZWQgInJv
-b3RzIiBhZGRlZCBsYXRlcgojICAodGhlIGRlZXBlbmluZyBpcyBhIGxpdHRsZSBjaGFvdGljLCB3
-aXRoIGxvdHMgb2YgYmxvYnMgYmVpbmcgcmV0cmlldmVkLCBwcmVzdW1hYmx5IGZyb20gdGhlIGRp
-ZmZlcmVudCBzaGFsbG93IHJvb3RzKQojIC0+IHRoZSBwcmVzZW5jZSBvZiBzbWFsbCBwcm9taXNv
-ciBwYWNrZmlsZXMgKE5PVCBhdCB0aGUgdGlwKSBtYWtlcyBubyBkaWZmZXJlbmNlOyBub24tcHJv
-bWlzb3IgcGFja2ZpbGVzIGF0IHRoZSB0aXAgdHJpZ2dlciB0aGUgcmV2LWxpc3QgY2FsbCwgaXQg
-Y29tcGxldGVzIGZhc3QKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgZ2l0IGNs
-b25lICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tbm8tY2hlY2tvdXQgLS1zaGFsbG93LXNpbmNl
-PTIwMTgtMDEtMDEgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29uZmlnIHJlbW90ZS5vcmlnaW4u
-cHJvbWlzb3IgdHJ1ZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBjb25maWcgcmVtb3RlLm9yaWdp
-bi5wYXJ0aWFsY2xvbmVmaWx0ZXIgYmxvYjpub25lICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZl
-dGNoIC0tc2hhbGxvdy1zaW5jZT0yMDE3LTEyLTMwICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZl
-dGNoCgoKIyBSZWd1bGFyIHNpbmdsZS1icmFuY2ggcXVpdGUtc2hhbGxvdyBjbG9uZSwgd2l0aCBi
-b3RoIGEgYmxvYi1maWx0ZXJlZCAidGlwIiBhbmQgYSBub24tcHJvbWlzb3ItcGFja2ZpbGUgInRp
-cCIKIyAgKGFub3RoZXIgcmVwbyBpcyBjcmVhdGVkIGp1c3QgdG8gbW92ZSB0aGUgdGlwIGZvciB0
-aGUgcHJvbWlzb3IgcGFja2ZpbGUgdG8gYmUgY3JlYXRlZCkKIyAtPiB0aGUgcHJlc2VuY2Ugb2Yg
-c21hbGwgcHJvbWlzb3IgcGFja2ZpbGVzIChhdCB0aGUgdGlwKSBtYWtlcyBubyBkaWZmZXJlbmNl
-OyBub24tcHJvbWlzb3IgcGFja2ZpbGVzIGF0IHRoZSB0aXAgdHJpZ2dlciB0aGUgcmV2LWxpc3Qg
-Y2FsbCwgaXQgY29tcGxldGVzIGZhc3QKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYm
-CiAgVElQX01PVkVSX0ZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgT1JJR0lOQUxfVElQ
-X0JSQU5DSD0idGVzdGJyYW5jaF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAk
-VEVTVEZPTERFUiAtLW5vLWNoZWNrb3V0IC0tc2hhbGxvdy1zaW5jZT0yMDE4LTAxLTAxICYmCiAg
-Z2l0IGNsb25lICRSRU1PVEVfVVJMICRUSVBfTU9WRVJfRk9MREVSIC0tZGVwdGg9MSAmJiAKICBl
-Y2hvICJTb21ldGhpbmcgJFJBTkRPTSIgPiAiJFRJUF9NT1ZFUl9GT0xERVIvdGVzdF9maWxlXyRS
-QU5ET00iICYmCiAgZ2l0IC1DICRUSVBfTU9WRVJfRk9MREVSIGFkZCAtQSAmJgogIGdpdCAtQyAk
-VElQX01PVkVSX0ZPTERFUiBjb21taXQgLS1uby1ncGctc2lnbiAtbSAidGVzdCBmaWxlIGNvbW1p
-dCIgJiYKICBnaXQgLUMgJFRJUF9NT1ZFUl9GT0xERVIgcHVzaCBvcmlnaW4gSEVBRCAmJgogIGdp
-dCAtQyAkVEVTVEZPTERFUiBjb25maWcgLS1hZGQgcmVtb3RlLm9yaWdpbi5mZXRjaCAiK3JlZnMv
-aGVhZHMvJE9SSUdJTkFMX1RJUF9CUkFOQ0g6cmVmcy9yZW1vdGVzL29yaWdpbi8kT1JJR0lOQUxf
-VElQX0JSQU5DSCIgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgcHVzaCBvcmlnaW4gIkhFQUQ6cmVm
-cy9oZWFkcy8kT1JJR0lOQUxfVElQX0JSQU5DSCIgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29u
-ZmlnIHJlbW90ZS5vcmlnaW4ucHJvbWlzb3IgdHJ1ZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBj
-b25maWcgcmVtb3RlLm9yaWdpbi5wYXJ0aWFsY2xvbmVmaWx0ZXIgYmxvYjpub25lICYmCiAgZ2l0
-IC1DICRURVNURk9MREVSIGZldGNoICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZldGNoCgoKIyBS
-ZWd1bGFyIHNpbmdsZS1icmFuY2ggdmVyeS1zaGFsbG93IGNsb25lLCB3aXRoIGZ1bGwgYmxvYi1m
-aWx0ZXJlZCBoaXN0b3J5IGFkZGVkIGxhdGVyCiMgLT4gdGhlIHByZXNlbmNlIG9mICpsYXJnZSog
-cHJvbWlzb3IgcGFja2ZpbGVzICh3aXRoIG5vbi1wcm9taXNvciBwYWNrZmlsZXMgYXQgdGhlIHRp
-cCkgbWVhbnMgdGhlIHJldi1saXN0IGNhbGwgcnVucywgYW5kIHJ1bnMgbG9uZy4uLgojIChzaXpl
-OiAyMDVNQiArIDEuMDlHQiwgY2xvbmUgJiB1bnNoYWxsb3c6IDYwcyArIDMxNHMsIGZldGNoOiAz
-MjRzIG1hZGUgdXAgb2YgMlggMTYycyByZXYtbGlzdCkKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRS
-QU5ET00iICYmCiAgZ2l0IGNsb25lICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tbm8tY2hlY2tv
-dXQgLS1kZXB0aD0xICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGNvbmZpZyByZW1vdGUub3JpZ2lu
-LnByb21pc29yIHRydWUgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29uZmlnIHJlbW90ZS5vcmln
-aW4ucGFydGlhbGNsb25lZmlsdGVyIGJsb2I6bm9uZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBm
-ZXRjaCAtLXVuc2hhbGxvdyAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBmZXRjaAoKCiMgUmVndWxh
-ciBzaW5nbGUtYnJhbmNoIHZlcnktc2hhbGxvdyBjbG9uZSwgd2l0aCBmdWxsIGJhcmVseS1maWx0
-ZXJlZCBoaXN0b3J5IGFkZGVkIGxhdGVyCiMgLT4gdGhlIHByZXNlbmNlIG9mICpodWdlKiBwcm9t
-aXNvciBwYWNrZmlsZXMgKHdpdGggbm9uLXByb21pc29yIHBhY2tmaWxlcyBhdCB0aGUgdGlwKSBt
-ZWFucyB0aGUgcmV2LWxpc3QgY2FsbCBydW5zIGV2ZW4gbG9uZ2VyCiMgKHNpemU6IDIwNU1CICsg
-Mi43M0dCLCBjbG9uZSAmIHVuc2hhbGxvdzogNjBzICsgMTQyMHMsIGZldGNoOiAxOTAwcyBtYWRl
-IHVwIG9mIDJYIDk0MHMgcmV2LWxpc3QpClRFU1RGT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAm
-JgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkVEVTVEZPTERFUiAtLW5vLWNoZWNrb3V0IC0tZGVw
-dGg9MSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBjb25maWcgcmVtb3RlLm9yaWdpbi5wcm9taXNv
-ciB0cnVlICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGNvbmZpZyByZW1vdGUub3JpZ2luLnBhcnRp
-YWxjbG9uZWZpbHRlciBibG9iOmxpbWl0PTFtICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZldGNo
-IC0tdW5zaGFsbG93ICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZldGNoCgoKIyBSZWd1bGFyIHNp
-bmdsZS1icmFuY2ggImRlZXAiIGNsb25lICpvZiBhIHZlcnkgb2xkIHJlZiosIHRhZyAidjIuNi4x
-MyIsIGFuZCB0aGVuIGZ1bGwgYmxvYi1maWx0ZXJlZCBoaXN0b3J5ICpzaW5jZSB0aGVuKiBhZGRl
-ZCBsYXRlcgojIC0+IHRoZSBwcmVzZW5jZSBvZiAqbGFyZ2UqIHByb21pc29yIHBhY2tmaWxlcyAo
-d2l0aCBub24tcHJvbWlzb3IgcGFja2ZpbGVzIGF0IHRoZSByb290KSBoYXMgZXhhY3RseSB0aGUg
-c2FtZSBpbXBhY3QgYXMgd2l0aCBub24tcHJvbWlzb3JzIGF0IHRpcAojIChzaXplOiA3Nk1CICsg
-MS4wOUdCLCBjbG9uZSAmIGZldGNoOiA5cyArIDI2NXMsIGZldGNoOiAzMjBzIG1hZGUgdXAgb2Yg
-MlggMTYwcyByZXYtbGlzdCkKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgZ2l0
-IGNsb25lICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tbm8tY2hlY2tvdXQgLWIgdjIuNi4xMyAt
-LXNpbmdsZS1icmFuY2ggJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29uZmlnIC0tYWRkIHJlbW90
-ZS5vcmlnaW4uZmV0Y2ggIityZWZzL2hlYWRzL21hc3RlcjpyZWZzL3JlbW90ZXMvb3JpZ2luL21h
-c3RlciIgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29uZmlnIHJlbW90ZS5vcmlnaW4ucHJvbWlz
-b3IgdHJ1ZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBjb25maWcgcmVtb3RlLm9yaWdpbi5wYXJ0
-aWFsY2xvbmVmaWx0ZXIgYmxvYjpub25lICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGZldGNoICYm
-CiAgZ2l0IC1DICRURVNURk9MREVSIGZldGNoCgoKCgojIC0tLS0tLS0KIyBPQlNFUlZBVElPTlM6
-IAojICAtIHJ1bm5pbmcgZ2l0IHJlcGFjayBvbiBhIGZ1bGx5LXByb21pc29yZWQgcmVwbyBjYW4v
-d2lsbCB5aWVsZCBub24tcHJvbWlzb3IgcGFja2ZpbGVzIChpZiB0aGVyZSBhcmUgbG9vc2Ugb2Jq
-ZWN0cyBmcm9tIGluaXRpYWxseS1sb2NhbCBjb21taXRzKQojICAtIGlmL3doZW4gc3VjaCBhIGxv
-Y2FsbHktcGFja2VkIG5vbi1wcm9taXNvciBwYWNrZmlsZSBjb250YWlucyBhbnkgInRpcCIgY29t
-bWl0cyBmb3IgdGhlIHByb21pc29yIHJlbW90ZSwgdGhlbjoKIyAgICAtIGZldGNoIHdpbGwgYmUg
-c2xvdyAoZGVwZW5kaW5nIG9uIHRoZSBzaXplIG9mIHByb21pc3NvciBwYWNrZmlsZXMpCiMgICAg
-LSB0aGlzIHdpbGwgY29udGludWUgdW50aWwgeW91IG1hbnVhbGx5IG1hcmsgdGhlIHBhY2sgZmls
-ZSBhcyAiLnByb21pc29yIiBPUiB5b3UgZ2V0IGEgbGF0ZXIgdGlwIGZvciB0aGUgYWZmZWN0ZWQg
-YnJhbmNoKGVzKSBmcm9tIGEgcHJvbWlzb3IgcmVtb3RlCiMgLS0tLS0tLQoKIwojIChjbG9uZTog
-MTgwcywgYWRkOiA3MHMgd2FybXVwLCBmZXRjaDogMXMsIHJlcGFjazogMTczcywgZmV0Y2g6IDM0
-MHMgZnJvbSAyWCByZXYtbGlzdCBhdCAxNzBzKQojIC0+IGFmdGVyIHJlcGFjaywgZmV0Y2ggaXMg
-KnZlcnkqIHNsb3cgdW50aWwgb25lIG9mIHR3byBjb3JyZWN0aXZlIGNpcmN1bXN0YW5jZXMgYXJp
-c2U6CiMgIDEuIHlvdSBtYWtlIHRoZSBzdHJheSBwYWNrZmlsZSBhIHByb21pc29yIHBhY2tmaWxl
-LCBvciAKIyAgMi4geW91IGZldGNoIGFub3RoZXIgY2hhbmdlICh0byB0aGF0IGJyYW5jaCkgZnJv
-bSB0aGUgcHJvbWlzb3IgcmVtb3RlIC8gdGhlIHRpcCBvZiB0aGUgYnJhbmNoICJuYXR1cmFsbHki
-IGJlY29tZXMgYSBwcm9taXNvciBhZ2FpbgpURVNURk9MREVSPSJsaW51eHRlc3RfJFJBTkRPTSIg
-JiYKICBnaXQgY2xvbmUgJFJFTU9URV9VUkwgJFRFU1RGT0xERVIgLS1zaW5nbGUtYnJhbmNoIC0t
-ZmlsdGVyPWJsb2I6bm9uZSAmJgogIGVjaG8gIlNvbWV0aGluZyAkUkFORE9NIiA+ICIkVEVTVEZP
-TERFUi90ZXN0X2ZpbGVfJFJBTkRPTSIgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgYWRkIC1BICYm
-CiAgZ2l0IC1DICRURVNURk9MREVSIGNvbW1pdCAtLW5vLWdwZy1zaWduIC1tICJ0ZXN0IGZpbGUg
-Y29tbWl0IiAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBwdXNoICYmCiAgZ2l0IC1DICRURVNURk9M
-REVSIGZldGNoCiAgZ2l0IC1DICRURVNURk9MREVSIHJlcGFjayAmJgogIGdpdCAtQyAkVEVTVEZP
-TERFUiBmZXRjaApGSVhVUEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgZ2l0IGNsb25l
-ICRSRU1PVEVfVVJMICRGSVhVUEZPTERFUiAtLWRlcHRoPTEgJiYKICBlY2hvICJTb21ldGhpbmcg
-JFJBTkRPTSIgPiAiJEZJWFVQRk9MREVSL3Rlc3RfZmlsZV8kUkFORE9NIiAmJgogIGdpdCAtQyAk
-RklYVVBGT0xERVIgYWRkIC1BICYmCiAgZ2l0IC1DICRGSVhVUEZPTERFUiBjb21taXQgLS1uby1n
-cGctc2lnbiAtbSAidGVzdCBmaWxlIGNvbW1pdCIgJiYKICBnaXQgLUMgJEZJWFVQRk9MREVSIHB1
-c2gKZ2l0IC1DICRURVNURk9MREVSIGZldGNoCgoKCgoKIyAtLS0tLS0tCiMgT0JTRVJWQVRJT05T
-OiAKIyAgLSBVbmRlciBzb21lIHNwZWNpZmljIGNpcmN1bXN0YW5jZXMsIGZvcmNlLXB1c2hpbmcg
-YSBicmFuY2ggZnJvbSBhIHBhcnRpYWwgY2xvbmUgY2F1c2VzIHRoaXMgcmVwbyAKIyAgICAgICB0
-byAqcmUtZmV0Y2ggdGhlIHJlcG8ncyBjb21taXRzICYgdHJlZXMqIGludG8gYW5vdGhlciBuZXcg
-cHJvbWlzb3IgcGFja2ZpbGUuIAojICAgIC0gVGhpcyBjYW4gYmUgcmVwZWF0ZWQgYW55IG51bWJl
-ciBvZiB0aW1lcywgeWllbGRpbmcgZWZmZWN0aXZlbHkgaWRlbnRpY2FsIChsYXJnZSkgZHVwbGlj
-YXRlIHBhY2tmaWxlcwojICAgIC0gVGhlIHByZWNvbmRpdGlvbnMgYXBwZWFyIHRvIGJlIHRoYXQg
-dGhlIHJlbW90ZSBhbmQgdGhlIGxvY2FsIHJlcG8gZWFjaCBoYXZlIG11dHVhbGx5IHVua25vd24g
-Y29tbWl0cyBhdCB0aGUgdGlwLi4uCiMgIC0gVGhlIGJlaGF2aW9yIGlzIHRvIHJlLWRvd25sb2Fk
-IHRoZSBjb21taXRzICYgdHJlZXMgb25seSwgZXZlbiBpZiB0aGUgZmlsdGVyIHNldHRpbmdzIG9u
-IHRoZSByZXBvIGFyZSAibGF4IiAoZWcgImxpbWl0PTFNIikKIyAtLS0tLS0tCgoKIyBHZXQgYSBm
-dWxseSBmaWx0ZXJlZCBmdWxsIGNsb25lLCBjb21taXQgdG8gdGhlIGJyYW5jaCBmcm9tIGVsc2V3
-aGVyZSwgYW5kIGZvcmNlIHRoZSBvcmlnaW5hbGx5IGNsb25lZCBicmFuY2ggc3RhdGUgYmFjawoj
-IC0+IGR1cmluZyB0aGUgZm9yY2VkIHB1c2ggd2UgcmFuZG9tbHksIHN0cmFuZ2VseSwgcmUtcmV0
-cmlldmUgdGhlIHdob2xlIGZpbHRlcmVkIGNsb25lIGRhdGEgLSBjb21taXRzICsgdHJlZXMKVEVT
-VEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgSU5URVJGRVJJTkdGT0xERVI9ImxpbnV4
-dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkSU5URVJGRVJJTkdGT0xE
-RVIgLS1kZXB0aD0xICYmCiAgZ2l0IGNsb25lICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tZmls
-dGVyPWJsb2I6bm9uZSAmJgogIGdpdCAtQyAkSU5URVJGRVJJTkdGT0xERVIgY29tbWl0IC0tYWxs
-b3ctZW1wdHkgLS1uby1ncGctc2lnbiAtbSAidGVzdCBmaWxlIGNvbW1pdCIgJiYKICBnaXQgLUMg
-JElOVEVSRkVSSU5HRk9MREVSIHB1c2ggJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgcHVzaCAtZgoK
-IyBDb25maXJtIC0gdGhlcmUgYXJlIHR3byAxLjA5LUdCIHBhY2tmaWxlcwpsbCAiJFRFU1RGT0xE
-RVIvLmdpdC9vYmplY3RzL3BhY2siCgojIFRoaXMgY2FuIGJlIHJlcGVhdGVkIGFueSBudW1iZXIg
-b2YgdGltZXMsIGVhY2ggdGltZSBjcmVhdGluZyB5ZXQgYW5vdGhlciAxLjA5R0IgcHJvbWlzb3Ig
-cGFja2ZpbGUuLi4KZ2l0IC1DICRJTlRFUkZFUklOR0ZPTERFUiBjb21taXQgLS1hbGxvdy1lbXB0
-eSAtLW5vLWdwZy1zaWduIC1tICJ0ZXN0IGZpbGUgY29tbWl0IiAmJgogIGdpdCAtQyAkSU5URVJG
-RVJJTkdGT0xERVIgcHVzaCAtZiAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBwdXNoIC1mIAoKIyBD
-b25maXJtIC0gdGhlcmUgYXJlIHRocmVlIDEuMDktR0IgcGFja2ZpbGVzCmxsICIkVEVTVEZPTERF
-Ui8uZ2l0L29iamVjdHMvcGFjayIKCiMgVGhpcyBjYW4gYmUgcmVwZWF0ZWQgYW55IG51bWJlciBv
-ZiB0aW1lcywgZWFjaCB0aW1lIGNyZWF0aW5nIHlldCBhbm90aGVyIDEuMDlHQiBwcm9taXNvciBw
-YWNrZmlsZS4uLgpnaXQgLUMgJElOVEVSRkVSSU5HRk9MREVSIGNvbW1pdCAtLWFsbG93LWVtcHR5
-IC0tbm8tZ3BnLXNpZ24gLW0gInRlc3QgZmlsZSBjb21taXQiICYmCiAgZ2l0IC1DICRJTlRFUkZF
-UklOR0ZPTERFUiBwdXNoIC1mICYmCiAgZ2l0IC1DICRURVNURk9MREVSIHB1c2ggLWYgCgojIENv
-bmZpcm0gLSB0aGVyZSBhcmUgZm91ciAxLjA5LUdCIHBhY2tmaWxlcwpsbCAiJFRFU1RGT0xERVIv
-LmdpdC9vYmplY3RzL3BhY2siCgoKCiMgQWdhaW4gd2l0aCBhICJsb29zZWx5IiBmaWx0ZXJlZCBj
-bG9uZQojIC0+IEV2ZW4gdGhvdWdoIHRoZSBvcmlnaW5hbCBjbG9uZSBzaXplIGlzIDNHQiwgdGhl
-IGxhdGVyICJkdXBsaWNhdGVkIiBkb3dubG9hZCBpcyBvbmNlIGFnYWluIDEuMDkgR0IgLSBjb21t
-aXRzICsgdHJlZXMgb25seS4KVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgSU5U
-RVJGRVJJTkdGT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RF
-X1VSTCAkSU5URVJGRVJJTkdGT0xERVIgLS1kZXB0aD0xICYmCiAgZ2l0IGNsb25lICRSRU1PVEVf
-VVJMICRURVNURk9MREVSIC0tZmlsdGVyPWJsb2I6bGltaXQ9MU0gJiYKICBnaXQgLUMgJElOVEVS
-RkVSSU5HRk9MREVSIGNvbW1pdCAtLWFsbG93LWVtcHR5IC0tbm8tZ3BnLXNpZ24gLW0gInRlc3Qg
-ZmlsZSBjb21taXQiICYmCiAgZ2l0IC1DICRJTlRFUkZFUklOR0ZPTERFUiBwdXNoICYmCiAgZ2l0
-IC1DICRURVNURk9MREVSIHB1c2ggLWYKCgoKCgojIC0tLS0KIyBPQlNFUlZBVElPTlM6IAojICAt
-IGdpdCByZXBhY2sgaXMgc2xvdyBvbiBmaWx0ZXJlZCByZXBvcyAocmVwb3Mgd2l0aCBwcm9taXNv
-ciBwYWNrZmlsZXMpCiMgIC0gZ2l0IHJlcGFjaydzIHNwZWVkIGlzICpkaXJlY3RseSByZWxhdGVk
-IHRvIHRoZSBzaXplIG9mIHRoZSBwcm9taXNvciBwYWNrZmlsZXMqCiMgICAgIChidXQgZ2l2ZW4g
-dGhhdCByZXBvcyB3aXRoIGEgbWl4IG9mIHByb21pc29yIGFuZCBub24tcHJvbWlzb3IgcGFja2Zp
-bGVzIG1pc2JlaGF2ZSBpbiBvdGhlciB3YXlzLCB0aGlzIGNvbmNsdXNpb24gaXMgb2YgbGltaXRl
-ZCB2YWx1ZSkKIyAtLS0tCgojIEJhc2VsaW5lIC0gcmVndWxhciBmdWxsIGNsb25lCiMgKHNpemUg
-PSAzLjExR0IsIGNsb25lID0gMjM1cywgcmVwYWNrID0gMTBzKQpURVNURk9MREVSPSJsaW51eHRl
-c3RfJFJBTkRPTSIgJiYKICBnaXQgY2xvbmUgJFJFTU9URV9VUkwgJFRFU1RGT0xERVIgJiYKICBn
-aXQgLUMgJFRFU1RGT0xERVIgcmVwYWNrCgojIEJhc2VsaW5lIC0gdmVyeS1zaGFsbG93IHNpbmds
-ZS1icmFuY2ggY2xvbmUKIyAoc2l6ZSA9IDIwM01CLCBjbG9uZSA9IDc0cywgcmVwYWNrID0gMHMp
-ClRFU1RGT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VS
-TCAkVEVTVEZPTERFUiAtLWRlcHRoPTEgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgcmVwYWNrCgoj
-IERlbW8gLSBmdWxseSBibG9iLWZpbHRlcmVkIGZ1bGwgY2xvbmUsIG5vcm1hbCBjaGVja291dAoj
-IChzaXplID0gMS4wOUdCICsgMjAzTUIsIGNsb25lID0gOTBzICsgMTAwcywgcmVwYWNrID0gMTgw
-cykKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgZ2l0IGNsb25lICRSRU1PVEVf
-VVJMICRURVNURk9MREVSIC0tZmlsdGVyPWJsb2I6bm9uZSAmJgogIGdpdCAtQyAkVEVTVEZPTERF
-UiByZXBhY2sKCiMgRGVtbyAtIGZ1bGx5IGJsb2ItZmlsdGVyZWQgZnVsbCBjbG9uZSwgbm8gY2hl
-Y2tvdXQKIyAoc2l6ZSA9IDEuMDlHQiwgY2xvbmUgPSA3MHMsIHJlcGFjayA9IDE2MHMpClRFU1RG
-T0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkVEVT
-VEZPTERFUiAtLWZpbHRlcj1ibG9iOm5vbmUgLS1uby1jaGVja291dCAmJgogIGdpdCAtQyAkVEVT
-VEZPTERFUiByZXBhY2sKCiMgRGVtbyAtIGZ1bGx5IGJsb2ItZmlsdGVyZWQgdmVyeS1zaGFsbG93
-IHNpbmdsZS1icmFuY2ggY2xvbmUsIG5vcm1hbCBjaGVja291dAojIChzaXplID0gMjAzTUIsIGNs
-b25lID0gMTUwcywgcmVwYWNrID0gOHMpClRFU1RGT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAm
-JgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkVEVTVEZPTERFUiAtLWZpbHRlcj1ibG9iOm5vbmUg
-LS1kZXB0aD0xICYmCiAgZ2l0IC1DICRURVNURk9MREVSIHJlcGFjawoKIyBEZW1vIC0gZnVsbHkg
-YmxvYi1maWx0ZXJlZCB2ZXJ5LXNoYWxsb3cgc2luZ2xlLWJyYW5jaCBjbG9uZSwgbm8gY2hlY2tv
-dXQKIyAoc2l6ZSA9IDJNQiwgY2xvbmUgPSAycywgcmVwYWNrID0gMHMpClRFU1RGT0xERVI9Imxp
-bnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAkVEVTVEZPTERFUiAt
-LWZpbHRlcj1ibG9iOm5vbmUgLS1uby1jaGVja291dCAtLWRlcHRoPTEgJiYKICBnaXQgLUMgJFRF
-U1RGT0xERVIgcmVwYWNrCgojIERlbW8gLSBiYXJlbHkgYmxvYi1maWx0ZXJlZCBzaW5nbGUtYnJh
-bmNoIGNsb25lLCBubyBjaGVja291dAojIChzaXplID0gMy4xR0IsIGNsb25lID0gMjAwcywgcmVw
-YWNrID0gODEwcykKVEVTVEZPTERFUj0ibGludXh0ZXN0XyRSQU5ET00iICYmCiAgZ2l0IGNsb25l
-ICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tZmlsdGVyPWJsb2I6bGltaXQ9MTBtIC0tc2luZ2xl
-LWJyYW5jaCAtLW5vLWNoZWNrb3V0ICYmCiAgZ2l0IC1DICRURVNURk9MREVSIHJlcGFjawoKIyBE
-ZW1vIC0gbWVkaXVtLWRlZXAgc2hhbGxvdyBzaW5nbGUtYnJhbmNoIGNsb25lIChubyBjaGVja291
-dCksIGZvbGxvd2VkIGJ5IGZ1bGx5IGZpbHRlcmVkIHVuc2hhbGxvdwojIChwcm9taXNvciBwYWNr
-ZmlsZSAiaW4gdGhlIHBhc3QiIG9mIHRoZSBzaW5nbGUgdGlwIHJlZiwgd2l0aCBtb3N0IGhpc3Rv
-cnkgaW4gdGhlICJ0aXAiIG5vbi1wcm9taXNvciBwYWNrZmlsZSkKIyAoc2l6ZSA9IDIuNjNHQiAr
-IDIwME1CLCBjbG9uZSA9IDMzN3MgKyAxMDhzLCByZXBhY2sgPSAyOHMpCiMgIC0+IFJlcGFjayB0
-aW1lIGlzIGRpcmVjdGx5IHJlbGF0ZWQgdG8gcHJvbWlzb3IgcGFja2ZpbGUgc2l6ZS9jb250ZW50
-L3Njb3BlIHdoZW4gZnVydGhlciBiYWNrIGluIGhpc3RvcnkKVEVTVEZPTERFUj0ibGludXh0ZXN0
-XyRSQU5ET00iICYmCiAgZ2l0IGNsb25lICRSRU1PVEVfVVJMICRURVNURk9MREVSIC0tbm8tY2hl
-Y2tvdXQgLS1zaGFsbG93LXNpbmNlPTIwMTAtMDEtMDEgLS1zaW5nbGUtYnJhbmNoICYmIAogIGdp
-dCAtQyAkVEVTVEZPTERFUiBjb25maWcgcmVtb3RlLm9yaWdpbi5wcm9taXNvciB0cnVlICYmCiAg
-Z2l0IC1DICRURVNURk9MREVSIGNvbmZpZyByZW1vdGUub3JpZ2luLnBhcnRpYWxjbG9uZWZpbHRl
-ciBibG9iOm5vbmUgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgZmV0Y2ggLS11bnNoYWxsb3cgJiYK
-ICBnaXQgLUMgJFRFU1RGT0xERVIgcmVwYWNrCgojIERlbW8gLSByZWFzb25hYmx5IHNoYWxsb3cg
-c2luZ2xlLWJyYW5jaCBjbG9uZSAobm8gY2hlY2tvdXQpLCBmb2xsb3dlZCBieSBleHRyYSBjb21t
-aXQgYXBwZWFyaW5nIGF0IHRpcCBvbiB0aGUgcmVtb3RlLCAKIyAgZm9sbG93ZWQgYnkgZmlsdGVy
-ZWQgZmV0Y2ggb2YgdGhhdCBuZXcgdGlwCiMgKHByb21pc29yIHBhY2tmaWxlICJhdCB0aGUgdGlw
-Iiwgd2l0aCBtb3N0IG9mIHRoZSBoaXN0b3J5IGluIGEgbm9uLXByb21pc29yIHBhY2tmaWxlICJi
-ZWhpbmQgdGhlIHRpcCIpCiMgKHNpemUgPSA5ODFNQiArICwgY2xvbmUgPSAycywgcmVwYWNrID0g
-M3MpCiMgKFRJUF9NT1ZFUiBjbG9uZSB0aW1lIGlnbm9yZWQpCiMgIC0+IFJlcGFjayB0aW1lIGlz
-IGRpcmVjdGx5IHJlbGF0ZWQgdG8gcHJvbWlzb3IgcGFja2ZpbGUgc2l6ZS9jb250ZW50L3Njb3Bl
-IHdoZW4gYXQgdGlwClRFU1RGT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIFRJUF9NT1ZF
-Ul9GT0xERVI9ImxpbnV4dGVzdF8kUkFORE9NIiAmJgogIGdpdCBjbG9uZSAkUkVNT1RFX1VSTCAk
-VEVTVEZPTERFUiAtLW5vLWNoZWNrb3V0IC0tc2hhbGxvdy1zaW5jZT0yMDE4LTAxLTAxIC0tc2lu
-Z2xlLWJyYW5jaCAmJiAKICBnaXQgY2xvbmUgJFJFTU9URV9VUkwgJFRJUF9NT1ZFUl9GT0xERVIg
-LS1kZXB0aD0xICYmIAogIGVjaG8gIlNvbWV0aGluZyAkUkFORE9NIiA+ICIkVElQX01PVkVSX0ZP
-TERFUi90ZXN0X2ZpbGVfJFJBTkRPTSIgJiYKICBnaXQgLUMgJFRJUF9NT1ZFUl9GT0xERVIgYWRk
-IC1BICYmCiAgZ2l0IC1DICRUSVBfTU9WRVJfRk9MREVSIGNvbW1pdCAtLW5vLWdwZy1zaWduIC1t
-ICJ0ZXN0IGZpbGUgY29tbWl0IiAmJgogIGdpdCAtQyAkVElQX01PVkVSX0ZPTERFUiBwdXNoIG9y
-aWdpbiBIRUFEICYmCiAgZ2l0IC1DICRURVNURk9MREVSIGNvbmZpZyByZW1vdGUub3JpZ2luLnBy
-b21pc29yIHRydWUgJiYKICBnaXQgLUMgJFRFU1RGT0xERVIgY29uZmlnIHJlbW90ZS5vcmlnaW4u
-cGFydGlhbGNsb25lZmlsdGVyIGJsb2I6bm9uZSAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiBmZXRj
-aCAmJgogIGdpdCAtQyAkVEVTVEZPTERFUiByZXBhY2sKCgoKIyAtLS0tLS0tCiMgQ0xFQU5VUAoj
-IC0tLS0tLS0KCiMgRGVsZXRlIGFsbCB0aGUgd2VpcmQgcmVwb3MgY3JlYXRlZC4Kcm0gLXJmIGxp
-bnV4dGVzdF8qCgoK
---00000000000097fd8c05c3e303e9--
+That is something you can fix to make the code easier to follow, no?
