@@ -2,92 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1555DC47082
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 22:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 769BDC47082
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 22:10:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF6FC613F8
-	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 22:06:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53EF5613F9
+	for <git@archiver.kernel.org>; Thu,  3 Jun 2021 22:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230212AbhFCWIn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 18:08:43 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50897 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFCWIm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 18:08:42 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 735DC128EDA;
-        Thu,  3 Jun 2021 18:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oQTfDbltk+UFLapzh2/nHeHwgLUtdKbNNWwFVE
-        OZeI0=; b=gnfywnc0kSQowpTpWKe5BmOvzmY2JOHBTsp1dA6sPf4g1rB/FdoN4A
-        1SqYo832B4zSH4B8dnkBGeh1HhOOXEOeeA7ZpbICVs+R8PBxTMY2UoAFWTV2DYxs
-        rQc1VdsgrFH793aNa0UWgOh13GBCoeSLogClTAyIS74FZWZfEM8D8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6B3AB128ED9;
-        Thu,  3 Jun 2021 18:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B87EF128ED8;
-        Thu,  3 Jun 2021 18:06:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ilias Apostolou <ilias.apostolou.zero@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Request feature: =?utf-8?Q?=E2=80=93no-submodule?=
-References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
-        <YLfqiLbpPXWXHlBi@nand.local> <xmqq8s3r7oma.fsf@gitster.g>
-        <YLg/dLqYFEqHZJUn@nand.local>
-        <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com>
-Date:   Fri, 04 Jun 2021 07:06:52 +0900
-In-Reply-To: <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com> (Ilias
-        Apostolou's message of "Thu, 3 Jun 2021 13:48:39 +0300")
-Message-ID: <xmqqim2u4n7n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 01C5EAE8-C4B8-11EB-920B-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+        id S230411AbhFCWMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 18:12:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60542 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhFCWME (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 18:12:04 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A204BC06174A
+        for <git@vger.kernel.org>; Thu,  3 Jun 2021 15:10:08 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id g9-20020a25ae490000b029052f9e5b7d3fso9142412ybe.4
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 15:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=e6iHEv1VwAMpP/gZtfhn4U5DvZzJ+R6gOF7GdbUTkzM=;
+        b=jbC2RbZt1P05H/zK7Bt/yg9EfSIinzX2BevWc2OqP6YIgxPiPRKB9B8bXK1Hmio9XN
+         vYq3Ib6oWmJ4F6AtJUk7hF3a4hjObouT5K+j1B6fb2kC2fO+u96SonD1ugNe+LRlu7W6
+         ZapMZgtA+OqzSpRmLR+V/XQwHemJ5Xok+qdR+6NFg8RZV/D7hNOHZ8byoee0lgO7vAnY
+         eBA3CSJOA0NNi6P6wQkrv3rE8x9iPd+Drx7DyFEEk7MRhVPRsKlpjR7Hid6tDfVmlkKm
+         vuBa/9NMlyH+/cmyFaGQ6pdaVMgagR5C0Q8J47R+aCgF1H2WIRSxlkP0pXK2BST1AirH
+         eH0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=e6iHEv1VwAMpP/gZtfhn4U5DvZzJ+R6gOF7GdbUTkzM=;
+        b=X6E3WgJaARp2s8dfK273l1ntHsTT1GjE7ITwHKJGRoK1UI0ffH7nyXGKsei2MrDyye
+         4EesZhNgk2cxHEnbMa9IVyYJXjU1cMcEwVy1HiE4wxRV4djiVIYRveaxBpjB/GUCCLhF
+         xRDMakuJeeLxrnDCiAeLS8FvN6ObIYHYpItY4oLAwp/+bjfMAFQ+e35MpwfOO4oyXoqF
+         YFoXUrKXhFjhia2uzgwW0zgz64ioQ+6aukaA0cch7FwH+oaejlgzgEVc/tNifg2ZZC0u
+         g2pczDQ83B6/62sCNb/CLvh2NGttvea3BeOo5mMojIFvVl9gnfd7jjkxkmBitL2EJ6VB
+         N53w==
+X-Gm-Message-State: AOAM530zQM0bBD/NzwM+uTRHTXQBBx4jhoE+MGvkx1gQAguy4zsPejGh
+        MsHaRu96ixfYMPMuiaP2lNetJy2hJSKqSZPvhIP8
+X-Google-Smtp-Source: ABdhPJwsNyeEukQMCxkgNAoItllq1zvT/uFCqu1ZUnTJtBth5XPWqb4iyuFiVdXjYhm5XKIDp0jlqYxA+kCTMZvpEknU
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:2551:: with SMTP id
+ l78mr911412ybl.353.1622758207880; Thu, 03 Jun 2021 15:10:07 -0700 (PDT)
+Date:   Thu,  3 Jun 2021 15:10:06 -0700
+In-Reply-To: <CAMbkP-Qkd0EzNvhKLeOU3LCdTDiYKpTmZJqMN5rFDg-WkVMrAw@mail.gmail.com>
+Message-Id: <20210603221006.458323-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAMbkP-Qkd0EzNvhKLeOU3LCdTDiYKpTmZJqMN5rFDg-WkVMrAw@mail.gmail.com>
+X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
+Subject: Re: [PATCH v4] hooks: propose project configured hooks
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     albertqcui@gmail.com
+Cc:     jonathantanmy@google.com, gitgitgadget@gmail.com,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        avarab@gmail.com, emilyshaffer@google.com, stolee@gmail.com,
+        emaste@freebsd.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ilias Apostolou <ilias.apostolou.zero@gmail.com> writes:
+> > From the implementation point of view, would it be sufficient to just
+> > advertise that hooks are available? Assuming that the hooks will be
+> > available from a specially named ref (as stated below), then we would
+> > only need to inform the user that this ref exists and hooks can be
+> > inspected using a special command. Likewise for when we fetch and notice
+> > that the ref now points to a different object. Then, we wouldn't need to
+> > do any extra fetching upon clone/fetch, saving time and bandwidth, but
+> > just do so if the user requests it.
+> >
+> 
+> From a user perspective, I think it's better to not just tell users
+> that hooks are available but also /what/ hooks are available.
+> 
+> That said, that doesn't require getting everything from the ref as the
+> hook command itself might be stored in this ref. So something like
+> this seems sufficient to me: "Origin suggests setting up a `pre-push`
+> hook which runs `pre_push.sh`. To view the contents of `pre_push.sh`,
+> run {special command}."
 
-> The reason we need to list all of the true files (except submodules)
-> is for code refactoring using the sed unility, for example:
->
-> git ls-files | grep -Ev '(png$|ico$)' | xargs sed -i 's/\r\n/\n/'
-> ...
-> In my opinion, this should be a feature for "ls-files" only, since it
-> would be nice to have a clean stream of true files.
+I agree that on its own, more information upfront is better than less.
+But we can't store anything more than an object ID (a SHA-1 hash) in a
+ref, though. Knowing anything beyond the object ID would require
+fetching some objects, which incurs time and bandwidth (perhaps
+comparatively a tiny amount in well-behaved repos, but we still need to
+acknowledge that). (Well, there is also the possibility of using
+multiple refs to communicate which hooks are present and which are not,
+but I think that's too cumbersome.)
 
-Ah, then pathspec is still the right tool to use, I would think.
+> > Right now hooks are fixed files (well, not counting Emily Shaffer's work
+> > on config hooks). Would it be sufficient to just provide replacements
+> > for those files?
+> >
+> 
+> My thought was we'd leverage config hooks and basically write to the
+> config for setting up hooks.
 
-For example,
+The config hooks work is still in progress, so I think we need to
+support both the legacy way and the new way. I think this shouldn't be a
+problem since both ways involve writing something somewhere.
 
-    git ls-files -s ':(exclude)*.png' ':(exclude)*.ico' |
-    sed -n -e 's/^100[76][54][54] [0-9a-f]* 0       //p' |
-    xargs sed -i 's/\r\n/\n/'
+In any case, if the aim is to support config hooks, I think it's clearer
+if this section just says "write a config" without explaining what the
+config can do, since that is the responsibility of the config hooks
+feature. (But then there remains the question of whether there will be a
+whitelist of acceptable configs to write.)
 
-that is,
+> > Hmm...what would be a use case of this? And how would, say, a pre-commit
+> > hook know which remote it is for?
+> >
+> 
+> For a concrete example, we use Gerrit for internal reviews and need
+> the Change-Id hook, but we don't want that when upstreaming.
+> 
+> Good question for specifying remotes. This might imply the need for
+> something like `git commit --hooks-from=origin`.
 
- (1) ls-files -s can be used to learn what kind of path it is.
-     Regular files are either 100644 or 100755.  That way, you can
-     also exclude symbolic links, which your example use case would
-     probably not want to touch.  And you can filter the output to
-     have 'a clean stream of true files' fairly easily Depending on
-     the details of your needs, it can be tweaked into 'a clean
-     stream of executable files' etc., too.
+I think passing a parameter to choose which hook to invoke is beyond the
+scope of upstream-supplied hooks. (Also, I don't think that this
+situation is resolved by having 2 remotes providing 2 different sets of
+hooks. Perhaps one of the remote's set knows to set the Change-Id
+trailer, but the other set would not know that it needs to remove a
+specific trailer.)
 
- (2) pathspec magic like ':(exclude)' can be used to lose your "we
-     know png and ico are not text files".
+> > This seems contradictory to a point above where we only inform the user
+> > upon clone (when the user is in the setup mood).
+> >
+> 
+> Good catch, I should clarify that previous point. The main concern is
+> prompting before a hook will execute which would get in the way of
+> existing workflows, making users susceptible to blindly agreeing.
+> Showing advice after the fact doesn't get in the way, and this is one
+> reason why "advice" felt like the right terminology to use (more
+> below): it's merely a helpful message that a user can optionally
+> choose to follow.
 
-Hope this helps.
+Ah, I see. I'm still not sure that it is a good idea. Firstly, the user
+should have already made this decision when they read the message at
+clone time, and secondly, this advice might come too late (a pre-commit
+hook might be "salvageable" but a push hook might not). Having said
+that, the presence or absence of this doesn't affect the overall design
+and implementation, so we can leave this in if you want.
+
+> > > +* If, after fetch, the central repository suggests new or updated hooks, the
+> > > +user should receive advice to install these new hooks (note: implementation
+> > > +should not interfere with requirement listed in "Fast Follows")
+> >
+> > In Git, the term "advice" seems to be used more for extra
+> > explanations that you can turn off once you're experienced with Git.
+> > Here, these seem like things that we would want to notify users about
+> > regardless of experience level, so maybe the word "notification" is more
+> > appropriate.
+> >
+> 
+> Another reason to use "advice" here is because the existing system
+> allows users to turn off the advice when it's not needed for the
+> requirement: "The user should be able to use configuration to turn off
+> this advice."
+> 
+> Do advice settings work on a per-clone basis? If not, I agree "advice"
+> is probably not the right term.
+
+Those settings don't work per-clone. My main point, though, is that the
+user probably would always need to know if there are new hooks.
+
+> No, that's what I meant by "Fast Follows" -- not needed for the initial feature.
+
+Ah, maybe call it "future work" then. "Fast follows" is not a term I'm
+familiar with (and searching online, it doesn't seem like a common term
+either).
