@@ -2,97 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE3BC07E94
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 13:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C394C07E94
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 13:25:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6599A613FA
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 13:23:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5653B613F9
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 13:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230416AbhFDNYw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 09:24:52 -0400
-Received: from mail-ot1-f53.google.com ([209.85.210.53]:36573 "EHLO
-        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbhFDNYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 09:24:51 -0400
-Received: by mail-ot1-f53.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so9058622otl.3
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 06:22:52 -0700 (PDT)
+        id S230520AbhFDN1I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 09:27:08 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:34486 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230200AbhFDN1H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 09:27:07 -0400
+Received: by mail-ed1-f44.google.com with SMTP id cb9so11167698edb.1
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 06:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VnODRFS/xGm5Un0NSkLMZOmMWbWWZEurX5SFM0GpHBA=;
-        b=cSUpt+FlFM68f/Tb/4k4JlXU6IzAlXG3793TvS3MO+KSLFJ4Zp+AIWcMK53BRYLlf+
-         K2fQSDsjGYfRqIOW0WJKR59Fwv2FVH2fTcfP8nJMHC7+3RX8Bmxku0Y984gb8cjK8fdq
-         2+MZA38AsvxEuPv/CMrPC741f8gFENWUGVAoDJ4foXtzALXQBX4V1Wd6nXas/eHIBSs+
-         awuka67w///kXSHEyBmxfb1CMmkBUrfwV5/SHxYnB5geMYI6RdC8yIJ4h4RCPV8RLmlM
-         noTr6L4YJKaQWSs3yV0kpT61eReXFycLBVqfZKuy0Yze9bVpE+dd/iB996YAZZTdJe3A
-         ErfA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+H5KKI0dZKJ4/43puAE6mhS0OtMXCUCO/kY4kWa8UpE=;
+        b=Njto0O3Z00VWvBJy2EPdPAc0jCWtjmT99lnOXGj0gj9+sFx+VwktsMqvns7dw9i/WE
+         FO7bg5E0I27D84c6GiKpjxqWjRZVJ6OYUUf+5EkCw3WXzUTg+Hgwal27Djls51wADbwG
+         tJFIVhC6emivL89l6SW/Ve+Fcp7dqy2Q9kX7JeaOnkGs6kfNFh2Up84hfz03Bt5F7Ty+
+         RiTSeHpnHfnGm4m8unjmTfJiQ74RwUr/0i+tIwOBxLZcF9Rw0cDd7B8aXFFNuEUguInB
+         /Kxi+dOO4nreM38EE2i/wvyAXxifNy+0SgS1x/PDdKFe+1tl76B0ltfGsqC/n7h+d/jY
+         O+9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VnODRFS/xGm5Un0NSkLMZOmMWbWWZEurX5SFM0GpHBA=;
-        b=ZVai0EbgE/fsgh/c9GndsgEccfRpIR9wTFb9io0JJXB4eKSdXf7lAAS2Fq7fm+gwpp
-         rQKof+DuC5k8hcSboXKQTfGSMNfSYX+Squ2HqWJgv64dOur7mpfC+XD2ygl2k8ieUvvn
-         4U+mV6cWkfDmGQoOhpN0pwUUMZ0529PXsX+laTGF2+KUlz0DeH9C6Afm1vlPdgr+cgIw
-         fYYj+TpJlEQUgcqbRVezV9csKvOEQ2HCTeooTHV4Lypm+ITPsPqEhG+LtrIcPKe4vnGh
-         4wjhdgAppOrDoh2wBi/ze8QuaK0pEOwCCRdT001RuqOzT5O/w/6U6hYFfcZUKjx2V2HM
-         ll+Q==
-X-Gm-Message-State: AOAM533DYQ7nndyac6pZJ75wg9h8fGIPebvNfBwkGL54+ImiSMEYTTUL
-        iTTXzhp4oi//LaUqLDITKg6U1Jf9tFQ+xg==
-X-Google-Smtp-Source: ABdhPJy8Y7FIW87w7d3/BT9jOeef03KG3b9G2eYnPS+TtT22ZNB0cd4vigUfUcAbPuSdIGa4UcMrcQ==
-X-Received: by 2002:a9d:798c:: with SMTP id h12mr3687191otm.253.1622812911715;
-        Fri, 04 Jun 2021 06:21:51 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:a8e5:75e1:b132:878d? ([2600:1700:e72:80a0:a8e5:75e1:b132:878d])
-        by smtp.gmail.com with ESMTPSA id m66sm457870oia.28.2021.06.04.06.21.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Jun 2021 06:21:51 -0700 (PDT)
-Subject: Re: Partial Clone, and a strange slow rev-list call on fetch
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     git@vger.kernel.org
-References: <CAPMMpogCz4o3ZGYHnux_6w+uFyxV-FR0R1hFNeg1COiv0qd_0g@mail.gmail.com>
- <71e60d80-44c1-225d-3cf4-26740de2ac6d@gmail.com>
- <CAPMMpogSepMk07HVtwO8qKaHx2SHmYVB+vnrnWwVWBNo8U5hAQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5ce5286c-9390-7cb5-a039-8e26be990b8d@gmail.com>
-Date:   Fri, 4 Jun 2021 09:21:49 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+H5KKI0dZKJ4/43puAE6mhS0OtMXCUCO/kY4kWa8UpE=;
+        b=nhigQBwZOIJT08NyBHs6WU5KFY39Ew5+q6d5ES/bgGioCkwcWHT/HXO8smT4kPc/gb
+         o6hziUZe2H5Ryt/7yyt2T7Pd1IxId36Gp8f+4Fdat8KcFwdptcFZUAI7Slq0u6Y08KEf
+         csRbVgIDNzkkiTGl4GLTj/QM/vxrOBEzuUkMjNR2X0AcDGVexeUftCI0YfZhNYtRdA63
+         oqyH9/Gmj03bz8ni2R6lvfT508BstXzAUAcj80n2NlGobyru4VUskwb9iwEeJWORQlmC
+         +tlshbnC1sJ09LUBSW1C8BcvUfDYZaGFTUbqKwOR7QUwyRvyw7H7epA3fXii6wHAyqMD
+         k5iA==
+X-Gm-Message-State: AOAM5301YFo2kd/eOJXLupogudDTGTkGV8LKICcL+36jV9Lcfz7AOZvJ
+        6d48GyhnlyUr+1ESzbNFSyJEhxFaSlIi9qRSdds=
+X-Google-Smtp-Source: ABdhPJyOQkmOF0RxcfUMso3XBXS5DlHxPwuhFv3QWAGJWTp8e3D5uKIHqRDr0+p8casyIlIGFhbdU+yW6nEWbi5s7ZY=
+X-Received: by 2002:a05:6402:35c4:: with SMTP id z4mr4608044edc.362.1622813049995;
+ Fri, 04 Jun 2021 06:24:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPMMpogSepMk07HVtwO8qKaHx2SHmYVB+vnrnWwVWBNo8U5hAQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.966.git.1622558243.gitgitgadget@gmail.com>
+ <pull.966.v2.git.1622808751.gitgitgadget@gmail.com> <0efed9435b59098f3ad928acd46c3c7e9f13677d.1622808751.git.gitgitgadget@gmail.com>
+In-Reply-To: <0efed9435b59098f3ad928acd46c3c7e9f13677d.1622808751.git.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 4 Jun 2021 15:23:58 +0200
+Message-ID: <CAP8UFD3m-=4=a9XX6Nu45+-4QdeNYi54rXgqizR7HrOh_qk8OQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] [GSOC] ref-filter: add %(raw) atom
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/3/2021 5:10 PM, Tao Klerks wrote:
-> On Wed, Jun 2, 2021 at 1:18 PM Derrick Stolee <stolee@gmail.com> wrote:
-> 
->> could you re-run the scenario with GIT_TRACE2_PERF=1 which will
->> give the full Git process stack as we reach that rev-list call.
-> 
-> Sorry about the delay, I've been trying to reproduce... reproduceably :)
-> 
-> I now have a whole file of examples and observations, attached (I
-> assume text attachments are allowed on this mailing list?), which
-> should be reproducible for anyone as I was able to use the linux
-> kernel repo to illustrate all cases.
+On Fri, Jun 4, 2021 at 2:12 PM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: ZheNing Hu <adlternative@gmail.com>
+>
+> Add new formatting option `%(raw)`, which will print the raw
+> object data without any changes. It will help further to migrate
+> all cat-file formatting logic from cat-file to ref-filter.
+>
+> The raw data of blob, tree objects may contain '\0', but most of
+> the logic in `ref-filter` depands on the output of the atom being
 
-I appreciate that you took so much time to investigate here. You
-have convinced me that there are deeper things going on than just
-the "unshallow, but with filters this time" situation.
+s/depands/depends/
 
-I have created an internal issue for my team to investigate this
-when we have capacity for it. I don't think it will happen this
-month, so if anyone else has the time now then don't wait for us.
+> text (specifically, no embedded NULs in it).
 
-Thanks,
--Stolee
+> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> index 2ae2478de706..8f8d8cd1e04f 100644
+> --- a/Documentation/git-for-each-ref.txt
+> +++ b/Documentation/git-for-each-ref.txt
+> @@ -235,6 +235,15 @@ and `date` to extract the named component.  For email fields (`authoremail`,
+>  without angle brackets, and `:localpart` to get the part before the `@` symbol
+>  out of the trimmed email.
+>
+> +The raw data in a object is `raw`.
+
+s/a object/an object/
+
+> +
+> +raw:size::
+> +       The raw data size of the object.
+> +
+> +Note that `--format=%(raw)` can not be used with `--python`, `--shell`, `--tcl`,
+> +`--perl` because the host language may not support arbitrary binary data in the
+> +variables of its string type.
+
+
+
+
+
+> @@ -1765,7 +1815,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>                 int deref = 0;
+>                 const char *refname;
+>                 struct branch *branch = NULL;
+> -
+> +               v->s_size = ATOM_VALUE_S_SIZE_INIT;
+
+It looks like a blank line was removed as you added the above new line.
+
+>                 v->handler = append_atom;
+>                 v->atom = atom;
+>
