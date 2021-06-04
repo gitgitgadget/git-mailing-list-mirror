@@ -2,113 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51479C47097
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 04:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 287F9C4708F
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:07:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3880B6140C
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 04:40:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 082936140C
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbhFDEmo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 00:42:44 -0400
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:51901 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbhFDEmn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 00:42:43 -0400
-Received: by mail-wm1-f53.google.com with SMTP id r13so4592837wmq.1
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 21:40:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VU00cywIlwLeCBDcEnqZW2ZnRbOIBvFkVNGp2zvI9ko=;
-        b=ErBALFMCTfhG8aMAIZQ9unsPgMjN7dgqmfihFyAGGzo4ggFyYqFwud4eaV2bn6owpu
-         0nkEMGTdIXSrXdtdajqxjNQr1X4jyD3+Etkt0BS579Ue/wgpf03HphzOdjwIJvjjasjg
-         zOKraEg/DEois0Mp9ZHfMc2pmJoWeVrHqB+7m0pLg+bLHsdzt6ewFs6bFop3a9RtOWo8
-         UK55Y5e1qFYvWlEwuNR1GpEjPS7Jelf/W3KRqJ1ppqTSaSyjvEWqz1HBRoeULFNcTHJa
-         8VYiqyXs/IGE9zEpXzAXDyW8GJMP8g8fPOty9fQ68HNgKbGXRm/kVTGiG7BKvytMj642
-         n0dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VU00cywIlwLeCBDcEnqZW2ZnRbOIBvFkVNGp2zvI9ko=;
-        b=Qpf453ArijL5SHzodWpTnbMIpWOa9H/yHKFAyGJACvFrDq7MUrdOkiiNGe/uRXj+20
-         543Bt+LwKApNsErkt+iYxWvdXZ5FZOPKoth4iyrsTwGY2qW/LF3wFQ0Mp/zbpdd6+yVo
-         EnDA9FGb3K6I9Lq3h9cIPJttYf0FoZv0vznV1Uvi0MppNodHxGZECzVonpz1EPb+M8uX
-         xzKr8rJ0jhBgcgYn5WWK6JqRBavamg4FfnC5j3+1euuJ8e9oUxaH6p9Dw8yMozfl4WSi
-         LHM+6kv/T3H0ycw1FBPzPOjahOSExFYAtX3fgsQm/aOh/y3EeBqEREb13LrqqyJWCL8d
-         o6Yg==
-X-Gm-Message-State: AOAM531eBW/Oy1of2g113Z2iykygo47BUCmOQ/+xCkWliZDXmYm9Z18e
-        Dlph1pLTdvlDm5hUCyLB3uyqk8v7U6Y=
-X-Google-Smtp-Source: ABdhPJxVMjyGd869e/6LAaGcRhhM2Ve1+L6/iVPYiAtPwDTYn7MbiWb+WfkOpE5rjG2ph2dMGH06/g==
-X-Received: by 2002:a7b:c761:: with SMTP id x1mr1599511wmk.118.1622781581224;
-        Thu, 03 Jun 2021 21:39:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p6sm5450851wrf.51.2021.06.03.21.39.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jun 2021 21:39:40 -0700 (PDT)
-Message-Id: <cd13499a6ff5f9ac2287d18ff00d8f7d1690bb6c.1622781578.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
-References: <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
-        <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Jun 2021 04:39:36 +0000
-Subject: [PATCH v3 2/4] diffcore-rename: avoid unnecessary strdup'ing in
- break_idx
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S230037AbhFDFIs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 01:08:48 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58025 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229452AbhFDFIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 01:08:48 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6B4912DDDE;
+        Fri,  4 Jun 2021 01:07:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JsMlFU7tuSxGgx4IaISRmX1bVSoZOY3TTjec8n
+        A+z3c=; b=NRiemRlNLIDnKUeuxBLkevi0bzRafOExo/Pz9XVkC2vcymvvhwRCXl
+        6KUYtdGtACGdJmmLvoOL2GmHG0XBtYnCINicUpyrIq8zEhK/xBfKViu39Ov1odS3
+        neQhnpKHg1yvocloETxtlGzrSQJaSfjh1m2Il/nn2wOTRJ+Fo7TPM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF6AA12DDDC;
+        Fri,  4 Jun 2021 01:07:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0EA3712DDD8;
+        Fri,  4 Jun 2021 01:06:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Ilias Apostolou <ilias.apostolou.zero@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Request feature: =?utf-8?Q?=E2=80=93no-submodule?=
+References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
+        <YLfqiLbpPXWXHlBi@nand.local> <xmqq8s3r7oma.fsf@gitster.g>
+        <YLg/dLqYFEqHZJUn@nand.local> <xmqq7dja6e46.fsf@gitster.g>
+        <YLkr+kLdjmHyPjgl@coredump.intra.peff.net>
+        <xmqqo8cm4nst.fsf@gitster.g>
+        <YLmmIXy/SITKh/Yw@coredump.intra.peff.net>
+Date:   Fri, 04 Jun 2021 14:06:58 +0900
+In-Reply-To: <YLmmIXy/SITKh/Yw@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 4 Jun 2021 00:03:45 -0400")
+Message-ID: <xmqqbl8m2p71.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B14EBBFE-C4F2-11EB-A69C-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+>> The original request, as I understand the clarification posted
+>> ...
+>> (cf. <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com>)
+>> 
+>> and with such an auto-pseudo-attribute, presumably something along
+>> this line would work, removing the need for the intermediate filter:
+>> 
+>>     git ls-files \
+>> 	':(attr:mode=100755)' ':(attr:mode=100644)' \
+>> 	':(exclude)*.png' ':(exclude)*.ico' |
+>>     xargs dos2unix
+>> 
+>
+> Yeah, that makes sense.
+>
+> By the way, another reason (beyond a simpler pipeline) that the "magic
+> pathspec that understands modes" is nicer is that it can be applied to a
+> more dynamic set of paths.
 
-The keys of break_idx are strings from the diff_filepairs of
-diff_queued_diff.  break_idx is only used in location_rename_dst(), and
-that usage is always before any free'ing of the pairs (and thus the
-strings in the pairs).  As such, there is no need to strdup these keys;
-we can just reuse the existing strings as-is.
+In the longer term, the project the original request wanted to
+invent the "--no-submodule" option for may want to lose the specific
+"we know that the only paths we do not want to run dos2unix happen
+to be png and ico files in the current codebase" from the above
+sample command line, and replace it with something like ':(attr:text)'
 
-The merge logic doesn't make use of break detection, so this does not
-affect the performance of any of my testcases.  It was just a minor
-unrelated optimization noted in passing while looking at the code.
+Alas, the "text" attribute does *not* work that way, though ;-)
+Just like any other attributes, what you assigned yourself counts,
+and our "is this file a text?" auto-detection logic only kicks in
+when there is no attribute that tells if a path is text or not.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Acked-by: Derrick Stolee <dstolee@microsoft.com>
----
- diffcore-rename.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 3375e24659ea..e333a6d64791 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -54,7 +54,7 @@ static void register_rename_src(struct diff_filepair *p)
- 	if (p->broken_pair) {
- 		if (!break_idx) {
- 			break_idx = xmalloc(sizeof(*break_idx));
--			strintmap_init(break_idx, -1);
-+			strintmap_init_with_options(break_idx, -1, NULL, 0);
- 		}
- 		strintmap_set(break_idx, p->one->path, rename_dst_nr);
- 	}
--- 
-gitgitgadget
+It would be expensive at runtime; even if we were to introduce a
+"dynamic" pseudo attribute to tell text files and others apart, we
+probably shouldn't use the same "attr:*" magic but use something
+distinct (e.g. "dynamic-attr:*") in order to make sure that the
+users understand the performance implications.  I think the above
+"mode=100755" matic (or anything that requires more than the basic
+"which entries in the .gitattributes files does this pathname
+match?") would fall into the same category.
 
