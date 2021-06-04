@@ -2,95 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E55E9C07E94
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 12:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB703C07E94
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 13:12:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6768610C7
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 12:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE62A61412
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 13:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbhFDM4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 08:56:40 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:37627 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbhFDM4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 08:56:39 -0400
-Received: by mail-ed1-f48.google.com with SMTP id b11so11027270edy.4
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 05:54:38 -0700 (PDT)
+        id S230108AbhFDNOV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 09:14:21 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:45872 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230004AbhFDNOR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 09:14:17 -0400
+Received: by mail-ot1-f45.google.com with SMTP id t10-20020a05683022eab0290304ed8bc759so8963329otc.12
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 06:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tiS3PrxyAkkoeEE3SnewRYYp93nsZ/muZbmyX+c9oic=;
-        b=N6s9PV6IcpSw8CT/sx7zI8JXoDf86cJZnK0RydjczgA1rmK2a8xjp5hiojl0VjAx5F
-         4WiwwXTr7FX/EX2PYDcz+sXqL2vew/afKuGbYHdMsTBaOKC9OLSFTLqiRQFwyoMPp+Ox
-         hSmz+/qOVhi84ZaTTLa/YbjY4StOUb54Bt1bsRQFXzxeepOcfFt7A9/eQ3/zpraj6v5b
-         n7PO65ZLVvjtuRA2M2cLn08HEbVy95OLMWekZHbICGZUIXXWIsCOWxzUMQL0e4Rg6+OT
-         OM9MbYhPpGOL/BTsFbQsBJtqExYwTXarSpWAuqujhHrTtUiE4y8OWF6QPkt/cVlmHAi0
-         niiA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Z6mkHZXJOwoJvLjBfJNuWyyRu29v1jGEH1soRTdDZhY=;
+        b=kvP1JVexgyjet4lMbZ4gYuKeIlsF9jChGPQFT7Q69HIywA/r9768YTKMNG+Zx3Gq8E
+         UFXHSYT4OTMem+P+UquH6YLBgwohlhhlmmLgN6GyXaTKg5wgl6RBwPcSZPNcs9Evrjfk
+         MfdU6oMFyqw3IIgiY1duf1MVNObHASk2Id34FeWWzOLNVpoyDnJG8pnBW02NNqteN5JJ
+         T5oD4cIWc/CWQE/mm6VIXOFfPMBjOzmNJm7e/xGZhK5i3+X9Q+YJO34mWDRe5L040uJa
+         Oy5PSSaPUPfPmcCDrA8/qpz8d8QFcVMuncfIHYt74ElLOARep5nmMVdRvrCv0BIGFUEE
+         UabQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tiS3PrxyAkkoeEE3SnewRYYp93nsZ/muZbmyX+c9oic=;
-        b=IbThsB9nLsj1tuexBwC9TNcrhV9M91DTiDTsomatJjlqWP4BUbw7EgX4Gtg1p7xVrP
-         FF6hXuLrI6xMZhuWsL2jgLaSlxEAT06U4YrM3fYI6qVlqtCARmfGXWUIowY2BoaZ0k3F
-         X1qt2Yek5Tf3OBQsTZmLNDvrI6sTNQbFbPbw+ErymKtQ05cX41ax8E/V2BklgeyvCdR6
-         B/xiTCXMGCv1th5fOm9fwM4gPCrTgAyIoDNRWKMHqfQOie3XhWnvGTuP5vf2G+z45+fm
-         S9NrDvR7z9pZIU3n+fd2fjKMEYLriEWprg1Gxtm6HcKzFkZxxikpvP4nFVFkQcwtPNRa
-         i9Lw==
-X-Gm-Message-State: AOAM532s3gyIHzceqD88N9UrlBD+UHnaeotF4zs7LDhmyH8vdRz2xXxY
-        Pb4/YUp1gryNt18rpu4KciAZsC/rZ71c32Wf4P0=
-X-Google-Smtp-Source: ABdhPJwldaAoPAkfyX2JDP7tDu0jOd+iJwS2oErKesy3u1cfhawmV1hpe0i2t+tLyA3wNbqFZ3+JJFX5EpHjscL8pBw=
-X-Received: by 2002:a50:ff0a:: with SMTP id a10mr4499547edu.273.1622811217785;
- Fri, 04 Jun 2021 05:53:37 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Z6mkHZXJOwoJvLjBfJNuWyyRu29v1jGEH1soRTdDZhY=;
+        b=YwjmX/rIK9ez23KEht2uItz9nHO0yI0Rnnzz0sgAwRtP9kJpDbX/1XbyTmMnMZ51zx
+         F4eZHvkP5+bv6Z9jmOPXb+mpV0S1yCH9BRMFEMz1tLVFAJ6FSv2mWm1Dj54/+IrNBz9C
+         Ixs1t+WBPtYAc7UUYrdiRgqhKV7ItNJhTMsBwV+pjdLXgzJAnDAOSZY/fC5CV38b/Jns
+         0J0lksMiwZN+rdOUfmS+lrNnjVdKO7lRP+12rLslJAs8Yp4E7bj0DjR1AvSEVtuBF9d3
+         XuL5WS6h6MaXfRycwYmW7UNbBOTrJPN5fmGYNalCArm4QnK+w9ijOOqsWz6p1nkKugOO
+         RWHA==
+X-Gm-Message-State: AOAM533hJt1SwRInjlFlmctDYVpnj3U5BiioytvPlTZu1bV8I4kHifa8
+        rsxBgBUFTRKPSfYWNnHMOkA=
+X-Google-Smtp-Source: ABdhPJwvYSZFYyLzG7Tna8wGR9arDlOjoTuKsI/IUjzodQA9Nv0yXyzeGa4O+ewHo0mHg9etJ5XOZA==
+X-Received: by 2002:a05:6830:1505:: with SMTP id k5mr3744984otp.45.1622812278496;
+        Fri, 04 Jun 2021 06:11:18 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:a8e5:75e1:b132:878d? ([2600:1700:e72:80a0:a8e5:75e1:b132:878d])
+        by smtp.gmail.com with ESMTPSA id f16sm405373oop.6.2021.06.04.06.11.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Jun 2021 06:11:17 -0700 (PDT)
+Subject: Re: [PATCH v3 0/4] Optimization batch 12: miscellaneous unthemed
+ stuff
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
+ <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a5755340-c0c8-8028-7c03-3c8e7f0268d1@gmail.com>
+Date:   Fri, 4 Jun 2021 09:11:16 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <pull.966.git.1622558243.gitgitgadget@gmail.com> <pull.966.v2.git.1622808751.gitgitgadget@gmail.com>
-In-Reply-To: <pull.966.v2.git.1622808751.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 4 Jun 2021 14:53:26 +0200
-Message-ID: <CAP8UFD0PPU4O+L3p0qJhKpsiB=MvyGJbbtxP6Vu0YeeVQ-Ojmg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] [GSOC] ref-filter: add %(raw) atom
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No need to resend as it's a cover letter, but just in case there is
-another round and you copy things from this cover letter:
+On 6/4/2021 12:39 AM, Elijah Newren via GitGitGadget wrote:
+> This series depends on en/ort-perf-batch-11 textually, but is semantically
+> independent of it.
+> 
+> Changes since v2:
+> 
+>  * Made suggested minor tweaks from Stolee on Patch 1
+>  * Dropped patch 3, for now
 
-On Fri, Jun 4, 2021 at 2:12 PM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> In order to make git cat-file --batch use ref-filter logic, %(raw) atom is
-> adding to ref-filter.
+With these changes, I think the code is good to go.
 
-s/adding/added/
+>  * Added Stolee's Acked-by
+...
+>  1:  c4a0f6a9510c ! 1:  f63ffc2a7c22 merge-ort: replace string_list_df_name_compare with faster alternative
+>      @@ Commit message
+>               just-one-mega:   500.3  ms ±  3.8  ms   480.1  ms ±  3.9  ms
+>       
+>           Signed-off-by: Elijah Newren <newren@gmail.com>
+>      +    Acked-by: Derrick Stolee <dstolee@microsoft.com>
 
-> Change from last version:
->
->  1. Change --<lang> and --format=%(raw) checkpoint to verify_ref_format(),
->     which make it more scalable.
+I believe the sign-off should always be the last thing in
+the message. Perhaps Junio is willing to fix this without a
+re-roll?
 
-s/make/makes/
+Feel free to replace Acked-by with Reviewed-by.
 
->  2. Change grab_sub_body_contents() use struct expand_data *data instread of
-
-s/use/to use/
-s/instread/instead/
-
->     using obj,buf,buf_size to pass object info which can reduce the delivery
->     of function parameters.
+Thanks,
+-Stolee
