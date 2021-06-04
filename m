@@ -2,96 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9504C4743C
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1691C4743D
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:56:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7471613F9
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:35:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7B46613F4
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbhFDUhV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 16:37:21 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:31595 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbhFDUhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 16:37:20 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 154KZUGI061192
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 4 Jun 2021 16:35:30 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "'Git Mailing List'" <git@vger.kernel.org>
-References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com>     <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com>    <012601d73ddf$3d0cf660$b726e320$@nexbridge.com> <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com>    <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com> <01dd01d745b0$875c6920$96153b60$@nexbridge.com> <00f101d75978$0074c840$015e58c0$@nexbridge.com> <xmqqo8cl1k8s.fsf@gitster.g>
-In-Reply-To: <xmqqo8cl1k8s.fsf@gitster.g>
-Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
-Date:   Fri, 4 Jun 2021 16:35:25 -0400
-Message-ID: <00f801d75981$29225c90$7b6715b0$@nexbridge.com>
+        id S230319AbhFDU6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 16:58:35 -0400
+Received: from mail-vs1-f43.google.com ([209.85.217.43]:33742 "EHLO
+        mail-vs1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229982AbhFDU6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 16:58:34 -0400
+Received: by mail-vs1-f43.google.com with SMTP id f11so5563071vst.0
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 13:56:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6ToTBHzGS/yu8Hg4o0QWLM3gHAwv2/77rR8KKvAZgeo=;
+        b=Tl1WQRaape1h8ih/EP6zhsruP6ArhctRflV1S0QBrt9RvGLRe16wvD6EHLH7tUw4Jh
+         YGYeB3c6RWYs0FXatoXwMZwZpjt0Anq+Lrphay3Cus0aKeb06uSh7LYeOUR7ZoFtPzJU
+         SbsHYJg37O697ZXGXi0M815c4lOuckLoMMf4Gi+xj2fQ/Ji2d7Oa3Wcv53cFWURKTxMF
+         0K81Q8QcagtGPYctoe3mdXM9wckH7/nEnIvLFhO+SkMnaL9xSuXONVbR33pK+bcCoU8b
+         jMkpXI6uCyjJR5bsgAgLqAACupBFa9cSUJWSoxHHbZpBi8Or6nl5aw73eL+J2jfmT7Bl
+         P9Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6ToTBHzGS/yu8Hg4o0QWLM3gHAwv2/77rR8KKvAZgeo=;
+        b=Rp0BN72n4Ecr2C+ZwtS8Ryy44eiUFS8lr2Qhsx7c8vUa2sCkOqvYSrZzFjJVsqA+v8
+         Y2d5A0W7HcHuY5sin5tX1G2Zt7SYN9jvx/LYtO5mlS3mZwdnoyxN2jLLr9we4Om5Eo28
+         S1XHDNkmHXphGITZVB0NmF5sIqqHnS3azlNNhalvN4ysigvzP6vIjY/F2IRwFA+RZG3G
+         Ihqs3ZGsZT9P0u9Vk8e9xYrPFMkMMyIZ6KtPYw5VoT8CXCtIBOwc6sfttkHMbfh07K02
+         NOcXRrlpv67PrC8N9ka/iDAHr0JriYn1/pnzhTW7L79VegAPepuBA5hT8HRxb/DyCcu7
+         ZIxg==
+X-Gm-Message-State: AOAM533QiBTGZgl/DLwHqMEFsMXm3lcgSBszXWK1ZWzu+Ic7VMFUHHO8
+        NYa8LzrCh4ARRFJsqlYQspjxU/dQ0AiyCTEl4lo=
+X-Google-Smtp-Source: ABdhPJzDzMHcGDJ/wnqqQf5XwLqZ3mGgNh8XfAhwauGBROWYlpZpj6PxS2A+mwnWxGbSAcxJClzIpibBnSZ0qgAwGdw=
+X-Received: by 2002:a05:6102:2008:: with SMTP id p8mr4351281vsr.53.1622840147085;
+ Fri, 04 Jun 2021 13:55:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWGYGttp5Jdx88vf9L/5ZtrxnlMwG55eaXAXoXgPoC7mL63QI2zlGUAkuPwtwCEzMldQHDJRNoqhL0OYA=
-Content-Language: en-ca
+References: <pull.970.git.1622828605.gitgitgadget@gmail.com> <3170f78daa5fa89f04f61e24c9c64c93ea5b394f.1622828605.git.gitgitgadget@gmail.com>
+In-Reply-To: <3170f78daa5fa89f04f61e24c9c64c93ea5b394f.1622828605.git.gitgitgadget@gmail.com>
+From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Date:   Sat, 5 Jun 2021 02:25:35 +0530
+Message-ID: <CAKiG+9UT+B-kFiY7sA8ZedB31xYARbFgSFwQRzktww_S2B_tfA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] cmake: add knob to disable vcpkg
+To:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Danh Doan <congdanhqx@gmail.com>,
+        Matthew Rogers <mattr94@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 4, 2021 3:52 PM, Junio C Hamano wrote:
->"Randall S. Becker" <rsbecker@nexbridge.com> writes:
->> The primary
->> problem is supplying -S $ZSSH0 on the command line causes $ZSSH0 to be
->> resolved as a shell variable. It is not.
->
->I think we've heard that one before, and the whole thing sounds like you are saying that a command line
->
->    $ cmd $ZSSH0
->
->expects ZSSH0 to be a variable and tries to interpolate its value before passing it to "cmd" while you want "cmd" to see a literal
-string that
->begins with a dollar sign.
->
->And the standard solution to that problem obviously is to tell the shell that the dollar-sign is not a reference to a variable by
-quoting, by
->using any variant of e.g.
->
->    $ cmd \$ZSSH0
->    $ cmd '$ZSSH0'
->    $ cmd "\$ZSSH0"
+On Fri, Jun 4, 2021 at 11:13 PM Matthew Rogers via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 
-I'm going to have to retest this, but, when I last tried this, admittedly around git 2.0, what happened was that one level of
-escaping the $ worked for ls-remote, but we needed two levels for upload-pack which seemed to have two shells processing the
-command. I might be wrong about the specifics (been 4 years), but there was an inconsistency with the number of required escapes.
-The single quote did not work for upload-pack at the time. It is entirely possible that the second level indirection happened
-because the execution of the sshoss command itself cross over a platform boundary between the POSIX and non-POSIX file systems (it
-lives in the non-POSIX side).
+> -if(WIN32)
+> +
+> +if (WIN32 AND NOT NO_VCPKG)
+> +       set(USING_VCPKG TRUE)
+> +else()
+> +       set(USING_VCPKG FALSE)
+> +endif()
 
->As far as I can tell, the code in connect.c that spawns ssh via GIT_SSH_COMMAND uses the pretty vanilla run_command() interface,
-and
->that ought to be capable of producing such a command line, so I am lost as to where the need to have special case comes from.
+I think it would be better if we could have an option for this knob.
+Maybe like this
 
->"cmd" here may be "ssh" but run_command() should not care what exact command is being invoked.  I am puzzled why a simple quoting
->like the following cannot be adjusted for this particular case, for
->example:
->
->    $ cat >>.git/config <<\EOF
->    [alias]
->	cmdtest0 = "!echo ..\\$ZSSH0.."
->	cmdtest1 = "!echo ..$ZSSH0.."
->    EOF
->    $ ZSSH0=foo git cmdtest0
->    ..$ZSSH0..
->    $ ZSSH0=foo git cmdtest1
->    ..foo..
+option(NO_VCPKG "Don't use vcpkg for obtaining dependencies. Only
+applicable to Windows platforms" OFF)
 
-The multi-level resolution that I experienced is not covered in this situation. Still going to investigate this. I'm working on a
-different approach to extend my wrapper script to parse out the port, to supply to sshoss, which is not complaint with the standard
-ssh. If I have to stick with that script, there's no point going further on this variant.
+I would prefer to use `USE_VCPKG`.
 
+Thank You,
+Sibi Siddharthan
