@@ -2,230 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B466C07E94
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 09:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE449C07E94
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 10:24:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E45661405
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 09:48:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0ACD611ED
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 10:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbhFDJtu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 05:49:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42382 "EHLO
+        id S229718AbhFDK0L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 06:26:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbhFDJtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 05:49:50 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA7DFC06174A
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 02:47:53 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id h12so4352668plf.11
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 02:47:53 -0700 (PDT)
+        with ESMTP id S229625AbhFDK0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 06:26:10 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05809C06174A
+        for <git@vger.kernel.org>; Fri,  4 Jun 2021 03:24:17 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id y7so4129803wrh.7
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 03:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=PzQYn7hKULLjG5/aWOpZmi6olgr4losYm/DQyRKVn4U=;
-        b=EqX431DiAX6TkelRRTcx6MRlfOzLeKd95DT6PxdE1vKu9nbweGmbGfeMz7++AxCXkb
-         k4AJi9AS8D/7ZUOVVzieOS6KK1MSr5hscBc9sA8XzpRJICfKI/ptrTPnLDfhIp//Fpuw
-         XBlEem//6EjJj7vkXOm/JEwtRQxcw/3RhK68hGWInQ6bWqfKnIVcdOXsH4eazOy0qDh3
-         IwZK+TM5WXQr5l8yy8hJ00ciISHND0W/wBXz2Cgqhsfquy5X+Fwh0/yDL5vGPUoQdtaz
-         HHVo7QGXN791MZ+pKioqe0PeOcs5RV72tcMLfKJ94XuiyV7DR8t2DLNvRZLBLEsN0Dj0
-         1jIA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=TlcLtQZGL0EbI7TlXjRm3qLpUVhR+wy+gENuFD/DaQI=;
+        b=Vmwz5ItPfUud8mNsKvRLDmgkP+XQshRIDYDvTHkLXjt4gMJ2L2MSmZ50+x+Q1xdvC0
+         XYttMnrB/rukCk28L2M5PluLwP8YUDowBw9Vm3gQKIwx3TKc9mcUUqs63sXXgXj9o2AL
+         pGr1R/mwe38a4speAkR30yGXnlcygAbby+Xu8izA/hBaZnxFYagv/LYlbWTdx53TrpvI
+         vRCcA+eYad7BMLp8Hx4Vlr/vjdcqUQu5n+ZXiowRrHkZcQAcc3R7tvNT0I0A/lnfVzlP
+         h9a/EMZja12p+HFT4ZWIYqIBBTxXvCOHmixNfY8TflsnQGntcvuWSfzy/w7gCrOJYf9w
+         H/ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=PzQYn7hKULLjG5/aWOpZmi6olgr4losYm/DQyRKVn4U=;
-        b=BtnbBy5r5wd+hy3wYxPND7zweJvhBI+H5wXs9zqGkfmH96tL1UqsF0VXsMsY+2MQke
-         0AP4CQpjTB71hHES/KUcSYOFS8LjfhWGv+yDuF3Si/Ic3YPpgCg3cPO2i6rB+2tU6q7O
-         Bvm1iCy17rQCIr/ACAxLfI7AN8XaLy+LDzlGH3xjUlgmbQEYe3Dl4h6mu/d/WhGPXdc1
-         T+ttzyZ/bCrkc8el845ICAgHawDZK3BQfgNwAD6CNkO1bZxZ4KxMQqzpcRu9XdIo46mi
-         iP+GH961Su56McvpBQUnOCNGWpaS4/hgEcRFWBmD5l92U8EMpMx79c1lmAdAYCMBe2Uf
-         NBlQ==
-X-Gm-Message-State: AOAM533axPYFsOx3rgFxwr7imwiKBCZfGMBHSoQ7y8FbOZpMZYrah7d8
-        v+JAHnz+fqzKGjFrlcXSb+o=
-X-Google-Smtp-Source: ABdhPJykccv+RA8JYjpVle18NWpZcsPLUP3MEcIzj4Ch5qlmzB+ibIoFamHqdtuBXhAFhcdBJvC6wQ==
-X-Received: by 2002:a17:90a:4f0a:: with SMTP id p10mr16303045pjh.36.1622800073099;
-        Fri, 04 Jun 2021 02:47:53 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.107.60])
-        by smtp.gmail.com with ESMTPSA id g29sm1528170pgm.11.2021.06.04.02.47.50
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Jun 2021 02:47:52 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [PATCH v2] [GSoC] submodule--helper: introduce add-clone
- subcommand
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <CAP8UFD01-VJpUEGg3cEG7X=xU0KCv1AEgq2n_qhk=U+rXV5mvA@mail.gmail.com>
-Date:   Fri, 4 Jun 2021 15:17:48 +0530
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <11A04D37-41CB-43D7-B237-3BFA10B1313A@gmail.com>
-References: <20210528081224.69163-1-raykar.ath@gmail.com>
- <20210602131259.50350-1-raykar.ath@gmail.com>
- <CAP8UFD01-VJpUEGg3cEG7X=xU0KCv1AEgq2n_qhk=U+rXV5mvA@mail.gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TlcLtQZGL0EbI7TlXjRm3qLpUVhR+wy+gENuFD/DaQI=;
+        b=oyfvqHAB9tH7Rukm/xLCXsVXTf29nlVEW8spjFf7F9/6BBnrzJ2mTulpZzkYvkc2Vr
+         fQPyUpYVfU+26hJyfWl8EakIoNGWfjQcrFbMdj2b5UJ1eaoOx+DVECCiHTZqjyAX3EQQ
+         cB5Hfv9fn/C9omN1QLGk087yHDrtkO71a0EnMq/1DSfRGKBR0N0ln6a7L0GCLPm+vpOA
+         XLeQk6MvMtrQJnEZyNLC7e75zutFS1pLMIsYS7ZyGpb/ACgWn7zW/Ic4GSupPDI1d2l8
+         rAc3mV3AfNueLgM8cTjhbMQmzE2xCiaJvhz9JIjIXsaD6600xSaS5wnBnilczbph7kU6
+         zt5g==
+X-Gm-Message-State: AOAM531jNmRDsbPCk5sqf2UiV9CyTVSnUO88mQie4dp67A8qsvyD2xWm
+        OPwChIkZVVk7g96ZlMu4UjdPMNSv4FI=
+X-Google-Smtp-Source: ABdhPJy9pTe2R7j0By7C2sgHEFp2aV8cci3k7dPwNioLs/9LglcZwHX4Cig8Rnd+Zpf9AeKrsRqAxQ==
+X-Received: by 2002:a5d:63c7:: with SMTP id c7mr3015043wrw.276.1622802255595;
+        Fri, 04 Jun 2021 03:24:15 -0700 (PDT)
+Received: from [192.168.1.201] (11.22.198.146.dyn.plus.net. [146.198.22.11])
+        by smtp.googlemail.com with ESMTPSA id m23sm9599618wml.27.2021.06.04.03.24.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Jun 2021 03:24:15 -0700 (PDT)
+Subject: Re: The git spring cleanup challenge
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <87bl8n73om.fsf@evledraar.gmail.com>
+ <60b8b882b9dc5_1a0a2d208e9@natae.notmuch>
+ <87wnrb5cvl.fsf@evledraar.gmail.com>
+ <dbbb5a73-12b5-27a1-63d4-eece1e60f57b@gmail.com>
+ <87tume6g0g.fsf@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <3edd4518-00bd-6227-54e5-e546fd6b849b@gmail.com>
+Date:   Fri, 4 Jun 2021 11:24:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
+MIME-Version: 1.0
+In-Reply-To: <87tume6g0g.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04-Jun-2021, at 13:51, Christian Couder <christian.couder@gmail.com> =
-wrote:
->=20
-> On Wed, Jun 2, 2021 at 3:13 PM Atharva Raykar <raykar.ath@gmail.com> =
-wrote:
->=20
->> +static void show_fetch_remotes(FILE *output, const char *sm_name, =
-const char *git_dir_path)
->> +{
->> +       struct child_process cp_remote =3D CHILD_PROCESS_INIT;
->> +       struct strbuf sb_remote_out =3D STRBUF_INIT;
->> +
->> +       cp_remote.git_cmd =3D 1;
->> +       strvec_pushf(&cp_remote.env_array,
->> +                    "GIT_DIR=3D%s", git_dir_path);
->> +       strvec_push(&cp_remote.env_array, "GIT_WORK_TREE=3D.");
->> +       strvec_pushl(&cp_remote.args, "remote", "-v", NULL);
->> +       if (!capture_command(&cp_remote, &sb_remote_out, 0)) {
->> +               char *line;
->> +               char *begin =3D sb_remote_out.buf;
->> +               char *end =3D sb_remote_out.buf + sb_remote_out.len;
->> +               while (begin !=3D end && (line =3D =
-get_next_line(begin, end))) {
->> +                       char *name, *url, *tail;
->> +                       name =3D parse_token(&begin, line);
->> +                       url =3D parse_token(&begin, line);
->> +                       tail =3D parse_token(&begin, line);
->=20
-> Sorry for not replying to your earlier message, but I think it's a bit
-> better to save a line with:
->=20
->                       char *name =3D parse_token(&begin, line);
->                       char *url =3D parse_token(&begin, line);
->                       char *tail =3D parse_token(&begin, line);
+Hi Ævar
+On 03/06/2021 17:44, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Jun 03 2021, Phillip Wood wrote:
+> 
+>> Hi Ævar
+>>
+>> On 03/06/2021 13:31, Ævar Arnfjörð Bjarmason wrote:
+>>> On Thu, Jun 03 2021, Felipe Contreras wrote:
+>>>
+>>>> Ævar Arnfjörð Bjarmason wrote:
+>>>>> So I skipped the "disable most config", but for what it's worth I think
+>>>>> I'd miss these the most, I couldn't pick just N favorites, sorry:
+>>>>>
+>>>>>    * diff.colorMoved=true: super useful, but I'd be vary of turning it on
+>>>>>      by default in its current form. E.g. on gcc.git's changelog files it
+>>>>>      has really pathological performance characteristics.
+>>
+>> Would you be able say a bit more about this so I can try and reproduce
+>> it please. I'm working on some patches [1] to improve the performance
+>> of `diff --color-moved` and `diff --color-moved-ws` and it would be
+>> good to test them on a problematic repo. At the moment I diffing two
+>> releases of git to test performance on a large diff. I just cloned the
+>> last 18 months of gcc.git and Changelog seems to just be appended to.
+> 
+> I misremembered the gcc.git ChangeLog issue, sorry. That's about
+> something else entirely.
+> 
+> The issue with the color moved code can just be reproduced on most large
+> diffs, e.g. on git.git:
+>      
+>      $ time git diff --color-moved=true v2.25.0..v2.30.0 >/dev/null
+>      real    0m10.112s
+>      $ time git diff --color-moved=false v2.25.0..v2.30.0 >/dev/null
+>      real    0m0.939s
 
-Alright.
+"Big diffs are slow with --color-moved" is the problem I've been 
+focusing on. With my patches I see the time for --color-moved=true go 
+down from 16s to 4.3s for that example. --color-moved=false takes 0.8s 
+so the --color-moved=true is still quite a bit slower but it's not as 
+bad. --color-moved-ws=allow-indentation-change goes from 8 minutes(!) to 
+6 seconds. I'm seeing a slight (few percent) slowdown for `git log 
+--patch --no-merges -n1000` though which I'd like to avoid.
 
->> +                       if (!memcmp(tail, "(fetch)", 7))
->> +                               fprintf(output, "  %s\t%s\n", name, =
-url);
->> +                       free(url);
->> +                       free(name);
->> +                       free(tail);
->> +               }
->> +       }
->> +
->> +       strbuf_release(&sb_remote_out);
->> +}
->> +
->> +static int add_submodule(const struct add_data *info)
->> +{
->> +       char *submod_gitdir_path;
->> +       /* perhaps the path already exists and is already a git repo, =
-else clone it */
->> +       if (is_directory(info->sm_path)) {
->> +               printf("sm_path=3D%s\n", info->sm_path);
->=20
-> I don't see which shell code the above printf(...) instruction is
-> replacing. That's why I asked if it's some debugging leftover.
+> So 10x slower, and e.g. diffing from v2.22.0 makes it 25s and 1.1s,
+> respectively.
+>
+> In some sense that slowness is expected, it simly takes time to compute
+> this. I think for turning it on by default we should have something like
+> the diff.renameLimit, and change the default to some "auto" that would
+> punt out if it was taking too long to compute.
+> 
+> I run with it by default so this doesn't bother me, but I think it's
+> probably a semi-common use-case of some people to e.g. diff the last N
+> releases of Linux, and then use their pager to search around in the
+> diff.
 
-Oh, my bad. It is a leftover debugging statement. Please excuse
-my temporary blindness to it (:
+Yeah I can see people doing that.
 
-> [...]
->=20
->> +               if (info->dissociate)
->> +                       strvec_push(&clone_args, "--dissociate");
->> +               if (info->depth >=3D 0)
->> +                       strvec_pushf(&clone_args, "--depth=3D%d", =
-info->depth);
->=20
-> It's ok if there is a blank line here.
+> We don't want commands like that to take 25s instead of 1s, but I think
+> it would be fine (and we should) warn that we aborted on the color move
+> if it's otherwise the default.
+> 
+> Otherwise it'll take 1s, and if you normally depend on it you'll
+> conclude that some code you're looking at wasn't moved, which would also
+> suck, better to punt on it and warn, just like the diff.renameLimit.
 
-OK. Makes sense.
+That's a nice idea, one other thought I had was to fall back to just 
+looking for moved lines within the same file - that would be much faster 
+on a large diff with lots of files but maybe it is confusing to 
+highlight only some of the moved lines when there are interfile as well 
+as intrafile moves.
 
->> +               if (module_clone(clone_args.nr, clone_args.v, =
-info->prefix)) {
->> +                       strvec_clear(&clone_args);
->> +                       return -1;
->> +               }
->> +               strvec_clear(&clone_args);
->=20
->> +static int add_clone(int argc, const char **argv, const char =
-*prefix)
->> +{
->> +       const char *branch =3D NULL, *sm_path =3D NULL;
->> +       const char *wt_prefix =3D NULL, *realrepo =3D NULL;
->> +       const char *reference =3D NULL, *sm_name =3D NULL;
->> +       int force =3D 0, quiet =3D 0, dissociate =3D 0, depth =3D -1, =
-progress =3D 0;
->> +       struct add_data info =3D ADD_DATA_INIT;
->=20
-> Maybe: s/info/add_data/
+Best Wishes
 
-'info' was the local convention for naming similar structures that
-held the flag values (like summary_cb, module_cb, deinit_cb etc).
+Phillip
 
-The exception to the above is 'struct submodule_update_clone', which
-was named as 'suc'. It did not follow the *_cb naming convention,
-presumably because it was not used as a parameter passed to any
-*_cb() function.
+> 
+>>>> Very nice! I didn't know about it. I'll pick it for my third day.
+>>> It makes patch review a lot easier, and also integrates nicely with
+>>> -w.
+>>
+>> I find --color-moved-ws=allow-indentation-change helpful as well (it
+>> is quite a bit slower at the moment but I have some patches to bring
+>> it up to the speed of the other --color-moved modes.
+>>
+>> [1] https://github.com/phillipwood/git/tree/wip/diff-color-moved-tweaks
+> 
+> Nice, I didn't know about that option. Will try it.
+> 
 
-Since 'struct add_data' is more similar to the latter (as it is not
-used in any callback function) I guess it would be okay to name it
-differently and more descriptively as 'add_data'?
-
-> Also it seems that in many cases it's a bit wasteful to use new
-> variables for option parsing and then to copy them into the add_data
-> struct when the field of the add_data struct could be used directly
-> for option parsing...
->=20
->> +       struct option options[] =3D {
->> +               OPT_STRING('b', "branch", &branch,
->=20
-> ...for example, here maybe `&add_data.branch` could be used instead of
-> `&branch`...
-
-I thought of this too, but decided to stick to the surrounding
-convention, where a new variable is used and then assigned to the
-struct.
-
-I had a looked at the file again, and turns out...
-
-	OPT_STRING_LIST(0, "reference", &suc.references, N_("repo"),
-		   N_("reference repository")),
-	OPT_BOOL(0, "dissociate", &suc.dissociate,
-		   N_("use --reference only while cloning")),
-	OPT_STRING(0, "depth", &suc.depth, "<depth>",
-		   N_("create a shallow clone truncated to the "
-		      "specified number of revisions")),
-
-... update_clone() is the exception again.
-
-So there is precedent, and I'd rather follow what you suggested,
-because that looks much better to me, and saves a lot of redundant
-code.
-
->> +                          N_("branch"),
->> +                          N_("branch of repository to checkout on =
-cloning")),
->=20
-> [...]
->=20
->> +       info.branch =3D branch;
->=20
-> ...so that the above line would not be needed.
-
-Yes, although I might still need to use an extra variable for
-booleans, like 'progress' or 'dissociate', because of the need
-to use !! to make it either 1 or 0. I am not too familiar with
-why doing that would be important in this context, but since
-this is the convention, I'll keep it intact.=
