@@ -7,111 +7,137 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF4A6C47083
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D956C47083
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 06:01:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB32E6140F
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:35:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E337613FF
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 06:01:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbhFDFhg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 01:37:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43836 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbhFDFhf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 01:37:35 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E82EC06174A
-        for <git@vger.kernel.org>; Thu,  3 Jun 2021 22:35:36 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id a21so8712869oiw.3
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 22:35:36 -0700 (PDT)
+        id S230030AbhFDGDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 02:03:25 -0400
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:35688 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229833AbhFDGDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 02:03:24 -0400
+Received: by mail-ot1-f52.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so8119284otg.2
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 23:01:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=nxs2mFjUgMXOaJpNOnfs/TNYQihP34zh5Wo+uXh6WG4=;
-        b=jJA4NbfPwKkM78Sy/rJh1u5rnqXGoM5q+tdKq5ea2D00FKHI+JCV/f20g/M6YdzVV+
-         ZKMfX2+tiFyvtc8eczJ5AePPz6fybEID0u8jOTvWEKOz+L7BUURQ9WGJbCzjE6BSuw8D
-         ZVDrIwh7D/v+dBDCN5dVzWYfoSLAxXWJXrryZq5V8kSMahRivrXL8EWkNyb/fHEXCcNw
-         5OzY2OBb8rkcQscssVD3MFROaGg/h35jMTK73OWqo7n3JZFeVwt0bR3bm9OzVxgjs+1N
-         lKuhem3aVIhoQFni6BXRswJ8V0t62NpdHaHmnlwl0XPoGId1wzboTEy0MAGDhOytN6EE
-         cAXQ==
+        bh=MxcMx2Q2TtTC2LlyeR69+NElgLtUKJ7v4kbZJFI+bzw=;
+        b=MNBd8KvO9tK+9rPiPq4tpO8QBC0mDM9Z0w2REjGJjpLW2TaOyvmnQ16OQS9LcSfD/r
+         L9IbphtQ5tkU2QZrdUK8vpoiVEAyebTZjtadenq5q8cqwKB+ZNF7gCvAI4kHfWeQYlVL
+         zRBrS5zCZC1sQRrRa5Xqy1KGy5jp0MNXl6hwz+0277vWJxekZTjq2tMTjcN+y61YufC6
+         9gob+IA1KptfFv+mWzLWNQv93ZDTKUgJjP9eFvVGydbUYROn0cxwims0sOM8ny3ooLnt
+         KKBDZ8fuj7l4lOwJlRDZXzPjhp+EXuoJoCSbJN8L9iUGPzN5I6BEiJetnI7cG/ScAYrc
+         8dPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=nxs2mFjUgMXOaJpNOnfs/TNYQihP34zh5Wo+uXh6WG4=;
-        b=YGJjEm4CCAbD1kmOkvOh1q2FuZ8iQyLeZAoxPmMq0xg2dGNik3hEohMXYaoQbDdI7Y
-         oZahj8nMF+8pnTlZ50BWv7wCn5Bt6CiwN3No5vgY3u+SXalSX3BPkQ7axrvQz0BdEKko
-         utDU0qLVoi0n6eonoyb7R+GbfK4R50+YYI6nnaZWClG5+AZ5cEM8ti0jpGh27bjE/foU
-         6ZX+GtlgRPViPzgDbs4L1T4rsOBFmqgTbuaaD8VYjpaLOPMLVTetnraEyQx5kRHaqYLT
-         Z5pFzx5YC9NtopFsvdXilTUgWYnN6LSUjk7pjeLGThgkfWJwveAme4AcvLW4lAjRU6nQ
-         R3WQ==
-X-Gm-Message-State: AOAM531wq7Vd5ugEs0zZV9JpqO62nKaw0mXLBycS2nYxd0yBTSSTCYNX
-        vwE/0GQuURiLBRSk67DCZjs=
-X-Google-Smtp-Source: ABdhPJw7Rxk+eu5S1RKvrt5w9MaXn88/4QrcTV+cH3ARR//rdsOGwa82R344lELuFdVW0lbD4C49ug==
-X-Received: by 2002:aca:340a:: with SMTP id b10mr9920513oia.95.1622784934585;
-        Thu, 03 Jun 2021 22:35:34 -0700 (PDT)
+        bh=MxcMx2Q2TtTC2LlyeR69+NElgLtUKJ7v4kbZJFI+bzw=;
+        b=Nl4DnIOYkqCtooyEUl//7UkCo1gXOrjRPWssuOKMMhCEV11ghL7m2R8mOI0r7vsS3R
+         UVd6IIPQXpORGsw4yHyjHkFZBqxJ6KXrD1QchHpkbo3rSHIKtGLqIxF8WuQen78cEPiz
+         QnnI9wUtmJJptbXmnG+/QSiZ6htrLsHw20bvkwkopC1JSNnB/8yQhp9vnETwBGzws4Ql
+         S7B2LCA4cQLRlTHElm9eekk0g35Vy7Kgma5J3i7+Ddx3ghyUph0rOdCeAey9ZifZyeBb
+         8jti7s0RoSv5k/l2MBy1GyMgS6//coGabFajzQ3vPoGpunNmKvDaVk3DkiTN+dmmUedP
+         y33Q==
+X-Gm-Message-State: AOAM531Cbim0zMQXWwBe/m/NWtbw2UBuBc7aKURdvR5+g7/Tc/s/eK5t
+        DQMBKogxxqqpa/i46tOGs4Q=
+X-Google-Smtp-Source: ABdhPJxgVpmrMwdSW2YHxnMFj2LfPIBlal+dNqL3L6TyFBE/13uLTsI40/D0czF4qHqZ8UG0OdD1fQ==
+X-Received: by 2002:a05:6830:1db6:: with SMTP id z22mr2571432oti.312.1622786428569;
+        Thu, 03 Jun 2021 23:00:28 -0700 (PDT)
 Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id 16sm271786otm.57.2021.06.03.22.35.33
+        by smtp.gmail.com with ESMTPSA id v10sm252791ool.45.2021.06.03.23.00.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jun 2021 22:35:34 -0700 (PDT)
-Date:   Fri, 04 Jun 2021 00:35:32 -0500
+        Thu, 03 Jun 2021 23:00:28 -0700 (PDT)
+Date:   Fri, 04 Jun 2021 01:00:26 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>,
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Git Users <git@vger.kernel.org>
-Message-ID: <60b9bba4b792c_3bd685208ec@natae.notmuch>
-In-Reply-To: <CAPig+cSXbCTymdrUOZwFBeUNMWuhnGb91Ar9Jth2cHCG2xav+g@mail.gmail.com>
+Message-ID: <60b9c17ae2306_3bd68520833@natae.notmuch>
+In-Reply-To: <YLm4dn4INFPhg2OI@danh.dev>
 References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
  <20210603180851.5tbnuvfb6auxrhvm@nitro.local>
  <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
  <60b928374d90e_39cbe920835@natae.notmuch>
  <CAPig+cS74Ah3OyJPNQhvkdV6f7mkFgFQjHgfrrAE1gZsvN38RA@mail.gmail.com>
  <60b97dd1acd9d_3a18272087b@natae.notmuch>
- <CAPig+cSXbCTymdrUOZwFBeUNMWuhnGb91Ar9Jth2cHCG2xav+g@mail.gmail.com>
+ <YLmGxcQ3s2gBbfe0@danh.dev>
+ <60b98adc7f8cb_3a25c2208c9@natae.notmuch>
+ <YLmLyT0XmQ/lOBKg@danh.dev>
+ <60b9a1d25b63f_3a3b7e208fd@natae.notmuch>
+ <YLm4dn4INFPhg2OI@danh.dev>
 Subject: Re: Gmail OAuth2 in git send-email
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine wrote:
-> On Thu, Jun 3, 2021 at 9:11 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > Eric Sunshine wrote:
-> > > Google requires 2fa to be enabled in order to create app passwords,
-> >
-> > That doesn't make sense.
-> 
-> What doesn't make sense? My statement?
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> On 2021-06-03 22:45:22-0500, Felipe Contreras <felipe.contreras@gmail.c=
+om> wrote:
+> > =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> >> On 2021-06-03 21:07:24-0500, Felipe Contreras <felipe.contreras@gmai=
+l.com> wrote:
+> >> > =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> >> > > On 2021-06-03 20:11:45-0500, Felipe Contreras <felipe.contreras@=
+gmail.com> wrote:
+> >> > > > All you need to enable 2fa is demonstrate that you can *use* 2=
+fa... So
+> >> > > > you need an OTP client.
+> >> > > =
 
-Your statement.
+> >> > > In the past, when I tried to enable 2FA, Google always asks for =
+my
+> >> > > Phone Number because of *security* and *safety* reason.
+> >> > > =
 
-> > It's like complaining that you need to lose a limb in order to use
-> > prostetics...
-> > App passwords are a suboptimal solution in case you cannot use 2fa for a
-> > certain application.
-> 
-> Nevertheless, that's what Google requires.
+> >> > > I tried to create a new Google account to double check my memory=
+,
+> >> > > Google now requires a phone number in order to *create* new Goog=
+le
+> >> > > accounts.
+> >> > =
 
-No. Google doesn't require app passwords, nor 2fa.
+> >> > Presumably if you don't have a Google account, then don't have a
+> >> > gmail.com address, and you can't use Gmail.
+> >> > =
 
-> > If you cannot use 2fa for any application, then don't enable 2fa, and
-> > then you don't need an app password. Just use your regular password.
-> 
-> Google has been clamping down on "regular password" use for
-> third-party applications/sign-ins for several years now and they
-> heavily discourage it.
+> >> > So why would this thread interest you?
+> >> =
 
-Perhaps, but they don't requier 2fa. If you don't want to use 2fa, then
-use regular passwords.
+> >> The first point ;)
+> > =
 
-Or just don't use Gmail.
+> > Which is?
+> =
 
--- 
-Felipe Contreras
+> Which is the point I specificly copy-pasted after that comment,
+> and it's also the point you stripped out.
+> =
+
+> I guess it's my bad that I wasn't very clear in the original comment.
+> So, here is the quote:
+> =
+
+> >> > > In the past, when I tried to enable 2FA, Google always asks for =
+my
+> >> > > Phone Number because of *security* and *safety* reason.
+
+I still don't see what is your point.
+
+If you don't have a Gmail account, then why do you care about particular
+ways to authenticate into a Gmail account?
+
+-- =
+
+Felipe Contreras=
