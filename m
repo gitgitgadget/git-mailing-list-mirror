@@ -6,102 +6,92 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0080FC47083
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 04:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17AFBC47083
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 04:10:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C99F560720
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 04:03:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1D0761406
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 04:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbhFDEFd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 00:05:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45852 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229445AbhFDEFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 00:05:33 -0400
-Received: (qmail 8443 invoked by uid 109); 4 Jun 2021 04:03:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Jun 2021 04:03:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32185 invoked by uid 111); 4 Jun 2021 04:03:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Jun 2021 00:03:48 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 4 Jun 2021 00:03:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Ilias Apostolou <ilias.apostolou.zero@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Request feature: =?utf-8?B?4oCTbm8t?= =?utf-8?Q?submodule?=
-Message-ID: <YLmmIXy/SITKh/Yw@coredump.intra.peff.net>
-References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
- <YLfqiLbpPXWXHlBi@nand.local>
- <xmqq8s3r7oma.fsf@gitster.g>
- <YLg/dLqYFEqHZJUn@nand.local>
- <xmqq7dja6e46.fsf@gitster.g>
- <YLkr+kLdjmHyPjgl@coredump.intra.peff.net>
- <xmqqo8cm4nst.fsf@gitster.g>
+        id S229527AbhFDEMV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 00:12:21 -0400
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:36860 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229445AbhFDEMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 00:12:20 -0400
+Received: by mail-ed1-f50.google.com with SMTP id w21so9460661edv.3
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 21:10:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h+afrMdnVoFMomJN6iSGxnHdp/FHylXXwwtw1D3hN4A=;
+        b=dJ0ONYHkHi9A8k47GBbyMVuoUFmpwdWNzeXWSZsXk3xPo/dNCU9LqtCBSQKmOWbr1T
+         NjkzWNL8LFdf+KJCe7XpvLmKoKjBA/NWicO9bsiqEmpibQAnHfXW6YmWdXTnThey0V8O
+         reri6gM2rLSwx3R4l8TFckeWCBQGOTc6sSrQbE65EedAQzt0Rz6gUwddeT/IZxCsOcBU
+         H6ZhEHvYV6DOXFda7DCPwkX7BSPRSfnF0qchynPBocqg3+E7SM+828l8hF6Nu0Ovj0rd
+         iDhObC2/vQgEVatD41sZdXtlAmBkswmLqEim+PuimDFzofN67e69i2XOEQxvuwYe86Q4
+         74yQ==
+X-Gm-Message-State: AOAM533S967oEHi3Mx3ZoR2B6PIePQueluS40CEjHzy8U18WHqdXDs71
+        qHYWeozQKSvkrMhxGaE/Q1pESarKU6HvA70IZWk=
+X-Google-Smtp-Source: ABdhPJz5vJyZel4RFbcnaTMgm8H7ireyYQhr1Snu+8fSRtQtGnIaxuvCiIfbA++waB4z+z2mjYVpV5iwVvXl4BZnj7E=
+X-Received: by 2002:a05:6402:311c:: with SMTP id dc28mr2586508edb.291.1622779820548;
+ Thu, 03 Jun 2021 21:10:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo8cm4nst.fsf@gitster.g>
+References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
+ <20210603180851.5tbnuvfb6auxrhvm@nitro.local> <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
+ <60b928374d90e_39cbe920835@natae.notmuch> <CAPig+cS74Ah3OyJPNQhvkdV6f7mkFgFQjHgfrrAE1gZsvN38RA@mail.gmail.com>
+ <60b97dd1acd9d_3a18272087b@natae.notmuch>
+In-Reply-To: <60b97dd1acd9d_3a18272087b@natae.notmuch>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 4 Jun 2021 00:10:09 -0400
+Message-ID: <CAPig+cSXbCTymdrUOZwFBeUNMWuhnGb91Ar9Jth2cHCG2xav+g@mail.gmail.com>
+Subject: Re: Gmail OAuth2 in git send-email
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 04, 2021 at 06:54:10AM +0900, Junio C Hamano wrote:
+On Thu, Jun 3, 2021 at 9:11 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Eric Sunshine wrote:
+> > Google requires 2fa to be enabled in order to create app passwords,
+>
+> That doesn't make sense.
 
-> > An alternative view is allowing a pathspec that asks about the mode:
-> >
-> >   git ls-files ':(mode=160000)'
-> >
-> > That also lets you ask about other things, like:
-> >
-> >   git ls-files ':(mode=100755)'
-> >
-> > but it is probably unnecessarily arcane (even I had to look up the
-> > correct mode for a gitlink just now :) ).
-> 
-> The original request, as I understand the clarification posted
-> upthread, is not "submodules are uninteresting", but is "we want
-> regular files" (and we postprocess further the output), so such a
-> "mode" (pseudo-)attribute that is automatically populated would be a
-> better fit anyway.  With the current system, they can already do:
-> 
->     git ls-files -s ':(exclude)*.png' ':(exclude)*.ico)' |
->     sed -n -e 's/^100[76][54][54] [0-9a-f]* 0       //p' |
->     xargs dos2unix
-> 
-> (cf. <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com>)
-> 
-> and with such an auto-pseudo-attribute, presumably something along
-> this line would work, removing the need for the intermediate filter:
-> 
->     git ls-files \
-> 	':(attr:mode=100755)' ':(attr:mode=100644)' \
-> 	':(exclude)*.png' ':(exclude)*.ico' |
->     xargs dos2unix
-> 
+What doesn't make sense? My statement? Or Google's requirements?
 
-Yeah, that makes sense.
+> It's like complaining that you need to lose a limb in order to use
+> prostetics...
+> App passwords are a suboptimal solution in case you cannot use 2fa for a
+> certain application.
 
-By the way, another reason (beyond a simpler pipeline) that the "magic
-pathspec that understands modes" is nicer is that it can be applied to a
-more dynamic set of paths.
+Nevertheless, that's what Google requires.
 
-For instance, you could use a pipeline like the one you showed above to
-limit the ls-files output, and then you could feed that set of literal
-paths to a command like "git add" (perhaps with --literal-pathspecs).
-But you would not want to feed it to git-log like:
+> If you cannot use 2fa for any application, then don't enable 2fa, and
+> then you don't need an app password. Just use your regular password.
 
-  git --literal-pathspecs log $(git ls-files -s | sed ...)
+Google has been clamping down on "regular password" use for
+third-party applications/sign-ins for several years now and they
+heavily discourage it. It is still possible to do it, though, by
+enabling "Less secure apps" explicitly[1]. However, when "Less secure
+apps" is enabled, they regularly send messages "strongly suggesting"
+turning it off. I won't be surprised if the "Less secure apps" option
+disappears at some point.
 
-because you'd really want to expand the set of paths at each commit, not
-once based on the current index (i.e., it would fail to match paths that
-were removed or changed modes).
+> > Thanks, that's an interesting bit of information, though if a person
+> > can't enable 2fa in the first place, then... (intentionally left
+> > blank)
+>
+> All you need to enable 2fa is demonstrate that you can *use* 2fa... So
+> you need an OTP client.
 
-This is kind of a subtle and esoteric point, but it makes me more
-convinced that having powerful pathspec selectors is potentially useful.
-Or at least solving a problem that's hard to otherwise solve correctly. :)
+I'd be happy to see concrete instructions explaining how to accomplish
+all of this since each time I attempted it, Google's instructions led
+me in endless circles, with each cycle always asking for (er,
+requiring) my non-existent phone number.
 
--Peff
+[1]: https://support.google.com/accounts/answer/6010255/less-secure-apps-amp-your-google-account
