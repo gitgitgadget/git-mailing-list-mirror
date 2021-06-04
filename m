@@ -2,103 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96279C4743C
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9504C4743C
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:35:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7509361153
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:19:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7471613F9
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 20:35:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbhFDUVn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 16:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbhFDUVm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 16:21:42 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EADAC061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 13:19:56 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id k5so1628102iow.12
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 13:19:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lbk/goq7ZcS587dbvx8sq0GdywPWsyq+MIBSRWiJGWM=;
-        b=UClyLmShv00d+LD+MhiRD2MI1ot7MHfeuYhV66EppwKGiYfAUORG6oodLAeZsAafZ2
-         odb8955rb4LVtNq3MEnUcMDhHBMWBYFslSGPrAJ3jGvow1LKpGbKFtPJ3TpLONzLgLfk
-         Ph653u5NImTUA3lJkVUOA7GArCIKevQRK4lHd/0w2D9xxVWrL1XBCIAYn2SWztTwTxH/
-         y1o4OjFsswUQ1MzBgnFtHysJ7k4AnjcTJiYZIULUdp9J4b33UKCYlwRNYsRUi2yyfCCN
-         QvMFiEQZnqrS4eHu0FNm7uUgmVAJ2FyZZ6TiPRD/8rGTxAHEXR56Vc0IxbwfJjn5uCeN
-         jKdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lbk/goq7ZcS587dbvx8sq0GdywPWsyq+MIBSRWiJGWM=;
-        b=fPEt5rYLJZKb01mVBkfH2EVyUmh4V0oZvnEia4chP6p8fGpsO9LyLUTLehEAEefXrI
-         9b7Ho1ymHJeNMcY+YCJ8O/uLQnj1Q3oD5MuOLV7Xyz3nmcPjGSFxt66W9dBTojyFKkv2
-         OwplBllxMPt35zcpPgYyZC7aEpHs5TOBblDG1dH6Vn3/aIEXy1geWd86DhIuJfTcXh95
-         QJVD8prwR0EgsAIDoeRoCZK+F41noYzDSNLboMgxer4dBwqX2DqVHiiE8sg0mnJgzwt6
-         z2H0pz2uJQDvQBUCCw93rrZKatxFSnBmnXhZrqFrMxW6GwHDJ2b1yQXbOAr5VNeKqqCm
-         WXcw==
-X-Gm-Message-State: AOAM532eVEtRfnBs47wQndsc7V3Zc+RHuAy3wYnZ+tp3MilorB2PJm+6
-        XgnmWrd7j9Emk01AnQ10+mbeQg==
-X-Google-Smtp-Source: ABdhPJzzj/Hx0DIxHMDalLiBvC9b6bBji9WBSPZ9NeDw1YevD8Nnhsg0wdkG7ocyVlFqLi5XPkHLCw==
-X-Received: by 2002:a6b:8ec2:: with SMTP id q185mr5086533iod.22.1622837995305;
-        Fri, 04 Jun 2021 13:19:55 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:e28c:b821:dd88:1fd1])
-        by smtp.gmail.com with ESMTPSA id a11sm3818348ioq.12.2021.06.04.13.19.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Jun 2021 13:19:54 -0700 (PDT)
-Date:   Fri, 4 Jun 2021 16:19:53 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] run-command: move envvar-resetting function
-Message-ID: <YLqK6XTmnaQoFycz@nand.local>
-References: <cover.1622580781.git.jonathantanmy@google.com>
- <c5307a9f02f3f0f9b30c87bb3e9f8fa3163f839d.1622580781.git.jonathantanmy@google.com>
+        id S230214AbhFDUhV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 16:37:21 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:31595 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229913AbhFDUhU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 16:37:20 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 154KZUGI061192
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 4 Jun 2021 16:35:30 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Git Mailing List'" <git@vger.kernel.org>
+References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com>     <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com>    <012601d73ddf$3d0cf660$b726e320$@nexbridge.com> <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com>    <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com> <01dd01d745b0$875c6920$96153b60$@nexbridge.com> <00f101d75978$0074c840$015e58c0$@nexbridge.com> <xmqqo8cl1k8s.fsf@gitster.g>
+In-Reply-To: <xmqqo8cl1k8s.fsf@gitster.g>
+Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
+Date:   Fri, 4 Jun 2021 16:35:25 -0400
+Message-ID: <00f801d75981$29225c90$7b6715b0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c5307a9f02f3f0f9b30c87bb3e9f8fa3163f839d.1622580781.git.jonathantanmy@google.com>
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIWGYGttp5Jdx88vf9L/5ZtrxnlMwG55eaXAXoXgPoC7mL63QI2zlGUAkuPwtwCEzMldQHDJRNoqhL0OYA=
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 01, 2021 at 02:34:18PM -0700, Jonathan Tan wrote:
-> There is a function that resets environment variables, used when
-> invoking a sub-process in a submodule. The lazy-fetching code (used in
-> partial clones) will need this function in a subsequent commit, so move
-> it to a more central location.
+On June 4, 2021 3:52 PM, Junio C Hamano wrote:
+>"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+>> The primary
+>> problem is supplying -S $ZSSH0 on the command line causes $ZSSH0 to be
+>> resolved as a shell variable. It is not.
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>I think we've heard that one before, and the whole thing sounds like you are saying that a command line
+>
+>    $ cmd $ZSSH0
+>
+>expects ZSSH0 to be a variable and tries to interpolate its value before passing it to "cmd" while you want "cmd" to see a literal
+string that
+>begins with a dollar sign.
+>
+>And the standard solution to that problem obviously is to tell the shell that the dollar-sign is not a reference to a variable by
+quoting, by
+>using any variant of e.g.
+>
+>    $ cmd \$ZSSH0
+>    $ cmd '$ZSSH0'
+>    $ cmd "\$ZSSH0"
 
-All seems pretty normal to me. I did have one question, though:
+I'm going to have to retest this, but, when I last tried this, admittedly around git 2.0, what happened was that one level of
+escaping the $ worked for ls-remote, but we needed two levels for upload-pack which seemed to have two shells processing the
+command. I might be wrong about the specifics (been 4 years), but there was an inconsistency with the number of required escapes.
+The single quote did not work for upload-pack at the time. It is entirely possible that the second level indirection happened
+because the execution of the sshoss command itself cross over a platform boundary between the POSIX and non-POSIX file systems (it
+lives in the non-POSIX side).
 
-> +/**
-> + * Convenience function that adds entries to env_array that resets all
+>As far as I can tell, the code in connect.c that spawns ssh via GIT_SSH_COMMAND uses the pretty vanilla run_command() interface,
+and
+>that ought to be capable of producing such a command line, so I am lost as to where the need to have special case comes from.
 
-Hmm. Why "resets"? IIUC local_repo_env is the array of environment
-variables that change behavior. With that understanding in mind, I
-probably would have written something more like:
+>"cmd" here may be "ssh" but run_command() should not care what exact command is being invoked.  I am puzzled why a simple quoting
+>like the following cannot be adjusted for this particular case, for
+>example:
+>
+>    $ cat >>.git/config <<\EOF
+>    [alias]
+>	cmdtest0 = "!echo ..\\$ZSSH0.."
+>	cmdtest1 = "!echo ..$ZSSH0.."
+>    EOF
+>    $ ZSSH0=foo git cmdtest0
+>    ..$ZSSH0..
+>    $ ZSSH0=foo git cmdtest1
+>    ..foo..
 
-    Convenience function which adds all GIT_* environment variables to
-    env_array with the exception of GIT_CONFIG_PARAMETERS. See
-    local_repo_env in cache.h for more information.
+The multi-level resolution that I experienced is not covered in this situation. Still going to investigate this. I'm working on a
+different approach to extend my wrapper script to parse out the port, to supply to sshoss, which is not complaint with the standard
+ssh. If I have to stick with that script, there's no point going further on this variant.
 
-(Confusingly, cache.h calls this variable CONFIG_DATA_ENVIRONMENT, but
-binds it to GIT_CONFIG_PARAMETERS. I think it probably makes more sense
-to use the environment variable's name rather than our #define, since
-we're saying "all GIT_* variables, except this one", so it would be
-weird for "this one" not to start with "GIT_".
-
-Otherwise the movement looks fine to me.
-
-Thanks,
-Taylor
