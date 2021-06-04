@@ -2,73 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8980C47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDEF9C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7AA61613DF
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:33:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C24861279
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbhFEPfF convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 5 Jun 2021 11:35:05 -0400
-Received: from botech.co.uk ([81.187.226.106]:46476 "EHLO chimp.botech.co.uk"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229930AbhFEPfF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 11:35:05 -0400
-Received: from botech.co.uk ([81.187.226.106] helo=[192.168.4.5])
-        by chimp.botech.co.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <tpr.ll@botech.co.uk>)
-        id 1lpYIO-0001jG-RQ; Sat, 05 Jun 2021 16:33:08 +0100
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.20\))
-Subject: Re: [PATCH] unpack-trees: add core.sparseCheckoutRmFiles config
-From:   "Tim Renouf (open source)" <tpr.ll@botech.co.uk>
-In-Reply-To: <CABPp-BHT3ZrGrDVBcSTuzhSmy0EdtGUeHF_RAVohw=nemGhoOA@mail.gmail.com>
-Date:   Sat, 5 Jun 2021 16:33:08 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <66290CC2-CC83-491F-84BD-3D9107B11EFB@botech.co.uk>
-References: <20210601183106.3084008-1-tpr.ll@botech.co.uk>
- <f6d39636-308c-c846-55b5-3f16a155e69d@gmail.com> <xmqqmts9q9m2.fsf@gitster.g>
- <CABPp-BHs0ACvkCJMB-tO8xkiidB12NrN1hOhLRvm3U_Q=r2YcQ@mail.gmail.com>
- <9BCB8981-09D5-4BF4-981B-2BF0AA0D6E5A@botech.co.uk>
- <CABPp-BHT3ZrGrDVBcSTuzhSmy0EdtGUeHF_RAVohw=nemGhoOA@mail.gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.20)
+        id S229980AbhFEPoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 11:44:00 -0400
+Received: from bounceout07.ispgateway.de ([134.119.228.227]:6272 "EHLO
+        bounceout07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229930AbhFEPoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 11:44:00 -0400
+X-Greylist: delayed 87902 seconds by postgrey-1.27 at vger.kernel.org; Sat, 05 Jun 2021 11:43:59 EDT
+Received: from [134.119.228.98] (helo=smtprelay08.ispgateway.de)
+        by bounceout07.ispgateway.de with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <alexander.adolf@condition-alpha.com>)
+        id 1lpYR5-00017k-Hj
+        for git@vger.kernel.org; Sat, 05 Jun 2021 17:42:07 +0200
+Received: from [46.244.216.1] (helo=condition-alpha.com)
+        by smtprelay08.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <alexander.adolf@condition-alpha.com>)
+        id 1lpBY8-0006lu-Pn
+        for git@vger.kernel.org; Fri, 04 Jun 2021 17:15:52 +0200
+Message-Id: <d8044e41ed12459c405a9a3be522c0f1@condition-alpha.com>
+From:   Alexander Adolf <alexander.adolf@condition-alpha.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] git-prompt.sh not working with vcs_info under zsh
+Date:   Fri, 04 Jun 2021 17:17:09 +0200
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-=-="
+X-Df-Sender: YWxleGFuZGVyLmFkb2xmQGNvbmRpdGlvbi1hbHBoYS5jb20=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Can you expand on this use case a bit? 
+Hello,
 
-Fundamentally, I wanted sparse-checkout to cause all git commands to completely ignore all files outside sparse-checkout patterns, even if they happen to correspond to paths in the index. I realize that that is difficult to achieve, but I was hoping that my patch would make it close enough to be workable. In particular, I would need to avoid doing a merge (cherry-pick, rebase) with conflicts outside the sparse-checkout patterns.
+I discovered and fixed a small glitch in git-prompt.sh in conjunction
+with zsh's vcs_info library. I prefer using git-prompt.sh through
+vcs_info because it allows me to leverage the support of other version
+control systems provided by vcs_info, and still get the more detailed
+information provided by git-prompt.sh. Best-of-both-worlds approach. ;-)
 
-Here is the (maybe slightly specialized) use case:
+The issue is that the prompt_subst option (required for using vcs_info)
+breaks the rendering of the percent character to indicate untracked
+objects. More details in the attached patch.
 
-Due to decisions out of my hands, I have a monorepo containing some shared code and some separate components in subdirectories. There is a “main” branch where the code is built and delivered from. Each component is developed separately and has its own dev branch, e.g. “dev-component1”, “dev-component2”. Many developers develop on just one component, so they check out its dev branch. The “dev-component1” branch still contains the “main” version of the shared code and the other components, so you can merge it up to the main branch.
+For the curious, here is the relevant snippet from my ~/.zshrc:
+---------------------------- Begin Quote -----------------------------
+setopt prompt_subst
+autoload -U promptinit; promptinit
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn cvs hg
+zstyle ':vcs_info:*' check-for-changes true
+source ~/.zsh/git-prompt.sh	# defines __git_ps1()
+GIT_PS1_SHOWCOLORHINTS=3D"1"	# colors are based on the colored output of "g=
+it status -sb"
+GIT_PS1_SHOWDIRTYSTATE=3D"1"	# '*' unstaged and '+' staged changes
+GIT_PS1_SHOWSTASHSTATE=3D"1"	# '$' if something is stashed
+GIT_PS1_SHOWUNTRACKEDFILES=3D"1"	# '%' if untracked files exist
+GIT_PS1_SHOWUPSTREAM=3D('name' 'verbose' 'git')
+function git-ps1-wrapper () { reply=3D" (%s:$(__git_ps1 '%s'))" }
+zstyle -e ':vcs_info:git:*' formats       'git-ps1-wrapper'
+zstyle -e ':vcs_info:git:*' actionformats 'git-ps1-wrapper'
+zstyle  ':vcs_info:*'     formats       ' (%s:%b%u%c)'
+zstyle  ':vcs_info:*'     actionformats ' (%s:%b%u%c|%a)'
+precmd () { vcs_info }
+PROMPT=3D'
+%B%m:%2~%b${vcs_info_msg_0_}
+%B%(!.#.=E2=96=B6)%b '
+----------------------------- End Quote ------------------------------
 
-But some people want to be able to develop on two components at the same time. So they want to check out component1 on its dev-component1 branch, and component2 on its dev-component2 branch. They would ideally want to do this at the same time as maintaining the overall monorepo directory layout. The monorepo does not give a good way to do that.
 
-I was experimenting with an approach combining sparse-checkout, worktrees, and the core.worktree config item, as follows:
+Many thanks, looking forward to your thoughts, and have a great weekend,
 
-The monorepo has its main worktree at the root of the overall workspace, with sparse-checkout set to check out just the shared code not considered part of any separate component. Each component has its own worktree in its subdirectory, with sparse-checkout set to only check out that component. To get the monorepo-like directory structure, a component’s worktree has its core.worktree config item set to point back up to the root of the overall workspace.
+  --alexander
 
-So, with that somewhat hairy structure, anything that touches a file outside of the worktree’s sparse-checkout actually touches a file in a different worktree, giving some surprising results.
 
-Even with my patch, there is still a risk of that happening. And having a component’s worktree rooted somewhere other than where you think it is rooted gave some other surprising results.
 
-I think I am going to abandon that approach and go a different way.
+--=-=-=
+Content-Type: text/x-patch
+Content-Disposition: inline;
+ filename=0001-Cannot-Use-__git_ps1-in-normal-mode-for-zsh-vcs_info.patch
 
-Thanks for the attention.
+From 5a00f8f58a18c87f2a7b9815d832c0beef7b9bff Mon Sep 17 00:00:00 2001
+From: Alexander Adolf <c-alpha@users.noreply.github.com>
+Date: Fri, 4 Jun 2021 01:41:56 +0200
+Subject: [PATCH] Cannot Use __git_ps1 in normal mode for zsh vcs_info
 
--tpr
+When using the __git_ps1 shell function in normal mode (i.e. passing
+it a single argument) in conjunction with the vcs_info library under
+zsh, the percent character ('%'), used to indicate untracked objects,
+breaks the rendering ('%f' is no longer recognised as ending the
+colour code, but appears verbatim in the prompt).
+
+This is because using vcs_info requires the PROMPT_SUBST option to be
+set in zsh, but which changes the handling of percent characters. When
+PROMPT_SUBST is in effect, one additional 'level' of percent signs is
+consumed by the prompt substitution, and to get the desired
+effect (resulting in a single, verbatim percent character in the
+prompt), four percent signs need to be inserted.
+
+This commit changes the way the needed percent character(s) to
+indicate untracked objects are inserted when running under zsh,
+depending on whether the PROMPT_SUBST option is in effect or not.
+---
+ contrib/completion/git-prompt.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index db7c0068fb..f8d19139b6 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -540,7 +540,11 @@ __git_ps1 ()
+ 		   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
+ 		   git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+ 		then
+-			u="%${ZSH_VERSION+%}"
++			if [ $ps1_expanded = yes ]; then
++				u="%${ZSH_VERSION+%%%}"
++			else
++				u="%${ZSH_VERSION+%}"
++			fi
+ 		fi
+ 
+ 		if [ -n "${GIT_PS1_COMPRESSSPARSESTATE-}" ] &&
+-- 
+2.31.1
+
+
+--=-=-=--
