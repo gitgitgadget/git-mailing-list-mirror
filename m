@@ -2,154 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6205C4708F
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74D65C4708F
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:22:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86734613D2
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:20:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D54361359
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:22:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbhFDFWS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 01:22:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40560 "EHLO
+        id S230094AbhFDFYB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 01:24:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbhFDFWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 01:22:18 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ACFEC06174A
-        for <git@vger.kernel.org>; Thu,  3 Jun 2021 22:20:21 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id o9so4101452pgd.2
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 22:20:21 -0700 (PDT)
+        with ESMTP id S230080AbhFDFYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 01:24:01 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4053C06174A
+        for <git@vger.kernel.org>; Thu,  3 Jun 2021 22:22:00 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id o17-20020a17090a9f91b029015cef5b3c50so6780717pjp.4
+        for <git@vger.kernel.org>; Thu, 03 Jun 2021 22:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=OunbsFKEYJk1oKxFiYu43Ts46kMPthyD+5h4ZsP/IQk=;
-        b=lGYm+RWc9CrVLokn6C5m2VJMdt6SLf1XGsGIO7WHg/c218PL5PrDGfD7EXHWgu7SCG
-         2fsCo38vAKY9d/Cr4kUpcmdI5JxIJ5WBZRpkrEqJdZE05ffmmEOOTE5i8ZmqxXmkQqb/
-         0YcilwE7CdL7bgdCfBIoyTSLlb0fELNCETD9/2Xccxf+eAwQGT6rklOulIXebHJ/9/zR
-         Ilu+UcnJdYCHyvKIl1LEiMWA4padEdiMOYpBvpyAFfYw6jf34iK+yN2IbJDN8n4AL3Hg
-         o6h8Bz7Yi4fvHedmXo6OIQtDhWhjvYrA9TsnbnQquMtSTBIPmvibMsTNIBJusURCObVm
-         5hxQ==
+        bh=53aFb97nJwirIEb1UOpG57LP0BpAJ4gUW43LUggGPj0=;
+        b=Xj/M38qRzpSX0P02hMoiRVVDJKSpLrTPh45aYSgSGW50jnk99r915oY92ZCCjI47Gf
+         /hmhh3tGX6rd9a98reweJVJkzseoMDLV8h/4nc+a2zRgAKthcBM821MXbijWvzb9bj0O
+         GPQ/FlJIKOeNpGIJ3RCc9qQCJMN6UO6pohxG+Kwnj8Xn4BhJM9wmzFb9YUVfotw1v6KQ
+         DwaYBCOqIG9ZwHxPDjd8pS4M8KZYa4hGEE4KkgP0+twb2n/7sO/K2gVQT8hu208fmkFL
+         bchhJA8EDMKs1qiq5TM8tyDEDllE0WYYlGK+gPpcGMdh7ggpeZ01FtYMQM6e2z77hDLC
+         G3VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=OunbsFKEYJk1oKxFiYu43Ts46kMPthyD+5h4ZsP/IQk=;
-        b=AwKOvNnuMWC5LiiYEqc137FD0tgAtvqds8O/5Vixkrxp1LYE62Qx0EBagtef9mJpHh
-         vQ/h3gt/pvlslVCIIECjB3T8CqMMl822PdM3ToZ1mZm0pV9exFsX1p8CzP8VTh+NPNqP
-         fX14Cc+xMF8BLGkwlE/BHq5JpEK57VMd7iqpquQaxKfLHbGZPLwUP5Cgx8bUA24dJgww
-         XhzofsFUMs7wIFlituxYrWj8LLljBdKEfV1d9ZLLXqe03UEmSk7nj9Jt9CtcAaQJEgCY
-         F5Lms7w0XvqdSIt53Ye7Yz3kijk+xw8yJharLx4korx02/0QAb237dGbgk9S8xIyax9r
-         jrbQ==
-X-Gm-Message-State: AOAM533/eMU+wKDfmt1z7kEZi8z3etsCBm4VH6kq4sJE+Qo1yYKIXg9n
-        QiXeCOimxCMmyxkmAf3OB0dWfxdJ3H0l/g==
-X-Google-Smtp-Source: ABdhPJyd/oqdraV/eWwyQhQClXNPuMyLdc+l64kXBhJB7svZbutJmTIb1oiY9ldMuA91p8nwuidcOA==
-X-Received: by 2002:a05:6a00:882:b029:24b:afda:acfa with SMTP id q2-20020a056a000882b029024bafdaacfamr2693496pfj.72.1622784020994;
-        Thu, 03 Jun 2021 22:20:20 -0700 (PDT)
+        bh=53aFb97nJwirIEb1UOpG57LP0BpAJ4gUW43LUggGPj0=;
+        b=BXSGNM760YbiI3sYSobAfXVhozTGUFHdAf7zINJfrxmEpIK9IsEzdV0aHPHQ1mIUOk
+         Enhxh3kHxfgR5t0AnSTIN7w/xzhIo0BC0yGOSWBhdhw8ZMXJebYYXr7sbHXF5f8NXvh/
+         z/x+PVLESrDjOQHHRLLhGfjuJT9gZGALPWdaFSQe49hkYtjKoPJUo5gJ2oaMBZvIYGGL
+         5k9xWmxbVGu+oNfmU8nD9xP4LKJ8KGC1lDn9gntb2SKhXpfI1LlJr1JdQ8Tmb1HLNyBX
+         4irJ+YMNjw6AsinGf26a4OZv/3XC2TI7i6otMTOMd/1TEQpbbPJ6OMbC/R/8c5wisAFr
+         hCSw==
+X-Gm-Message-State: AOAM530skV1eA/X8VohN6Y8Wiq98zgXqF51NSwPA3Fl/ErwmWHa7irHq
+        kvQuAyHG6iY0ghJoALvhMl0BTRdMe13Ffw==
+X-Google-Smtp-Source: ABdhPJxzm/ZdjblLs4AmcL05GpN+7IUU9faVPeVofyfZ9I7SfxWhgEQRMkAlhEB3j7UcDhPsHlZIQw==
+X-Received: by 2002:a17:90a:6285:: with SMTP id d5mr3078541pjj.3.1622784120475;
+        Thu, 03 Jun 2021 22:22:00 -0700 (PDT)
 Received: from localhost ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
-        by smtp.gmail.com with ESMTPSA id np1sm3507706pjb.13.2021.06.03.22.20.19
+        by smtp.gmail.com with ESMTPSA id x20sm394534pfu.205.2021.06.03.22.21.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jun 2021 22:20:20 -0700 (PDT)
-Date:   Fri, 4 Jun 2021 12:20:17 +0700
+        Thu, 03 Jun 2021 22:22:00 -0700 (PDT)
+Date:   Fri, 4 Jun 2021 12:21:58 +0700
 From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t: use user-specific utf-8 locale for testing
-Message-ID: <YLm4EXRqsXF/VenO@danh.dev>
-References: <20210602114646.17463-1-congdanhqx@gmail.com>
- <f8cbd947-3176-34bc-a0f0-dd816298e2c7@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Gmail OAuth2 in git send-email
+Message-ID: <YLm4dn4INFPhg2OI@danh.dev>
+References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
+ <20210603180851.5tbnuvfb6auxrhvm@nitro.local>
+ <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
+ <60b928374d90e_39cbe920835@natae.notmuch>
+ <CAPig+cS74Ah3OyJPNQhvkdV6f7mkFgFQjHgfrrAE1gZsvN38RA@mail.gmail.com>
+ <60b97dd1acd9d_3a18272087b@natae.notmuch>
+ <YLmGxcQ3s2gBbfe0@danh.dev>
+ <60b98adc7f8cb_3a25c2208c9@natae.notmuch>
+ <YLmLyT0XmQ/lOBKg@danh.dev>
+ <60b9a1d25b63f_3a3b7e208fd@natae.notmuch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f8cbd947-3176-34bc-a0f0-dd816298e2c7@gmail.com>
+In-Reply-To: <60b9a1d25b63f_3a3b7e208fd@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-06-04 10:32:04+0700, Bagas Sanjaya <bagasdotme@gmail.com> wrote:
-> Hi Đoàn,
+On 2021-06-03 22:45:22-0500, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> Đoàn Trần Công Danh wrote:
+>> On 2021-06-03 21:07:24-0500, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>> > Đoàn Trần Công Danh wrote:
+>> > > On 2021-06-03 20:11:45-0500, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>> > > > All you need to enable 2fa is demonstrate that you can *use* 2fa... So
+>> > > > you need an OTP client.
+>> > > 
+>> > > In the past, when I tried to enable 2FA, Google always asks for my
+>> > > Phone Number because of *security* and *safety* reason.
+>> > > 
+>> > > I tried to create a new Google account to double check my memory,
+>> > > Google now requires a phone number in order to *create* new Google
+>> > > accounts.
+>> > 
+>> > Presumably if you don't have a Google account, then don't have a
+>> > gmail.com address, and you can't use Gmail.
+>> > 
+>> > So why would this thread interest you?
+>> 
+>> The first point ;)
 > 
-> On 02/06/21 18.46, Đoàn Trần Công Danh wrote:
-> > In some test-cases, utf-8 locale is required. To find such locale,
-> > we're using the first available UTF-8 locale that returned by
-> > "locale -a".
-> > 
-> 
-> On most systems, the first available such locale is C.UTF-8, so why don't we
-> just use it?
+> Which is?
 
-I don't know. I think in Linux with glibc, C.UTF-8 must be enable
-explicitly and run "localedef"?
-Worse, systems have a right to not have any UTF-8 locales.
-Someone may only enable C and en_US.ISO-8859-1
+Which is the point I specificly copy-pasted after that comment,
+and it's also the point you stripped out.
 
-> > Despite being required by POSIX, locale(1) is unavailable in some
-> > systems, e.g. Linux with musl libc.  Some of those systems support
-> > utf-8 locale out of the box.
-> > 
-> > However, without "locale -a", we can't guess provided UTF-8 locale.
-> > 
-> > Let's give users of those systems an option to have better test
-> > coverage.
-> > 
-> 
-> So can we assume to UTF-8 locale as default for testing on systems without
-> locale(1)?
+I guess it's my bad that I wasn't very clear in the original comment.
+So, here is the quote:
 
-I don't know, either. POSIX only requires 2 locales, C and POSIX,
-All other locales are optional:
-
-	Conforming implementations shall support one or more coded
-	character sets. 
-
-I don't know if such systems exist or not.
-
-C and POSIX treats any bytes higher than 0x80 as arbitrary characters [1].
-
-	The POSIX locale shall contain 256 single-byte characters
-	including the characters
-
-> > Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-> > ---
-> >   Makefile                                 |  6 ++++++
-> >   t/lib-git-svn.sh                         | 15 +++++++++------
-> >   t/t9100-git-svn-basic.sh                 | 14 +++-----------
-> >   t/t9115-git-svn-dcommit-funky-renames.sh |  6 +++---
-> >   t/t9129-git-svn-i18n-commitencoding.sh   |  4 ++--
-> >   5 files changed, 23 insertions(+), 22 deletions(-)
-> > 
-> > diff --git a/Makefile b/Makefile
-> > index c3565fc0f8..4b2c24e5ea 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -398,6 +398,9 @@ all::
-> >   # with a different indexfile format version.  If it isn't set the index
-> >   # file format used is index-v[23].
-> >   #
-> > +# Define GIT_TEST_UTF8_LOCALE to prefered utf-8 locale for testing.
-> > +# If it isn't set, use the first utf-8 locale returned by "locale -a".
-> > +#
-> 
-> Better say "... to prefer utf-8 locale for testing".
-
-I intended to say:
-
-	... to *the* preferred ...
-
-We need utf-8 locale to test anyway ;) So, we don't prefer utf-8 locale,
-we pick a utf-8 locale from a handful of utf-8 locales.
-
-
-1: https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap06.html#tag_06_02
+>> > > In the past, when I tried to enable 2FA, Google always asks for my
+>> > > Phone Number because of *security* and *safety* reason.
 
 -- 
 Danh
