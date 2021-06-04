@@ -2,115 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B31C4708F
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 03:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32D4AC47083
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 03:55:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 269D1610CB
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 03:46:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08D05613F6
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 03:55:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbhFDDsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Jun 2021 23:48:23 -0400
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:42824 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbhFDDsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jun 2021 23:48:22 -0400
-Received: by mail-ot1-f44.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so3453877oth.9
-        for <git@vger.kernel.org>; Thu, 03 Jun 2021 20:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=INl5xUyZGNMWE3nyjWdP3iMMWSIskgLBroneYFWhhps=;
-        b=jUEgIGphWn4to1GcSQmyDnCgY5hQTn5O3gluiAOZDMwvtCAv7mnpC1gnNrV1YQJ0cM
-         oybtnhJ8tbqTybGtO0QVn0Pz9fmyGyiItfTwB97hZ3nLFBFW0kiAjbE5eMQFjK1q2z3Y
-         hVEn27F7tQa2BhPO6GN+QX7J6nzVWqw+b2Qu1huzZnBtgqdoMSreINxnZl+SS49TMNJ2
-         8+Hxx3F9tCMWKCa1B2ChIBbKF3p5EGcu3X3srsIleZYbOiY3Zz/CXV8/PjZxBBdED8B3
-         LNVEommMaRLnEEkhxip1ZgLXaZZ7urX5ggjbXpLyOZd6iY09zpHCH8YPt9KI3qCuGWUf
-         y3ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=INl5xUyZGNMWE3nyjWdP3iMMWSIskgLBroneYFWhhps=;
-        b=GOjLGk+8GLEKabvuw80vSyB5w0RY9O+e119m2imegXRmwOGevOykm3d1uLUOJ+iirI
-         +JbEVk+ONDQauyja7yCmXUH5XJQDzjHyQ3EyAvmUFEx2EOB/3zI/Z8G6o70Vt4i9BtaX
-         VNimO8WwHyhTC6CMeH2sSfgiEQsf62NkAhzeHjQLwU+OZb07Yy100GA8Fyn6D8NVQsCr
-         rAgZEF2lxHFr+3jMYlW8HKizGiaKrXHNmMtn3FqbH+xNkUZam8+PvJ+Wyfu+gIPwrlN7
-         CJJSUHGPH1erita3kOlDQAHLPPbyq7vBnD98HenJSt1OfDi9x/cMFjuMvm/P/uE2sqKm
-         4XxQ==
-X-Gm-Message-State: AOAM531coFcDDdyRDUrqntQ+TEcJXzY4L8Jdu47vUEHaCmjSJbCBE+uQ
-        l4ct2HPI5+ZnQvMSRkIdTFo=
-X-Google-Smtp-Source: ABdhPJy3XeRd0RMT5chQuTf3XHxGCz82Oz95DhJdxJ8iyUH7JtEs8wfal1SjM4YIu/p2H3NPLXdm4g==
-X-Received: by 2002:a9d:1b24:: with SMTP id l33mr2109001otl.309.1622778323678;
-        Thu, 03 Jun 2021 20:45:23 -0700 (PDT)
-Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
-        by smtp.gmail.com with ESMTPSA id b3sm220618otk.54.2021.06.03.20.45.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jun 2021 20:45:23 -0700 (PDT)
-Date:   Thu, 03 Jun 2021 22:45:22 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Message-ID: <60b9a1d25b63f_3a3b7e208fd@natae.notmuch>
-In-Reply-To: <YLmLyT0XmQ/lOBKg@danh.dev>
-References: <d93a3024-ba8d-3469-2dba-2e0032334232@gmail.com>
- <20210603180851.5tbnuvfb6auxrhvm@nitro.local>
- <CAPig+cT2fJqsptU0YpNQ=nhvU2Tu19zdHXxCin8fUkSkd97m4A@mail.gmail.com>
- <60b928374d90e_39cbe920835@natae.notmuch>
- <CAPig+cS74Ah3OyJPNQhvkdV6f7mkFgFQjHgfrrAE1gZsvN38RA@mail.gmail.com>
- <60b97dd1acd9d_3a18272087b@natae.notmuch>
- <YLmGxcQ3s2gBbfe0@danh.dev>
- <60b98adc7f8cb_3a25c2208c9@natae.notmuch>
- <YLmLyT0XmQ/lOBKg@danh.dev>
-Subject: Re: Gmail OAuth2 in git send-email
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S229844AbhFDD5C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Jun 2021 23:57:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45836 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229704AbhFDD5C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jun 2021 23:57:02 -0400
+Received: (qmail 8420 invoked by uid 109); 4 Jun 2021 03:55:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Jun 2021 03:55:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32161 invoked by uid 111); 4 Jun 2021 03:55:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Jun 2021 23:55:17 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 3 Jun 2021 23:55:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.32.0-rc3 - t5300 Still Broken on NonStop
+ ia64/x86
+Message-ID: <YLmkI4a4J60KFY2W@coredump.intra.peff.net>
+References: <002701d757d8$1a8d9dc0$4fa8d940$@nexbridge.com>
+ <YLfc2+Te7Y3UY+Sm@nand.local>
+ <YLfgy94sbmStC0mR@coredump.intra.peff.net>
+ <YLfl4jkuwSCiNrrS@nand.local>
+ <YLfm8cqY6EjQuhcO@coredump.intra.peff.net>
+ <xmqqk0na2yyc.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk0na2yyc.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-> On 2021-06-03 21:07:24-0500, Felipe Contreras <felipe.contreras@gmail.c=
-om> wrote:
-> > =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
-> > > On 2021-06-03 20:11:45-0500, Felipe Contreras <felipe.contreras@gma=
-il.com> wrote:
-> > > > All you need to enable 2fa is demonstrate that you can *use* 2fa.=
-.. So
-> > > > you need an OTP client.
-> > > =
+On Fri, Jun 04, 2021 at 10:36:11AM +0900, Junio C Hamano wrote:
 
-> > > In the past, when I tried to enable 2FA, Google always asks for my
-> > > Phone Number because of *security* and *safety* reason.
-> > > =
+> Thanks.  I was hoping somebody in the thread would tie the loose
+> ends, but upon inspection of the output from
+> 
+>     $ git grep -e fsync\( maint seen -- \*.[ch]
+> 
+> it turns out that fsync_or_die() is the only place that calls
+> fsync(), so perhaps doing it in a way that is quite different from
+> what has been discussed may be even a better alternative.
+> 
+> If any new callers care about the return value of fsync(), I'd
+> expect that they would be calling this wrapper, and the "best
+> effort" callers that do not check the returned value by definition
+> do not care if fsync() does not complete due to an interrupt, so I
+> am hoping that the current "we only call it from this wrapper" is
+> not just "the code currently happens to be this way", but it is
+> sensible that the code will stay that way in the future.
+> 
+> Obviously I appreciate reviews and possibly tests, but sanity
+> checking my observation that fsync() is called only from here is a
+> good thing to have.
 
-> > > I tried to create a new Google account to double check my memory,
-> > > Google now requires a phone number in order to *create* new Google
-> > > accounts.
-> > =
+Thanks for digging further. I didn't even think to look at how many
+calls there were, but I agree there is only the one. And moreover, I
+agree that it is unlikely we'd ever have more than one, for the reasons
+you listed. So I think your patch is a nice and simple solution, and we
+don't need worry about magic macro wrappers at all.
 
-> > Presumably if you don't have a Google account, then don't have a
-> > gmail.com address, and you can't use Gmail.
-> > =
+One brief aside: I'm still not entirely convinced that NonStop isn't
+violating POSIX. Yes, as Eric noted, fsync() is allowed to return EINTR.
+But should it do so when the signal it got was set up with SA_RESTART?
 
-> > So why would this thread interest you?
-> =
+The sigaction(3posix) page says:
 
-> The first point ;)
+     SA_RESTART   This flag affects the behavior of interruptible functions;
+		  that is, those specified to fail with errno set to
+		  [EINTR]. If set, and a function specified as
+		  interruptible is interrupted by this signal, the
+		  function shall restart and shall not fail with [EINTR]
+		  unless otherwise specified. [...]
 
-Which is?
+and I could not find anywhere that it is "otherwise specified" for
+fsync(). Of course, whatever POSIX says, if NonStop needs this
+workaround, we should provide it. But this may explain why we never saw
+it on other systems.
 
--- =
+It also means it's less important for this workaround to kick in
+everywhere. But given how low-cost it is, I'm just as happy to avoid
+having a separate knob to enable it.
 
-Felipe Contreras=
+> -- >8 --
+> Subject: fsync(): be prepared to see EINTR
+
+The patch itself looks good to me.
+
+-Peff
