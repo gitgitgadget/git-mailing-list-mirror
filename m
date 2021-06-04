@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 287F9C4708F
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25072C4708F
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:12:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 082936140C
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:07:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 005C46140C
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 05:12:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbhFDFIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 01:08:48 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58025 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbhFDFIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 01:08:48 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6B4912DDDE;
-        Fri,  4 Jun 2021 01:07:02 -0400 (EDT)
+        id S229849AbhFDFN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 01:13:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55277 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229812AbhFDFN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 01:13:57 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8718BD018F;
+        Fri,  4 Jun 2021 01:12:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JsMlFU7tuSxGgx4IaISRmX1bVSoZOY3TTjec8n
-        A+z3c=; b=NRiemRlNLIDnKUeuxBLkevi0bzRafOExo/Pz9XVkC2vcymvvhwRCXl
-        6KUYtdGtACGdJmmLvoOL2GmHG0XBtYnCINicUpyrIq8zEhK/xBfKViu39Ov1odS3
-        neQhnpKHg1yvocloETxtlGzrSQJaSfjh1m2Il/nn2wOTRJ+Fo7TPM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BF6AA12DDDC;
-        Fri,  4 Jun 2021 01:07:02 -0400 (EDT)
+        :content-type; s=sasl; bh=RE3bjx1wdDwptL670vGy1S3KGxZQirW6inXf/j
+        WyzJ4=; b=WC+OrvhDeI4mgWCY4SDD7Qsd/1b20K0Se6X67PdZofQktOst2QN7EC
+        cW85b/x6s4BxVl1x6efRY4786/w3UZdrctWCwxdvQ7h2lj8pFzV+Deibe5OeWCfw
+        om2aWJPIXhD/T1EE9FJYcUS7Vb5ALkJ5EWlS5rce72GVzEk+vWsfw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6EE1ED018D;
+        Fri,  4 Jun 2021 01:12:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0EA3712DDD8;
-        Fri,  4 Jun 2021 01:06:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD17AD018B;
+        Fri,  4 Jun 2021 01:12:10 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>,
-        Ilias Apostolou <ilias.apostolou.zero@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Request feature: =?utf-8?Q?=E2=80=93no-submodule?=
-References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
-        <YLfqiLbpPXWXHlBi@nand.local> <xmqq8s3r7oma.fsf@gitster.g>
-        <YLg/dLqYFEqHZJUn@nand.local> <xmqq7dja6e46.fsf@gitster.g>
-        <YLkr+kLdjmHyPjgl@coredump.intra.peff.net>
-        <xmqqo8cm4nst.fsf@gitster.g>
-        <YLmmIXy/SITKh/Yw@coredump.intra.peff.net>
-Date:   Fri, 04 Jun 2021 14:06:58 +0900
-In-Reply-To: <YLmmIXy/SITKh/Yw@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 4 Jun 2021 00:03:45 -0400")
-Message-ID: <xmqqbl8m2p71.fsf@gitster.g>
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.32.0-rc3 - t5300 Still Broken on NonStop
+ ia64/x86
+References: <002701d757d8$1a8d9dc0$4fa8d940$@nexbridge.com>
+        <YLfc2+Te7Y3UY+Sm@nand.local>
+        <YLfgy94sbmStC0mR@coredump.intra.peff.net>
+        <YLfl4jkuwSCiNrrS@nand.local>
+        <YLfm8cqY6EjQuhcO@coredump.intra.peff.net>
+        <xmqqk0na2yyc.fsf@gitster.g>
+        <YLmkI4a4J60KFY2W@coredump.intra.peff.net>
+Date:   Fri, 04 Jun 2021 14:12:10 +0900
+In-Reply-To: <YLmkI4a4J60KFY2W@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 3 Jun 2021 23:55:15 -0400")
+Message-ID: <xmqq7dja2oyd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B14EBBFE-C4F2-11EB-A69C-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 6A952544-C4F3-11EB-99AB-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> The original request, as I understand the clarification posted
->> ...
->> (cf. <9cc98ca3-bdc5-61bf-450a-99bb47673d6c@gmail.com>)
->> 
->> and with such an auto-pseudo-attribute, presumably something along
->> this line would work, removing the need for the intermediate filter:
->> 
->>     git ls-files \
->> 	':(attr:mode=100755)' ':(attr:mode=100644)' \
->> 	':(exclude)*.png' ':(exclude)*.ico' |
->>     xargs dos2unix
->> 
+Jeff King <peff@peff.net> writes:
+
+> One brief aside: I'm still not entirely convinced that NonStop isn't
+> violating POSIX. Yes, as Eric noted, fsync() is allowed to return EINTR.
+> But should it do so when the signal it got was set up with SA_RESTART?
 >
-> Yeah, that makes sense.
+> The sigaction(3posix) page says:
 >
-> By the way, another reason (beyond a simpler pipeline) that the "magic
-> pathspec that understands modes" is nicer is that it can be applied to a
-> more dynamic set of paths.
+>      SA_RESTART   This flag affects the behavior of interruptible functions;
+> 		  that is, those specified to fail with errno set to
+> 		  [EINTR]. If set, and a function specified as
+> 		  interruptible is interrupted by this signal, the
+> 		  function shall restart and shall not fail with [EINTR]
+> 		  unless otherwise specified. [...]
+>
+> and I could not find anywhere that it is "otherwise specified" for
+> fsync(). Of course, whatever POSIX says, if NonStop needs this
+> workaround, we should provide it. But this may explain why we never saw
+> it on other systems.
 
-In the longer term, the project the original request wanted to
-invent the "--no-submodule" option for may want to lose the specific
-"we know that the only paths we do not want to run dos2unix happen
-to be png and ico files in the current codebase" from the above
-sample command line, and replace it with something like ':(attr:text)'
+Yeah, I think all of the above makes sense.
 
-Alas, the "text" attribute does *not* work that way, though ;-)
-Just like any other attributes, what you assigned yourself counts,
-and our "is this file a text?" auto-detection logic only kicks in
-when there is no attribute that tells if a path is text or not.
+> It also means it's less important for this workaround to kick in
+> everywhere. But given how low-cost it is, I'm just as happy to avoid
+> having a separate knob to enable it.
 
-It would be expensive at runtime; even if we were to introduce a
-"dynamic" pseudo attribute to tell text files and others apart, we
-probably shouldn't use the same "attr:*" magic but use something
-distinct (e.g. "dynamic-attr:*") in order to make sure that the
-users understand the performance implications.  I think the above
-"mode=100755" matic (or anything that requires more than the basic
-"which entries in the .gitattributes files does this pathname
-match?") would fall into the same category.
-
+Yes, any caller who cares about the result of fsync() is willing to
+wait, and on a well benaved system, we would never see EINTR so the
+loop won't iterate.  Having to carry just a handful of extra bytes
+in ICache in a codepath that is not performance critical is probably
+an acceptable cost for simpler code.
