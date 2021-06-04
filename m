@@ -2,183 +2,369 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B58AC4743C
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 21:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA78C4743C
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 21:21:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05748613EA
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 21:12:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2953861106
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 21:21:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbhFDVOG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 17:14:06 -0400
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:40838 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbhFDVOF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 17:14:05 -0400
-Received: by mail-ed1-f48.google.com with SMTP id t3so12645151edc.7
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 14:12:18 -0700 (PDT)
+        id S230396AbhFDVX1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 17:23:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53856 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229916AbhFDVXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 17:23:25 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BEF3C061766
+        for <git@vger.kernel.org>; Fri,  4 Jun 2021 14:21:24 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so10451091otg.2
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 14:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Lsk3hVLBKpK2IAl970lSEXKpOQJp24OjH+LNaXiRquc=;
-        b=jl9wIaYnhiIicxE7JleX5B+VlWUpWRsrmZGF1Dz8IyzHVvEsJDKgkV+Vo6XIHDm2Xi
-         /F9Eqi2JI2mhOv9o1S6UYRkRrNXoAN/KMFFO8WAn5wkpeBOKK8bv4hw/BRLd/SrGGVGc
-         sDgdp6uKLMOOCeZqYX4Odb457JCFWEd029rHOkFNtI46/N6urEvCfWVr5LZd34kYaiWJ
-         j/yytQI6xQJcOnPdN7emdLIr5Ax/c8cSSo4KG2T0+zGGBX7wWL2+cuj1dkHcpK5fNCTn
-         kcFTuWDi28VQvc5qveueyS81uLctWbBkuJq3DzGo9puxzmaSweXCsZ8xqO65xKSG6pJc
-         ksCQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m1gdNHHLYrQUxrhdbS5/eoZ5qGATY5v6vgQHHdi01xM=;
+        b=a9AJCvQ65SZBQg154PKqj4e3Ex7FZPXw+LpbGb7oRqbF2BescSl4Juomk6JkmESDm8
+         4/gr0DS33NQcMLnaDGfZMVmgr5cvL9f94o9c26dQ33rIKcoM9zA5pACpOdrAdGAOmLBc
+         Kyu0ggKrOapld+CkDWKYMcl8D8xCTkeLeuDOUIlrIJGhJOTpsklxXT1L3CeIu009pftk
+         ZNFogpEfVVzSkSvxzXog8hbfO8Yn3uxFwwAuV+dZx30k/2MJiXkSrfmqjFaWNvYg7mOy
+         W/EpVnrbW3329xTRL8hKZU7AeHSp4iqxAIZ+nGsI5Z8EB4ZJ350EIYk4mhHGKVaiMEJU
+         lVig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Lsk3hVLBKpK2IAl970lSEXKpOQJp24OjH+LNaXiRquc=;
-        b=WkFpjuutqx6UE3hManea9eRUPdSHN6ucssUm5YBpgwfyOTBjk8sDGpNkmokCEys2Zb
-         P/09BVOaquGVF/J8OxA3Qr37/fRInAk/Df6t9bWYlILxhrIWzyPE/naxLWzhmEl0373Y
-         vZPBl6L7p1rPv7dU/vr35hV5RGRgCz1o3X2PPAs0uPex5nU/4U0+l+0ielhZnpugmDO3
-         owjdPOtmJrVqTCQhKRGLA5bXB/xEdrwTctHyVqPatvqkPUpjez/a5GjNRaxw1cQNNTNU
-         ZOFY3Vz8/jfzoHnhhvNIes6uMK6UrDB8FDBIXtv3fT4M/2MaVl61vu8YAL/UxbeWHyFt
-         57NA==
-X-Gm-Message-State: AOAM532UjjVF3bNDYFPq18reU1oCbiYZWGzD1G0EHBi/itz+L44ipYlP
-        ZB0qYsI+UfjXclKCEy/0pqI=
-X-Google-Smtp-Source: ABdhPJzYwRV0yw229EnKDz7BQVxvmS9z2URSa2atjbIXRSzBd0EDMwzNOz4sHGP6od7Q30CfuWhrNQ==
-X-Received: by 2002:a50:8dc6:: with SMTP id s6mr6909664edh.50.1622841077829;
-        Fri, 04 Jun 2021 14:11:17 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id n18sm3258578ejx.41.2021.06.04.14.11.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Jun 2021 14:11:17 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t: use portable wrapper for readlink(1)
-Date:   Fri, 04 Jun 2021 23:09:28 +0200
-References: <20170720232040.GA159617@aiede.mtv.corp.google.com>
- <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
- <87y2bv0yvl.fsf@evledraar.gmail.com>
- <YLkwCTcRT/9s8+5R@coredump.intra.peff.net>
- <YLk0Zm2J6VOA/lks@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YLk0Zm2J6VOA/lks@coredump.intra.peff.net>
-Message-ID: <87r1hh5o97.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m1gdNHHLYrQUxrhdbS5/eoZ5qGATY5v6vgQHHdi01xM=;
+        b=AVi1tlnfTLegtCw9xYO8LPD05Za/9lAfS7ErDXlAmQ4gmIXpqWc5h0wPBT+eNL26M0
+         iuABfHp0ooQQzXFL9znbXBgjvlqpdvHpsiOPRHcmz/f34g1mtmO9pV1FB/kIw3HHdmum
+         NeJPPOC2R76uV1fRLB930WCEaE1laLO71oCRrpe8m1C3uYGDxUnfiGlgOF5SRkpgSdO1
+         9tA4FOIqHof6E0JjhvNC1xerDd+IaAn+/39rZi2+qGLMSVhhcoTHBJ2nzKlb485fgNth
+         BrirZVpPK5mahBG8dStbzXFN1cDeYKJDp3/TtqwLVatg/tsxb+MFMZ7Io6wAdFkibenR
+         nbuQ==
+X-Gm-Message-State: AOAM530HNnUNx5TOFfctBFtZIA93OhuzGDX4M5EMPMbhHzdMvw5xx4/T
+        CdKS6PXowGd1GU2twi9BNcKThiWew9jzqmEg1M8=
+X-Google-Smtp-Source: ABdhPJwFEggDebEHaPmeoCwQjeRTEJX1DuObUAnRLM8Bq0yW19UvfP+tzrb1TIeHAbqCIqnrEVAo3uSgCMCK9Y7PIb8=
+X-Received: by 2002:a9d:67c5:: with SMTP id c5mr5243131otn.162.1622841683935;
+ Fri, 04 Jun 2021 14:21:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <cover.1622580781.git.jonathantanmy@google.com> <d8f5fa9b9fab73c2e0923ccf38d5bdb15f7b7a70.1622580781.git.jonathantanmy@google.com>
+In-Reply-To: <d8f5fa9b9fab73c2e0923ccf38d5bdb15f7b7a70.1622580781.git.jonathantanmy@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 Jun 2021 14:21:12 -0700
+Message-ID: <CABPp-BHZ0OrADfP3V-hZ1YYf3fQYW3fU-tCJWgs976amG-T1Dg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] promisor-remote: support per-repository config
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Jun 03 2021, Jeff King wrote:
-
-> On Thu, Jun 03, 2021 at 03:39:53PM -0400, Jeff King wrote:
+On Tue, Jun 1, 2021 at 2:38 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
->> > FWIW this broke tests on AIX because we can't assume readlink(1) exists
->> > at all. See d2addc3b96 (t7800: readlink may not be available,
->> > 2016-05-31) for a workaround.
->>=20
->> Hmm. So obviously we can use a fix similar to the one in t7800 (though
->> it's sufficiently complicated that I'd be tempted to wrap it in a helper
->> function). There are a few other calls that could be changed, too.
+> Instead of using global variables to store promisor remote information,
+> store this config in struct repository instead, and add
+> repository-agnostic non-static functions corresponding to the existing
+> non-static functions that only work on the_repository.
 >
-> Here's a patch to do that. Can you confirm that it fixes your test
-> failure?
-
-It does, thanks, t3210*.sh is broken on current master on AIX, fixed
-with this patch. I don't have p4 on that machine (or any box I hack on),
-so I can't test t9802*.sh.
-
-> -- >8 --
-> Subject: [PATCH] t: use portable wrapper for readlink(1)
+> The actual lazy-fetching of missing objects currently does not work on
+> repositories other than the_repository, and will still not work after
+> this commit, so add a BUG message explaining this. A subsequent commit
+> will remove this limitation.
 >
-> Not all systems have a readlink program available for use by the shell.
-> This causes t3210 to fail on at least AIX. Let's provide a perl
-> one-liner to do the same thing, and use it there.
->
-> I also updated calls in t9802. Nobody reported failure there, but it's
-> the same issue. Presumably nobody actually tests with p4 on AIX in the
-> first place (if it is even available there).
->
-> I left the use of readlink in the "--valgrind" setup in test-lib.sh, as
-> valgrind isn't available on exotic platforms anyway (and I didn't want
-> to increase dependencies between test-lib.sh and test-lib-functions.sh).
->
-> There's one other curious case. Commit d2addc3b96 (t7800: readlink may
-> not be available, 2016-05-31) fixed a similar case. We can't use our
-> wrapper function there, though, as it's inside a sub-script triggered by
-> Git. It uses a slightly different technique ("ls" piped to "sed"). I
-> chose not to use that here as it gives confusing "ls -l" output if the
-> file is unexpectedly not a symlink (which is OK for its limited use, but
-> potentially confusing for general use within the test suite). The perl
-> version emits the empty string.
->
-> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
->  t/t3210-pack-refs.sh       | 2 +-
->  t/t9802-git-p4-filetype.sh | 4 ++--
->  t/test-lib-functions.sh    | 6 ++++++
->  3 files changed, 9 insertions(+), 3 deletions(-)
+>  promisor-remote.c | 101 +++++++++++++++++++++++++---------------------
+>  promisor-remote.h |  20 +++++++--
+>  repository.h      |   4 ++
+>  3 files changed, 77 insertions(+), 48 deletions(-)
 >
-> diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-> index 3b7cdc56ec..577f32dc71 100755
-> --- a/t/t3210-pack-refs.sh
-> +++ b/t/t3210-pack-refs.sh
-> @@ -253,7 +253,7 @@ test_expect_success SYMLINKS 'pack symlinked packed-r=
-efs' '
->  	git for-each-ref >all-refs-packed &&
->  	test_cmp all-refs-before all-refs-packed &&
->  	test -h .git/packed-refs &&
-> -	test "$(readlink .git/packed-refs)" =3D "my-deviant-packed-refs"
-> +	test "$(test_readlink .git/packed-refs)" =3D "my-deviant-packed-refs"
->  '
->=20=20
->  test_done
-> diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
-> index 94edebe272..19073c6e9f 100755
-> --- a/t/t9802-git-p4-filetype.sh
-> +++ b/t/t9802-git-p4-filetype.sh
-> @@ -263,7 +263,7 @@ test_expect_success SYMLINKS 'ensure p4 symlink parse=
-d correctly' '
->  	(
->  		cd "$git" &&
->  		test -L symlink &&
-> -		test $(readlink symlink) =3D symlink-target
-> +		test $(test_readlink symlink) =3D symlink-target
->  	)
->  '
->=20=20
-> @@ -329,7 +329,7 @@ test_expect_success SYMLINKS 'empty symlink target' '
->  	git p4 clone --dest=3D"$git" //depot@all &&
->  	(
->  		cd "$git" &&
-> -		test $(readlink empty-symlink) =3D target2
-> +		test $(test_readlink empty-symlink) =3D target2
->  	)
->  '
->=20=20
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index b823c14027..661f376077 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1692,3 +1692,9 @@ test_region () {
->=20=20
->  	return 0
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index bfe8eee5f2..5819d2cf28 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -5,7 +5,11 @@
+>  #include "transport.h"
+>  #include "strvec.h"
+>
+> -static char *repository_format_partial_clone;
+> +struct promisor_remote_config {
+> +       char *repository_format_partial_clone;
+> +       struct promisor_remote *promisors;
+> +       struct promisor_remote **promisors_tail;
+> +};
+>
+>  static int fetch_objects(const char *remote_name,
+>                          const struct object_id *oids,
+> @@ -37,10 +41,8 @@ static int fetch_objects(const char *remote_name,
+>         return finish_command(&child) ? -1 : 0;
 >  }
+>
+> -static struct promisor_remote *promisors;
+> -static struct promisor_remote **promisors_tail = &promisors;
+> -
+> -static struct promisor_remote *promisor_remote_new(const char *remote_name)
+> +static struct promisor_remote *promisor_remote_new(struct promisor_remote_config *config,
+> +                                                  const char *remote_name)
+>  {
+>         struct promisor_remote *r;
+>
+> @@ -52,18 +54,19 @@ static struct promisor_remote *promisor_remote_new(const char *remote_name)
+>
+>         FLEX_ALLOC_STR(r, name, remote_name);
+>
+> -       *promisors_tail = r;
+> -       promisors_tail = &r->next;
+> +       *config->promisors_tail = r;
+> +       config->promisors_tail = &r->next;
+>
+>         return r;
+>  }
+>
+> -static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
+> +static struct promisor_remote *promisor_remote_lookup(struct promisor_remote_config *config,
+> +                                                     const char *remote_name,
+>                                                       struct promisor_remote **previous)
+>  {
+>         struct promisor_remote *r, *p;
+>
+> -       for (p = NULL, r = promisors; r; p = r, r = r->next)
+> +       for (p = NULL, r = config->promisors; r; p = r, r = r->next)
+>                 if (!strcmp(r->name, remote_name)) {
+>                         if (previous)
+>                                 *previous = p;
+> @@ -73,7 +76,8 @@ static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
+>         return NULL;
+>  }
+>
+> -static void promisor_remote_move_to_tail(struct promisor_remote *r,
+> +static void promisor_remote_move_to_tail(struct promisor_remote_config *config,
+> +                                        struct promisor_remote *r,
+>                                          struct promisor_remote *previous)
+>  {
+>         if (r->next == NULL)
+> @@ -82,20 +86,21 @@ static void promisor_remote_move_to_tail(struct promisor_remote *r,
+>         if (previous)
+>                 previous->next = r->next;
+>         else
+> -               promisors = r->next ? r->next : r;
+> +               config->promisors = r->next ? r->next : r;
+>         r->next = NULL;
+> -       *promisors_tail = r;
+> -       promisors_tail = &r->next;
+> +       *config->promisors_tail = r;
+> +       config->promisors_tail = &r->next;
+>  }
+>
+>  static int promisor_remote_config(const char *var, const char *value, void *data)
+>  {
+> +       struct promisor_remote_config *config = data;
+>         const char *name;
+>         size_t namelen;
+>         const char *subkey;
+>
+>         if (!strcmp(var, "extensions.partialclone")) {
+> -               repository_format_partial_clone = xstrdup(value);
+> +               config->repository_format_partial_clone = xstrdup(value);
+>                 return 0;
+>         }
+>
+> @@ -110,8 +115,8 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+>
+>                 remote_name = xmemdupz(name, namelen);
+>
+> -               if (!promisor_remote_lookup(remote_name, NULL))
+> -                       promisor_remote_new(remote_name);
+> +               if (!promisor_remote_lookup(config, remote_name, NULL))
+> +                       promisor_remote_new(config, remote_name);
+>
+>                 free(remote_name);
+>                 return 0;
+> @@ -120,9 +125,9 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+>                 struct promisor_remote *r;
+>                 char *remote_name = xmemdupz(name, namelen);
+>
+> -               r = promisor_remote_lookup(remote_name, NULL);
+> +               r = promisor_remote_lookup(config, remote_name, NULL);
+>                 if (!r)
+> -                       r = promisor_remote_new(remote_name);
+> +                       r = promisor_remote_new(config, remote_name);
+>
+>                 free(remote_name);
+>
+> @@ -135,59 +140,63 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+>         return 0;
+>  }
+>
+> -static int initialized;
+> -
+> -static void promisor_remote_init(void)
+> +static void promisor_remote_init(struct repository *r)
+>  {
+> -       if (initialized)
+> +       struct promisor_remote_config *config;
 > +
-> +# Print the destination of symlink(s) provided as arguments. Basically
-> +# the same as the readlink command, but it's not available everywhere.
-> +test_readlink () {
-> +	perl -le 'print readlink($_) for @ARGV' "$@"
+> +       if (r->promisor_remote_config)
+>                 return;
+> -       initialized = 1;
+> +       config = r->promisor_remote_config =
+> +               xcalloc(sizeof(*r->promisor_remote_config), 1);
+> +       config->promisors_tail = &config->promisors;
+>
+> -       git_config(promisor_remote_config, NULL);
+> +       git_config(promisor_remote_config, config);
+>
+> -       if (repository_format_partial_clone) {
+> +       if (config->repository_format_partial_clone) {
+>                 struct promisor_remote *o, *previous;
+>
+> -               o = promisor_remote_lookup(repository_format_partial_clone,
+> +               o = promisor_remote_lookup(config,
+> +                                          config->repository_format_partial_clone,
+>                                            &previous);
+>                 if (o)
+> -                       promisor_remote_move_to_tail(o, previous);
+> +                       promisor_remote_move_to_tail(config, o, previous);
+>                 else
+> -                       promisor_remote_new(repository_format_partial_clone);
+> +                       promisor_remote_new(config, config->repository_format_partial_clone);
+>         }
+>  }
+>
+> -static void promisor_remote_clear(void)
+> +static void promisor_remote_clear(struct promisor_remote_config *config)
+>  {
+> -       while (promisors) {
+> -               struct promisor_remote *r = promisors;
+> -               promisors = promisors->next;
+> +       while (config->promisors) {
+> +               struct promisor_remote *r = config->promisors;
+> +               config->promisors = config->promisors->next;
+>                 free(r);
+>         }
+>
+> -       promisors_tail = &promisors;
+> +       config->promisors_tail = &config->promisors;
+>  }
+>
+> -void promisor_remote_reinit(void)
+> +void repo_promisor_remote_reinit(struct repository *r)
+>  {
+> -       initialized = 0;
+> -       promisor_remote_clear();
+> -       promisor_remote_init();
+> +       promisor_remote_clear(r->promisor_remote_config);
+> +       FREE_AND_NULL(r->promisor_remote_config);
+> +       promisor_remote_init(r);
+>  }
+>
+> -struct promisor_remote *promisor_remote_find(const char *remote_name)
+> +struct promisor_remote *repo_promisor_remote_find(struct repository *r,
+> +                                                 const char *remote_name)
+>  {
+> -       promisor_remote_init();
+> +       promisor_remote_init(r);
+>
+>         if (!remote_name)
+> -               return promisors;
+> +               return r->promisor_remote_config->promisors;
+>
+> -       return promisor_remote_lookup(remote_name, NULL);
+> +       return promisor_remote_lookup(r->promisor_remote_config, remote_name, NULL);
+>  }
+>
+> -int has_promisor_remote(void)
+> +int repo_has_promisor_remote(struct repository *r)
+>  {
+> -       return !!promisor_remote_find(NULL);
+> +       return !!repo_promisor_remote_find(r, NULL);
+>  }
+>
+>  static int remove_fetched_oids(struct repository *repo,
+> @@ -235,9 +244,11 @@ int promisor_remote_get_direct(struct repository *repo,
+>         if (oid_nr == 0)
+>                 return 0;
+>
+> -       promisor_remote_init();
+> +       promisor_remote_init(repo);
+>
+> -       for (r = promisors; r; r = r->next) {
+> +       if (repo != the_repository)
+> +               BUG("only the_repository is supported for now");
+> +       for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
+>                 if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
+>                         if (remaining_nr == 1)
+>                                 continue;
+> diff --git a/promisor-remote.h b/promisor-remote.h
+> index 687210ab87..5390d3e7bf 100644
+> --- a/promisor-remote.h
+> +++ b/promisor-remote.h
+> @@ -17,9 +17,23 @@ struct promisor_remote {
+>         const char name[FLEX_ARRAY];
+>  };
+>
+> -void promisor_remote_reinit(void);
+> -struct promisor_remote *promisor_remote_find(const char *remote_name);
+> -int has_promisor_remote(void);
+> +void repo_promisor_remote_reinit(struct repository *r);
+> +static inline void promisor_remote_reinit(void)
+> +{
+> +       repo_promisor_remote_reinit(the_repository);
+> +}
+> +
+> +struct promisor_remote *repo_promisor_remote_find(struct repository *r, const char *remote_name);
+> +static inline struct promisor_remote *promisor_remote_find(const char *remote_name)
+> +{
+> +       return repo_promisor_remote_find(the_repository, remote_name);
+> +}
+> +
+> +int repo_has_promisor_remote(struct repository *r);
+> +static inline int has_promisor_remote(void)
+> +{
+> +       return repo_has_promisor_remote(the_repository);
 > +}
 
+Is part of the plan for supporting partial clones within submodules to
+audit the code for use of these inline wrappers and convert them over
+to the repo_* variants?  I'm particularly interested in the
+has_promisor_remote() function, since there are calls in
+diffcore-rename at least that protect that call with a check against r
+== the_repository.
+
+>
+>  /*
+>   * Fetches all requested objects from all promisor remotes, trying them one at
+> diff --git a/repository.h b/repository.h
+> index a45f7520fd..fc06c154e2 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -10,6 +10,7 @@ struct lock_file;
+>  struct pathspec;
+>  struct raw_object_store;
+>  struct submodule_cache;
+> +struct promisor_remote_config;
+>
+>  enum untracked_cache_setting {
+>         UNTRACKED_CACHE_UNSET = -1,
+> @@ -139,6 +140,9 @@ struct repository {
+>         /* True if commit-graph has been disabled within this process. */
+>         int commit_graph_disabled;
+>
+> +       /* Configurations related to promisor remotes. */
+> +       struct promisor_remote_config *promisor_remote_config;
+> +
+>         /* Configurations */
+>
+>         /* Indicate if a repository has a different 'commondir' from 'gitdir' */
+> --
+> 2.32.0.rc0.204.g9fa02ecfa5-goog
+
+Looks like a reasonable step in moving away from globals and have
+repository-specific variants of these functions; I didn't spot any
+problems, just one question about additional plans.
