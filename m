@@ -2,107 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEC9CC4743C
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 19:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5600FC4743D
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 19:53:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9EB4461028
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 19:51:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BCF5613AD
+	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 19:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbhFDTxY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 15:53:24 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60788 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbhFDTxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 15:53:23 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A3D77137873;
-        Fri,  4 Jun 2021 15:51:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=grW7mEmTYi/iEJb+z0/Bd+lh5nxJIRpkZ2rF1a
-        9zBZc=; b=EVtEjqI0y1jvdwvXjvzH5yHcA2w1P3DzTqAbPR+uHu9GXPt+VBnLDe
-        EP5VAoll7x0UUl4wfzJaEnq3IreAmSxcdsr5b3EQsDDc5GT4iUdE29n/mrFbCQiO
-        eG6EqTwnCLy+9zpa+nqUlxiuA15xjvRzndQy2214EoetQiCjdlE1Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B404137872;
-        Fri,  4 Jun 2021 15:51:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D94AE13786E;
-        Fri,  4 Jun 2021 15:51:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     "'Git Mailing List'" <git@vger.kernel.org>
-Subject: Re: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant
- set.
-References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com>
-        <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com>
-        <012601d73ddf$3d0cf660$b726e320$@nexbridge.com>
-        <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com>
-        <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com>
-        <01dd01d745b0$875c6920$96153b60$@nexbridge.com>
-        <00f101d75978$0074c840$015e58c0$@nexbridge.com>
-Date:   Sat, 05 Jun 2021 04:51:31 +0900
-In-Reply-To: <00f101d75978$0074c840$015e58c0$@nexbridge.com> (Randall
-        S. Becker's message of "Fri, 4 Jun 2021 15:29:51 -0400")
-Message-ID: <xmqqo8cl1k8s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231180AbhFDTyu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 15:54:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46476 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229880AbhFDTys (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 15:54:48 -0400
+Received: (qmail 11266 invoked by uid 109); 4 Jun 2021 19:53:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Jun 2021 19:53:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5621 invoked by uid 111); 4 Jun 2021 19:53:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Jun 2021 15:53:02 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 4 Jun 2021 15:53:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v3 0/4] Optimization batch 12: miscellaneous unthemed
+ stuff
+Message-ID: <YLqEnEJgQANm1SCD@coredump.intra.peff.net>
+References: <pull.962.v2.git.1622559516.gitgitgadget@gmail.com>
+ <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
+ <a5755340-c0c8-8028-7c03-3c8e7f0268d1@gmail.com>
+ <CABPp-BEsiw-E9_TGUDaGEkhQHNqLH48=ZTu7yXX7XqRaM2JdOQ@mail.gmail.com>
+ <YLpWbLkaqVYqTrGL@coredump.intra.peff.net>
+ <c9d596f3-cfc9-4bb7-1008-4873dafd8270@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 43C5355A-C56E-11EB-9686-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c9d596f3-cfc9-4bb7-1008-4873dafd8270@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+On Fri, Jun 04, 2021 at 02:42:03PM -0400, Derrick Stolee wrote:
 
-> The primary
-> problem is supplying -S $ZSSH0 on the command line causes $ZSSH0
-> to be resolved as a shell variable. It is not.
+> > Whether "Acked-by" happens after the author signs off or not is
+> > debatable. Obviously it happens after the version of the patch that is
+> > sent out. But if you re-send with an Acked-by, is the signoff your one
+> > from before that happened first, or a new one that happened as you sent
+> > out the patch? Perhaps a question for the philosophers. ;)
+> 
+> I guess I was just interpreting that the "Acked-by" was part of
+> the content you created, and hence it should be covered by the
+> sign-off. I can imagine that if Junio added it, then it would be
+> after your sign-off but before his.
 
-I think we've heard that one before, and the whole thing sounds like
-you are saying that a command line
+FWIW, that's how I interpret it, too. I was curious how it looks for my
+own patches, which is easy-ish to dig up with:
 
-    $ cmd $ZSSH0
+  git log --author=peff --grep=Acked-by --format='%H%n%(trailers)'
 
-expects ZSSH0 to be a variable and tries to interpolate its value
-before passing it to "cmd" while you want "cmd" to see a literal
-string that begins with a dollar sign.
+They're mostly after my signoff there, but I think that's because I very
+rarely add in the Ack, and mostly Junio does it (likewise for
+Reviewed-by).
 
-And the standard solution to that problem obviously is to tell the
-shell that the dollar-sign is not a reference to a variable by
-quoting, by using any variant of e.g.
+My workflow is maybe a little different than others, too, in that I very
+rarely signoff patches in my repo, but add it via "format-patch -s" when
+sending them out (so naturally it would come after anything I had
+typed).
 
-    $ cmd \$ZSSH0
-    $ cmd '$ZSSH0'
-    $ cmd "\$ZSSH0"
+> > Anyway, I think it is perfectly fine either way (as your numbers
+> > indicate).
+> 
+> I agree. I didn't mean to make a big deal of it.
 
-As far as I can tell, the code in connect.c that spawns ssh via
-GIT_SSH_COMMAND uses the pretty vanilla run_command() interface,
-and that ought to be capable of producing such a command line, so I
-am lost as to where the need to have special case comes from.
+It was a little bit of an interesting diversion, though. :)
 
-"cmd" here may be "ssh" but run_command() should not care what exact
-command is being invoked.  I am puzzled why a simple quoting like
-the following cannot be adjusted for this particular case, for
-example:
-
-    $ cat >>.git/config <<\EOF
-    [alias]
-	cmdtest0 = "!echo ..\\$ZSSH0.."
-	cmdtest1 = "!echo ..$ZSSH0.."
-    EOF
-    $ ZSSH0=foo git cmdtest0
-    ..$ZSSH0..
-    $ ZSSH0=foo git cmdtest1
-    ..foo..
-
+-Peff
