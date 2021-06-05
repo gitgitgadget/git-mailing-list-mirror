@@ -2,203 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31BBBC4743D
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 23:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B29BFC4743D
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 00:23:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11EE961359
-	for <git@archiver.kernel.org>; Fri,  4 Jun 2021 23:14:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B7C2613C9
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 00:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbhFDXPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 19:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50346 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbhFDXPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 19:15:54 -0400
-X-Greylist: delayed 97 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 04 Jun 2021 16:14:07 PDT
-Received: from forward101o.mail.yandex.net (forward101o.mail.yandex.net [IPv6:2a02:6b8:0:1a2d::601])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7251EC061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 16:14:07 -0700 (PDT)
-Received: from myt6-640abdf8240b.qloud-c.yandex.net (myt6-640abdf8240b.qloud-c.yandex.net [IPv6:2a02:6b8:c12:238c:0:640:640a:bdf8])
-        by forward101o.mail.yandex.net (Yandex) with ESMTP id 3A7D43C00E99
-        for <git@vger.kernel.org>; Sat,  5 Jun 2021 02:12:27 +0300 (MSK)
-Received: from mail.yandex.ru (mail.yandex.ru [109.161.50.48])
-        by myt6-640abdf8240b.qloud-c.yandex.net (mxback/Yandex) with HTTP id 5CRi9v2LiiE1-CQLubWFT;
-        Sat, 05 Jun 2021 02:12:26 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1622848346;
-        bh=PKY+N/2TaRRZKbZxWlLTrUKj354qJ10fXRBlkNfNyVQ=;
-        h=Message-Id:Date:Subject:To:From;
-        b=JnOgSw21iOvtpVgiEG64AKeFE4n/2wIot9HTFBadmoxcUc94gFg5KZHv5Fy2IBhc0
-         ZRZ/7Kae8V8AFRDlz3B0d5OnTiiYdZUlbD5zj8J8Ka7VjKGxBHlyWrnvwq4IiytJUk
-         dLyn5aDPXXQWGuJNgY6NbCnhFqXSjXCkHftNUOwI=
-Authentication-Results: myt6-640abdf8240b.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by myt5-a5512e99e394.qloud-c.yandex.net with HTTP;
-        Sat, 05 Jun 2021 02:12:26 +0300
-From:   grizlyk <grizlyk1@yandex.ru>
-To:     git@vger.kernel.org
-Subject: Pro Git book: concerning data lost due to ".gitignore"
+        id S229886AbhFEAZL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 20:25:11 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:42615 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229847AbhFEAZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 20:25:11 -0400
+Received: by mail-ot1-f45.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so6360128oth.9
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 17:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KYKtC9VZMTK3LV+N1p0kbI4hSj/rqIyf1qzdDqom/24=;
+        b=rjlRjNUz4xTpljr3Z7S69Mi0RYAzxLVxeMXw3q+Uq9wU0dwHWyDZt7eRmaZiYQlYEn
+         xYrDizT02PCD4NT7InGy9IJutT+pjR0+JuGn8rt5YtGOTVc+bUWWbx2WBgHTf4Ylpr8i
+         GV5V0UXou8qT+EVuFll9bA8qtS5Oxce2NXCOiFaJgkpob9e/s5AWsLou02rLXheAy/UL
+         tTzxSD2cx06yyEI+R7tzfNlzQlWYafMjwTby1CiT6AHrRJ/Is4VVdTCjC1NeARbTL7DH
+         xrUEoLbU7Dfq8DisoKaf+6w2UEwpfB4Em/Pmu3O/A+T1BoCRCUoCl0yeiIe0GlEp8BMa
+         Z6kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KYKtC9VZMTK3LV+N1p0kbI4hSj/rqIyf1qzdDqom/24=;
+        b=frlKeNvnLxuL150TZTzVSE1tUz7yjlBd7OjuCbJTEEY8yUiI5CTTd0UoZyvYu9IA/a
+         oMRhi+ciPXqYhtyzcNNePaWTK7Tn0qgMk92xxZRcM98BQHodBPdaB2pJwS971hng7oHB
+         fNzwBcb6AjreWtYUriB9v9uTRAZmve2m+mSzuMwiupnmnmdxFkjzo+TvoNMIgZbnSjAp
+         q+lK0S1HpEZzMZz5mHxVW8bPQ3qSl86mM4x9TyEwDWP8oxZ8lTadWKVwLzm0eBdusvB4
+         TqK+mjdEU5ji6619CcGE3Q5CXGg607NkdK4zZ0c/0C0FChaxO0VMnZj7QY+CwOyP/l3y
+         9DPQ==
+X-Gm-Message-State: AOAM530ZC58QxlVPUWpuLefb9R+pxPXKdzbUHcau4NicwPH+LpqNzdUH
+        facYsTiHHX6ymwUhnMpmoQEEAsfam0G1Qfl/CKQ=
+X-Google-Smtp-Source: ABdhPJwSMTdBrcxdMMp9yhTorx5AjcH5EYELuIGiAX5ssL49BtVAHSzq/h+sI+c72tvxcRpIeYTJooE2qUNKcwG4F18=
+X-Received: by 2002:a9d:1a8:: with SMTP id e37mr5653629ote.316.1622852535545;
+ Fri, 04 Jun 2021 17:22:15 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Sat, 05 Jun 2021 02:12:26 +0300
-Message-Id: <3957861622848346@myt5-a5512e99e394.qloud-c.yandex.net>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+References: <cover.1622580781.git.jonathantanmy@google.com> <b70a00b9b06e5142bb95891cfc2faa87d708ef0d.1622580781.git.jonathantanmy@google.com>
+In-Reply-To: <b70a00b9b06e5142bb95891cfc2faa87d708ef0d.1622580781.git.jonathantanmy@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 Jun 2021 17:22:04 -0700
+Message-ID: <CABPp-BGqt2DsrtJZ3_C5AajVyPsN+6a6rhMscSKrgYiCPVDnfA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] promisor-remote: teach lazy-fetch in any repo
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good day.
+Hi,
 
-1. Summary. 
+On Tue, Jun 1, 2021 at 2:38 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> This is one step towards supporting partial clone submodules.
+>
+> Even after this patch, we will still lack partial clone submodules
+> support, primarily because a lot of Git code that accesses submodule
+> objects does so by adding their object stores as alternates, meaning
+> that any lazy fetches that would occur in the submodule would be done
+> based on the config of the superproject, not of the submodule. This also
+> prevents testing of the functionality in this patch by user-facing
+> commands. So for now, test this mechanism using a test helper.
+>
+...
+> diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
+> new file mode 100644
+> index 0000000000..e7bc7eb21f
+> --- /dev/null
+> +++ b/t/helper/test-partial-clone.c
+> @@ -0,0 +1,34 @@
+> +#include "cache.h"
+> +#include "test-tool.h"
+> +#include "repository.h"
+> +#include "object-store.h"
+> +
+> +static void object_info(const char *gitdir, const char *oid_hex)
+> +{
+> +       struct repository r;
+> +       struct object_id oid;
+> +       unsigned long size;
+> +       struct object_info oi = {.sizep = &size};
+> +       const char *p;
+> +
+> +       if (repo_init(&r, gitdir, NULL))
+> +               die("could not init repo");
+> +       if (parse_oid_hex(oid_hex, &oid, &p))
+> +               die("could not parse oid");
+> +       if (oid_object_info_extended(&r, &oid, &oi, 0))
+> +               die("could not obtain object info");
+> +       printf("%d\n", (int) size);
+> +}
+> +
+> +int cmd__partial_clone(int argc, const char **argv)
+> +{
+> +       if (argc < 4)
+> +               die("too few arguments");
+> +
+> +       if (!strcmp(argv[1], "object-info"))
+> +               object_info(argv[2], argv[3]);
+> +       else
+> +               die("invalid argument '%s'", argv[1]);
+> +
+> +       return 0;
+> +}
+> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+> index c5bd0c6d4c..b21e8f1519 100644
+> --- a/t/helper/test-tool.c
+> +++ b/t/helper/test-tool.c
+> @@ -46,6 +46,7 @@ static struct test_cmd cmds[] = {
+>         { "online-cpus", cmd__online_cpus },
+>         { "parse-options", cmd__parse_options },
+>         { "parse-pathspec-file", cmd__parse_pathspec_file },
+> +       { "partial-clone", cmd__partial_clone },
+>         { "path-utils", cmd__path_utils },
+>         { "pcre2-config", cmd__pcre2_config },
+>         { "pkt-line", cmd__pkt_line },
+> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+> index e8069a3b22..f845ced4b3 100644
+> --- a/t/helper/test-tool.h
+> +++ b/t/helper/test-tool.h
+> @@ -35,6 +35,7 @@ int cmd__oidmap(int argc, const char **argv);
+>  int cmd__online_cpus(int argc, const char **argv);
+>  int cmd__parse_options(int argc, const char **argv);
+>  int cmd__parse_pathspec_file(int argc, const char** argv);
+> +int cmd__partial_clone(int argc, const char **argv);
+>  int cmd__path_utils(int argc, const char **argv);
+>  int cmd__pcre2_config(int argc, const char **argv);
+>  int cmd__pkt_line(int argc, const char **argv);
+> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+> index 584a039b85..e804d267e6 100755
+> --- a/t/t0410-partial-clone.sh
+> +++ b/t/t0410-partial-clone.sh
+> @@ -604,6 +604,30 @@ test_expect_success 'do not fetch when checking existence of tree we construct o
+>         git -C repo cherry-pick side1
+>  '
+>
+> +test_expect_success 'lazy-fetch when accessing object not in the_repository' '
+> +       rm -rf full partial.git &&
+> +       test_create_repo full &&
+> +       printf 12345 >full/file.txt &&
+> +       git -C full add file.txt &&
+> +       git -C full commit -m "first commit" &&
+> +
+> +       test_config -C full uploadpack.allowfilter 1 &&
+> +       test_config -C full uploadpack.allowanysha1inwant 1 &&
+> +       git clone --filter=blob:none --bare "file://$(pwd)/full" partial.git &&
+> +       FILE_HASH=$(git hash-object --stdin <full/file.txt) &&
+> +
+> +       # Sanity check that the file is missing
+> +       git -C partial.git rev-list --objects --missing=print HEAD >out &&
+> +       grep "[?]$FILE_HASH" out &&
+> +
+> +       OUT=$(test-tool partial-clone object-info partial.git "$FILE_HASH") &&
+> +       test "$OUT" -eq 5 &&
+> +
+> +       # Sanity check that the file is now present
+> +       git -C partial.git rev-list --objects --missing=print HEAD >out &&
+> +       ! grep "[?]$FILE_HASH" out
+> +'
+> +
 
-It should be explicitly warned in the Pro Git book https://git-scm.com/book/en/v2 (and in git man also) that the ".gitignore" feature is very dangerous stuff and should be used with care. 
+Turns out that this test fails under GIT_TEST_DEFAULT_HASH=sha256; output:
 
-Due to ".gitignore" usage, some data files in directory placed under git version control, can be lost for indexing and can be not placed into repo _unexpectedly_ for user. 
-
-User will call "git add" and git will answer about "nothing to stage". 
-
-The problem grows up if the project was obtained from network with unknown ".gitignore" files or there are external tools (like Visual Studio IDE) that can in background setup and modify "./.gitignore" files by unknown for user way during project lifetime. 
-
-In follow text we list the problems, and git book editors will decide how to write about (esp. in english). 
-
-2.
-In ideal case ".gitignore" should be disabled at all, user should provide clean directory to be controlled by any VCS, any all dummy files must be moved out by generic OS tools. 
-
-But for some reasons ".gitignore" will exist. 
-
-There are some visible solutions to relax the data lost danger due to ".gitignore": 
-
-2.1
-place files that no need to be staged into separate from repo subdirectories. 
-
-In ideal case for directory tree like "a\b\c": 
-- all subdirectories placed under git control must be staged ("git add src"); 
-"\src\" + "a\b\c"
-
-- all generated files must be outside of src source directory (possibly with the same subdir tree); 
-"\var\" + "a\b\c"
-
-In the case you will treat ".gitignore" feature as workaround to projects that can not follow reliable repo rules (reliable here means files will not be omitted from stage by mistake). 
-
-2.2
-provide trivial ".gitignore" file.
-
-- rename all unknown to you foreign or autogenerated ".gitignore" into any kind of ".old-gitignore.old"; 
-- manually create ".gitignore" file and place into it only the names, that you exactly know; 
-- always call "git status --ignored". 
-
-2.3
-use "git status --ignored".
-
-always use "--ignored" option of "git status" at least to complete daily commit but better for every commit. 
-
-Check ignored files list by "git status --ignored". You will see all 4 parts of status list (instead of 3 parts of the list without "--ignored" option): 
-
-example: 
-$ git status --ignored
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-Ignored files:
-  (use "git add -f <file>..." to include in what will be committed)
-
-If you follow rule "to separate output files", the "Ignored files" list will be very short and you will see here only known to you names. 
-
-2.4
-visual tools to work with git should have separated tab to display "Ignored files" list. 
-
-not a user work
-
-2.5
-We realize that "Ignored files" was invented exactly in intention to be skipped from repo.
- 
-But in status list, if option "status --ignored" was not used, it could be useful to warn users by message like this: 
-"There are ignored files (%u<number of files>) not placed into repo.\n\t(use git status --ignored to view)"
-
-instead of full list, if option "status --ignored" was used
-Ignored files:
-  (use "git add -f <file>..." to include in what will be committed)
-
-not a user work
-
-3.
-More explanations. 
-
-In the book one can read: "2.2 Ignoring Files. Tips: The Linux kernel source repository has 206 .gitignore files". 
-
-But in real the kernel source is not comprehensive list of ".gitignore" usage. 
-
-Any tool does not exist by itself, it works "in terms of task the tool implements". That means there are "tasks" the tool does. 
-
-Like any VCS, git has a valuable "task" named "every commit backup all files in the dir placed under version control". The task means "it is beter to include extra files into repo than to lose required files". If even only one file will be lost from stage git will fail the task. 
-
-In the task git works in "cp" level and should be the same trivial and reliable as "cp", here we even should not try more tricks with git, just because "enumerate files in directory without errors" is very easy work that any software from CP/M times should implement. 
-
-4. Example. 
-
-There is practical example of the git usage with errors due to ".gitignore". 
-
-I have a source "." directory. 
-
-In the directory i have some files (in my case 297 files, i was forced by git to count files in the directory, i have never tried to count files before git usage) and some levels of sub directories (in my case 9 or more levels of sub directories, i am not sure). 
-
-I called "git add ." but i was not able to add all files in the directory in git repo without any error messages by answer about "nothing to stage". 
-
-VS shows me that only 80 sacred files of 297 total files was blessed into repo by git in conjunction with VS without any error messages. 
-
-Though first time (when repo was created) VS tried to stage more files (all 297 files) into git repo, but git did not accept the gift by answer about "nothing to stage". Later VS does not offer more than 80 files to add. 
-
-I spent several hours to read git large mans, tens of flat git options, but i was still not able to add the directory in git repo. 
-
-Because "gnu in windows" has well known troubles with console and charsets (names can look like "f??df???.???"), the system was also under suspition and was also checked (as the system that is unable to enumerate files in directory). 
-
-4.1
-looking into ".gitignore" file, created by several versions of VS, i found that some sub directories of the repo was marked to ignore. 
-
-I removed the names from ".gitignore" file and completed repo about 217 files.
-
-At last the git repo was in work. Creepy. 
-
-4.2
-After several days when the git repo was (as i believed) recovered i called "git status --ignored" by random event. 
-
-I got 
->git status --ignored
-
-Ignored files:
-  (use "git add -f <file>..." to include in what will be committed)
-        .vs/
-        10
-        7
-        .../state/#bak/v02/
-        .../state/...reg_i.h
-
-I found yet 2 extra names ignored by VS and by git due to ".gitignore" files. More creepy. 
-
-As you see by the real example: ".gitignore" feature has real ability to produce repo with lost files. 
-
-PS:
-In Visual Studio related part it should be warned to do manual check ".gitattributes" file often to adjust (for example to comment out) record "* text=auto". 
-
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
-#* text=auto
-
-PPS:
-I also just have played in dice (no luck) to report the issue, not sure it can help to stage files. 
-
-Best regards, 
-Maksim.
+error: wrong index v2 file size in /home/newren/floss/git/t/trash
+directory.t0410-partial-clone/partial.git/objects/pack/pack-66a15be115d740341216938fb7abb31902e960bd6d464829d85164d1a4a25bec.idx
+error: wrong index v2 file size in /home/newren/floss/git/t/trash
+directory.t0410-partial-clone/partial.git/objects/pack/pack-66a15be115d740341216938fb7abb31902e960bd6d464829d85164d1a4a25bec.idx
+fatal: couldn't find remote ref 74242c6e4a0d89f454d89d3496a1f7cb3f1f39f0
+error: wrong index v2 file size in /home/newren/floss/git/t/trash
+directory.t0410-partial-clone/partial.git/objects/pack/pack-66a15be115d740341216938fb7abb31902e960bd6d464829d85164d1a4a25bec.idx
+error: wrong index v2 file size in /home/newren/floss/git/t/trash
+directory.t0410-partial-clone/partial.git/objects/pack/pack-66a15be115d740341216938fb7abb31902e960bd6d464829d85164d1a4a25bec.idx
+fatal: could not obtain object info
