@@ -2,151 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98E00C47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 14:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C040C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 14:57:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72DEE611CA
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 14:32:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11231613AC
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 14:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229959AbhFEOeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 10:34:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51312 "EHLO
+        id S230048AbhFEO7a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 10:59:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229931AbhFEOd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 10:33:59 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0A2C061766
-        for <git@vger.kernel.org>; Sat,  5 Jun 2021 07:32:11 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id n24so1229548lji.2
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 07:32:11 -0700 (PDT)
+        with ESMTP id S230035AbhFEO73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 10:59:29 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF04C061766
+        for <git@vger.kernel.org>; Sat,  5 Jun 2021 07:57:24 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id u126so5630841pfu.13
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 07:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WoHNCSV3TFuGDrvJ4yUNQfWaTHZIVVAkVbwN5dcn4Ns=;
-        b=CsfXP8fHUzus0i39ibgKqCdm+p7fSxe46BQMeTTGCseHtQbaXQgqPZOWDf+4GnMDjC
-         IYkp11qPuQBlRnqtNQLhX7gDFwDmb7ScV1f72o6zwJ+I+P5+N79K5bwttNVaXKlGvbZv
-         3vJvET7ZLlqbBHdCs91X4iEE9w8RgRRN4OTyJ3sp1gb7F7o++Ch0FE8iNCfmoFKzaNjF
-         vop6OUt+Ede3VbnczTDNZUey62j2zIwMs2TUiJFMFz4Pm2izmTdZEbDql8WDw2anRHRG
-         bEj7XDWxP3HVOK1ZLj5dfCxPSqA4lCCpbYD7mgt0QpW17J/89G6U3Mq7Ok9y0TWPVFC7
-         JEVA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VR6f1v7bSXrA6nVH5Ss4LfnA5La5Xv3aGS/hHFuXz1Y=;
+        b=pRBjtWLGNarwHyItwlct2ZFhffS/xcTr8Ax2ka2AUppUXK6C+bULrLpidNmSNdPOec
+         +SZoXstIDJEK1twUYZjV3vplSl8j59EmKh9ZU4fluHXewWKUOai5Qc/4djdrvLLnBlgo
+         484RhZKcTzZLE1/RPY8c2CUZuL+RhckoJij4jwphuOkdQv0hyDtBDdcEnUHLfSkCv/L2
+         dAnUuUIExjJ4ommMZagWbNvjbDXwczJDo/cNUWjTtv4phXuPRfCTXGe3p0CoE4sZ2aJj
+         nrmkGEREX9j4wp3CTE4y4HZB9RCAblIKFxkc9vMRROp490Tc+7kixmOceG++24vGT6xp
+         H6sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WoHNCSV3TFuGDrvJ4yUNQfWaTHZIVVAkVbwN5dcn4Ns=;
-        b=HFY0f/GzbeiWwOFwcJZ32JwvfZNTpo3Be8yZPkW9LtrFFnFN6fKfRDKAydA3XMz1io
-         svBUDzfObcVMSdgvgKKYY7B8o5ow9zkOrSvewCIamI/UzWJZFBT6GYkYtu4R2GIxKnsM
-         ink0rpzmwjUo0xf7rXGyccNDjL6Gtv6UfRjf41rXT3sn9C8koxCmuYujw2BsOmbFPASJ
-         +bnve+0jMBAAFLGja53WCiIO3tZerHSd/sPaATdOQ1a1JYXSzx2mlXiBg3b1nWVZ6/tT
-         2LEs4H3C669Z6aACFlEk+x7hhP6XjJ9VLfKLZivcAdONZV+1x0bu2foPKEiT9KiUIDlB
-         FpVA==
-X-Gm-Message-State: AOAM532vrsEpk4Gyu/mwvcPIqJ92uap0vCcp2ybXuoJY8m2p879Sgt30
-        zVXKXyNwLDD8bLL36wySxnH0Kh2RUtg0i8o+bq+zUA==
-X-Google-Smtp-Source: ABdhPJxh7HgXWD3dZvsSTmljX4/dQ3YSDYuYtGebgm2YDFQGX0nQ7kNiVlWA7OD9aJ9247Uh59TCKfBBcwTOnYXVSkU=
-X-Received: by 2002:a2e:90cd:: with SMTP id o13mr7510981ljg.248.1622903529404;
- Sat, 05 Jun 2021 07:32:09 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VR6f1v7bSXrA6nVH5Ss4LfnA5La5Xv3aGS/hHFuXz1Y=;
+        b=bD4bgq9qNnzEf81248xA/CEQ2rtr/973OJvklNU++cO+39kyF5kEKAMzzE8d9Ybnyf
+         D36Dgn39T/jxGlpycS+yvs5n56GhtJ8y3W800tFMhx/zKdyJ/hpGLf0Shkglc3FF0dj/
+         nhNDK9z7iaePNNcJtCfyGf/8qMSOhcbRy01wPqWDhK3O5GDZC5GJQbDywavMavd+iSde
+         esIGff33mqclfvUGxK8uqHR+PO2UEa/QC7n2Xn+euF5gbbFls4TlBNORMt/aw/cX5WD8
+         vJOlCCV23Cr1GVf33hs71D0BkXjKLVXN4MLcTNqJe7KGErhc2WW+CpMDoiFHBiQZeB3f
+         s/Mw==
+X-Gm-Message-State: AOAM531wsr9dUAg80kW7tGZKkOFfGcdblnBqmSHDE0NK6ZG/8XOX0tD1
+        s4NYP5ckLL8kAgvGOAwVF8E=
+X-Google-Smtp-Source: ABdhPJwTTYPq5ZwLxQSKZUc2KEoLfRxhhiGQ2GSgLbuVP5DYaFJ/djD6L/0dviJs/R+kD8f4RvOVPQ==
+X-Received: by 2002:a62:aa01:0:b029:2ea:743:6693 with SMTP id e1-20020a62aa010000b02902ea07436693mr9668451pff.68.1622905044366;
+        Sat, 05 Jun 2021 07:57:24 -0700 (PDT)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id o133sm4333918pfd.49.2021.06.05.07.57.22
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 05 Jun 2021 07:57:23 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Git l10n discussion group <git-l10n@googlegroups.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Alexey Roslyakov <alexey.roslyakov@gmail.com>,
+        Arusekk <arek_koz@o2.pl>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Daniel Santos <hello@brighterdan.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        =?UTF-8?q?Emir=20Sar=C4=B1?= <bitigchi@me.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>,
+        Vincent Tam <VincentTam@users.noreply.github.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>,
+        rlespinasse <romain.lespinasse@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.32.0 round 1
+Date:   Sat,  5 Jun 2021 22:57:17 +0800
+Message-Id: <20210605145717.13646-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
 MIME-Version: 1.0
-References: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de>
-In-Reply-To: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Sat, 5 Jun 2021 11:31:58 -0300
-Message-ID: <CAHd-oW7f0rfRaTyvJJMt7uNiLS4F9c=D3oKYc5v+unzxPPxjCw@mail.gmail.com>
-Subject: Re: [PATCH] parallel-checkout: use grep -c to count workers in tests
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 5, 2021 at 9:27 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-> The parallel checkout tests fail when run with /bin/dash on MacOS 11.4,
-> reporting the following error:
->
->    ./t2080-parallel-checkout-basics.sh: 33: local: 0: bad variable name
 
-That's interesting. It seems that dash is trying to use wc's output
-(in this case "0") as a local variable name which, of course, is not
-valid.
+Hi Junio,
 
-This reply [1] to this bug report [2] mentions that dash expands a
-local assignment like the following:
+Please pull the following l10n updates for Git 2.32.0.
 
-    x=3D"1 2 3"
-    local y=3D$x ---expands-to---> local y=3D1 2 3
+The following changes since commit bf949ade81106fbda068c1fdb2c6fd1cb1babe7e:
 
-So, in this case, dash thinks we are trying to declare three local
-variables, y, 2, and 3, which is an error. In bash, the above commands
-would result in $y getting the value "1 2 3", even though we didn't
-quote $x in the assignment. (BTW, the reply mentions that quoting the
-right side of the assignment should make this work in dash as well.)
+  Git 2.32-rc0 (2021-05-16 21:05:24 +0900)
 
-I wonder if that's what's happening here. Maybe "wc -l" is outputting
-a space before the number, and that makes dash parse this line as
-something like `local workers=3D"" 0=3D"" `? If that's really the case (I
-can't confirm because the bug seems to have been fixed in the dash
-version I have), maybe we could mention that in the commit message.
+are available in the Git repository at:
 
-[1]: https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097/comments/6
-[2]: https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097
+  git@github.com:git-l10n/git-po.git tags/l10n-2.32.0-rnd1
 
-> This seems to be caused by a bug in dash, which doesn't like the pipe
-> into wc for some reason.  We can work around it and make the test
-> slightly shorter and faster by having grep do the counting, though, so
-> let's do that.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> Reduced test case for underlying dash issue:
->
->    $ dash -c 'foo () { local bar=3D$(echo baz | wc); }; foo'
->    dash: 1: local: 1: bad variable name
->
->
-> The pipe is not even required to trigger the issue:
->
->    $ dash -c 'foo () { local bar=3D$(wc /dev/null); }; foo'
->    dash: 1: local: 0: bad variable name
->
-> Turning wc into a function calms the shell:
->
->    $ dash -c 'foo () { local bar=3D$(echo baz | wc); }; wc () { :; }; foo=
-'
->
-> Setting a global variable also works fine:
->
->    $ dash -c 'foo () { bar=3D$(echo baz | wc); }; foo'
->
->  t/lib-parallel-checkout.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
-> index 21f5759732..145276eb4c 100644
-> --- a/t/lib-parallel-checkout.sh
-> +++ b/t/lib-parallel-checkout.sh
-> @@ -27,7 +27,7 @@ test_checkout_workers () {
->         rm -f "$trace_file" &&
->         GIT_TRACE2=3D"$(pwd)/$trace_file" "$@" 2>&8 &&
->
-> -       local workers=3D$(grep "child_start\[..*\] git checkout--worker" =
-"$trace_file" | wc -l) &&
-> +       local workers=3D$(grep -c "child_start\[..*\] git checkout--worke=
-r" <"$trace_file") &&
+for you to fetch changes up to 33b62fba4d61d604b30942fb4ec22b6e2782726b:
 
-Nice, and the result is both cleaner and more efficient :) Just one
-minor nit: I think we could drop the redirection as grep can take the
-file name as an argument.
+  l10n: zh_CN: for git v2.32.0 l10n round 1 (2021-06-05 22:45:18 +0800)
 
->         test $workers -eq $expected_workers &&
->         rm "$trace_file"
->  } 8>&2 2>&4
-> --
-> 2.31.1
+----------------------------------------------------------------
+l10n-2.32.0-rnd1
+
+----------------------------------------------------------------
+Alex Henrie (1):
+      l10n: Update Catalan translation
+
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5204t)
+
+Alexey Roslyakov (1):
+      l10n: ru.po: fix typo in Russian translation
+
+Bagas Sanjaya (5):
+      l10n: id: po-id for 2.32.0 (round 1)
+      l10n: README: document git-po-helper
+      l10n: README: document "core translation"
+      l10n: README: document l10n conventions
+      l10n: README: note on fuzzy translations
+
+Daniel Santos (2):
+      l10n: pt_PT: add Portuguese translations part 2
+      l10n: pt_PT: add Portuguese translations part 3
+
+Emir Sarı (1):
+      l10n: tr: v2.32.0-r1
+
+Jean-Noël Avila (1):
+      l10n: fr: v2.32.0 round 1
+
+Jiang Xin (9):
+      l10n: git.pot: v2.32.0 round 1 (126 new, 26 removed)
+      l10n: fix typos in po/TEAMS
+      Merge branch 'fr_next' of github.com:jnavila/git
+      Merge branch 'master' of github.com:Softcatala/git-po
+      Merge branch 'l10n/zh_TW/21-05-20' of github.com:l10n-tw/git-po
+      l10n: README: add file extention ".md"
+      Merge branch 'pt-PT' of github.com:git-l10n-pt-PT/git-po
+      Merge branch 'fix_typo' of github.com:e-yes/git
+      l10n: zh_CN: for git v2.32.0 l10n round 1
+
+Jordi Mas (1):
+      l10n: Update Catalan translation
+
+Matthias Rüster (1):
+      l10n: de.po: Update German translation for Git v2.32.0
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (5204t0f0u)
+
+Trần Ngọc Quân (1):
+      l10n: vi.po(5204t): Updated Vietnamese translation for v2.32.0
+
+Vincent Tam (1):
+      l10n: fr.po fixed inconsistencies
+
+Yi-Jyun Pan (2):
+      l10n: zh_TW.po: v2.32.0 round 1 (11 untranslated)
+      l10n: zh_TW.po: localized
+
+rlespinasse (1):
+      l10n: fr: fixed inconsistencies
+
+ po/{README => README.md} |   113 +
+ po/TEAMS                 |     4 +-
+ po/bg.po                 |  7100 ++++++++++++------------
+ po/ca.po                 | 13056 ++++++++++++++++++++++++---------------------
+ po/de.po                 |  6956 +++++++++++++-----------
+ po/fr.po                 | 10104 ++++++++++++++++-------------------
+ po/git.pot               |  6731 ++++++++++++-----------
+ po/id.po                 |  9809 +++++++++++++++++++---------------
+ po/pt_PT.po              |  1237 +++--
+ po/ru.po                 |     2 +-
+ po/sv.po                 |  6882 +++++++++++++-----------
+ po/tr.po                 |  6819 ++++++++++++-----------
+ po/vi.po                 |  6893 +++++++++++++-----------
+ po/zh_CN.po              |  6862 +++++++++++++-----------
+ po/zh_TW.po              |  7104 ++++++++++++------------
+ 15 files changed, 47249 insertions(+), 42423 deletions(-)
+ rename po/{README => README.md} (72%)
+
+--
+Jiang Xin
