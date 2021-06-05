@@ -2,113 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72F9BC4743C
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ED86C4743C
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:15:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57042613BF
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:07:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12211613D8
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:15:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231157AbhFEBJd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 21:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46694 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbhFEBJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 21:09:32 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17589C061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 18:07:35 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id h22-20020a05600c3516b02901a826f84095so1531473wmq.5
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:07:34 -0700 (PDT)
+        id S231132AbhFEBQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 21:16:47 -0400
+Received: from mail-oi1-f182.google.com ([209.85.167.182]:42503 "EHLO
+        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230185AbhFEBQq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 21:16:46 -0400
+Received: by mail-oi1-f182.google.com with SMTP id v142so11132642oie.9
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/jUqJ73rZCt9LIqpBDJpkrdS//kXGAx6J+fidYAZOcQ=;
-        b=AWUCzuSrnFHq9g30FG1S0LyimLzEpJ8re3omCLmtnF713XEcF7cXSnSFrg7DOeiX2f
-         7BZxOcTyHaQ9fIVby/d4XD6lJfHvs5nEPFX4XcflmBrphGXKSxqKNuj+pOPrU5mD/+Rl
-         /9Q2C27UHY6RO9WhIJ8mvTbULHPG3C/FUaeXxruoN6aXJKq36daZSq2QU7tJlw3ttJMe
-         tO7Ux8IZzcTXPlgAXdEFrU5CdsYijrV+Bkswqdw7Wt70nxVit5SO20QLhyo36PREwICf
-         PoO3qufv4J7M0PjhUg5E7Qus+il3iqkefRmgfpTeu6Sou13gbp/TljthKumXoHkxzSaY
-         fQjw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QYpPwPqpdCAw7sD+MuRl0sr1uDM5ZdriWJTi3u0snBg=;
+        b=VGwM/Re4cjhWlNTw+hZonNXsQLcMBH4WW6WgB1r0+oBWrkUu8MLYz8lI8iuN75kCD3
+         tqoI28Zh5pqOo8jX6umhUGznVsg4gMEL/q1e33G5fjPofxQgj7lX41zIrKREkJPe9heW
+         f4W+4a2TpbBqfy1MGb6UuCiUJy8Qc5FqDCVPAYUsEhFckxLGPP6DAjPhtcxbjEVfc1gD
+         iGMSERO8xnZ4eHYTEdCn6LjZjuI3GJJLaWhKHBpep8GPg/iStnB1h0o1sKphdfCdfftP
+         1TEG4t2yL64fCt/7SUJG4f8SZ+ygVe3v5J/akiUKEtEq5FCdREiB2SWDDb7ek6oNyR+j
+         SlOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/jUqJ73rZCt9LIqpBDJpkrdS//kXGAx6J+fidYAZOcQ=;
-        b=k6yqCOFGhhYFF2udsH/AprpIdx/fWmPYoDGVqYfM7vLr819S7aZYvF0zR3AEqYol7j
-         4kxZ1FPHF3x6xscK/HyOlcQZii4fgw8x0JsHrk++0s36UUvq/F8uytDeU4cq2TKZBMQq
-         sd4Qgg4KF723JsUefTLMeFKc/voJRjPGb+dD0Ya98PKF+hFsVBPvCrCczgSlD5Er7LtA
-         HYMIXwj+5sbmFbBC7JJPT+qqstsqtgJ2Qb9F9AXOxePOx6HcXTQh8zUdQxLOzRauXnDL
-         tamxRw3CLNCbcYO49H+5014hcyTC4Qam8k0340wFliXvL2iYT3MoHWw0WY3WvGIoCBql
-         WYug==
-X-Gm-Message-State: AOAM533YGrG0TySKeW43WfTpb1DDbQ1gz61agl9eVwFiD1QcJPefWJMu
-        hAtZABASIzQEE+JgQ150yBB0/Qlh5gePAV/0iF4=
-X-Google-Smtp-Source: ABdhPJwTpAHlcXjrVT11Nd2MBaKNzNPGhkYX82nBsBI70oJ7W9m720KO/0DSWa52/ta25OYjz2VLxUfsy+SCAic0MBI=
-X-Received: by 2002:a05:600c:2194:: with SMTP id e20mr5782457wme.173.1622855253511;
- Fri, 04 Jun 2021 18:07:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20170720232040.GA159617@aiede.mtv.corp.google.com>
- <d0da02a8b6f0272fa70ae3b1dc80fee6c6ee8d18.1501111803.git.mhagger@alum.mit.edu>
- <87y2bv0yvl.fsf@evledraar.gmail.com> <YLkwCTcRT/9s8+5R@coredump.intra.peff.net>
- <60b93a264cb7_39da0420855@natae.notmuch> <YLlEx5qlN7rgehaP@coredump.intra.peff.net>
- <87lf7p5msj.fsf@evledraar.gmail.com>
-In-Reply-To: <87lf7p5msj.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QYpPwPqpdCAw7sD+MuRl0sr1uDM5ZdriWJTi3u0snBg=;
+        b=Whz3qGWU2tOoY/0p1+Jz0gAZFjSIVFi1nlLjYdlBJDtb8i3+XRiE89ALchPHgOvD5o
+         jZboHDJcXzHtnkwKwYHaoeRRH9EjC8kwiY1xU5wdj3LhRngiqmcNb/YugLsCsWfF0isu
+         YnLDKzZfJG3JzJxuEy/oUDzhDJDCRRRovmPNnePHIQ6pzn90+eG3kYFoYBkd7tP2qGrO
+         KTvH8lfEuHcL1bTHVrSE+zXu/QYqKPb5enOuVAqWUJyd1z/gmxj/T1Ou/6XLH5sT6pYC
+         WbBAbmRK4opAwZDzBBm46xZ7OAmVbQ3SwN11h4MZCy2tIE2BPixomzO95DZ+tbupFkFi
+         CxPA==
+X-Gm-Message-State: AOAM533poUc5Z8YfHXR73yVUcaRFRmnzIPqSX5HiEuQXOUGusEg59qoP
+        K8thTCDF1JJ2fVWrWEipOMjvJf6T7xjwFQ==
+X-Google-Smtp-Source: ABdhPJzRSgTrBV545jeJSmhO3NrR/rVndewuCHcL/Lz0VSZIsuuViC7zC2nJiLBeNODdkq2qDCBK0A==
+X-Received: by 2002:a05:6808:2d3:: with SMTP id a19mr12923984oid.133.1622855629425;
+        Fri, 04 Jun 2021 18:13:49 -0700 (PDT)
+Received: from localhost (fixed-187-190-78-172.totalplay.net. [187.190.78.172])
+        by smtp.gmail.com with ESMTPSA id r19sm772672ooj.5.2021.06.04.18.13.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Jun 2021 18:13:49 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 4 Jun 2021 20:07:22 -0500
-Message-ID: <CAMP44s2FrZkbPbi+vFxD1dLfZPtKeJ2QZk5Gk0HgQjMgE_3Rbg@mail.gmail.com>
-Subject: Re: [PATCH] packed_ref_store: handle a packed-refs file that is a symlink
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] branch: make -v useful
+Date:   Fri,  4 Jun 2021 20:13:39 -0500
+Message-Id: <20210605011339.2202-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 4, 2021 at 4:42 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-> On Thu, Jun 03 2021, Jeff King wrote:
+Currently `git branch -v` shows something like "[ahead 10]", but ahead
+of what?
 
-> I have some incomplete work somewhere to slurp up all the package
-> sources I could find in the wild (SRPM's, Debian recipies etc.) and
-> their patches, the aim was to submit it into contrib/ so we could see
-> what monkeypatches to git.git existed in the wild.
->
-> Last time I looked at those (and this is from memory, and it was a while
-> ago) many of those patches / build recipies were simply blindly skipping
-> or otherwise working around test failures.
->
-> So we can't assume that failures in the wild are reported to us, and I
-> think many packagers are not running any of our tests at all. If it
-> compiles and seems to work they're probably just shipping it.
+We git experts know ahead of what, but not what that what is set to. Just
+like "[@{upstream}: ahead 10]" would not be particularly useful to
+anyone that doesn't know, or remembers, what @{upstream} is set to.
 
-Arch Linux boasts of following upstream as closely as possible, I
-looked at their build instructions for the umpteenth time to see if I
-could find anything interesting. While they don't have patches, they
-do have NO_SVN_TESTS=3Dy (plus a bunch of `cp contrib/*`).
+On the other hand "[master: ahead 10]" is perfectly clear to anyone.
 
-So I don't think any packager can just blindly trust the Git project
-to do the sensible thing here. Who uses subversion anymore? And who
-that still uses subversion wants or needs git-svn? And why would
-failing any of these break the release?
+This confusion only gets worse when you see "[ahead 10, behind 100]". Is
+it master? Is it next? Is it
+john/experimental-feature-i-based-my-branch-on?
 
-Maybe we need some "test-packager" target that limits the tests to
-something sensible. Ideally it should be the other way around:
-packagers run `make test`, and developers `make test-developer`. But
-that's a bigger discussion.
+Inevitably most users will need to know what @{upstream} is.
 
-Cheers.
+So let's make `git branch -v` output what is most useful:
 
---=20
-Felipe Contreras
+  [master]
+
+Before:
+
+  * fc/branch/sane-colors b2489a3735 [ahead 1] branch: make -v useful
+
+After:
+
+  * fc/branch/sane-colors b2489a3735 [master] branch: make -v useful
+
+An additional benefit is that `git branch -v` is slightly faster: 30ms
+vs. 60ms on my system.
+
+`git branch -vv` is unaffected.
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+
+This is a reboot of my old patch series [1].
+
+Every time I use git without this feature I miss it.
+
+[1] https://lore.kernel.org/git/1398027514-19399-1-git-send-email-felipe.contreras@gmail.com/
+
+ builtin/branch.c           |  9 ++++-----
+ t/t3201-branch-contains.sh |  2 +-
+ t/t6040-tracking-info.sh   | 12 ++++++------
+ 3 files changed, 11 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b23b1d1752..7c0d3f7e4e 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -375,16 +375,15 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+ 		strbuf_addstr(&local, branch_get_color(BRANCH_COLOR_RESET));
+ 		strbuf_addf(&local, " %s ", obname.buf);
+ 
++		strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
++			    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
+ 		if (filter->verbose > 1)
+-		{
+-			strbuf_addf(&local, "%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)(%s%%(worktreepath)%s) %%(end)%%(end)",
+-				    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
+ 			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
+ 				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
+ 				    branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
+-		}
+ 		else
+-			strbuf_addf(&local, "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)");
++			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s] %%(end)%%(contents:subject)",
++				    branch_get_color(BRANCH_COLOR_UPSTREAM), branch_get_color(BRANCH_COLOR_RESET));
+ 
+ 		strbuf_addf(&remote, "%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s"
+ 			    "%%(if)%%(symref)%%(then) -> %%(symref:short)"
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 349a810cee..53e2d65e67 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -261,7 +261,7 @@ test_expect_success 'branch --merged with --verbose' '
+ 	git branch --verbose --merged topic >actual &&
+ 	cat >expect <<-EOF &&
+ 	  main  $(git rev-parse --short main) second on main
+-	* topic $(git rev-parse --short topic ) [ahead 1] foo
++	* topic $(git rev-parse --short topic ) [main] foo
+ 	  zzz   $(git rev-parse --short zzz   ) second on main
+ 	EOF
+ 	test_cmp expect actual
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index a313849406..30f80ad61b 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -43,12 +43,12 @@ test_expect_success setup '
+ 
+ t6040_script='s/^..\(b.\) *[0-9a-f]* \(.*\)$/\1 \2/p'
+ cat >expect <<\EOF
+-b1 [ahead 1, behind 1] d
+-b2 [ahead 1, behind 1] d
+-b3 [behind 1] b
+-b4 [ahead 2] f
+-b5 [gone] g
+-b6 c
++b1 [origin/main] d
++b2 [origin/main] d
++b3 [origin/main] b
++b4 [origin/main] f
++b5 [brokenbase] g
++b6 [origin/main] c
+ EOF
+ 
+ test_expect_success 'branch -v' '
+-- 
+2.32.0.rc2
+
