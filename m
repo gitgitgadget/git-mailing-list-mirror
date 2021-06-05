@@ -2,152 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DBD6C4743C
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 02:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9260C4743C
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 02:16:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AEB8613E7
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 02:11:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD6C0613D2
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 02:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231570AbhFECNA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 22:13:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60382 "EHLO
+        id S231157AbhFECSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 22:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230414AbhFECNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 22:13:00 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB0EC061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 19:11:05 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id l6-20020a3770060000b02902fa5329f2b4so7784852qkc.18
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 19:11:05 -0700 (PDT)
+        with ESMTP id S230169AbhFECSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 22:18:05 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 547BAC061766
+        for <git@vger.kernel.org>; Fri,  4 Jun 2021 19:16:18 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id v63-20020a2561420000b029053606377441so14317467ybb.15
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 19:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=YI9NnP7rwcju0iLZFUIzFJGrORPIzYcr88YwUErjxj0=;
-        b=JNpkmTvDgvvHzwHWS3CfaBYTBNizDcP8K1p6oTCu5BkdHPKLNWWhjh16YBYoZrkEM6
-         AZXvzSRLkpuG4KmJLKTy5cUrWWl7SEyh6H7Uu7QOspwWOAZkbl9xoTP/86Op8Tb7hRLQ
-         LUt6Zm6dCyobXfHMmwlDaWyOHxBmpGajwaD0PdUTq2ExL3RCA43yqDLPUuDbP0ArBjDY
-         V5Ha5WhGBw5IRIwbphyys2wyb7eFaa+mjdheicvhcZGS1mNshB6w64TN7gb70xCPeQPS
-         ve9XxHHw0oUiE4AOXgKoHzabdNBr/i0fp8MpCYhQo1bS+xUIKhNAEMhOkSqcEw7mrp77
-         P6Ng==
+        bh=S2N3zgpB4vNiEYhpDKyymRXJNFlsOO0hr5ihbhirKsA=;
+        b=uxeCkwQkARbUasOljzRM+ulnMXMo4ywbb/yjVHqrmlqhzI1K5DCMV5pnkXZD0SQ741
+         iZIhueNn9M95CKXcuSVgy/yXXDAP9+jmlCrv/kjUm+OEMeBtlIj5mxuXREoYm7D7KVYb
+         XrmxV8rTedn2DwGdnFhODLeGKH4mwZH7pKfpnO5gigXP2BgaLQXJratSOLgkpTtpVL6S
+         oTwTEWwkwtXb8u5m/MzmtDgbL8YH0isbi7oxatE3QDW1Vl8nj0n2UO3KmXTizIQsFGPR
+         lNqr86hFxztIjZBdLtfRxNVI4K0qoeLd/26VnqaJ1+DK4LyUN9CDKZgUZRxCtsHC2O74
+         25Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=YI9NnP7rwcju0iLZFUIzFJGrORPIzYcr88YwUErjxj0=;
-        b=huC8Bbzzw4iIL4aj0OdyLpXTuj2BYfFWElPo5efXcmXCKSYu1vkHxXxj01mGjGAe9O
-         CIzzMmvnKEw0YL+0YigHcl8HDE+rBHolcYqrmbdRTiKwT9XnHWqhp/urJqYLCiAcebqi
-         wKfXrtVB1s2vErNigNMuor/46Nlq+Lwpu8XzlMMmOyjbqDk5LnFvykWjJy9Ay98FlyLW
-         WbB+wULQBUIp3XcQQGFAZ1n2hUlq2xNAdnIQTJjNC0Si3edH/ZZJLy7wZQzfvePold71
-         ihETGjl7navWL+VI/O5rpKheJuLClgGk43poKQIdTsbm4FaH9AFLOKFYjNs/gaDpH+rU
-         4mIA==
-X-Gm-Message-State: AOAM532i1OYDx69wmzFR1kFaEsk0h4uUJp06fmLNA4Y/5EYZW83Ak/6x
-        jAv2x8BAzyA/4sEMD7QUV5K5cAG5kceF/r1FxUgX
-X-Google-Smtp-Source: ABdhPJyCykquhB4nb8DVl4yKwNmlOrkWByeoAXvaVChWaoH2vdiN+5Mf8bt0eGzq5+F4m2DrvaiqXLLA+ZyKvJNFD+nO
+        bh=S2N3zgpB4vNiEYhpDKyymRXJNFlsOO0hr5ihbhirKsA=;
+        b=P6Gb6NIcvHn8fr3RSYtqfwHT1QzQ6faqBnemfFY+ecgpJsGsbQxxbZVLh7Qx0HxsPG
+         D9MWtEfb56F7j4aeo4GbZRGpI3yPNlon8Hn8SRaLnlkAKA2dhD3jjPS+1xWULBm5BkBy
+         IhcdZmXsKb5hiobDjPTqM/HlVFP/D3K2u8agDAYtPQ32s6ck4HgIgAm6XP38u1/N6xFh
+         G7CsTo6MsPOggwsq9z77EY6x4rY45znuP29P2p2Aju1urllD8b8YIzmgOZGa2T/9PNNp
+         0NdGtAY6t1auinvjqi2eUQG6QSZhvCA7P/Un0acBFFWjWGL0JHS/77Om4GZtexPjqvah
+         Dthg==
+X-Gm-Message-State: AOAM532xB/nG72rFGhmOSaymA+J2fCdAruu+RSIdpEijshL5Qv19M3lF
+        F0mp0cqkJ+Ac+20v6ON5VVI+Fc5YPzsIAIl4SPrB
+X-Google-Smtp-Source: ABdhPJweU9aWPwvRZ2hTv4LKRvnKit4RdW+MWKyO+d1uN7XSD+SvyR0oObsHIUtB6pb7/LsM96f1QxHyEDI3tXOegCtQ
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:10e9:: with SMTP id
- q9mr7517569qvt.45.1622859064838; Fri, 04 Jun 2021 19:11:04 -0700 (PDT)
-Date:   Fri,  4 Jun 2021 19:11:03 -0700
-In-Reply-To: <YLqaWm9NOmtENT2J@nand.local>
-Message-Id: <20210605021103.609217-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a25:bbd1:: with SMTP id
+ c17mr9596724ybk.507.1622859377579; Fri, 04 Jun 2021 19:16:17 -0700 (PDT)
+Date:   Fri,  4 Jun 2021 19:16:15 -0700
+In-Reply-To: <CABPp-BGeOVQokV+zg2-PUcmjEQ8+jmn6e=UeE=cOn=-Qm32p_Q@mail.gmail.com>
+Message-Id: <20210605021615.609989-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <YLqaWm9NOmtENT2J@nand.local>
+References: <CABPp-BGeOVQokV+zg2-PUcmjEQ8+jmn6e=UeE=cOn=-Qm32p_Q@mail.gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
 Subject: Re: [PATCH 4/4] promisor-remote: teach lazy-fetch in any repo
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     me@ttaylorr.com
+To:     newren@gmail.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > +static void object_info(const char *gitdir, const char *oid_hex)
-> > +{
-> > +	struct repository r;
-> > +	struct object_id oid;
-> > +	unsigned long size;
-> > +	struct object_info oi = {.sizep = &size};
-> > +	const char *p;
-> > +
-> > +	if (repo_init(&r, gitdir, NULL))
-> > +		die("could not init repo");
-> > +	if (parse_oid_hex(oid_hex, &oid, &p))
-> > +		die("could not parse oid");
-> > +	if (oid_object_info_extended(&r, &oid, &oi, 0))
-> > +		die("could not obtain object info");
-> > +	printf("%d\n", (int) size);
-> > +}
+> > diff --git a/object-file.c b/object-file.c
+> > index f233b440b2..ebf273e9e7 100644
+> > --- a/object-file.c
+> > +++ b/object-file.c
+> > @@ -1570,15 +1570,12 @@ static int do_oid_object_info_extended(struct repository *r,
+> >                 }
+> >
+> >                 /* Check if it is a missing object */
+> > -               if (fetch_if_missing && has_promisor_remote() &&
+> > -                   !already_retried && r == the_repository &&
+> > +               if (fetch_if_missing && repo_has_promisor_remote(r) &&
+> > +                   !already_retried &&
 > 
-> Hmm. Is there a reason that the same couldn't be implemented by calling "git
-> cat-file -s" from the partial clone?
+> So here you removed the special check against the_repository while
+> looking for promisor_remotes.  There are other such special checks in
+> the code; I also see:
+> 
+> diff.c: if (options->repo == the_repository && has_promisor_remote() &&
+> diffcore-break.c:       if (r == the_repository && has_promisor_remote()) {
+> diffcore-rename.c:      if (r == the_repository && has_promisor_remote()) {
+> 
+> and a series I'm planning to submit soon will add another to merge.ort.c.
+> 
+> Do these need to all be fixed as part of the partial clone submodule
+> support as well?  Do I need to change anything about my series?  I
+> guess since I'm asking that, I should probably submit it first so you
+> can actually see it and answer my question.  (And the timing may be
+> good since the area is fresh in your memory...)
 
-I don't think "git cat-file" (when run in the superproject) by itself
-can access an object from a submodule. "git -C name_of_submodule
-cat-file $HASH" would access that object, but I specifically want to
-test oid_object_info_extended() on a repo that is not the_repository
-(which would not work with -C, because the_repository would then be the
-submodule).
+Thanks for raising this. Looking at the 3 you listed, they all have to
+do with prefetching. This is fine both now and later. Now, since partial
+clones in submodules still don't work, any fetching of any sort (pre- or
+not) will not work. Later, since this prefetching is just an
+optimization. (Of course, we should come back and add prefetching for
+submodule partial clones, but that is an optimization, not a correctness
+issue.)
 
-> > +test_expect_success 'lazy-fetch when accessing object not in the_repository' '
-> > +	rm -rf full partial.git &&
-> > +	test_create_repo full &&
-> > +	printf 12345 >full/file.txt &&
-> > +	git -C full add file.txt &&
-> > +	git -C full commit -m "first commit" &&
+> >                     !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
+> >                         /*
+> >                          * TODO Investigate checking promisor_remote_get_direct()
+> >                          * TODO return value and stopping on error here.
+> > -                        * TODO Pass a repository struct through
+> > -                        * promisor_remote_get_direct(), such that arbitrary
+> > -                        * repositories work.
 > 
-> This is a stylistic nit, but I think using test_commit is better here
-> for a non-superficial reason. My guess is that you wanted to avoid
-> specifying a message and file (which are required positional arguments
-> to test_commit before you can specify the contents). But I think there
-> are two good reasons to use test_commit here:
+> Odd, it appears that when this comment was added (in commit b14ed5adaf
+> ("Use promisor_remote_get_direct() and has_promisor_remote()",
+> 2019-06-25)), a repository was passed to promisor_remote_get_direct().
+> Sure, it was just a transliteration of the comment that was there
+> before when fetch_objects() was the function being called, but since
+> the code was being changed and the comment being updated, it seems the
+> TODO should have been removed back then.
 > 
->   - It saves three lines of test script here.
->   - You don't have to make the expected size a magic number (i.e.,
->     because you knew ahead of time that the contents was "12345").
-> 
-> I probably would have expected this test to end with:
-> 
->   git -C full cat-file -s $FILE_HASH >expect &&
->   git -C partial.git cat-file -s $FILE_HASH >actual &&
->   test_cmp expect actual
-> 
-> which reads more clearly to me (although I think the much more important
-> test is that $FILE_HASH doesn't show up in the output of the rev-list
-> --missing=print that is run in the partial clone).
+> Oh, well, good to update it now at least.
 
-That makes sense.
+Yes - perhaps the comment was emphasizing the "such that arbitrary
+repositories work" part. But anyway, yes, it is now removed.
 
-> > +	test_config -C full uploadpack.allowfilter 1 &&
-> > +	test_config -C full uploadpack.allowanysha1inwant 1 &&
-> > +	git clone --filter=blob:none --bare "file://$(pwd)/full" partial.git &&
-> > +	FILE_HASH=$(git hash-object --stdin <full/file.txt) &&
-> 
-> This works for me, although I wouldn't have been sad to see the
-> sub-shell contain "git -C full rev-parse HEAD:file.txt" instead.
+[snip]
 
-I'll do this too.
+> Looks good to me.
 
-> > +	# Sanity check that the file is missing
-> > +	git -C partial.git rev-list --objects --missing=print HEAD >out &&
-> > +	grep "[?]$FILE_HASH" out &&
-> > +
-> > +	OUT=$(test-tool partial-clone object-info partial.git "$FILE_HASH") &&
-> 
-> Coming back to my point about the utility of the partial-clone helper,
-> could this be replaced by saying just OUT="$(git -C partial.git cat-file
-> -s "$FILE_HASH")" instead?
-> 
-> Thanks,
-> Taylor
-
-Same answer as above - I specifically want to test accessing (and
-thereby lazy-fetching) an object when the object is not in
-the_repository. I'll add some documentation to explain what it does and
-that it's equivalent to using "git -C repo cat-file -s", except that
-this specifically tests another code path.
+Thanks for taking a look.
