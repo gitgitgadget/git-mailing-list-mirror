@@ -7,59 +7,55 @@ X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A465AC4743C
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66F27C4743C
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:44:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C64460FDB
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:38:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D461613BF
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbhFEBkc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 21:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbhFEBkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 21:40:31 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4291BC061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 18:38:32 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id hf1-20020a17090aff81b02901630f822d2aso8729355pjb.6
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:38:32 -0700 (PDT)
+        id S231174AbhFEBqp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 21:46:45 -0400
+Received: from mail-yb1-f202.google.com ([209.85.219.202]:46786 "EHLO
+        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230185AbhFEBqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 21:46:45 -0400
+Received: by mail-yb1-f202.google.com with SMTP id p2-20020a2599820000b02905394c6727easo14082828ybo.13
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:44:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ZybTr5vcD6L3Fsc42yfLlu9NBMoZRbZ4HINCDL3p4gI=;
-        b=HYBVUPPV0X49+rlWbjZy7jsIB8l8oC4aU0CfIYTEWoNfwG+pg0D7iI0JYFAyLFgNIL
-         QXEkSeOybWfG8HtC5oZki9i2lFJS61T/CL8QoswbNgEj6LHIq3D0h6b+ucp4+4Hg+kOf
-         XWJy0I/3dCuliSKiBB65Yp1kyTfH0yTTiEpYvyZkn86dTjlNmHgQBO4eU8jARei+7N2/
-         BWUEY3EF8vnkQFGoPdFya1w6Lqzf4zpnrRgNZ5ngMIlqxmId3j5mIffSdEDtNsIOQmc3
-         0ce9BGweH+g9wf40sDsTgT6Ib6unnibEs0FENCKizukEHPFKNhyAGMlDUNcZHWHHhv7U
-         La4Q==
+        bh=e/nd21HFd+pWBMrp5NyDPU6EqnKIo8KYPcrJXW0kVFA=;
+        b=r0k7v0aGoxImaQpvnQeF5ijZE51aRvTESbQnhUkhfLjl+t0CQEMuH66t6Bu6qOggWO
+         QrCGrdIIqjZjnGRofM8kW9JsIBflZe/HdswX9+7EM2hQpT2/mPPb6tZQ/vf3G0T39S6z
+         Fp56BLETKRAbcMOMPSiKYp1ACSQURLqPVFGwCu3cOz8cnboWkZdKDJLVNazZpecntH2y
+         hLunZ/tC+K/WMq2MzXjo2VWymWDkR3L8FsWil3lYWyEnuyg8nrj4noF1G2CS1/1liczk
+         m3NLQP4Vmq2DuVVzugBeovj7ogdyx12wBUpP18MXt89LLY3au20B88oeDdAhCa++lT1q
+         c05g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ZybTr5vcD6L3Fsc42yfLlu9NBMoZRbZ4HINCDL3p4gI=;
-        b=j82QQcu7kJ2B5L4NbrpJPeYOW8+zrUNyahSb9hH+4xGbh3Z+ebxDO5abeTuOs3zNEa
-         qo3/ccSZeNCcgPC40ENZ70X3lFhxT/8zb2L8KtBs9J3rZxp9i49yOR7ODZ/7/5UyV0RP
-         zW/OIUYK2L5ejPWWYaLPGedUeMP74wSsqeu7ymiyBx6TzCUHx5QLm8iX2cF/lUHXYcGR
-         CJsrqKI0Yec2D1Y/ClDLT02e79Sn8c5mSzKyT6M4JEXAZbGXDbw7GuyVB30hGmCsBc/6
-         BWkKGt8apOs63xKAArv0RZxVIRT68b9lVhywxX5PfnGwudadG530UeqdUy34Qv8PFwzb
-         rv0w==
-X-Gm-Message-State: AOAM531G6rzMoLWFGRUBOr1rnhgVuD/I1XQVC09nVXn6xZP2E/zJ7dW+
-        iRs1zDXfcgHBqazbzb5/QrhZBitzd3wVe85r07bo
-X-Google-Smtp-Source: ABdhPJxU8Z+JAJvNEYCFdJLeFR13ORzpVI/4rX3vz9UmLf5Rqv8cBx30T1bLQRPcNF/eItkFy5su6VKXz2YseN5ljC5F
+        bh=e/nd21HFd+pWBMrp5NyDPU6EqnKIo8KYPcrJXW0kVFA=;
+        b=fFCsesQohQjgml1HnBTCYYnGEKOyL2wElQ/d+Vns8bloLLVm86LTWBIgfmfp+9vLi4
+         sgrFGGZRRnrxAdASX38NVhkI03fkhdFECDGS0AF8fFukWiBpnm7u68Ddxlbi/jrD/qu5
+         DFe21cUSYZ3RbEAX/lEijyk6OGkz7RmxTPxUkT5KBO4jP2mbYQeq84vPJWHwd6/2pXtU
+         rJbnnBzR/NIERiMeVku+Ny+ugrXmmbDaxzHwGCeyDFH2ux8/ubD07GEoJY0snjWHgq/H
+         315C9a5gri6cxTaBgRTOGsoY9Fg9fiGzj2L0lVUAIvvW/8gUYNIodBUV8+q9E+JuNqJc
+         hGmA==
+X-Gm-Message-State: AOAM531EFYBYmwYL+hcd8YE++e/UDdhoQv4oCQpX1++27u8KTPBAOJ9j
+        rHR3IrMkvYDlYWK57VZdrL6kBeTQzadbKk3iBk2M
+X-Google-Smtp-Source: ABdhPJyDEFYStMmqjGfAHhWVKwGRSGSiD7IckUc0YjmpNCSGexvkdj5etfdDRAHVNlam8EVz19aoQWgwnY6DS/Nf8YPI
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:8491:0:b029:2e9:c618:fa32 with
- SMTP id k139-20020a6284910000b02902e9c618fa32mr7262953pfd.15.1622857111681;
- Fri, 04 Jun 2021 18:38:31 -0700 (PDT)
-Date:   Fri,  4 Jun 2021 18:38:28 -0700
-In-Reply-To: <YLqFgjEV8JoLzZSL@nand.local>
-Message-Id: <20210605013828.603432-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a25:6ed4:: with SMTP id
+ j203mr9827923ybc.344.1622857437856; Fri, 04 Jun 2021 18:43:57 -0700 (PDT)
+Date:   Fri,  4 Jun 2021 18:43:55 -0700
+In-Reply-To: <YLqIaVbA/uDa2qgh@nand.local>
+Message-Id: <20210605014355.606010-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <YLqFgjEV8JoLzZSL@nand.local>
+References: <YLqIaVbA/uDa2qgh@nand.local>
 X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
-Subject: Re: [PATCH 1/4] promisor-remote: read partialClone config here
+Subject: Re: [PATCH 2/4] promisor-remote: support per-repository config
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     me@ttaylorr.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org
@@ -68,48 +64,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Tue, Jun 01, 2021 at 02:34:16PM -0700, Jonathan Tan wrote:
-> > @@ -99,6 +94,11 @@ static int promisor_remote_config(const char *var, const char *value, void *data
-> >  	size_t namelen;
-> >  	const char *subkey;
+> On Tue, Jun 01, 2021 at 02:34:17PM -0700, Jonathan Tan wrote:
+> > Instead of using global variables to store promisor remote information,
+> > store this config in struct repository instead, and add
+> > repository-agnostic non-static functions corresponding to the existing
+> > non-static functions that only work on the_repository.
 > >
-> > +	if (!strcmp(var, "extensions.partialclone")) {
-> > +		repository_format_partial_clone = xstrdup(value);
+> > The actual lazy-fetching of missing objects currently does not work on
+> > repositories other than the_repository, and will still not work after
+> > this commit, so add a BUG message explaining this. A subsequent commit
+> > will remove this limitation.
 > 
-> Can value ever be NULL here? I think the answer is "no, because we check
-> earlier in setup.c:handle_extension_v0()", but there is an implicit
-> conversion from xstrdup_or_null() to just xstrdup(), which would fault
-> if value were to be NULL.
+> Makes sense to me. I found my answer to the question that I raised
+> during my review of the previous patch, and I think it would make sense
+> to address in an amended version of this patch.
 
-Ah, good catch. I think you're right, but it's better to be defensive
-here. I'll add that check and also say that this will be caught by
-setup.c.
+Just to clarify, what is the question and what is the answer?
 
-> Looking deeper, this path is a little confusing to me, since (in the
-> pre-image), handle_extension_v0() makes a copy of value and binds it to
-> data->partial_clone. But then check_repository_format_gently() makes
-> another copy of canidate->partial_clone (which is the same location as
-> data->partial_clone).
+> Other than that, the translation all looked very faithful to me.
 > 
-> So, the extra copy is a little strange to me, because even though the
-> copy in handle_extension_v0() is definitely necessary, I'm not certain
-> that the one in set_repository_format_partial_clone() is. And this patch
-> removes the latter one, which I think is good. But we never free
-> repository_format_partial_clone.
+> > -void promisor_remote_reinit(void)
+> > +void repo_promisor_remote_reinit(struct repository *r)
+> >  {
+> > -	initialized = 0;
+> > -	promisor_remote_clear();
+> > -	promisor_remote_init();
+> > +	promisor_remote_clear(r->promisor_remote_config);
+> 
+> Ah, this is probably where I would have expected to see
+> r->promisor_remote_config->repository_format_partial_clone freed as
+> well.
+> 
+> I wondered whether or not that should have been freed, since on first
+> read it seemed that this function was mostly concerned with the list of
+> promisor remotes rather than the structure containing them. But on a
+> closer look, we are re-initializing the whole structure with
+> promisor_remote_init(), which runs the whole promisor_remote_config
+> callback again.
+> 
+> So I do think we want to free that part of the structure, too, before
+> reinitializing it. I would probably do it in promisor_remote_clear().
 
-Yes, it's also a simplification that we go straight from config to
-variable here, instead of going through the candidate struct. As for
-freeing repository_format_partial_clone, this is run once and never
-again (guarded by "initialized" check) so there is no prior value to
-free, and I don't think this variable needs to be freed.
+I'll add that in the next version.
 
-> Maybe that is added in a later patch, let's see...
+> > @@ -235,9 +244,11 @@ int promisor_remote_get_direct(struct repository *repo,
+> >  	if (oid_nr == 0)
+> >  		return 0;
+> >
+> > -	promisor_remote_init();
+> > +	promisor_remote_init(repo);
+> >
+> > -	for (r = promisors; r; r = r->next) {
+> > +	if (repo != the_repository)
+> > +		BUG("only the_repository is supported for now");
+> 
+> I could go either way on whether this is worthy of a BUG() or not, but I
+> don't really have much of a strong feeling about it.
 
-So I think things are fine here, but in a later patch,
-repository_format_partial_clone is moved to the struct repository, which
-can be cleared with repo_clear(). I'll need to add a free there :-)
-
-> Thanks,
-> Taylor
-
-Thanks for looking at the patch set too.
+This BUG() will be removed in patch 4. I'm OK either way (adding BUG()
+here and removing it in patch 4, or never adding BUG() in the first
+place).
