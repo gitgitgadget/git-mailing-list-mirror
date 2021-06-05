@@ -2,76 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6AFFC4743D
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 17:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16308C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 18:11:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C983613B4
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 17:52:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0819611C2
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 18:11:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229996AbhFERyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 13:54:24 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:40611 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229964AbhFERyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 13:54:24 -0400
-Received: by mail-wr1-f43.google.com with SMTP id y7so7896867wrh.7
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 10:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GKEGmttsvaDxaVV7oXwEtw6M5fXsz9qefv8FmpTsHkE=;
-        b=dFqdqwddGHnR5uKGBapgpeSj3szUPhEMl6E0CkcySaDTcedJr+/sbZVNNkDAd55Q3x
-         gEfhJNwUr5BZO11gSo4OsK4l1afq3o1akD2GsCGlH//dpq1tkLfETZtJYLyNux8LePqe
-         Vnqlmd4T4xI0pS1xhtkuKVF01nfkybjaqp3zfX9cbFnIPxGh1dPTw5DXNa4Z7/2LGTv9
-         3W+YiJUAbYSmNluJEZ1/2FhLh6S+vnivoJrc7Mu1YhROW3n3YSNedV8diR/fijkka+NM
-         hbu4q8mhXprnTW0rhetRf+pT4Uhs4B69gDBoYiR5Y4YqvlBWsnySKCiNg9E85pq2/Vqi
-         loAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GKEGmttsvaDxaVV7oXwEtw6M5fXsz9qefv8FmpTsHkE=;
-        b=ndKNzp31Q4w1ZVALdSecGRQez2oack8VzVKRXeGPod79CLOU74mmcukAYkYGHQpYMB
-         HA/kX/jshDShQV2vnufqT4resU/D4ohvfNECNxUmCBMtD9WN22W+tBZd3eDamn+lysPQ
-         KrqqbSMCoVxVWMcN+R287xNLZyle6jufxcynqSXar55UXKB9eAP+l9PLDoYMMbzZZYY9
-         fgn332SCcyRZkfPoiUFhbSEXNkEtIXKLzxu47nv7yO9LxHd+wgNzP8N15Fh0HWg3Sy2f
-         OzAGZIV0eXw4vMnjVqBHvnRb60LqnipA90scvgRWPT1Rv785sUyfuvutMtonB2T+zWTz
-         KCqg==
-X-Gm-Message-State: AOAM531FCXd+t+kepaSzaszsWR4XqdkGYRlrFghxIqUSeyzDCTvtrPSf
-        GwFveW+qe0Eq9j74WVSZ65OXcYuhl4zKxPCNm1aamtS7a3p7Zw==
-X-Google-Smtp-Source: ABdhPJw5oCLS4Ab5UcCWjyKUUEWn2GUP5v2G7rcaEsp6dSeXqewqSgzKjfSJOjNqWsytted/T2hIlkG7vng05oXb3+c=
-X-Received: by 2002:adf:efca:: with SMTP id i10mr9472194wrp.139.1622915495452;
- Sat, 05 Jun 2021 10:51:35 -0700 (PDT)
+        id S230010AbhFESNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 14:13:20 -0400
+Received: from mout.web.de ([217.72.192.78]:43345 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229994AbhFESNU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 14:13:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1622916685;
+        bh=OJMQChTKvnU8rCAkOpK7f52nri5PnNrBi7CQLKOmbBA=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=J9tj5OGclq5QfiVhKYjzaDKel/WkCj5mjEHmP7LDe+0ocZAR084Jx1HAPeP8zDC8U
+         +/v6JBF92e9R8Jta+5mbctq+0kLJwU7e8BQuugCQX32belcy0kDRzpH5uKuOrPtq0s
+         P65+cXTfENhglmDfPsTAxuNHROKWldKgZItF0bVc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
+ (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0MA5if-1leHAa03s9-00BLyN; Sat, 05 Jun 2021 20:11:25 +0200
+Subject: [PATCH v2] parallel-checkout: avoid dash local bug in tests
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        Junio C Hamano <gitster@pobox.com>
+References: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de>
+Message-ID: <472c1411-fcf8-862b-cef9-52c2c994914b@web.de>
+Date:   Sat, 5 Jun 2021 20:11:24 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 5 Jun 2021 12:51:24 -0500
-Message-ID: <CAMP44s3DodJ6giL_CHmUvsv3t6w4aUAS6A1STtL3yNRgBnPutw@mail.gmail.com>
-Subject: Blog post: Adventures with man color
-To:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:KFu5ZVq87qEjW/zWhqI3ybYArrjSAIIY7IjFNmtK5BNsho/pCeB
+ mmCVEQxjilkKHhSGIPPnvcM9xKUAZea2Wf53mYHOG4Y/PEGk5W6dGXdZEjObqSWuXenYSX2
+ +hPwEWtiZKCD9mYQLBJ68eqd/Hn+iDDEaps5vHOHdXFjrINhLUeA2I4bb/FAxzt/lsIYvVt
+ PKq1XU2eFA2wY8DxLFJjQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YFXCndqeR/M=:xq/cZwOcNqz1gSrdORO1nz
+ W2UJ0S25t1zyhbzNidA6TlOw7ZmULcGnBEVHdmuQWG1Dqk1eQ72qbjQv2yk288rKw2RKajVE4
+ 7FeHLvOBxu3LS/6Aw8PR5pMAJ7VC1pDgCiVT3EZQm9jaKZOd0enEtafVCSaCUx+KLp24RJilD
+ R3tE085fJF91VlI5TL5GSYKtafojjkQdtj2Y62wuaIW8MEsQ27NcSB0FZuNcWUfAaSyu/V9f9
+ 9+H6XwclZfU7SgQfLFWNLfneLkKoRB/6smIlyW9lOluwNf1w7Hsx8WwYeGhKm0qlwQcYgDAbg
+ 8DZU2Umg6T0uUp/2GW44x5CSr7p8UcVzn0cczGmWLe3F6qffvUHOSaMGVZxEfxuy3WZY2StSm
+ 1aXsXs/TtdW/A37026tFOshgWfpERK1KnDFGKnCwTyXDKnGGAstfym9IhxMMPhiZN7nK8HQ3s
+ NUTs/AdwYCZHKD47Lw+YtCAzeyzMW9mxvx8QdBtvudObGzY4yubaauKaFVTOL98nbDluMxgbA
+ ML8gi9DsrqZ2nXHfFDgB6J7HYupxbmoXZlU+R0FTwrL/vDZ2Iggn0+w4Q836PRDygLGHyzLB9
+ tL1vjCP6wfm+sL1cvek2hgravGQynzbDp0Nn2TGUc9xQ5UAOmk7iAva7OvmTnMrA+Rvrg3W0n
+ aVErMIUt4O1i0LyyTiv1ct6NUvLHdCyo+eSVMixwwKntxiI5xZuu4I5w8nqUYG9kKAAcwNF2q
+ +LlipdnSNL0vpAC9RKe7yxxXph8w56/O4B1VBvgTH7fDuqDQ/p826m6NVQidpmZlcQmKoeJQD
+ HiQ1/iYYwX5xKNS2AbmMlXwFbIzQUR0DaMK+rOUySEN7MkrtR/tE5rQ3bC3wiqggJpOrSu9v7
+ 5i0QIrn14uDgjnD/9o6CXFx9jFt49cak5IIg7LFuAgBlpm0ouFcE+P4+kOyZxjUy/1Rvf8Vt1
+ YBz2ZGDWVAAJJuePNlhTf1dMzfK9JQ9XoQoSoHnGe+7l08WbdDjY89ycQoaWXxznCWF/rtHMh
+ lUSPQMc9LKF3LTNsI5jZBUkxdIfEfZl2wokE1nSzVYCPdTlXwzqiBgdecSl+0FoJ8XEdI2VA0
+ wOa6pfc9yTXElFpXoux9ZjENBcD9Z2q2u+n
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+The parallel checkout tests fail when run with /bin/dash on MacOS 11.4,
+reporting the following error:
 
-Work to arrive at one patch (e.g. [1]) is many times non-trivial, even
-if the patch is.
+   ./t2080-parallel-checkout-basics.sh: 33: local: 0: bad variable name
 
-Part of the work is explained in the commit message, but only a tiny amount.
+That's because wc's output contains leading spaces and this version of
+dash erroneously expands the variable declaration as "local workers=3D 0",
+i.e. it tries to set the "workers" variable to the empty string and also
+declare a variable named "0", which not a valid name.  This is a known
+dash bug (https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097).
 
-For a full explanation of the removal of GNU_ROFF I wrote a blog post
-with much more detail:
+Work around it by passing the command output directly to test instead of
+storing it in a variable first.  While at it, let grep count the number
+of lines instead of piping its output to wc, which is a bit shorter and
+more efficient.
 
-https://felipec.wordpress.com/2021/06/05/adventures-with-man-color/
+Helped-by: Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Changes since v1:
+- Explain the root cause.
+- Get rid of the local variable "workers".
+- Adjust title accordingly.
+- Still use grep -c, though.
+- Remove input redirection.
 
-Cheers.
+ t/lib-parallel-checkout.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-[1] https://lore.kernel.org/git/20210515115653.922902-2-felipe.contreras@gmail.com/
+diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+index 21f5759732..66350d5207 100644
+=2D-- a/t/lib-parallel-checkout.sh
++++ b/t/lib-parallel-checkout.sh
+@@ -27,8 +27,7 @@ test_checkout_workers () {
+ 	rm -f "$trace_file" &&
+ 	GIT_TRACE2=3D"$(pwd)/$trace_file" "$@" 2>&8 &&
 
--- 
-Felipe Contreras
+-	local workers=3D$(grep "child_start\[..*\] git checkout--worker" "$trace=
+_file" | wc -l) &&
+-	test $workers -eq $expected_workers &&
++	test $(grep -c "child_start\[..*\] git checkout--worker" "$trace_file") =
+-eq $expected_workers &&
+ 	rm "$trace_file"
+ } 8>&2 2>&4
+
+=2D-
+2.31.1
+
