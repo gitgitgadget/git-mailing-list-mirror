@@ -2,90 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08666C47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8980C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:33:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBC46613B4
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:30:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AA61613DF
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbhFEPcC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 11:32:02 -0400
-Received: from mout.web.de ([212.227.17.12]:37079 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229930AbhFEPcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 11:32:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1622907007;
-        bh=NUI3WkhHGYCjh4m6mVcfKLLllxP3IItASRhj1AlejfI=;
-        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=auuSeHnhWVrmJ7antp863KR5loN/LXZvwWV3ZFRfbHf7U6s02FBYpQpdkRT6w1R7J
-         /lc+VKqLLYYyQc0hg0Iq6zsxz+WI5oVKYxFnwhz1JEqveY6Aj0NmyI1zLrblSiiPkj
-         XUXemUd8W6bz7eL5Ix4WD6cplk0WvsIVXGQpx9CI=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
- (mrweb105 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MovjQ-1l1Nlx30O6-00qVHe; Sat, 05 Jun 2021 17:30:07 +0200
-Subject: Re: [PATCH] parallel-checkout: use grep -c to count workers in tests
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de>
- <CAHd-oW7f0rfRaTyvJJMt7uNiLS4F9c=D3oKYc5v+unzxPPxjCw@mail.gmail.com>
- <a946daaa-6aa8-8527-5b55-ccf86de2a9d7@web.de>
-Message-ID: <eb8e938f-1308-6200-5484-e009f6e4c625@web.de>
-Date:   Sat, 5 Jun 2021 17:30:06 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <a946daaa-6aa8-8527-5b55-ccf86de2a9d7@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:vj4pSuPTvrMdmnG5jBCO/3vN+XqTAicdcNXwIkbNJOBAVRRVKUv
- MfSFseWDTqdv0Bbv6xVIesrrZrMZYxvpVoNGNT6RstWwIdy56eh0yRMp7B/637jlpq+4iQ+
- yoabejjW4AWehPbwnA4u5g0/tJ9Aqkx2gBnMMXCxavSQKe9ZgYw+yVCjMPTSwqjUFi3lxwC
- ZrTpLmb5cSbUAjUMMj+wA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bWb2dLbq+zU=:mE750596rOSIZZe9OHOd1e
- NIn/zYYDMhd6Pup5Y5YK08O/NY3uQGtIVtlmENXjr/EXr1XUoYQOnflHHVsAZFv3dTxuCWZ8D
- ec4GJyXcUo+Us3bhTtLi7962Klvzl33UkAXGZ3QytjC1+z88mX7C+bv3u/rZRM3bTKHM6UN6U
- FDpYuIDAQPYtUCV0Up/751pSjqowBbZPyyKbB0rSNrBZT3NfoI1RDpsBHLZh7CvBvoigmpfSe
- kIFolrMskbb9lAD+dSz4iz38fSrPG4LS8KsM4q7HYNr5e7rwVEshE1MBZU7CDoYWqFaV2YoAP
- 65LuyjEmEvUTKiXxRBrrI3OUbrzlZQfwiQsM/sqsFeCZQeoA1CeoKKvPD2lTnwM1yWx0sQ15X
- dgqmLY83ph2K/4LmGPgzO65/0c+KWLnPF5ZEcK8TxlL/ca3Nc1b+ftez4odqDN/wl245jYzbh
- A4xP0voDImcE/8tT+qRRm9oCZGdMGK/JxiER+GgBYh2k6iCBDbMSLL0nKyeIstt85frpTGVs1
- KvSqg91I7dUVIrJXdJ9wl4LHJdEjHNG/SHeBwHQ1W02Sv/UmGNk3xyv6Avpm7cJqW4EGrBt6+
- 1wEXWu30AjkkzDZirj/t9raZmSr2IDcAcGjdXiX/T0FSNdsGu4wVu/AU9PyMSWTUtFdH+qy7f
- W/pbchpP85NRSZNHzazrGhCN3HG6adlNXZand8CFGTPOnqVbU/kxR/719/iHXIfQqY6Pl2uHq
- 4Pi0g3TwHu2v50Y7RKKoOnDGUpXk5fi8mpZyDIT//6idzcx6u7XQ7kzy8D6DZ2xpCz/ivy1h9
- WUmnM9nOyM+pDFN7fE7D5kVADc9PhyTFVYFIi9uRzBygDqOe2ppcNrmlHaJ3xNBRL9zJOfYZV
- yVI+nDer0u/NVDGvgfuUtxVJnrUe9IluzEuqtJRB3alFTM6ho+U5cL67UsoaT+1YmuvSkJ5g0
- +X7bb5i5eFHO8D6Ax/OPpA6//xzCr42scKWQbtw0a6OLF7m9nzWc/sdmEBFOSYpH4+clw3HLF
- Ds8XHCYPytu7D0xcsmNUkkDKzXtSgC8M1fWdvcsiQYzabEU/nL1r1ET6XLCh4fAv4a739f6FM
- SQuf8AQ/t8XyjprCihj7L2XPMEDoDr7z29r
+        id S229957AbhFEPfF convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 5 Jun 2021 11:35:05 -0400
+Received: from botech.co.uk ([81.187.226.106]:46476 "EHLO chimp.botech.co.uk"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229930AbhFEPfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 11:35:05 -0400
+Received: from botech.co.uk ([81.187.226.106] helo=[192.168.4.5])
+        by chimp.botech.co.uk with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <tpr.ll@botech.co.uk>)
+        id 1lpYIO-0001jG-RQ; Sat, 05 Jun 2021 16:33:08 +0100
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.20\))
+Subject: Re: [PATCH] unpack-trees: add core.sparseCheckoutRmFiles config
+From:   "Tim Renouf (open source)" <tpr.ll@botech.co.uk>
+In-Reply-To: <CABPp-BHT3ZrGrDVBcSTuzhSmy0EdtGUeHF_RAVohw=nemGhoOA@mail.gmail.com>
+Date:   Sat, 5 Jun 2021 16:33:08 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <66290CC2-CC83-491F-84BD-3D9107B11EFB@botech.co.uk>
+References: <20210601183106.3084008-1-tpr.ll@botech.co.uk>
+ <f6d39636-308c-c846-55b5-3f16a155e69d@gmail.com> <xmqqmts9q9m2.fsf@gitster.g>
+ <CABPp-BHs0ACvkCJMB-tO8xkiidB12NrN1hOhLRvm3U_Q=r2YcQ@mail.gmail.com>
+ <9BCB8981-09D5-4BF4-981B-2BF0AA0D6E5A@botech.co.uk>
+ <CABPp-BHT3ZrGrDVBcSTuzhSmy0EdtGUeHF_RAVohw=nemGhoOA@mail.gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+X-Mailer: Apple Mail (2.3445.104.20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.06.21 um 17:20 schrieb Ren=C3=A9 Scharfe:
-> Am 05.06.21 um 16:31 schrieb Matheus Tavares Bernardino:
->> On Sat, Jun 5, 2021 at 9:27 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->> Just one
->> minor nit: I think we could drop the redirection as grep can take the
->> file name as an argument.
->
-> I'm not sure if there's a grep out there that prints the filename before
-> the count even if it deals with a single file.  git grep does that, at
-> least.  POSIX[3] implies the lack of filename prefix for the single file
-> case, but I don't know if we can rely on that everywhere.
->
-> [3] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html
+Hi all
 
-Except we got plenty of "grep -c" calls with a single filename and no
-redirection in t/ already.  Adding one more should be fine.
+> Can you expand on this use case a bit? 
 
-Ren=C3=A9
+Fundamentally, I wanted sparse-checkout to cause all git commands to completely ignore all files outside sparse-checkout patterns, even if they happen to correspond to paths in the index. I realize that that is difficult to achieve, but I was hoping that my patch would make it close enough to be workable. In particular, I would need to avoid doing a merge (cherry-pick, rebase) with conflicts outside the sparse-checkout patterns.
+
+Here is the (maybe slightly specialized) use case:
+
+Due to decisions out of my hands, I have a monorepo containing some shared code and some separate components in subdirectories. There is a “main” branch where the code is built and delivered from. Each component is developed separately and has its own dev branch, e.g. “dev-component1”, “dev-component2”. Many developers develop on just one component, so they check out its dev branch. The “dev-component1” branch still contains the “main” version of the shared code and the other components, so you can merge it up to the main branch.
+
+But some people want to be able to develop on two components at the same time. So they want to check out component1 on its dev-component1 branch, and component2 on its dev-component2 branch. They would ideally want to do this at the same time as maintaining the overall monorepo directory layout. The monorepo does not give a good way to do that.
+
+I was experimenting with an approach combining sparse-checkout, worktrees, and the core.worktree config item, as follows:
+
+The monorepo has its main worktree at the root of the overall workspace, with sparse-checkout set to check out just the shared code not considered part of any separate component. Each component has its own worktree in its subdirectory, with sparse-checkout set to only check out that component. To get the monorepo-like directory structure, a component’s worktree has its core.worktree config item set to point back up to the root of the overall workspace.
+
+So, with that somewhat hairy structure, anything that touches a file outside of the worktree’s sparse-checkout actually touches a file in a different worktree, giving some surprising results.
+
+Even with my patch, there is still a risk of that happening. And having a component’s worktree rooted somewhere other than where you think it is rooted gave some other surprising results.
+
+I think I am going to abandon that approach and go a different way.
+
+Thanks for the attention.
+
+-tpr
