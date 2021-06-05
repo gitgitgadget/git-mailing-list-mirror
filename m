@@ -2,194 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C040C47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 14:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31CDEC47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:20:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11231613AC
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 14:57:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1358B613DF
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:20:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230048AbhFEO7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 10:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56804 "EHLO
+        id S229963AbhFEPWi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 11:22:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbhFEO73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 10:59:29 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF04C061766
-        for <git@vger.kernel.org>; Sat,  5 Jun 2021 07:57:24 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id u126so5630841pfu.13
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 07:57:24 -0700 (PDT)
+        with ESMTP id S229930AbhFEPWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 11:22:37 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B839DC061766
+        for <git@vger.kernel.org>; Sat,  5 Jun 2021 08:20:49 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so12092371otp.4
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 08:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VR6f1v7bSXrA6nVH5Ss4LfnA5La5Xv3aGS/hHFuXz1Y=;
-        b=pRBjtWLGNarwHyItwlct2ZFhffS/xcTr8Ax2ka2AUppUXK6C+bULrLpidNmSNdPOec
-         +SZoXstIDJEK1twUYZjV3vplSl8j59EmKh9ZU4fluHXewWKUOai5Qc/4djdrvLLnBlgo
-         484RhZKcTzZLE1/RPY8c2CUZuL+RhckoJij4jwphuOkdQv0hyDtBDdcEnUHLfSkCv/L2
-         dAnUuUIExjJ4ommMZagWbNvjbDXwczJDo/cNUWjTtv4phXuPRfCTXGe3p0CoE4sZ2aJj
-         nrmkGEREX9j4wp3CTE4y4HZB9RCAblIKFxkc9vMRROp490Tc+7kixmOceG++24vGT6xp
-         H6sA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2arq/D7pd7FsKvGlToOYMUSYSGVI7FkpqkmeHLCS1AI=;
+        b=bDoF2sXcl+ghFZrESHxmGrIlHAxH1nIoX7wvRF6RU7Yhy7LGC5Va0xBihZPx+VXczG
+         S8R9grUqAlZ4qmi5r7etQ8O4kBoriob62ANqY/93nun4Q4SncIjIDhRuSJzl5PFgQZs4
+         lW9Hvayu2R0XCLCd8whlFcAg4GQtd6iL87BPxzLeC0nfNYFscRxfciIy4lpVaDJmiVKM
+         C31RevSPRv8HpJQnzBoMAjUynTfKNgslmw7fsONVXkq1VIdVCy1QuSWK6Po5GqTDjhYW
+         ZirKps3gL3TL+f87b9vAMFa+NXSjNazl1KCoiN+v6XlYx7ihf+pAWF7kIqIxFrc4+WuN
+         OAHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VR6f1v7bSXrA6nVH5Ss4LfnA5La5Xv3aGS/hHFuXz1Y=;
-        b=bD4bgq9qNnzEf81248xA/CEQ2rtr/973OJvklNU++cO+39kyF5kEKAMzzE8d9Ybnyf
-         D36Dgn39T/jxGlpycS+yvs5n56GhtJ8y3W800tFMhx/zKdyJ/hpGLf0Shkglc3FF0dj/
-         nhNDK9z7iaePNNcJtCfyGf/8qMSOhcbRy01wPqWDhK3O5GDZC5GJQbDywavMavd+iSde
-         esIGff33mqclfvUGxK8uqHR+PO2UEa/QC7n2Xn+euF5gbbFls4TlBNORMt/aw/cX5WD8
-         vJOlCCV23Cr1GVf33hs71D0BkXjKLVXN4MLcTNqJe7KGErhc2WW+CpMDoiFHBiQZeB3f
-         s/Mw==
-X-Gm-Message-State: AOAM531wsr9dUAg80kW7tGZKkOFfGcdblnBqmSHDE0NK6ZG/8XOX0tD1
-        s4NYP5ckLL8kAgvGOAwVF8E=
-X-Google-Smtp-Source: ABdhPJwTTYPq5ZwLxQSKZUc2KEoLfRxhhiGQ2GSgLbuVP5DYaFJ/djD6L/0dviJs/R+kD8f4RvOVPQ==
-X-Received: by 2002:a62:aa01:0:b029:2ea:743:6693 with SMTP id e1-20020a62aa010000b02902ea07436693mr9668451pff.68.1622905044366;
-        Sat, 05 Jun 2021 07:57:24 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id o133sm4333918pfd.49.2021.06.05.07.57.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 05 Jun 2021 07:57:23 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Alexey Roslyakov <alexey.roslyakov@gmail.com>,
-        Arusekk <arek_koz@o2.pl>, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        Daniel Santos <hello@brighterdan.com>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        =?UTF-8?q?Emir=20Sar=C4=B1?= <bitigchi@me.com>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>,
-        Vincent Tam <VincentTam@users.noreply.github.com>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        rlespinasse <romain.lespinasse@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.32.0 round 1
-Date:   Sat,  5 Jun 2021 22:57:17 +0800
-Message-Id: <20210605145717.13646-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2arq/D7pd7FsKvGlToOYMUSYSGVI7FkpqkmeHLCS1AI=;
+        b=XtSEyIKPseWCJczSD16G/cGJeZWMjYOoepCKHx943kGzZ3RqHEI0lI5cGjDsfKGnxY
+         4vfkFmLCUNkoez+pDTidZCIyDllplalHeI2yigBJ1+9QG3KUPjvEsiHfgMtqaFu0607x
+         V/puSxLGQj9uezy+U+VDOZNuB6x+GTqPKBeR+mhffgl876SqyTiLRVs3b+AMjGc19IMk
+         tn3vN9x5SHFbbGBYLXnN3K6lp90X+Z5VNXcV8yXlA7as3t5WakrWZOUPRiUCYpn11zjT
+         QUKNO7eO+8qfuUunc1kavXfiXCyX1vD1Z5uOnDu4SrwMGypqABy3bHI7FgTPiCDGnozn
+         P3nQ==
+X-Gm-Message-State: AOAM533kc5mVzk9bxceVLIkDbTx2KySuf74ZsIMX/1j08I9x6x2fgueI
+        KyLBWhspn7YXksQZhNh5+bzeJ/62x3ZTiH+yoXs=
+X-Google-Smtp-Source: ABdhPJyDJ3UrbGdJktAJLs711D42MsdW15XhWo55+tPHO+X53PMnBsv+6DHEvL8n8ZcvurWRxuv/6XutOhD/b+VH+gw=
+X-Received: by 2002:a9d:a13:: with SMTP id 19mr7863000otg.131.1622906448831;
+ Sat, 05 Jun 2021 08:20:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.972.git.1622884415.gitgitgadget@gmail.com> <ccdd18ad508824aa206a02c479229d0ede69522d.1622884415.git.gitgitgadget@gmail.com>
+In-Reply-To: <ccdd18ad508824aa206a02c479229d0ede69522d.1622884415.git.gitgitgadget@gmail.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Sat, 5 Jun 2021 20:50:37 +0530
+Message-ID: <CA+CkUQ9f8kN=S8dU_zt=-uG1pcK8cE9CuhJdqR9oMwcguZ9FLg@mail.gmail.com>
+Subject: Re: [PATCH 4/6] [GSOC] ref-filter: add %(rest) atom and --rest option
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-Hi Junio,
+On Sat, Jun 5, 2021 at 2:43 PM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: ZheNing Hu <adlternative@gmail.com>
+>
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -670,6 +674,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>                         N_("print only branches of the object"), parse_opt_object_name),
+>                 OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+>                 OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
+> +               OPT_STRING(0, "rest", &format.rest, N_("rest"), N_("specify %(rest) contents")),
+>                 OPT_END(),
+>         };
+>
 
-Please pull the following l10n updates for Git 2.32.0.
+Although it's not related to this patch. But I just noticed an unusual
+extra space(s) before the first argument of `OPT_STRING()`. (above the
+line you added)
 
-The following changes since commit bf949ade81106fbda068c1fdb2c6fd1cb1babe7e:
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -37,6 +37,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>
+>                 OPT_GROUP(""),
+>                 OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
+> +               OPT_STRING(  0 , "rest", &format.rest, N_("rest"), N_("specify %(rest) contents")),
+>                 OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
+>                 OPT__COLOR(&format.use_color, N_("respect format colors")),
+>                 OPT_REF_SORT(sorting_tail),
 
-  Git 2.32-rc0 (2021-05-16 21:05:24 +0900)
+Here too in `OPT_INTEGER()` and `OPT_INTEGER()`.
 
-are available in the Git repository at:
+Also, I don't think these extra space(s) are intended. So you don't
+need to imitate them.
 
-  git@github.com:git-l10n/git-po.git tags/l10n-2.32.0-rnd1
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -481,6 +486,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>                 OPT_STRING(  0 , "format", &format.format, N_("format"),
+>                            N_("format to use for the output")),
+>                 OPT__COLOR(&format.use_color, N_("respect format colors")),
+> +               OPT_STRING(0, "rest", &format.rest, N_("rest"), N_("specify %(rest) contents")),
+>                 OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+>                 OPT_END()
+>         };
 
-for you to fetch changes up to 33b62fba4d61d604b30942fb4ec22b6e2782726b:
+Here too in the first line.
 
-  l10n: zh_CN: for git v2.32.0 l10n round 1 (2021-06-05 22:45:18 +0800)
-
-----------------------------------------------------------------
-l10n-2.32.0-rnd1
-
-----------------------------------------------------------------
-Alex Henrie (1):
-      l10n: Update Catalan translation
-
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (5204t)
-
-Alexey Roslyakov (1):
-      l10n: ru.po: fix typo in Russian translation
-
-Bagas Sanjaya (5):
-      l10n: id: po-id for 2.32.0 (round 1)
-      l10n: README: document git-po-helper
-      l10n: README: document "core translation"
-      l10n: README: document l10n conventions
-      l10n: README: note on fuzzy translations
-
-Daniel Santos (2):
-      l10n: pt_PT: add Portuguese translations part 2
-      l10n: pt_PT: add Portuguese translations part 3
-
-Emir Sarı (1):
-      l10n: tr: v2.32.0-r1
-
-Jean-Noël Avila (1):
-      l10n: fr: v2.32.0 round 1
-
-Jiang Xin (9):
-      l10n: git.pot: v2.32.0 round 1 (126 new, 26 removed)
-      l10n: fix typos in po/TEAMS
-      Merge branch 'fr_next' of github.com:jnavila/git
-      Merge branch 'master' of github.com:Softcatala/git-po
-      Merge branch 'l10n/zh_TW/21-05-20' of github.com:l10n-tw/git-po
-      l10n: README: add file extention ".md"
-      Merge branch 'pt-PT' of github.com:git-l10n-pt-PT/git-po
-      Merge branch 'fix_typo' of github.com:e-yes/git
-      l10n: zh_CN: for git v2.32.0 l10n round 1
-
-Jordi Mas (1):
-      l10n: Update Catalan translation
-
-Matthias Rüster (1):
-      l10n: de.po: Update German translation for Git v2.32.0
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation (5204t0f0u)
-
-Trần Ngọc Quân (1):
-      l10n: vi.po(5204t): Updated Vietnamese translation for v2.32.0
-
-Vincent Tam (1):
-      l10n: fr.po fixed inconsistencies
-
-Yi-Jyun Pan (2):
-      l10n: zh_TW.po: v2.32.0 round 1 (11 untranslated)
-      l10n: zh_TW.po: localized
-
-rlespinasse (1):
-      l10n: fr: fixed inconsistencies
-
- po/{README => README.md} |   113 +
- po/TEAMS                 |     4 +-
- po/bg.po                 |  7100 ++++++++++++------------
- po/ca.po                 | 13056 ++++++++++++++++++++++++---------------------
- po/de.po                 |  6956 +++++++++++++-----------
- po/fr.po                 | 10104 ++++++++++++++++-------------------
- po/git.pot               |  6731 ++++++++++++-----------
- po/id.po                 |  9809 +++++++++++++++++++---------------
- po/pt_PT.po              |  1237 +++--
- po/ru.po                 |     2 +-
- po/sv.po                 |  6882 +++++++++++++-----------
- po/tr.po                 |  6819 ++++++++++++-----------
- po/vi.po                 |  6893 +++++++++++++-----------
- po/zh_CN.po              |  6862 +++++++++++++-----------
- po/zh_TW.po              |  7104 ++++++++++++------------
- 15 files changed, 47249 insertions(+), 42423 deletions(-)
- rename po/{README => README.md} (72%)
-
---
-Jiang Xin
+Thanks,
+Hariom
