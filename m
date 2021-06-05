@@ -2,89 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,SUBJ_BUY autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 364ADC47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 375EAC47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:32:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05BD9613AA
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:31:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BC97613B4
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbhFEWdQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 18:33:16 -0400
-Received: from mail-qk1-f179.google.com ([209.85.222.179]:37539 "EHLO
-        mail-qk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbhFEWdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 18:33:16 -0400
-Received: by mail-qk1-f179.google.com with SMTP id i67so13102616qkc.4
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 15:31:15 -0700 (PDT)
+        id S230050AbhFEWdw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 18:33:52 -0400
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:36793 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229998AbhFEWdv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 18:33:51 -0400
+Received: by mail-pj1-f41.google.com with SMTP id d5-20020a17090ab305b02901675357c371so9203287pjr.1
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 15:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ampliffy-com.20150623.gappssmtp.com; s=20150623;
-        h=date:to:from:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jykGrU5P8idetVgKdzwIrjt7HfIbGzNbdFxsgbxNnx8=;
-        b=tvPZbR++Vy4TOAXgF7J4V+uxgTrQIkf4nGzcTCfwgAbMF8JAcxswsaO9oeqkkAZv/N
-         JuOrGTnK8q62HXf7kBaT/FYInbeyIXa0/RyQ/gymYUD+5RIAYjEhD/iUKH3Pfb56i9Fo
-         EgYI4uxgSv8cULrhDPb3NOKgLTshpw6t+yrMdhSlKIt8wSOZeLHB7XgS1G+rQgQ4a1hX
-         fODsP3hqPTZRDQ87QZvNe1/Tc+cY+jguvaQmIGdSEN++zV9uSqAWTPSEnCYYm06LHirK
-         Acl90mBMMp8sx/3Qghq6eyxa9+vatOny+ITImD13X13v4Rsi2sEWjvkfha7Hg4tz57v7
-         91xQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uSKHpIiaF5BDbSI9CFYZdaZFkqg6yIpEkfRo9DcUiWg=;
+        b=ThgRPZd75qF42qJNXh8TMm+eiLmWUBv7zalj6RTnXwrNzSY94gQqqIHOVmn9HoMFOn
+         FEt8kJYQgfP0yXBKc9awdKudy+EIUin6oGx6AOMYd9iROraircCH2Seite2GWYCc6oSw
+         HLGeVuMaeTzMept1XuYtANPnkitEvVOWh2nTQQQOnGBm5eNWnIZJyDzSDRRhnJa7Mw4s
+         LUoR3sMFA0fgZyhTdM9rrYSTgJgPaFEr2WzZgeEqEvcq1FuElicvMKGSzt019XRVzGmt
+         shpy+2giH9iTUlRfkKpwfE4ylJGpSXwUjF2bBgSoL9A0470nNex1EyfdovAEx96U+/is
+         qaeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:to:from:subject:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jykGrU5P8idetVgKdzwIrjt7HfIbGzNbdFxsgbxNnx8=;
-        b=liSSieNTv9Y2ZG8aJ6bcwGC2TOGbgNzVozsK/Uyok3XV3WA0fydMZ4hqLMJpfzSQZK
-         +Juwh6LoO9zKAUVkn5wlfXq9TOOpbpogsxHq4dTm2cr247+G1qpProy34nUXesbVYRsz
-         Q+o1barJtMdU2RZLs1mSo+0eLyl0hbQRsT0VhumRd12CHbGft0qlEpTrh4HouLNGXPMy
-         /266+BcCFyttp6FAqdk1sLTfiiJthAZOc4fmmanqB50Ez/QwbFOs3ACyJUJU2tZ/ts3h
-         nuP7wBhjVx5IFNbk0sx/+rgkUP/l8OKZGVgUIXXWRaHw/8yM2ZCfCVNHQjWJ6HAQ7KwB
-         Tv2A==
-X-Gm-Message-State: AOAM532YSnC4ZUVIOZGpFCGTSaHJaPN0GRYjacVoaD1xSjuafzmQvD17
-        vPT0ts4MjKlBUFS+CKqnCEyPvW0FA3r4gw==
-X-Google-Smtp-Source: ABdhPJx+iOxfhqm3JY1HPhe+hr8nfW5skDBRv1sYTDEd3vcwENgBYf1PWs0P9L41buDkmEFHl6Dw3A==
-X-Received: by 2002:a37:5847:: with SMTP id m68mr10292384qkb.111.1622932214717;
-        Sat, 05 Jun 2021 15:30:14 -0700 (PDT)
-Received: from intranet.smilethink.com (ec2-18-207-154-26.compute-1.amazonaws.com. [18.207.154.26])
-        by smtp.gmail.com with ESMTPSA id o22sm6038839qtq.89.2021.06.05.15.30.14
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jun 2021 15:30:14 -0700 (PDT)
-Date:   Sun, 6 Jun 2021 00:29:47 +0200
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Diana_Gonz=C3=A1lez_-_Ampliffy=2Ecom?= 
-        <diana@ampliffy.com>
-Subject: Buy In-Stream preroll video
-Message-ID: <955807b31c32217117d53affd7e49222@intranet.smilethink.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uSKHpIiaF5BDbSI9CFYZdaZFkqg6yIpEkfRo9DcUiWg=;
+        b=gnhm3VzugiAwc2k1lNyLe3T6QyvNe1HDPu0Ri9OrYrGisLNUym3F5RKFnnwuhamZ7X
+         6bbluBUxLIRoelAJb5B2XDJEUapT0KGNUAXXPfJKWDpLTVQkmSdlf8oyqWntrs61SyYE
+         ecEZ7sylSzZF2GFyKeePg99Yht6oC5dyTa2gQjxx+n9wMpXgb3hnJF9xBCjg8kysSd5Z
+         cuvlIVuiacp/h8IFVSCiDOVFPycQZzM/RCFxygZ/N5zh1lC0EuEc3FR5Cg85HjqCPgsa
+         nNTmBtccbnkH/Dblg44vmlLd4fm35lTBHH187HqOllMsOgr5LmTJwQs4lhzIeL+JUWK2
+         bR0Q==
+X-Gm-Message-State: AOAM531tkFTm6HKFFtCBXbV740k6TpU3g8mSOZaJY7TERUcsJ4tzKK2p
+        UDddMvEB7vC7sik1qOcUxx4N8gpD4Ubii7iZFuY=
+X-Google-Smtp-Source: ABdhPJxwoxFHnuc6/LdoAzSWJ4c7Eojfpft0DVn4cfhFBEeSFuv0diP81L4f9Xx0e2ezS4YW9UEv9T8wxEPbrfDnx48=
+X-Received: by 2002:a17:90a:4216:: with SMTP id o22mr24335106pjg.3.1622932263395;
+ Sat, 05 Jun 2021 15:31:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.970.git.1622828605.gitgitgadget@gmail.com>
+ <3170f78daa5fa89f04f61e24c9c64c93ea5b394f.1622828605.git.gitgitgadget@gmail.com>
+ <CAKiG+9UT+B-kFiY7sA8ZedB31xYARbFgSFwQRzktww_S2B_tfA@mail.gmail.com>
+In-Reply-To: <CAKiG+9UT+B-kFiY7sA8ZedB31xYARbFgSFwQRzktww_S2B_tfA@mail.gmail.com>
+From:   Matt Rogers <mattr94@gmail.com>
+Date:   Sat, 5 Jun 2021 18:30:53 -0400
+Message-ID: <CAOjrSZv9h09y-=KVz8UGZaB0r5MHRqFZJjp0VDFX6fnohoFx9Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] cmake: add knob to disable vcpkg
+To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Danh Doan <congdanhqx@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello ,
+On Fri, Jun 4, 2021 at 4:55 PM Sibi Siddharthan
+<sibisiddharthan.github@gmail.com> wrote:
+>
+> On Fri, Jun 4, 2021 at 11:13 PM Matthew Rogers via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>
+> > -if(WIN32)
+> > +
+> > +if (WIN32 AND NOT NO_VCPKG)
+> > +       set(USING_VCPKG TRUE)
+> > +else()
+> > +       set(USING_VCPKG FALSE)
+> > +endif()
+>
+> I think it would be better if we could have an option for this knob.
+> Maybe like this
+>
+> option(NO_VCPKG "Don't use vcpkg for obtaining dependencies. Only
+> applicable to Windows platforms" OFF)
 
-How are you? I hope that very good!
+Option would definitely be the better tool to use here, I just didn't
+think about
+it when originally writing it, so I'll send a reroll with that and the spelling
+corrections suggested by Eric Sunshine.  I assume you'd prefer something
+with a final form more like:
 
-I would be interested in buying preroll video advertising on your site.
+option(USE_VCPKG "Whether or not to use vcpkg for obtaining dependencies.
+Only applicable to Windows platforms" ON)
 
-Who should I talk to to explain how we work and explore a possible agreement?
 
-Thank you very much for your help,
+>
+> I would prefer to use `USE_VCPKG`.
+>
+> Thank You,
+> Sibi Siddharthan
 
-Diana González
-Media Buyer
-----------------------------------
-Ampliffy
-Access to a Young Audience
-Barcelona - Madrid - San Francisco
-----------------------------------
-Email: diana@ampliffy.com
-Mobile: +34.611.693.613
-Skype: Dianagon90
-Site: http://www.ampliffy.com
------------------------------------
 
+
+-- 
+Matthew Rogers
