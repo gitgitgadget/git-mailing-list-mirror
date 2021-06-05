@@ -2,121 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31CDEC47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57979C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:21:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1358B613DF
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:20:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3946E613DF
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 15:21:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbhFEPWi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 11:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbhFEPWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 11:22:37 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B839DC061766
-        for <git@vger.kernel.org>; Sat,  5 Jun 2021 08:20:49 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so12092371otp.4
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 08:20:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2arq/D7pd7FsKvGlToOYMUSYSGVI7FkpqkmeHLCS1AI=;
-        b=bDoF2sXcl+ghFZrESHxmGrIlHAxH1nIoX7wvRF6RU7Yhy7LGC5Va0xBihZPx+VXczG
-         S8R9grUqAlZ4qmi5r7etQ8O4kBoriob62ANqY/93nun4Q4SncIjIDhRuSJzl5PFgQZs4
-         lW9Hvayu2R0XCLCd8whlFcAg4GQtd6iL87BPxzLeC0nfNYFscRxfciIy4lpVaDJmiVKM
-         C31RevSPRv8HpJQnzBoMAjUynTfKNgslmw7fsONVXkq1VIdVCy1QuSWK6Po5GqTDjhYW
-         ZirKps3gL3TL+f87b9vAMFa+NXSjNazl1KCoiN+v6XlYx7ihf+pAWF7kIqIxFrc4+WuN
-         OAHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2arq/D7pd7FsKvGlToOYMUSYSGVI7FkpqkmeHLCS1AI=;
-        b=XtSEyIKPseWCJczSD16G/cGJeZWMjYOoepCKHx943kGzZ3RqHEI0lI5cGjDsfKGnxY
-         4vfkFmLCUNkoez+pDTidZCIyDllplalHeI2yigBJ1+9QG3KUPjvEsiHfgMtqaFu0607x
-         V/puSxLGQj9uezy+U+VDOZNuB6x+GTqPKBeR+mhffgl876SqyTiLRVs3b+AMjGc19IMk
-         tn3vN9x5SHFbbGBYLXnN3K6lp90X+Z5VNXcV8yXlA7as3t5WakrWZOUPRiUCYpn11zjT
-         QUKNO7eO+8qfuUunc1kavXfiXCyX1vD1Z5uOnDu4SrwMGypqABy3bHI7FgTPiCDGnozn
-         P3nQ==
-X-Gm-Message-State: AOAM533kc5mVzk9bxceVLIkDbTx2KySuf74ZsIMX/1j08I9x6x2fgueI
-        KyLBWhspn7YXksQZhNh5+bzeJ/62x3ZTiH+yoXs=
-X-Google-Smtp-Source: ABdhPJyDJ3UrbGdJktAJLs711D42MsdW15XhWo55+tPHO+X53PMnBsv+6DHEvL8n8ZcvurWRxuv/6XutOhD/b+VH+gw=
-X-Received: by 2002:a9d:a13:: with SMTP id 19mr7863000otg.131.1622906448831;
- Sat, 05 Jun 2021 08:20:48 -0700 (PDT)
+        id S229964AbhFEPWx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 11:22:53 -0400
+Received: from mout.web.de ([217.72.192.78]:38003 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229938AbhFEPWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 11:22:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1622906459;
+        bh=Ecj9C7fH7Sgg5XnFAWgfWluzTA5X+DKzSJJcOQWnoks=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=SuCj18jjh5CiF45snpmNhMjHOJU85UJABwqsNnzra/YwqG1ZHPqeivE79+hnze+rv
+         tZ3+boJR6RLuzb5N9HQzIfZRj95ZWx0wJkD8AjhfFbKEYi6/vyFbVuvHeAlWxy1J1Y
+         iEZHFPtA3y+g0ysoI1EhWO/WJNJpJYBDzfDDSyrs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
+ (mrweb105 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 1MrwwJ-1l3r1a1xif-00o2Y7; Sat, 05 Jun 2021 17:20:59 +0200
+Subject: Re: [PATCH] parallel-checkout: use grep -c to count workers in tests
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de>
+ <CAHd-oW7f0rfRaTyvJJMt7uNiLS4F9c=D3oKYc5v+unzxPPxjCw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <a946daaa-6aa8-8527-5b55-ccf86de2a9d7@web.de>
+Date:   Sat, 5 Jun 2021 17:20:58 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <pull.972.git.1622884415.gitgitgadget@gmail.com> <ccdd18ad508824aa206a02c479229d0ede69522d.1622884415.git.gitgitgadget@gmail.com>
-In-Reply-To: <ccdd18ad508824aa206a02c479229d0ede69522d.1622884415.git.gitgitgadget@gmail.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Sat, 5 Jun 2021 20:50:37 +0530
-Message-ID: <CA+CkUQ9f8kN=S8dU_zt=-uG1pcK8cE9CuhJdqR9oMwcguZ9FLg@mail.gmail.com>
-Subject: Re: [PATCH 4/6] [GSOC] ref-filter: add %(rest) atom and --rest option
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHd-oW7f0rfRaTyvJJMt7uNiLS4F9c=D3oKYc5v+unzxPPxjCw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:AIAg/LSJOWDwX/BQw/THKwOxU1zRAz6aVW6NwzNOKlmellBKuQK
+ fmE1Xml93/D7FN+UdmK53DnnlkTw7D8fHFRosp1F7JNmhCaQUjqQNHFFV3D2K2oluB6jogg
+ 4Pjba5hvOS3hfX7FrmNLdOVyrzYopPHteTZrotiVJTvRprIjrN3XH7lgCbvxaUPX6QCijuz
+ qqO9Nf1IZcO64cl4v/Qfw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Rre9oo/QtB4=:ige9iqyY4HkmcZ+i9LLVIO
+ XzqLjQYe76sSxFR0bxG9uao7TTNwgCiEtwY5L7WTvh07wNT1PoY6nWgkolIq9dj2qf4j33YxC
+ gtqbib4gf5J+/whdevcLebk/OuDLA17rGB9bLk5eYIscyeMVNXRR8fUAIMd321HYkinTYQ72G
+ d9sUhqAQTjLVQscQKV7Mw1IPSIhzlS8HXFxVCOiZepvVAHHf5AMhaWYKzLflJvmSVlurYBW97
+ KSmupboJG33UJc7atTrkNSb/uRGHXVJ9BgZj6AomIVcvEFg/4LXmza/wQ2GHqDFkNUadGsgk+
+ 7G2+0r37TON2F0bjNKaK1OOw5J5ayRHlPzQdbyomG3dqMTcFAuHPWzWnku/5vE5YeUatlQOma
+ eC0EbNtZljd8VDMl2XpTwq4b2QYsmEOa1M1OcDFXK08Zkf2JtBiqESonr1rNTJ2K+KixmPpRn
+ 5wSI5zUB+kd5aYrLd+7+pLrQwNThDtteOxhxmDGbch/KjJzihY9NUO6laxq9B6CSWLjKmXSS6
+ WYq+LcO682yZJ6/qL98HEyS6u2UQESkv54N0cggZC3jee7+y62yaEF6bZOq1JwPw0AEZ4q1ci
+ hikUaPFf7qAwVDanNTTIUrhkmiyiqqnYr36MAZdspzbLFuCWy+iZ1UMdEigf7INdEr+shtKYO
+ xObukC/AUeo1ftTOx8ssUbgdp9kQWdXoEdO0CphO/xYbKmzUPlA4M5QG58I40fzKCBCDqEd/e
+ s/VPXhh8ODxIjl2/UOemdxof9wpAq997rdaLGsw98hrwEbYo6YQqC7DvQ4/bfSFX72RSKGjYy
+ IBcRp3pnXi2A6xnqfv70G51lIuWEPsvx8D/tv0rxFFOV+frhm3toKd3kftTGkH60tjDEb0fgI
+ 9HzRnlX4nwYl5zZpU1KFmLmPyedUYG7bfdNFHcEaeRLVRmVUtddf2XvshzB+COiPooCbd30sB
+ uS6HJpyUfTfNpNeP5QYajQTyCopFSMUtSwWgpuW9nhNWRk+r/gLaKLiTRw2vODytfRna9Bs8X
+ yanP7Adkp0SDR30oupxBw8Q9YxQWa/fvd9RjVYpcusx3GQ1/AXMbA5BhFPcXmhV00/jbiIiRj
+ pDP7TOtNEGVS96MB/hQ8XXtL1utfFHZaSQJ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Sat, Jun 5, 2021 at 2:43 PM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Am 05.06.21 um 16:31 schrieb Matheus Tavares Bernardino:
+> On Sat, Jun 5, 2021 at 9:27 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>>
+>> The parallel checkout tests fail when run with /bin/dash on MacOS 11.4,
+>> reporting the following error:
+>>
+>>    ./t2080-parallel-checkout-basics.sh: 33: local: 0: bad variable name
 >
-> From: ZheNing Hu <adlternative@gmail.com>
+> That's interesting. It seems that dash is trying to use wc's output
+> (in this case "0") as a local variable name which, of course, is not
+> valid.
 >
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -670,6 +674,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->                         N_("print only branches of the object"), parse_opt_object_name),
->                 OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
->                 OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
-> +               OPT_STRING(0, "rest", &format.rest, N_("rest"), N_("specify %(rest) contents")),
->                 OPT_END(),
->         };
+> This reply [1] to this bug report [2] mentions that dash expands a
+> local assignment like the following:
 >
-
-Although it's not related to this patch. But I just noticed an unusual
-extra space(s) before the first argument of `OPT_STRING()`. (above the
-line you added)
-
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -37,6 +37,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+>     x=3D"1 2 3"
+>     local y=3D$x ---expands-to---> local y=3D1 2 3
 >
->                 OPT_GROUP(""),
->                 OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
-> +               OPT_STRING(  0 , "rest", &format.rest, N_("rest"), N_("specify %(rest) contents")),
->                 OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
->                 OPT__COLOR(&format.use_color, N_("respect format colors")),
->                 OPT_REF_SORT(sorting_tail),
+> So, in this case, dash thinks we are trying to declare three local
+> variables, y, 2, and 3, which is an error. In bash, the above commands
+> would result in $y getting the value "1 2 3", even though we didn't
+> quote $x in the assignment. (BTW, the reply mentions that quoting the
+> right side of the assignment should make this work in dash as well.)
+>
+> I wonder if that's what's happening here. Maybe "wc -l" is outputting
+> a space before the number, and that makes dash parse this line as
+> something like `local workers=3D"" 0=3D"" `? If that's really the case (=
+I
+> can't confirm because the bug seems to have been fixed in the dash
+> version I have), maybe we could mention that in the commit message.
+>
+> [1]: https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097/comments=
+/6
+> [2]: https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097
 
-Here too in `OPT_INTEGER()` and `OPT_INTEGER()`.
+Ah, indeed:
 
-Also, I don't think these extra space(s) are intended. So you don't
-need to imitate them.
+   $ dash -c 'foo () { local bar=3D$(echo "1"); }; foo'
 
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -481,6 +486,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->                 OPT_STRING(  0 , "format", &format.format, N_("format"),
->                            N_("format to use for the output")),
->                 OPT__COLOR(&format.use_color, N_("respect format colors")),
-> +               OPT_STRING(0, "rest", &format.rest, N_("rest"), N_("specify %(rest) contents")),
->                 OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
->                 OPT_END()
->         };
+   $ dash -c 'foo () { local bar=3D$(echo " 1"); }; foo'
+   dash: 1: local: 1: bad variable name
 
-Here too in the first line.
+   $ wc -l </dev/null | tr ' ' s
+   sssssss0
 
-Thanks,
-Hariom
+>>  t/lib-parallel-checkout.sh | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+>> index 21f5759732..145276eb4c 100644
+>> --- a/t/lib-parallel-checkout.sh
+>> +++ b/t/lib-parallel-checkout.sh
+>> @@ -27,7 +27,7 @@ test_checkout_workers () {
+>>         rm -f "$trace_file" &&
+>>         GIT_TRACE2=3D"$(pwd)/$trace_file" "$@" 2>&8 &&
+>>
+>> -       local workers=3D$(grep "child_start\[..*\] git checkout--worker=
+" "$trace_file" | wc -l) &&
+>> +       local workers=3D$(grep -c "child_start\[..*\] git checkout--wor=
+ker" <"$trace_file") &&
+>
+> Nice, and the result is both cleaner and more efficient :) Just one
+> minor nit: I think we could drop the redirection as grep can take the
+> file name as an argument.
+
+I'm not sure if there's a grep out there that prints the filename before
+the count even if it deals with a single file.  git grep does that, at
+least.  POSIX[3] implies the lack of filename prefix for the single file
+case, but I don't know if we can rely on that everywhere.
+
+[3] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html
+
+>
+>>         test $workers -eq $expected_workers &&
+>>         rm "$trace_file"
+>>  } 8>&2 2>&4
+>> --
+>> 2.31.1
