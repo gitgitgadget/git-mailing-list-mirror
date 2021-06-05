@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEECEC4743C
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 251A1C4743D
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:57:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91706613C9
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:54:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F271A613BF
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbhFEB4G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 21:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56696 "EHLO
+        id S230468AbhFEB7c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Jun 2021 21:59:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbhFEB4G (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jun 2021 21:56:06 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78AF9C061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 18:54:05 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id o12-20020a5b050c0000b02904f4a117bd74so14159510ybp.17
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:54:05 -0700 (PDT)
+        with ESMTP id S230169AbhFEB7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 21:59:31 -0400
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87554C061766
+        for <git@vger.kernel.org>; Fri,  4 Jun 2021 18:57:44 -0700 (PDT)
+Received: by mail-qk1-x74a.google.com with SMTP id n3-20020a378b030000b02903a624ca95adso7736926qkd.17
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=CDw0C+PTTCs2WvdHoytlWtcWCgpYlRv/Y3C5vuA9ykY=;
-        b=Cs4GXlWbc4VRfK/GGOjH4QCDlcW8NQo5jNi65yigUnh4Gyr84ChcrlTIZn8ytqVjss
-         MEFJGiouuEfkuERUcrVVEt8fvyOAReChB4PgP+VeoNniwEK/aKSKvlILIwML1ZKxfHst
-         yBEksnqW5olubMblNQtNqf5oTmwVhsnWeWbQ4r6SKgv1Tx82k+UMb9pTw2aDOrLWQhmC
-         cXbLE2WZgXxfVNDP3+AJcdwBL3DHRdHY1sAJDy3JIWQE/M3Poz6yVi+JauThIdy4OqPg
-         A8rkL70hm63dcjpyCurkz9OcZLE5DIm72iINC4kyM2FnZllOmTgSI1S221TxJnQaJwID
-         rtXA==
+        bh=wCT3y1C/dDv30SSL6Y30+Gog35hmiHRCSb2ERYhXTQU=;
+        b=Dlgom+AAbqbEZwqAu0dLs843AzamXDzQxFq+KHzd2UGccVoTOttaXIpOyf/j8s+Sdk
+         SUUzbzq9oY47Iq4qcNLdvl3wT9eE+72HqQUowOhf/WBPMY1jJuXV9w79mLhmDsyU76zW
+         0G01XmNipESbzVi73Rx2h4tPLfoUbAC97u/AA0V56vAhNXzoD5Ure4akzma/5I7keC5y
+         ZJ16Wv0O5OiXlsaly29UChHhjbdli72c6xHavc/Ff4aZQ8HKR/uN+2t08IFf0SOkcDEO
+         0XiWKQtIUAGdzNFCGEwrOyW4zG9IL+IFUPJjsMVPp6EoTAfpycC7XKBYYGvlJG3eLmb4
+         SWIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=CDw0C+PTTCs2WvdHoytlWtcWCgpYlRv/Y3C5vuA9ykY=;
-        b=sOHirQPXvsLTarR3BUotDlO/JMVz7EE/L79Jl7N5EL1loSJRCywo7cfNxomi+mjEmc
-         5VrWFCzH0SW7kq5bn286dibvDzkS8X4dnzVuDliIM7UmI/NQf6Bsd8jQJn58ynPu9asn
-         ezxNGdr89IrZOVCOXAN2WW+7K5xogPQBj6DVQR7hafrph5i306HIRTO491YbcpAwxdGs
-         K7jyV8brfDEOT54aKOTlnKRVFxqtG82xWjSheAA6a8hGMdPDoyT8EMDQT4z27hNnHVGi
-         w2HAcID/msnAfClnFMw+R8MW+NpnhM18zVCPUkVcbsSbfwBGnHWAr7VJbHTUZaIiRcRX
-         mZag==
-X-Gm-Message-State: AOAM532QujcF6EgHp+JIYIs3ziccz3Gau8cVlEZE2fy+7tEVLJVkVVE4
-        H3pKY9XcrRhxCoiw+KynAYREG/1/B07zSWk/AXqm
-X-Google-Smtp-Source: ABdhPJz6FE1sG7ToiGiPCYkSk0tKYq/J8aB3EnNeVw8K8035wJ1GL28JDqbKKcVkmIBhFt5j+iORf77XFYr3Un49STYT
+        bh=wCT3y1C/dDv30SSL6Y30+Gog35hmiHRCSb2ERYhXTQU=;
+        b=HSp+EzOn37Z+j4WspRa5O5XghRQUT/ZBbHoqi9/cFjgb1dRaPtm+Ad4GF3xDko9784
+         v4xJq8Wb/hCxLVDb1UFS7VD8joNZAvfWPg1zIHWMAEf1RN4VyzQBgnR6+YGL4woe0WJB
+         VaJHyyj61JXTsnQHW8/84gY4tuMg2OTpLQXDCdjAS10fUXY+yYuxIgvuxkwXhxL4qou3
+         Kc40/njfzG3eKXzu5tEgovw5bSAEjWpyH4uxu8xXQnPut64KgJh+vRDV8vzVwzGuzFsW
+         w9d0ddIBbEx5ghcrfgBHkVigtBiR2reYYcxLP3frW/F8AlNpi2G/TS/BO0rHBaO/jhxP
+         rXSw==
+X-Gm-Message-State: AOAM532C/iRgIjSwAZPD1lSHgbOLpGrc2Fy/YHoL9lwgTdJexmyWhTpo
+        eYBHEpjREo4YphYoQsborErBZuNQ0PcrjrufFeQe
+X-Google-Smtp-Source: ABdhPJwHlRQYdLUnMZLuHl5qsWNmW2ZuAs8zRwifN16e4YNFI0LKfHsyomAvyThIN57YcX/fsbMLstyntnyXjdtyO0EP
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:d8c1:: with SMTP id
- p184mr8516932ybg.10.1622858044694; Fri, 04 Jun 2021 18:54:04 -0700 (PDT)
-Date:   Fri,  4 Jun 2021 18:54:02 -0700
-In-Reply-To: <CABPp-BHZ0OrADfP3V-hZ1YYf3fQYW3fU-tCJWgs976amG-T1Dg@mail.gmail.com>
-Message-Id: <20210605015402.607304-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:ad4:4522:: with SMTP id
+ l2mr7589677qvu.61.1622858262983; Fri, 04 Jun 2021 18:57:42 -0700 (PDT)
+Date:   Fri,  4 Jun 2021 18:57:41 -0700
+In-Reply-To: <YLqK6XTmnaQoFycz@nand.local>
+Message-Id: <20210605015741.607933-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <CABPp-BHZ0OrADfP3V-hZ1YYf3fQYW3fU-tCJWgs976amG-T1Dg@mail.gmail.com>
+References: <YLqK6XTmnaQoFycz@nand.local>
 X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
-Subject: Re: [PATCH 2/4] promisor-remote: support per-repository config
+Subject: Re: [PATCH 3/4] run-command: move envvar-resetting function
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     newren@gmail.com
+To:     me@ttaylorr.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > +int repo_has_promisor_remote(struct repository *r);
-> > +static inline int has_promisor_remote(void)
-> > +{
-> > +       return repo_has_promisor_remote(the_repository);
-> > +}
-> 
-> Is part of the plan for supporting partial clones within submodules to
-> audit the code for use of these inline wrappers and convert them over
-> to the repo_* variants?  I'm particularly interested in the
-> has_promisor_remote() function, since there are calls in
-> diffcore-rename at least that protect that call with a check against r
-> == the_repository.
-
-Good point. Yes, that should be part of the plan - at least, we should
-see what those invocations are for.
-
-> > @@ -139,6 +140,9 @@ struct repository {
-> >         /* True if commit-graph has been disabled within this process. */
-> >         int commit_graph_disabled;
+> On Tue, Jun 01, 2021 at 02:34:18PM -0700, Jonathan Tan wrote:
+> > There is a function that resets environment variables, used when
+> > invoking a sub-process in a submodule. The lazy-fetching code (used in
+> > partial clones) will need this function in a subsequent commit, so move
+> > it to a more central location.
 > >
-> > +       /* Configurations related to promisor remotes. */
-> > +       struct promisor_remote_config *promisor_remote_config;
-> > +
-> >         /* Configurations */
-> >
-> >         /* Indicate if a repository has a different 'commondir' from 'gitdir' */
-> > --
-> > 2.32.0.rc0.204.g9fa02ecfa5-goog
+> > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > 
-> Looks like a reasonable step in moving away from globals and have
-> repository-specific variants of these functions; I didn't spot any
-> problems, just one question about additional plans.
+> All seems pretty normal to me. I did have one question, though:
+> 
+> > +/**
+> > + * Convenience function that adds entries to env_array that resets all
+> 
+> Hmm. Why "resets"? IIUC local_repo_env is the array of environment
+> variables that change behavior. With that understanding in mind, I
+> probably would have written something more like:
+> 
+>     Convenience function which adds all GIT_* environment variables to
+>     env_array with the exception of GIT_CONFIG_PARAMETERS. See
+>     local_repo_env in cache.h for more information.
 
-Thanks for taking a look.
+I mentioned "reset" because the effect of adding the name without any
+value makes the environment variable of that name unset in the
+subprocess. I'll word it as you say, and add "When used as the env_array
+of a subprocess, these entries cause the corresponding environment
+variables to be unset in the subprocess." after the first sentence.
+
+> (Confusingly, cache.h calls this variable CONFIG_DATA_ENVIRONMENT, but
+> binds it to GIT_CONFIG_PARAMETERS. I think it probably makes more sense
+> to use the environment variable's name rather than our #define, since
+> we're saying "all GIT_* variables, except this one", so it would be
+> weird for "this one" not to start with "GIT_".
+
+OK, that makes sense.
+
+> Otherwise the movement looks fine to me.
+> 
+> Thanks,
+> Taylor
+
+Thanks.
