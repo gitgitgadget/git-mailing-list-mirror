@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56D97C4743F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56FFAC48BC2
 	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:29:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4309661261
+	by mail.kernel.org (Postfix) with ESMTP id 331A161246
 	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 01:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231325AbhFEBbJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Jun 2021 21:31:09 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:44906 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbhFEBbH (ORCPT <rfc822;git@vger.kernel.org>);
+        id S231286AbhFEBbH (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 4 Jun 2021 21:31:07 -0400
-Received: by mail-wr1-f42.google.com with SMTP id f2so10926928wri.11
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:40673 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230169AbhFEBbG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jun 2021 21:31:06 -0400
+Received: by mail-wr1-f46.google.com with SMTP id y7so6328364wrh.7
         for <git@vger.kernel.org>; Fri, 04 Jun 2021 18:29:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yjljHMsI83jMnc6ysuMNAloovg3NdkTceuIBTZHhyB0=;
-        b=Z3aG8WxpGF6I8hs1HKk8c1LTfRL5EOO9ogipVqHTmYU4GV7FKkUdbMtHArXRMxzVSu
-         s8tcQ70TJfazSqLzfCvAcrveOtvwidsgkdSuK5kVb7rS9N+46HCm2oGGiXepZT3lIc+i
-         Od0UCDXz2usdscsh/JD3bgl9bqJuFgGX2d1uG6ckFoGxUmiRBvEDHlloiiar91UAL2EV
-         96AFSV/x9rv5uekxnwHHQ+6CcT+U4gmkl5Y8T1Gnbn670btDLURcGFrTLCtTYvwmmUi4
-         C6KNeq4JkKq6M/VReHk8MouMwapbLU62eVaCqezAvn0fW/N8/PaF3vufTXKJ6a46hMYZ
-         FrmA==
+        bh=ahM/nbhBcAoCaNJ7ubx8PUjT84lD9DhTAC6mj3WU9zA=;
+        b=Ea7MX9bFwwQnMrIh2sM+4M2B04SB94EOdJXnGZvff0Hbb7S4vqDubPJ+eFO/AlP60f
+         f02eGMRwfzTBsrf2pa+pw1qpEX9SmnJuGtB8/2jD1jcw7b6cFgxqsIUela4MLyNE7sM+
+         FsFxC4k5fXncoJsA6oeQAGm8zSeUngw6e0ewWnZ01o4fBY4q3E6PmH1ClLb7U6EcgrhL
+         ckl7Sa/ldDRdoJJxWk9KW5GLsqPU7JjA5+9CEjfcfOSF+OmoWHoypgeQQoU6yR9iCN4r
+         +XHXmNGLwa1oRwAqUFqYMK2KNQTg2pqKnGjU669C/6Ku8MUSdWbZDne9C83zlQ01X4Ud
+         XXUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yjljHMsI83jMnc6ysuMNAloovg3NdkTceuIBTZHhyB0=;
-        b=NyATTug5+hj0m6F5JNmPZ6qEituF9dgiPUFadeLNG3ub8xN6Hc6yyTzTCNkrrKwpVB
-         oMj+UKliig7agjZuWtG3XB9WvJC3eCVJ1qgqEklwcLJkwYAzjuAltAqDUXOHb7ZOlaGF
-         aTIa0y4Rmr/q2U+i3S8H3YryByaDlydkZODz2VDAf04dyWYmCH4NITw3LNCSP0HD6D8m
-         IFZ1KmRdslNK43CH5cacn0opLJbUYhGSh1qQiT2eOqeVuszVJkiRuhk/Ddpmx5LolksE
-         7Xcyz67I8jpGNdNf0C7Xo6ttBtcMnRZ8NMfguw/0jRfe+hTB4GyVTkRJVePjRV6/i6rw
-         UJeQ==
-X-Gm-Message-State: AOAM533NUBrtl3p5gpobBE92B1yVTbhxWGdwAzPRGTw9izOWQODKX027
-        DrVrgI/VG6efZyjSVdMvZpX9dt8sco0=
-X-Google-Smtp-Source: ABdhPJyeBYUsTReAGq4dSbD56T2If94o2se7YNIfgmUcu09eWCCLECEm39BRIF6ywQEV9l7uQmaUnw==
-X-Received: by 2002:adf:e3cf:: with SMTP id k15mr6243164wrm.403.1622856488159;
-        Fri, 04 Jun 2021 18:28:08 -0700 (PDT)
+        bh=ahM/nbhBcAoCaNJ7ubx8PUjT84lD9DhTAC6mj3WU9zA=;
+        b=EP3K6YVOuRBbD6kuhYkXBWHkJlP2/vg3A1dIwrs49MSA5hJA0rwegCzWASl1VJtiJg
+         FfqeUZDmVzp3AGH3CXwrCx/jfD/VpjtftjGBvDWSAm/fEG2YqwhrFnbxKbXeoLzt85GU
+         DzYHnJexLl0ATF1Rt9L0hUXT9Xu1iLBk6Q5mQKTQgScJP/PYyaSkGe8nQUTvkkDOzrlC
+         aeWKzuxsxsbGc338QKh3HTnRwjlpOK6Q9wXWwhCuukHmkN3265gFPLOp3f/F/287WZOn
+         +RDlBa3kqUE0Pfj7rhUCYVZqbupxDKliuJqTRC9uYeKrqIhhShPiI9auvt7jN1KGxDta
+         AQqg==
+X-Gm-Message-State: AOAM531NSlsFrhpK7jx68mB6+aYVReTvtki6+p+HSqOK3+27ZxloZgae
+        tj3pOxCu96uQBSscWKE/1SUuSqPrB+0=
+X-Google-Smtp-Source: ABdhPJz/CfJE6lXLBRCz/dte718xd87H8BW+Uct/OgVwre46dslwpOB/TPRFUCHhXJHb/UkRG3BfiA==
+X-Received: by 2002:adf:8b91:: with SMTP id o17mr6224854wra.385.1622856487665;
+        Fri, 04 Jun 2021 18:28:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k82sm10360272wmf.11.2021.06.04.18.28.07
+        by smtp.gmail.com with ESMTPSA id c64sm10037177wma.15.2021.06.04.18.28.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 04 Jun 2021 18:28:07 -0700 (PDT)
-Message-Id: <c4b3109c3b08d549b5ac698edd331639ed6280e2.1622856485.git.gitgitgadget@gmail.com>
+Message-Id: <6462bb63310dbc889a3442951ef261bc7fd7e0dc.1622856485.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.969.git.1622856485.gitgitgadget@gmail.com>
 References: <pull.969.git.1622856485.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 05 Jun 2021 01:28:02 +0000
-Subject: [PATCH 3/5] diffcore-rename: allow different missing_object_cb
- functions
+Date:   Sat, 05 Jun 2021 01:28:01 +0000
+Subject: [PATCH 2/5] t6421: add tests checking for excessive object downloads
+ during merge
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,175 +76,451 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-estimate_similarity() was setting up a diff_populate_filespec_options
-every time it was called, requiring the caller of estimate_similarity()
-to pass in some data needed to set up this option.  Currently the needed
-data consisted of a single variable (skip_unmodified), but we want to
-also have the different estimate_similarity() callsites start using
-different missing_object_cb functions as well.  Rather than also passing
-that data in, just have the caller pass in the whole
-diff_populate_filespec_options, and reduce the number of times we need to
-set it up.
-
-As a side note, this also drops the number of calls to
-has_promisor_remote() dramatically.  If L is the number of basename
-paths to compare, M is the number of inexact sources, and N is the
-number of inexact destinations, then the number of calls to
-has_promisor_remote() drops from L+M*N down to at most 2 -- one for each
-of the sites that calls estimate_similarity().  has_promisor_remote() is
-a very fast function so this almost certainly has no measurable
-performance impact, but it seems cleaner to avoid calling that function
-so many times.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 58 +++++++++++++++++++++++++++++++----------------
- 1 file changed, 39 insertions(+), 19 deletions(-)
+ t/t6421-merge-partial-clone.sh | 433 +++++++++++++++++++++++++++++++++
+ 1 file changed, 433 insertions(+)
+ create mode 100755 t/t6421-merge-partial-clone.sh
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 35378d84e8f1..e13e52046026 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -126,7 +126,7 @@ static int estimate_similarity(struct repository *r,
- 			       struct diff_filespec *src,
- 			       struct diff_filespec *dst,
- 			       int minimum_score,
--			       int skip_unmodified)
-+			       struct diff_populate_filespec_options *dpf_opt)
- {
- 	/* src points at a file that existed in the original tree (or
- 	 * optionally a file in the destination tree) and dst points
-@@ -143,15 +143,6 @@ static int estimate_similarity(struct repository *r,
- 	 */
- 	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
- 	int score;
--	struct diff_populate_filespec_options dpf_options = {
--		.check_size_only = 1
--	};
--	struct prefetch_options prefetch_options = {r, skip_unmodified};
--
--	if (r == the_repository && has_promisor_remote()) {
--		dpf_options.missing_object_cb = prefetch;
--		dpf_options.missing_object_data = &prefetch_options;
--	}
- 
- 	/* We deal only with regular files.  Symlink renames are handled
- 	 * only when they are exact matches --- in other words, no edits
-@@ -169,11 +160,13 @@ static int estimate_similarity(struct repository *r,
- 	 * is a possible size - we really should have a flag to
- 	 * say whether the size is valid or not!)
- 	 */
-+	dpf_opt->check_size_only = 1;
+diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
+new file mode 100755
+index 000000000000..028d876be2c8
+--- /dev/null
++++ b/t/t6421-merge-partial-clone.sh
+@@ -0,0 +1,433 @@
++#!/bin/sh
 +
- 	if (!src->cnt_data &&
--	    diff_populate_filespec(r, src, &dpf_options))
-+	    diff_populate_filespec(r, src, dpf_opt))
- 		return 0;
- 	if (!dst->cnt_data &&
--	    diff_populate_filespec(r, dst, &dpf_options))
-+	    diff_populate_filespec(r, dst, dpf_opt))
- 		return 0;
- 
- 	max_size = ((src->size > dst->size) ? src->size : dst->size);
-@@ -191,11 +184,11 @@ static int estimate_similarity(struct repository *r,
- 	if (max_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
- 		return 0;
- 
--	dpf_options.check_size_only = 0;
-+	dpf_opt->check_size_only = 0;
- 
--	if (!src->cnt_data && diff_populate_filespec(r, src, &dpf_options))
-+	if (!src->cnt_data && diff_populate_filespec(r, src, dpf_opt))
- 		return 0;
--	if (!dst->cnt_data && diff_populate_filespec(r, dst, &dpf_options))
-+	if (!dst->cnt_data && diff_populate_filespec(r, dst, dpf_opt))
- 		return 0;
- 
- 	if (diffcore_count_changes(r, src, dst,
-@@ -862,7 +855,11 @@ static int find_basename_matches(struct diff_options *options,
- 	int i, renames = 0;
- 	struct strintmap sources;
- 	struct strintmap dests;
--
-+	struct diff_populate_filespec_options dpf_options = {
-+		.check_binary = 0,
-+		.missing_object_cb = NULL,
-+		.missing_object_data = NULL
-+	};
- 	/*
- 	 * The prefeteching stuff wants to know if it can skip prefetching
- 	 * blobs that are unmodified...and will then do a little extra work
-@@ -873,7 +870,10 @@ static int find_basename_matches(struct diff_options *options,
- 	 * the extra work necessary to check if rename_src entries are
- 	 * unmodified would be a small waste.
- 	 */
--	int skip_unmodified = 0;
-+	struct prefetch_options prefetch_options = {
-+		.repo = options->repo,
-+		.skip_unmodified = 0
-+	};
- 
- 	/*
- 	 * Create maps of basename -> fullname(s) for remaining sources and
-@@ -910,6 +910,11 @@ static int find_basename_matches(struct diff_options *options,
- 			strintmap_set(&dests, base, i);
- 	}
- 
-+	if (options->repo == the_repository && has_promisor_remote()) {
-+		dpf_options.missing_object_cb = prefetch;
-+		dpf_options.missing_object_data = &prefetch_options;
-+	}
++test_description="limiting blob downloads when merging with partial clones"
++# Uses a methodology similar to
++#   t6042: corner cases with renames but not criss-cross merges
++#   t6036: corner cases with both renames and criss-cross merges
++#   t6423: directory rename detection
++#
++# The setup for all of them, pictorially, is:
++#
++#      A
++#      o
++#     / \
++#  O o   ?
++#     \ /
++#      o
++#      B
++#
++# To help make it easier to follow the flow of tests, they have been
++# divided into sections and each test will start with a quick explanation
++# of what commits O, A, and B contain.
++#
++# Notation:
++#    z/{b,c}   means  files z/b and z/c both exist
++#    x/d_1     means  file x/d exists with content d1.  (Purpose of the
++#                     underscore notation is to differentiate different
++#                     files that might be renamed into each other's paths.)
 +
- 	/* Now look for basename matchups and do similarity estimation */
- 	for (i = 0; i < rename_src_nr; ++i) {
- 		char *filename = rename_src[i].p->one->path;
-@@ -953,7 +958,7 @@ static int find_basename_matches(struct diff_options *options,
- 			one = rename_src[src_index].p->one;
- 			two = rename_dst[dst_index].p->two;
- 			score = estimate_similarity(options->repo, one, two,
--						    minimum_score, skip_unmodified);
-+						    minimum_score, &dpf_options);
- 
- 			/* If sufficiently similar, record as rename pair */
- 			if (score < minimum_score)
-@@ -1272,6 +1277,14 @@ void diffcore_rename_extended(struct diff_options *options,
- 	int num_sources, want_copies;
- 	struct progress *progress = NULL;
- 	struct dir_rename_info info;
-+	struct diff_populate_filespec_options dpf_options = {
-+		.check_binary = 0,
-+		.missing_object_cb = NULL,
-+		.missing_object_data = NULL
-+	};
-+	struct prefetch_options prefetch_options = {
-+		.repo = options->repo
-+	};
- 
- 	trace2_region_enter("diff", "setup", options->repo);
- 	info.setup = 0;
-@@ -1433,6 +1446,13 @@ void diffcore_rename_extended(struct diff_options *options,
- 				(uint64_t)num_destinations * (uint64_t)num_sources);
- 	}
- 
-+	/* Finish setting up dpf_options */
-+	prefetch_options.skip_unmodified = skip_unmodified;
-+	if (options->repo == the_repository && has_promisor_remote()) {
-+		dpf_options.missing_object_cb = prefetch;
-+		dpf_options.missing_object_data = &prefetch_options;
-+	}
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-merge.sh
 +
- 	CALLOC_ARRAY(mx, st_mult(NUM_CANDIDATE_PER_DST, num_destinations));
- 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
- 		struct diff_filespec *two = rename_dst[i].p->two;
-@@ -1458,7 +1478,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 			this_src.score = estimate_similarity(options->repo,
- 							     one, two,
- 							     minimum_score,
--							     skip_unmodified);
-+							     &dpf_options);
- 			this_src.name_score = basename_same(one, two);
- 			this_src.dst = i;
- 			this_src.src = j;
++test_setup_repo () {
++	test -d server && return
++	test_create_repo server &&
++	(
++		cd server &&
++
++		git config uploadpack.allowfilter 1 &&
++		git config uploadpack.allowanysha1inwant 1 &&
++
++		mkdir -p general &&
++		test_seq 2 9 >general/leap1 &&
++		cp general/leap1 general/leap2 &&
++		echo leap2 >>general/leap2 &&
++
++		mkdir -p basename &&
++		cp general/leap1 basename/numbers &&
++		cp general/leap1 basename/sequence &&
++		cp general/leap1 basename/values &&
++		echo numbers >>basename/numbers &&
++		echo sequence >>basename/sequence &&
++		echo values >>basename/values &&
++
++		mkdir -p dir/unchanged &&
++		mkdir -p dir/subdir/tweaked &&
++		echo a >dir/subdir/a &&
++		echo b >dir/subdir/b &&
++		echo c >dir/subdir/c &&
++		echo d >dir/subdir/d &&
++		echo e >dir/subdir/e &&
++		cp general/leap1 dir/subdir/Makefile &&
++		echo toplevel makefile >>dir/subdir/Makefile &&
++		echo f >dir/subdir/tweaked/f &&
++		echo g >dir/subdir/tweaked/g &&
++		echo h >dir/subdir/tweaked/h &&
++		echo subdirectory makefile >dir/subdir/tweaked/Makefile &&
++		for i in `test_seq 1 88`; do
++			echo content $i >dir/unchanged/file_$i
++		done &&
++		git add . &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B-single &&
++		git branch B-dir &&
++		git branch B-many &&
++
++		git switch A &&
++
++		git rm general/leap* &&
++		mkdir general/ &&
++		test_seq 1 9 >general/jump1 &&
++		cp general/jump1 general/jump2 &&
++		echo leap2 >>general/jump2 &&
++
++		rm basename/numbers basename/sequence basename/values &&
++		mkdir -p basename/subdir/
++		cp general/jump1 basename/subdir/numbers &&
++		cp general/jump1 basename/subdir/sequence &&
++		cp general/jump1 basename/subdir/values &&
++		echo numbers >>basename/subdir/numbers &&
++		echo sequence >>basename/subdir/sequence &&
++		echo values >>basename/subdir/values &&
++
++		git rm dir/subdir/tweaked/f &&
++		echo more >>dir/subdir/e &&
++		echo more >>dir/subdir/Makefile &&
++		echo more >>dir/subdir/tweaked/Makefile &&
++		mkdir dir/subdir/newsubdir &&
++		echo rust code >dir/subdir/newsubdir/newfile.rs &&
++		git mv dir/subdir/e dir/subdir/newsubdir/ &&
++		git mv dir folder &&
++		git add . &&
++		git commit -m "A" &&
++
++		git switch B-single &&
++		echo new first line >dir/subdir/Makefile &&
++		cat general/leap1 >>dir/subdir/Makefile &&
++		echo toplevel makefile >>dir/subdir/Makefile &&
++		echo perl code >general/newfile.pl &&
++		git add . &&
++		git commit -m "B-single" &&
++
++		git switch B-dir &&
++		echo java code >dir/subdir/newfile.java &&
++		echo scala code >dir/subdir/newfile.scala &&
++		echo groovy code >dir/subdir/newfile.groovy &&
++		git add . &&
++		git commit -m "B-dir" &&
++
++		git switch B-many &&
++		test_seq 2 10 >general/leap1 &&
++		rm general/leap2 &&
++		cp general/leap1 general/leap2 &&
++		echo leap2 >>general/leap2 &&
++
++		rm basename/numbers basename/sequence basename/values &&
++		mkdir -p basename/subdir/
++		cp general/leap1 basename/subdir/numbers &&
++		cp general/leap1 basename/subdir/sequence &&
++		cp general/leap1 basename/subdir/values &&
++		echo numbers >>basename/subdir/numbers &&
++		echo sequence >>basename/subdir/sequence &&
++		echo values >>basename/subdir/values &&
++
++		mkdir dir/subdir/newsubdir/ &&
++		echo c code >dir/subdir/newfile.c &&
++		echo python code >dir/subdir/newsubdir/newfile.py &&
++		git add . &&
++		git commit -m "B-many" &&
++
++		git switch A
++	)
++}
++
++# Testcase: Objects downloaded for single relevant rename
++#   Commit O:
++#              general/{leap1_O, leap2_O}
++#              basename/{numbers_O, sequence_O, values_O}
++#              dir/subdir/{a,b,c,d,e_O,Makefile_TOP_O}
++#              dir/subdir/tweaked/{f,g,h,Makefile_SUB_O}
++#              dir/unchanged/<LOTS OF FILES>
++#   Commit A:
++#     (Rename leap->jump, rename basename/ -> basename/subdir/, rename dir/
++#      -> folder/, move e into newsubdir, add newfile.rs, remove f, modify
++#      both both Makefiles and jumps)
++#              general/{jump1_A, jump2_A}
++#              basename/subdir/{numbers_A, sequence_A, values_A}
++#              folder/subdir/{a,b,c,d,Makefile_TOP_A}
++#              folder/subdir/newsubdir/{e_A,newfile.rs}
++#              folder/subdir/tweaked/{g,h,Makefile_SUB_A}
++#              folder/unchanged/<LOTS OF FILES>
++#   Commit B(-single):
++#     (add newfile.pl, tweak Makefile_TOP)
++#              general/{leap1_O, leap2_O,newfile.pl}
++#              basename/{numbers_O, sequence_O, values_O}
++#              dir/{a,b,c,d,e_O,Makefile_TOP_B}
++#              dir/tweaked/{f,g,h,Makefile_SUB_O}
++#              dir/unchanged/<LOTS OF FILES>
++#   Expected:
++#              general/{jump1_A, jump2_A,newfile.pl}
++#              basename/subdir/{numbers_A, sequence_A, values_A}
++#              folder/subdir/{a,b,c,d,Makefile_TOP_Merged}
++#              folder/subdir/newsubdir/{e_A,newfile.rs}
++#              folder/subdir/tweaked/{g,h,Makefile_SUB_A}
++#              folder/unchanged/<LOTS OF FILES>
++#
++# Objects that need to be fetched:
++#   Rename detection:
++#     Side1 (O->A):
++#       Basename-matches rename detection only needs to fetch these objects:
++#         Makefile_TOP_O, Makefile_TOP_A
++#         (Despite many renames, all others are content irrelevant.  They
++#          are also location irrelevant because newfile.rs was added on
++#          the side doing the directory rename, and newfile.pl was added to
++#          a directory that was not renamed on either side.)
++#       General rename detection only needs to fetch these objects:
++#         <None>
++#          (Even though newfile.rs, jump[12], basename/subdir/*, and e
++#          could all be used as destinations in rename detection, the
++#          basename detection for Makefile matches up all relevant
++#          sources, so these other files never end up needing to be
++#          used)
++#     Side2 (O->B):
++#       Basename-matches rename detection only needs to fetch these objects:
++#         <None>
++#         (there are no deleted files, so no possible sources)
++#       General rename detection only needs to fetch these objects:
++#         <None>
++#         (there are no deleted files, so no possible sources)
++#   Merge:
++#     3-way content merge needs to grab these objects:
++#       Makefile_TOP_B
++#   Nothing else needs to fetch objects
++#
++#   Summary: 2 fetches (1 for 2 objects, 1 for 1 object)
++#
++test_expect_merge_algorithm failure failure 'Objects downloaded for single relevant rename' '
++	test_setup_repo &&
++	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-single &&
++	(
++		cd objects-single &&
++
++		git rev-list --objects --all --missing=print |
++			grep '\?' >missing-objects-before &&
++
++		git checkout -q origin/A &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" git -c merge.directoryRenames=true merge --no-stat --no-progress origin/B-single &&
++
++		# Check the number of objects we reported we would fetch
++		cat >expect <<-EOF &&
++		 ..........fetch_count:2
++		 ......fetch_count:1
++		EOF
++		grep fetch_count trace.output | cut -d "|" -f 9 >actual &&
++		test_cmp expect actual &&
++
++		# Check the number of fetch commands exec-ed
++		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
++		test_line_count = 2 fetches &&
++
++		git rev-list --objects --all --missing=print |
++			grep ^? >missing-objects-after &&
++		test_cmp missing-objects-before missing-objects-after |
++			grep "^[-+]?" >found-and-new-objects &&
++		# We should not have any NEW missing objects
++		! grep ^+ found-and-new-objects &&
++		# Fetched 2+1=3 objects, so should have 3 fewer missing objects
++		test_line_count = 3 found-and-new-objects
++	)
++'
++
++# Testcase: Objects downloaded for directory rename
++#   Commit O:
++#              general/{leap1_O, leap2_O}
++#              basename/{numbers_O, sequence_O, values_O}
++#              dir/subdir/{a,b,c,d,e_O,Makefile_TOP_O}
++#              dir/subdir/tweaked/{f,g,h,Makefile_SUB_O}
++#              dir/unchanged/<LOTS OF FILES>
++#   Commit A:
++#     (Rename leap->jump, rename basename/ -> basename/subdir/, rename dir/ ->
++#      folder/, move e into newsubdir, add newfile.rs, remove f, modify
++#      both Makefiles and jumps)
++#              general/{jump1_A, jump2_A}
++#              basename/subdir/{numbers_A, sequence_A, values_A}
++#              folder/subdir/{a,b,c,d,Makefile_TOP_A}
++#              folder/subdir/newsubdir/{e_A,newfile.rs}
++#              folder/subdir/tweaked/{g,h,Makefile_SUB_A}
++#              folder/unchanged/<LOTS OF FILES>
++#   Commit B(-dir):
++#     (add dir/subdir/newfile.{java,scala,groovy}
++#              general/{leap1_O, leap2_O}
++#              basename/{numbers_O, sequence_O, values_O}
++#              dir/subdir/{a,b,c,d,e_O,Makefile_TOP_O,
++#                          newfile.java,newfile.scala,newfile.groovy}
++#              dir/subdir/tweaked/{f,g,h,Makefile_SUB_O}
++#              dir/unchanged/<LOTS OF FILES>
++#   Expected:
++#              general/{jump1_A, jump2_A}
++#              basename/subdir/{numbers_A, sequence_A, values_A}
++#              folder/subdir/{a,b,c,d,Makefile_TOP_A,
++#                             newfile.java,newfile.scala,newfile.groovy}
++#              folder/subdir/newsubdir/{e_A,newfile.rs}
++#              folder/subdir/tweaked/{g,h,Makefile_SUB_A}
++#              folder/unchanged/<LOTS OF FILES>
++#
++# Objects that need to be fetched:
++#   Makefile_TOP_O, Makefile_TOP_A
++#   Makefile_SUB_O, Makefile_SUB_A
++#   e_O, e_A
++#   * Despite A's rename of jump->leap, those renames are irrelevant.
++#   * Despite A's rename of basename/ -> basename/subdir/, those renames are
++#     irrelevant.
++#   * Because of A's rename of dir/ -> folder/ and B-dir's addition of
++#     newfile.* into dir/subdir/, we need to determine directory renames.
++#     (Technically, there are enough exact renames to determine directory
++#      rename detection, but the current implementation always does
++#      basename searching before directory rename detection.  Running it
++#      also before basename searching would mean doing directory rename
++#      detection twice, but it's a bit expensive to do that and cases like
++#      this are not all that common.)
++#   Summary: 1 fetches for 6 objects
++#
++test_expect_merge_algorithm failure failure 'Objects downloaded when a directory rename triggered' '
++	test_setup_repo &&
++	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-dir &&
++	(
++		cd objects-dir &&
++
++		git rev-list --objects --all --missing=print |
++			grep '\?' >missing-objects-before &&
++
++		git checkout -q origin/A &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" git -c merge.directoryRenames=true merge --no-stat --no-progress origin/B-dir &&
++
++		# Check the number of objects we reported we would fetch
++		cat >expect <<-EOF &&
++		 ..........fetch_count:6
++		EOF
++		grep fetch_count trace.output | cut -d "|" -f 9 >actual &&
++		test_cmp expect actual &&
++
++		# Check the number of fetch commands exec-ed
++		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
++		test_line_count = 1 fetches &&
++
++		git rev-list --objects --all --missing=print |
++			grep ^? >missing-objects-after &&
++		test_cmp missing-objects-before missing-objects-after |
++			grep "^[-+]?" >found-and-new-objects &&
++		# We should not have any NEW missing objects
++		! grep ^+ found-and-new-objects &&
++		# Fetched 6 objects, so should have 6 fewer missing objects
++		test_line_count = 6 found-and-new-objects
++	)
++'
++
++# Testcase: Objects downloaded with lots of renames and modifications
++#   Commit O:
++#              general/{leap1_O, leap2_O}
++#              basename/{numbers_O, sequence_O, values_O}
++#              dir/subdir/{a,b,c,d,e_O,Makefile_TOP_O}
++#              dir/subdir/tweaked/{f,g,h,Makefile_SUB_O}
++#              dir/unchanged/<LOTS OF FILES>
++#   Commit A:
++#     (Rename leap->jump, rename basename/ -> basename/subdir/, rename dir/
++#      -> folder/, move e into newsubdir, add newfile.rs, remove f, modify
++#      both both Makefiles and jumps)
++#              general/{jump1_A, jump2_A}
++#              basename/subdir/{numbers_A, sequence_A, values_A}
++#              folder/subdir/{a,b,c,d,Makefile_TOP_A}
++#              folder/subdir/newsubdir/{e_A,newfile.rs}
++#              folder/subdir/tweaked/{g,h,Makefile_SUB_A}
++#              folder/unchanged/<LOTS OF FILES>
++#   Commit B(-minimal):
++#     (modify both leaps, rename basename/ -> basename/subdir/, add
++#      newfile.{c,py})
++#              general/{leap1_B, leap2_B}
++#              basename/subdir/{numbers_B, sequence_B, values_B}
++#              dir/{a,b,c,d,e_O,Makefile_TOP_O,newfile.c}
++#              dir/tweaked/{f,g,h,Makefile_SUB_O,newfile.py}
++#              dir/unchanged/<LOTS OF FILES>
++#   Expected:
++#              general/{jump1_Merged, jump2_Merged}
++#              basename/subdir/{numbers_Merged, sequence_Merged, values_Merged}
++#              folder/subdir/{a,b,c,d,Makefile_TOP_A,newfile.c}
++#              folder/subdir/newsubdir/e_A
++#              folder/subdir/tweaked/{g,h,Makefile_SUB_A,newfile.py}
++#              folder/unchanged/<LOTS OF FILES>
++#
++# Objects that need to be fetched:
++#   Rename detection:
++#     Side1 (O->A):
++#       Basename-matches rename detection only needs to fetch these objects:
++#         numbers_O, numbers_A
++#         sequence_O, sequence_A
++#         values_O, values_A
++#         Makefile_TOP_O, Makefile_TOP_A
++#         Makefile_SUB_O, Makefile_SUB_A
++#         e_O, e_A
++#       General rename detection only needs to fetch these objects:
++#         leap1_O, leap2_O
++#         jump1_A, jump2_A, newfile.rs
++#         (only need remaining relevant sources, but any relevant sources need
++#          to be matched against all possible unpaired destinations)
++#     Side2 (O->B):
++#       Basename-matches rename detection only needs to fetch these objects:
++#         numbers_B
++#         sequence_B
++#         values_B
++#       (because numbers_O, sequence_O, and values_O already fetched above)
++#       General rename detection only needs to fetch these objects:
++#         <None>
++#   Merge:
++#     3-way content merge needs to grab these objects:
++#       leap1_B
++#       leap2_B
++#   Nothing else needs to fetch objects
++#
++#   Summary: 4 fetches (1 for 6 objects, 1 for 8, 1 for 3, 1 for 2)
++#
++test_expect_merge_algorithm failure failure 'Objects downloaded with lots of renames and modifications' '
++	test_setup_repo &&
++	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-many &&
++	(
++		cd objects-many &&
++
++		git rev-list --objects --all --missing=print |
++			grep '\?' >missing-objects-before &&
++
++		git checkout -q origin/A &&
++
++		GIT_TRACE2_PERF="$(pwd)/trace.output" git -c merge.directoryRenames=true merge --no-stat --no-progress origin/B-many &&
++
++		# Check the number of objects we reported we would fetch
++		cat >expect <<-EOF &&
++		 ..........fetch_count:12
++		 ..........fetch_count:5
++		 ..........fetch_count:3
++		 ......fetch_count:2
++		EOF
++		grep fetch_count trace.output | cut -d "|" -f 9 >actual &&
++		test_cmp expect actual &&
++
++		# Check the number of fetch commands exec-ed
++		grep d0.*fetch.negotiationAlgorithm trace.output >fetches &&
++		test_line_count = 4 fetches &&
++
++		git rev-list --objects --all --missing=print |
++			grep ^? >missing-objects-after &&
++		test_cmp missing-objects-before missing-objects-after |
++			grep "^[-+]?" >found-and-new-objects &&
++		# We should not have any NEW missing objects
++		! grep ^+ found-and-new-objects &&
++		# Fetched 12 + 5 + 3 + 2 == 22 objects
++		test_line_count = 22 found-and-new-objects
++	)
++'
++
++test_done
 -- 
 gitgitgadget
 
