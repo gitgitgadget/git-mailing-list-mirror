@@ -2,111 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D4BC47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB9B6C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:36:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01EE46139A
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B827613AC
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:36:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbhFEWhZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 18:37:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47008 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229998AbhFEWhX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 18:37:23 -0400
-Received: (qmail 16386 invoked by uid 109); 5 Jun 2021 22:35:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 05 Jun 2021 22:35:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20262 invoked by uid 111); 5 Jun 2021 22:35:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 05 Jun 2021 18:35:35 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 5 Jun 2021 18:35:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] branch: make -v useful
-Message-ID: <YLv8NWL7WfBRkiGe@coredump.intra.peff.net>
-References: <20210605011339.2202-1-felipe.contreras@gmail.com>
- <87czt059sn.fsf@evledraar.gmail.com>
+        id S230050AbhFEWiF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 18:38:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42634 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229998AbhFEWiE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 18:38:04 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3474AC061766
+        for <git@vger.kernel.org>; Sat,  5 Jun 2021 15:36:16 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id x10so6553109plg.3
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 15:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1MfMFEkX4yvAliFSNppN+VFlLacMRf73GLGySFvrvQ8=;
+        b=ty7HrBAXoYcUNNCc7iw3EnBTwTmFr6gjgKa7qOCAsx1DyhL2VaCOhpZVsledEdeJzK
+         UtQ8jPmmwMASOj7Acp3uYT8qfS6/tcD2u//Q3uU0zn6joeLcgHCXWIBvzUKumdXKKiDj
+         Pw+p0j9LTWlfrOawK5EQVnJHsV72UPkSi6pyzRlDTlwkWEKsQYTK63Ji/9STPZt5rdPm
+         PyYGR1AXXOi9pkcP1QlJj0nP81GAr0MpY4yqlq4bYG7fmXNpjRvW9/VW+CbrS3n3rq36
+         kHrStMDvtgbBaUi6aUGZRmUjxqC1zpK68sA5cWfDDE+Vx+9DFj5s42Eb9gayWcABnvYr
+         rX9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1MfMFEkX4yvAliFSNppN+VFlLacMRf73GLGySFvrvQ8=;
+        b=KTMY3SR0nU620migsnBdgTibynpP4c+aLIz1Zkcw8sksc7CdinjQhDBkTuupWCoIJy
+         mZXS3SdR+qI5Dt4u5xpJKxov+YKAWuo/23OfLZ2Q9VBbukOaHqzoKdbv+S6p33Jb6nGy
+         9cXpBr3qQIi9h53EZkv/KidZyl1XlFVFDpLvxyT2F5JDXmhLd2COsBt8fSg4/8AedLyf
+         epdt+DVDEQxZimybNNzc/7avrfbVE2V+epfyED+CCLzQBFzGpYBhy12/qsYPsxyb05Bl
+         qyqY9ZwWt5mM5nVjn9eOvhGRhX5KQ4VqFhabCdFiTIFjNtrx09q5aZviCe/nhtykovGp
+         Rmgg==
+X-Gm-Message-State: AOAM533o7AbKZ/GZSzARhoIRH7o7ZI8EMGyUcJfnRR013CYUkc6PYrHI
+        PLBb8qoIoxGfoWxyxe8oaPtFqk13GktAN+ZTxtjWqJRSiBYslw==
+X-Google-Smtp-Source: ABdhPJwvgZ494xmfuN0jZsBlveK5/JugU5lw42Gh69RvDIJDUZ8x66OTYL95c4z893+0JmDl0XJI3PUGsC54NBmw168=
+X-Received: by 2002:a17:90b:3001:: with SMTP id hg1mr24091315pjb.169.1622932574638;
+ Sat, 05 Jun 2021 15:36:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87czt059sn.fsf@evledraar.gmail.com>
+References: <pull.970.git.1622828605.gitgitgadget@gmail.com>
+ <c3bf266cf03a9678933623b48927ee749956218d.1622828605.git.gitgitgadget@gmail.com>
+ <CAKiG+9W8Da4bG87VjTKN6m=cX+v_x33YAw8p4MqCfmNinYt1XA@mail.gmail.com>
+In-Reply-To: <CAKiG+9W8Da4bG87VjTKN6m=cX+v_x33YAw8p4MqCfmNinYt1XA@mail.gmail.com>
+From:   Matt Rogers <mattr94@gmail.com>
+Date:   Sat, 5 Jun 2021 18:36:05 -0400
+Message-ID: <CAOjrSZsyUi+RAqxXyd6JqzWqO8hMdtwTuWpZy+cKbz654Xu45A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] cmake: create compile_commands.json by default
+To:     Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Danh Doan <congdanhqx@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 05, 2021 at 10:18:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Jun 4, 2021 at 5:09 PM Sibi Siddharthan
+<sibisiddharthan.github@gmail.com> wrote:
+>
+> On Fri, Jun 4, 2021 at 11:13 PM Matthew Rogers via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > A straightforward way to accomplish this is to make it as simple as
+> > possible is to enable the generation of the compile_commands.json file,
+> > which is supported by many tools such as: clang-tidy, clang-format,
+> > sourcetrail, etc.
+> >
+> > This does come with a small run-time overhead during the configuration
+> > step (~6 seconds on my machine):
+> >
+> >     Time to configure with CMAKE_EXPORT_COMPILE_COMMANDS=TRUE
+> >
+> >     real    1m9.840s
+> >     user    0m0.031s
+> >     sys     0m0.031s
+> >
+> >     Time to configure with CMAKE_EXPORT_COMPILE_COMMANDS=FALSE
+> >
+> >     real    1m3.195s
+> >     user    0m0.015s
+> >     sys     0m0.015s
+> >
+> > This seems like a small enough price to pay to make the project more
+> > accessible to newer users.  Additionally there are other large projects
+> > like llvm [2] which has had this enabled by default for >6 years at the
+> > time of this writing, and no real negative consequences that I can find
+> > with my search-skills.
+> >
+>
+> The overhead is actually much smaller than that. In my system it is
+> less than 150ms.
 
-> As for the proposal, I don't use "branch -v" all that much much, so I
-> don't have strong knee-jerk feelings on it, but just considering it now
-> I'd think that the current default is a fundamentally better
-> approximation of what most users would like as a default.
-> 
-> I.e. I think it's fair to say that to the extent that most users have
-> topic branches they're part of some pull-request workflow where they're
-> always tracking the one upstream they always care about, usually
-> origin/master.
+Is that 150 ms for the whole process or just the difference between the two
+options?  I'm running this on windows via the git bash provided by the
+git sdk.
 
-I'm in the same boat. I don't use "branch -v" either, but showing the
-upstream name wouldn't be at all helpful to me, since it they would all
-just be "origin/master". (This will vary based on workflow, but the
-other common workflow would probably just show "topic" being based on
-"origin/topic").
+> The first configure takes this long because we generate command-list.h
+> and config-list.h.
+> This process is really slow under Windows.
+>
 
-> The -v output showing the ahead/behind relationship to that branch
-> without naming it is thus the best use of the limited space we have, and
-> with a bit more verbosity under -vv we'd show the (usually the same for
-> all of those) upstream name.
+I used two different build directories for both my invocations specifically
+to avoid having to account for cache variables and other side effects
+from earlier configurations.  The variation could also be from network
+latency since in this test I was downloading vcpkg, etc.
 
-The notion of what to show for a verbose format may depend on workflow,
-or even what the user's currently interested in. These days we have
---format to give much more flexible output.
+> Thank You,
+> Sibi Siddharthan
 
-The "-v" and "-vv" options predate --format, but these days are
-implemented on top of it (they literally build a format string that's
-passed into ref-filter.c's interpreter).
 
-So we could document them as: behave as if "--format=..." was given on
-the command line (unfortunately "..." here is a complex set of %(if)
-mechanisms, but it would mostly be for reference; nobody would need to
-type it).
 
-And then it is not a far leap to change that to: behave as if --format
-was set to the value of branch.verboseFormat, and the default of that
-config option is "...". And then anybody can make "branch -v" behave
-however they like.
-
-It would break scripts that parse "branch -v", of course, but we've been
-pretty explicit that this is porcelain (and the plumbing option is
-for-each-ref).
-
-> For what it's worth I remember some past discussion where it was
-> discussed to have some human-readable cut-off so instead of saying:
-> 
->     ahead 2, behind 38741
-> 
-> We'd just fall back on saying "behind lots" once your number of behind
-> reached some limit (which could dynamically compute as a heuristic based
-> on repo size, just like the abbrev length)..
-
-There's some discussion in the sub-thread starting here:
-
-  https://lore.kernel.org/git/7b759564-5544-8845-0594-e8342a0b4ba5@gmail.com/
-
-I do like that direction, but it sounds like there's some complexity
-(maybe less these days if we can rely on having commit-graphs with
-generation numbers). There is an AHEAD_BEHIND_QUICK flag, but I think it
-can only be triggered via "git status --no-ahead-behind" (and it's kind
-of unsatisfying, as it only tells you whether the two tips are identical
-or not).
-
--Peff
+-- 
+Matthew Rogers
