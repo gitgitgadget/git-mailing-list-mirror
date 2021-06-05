@@ -2,123 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D497C47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 21:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1147C47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:19:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DE686109F
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 21:57:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB8796121E
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 22:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbhFEV6s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 17:58:48 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:26915 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbhFEV6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 17:58:48 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 155LutPj075495
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 5 Jun 2021 17:56:56 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "'Git Mailing List'" <git@vger.kernel.org>
-References: <011f01d73dd0$ecf91e00$c6eb5a00$@nexbridge.com>     <CABPp-BH6RgiMwGLz31nHmis3VTpuEUG--G_6Y+Wfwg24u4Zbag@mail.gmail.com>    <012601d73ddf$3d0cf660$b726e320$@nexbridge.com> <CABPp-BE_5c1vXuxPWTO82cGmyajXxpxW+-ycZ+-5vy+tsV3bUA@mail.gmail.com>    <012901d73de6$c25a4ff0$470eefd0$@nexbridge.com> <01dd01d745b0$875c6920$96153b60$@nexbridge.com> <00f101d75978$0074c840$015e58c0$@nexbridge.com> <xmqqo8cl1k8s.fsf@gitster.g> 
-In-Reply-To: 
-Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
-Date:   Sat, 5 Jun 2021 17:56:49 -0400
-Message-ID: <011b01d75a55$b315a860$1940f920$@nexbridge.com>
+        id S230035AbhFEWUz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 18:20:55 -0400
+Received: from mail-lj1-f176.google.com ([209.85.208.176]:39818 "EHLO
+        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230010AbhFEWUw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 18:20:52 -0400
+Received: by mail-lj1-f176.google.com with SMTP id c11so16515971ljd.6
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 15:19:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dbL1nG1lSGOSr4iCYzBt12TNo3sDBdsISk3wC60jw9Q=;
+        b=Hdf+kgGSA3gkE4aysbIsn67quOgr+KnIjdSb3OjmgMOecFPHpRPojVgBIy7WdCTN2+
+         /ToWhngJhinRC/t48qDnexLaTJDm3c0iMhJkaYXw9NQRyoomPz/ZoB17UT346IZOz155
+         aD3bWqPI33+jJxmTeoRUSb56VREVA52Fq6vNjoSGru97PZvNNFww7FUjUbPlVX1veaRb
+         x7FXNr6RmulUcvg2KlItr+pJdPP5EPaaVonzUXiFUZi7hx6ujrw8cRZNL+/vNE4cLLhI
+         HywZ6xIRMuM4psReTwdxtGXuSfM9M6J1ss/Z9uI4qMhANaEKVjStSPySw1a8tmgY7ajF
+         oa/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dbL1nG1lSGOSr4iCYzBt12TNo3sDBdsISk3wC60jw9Q=;
+        b=UGj30ByB7HCVMeQwUSstgyE+IQQlqk9Ard/1joG7WPTytKZ8Em/bXypKYI178G5cin
+         5UyQQhZJxdZKPAhYD/uJbuBeAAxIPikieRYuCUSCgPqJSK5hlFuyZxTp5Wh9/tyx/sPK
+         3l3tpKWi810/lY3fxPhvYVYb33vMpb7f0K2HA88K+BMjhb/1xfwit7Z6ySJS1IN2VkEB
+         54kM3U3bsUbJ18lAdjPUami7qe+ljNQ1Bpv3df6korBf8IfUEo+curLQKEmbIsGhfNDc
+         4QEX5muXCeebX7WXuec4lSk6kP8/12wa/CHi741gT61zPfVQp7z2s1UwJwFGrFS7t5Vi
+         k7Mg==
+X-Gm-Message-State: AOAM530kH04qL6U09Dxv3mOFRdij/ZuXdZIVIMRSE3VV//0WFkU9wZTN
+        MuL4b1sFt9Wia9HxwHV83/RTkN6BOsF91i0GeuIMjw==
+X-Google-Smtp-Source: ABdhPJz3KCPbvzeaoCmFPbLN2zSp7+SzJVQ5vj58O5Y4fCRMDxG+yHpvNqkesffm5kY5CLxW+xyAqy5IPWqD3DsDAkc=
+X-Received: by 2002:a2e:90cd:: with SMTP id o13mr8745110ljg.248.1622931483086;
+ Sat, 05 Jun 2021 15:18:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIWGYGttp5Jdx88vf9L/5ZtrxnlMwG55eaXAXoXgPoC7mL63QI2zlGUAkuPwtwCEzMldQHDJRNoqhL0OYCAAamuEA==
-Content-Language: en-ca
+References: <eb4bcd4c-e6d2-cbeb-8951-cf22b9d3d5fe@web.de> <472c1411-fcf8-862b-cef9-52c2c994914b@web.de>
+ <87fsxw5bav.fsf@evledraar.gmail.com>
+In-Reply-To: <87fsxw5bav.fsf@evledraar.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Sat, 5 Jun 2021 19:17:52 -0300
+Message-ID: <CAHd-oW6_29y90Ui-2mKjoyjZS0n9tyBY2a5ON8shEyddM0t8pQ@mail.gmail.com>
+Subject: Re: [PATCH v2] parallel-checkout: avoid dash local bug in tests
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 4, 2021 4:35 PM, I wrote:
->To: 'Junio C Hamano' <gitster@pobox.com>
->Cc: 'Git Mailing List' <git@vger.kernel.org>
->Subject: RE: [Patch 1/3] connect.c: add nonstopssh variant to the sshVariant set.
+On Sat, Jun 5, 2021 at 5:03 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
->On June 4, 2021 3:52 PM, Junio C Hamano wrote:
->>"Randall S. Becker" <rsbecker@nexbridge.com> writes:
->>> The primary
->>> problem is supplying -S $ZSSH0 on the command line causes $ZSSH0 to
->>> be resolved as a shell variable. It is not.
->>
->>I think we've heard that one before, and the whole thing sounds like
->>you are saying that a command line
->>
->>    $ cmd $ZSSH0
->>
->>expects ZSSH0 to be a variable and tries to interpolate its value
->>before passing it to "cmd" while you want "cmd" to see a literal string that begins with a dollar sign.
->>
->>And the standard solution to that problem obviously is to tell the
->>shell that the dollar-sign is not a reference to a variable by quoting, by using any variant of e.g.
->>
->>    $ cmd \$ZSSH0
->>    $ cmd '$ZSSH0'
->>    $ cmd "\$ZSSH0"
 >
->I'm going to have to retest this, but, when I last tried this, admittedly around git 2.0, what happened was that one level of
-escaping the $
->worked for ls-remote, but we needed two levels for upload-pack which seemed to have two shells processing the command. I might be
->wrong about the specifics (been 4 years), but there was an inconsistency with the number of required escapes. The single quote did
-not
->work for upload-pack at the time. It is entirely possible that the second level indirection happened because the execution of the
-sshoss
->command itself cross over a platform boundary between the POSIX and non-POSIX file systems (it lives in the non-POSIX side).
+> On Sat, Jun 05 2021, Ren=C3=A9 Scharfe wrote:
 >
->>As far as I can tell, the code in connect.c that spawns ssh via
->>GIT_SSH_COMMAND uses the pretty vanilla run_command() interface, and that ought to be capable of producing such a command line,
->so I am lost as to where the need to have special case comes from.
+> > The parallel checkout tests fail when run with /bin/dash on MacOS 11.4,
+> > reporting the following error:
+> >
+> >    ./t2080-parallel-checkout-basics.sh: 33: local: 0: bad variable name
+> >
+> > That's because wc's output contains leading spaces and this version of
+> > dash erroneously expands the variable declaration as "local workers=3D =
+0",
+> > i.e. it tries to set the "workers" variable to the empty string and als=
+o
+> > declare a variable named "0", which not a valid name.  This is a known
+> > dash bug (https://bugs.launchpad.net/ubuntu/+source/dash/+bug/139097).
+> >
+> > Work around it by passing the command output directly to test instead o=
+f
+> > storing it in a variable first.  While at it, let grep count the number
+> > of lines instead of piping its output to wc, which is a bit shorter and
+> > more efficient.
+> >
+> > Helped-by: Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+> > Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> > ---
+> > Changes since v1:
+> > - Explain the root cause.
+> > - Get rid of the local variable "workers".
+> > - Adjust title accordingly.
+> > - Still use grep -c, though.
+> > - Remove input redirection.
+> >
+> >  t/lib-parallel-checkout.sh | 3 +--
+> >  1 file changed, 1 insertion(+), 2 deletions(-)
+> >
+> > diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+> > index 21f5759732..66350d5207 100644
+> > --- a/t/lib-parallel-checkout.sh
+> > +++ b/t/lib-parallel-checkout.sh
+> > @@ -27,8 +27,7 @@ test_checkout_workers () {
+> >       rm -f "$trace_file" &&
+> >       GIT_TRACE2=3D"$(pwd)/$trace_file" "$@" 2>&8 &&
+> >
+> > -     local workers=3D$(grep "child_start\[..*\] git checkout--worker" =
+"$trace_file" | wc -l) &&
+> > -     test $workers -eq $expected_workers &&
+> > +     test $(grep -c "child_start\[..*\] git checkout--worker" "$trace_=
+file") -eq $expected_workers &&
+> >       rm "$trace_file"
+> >  } 8>&2 2>&4
 >
->>"cmd" here may be "ssh" but run_command() should not care what exact
->>command is being invoked.  I am puzzled why a simple quoting like the
->>following cannot be adjusted for this particular case, for
->>example:
->>
->>    $ cat >>.git/config <<\EOF
->>    [alias]
->>	cmdtest0 = "!echo ..\\$ZSSH0.."
->>	cmdtest1 = "!echo ..$ZSSH0.."
->>    EOF
->>    $ ZSSH0=foo git cmdtest0
->>    ..$ZSSH0..
->>    $ ZSSH0=foo git cmdtest1
->>    ..foo..
->
->The multi-level resolution that I experienced is not covered in this situation. Still going to investigate this. I'm working on a
-different
->approach to extend my wrapper script to parse out the port, to supply to sshoss, which is not complaint with the standard ssh. If I
-have to
->stick with that script, there's no point going further on this variant.
+> I'd find this thing much clearer if the v2 just narrowly focused on
+> avoiding the "local", and thus demonstrated the non-portable shell
+> issue,
 
-Without a variant (when simple is used), obviously ports cannot be specified. When using the following URL:
+I don't have any strong preference, but if we are leaving the "grep |
+wc -l" -> "grep -c" conversion to a followup patch, perhaps the
+simplest change focusing on the dash issue would be to quote the
+right-hand side of the "local" assignment:
 
-    git clone ssh://git@bitbucket.org:22/myproj/repo.git repo
+-     local workers=3D$(grep "child_start\[..*\] git checkout--worker"
+"$trace_file" | wc -l) &&
++     local workers=3D"$(grep "child_start\[..*\] git checkout--worker"
+"$trace_file" | wc -l)" &&
 
-The arguments appended using the auto-detected ssh variant that end up being passed to the GIT_SSH_COMMAND command string are:
+(Ren=C3=A9, could you confirm if this works to make the test pass on dash?)
 
-    -o SendEnv=GIT_PROTOCOL -p 22 git@bitbucket.org git-upload-pack '/myproj/repo.git'
-
-which is part of the way there, but the -o SendEnv=GIT_PROTOCOL is OpenSSH specific. There is no such argument for the SSHOSS
-program. This becomes somewhat problematic.
-
-Of course, a sufficiently smart wrapper can detect this and strip off the -o SendEnv, which I have working. This just does not seem
-like a general solution, leading me back down the nonstopssh variant path.
-
-Sigh.
-
-Randall
-
+Alternatively, we could use `test_line_count` as SZEDER G=C3=A1bor
+suggested in a parallel reply.
