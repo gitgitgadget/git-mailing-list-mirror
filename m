@@ -2,112 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24A57C47082
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 05:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E48ABC47082
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 05:45:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1E6461407
-	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 05:42:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C060461404
+	for <git@archiver.kernel.org>; Sat,  5 Jun 2021 05:45:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbhFEFoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 01:44:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49338 "EHLO
+        id S230225AbhFEFre (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 01:47:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbhFEFoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 01:44:24 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4819C061766
-        for <git@vger.kernel.org>; Fri,  4 Jun 2021 22:42:21 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id d1so7853647ils.5
-        for <git@vger.kernel.org>; Fri, 04 Jun 2021 22:42:21 -0700 (PDT)
+        with ESMTP id S229980AbhFEFrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 01:47:33 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACCCC061766
+        for <git@vger.kernel.org>; Fri,  4 Jun 2021 22:45:30 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id y7so6661388wrh.7
+        for <git@vger.kernel.org>; Fri, 04 Jun 2021 22:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fFSLWN4kt3XCMcEdCO4IlOMuJvgCPl4ep2yfXiyTajQ=;
-        b=RmTVQCTXAG0qyIG1g34DUrvjCOayrFr4YlHr+GDfy3Zgmh+pgJpFUpmtVe36Mix+xO
-         /Y/FhopnBgwYXSXUEYwoVaf245wLOFfYJ/5p0mfyNmeTUhqt7a6u9n+o2yJmRH8g9MVf
-         dOJE4FjILzhaQ3VBGdGFaGiWxFPCQPyFZcsA5d8hD4RJrCMoqRdse1PrmBjny0K8Z/IY
-         Kyq+SRb15AlLRoT7ewJY1zhFKGkF4ZVwzZoUzIQQMzgx0/VUXod2I/PKcm+6A4yNiXBH
-         58tI0kusbxRO/iTa4JQqrQBFEtMMfOHNDmFd1UuTv5yzf7KAb5RCbJxIPfGCPqke9icf
-         km6g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=5D7r8R2ueCdwOKxPrMNImnmmcLnSjDudmuw62D2hbdo=;
+        b=O3JxV8tyWXQydYMtlx0Ffz7yrrFZ1VuBhloe6VkpSlpTZSdmoXL0+N8MTg2G7W+xGV
+         20cl3pIQ7hm43vrxxOKBASo/wwAhWAwoudeLbOxTnjmL558nalVYkU+GQ4pbNUOyryO7
+         3GIISKAXJ23/+9BWb4fXqCdb9aXJeXrSoJHWJ9LpYnz7QkciyF6RHI+j1cHD01WuFohb
+         W2H1UvrmhaZ5C2tlOOC42TteWcjnKAmNsPF7yoJjkXW6NbUO4NTaSlu7Acm46+4xjlWi
+         unTkiqc73xN7nhqztgYWxLA5LeZo2Emus3F13C1FqtEL1iwXCyVpTVMDZbTOC0OY4a0c
+         nItQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fFSLWN4kt3XCMcEdCO4IlOMuJvgCPl4ep2yfXiyTajQ=;
-        b=Jeum8+MyBElbHEzJ+KKfN7ETgy3i2v3JLB7nLxvvGZogSRSHeJ8f+nSkMhEIj5kZx7
-         Ig3V2U38hMvwZWZiR7RcvQILM87dEv8iaZ83XA41KYlBDKrN6ohkCj6zQBbLdbUbdeGw
-         F6jnhhXxZidoq6UhJpTAi36yiE7DJIjEBYrtQr54jwsUynSP9ZXXCVyABrxnv9/sGOWV
-         uMgnWQMoLBXLHHdCD54GJMSPsBi0CnF2VcbuQ3y7Uv9te/WhQ9nP2U45Ww8yHQB28qRO
-         TfjrOyjlzk1kwbKwFtOpOr/ebjXWt9s4U+WqOeMPd4yNKHULP7lq2jQr1aQF56osJ7Z4
-         bYuA==
-X-Gm-Message-State: AOAM530n/Xc6aSD8AkVurpwyQxHWgnlxtouSJ5eXDn/xZ/mXQOH7+9pT
-        /pjLVXdUFq/FzlzymVkmCX0/NFbGLKmtay8Zx2w=
-X-Google-Smtp-Source: ABdhPJwZLMdAtBDL3x9dXmr31w7YE4RS3hXi9UvqcC0dSXyV84NgrEIi/LKusBfDYITdI3eWYp9sqV9maqVbvBhh8gI=
-X-Received: by 2002:a92:b0b:: with SMTP id b11mr6823852ilf.301.1622871739497;
- Fri, 04 Jun 2021 22:42:19 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=5D7r8R2ueCdwOKxPrMNImnmmcLnSjDudmuw62D2hbdo=;
+        b=tDdfv0Z5c4+3upFN/5DhQ7DsuBTx9mzPCUNvhtNJ9pUvslxVfGyaVQ7dMhY/Lc+gRE
+         dzh5WLSUF2qiV/qPSVdiRNMHm4ijAZK5HRFhTrznzA907BEgn0rS7/rhU6w5l/VcbihY
+         Rjufls8I3/8ayeka5W3QPwEipPws9p1mo5fzQ3Ca1Ayb+evQLr7tTTruKlXftBck/PJV
+         ypn0d6KHr7E/6cSkBSfoCFG5Zxr3rA7GiYrysYSNaONVDdWwEs34l+UFhjjRl+R0JQXt
+         f3N37qYHt2wH2TSt/pVy9S2ADpCqzxvrDRBLmJnrqmhY2Q9na94tIf6DdQ6x/wJWL/tl
+         J2cg==
+X-Gm-Message-State: AOAM532rlqCjgbfi++Qr+nFE3M1VCJiSWJhTrhwwBj1ZQcMFVLm40EPo
+        R9JZt4s4EmTYkPb0OqIKabjzuM/WKDTEXTVS
+X-Google-Smtp-Source: ABdhPJymzWRqlb7AiSVq4Sm8azrzrcxH4EQM3E6B66/UEfa9NQzWtMVx0tyZSoKZ/PipJjsdREb44Q==
+X-Received: by 2002:a5d:47cb:: with SMTP id o11mr893574wrc.38.1622871924130;
+        Fri, 04 Jun 2021 22:45:24 -0700 (PDT)
+Received: from ?IPv6:2a02:587:4411:d162:d4f6:a55c:626a:a7c? ([2a02:587:4411:d162:d4f6:a55c:626a:a7c])
+        by smtp.gmail.com with ESMTPSA id 89sm9133938wrq.14.2021.06.04.22.45.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Jun 2021 22:45:23 -0700 (PDT)
+Subject: =?UTF-8?Q?Re=3a_Request_feature=3a_=e2=80=93no-submodule?=
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <c5709df6-c357-56b4-f0e0-673bc8b4e668@gmail.com>
+ <YLfqiLbpPXWXHlBi@nand.local> <xmqq8s3r7oma.fsf@gitster.g>
+ <YLg/dLqYFEqHZJUn@nand.local> <xmqq7dja6e46.fsf@gitster.g>
+ <YLkr+kLdjmHyPjgl@coredump.intra.peff.net> <xmqqo8cm4nst.fsf@gitster.g>
+ <YLmmIXy/SITKh/Yw@coredump.intra.peff.net> <xmqqbl8m2p71.fsf@gitster.g>
+From:   Ilias Apostolou <ilias.apostolou.zero@gmail.com>
+Message-ID: <d75f856e-f219-3d15-e94b-837fb2355df9@gmail.com>
+Date:   Sat, 5 Jun 2021 08:45:18 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <pull.966.git.1622558243.gitgitgadget@gmail.com>
- <pull.966.v2.git.1622808751.gitgitgadget@gmail.com> <CAP8UFD0PPU4O+L3p0qJhKpsiB=MvyGJbbtxP6Vu0YeeVQ-Ojmg@mail.gmail.com>
- <CAOLTT8SEXfNcpzKaGzvMXxJ1NS_dw-S--K5a_jQ=d3be5CgpXw@mail.gmail.com> <CAP8UFD3SxAh1ZW2TTMqn2e6=qP1YDd5qVd15yFR669+cPr481Q@mail.gmail.com>
-In-Reply-To: <CAP8UFD3SxAh1ZW2TTMqn2e6=qP1YDd5qVd15yFR669+cPr481Q@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 5 Jun 2021 13:42:07 +0800
-Message-ID: <CAOLTT8RP1myY32cOMMvU4Q2_XyKsL=+XERij7RYJYM3We0rP8w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] [GSOC] ref-filter: add %(raw) atom
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqbl8m2p71.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=
-=885=E6=97=A5=E5=91=A8=E5=85=AD =E4=B8=8B=E5=8D=8812:49=E5=86=99=E9=81=93=
-=EF=BC=9A
->
-> On Sat, Jun 5, 2021 at 6:34 AM ZheNing Hu <adlternative@gmail.com> wrote:
-> >
-> > Hi, Christian,
-> >
-> > Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B46=
-=E6=9C=884=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=888:53=E5=86=99=E9=81=
-=93=EF=BC=9A
-> > >
-> > > No need to resend as it's a cover letter, but just in case there is
-> > > another round and you copy things from this cover letter:
-> > >
-> >
-> > Sorry, what is the bad place in this cover letter I write? This
-> > cover letter is also different from the last time ...
->
-> I was talking about the grammatical issues below in the cover letter.
-> Sometimes people copy things, for example a text explaining what the
-> patch series is about, from the cover letter of version N to the cover
-> letter of version N + 1, so I thought that telling you about
-> grammatical issues in this cover letter could perhaps help you if you
-> have to write another cover letter for another version of this patch
-> series.
+If I understand correctly, we should learn to use git ls-files special 
+parameters like 'attr' and 'exclude'. I'm impressed by the fact that 
+these are not wide-spread known. We should learn to use these advanced 
+features instead of extra piping. Your emails are precious to my team 
+and will help us advance.
 
-Ok, I get it.
+Please consider this request closed.
+Ilias
 
-I want to mention another question:
-If I have a new patch series about %(rest) is based on the current %(raw)
-patch series, should I submit it immediately?
-
-Thanks.
---
-ZheNing Hu
