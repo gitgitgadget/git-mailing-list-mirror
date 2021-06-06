@@ -2,198 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,INCLUDES_PULL_REQUEST,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 445B6C47082
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 03:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB19C47096
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 03:39:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 242DD6141D
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 03:25:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A87D6136E
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 03:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhFFD1i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Jun 2021 23:27:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230060AbhFFD1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jun 2021 23:27:36 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BBEC061766
-        for <git@vger.kernel.org>; Sat,  5 Jun 2021 20:25:32 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 27so11154339pgy.3
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 20:25:32 -0700 (PDT)
+        id S230090AbhFFDlI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Jun 2021 23:41:08 -0400
+Received: from mail-pg1-f182.google.com ([209.85.215.182]:46763 "EHLO
+        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230025AbhFFDlH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jun 2021 23:41:07 -0400
+Received: by mail-pg1-f182.google.com with SMTP id n12so11115820pgs.13
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 20:39:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FE6a801PSuKrtf/mA0WP3UptBqsrf4YEQbEd9BFBogI=;
-        b=OlEEE6Z3Uj7Sexb6iD7yrh6PlyCXTVZFGAMwajsGW/uGyJrFJM1Z4j6Y2peCIH+Su5
-         AI+oEw5CX5MtSfjJvBesYbcYg1jBsrxnouOg+Yo9W2/p9GkJEUM7DqiAJ1J7+6v3bLjq
-         Bc4X96V22INsT3OwQSwuMPSWprpezL8TAAnFqam3+k5+6S0hRmIOxvpRy/j3lhhK/bKL
-         CnyXnEDM/bpgex+d4G6pJURMSjkINE0Jr8s6MFLTiNzDHEbseXQvg7qd/4/+r/jLdVc/
-         VEiZ1+/p8PaVnGbK2gCrkRKTYkWiVPGuowx0cz0w0TEuPWAJaIE4jFZVzKGJQDQlq0Xj
-         2Zaw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nFR35FTD8pIgGtoALSpUn0eLizNiGWkps/Uqrx0zsWI=;
+        b=Fsl2XmhpoakvZWDqareWnRkeAeIdLjA1KRtBh3oc7VVDOT47nN2WDiqH+kJlsuhQN+
+         3GozYMHVAomsX/5kfMxSOKJYZ/DIL3/iqDWKso9rZ4IOIBeBko6saKyCq6geZfM1R7gh
+         nySLfiKZFh7SbYVvUes6TPaOkMQJWK7Jjt3IvFaR2Y2flBZdfp1p6gN114PJzrF5+kmL
+         by+xr55qacSyKe6+3PDadh4YyiRJIyxdjGZXT6ijLh6B4bMahe4Ag0e4ebruB2M5IzVi
+         XrsUax/GljI0IpW5O9hHvdpOnjV7fIfnjxKj34XB1XEsMKZ1GbKAtHVTd3QT41FarmCq
+         46Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FE6a801PSuKrtf/mA0WP3UptBqsrf4YEQbEd9BFBogI=;
-        b=p152xU9ob3PtNxoUQMjrLNQPPBpduY60qyiCuqTSMBX5gVIpSqI1kuin+Ejlr4LJ82
-         DPGZj+y+pIY1NuIhKSHQGx76r82wo+bjPFgvK5zxi/u/ICyqUHRch/MslBdyIZLWIrwv
-         JFU3L6jRTcBYJUC64MxqZZQUomcEyei2rCAPJmCLBSwiE4vKU0MDNT8sA9s6y1qr0CvE
-         tO+h2uB15Z5Ukm5LlBRpZ3m8oYvq/VBuc1gvvQ0mXYI+MDbgRiCzQV0WCPqVoaCGnmoZ
-         fSBdrfxo2O7YOWptCzcZeCDXjlV0RBxuT+J+uyewcMYIhhR/D5mXLNU+0nCeIgv3lebE
-         AZeA==
-X-Gm-Message-State: AOAM533tRjNsRJKLJQB2jKyimxKOD5GL91Iz+n81aIFEKpH5lGtKndVa
-        hWr5Y/gBGAbcc80OOByD3R4=
-X-Google-Smtp-Source: ABdhPJx+5w7Bk5N3ZOjy91VX5C82p1HmkSlWdCNuluQB30qQ9kKbkii5VyzNxgIIc24hrCkQqpqH1A==
-X-Received: by 2002:a05:6a00:a02:b029:2ec:a0a6:9c54 with SMTP id p2-20020a056a000a02b02902eca0a69c54mr7011349pfh.47.1622949932045;
-        Sat, 05 Jun 2021 20:25:32 -0700 (PDT)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id t5sm4920273pfe.116.2021.06.05.20.25.30
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 05 Jun 2021 20:25:31 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Alexey Roslyakov <alexey.roslyakov@gmail.com>,
-        Arusekk <arek_koz@o2.pl>, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        Daniel Santos <hello@brighterdan.com>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        =?UTF-8?q?Emir=20Sar=C4=B1?= <bitigchi@me.com>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>,
-        rlespinasse <romain.lespinasse@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.32.0 round 1.1
-Date:   Sun,  6 Jun 2021 11:25:27 +0800
-Message-Id: <20210606032527.3641-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <20210605145717.13646-1-worldhello.net@gmail.com>
-References: 
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nFR35FTD8pIgGtoALSpUn0eLizNiGWkps/Uqrx0zsWI=;
+        b=fXj80Q+2pGNM9aG0J3ZgNWvOswJ55SY9xUGuIY2+Q+9UnShufya1i3hK3hzhYNqnjU
+         hr51ztwd31ZXKi7QFVCAGyoDlNCZTxM6agpxwGBVtmMJHMjk4E718rPoceyaNCI696lX
+         +zaOlWylHmUKTDEt1unwUhNP3cyG6QNrqh7UWV1TvTsZaINdBlpD7TCM+6Lunw9svYuT
+         4ZGOXEX840yx8apilqAiiKgMNyfHkvMQGPnwm9Cief0JHKGGFRk1EfZt+A47wa+h9jac
+         MkA2ORy8e/faySI7+O+kYSjq2kFbNUWNdgTWjIDdVv8xMBEJHwKbbYEZ5jU59dJB0gtx
+         Nq8A==
+X-Gm-Message-State: AOAM531Yejoz5ckTivhUMB6gBfxUBDKLwel/xokD7r2IvBvYaDctlK5B
+        /ClAM+OJAZKdCebaGRVXF84=
+X-Google-Smtp-Source: ABdhPJwqNA8GhBxK6OhxSoP0t2v4Zxw2+UBeSmsp+hFSsx9NieNFJq0mzFR/NFB8usuZLML2CPfmzw==
+X-Received: by 2002:aa7:9188:0:b029:2d8:96df:8dec with SMTP id x8-20020aa791880000b02902d896df8decmr11633054pfa.8.1622950683793;
+        Sat, 05 Jun 2021 20:38:03 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-2.three.co.id. [180.214.233.2])
+        by smtp.gmail.com with ESMTPSA id v22sm4908714pff.105.2021.06.05.20.38.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Jun 2021 20:38:03 -0700 (PDT)
+Subject: Re: [GSoC] [PATCH 1/2] submodule--helper: introduce add-clone
+ subcommand
+To:     Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+References: <20210605113913.29005-1-raykar.ath@gmail.com>
+ <20210605113913.29005-2-raykar.ath@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <2422ea94-473e-2fa9-a3cf-f22f941e9b44@gmail.com>
+Date:   Sun, 6 Jun 2021 10:38:00 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210605113913.29005-2-raykar.ath@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi,
 
-After sending pull request last night, I received new update from Christopher.
-So I deleted tag l10n-2.32.0-rnd1 and creataed a new tag l10n-2.32.0-rnd1.1
-with update on "po/es.po".
+On 05/06/21 18.39, Atharva Raykar wrote:
+> +	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
 
-Please pull the following l10n updates for Git 2.32.0.
+What is the exit code you mean in case of error?
 
-The following changes since commit bf949ade81106fbda068c1fdb2c6fd1cb1babe7e:
+>   	git config submodule."$sm_name".url "$realrepo"
+>   
+>   	git add --no-warn-embedded-repo $force "$sm_path" ||
+> 
 
-  Git 2.32-rc0 (2021-05-16 21:05:24 +0900)
+Is `git` executable that found in $PATH used? I have both 
+distro-packaged Git and custom-compiled Git installed, and I would like 
+the latter to be able to use git-submodule from its own install prefix 
+(/path/to/git-prefix or whatsever).
 
-are available in the Git repository at:
-
-  git@github.com:git-l10n/git-po.git tags/l10n-2.32.0-rnd1.1
-
-for you to fetch changes up to 8e02217e104d9084bdba17d945f078863073ff59:
-
-  l10n: es: 2.32.0 round 1 (2021-06-05 20:06:23 -0500)
-
-----------------------------------------------------------------
-l10n-2.32.0-rnd1.1
-
-----------------------------------------------------------------
-Alex Henrie (1):
-      l10n: Update Catalan translation
-
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (5204t)
-
-Alexey Roslyakov (1):
-      l10n: ru.po: fix typo in Russian translation
-
-Bagas Sanjaya (5):
-      l10n: id: po-id for 2.32.0 (round 1)
-      l10n: README: document git-po-helper
-      l10n: README: document "core translation"
-      l10n: README: document l10n conventions
-      l10n: README: note on fuzzy translations
-
-Christopher Diaz Riveros (1):
-      l10n: es: 2.32.0 round 1
-
-Daniel Santos (2):
-      l10n: pt_PT: add Portuguese translations part 2
-      l10n: pt_PT: add Portuguese translations part 3
-
-Emir Sarı (1):
-      l10n: tr: v2.32.0-r1
-
-Jean-Noël Avila (1):
-      l10n: fr: v2.32.0 round 1
-
-Jiang Xin (9):
-      l10n: git.pot: v2.32.0 round 1 (126 new, 26 removed)
-      l10n: fix typos in po/TEAMS
-      Merge branch 'fr_next' of github.com:jnavila/git
-      Merge branch 'master' of github.com:Softcatala/git-po
-      Merge branch 'l10n/zh_TW/21-05-20' of github.com:l10n-tw/git-po
-      l10n: README: add file extention ".md"
-      Merge branch 'pt-PT' of github.com:git-l10n-pt-PT/git-po
-      Merge branch 'fix_typo' of github.com:e-yes/git
-      l10n: zh_CN: for git v2.32.0 l10n round 1
-
-Jordi Mas (1):
-      l10n: Update Catalan translation
-
-Matthias Rüster (1):
-      l10n: de.po: Update German translation for Git v2.32.0
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation (5204t0f0u)
-
-Trần Ngọc Quân (1):
-      l10n: vi.po(5204t): Updated Vietnamese translation for v2.32.0
-
-Vincent Tam (1):
-      l10n: fr.po fixed inconsistencies
-
-Yi-Jyun Pan (2):
-      l10n: zh_TW.po: v2.32.0 round 1 (11 untranslated)
-      l10n: zh_TW.po: localized
-
-rlespinasse (1):
-      l10n: fr: fixed inconsistencies
-
- po/{README => README.md} |   113 +
- po/TEAMS                 |     4 +-
- po/bg.po                 |  7100 ++++++++++++------------
- po/ca.po                 | 13056 ++++++++++++++++++++++++---------------------
- po/de.po                 |  6956 +++++++++++++-----------
- po/es.po                 |  7106 ++++++++++++------------
- po/fr.po                 | 10104 ++++++++++++++++-------------------
- po/git.pot               |  6731 ++++++++++++-----------
- po/id.po                 |  9809 +++++++++++++++++++---------------
- po/pt_PT.po              |  1237 +++--
- po/ru.po                 |     2 +-
- po/sv.po                 |  6882 +++++++++++++-----------
- po/tr.po                 |  6819 ++++++++++++-----------
- po/vi.po                 |  6893 +++++++++++++-----------
- po/zh_CN.po              |  6862 +++++++++++++-----------
- po/zh_TW.po              |  7104 ++++++++++++------------
- 16 files changed, 51055 insertions(+), 45723 deletions(-)
- rename po/{README => README.md} (72%)
+-- 
+An old man doll... just what I always wanted! - Clara
