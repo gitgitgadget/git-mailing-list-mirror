@@ -2,120 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29216C4743D
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E93C47096
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:27:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07E4461408
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:04:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60A0B6124C
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbhFFMGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Jun 2021 08:06:02 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:35530 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbhFFMGA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jun 2021 08:06:00 -0400
-Received: by mail-wr1-f42.google.com with SMTP id m18so14173874wrv.2
-        for <git@vger.kernel.org>; Sun, 06 Jun 2021 05:03:58 -0700 (PDT)
+        id S230085AbhFFM3S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Jun 2021 08:29:18 -0400
+Received: from mail-pg1-f171.google.com ([209.85.215.171]:44776 "EHLO
+        mail-pg1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229508AbhFFM3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jun 2021 08:29:16 -0400
+Received: by mail-pg1-f171.google.com with SMTP id y11so3521468pgp.11
+        for <git@vger.kernel.org>; Sun, 06 Jun 2021 05:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=QVYidJVjvN8UjKUUznUYyJfwF6LhpwcZXlKQZ3a0M/Y=;
-        b=XKAEh9kFc4b7VQpyv9tMgWtqgBEgAnrFsgZO4zEnLh7BwukakkkMKoNHUR8y15fful
-         GG5TbrNPL3olPW7eduTj4Ig8mzH6LISTALXS39pEoZ3ATpJVpvFDgcfjv9DzuaxNc/2Z
-         8XCmNAtt/w9Q6CbbOUv9+lgIEMY2MmfNqy1dfd7TXectHrbQO4WE1z0etxMUzVfNHBIf
-         YQ6gdl6d6csQ5ApELoAYZbQSvpMCQ/86kdqxn+5/cyd52Nsyzzp3jGu0gWxIjQSNWOgd
-         OWqOtjDpQYsVMFs6du+lfTI7xmQGaScwax/bwxZ/1qzTiKIBqqphpIbOlu1Tu3+ncInX
-         3F7g==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=JjnRgIihpE37cPoqwem+c6wDJFhW9OBx9NjXPN+ykSc=;
+        b=B2Yl0H1DKHhsiJsY6ILpQID6TErM0JCN8gJA3yFIpcViAucJt5/YK96L9WH08w4gVK
+         O36UCfuT+JzE8ghPFb6Wu3JzbyGKgdi3b89mDHNryGsqwH5Df5c0I1lLuN7KPwrYxV2W
+         t3lJDJntP9EV6/ZCPYXvlaMWequd4WreFQwCHLy7A9p+38s46jeOo/cp4ddvyVIRQTcX
+         u9Y8mfGL730m3Y6mmFgujLzbyYz5zApDihxAVwfOPxTAMAFGscIrN/O2tsVJumcCZEYy
+         eHxeaoFA8GPXqXU6d9szG0V4xKxSi3n33nvnExVLcZE2ltHQmxOf0fFSv3CqO5thyg5/
+         8gmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QVYidJVjvN8UjKUUznUYyJfwF6LhpwcZXlKQZ3a0M/Y=;
-        b=W9gRtUjkmpGVsCrcbSX+BM2yke1RrBVpZKJ9h8RQ5ldk2YE4XgoK3JX7rLNIXrhO2Q
-         7OYbAMqi45FaEqiuFBZgUPMe/WQ96kzL6Ix9O+ZZDlnEfgXCcE5yBBPmkqOukoQfUMky
-         KGVwhBw/JA8qz0wCWKonSy7hnp+EYdJQmGf2s9hY8+Yv3on6oLjBYXEqBauMn2/Fm6W5
-         g5rkcZouc/W8AFih898a2LY/c2GNWdsiyr1UnwntrFYNlyhPjN7qvwqlm9N42TF5s8An
-         WrZxnWJd8c5MzMPPzjP8UejAL30pyE7s4z+TlbZbV/0jHCw3q9a3FtGdOXQSeALksG/i
-         E6KA==
-X-Gm-Message-State: AOAM531umbFYDrFHppWv5n5dof57B5F6xYWveW/I5Dr8kBVd4qY0RHfl
-        MZkroUfTBTLWta12aw2Iw2XacY8eAcs=
-X-Google-Smtp-Source: ABdhPJyMV7zCvFsjo1tToxu7bwLWj6OrfLIggDPLiYpYwNWfNhvjU+Yz2T/POqoVcHhvj/FHCmW7ZQ==
-X-Received: by 2002:adf:fe8c:: with SMTP id l12mr12698767wrr.26.1622980977872;
-        Sun, 06 Jun 2021 05:02:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12sm12914382wme.43.2021.06.06.05.02.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jun 2021 05:02:57 -0700 (PDT)
-Message-Id: <2110c8ffa423e90224089d048291f4392aa50eab.1622980974.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.970.v2.git.1622980974.gitgitgadget@gmail.com>
-References: <pull.970.git.1622828605.gitgitgadget@gmail.com>
-        <pull.970.v2.git.1622980974.gitgitgadget@gmail.com>
-From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Jun 2021 12:02:54 +0000
-Subject: [PATCH v2 3/3] cmake: add warning for ignored MSGFMT_EXE
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Matthew Rogers <mattr94@gmail.com>,
-        Matthew Rogers <mattr94@gmail.com>
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=JjnRgIihpE37cPoqwem+c6wDJFhW9OBx9NjXPN+ykSc=;
+        b=jv/pnRVSsmtwN4TkdXVrXZPEiKuAaYHLM36pqA8w9kuXKilA6tANiXfOjHBDTlZ+GY
+         UFZN6L6ye/9Z4kqLO5QH3nMsT+2zHqhZ4WTCYafmvo4vJfVbfpAEWX+T/5WL2Qi67uB2
+         nUDVWsGHaf+7bFx3w2TDljkNE+RfvnIzyZ1OyjLNjh3Uji0dCMz9rqY7ef15HSi+Hgu+
+         few09P9hfBnl1uhGSVr+haDeECWhCS7VpAnKrSi2kjYlaHZF28KfA+14z1yc5ZugbuFP
+         suMGrQJm4+XPO0kXClqRyOoCSTaOnJsECIeUzYeKVzJQkCHYSks9XUNsjxjx6ny9CBkc
+         /w4A==
+X-Gm-Message-State: AOAM5303mvkwt5NmXWjXO5NkBTq9NZByn2lvoMYRrr0VvOCYPBIm9Fv/
+        voHGyEfzScf6+vJRSu+UvHmk5B1IQQazObCo
+X-Google-Smtp-Source: ABdhPJw6ReE375iLcFaGEELybTD5Cj79FOdmDE+PRgZHkFeHrPWbw/TUXgPADy2dNyZaEwPLolR/jQ==
+X-Received: by 2002:aa7:8244:0:b029:2ec:968d:c1b4 with SMTP id e4-20020aa782440000b02902ec968dc1b4mr10335334pfn.32.1622982374229;
+        Sun, 06 Jun 2021 05:26:14 -0700 (PDT)
+Received: from atharva-on-air.dlink ([119.82.107.60])
+        by smtp.gmail.com with ESMTPSA id n12sm9463898pjk.48.2021.06.06.05.26.13
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 06 Jun 2021 05:26:13 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: [GSoC] My Git Dev Blog - Week 3
+Message-Id: <FC56DF49-CEC5-4C9F-BDE4-B0119558E4B2@gmail.com>
+Date:   Sun, 6 Jun 2021 17:56:11 +0530
+To:     git <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew Rogers <mattr94@gmail.com>
+Hi,
 
-It does not make sense to attempt to set MSGFMT_EXE when NO_GETTEXT is
-configured, as such add a check for NO_GETTEXT before attempting to set
-it.
+Here is my latest instalment in my weekly Git blog:
+http://atharvaraykar.me/gitnotes/week3
 
-Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Matthew Rogers <mattr94@gmail.com>
----
- contrib/buildsystems/CMakeLists.txt | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+(In case you missed week two, here is where you can find it:
+http://atharvaraykar.me/gitnotes/week2)
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 399a3cd6c071..3dc7ffcd98bb 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -189,14 +189,18 @@ if(WIN32 AND NOT MSVC)#not required for visual studio builds
- 	endif()
- endif()
- 
--find_program(MSGFMT_EXE msgfmt)
--if(NOT MSGFMT_EXE)
--	if (USE_VCPKG)
--		set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
--	endif()
--	if(NOT EXISTS ${MSGFMT_EXE})
--		message(WARNING "Text Translations won't be built")
--		unset(MSGFMT_EXE)
-+if(NO_GETTEXT)
-+	message(STATUS "msgfmt not used under NO_GETTEXT")
-+else()
-+	find_program(MSGFMT_EXE msgfmt)
-+	if(NOT MSGFMT_EXE)
-+		if(USE_VCPKG)
-+			set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
-+		endif()
-+		if(NOT EXISTS ${MSGFMT_EXE})
-+			message(WARNING "Text Translations won't be built")
-+			unset(MSGFMT_EXE)
-+		endif()
- 	endif()
- endif()
- 
--- 
-gitgitgadget
+This issue mostly consists of an update on the work I have
+done since the last week, as well as the challenges I faced
+and overcame.
+
+I'm sure many of you will probably find things that are
+quite suboptimal about how I work, so feel free to nitpick
+away. I'll definitely learn something from it ;-)
+
+Have a great weekend, and stay safe!
+
+--
+Atharva Raykar
