@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87294C47096
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 04:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF60DC47096
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 04:40:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DC2261408
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 04:33:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACDD4613F3
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 04:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbhFFEfN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Jun 2021 00:35:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34764 "EHLO
+        id S230203AbhFFEly (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Jun 2021 00:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbhFFEfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jun 2021 00:35:13 -0400
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B4CC061766
-        for <git@vger.kernel.org>; Sat,  5 Jun 2021 21:33:24 -0700 (PDT)
-Received: by mail-vs1-xe30.google.com with SMTP id z206so7122136vsz.6
-        for <git@vger.kernel.org>; Sat, 05 Jun 2021 21:33:24 -0700 (PDT)
+        with ESMTP id S229437AbhFFEly (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jun 2021 00:41:54 -0400
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A93C061766
+        for <git@vger.kernel.org>; Sat,  5 Jun 2021 21:39:50 -0700 (PDT)
+Received: by mail-vs1-xe2e.google.com with SMTP id b1so5382263vsh.7
+        for <git@vger.kernel.org>; Sat, 05 Jun 2021 21:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hyM0X6Nz9XjoFagNgDfmascSO5PzEq/MWfT7C8//1+o=;
-        b=p5SAcKeIKpbFbjY2EHMqtyeB9yUSV8KaJXH4+hUFlm2Y3NMWPZo237eWs0O5w2SeV/
-         zs6e/JaM5R9dcXnX2z+MvZZ60csyWIKKeEemPmFK7S3dkMfthnd0dvp+jTE48Bnl4Si8
-         6tw5X2FONFotbaFXKYm0R2624klTbKqzmX6vXwtmHSaGz4RWCGDjEeWc8toZYuzm0ayX
-         rWMxPkejN0hd+kk4v43YIaggL7Cf5tPTA1YMf/iAg7wHmqERJRB3X6p52tGVDiKzEeY7
-         brsKlxrXDd3LgVMm9qP5T+fLiqgpbIGczdvn57wGOU2njTIryc+dHEi777W2NQzIpXTy
-         rNhQ==
+        bh=GPLByMoxOc6dMY7PNtheRJhIYMATCHAQMWI71Azu8eI=;
+        b=KChXAjr0ONK/h88Qle+3nfJjDoI/5xzo03Pv4EMpkTVE0Y9HTIy87vLWxonNiFoVX+
+         wf/93G5jU2DjrGk7O7SYH4rdQGRDw92fv7z3BUA0AP/VXwMLIVgRdiFYtxGhmsX1E4Cq
+         udMkybm9Yi6MNaR2aBfd467qoXJkbpccGutSsvxMC05E0bF7L0Y+FGt/reBlOqc73qq3
+         sM/djABO/Xk91WOauDueL8TvXSEpa/F1ZyFIrhowu+1DQJseST3RAAa4/tZAXG1pIw/P
+         +U7oDaXFq1VHVw9409VeqHOT0JU9BrMaT8GsT+IUxfpZKssMhPTj0VnHxb25+AIeGPeb
+         SROA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hyM0X6Nz9XjoFagNgDfmascSO5PzEq/MWfT7C8//1+o=;
-        b=K1fWcLoS3Dq5WMM1Tfcv3Dh6+qg4vQ2n0NnTlqv+9dErr5s2ARdtrNGYcmEN28crlb
-         Z0iVQxWvYEBKmaorWTJLHhJgJf7Rv7v9uC9wnPt5KHGVqnp4L97Ds2KcCI7jJsgMXFHz
-         mF+ZNcZ2dfGlIIrWajrL4FJXcNWwJywv8YDWjiLm4Kl8wLqTQ9WF2SPY85VRhrbJMriP
-         IBhItN20yBKIhc97yJ2fcpvg/9A56enUeeEAM/3uE9DumDy3mRaEt+pwgpOkmP2MdQYy
-         pzTayfqn5siUHOPSq/kllpJ5HTwgp67gmQG0oxvFHef1856Wo0X6tJz/l5YlCOMWmCLe
-         Ra6Q==
-X-Gm-Message-State: AOAM532T/LHuffyRvkK/LyHRNImUjkR2hp064tgpopxau8usD8WuI3V3
-        OHGR4m/bTjjdoNfX1be3U87nndOWuWC7Oaihtyw=
-X-Google-Smtp-Source: ABdhPJyvGhbb0yyNBkGfjFp88cBWtE7pY6Y01UTOm86uwGnO/81ZvVcnk3Xp+IP4E49tJTdH84vscCAeA8Xqq0BkJ1k=
-X-Received: by 2002:a67:cb0a:: with SMTP id b10mr6923524vsl.9.1622954002410;
- Sat, 05 Jun 2021 21:33:22 -0700 (PDT)
+        bh=GPLByMoxOc6dMY7PNtheRJhIYMATCHAQMWI71Azu8eI=;
+        b=NtRN94q/6pN3KA06/cjtkdjhENtc9T0jciLX8TzFXNbpoXXeEFmuJEk8ROvNwGKZs+
+         /PjLm93TUynj4tDDJNxIwzUeD/LcUHpF7MuGcRfehn8hAv0P9xNOU1bdLo+RLqZVDNW2
+         drDRehe/mjziiBzXbu8DTb65dpYhZDu3JT0QOoF1R3UgO2ZN6OiJbU506wWXo0pkkV9z
+         6zCRwoyCn2WrLs0rBy1eh41ibQ1nbH9Pehryj+JnxQJ5g8wOxF0bmdKLAWkNy7RoOw15
+         Lo6qf37VkLxvvQGr44ckygsoB1sHydWiRGaO+WScsqq6dNEoWbBLNFeT4QG8lkZ7AaPY
+         vQMw==
+X-Gm-Message-State: AOAM533ts72nuxqU7u4cL3Hi0nyTsWG9F/SiOB/DzuHLV+KGyiQNX87T
+        pvC25GjkDBiS/YTOIoucEnpIDjfaAPYZQiIb5jA=
+X-Google-Smtp-Source: ABdhPJy8neESDbn5BKf1IkCUD0h2LocmaswXkqQrkeYBEiOmo63oYLDmwhEDZhspjRqegdGjEFZesUi2WWg80ugaxO8=
+X-Received: by 2002:a05:6102:2008:: with SMTP id p8mr6417795vsr.53.1622954389095;
+ Sat, 05 Jun 2021 21:39:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.970.git.1622828605.gitgitgadget@gmail.com>
- <3170f78daa5fa89f04f61e24c9c64c93ea5b394f.1622828605.git.gitgitgadget@gmail.com>
- <CAKiG+9UT+B-kFiY7sA8ZedB31xYARbFgSFwQRzktww_S2B_tfA@mail.gmail.com> <CAOjrSZv9h09y-=KVz8UGZaB0r5MHRqFZJjp0VDFX6fnohoFx9Q@mail.gmail.com>
-In-Reply-To: <CAOjrSZv9h09y-=KVz8UGZaB0r5MHRqFZJjp0VDFX6fnohoFx9Q@mail.gmail.com>
+ <c3bf266cf03a9678933623b48927ee749956218d.1622828605.git.gitgitgadget@gmail.com>
+ <CAKiG+9W8Da4bG87VjTKN6m=cX+v_x33YAw8p4MqCfmNinYt1XA@mail.gmail.com> <CAOjrSZsyUi+RAqxXyd6JqzWqO8hMdtwTuWpZy+cKbz654Xu45A@mail.gmail.com>
+In-Reply-To: <CAOjrSZsyUi+RAqxXyd6JqzWqO8hMdtwTuWpZy+cKbz654Xu45A@mail.gmail.com>
 From:   Sibi Siddharthan <sibisiddharthan.github@gmail.com>
-Date:   Sun, 6 Jun 2021 10:03:11 +0530
-Message-ID: <CAKiG+9UPBDVVH+2TnfYU6VoTdB1UFoVP=M_D+9H1e=k5+s7vfA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] cmake: add knob to disable vcpkg
+Date:   Sun, 6 Jun 2021 10:09:38 +0530
+Message-ID: <CAKiG+9U2tXu+k+oEx-fx9tjTYEdrL_Nf3Cxk14=ik1Ji8ZUehg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] cmake: create compile_commands.json by default
 To:     Matt Rogers <mattr94@gmail.com>
 Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -71,39 +71,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 6, 2021 at 4:01 AM Matt Rogers <mattr94@gmail.com> wrote:
+On Sun, Jun 6, 2021 at 4:06 AM Matt Rogers <mattr94@gmail.com> wrote:
 >
-> On Fri, Jun 4, 2021 at 4:55 PM Sibi Siddharthan
+> On Fri, Jun 4, 2021 at 5:09 PM Sibi Siddharthan
 > <sibisiddharthan.github@gmail.com> wrote:
 > >
 > > On Fri, Jun 4, 2021 at 11:13 PM Matthew Rogers via GitGitGadget
 > > <gitgitgadget@gmail.com> wrote:
+> > >
+> > > A straightforward way to accomplish this is to make it as simple as
+> > > possible is to enable the generation of the compile_commands.json file,
+> > > which is supported by many tools such as: clang-tidy, clang-format,
+> > > sourcetrail, etc.
+> > >
+> > > This does come with a small run-time overhead during the configuration
+> > > step (~6 seconds on my machine):
+> > >
+> > >     Time to configure with CMAKE_EXPORT_COMPILE_COMMANDS=TRUE
+> > >
+> > >     real    1m9.840s
+> > >     user    0m0.031s
+> > >     sys     0m0.031s
+> > >
+> > >     Time to configure with CMAKE_EXPORT_COMPILE_COMMANDS=FALSE
+> > >
+> > >     real    1m3.195s
+> > >     user    0m0.015s
+> > >     sys     0m0.015s
+> > >
+> > > This seems like a small enough price to pay to make the project more
+> > > accessible to newer users.  Additionally there are other large projects
+> > > like llvm [2] which has had this enabled by default for >6 years at the
+> > > time of this writing, and no real negative consequences that I can find
+> > > with my search-skills.
+> > >
 > >
-> > > -if(WIN32)
-> > > +
-> > > +if (WIN32 AND NOT NO_VCPKG)
-> > > +       set(USING_VCPKG TRUE)
-> > > +else()
-> > > +       set(USING_VCPKG FALSE)
-> > > +endif()
-> >
-> > I think it would be better if we could have an option for this knob.
-> > Maybe like this
-> >
-> > option(NO_VCPKG "Don't use vcpkg for obtaining dependencies. Only
-> > applicable to Windows platforms" OFF)
+> > The overhead is actually much smaller than that. In my system it is
+> > less than 150ms.
 >
-> Option would definitely be the better tool to use here, I just didn't
-> think about
-> it when originally writing it, so I'll send a reroll with that and the spelling
-> corrections suggested by Eric Sunshine.  I assume you'd prefer something
-> with a final form more like:
->
-> option(USE_VCPKG "Whether or not to use vcpkg for obtaining dependencies.
-> Only applicable to Windows platforms" ON)
->
+> Is that 150 ms for the whole process or just the difference between the two
+> options?  I'm running this on windows via the git bash provided by the
+> git sdk.
 
-Yes, this would be better.
+The difference between the two. Without exporting compile_commands.json
+it takes around 650ms, with it around 750ms.
+NOTE: This is for subsequent CMake runs. (Excludes the initial run)
 
 Thank You,
 Sibi Siddharthan
