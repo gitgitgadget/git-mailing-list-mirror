@@ -8,61 +8,57 @@ X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26213C47096
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91EC1C47096
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:04:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AB51613DF
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:03:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62E2F613DF
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:04:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230112AbhFFMFF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Jun 2021 08:05:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46822 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229465AbhFFMFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jun 2021 08:05:04 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7F8C061766
-        for <git@vger.kernel.org>; Sun,  6 Jun 2021 05:02:58 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id a20so14218957wrc.0
-        for <git@vger.kernel.org>; Sun, 06 Jun 2021 05:02:58 -0700 (PDT)
+        id S230128AbhFFMGB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Jun 2021 08:06:01 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:43762 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229465AbhFFMGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jun 2021 08:06:00 -0400
+Received: by mail-wr1-f49.google.com with SMTP id u7so8717899wrs.10
+        for <git@vger.kernel.org>; Sun, 06 Jun 2021 05:03:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HEi8+rxOPBghb+AsSj6zyh+caMylWWOo5i+0EQ+VefQ=;
-        b=dCrm2iKSc0YGOytH6y5i2b1UASVLv5ugaFNlCshsAHL9dRaUuPinz2zuup4921TX3p
-         OP5YOUWeJC0+xrwXuCAlXzng+pRF4rHH3HNSzGRDo76HQazNZ+2BsJ3ga0QLoblMNVNu
-         7IJJK+/aMFK2n80WiglLDn5viB4w/1Hh3CUyQ0QzCBGd1qcbec7PfwB7R02XNoOYqe6y
-         2rWkk0kJBCe4nU5ySgviUP0wrh2dqyRP0l/v/Q6kjnPWD9lbsPewmEyjZPPvtJCzDP9h
-         JpszgvlrrLuRSuVdW2aH9CM7TwUVlmowP0LF5thYyfVSr53YLMBzLbHIZTjCGE6jLo1m
-         fqFw==
+        bh=xUpoyi/EP+oYPLo23BB9sSu+ETCfoRKWS1iw6Jne+8Y=;
+        b=ui092qIBp08BVjmUgRcampPjzoL5zCnKViMSd7F8hiTWR8ukP5Mss9cVUdTsvDCUPU
+         wPqyODCx/eKHjljThzppQaPcwcKkQI+C0jB3Rcxn1WKPJy4sX0k2V4DDFmGVKDg+BxMO
+         tHpWEDYqm8dg5i1sKyqkLxgg31nZXa42X3m9DXLvds5stIvEdSkU/0lhsg4vQ5grbflV
+         vHJsDbtlgjc2fD2OoDOft85yk4dTvY7cC/jyRKFsfsG3mX+6MLmEOSfwQUVMA8PRF3cP
+         sBPlN/mQ/K4PSDgw04/vVyPN1LQ18xt5glvDfSHf1PQkafcJ1Mp5KePfUYMnncBhvA1B
+         MOVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HEi8+rxOPBghb+AsSj6zyh+caMylWWOo5i+0EQ+VefQ=;
-        b=ahsvfv7hvRGrwkSsx+5rW/qyHsifkcVwIwh5HHToSRv73Z3DTEqA5LELubamDLv2tX
-         sVpdVOYHEvBMscOg46mQ9SEbAhbz/nBWew137tV391c7mwx5qfc+HUjQb3Hw27snmf3i
-         CoZeilcRwdUgROGEQHxFdnBj8AdbUKcU3H8Q9PQO+CR4ytXxeI7J+U6DF4AMSo7TcOv8
-         deNmEuyemt3dHAk2Bs9gdvZhdEYm28YUAJxhCYIfvSSjPex/Q+CxTgWUVypL6EIsAzdk
-         3NuysbSxjsbQhGh7STId7FtiJQt7V/+1pT1irJXVU+ocwx0hsn8bfGuq+UL/mJFkuooM
-         beNg==
-X-Gm-Message-State: AOAM532IBocpY5Z3yN0hy1FVL5w2SwfHsoHzQwE0j7O74OFxKjBds8vW
-        FBBMFH+mDJ67AAVEBXDDBJvkTYDg2DU=
-X-Google-Smtp-Source: ABdhPJzMmpzB4fcSMejxXMF0HFbAl4pjfYn7qRyOgfQOdoXqmdoYwK+pgRCj63jgFZvZ+qlggee07g==
-X-Received: by 2002:a05:6000:10cc:: with SMTP id b12mr12482460wrx.54.1622980977207;
-        Sun, 06 Jun 2021 05:02:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r2sm12515139wrv.39.2021.06.06.05.02.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=xUpoyi/EP+oYPLo23BB9sSu+ETCfoRKWS1iw6Jne+8Y=;
+        b=CuNa2PN5NK1/OgQJkFksma2TTaMMwisR126VoWi9ZlanD8VUg1gLldXRWXgUBUEnMW
+         C/TQR0T7yW81TpPtcwz7lED8sRpReDRwFaqbnx+UDW4e5e6k30rfo6QrwFkJFhTMYQF8
+         1/0NidyShV0Jc6O1PlO6ytxIXK1/mDEYPy+ZwG6/EeJy4ewc9vaVViboGUpwvJsroPHh
+         AlxliNIwgAKEchHX/MPEwPGysK4soME55zrgJerNGR26HiLJllPwSJ36jfWeCknoZnql
+         xwhnYb3AhBUf3ul8pRabnNQx8bC1wq2v1PyF6Cv9Ml3Rx2j5gCMWb5+RXz3bmffpHxVy
+         Llhg==
+X-Gm-Message-State: AOAM530qBdsoycUCzQZVeHlvB4GefNCRET8YBr1Ih6MP9wr76OHNVFzX
+        W+lXqeyD8BGVSdoMFGHmynT7sZZmHhQ=
+X-Google-Smtp-Source: ABdhPJx5GZzkvD3XVpsG1awVTirPfJgktz+f+DeqlafzsMAOejZfOybIDLYDBS/kPvzGYjmnuVr0Iw==
+X-Received: by 2002:a5d:440a:: with SMTP id z10mr12241032wrq.323.1622980976066;
         Sun, 06 Jun 2021 05:02:56 -0700 (PDT)
-Message-Id: <a3b5eef5418861ee5c008aef0cdab3448b8fc5d9.1622980974.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.970.v2.git.1622980974.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a11sm12324259wrr.48.2021.06.06.05.02.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Jun 2021 05:02:55 -0700 (PDT)
+Message-Id: <pull.970.v2.git.1622980974.gitgitgadget@gmail.com>
+In-Reply-To: <pull.970.git.1622828605.gitgitgadget@gmail.com>
 References: <pull.970.git.1622828605.gitgitgadget@gmail.com>
-        <pull.970.v2.git.1622980974.gitgitgadget@gmail.com>
 From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Jun 2021 12:02:53 +0000
-Subject: [PATCH v2 2/3] cmake: create compile_commands.json by default
+Date:   Sun, 06 Jun 2021 12:02:51 +0000
+Subject: [PATCH v2 0/3] Make CMake work out of the box
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,72 +67,153 @@ To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Matthew Rogers <mattr94@gmail.com>,
         Matthew Rogers <mattr94@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew Rogers <mattr94@gmail.com>
+This pull request comes from our discussion here[1], and I think these
+patches provide a good compromise around the concerns discussed there
 
-Some users have expressed interest in a more "batteries included" way of
-building via CMake[1], and a big part of that is providing easier access
-to tooling external tools.
+1:
+https://lore.kernel.org/git/CAOjrSZusMSvs7AS-ZDsV8aQUgsF2ZA754vSDjgFKMRgi_oZAWw@mail.gmail.com/
 
-A straightforward way to accomplish this is to make it as simple as
-possible is to enable the generation of the compile_commands.json file,
-which is supported by many tools such as: clang-tidy, clang-format,
-sourcetrail, etc.
+CCing the people involved in the original discussion. cc: Philip Oakley
+philipoakley@iee.email cc: Sibi Siddharthan
+sibisiddharthan.github@gmail.com, cc: Johannes Schindelin
+johannes.schindelin@gmx.de, cc: Danh Doan congdanhqx@gmail.com
 
-This does come with a small run-time overhead during the configuration
-step (~6 seconds on my machine):
+Matthew Rogers (3):
+  cmake: add knob to disable vcpkg
+  cmake: create compile_commands.json by default
+  cmake: add warning for ignored MSGFMT_EXE
 
-    Time to configure with CMAKE_EXPORT_COMPILE_COMMANDS=TRUE
+ contrib/buildsystems/CMakeLists.txt | 37 ++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
-    real    1m9.840s
-    user    0m0.031s
-    sys     0m0.031s
 
-    Time to configure with CMAKE_EXPORT_COMPILE_COMMANDS=FALSE
+base-commit: c09b6306c6ca275ed9d0348a8c8014b2ff723cfb
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-970%2FROGERSM94%2Ffix-cmake-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-970/ROGERSM94/fix-cmake-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/970
 
-    real    1m3.195s
-    user    0m0.015s
-    sys     0m0.015s
+Range-diff vs v1:
 
-This seems like a small enough price to pay to make the project more
-accessible to newer users.  Additionally there are other large projects
-like llvm [2] which has had this enabled by default for >6 years at the
-time of this writing, and no real negative consequences that I can find
-with my search-skills.
+ 1:  3170f78daa5f ! 1:  485254b49de8 cmake: add knob to disable vcpkg
+     @@ Commit message
+              generators.
+      
+            - Some versions of Visual Studio 2019 moved away from using the
+     -        VS 2019 by default, making it impossible for Visual Studio to
+     -        configure the project in the likely event that it couldn't find the
+     -        dependencies.
+     +        VS 2019  generator by default, making it impossible for Visual
+     +        Studio to configure the project in the likely event that it couldn't
+     +        find the dependencies.
+      
+            - Inexperienced users of CMake are very likely to get tripped up by
+              the errors caused by a lack of vcpkg, making the above bullet point
+              both annoying and hard to debug.
+      
+     -    As such, lets make using vcpkg the default on windows.  Users who want
+     +    As such, let's make using vcpkg the default on windows.  Users who want
+          to avoid using vcpkg can disable it by passing -DNO_VCPKG=TRUE.
+      
+          Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+     @@ contrib/buildsystems/CMakeLists.txt: NOTE: By default CMake uses Makefile as the
+       set(CMAKE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
+      -if(WIN32)
+      +
+     -+if (WIN32 AND NOT NO_VCPKG)
+     -+	set(USING_VCPKG TRUE)
+     -+else()
+     -+	set(USING_VCPKG FALSE)
+     ++option(USE_VCPKG "Whether or not to use vcpkg for obtaining dependencies.  Only applicable to Windows platforms" ON)
+     ++if(NOT WIN32)
+     ++	set(USE_VCPKG OFF CACHE BOOL FORCE)
+      +endif()
+      +
+     -+if(USING_VCPKG)
+     ++if(USE_VCPKG)
+       	set(VCPKG_DIR "${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg")
+      -	if(MSVC AND NOT EXISTS ${VCPKG_DIR})
+      +	if(NOT EXISTS ${VCPKG_DIR})
+     @@ contrib/buildsystems/CMakeLists.txt: endif()
+       find_program(MSGFMT_EXE msgfmt)
+       if(NOT MSGFMT_EXE)
+      -	set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
+     -+	if (USING_VCPKG)
+     ++	if (USE_VCPKG)
+      +		set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
+      +	endif()
+       	if(NOT EXISTS ${MSGFMT_EXE})
+     @@ contrib/buildsystems/CMakeLists.txt: file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-O
+       file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
+       file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SUPPORTS_SIMPLE_IPC='${SUPPORTS_SIMPLE_IPC}'\n")
+      -if(WIN32)
+     -+if(USING_VCPKG)
+     ++if(USE_VCPKG)
+       	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+       endif()
+       
+ 2:  c3bf266cf03a ! 2:  a3b5eef54188 cmake: create compile_commands.json by default
+     @@ Commit message
+          time of this writing, and no real negative consequences that I can find
+          with my search-skills.
+      
+     -    NOTE: That the comppile_commands.json is currenntly produced only when
+     +    NOTE: That the compile_commands.json is currently produced only when
+          using the Ninja and Makefile generators.  See The CMake documentation[3]
+          for more info.
+      
+     @@ Commit message
+          Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+      
+       ## contrib/buildsystems/CMakeLists.txt ##
+     -@@ contrib/buildsystems/CMakeLists.txt: else()
+     - 	set(USING_VCPKG FALSE)
+     +@@ contrib/buildsystems/CMakeLists.txt: if(NOT WIN32)
+     + 	set(USE_VCPKG OFF CACHE BOOL FORCE)
+       endif()
+       
+     -+if (NOT DEFINED CMAKE_EXPORT_COMPILE_COMMANDS)
+     -+	SET(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+     ++if(NOT DEFINED CMAKE_EXPORT_COMPILE_COMMANDS)
+     ++	set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+      +endif()
+      +
+     - if(USING_VCPKG)
+     + if(USE_VCPKG)
+       	set(VCPKG_DIR "${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg")
+       	if(NOT EXISTS ${VCPKG_DIR})
+ 3:  07763a9de723 ! 3:  2110c8ffa423 cmake: add warning for ignored MSGFMT_EXE
+     @@ Commit message
+          configured, as such add a check for NO_GETTEXT before attempting to set
+          it.
+      
+     -    suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     +    Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+          Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+      
+       ## contrib/buildsystems/CMakeLists.txt ##
+     @@ contrib/buildsystems/CMakeLists.txt: if(WIN32 AND NOT MSVC)#not required for vis
+       
+      -find_program(MSGFMT_EXE msgfmt)
+      -if(NOT MSGFMT_EXE)
+     --	if (USING_VCPKG)
+     +-	if (USE_VCPKG)
+      -		set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
+      -	endif()
+      -	if(NOT EXISTS ${MSGFMT_EXE})
+     @@ contrib/buildsystems/CMakeLists.txt: if(WIN32 AND NOT MSVC)#not required for vis
+      +else()
+      +	find_program(MSGFMT_EXE msgfmt)
+      +	if(NOT MSGFMT_EXE)
+     -+		if (USING_VCPKG)
+     ++		if(USE_VCPKG)
+      +			set(MSGFMT_EXE ${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg/downloads/tools/msys2/msys64/usr/bin/msgfmt.exe)
+      +		endif()
+      +		if(NOT EXISTS ${MSGFMT_EXE})
 
-NOTE: That the compile_commands.json is currently produced only when
-using the Ninja and Makefile generators.  See The CMake documentation[3]
-for more info.
-
-1: https://lore.kernel.org/git/CAOjrSZusMSvs7AS-ZDsV8aQUgsF2ZA754vSDjgFKMRgi_oZAWw@mail.gmail.com/
-2: https://github.com/llvm/llvm-project/commit/2c5712051b31b316a9fc972f692579bd8efa6e67
-3: https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html
-
-Signed-off-by: Matthew Rogers <mattr94@gmail.com>
----
- contrib/buildsystems/CMakeLists.txt | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index be6d9659c387..399a3cd6c071 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -57,6 +57,10 @@ if(NOT WIN32)
- 	set(USE_VCPKG OFF CACHE BOOL FORCE)
- endif()
- 
-+if(NOT DEFINED CMAKE_EXPORT_COMPILE_COMMANDS)
-+	set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-+endif()
-+
- if(USE_VCPKG)
- 	set(VCPKG_DIR "${CMAKE_SOURCE_DIR}/compat/vcbuild/vcpkg")
- 	if(NOT EXISTS ${VCPKG_DIR})
 -- 
 gitgitgadget
-
