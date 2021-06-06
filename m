@@ -2,137 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AB87C47096
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 08:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 201DEC47096
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 09:07:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01AB761090
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 08:57:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0368C61420
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 09:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbhFFI7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Jun 2021 04:59:34 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:60879 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229465AbhFFI7e (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 Jun 2021 04:59:34 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id DABD95C01BB;
-        Sun,  6 Jun 2021 04:57:44 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Sun, 06 Jun 2021 04:57:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm2; bh=EyFiFL0aDLDT8
-        xcOQdAtvKf/jxawY95FqesVxZGJMP8=; b=jmYfQHJOEgJvaQEbI6L1+enywb1HA
-        uRu0bAFTIAodMDzuPazvHATnFxInpsqDoZMvP/wx6JUi7rr6itExHCo9VxEWTPsE
-        XPZLMLn4Z0JL+HyZ/2lk0YD7ITkursZLnyj698yYm7Lfn+lzx/nWgnBgwZg14uuc
-        2Yoz3SVsjtIlbMxlyHbrcsF5rMQBb2WhEUjcnRM03Tab2NDvEPgcHXsHlQc+0QQR
-        323ECZoFVNXuuYUvCgeWEMHBahUKTad/4ztsz2qWPUueuOExUsRjW596s8h3bezj
-        NQ4+v56Yy9l7mgPqoecnXHohDujZj4+xRAil4iH93nKl0Wc3Ra31/Xa8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=EyFiFL0aDLDT8xcOQdAtvKf/jxawY95FqesVxZGJMP8=; b=tpUo3aLN
-        2rtwycGSWj60W7Da47SKF/sYgH9VO7K6ziaeLZPxg86gkSpwp96zhiA6K2O9tIoK
-        5kvnqfy6LjvIehHk07sGWGKZ+Iz7M5ENFBgrWvHNU6tiRx+wE+mqkB5DwH5cGoMq
-        sf2B1thJXtPMs4JldVgONXqKWxQ1WIfoKV95LGrKo9bNd3VFgEJu9iociRMfaIb4
-        ffid065GlaxZdLMV0Bah+NwkDTYUhuliORf2OQAgZV7DumraYKGhVdJh28cZ/mkw
-        +W635NMIRFYlmSTx9cO6pJZt/pyPlsZLwOXOWlpIBzhaTVdkWl1KJoRgmuddfB/0
-        gBOZFVLvxQV7VQ==
-X-ME-Sender: <xms:CI68YOnMQAcJygP1c6TLK_ipZNzzjO9AcOr9Z5aoFYYB5WNnV9OBwg>
-    <xme:CI68YF2xcouzGyCmEMg7l1iSrbsulBFX18I4e0pmPM_AUORlSi_EJaYlhX7iP2AMk
-    St5Je9gpBOF9dnGlt8>
-X-ME-Received: <xmr:CI68YMpqS4oP6Tuh7mg6Wdg4huTrQUvpELpOwHVuqf091vD23At1PH9WZjPIpw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedthedguddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
-    dtredttdenucfhrhhomhepifhrvghgucfjuhhrrhgvlhhluceoghhrvghgsehhuhhrrhgv
-    lhhlrdhnvghtqeenucggtffrrghtthgvrhhnpeeutedvieffudeggeehudehtddufeelje
-    ehtddttedvteefhfevkeeuudelhedtfeenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgrhgvgheshhhurhhrvghllhdrnhgvth
-X-ME-Proxy: <xmx:CI68YClgKYdVzarSQ5l9dcXRQnaYy7SDhadYqBb2-EWiVMwI4r0IIA>
-    <xmx:CI68YM2LEinoxZbbT-DS5c9TrQ6QEWgXLmDX9pGdsWIgW171oLWmhA>
-    <xmx:CI68YJtQYk6Tx4_seCkHF1a_BlbEXRxBBvkf8IsIDaD1Un1CbYsTQg>
-    <xmx:CI68YB9Xi7glGpYf6hyU9brPArx_puXMojsf8AFNpAhODClRfBhtdA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 6 Jun 2021 04:57:43 -0400 (EDT)
-From:   Greg Hurrell <greg@hurrell.net>
-To:     git@vger.kernel.org
-Cc:     Greg Hurrell <greg@hurrell.net>
-Subject: [RFC PATCH] gitweb: use HEAD as primary sort key in git_get_heads_list()
-Date:   Sun,  6 Jun 2021 10:57:32 +0200
-Message-Id: <20210606085732.15001-1-greg@hurrell.net>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210606085116.13739-1-greg@hurrell.net>
-References: <20210606085116.13739-1-greg@hurrell.net>
+        id S230075AbhFFJJW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Jun 2021 05:09:22 -0400
+Received: from mail-ej1-f46.google.com ([209.85.218.46]:45835 "EHLO
+        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229525AbhFFJJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jun 2021 05:09:21 -0400
+Received: by mail-ej1-f46.google.com with SMTP id k7so21412748ejv.12
+        for <git@vger.kernel.org>; Sun, 06 Jun 2021 02:07:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=swyoKh+Km5gBweyWskWH74HHZMePNseLrm5HskFSkcA=;
+        b=oGHLcM+nJn8nbBMEZrlBoGKJRDj91Jtqx0dPfCCw1qBm57AHlxkrWzFJ4q33pS0L2G
+         rlNNI9wOWbn1CIugA4SIEGDZtfd8f91ZXWUALl6JD0hSSGqW8IbPtW0Ohc3dxDQKTIIJ
+         eZ393eK7WugQxvtx1G+0ruNnz63dhtkFigciqcbsOBpq81T0sVR5pNS7xY5Ssuo0YMb5
+         MKZ5yxwFshvPHwI2u01g725p3iIJU/QAl/SuwzyFNefhMug3ISacC0i4WBh6cuhCelYW
+         S+yDXttwRCo+TxPCDwib5b36Q15zh0DkIZ/zftf8l70NeVkoVwyVo13R9T3+wFgoDttW
+         e1cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=swyoKh+Km5gBweyWskWH74HHZMePNseLrm5HskFSkcA=;
+        b=odkEPnv8AWhNh7PN78wY9wTRxUetRela2jNEv6HmiY5ySvUsiXMmbefucqJJjM7rVl
+         5wSUurzjiTL/rPwowPqecE4OmjGhVOLY7PhtTVpwWYG/C7IbVtF4B1PgcTGJ9Mc4nsnH
+         fXU4qR+7SlDiH5uKkWfR4Q2ckw9ihfxRQBdFlOLzcTahe6zavCLbFAGM6rW3HphUarIt
+         nmb5CJgdr9Js64P9XiQJfnvyOw3DnNzgBItQzv0Hfo4SlYEoh1FJWvGcMhFVqzknhLDg
+         OpyjWuQmIuiPcTJoIgm/cPapJ2ngVl0ADIRqCNqqjgLeSDlIAaGhAJqjsQnj2yQVYp+X
+         kWtg==
+X-Gm-Message-State: AOAM5320EQTV4Vfsp6PnKFbmoYv0jeKRMhkNmKknM/ya0HnnqeJF6neB
+        0GjypmjnPmGJPpXLEWqvTeVQvsMNqZogkY/mYs0=
+X-Google-Smtp-Source: ABdhPJyjeacndm1NxQ9NhKQTuBcodK9n9wI4/FS9oCg2InGPOr9Zo+Ekkg8q0RlBNzbbnkmEaqJtPvL5zxcL0Dcq5a0=
+X-Received: by 2002:a17:906:2481:: with SMTP id e1mr12836779ejb.216.1622970376642;
+ Sun, 06 Jun 2021 02:06:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210605113913.29005-1-raykar.ath@gmail.com> <20210605113913.29005-2-raykar.ath@gmail.com>
+ <2422ea94-473e-2fa9-a3cf-f22f941e9b44@gmail.com>
+In-Reply-To: <2422ea94-473e-2fa9-a3cf-f22f941e9b44@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 6 Jun 2021 11:06:05 +0200
+Message-ID: <CAP8UFD0oXjxRCXi12nVWtKWBm+tAOcRhZ5g+1tM8qP+5nKbLpQ@mail.gmail.com>
+Subject: Re: [GSoC] [PATCH 1/2] submodule--helper: introduce add-clone subcommand
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Atharva Raykar <raykar.ath@gmail.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prior to this commit, the "heads" section on a gitweb summary page would
-list the heads in `-committerdate` order (ie. the most recently-modified
-ones at the top).
+Hi,
 
-In my own repos I have started to move from "master" towards "main", but
-I keep "master" around and in sync with "main" so as not to break
-existing clones. As such, they always point at the same commit.
+On Sun, Jun 6, 2021 at 5:38 AM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>
+> Hi,
+>
+> On 05/06/21 18.39, Atharva Raykar wrote:
+> > +     git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"-=
+-force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "=
+$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${referen=
+ce:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
+>
+> What is the exit code you mean in case of error?
 
-This means that in the "heads" listing of a gitweb instance, the display
-order ends up being determined by how `git for-each-ref` decides to
-tie-break "master" and "main"
+The exit code of the above is the same as the exit code of what's
+before `|| exit`.
 
-For example, right now on a sample repo, gitweb shows the heads in this
-order, even though "master" and "main" reference the same commit. The
-tie-breaking evidently isn't happening lexicographically:
+For example:
 
-- master
-- main
-- pu
-- next
+$ ( ( exit 10 ) || exit ); echo $?
+10
 
-So, this commit adds another `--sort` parameter to the `git
-for-each-ref` invocation in `git_get_heads_list()`, ensuring that the
-`HEAD` ref always ends up getting sorted to the top:
+> >       git config submodule."$sm_name".url "$realrepo"
+> >
+> >       git add --no-warn-embedded-repo $force "$sm_path" ||
+>
+> Is `git` executable that found in $PATH used? I have both
+> distro-packaged Git and custom-compiled Git installed, and I would like
+> the latter to be able to use git-submodule from its own install prefix
+> (/path/to/git-prefix or whatsever).
 
-- main
-- master
-- pu
-- next
-
-This seems to be a useful change, because I can't see anywhere else in
-the gitweb UI where we actually indicate to the user what the "default"
-branch is (ie. what they'll checkout if they run `git clone`).
-
-Signed-off-by: Greg Hurrell <greg@hurrell.net>
----
-
-Resending because I forgot the Signed-off-by the first time. Sorry for
-the noise.
-
- gitweb/gitweb.perl | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e09e024a09..e5270b0291 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3796,7 +3796,8 @@ sub git_get_heads_list {
- 	my @headslist;
- 
- 	open my $fd, '-|', git_cmd(), 'for-each-ref',
--		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
-+		($limit ? '--count='.($limit+1) : ()),
-+		'--sort=-committerdate', '--sort=-HEAD',
- 		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
- 		@patterns
- 		or return;
--- 
-2.29.2
-
+This is a different issue than what this patch is doing.
