@@ -7,899 +7,321 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7571C4743D
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0222BC47096
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 14:14:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 839CB60C40
-	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 12:41:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E050F61377
+	for <git@archiver.kernel.org>; Sun,  6 Jun 2021 14:14:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbhFFMmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Jun 2021 08:42:37 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53734 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230128AbhFFMmU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jun 2021 08:42:20 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9A4E112B369;
-        Sun,  6 Jun 2021 08:40:30 -0400 (EDT)
+        id S230126AbhFFOQU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Jun 2021 10:16:20 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55862 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230003AbhFFOQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jun 2021 10:16:18 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CEF90137D3D;
+        Sun,  6 Jun 2021 10:14:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=x
-        L4a6Ztpx80vpKSNZPFAF5IGuzRFdJEOUTQH3ZwC18o=; b=DEwB8xpVMcVRsOMTq
-        WU2kfomJ3ueGc2B178EiyH6/j91zaZS2e5NV24rnsHFk8wAHaMcUhjRMRZD3RbjK
-        8vEHzUETy9d5aUJWHU1QTP0JvqIwKcRUEH+BrL8xEVP4ko7c1C706Uz7KCiXQd8P
-        hPr5fdtB3s5ET9zonWqJzPROcc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9242712B367;
-        Sun,  6 Jun 2021 08:40:30 -0400 (EDT)
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=J
+        4eiyyZMWDOJzYwlTdahKoUZIg8mutCnj+hziraEJSc=; b=eag6J15s3z8/Fyep3
+        Uw5kQm43Oz6ckPrlYNcKQC2oPyCxQeDavHLz9blnl2rEKabwJp3/7aST1RCT5+RT
+        z9KLIiSLsMQ+rEJajode/TulYAD4vXIXy/fs9O0VGy+RmMadH86e4MjR9BvLOj5+
+        BM/YD9fbW3Pp7SuDsDH86f+80Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B9F1E137D3C;
+        Sun,  6 Jun 2021 10:14:27 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB45712B366;
-        Sun,  6 Jun 2021 08:40:27 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ED291137D3B;
+        Sun,  6 Jun 2021 10:14:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Jun 2021, #02; Sun, 6)
-X-master-at: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
-X-next-at: 935e593368000d8476c1712a0a3d40699d2af34b
-Date:   Sun, 06 Jun 2021 21:40:26 +0900
-Message-ID: <xmqq4kebxj2d.fsf@gitster.g>
+Subject: A note from the maintainer
+Date:   Sun, 06 Jun 2021 23:14:23 +0900
+Message-ID: <xmqqy2bnw05c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5F303608-C6C4-11EB-A3C1-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 7F394982-C6D1-11EB-8EDB-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '-' are only in 'seen' (which collects random set of
-topics that are not yet in 'next') while commits prefixed with '+'
-are in 'next'.  The ones marked with '.' do not appear in any of the
-integration branches, but I am still holding onto them.
+Welcome to the Git development community.
 
-Git 2.32 is out.
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-As usual, we'll see if people notice brown-paper-bag bugs and deal
-with them, merge down topics that have been cooking in 'next' from
-simpler and obvious topics to more complex ones, and once 'next'
-gets depleted, rewind its tip and take more topics to it.  Hopefully
-all of that will happen by sometime in the middle of week #2 of the
-next cycle (cf. https://tinyurl.com/gitCal).
+The current maintainer is Junio C Hamano <gitster@pobox.com>; please
+do not send any private message to this address, because it is likely
+that such a message will not be seen by any human being.  Spam filters
+learned that legitimate messages to the address come only from a very
+few sender addresses that are known to be good, and messages from all
+others are likely to be spam unless they are also sent to the mailing
+list at the same time (i.e. "Reply-all" to the list message would
+reach the mailbox, but "Reply" will likely be thrown into the spam
+folder).
 
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
 
-With maint, master, next, seen, todo:
+* Mailing list and the community
 
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-With all the integration branches and topics broken out:
+As an anti-spam measure, the mailing list software rejects messages
+that are not text/plain and drops them on the floor.  If you are a
+GMail user, you'd want to make sure "Plain text mode" is checked.
 
-	https://github.com/gitster/git/
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
+If you sent a patch and you did not hear any response from anybody for
+several days, it could be that your patch was totally uninteresting,
+but it also is possible that it was simply lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
+The list archive is available at a few public sites:
 
-Release tarballs are available at:
+        http://lore.kernel.org/git/
+        http://marc.info/?l=git
+        http://www.spinics.net/lists/git/
 
-	https://www.kernel.org/pub/software/scm/git/
+For those who prefer to read it over NNTP:
 
---------------------------------------------------
-[Graduated to 'master']
+	nntp://nntp.lore.kernel.org/org.kernel.vger.git
+        nntp://news.public-inbox.org/inbox.comp.version-control.git
 
-* jc/fsync-can-fail-with-eintr (2021-06-05) 1 commit
-  (merged to 'next' on 2021-06-05 at 28992617a1)
- + fsync(): be prepared to see EINTR
+are available.
 
- Last minute portability fix.
+When you point at a message in a mailing list archive, using its
+message ID is often the most robust (if not very friendly) way to do
+so, like this:
 
+	http://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
 
-* rs/parallel-checkout-test-fix (2021-06-06) 1 commit
-  (merged to 'next' on 2021-06-06 at 834ea5e286)
- + parallel-checkout: avoid dash local bug in tests
+Often these web interfaces accept the message ID with enclosing <>
+stripped (like the above example to point at one of the most important
+message in the Git list).
 
- Test fix.
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on FreeNode (historically, but
+the IRC situation is in flux at the moment).  Their logs are available
+at:
 
---------------------------------------------------
-[New Topics]
+        http://colabti.org/irclogger/irclogger_log/git
+        http://colabti.org/irclogger/irclogger_log/git-devel
 
-* js/trace2-discard-event-docfix (2021-06-04) 1 commit
- - docs: fix api-trace2 doc for "too_many_files" event
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" http://git.github.io/rev_news/).
 
- Docfix.
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
- Will merge to 'next'.
+For our expectations on the behaviour of the community participants
+towards each other, see CODE_OF_CONDUCT.md at the top level of the source
+tree, or:
 
+    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
 
-* tk/partial-clone-repack-doc (2021-06-04) 1 commit
- - Remove warning that repack only works on non-promisor packfiles
 
- Docfix.
+* Reporting bugs
 
- Will merge to 'next'.
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken. People would not know what other result Y you expected
+to see instead of X, if you left it unsaid.
 
+Please remember to always state
 
-* zh/cat-file-batch-fix (2021-06-04) 2 commits
- - cat-file: merge two block into one
- - cat-file: handle trivial --batch format with --batch-all-objects
+ - what you wanted to achieve;
 
- "git cat-file --batch-all-objects"" misbehaved when "--batch" is in
- use and did not ask for certain object traits.
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
 
- Will merge to 'next'.
+ - what you saw happen (X above);
 
---------------------------------------------------
-[Stalled]
+ - what you expected to see (Y above); and
 
-* mr/bisect-in-c-4 (2021-04-11) 4 commits
- - bisect--helper: retire `--bisect-next-check` subcommand
- - bisect--helper: reimplement `bisect_run` shell function in C
- - bisect--helper: reimplement `bisect_visualize()`shell function in C
- - run-command: make `exists_in_PATH()` non-static
+ - how the last two are different.
 
- The codepaths involved in running "git bisect visualize" and "git
- bisect run" has been rewritten in C.
+See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.  Our `git bugreport` tool gives you a handy way you can use to
+make sure you do not forget these points when filing a bug report.
 
- Expecting a reroll.
- cf. <xmqq35vwh8qk.fsf@gitster.g>, <xmqqy2doftrj.fsf@gitster.g>,
- <CAP8UFD3X24F3qgefHpi00PM-KUk+vcqxwy2Dbngbyj7ciavCVQ@mail.gmail.com>
- May want to boost the test coverage.
-
-
-* hn/reftable (2021-05-20) 28 commits
- . t1404: annotate test cases with REFFILES
- . t1401,t2011: parameterize HEAD.lock for REFTABLE
- . t1301: document what needs to be done for REFTABLE
- . Add "test-tool dump-reftable" command.
- . git-prompt: prepare for reftable refs backend
- . Reftable support for git-core
- . reftable: add dump utility
- . reftable: implement stack, a mutable database of reftable files.
- . reftable: implement refname validation
- . reftable: add merged table view
- . reftable: add a heap-based priority queue for reftable records
- . reftable: reftable file level tests
- . reftable: read reftable files
- . reftable: generic interface to tables
- . reftable: write reftable files
- . reftable: a generic binary tree implementation
- . reftable: reading/writing blocks
- . Provide zlib's uncompress2 from compat/zlib-compat.c
- . reftable: (de)serialization for the polymorphic record type.
- . reftable: add blocksource, an abstraction for random access reads
- . reftable: utility functions
- . reftable: add error related functionality
- . reftable: add LICENSE
- . init-db: set the_repository->hash_algo early on
- . hash.h: provide constants for the hash IDs
- . refs/debug: trace into reflog expiry too
- . refs: document reflog_expire_fn's flag argument
- . refs: make explicit that ref_iterator_peel returns boolean
-
- The "reftable" backend for the refs API.
-
- Waiting for reviews.
- Seems to break tests when merged to 'seen'.
-
-
-* ma/t0091-bugreport-fix (2021-04-12) 1 commit
- - t0091-bugreport.sh: actually verify some content of report
-
- Test fix.
-
- Expecting a reroll.
- cf. <YHYZTLl90rkWWVOr@google.com>, <87a6q22dei.fsf@evledraar.gmail.com>
-
-
-* ls/fast-export-signed (2021-05-03) 5 commits
- - fast-export, fast-import: add support for signed-commits
- - fast-export: do not modify memory from get_commit_buffer
- - git-fast-export.txt: clarify why 'verbatim' may not be a good idea
- - fast-export: rename --signed-tags='warn' to 'warn-verbatim'
- - git-fast-import.txt: add missing LF in the BNF
-
- "git fast-export" offers a way to control how signed tags are
- handled; the mechanism has been extended to allow specifying how
- signed commits are handled as well.
-
- Expecting a reroll.
- cf. <xmqqa6pca0pv.fsf@gitster.g>, <xmqq1rao9zev.fsf@gitster.g>
-
-
-* hn/prep-tests-for-reftable (2021-06-02) 22 commits
- - t1415: set REFFILES for test specific to storage format
- - t4202: mark bogus head hash test with REFFILES
- - t7003: check reflog existence only for REFFILES
- - t7900: stop checking for loose refs
- - t1404: mark tests that muck with .git directly as REFFILES.
- - t2017: mark --orphan/logAllRefUpdates=false test as REFFILES
- - t1414: mark corruption test with REFFILES
- - t1407: require REFFILES for for_each_reflog test
- - test-lib: provide test prereq REFFILES
- - t5304: use "reflog expire --all" to clear the reflog
- - t5304: restyle: trim empty lines, drop ':' before >
- - t7003: use rev-parse rather than FS inspection
- - t5000: inspect HEAD using git-rev-parse
- - t5000: reformat indentation to the latest fashion
- - t1301: fix typo in error message
- - t1413: use tar to save and restore entire .git directory
- - t1401-symbolic-ref: avoid direct filesystem access
- - t1401: use tar to snapshot and restore repo state
- - t5601: read HEAD using rev-parse
- - t9300: check ref existence using test-helper rather than a file system check
- - t/helper/ref-store: initialize oid in resolve-ref
- - t4202: split testcase for invalid HEAD symref and HEAD hash
-
- Preliminary clean-up of tests before the main reftable changes
- hits the codebase.
-
- Will merge to 'next'.
-
-
-* tb/multi-pack-bitmaps (2021-04-10) 23 commits
- . p5326: perf tests for MIDX bitmaps
- . p5310: extract full and partial bitmap tests
- . midx: respect 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP'
- . t7700: update to work with MIDX bitmap test knob
- . t5319: don't write MIDX bitmaps in t5319
- . t5310: disable GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
- . t5326: test multi-pack bitmap behavior
- . t/helper/test-read-midx.c: add --checksum mode
- . t5310: move some tests to lib-bitmap.sh
- . pack-bitmap: write multi-pack bitmaps
- . pack-bitmap: read multi-pack bitmaps
- . pack-bitmap.c: introduce 'bitmap_is_preferred_refname()'
- . pack-bitmap.c: introduce 'nth_bitmap_object_oid()'
- . pack-bitmap.c: introduce 'bitmap_num_objects()'
- . midx: respect 'core.multiPackIndex' when writing
- . midx: clear auxiliary .rev after replacing the MIDX
- . midx: make a number of functions non-static
- . Documentation: describe MIDX-based bitmaps
- . Documentation: build 'technical/bitmap-format' by default
- . pack-bitmap-write.c: free existing bitmaps
- . pack-bitmap-write.c: gracefully fail to write non-closed bitmaps
- . pack-bitmap.c: harden 'test_bitmap_walk()' to check type bitmaps
- . Merge branch 'tb/pack-preferred-tips-to-give-bitmap' into tb/multi-pack-bitmaps
-
- The reachability bitmap file used to be generated only for a single
- pack, but now we've learned to generate bitmaps for history that
- span across multiple packfiles.
-
- Waiting for reviews.
- cf. <cover.1617991824.git.me@ttaylorr.com>
- Seems to break tests when merged to 'seen'.
-
-
-* hn/refs-errno-cleanup (2021-04-30) 8 commits
- - refs: explicitly propagate errno from refs_read_raw_ref
- - refs: stop setting EINVAL and ELOOP in symref resolution
- - refs: clear errno return in refs_resolve_ref_unsafe()
- - refs: add failure_errno to refs_read_raw_ref() signature
- - refs: make errno output explicit for refs_resolve_ref_unsafe
- - refs: make errno output explicit for read_raw_ref_fn
- - refs/files-backend: stop setting errno from lock_ref_oid_basic
- - refs: remove EINVAL specification from the errno sideband in read_raw_ref_fn
-
- Futz with the way 'errno' is relied on in the refs API to carry the
- failure modes up the callchain.
-
- Waiting for reviews.
-
-
-* ao/p4-avoid-decoding (2021-04-12) 2 commits
- - git-p4: do not decode data from perforce by default
- - git-p4: avoid decoding more data from perforce
-
- "git p4" in Python-2 days used to accept a lot more kinds of data
- from Perforce server as uninterrupted byte sequence, but after
- switching to Python-3, too many things are expected to be in UTF-8,
- which broke traditional use cases.
-
- Waiting for reviews.
-
-
-* ab/update-submitting-patches (2021-05-13) 3 commits
- - SubmittingPatches: remove pine-specific hints from MUA hints
- - SubmittingPatches: replace discussion of Travis with GitHub Actions
- - SubmittingPatches: move discussion of Signed-off-by above "send"
-
- Reorganize and update the SubmitingPatches document.
-
- Expecting a reroll.
- cf. <xmqq4kf7fueq.fsf@gitster.g>, <20210512235136.GB10785@localhost>
-
-
-* ag/merge-strategies-in-c (2021-03-17) 15 commits
- - sequencer: use the "octopus" merge strategy without forking
- - sequencer: use the "resolve" strategy without forking
- - merge: use the "octopus" strategy without forking
- - merge: use the "resolve" strategy without forking
- - merge-octopus: rewrite in C
- - merge-recursive: move better_branch_name() to merge.c
- - merge-resolve: rewrite in C
- - merge-one-file: rewrite in C
- - update-index: move add_cacheinfo() to read-cache.c
- - merge-index: add a new way to invoke `git-merge-one-file'
- - merge-index: drop the index
- - merge-index: libify merge_one_path() and merge_all()
- - t6060: add tests for removed files
- - t6060: modify multiple files to expose a possible issue with merge-index
- - t6407: modernise tests
-
- The resolve and octopus merge strategy backends have been rewritten
- in C.
-
- Expecting a (hopefully final) reroll.
- cf. <nycvar.QRO.7.76.6.2103241142220.50@tvgsbejvaqbjf.bet>
-
-
-* tv/p4-fallback-encoding (2021-04-30) 1 commit
- - git-p4: git-p4.fallbackEncoding to specify non UTF-8 charset
-
- "git p4" learns the fallbackEncoding configuration variable to
- safely accept changeset descriptions that aren't written in UTF-8.
-
-
-* ds/status-with-sparse-index (2021-05-22) 14 commits
- - fsmonitor: integrate with sparse index
- - wt-status: expand added sparse directory entries
- - status: use sparse-index throughout
- - status: skip sparse-checkout percentage with sparse-index
- - dir.c: accept a directory as part of cone-mode patterns
- - unpack-trees: be careful around sparse directory entries
- - unpack-trees: compare sparse directories correctly
- - unpack-trees: preserve cache_bottom
- - t1092: add tests for status/add and sparse files
- - t1092: expand repository data shape
- - sparse-index: include EXTENDED flag when expanding
- - sparse-index: skip indexes with unmerged entries
- - Merge branch 'mt/add-rm-in-sparse-checkout' into ds/status-with-sparse-index
- - Merge branch 'ds/sparse-index-protections' into ds/status-with-sparse-index
-
- "git status" codepath learned to work with sparsely populated index
- without hydrating it fully.
-
-
-* ab/describe-tests-fix (2021-05-11) 5 commits
- - describe tests: support -C in "check_describe"
- - describe tests: fix nested "test_expect_success" call
- - describe tests: don't rely on err.actual from "check_describe"
- - describe tests: refactor away from glob matching
- - describe tests: improve test for --work-tree & --dirty
- (this branch uses ab/test-lib-updates.)
-
- Various updates to tests around "git describe"
-
- Waiting for the base topic to solidify.
-
-
-* ab/pickaxe-pcre2 (2021-05-11) 22 commits
- - xdiff-interface: replace discard_hunk_line() with a flag
- - xdiff users: use designated initializers for out_line
- - pickaxe -G: don't special-case create/delete
- - pickaxe -G: terminate early on matching lines
- - xdiff-interface: allow early return from xdiff_emit_line_fn
- - xdiff-interface: prepare for allowing early return
- - pickaxe -S: slightly optimize contains()
- - pickaxe: rename variables in has_changes() for brevity
- - pickaxe -S: support content with NULs under --pickaxe-regex
- - pickaxe: assert that we must have a needle under -G or -S
- - pickaxe: refactor function selection in diffcore-pickaxe()
- - perf: add performance test for pickaxe
- - pickaxe/style: consolidate declarations and assignments
- - diff.h: move pickaxe fields together again
- - pickaxe: die when --find-object and --pickaxe-all are combined
- - pickaxe: die when -G and --pickaxe-regex are combined
- - pickaxe tests: add missing test for --no-pickaxe-regex being an error
- - pickaxe tests: test for -G, -S and --find-object incompatibility
- - pickaxe tests: add test for "log -S" not being a regex
- - pickaxe tests: add test for diffgrep_consume() internals
- - pickaxe tests: refactor to use test_commit --append --printf
- - grep/pcre2 tests: reword comments referring to kwset
- (this branch uses ab/test-lib-updates.)
-
- Rewrite the backend for "diff -G/-S" to use pcre2 engine when
- available.
-
- Waiting for the base topic to solidify.
-
---------------------------------------------------
-[Cooking]
-
-* fc/push-simple-updates (2021-06-02) 7 commits
- - doc: push: explain default=simple correctly
- - push: remove unused code in setup_push_upstream()
- - push: simplify setup_push_simple()
- - push: reorganize setup_push_simple()
- - push: copy code to setup_push_simple()
- - push: hedge code of default=simple
- - push: rename !triangular to same_remote
- (this branch is used by fc/push-simple-updates-cleanup.)
-
- Some code and doc clarification around "git push".
-
- Will merge to 'next'.
-
-
-* fc/push-simple-updates-cleanup (2021-06-02) 13 commits
- - push: don't get a full remote object
- - push: only check same_remote when needed
- - push: remove trivial function
- - push: remove redundant check
- - push: factor out the typical case
- - push: get rid of all the setup_push_* functions
- - push: trivial simplifications
- - push: make setup_push_* return the dst
- - push: only get the branch when needed
- - push: factor out null branch check
- - push: split switch cases
- - push: return immediately in trivial switch case
- - push: create new get_upstream_ref() helper
- (this branch uses fc/push-simple-updates.)
-
- Some more code and doc clarification around "git push".
-
- Will merge to 'next'.
-
-
-* tb/complete-diff-anchored (2021-05-31) 1 commit
- - completion: add --anchored to diff's options
-
- The command line completion (in contrib/) learned that "git diff"
- takes the "--anchored" option.
-
- Will merge to 'next'.
-
-
-* en/ort-perf-batch-12 (2021-06-04) 4 commits
- - merge-ort: miscellaneous touch-ups
- - merge-ort: fix various issues found in comments
- - diffcore-rename: avoid unnecessary strdup'ing in break_idx
- - merge-ort: replace string_list_df_name_compare with faster alternative
- (this branch uses en/ort-perf-batch-11.)
-
-
-* zh/ref-filter-raw-data (2021-05-31) 2 commits
- . ref-filter: add %(raw) atom
- . ref-filter: add obj-type check in grab contents
-
- Prepare the "ref-filter" machinery that drives the "--format"
- option of "git for-each-ref" and its friends to be used in "git
- cat-file --batch".
-
- Seems to crash with zh/ref-filter-atom-type.
-
-
-* fc/doc-build-cleanup (2021-05-24) 5 commits
-  (merged to 'next' on 2021-05-31 at af103e12f4)
- + doc: avoid using rm directly
- + doc: simplify Makefile using .DELETE_ON_ERROR
- + doc: remove unnecessary rm instances
- + doc: improve asciidoc dependencies
- + doc: refactor common asciidoc dependencies
-
- Preparatory build procedure clean-up for documentation.
-
- Will cook in 'next'.
-
-
-* es/config-based-hooks (2021-05-27) 37 commits
- - docs: link githooks and git-hook manpages
- - doc: clarify fsmonitor-watchman specification
- - run-command: stop thinking about hooks
- - git-send-email: use 'git hook run' for 'sendemail-validate'
- - bugreport: use hook_exists instead of find_hook
- - receive-pack: convert receive hooks to hook.h
- - post-update: use hook.h library
- - proc-receive: acquire hook list from hook.h
- - receive-pack: convert 'update' hook to hook.h
- - reference-transaction: look for hooks in config
- - transport: convert pre-push hook to use config
- - hook: convert 'post-rewrite' hook to config
- - hooks: convert 'post-checkout' hook to hook library
- - git-p4: use 'git hook' to run hooks
- - receive-pack: convert push-to-checkout hook to hook.h
- - read-cache: convert post-index-change hook to use config
- - rebase: teach pre-rebase to use hook.h
- - gc: use hook library for pre-auto-gc hook
- - merge: use config-based hooks for post-merge hook
- - am: convert applypatch hooks to use config
- - commit: use config-based hooks
- - hooks: allow callers to capture output
- - run-command: allow capturing of collated output
- - hook: provide stdin by string_list or callback
- - run-command: add stdin callback for parallelization
- - hook: allow specifying working directory for hooks
- - hook: allow parallel hook execution
- - run-command: allow stdin for run_processes_parallel
- - hook: support passing stdin to hooks
- - hook: introduce hook_exists()
- - hook: add 'run' subcommand
- - parse-options: parse into strvec
- - hook: implement hookcmd.<name>.skip
- - hook: teach hook.runHookDir
- - hook: include hookdir hook in list
- - hook: introduce git-hook subcommand
- - doc: propose hooks managed by the config
-
-
-* jh/builtin-fsmonitor (2021-05-24) 30 commits
- - t/perf: avoid copying builtin fsmonitor files into test repo
- - t7527: test status with untracked-cache and fsmonitor--daemon
- - p7519: add fsmonitor--daemon
- - t7527: create test for fsmonitor--daemon
- - fsmonitor: force update index after large responses
- - fsmonitor: enhance existing comments
- - fsmonitor--daemon: use a cookie file to sync with file system
- - fsmonitor--daemon: periodically truncate list of modified files
- - fsmonitor--daemon: implement handle_client callback
- - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
- - fsmonitor-fs-listen-macos: add macos header files for FSEvent
- - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
- - fsmonitor--daemon: create token-based changed path cache
- - fsmonitor--daemon: define token-ids
- - fsmonitor--daemon: add pathname classification
- - fsmonitor--daemon: implement daemon command options
- - fsmonitor-fs-listen-macos: stub in backend for MacOS
- - fsmonitor-fs-listen-win32: stub in backend for Windows
- - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
- - fsmonitor--daemon: implement client command options
- - fsmonitor--daemon: add a built-in fsmonitor daemon
- - fsmonitor: introduce `core.useBuiltinFSMonitor` to call the daemon via IPC
- - config: FSMonitor is repository-specific
- - help: include fsmonitor--daemon feature flag in version info
- - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
- - fsmonitor--daemon: update fsmonitor documentation
- - fsmonitor--daemon: man page
- - simple-ipc: preparations for supporting binary messages.
- - Merge branch 'jk/perf-in-worktrees' into HEAD
- - Merge branch 'jh/simple-ipc' into jh/rfc-builtin-fsmonitor
-
- An attempt to write and ship with a watchman equivalent tailored
- for our use.
-
-
-* dd/honor-users-tar-in-tests (2021-05-22) 1 commit
-  (merged to 'next' on 2021-05-28 at 56961581ce)
- + t: use configured TAR instead of tar
-
- Test portability fix.
-
- Will cook in 'next'.
-
-
-* ah/fetch-reject-warning-grammofix (2021-05-20) 1 commit
-  (merged to 'next' on 2021-05-28 at 09820da41b)
- + fetch: improve grammar of "shallow roots" message
-
- Message update.
-
- Will cook in 'next'.
-
-
-* ah/setup-extensions-message-i18n-fix (2021-05-20) 1 commit
-  (merged to 'next' on 2021-05-28 at 562b4e6f10)
- + setup: split "extensions found" messages into singular and plural
-
- Message update.
-
- Will cook in 'next'.
-
-
-* jk/clone-clean-upon-transport-error (2021-05-19) 1 commit
-  (merged to 'next' on 2021-05-22 at 464b1f187c)
- + clone: clean up directory after transport_fetch_refs() failure
-
- Recent "git clone" left a temporary directory behind when the
- transport layer returned an failure.
-
- Will cook in 'next'.
-
-
-* jk/doc-color-pager (2021-05-20) 1 commit
-  (merged to 'next' on 2021-05-28 at 52e4aa77df)
- + doc: explain the use of color.pager
-
- The documentation for "color.pager" configuration variable has been
- updated.
-
- Will cook in 'next'.
-
-
-* jk/fetch-pack-v2-half-close-early (2021-05-20) 1 commit
-  (merged to 'next' on 2021-05-28 at 56e97ec2df)
- + fetch-pack: signal v2 server that we are done making requests
-
- "git fetch" over protocol v2 left its side of the socket open after
- it finished speaking, which unnecessarily wasted the resource on
- the other side.
-
- Will cook in 'next'.
-
-
-* ry/clarify-fast-forward-in-glossary (2021-05-19) 1 commit
-  (merged to 'next' on 2021-05-22 at 97a851d59f)
- + docs: improve fast-forward in glossary content
-
- The description of "fast-forward" in the glossary has been updated.
-
- Will cook in 'next'.
-
-
-* wm/rev-parse-die-i18n (2021-05-17) 1 commit
-  (merged to 'next' on 2021-05-22 at 65c256d92b)
- + rev-parse: mark die() messages for translation
-
- Quite a many die() messages in rev-parse haven't been marked for
- translation.
-
- Will cook in 'next'.
-
-
-* es/trace2-log-parent-process-name (2021-05-25) 1 commit
- - tr2: log parent process name
-
-
-* ps/rev-list-object-type-filter (2021-05-21) 1 commit
-  (merged to 'next' on 2021-05-28 at f22e938f3e)
- + help: fix small typo in error message
-
- Message update.
-
- Will cook in 'next'.
-
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
 
-* ab/send-email-optim (2021-05-28) 13 commits
- - perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
- - send-email: move trivial config handling to Perl
- - perl: lazily load some common Git.pm setup code
- - send-email: lazily load modules for a big speedup
- - send-email: get rid of indirect object syntax
- - send-email: use function syntax instead of barewords
- - send-email: lazily shell out to "git var"
- - send-email: lazily load config for a big speedup
- - send-email: copy "config_regxp" into git-send-email.perl
- - send-email: refactor sendemail.smtpencryption config parsing
- - send-email: remove non-working support for "sendemail.smtpssl"
- - send-email tests: test for boolean variables without a value
- - send-email tests: support GIT_TEST_PERL_FATAL_WARNINGS=true
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
 
- "git send-email" optimization.
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are (mirrored) at:
+
+  https://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  https://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  https://gitlab.com/git-vcs/git/
+
+This one shows not just the main integration branches, but also
+individual topics broken out:
+
+  https://github.com/gitster/git/
+
+A few web interfaces are found at:
+
+  http://git.kernel.org/pub/scm/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  http://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  https://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  https://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+The manual pages formatted in HTML for the tip of 'master' can be
+viewed online at:
+
+  https://git.github.io/htmldocs/git.html
 
+
+* How various branches are used.
 
-* zh/ref-filter-atom-type (2021-05-14) 2 commits
-  (merged to 'next' on 2021-05-16 at 48fd717185)
- + ref-filter: introduce enum atom_type
- + ref-filter: add objectsize to used_atom
+There are four branches in git.git repository that track the source tree
+of git: "master", "maint", "next", and "seen".
 
- The code to handle the "--format" option in "for-each-ref" and
- friends made too many string comparisons on %(atom)s used in the
- format string, which has been corrected by converting them into
- enum when the format string is parsed.
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g. "1.8.5"), but we have
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
 
- Will cook in 'next'.
+The last such release was 2.32 done on June 6th, 2021.  You can expect
+that the tip of the "master" branch is always more stable than any of
+the released versions.
 
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are applied to this branch and maintenance releases are cut
+from it.  Usually the fixes are merged to the "master" branch first,
+several days before merged to the "maint" branch, to reduce the chance
+of last-minute issues.  The maintenance releases used to be named with
+four dotted decimal, named after the feature release they are updates
+to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
+feature release).  These days, maintenance releases are named by
+incrementing the last digit of three-dotted decimal name (e.g. "2.29.2"
+was the second maintenance release for the "2.29" series).
 
-* tl/fix-packfile-uri-doc (2021-05-25) 1 commit
-  (merged to 'next' on 2021-05-25 at d047277014)
- + packfile-uri.txt: fix blobPackfileUri description
+New features never go to the 'maint' branch.  It is merged into "master"
+primarily to propagate the description in the release notes forward.
 
- Doc fix.
+A new development does not usually happen on "master". When you send a
+series of patches, after review on the mailing list, a separate topic
+branch is forked from the tip of "master" (or somewhere older, especially
+when the topic is about fixing an earlier bug) and your patches are queued
+there, and kept out of "master" while people test it out. The quality of
+topic branches are judged primarily by the mailing list discussions.
 
- Will cook in 'next'.
+Topic branches that are in good shape are merged to the "next" branch. In
+general, the "next" branch always contains the tip of "master".  It might
+not be quite rock-solid, but is expected to work more or less without major
+breakage. The "next" branch is where new and exciting things take place. A
+topic that is in "next" is expected to be polished to perfection before it
+is merged to "master".  Please help this process by building & using the
+"next" branch for your daily work, and reporting any new bugs you find to
+the mailing list, before the breakage is merged down to the "master".
 
+The "seen" (formerly "pu", proposed updates) branch bundles all the
+remaining topic branches the maintainer happens to have seen.  There
+is no guarantee that the maintainer has enough bandwidth to pick up any
+and all topics that are remotely promising from the list traffic, so
+please do not read too much into a topic being on (or not on) the "seen"
+branch.  This branch is mainly to remind the maintainer that the topics
+in them may turn out to be interesting when they are polished, nothing
+more.  The topics on this branch aren't usually complete, well tested,
+or well documented and they often need further work.  When a topic that
+was in "seen" proves to be in a testable shape, it is merged to "next".
 
-* ga/send-email-sendmail-cmd (2021-05-17) 1 commit
-  (merged to 'next' on 2021-05-22 at 755df67f0e)
- + git-send-email: add option to specify sendmail command
+You can run "git log --first-parent master..seen" to see what topics are
+currently in flight.  Sometimes, an idea that looked promising turns out
+to be not so good and the topic can be dropped from "seen" in such a case.
+The output of the above "git log" talks about a "jch" branch, which is an
+early part of the "seen" branch; that branch contains all topics that
+are in "next" and a bit more (but not all of "seen") and is used by the
+maintainer for his daily work.
 
- "git send-email" learned the "--sendmail-cmd" command line option
- and the "sendemail.sendmailCmd" configuration variable, which is a
- more sensible approach than the current way of repurposing the
- "smtp-server" that is meant to name the server to instead name the
- command to talk to the server.
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+Some topics that used to be in "next" during the previous cycle may
+get ejected from "next" when this happens.
 
- Will cook in 'next'.
+A natural consequence of how "next" and "seen" bundles topics together
+is that until a topic is merged to "next", updates to it is expected
+by replacing the patch(es) in the topic with an improved version,
+and once a topic is merged to "next", updates to it needs to come as
+incremental patches, pointing out what was wrong in the previous
+patches and how the problem was corrected.
 
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
 
-* ah/doc-describe (2021-05-17) 1 commit
-  (merged to 'next' on 2021-05-22 at 8f3925fd41)
- + describe-doc: clarify default length of abbreviation
 
- Doc update.
+* Other people's trees.
 
- Will cook in 'next'.
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
 
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
 
-* ah/merge-usage-i18n-fix (2021-05-16) 1 commit
-  (merged to 'next' on 2021-05-20 at e26a60d624)
- + merge: don't translate literal commands
+ - git-gui/ comes from git-gui project, maintained by Pratyush Yadav:
 
- i18n update.
+        https://github.com/prati0100/git-gui.git
 
- Will cook in 'next'.
+ - gitk-git/ comes from Paul Mackerras's gitk project:
 
+        git://ozlabs.org/~paulus/gitk
 
-* ah/stash-usage-i18n-fix (2021-05-17) 1 commit
-  (merged to 'next' on 2021-05-20 at 68e6a46117)
- + stash: don't translate literal commands
+ - po/ comes from the localization coordinator, Jiang Xin:
 
- i18n update.
+	https://github.com/git-l10n/git-po/
 
- Will cook in 'next'.
-
-
-* ah/submodule-helper-module-summary-parseopt (2021-05-17) 1 commit
-  (merged to 'next' on 2021-05-20 at 928e72b83f)
- + submodule: use the imperative mood to describe the --files option
-
- Message update.
-
- Will cook in 'next'.
-
-
-* ef/mailinfo-short-name (2021-05-17) 1 commit
-  (merged to 'next' on 2021-05-20 at 5ee67911ea)
- + mailinfo: don't discard names under 3 characters
-
- We historically rejected a very short string as an author name
- while accepting a patch e-mail, which has been loosened.
-
- Will cook in 'next'.
-
-
-* ds/write-index-with-hashfile-api (2021-05-19) 4 commits
-  (merged to 'next' on 2021-05-28 at f0c51ddf7c)
- + read-cache: delete unused hashing methods
- + read-cache: use hashfile instead of git_hash_ctx
- + csum-file.h: increase hashfile buffer size
- + hashfile: use write_in_full()
-
- Use the hashfile API in the codepath that writes the index file to
- reduce code duplication.
-
- Will cook in 'next'.
-
-
-* jc/clarify-revision-range (2021-05-18) 1 commit
-  (merged to 'next' on 2021-05-22 at 83a689d8ad)
- + revisions(7): clarify that most commands take a single revision range
-
- Doc update.
-
- Will cook in 'next'.
-
-
-* jn/size-t-casted-to-off-t-fix (2021-05-19) 1 commit
-  (merged to 'next' on 2021-05-20 at bbde7e6616)
- + xsize_t: avoid implementation defined behavior when len < 0
-
- Rewrite code that triggers undefined behaiour warning.
-
- Will cook in 'next'.
-
-
-* mt/parallel-checkout-with-padded-oidcpy (2021-05-18) 1 commit
-  (merged to 'next' on 2021-05-20 at 016cab0381)
- + parallel-checkout: send the new object_id algo field to the workers
-
- The parallel checkout codepath did not initialize object ID field
- used to talk to the worker processes in a futureproof way.
-
- Will cook in 'next'.
-
-
-* so/log-m-implies-p (2021-05-21) 10 commits
-  (merged to 'next' on 2021-05-28 at 2733ec2409)
- + diff-merges: let "-m" imply "-p"
- + diff-merges: rename "combined_imply_patch" to "merges_imply_patch"
- + stash list: stop passing "-m" to "git log"
- + git-svn: stop passing "-m" to "git rev-list"
- + diff-merges: move specific diff-index "-m" handling to diff-index
- + t4013: test "git diff-index -m"
- + t4013: test "git diff-tree -m"
- + t4013: test "git log -m --stat"
- + t4013: test "git log -m --raw"
- + t4013: test that "-m" alone has no effect in "git log"
-
- The "-m" option in "git log -m" that does not specify which format,
- if any, of diff is desired did not have any visible effect; it now
- implies some form of diff (by default "--patch") is produced.
-
- Will cook in 'next'.
-
-
-* bc/doc-asciidoctor-to-man-wo-xmlto (2021-05-14) 2 commits
- - doc: remove GNU_ROFF option
- - doc: add an option to have Asciidoctor build man pages directly
-
- An option to render the manual pages via AsciiDoctor bypassing
- xmlto has been introduced.
-
-
-* ab/trace2-squelch-gcc-warning (2021-05-21) 1 commit
-  (merged to 'next' on 2021-05-28 at 6c7a015f99)
- + trace2: refactor to avoid gcc warning under -O3
-
- Workaround compiler warnings.
-
- Will cook in 'next'.
-
-
-* en/ort-perf-batch-11 (2021-05-20) 13 commits
-  (merged to 'next' on 2021-05-28 at 58a8b85d6a)
- + merge-ort, diffcore-rename: employ cached renames when possible
- + merge-ort: handle interactions of caching and rename/rename(1to1) cases
- + merge-ort: add helper functions for using cached renames
- + merge-ort: preserve cached renames for the appropriate side
- + merge-ort: avoid accidental API mis-use
- + merge-ort: add code to check for whether cached renames can be reused
- + merge-ort: populate caches of rename detection results
- + merge-ort: add data structures for in-memory caching of rename detection
- + t6429: testcases for remembering renames
- + fast-rebase: write conflict state to working tree, index, and HEAD
- + fast-rebase: change assert() to BUG()
- + Documentation/technical: describe remembering renames optimization
- + t6423: rename file within directory that other side renamed
- (this branch is used by en/ort-perf-batch-12.)
-
- Optimize out repeated rename detection in a sequence of mergy
- operations.
-
- Will cook in 'next'.
-
-
-* ab/test-lib-updates (2021-05-11) 11 commits
-  (merged to 'next' on 2021-05-31 at 73bf1ecb31)
- + test-lib: split up and deprecate test_create_repo()
- + test-lib: do not show advice about init.defaultBranch under --verbose
- + test-lib: reformat argument list in test_create_repo()
- + submodule tests: use symbolic-ref --short to discover branch name
- + test-lib functions: add --printf option to test_commit
- + describe tests: convert setup to use test_commit
- + test-lib functions: add an --annotated option to "test_commit"
- + test-lib-functions: document test_commit --no-tag
- + test-lib-functions: reword "test_commit --append" docs
- + test-lib tests: remove dead GIT_TEST_FRAMEWORK_SELFTEST variable
- + test-lib: bring $remove_trash out of retirement
- (this branch is used by ab/describe-tests-fix and ab/pickaxe-pcre2.)
-
- Test clean-up.
-
-
-* ab/fsck-unexpected-type (2021-05-21) 17 commits
- . fsck: report invalid object type-path combinations
- . fsck: report invalid types recorded in objects
- . object-store.h: move read_loose_object() below 'struct object_info'
- . fsck: don't hard die on invalid object types
- . object-file.c: return -1, not "status" from unpack_loose_header()
- . object-file.c: return -2 on "header too long" in unpack_loose_header()
- . object-file.c: stop dying in parse_loose_header()
- . object-file.c: add missing braces to loose_object_info()
- . object-file.c: make parse_loose_header_extended() public
- . cache.h: move object functions to object-store.h
- . cat-file tests: test for current --allow-unknown-type behavior
- . cat-file tests: add corrupt loose object test
- . rev-list tests: test for behavior with invalid object types
- . cat-file tests: test that --allow-unknown-type isn't on by default
- . cat-file tests: test for missing object with -t and -s
- . fsck tests: add test for fsck-ing an unknown type
- . fsck tests: refactor one test to use a sub-repo
-
- "git fsck" has been taught to report mismatch between expected and
- actual types of an object better.
-
- Seems to break tests when merged to 'seen'.
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
