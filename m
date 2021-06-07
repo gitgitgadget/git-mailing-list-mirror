@@ -2,141 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A37C47082
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 14:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6C7FC47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 14:43:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B447A6105A
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 14:38:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BACE9610C8
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 14:43:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbhFGOkV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 10:40:21 -0400
-Received: from mout.web.de ([212.227.17.12]:59863 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230193AbhFGOkT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 10:40:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1623076697;
-        bh=GWIjoIeVCh1QcL5GZpc7tc6NSL2Alzufxps9QBFTN24=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=WP4TkNFc6nafe8fpUepUR99FqL2IYWcpNok4dU6CWR0GPnrxz2BazpTeq0CCU1BuC
-         ibv+WMm1tBOU/CES/Iz2YRGOBzn+zR+p0jII9EjRTLymC9/eR0miN4OZuJzNw2quz4
-         6cvVUfHXdWbc0KCSZpVfqITaYUi/DPLn6Anvz5ck=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mq184-1l3R3D0n7y-00nDdH; Mon, 07
- Jun 2021 16:38:17 +0200
-Date:   Mon, 7 Jun 2021 16:38:16 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Taylor Blau <ttaylorr@github.com>, Jeff King <peff@peff.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v3] t: use pre-defined utf-8 locale for testing svn
-Message-ID: <20210607143815.77djyvxf4xec2qht@tb-raspi4>
-References: <20210602114646.17463-1-congdanhqx@gmail.com>
- <20210607004838.15235-1-congdanhqx@gmail.com>
- <xmqqk0n6wkrr.fsf@gitster.g>
+        id S230266AbhFGOpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 10:45:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56362 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230239AbhFGOpX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 10:45:23 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE25C061787
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 07:43:32 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id g8so27139035ejx.1
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 07:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kvDAN2bgZCwafU6d1DOdMHqsdXwgXno9tVgtdhrQwhw=;
+        b=ODjh7rECgF2N/vxUrfTBcDUwvt9wQxWlk38LP7vs93WNh4Cv7nWEK8PEotw8Nt4cCy
+         NV51rKOpqtt6b4bYWj5VKvw3dQCbbTrpFq+2MPnF0CNox0y4ySqDLG4eJmpVzeQZUYhn
+         /EAnu59F/E4t2nV+yRcxyRJdVg0V5M7wS2GjAZ7Q7pjJqGRpGtmowIRDH8YWoXavHrwP
+         PWrCoogctV6utfbkXIzDFLg8b6JvqYO/3/v339dd++kP+7fyx8cOHLwMiaT++nhmEth5
+         znY5sjBh25eAcfHvqvOcabJRlOToSE3PdbDXCmxddhI3Ikyw6000el8fbyyESKlTsfZp
+         8r4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kvDAN2bgZCwafU6d1DOdMHqsdXwgXno9tVgtdhrQwhw=;
+        b=Acj5V99I9pm9dieAasAZCY5nLpcGEUJt5+bt1XRLsVM5urRCo9tDzj9uQM1PfJqtV0
+         ikavGGXQZJCT8geqKmOziDgPp8zJsVB/6gAb/fWmSH19+IcZFP+2E25OX3j/6C/K/911
+         YXvLInt/xkQLUuhlxLaHaX+LAUT6vpXXuuO2VUzzzRHUl/+poufuSPWnxuKEkkXVbbmk
+         4taEvyI0GeMfDS/eO9vC2DTgGRiOlAKBLpx67MxNBJkwbd0o0B6A22pDnRAEuVbRPVKO
+         skfuV5/C79wu6uZwybfDB5Kssy9GQPothpQGr1wXsoGfKmc3AuHh7UCFUISh2zmcJQQ4
+         bTrA==
+X-Gm-Message-State: AOAM530Z8FnkSksHy6GZfHCt9OZDoeFwuM7it3o6fmCmiSJ8vTm674nv
+        ATa1kVwMIbhNRvE9ODpvOPgekTM6oIb36w==
+X-Google-Smtp-Source: ABdhPJx57MgLEAb5DlBdmvBeysxWpDyzNd4n5rzISKtKxAtfPrziPbC+sK7Igar3AUlQfS+IvNw79w==
+X-Received: by 2002:a17:906:1d11:: with SMTP id n17mr17941135ejh.215.1623077010473;
+        Mon, 07 Jun 2021 07:43:30 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id h19sm3446723ejy.82.2021.06.07.07.43.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Jun 2021 07:43:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 2/2] read-cache: fix incorrect count and progress bar stalling
+Date:   Mon,  7 Jun 2021 16:43:23 +0200
+Message-Id: <patch-2.2-042f598826-20210607T144206Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
+In-Reply-To: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
+References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <xmqqk0n6wkrr.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:kpd4p666hLadLYnSmg4vdjqwa+Ix3+VPRMf6r3LfLditkRCetVv
- HGiXg6n4WnwgzV51Ix3yyV3Ou4x54xuCJidvxUdQ/ps2v9u/sQPewYPz7DtuAKk/KP9fnv4
- vDHdR7TQPIKTDk1sYgTLZqnWG6IqQ1zNFSZtrBRdLoGnQx+cK+y9/3cFoDTnmgKE/OG0WQE
- mk/PFYGc1YC8hOPmXHG4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:v8949SajnhU=:gKuP7RkC345gFZHYCnQVD1
- zuY1h3HTxJ3MDLOMZgyCnLC3PGRCfJav+/khlR6Pp2IRiNuVDfOubW41APGOTYAca+szLJ8p8
- fEMjFy3YeHDLeThkhWNh/X9TLJG/XoupJ8O52p9E+JitfXbNSg+vQgXzKeh4B1XV0BS4D4DkO
- o7cVnHND6q6zXIcKwC7O5dNvWYoOWlTW67HAf6VbdAFRVESdpt7AxzcvyQI9Pk1PQG3PGLwXp
- 2c9REWggsyWizIcZrzGxtYV/CU4SqodZhQwaYm6y4Iox43s4GUhkZr4FpKAKiZL4HeBQbx4o/
- I/o50psfmkX0UUDh/2+/oAO5SximuZEU7by5ESSFK74L1xYl2jACAA0e5AKAQqmlEOZ/yRgbs
- pMYWOpjmXOVVviGCaVDivrbagFEp+gPp9BeoLu/vK1UW3ExKQA5TfPRszojZ2l6U2tKNTV93J
- hKJWm5xueVfliV49Qf10l+TWoCNzaA81hBiPZPFQWVuN0jIv17VX/Q9ywrmO6ML9b+NfgrK/y
- /bKdadxeWOm0cu/scFwAsvdlamGEBLkEHYajAiikknyVQcNhAmnqovcgxVhOt5KBEvFJh41Sk
- CMmIlBtBTH/SChDabaTKUPbQGGRE7ERRlx0h91tJhI6s/TcZ1zpAOfVfazkP6SnFPgiil2SBg
- ohR5sshm4heJKdZIVOr/VXq4/5YsYmgkJCjUUjt6SdPE4K/SGXRJvYiOtlP9pJGTLobUx4Gjr
- autoBhHiLknkOgJLKBiBUnE3OAY43+VLRqFeRfzQKu2mxR1EXYLWdLGqex9Sk7PAc0SvQz8gM
- 5rXHY45JM3l+jN38dNI42eKGIrbOFsFfPJjUlPopMbd8/6pi5EC3zH87VJzWS/IzI83dlYFPY
- NA+LgcHUIwuW1/2/98B8yWhfr5m+3vW8wuAwOULBLjpEttHHZ2h85+CSx9kMAWvzq9rfA/hV0
- Ckhceav8t/rfiYwyoyv1l57zb2BVK9OLH/3xpDwuK7M1s9Vr7mIxz1gE/eiOD+5PykALSZQ57
- aj0NJqqeB6dw/g70hAxL5UatKzAbGciSi5GRFhDKs74+PP1tPItR+8mxnIpfZRy+efFzdU+o4
- ZjWq1kDSKavPbwqddog2pHFtcKBX9SVMBdJ
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 07, 2021 at 10:01:12AM +0900, Junio C Hamano wrote:
-> =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> write=
-s:
->
-> > Subject: Re: [PATCH v3] t: use pre-defined utf-8 locale for testing sv=
-n
->
-> That certainly is better than "user-specific", but a lot worse than
-> "user-specified".  "pre-defined" leaves it open to question "who
-> defines it?", and it is a reasonable interpretation that the locale
-> may be hardcoded in the makefile, but that is not what this patch
-> does.  Saying "user-specified" would not have such a problem.
->
-> >> I kind of wonder if trying "C.UTF-8" would be a reasonable fallback s=
-o
-> >> that people don't even have to set this extra Makefile knob. But I'm =
-not
-> >> sure if we have a good way of testing if that locale works (if we can=
-'t
-> >> find the "locale" binary).
-> >
-> > I also think we should fallback to "C.UTF-8" instead of not testing th=
-ose
-> > tests.  However, I don't know if there're any systems that not have "C=
-.UTF-8"
-> > locale.
->
-> I do share the feeling, but have a hunch that systems lacking
-> "locale -a" may be either superset of, or has at least large overlap
-> with, those lacking "C.UTF-8", and the new mechanism introduced here
-> will cover both of them, so I think it is OK to stop here, at least
-> for now.
->
-> Thanks.
+Fix a potential incorrect display of the number of items (off by one)
+and stalling of the progress bar in refresh_index().
 
-I did a little bit of digging, the first (?) usage of locale was probably
-introduced in the i18n patch to use gettext and msgfmt and stuff:
+The off-by-one error is minor, we should say we're processing the 1st
+item, not the 0th. This along with the next change also allows us to
+remove the last display_progress() call outside the loop, as we'll
+always have reached 100% now.
 
-commit 5e9637c629702e3d41ad01d95956d1835d7338e0
-Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Date:   Fri Nov 18 00:14:42 2011 +0100
+Let's also move the display_progress() call to the very start of the
+loop refresh_index() loop. In the loop we first check whether e.g. we
+ignore submodules and the entry we're processing is a submodule,
+whether we ignore certain paths etc.. Thus we could have a
+pathological case where we have a huge index consisting of such
+ignored entries, and we'd stall on the progress bar.
 
-    i18n: add infrastructure for translating Git with gettext
+See ae9af12287 (status: show progress bar if refreshing the index
+takes too long, 2018-09-15) for the initial addition of this progress
+bar to refresh_index().
 
-=2D-------------------------
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ read-cache.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I can't get rid of the feeling, that most systems have an UTF-8
-locale enabled by default these days.
-
-What does the following give us under Linux musl ?
-set | grep UTF
-
-
-MacOs (my box here) has this:
-
-LANG=3Den_US.UTF-8
-LC_ALL=3Den_US.UTF-8
-LC_CTYPE=3DUTF-8
-XTERM_LOCALE=3Den_US.UTF-8
-
-If, and only if, Linux musl has a similar setup,
-then we may be able to skip the Makefile knob for the moment.
-Just skip locale -a, if locale is not available.
-This is just a loose idea, I need to install the git-svn bindings and
-test if the git-svn tests pass.
-
+diff --git a/read-cache.c b/read-cache.c
+index 470f800855..8b0073a839 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1594,6 +1594,8 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		int t2_did_lstat = 0;
+ 		int t2_did_scan = 0;
+ 
++		display_progress(progress, i + 1);
++
+ 		ce = istate->cache[i];
+ 		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
+ 			continue;
+@@ -1627,7 +1629,6 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		t2_sum_scan += t2_did_scan;
+ 		if (new_entry == ce)
+ 			continue;
+-		display_progress(progress, i);
+ 		if (!new_entry) {
+ 			const char *fmt;
+ 
+@@ -1662,7 +1663,6 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 	trace2_data_intmax("index", NULL, "refresh/sum_lstat", t2_sum_lstat);
+ 	trace2_data_intmax("index", NULL, "refresh/sum_scan", t2_sum_scan);
+ 	trace2_region_leave("index", "refresh", NULL);
+-	display_progress(progress, istate->cache_nr);
+ 	stop_progress(&progress);
+ 	trace_performance_leave("refresh index");
+ 	return has_errors;
+-- 
+2.32.0.rc3.434.gd8aed1f08a7
 
