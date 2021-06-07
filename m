@@ -8,62 +8,67 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71A84C47082
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E09DC47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:56:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59E356054E
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:45:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2006060720
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:56:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230341AbhFGQqy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 12:46:54 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:45899 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230294AbhFGQqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 12:46:53 -0400
-Received: by mail-ed1-f43.google.com with SMTP id r7so6773078edv.12
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:44:52 -0700 (PDT)
+        id S230481AbhFGQ6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 12:58:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230250AbhFGQ6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 12:58:35 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7015C061766
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 09:56:43 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id c9so9739329wrt.5
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=q0eXb4vDYbP3Qp5rTY50PbC4F3S/E9aczQKqh5xezeY=;
-        b=Iagh9XQLayS4QiF24Gr57UFJ7Zg13EHZf8p+40xVljvqfEHwh08l4V3iu6kQy+mZqy
-         3P5KMQSSKMM/yL/m770vjRYCcun3CwfERnBRtfZ1z39x8e84Al6IZMZjhU+BHO6AkakH
-         qZwBS46cXudvSFSJwVDOCUb1utydeOyjoyVIgnnNy/Q/vE5LAYBrIqnLXz/xM2ZsC5W2
-         XAnRweoQRWzc8c1SmJ//7xfYPw70T4hyTeRzn0w3icusi9ov1TywkLixS8QkTgOVAmt0
-         kWRrOmLtno2knZpvz47yqvt73CoVXqc4SZYSQsYAOX/JXZm98ue5DVuxh2JqpcUIJWRJ
-         JS+Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=9KWvs870+fKBd3M4qRSKB26VnC4XWPF+klGY3Js/64g=;
+        b=LFMwmofkDQ4lX35BQBXWow1/g2K8W5idGEzSbSDKuJ/QTopSRPDwQI1dBsOfw+5WzV
+         UZORTia+DE43W8cw85PNDHxWcGqvLp6VtrHbB6UoetMQp6XRUTroyQG/KhDnOzT+FWuH
+         e08tZa7hofEjWfB7Ws31VNrV5+Mo9gmSTSyObDkWJIyltmwCB6wg3JqOJYsFmfh5YwFe
+         fITuT47U3ov32283qTl+A4Wpevkfr1iGxbbf6DsS2lh8xIUl1TbadHgBux8sHWOwklAz
+         J8qQ0+/gaq2Eb7/2RNrvP+QS4J1uQaHieOC96l+IO1XCO2AbKuRxU+MeM5qy8zneiyCK
+         zY8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=q0eXb4vDYbP3Qp5rTY50PbC4F3S/E9aczQKqh5xezeY=;
-        b=eICQ2OxGVFuZhOZxkO/bJvI9hzDUMgaaEYkG4i2rJpvErT2K9Dp6kyotGiWEGweVt1
-         uYJW5SouGrFgQBsk/qcnXbbRE4VsGMvCZzJLpTzgMALVwdZjMWWtc4Y0XJm1LD/fPkBM
-         pUmuRMPY1qLw4dWCLn9GuvHxvD4sZdztw7PA2s7scVIGIBMCQYYierPip3BuAK6rBLpi
-         X7whNEq0/o9sJfqs8CNyEirAzPWwStdgbcu6JP5Xf3fLhBIeTSyMuOpqfxVVfpzrg7aL
-         7qyLi/fNHsh836hbobLRaNKVSETeV/ysASMVhwABabYG4wxmUQSbB7106BE3odDQXFMo
-         /P7A==
-X-Gm-Message-State: AOAM531OV6qIWtgSsiH6cvdAsZNTY29KXCrQXhANe1Fh+2lAkz0+Pv+z
-        K3EovOakCpuS7z1yJ/Excp9ymav1o/0RXQ==
-X-Google-Smtp-Source: ABdhPJyPzbf+Ln6zMVnf3JClaBN2SDIzNo9+uNF/zYxPoKIckGjvWvQyr7Dfbch9Rk9M60DjNKye6Q==
-X-Received: by 2002:a50:afe4:: with SMTP id h91mr20819788edd.28.1623084231274;
-        Mon, 07 Jun 2021 09:43:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=9KWvs870+fKBd3M4qRSKB26VnC4XWPF+klGY3Js/64g=;
+        b=E/OgEUOFuNWDitxOISt6OdMBUypwqDDCidQYuSv06IVUrF1d3BB8ULvpTi6eztkefm
+         IKrJ6MLC9Pp3ZarlaA2hUs7ILymVhtFMDEhz54Q+iTLKZ8zaCc4kYJcb+oeUkj6M/a/C
+         mb+HTCkOkJ5FCDLC6Zdfwm6pFSmncQ1Q4pxYhZK3JbFbVjD4o4WjiY/QLOjzVy507tLc
+         IrEXStRMBlW6A/ebQ1/d3YqGoBtrJXXwwCjiUbyS4eNBaa0gzz/WKNoEoAGTwOnPcR+0
+         G588hrA8rIpOR03SDmjsQR1mraRp3UccU8+spvnRSkyYQNvH6l++nKlIsHY03VQjJN4N
+         HDyw==
+X-Gm-Message-State: AOAM533O/5ZvEKhl485Wi827kf11x00LswZyxLzl3hrN6mw7/o+/jc95
+        hVwHLPktk+9/xo1kkRKPXqLCd0IMD8kbpg==
+X-Google-Smtp-Source: ABdhPJx9W2wfOrpsAEhRw4B1EsfYdaMWwd+g5DozWTNOquPe4fr1GSvGUbKC43fCd5oEWqDuVyoNgQ==
+X-Received: by 2002:adf:fc0e:: with SMTP id i14mr18256475wrr.71.1623085002169;
+        Mon, 07 Jun 2021 09:56:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id dy19sm7796510edb.68.2021.06.07.09.43.50
+        by smtp.gmail.com with ESMTPSA id j11sm4066056wmq.4.2021.06.07.09.56.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 09:43:50 -0700 (PDT)
+        Mon, 07 Jun 2021 09:56:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] xdiff: use BUG(...), not xdl_bug(...)
-Date:   Mon,  7 Jun 2021 18:43:49 +0200
-Message-Id: <patch-1.1-68bf1ba4d3-20210607T164305Z-avarab@gmail.com>
+Subject: [PATCH v2] bundle doc: rewrite the "DESCRIPTION" section
+Date:   Mon,  7 Jun 2021 18:56:39 +0200
+Message-Id: <patch-1.1-bc6a6d8922-20210607T165507Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
+In-Reply-To: <patch-1.1-4e736877d1-20210607T143643Z-avarab@gmail.com>
+References: <patch-1.1-4e736877d1-20210607T143643Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,91 +76,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The xdl_bug() function was introduced in
-e8adf23d1e (xdl_change_compact(): introduce the concept of a change
-group, 2016-08-22), let's use our usual BUG() function instead.
-
-We'll now have meaningful line numbers if we encounter bugs in xdiff,
-and less code duplication.
+Rewrite the "DESCRIPTION" section for "git bundle" to start by talking
+about what bundles are in general terms, rather than diving directly
+into one example of what they might be used for. This changes
+documentation that's been substantially the same ever since the
+command was added in 2e0afafebd8 (Add git-bundle: move objects and
+references by archive, 2007-02-22).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- xdiff/xdiffi.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 380eb728ed..a4542c05b6 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -796,12 +796,6 @@ static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g, long flags)
- 	}
- }
+I didn't think I needed to type "make" to check a doc-only change, but
+as it turns out v1 of this doesn't compile git because the script to
+generate command-list.h doesn't know how to escape the quotes in the
+C-string it generates.
+
+This is probably better in either case, sorry about the noise.
+
+Range-diff against v1:
+1:  4e736877d1 ! 1:  bc6a6d8922 bundle doc: rewrite the "DESCRIPTION" section
+    @@ Documentation/git-bundle.txt: git-bundle(1)
+      NAME
+      ----
+     -git-bundle - Move objects and refs by archive
+    -+git-bundle - Create, unpack and manipulate "bundles"
+    ++git-bundle - Create, unpack and manipulate bundles
+      
+      
+      SYNOPSIS
+
+ Documentation/git-bundle.txt | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index 53804cad4b..cdc4e0b51b 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -3,7 +3,7 @@ git-bundle(1)
  
--static void xdl_bug(const char *msg)
--{
--	fprintf(stderr, "BUG: %s\n", msg);
--	exit(1);
--}
--
- /*
-  * Move back and forward change groups for a consistent and pretty diff output.
-  * This also helps in finding joinable change groups and reducing the diff
-@@ -841,7 +835,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			/* Shift the group backward as much as possible: */
- 			while (!group_slide_up(xdf, &g, flags))
- 				if (group_previous(xdfo, &go))
--					xdl_bug("group sync broken sliding up");
-+					BUG("group sync broken sliding up");
+ NAME
+ ----
+-git-bundle - Move objects and refs by archive
++git-bundle - Create, unpack and manipulate bundles
  
- 			/*
- 			 * This is this highest that this group can be shifted.
-@@ -857,7 +851,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 				if (group_slide_down(xdf, &g, flags))
- 					break;
- 				if (group_next(xdfo, &go))
--					xdl_bug("group sync broken sliding down");
-+					BUG("group sync broken sliding down");
  
- 				if (go.end > go.start)
- 					end_matching_other = g.end;
-@@ -882,9 +876,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 */
- 			while (go.end == go.start) {
- 				if (group_slide_up(xdf, &g, flags))
--					xdl_bug("match disappeared");
-+					BUG("match disappeared");
- 				if (group_previous(xdfo, &go))
--					xdl_bug("group sync broken sliding to match");
-+					BUG("group sync broken sliding to match");
- 			}
- 		} else if (flags & XDF_INDENT_HEURISTIC) {
- 			/*
-@@ -925,9 +919,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ SYNOPSIS
+@@ -18,15 +18,25 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
  
- 			while (g.end > best_shift) {
- 				if (group_slide_up(xdf, &g, flags))
--					xdl_bug("best shift unreached");
-+					BUG("best shift unreached");
- 				if (group_previous(xdfo, &go))
--					xdl_bug("group sync broken sliding to blank line");
-+					BUG("group sync broken sliding to blank line");
- 			}
- 		}
+-Some workflows require that one or more branches of development on one
+-machine be replicated on another machine, but the two machines cannot
+-be directly connected, and therefore the interactive Git protocols (git,
+-ssh, http) cannot be used.
++Create, unpack and manipulate "bundles" (.bundle) files. Bundles are
++.pack files (see linkgit:git-pack-objects[1]) with a header indicating
++what references are contained within the bundle. The header is in the
++format emitted by linkgit:git-show-ref[1].
  
-@@ -936,11 +930,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 		if (group_next(xdf, &g))
- 			break;
- 		if (group_next(xdfo, &go))
--			xdl_bug("group sync broken moving to next group");
-+			BUG("group sync broken moving to next group");
- 	}
+-The 'git bundle' command packages objects and references in an archive
+-at the originating machine, which can then be imported into another
+-repository using 'git fetch', 'git pull', or 'git clone',
+-after moving the archive by some means (e.g., by sneakernet).
++Like the the packed archive format itself bundles can either be
++self-contained or thin (see "--thin" in linkgit:git-pack-objects[1]).
++
++Bundles are useful for numerous purposes. They were originally
++designed to facilitate the transfer of repository data between
++repositories which could not be directly connect to each other, and
++therefore the interactive Git protocols (git, ssh, http) could not be
++used.
++
++In that scenario a bundle is produced on the originating machine. It
++is then transferred to the other machine (e.g. by sneakernet), and
++unpacked on the other end. The unpacking can happen either with
++linkgit:git-clone[1] (which knows how to clone from bundle files), or
++by "git bundle unbundle".
  
- 	if (!group_next(xdfo, &go))
--		xdl_bug("group sync broken at end of file");
-+		BUG("group sync broken at end of file");
+ As no
+ direct connection between the repositories exists, the user must specify a
+@@ -34,6 +44,9 @@ basis for the bundle that is held by the destination repository: the
+ bundle assumes that all objects in the basis are already in the
+ destination repository.
  
- 	return 0;
- }
++Similarly, bundles are commonly used to produce incremental backups of
++git repositories. See the "EXAMPLES" section below.
++
+ OPTIONS
+ -------
+ 
 -- 
 2.32.0.rc3.434.gd8aed1f08a7
 
