@@ -2,156 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D76A6C47095
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 17:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F206C47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 17:33:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BED866105A
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 17:26:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 448AE610A1
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 17:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230287AbhFGR2l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 13:28:41 -0400
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:45676 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229997AbhFGR2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 13:28:41 -0400
-Received: by mail-wm1-f50.google.com with SMTP id v206-20020a1cded70000b02901a586d3fa23so104752wmg.4
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 10:26:49 -0700 (PDT)
+        id S230266AbhFGRf3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 13:35:29 -0400
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:44944 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229997AbhFGRf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 13:35:28 -0400
+Received: by mail-ot1-f44.google.com with SMTP id q5-20020a9d66450000b02903f18d65089fso1303220otm.11
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 10:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=xyhhmvDL4Suz0pOWwir/ReEfhsF7iTXc6xmbQMnMDl8=;
-        b=rJLO6YbuKwYAiyeZDsWX/NgL2Gs0p+BU9qgCc95eH9yToyafuigl80Qzc7Ywy/pc9X
-         sxbLuE19n83NET+L8ukRmqQY1zKwxqrZxtxo48DDrkCvYkTbnq0Ozo4tuDhwmQ4GXK3D
-         qLY1SWm+3g/1KERBO2GsUE3dTa9CQbO3dssh7P3g+lgXPxlnA/3wSGdaWsGcXO6M2rYg
-         sp9l5vECM8aPouYM91XimLt4QYecHLlk09V3C2jZmWmJkCUGx+SLxIzI9T/TYZrfg7zn
-         OGs0sMQuFL6SkgxLrdCXIE2dt2rukpiu7NHBFYoqI+BnSgbW8F/KE/Vn64KEOwrL36jo
-         HfEw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cC4S4nLmIJISeIfzg/NFAPqgERsQxBYYVi8vwCghulU=;
+        b=pJjJo2Bi/yQoQoWQclW/5O6KonJIt/CmtVifN5lsHKk4uLdj8+0YcR82TCzJsOL8Ln
+         cyg2+Cg51OpNz76SAP0ohDTmXuAnLuBnfGpX8sBbbhXZHVY7FKT9uSfcDNAjMLMmeJpU
+         o2I3TkJn77oqBVQxswfMTVVqS+0GeGflFrU2r0XWhcXynKkBn59DcxGsWjA95NDWF9Wv
+         sAipIwkDOSkp0B2yrnD5/0oawVzNiyRWmhOaGMDbtMixNl2JE7q2nSoRCs49j83I9hN5
+         48/kQAwBFFFMshyionWMvIuJfjdwfDFJ3erE6NW/XuyFefqNhXUktx1Q30s9vhdNg4M8
+         /nIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=xyhhmvDL4Suz0pOWwir/ReEfhsF7iTXc6xmbQMnMDl8=;
-        b=RYmOuNnXKTy6lrGfXdor7XAj2wbzVlfLM6kCWrBm4+BaGXnRdcLlV/U1ADbEyS4o5Z
-         S2TgvBmeP729tj5YeS6RbJlr5YyjhrfOem61DG+WIBYCNHgu8ZE4fmnKbcGi0MAFboI/
-         tQW/kz4QsBCjMtxFnvp3pC57vugfwcuncv9EUGTpemf7pUqYvCOkGT03ZlSYIF1bGheZ
-         wlZ0yHi60VKUgHF9pXNpBvNDBbMb8Nc8aj72IDGtLKwqJfOOD9mRh8AvqaH3yrZHa7Pn
-         M7yFxtK59R5pTVn4WlovHgPAWOYyndNCyyksVvGqwU9XGXH5aq6izxGDw12eHPDoNAFu
-         l3Dw==
-X-Gm-Message-State: AOAM530GVUMNWJegA94A74BOC9DR3XXz2VSRthAWlzQVnjq1oCosDnle
-        2fFOkwWLmEQBtl5r3RtTDJigVnc8iyE=
-X-Google-Smtp-Source: ABdhPJytKmy5BFS0iOkxvJqu9aynmlOfAH+UOFmCc6RDFE9u0R/XSgHT9Oo00DnJLVGK01RfJEbBBQ==
-X-Received: by 2002:a05:600c:5112:: with SMTP id o18mr10736064wms.15.1623086748923;
-        Mon, 07 Jun 2021 10:25:48 -0700 (PDT)
-Received: from szeder.dev (94-21-29-108.pool.digikabel.hu. [94.21.29.108])
-        by smtp.gmail.com with ESMTPSA id n13sm18894692wrg.75.2021.06.07.10.25.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 10:25:48 -0700 (PDT)
-Date:   Mon, 7 Jun 2021 19:25:42 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Dave Huseby <dwh@linuxprogrammer.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 2/3] SubmittingPatches: replace discussion of Travis
- with GitHub Actions
-Message-ID: <20210607172542.GA6312@szeder.dev>
-References: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
- <cover-0.3-0000000000-20210607T110044Z-avarab@gmail.com>
- <patch-2.3-7d5d2854e3-20210607T110044Z-avarab@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cC4S4nLmIJISeIfzg/NFAPqgERsQxBYYVi8vwCghulU=;
+        b=MMER3xD4tp9GUgXawxOmu/b5gNjtkP8F5orBIzoTceBy9+mztEm6bMcedghIVpxqdH
+         bSISY4aeIRO2wL10V1WKZ/fjn0thpW3wmPn60n8ozIUveaJYw45q163TtFAFJg7p+2A9
+         l3QMSiKnMTBzuX1LCxwzY0/mvcLD6ZWbbz9A2DxZ4x7UX5MsTgegnBAQs4izUDmvVCBF
+         /fU8KbTk+foGVDKdRDmXPyNm5oGVseHVhBKA6MwVtae4itQegKNiNDZXhkj7hqSrMWly
+         qqT5jcU7ud9GeGy4xK++/EjfxG1IRcXjyG1LfpIs0+o4KiU02wcdafCBvwO8wayA++rN
+         olow==
+X-Gm-Message-State: AOAM533qx4j0ZkJYTl1q4YMFUd95InfK1qlkDGcq81lgA2fDUtBMss4N
+        wQbsArP/EGEC2h2qkWLBGzY=
+X-Google-Smtp-Source: ABdhPJxTXsvYeB7T8hmUmTOW8NzHRWFp+bTcD1g9/UzPlZTbdddG2UXYTBeV/CRXDLEOPuBcxY6fzg==
+X-Received: by 2002:a05:6830:3115:: with SMTP id b21mr14200781ots.291.1623087140967;
+        Mon, 07 Jun 2021 10:32:20 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:58fa:fc7:3955:c1d5? ([2600:1700:e72:80a0:58fa:fc7:3955:c1d5])
+        by smtp.gmail.com with ESMTPSA id x7sm2327480ooc.23.2021.06.07.10.32.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Jun 2021 10:32:20 -0700 (PDT)
+Subject: Re: [PATCH 1/4] Documentation: use singular they when appropriate
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        sandals@crustytoothpaste.net, jrnieder@gmail.com,
+        emilyshaffer@google.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+ <afc51c5e6edec7935a6d0d0a05d396e11311ca6c.1623085069.git.gitgitgadget@gmail.com>
+ <87eedd4n20.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9ae26bcd-c6b7-682d-f895-3196c6c04ce2@gmail.com>
+Date:   Mon, 7 Jun 2021 13:32:18 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <87eedd4n20.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-2.3-7d5d2854e3-20210607T110044Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 07, 2021 at 01:03:42PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Replace the discussion of Travis CI added in
-> 0e5d028a7a0 (Documentation: add setup instructions for Travis CI,
-> 2016-05-02) with something that covers the GitHub Actions added in
-> 889cacb6897 (ci: configure GitHub Actions for CI/PR, 2020-04-11).
+On 6/7/2021 1:09 PM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> The setup is trivial compared to using Travis, and it even works on
-> Windows (that "hopefully soon" comment was probably out-of-date on
-> Travis as well).
+> On Mon, Jun 07 2021, Derrick Stolee via GitGitGadget wrote:
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  Documentation/SubmittingPatches | 44 ++++++++++++---------------------
->  1 file changed, 16 insertions(+), 28 deletions(-)
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> There are several instances in our documentation where we refer to an
+>> anonymous user as "a contributor" or "an integrator" or similar. To
+>> avoid repeating this role, pronouns are used. Previous examples
+>> chose a gender for this user, using "he/him" or "she/her" arbitrarily.
+>>
+>> Replace these uses with "they/them" to ensure that these documentation
+>> examples apply to all potential users without exception.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > 
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 2643062624..e372d17673 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -74,10 +74,9 @@ the feature triggers the new behavior when it should, and to show the
->  feature does not trigger when it shouldn't.  After any code change, make
->  sure that the entire test suite passes.
->  
-> -If you have an account at GitHub (and you can get one for free to work
-> -on open source projects), you can use their Travis CI integration to
-> -test your changes on Linux, Mac (and hopefully soon Windows).  See
-> -GitHub-Travis CI hints section for details.
-> +Pushing to a fork of https://github.com/git/git will use their CI
-> +integration to test your changes on Linux, Mac and Windows. See the
-> +GitHub CI section for details.
->  
->  Do not forget to update the documentation to describe the updated
->  behavior and make sure that the resulting documentation set formats
-> @@ -451,12 +450,12 @@ their trees themselves.
->    the status of various proposed changes.
->  
->  [[travis]]
+> I think this is mostly an improvement, however:
+> 
+>>  .../using-signed-tag-in-pull-request.txt      | 38 +++++++++----------
+> 
+> This is a quote from a mail of Junio's[1] (date and all). I don't think
+> it makes sense to copyedit that after the fact without at least editing
+> the header that indicates that it's a verbatim reproduction.
+> 
+> 1. https://lore.kernel.org/git/7vehuyosaa.fsf@alter.siamese.dyndns.org/
 
-What about this occurence of "travis"?
+That's a good point. It does look a little strange that there is
+an email in our Documentation/ directory. I wondered if this was
+included in the docs that get posted to git-scm.com, but I see that
+the link I manually constructed [1] redirects to the GitHub mirror.
 
-> -== GitHub-Travis CI hints
-> +== GitHub CI
->  
-> -With an account at GitHub (you can get one for free to work on open
-> -source projects), you can use Travis CI to test your changes on Linux,
-> -Mac (and hopefully soon Windows).  You can find a successful example
-> -test build here: https://travis-ci.org/git/git/builds/120473209
-> +With an account at GitHub, you can use GitHub CI to test your changes
-> +on Linux, Mac and Windows. See
-> +https://github.com/git/git/actions/workflows/main.yml for examples of
-> +recent CI runs.
->  
->  Follow these steps for the initial setup:
->  
-> @@ -464,31 +463,20 @@ Follow these steps for the initial setup:
->    You can find detailed instructions how to fork here:
->    https://help.github.com/articles/fork-a-repo/
->  
-> -. Open the Travis CI website: https://travis-ci.org
-> -
-> -. Press the "Sign in with GitHub" button.
-> -
-> -. Grant Travis CI permissions to access your GitHub account.
-> -  You can find more information about the required permissions here:
-> -  https://docs.travis-ci.com/user/github-oauth-scopes
-> -
-> -. Open your Travis CI profile page: https://travis-ci.org/profile
-> -
->  . Enable Travis CI builds for your Git fork.
->  
->  After the initial setup, Travis CI will run whenever you push new changes
+[1] https://git-scm.com/docs/howto/using-signed-tag-in-pull-request.txt
 
-And what about these two mentions of Travis CI in the context?
+As long as this file remains formatted as an archived email message,
+the edits here are inappropriate. It's another question of whether the
+files within Documentation/howto should be updated to be docs that can
+be more easily posted in places like git-scm.com.
 
->  to your fork of Git on GitHub.  You can monitor the test state of all your
-> -branches here: https://travis-ci.org/__<Your GitHub handle>__/git/branches
-> +branches here: https://github.com/<Your GitHub handle>/git/actions/workflows/main.yml
+For now, I'll remove these edits from the patch.
+
+Thanks,
+-Stolee
