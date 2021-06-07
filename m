@@ -2,108 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0AC4C47094
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 18:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C429C47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 18:48:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C26161130
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 18:37:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5294C6108C
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 18:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230316AbhFGSjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 14:39:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52106 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230289AbhFGSjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 14:39:22 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52AD8C061766
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 11:37:31 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id c13so13498325oib.13
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 11:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=Gvdh8iN5uIw5t943IiBCqSOhAUy2LkyGJOjvHR3VrdU=;
-        b=bsZzniMEH6Vgo6bGBtsd4FbzJqek+KwSYgCKDgndDd2eG4esU7DC7OqvrGTnrJrSGO
-         HKPRbYOuccUThTQaiS5WkJh8TrurjqtefcSuyzHKJKDibY5t9wQYVCGdfL9EwJjYm8gR
-         52EyeIdnOvUxdBl7A7jrwZ9dpezc1Y8PPBSQSdjgL2sNsGB/aQQlBTC+u2bdc2rlWxN+
-         mK8D2rcZdaf71eOkKlytA/mZEDblOk6cTQTHa/wj+3l3MaTsaw3DKkiQA9krbQZVx2d0
-         MptXLIUaZYk3k/W/bnSZIiRliqtDgTFZzyfQJuDbOKRlLi5MZ5MrtmK4fUeM/ernZXAP
-         CB4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=Gvdh8iN5uIw5t943IiBCqSOhAUy2LkyGJOjvHR3VrdU=;
-        b=lhBvFoE8z/OHlz0uurkc96kdhon+WrKPORFvaGsz0PMXo9MoVSC0E3upWCr89Sk3dL
-         pGiIvr/DCwmho/YJKfaTDXjKSAa26rgi6P3HvitV58OaU7lLxg1S9OK86F3ApjEPOObz
-         JcqGhH6CsOd8PAg53Bqf6jmEwSfmtF7s/4tqt0KfM6MQ54RAAjcC5aal3ONFkQMs6kEq
-         RMU42YEcLChb0di90wTXVs92QdMUf9oKhut2+nOdVZNixm5qBSRXZbpcv2zezBeYFdQC
-         oR/JbbxG9J9ewwiSmUhq+B+gE33X3ruG5ygAUbyOLEK83FjUD6BZlX+CMA2eoVomw82Q
-         4NPA==
-X-Gm-Message-State: AOAM530ga0lv+9UfQTRmneNU+iycAYLK8Muo/tLW1Z/oOF00UVXeeS6A
-        cBfhOrID5RMOWP97gtTgbu4=
-X-Google-Smtp-Source: ABdhPJyc560yfRtl4wNpaTns7OX5J8TDHLwe+2ou4yZ9QbSdNy2TlwDZv8106X7ZiAz2eWIPCW08bQ==
-X-Received: by 2002:aca:b107:: with SMTP id a7mr321777oif.170.1623091050675;
-        Mon, 07 Jun 2021 11:37:30 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id x9sm2515821oto.79.2021.06.07.11.37.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 11:37:30 -0700 (PDT)
-Date:   Mon, 07 Jun 2021 13:37:28 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <60be6768d74bc_3bc33208cf@natae.notmuch>
-In-Reply-To: <87h7i94ola.fsf@evledraar.gmail.com>
-References: <20210605011339.2202-1-felipe.contreras@gmail.com>
- <87czt059sn.fsf@evledraar.gmail.com>
- <60be3b2d6e1e6_39c0a20883@natae.notmuch>
- <87h7i94ola.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH] branch: make -v useful
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S231157AbhFGSuB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 14:50:01 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52921 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230420AbhFGSuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 14:50:01 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF97C13E532;
+        Mon,  7 Jun 2021 14:48:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YkGtIfjh9rLZZnb9EWdRGGM6BttlLTEh8xKLyL
+        Cxu0U=; b=Dc6BmpymxXfW+0MsTd+NoFn0gPZxpZ8dbSU6a/lAYDLWn/XZIoNv/v
+        V9aCy7XZp76T/Li3dIix0405RHU70w6c1g/EPSKwMLxwGYKOxe4faYRAy7mH2TMI
+        VG0AdEgaRvkvr7Cr8glUVHMS9x4soa+NWUMbvisU3XoL82TaZlqbc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C8D6813E531;
+        Mon,  7 Jun 2021 14:48:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1ED9813E52D;
+        Mon,  7 Jun 2021 14:48:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t: fix whitespace around &&
+References: <20210607131320.982362-1-rybak.a.v@gmail.com>
+Date:   Tue, 08 Jun 2021 03:48:05 +0900
+In-Reply-To: <20210607131320.982362-1-rybak.a.v@gmail.com> (Andrei Rybak's
+        message of "Mon, 7 Jun 2021 15:13:20 +0200")
+Message-ID: <xmqq8s3lv7dm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E6013482-C7C0-11EB-9C7D-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Mon, Jun 07 2021, Felipe Contreras wrote:
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-> >> and I think the commit messages should discuss whether we break this=
+> Add missing spaces before '&&' and switch tabs around '&&' to spaces.
+>
+> These issues were found using `git grep '[^ ]&&$'` and
+> `git grep -P '&&\t'`.
+>
+> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+> ---
+>  contrib/mw-to-git/t/t9360-mw-to-git-clone.sh | 2 +-
+>  contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh  | 4 ++--
+>  t/t1092-sparse-checkout-compatibility.sh     | 2 +-
+>  t/t3920-crlf-messages.sh                     | 2 +-
+>  t/t4203-mailmap.sh                           | 2 +-
+>  t/t4205-log-pretty-formats.sh                | 2 +-
+>  t/t7800-difftool.sh                          | 2 +-
+>  7 files changed, 8 insertions(+), 8 deletions(-)
 
-> >> promise of having consistent output between "status" and "branch -v"=
+Looks trivially correct, all of them.  Thanks.
 
-> >> now.
-> >
-> > But we don't with "branch -vv".
-> =
-
-> I think the wording there needs to be changed in any case, I'm not sure=
-
-> what it's supposed to mean.
-> =
-
-> I think the "show the relationship between" there is referring to the
-> ahead/behind relationship, or maybe it's just speaking more generally
-> about the short (branch -v[-v]) v.s. long (git status) blurb we show
-> about the branch status overall.
-
-I was going to do this, but given than most of my proposals to update the=
-
-documentation are rejected (or similar), I think I'll just do the
-minimal changes for now.
-
--- =
-
-Felipe Contreras=
+> diff --git a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+> index 4c39bda7bf..f08890d9e7 100755
+> --- a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+> +++ b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+> @@ -86,7 +86,7 @@ test_expect_success 'Git clone works with page added' '
+>  test_expect_success 'Git clone works with an edited page ' '
+>  	wiki_reset &&
+>  	wiki_editpage foo "this page will be edited" \
+> -		false -s "first edition of page foo"&&
+> +		false -s "first edition of page foo" &&
+>  	wiki_editpage foo "this page has been edited and must be on the clone " true &&
+>  	git clone mediawiki::'"$WIKI_URL"' mw_dir_6 &&
+>  	test_path_is_file mw_dir_6/Foo.mw &&
+> diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
+> index 6b0dbdac4d..526d92850f 100755
+> --- a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
+> +++ b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
+> @@ -287,7 +287,7 @@ test_expect_success 'git push with \' '
+>  		git add \\ko\\o.mw &&
+>  		git commit -m " \\ko\\o added" &&
+>  		git push
+> -	)&&
+> +	) &&
+>  	wiki_page_exist \\ko\\o &&
+>  	wiki_check_content mw_dir_18/\\ko\\o.mw \\ko\\o
+>  
+> @@ -311,7 +311,7 @@ test_expect_success 'git push with \ in format control' '
+>  		git add \\fo\\o.mw &&
+>  		git commit -m " \\fo\\o added" &&
+>  		git push
+> -	)&&
+> +	) &&
+>  	wiki_page_exist \\fo\\o &&
+>  	wiki_check_content mw_dir_20/\\fo\\o.mw \\fo\\o
+>  
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index e9a815ca7a..d028b73eba 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -268,7 +268,7 @@ test_expect_success 'diff with renames' '
+>  	for branch in rename-out-to-out rename-out-to-in rename-in-to-out
+>  	do
+>  		test_all_match git checkout rename-base &&
+> -		test_all_match git checkout $branch -- .&&
+> +		test_all_match git checkout $branch -- . &&
+>  		test_all_match git diff --staged --no-renames &&
+>  		test_all_match git diff --staged --find-renames || return 1
+>  	done
+> diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+> index 70ddce3a2e..a8ad5462d9 100755
+> --- a/t/t3920-crlf-messages.sh
+> +++ b/t/t3920-crlf-messages.sh
+> @@ -64,7 +64,7 @@ test_crlf_subject_body_and_contents() {
+>  	while test -n "${atoms}"
+>  	do
+>  		set ${atoms} && atom=$1 && shift && atoms="$*" &&
+> -		set ${files} &&	file=$1 && shift && files="$*" &&
+> +		set ${files} && file=$1 && shift && files="$*" &&
+>  		test_expect_success "${command}: --format='%${atom}' works with messages using CRLF" "
+>  			rm -f expect &&
+>  			for ref in ${LIB_CRLF_BRANCHES}
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index d8e7374234..0b2d21ec55 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -959,7 +959,7 @@ test_expect_success SYMLINKS 'symlinks not respected in-tree' '
+>  	test_when_finished "rm .mailmap" &&
+>  	ln -s map .mailmap &&
+>  	git log -1 --format=%aE >actual &&
+> -	echo "orig@example.com" >expect&&
+> +	echo "orig@example.com" >expect &&
+>  	test_cmp expect actual
+>  '
+>  
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> index 8272d94ce6..5865daa8f8 100755
+> --- a/t/t4205-log-pretty-formats.sh
+> +++ b/t/t4205-log-pretty-formats.sh
+> @@ -988,7 +988,7 @@ test_expect_success '%(describe) vs git describe' '
+>  
+>  test_expect_success '%(describe:match=...) vs git describe --match ...' '
+>  	test_when_finished "git tag -d tag-match" &&
+> -	git tag -a -m tagged tag-match&&
+> +	git tag -a -m tagged tag-match &&
+>  	git describe --match "*-match" >expect &&
+>  	git log -1 --format="%(describe:match=*-match)" >actual &&
+>  	test_cmp expect actual
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 3e041e83ae..a173f564bc 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -770,7 +770,7 @@ test_expect_success 'difftool --rotate-to' '
+>  	echo 4 >4 &&
+>  	git add 1 2 4 &&
+>  	git commit -a -m "124" &&
+> -	git difftool --no-prompt --extcmd=cat --rotate-to="2" HEAD^ >output&&
+> +	git difftool --no-prompt --extcmd=cat --rotate-to="2" HEAD^ >output &&
+>  	cat >expect <<-\EOF &&
+>  	2
+>  	4
