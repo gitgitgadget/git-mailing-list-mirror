@@ -2,131 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A34BCC47082
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 21:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F261BC47082
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 22:19:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83EA861182
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 21:59:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0CD561185
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 22:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbhFGWBQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 18:01:16 -0400
-Received: from mout.gmx.net ([212.227.15.15]:48149 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230359AbhFGWBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 18:01:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1623103156;
-        bh=Da0e9p5odPyDPTiEAH52uyo1iXjYGRxq2Xu2hLLUP14=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UTk82jXSLeIyQ4cgB1AezEgsnZ8flKR/cvZWfwNF9CzYkMPxZ4gzxS08tPOsrkJvJ
-         pS0tiuPmF7yQbNR8lSs7SZLkx7rQUoExCPCLX165+iNTQy/wBsqmXw7htqL2Zw6Qfv
-         uJjEHyFOedkZnqwYnNGr/zIwqEEoIUTdosfcdmnU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.29.8.58] ([89.1.213.18]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgNh7-1l93Ai44Vj-00hwpk; Mon, 07
- Jun 2021 23:59:16 +0200
-Date:   Mon, 7 Jun 2021 23:59:14 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] remote: initialize values that might not be set
-In-Reply-To: <pull.974.git.1623069570553.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2106072355110.55@tvgsbejvaqbjf.bet>
-References: <pull.974.git.1623069570553.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:PknDa1EtNiGUMQRyB/tAvkM7glHUsMXE1HPwyYRNKCQvitqAEiU
- JLNwe/O+Mlb5MLmmsnNpvB3HPo2erthrVMIN112DHPCq3D7cjHSqLf99Tv7s3ygn4WQR2Lm
- Pur19hbwFgEVb61NmSKMgXJsb/hOG+f8OE0BpS5251oHAyy9E9kWc4p8PCEG6zK+7wZUGSh
- 5zd3ZgC4H6IxAdP8MmGYw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:S3lbp5UMVqU=:Iu7gNiFBETz7H0CEuEWwQP
- A1yj+T8ootMFyGBFgN37EZmJ5tJ8DfK5tx9tg9pPeeRo81hi+8FF5+eqwYaxO+ZzkAOvoFO0h
- qlnfs8Y4FVYBmeuNaIlfi5FyND2+ArKseaaqJ2BbQy18sp1fLd60u67H9irWD5BjD2u4DDSex
- Jh3JpEUfM3Ind8abAeapau7jF9XZ1ez0l/e67S38U4HVQma9gn3R9MZVtykBk66JzHR8j1ceX
- 0FcuTyO/yD5nfvCIFf6JHu0gzC61KTW8ZtbXXRUx/Jq4uCpXPEny4sPu7uaHdw8iHZREQtBkl
- Ec6CnhfdeQkPoDZGw8ytMNFSqNwFCPzxcdcgk5i1l+dCLSuU2bEtIZjJV9qwPToqHuAxxBUAG
- fvrrfOZcy71MDjXEKLa8i3ifRPQu6eVHUjgZInE6kelop9xohsTYEyU4tCMrdxJjE0Q2TyCdP
- h+Y7uutCiq1R+o5eOWaUPTfoGebehfqm5Wu4YlN+M4RlYi7SxpLBmQvWOiV2MLVaEK+uSwi6d
- UpO80N0rSHWoTKxr7QPWjBNRP0bKbYoupW2MPXVtygq7WJ+F1q8pbJR3HvUKaV2HzHJlQgHJ/
- y0JKVHBUbs2ckIgwtigWmwtTw/pPkkQeyNzl+tGE+RI3dAuUM+LZ9DJcH3h8oTNGZ7EBkzE54
- e1se6AgV7yeM9N9S9GHCEypIY7k7VIPL7dj+id/rYGGSNMeJUzYufqHQHsezgW0alwPt4O+7Y
- KB/7eMNVNYPw2bnS1j5Pyc3wag9x0wjH7L7CpuEvAtn9Pnce9eRkCtyq2vPLfzrE1WYJvw/iK
- if2LwxcKlxOODDsCFDvjNTNO1TXr1w12NfdVhtOIVUffIhr9BAGXxWUY4YGCFc/JIor4kxXtP
- dtCDHGFqLg1YqN3MCtJo71mmMf/msxVmfBjXoZEnkdFQmnxPnhdeWx5XmOsEzYP1jcFnVbHoZ
- 1Y7XEfOyoaetLdHnyakaWTSzdatKHOFtzTmm8VbFGQ0nUriY4BhmfxKj4DCdBIZowooDhLQW+
- IA+avfr5Le2YcAUR6SbWYAjus+CLkL+nZHL70a67h1uly44J+ojhu7Hibp0+sP17rJovDEHH3
- nXwp4auhR9pSP8CRd5Wo9AP2twr6v/2lNE9Ug0PVFmCybB8B0JLrx0CPQ==
-Content-Transfer-Encoding: quoted-printable
+        id S230282AbhFGWVC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 18:21:02 -0400
+Received: from mail-ot1-f46.google.com ([209.85.210.46]:37541 "EHLO
+        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230261AbhFGWVC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 18:21:02 -0400
+Received: by mail-ot1-f46.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so18343078otp.4
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 15:19:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=3RsFC/fzxAoap5Z6i1wxe6fBFfR7v5xjG/++E/GiQHk=;
+        b=q5OHR5QsvaYNZWmYSBbfzAXtULbrq3ZY73gRPcOUhYHTj36CvgG3agf4/tBpNhmRu2
+         YyybEx6v3H8A8bkkMQGQY4Q7UN2iDiDOZ1kCqPSiGf4Dx2GrIb0gt19EjjJhEDIddr1m
+         ORrAR0GtxpqcHVDUDB2972W6l7SrqiOAPCK6gj+N3pKMslklu1h86ubFYgqCJems0a0R
+         9vfYzpaS0R88e+Rpi7a1Nv+3ayEvBYaGj0UZVsb9I4IF6eg0wEFQqHSAmS3NNTrJW8Mw
+         1X3KGTwJWfrmJU1SKN0LAzKnvy+AynUGK8WlkH9QBX+DxqejjzOu0BW83jPtyZwOEcXr
+         Obdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=3RsFC/fzxAoap5Z6i1wxe6fBFfR7v5xjG/++E/GiQHk=;
+        b=LHo+VhOFf35c9ItNtRQeSMgL2B1rhsjIIDhvyPgeke1hA848vs1BWQ4LN9VpymBqdX
+         7j5g1l2EurH2qsCUuGz56q4httcTecCeCTjSxf+8ZW7WsfDUYVnQTG7QFKEtgfQy2b1G
+         1ymH/vHFwt3Xf0AcMuc2H7PsNIERh59hJjG21CkSulKWulDBuY1vQubhFQhrro0yAjX9
+         fVw3NYtxlDwzmiwGCFn34sEZ+pGTPQ1Sw/fqyYzrExi7xDO4jpncNbQSFWIUQ1pzigmK
+         IrcsFRRQTSP8GflfQ3ZkDbs2xXBmRLlGbneNmqU2K7o3CRegyQCErHvTVL3aE0wT1fZh
+         eiBg==
+X-Gm-Message-State: AOAM5301s+25tva61R066i82v0EQLYuF+Fuj+oztSa2AolQDt1kU3l0/
+        Mbvte5qO5dxgWQsuzgjN2+M=
+X-Google-Smtp-Source: ABdhPJw8t/mSHiKe3FZGEVWsmAAn86gKpeSsMpRxP5WpS/GOnFGj04NO8olI4SkN12PjM0zmsTlIug==
+X-Received: by 2002:a05:6830:717:: with SMTP id y23mr15393369ots.174.1623104282765;
+        Mon, 07 Jun 2021 15:18:02 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id x7sm2489841ooc.23.2021.06.07.15.18.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Jun 2021 15:18:02 -0700 (PDT)
+Date:   Mon, 07 Jun 2021 17:18:01 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Robert Karszniewicz <avoidr@posteo.de>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        sandals@crustytoothpaste.net, stolee@gmail.com, jrnieder@gmail.com,
+        emilyshaffer@google.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Robert Karszniewicz <avoidr@posteo.de>
+Message-ID: <60be9b1913a2e_dc7a9208fc@natae.notmuch>
+In-Reply-To: <YL5/diPpLTOdRjoB@BDZ>
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+ <d2c079264955b3bd6c3a5ef77a9c3684206f8475.1623085069.git.gitgitgadget@gmail.com>
+ <YL5/diPpLTOdRjoB@BDZ>
+Subject: Re: [PATCH 4/4] CodingGuidelines: recommend singular they
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+Robert Karszniewicz wrote:
+> On Mon, Jun 07, 2021 at 04:57:48PM +0000, Derrick Stolee via GitGitGadget wrote:
+> > From: Derrick Stolee <dstolee@microsoft.com>
+> > 
+> > Technical writing seeks to convey information with minimal friction. One
+> > way that a reader can experience friction is if they encounter a
+> > description of "a user" that is later simplified using a gendered
+> > pronoun. If the reader does not consider that pronoun to apply to them,
+> > then they can experience cognitive dissonance that removes focus from
+> > the information.
+> > 
+> > If we use singular "they/them" pronouns instead of "he/him" or "she/her"
+> > pronouns, then we can avoid this congitive load on the reader.
+> 
+> That is funny, because I experience cognitive dissonance exactly when
+> people use singular plural-pronouns. ("What? Did I read right? Is it a
+> group? Or a company?" [seek back to verify, or explicitly ignore the
+> hiccup])
 
-On Mon, 7 Jun 2021, Derrick Stolee via GitGitGadget wrote:
+Same here.
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> I noticed during an unrelated test with Valgrind that these variables
-> might be left un-set by stat_tracking_info() in some cases. Initialize
-> them so that a later branch upon their value is consistent.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->     remote: initialize values that might not be set
->
->     A very minor fixup.
->
->     Thanks, -Stolee
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-974%2F=
-derrickstolee%2Fremote-uninitialized-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-974/derri=
-ckstolee/remote-uninitialized-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/974
->
->  remote.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index c3f85c17ca7c..a116392fb057 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2101,7 +2101,7 @@ int stat_tracking_info(struct branch *branch, int =
-*num_ours, int *num_theirs,
->  int format_tracking_info(struct branch *branch, struct strbuf *sb,
->  			 enum ahead_behind_flags abf)
->  {
-> -	int ours, theirs, sti;
-> +	int ours =3D 0, theirs =3D 0, sti =3D 0;
+> On the other hand I strongly doubt that such a cognitive dissonance
+> happens when people come across a wrong gender.  When documentation
+> speaks of "the user" -- *any* user -- then it does not in any way
+> conflict that that "any user" might be female.
 
-While I like this change, I am somewhat confused where the values are used
-for branching. The only time I see them used when `stat_branch_pair()` has
-_not_ initialized `ours` and `theirs` is in those `trace2_data_intmax()`
-calls. Otherwise `sti` is set to -1 and the other users of `ours` and
-`theirs` aren't reached.
+Same here. If it is stated that a female reviewer shall do X, I don't see
+for the life of me why it wouldn't apply to me too.
 
-If my reading of the code is correct, maybe the commit message could be
-adjusted to talk about tracing instead of branching?
+> > Using singular "they" is also incredibly efficient. Choosing a gendered
+> > pronoun is usually arbitrary between "he" or "she". Using constructs
+> > such as "he or she", "s/he", or "(s)he" are more complicated than
+> > singular "they".
+> > 
+> > When choosing a gendered pronoun, that pronoun no longer applies to
+> > nearly half of possible readers. Even if we alternated between "he/him"
+> > and "she/her" perfectly evenly, we would still expect male and female
+> > readers to experience an incorrect pronoun half the time. However, some
+> > readers will not prescribe to either of these binary genders. Those
+> > readers hence suffer an incorrect pronoun the entire time. Singular
+> > "they" applies to every reader.
+> 
+> The 'singular "they"' does not apply to every reader and might not even
+> apply to most readers. It might be natural for native speakers to know
+> that "they" is "1 or more people", but that is not what foreigners are
+> taught what "they" means.
 
-Thanks,
-Dscho
+That's not even true for native speakers either.
 
->  	const char *full_base;
->  	char *base;
->  	int upstream_is_gone =3D 0;
->
-> base-commit: 71ca53e8125e36efbda17293c50027d31681a41f
-> --
-> gitgitgadget
->
+There's a difference between singular "they" with semantically plural
+antecedents, and semantically singular antecedents.
+
+For example:
+
+  Everyone returned to their seats
+
+I don't see any problem with that sentence, and it's singular "they"
+(with semantically plural antecedents).
+
+When linguists say singular "they" has been used four centuries, they
+refer to the usage above.
+
+But with semantically singular antecedents it's different:
+
+  We thank the reviewer for their comments
+
+Many native speaker linguist experts see a problem with that sentence
+(and so do I).
+
+Cheers.
+
+-- 
+Felipe Contreras
