@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDD04C47095
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E975C47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:58:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C492461003
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:57:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6835961003
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231217AbhFGQ7p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 12:59:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58178 "EHLO
+        id S231225AbhFGRAA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 13:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230250AbhFGQ7o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 12:59:44 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07059C061787
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 09:57:53 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id y7so13796695wrh.7
+        with ESMTP id S230250AbhFGQ77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 12:59:59 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B742C061766
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 09:57:52 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id z8so18392853wrp.12
         for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nm/2AwtFy1DKF7JqvzcW9DsPFQd3dcAuO4FMF5hidwQ=;
-        b=fL44ykkjcfp0r1AIExnUDAJd72VFWHNGw2ho3d+POLcHyYq3ST10Zk4+y5CMtCGIsQ
-         E5BLG2vgAV5eJDxvHKQITHgnD8cjFGfNlFlpH8Yefej37nCDVwk2CO4bzpjFQPe+MvMm
-         38SOa/rPYjOBkjmKIlx38G5PGHw095rH1clkznTm0/V50pWn4FM6HubH6Jzw6nD3HWxZ
-         7nLrbosKfY57YM70WpwpAbvm0tGR8rjrB1Wkuo5UYr8v2OkmIY1PsC30OflT/ZuGe12Z
-         k9x3IPVbBbO8V+ejb4CCUjT9/UYDdaL6RQy3SdCCiaRm4irALWidu0Bdii5KPc6RTBMf
-         KWIw==
+        bh=MnAvzeYdtATK/6fNagSayGNr+zypeWHQqkfM1++nxHM=;
+        b=ZPLv4CVFLIYx8fnT0k+21YaeV3+hKoNffEm/XbgXIDNmN5EUl148dQR6SHWg8wgLF3
+         DpB2h/shsO6qKnowvDxDC2tr+9Aya5sy727yux5eYKz3WdkoBihGhKL1oveXS5ppNXKv
+         dJNV+5CN5/Nkt0ZWjanQsVzyPB3hzkJUdZdgt+E/KvEFT+vvQczFw+Xb7UjIe/ulcVgW
+         GMrB697KXxgwr8+hbR+8g96bnbO1g7UhLaw/H6ngek4lnndS56WAn33cgIht++mQ6e+a
+         xIprRFgdrFygWaaNctqIszrkW0mL5eXLWUvIWA7io4oAeu2aAFu35YG9toLGpgj0viWG
+         DTZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nm/2AwtFy1DKF7JqvzcW9DsPFQd3dcAuO4FMF5hidwQ=;
-        b=tkmpjUTYE5txXsQlQM0XlPGxxgMTinKjMO1Y/W3vgTM7d6J2wZKwIdQwB7ymxweIEq
-         rRLXnt3dnIPOtf5bxlfkx+oYu8O6sc2fGzLBZbcSfNuOd8lNB9po3b96S93Qwz+4O/0N
-         1VPf01oWDQAGrUiiJBorxDeMfHBnvKt6qZE57kV+IAE735jQj5XxhZoKkCA5LXOAGFoF
-         4oB7LRlxOzJ8SATrEkPci1rUfreicP0EvrcKMo/Z2jqLIrG9CMzeJxjZT9lCeGIi/Jhi
-         Hd4Ee4STkoLn7GSMU1MIM4CadlJXITtN8+QHnZ31Wi/R1JKAeeNQV6QKEMs3mmhVAMH6
-         1SnA==
-X-Gm-Message-State: AOAM532GU5prtYjH7Bkp0H9DZRtrxWothLOVVG4IKeGnSaCmoH6aluTA
-        JG5S+fNCMGOfiGLVIXhepT7V59eGTOg=
-X-Google-Smtp-Source: ABdhPJwpZIAIOch4HbEopOR2AJTrOOPYLV6j5Pw3vs6xUvhYV4RL6Fs3kJ2bzZs2FdvoI+EjgowbdA==
-X-Received: by 2002:a5d:5271:: with SMTP id l17mr17918423wrc.142.1623085071694;
+        bh=MnAvzeYdtATK/6fNagSayGNr+zypeWHQqkfM1++nxHM=;
+        b=kSh//VYil5r0dPBqvPCsxrjXArT+2UY6IVxRIV0My+II3LEVBC6sadFBidXyHoUtju
+         0wi7vTiXtmnTLDHRRtz199ajrBe90J3csYDTLETmUxRwGIpuJtC1ejq1I1cpdkbKrHzi
+         qavSZRUSGfm8Bzc8jjH0mvlowp5zIc8eed0nnfAqkI0AoHcjy8QusA58wN+i7g/bV0DT
+         VTIpq6tfx4SpdyfI/IHwkL4fuMmFdCl6NnX2brhPvK1eB3npan6WCkSuzD1055thCgvv
+         53ZanzYyIqj5PHpxh9cwLrCaKyP0yNWq/gFyTXzfFQ8hkFX4hnuiAKGtZtoJIllG/qWU
+         pCMQ==
+X-Gm-Message-State: AOAM533nqs19jM3uKBuoKi1c2iBVZx7OF4MdO1m2Kg5CkInJmsvh4b5w
+        Aw2LNoz0QpPE7XVZrdu4eM98fCDW9R4=
+X-Google-Smtp-Source: ABdhPJzCs6bbi2OAqdoc7yJ8U22QfL1UJy8Bf/hKVdV8goTVxVud4+OQyuTdtOAo+ZN60VKBHibfBQ==
+X-Received: by 2002:a05:6000:1447:: with SMTP id v7mr17956014wrx.252.1623085071099;
         Mon, 07 Jun 2021 09:57:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q5sm16963654wrm.15.2021.06.07.09.57.51
+        by smtp.gmail.com with ESMTPSA id o18sm62586wmq.23.2021.06.07.09.57.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 09:57:51 -0700 (PDT)
-Message-Id: <b36e3f99716bf3976fc886df684c300e17566c79.1623085069.git.gitgitgadget@gmail.com>
+        Mon, 07 Jun 2021 09:57:50 -0700 (PDT)
+Message-Id: <afc51c5e6edec7935a6d0d0a05d396e11311ca6c.1623085069.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.975.git.1623085069.gitgitgadget@gmail.com>
 References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Jun 2021 16:57:46 +0000
-Subject: [PATCH 2/4] *: use singular they in comments
+Date:   Mon, 07 Jun 2021 16:57:45 +0000
+Subject: [PATCH 1/4] Documentation: use singular they when appropriate
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,123 +77,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Several comments in our code refer to an anonymous user with "he/him" or
-"she/her" pronouns, and the choice between the two is arbitrary.
+There are several instances in our documentation where we refer to an
+anonymous user as "a contributor" or "an integrator" or similar. To
+avoid repeating this role, pronouns are used. Previous examples
+chose a gender for this user, using "he/him" or "she/her" arbitrarily.
 
-Replace these uses with "they/them" which universally includes all
-potential readers.
+Replace these uses with "they/them" to ensure that these documentation
+examples apply to all potential users without exception.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit.c                                 | 2 +-
- config.h                                 | 2 +-
- contrib/hooks/multimail/git_multimail.py | 4 ++--
- date.c                                   | 2 +-
- pathspec.h                               | 2 +-
- strbuf.h                                 | 2 +-
- wt-status.c                              | 2 +-
- 7 files changed, 8 insertions(+), 8 deletions(-)
+ Documentation/SubmittingPatches               |  2 +-
+ Documentation/git-push.txt                    |  4 +-
+ .../using-signed-tag-in-pull-request.txt      | 38 +++++++++----------
+ Documentation/user-manual.txt                 |  2 +-
+ 4 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 8ea55a447fa9..35e93abce6ae 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1178,7 +1178,7 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
- 	/*
- 	 * We could verify this signature and either omit the tag when
- 	 * it does not validate, but the integrator may not have the
--	 * public key of the signer of the tag he is merging, while a
-+	 * public key of the signer of the tag they are merging, while a
- 	 * later auditor may have it while auditing, so let's not run
- 	 * verify-signed-buffer here for now...
- 	 *
-diff --git a/config.h b/config.h
-index 9038538ffdcb..7107b41a8933 100644
---- a/config.h
-+++ b/config.h
-@@ -451,7 +451,7 @@ void git_configset_init(struct config_set *cs);
-  * Parses the file and adds the variable-value pairs to the `config_set`,
-  * dies if there is an error in parsing the file. Returns 0 on success, or
-  * -1 if the file does not exist or is inaccessible. The user has to decide
-- * if he wants to free the incomplete configset or continue using it when
-+ * if they want to free the incomplete configset or continue using it when
-  * the function returns -1.
-  */
- int git_configset_add_file(struct config_set *cs, const char *filename);
-diff --git a/contrib/hooks/multimail/git_multimail.py b/contrib/hooks/multimail/git_multimail.py
-index f563be82fc7e..5932a3354f26 100755
---- a/contrib/hooks/multimail/git_multimail.py
-+++ b/contrib/hooks/multimail/git_multimail.py
-@@ -3219,7 +3219,7 @@ class GitoliteEnvironmentLowPrecMixin(
-     def get_repo_shortname(self):
-         # The gitolite environment variable $GL_REPO is a pretty good
-         # repo_shortname (though it's probably not as good as a value
--        # the user might have explicitly put in his config).
-+        # the user might have explicitly put in their config).
-         return (
-             self.osenv.get('GL_REPO', None) or
-             super(GitoliteEnvironmentLowPrecMixin, self).get_repo_shortname()
-@@ -3361,7 +3361,7 @@ def get_pusher(self):
-                 # __submitter into an RFC 2822 string already.
-                 return re.match(r'(.*?)\s*<', self.__submitter).group(1)
-             else:
--                # Submitter has no configured email, it's just his name.
-+                # Submitter has no configured email, it's just their name.
-                 return self.__submitter
-         else:
-             # If we arrive here, this means someone pushed "Submit" from
-diff --git a/date.c b/date.c
-index f9ea807b3a9f..2da0f80b9bfa 100644
---- a/date.c
-+++ b/date.c
-@@ -908,7 +908,7 @@ int parse_expiry_date(const char *date, timestamp_t *timestamp)
- 		/*
- 		 * We take over "now" here, which usually translates
- 		 * to the current timestamp.  This is because the user
--		 * really means to expire everything she has done in
-+		 * really means to expire everything they have done in
- 		 * the past, and by definition reflogs are the record
- 		 * of the past, and there is nothing from the future
- 		 * to be kept.
-diff --git a/pathspec.h b/pathspec.h
-index fceebb876f7a..6e84099bea22 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -108,7 +108,7 @@ struct pathspec {
-  *
-  * A similar process is applied when a new pathspec magic is added. The designer
-  * lifts the GUARD_PATHSPEC restriction in the functions that support the new
-- * magic. At the same time (s)he has to make sure this new feature will be
-+ * magic. At the same time they have to make sure this new feature will be
-  * caught at parse_pathspec() in commands that cannot handle the new magic in
-  * some cases. grepping parse_pathspec() should help.
-  */
-diff --git a/strbuf.h b/strbuf.h
-index 223ee2094af8..b543e354f0ed 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -338,7 +338,7 @@ const char *strbuf_join_argv(struct strbuf *buf, int argc,
-  *
-  * In order to facilitate caching and to make it possible to give
-  * parameters to the callback, `strbuf_expand()` passes a context pointer,
-- * which can be used by the programmer of the callback as she sees fit.
-+ * which can be used by the programmer of the callback as they see fit.
-  */
- typedef size_t (*expand_fn_t) (struct strbuf *sb,
- 			       const char *placeholder,
-diff --git a/wt-status.c b/wt-status.c
-index 42b673571696..bd7ef3e4fd02 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -639,7 +639,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 		 * mode by passing a command line option we do not ignore any
- 		 * changed submodule SHA-1s when comparing index and HEAD, no
- 		 * matter what is configured. Otherwise the user won't be
--		 * shown any submodules she manually added (and which are
-+		 * shown any submodules they manually added (and which are
- 		 * staged to be committed), which would be really confusing.
- 		 */
- 		handle_ignore_submodules_arg(&rev.diffopt, "dirty");
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 55287d72e0ef..b518d3157f70 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -373,7 +373,7 @@ If you like, you can put extra tags at the end:
+ . `Acked-by:` says that the person who is more familiar with the area
+   the patch attempts to modify liked the patch.
+ . `Reviewed-by:`, unlike the other tags, can only be offered by the
+-  reviewer and means that she is completely satisfied that the patch
++  reviewer and means that they are completely satisfied that the patch
+   is ready for application.  It is usually offered only after a
+   detailed review.
+ . `Tested-by:` is used to indicate that the person applied the patch
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index a953c7c38790..2f25aa3a291b 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -244,8 +244,8 @@ Imagine that you have to rebase what you have already published.
+ You will have to bypass the "must fast-forward" rule in order to
+ replace the history you originally published with the rebased history.
+ If somebody else built on top of your original history while you are
+-rebasing, the tip of the branch at the remote may advance with her
+-commit, and blindly pushing with `--force` will lose her work.
++rebasing, the tip of the branch at the remote may advance with their
++commit, and blindly pushing with `--force` will lose their work.
+ +
+ This option allows you to say that you expect the history you are
+ updating is what you rebased and want to replace. If the remote ref
+diff --git a/Documentation/howto/using-signed-tag-in-pull-request.txt b/Documentation/howto/using-signed-tag-in-pull-request.txt
+index bbf040eda8af..e9ad0b4ff8e0 100644
+--- a/Documentation/howto/using-signed-tag-in-pull-request.txt
++++ b/Documentation/howto/using-signed-tag-in-pull-request.txt
+@@ -1,8 +1,8 @@
+ From: Junio C Hamano <gitster@pobox.com>
+ Date: Tue, 17 Jan 2011 13:00:00 -0800
+ Subject: Using signed tag in pull requests
+-Abstract: Beginning v1.7.9, a contributor can push a signed tag to her
+- publishing repository and ask her integrator to pull it. This assures the
++Abstract: Beginning v1.7.9, a contributor can push a signed tag to their
++ publishing repository and ask their integrator to pull it. This assures the
+  integrator that the pulled history is authentic and allows others to
+  later validate it.
+ Content-type: text/asciidoc
+@@ -11,9 +11,9 @@ How to use a signed tag in pull requests
+ ========================================
+ 
+ A typical distributed workflow using Git is for a contributor to fork a
+-project, build on it, publish the result to her public repository, and ask
+-the "upstream" person (often the owner of the project where she forked
+-from) to pull from her public repository. Requesting such a "pull" is made
++project, build on it, publish the result to their public repository, and ask
++the "upstream" person (often the owner of the project where they forked
++from) to pull from their public repository. Requesting such a "pull" is made
+ easy by the `git request-pull` command.
+ 
+ Earlier, a typical pull request may have started like this:
+@@ -32,7 +32,7 @@ followed by a shortlog of the changes and a diffstat.
+ 
+ The request was for a branch name (e.g. `for-xyzzy`) in the public
+ repository of the contributor, and even though it stated where the
+-contributor forked her work from, the message did not say anything about
++contributor forked their work from, the message did not say anything about
+ the commit to expect at the tip of the for-xyzzy branch. If the site that
+ hosts the public repository of the contributor cannot be fully trusted, it
+ was unnecessarily hard to make sure what was pulled by the integrator was
+@@ -57,7 +57,7 @@ integrator, using Git v1.7.9 or later.
+ A contributor or a lieutenant
+ -----------------------------
+ 
+-After preparing her work to be pulled, the contributor uses `git tag -s`
++After preparing their work to be pulled, the contributor uses `git tag -s`
+ to create a signed tag:
+ 
+ ------------
+@@ -73,7 +73,7 @@ to justify why it is worthwhile for the integrator to pull it, as this
+ message will eventually become part of the final history after the
+ integrator responds to the pull request (as we will see later).
+ 
+-Then she pushes the tag out to her public repository:
++Then they push the tag out to their public repository:
+ 
+ ------------
+  $ git push example.com:/git/froboz.git/ +frotz-for-xyzzy
+@@ -94,10 +94,10 @@ The contributor then prepares a message to request a "pull":
+ 
+ The arguments are:
+ 
+-. the version of the integrator's commit the contributor based her work on;
+-. the URL of the repository, to which the contributor has pushed what she
+-  wants to get pulled; and
+-. the name of the tag the contributor wants to get pulled (earlier, she could
++. the version of the integrator's commit the contributor based their work on;
++. the URL of the repository, to which the contributor has pushed what they
++  want to get pulled; and
++. the name of the tag the contributor wants to get pulled (earlier, they could
+   write only a branch name here).
+ 
+ The resulting msg.txt file begins like so:
+@@ -130,7 +130,7 @@ command, the reader should notice that:
+ 
+ The latter is why the contributor would want to justify why pulling her
+ work is worthwhile when creating the signed tag.  The contributor then
+-opens her favorite MUA, reads msg.txt, edits and sends it to her upstream
++opens their favorite MUA, reads msg.txt, edits and sends it to their upstream
+ integrator.
+ 
+ 
+@@ -163,20 +163,20 @@ In the editor, the integrator will see something like this:
+ 
+ Notice that the message recorded in the signed tag "Completed frotz
+ feature" appears here, and again that is why it is important for the
+-contributor to explain her work well when creating the signed tag.
++contributor to explain their work well when creating the signed tag.
+ 
+ As usual, the lines commented with `#` are stripped out. The resulting
+ commit records the signed tag used for this validation in a hidden field
+ so that it can later be used by others to audit the history. There is no
+-need for the integrator to keep a separate copy of the tag in his
++need for the integrator to keep a separate copy of the tag in their
+ repository (i.e. `git tag -l` won't list the `frotz-for-xyzzy` tag in the
+-above example), and there is no need to publish the tag to his public
++above example), and there is no need to publish the tag to their public
+ repository, either.
+ 
+-After the integrator responds to the pull request and her work becomes
++After the integrator responds to the pull request and their work becomes
+ part of the permanent history, the contributor can remove the tag from
+-her public repository, if she chooses, in order to keep the tag namespace
+-of her public repository clean, with:
++their public repository, if they choose, in order to keep the tag namespace
++of their public repository clean, with:
+ 
+ ------------
+  $ git push example.com:/git/froboz.git :frotz-for-xyzzy
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index f9e54b867417..4fe9be117c4a 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2792,7 +2792,7 @@ A fast-forward looks something like this:
+ 
+ In some cases it is possible that the new head will *not* actually be
+ a descendant of the old head.  For example, the developer may have
+-realized she made a serious mistake, and decided to backtrack,
++realized they made a serious mistake, and decided to backtrack,
+ resulting in a situation like:
+ 
+ ................................................
 -- 
 gitgitgadget
 
