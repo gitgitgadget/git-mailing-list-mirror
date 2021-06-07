@@ -2,169 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E09DC47094
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 437F7C47082
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:57:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2006060720
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:56:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2D3016108E
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230481AbhFGQ6f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 12:58:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
+        id S231184AbhFGQ7n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 12:59:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230250AbhFGQ6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 12:58:35 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7015C061766
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 09:56:43 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id c9so9739329wrt.5
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:56:43 -0700 (PDT)
+        with ESMTP id S230250AbhFGQ7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 12:59:43 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E09D5C061766
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 09:57:51 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id l9so106387wms.1
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9KWvs870+fKBd3M4qRSKB26VnC4XWPF+klGY3Js/64g=;
-        b=LFMwmofkDQ4lX35BQBXWow1/g2K8W5idGEzSbSDKuJ/QTopSRPDwQI1dBsOfw+5WzV
-         UZORTia+DE43W8cw85PNDHxWcGqvLp6VtrHbB6UoetMQp6XRUTroyQG/KhDnOzT+FWuH
-         e08tZa7hofEjWfB7Ws31VNrV5+Mo9gmSTSyObDkWJIyltmwCB6wg3JqOJYsFmfh5YwFe
-         fITuT47U3ov32283qTl+A4Wpevkfr1iGxbbf6DsS2lh8xIUl1TbadHgBux8sHWOwklAz
-         J8qQ0+/gaq2Eb7/2RNrvP+QS4J1uQaHieOC96l+IO1XCO2AbKuRxU+MeM5qy8zneiyCK
-         zY8w==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=7qCf3ontfDcHznOWClKkgZv7dV1KEpJ7OSuarGY8XyY=;
+        b=oZMWouJvpUpmHA74Wq7DxFHqvVWe4XMcEVLgzvu0/mP3+svdJ76cph3fO0bAFqRNF6
+         U7tGEeOrpUAjpbArddQEmTpJ4V3z4kGzXxXBcuqMDHnRL5H4kUEkQJ8I5nh0VTp5VvyJ
+         SyjTM6G+49THxDRR++bT3qvC6GT8jQQsyQ0G1sDBDhQbtOVlnWTWWU62mEzYXRRHZBuF
+         B5I8D6TO874ZrTk8rWZEVYOu9w1yFgePwdm/vHh8pcZ4zmN3oyyvg/rrxabb+gT7I+RW
+         7/tD62F5HkzfGAgFM9pqJE9YYT0eaG9YKP+Q8vyHaF4EL0ZIFqTA+Nleg8FQnICDNYlz
+         oWvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9KWvs870+fKBd3M4qRSKB26VnC4XWPF+klGY3Js/64g=;
-        b=E/OgEUOFuNWDitxOISt6OdMBUypwqDDCidQYuSv06IVUrF1d3BB8ULvpTi6eztkefm
-         IKrJ6MLC9Pp3ZarlaA2hUs7ILymVhtFMDEhz54Q+iTLKZ8zaCc4kYJcb+oeUkj6M/a/C
-         mb+HTCkOkJ5FCDLC6Zdfwm6pFSmncQ1Q4pxYhZK3JbFbVjD4o4WjiY/QLOjzVy507tLc
-         IrEXStRMBlW6A/ebQ1/d3YqGoBtrJXXwwCjiUbyS4eNBaa0gzz/WKNoEoAGTwOnPcR+0
-         G588hrA8rIpOR03SDmjsQR1mraRp3UccU8+spvnRSkyYQNvH6l++nKlIsHY03VQjJN4N
-         HDyw==
-X-Gm-Message-State: AOAM533O/5ZvEKhl485Wi827kf11x00LswZyxLzl3hrN6mw7/o+/jc95
-        hVwHLPktk+9/xo1kkRKPXqLCd0IMD8kbpg==
-X-Google-Smtp-Source: ABdhPJx9W2wfOrpsAEhRw4B1EsfYdaMWwd+g5DozWTNOquPe4fr1GSvGUbKC43fCd5oEWqDuVyoNgQ==
-X-Received: by 2002:adf:fc0e:: with SMTP id i14mr18256475wrr.71.1623085002169;
-        Mon, 07 Jun 2021 09:56:42 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j11sm4066056wmq.4.2021.06.07.09.56.41
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7qCf3ontfDcHznOWClKkgZv7dV1KEpJ7OSuarGY8XyY=;
+        b=hJVsO1qouVZd7YGVgyG97FANrjem9aWL/OyhO7IrtP2XJeX+U0/aUm6unxO5khWxkx
+         7NtwWREGM51m0d937SNnvuus3maJtytrHe4YVlcT5XsWVDGyOoaZ+8h2xe/5ulLe+nAE
+         AN30vXtYseP6nsb6JjCAWxmRxsmnRNiIh8yTEfNtKJui6KS4SNWpQ353aTcJznIL6KHT
+         bJYr3LrDp0YStJwyxKhBLgxZ1wEJk5pJXIt2Jot7QM16NdbedWIKhN9NtFlEZu6gBJYc
+         26gnTZcRXrgTb3QR84SvId1fnIfixPcdsdDC/y3Ng+D7VsuSzYFYApgtLwv4RZGXMw2N
+         0STg==
+X-Gm-Message-State: AOAM531jdsPUnblJxFifNm+Dor3cIizeHxCI2zl94KAXt+r6SIQHObdj
+        ne8LaRxp5uG2TzKsP3L/OG4PUH1P434=
+X-Google-Smtp-Source: ABdhPJxe0im57dmhgRyIFpgPbgBBtqRfT+19un6Jga3PaXGeM6BKwzRF/HBFT3mrKaH5eKJ1TpdW9A==
+X-Received: by 2002:a05:600c:d0:: with SMTP id u16mr43619wmm.155.1623085070531;
+        Mon, 07 Jun 2021 09:57:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p187sm15501180wmp.28.2021.06.07.09.57.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 09:56:41 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] bundle doc: rewrite the "DESCRIPTION" section
-Date:   Mon,  7 Jun 2021 18:56:39 +0200
-Message-Id: <patch-1.1-bc6a6d8922-20210607T165507Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
-In-Reply-To: <patch-1.1-4e736877d1-20210607T143643Z-avarab@gmail.com>
-References: <patch-1.1-4e736877d1-20210607T143643Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Mon, 07 Jun 2021 09:57:50 -0700 (PDT)
+Message-Id: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 07 Jun 2021 16:57:44 +0000
+Subject: [PATCH 0/4] Use singular "they" when appropriate
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, stolee@gmail.com,
+        jrnieder@gmail.com, emilyshaffer@google.com,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rewrite the "DESCRIPTION" section for "git bundle" to start by talking
-about what bundles are in general terms, rather than diving directly
-into one example of what they might be used for. This changes
-documentation that's been substantially the same ever since the
-command was added in 2e0afafebd8 (Add git-bundle: move objects and
-references by archive, 2007-02-22).
+In another topic, I claimed [1] that singular "they" was better than
+"he/she" for gender neutrality.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+[1]
+https://lore.kernel.org/git/44d937a0-e876-e185-f409-a4fd61eae580@gmail.com/
 
-I didn't think I needed to type "make" to check a doc-only change, but
-as it turns out v1 of this doesn't compile git because the script to
-generate command-list.h doesn't know how to escape the quotes in the
-C-string it generates.
+The fact that singular "they" is less awkward to write and read seemed
+obvious to me, so I did not back up my statement with any references or
+reasons. The ensuing discussion did include reasons, especially brian m.
+carlson's thoughtful message [2].
 
-This is probably better in either case, sorry about the noise.
+[2] https://lore.kernel.org/git/YKrk4dEjEm6+48ji@camp.crustytoothpaste.net/
 
-Range-diff against v1:
-1:  4e736877d1 ! 1:  bc6a6d8922 bundle doc: rewrite the "DESCRIPTION" section
-    @@ Documentation/git-bundle.txt: git-bundle(1)
-      NAME
-      ----
-     -git-bundle - Move objects and refs by archive
-    -+git-bundle - Create, unpack and manipulate "bundles"
-    ++git-bundle - Create, unpack and manipulate bundles
-      
-      
-      SYNOPSIS
+This patch series officially adopts singular "they" as a contributor
+guideline; see Patch 4 for the change to the guidelines and the reasoning
+for the change. Before modifying the guidelines, documentation and comments
+are updated to not use gendered pronouns, which provides examples of how to
+use it.
 
- Documentation/git-bundle.txt | 31 ++++++++++++++++++++++---------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+I would appreciate ACKs in support on patch 4.
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 53804cad4b..cdc4e0b51b 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -3,7 +3,7 @@ git-bundle(1)
- 
- NAME
- ----
--git-bundle - Move objects and refs by archive
-+git-bundle - Create, unpack and manipulate bundles
- 
- 
- SYNOPSIS
-@@ -18,15 +18,25 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--Some workflows require that one or more branches of development on one
--machine be replicated on another machine, but the two machines cannot
--be directly connected, and therefore the interactive Git protocols (git,
--ssh, http) cannot be used.
-+Create, unpack and manipulate "bundles" (.bundle) files. Bundles are
-+.pack files (see linkgit:git-pack-objects[1]) with a header indicating
-+what references are contained within the bundle. The header is in the
-+format emitted by linkgit:git-show-ref[1].
- 
--The 'git bundle' command packages objects and references in an archive
--at the originating machine, which can then be imported into another
--repository using 'git fetch', 'git pull', or 'git clone',
--after moving the archive by some means (e.g., by sneakernet).
-+Like the the packed archive format itself bundles can either be
-+self-contained or thin (see "--thin" in linkgit:git-pack-objects[1]).
-+
-+Bundles are useful for numerous purposes. They were originally
-+designed to facilitate the transfer of repository data between
-+repositories which could not be directly connect to each other, and
-+therefore the interactive Git protocols (git, ssh, http) could not be
-+used.
-+
-+In that scenario a bundle is produced on the originating machine. It
-+is then transferred to the other machine (e.g. by sneakernet), and
-+unpacked on the other end. The unpacking can happen either with
-+linkgit:git-clone[1] (which knows how to clone from bundle files), or
-+by "git bundle unbundle".
- 
- As no
- direct connection between the repositories exists, the user must specify a
-@@ -34,6 +44,9 @@ basis for the bundle that is held by the destination repository: the
- bundle assumes that all objects in the basis are already in the
- destination repository.
- 
-+Similarly, bundles are commonly used to produce incremental backups of
-+git repositories. See the "EXAMPLES" section below.
-+
- OPTIONS
- -------
- 
+Thanks, -Stolee
+
+Derrick Stolee (4):
+  Documentation: use singular they when appropriate
+  *: use singular they in comments
+  *: fix typos
+  CodingGuidelines: recommend singular they
+
+ Documentation/CodingGuidelines                |  5 +++
+ Documentation/SubmittingPatches               |  2 +-
+ Documentation/git-push.txt                    |  4 +-
+ .../using-signed-tag-in-pull-request.txt      | 38 +++++++++----------
+ Documentation/user-manual.txt                 |  2 +-
+ commit.c                                      |  2 +-
+ config.c                                      |  2 +-
+ config.h                                      |  2 +-
+ contrib/hooks/multimail/git_multimail.py      |  4 +-
+ date.c                                        |  2 +-
+ pathspec.h                                    |  2 +-
+ strbuf.h                                      |  2 +-
+ t/t9300-fast-import.sh                        |  2 +-
+ wt-status.c                                   |  2 +-
+ 14 files changed, 38 insertions(+), 33 deletions(-)
+
+
+base-commit: c09b6306c6ca275ed9d0348a8c8014b2ff723cfb
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-975%2Fderrickstolee%2Fthey-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-975/derrickstolee/they-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/975
 -- 
-2.32.0.rc3.434.gd8aed1f08a7
-
+gitgitgadget
