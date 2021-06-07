@@ -2,73 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45CBAC47094
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 21:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B90EC47082
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 21:48:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1782B610A2
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 21:44:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DD25610A2
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 21:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbhFGVq2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 17:46:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230359AbhFGVq1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 17:46:27 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBFA3C061574
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 14:44:20 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id w127so19520990oig.12
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 14:44:20 -0700 (PDT)
+        id S230359AbhFGVt5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 17:49:57 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:45723 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231186AbhFGVt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 17:49:56 -0400
+Received: by mail-ot1-f48.google.com with SMTP id 6-20020a9d07860000b02903e83bf8f8fcso5253153oto.12
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 14:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=HVPevmsSHpSuoIm4hGD/xNE7s1gM6jj4E1HZJw8o59M=;
-        b=W2K44oF9+6NMfuf/HjFBdm562505+PBICPSSCPwdz60flb9sY1o9XwPoQzimcmuIGM
-         5U/IZc6dSQ6siE0oPfKrGvRSU5GjSK+Z7CGVh9PlRcAPLzFPbYvwaWa6ZAkKkDXKyARV
-         6zRhIz+SwvoQtmnDRGUhZKXiRhxaCxP7nDAy2knWkdxHtfg30Wf5+ddGKNdc1k9g4KCY
-         dM8ATMygfSudLdCCUVqXciBLhwmDtSR4nLdwd/zd4doRyK/R4S27zRNwwqQqSSX83JsN
-         Ip6qZX/VObksmgJMRG+KbVfWmuXPJ303Y1cBsVDSjWtsEwF95dFgApSO4MsbOg0Ox0FE
-         zwUA==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=BAbgFsNooS1GMUjCknBumJqh+orHKumiDoxyF2hnr0E=;
+        b=pO/MSAMk3LHnvf9raB44U/oXSgdWzsc+1kEzkcpgmDV5O3NmFxKnugIlIwkYDP8iLZ
+         ESRE0GFGeUi3V3pugSH1tVITu9JuPBWbYa09+P9HVLCSi9tI+z+wvD8zF6LB0gcIhp06
+         5C0ySDLAroaZd3seDk3YHWc0PQ1wdcEr0u8NQUdB4Da0/S6aLXWuF+747jc9tSLlNnLp
+         qxzsP821pq2Seph0uPafMMXxFOL9PlixQ5O61zqzO3Z8lml7hnJ7Ypq5NtEYiZ8wSHsB
+         5uVgFpHedihgs9dkjq8L5lVuQPy7EexeOWBMYxHhCPiDBfdXqIEjqBC1kIR6Dt8BUG3q
+         RAKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=HVPevmsSHpSuoIm4hGD/xNE7s1gM6jj4E1HZJw8o59M=;
-        b=dUg3K4hbsCkEz68dsljp3VXueyEEoT1oTxfcVsTfiIte+wswBYgywW0z7/2to4n5Ee
-         fejhDyfuwNs5/aBmnbv4GY0jDxJdEW/PMAwOvwcCnySb/jcKKHRca9ycNRE3TuXTzGEB
-         nKxVeUuCtlq/Okht7umNJcJogdSX+nlNhLsIsHw0dxjSnk5HWtwc8ye/qZ+eCCWNYFl3
-         Kc1tdIdxH9uRKWydR4stRtF6LMg+e4ES5mp5GscyCIavW/qAcsLeDnciqm5b8SZqurBS
-         RoPrD9XJUA7p1bsCQSm4qhmzg5k3CP3XLGf8iA9dDI8l0UankjZuG78lLUScbWVJmvTG
-         BMgQ==
-X-Gm-Message-State: AOAM5318wiaJvlDxPeZenG6z1dHW6zjBPTvnZsvNbqHkA4OENxNOoASr
-        90MBBIRwxYlTDJbv3wHF0Q0=
-X-Google-Smtp-Source: ABdhPJzPiUVgYmHcC4DxJIzMgyDDOVi3eRRgtq8OuHAHfoAQcdRusB/FJIM5hAcvb1SC1X4/S0zCNQ==
-X-Received: by 2002:aca:2215:: with SMTP id b21mr811290oic.94.1623102260298;
-        Mon, 07 Jun 2021 14:44:20 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=BAbgFsNooS1GMUjCknBumJqh+orHKumiDoxyF2hnr0E=;
+        b=ESWIVWETOgQXjtq9/7MgNIO6JUvPRK5hHFF2ySpIvdkKikw3cwiYfKXOzXj40i4tMn
+         F19mdvAYLVtE+E6wmkJjtSGcjiAoFNMD2cVTsy3r5T0AcPblC0kWFhZnKqDBjws75lg5
+         7FHXP/AjouBK6xLBMoEVi3kSyVcRGlzLkAwvsOwb72xo53ZC2TgqwtlehK/h3kY8U15v
+         o3rOxFeXsQHaFwwpwZDhWNIREmYcEoZg7gy+9MnWW/NScPfPh3t7Tg890iDuTsAVuVZU
+         2foWtHDRbXm/jv1qSzzQBfJne7eTMngdn2hY+kM/kWItWVSMR0o7w0+Lo/t0iCaMVm48
+         o8UA==
+X-Gm-Message-State: AOAM532AS+tkOL5l4344CAQitNpN21M2H7RRGDUpgmgk+PxCBeUX/Hxe
+        FsDTLqkk4DYqd+dwpfV+hss=
+X-Google-Smtp-Source: ABdhPJzApDN59KUBWX0vxBDoawEO89+aU3sKYCFOuOKdOoAIn1cRhFJ8CI83h2SPXJvH2fYPQYbabQ==
+X-Received: by 2002:a9d:7012:: with SMTP id k18mr15329340otj.179.1623102408193;
+        Mon, 07 Jun 2021 14:46:48 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id p5sm2501986oip.35.2021.06.07.14.44.19
+        by smtp.gmail.com with ESMTPSA id x9sm2405441ooo.27.2021.06.07.14.46.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 14:44:19 -0700 (PDT)
-Date:   Mon, 07 Jun 2021 16:44:18 -0500
+        Mon, 07 Jun 2021 14:46:47 -0700 (PDT)
+Date:   Mon, 07 Jun 2021 16:46:46 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        stolee@gmail.com, jrnieder@gmail.com, emilyshaffer@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Message-ID: <60be93327f1db_db80d208d1@natae.notmuch>
-In-Reply-To: <xmqqwnr5ts55.fsf@gitster.g>
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <b36e3f99716bf3976fc886df684c300e17566c79.1623085069.git.gitgitgadget@gmail.com>
- <xmqqwnr5ts55.fsf@gitster.g>
-Subject: Re: [PATCH 2/4] *: use singular they in comments
+To:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Message-ID: <60be93c64372d_db80d20887@natae.notmuch>
+In-Reply-To: <CABPp-BE-2s+0vOg+icJGBgR5X6BpoTieJd2KH39SbXW1WAA1Ew@mail.gmail.com>
+References: <CABPp-BE-2s+0vOg+icJGBgR5X6BpoTieJd2KH39SbXW1WAA1Ew@mail.gmail.com>
+Subject: RE: [ANNOUNCE] git-filter-repo 2.32.0
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -77,42 +69,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > @@ -1178,7 +1178,7 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
-> >  	/*
-> >  	 * We could verify this signature and either omit the tag when
-> >  	 * it does not validate, but the integrator may not have the
-> > -	 * public key of the signer of the tag he is merging, while a
-> > +	 * public key of the signer of the tag they are merging, while a
-> >  	 * later auditor may have it while auditing, so let's not run
-> >  	 * verify-signed-buffer here for now...
-> >  	 *
-> 
-> This is not wrong per-se, but "the tag being merged" is something I
-> would have written, as naive non-native English speakers would find
-> it disturbing and ungrammatical that "the integrator" singular is
-> matched with "singular" they, which goes opposite from what they
-> were taught in their foreign language classes [*1*].
+Elijah Newren wrote:
+> The latest release of git-filter-repo, v2.32.0, is now available.  It
+> is comprised of 32 non-merge commits since v2.29.0, including 20
+> changes from five new contributors.
 
-It's not just non-native English speakers. According to linguists the
-singular "they" only makes sense when the antecedent is plural (comes
-from a pool of people), in this case "the integrator" is semantically
-singular.
-
-58% of the Usage Panel of the American Heritage Dictionary would
-disagree with this usage [1].
-
-> Perhaps offer a passive voice as a weaker alternative to the
-> singular they in the guidelines patch?
-
-Yes, "of the tag being merged" does read correctly to me, unlike the
-version above.
+Maybe provide a quick summary of what git-filter-repo is?
 
 Cheers.
-
-[1] https://ahdictionary.tumblr.com/post/147597257733/updated-usage-note-they
 
 -- 
 Felipe Contreras
