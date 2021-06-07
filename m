@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FDDC47082
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 12:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE78C47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 12:35:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 725D461057
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 12:35:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 387E9611C0
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 12:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbhFGMhJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231196AbhFGMhM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 08:37:12 -0400
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:42596 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231200AbhFGMhJ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Jun 2021 08:37:09 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:50801 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230261AbhFGMhH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 08:37:07 -0400
-Received: by mail-wm1-f51.google.com with SMTP id d184so150073wmd.0
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 05:35:16 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id l7-20020a05600c1d07b02901b0e2ebd6deso1821310wms.1
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 05:35:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=y4mvuHoWzj7XrrowHJV5XjYD/DABbA0iLonUwaUawQ8=;
-        b=P7UzSDxwpbJIsNFqw0SlPxPv+n6U9n2EBK0Kp6+wtyDBpc5jvAszi7H/QvBF4I/qQP
-         CJFWr+//EntOO3MwoTq7mTUDKc6Mhha+UTS6lGvGuOJg8AjRIWeRUiAGEqYPQkLHCoqc
-         JmdQiaSWEvodhHp0l5AtRyIrmi5p13cnGRypETW28eWCcJvcUuXaBsVGCPhzXqDWf+h3
-         bN9XtIP4oGkTYcRGns1uOJziRy9Jr32EOHPASbaPLO0eHk4cXCu8A3EAFq7d4ALTkZga
-         HMnGBrlU62q5Cc6oS2bkqJskxOzGNxDbe9twdjuAybk3FkYi6cvXTBr25qt8kZX8OXMw
-         1+ow==
+        bh=wFfpok35DynSJzLw2iHIzdshoI7yibKc8zfxCLq0Mn8=;
+        b=c2E6qwF0Mtz3Ow363vUpgOZzTlsJJKP160gjU697heeeEFyZlByQ/SxTj6+iiw8/LO
+         jUE+P/O4hoQYeONSwV2XRVNRM1jILt8BTfbt7NdFxJ51tfmkUZ44xTmWIiPIK6YQup3D
+         xqHga8FchcUC771UvyVMsdc/K/RybXcfaf6ac/8g8kjsGdp4rEpnVElUKic5MtdPaNP2
+         FyztqwMDONEBD6V01RNvAsp7uKsv37FhAMeDqZBbUGQe8VNXw5cV9N3KpR5vXq0wY/TE
+         RD8nBS4NQVmKhIJTtkJ5RgpROsupV4eyZjmKr+UWhzzEp7n9P3BUoFUMMbWNdcLViNkN
+         R95Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y4mvuHoWzj7XrrowHJV5XjYD/DABbA0iLonUwaUawQ8=;
-        b=LcpMGZ84HCj4uFnxA6fgbOLKHiD357G6Vj9zY+gNU/4rtu4y5OmoNYkXc20MLFwZjX
-         Mr2SqSL6XRPNPigYPM5ERynP6THNTBZjOXeujVskoSsAxJ+3WCKu28YTLP9LoQfAPuDR
-         xpb0WIZrzCl1TZlobmZ2Rx9I6jhsBQlBvpOguU+tTFEBiOLPxByryBPMs/fTmdU7VKqt
-         +qQpj1f3MWdrQ9wxMPt0OlVsVbx/Gg+5jtYVAi91Su9pa8GwFPVWVRx68M9CFKQNBlK8
-         YPeaepSxHMZo7AYVH07N88cXVFP8ILog+98FPJNTB2DCWKcQ13vu7P+DlV5ge3WMmJe6
-         vSZA==
-X-Gm-Message-State: AOAM530tZlqRT5JwCFTJSsfqZnyHHM1YXMZ62sVTGifX9dyiZj7TujU3
-        Tahd8d+aSDZltEETv2k33cSt97U4KKg=
-X-Google-Smtp-Source: ABdhPJzkgItBygvXHSAKoRMPa77IkoUd66KtVMJvdKGd0LkIHEqSFqZla6Eb4bKjgoKimavLeqC1hA==
-X-Received: by 2002:a05:600c:1546:: with SMTP id f6mr4479756wmg.47.1623069256057;
-        Mon, 07 Jun 2021 05:34:16 -0700 (PDT)
+        bh=wFfpok35DynSJzLw2iHIzdshoI7yibKc8zfxCLq0Mn8=;
+        b=YtA6uDY7vIw7mJCcxra71Jo6nFAZLPbkCI0bgyKgmQgdhFA/vJmcgfQdzt/MebIuLq
+         ImttB9gvnQBLc48vu15FOSVuoDyYqaTHCY2WVpOjBivUmBYfTAm+QlzgGtxXGk8a/cER
+         MnqJ3O93MoeUCV4HrvdYQSpMW/NxmWVNETQxBgW6IBx9P3T5E76t5QLKwZ51iov2KrwT
+         VNB7X/WwsHaKAmtt7bDxrftwI4o1PGrnPShjIOCapmG8jfOUevpFlREMCFjLWLY2bHN3
+         WjMlFVFMfpZ1TNGXc+2Qba4y52zxMrJaqWsPuDZ4rEY939azv7AJs+2eQCuyZH/t6fjs
+         YJ3Q==
+X-Gm-Message-State: AOAM533cpkQ9NWo4onPkAwVqwFjwVQhWLVA+zMY8Y9PMscDU0xrU7vBd
+        n8VSMzviEoIEKjOgk5ADjRcJK3f+CZc=
+X-Google-Smtp-Source: ABdhPJxg14GR2Q01t53Eh0eZv3jeg9Zcg5MkzQeIeaA8LMY9UQUoTuqC983o/IAeRAsqQ+p+DmsCJQ==
+X-Received: by 2002:a05:600c:4f90:: with SMTP id n16mr16644166wmq.139.1623069257772;
+        Mon, 07 Jun 2021 05:34:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y2sm20493770wmq.45.2021.06.07.05.34.15
+        by smtp.gmail.com with ESMTPSA id k8sm13292661wrp.3.2021.06.07.05.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 05:34:15 -0700 (PDT)
-Message-Id: <b99371c7dd61bad552231ac964605cf738f90c7f.1623069252.git.gitgitgadget@gmail.com>
+        Mon, 07 Jun 2021 05:34:17 -0700 (PDT)
+Message-Id: <f3f6223e955f48ea9f7d6bf70a5a230682744285.1623069252.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
 References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
         <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Jun 2021 12:34:01 +0000
-Subject: [PATCH v5 03/14] t1092: replace incorrect 'echo' with 'cat'
+Date:   Mon, 07 Jun 2021 12:34:04 +0000
+Subject: [PATCH v5 06/14] unpack-trees: preserve cache_bottom
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,28 +76,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-This fixes the test data shape to be as expected, allowing rename
-detection to work properly now that the 'larger-conent' file actually
-has meaningful lines.
+The cache_bottom member of 'struct unpack_trees_options' is used to
+track the range of index entries corresponding to a node of the cache
+tree. While recursing with traverse_by_cache_tree(), this value is
+preserved on the call stack using a local and then restored as that
+method returns.
+
+The mark_ce_used() method normally modifies the cache_bottom member when
+it refers to the marked cache entry. However, sparse directory entries
+are stored as nodes in the cache-tree data structure as of 2de37c53
+(cache-tree: integrate with sparse directory entries, 2021-03-30). Thus,
+the cache_bottom will be modified as the cache-tree walk advances. Do
+not update it as well within mark_ce_used().
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ unpack-trees.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 4f2f09b53a32..d55478a1902b 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -40,7 +40,7 @@ test_expect_success 'setup' '
- 		done &&
+diff --git a/unpack-trees.c b/unpack-trees.c
+index dddf106d5bd4..1067db19c9d2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -586,6 +586,13 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
+ {
+ 	ce->ce_flags |= CE_UNPACKED;
  
- 		git checkout -b rename-base base &&
--		echo >folder1/larger-content <<-\EOF &&
-+		cat >folder1/larger-content <<-\EOF &&
- 		matching
- 		lines
- 		help
++	/*
++	 * If this is a sparse directory, don't advance cache_bottom.
++	 * That will be advanced later using the cache-tree data.
++	 */
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		return;
++
+ 	if (o->cache_bottom < o->src_index->cache_nr &&
+ 	    o->src_index->cache[o->cache_bottom] == ce) {
+ 		int bottom = o->cache_bottom;
 -- 
 gitgitgadget
 
