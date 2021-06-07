@@ -2,237 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEC2C47094
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 10:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B163DC47094
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 11:03:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26D5C61073
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 10:50:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9649B61107
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 11:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230289AbhFGKws (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 06:52:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60842 "EHLO
+        id S231181AbhFGLF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 07:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbhFGKwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 06:52:47 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE08C061766
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 03:50:47 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id ci15so25862947ejc.10
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 03:50:47 -0700 (PDT)
+        with ESMTP id S231184AbhFGLF0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 07:05:26 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8258CC061766
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 04:03:34 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id w21so19716261edv.3
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 04:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=z/yZHFbOuw5IYanhYP74ViP0KjlSDSY22LQozm9/pR4=;
-        b=YL5jeAr4kUrGEKceaxj5l3IZzUxIOTCITBt131N3ZXGlxVVx9caeo5kpZOx0pQb5ks
-         GDKWmlNPAE1xMMI1JBsMetN/LKOYcVVLv8Vh1MpfZ+FYlBPxM19NxGdAsEeqQ2AusUvd
-         WWXZd47mtGHunS/C5/jFtP04DYa1xy9q6pBKFDG7DmkcwTs0Sm/Tf6LSHhCET7jsrK8W
-         qK2dxDfIY+uBdavxbO45At0xZE9UAE3W0tVoleCLEIwikdilSLjqXqHGfVrhJGlGqZe7
-         233FuNzL/bRT+eXXUOkO3oFyNaueeh2wy0oCXkTvtlSEHQv/RkdQb0kGqazGsqTtYj0T
-         rGNg==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7wm6G18cocFYZZbzOAi0xz1T9xVhf48PS3Sc2KdgGrU=;
+        b=vSBrGOYj7ne3hB82FjKWB7ZWAhv73NgSKgb3qBtvwNxbqwI6JH8M9OZcw+lsJGx54O
+         k0R4XtTONvytYv3PfuiaZp7Ag+h5fYBextOfJ/yGZQdsJqtWgc2iVKVfaFAwoCqU+CG6
+         eJR8mOFn/P3TLJWnxxXYJMgA1VFlGLKKzX+zlO7ERGvyS59Hm7J8U0j/GA/bVT/DYKBF
+         JLORqNjTg9FBgS5FcQ4jkUNFMOjAPSHm3WMJMie3we9dhWjL6jT4rDpSkViNfDVp8ny9
+         uj3Bt0zdRiVriLUBJQCw3BhcS6s30BjcuBdUPnVNsvxOuOVwi+dhg4cI/z+Uskdyb9GJ
+         FAwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=z/yZHFbOuw5IYanhYP74ViP0KjlSDSY22LQozm9/pR4=;
-        b=b4iN1Ow6cdMirDBwoQwWMdPkyNyFK0fkwvtCEH9XRCH5A4Wl7TyMF8rF5tr8DLTyG9
-         E5IK0EMQh8akydAngfcgVT8JI7YiYkL5jvsW20c9jSAfEOW/p9GAJeBq/HpRZrc/Cvk2
-         JST6HgZ/oofrORWBN5KpPGBTqdfjRa8wgjfMCpGgopmHxgoggzzf52iK+b17S1aYoRWy
-         AFpazJZ1W1+X2ncdUoeTK2eoJKRIQNPfZ2IJnQqKG8oKmR5L+2dqn+Q8R4+kj/vI/rf1
-         vGrJzU+iiU0td4UWGWIo4Hwt4MOUJuU0C6zmIkd0qOqMJ9Q5N43EmCicCW6SwBeLxv8y
-         N7CA==
-X-Gm-Message-State: AOAM5322kBeuhU/HVkMWyG0ubVudWQ8RE2xAUroU/wge0OR2fMy/5w4h
-        Kp8NESNpEnv63wh1Dai3FDU=
-X-Google-Smtp-Source: ABdhPJyPvoGEMfMXMbWQGXhDBI5vQCT/0B/rhvFld2RNGRf2sXTNPHdiSluxZovc4uCD5lduOqH39g==
-X-Received: by 2002:a17:906:7712:: with SMTP id q18mr17708521ejm.10.1623063045565;
-        Mon, 07 Jun 2021 03:50:45 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=7wm6G18cocFYZZbzOAi0xz1T9xVhf48PS3Sc2KdgGrU=;
+        b=tvNF2vdRGlddQoHm5y1jgPkzhapfI/vbupbIr9hFz4AQQOqFsS0Nmi6pqKqLlh5yrN
+         No3tE2hQ0HMljhV7mFvkerY60YMurAN8s+66zurp6zzgNcXRfsbB9wUnqOgpzbK1VNXF
+         3mOeyEwteY2/DHDIzbvKs/JQNbk4wMbLFvz5vm37pYtfiEbwLzDpN6REf9fTUkVHWBb6
+         fkHC0ntWYrGgbTiaRhLpI97tPSZHljEqykJNC4+jgH/msGCSZMPzA1WWvXTt6HGUEBQH
+         a9OxL7VXcrGfpZEYy2hG7ZYS1sv/GbbUX6n5NqAtBAL5ydCTJzya7B+aNOHBUOzeoLwZ
+         KiqQ==
+X-Gm-Message-State: AOAM532x5h1+xqkkgE72WNpDsgsQCVnxD3FkA7e/ORH7hjtdBet6mMpe
+        ITqrCriixWXu7hp1OrdMV26Kg7O1TVw=
+X-Google-Smtp-Source: ABdhPJybcPNIbLpeYWTr7JyomNCK/GeviPDaec8lFHKd/YvVbs2S4Bo6sb3rjVdhakxS0RBdNtZfeA==
+X-Received: by 2002:aa7:db90:: with SMTP id u16mr19138648edt.106.1623063812781;
+        Mon, 07 Jun 2021 04:03:32 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w17sm7313242edd.44.2021.06.07.03.50.45
+        by smtp.gmail.com with ESMTPSA id n23sm4833196edr.46.2021.06.07.04.03.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 03:50:45 -0700 (PDT)
+        Mon, 07 Jun 2021 04:03:32 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] rerere: enable by default
-Date:   Mon, 07 Jun 2021 11:50:35 +0200
-References: <xmqqfsxvxjj2.fsf@gitster.g>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Dave Huseby <dwh@linuxprogrammer.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH 1/3] SubmittingPatches: move discussion of Signed-off-by
+ above "send"
+Date:   Mon, 07 Jun 2021 13:02:08 +0200
+References: <cover-0.3-0000000000-20210512T084137Z-avarab@gmail.com>
+ <patch-1.3-d18a3caa07-20210512T084137Z-avarab@gmail.com>
+ <609ba00a1c03b_6e87020886@natae.notmuch>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <xmqqfsxvxjj2.fsf@gitster.g>
-Message-ID: <877dj654or.fsf@evledraar.gmail.com>
+In-reply-to: <609ba00a1c03b_6e87020886@natae.notmuch>
+Message-ID: <874kea543g.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Jun 06 2021, Junio C Hamano wrote:
+On Wed, May 12 2021, Felipe Contreras wrote:
 
-> By default, the rerere machinery has been disabled since a bug in
-> the machinery could screw up the end user's data at the most
-> stressful time during the end user's workday (i.e. during conflict
-> resolution).
-
-What was that bug & in what commit was it fixed? Makes sense to note
-that here.
-
-> It however has been in wide use without causing much trouble (other
-> than, obviously, replaying a broken conflict resolution that was
-> recorded earlier when the user made a mismerge), and it is about
-> time to enable it by default.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> +=3D=3D=3D Certify your work by adding your `Signed-off-by` trailer
+>> +
+>> +To improve tracking of who did what, we ask you to certify that you
+>> +wrote the patch or have the right to pass it on under the same license
+>> +as ours, by "signing off" your patch.  Without sign-off, we cannot
+>> +accept your patches.
 >
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/config/rerere.txt |  5 ++---
->  rerere.c                        | 12 +++---------
->  t/t2030-unresolve-info.sh       |  3 +++
->  3 files changed, 8 insertions(+), 12 deletions(-)
+> This may be me, but I would expect the phrase to make sense without the
+> comma:
 >
-> diff --git a/Documentation/config/rerere.txt b/Documentation/config/rerere.txt
-> index 40abdf6a6b..45e97fc0fa 100644
-> --- a/Documentation/config/rerere.txt
-> +++ b/Documentation/config/rerere.txt
-> @@ -7,6 +7,5 @@ rerere.enabled::
->  	Activate recording of resolved conflicts, so that identical
->  	conflict hunks can be resolved automatically, should they be
->  	encountered again.  By default, linkgit:git-rerere[1] is
-> -	enabled if there is an `rr-cache` directory under the
-> -	`$GIT_DIR`, e.g. if "rerere" was previously used in the
-> -	repository.
-> +	enabled, but this configuration can be set to 'false' to
-> +	turn it off.
-> diff --git a/rerere.c b/rerere.c
-> index d83d58df4f..83e740d730 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -18,8 +18,7 @@
->  #define THREE_STAGED 2
->  void *RERERE_RESOLVED = &RERERE_RESOLVED;
->  
-> -/* if rerere_enabled == -1, fall back to detection of .git/rr-cache */
-> -static int rerere_enabled = -1;
-> +static int rerere_enabled = 1; /* default to true */
->  
->  /* automatically update cleanly resolved paths to the index */
->  static int rerere_autoupdate;
-> @@ -852,16 +851,11 @@ static GIT_PATH_FUNC(git_path_rr_cache, "rr-cache")
->  
->  static int is_rerere_enabled(void)
->  {
-> -	int rr_cache_exists;
-> -
->  	if (!rerere_enabled)
->  		return 0;
->  
-> -	rr_cache_exists = is_directory(git_path_rr_cache());
-> -	if (rerere_enabled < 0)
-> -		return rr_cache_exists;
-> -
-> -	if (!rr_cache_exists && mkdir_in_gitdir(git_path_rr_cache()))
-> +	if (!is_directory(git_path_rr_cache()) &&
-> +	    mkdir_in_gitdir(git_path_rr_cache()))
->  		die(_("could not create directory '%s'"), git_path_rr_cache());
->  	return 1;
->  }
-> diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-> index be6c84c52a..8c571ddf92 100755
-> --- a/t/t2030-unresolve-info.sh
-> +++ b/t/t2030-unresolve-info.sh
-> @@ -46,6 +46,7 @@ prime_resolve_undo () {
->  }
->  
->  test_expect_success setup '
-> +	git config rerere.enabled false &&
->  	mkdir fi &&
->  	printf "a\0a" >binary &&
->  	git add binary &&
-> @@ -127,6 +128,8 @@ test_expect_success 'unmerge with plumbing' '
->  '
->  
->  test_expect_success 'rerere and rerere forget' '
-> +	# from here on, use rerere.
-> +	git config rerere.enabled true &&
->  	mkdir .git/rr-cache &&
->  	prime_resolve_undo &&
->  	echo record the resolution &&
+>> we ask you to certify that you wrote the patch ... by "signing off"
+>> your patch.
+>
+> Whatever you put inside the ... is additional information that doesn't
+> negate the origina sentence.
+>
+> So:
+>
+>> To improve tracking of who did what, we ask you to certify that you
+>> wrote the patch--or have the right to pass it on under the same
+>> license as ours--by "signing off" your patch.
+>
+> Cheers.
 
-It seems strange to disable it at the very beginning, but then not have
-any test until you turn it on actually rely on that except that "mkdir"
-in the second hunk, i.e. this on top works:
-	
-	diff --git a/t/t2030-unresolve-info.sh b/t/t2030-unresolve-info.sh
-	index 8c571ddf92..7195ded9f9 100755
-	--- a/t/t2030-unresolve-info.sh
-	+++ b/t/t2030-unresolve-info.sh
-	@@ -46,7 +46,6 @@ prime_resolve_undo () {
-	 }
-	 
-	 test_expect_success setup '
-	-	git config rerere.enabled false &&
-	 	mkdir fi &&
-	 	printf "a\0a" >binary &&
-	 	git add binary &&
-	@@ -130,7 +129,6 @@ test_expect_success 'unmerge with plumbing' '
-	 test_expect_success 'rerere and rerere forget' '
-	 	# from here on, use rerere.
-	 	git config rerere.enabled true &&
-	-	mkdir .git/rr-cache &&
-	 	prime_resolve_undo &&
-	 	echo record the resolution &&
-	 	git rerere &&
+I think these are good notes, but in this commit I'm merely moving
+existing lines around in the file so that 2/3 and 3/3 make sense, so
+I've left any change to the existing text out of v2 of this series.
 
-So the only impact of that rerere.enabled=false early is to make sure
-we're not creating the .git/rr-cache.
-
-Those tests will fail if we turned on rerere.autoUpdate=true there, so
-isn't it a better test coverage to assert that even with
-rerere.enabled=true we don't impact these merge resolutions in the
-earlier tests?
-
-It also seems to make sense to change the main rerere tests to assert
-that we have the default set to this new value, i.e.:
-	
-	diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-	index 9f8c76dffb..f319f08852 100755
-	--- a/t/t4200-rerere.sh
-	+++ b/t/t4200-rerere.sh
-	@@ -89,8 +89,8 @@ test_expect_success 'activate rerere, old style (conflicting merge)' '
-	 '
-	 
-	 test_expect_success 'rerere.enabled works, too' '
-	+	test_path_is_dir .git/rr-cache &&
-	 	rm -rf .git/rr-cache &&
-	-	git config rerere.enabled true &&
-	 	git reset --hard &&
-	 	test_must_fail git merge first &&
-	 
-	@@ -100,8 +100,8 @@ test_expect_success 'rerere.enabled works, too' '
-	 '
-	 
-	 test_expect_success 'set up rr-cache' '
-	+	test_path_is_dir .git/rr-cache &&
-	 	rm -rf .git/rr-cache &&
-	-	git config rerere.enabled true &&
-	 	git reset --hard &&
-	 	test_must_fail git merge first &&
-	 	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
-	@@ -668,7 +668,6 @@ test_expect_success 'test simple stage 1 handling' '
-	 	(
-	 		cd stage_1_handling &&
-	 
-	-		git config rerere.enabled true &&
-	 		git checkout A^0 &&
-	 		test_must_fail git merge B^0
-	 	)
-
-As an aside: This pre-dates your change here, but I thought the config
-reading in rerere.c was a bit odd, why do we call the one-off config
-reading functions when we're about to iterate over the whole set anyway?
-Turns out we did it the way I'd expect before 633e5ad326 (rerere.c:
-replace `git_config()` with `git_config_get_*()` family, 2014-08-07).
+I welcome an effort to improve the existing wording, but I think it's
+better if you submit your own patch-on-top for that, I'd rather not get
+bogged down in that any more than I already am :)
