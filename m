@@ -2,75 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AA44C47082
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 05:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CB3CC48BC2
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 06:44:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EDBE6121D
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 05:56:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2795A611C0
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 06:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbhFGF5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 01:57:55 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53393 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbhFGF5x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 01:57:53 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB759135A5C;
-        Mon,  7 Jun 2021 01:56:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3wNhQg0OAGuBPRJLRAyU7B8U6qZlwqh++TwdOt
-        BoHMY=; b=gD8QPW5V5kMHC7YHLyfLiFqqaAY6F5fkYN6E92gLru+Lw7QlVTO26Q
-        HRy3wPCQVEjas78Yvdy8qHwR664G8PNVTkggGTKtNJU/J6bbF1xn7e1tfF8D8/PR
-        mZGzdMTtJuw++DKgOyqCCOpVqxI8iGdZlR5AOAQ29KoC087WtFyWI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B4036135A5B;
-        Mon,  7 Jun 2021 01:56:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 03C4D135A58;
-        Mon,  7 Jun 2021 01:55:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 0/6] [GSOC][RFC] ref-filter: add %(raw:textconv) and
- %(raw:filters)
-References: <pull.972.git.1622884415.gitgitgadget@gmail.com>
-Date:   Mon, 07 Jun 2021 14:55:58 +0900
-In-Reply-To: <pull.972.git.1622884415.gitgitgadget@gmail.com> (ZheNing Hu via
-        GitGitGadget's message of "Sat, 05 Jun 2021 09:13:28 +0000")
-Message-ID: <xmqq35tuw74h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230233AbhFGGpz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 02:45:55 -0400
+Received: from mail-pf1-f177.google.com ([209.85.210.177]:43888 "EHLO
+        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230155AbhFGGpy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 02:45:54 -0400
+Received: by mail-pf1-f177.google.com with SMTP id t28so12346932pfg.10
+        for <git@vger.kernel.org>; Sun, 06 Jun 2021 23:43:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=ncjAV/o5oJX9q+uuBYtxte1BsoSKdaii/Fe60r8BFfI=;
+        b=jS1x5HKPwAPBrhPlw4s5H6ibwBoS4ufBsK9e9gRdTGUM/W1S5MUrIlUfU+SAyHSnMs
+         mx2tqJIdB3DgENhz+APpcrNGZp7IsYfeeFFOPAniRD7UQwpjY4h9L4rgdRrZNtNAjt5B
+         fMWLE1stDaxl0hA6q7iZ925r6/Y7gfFWSXTHq+37YJssbZgW3woN2Heg0AjK8GNUe8Db
+         aWGjLbCoaY7lqA8eWtE5/AmV7lgckFoqSYOGtu9DwrgGI6f3BrQjxzQt2C/gpOiSQv9S
+         w3h80BLZZXTXvDACdOBG+EwgSEFGTqXPIattnHxzMmyyVBeT4DU3ddPMjt4cebwtrBYX
+         oBqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=ncjAV/o5oJX9q+uuBYtxte1BsoSKdaii/Fe60r8BFfI=;
+        b=TTeNkq85/dzLUjFgsaLkiLHpycdMxB3cbXUAewjKJg1sdLjB1RzWZQoW2Q8T80svdl
+         myJMH6vQVi0MZZQneicpvuGqfJqmSNXHVmdN/sCFwGDxp4rAaExFkDR2dl7aT7oTGXS+
+         UIJ2UjKgNQPzHlJW6J8Mdy1e+s6nFes/hfD87O7yZ01xZAI2rr1DDTXpvzXFhh/JyuyI
+         dAW08Dc7Z0jH9U7Hm2T0FJMHF/y4nWKeS8h4av7oKckjYppMmQvhiro5GIXTcDQjQU7Y
+         hENnUh2Q+48wl4u0uEBuo43b6OEOUiMD5BhJxtmom6JUSo5sGKQzSYlw/3mATapZ+DOB
+         nqWw==
+X-Gm-Message-State: AOAM531pBWf6r/F0wfvO1dTyqhfmCj5+XeM0Q+Svwe5ldn2Quanycyw9
+        QBZtsIY8yI6eJKgyEuBoQyMop5Wz5Ymzog==
+X-Google-Smtp-Source: ABdhPJxAKjLPT0o0aGafoO2PsHEA72Scv5eGYfVFx96pzRXUIn278fzR1jcPKRRA87leKenROxhq3g==
+X-Received: by 2002:a62:2e04:0:b029:2db:4c99:614f with SMTP id u4-20020a622e040000b02902db4c99614fmr15720102pfu.47.1623048170383;
+        Sun, 06 Jun 2021 23:42:50 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-19.three.co.id. [116.206.28.19])
+        by smtp.gmail.com with ESMTPSA id o9sm11012582pjp.51.2021.06.06.23.42.49
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 06 Jun 2021 23:42:50 -0700 (PDT)
+To:     Git Users <git@vger.kernel.org>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: [suggestion] support non-negative float number in git-repack
+ --max-pack-size
+Message-ID: <776cb2f9-5fef-4486-5aef-f3ee62fcda7e@gmail.com>
+Date:   Mon, 7 Jun 2021 13:42:47 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 08E551A2-C755-11EB-B471-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> The current series is based on 0efed9435 ([GSOC] ref-filter: add %(raw)
-> atom)
+I would like to create packfiles with charm-numbered size (that is for 
+example use 49.99M instead of 50M) with git-repack:
 
-I do not have that commit object, but these six patches include the
-two commits that are %(raw) and %(raw:size), so I'll just discard
-the old round that wasn't based on the atom-type stuff and queue
-these six as a single series.
+$ git repack --max-pack-size=49.99M -a -d
 
-As I already said, I am not sure how %(rest) makes any sense outside
-the context of "cat-file --batch"; I suspect it would make more sense
-to make it easier to arrange certain placeholders to error out when
-used in a context where they do not make sense (e.g. use of --rest
-in "git branch --list").
+But Git didn't support it:
 
+> error: option `max-pack-size' expects a non-negative integer value with an optional k/m/g suffix
+
+The workaround was scaling down to kibibytes:
+
+$ git repack --max-pack-size=52418K -a -d
+
+But the workaround is a rather convoluted to me, because I must convert 
+mebibytes (MiB) to kibibytes (KiB). I had to multiply the desired 
+packfile size by 1024, as opposed to by 1000 in familiar size notation 
+(kilobytes [KB] and megabytes [MB]).
+
+It would be nice if non-negative floating-point number can be allowed in 
+--max-pack-size option, so that many users don't have to scale down size 
+notation like above.
+
+PS: charm numbers are most often used in pricing, because it's almost 
+used everywhere (part of psychological pricing).
+
+Thanks.
+
+-- 
+An old man doll... just what I always wanted! - Clara
