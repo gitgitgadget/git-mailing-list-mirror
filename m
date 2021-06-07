@@ -2,99 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 979B3C47082
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71A84C47082
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:45:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75FC060C3D
-	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:42:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59E356054E
+	for <git@archiver.kernel.org>; Mon,  7 Jun 2021 16:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230363AbhFGQof (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 12:44:35 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:36446 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbhFGQoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 12:44:34 -0400
-Received: by mail-ot1-f46.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so17367437otl.3
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:42:43 -0700 (PDT)
+        id S230341AbhFGQqy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 12:46:54 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:45899 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230294AbhFGQqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 12:46:53 -0400
+Received: by mail-ed1-f43.google.com with SMTP id r7so6773078edv.12
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 09:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=QsKzDIWW43nBg7CYYPAKseRBmWPzO1ZCY9NYMJACYpY=;
-        b=MpCLw1vsuQRr3z85xrhBs530ajksQESDuVVA1GUwEcOzoAdjZ5+GxCR8eP77pMC7iP
-         09wQYjFaj9B9+AX27f35eHF3pHLWpb6edaGIdWo5zikHSHC3OydNLuNFn79f8OcYehSU
-         cwMtyMewq/L3GvyZGNe5dTwTtAcKpz0TlPNoafCMDCEOT2byF7aonnkvgwSiOLOA7WSD
-         wkNC7rgcoGuxzvtZQcmHvyPbAh5r/P+MovHuSHd/VId0QRZVNWkr4hMQ2XdiPMLxiu/A
-         8UNo+yIQNkAS77DkCD3zCrCOuVbrDC4EDXoxXnILFdj/kQsKo0ISgNWsnr3DHplvDDZH
-         fRMw==
+        bh=q0eXb4vDYbP3Qp5rTY50PbC4F3S/E9aczQKqh5xezeY=;
+        b=Iagh9XQLayS4QiF24Gr57UFJ7Zg13EHZf8p+40xVljvqfEHwh08l4V3iu6kQy+mZqy
+         3P5KMQSSKMM/yL/m770vjRYCcun3CwfERnBRtfZ1z39x8e84Al6IZMZjhU+BHO6AkakH
+         qZwBS46cXudvSFSJwVDOCUb1utydeOyjoyVIgnnNy/Q/vE5LAYBrIqnLXz/xM2ZsC5W2
+         XAnRweoQRWzc8c1SmJ//7xfYPw70T4hyTeRzn0w3icusi9ov1TywkLixS8QkTgOVAmt0
+         kWRrOmLtno2knZpvz47yqvt73CoVXqc4SZYSQsYAOX/JXZm98ue5DVuxh2JqpcUIJWRJ
+         JS+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=QsKzDIWW43nBg7CYYPAKseRBmWPzO1ZCY9NYMJACYpY=;
-        b=c6sm0UZYR1O0BCSN06v+mVy05ybDpawEbRvxEPbrPsOSRTa72aka5HG8msxvEPhuct
-         rlFkKqa6z45xcG+xydNQdY91s3eGQgoRinQQBxT7WTw0aUiF2BDzlaR37SrU9D4Hv66W
-         qJ2dxCrPBPYdAdtsNBARaGgQUlJdNJE6vZNWjW990C802q+OTODP8szc11x2igsdfuh0
-         retcjntgZdQJlqD4wMKqtRJqok1JeeiRxm7AmoS/Q+Nt54UIrvq4tOJMuLh2oANlWrfE
-         2bj915cFw0e672uloTnA1DvKZjMUcKcq55MbihaKA5Rnh3tnlygTJHXy2/th0TDMbb33
-         r4AQ==
-X-Gm-Message-State: AOAM5317Rl7wbHdxLfQwQUXu4vh4xbRcG+xeunH4ZMyzvCGdNIpu66rC
-        zk4bkddPqWGhnEd1uCgFpyKfXSfr9+iHLA==
-X-Google-Smtp-Source: ABdhPJzRjQ7pumFTK8jbsXe35UGB5gfU83JgS6gsCpzrt8uA03pMqafoH6eHW9vVmv6HeV/u/zTtnA==
-X-Received: by 2002:a05:6830:348c:: with SMTP id c12mr14010936otu.344.1623084103183;
-        Mon, 07 Jun 2021 09:41:43 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id z22sm134758ooj.6.2021.06.07.09.41.42
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=q0eXb4vDYbP3Qp5rTY50PbC4F3S/E9aczQKqh5xezeY=;
+        b=eICQ2OxGVFuZhOZxkO/bJvI9hzDUMgaaEYkG4i2rJpvErT2K9Dp6kyotGiWEGweVt1
+         uYJW5SouGrFgQBsk/qcnXbbRE4VsGMvCZzJLpTzgMALVwdZjMWWtc4Y0XJm1LD/fPkBM
+         pUmuRMPY1qLw4dWCLn9GuvHxvD4sZdztw7PA2s7scVIGIBMCQYYierPip3BuAK6rBLpi
+         X7whNEq0/o9sJfqs8CNyEirAzPWwStdgbcu6JP5Xf3fLhBIeTSyMuOpqfxVVfpzrg7aL
+         7qyLi/fNHsh836hbobLRaNKVSETeV/ysASMVhwABabYG4wxmUQSbB7106BE3odDQXFMo
+         /P7A==
+X-Gm-Message-State: AOAM531OV6qIWtgSsiH6cvdAsZNTY29KXCrQXhANe1Fh+2lAkz0+Pv+z
+        K3EovOakCpuS7z1yJ/Excp9ymav1o/0RXQ==
+X-Google-Smtp-Source: ABdhPJyPzbf+Ln6zMVnf3JClaBN2SDIzNo9+uNF/zYxPoKIckGjvWvQyr7Dfbch9Rk9M60DjNKye6Q==
+X-Received: by 2002:a50:afe4:: with SMTP id h91mr20819788edd.28.1623084231274;
+        Mon, 07 Jun 2021 09:43:51 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id dy19sm7796510edb.68.2021.06.07.09.43.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 09:41:42 -0700 (PDT)
-Date:   Mon, 07 Jun 2021 11:41:36 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60be4c4071b80_39c0a208ac@natae.notmuch>
-In-Reply-To: <xmqqfsxvxjj2.fsf@gitster.g>
-References: <xmqqfsxvxjj2.fsf@gitster.g>
-Subject: RE: [PATCH] rerere: enable by default
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Mon, 07 Jun 2021 09:43:50 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] xdiff: use BUG(...), not xdl_bug(...)
+Date:   Mon,  7 Jun 2021 18:43:49 +0200
+Message-Id: <patch-1.1-68bf1ba4d3-20210607T164305Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> By default, the rerere machinery has been disabled since a bug in
-> the machinery could screw up the end user's data at the most
-> stressful time during the end user's workday (i.e. during conflict
-> resolution).
-> 
-> It however has been in wide use without causing much trouble (other
-> than, obviously, replaying a broken conflict resolution that was
-> recorded earlier when the user made a mismerge), and it is about
-> time to enable it by default.
+The xdl_bug() function was introduced in
+e8adf23d1e (xdl_change_compact(): introduce the concept of a change
+group, 2016-08-22), let's use our usual BUG() function instead.
 
-That is a good diea.
+We'll now have meaningful line numbers if we encounter bugs in xdiff,
+and less code duplication.
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ xdiff/xdiffi.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-But did you really come up with it all by yourself?
-
-Could perhaps this mail [1] sent 5 days prior have anything to do with it?
-
-> If the defaults make your life hard, then shouldn't we change the
-> defaults?
-
-> But, if we are already on this topic... who wants rerere disabled by
-> default?
-
-Cheers.
-
-[1] https://lore.kernel.org/git/60b61089ba63d_e40ca20894@natae.notmuch/
-
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 380eb728ed..a4542c05b6 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -796,12 +796,6 @@ static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g, long flags)
+ 	}
+ }
+ 
+-static void xdl_bug(const char *msg)
+-{
+-	fprintf(stderr, "BUG: %s\n", msg);
+-	exit(1);
+-}
+-
+ /*
+  * Move back and forward change groups for a consistent and pretty diff output.
+  * This also helps in finding joinable change groups and reducing the diff
+@@ -841,7 +835,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			/* Shift the group backward as much as possible: */
+ 			while (!group_slide_up(xdf, &g, flags))
+ 				if (group_previous(xdfo, &go))
+-					xdl_bug("group sync broken sliding up");
++					BUG("group sync broken sliding up");
+ 
+ 			/*
+ 			 * This is this highest that this group can be shifted.
+@@ -857,7 +851,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 				if (group_slide_down(xdf, &g, flags))
+ 					break;
+ 				if (group_next(xdfo, &go))
+-					xdl_bug("group sync broken sliding down");
++					BUG("group sync broken sliding down");
+ 
+ 				if (go.end > go.start)
+ 					end_matching_other = g.end;
+@@ -882,9 +876,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 */
+ 			while (go.end == go.start) {
+ 				if (group_slide_up(xdf, &g, flags))
+-					xdl_bug("match disappeared");
++					BUG("match disappeared");
+ 				if (group_previous(xdfo, &go))
+-					xdl_bug("group sync broken sliding to match");
++					BUG("group sync broken sliding to match");
+ 			}
+ 		} else if (flags & XDF_INDENT_HEURISTIC) {
+ 			/*
+@@ -925,9 +919,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 
+ 			while (g.end > best_shift) {
+ 				if (group_slide_up(xdf, &g, flags))
+-					xdl_bug("best shift unreached");
++					BUG("best shift unreached");
+ 				if (group_previous(xdfo, &go))
+-					xdl_bug("group sync broken sliding to blank line");
++					BUG("group sync broken sliding to blank line");
+ 			}
+ 		}
+ 
+@@ -936,11 +930,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 		if (group_next(xdf, &g))
+ 			break;
+ 		if (group_next(xdfo, &go))
+-			xdl_bug("group sync broken moving to next group");
++			BUG("group sync broken moving to next group");
+ 	}
+ 
+ 	if (!group_next(xdfo, &go))
+-		xdl_bug("group sync broken at end of file");
++		BUG("group sync broken at end of file");
+ 
+ 	return 0;
+ }
 -- 
-Felipe Contreras
+2.32.0.rc3.434.gd8aed1f08a7
+
