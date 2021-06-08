@@ -6,83 +6,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9C25C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB432C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:40:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 824A161208
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:38:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 958916023E
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbhFHGkq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 02:40:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48602 "EHLO cloud.peff.net"
+        id S229526AbhFHGmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 02:42:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48618 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229548AbhFHGkq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 02:40:46 -0400
-Received: (qmail 28141 invoked by uid 109); 8 Jun 2021 06:38:52 -0000
+        id S229507AbhFHGmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 02:42:12 -0400
+Received: (qmail 28162 invoked by uid 109); 8 Jun 2021 06:40:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Jun 2021 06:38:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Jun 2021 06:40:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7016 invoked by uid 111); 8 Jun 2021 06:38:53 -0000
+Received: (qmail 7042 invoked by uid 111); 8 Jun 2021 06:40:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Jun 2021 02:38:53 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Jun 2021 02:40:22 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 8 Jun 2021 02:38:51 -0400
+Date:   Tue, 8 Jun 2021 02:40:19 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <ttaylorr@github.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] t: use user-specified utf-8 locale for testing svn
-Message-ID: <YL8Qe31z1Q5/DkmF@coredump.intra.peff.net>
-References: <20210602114646.17463-1-congdanhqx@gmail.com>
- <20210607010844.24587-1-congdanhqx@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Junio C Hamano' <gitster@pobox.com>,
+        'Taylor Blau' <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.32.0-rc3 - t5300 Still Broken on NonStop
+ ia64/x86
+Message-ID: <YL8Q08sPWCMYN9Y1@coredump.intra.peff.net>
+References: <002701d757d8$1a8d9dc0$4fa8d940$@nexbridge.com>
+ <YLfc2+Te7Y3UY+Sm@nand.local>
+ <YLfgy94sbmStC0mR@coredump.intra.peff.net>
+ <YLfl4jkuwSCiNrrS@nand.local>
+ <YLfm8cqY6EjQuhcO@coredump.intra.peff.net>
+ <xmqqk0na2yyc.fsf@gitster.g>
+ <YLmkI4a4J60KFY2W@coredump.intra.peff.net>
+ <xmqq7dja2oyd.fsf@gitster.g>
+ <015301d75b07$132a0aa0$397e1fe0$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210607010844.24587-1-congdanhqx@gmail.com>
+In-Reply-To: <015301d75b07$132a0aa0$397e1fe0$@nexbridge.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 07, 2021 at 08:08:44AM +0700, Đoàn Trần Công Danh wrote:
+On Sun, Jun 06, 2021 at 03:06:31PM -0400, Randall S. Becker wrote:
 
-> In some test-cases, UTF-8 locale is required. To find such locale,
-> we're using the first available UTF-8 locale that returned by
-> "locale -a".
-> 
-> However, the locale(1) utility is unavailable on some systems,
-> e.g. Linux with musl libc.
-> 
-> However, without "locale -a", we can't guess provided UTF-8 locale.
-> 
-> Add a Makefile knob GIT_TEST_UTF8_LOCALE and activate it for
-> linux-musl in our CI system.
-> 
-> Rename t/lib-git-svn.sh:prepare_a_utf8_locale to prepare_utf8_locale,
-> since we no longer prepare the variable named "a_utf8_locale",
-> but set up a fallback value for GIT_TEST_UTF8_LOCALE instead.
-> The fallback will be LC_ALL, LANG environment variable,
-> or the first UTF-8 locale from output of "locale -a", in that order.
+> Just something to note: I was running git gc --aggressive on OpenSSL
+> today and got the same error as in this case. I'm assuming that the
+> fix will apply to that too. In this situation, the gc ran for over 2
+> hours until failing. This may be a more widely available test
+> condition for fsync() EINTR, possibly.
 
-This patch looks good to me. I have one tiny nit below, but I'm OK if
-it's left as-is:
-
-> +prepare_utf8_locale () {
-> +	if test -n "$GIT_TEST_UTF8_LOCALE"
-> +	then
-> +		: test_set_prereq UTF8
-
-This ":" is really just a comment, but since it contains code we would
-like to run (but which actually gets run later), it confused me.
-Something like:
-
-  : already set by the caller, nothing to do
-
-would have made it easier to understand.
-
-And then the rest of the function is pretty self-explanatory.
+Thanks. One of my original questions was that we'd expect to see this in
+the wild, and not just the test suite. But it sounds like now we have. :)
+So I feel better that we have a full understanding of the issue.
 
 -Peff
