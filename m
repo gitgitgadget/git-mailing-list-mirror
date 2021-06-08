@@ -2,112 +2,573 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D77BC47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7BFBC4743D
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:41:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1F526128A
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:00:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC98E61285
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232728AbhFHNCp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 09:02:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232644AbhFHNCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 09:02:45 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A0B3C061574
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 06:00:52 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id j184so20018337qkd.6
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 06:00:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ajJQhOURy0Gp/fGqEEXMr1wKlu0FARxGVLoRAGr34PY=;
-        b=S+cYBDrDPJUCAVKwa2YY4SAQ4tOL1cFkov0pxhYRZJsLAKec383nNdhkA/CEP5iqQl
-         YPOHfQIAbF260byAqXi4Y/djh1/1yVi1eog52XbE0moiAOW+O30wfPIVQlJ1Gozi8Cwf
-         /Uc0P1GeM3oitpveXG/3gagl9CSxOPkx8Lv2SmcdH/nod2sbRdfdtjZKRTrpZY8LpMW1
-         S7WqUO7kyg2Wsy1CKt/vSWtL5QcqJ0LXxJ3MZg+/3odF2Y74gWTit0vFMD9SUpiIwXoV
-         z/q7z3wzFf1FIMHQqXfQ/y2hZjTgJlzJSUtZzbJ7ogiR2dUVFZ1qNIo1YMR9cMnbULXI
-         5qsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ajJQhOURy0Gp/fGqEEXMr1wKlu0FARxGVLoRAGr34PY=;
-        b=OOMkuvs+4FszeolTL56t1aOARhpyjFsAksqj1ioxocgLgsg/M+W+mOINo59L4ffqta
-         Cmop8LQqRbz6eq7KYMR3Im4NCuYOMEviGMjlPMjo/lDL0BhGLB4u/vq/z5cKTvwBhUCj
-         M2jTgxKIbq9RDmX9j9sMBzpSMr+qLrhQ0OUryoK58JnLeRj3LL4I+JBwyGKCgfkvMg8l
-         73su/TYDVprWLUMvsnTiy/PTHDaCVXXEMo8w+B10p9d2iuUPbT7j+7G5OzLvqvVOyjS+
-         BlkZ7sF7AY3+jfpiyckGjg1T276dX+qPko6ScYcAQZ1InP7D8Ntmt6seiCpI24nf6G+z
-         kF4Q==
-X-Gm-Message-State: AOAM532LR4NO08iVNwTiVnR8WJBvATaOk3tQwDVJ/I0Q4l8qjRdd+6jh
-        uoG8PfH6wGQ4Y12s2paZBig=
-X-Google-Smtp-Source: ABdhPJwkPEsTzzLrD9e6x9xCVmrwFUWr8XMkOSIzvWw560a3OPwCqbL8qOTI27gYfKqSthpDmT9tXQ==
-X-Received: by 2002:a05:620a:787:: with SMTP id 7mr21389251qka.397.1623157251472;
-        Tue, 08 Jun 2021 06:00:51 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:950a:2e04:f8f4:95ec? ([2600:1700:e72:80a0:950a:2e04:f8f4:95ec])
-        by smtp.gmail.com with ESMTPSA id a14sm10556590qtj.57.2021.06.08.06.00.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jun 2021 06:00:50 -0700 (PDT)
-Subject: Re: [PATCH v5 10/14] diff-lib: handle index diffs with sparse dirs
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
- <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
- <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
- <b2ce649a-00d0-8418-2a3f-9172ff69eccf@gmail.com> <xmqqmts1rwr4.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b13422ee-0cc8-d77d-cdfa-c8caaf0efdbb@gmail.com>
-Date:   Tue, 8 Jun 2021 09:00:48 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S233017AbhFHNnO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 09:43:14 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:46728 "EHLO
+        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232797AbhFHNnK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 09:43:10 -0400
+Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:4a10:7e85:729c:98ea])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id D44F048743E;
+        Tue,  8 Jun 2021 15:41:09 +0200 (CEST)
+Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
+        t=1623159670; bh=j9N1bhnLeO4UOx6RLKzkgDDp52ExGZonIeldjxEB2Mk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=wchlt8Jn/mnP/RAUdEIwCyq6O/Au0Smr5d/0fsf+fNT/aMUzb2Mcjy/l+6yqEtsQ9
+         uydKzoaO2afx2tVdzIESM4fOjfIrUDfyCwyQxsQcXN00PnNgCf2isJAJRGvsSeKKJ0
+         17zAulHpAeYkKuOXL/f5dCMazz3VwNGhB4Y1wgvM=
+From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
+Subject: [PATCH v5 3/3] maintenance: add support for systemd timers on Linux
+Date:   Tue,  8 Jun 2021 15:40:00 +0200
+Message-Id: <20210608134000.663398-4-lenaic@lhuard.fr>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210608134000.663398-1-lenaic@lhuard.fr>
+References: <20210524071538.46862-1-lenaic@lhuard.fr>
+ <20210608134000.663398-1-lenaic@lhuard.fr>
 MIME-Version: 1.0
-In-Reply-To: <xmqqmts1rwr4.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/7/2021 9:05 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> On 6/7/2021 8:34 AM, Derrick Stolee via GitGitGadget wrote:
->>> From: Derrick Stolee <dstolee@microsoft.com>
->> ...
->>> +			old_entry = make_transient_cache_entry(
->>> +					entry[0].mode, &entry[0].oid,
->>> +					old_path, /* stage */ 0);
->>
->> I didn't realize this before I started integrating with
->> v2.32.0 (which I should have done before submitting v5) that
->> make_transient_cache_entry() has changed its prototype to
->> include a memory pool parameter.
-> 
-> Sorry for the trouble---these are usually all known to me for topics
-> I happened to have picked up in 'seen', since I try to make it a rule
-> that 'seen' must be a descendant of 'master'.
-> 
-> How can I usefully communicate the conflicts I find out during the
-> integration cycles to topic owners, I wonder.
+The existing mechanism for scheduling background maintenance is done
+through cron. On Linux systems managed by systemd, systemd provides an
+alternative to schedule recurring tasks: systemd timers.
 
-This is my fault for stacking topics. I used a GitGitGadget PR
-to target a custom merge of other topics in flight, so my
-merges were testing against a static target. When those topics
-were merged, I should have updated my PR to point to 'master' or
-even 'next'.
+The main motivations to implement systemd timers in addition to cron
+are:
+* cron is optional and Linux systems running systemd might not have it
+  installed.
+* The execution of `crontab -l` can tell us if cron is installed but not
+  if the daemon is actually running.
+* With systemd, each service is run in its own cgroup and its logs are
+  tagged by the service inside journald. With cron, all scheduled tasks
+  are running in the cron daemon cgroup and all the logs of the
+  user-scheduled tasks are pretended to belong to the system cron
+  service.
+  Concretely, a user that doesn’t have access to the system logs won’t
+  have access to the log of their own tasks scheduled by cron whereas
+  they will have access to the log of their own tasks scheduled by
+  systemd timer.
+  Although `cron` attempts to send email, that email may go unseen by
+  the user because these days, local mailboxes are not heavily used
+  anymore.
 
-Thanks,
--Stolee
+In order to schedule git maintenance, we need two unit template files:
+* ~/.config/systemd/user/git-maintenance@.service
+  to define the command to be started by systemd and
+* ~/.config/systemd/user/git-maintenance@.timer
+  to define the schedule at which the command should be run.
+
+Those units are templates that are parameterized by the frequency.
+
+Based on those templates, 3 timers are started:
+* git-maintenance@hourly.timer
+* git-maintenance@daily.timer
+* git-maintenance@weekly.timer
+
+The command launched by those three timers are the same as with the
+other scheduling methods:
+
+/path/to/git for-each-repo --exec-path=/path/to
+--config=maintenance.repo maintenance run --schedule=%i
+
+with the full path for git to ensure that the version of git launched
+for the scheduled maintenance is the same as the one used to run
+`maintenance start`.
+
+The timer unit contains `Persistent=true` so that, if the computer is
+powered down when a maintenance task should run, the task will be run
+when the computer is back powered on.
+
+Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
+---
+ Documentation/git-maintenance.txt |  57 +++++++-
+ builtin/gc.c                      | 228 ++++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh            |  67 ++++++++-
+ 3 files changed, 342 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 07065ed4f3..7b7dbbbca9 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -179,16 +179,19 @@ OPTIONS
+ 	`maintenance.<task>.enabled` configured as `true` are considered.
+ 	See the 'TASKS' section for the list of accepted `<task>` values.
+ 
+---scheduler=auto|crontab|launchctl|schtasks::
++--scheduler=auto|crontab|systemd-timer|launchctl|schtasks::
+ 	When combined with the `start` subcommand, specify the scheduler
+ 	to use to run the hourly, daily and weekly executions of
+ 	`git maintenance run`.
+ 	The possible values for `<scheduler>` depend on the system: `crontab`
+-	is available on POSIX systems, `launchctl` is available on
+-	MacOS and `schtasks` is available on Windows.
++	is available on POSIX systems, `systemd-timer` is available on Linux
++	systems, `launchctl` is available on MacOS and `schtasks` is available
++	on Windows.
+ 	By default or when `auto` is specified, a suitable scheduler for
+ 	the system is used. On MacOS, `launchctl` is used. On Windows,
+-	`schtasks` is used. On all other systems, `crontab` is used.
++	`schtasks` is used. On Linux, `systemd-timer` is used if user systemd
++	timers are available, otherwise, `crontab` is used. On all other systems,
++	`crontab` is used.
+ 
+ 
+ TROUBLESHOOTING
+@@ -288,6 +291,52 @@ schedule to ensure you are executing the correct binaries in your
+ schedule.
+ 
+ 
++BACKGROUND MAINTENANCE ON LINUX SYSTEMD SYSTEMS
++-----------------------------------------------
++
++While Linux supports `cron`, depending on the distribution, `cron` may
++be an optional package not necessarily installed. On modern Linux
++distributions, systemd timers are superseding it.
++
++If user systemd timers are available, they will be used as a replacement
++of `cron`.
++
++In this case, `git maintenance start` will create user systemd timer units
++and start the timers. The current list of user-scheduled tasks can be found
++by running `systemctl --user list-timers`. The timers written by `git
++maintenance start` are similar to this:
++
++-----------------------------------------------------------------------
++$ systemctl --user list-timers
++NEXT                         LEFT          LAST                         PASSED     UNIT                         ACTIVATES
++Thu 2021-04-29 19:00:00 CEST 42min left    Thu 2021-04-29 18:00:11 CEST 17min ago  git-maintenance@hourly.timer git-maintenance@hourly.service
++Fri 2021-04-30 00:00:00 CEST 5h 42min left Thu 2021-04-29 00:00:11 CEST 18h ago    git-maintenance@daily.timer  git-maintenance@daily.service
++Mon 2021-05-03 00:00:00 CEST 3 days left   Mon 2021-04-26 00:00:11 CEST 3 days ago git-maintenance@weekly.timer git-maintenance@weekly.service
++-----------------------------------------------------------------------
++
++One timer is registered for each `--schedule=<frequency>` option.
++
++The definition of the systemd units can be inspected in the following files:
++
++-----------------------------------------------------------------------
++~/.config/systemd/user/git-maintenance@.timer
++~/.config/systemd/user/git-maintenance@.service
++~/.config/systemd/user/timers.target.wants/git-maintenance@hourly.timer
++~/.config/systemd/user/timers.target.wants/git-maintenance@daily.timer
++~/.config/systemd/user/timers.target.wants/git-maintenance@weekly.timer
++-----------------------------------------------------------------------
++
++`git maintenance start` will overwrite these files and start the timer
++again with `systemctl --user`, so any customization should be done by
++creating a drop-in file, i.e. a `.conf` suffixed file in the
++`~/.config/systemd/user/git-maintenance@.service.d` directory.
++
++`git maintenance stop` will stop the user systemd timers and delete
++the above mentioned files.
++
++For more details, see `systemd.timer(5)`.
++
++
+ BACKGROUND MAINTENANCE ON MACOS SYSTEMS
+ ---------------------------------------
+ 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index f2a81ecb44..5fe416c903 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -2040,10 +2040,221 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 	return result;
+ }
+ 
++#ifdef __linux__
++
++static int real_is_systemd_timer_available(void)
++{
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	strvec_pushl(&child.args, "systemctl", "--user", "list-timers", NULL);
++	child.no_stdin = 1;
++	child.no_stdout = 1;
++	child.no_stderr = 1;
++	child.silent_exec_failure = 1;
++
++	if (start_command(&child))
++		return 0;
++	if (finish_command(&child))
++		return 0;
++	return 1;
++}
++
++#else
++
++static int real_is_systemd_timer_available(void)
++{
++	return 0;
++}
++
++#endif
++
++static int is_systemd_timer_available(void)
++{
++	const char *cmd = "systemctl";
++	int is_available;
++
++	if (get_schedule_cmd(&cmd, &is_available))
++		return is_available;
++
++	return real_is_systemd_timer_available();
++}
++
++static char *xdg_config_home_systemd(const char *filename)
++{
++	return xdg_config_home_for("systemd/user", filename);
++}
++
++static int systemd_timer_enable_unit(int enable,
++				     enum schedule_priority schedule)
++{
++	const char *cmd = "systemctl";
++	struct child_process child = CHILD_PROCESS_INIT;
++	const char *frequency = get_frequency(schedule);
++
++	/*
++	 * Disabling the systemd unit while it is already disabled makes
++	 * systemctl print an error.
++	 * Let's ignore it since it means we already are in the expected state:
++	 * the unit is disabled.
++	 *
++	 * On the other hand, enabling a systemd unit which is already enabled
++	 * produces no error.
++	 */
++	if (!enable)
++		child.no_stderr = 1;
++
++	get_schedule_cmd(&cmd, NULL);
++	strvec_split(&child.args, cmd);
++	strvec_pushl(&child.args, "--user", enable ? "enable" : "disable",
++		     "--now", NULL);
++	strvec_pushf(&child.args, "git-maintenance@%s.timer", frequency);
++
++	if (start_command(&child))
++		return error(_("failed to start systemctl"));
++	if (finish_command(&child))
++		/*
++		 * Disabling an already disabled systemd unit makes
++		 * systemctl fail.
++		 * Let's ignore this failure.
++		 *
++		 * Enabling an enabled systemd unit doesn't fail.
++		 */
++		if (enable)
++			return error(_("failed to run systemctl"));
++	return 0;
++}
++
++static int systemd_timer_delete_unit_templates(void)
++{
++	int ret = 0;
++	char *filename = xdg_config_home_systemd("git-maintenance@.timer");
++	if(unlink(filename) && !is_missing_file_error(errno))
++		ret = error_errno(_("failed to delete '%s'"), filename);
++	FREE_AND_NULL(filename);
++
++	filename = xdg_config_home_systemd("git-maintenance@.service");
++	if(unlink(filename) && !is_missing_file_error(errno))
++		ret = error_errno(_("failed to delete '%s'"), filename);
++
++	free(filename);
++	return ret;
++}
++
++static int systemd_timer_delete_units(void)
++{
++	return systemd_timer_enable_unit(0, SCHEDULE_HOURLY) ||
++	       systemd_timer_enable_unit(0, SCHEDULE_DAILY) ||
++	       systemd_timer_enable_unit(0, SCHEDULE_WEEKLY) ||
++	       systemd_timer_delete_unit_templates();
++}
++
++static int systemd_timer_write_unit_templates(const char *exec_path)
++{
++	char *filename;
++	FILE *file;
++	const char *unit;
++
++	filename = xdg_config_home_systemd("git-maintenance@.timer");
++	if (safe_create_leading_directories(filename)) {
++		error(_("failed to create directories for '%s'"), filename);
++		goto error;
++	}
++	file = fopen_or_warn(filename, "w");
++	if (file == NULL)
++		goto error;
++	FREE_AND_NULL(filename);
++
++	unit = "# This file was created and is maintained by Git.\n"
++	       "# Any edits made in this file might be replaced in the future\n"
++	       "# by a Git command.\n"
++	       "\n"
++	       "[Unit]\n"
++	       "Description=Optimize Git repositories data\n"
++	       "\n"
++	       "[Timer]\n"
++	       "OnCalendar=%i\n"
++	       "Persistent=true\n"
++	       "\n"
++	       "[Install]\n"
++	       "WantedBy=timers.target\n";
++	if (fputs(unit, file) == EOF) {
++		error(_("failed to write to '%s'"), filename);
++		fclose(file);
++		goto error;
++	}
++	if (fclose(file) == EOF) {
++		error_errno(_("failed to flush '%s'"), filename);
++		goto error;
++	}
++
++	filename = xdg_config_home_systemd("git-maintenance@.service");
++	file = fopen_or_warn(filename, "w");
++	if (file == NULL)
++		goto error;
++	FREE_AND_NULL(filename);
++
++	unit = "# This file was created and is maintained by Git.\n"
++	       "# Any edits made in this file might be replaced in the future\n"
++	       "# by a Git command.\n"
++	       "\n"
++	       "[Unit]\n"
++	       "Description=Optimize Git repositories data\n"
++	       "\n"
++	       "[Service]\n"
++	       "Type=oneshot\n"
++	       "ExecStart=\"%s/git\" --exec-path=\"%s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%%i\n"
++	       "LockPersonality=yes\n"
++	       "MemoryDenyWriteExecute=yes\n"
++	       "NoNewPrivileges=yes\n"
++	       "RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6\n"
++	       "RestrictNamespaces=yes\n"
++	       "RestrictRealtime=yes\n"
++	       "RestrictSUIDSGID=yes\n"
++	       "SystemCallArchitectures=native\n"
++	       "SystemCallFilter=@system-service\n";
++	if (fprintf(file, unit, exec_path, exec_path) < 0) {
++		error(_("failed to write to '%s'"), filename);
++		fclose(file);
++		goto error;
++	}
++	if (fclose(file) == EOF) {
++		error_errno(_("failed to flush '%s'"), filename);
++		goto error;
++	}
++	return 0;
++
++error:
++	free(filename);
++	systemd_timer_delete_unit_templates();
++	return -1;
++}
++
++static int systemd_timer_setup_units(void)
++{
++	const char *exec_path = git_exec_path();
++
++	int ret = systemd_timer_write_unit_templates(exec_path) ||
++	          systemd_timer_enable_unit(1, SCHEDULE_HOURLY) ||
++	          systemd_timer_enable_unit(1, SCHEDULE_DAILY) ||
++	          systemd_timer_enable_unit(1, SCHEDULE_WEEKLY);
++	if (ret)
++		systemd_timer_delete_units();
++	return ret;
++}
++
++static int systemd_timer_update_schedule(int run_maintenance, int fd)
++{
++	if (run_maintenance)
++		return systemd_timer_setup_units();
++	else
++		return systemd_timer_delete_units();
++}
++
+ enum scheduler {
+ 	SCHEDULER_INVALID = -1,
+ 	SCHEDULER_AUTO,
+ 	SCHEDULER_CRON,
++	SCHEDULER_SYSTEMD,
+ 	SCHEDULER_LAUNCHCTL,
+ 	SCHEDULER_SCHTASKS,
+ };
+@@ -2058,6 +2269,11 @@ static const struct {
+ 		.is_available = is_crontab_available,
+ 		.update_schedule = crontab_update_schedule,
+ 	},
++	[SCHEDULER_SYSTEMD] = {
++		.name = "systemctl",
++		.is_available = is_systemd_timer_available,
++		.update_schedule = systemd_timer_update_schedule,
++	},
+ 	[SCHEDULER_LAUNCHCTL] = {
+ 		.name = "launchctl",
+ 		.is_available = is_launchctl_available,
+@@ -2078,6 +2294,9 @@ static enum scheduler parse_scheduler(const char *value)
+ 		return SCHEDULER_AUTO;
+ 	else if (!strcasecmp(value, "cron") || !strcasecmp(value, "crontab"))
+ 		return SCHEDULER_CRON;
++	else if (!strcasecmp(value, "systemd") ||
++		 !strcasecmp(value, "systemd-timer"))
++		return SCHEDULER_SYSTEMD;
+ 	else if (!strcasecmp(value, "launchctl"))
+ 		return SCHEDULER_LAUNCHCTL;
+ 	else if (!strcasecmp(value, "schtasks"))
+@@ -2116,6 +2335,15 @@ static void resolve_auto_scheduler(enum scheduler *scheduler)
+ 	*scheduler = SCHEDULER_SCHTASKS;
+ 	return;
+ 
++#elif defined(__linux__)
++	if (is_systemd_timer_available())
++		*scheduler = SCHEDULER_SYSTEMD;
++	else if (is_crontab_available())
++		*scheduler = SCHEDULER_CRON;
++	else
++		die(_("neither systemd timers nor crontab are available"));
++	return;
++
+ #else
+ 	*scheduler = SCHEDULER_CRON;
+ 	return;
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index b36b7f5fb0..b289cae6b9 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -20,6 +20,18 @@ test_xmllint () {
+ 	fi
+ }
+ 
++test_lazy_prereq SYSTEMD_ANALYZE '
++	systemd-analyze --help >out &&
++	grep verify out
++'
++
++test_systemd_analyze_verify () {
++	if test_have_prereq SYSTEMD_ANALYZE
++	then
++		systemd-analyze verify "$@"
++	fi
++}
++
+ test_expect_success 'help text' '
+ 	test_expect_code 129 git maintenance -h 2>err &&
+ 	test_i18ngrep "usage: git maintenance <subcommand>" err &&
+@@ -634,15 +646,56 @@ test_expect_success 'start and stop Windows maintenance' '
+ 	test_cmp expect args
+ '
+ 
++test_expect_success 'start and stop Linux/systemd maintenance' '
++	write_script print-args <<-\EOF &&
++	printf "%s\n" "$*" >>args
++	EOF
++
++	XDG_CONFIG_HOME="$PWD" &&
++	export XDG_CONFIG_HOME &&
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args" git maintenance start --scheduler=systemd-timer &&
++
++	# start registers the repo
++	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
++
++	test_systemd_analyze_verify "systemd/user/git-maintenance@.service" &&
++
++	printf -- "--user enable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
++	test_cmp expect args &&
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args" git maintenance stop &&
++
++	# stop does not unregister the repo
++	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
++
++	test_path_is_missing "systemd/user/git-maintenance@.timer" &&
++	test_path_is_missing "systemd/user/git-maintenance@.service" &&
++
++	printf -- "--user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
++	test_cmp expect args
++'
++
+ test_expect_success 'start and stop when several schedulers are available' '
+ 	write_script print-args <<-\EOF &&
+ 	printf "%s\n" "$*" | sed "s:gui/[0-9][0-9]*:gui/[UID]:; s:\(schtasks /create .* /xml\).*:\1:;" >>args
+ 	EOF
+ 
+ 	rm -f args &&
+-	GIT_TEST_MAINT_SCHEDULER="launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=launchctl &&
+-	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
++	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=systemd-timer &&
++	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
+ 		hourly daily weekly >expect &&
++	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
++		hourly daily weekly >>expect &&
++	printf -- "systemctl --user enable --now git-maintenance@%s.timer\n" hourly daily weekly >>expect &&
++	test_cmp expect args &&
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=launchctl &&
++	printf -- "systemctl --user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
++	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
++		hourly daily weekly >>expect &&
+ 	for frequency in hourly daily weekly
+ 	do
+ 		PLIST="$pfx/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
+@@ -652,17 +705,19 @@ test_expect_success 'start and stop when several schedulers are available' '
+ 	test_cmp expect args &&
+ 
+ 	rm -f args &&
+-	GIT_TEST_MAINT_SCHEDULER="launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=schtasks &&
++	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=schtasks &&
++	printf -- "systemctl --user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
+ 	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
+-		hourly daily weekly >expect &&
++		hourly daily weekly >>expect &&
+ 	printf "schtasks /create /tn Git Maintenance (%s) /f /xml\n" \
+ 		hourly daily weekly >>expect &&
+ 	test_cmp expect args &&
+ 
+ 	rm -f args &&
+-	GIT_TEST_MAINT_SCHEDULER="launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance stop &&
++	GIT_TEST_MAINT_SCHEDULER="systemctl:./print-args systemctl,launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance stop &&
++	printf -- "systemctl --user disable --now git-maintenance@%s.timer\n" hourly daily weekly >expect &&
+ 	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
+-		hourly daily weekly >expect &&
++		hourly daily weekly >>expect &&
+ 	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
+ 		hourly daily weekly >>expect &&
+ 	test_cmp expect args
+-- 
+2.32.0
+
