@@ -7,81 +7,77 @@ X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 855CFC47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A791C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:38:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 593B261287
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:37:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2AAF06135A
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232152AbhFHRj3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 13:39:29 -0400
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:38648 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231691AbhFHRj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 13:39:28 -0400
-Received: by mail-pl1-f169.google.com with SMTP id 69so11039542plc.5
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:37:25 -0700 (PDT)
+        id S233536AbhFHRkS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 13:40:18 -0400
+Received: from mail-pj1-f42.google.com ([209.85.216.42]:33496 "EHLO
+        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232885AbhFHRkR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 13:40:17 -0400
+Received: by mail-pj1-f42.google.com with SMTP id k22-20020a17090aef16b0290163512accedso2171096pjz.0
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:38:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BdQCejkkhCfrFwQonU8xoShqMAHB495u7fPtYIPpyYg=;
-        b=BfZbvUMTbpH92XgMUb/9yyn2bHkbBDIg5M3tw+awOjjPFlA9O2HQJug5L1V46GNBXj
-         3JX6QzwsRYPGmQZY7RTjj/W7g0e3bE7cZ7X2d+EXAf3JgoqmvxYki+6Dk/DGgOgPLBIz
-         2MrPCLGotznMTlTTx3bjDl/y6tKmS4iZya3HQhR3/wNbwTOu+GPHwvj9LM0YZKDN1zMr
-         xNV6sAcf3FufumZeKw6cs4o8D0dhc6ZlG0QR6sBlCvGkB3EBGlccmiwKKaRwCv0WtbYw
-         IjcYmNAP9eZ6aPmoKzfa7hJh15d0g95d6GWqgizSwclXUnjqSA5IgXXZbvZ2phXAmcnp
-         +EOg==
+        bh=LaycHrTn2E1++tBsZLEzPYKibi6YUeefZW7JDwnPGYI=;
+        b=cEyDPW1x+VYf+HW4U942XiQfuaQAN/aoRpAQn2qdujw5nFRXI864NXqNA0enORFnEF
+         DmAxgfigKgQaAmWbPeOHOsAznrinb3L1I5CXiGzuHwLVtvnyk3EvH79wEwIOg5IWU2TQ
+         Rg+JgVDFbRbn3nZKZ0wUjNsePQgcP7yabYG2j2ysOtjCbhimQEM17cjM3a9vMXU10ey6
+         3A03ebsyKrblgpo4aIxU/oDMK/uw2qORbf6IBhwDnfG89n9IcwVOM9855hty3RUkvcsU
+         MZnu4rpd7LU1rAJBPRjVjFQtXujcaMuQ2cmnJ5Pgm9LpZSHXmli5jHYexnsV2cuaHTB7
+         hBFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BdQCejkkhCfrFwQonU8xoShqMAHB495u7fPtYIPpyYg=;
-        b=dWT9Dk1v5g4Oo2NBUtyf1uyoa25ynQrNrvKAlYntN/sRNDyusvI8LXAPrDDAVKVrMu
-         IvpPFK+mDssngTJrlsWW5qn2J2ePUnXEMyIpgtNYRd/rLunIaQdcn4oW4lg8/rZrBegL
-         qABmAi76XvMBIoFmq1Jdd07OI4snBDFzkLIXmSRN9ZK2HAN6h7IDpH2+wWSZyj4P/irc
-         HqL6REJCnZeIlVUHEB7jhINNxcSnjmFXJ8c/yNTgtyNCNhLT8AMcjxvCH90dCiMYJKBN
-         dLnX2ORFsJUxZxbvVixlONNAmjAVM0EA+1F9Cka9gBdRN2isxBVvChJE96jlQnXo0WR6
-         TQbQ==
-X-Gm-Message-State: AOAM530XXVlKNVVXQVjfv+j6n+7uQnod//ldYQJKuh8pcCuuEXJp6I8I
-        g7q/lTsXHfru7+4ldL2Yir58WEVNzjNBKQ==
-X-Google-Smtp-Source: ABdhPJxVAbuqlZIAHJqFtGJXeA2IJvMqrrByYhz6GNBQsnQB48Wqd0koJvBeqv2U2lJLQFI4YhIkCg==
-X-Received: by 2002:a17:90a:4e85:: with SMTP id o5mr6128404pjh.22.1623173784743;
-        Tue, 08 Jun 2021 10:36:24 -0700 (PDT)
+        bh=LaycHrTn2E1++tBsZLEzPYKibi6YUeefZW7JDwnPGYI=;
+        b=DeHr6ZFMFybB+VegIfRUdDimjaVUdV2g7157+cEya0j46PVzFlRlVVXOO4UDT2CeTw
+         yg0WUZkdioZBGeAOWD0HDyr1Be51YaLp9wQwFRsX0MhoKuww8nsHAggkaD5XQQ47lFNL
+         ZOwEODRK7gJKXKgeN/CK8XTbIn3qQP9BzsogUC8so1IPpvH3s8cJ0Et5wK5VXQZxIW+1
+         hdI6WMd8qSkTLWTkm2/4dsrkrVIUznkF6JpYID2qnGFNkE5oBF9m8+HQn4RfrnUxhb9S
+         2ebLVt0Oqvmm+ZX5KzJunRYkV8gbsyhuFrHfVJK7Lr5EhdBSKPtKk08HSmZilIqescCZ
+         je5Q==
+X-Gm-Message-State: AOAM531Nvc6GS6rBRFFQSUH4rmQrEhLqJkS3DMJqgBI3aiDF2+qGlDNk
+        wbO3mLaha/WxnxlelAhM9rQDqw==
+X-Google-Smtp-Source: ABdhPJw7Z2/4BWaDGrEDCfgWR+SMydYDbj6KFwKjm4RHF4fYkSvUSK7oVK4UmW4IkiL0yP0H3hAeIw==
+X-Received: by 2002:a17:902:db0f:b029:f3:e5f4:87f1 with SMTP id m15-20020a170902db0fb02900f3e5f487f1mr775316plx.26.1623173844360;
+        Tue, 08 Jun 2021 10:37:24 -0700 (PDT)
 Received: from google.com ([2620:15c:2ce:0:f819:e238:f61a:a961])
-        by smtp.gmail.com with ESMTPSA id p11sm15935754pjo.19.2021.06.08.10.36.23
+        by smtp.gmail.com with ESMTPSA id d131sm11744369pfd.176.2021.06.08.10.37.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 10:36:23 -0700 (PDT)
-Date:   Tue, 8 Jun 2021 10:36:17 -0700
+        Tue, 08 Jun 2021 10:37:23 -0700 (PDT)
+Date:   Tue, 8 Jun 2021 10:37:18 -0700
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com,
         sandals@crustytoothpaste.net, stolee@gmail.com, jrnieder@gmail.com,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 2/4] *: use singular they in comments
-Message-ID: <YL+qkVXGMzg8S9gp@google.com>
+Subject: Re: [PATCH 3/4] *: fix typos
+Message-ID: <YL+qzgs1sdkbspbY@google.com>
 References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <b36e3f99716bf3976fc886df684c300e17566c79.1623085069.git.gitgitgadget@gmail.com>
+ <c40ad4a058a75d57adc97b8252ad0f57600b8d86.1623085069.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b36e3f99716bf3976fc886df684c300e17566c79.1623085069.git.gitgitgadget@gmail.com>
+In-Reply-To: <c40ad4a058a75d57adc97b8252ad0f57600b8d86.1623085069.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 07, 2021 at 04:57:46PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Mon, Jun 07, 2021 at 04:57:47PM +0000, Derrick Stolee via GitGitGadget wrote:
 > 
 > 
-> Several comments in our code refer to an anonymous user with "he/him" or
-> "she/her" pronouns, and the choice between the two is arbitrary.
-> 
-> Replace these uses with "they/them" which universally includes all
-> potential readers.
+> These typos were found while searching the codebase for gendered
+> pronouns.
 
-Thanks. I'm especially glad to see the codebase start to unify instead
-of awkwardly choosing between "he", "she", "he or she", or even "(s)he".
-This seems a lot neater.
+Around snickering to myself trying to figure out alternate meanings
+where these aren't typos,
 
 Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
