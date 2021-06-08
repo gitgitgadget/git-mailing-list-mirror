@@ -2,138 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-28.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A09F5C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 222F5C4743D
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:29:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8421C6136D
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:24:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0740361375
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:29:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232725AbhFHR0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 13:26:18 -0400
-Received: from mail-pg1-f172.google.com ([209.85.215.172]:40721 "EHLO
-        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231237AbhFHR0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 13:26:17 -0400
-Received: by mail-pg1-f172.google.com with SMTP id j12so17054656pgh.7
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:24:08 -0700 (PDT)
+        id S231517AbhFHRbO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 13:31:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42998 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231278AbhFHRbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 13:31:14 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A91B6C061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 10:29:04 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so21101997otl.3
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uoLeKidaSD4g6/DrEw/k1gxcQCxr6aArHk/wMJuNhO4=;
-        b=f1lDvI51kp2QEOfCtkbh5h2R2U6BI+JMql+OUgWeR1yIcYjrEdxLjnvzgjAQycdna0
-         oYkPyMbgNAaDruE+1k9l6sD45z3WT5838dg25AP36KAQ40SM348PIRRqz9f4S1tbHC93
-         wQ6kU9KAGOuKb1L6EnSZEjVJp67wbicL5yP1tZZqhRMuVTFwqaG6H0g0d2UUS0EdHe7r
-         Y0tBRNO9AsQ7Qg58nt5volWMsBucw08TuJIrO+gMUOW9Pt1Ag3NX9OKeg0d7DRFEH7T/
-         XBl19IuufpcS7qk/mIKbYFtGAhZkcm3MQEqBPZ17mDlU3bwVL/FD081EY5spFmZtgjz8
-         b1Hg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6xQwVeYLBln2/RU5GK/u/7XCDlEmpNQzNGihz3B8e8Q=;
+        b=SOjXj12rEeLuW9gB4nEN5J34YihoCXZMxrVJf9/nIVMGw155LCLlgV8+mCW8s4vQt4
+         VtenDJjRuYQWDhZqkFmdQndhDXf8LREf0aGHoGB7tiL2FSINDqx5YYtLv8hJvhS+lnLJ
+         hW/Ym6JxVqYcYs8NSMDARKZfnCFjWRZZVTOnF8KlQanP65SVnD9w8rBjwhHhWPlrzdBJ
+         eQ1IXGOH/sJ+f3IqzlNDE79D51FJHA7xdsenB6NgwJtEKmjtsGc4ttxYCs4OcDsVFWVo
+         D85RlXdo4MtJa3a3LKe6u4D0NG15YSFTYHicNbKPcUzWhiZuis6b+2O2iyvCWou7jvp1
+         Ss0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uoLeKidaSD4g6/DrEw/k1gxcQCxr6aArHk/wMJuNhO4=;
-        b=Ruk0TL/8csIpkSCrOb5H4LT0ArO8RPxUJYpT5+vsPL4RCJ9sbfvdOtUVII+b+B/sWQ
-         pDcQHHjq1dE0d1JDLrcEZjnlwsa9VlcWIs4r3rj+AoMhqGGOOYQPDJwLrYNu+Jypbt5n
-         TQzoEXwvpPA5139pWc/rPq37ZCHGas90+/A4qdTxrhMZzLz9lkal2RIGErrMu2AmXdQ0
-         zSxUVsmzY9I4r7WOIHoXEiHhqEriTUrBeYf0wfoyyNzCURg9w/sc6P0uzvBbQ5F7b3lW
-         GERNpYLwxgWtxh2H3N3M5NxUSdILfZZLVzsTy+3u6pHVDdVDX/qsXgQ9A61sNLGUjJ6m
-         Il6g==
-X-Gm-Message-State: AOAM532ftZqvjDi03Xo/6rPnngj2zdjFmrZ9Cm4/g64zPX3XKDU1Ovl8
-        2SKy/b49+7ed4ePUQquUsC0flw==
-X-Google-Smtp-Source: ABdhPJyfAo1J83a3lvclasSoPOOw0MfOlglNIrTYJkU1VmcLXTmpAidHWRgEjDTFPIUTSmbv9ZK9mA==
-X-Received: by 2002:a05:6a00:1913:b029:2ec:8f20:4ea with SMTP id y19-20020a056a001913b02902ec8f2004eamr981608pfi.3.1623172987566;
-        Tue, 08 Jun 2021 10:23:07 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:f819:e238:f61a:a961])
-        by smtp.gmail.com with ESMTPSA id o3sm4399869pfd.41.2021.06.08.10.23.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 10:23:06 -0700 (PDT)
-Date:   Tue, 8 Jun 2021 10:23:00 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] MyFirstContribution: link #git-devel to Libera Chat
-Message-ID: <YL+ndHSLowy/qyZV@google.com>
-References: <20210608135114.71104-1-raykar.ath@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6xQwVeYLBln2/RU5GK/u/7XCDlEmpNQzNGihz3B8e8Q=;
+        b=AyOpfjwQ9Hbt5FNjbPcwH2TPkiOpQDOhxkztPQ5XtC4u285E4aGM6yiPiIaFe+dQg/
+         W2ESGgsSE9HEFpY2hAKc4p7OSkxb5FejgQFHQPRAMtz8r+uHITCNdvJNuil4jmPs1aXq
+         jWtNU8Jg2n75YDR9dgA3K+vXvJobYncPDamCTIC08sBIVRXMOWE7cmf4QZzvc6YyTFg4
+         OS/N5blLA/PjJvfAalZP7T83Hzk7vy2ZK77d+T2dYGrNCyhzvHqcy/5dOdmmphqdCCyw
+         Ch3kFBhzcgw4u3PXWbkh7U5wTZIMfDFYD2gAl6lNTJiWPU5KNhy+q4/hAwW2Su/BkHe9
+         Deuw==
+X-Gm-Message-State: AOAM5317U2jzoO7cFjRc0mU/z33NNIcVh+SjS9vVVQu/IYQc/MfoJYkN
+        VBpFotWHwn4r7sKcWn51esds5QZcHnVtCg2rjWQ=
+X-Google-Smtp-Source: ABdhPJzXcYDMQt2DS5uOsRSuYC9wDJ+CuR69dLOAKorKwuDcXPaGvvfIrDe2iP0Pi1DkN47u2MKOJt+FblzbnzGUD5Y=
+X-Received: by 2002:a9d:1a8:: with SMTP id e37mr18704942ote.316.1623173343947;
+ Tue, 08 Jun 2021 10:29:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210608135114.71104-1-raykar.ath@gmail.com>
+References: <cover.1622580781.git.jonathantanmy@google.com>
+ <cover.1623111879.git.jonathantanmy@google.com> <07290cba86fda73ee329a47db8e524b32dba25af.1623111879.git.jonathantanmy@google.com>
+In-Reply-To: <07290cba86fda73ee329a47db8e524b32dba25af.1623111879.git.jonathantanmy@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 8 Jun 2021 10:28:52 -0700
+Message-ID: <CABPp-BEn+yksK1KhncL8jWAya+ikGPUtsWpoZhrJrgRH2ORajw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] promisor-remote: read partialClone config here
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 08, 2021 at 07:21:14PM +0530, Atharva Raykar wrote:
-> 
-> It's pretty safe to say that most of the regulars on #git-devel are now
-> on Libera Chat. This will help new contributors find the right place, if
-> they choose to ask questions on `#git-devel`.
-> 
-> Since there seems to be no way to directly link Libera's web chat to
-> `#git-devel` directly,
-
-I just typed "web.libera.chat/#git-devel" and it worked perfectly fine.
-
-> I have put a generic link over the text 'Libera
-> Chat'. Users will have to manually type `#git-devel` in the webchat
-> interface, but that should be obvious enough to not be worth mentioning.
-
-Generally, this is a bad approach to take for absolute-beginner
-documents like this one. Even if it "should" be obvious, why not just
-say it? Some skills - like how to examine the compiler errors from your
-C compiler and fix your code accordingly - are a necessary prerequisite
-to be useful on the Git project; other skills - like how to use IRC -
-are not, and we can teach them, especially in a guide like this :)
-
-But anyway it's moot, as direct link does seem to work.
-
-> 
-> Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+On Mon, Jun 7, 2021 at 5:26 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> Currently, the reading of config related to promisor remotes is done in
+> two places: once in setup.c (which sets the global variable
+> repository_format_partial_clone, to be read by the code in
+> promisor-remote.c), and once in promisor-remote.c. This means that care
+> must be taken to ensure that repository_format_partial_clone is set
+> before any code in promisor-remote.c accesses it.
+>
+> To simplify the code, move all such config reading to promisor-remote.c.
+> By doing this, it will be easier to see when
+> repository_format_partial_clone is written and, thus, to reason about
+> the code. This will be especially helpful in a subsequent commit, which
+> modifies this code.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
-> 
-> My heuristic for determining "most of the regulars are on Libera Chat" is the
-> fact that the last biweekly standup happened there.
-> 
->  Documentation/MyFirstContribution.txt | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
-> index af0a9da62e..cd9e2069d4 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -47,7 +47,7 @@ Veteran contributors who are especially interested in helping mentor newcomers
->  are present on the list. In order to avoid search indexers, group membership is
->  required to view messages; anyone can join and no approval is required.
->  
-> -==== https://webchat.freenode.net/#git-devel[#git-devel] on Freenode
-> +==== #git-devel on https://web.libera.chat[Libera Chat]
+>  cache.h           |  1 -
+>  promisor-remote.c | 14 +++++++++-----
+>  promisor-remote.h |  6 ------
+>  setup.c           | 10 +++++++---
+>  4 files changed, 16 insertions(+), 15 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index ba04ff8bd3..dbdcec8601 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1061,7 +1061,6 @@ extern int repository_format_worktree_config;
+>  struct repository_format {
+>         int version;
+>         int precious_objects;
+> -       char *partial_clone; /* value of extensions.partialclone */
+>         int worktree_config;
+>         int is_bare;
+>         int hash_algo;
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index da3f2ca261..c0e5061dfe 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -7,11 +7,6 @@
+>
+>  static char *repository_format_partial_clone;
+>
+> -void set_repository_format_partial_clone(char *partial_clone)
+> -{
+> -       repository_format_partial_clone = xstrdup_or_null(partial_clone);
+> -}
+> -
+>  static int fetch_objects(const char *remote_name,
+>                          const struct object_id *oids,
+>                          int oid_nr)
+> @@ -99,6 +94,15 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+>         size_t namelen;
+>         const char *subkey;
+>
+> +       if (!strcmp(var, "extensions.partialclone")) {
+> +               /*
+> +                * NULL value is handled in handle_extension_v0 in setup.c.
+> +                */
+> +               if (value)
+> +                       repository_format_partial_clone = xstrdup(value);
+> +               return 0;
+> +       }
 
-The prior link was a direct link to the #git-devel channel, so that
-newbies don't need to figure out how to join the channel they want from
-the main webchat landing page. It looks like Libera also supports this
-functionality. So please link to 'https://web.libera.chat/#git-devel'
-instead.
+This is actually slightly hard to parse out.  I was trying to figure
+out where repository_format_partial_clone was initialized, and it's
+not handled when value is NULL in handle_extension_v0; it's the fact
+that repository_format_partial_clone is declared a static global
+variable.
 
-> @@ -826,9 +826,9 @@ NOTE: You can typically find someone who can `/allow` you on GitGitGadget by
->  either examining recent pull requests where someone has been granted `/allow`
->  (https://github.com/gitgitgadget/git/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+%22%2Fallow%22[Search:
->  is:pr is:open "/allow"]), in which case both the author and the person who
-> -granted the `/allow` can now `/allow` you, or by inquiring on the
-> -https://webchat.freenode.net/#git-devel[#git-devel] IRC channel on Freenode
-> -linking your pull request and asking for someone to `/allow` you.
-> +granted the `/allow` can now `/allow` you, or by inquiring on the #git-devel IRC
-> +channel on https://web.libera.chat[Libera Chat] linking your pull request and
-> +asking for someone to `/allow` you.
+But in the next patch you make it a member of struct
+promisor_remote_config, and instead rely on the xcalloc call in
+promisor_remote_init().
 
-Same as above.
+That means everything is properly initialized and you haven't made any
+mistakes here, but the logic is a bit hard to follow.  Perhaps it'd be
+nicer to just write this as
 
++       if (!strcmp(var, "extensions.partialclone")) {
++               repository_format_partial_clone = xstrdup_or_null(value);
++               return 0;
++       }
 
-Thanks very much for sending the patch. I haven't had time to address it
-myself.
-
- - Emily
+which makes the code shorter and easier to follow, at least for me.
