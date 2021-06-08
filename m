@@ -5,283 +5,305 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE6D7C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98495C4743D
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 10:49:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CD1561185
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:59:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E4A661246
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 10:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231183AbhFHKBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 06:01:10 -0400
-Received: from mail-pg1-f172.google.com ([209.85.215.172]:43860 "EHLO
-        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbhFHKBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 06:01:09 -0400
-Received: by mail-pg1-f172.google.com with SMTP id e22so16081817pgv.10
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 02:59:17 -0700 (PDT)
+        id S231890AbhFHKvE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 06:51:04 -0400
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:37608 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231588AbhFHKvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 06:51:00 -0400
+Received: by mail-wm1-f51.google.com with SMTP id f16-20020a05600c1550b02901b00c1be4abso1614918wmg.2
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 03:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KX3bswDNF4TESUPTIvIQEpWB5DNLDLS1pa9VRs3NAZw=;
-        b=Khq4o6YsVyltCes0wbqvNfPN9Q2aIR2X6frqyxSDOoln01QNpj0TMLroJzbLQy1xC0
-         +MX04hLu6yuVqY4nYcsoB1O4qC92t6+WdX4oAiZG8e0X1e9xgK9dWzjbxABhP1XUROsC
-         OJce9zOSkRGMFP6mKK7PGDZ93oU/aoGGAabqHgvcV+J2SJITcjYYJaukXeretIvSRGIY
-         VZQhp/8K2WKMmRmbSqW+8dv4B5d6myrT7HWaQNCzTBeHv7jgICt/8W/07atuxo+gcSj3
-         iJEVQd0ykU0BtoLwzH2r2vvWehqkJw0MvYk4QuCj0yryGrRPkp2A8GCPJJzhzH4otIPn
-         EJNA==
+        bh=2dNB4wLiPRKZFSb0fxX6LFLJBXB30M9kq8hIjDtiGjs=;
+        b=ey4HiDvYXTJVPnwZpjvMyh4zB+T7nqu0H2tzW7OlVtOXklxKxqnOVgfbX6etMp4j+8
+         Kp2OGTbeLW3V5QWEuJ0cV6N+offiK4eVxp8ERx8YwY+t4xkhBwudlqPzVl8Dvh8J/+zo
+         NWwL6K2GT0X34W5LUBRiUXLwmvc6f/SYCt1UC03VKqe7LYdRyIlcg43uPHsaDXgxaWj9
+         wiRRFy9H8JzELX+zQL8gSf5Wb3XYncy3Fu01Pv7cG6972ueb3k+hyr0UxZOb386LcSS5
+         BgqqWaAc4CLSp4snqAwJ7+DIF+Vyeynx/t64DlJcSPQJudnLuNCfXD6PVhW28pnk3aFY
+         0vQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KX3bswDNF4TESUPTIvIQEpWB5DNLDLS1pa9VRs3NAZw=;
-        b=SgrsxpF7/QkAqbu3TASlL/7DGhXHwT6rAjx8jT++yVimTGGhLrIokNXj7wuTmn05nm
-         4eL2na3bFP/dNYCeBrqAnHXU4ffQRQFrJc3YtkZuZzmyT6qd7nI10Wjm0VpWx8Sduwln
-         XUyeSWlnVBM5cJt8qLscdmPwlnXaTSXkrZl52Amk22a4b9grmLOg/8VFH6P0ugqcBVvO
-         qIcVB0P2ZOLjodSNIxyDfFpdmJtUR73V12VTlBjypZ4n9fgal8/82aGtju2gjPr5Fj1h
-         pKzudcVRxWXiJryWRIWORa5aW4b3Bcy1gQ1iENcy+7PKX6SNqAFecJwxvKywOzTGDbwB
-         LgAQ==
-X-Gm-Message-State: AOAM532xtHvGQYq3y8PmNsMSmxljtABeegjirGLFAlh/c9/shBo27Jiv
-        LNO83OoIiAokcw8V6MuNhnc6mWZP+BIBJxhYQFM=
-X-Google-Smtp-Source: ABdhPJwtwH2bSxg6fiW120UEYbNoZBj9HW+eFMq0IaWqvkupZgxuPuMKbMYSRIKtaa5VfSCnngi22g==
-X-Received: by 2002:a05:6a00:181c:b029:2ed:49fa:6dc5 with SMTP id y28-20020a056a00181cb02902ed49fa6dc5mr13990752pfa.3.1623146296849;
-        Tue, 08 Jun 2021 02:58:16 -0700 (PDT)
-Received: from atharva-on-air.Dlink ([119.82.107.60])
-        by smtp.gmail.com with ESMTPSA id p20sm10323979pff.204.2021.06.08.02.58.14
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Jun 2021 02:58:16 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
+        bh=2dNB4wLiPRKZFSb0fxX6LFLJBXB30M9kq8hIjDtiGjs=;
+        b=kZY16FZhoRvV5dPUDdCczxFjLyzvqdv8EEbGQy7y4CY8NeIgZuKV00N3ahR7Pyjs53
+         YdPV55bgzShygomYUoRiLHROm2cmKb/7hC4i6wMP0kjIqG9LY3dNAzLpACitcQH4z4fG
+         wzImyf4vOWCD2JVqjdfl3qjgew/5lNH/3hl1ueHKSOKBqItNXpGfBsduqmRhTrJyHRt8
+         KGNZastR0/Iod4jSYCSVJnO8CbHGkpBxWxlRWshwCTRpsEIc3YJwoKqlFIyIrsD4FveN
+         X9dCpe2JCzraTYxUtevYnuECdhrd9IguVMUd06cS6mcQel6oDzBjPQlGOovPyacjfYsu
+         3rNA==
+X-Gm-Message-State: AOAM532dEv4CLoGlfjlHwEhg7oeo5htPsFEQL6+crwrlBxzQgQrKTefn
+        Ueg98hYTvHuN/Ljt8cBkm3g9P1jcyY9ixw==
+X-Google-Smtp-Source: ABdhPJxFRnxGfbLW88DYpyKlJXST+1ZOWmZGL2Aty8ghh2/h8956G0ipN3jyKO/0ULuVguhrG4kzoQ==
+X-Received: by 2002:a05:600c:4e8e:: with SMTP id f14mr3466825wmq.172.1623149286787;
+        Tue, 08 Jun 2021 03:48:06 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t4sm19765449wru.53.2021.06.08.03.48.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 03:48:06 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC] [PATCH v2 2/2] submodule--helper: introduce add-config subcommand
-Date:   Tue,  8 Jun 2021 15:26:55 +0530
-Message-Id: <20210608095655.47324-3-raykar.ath@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210608095655.47324-1-raykar.ath@gmail.com>
-References: <20210605113913.29005-1-raykar.ath@gmail.com>
- <20210608095655.47324-1-raykar.ath@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] builtins + test helpers: use return instead of exit() in cmd_*
+Date:   Tue,  8 Jun 2021 12:48:03 +0200
+Message-Id: <patch-1.1-f225b78e01-20210608T104454Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
+In-Reply-To: <patch-1.1-61d7e6e079-20210607T111008Z-avarab@gmail.com>
+References: <patch-1.1-61d7e6e079-20210607T111008Z-avarab@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new "add-config" subcommand to `git submodule--helper` with the
-goal of converting part of the shell code in git-submodule.sh related to
-`git submodule add` into C code. This new subcommand sets the
-configuration variables of a newly added submodule, by registering the
-url in local git config, as well as the submodule name and path in the
-.gitmodules file. It also sets 'submodule.<name>.active' to "true" if
-the submodule path has not already been covered by any pathspec
-specified in 'submodule.active'.
+Change various cmd_* functions that claim no return an "int" to use
+"return" instead of exit() to indicate an exit code. These were not
+marked with NORETURN, and by directly exit()-ing we'll skip the
+cleanup git.c would otherwise do (e.g. closing fd's, erroring if we
+can't). See run_builtin() in git.c.
 
-This is meant to be a faithful conversion from shell to C, with only one
-minor change: A warning is emitted if no value is specified in
-'submodule.active', ie, the config looks like: "[submodule] active\n",
-because it is an invalid configuration. It would be helpful to let the
-user know that the pathspec is unset, and the value of
-'submodule.<name>.active' might be set to 'true' so that they can
-rectify their configuration and prevent future surprises (especially
-given that the latter variable has a higher priority than the former).
+In the case of shell.c and sh-i18n--envsubst.c this was the result of
+an incomplete migration to using a cmd_main() in 3f2e2297b9 (add an
+extra level of indirection to main(), 2016-07-01).
 
-The structure of the conditional to check if we need to set the 'active'
-toggle looks different from the shell version -- but behaves the same.
-The change was made to decrease code duplication. A comment has been
-added to explain that only one value of 'submodule.active' is obtained
-to check if we need to call is_submodule_active() at all.
+This was spotted by SunCC 12.5 on Solaris 10 (gcc210 on the gccfarm).
 
-This is part of a series of changes that will result in all of
-'submodule add' being converted to C.
-
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-Based-on-patch-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 116 ++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  28 +--------
- 2 files changed, 117 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c9cb535312..d7225f503d 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2943,6 +2943,121 @@ static int add_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
+Clarified the commit message, and made the same s/exit/return/g change
+in shell.c and sh-i18n--envsubst.c. I also missed an "exit(2)" in a
+brach in builtin/merge-ours.c.
+
+Range-diff against v1:
+1:  61d7e6e079 ! 1:  f225b78e01 builtins + test helpers: use return instead of exit() in cmd_*
+    @@ Metadata
+      ## Commit message ##
+         builtins + test helpers: use return instead of exit() in cmd_*
+     
+    -    Change various cmd_* functions to use "return" instead of exit() to
+    -    indicate an exit code. On Solaris with SunCC the compiler legitimately
+    -    complains about these, since we'll e.g. skip the cleanup (e.g. closing
+    -    fd's, erroring if we can't) in git.c's run_builtin() when we exit()
+    -    directly like this.
+    +    Change various cmd_* functions that claim no return an "int" to use
+    +    "return" instead of exit() to indicate an exit code. These were not
+    +    marked with NORETURN, and by directly exit()-ing we'll skip the
+    +    cleanup git.c would otherwise do (e.g. closing fd's, erroring if we
+    +    can't). See run_builtin() in git.c.
+    +
+    +    In the case of shell.c and sh-i18n--envsubst.c this was the result of
+    +    an incomplete migration to using a cmd_main() in 3f2e2297b9 (add an
+    +    extra level of indirection to main(), 2016-07-01).
+    +
+    +    This was spotted by SunCC 12.5 on Solaris 10 (gcc210 on the gccfarm).
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ builtin/difftool.c: static int run_file_diff(int prompt, const char *prefix,
+     
+      ## builtin/merge-ours.c ##
+     @@ builtin/merge-ours.c: int cmd_merge_ours(int argc, const char **argv, const char *prefix)
+    + 	if (read_cache() < 0)
+      		die_errno("read_cache failed");
+      	if (index_differs_from(the_repository, "HEAD", NULL, 0))
+    - 		exit(2);
+    +-		exit(2);
+     -	exit(0);
+    ++		return 2;
+     +	return 0;
+      }
+     
+    @@ builtin/mktree.c: int cmd_mktree(int ac, const char **av, const char *prefix)
+     +	return 0;
+      }
+     
+    + ## sh-i18n--envsubst.c ##
+    +@@ sh-i18n--envsubst.c: cmd_main (int argc, const char *argv[])
+    +   if (ferror (stderr) || fflush (stderr))
+    +     {
+    +       fclose (stderr);
+    +-      exit (EXIT_FAILURE);
+    ++      return (EXIT_FAILURE);
+    +     }
+    +   if (fclose (stderr) && errno != EBADF)
+    +-    exit (EXIT_FAILURE);
+    ++    return (EXIT_FAILURE);
+    + 
+    +-  exit (EXIT_SUCCESS);
+    ++  return (EXIT_SUCCESS);
+    + }
+    + 
+    + /* Parse the string and invoke the callback each time a $VARIABLE or
+    +
+    + ## shell.c ##
+    +@@ shell.c: int cmd_main(int argc, const char **argv)
+    + 		default:
+    + 			continue;
+    + 		}
+    +-		exit(cmd->exec(cmd->name, arg));
+    ++		return cmd->exec(cmd->name, arg);
+    + 	}
+    + 
+    + 	cd_to_homedir();
+    +
+      ## t/helper/test-hash-speed.c ##
+     @@ t/helper/test-hash-speed.c: int cmd__hash_speed(int ac, const char **av)
+      		free(p);
+
+ builtin/difftool.c          | 5 ++---
+ builtin/merge-ours.c        | 4 ++--
+ builtin/mktree.c            | 2 +-
+ sh-i18n--envsubst.c         | 6 +++---
+ shell.c                     | 2 +-
+ t/helper/test-hash-speed.c  | 2 +-
+ t/helper/test-hash.c        | 2 +-
+ t/helper/test-match-trees.c | 2 +-
+ t/helper/test-reach.c       | 2 +-
+ 9 files changed, 13 insertions(+), 14 deletions(-)
+
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 89334b77fb..6a9242a803 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -675,7 +675,7 @@ static int run_file_diff(int prompt, const char *prefix,
+ 		"GIT_PAGER=", "GIT_EXTERNAL_DIFF=git-difftool--helper", NULL,
+ 		NULL
+ 	};
+-	int ret = 0, i;
++	int i;
+ 
+ 	if (prompt > 0)
+ 		env[2] = "GIT_DIFFTOOL_PROMPT=true";
+@@ -686,8 +686,7 @@ static int run_file_diff(int prompt, const char *prefix,
+ 	strvec_push(&args, "diff");
+ 	for (i = 0; i < argc; i++)
+ 		strvec_push(&args, argv[i]);
+-	ret = run_command_v_opt_cd_env(args.v, RUN_GIT_CMD, prefix, env);
+-	exit(ret);
++	return run_command_v_opt_cd_env(args.v, RUN_GIT_CMD, prefix, env);
  }
  
-+static void configure_added_submodule(struct add_data *add_data)
-+{
-+	char *key, *submod_pathspec = NULL;
-+	struct child_process add_submod = CHILD_PROCESS_INIT;
-+	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
-+	int pathspec_key_exists, activate = 0;
-+
-+	key = xstrfmt("submodule.%s.url", add_data->sm_name);
-+	git_config_set_gently(key, add_data->realrepo);
-+	free(key);
-+
-+	add_submod.git_cmd = 1;
-+	strvec_pushl(&add_submod.args, "add",
-+		     "--no-warn-embedded-repo", NULL);
-+	if (add_data->force)
-+		strvec_push(&add_submod.args, "--force");
-+	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
-+
-+	if (run_command(&add_submod))
-+		die(_("Failed to add submodule '%s'"), add_data->sm_path);
-+
-+	key = xstrfmt("submodule.%s.path", add_data->sm_name);
-+	config_set_in_gitmodules_file_gently(key, add_data->sm_path);
-+	free(key);
-+	key = xstrfmt("submodule.%s.url", add_data->sm_name);
-+	config_set_in_gitmodules_file_gently(key, add_data->repo);
-+	free(key);
-+	if (add_data->branch) {
-+		key = xstrfmt("submodule.%s.branch", add_data->sm_path);
-+		config_set_in_gitmodules_file_gently(key, add_data->branch);
-+		free(key);
-+	}
-+
-+	add_gitmodules.git_cmd = 1;
-+	strvec_pushl(&add_gitmodules.args,
-+		     "add", "--force", "--", ".gitmodules", NULL);
-+
-+	if (run_command(&add_gitmodules))
-+		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-+
-+	/*
-+	 * NEEDSWORK: In a multi-working-tree world this needs to be
-+	 * set in the per-worktree config.
-+	 */
-+	pathspec_key_exists = !git_config_get_string("submodule.active",
-+						     &submod_pathspec);
-+	if (pathspec_key_exists && !submod_pathspec) {
-+		warning(_("The submodule.active configuration exists, but the "
-+			  "pathspec was unset. If the submodule is not already "
-+			  "active, the value of submodule.%s.active will be "
-+			  "be set to 'true'."), add_data->sm_name);
-+		activate = 1;
-+	}
-+
-+	/*
-+	 * If submodule.active does not exist, or if the pathspec was unset,
-+	 * we will activate this module unconditionally.
-+	 *
-+	 * Otherwise, we ask is_submodule_active(), which iterates
-+	 * through all the values of 'submodule.active' to determine
-+	 * if this module is already active.
-+	 */
-+	if (!pathspec_key_exists || activate ||
-+	    !is_submodule_active(the_repository, add_data->sm_path)) {
-+		key = xstrfmt("submodule.%s.active", add_data->sm_name);
-+		git_config_set_gently(key, "true");
-+		free(key);
-+	}
-+}
-+
-+static int add_config(int argc, const char **argv, const char *prefix)
-+{
-+	int force = 0;
-+	struct add_data add_data = ADD_DATA_INIT;
-+
-+	struct option options[] = {
-+		OPT_STRING('b', "branch", &add_data.branch,
-+			   N_("branch"),
-+			   N_("branch of repository to store in "
-+			      "the submodule configuration")),
-+		OPT_STRING(0, "url", &add_data.repo,
-+			   N_("string"),
-+			   N_("url to clone submodule from")),
-+		OPT_STRING(0, "resolved-url", &add_data.realrepo,
-+			   N_("string"),
-+			   N_("url to clone the submodule from, after it has "
-+			      "been dereferenced relative to parent's url, "
-+			      "in the case where <url> is a relative url")),
-+		OPT_STRING(0, "path", &add_data.sm_path,
-+			   N_("path"),
-+			   N_("where the new submodule will be cloned to")),
-+		OPT_STRING(0, "name", &add_data.sm_name,
-+			   N_("string"),
-+			   N_("name of the new submodule")),
-+		OPT_BOOL('f', "force", &force,
-+			 N_("allow adding an otherwise ignored submodule path")),
-+		OPT_END()
-+	};
-+
-+	const char *const usage[] = {
-+		N_("git submodule--helper add-config "
-+		   "[--force|-f] [--branch|-b <branch>] "
-+		   "--url <url> --resolved-url <resolved-url> "
-+		   "--path <path> --name <name>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+
-+	add_data.force = !!force;
-+	configure_added_submodule(&add_data);
-+
+ int cmd_difftool(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
+index 4594507420..3583cff71c 100644
+--- a/builtin/merge-ours.c
++++ b/builtin/merge-ours.c
+@@ -28,6 +28,6 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix)
+ 	if (read_cache() < 0)
+ 		die_errno("read_cache failed");
+ 	if (index_differs_from(the_repository, "HEAD", NULL, 0))
+-		exit(2);
+-	exit(0);
++		return 2;
 +	return 0;
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
+ }
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 891991b00d..ae78ca1c02 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -189,5 +189,5 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
+ 		used=0; /* reset tree entry buffer for re-use in batch mode */
+ 	}
+ 	strbuf_release(&sb);
+-	exit(0);
++	return 0;
+ }
+diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
+index e7430b9aa8..6cd307ac2c 100644
+--- a/sh-i18n--envsubst.c
++++ b/sh-i18n--envsubst.c
+@@ -104,12 +104,12 @@ cmd_main (int argc, const char *argv[])
+   if (ferror (stderr) || fflush (stderr))
+     {
+       fclose (stderr);
+-      exit (EXIT_FAILURE);
++      return (EXIT_FAILURE);
+     }
+   if (fclose (stderr) && errno != EBADF)
+-    exit (EXIT_FAILURE);
++    return (EXIT_FAILURE);
  
- struct cmd_struct {
-@@ -2956,6 +3071,7 @@ static struct cmd_struct commands[] = {
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
- 	{"add-clone", add_clone, 0},
-+	{"add-config", add_config, 0},
- 	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index f71e1e5495..9826378fa6 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -242,33 +242,7 @@ cmd_add()
- 	fi
- 
- 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
--	git config submodule."$sm_name".url "$realrepo"
--
--	git add --no-warn-embedded-repo $force "$sm_path" ||
--	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
--
--	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
--	git submodule--helper config submodule."$sm_name".url "$repo" &&
--	if test -n "$branch"
--	then
--		git submodule--helper config submodule."$sm_name".branch "$branch"
--	fi &&
--	git add --force .gitmodules ||
--	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
--
--	# NEEDSWORK: In a multi-working-tree world, this needs to be
--	# set in the per-worktree config.
--	if git config --get submodule.active >/dev/null
--	then
--		# If the submodule being adding isn't already covered by the
--		# current configured pathspec, set the submodule's active flag
--		if ! git submodule--helper is-active "$sm_path"
--		then
--			git config submodule."$sm_name".active "true"
--		fi
--	else
--		git config submodule."$sm_name".active "true"
--	fi
-+	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
+-  exit (EXIT_SUCCESS);
++  return (EXIT_SUCCESS);
  }
  
- #
+ /* Parse the string and invoke the callback each time a $VARIABLE or
+diff --git a/shell.c b/shell.c
+index cef7ffdc9e..811e13b9c9 100644
+--- a/shell.c
++++ b/shell.c
+@@ -177,7 +177,7 @@ int cmd_main(int argc, const char **argv)
+ 		default:
+ 			continue;
+ 		}
+-		exit(cmd->exec(cmd->name, arg));
++		return cmd->exec(cmd->name, arg);
+ 	}
+ 
+ 	cd_to_homedir();
+diff --git a/t/helper/test-hash-speed.c b/t/helper/test-hash-speed.c
+index 432233c7f0..f40d9ad0c2 100644
+--- a/t/helper/test-hash-speed.c
++++ b/t/helper/test-hash-speed.c
+@@ -57,5 +57,5 @@ int cmd__hash_speed(int ac, const char **av)
+ 		free(p);
+ 	}
+ 
+-	exit(0);
++	return 0;
+ }
+diff --git a/t/helper/test-hash.c b/t/helper/test-hash.c
+index 0a31de66f3..261c545b9d 100644
+--- a/t/helper/test-hash.c
++++ b/t/helper/test-hash.c
+@@ -54,5 +54,5 @@ int cmd_hash_impl(int ac, const char **av, int algo)
+ 		fwrite(hash, 1, algop->rawsz, stdout);
+ 	else
+ 		puts(hash_to_hex_algop(hash, algop));
+-	exit(0);
++	return 0;
+ }
+diff --git a/t/helper/test-match-trees.c b/t/helper/test-match-trees.c
+index b9fd427571..4079fdee06 100644
+--- a/t/helper/test-match-trees.c
++++ b/t/helper/test-match-trees.c
+@@ -23,5 +23,5 @@ int cmd__match_trees(int ac, const char **av)
+ 	shift_tree(the_repository, &one->object.oid, &two->object.oid, &shifted, -1);
+ 	printf("shifted: %s\n", oid_to_hex(&shifted));
+ 
+-	exit(0);
++	return 0;
+ }
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index cda804ed79..2f65c7f6a5 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -166,5 +166,5 @@ int cmd__reach(int ac, const char **av)
+ 		print_sorted_commit_ids(list);
+ 	}
+ 
+-	exit(0);
++	return 0;
+ }
 -- 
-2.31.1
+2.32.0.rc3.434.gd8aed1f08a7
 
