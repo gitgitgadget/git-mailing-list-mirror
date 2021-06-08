@@ -4,151 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9587C4743E
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 12:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA734C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 12:53:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAB4F61078
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 12:43:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2C8D611BD
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 12:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232680AbhFHMpM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 08:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36110 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232529AbhFHMpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 08:45:11 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9046AC061574
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 05:43:18 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id ho18so21413029ejc.8
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 05:43:18 -0700 (PDT)
+        id S232431AbhFHMzn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 08:55:43 -0400
+Received: from mail-io1-f54.google.com ([209.85.166.54]:46816 "EHLO
+        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232272AbhFHMzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 08:55:43 -0400
+Received: by mail-io1-f54.google.com with SMTP id b14so7014715iow.13
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 05:53:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=zhFaXUkUNfTxzdubICzD740onlmpC7X1pbmORyEJbsg=;
-        b=d2bejgsi80HZZNWhx3JJU6E+kSj2Em1kOFW6/M9yOmsELiqNH57YSzN1Usc+8aUC1u
-         VIXfxBbah5xtOucB5kRXOeu2P/y2rAmltGmK0fq1xuheDORDRJHFVgU+BNxovCGgmd1p
-         YriAVkelFNy3XT+FS8yTnFgBpFMKAdPcFL551W9rIR+BbdH1Fq/zWOIqiTRYQM2nFKEh
-         us8jJtzbg8QQ7a4mA2bSZYLJcgBHzkG/+59PGagfUvZJEQ+T+CzRuroZWs/pd9SzwHIT
-         QPfxVJuM2mkT/FMIwMdfXxowsLUhOQ/iWeNtt5+yivm4dkzOq454PfOZ+02NZZGDno7Y
-         8RIA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jf1Mbgwcg4JoGi9C2mwXHP4HWB/AclAYYKTaVo6/sSQ=;
+        b=NkQxN0IF5cD9It/0cSbJTY6qeJaWedjPfNWx2bdi1zJqb2cTISlU9GjEIwVCYT/tCV
+         Fi+aRu5ES823dM3ZEQiJ0mL51S5cpDmSsqJOVETL7rl0zs+ug5QoMpPlKhsx4VHYRdu+
+         gfsnctPi2cUFsJK3oKlI1Tk+40FM3OO0cW+1kEB6al9SUc8UQ3rWt5Lx4DTqEQhK7AC7
+         /Qcr79+OBJAHcPbaihzzFqvAe/Ose8ayNmUkLEFc2AxWALPDwxV/OW2XoRfuFwEExbk4
+         yZewCy9nQdfzYFVTGVnRjedVwKb2V+x97/fR2Iy+cT3iJnKNfbAQrqvT/uKrzA69LX0t
+         hCIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=zhFaXUkUNfTxzdubICzD740onlmpC7X1pbmORyEJbsg=;
-        b=AuLYS1tfhHqRH2IPvpMnhve9HF5WDIhl7n4JAf9q8i6PZUcCULW/0NwNiBviqcWJRq
-         m+ER7Y43x49AswrRNu9x6xpBpvpkTGvnnoqAcOwSuFDSIRzp0JsyawVKcJ0v9JoMo3wD
-         KxVXhP49K1LwbrVx1ESafMyv5r3bke6UXog/XAdqzUYqL5bZ5xqt5rGTr438AJq2X26v
-         DPtdugRVsnZPKHv5MmrAcvAvjVOtPDAs3uyOHyZ1wfakka1askZLMyuic0TPQRmmJwJg
-         TG4mrPDLsvYNEZnuwwO7x0iH8hUADX5plmV1fs4QaPuKBVD2qBoG7JKEWJsgKQd2Os9E
-         8/xQ==
-X-Gm-Message-State: AOAM533ufOk9cWOdHGMYwyO/f1wEytlpx116c6rD8qCGRG2XGsLhuf2Y
-        ZSdLyqRfsR2uYHJxbLy0b6cNyzT8+Nx/2g==
-X-Google-Smtp-Source: ABdhPJw7po6o0ysXMOCnIxS2NFPxNKsfRAAbFUBLISeW+7SFvEdUtAJ6l1MjxHqSM7RuPCxOyRQ+9g==
-X-Received: by 2002:a17:906:311a:: with SMTP id 26mr16520156ejx.517.1623156196866;
-        Tue, 08 Jun 2021 05:43:16 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id d24sm8839480edr.95.2021.06.08.05.43.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 05:43:15 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6] help: colorize man pages
-Date:   Tue, 08 Jun 2021 14:35:24 +0200
-References: <20210523054454.1188757-1-felipe.contreras@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210523054454.1188757-1-felipe.contreras@gmail.com>
-Message-ID: <87o8cg34t8.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jf1Mbgwcg4JoGi9C2mwXHP4HWB/AclAYYKTaVo6/sSQ=;
+        b=kkm8zhIxnJ6WXqER4irlwn9b6PGT+TBfh/zeJbfJSsLxucc1Ec8MlU2UKMF2d9eiSW
+         2VcgHDVd9l1CZWG2ZZl1oyj8pJJUl/4OEiy+1KWzqE/Vh/VpU2Azjt5WK8E8AcrTre5q
+         fQ4ux6OFBE3pSwjGNViWDj7fCC4ImbqQHzuSPpeEqX5NqzON8XJDO1Wrr2gMvPMTAr00
+         U0UMbEgWq9pro0Qu7uoF8Nhg3Ly6hqu3klqsbWxNLKvsrpCyqSn32xnRJmJlS1kiEy4Y
+         SkH0Uy6VpZ+23uZ9CtmD4Y42BBEvcmZGnZT8xIjcyzHfbSgBsAGW/bIZPyq0tBmtv8uC
+         UXHA==
+X-Gm-Message-State: AOAM533C2vZPu4b7Nl/Yd1duUiLmNHyn4mq9D0pzXiuXmXK+RbKu7/L9
+        vj9XjehXu0hPT6X8n5qoaCjl/8UQ+kveKuBLsSY=
+X-Google-Smtp-Source: ABdhPJwcTV9RnuH2DlWQAyqQzMx+3g1UqnBZCYZXhK+xg+aEOfQaDAWyYvcpSYj8FAG7otCCFTar/hFKcN3kmeSUcec=
+X-Received: by 2002:a5d:814d:: with SMTP id f13mr18427693ioo.203.1623156754238;
+ Tue, 08 Jun 2021 05:52:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.972.git.1622884415.gitgitgadget@gmail.com> <xmqqtum8q2lm.fsf@gitster.g>
+In-Reply-To: <xmqqtum8q2lm.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 8 Jun 2021 20:52:23 +0800
+Message-ID: <CAOLTT8ThnwfrbMxWaFptK=6Eh7EE-qavRWxyq3FWy3vVCVva_g@mail.gmail.com>
+Subject: Re: [PATCH 0/6] [GSOC][RFC] ref-filter: add %(raw:textconv) and %(raw:filters)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=888=E6=97=
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:42=E5=86=99=E9=81=93=EF=BC=9A
+>
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > ZheNing Hu (6):
+> >   [GSOC] ref-filter: add obj-type check in grab contents
+> >   [GSOC] ref-filter: add %(raw) atom
+> >   [GSOC] ref-filter: use non-const ref_format in *_atom_parser()
+> >   [GSOC] ref-filter: add %(rest) atom and --rest option
+> >   [GSOC] ref-filter: teach grab_sub_body_contents() return value and er=
+r
+> >   [GSOC] ref-filter: add %(raw:textconv) and %(raw:filters)
+>
+> I haven't gotten around looking at anything after the %(rest) one,
+> but
+>
+> https://github.com/git/git/runs/2770688471?check_suite_focus=3Dtrue
+>
+> seems to tell us that there is "size_t *" vs "ulong *" type
+> confusion, possibly around the textconv thing.
+>
+>
 
-On Sun, May 23 2021, Felipe Contreras wrote:
+ok, I will change it when we use %(raw:textconv) next time.
 
-> We already colorize tools traditionally not colorized by default, like
-> diff and grep. Let's do the same for man.
->
-> Our man pages don't contain many useful colors (just blue links),
-> moreover, many people have groff SGR disabled, so they don't see any
-> colors with man pages.
->
-> We can set LESS_TERMCAP variables to render bold and underlined text
-> with colors in the pager; a common trick[1].
->
-> Bold is rendered as red, underlined as blue, and standout (prompt and
-> highlighted search) as inverse cyan.
->
-> Obviously this only works when the less pager is used.
->
-> If the user already has LESS_TERMCAP variables set in his/her
-> environment, those are respected and nothing changes.
->
-> A new color configuration is added: `color.man` for the people that want
-> to turn this feature off, otherwise `color.ui` is respected.
-> Additionally, if color.pager is not enabled, this is disregarded.
->
-> Normally check_auto_color() would check the value of `color.pager`, but
-> in this particular case it's not git the one executing the pager, but
-> man. Therefore we need to check pager_use_color ourselves.
->
-> Also--unlike other color.* configurations--color.man=3Dalways does not
-> make any sense here; `git help` is always run for a tty (it would be very
-> strange for a user to do `git help $page > output`, but in fact, that
-> works anyway, we don't even need to check if stdout is a tty, but just
-> to be consistent we do). So it's simply a boolean in our case.
->
-> So, in order for this change to have any effect:
->
->  1. The user must use less
->  2. Not have the same LESS_TERMCAP variables set
->  3. Have color.ui enabled
->  4. Not have color.pager disabled
->  5. Not have color.man disabled
->  7. Not have git with stdout directed to a file
->
-> Fortunately the vast majority of our users meet all of the above, and
-> anybody who doesn't would not be affected negatively (plus very likely
-> comprises a very tiny minority).
->
-> [1] https://unix.stackexchange.com/questions/119/colors-in-man-pages/147
->
-> Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Phillip Wood <phillip.wood123@gmail.com>
-> Comments-by: Jeff King <peff@peff.net>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
-
-I've been running with this on my personal git build since May 26th. I
-haven't had any issues with it, and I like the new coloring.
-
-I for one would like to have this picked up by Junio.
-
-I think this is a good example of a change that we're better off just
-merging down and then reverting if the wider audience of git users hates
-it, rather than trying to come to some perfect consensus here
-on-list.
-
-We have a wider audience running "next" than "seen" (but this didn't
-even make "seen"), if this were to make it into a release and users
-overwhelmingly dislike it it's no big deal. There's a config option to
-turn it off, and/or we could make it opt-in later.
-
-Alternatively this could be opt-in and not fall under the color.ui=3Dauto
-umbrella, or only in combination with feature.experimental (or a new
-ui.experimental?, which would default to that?).
-
-But in any case if judgement call UI changes are always hidden behind
-options we'll never make forward progress on things that are possibly
-better defaults (and if they're not, we can always simply revert the
-change).
+Thanks.
+--
+ZheNing Hu
