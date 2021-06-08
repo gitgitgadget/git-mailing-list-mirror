@@ -5,61 +5,61 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 657ABC4743E
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28818C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:13:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43A5D61183
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:13:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0218261059
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:13:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231683AbhFHQOx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 12:14:53 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:33337 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229724AbhFHQOx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 12:14:53 -0400
-Received: by mail-wr1-f51.google.com with SMTP id a20so22257260wrc.0
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 09:12:46 -0700 (PDT)
+        id S232007AbhFHQO6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 12:14:58 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:41802 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229724AbhFHQO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 12:14:56 -0400
+Received: by mail-wr1-f41.google.com with SMTP id o3so3813261wri.8
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 09:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WzqMxGoQ/3QN9nGAoj4YC9PoEKvW66Mog8VCSaih88w=;
-        b=tsy4q+9XamJWbHePjctiOzU4ebGVAnasrVbKLPxgVwEHK7zspu1djho8t3wdTqBf/1
-         QyO8Tr8aibjD+mU1iF3gbeqR3IILpkI82VanSAAb7ZhARqk7DXl2nc6SSHi95Jsgqccz
-         TRb4aRlpej/SbFfk98GLEEmU2dsPObjoK8RJYT3UA27Oh1qlVwOtoMqYWTzQQv9gMmrJ
-         5UDlNC3ZtDHY5HrzTw140RjbCc6B2Zue0G0+Jb5MgucPTPVrotcQALaG74Ct8PWolEDw
-         A+0cbzyH5OGuwfHuLSMPN0giIPkw81y737lq3Q/HHIfxuceSbappo4NO/yG07a6ZBnD1
-         fIQw==
+        bh=0YqrfPqhOZkvS87u14mSd9+jPXQ4zsmGbqUyI/4q29c=;
+        b=stabryr+XZRzsvF0iVPCUQhCC9pF2AfaLULasYJPqOpg/mv07n9yhcsTvpUhllhCyC
+         XJDHocbpEipOv0qVBgU1sglQlMnTucS5qdfjvoizHp0m67qrCDXFdQt9u0KFvOPgaTYC
+         3DZzcX0b2qZDh3OjdX+Se3djbIgXXi2+cKHxKVIC41wv/XV64hx4cZrpcH1UuQIfxWYZ
+         F632GXx86b4aUu/hLbE/p2DHpLs4jZSdk+d00zAONYfywb+FT6eDe51w3GJQjeBrNhKx
+         QlZs3J5QEZRkzPTC/iNnrmXtUtV/jAfpk+vq/3oHfsJ/xlyCp8BNYmZgZnQRrQ5wc53F
+         o0qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WzqMxGoQ/3QN9nGAoj4YC9PoEKvW66Mog8VCSaih88w=;
-        b=JK7rr4Vn7ZCjuJzGH1ykkUkJCmGi2+GE4j1IZv+gUxhFoKenopDh6ZiQsgBQz33SMb
-         dXK9X5ari7zYug+X7XZqMBVk9MRvWTFDPJxl0sQtdSi9R2bDjel/tf9nJS7sgveVOpvR
-         StmFDObt9j2K1C37vYm2+quEznsXN8BBkge8jcxKU3WlqN1pz3NWbsR9fRKYCXfuREPM
-         sf1PV9Eo5T0A/3t1HYVa17uwbqf9wkCJqa0a4hBY7qucw7pSTbpuVFtmf04hD2sPjOdc
-         z6Zw2UBpeQtgR4ltIOyjxUd6lga2Ph832jP3Nqun1xTP8b/vZK6y4zUXRaJQZ47gfg3R
-         GWog==
-X-Gm-Message-State: AOAM5319IE0r8/XBp1FM7KKsiBvQNgsiLI99VZcjV1DKrEhgqOu8RLy0
-        1Fv7EqAml4E5IOHQDaycswqbK4p/gZU=
-X-Google-Smtp-Source: ABdhPJwLU7qQywro6oetwViXO2NYtNCZgxCISAg66iTOJkdLLwGQSeq9+kB2jFW8dlu7xyakm22lpg==
-X-Received: by 2002:adf:c18a:: with SMTP id x10mr13553648wre.193.1623168706382;
+        bh=0YqrfPqhOZkvS87u14mSd9+jPXQ4zsmGbqUyI/4q29c=;
+        b=QzKxZQ8QrTaibNUvHAiVQNJSeZ2Z74i4vftnRFwsH6kU+Y/pP8fVBixt+MFbBruLDZ
+         GEP+ObLxiqVaU2XUid7Y9s3iuAltLdOHUnPt2IsKKeRcrCxKfzefSebGhk891X2n8c1q
+         Ce8vddSDHfQbXi0h/2U7rVH5KaWX0nV79az+ww3ni97ForJjuLUcltAUDIeGc45ShUbB
+         yo2sTSZeIUrtY/QajrIp55Mc3/9W+C181QtwnzLeoidf1i5tBAF5MEtqx/5l6fgwN9nB
+         bJWTTV59y6pSRj4nWll8gWJGEYsbW1IJATdalIVf59Hnv+j6zH9CW2r0xhZyfePSFzye
+         +Ksg==
+X-Gm-Message-State: AOAM532DzyPoFBhOXX+cELxrah/mWt6rDmUIcMDShM3BfG8NJ+zcrGda
+        4I4IqWjS1CimYBeqKFSBLc69PNx8/7U=
+X-Google-Smtp-Source: ABdhPJzjINbwFz0tg05KvBZWAAuZBIXhZAoa/4A0SMi4GsSM5/cBrccB9pDkF/+h6QrpyCi6147Fsg==
+X-Received: by 2002:a5d:6b52:: with SMTP id x18mr22921643wrw.11.1623168706876;
         Tue, 08 Jun 2021 09:11:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y26sm11256689wma.33.2021.06.08.09.11.46
+        by smtp.gmail.com with ESMTPSA id s1sm3398096wmj.8.2021.06.08.09.11.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 08 Jun 2021 09:11:46 -0700 (PDT)
-Message-Id: <55c0f2c4560a5361979f3fac52e19b720036fe79.1623168703.git.gitgitgadget@gmail.com>
+Message-Id: <6de569e6ac492213e81321ca35f1f1b365ba31e3.1623168703.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.962.v4.git.1623168703.gitgitgadget@gmail.com>
 References: <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
         <pull.962.v4.git.1623168703.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Jun 2021 16:11:41 +0000
-Subject: [PATCH v4 3/4] Fix various issues found in comments
+Date:   Tue, 08 Jun 2021 16:11:42 +0000
+Subject: [PATCH v4 4/4] merge-ort: miscellaneous touch-ups
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,79 +79,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-A random hodge-podge of incorrect or out-of-date comments that I found:
-
-  * t6423 had a comment that has referred to the wrong test for years;
-    fix it to refer to the right one.
-  * diffcore-rename had a FIXME comment meant to remind myself to
-    investigate if I could make another code change.  I later
-    investigated and removed the FIXME, but while cherry-picking the
-    patch to submit upstream I missed the later update.  Remove the
-    comment now.
-  * merge-ort had the early part of a comment for a function; I had
-    meant to include the more involved description when I updated the
-    function.  Update the comment now.
+Add some notes in the code about invariants with match_mask when adding
+pairs.  Also add a comment that seems to have been left out in my work
+of pushing these changes upstream.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- diffcore-rename.c                   | 2 +-
- merge-ort.c                         | 8 +++++---
- t/t6423-merge-rename-directories.sh | 2 +-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ merge-ort.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index e333a6d64791..35378d84e8f1 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -1543,7 +1543,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 			/* all the usual ones need to be kept */
- 			diff_q(&outq, p);
- 		else
--			/* no need to keep unmodified pairs; FIXME: remove earlier? */
-+			/* no need to keep unmodified pairs */
- 			pair_to_free = p;
- 
- 		if (pair_to_free)
 diff --git a/merge-ort.c b/merge-ort.c
-index 061f15701359..2ec382e292a6 100644
+index 2ec382e292a6..cfa751053b01 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -2533,7 +2533,7 @@ static int compare_pairs(const void *a_, const void *b_)
- 	return strcmp(a->one->path, b->one->path);
- }
+@@ -765,6 +765,7 @@ static void add_pair(struct merge_options *opt,
+ 	int names_idx = is_add ? side : 0;
  
--/* Call diffcore_rename() to compute which files have changed on given side */
-+/* Call diffcore_rename() to update deleted/added pairs into rename pairs */
- static void detect_regular_renames(struct merge_options *opt,
- 				   unsigned side_index)
- {
-@@ -2586,8 +2586,10 @@ static void detect_regular_renames(struct merge_options *opt,
- }
+ 	if (is_add) {
++		assert(match_mask == 0 || match_mask == 6);
+ 		if (strset_contains(&renames->cached_target_names[side],
+ 				    pathname))
+ 			return;
+@@ -772,6 +773,8 @@ static void add_pair(struct merge_options *opt,
+ 		unsigned content_relevant = (match_mask == 0);
+ 		unsigned location_relevant = (dir_rename_mask == 0x07);
  
- /*
-- * Get information of all renames which occurred in 'side_pairs', discarding
-- * non-renames.
-+ * Get information of all renames which occurred in 'side_pairs', making use
-+ * of any implicit directory renames in side_dir_renames (also making use of
-+ * implicit directory renames rename_exclusions as needed by
-+ * check_for_directory_rename()).  Add all (updated) renames into result.
-  */
- static int collect_renames(struct merge_options *opt,
- 			   struct diff_queue_struct *result,
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index be84d22419d9..e834b7e6efe0 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -454,7 +454,7 @@ test_expect_success '1f: Split a directory into two other directories' '
- #   the directory renamed, but the files within it. (see 1b)
- #
- #   If renames split a directory into two or more others, the directory
--#   with the most renames, "wins" (see 1c).  However, see the testcases
-+#   with the most renames, "wins" (see 1f).  However, see the testcases
- #   in section 2, plus testcases 3a and 4a.
- ###########################################################################
++		assert(match_mask == 0 || match_mask == 3 || match_mask == 5);
++
+ 		/*
+ 		 * If pathname is found in cached_irrelevant[side] due to
+ 		 * previous pick but for this commit content is relevant,
+@@ -3477,6 +3480,8 @@ static void process_entry(struct merge_options *opt,
+ 	 */
+ 	if (!ci->merged.clean)
+ 		strmap_put(&opt->priv->conflicted, path, ci);
++
++	/* Record metadata for ci->merged in dir_metadata */
+ 	record_entry_for_tree(dir_metadata, path, &ci->merged);
+ }
  
 -- 
 gitgitgadget
-
