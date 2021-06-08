@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 352D0C4743E
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDA87C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:41:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22B436128D
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:41:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6C2E6128D
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 13:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233040AbhFHNnh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 09:43:37 -0400
-Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:46768 "EHLO
+        id S233045AbhFHNni (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 09:43:38 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:46770 "EHLO
         mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233035AbhFHNnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 09:43:35 -0400
+        id S232768AbhFHNnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 09:43:37 -0400
 Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:4a10:7e85:729c:98ea])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by mail.lhuard.fr (Postfix) with ESMTPSA id 6240848743C;
+        by mail.lhuard.fr (Postfix) with ESMTPSA id 96DE848743D;
         Tue,  8 Jun 2021 15:41:09 +0200 (CEST)
 Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
-        t=1623159669; bh=A1FTOTrexqZlmdyVSk0o0r0AB7iFhdmsQEEjTLaREmY=;
+        t=1623159669; bh=H9MAgYp3ZsadQx5DIMS8nGt6RsE3ncJq7sc4lVixHGc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=1M0+fIl90s/anZ/4Rwv61ITHTxgdG2IWOPL5wbLpACzD7ybPCUuH7JLZRdw3jNHzK
-         BNLIdbWIIjMYD04S3o80e/a2iboMTXT1KpJRtKjR4Y68Z4I3Fhw2Iw7TWFQOBLV9J3
-         egHeJ/dGyzekTY2M2RbdrLCkym6XXRSu2EF1YKnE=
+        b=cN+5j6wEhXzqI2RYzq1WRebJZSdk9xyYguJtBKnpZjMAuALmh4yuomYbK7WsKeWQi
+         TrzcOlQxoRHWo4mR9ptkUbzXSXvpnE/B4/6f1lWeXombzGw0hhCUC0ZnIniRWdjp9v
+         YVf7DOVl3AHF7tud1vGGlPu8Lhnplyi+DPcum8ys=
 From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -47,9 +47,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
-Subject: [PATCH v5 1/3] =?UTF-8?q?cache.h:=20Introduce=20a=20generic=20"xd?= =?UTF-8?q?g=5Fconfig=5Fhome=5Ffor(=E2=80=A6)"=20function?=
-Date:   Tue,  8 Jun 2021 15:39:58 +0200
-Message-Id: <20210608134000.663398-2-lenaic@lhuard.fr>
+Subject: [PATCH v5 2/3] maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
+Date:   Tue,  8 Jun 2021 15:39:59 +0200
+Message-Id: <20210608134000.663398-3-lenaic@lhuard.fr>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210608134000.663398-1-lenaic@lhuard.fr>
 References: <20210524071538.46862-1-lenaic@lhuard.fr>
@@ -61,79 +61,655 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Current implementation of `xdg_config_home(filename)` returns
-`$XDG_CONFIG_HOME/git/$filename`, with the `git` subdirectory inserted
-between the `XDG_CONFIG_HOME` environment variable and the parameter.
+Depending on the system, different schedulers can be used to schedule
+the hourly, daily and weekly executions of `git maintenance run`:
+* `launchctl` for MacOS,
+* `schtasks` for Windows and
+* `crontab` for everything else.
 
-This patch introduces a `xdg_config_home_for(subdir, filename)` function
-which is more generic. It only concatenates "$XDG_CONFIG_HOME", or
-"$HOME/.config" if the former isn’t defined, with the parameters,
-without adding `git` in between.
+`git maintenance run` now has an option to let the end-user explicitly
+choose which scheduler he wants to use:
+`--scheduler=auto|crontab|launchctl|schtasks`.
 
-`xdg_config_home(filename)` is now implemented by calling
-`xdg_config_home_for("git", filename)` but this new generic function can
-be used to compute the configuration directory of other programs.
+When `git maintenance start --scheduler=XXX` is run, it not only
+registers `git maintenance run` tasks in the scheduler XXX, it also
+removes the `git maintenance run` tasks from all the other schedulers to
+ensure we cannot have two schedulers launching concurrent identical
+tasks.
+
+The default value is `auto` which chooses a suitable scheduler for the
+system.
+
+`git maintenance stop` doesn't have any `--scheduler` parameter because
+this command will try to remove the `git maintenance run` tasks from all
+the available schedulers.
 
 Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
 ---
- cache.h |  7 +++++++
- path.c  | 13 ++++++++++---
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ Documentation/git-maintenance.txt |  11 +
+ builtin/gc.c                      | 336 +++++++++++++++++++++++-------
+ t/t7900-maintenance.sh            |  55 ++++-
+ 3 files changed, 327 insertions(+), 75 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index ba04ff8bd3..2a0fb3e4ba 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1286,6 +1286,13 @@ int is_ntfs_dotmailmap(const char *name);
-  */
- int looks_like_command_line_option(const char *str);
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 1e738ad398..07065ed4f3 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -179,6 +179,17 @@ OPTIONS
+ 	`maintenance.<task>.enabled` configured as `true` are considered.
+ 	See the 'TASKS' section for the list of accepted `<task>` values.
  
-+/**
-+ * Return a newly allocated string with the evaluation of
-+ * "$XDG_CONFIG_HOME/$subdir/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
-+ * "$HOME/.config/$subdir/$filename". Return NULL upon error.
-+ */
-+char *xdg_config_home_for(const char *subdir, const char *filename);
++--scheduler=auto|crontab|launchctl|schtasks::
++	When combined with the `start` subcommand, specify the scheduler
++	to use to run the hourly, daily and weekly executions of
++	`git maintenance run`.
++	The possible values for `<scheduler>` depend on the system: `crontab`
++	is available on POSIX systems, `launchctl` is available on
++	MacOS and `schtasks` is available on Windows.
++	By default or when `auto` is specified, a suitable scheduler for
++	the system is used. On MacOS, `launchctl` is used. On Windows,
++	`schtasks` is used. On all other systems, `crontab` is used.
 +
- /**
-  * Return a newly allocated string with the evaluation of
-  * "$XDG_CONFIG_HOME/git/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
-diff --git a/path.c b/path.c
-index 7bccd830e9..1b1de3be09 100644
---- a/path.c
-+++ b/path.c
-@@ -1503,21 +1503,28 @@ int looks_like_command_line_option(const char *str)
- 	return str && str[0] == '-';
+ 
+ TROUBLESHOOTING
+ ---------------
+diff --git a/builtin/gc.c b/builtin/gc.c
+index f05d2f0a1a..f2a81ecb44 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1529,6 +1529,59 @@ static const char *get_frequency(enum schedule_priority schedule)
+ 	}
  }
  
--char *xdg_config_home(const char *filename)
-+char *xdg_config_home_for(const char *subdir, const char *filename)
- {
- 	const char *home, *config_home;
- 
-+	assert(subdir);
- 	assert(filename);
- 	config_home = getenv("XDG_CONFIG_HOME");
- 	if (config_home && *config_home)
--		return mkpathdup("%s/git/%s", config_home, filename);
-+		return mkpathdup("%s/%s/%s", config_home, subdir, filename);
- 
- 	home = getenv("HOME");
- 	if (home)
--		return mkpathdup("%s/.config/git/%s", home, filename);
-+		return mkpathdup("%s/.config/%s/%s", home, subdir, filename);
-+
- 	return NULL;
- }
- 
-+char *xdg_config_home(const char *filename)
++static int get_schedule_cmd(const char **cmd, int *is_available)
 +{
-+	return xdg_config_home_for("git", filename);
++	char *item;
++	char *testing = xstrdup_or_null(getenv("GIT_TEST_MAINT_SCHEDULER"));
++
++	if (!testing)
++		return 0;
++
++	if (is_available)
++		*is_available = 0;
++
++	for(item = testing;;) {
++		char *sep;
++		char *end_item = strchr(item, ',');
++		if (end_item)
++			*end_item = '\0';
++
++		sep = strchr(item, ':');
++		if (!sep)
++			die("GIT_TEST_MAINT_SCHEDULER unparseable: %s", testing);
++		*sep = '\0';
++
++		if (!strcmp(*cmd, item)) {
++			*cmd = sep+1;
++			if (is_available)
++				*is_available = 1;
++			UNLEAK(testing);
++			return 1;
++		}
++
++		if (!end_item)
++			break;
++		item = end_item + 1;
++	}
++
++	free(testing);
++	return 1;
 +}
 +
- char *xdg_cache_home(const char *filename)
++static int is_launchctl_available(void)
++{
++	const char *cmd = "launchctl";
++	int is_available;
++	if (get_schedule_cmd(&cmd, &is_available))
++		return is_available;
++
++#ifdef __APPLE__
++	return 1;
++#else
++	return 0;
++#endif
++}
++
+ static char *launchctl_service_name(const char *frequency)
  {
- 	const char *home, *cache_home;
+ 	struct strbuf label = STRBUF_INIT;
+@@ -1555,19 +1608,17 @@ static char *launchctl_get_uid(void)
+ 	return xstrfmt("gui/%d", getuid());
+ }
+ 
+-static int launchctl_boot_plist(int enable, const char *filename, const char *cmd)
++static int launchctl_boot_plist(int enable, const char *filename)
+ {
++	const char *cmd = "launchctl";
+ 	int result;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	char *uid = launchctl_get_uid();
+ 
++	get_schedule_cmd(&cmd, NULL);
+ 	strvec_split(&child.args, cmd);
+-	if (enable)
+-		strvec_push(&child.args, "bootstrap");
+-	else
+-		strvec_push(&child.args, "bootout");
+-	strvec_push(&child.args, uid);
+-	strvec_push(&child.args, filename);
++	strvec_pushl(&child.args, enable ? "bootstrap" : "bootout",
++		     uid, filename, NULL);
+ 
+ 	child.no_stderr = 1;
+ 	child.no_stdout = 1;
+@@ -1581,26 +1632,26 @@ static int launchctl_boot_plist(int enable, const char *filename, const char *cm
+ 	return result;
+ }
+ 
+-static int launchctl_remove_plist(enum schedule_priority schedule, const char *cmd)
++static int launchctl_remove_plist(enum schedule_priority schedule)
+ {
+ 	const char *frequency = get_frequency(schedule);
+ 	char *name = launchctl_service_name(frequency);
+ 	char *filename = launchctl_service_filename(name);
+-	int result = launchctl_boot_plist(0, filename, cmd);
++	int result = launchctl_boot_plist(0, filename);
+ 	unlink(filename);
+ 	free(filename);
+ 	free(name);
+ 	return result;
+ }
+ 
+-static int launchctl_remove_plists(const char *cmd)
++static int launchctl_remove_plists(void)
+ {
+-	return launchctl_remove_plist(SCHEDULE_HOURLY, cmd) ||
+-		launchctl_remove_plist(SCHEDULE_DAILY, cmd) ||
+-		launchctl_remove_plist(SCHEDULE_WEEKLY, cmd);
++	return launchctl_remove_plist(SCHEDULE_HOURLY) ||
++		launchctl_remove_plist(SCHEDULE_DAILY) ||
++		launchctl_remove_plist(SCHEDULE_WEEKLY);
+ }
+ 
+-static int launchctl_schedule_plist(const char *exec_path, enum schedule_priority schedule, const char *cmd)
++static int launchctl_schedule_plist(const char *exec_path, enum schedule_priority schedule)
+ {
+ 	FILE *plist;
+ 	int i;
+@@ -1669,8 +1720,8 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 	fclose(plist);
+ 
+ 	/* bootout might fail if not already running, so ignore */
+-	launchctl_boot_plist(0, filename, cmd);
+-	if (launchctl_boot_plist(1, filename, cmd))
++	launchctl_boot_plist(0, filename);
++	if (launchctl_boot_plist(1, filename))
+ 		die(_("failed to bootstrap service %s"), filename);
+ 
+ 	free(filename);
+@@ -1678,21 +1729,35 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 	return 0;
+ }
+ 
+-static int launchctl_add_plists(const char *cmd)
++static int launchctl_add_plists(void)
+ {
+ 	const char *exec_path = git_exec_path();
+ 
+-	return launchctl_schedule_plist(exec_path, SCHEDULE_HOURLY, cmd) ||
+-		launchctl_schedule_plist(exec_path, SCHEDULE_DAILY, cmd) ||
+-		launchctl_schedule_plist(exec_path, SCHEDULE_WEEKLY, cmd);
++	return launchctl_schedule_plist(exec_path, SCHEDULE_HOURLY) ||
++		launchctl_schedule_plist(exec_path, SCHEDULE_DAILY) ||
++		launchctl_schedule_plist(exec_path, SCHEDULE_WEEKLY);
+ }
+ 
+-static int launchctl_update_schedule(int run_maintenance, int fd, const char *cmd)
++static int launchctl_update_schedule(int run_maintenance, int fd)
+ {
+ 	if (run_maintenance)
+-		return launchctl_add_plists(cmd);
++		return launchctl_add_plists();
+ 	else
+-		return launchctl_remove_plists(cmd);
++		return launchctl_remove_plists();
++}
++
++static int is_schtasks_available(void)
++{
++	const char *cmd = "schtasks";
++	int is_available;
++	if (get_schedule_cmd(&cmd, &is_available))
++		return is_available;
++
++#ifdef GIT_WINDOWS_NATIVE
++	return 1;
++#else
++	return 0;
++#endif
+ }
+ 
+ static char *schtasks_task_name(const char *frequency)
+@@ -1702,13 +1767,15 @@ static char *schtasks_task_name(const char *frequency)
+ 	return strbuf_detach(&label, NULL);
+ }
+ 
+-static int schtasks_remove_task(enum schedule_priority schedule, const char *cmd)
++static int schtasks_remove_task(enum schedule_priority schedule)
+ {
++	const char *cmd = "schtasks";
+ 	int result;
+ 	struct strvec args = STRVEC_INIT;
+ 	const char *frequency = get_frequency(schedule);
+ 	char *name = schtasks_task_name(frequency);
+ 
++	get_schedule_cmd(&cmd, NULL);
+ 	strvec_split(&args, cmd);
+ 	strvec_pushl(&args, "/delete", "/tn", name, "/f", NULL);
+ 
+@@ -1719,15 +1786,16 @@ static int schtasks_remove_task(enum schedule_priority schedule, const char *cmd
+ 	return result;
+ }
+ 
+-static int schtasks_remove_tasks(const char *cmd)
++static int schtasks_remove_tasks(void)
+ {
+-	return schtasks_remove_task(SCHEDULE_HOURLY, cmd) ||
+-		schtasks_remove_task(SCHEDULE_DAILY, cmd) ||
+-		schtasks_remove_task(SCHEDULE_WEEKLY, cmd);
++	return schtasks_remove_task(SCHEDULE_HOURLY) ||
++		schtasks_remove_task(SCHEDULE_DAILY) ||
++		schtasks_remove_task(SCHEDULE_WEEKLY);
+ }
+ 
+-static int schtasks_schedule_task(const char *exec_path, enum schedule_priority schedule, const char *cmd)
++static int schtasks_schedule_task(const char *exec_path, enum schedule_priority schedule)
+ {
++	const char *cmd = "schtasks";
+ 	int result;
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	const char *xml;
+@@ -1736,6 +1804,8 @@ static int schtasks_schedule_task(const char *exec_path, enum schedule_priority
+ 	char *name = schtasks_task_name(frequency);
+ 	struct strbuf tfilename = STRBUF_INIT;
+ 
++	get_schedule_cmd(&cmd, NULL);
++
+ 	strbuf_addf(&tfilename, "%s/schedule_%s_XXXXXX",
+ 		    get_git_common_dir(), frequency);
+ 	tfile = xmks_tempfile(tfilename.buf);
+@@ -1840,28 +1910,52 @@ static int schtasks_schedule_task(const char *exec_path, enum schedule_priority
+ 	return result;
+ }
+ 
+-static int schtasks_schedule_tasks(const char *cmd)
++static int schtasks_schedule_tasks(void)
+ {
+ 	const char *exec_path = git_exec_path();
+ 
+-	return schtasks_schedule_task(exec_path, SCHEDULE_HOURLY, cmd) ||
+-		schtasks_schedule_task(exec_path, SCHEDULE_DAILY, cmd) ||
+-		schtasks_schedule_task(exec_path, SCHEDULE_WEEKLY, cmd);
++	return schtasks_schedule_task(exec_path, SCHEDULE_HOURLY) ||
++		schtasks_schedule_task(exec_path, SCHEDULE_DAILY) ||
++		schtasks_schedule_task(exec_path, SCHEDULE_WEEKLY);
+ }
+ 
+-static int schtasks_update_schedule(int run_maintenance, int fd, const char *cmd)
++static int schtasks_update_schedule(int run_maintenance, int fd)
+ {
+ 	if (run_maintenance)
+-		return schtasks_schedule_tasks(cmd);
++		return schtasks_schedule_tasks();
+ 	else
+-		return schtasks_remove_tasks(cmd);
++		return schtasks_remove_tasks();
++}
++
++static int is_crontab_available(void)
++{
++	const char *cmd = "crontab";
++	int is_available;
++	struct child_process child = CHILD_PROCESS_INIT;
++
++	if (get_schedule_cmd(&cmd, &is_available) && !is_available)
++		return 0;
++
++	strvec_split(&child.args, cmd);
++	strvec_push(&child.args, "-l");
++	child.no_stdin = 1;
++	child.no_stdout = 1;
++	child.no_stderr = 1;
++	child.silent_exec_failure = 1;
++
++	if (start_command(&child))
++		return 0;
++	/* Ignore exit code, as an empty crontab will return error. */
++	finish_command(&child);
++	return 1;
+ }
+ 
+ #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
+ #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
+ 
+-static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
++static int crontab_update_schedule(int run_maintenance, int fd)
+ {
++	const char *cmd = "crontab";
+ 	int result = 0;
+ 	int in_old_region = 0;
+ 	struct child_process crontab_list = CHILD_PROCESS_INIT;
+@@ -1869,6 +1963,7 @@ static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
+ 	FILE *cron_list, *cron_in;
+ 	struct strbuf line = STRBUF_INIT;
+ 
++	get_schedule_cmd(&cmd, NULL);
+ 	strvec_split(&crontab_list.args, cmd);
+ 	strvec_push(&crontab_list.args, "-l");
+ 	crontab_list.in = -1;
+@@ -1945,66 +2040,165 @@ static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
+ 	return result;
+ }
+ 
++enum scheduler {
++	SCHEDULER_INVALID = -1,
++	SCHEDULER_AUTO,
++	SCHEDULER_CRON,
++	SCHEDULER_LAUNCHCTL,
++	SCHEDULER_SCHTASKS,
++};
++
++static const struct {
++	const char *name;
++	int (*is_available)(void);
++	int (*update_schedule)(int run_maintenance, int fd);
++} scheduler_fn[] = {
++	[SCHEDULER_CRON] = {
++		.name = "crontab",
++		.is_available = is_crontab_available,
++		.update_schedule = crontab_update_schedule,
++	},
++	[SCHEDULER_LAUNCHCTL] = {
++		.name = "launchctl",
++		.is_available = is_launchctl_available,
++		.update_schedule = launchctl_update_schedule,
++	},
++	[SCHEDULER_SCHTASKS] = {
++		.name = "schtasks",
++		.is_available = is_schtasks_available,
++		.update_schedule = schtasks_update_schedule,
++	},
++};
++
++static enum scheduler parse_scheduler(const char *value)
++{
++	if (!value)
++		return SCHEDULER_INVALID;
++	else if (!strcasecmp(value, "auto"))
++		return SCHEDULER_AUTO;
++	else if (!strcasecmp(value, "cron") || !strcasecmp(value, "crontab"))
++		return SCHEDULER_CRON;
++	else if (!strcasecmp(value, "launchctl"))
++		return SCHEDULER_LAUNCHCTL;
++	else if (!strcasecmp(value, "schtasks"))
++		return SCHEDULER_SCHTASKS;
++	else
++		return SCHEDULER_INVALID;
++}
++
++static int maintenance_opt_scheduler(const struct option *opt, const char *arg,
++				     int unset)
++{
++	enum scheduler *scheduler = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++
++	*scheduler = parse_scheduler(arg);
++	if (*scheduler == SCHEDULER_INVALID)
++		return error(_("unrecognized --scheduler argument '%s'"), arg);
++	return 0;
++}
++
++struct maintenance_start_opts {
++	enum scheduler scheduler;
++};
++
++static void resolve_auto_scheduler(enum scheduler *scheduler)
++{
++	if (*scheduler != SCHEDULER_AUTO)
++		return;
++
+ #if defined(__APPLE__)
+-static const char platform_scheduler[] = "launchctl";
++	*scheduler = SCHEDULER_LAUNCHCTL;
++	return;
++
+ #elif defined(GIT_WINDOWS_NATIVE)
+-static const char platform_scheduler[] = "schtasks";
++	*scheduler = SCHEDULER_SCHTASKS;
++	return;
++
+ #else
+-static const char platform_scheduler[] = "crontab";
++	*scheduler = SCHEDULER_CRON;
++	return;
+ #endif
++}
+ 
+-static int update_background_schedule(int enable)
++static void validate_scheduler(enum scheduler scheduler)
+ {
+-	int result;
+-	const char *scheduler = platform_scheduler;
+-	const char *cmd = scheduler;
+-	char *testing;
++	if (scheduler == SCHEDULER_INVALID)
++		BUG("invalid scheduler");
++	if (scheduler == SCHEDULER_AUTO)
++		BUG("resolve_auto_scheduler should have been called before");
++
++	if (!scheduler_fn[scheduler].is_available())
++		die(_("%s scheduler is not available"),
++		    scheduler_fn[scheduler].name);
++}
++
++static int update_background_schedule(const struct maintenance_start_opts *opts,
++				      int enable)
++{
++	unsigned int i;
++	int result = 0;
+ 	struct lock_file lk;
+ 	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
+ 
+-	testing = xstrdup_or_null(getenv("GIT_TEST_MAINT_SCHEDULER"));
+-	if (testing) {
+-		char *sep = strchr(testing, ':');
+-		if (!sep)
+-			die("GIT_TEST_MAINT_SCHEDULER unparseable: %s", testing);
+-		*sep = '\0';
+-		scheduler = testing;
+-		cmd = sep + 1;
++	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0) {
++		free(lock_path);
++		return error(_("another process is scheduling background maintenance"));
+ 	}
+ 
+-	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0) {
+-		result = error(_("another process is scheduling background maintenance"));
+-		goto cleanup;
++	for (i = 1; i < ARRAY_SIZE(scheduler_fn); i++) {
++		if (enable && opts->scheduler == i)
++			continue;
++		if (!scheduler_fn[i].is_available())
++			continue;
++		scheduler_fn[i].update_schedule(
++			0, get_lock_file_fd(&lk));
+ 	}
+ 
+-	if (!strcmp(scheduler, "launchctl"))
+-		result = launchctl_update_schedule(enable, get_lock_file_fd(&lk), cmd);
+-	else if (!strcmp(scheduler, "schtasks"))
+-		result = schtasks_update_schedule(enable, get_lock_file_fd(&lk), cmd);
+-	else if (!strcmp(scheduler, "crontab"))
+-		result = crontab_update_schedule(enable, get_lock_file_fd(&lk), cmd);
+-	else
+-		die("unknown background scheduler: %s", scheduler);
++	if (enable)
++		result = scheduler_fn[opts->scheduler].update_schedule(
++			1, get_lock_file_fd(&lk));
+ 
+ 	rollback_lock_file(&lk);
+ 
+-cleanup:
+ 	free(lock_path);
+-	free(testing);
+ 	return result;
+ }
+ 
+-static int maintenance_start(void)
++static const char *const builtin_maintenance_start_usage[] = {
++	N_("git maintenance start [--scheduler=<scheduler>]"),
++	NULL
++};
++
++static int maintenance_start(int argc, const char **argv, const char *prefix)
+ {
++	struct maintenance_start_opts opts = { 0 };
++	struct option options[] = {
++		OPT_CALLBACK_F(
++			0, "scheduler", &opts.scheduler, N_("scheduler"),
++			N_("scheduler to use to trigger git maintenance run"),
++			PARSE_OPT_NONEG, maintenance_opt_scheduler),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_maintenance_start_usage, 0);
++	if (argc)
++		usage_with_options(builtin_maintenance_start_usage,
++				   options);
++
++	resolve_auto_scheduler(&opts.scheduler);
++	validate_scheduler(opts.scheduler);
++
+ 	if (maintenance_register())
+ 		warning(_("failed to add repo to global config"));
+-
+-	return update_background_schedule(1);
++	return update_background_schedule(&opts, 1);
+ }
+ 
+ static int maintenance_stop(void)
+ {
+-	return update_background_schedule(0);
++	return update_background_schedule(NULL, 0);
+ }
+ 
+ static const char builtin_maintenance_usage[] =	N_("git maintenance <subcommand> [<options>]");
+@@ -2018,7 +2212,7 @@ int cmd_maintenance(int argc, const char **argv, const char *prefix)
+ 	if (!strcmp(argv[1], "run"))
+ 		return maintenance_run(argc - 1, argv + 1, prefix);
+ 	if (!strcmp(argv[1], "start"))
+-		return maintenance_start();
++		return maintenance_start(argc - 1, argv + 1, prefix);
+ 	if (!strcmp(argv[1], "stop"))
+ 		return maintenance_stop();
+ 	if (!strcmp(argv[1], "register"))
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index b93ae014ee..b36b7f5fb0 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -494,8 +494,21 @@ test_expect_success !MINGW 'register and unregister with regex metacharacters' '
+ 		maintenance.repo "$(pwd)/$META"
+ '
+ 
++test_expect_success 'start --scheduler=<scheduler>' '
++	test_expect_code 129 git maintenance start --scheduler=foo 2>err &&
++	test_i18ngrep "unrecognized --scheduler argument" err &&
++
++	test_expect_code 129 git maintenance start --no-scheduler 2>err &&
++	test_i18ngrep "unknown option" err &&
++
++	test_expect_code 128 \
++		env GIT_TEST_MAINT_SCHEDULER="launchctl:true,schtasks:true" \
++		git maintenance start --scheduler=crontab 2>err &&
++	test_i18ngrep "fatal: crontab scheduler is not available" err
++'
++
+ test_expect_success 'start from empty cron table' '
+-	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance start &&
++	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance start --scheduler=crontab &&
+ 
+ 	# start registers the repo
+ 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+@@ -518,7 +531,7 @@ test_expect_success 'stop from existing schedule' '
+ 
+ test_expect_success 'start preserves existing schedule' '
+ 	echo "Important information!" >cron.txt &&
+-	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance start &&
++	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance start --scheduler=crontab &&
+ 	grep "Important information!" cron.txt
+ '
+ 
+@@ -547,7 +560,7 @@ test_expect_success 'start and stop macOS maintenance' '
+ 	EOF
+ 
+ 	rm -f args &&
+-	GIT_TEST_MAINT_SCHEDULER=launchctl:./print-args git maintenance start &&
++	GIT_TEST_MAINT_SCHEDULER=launchctl:./print-args git maintenance start --scheduler=launchctl &&
+ 
+ 	# start registers the repo
+ 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+@@ -598,7 +611,7 @@ test_expect_success 'start and stop Windows maintenance' '
+ 	EOF
+ 
+ 	rm -f args &&
+-	GIT_TEST_MAINT_SCHEDULER="schtasks:./print-args" git maintenance start &&
++	GIT_TEST_MAINT_SCHEDULER="schtasks:./print-args" git maintenance start --scheduler=schtasks &&
+ 
+ 	# start registers the repo
+ 	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+@@ -621,6 +634,40 @@ test_expect_success 'start and stop Windows maintenance' '
+ 	test_cmp expect args
+ '
+ 
++test_expect_success 'start and stop when several schedulers are available' '
++	write_script print-args <<-\EOF &&
++	printf "%s\n" "$*" | sed "s:gui/[0-9][0-9]*:gui/[UID]:; s:\(schtasks /create .* /xml\).*:\1:;" >>args
++	EOF
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=launchctl &&
++	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
++		hourly daily weekly >expect &&
++	for frequency in hourly daily weekly
++	do
++		PLIST="$pfx/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
++		echo "launchctl bootout gui/[UID] $PLIST" >>expect &&
++		echo "launchctl bootstrap gui/[UID] $PLIST" >>expect || return 1
++	done &&
++	test_cmp expect args &&
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance start --scheduler=schtasks &&
++	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
++		hourly daily weekly >expect &&
++	printf "schtasks /create /tn Git Maintenance (%s) /f /xml\n" \
++		hourly daily weekly >>expect &&
++	test_cmp expect args &&
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="launchctl:./print-args launchctl,schtasks:./print-args schtasks" git maintenance stop &&
++	printf "launchctl bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
++		hourly daily weekly >expect &&
++	printf "schtasks /delete /tn Git Maintenance (%s) /f\n" \
++		hourly daily weekly >>expect &&
++	test_cmp expect args
++'
++
+ test_expect_success 'register preserves existing strategy' '
+ 	git config maintenance.strategy none &&
+ 	git maintenance register &&
 -- 
 2.32.0
 
