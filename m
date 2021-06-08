@@ -2,182 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CF50C4743D
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14698C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:18:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4541A61285
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBD7F6127A
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:18:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230184AbhFHHQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 03:16:28 -0400
-Received: from mail-pl1-f170.google.com ([209.85.214.170]:40571 "EHLO
-        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbhFHHQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 03:16:25 -0400
-Received: by mail-pl1-f170.google.com with SMTP id e7so10134050plj.7
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 00:14:19 -0700 (PDT)
+        id S230261AbhFHHTx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 03:19:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48326 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229507AbhFHHTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 03:19:50 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328ADC061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 00:17:46 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id d21so20650876oic.11
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 00:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=jm4oaFfkmD/+5eIJfHdHuxSE/aJeOl4qQvuhCXxa91I=;
-        b=BniP39c6DsVku3ft/H7njRB2n8gjjQiJ/b/DOoOwMlcQCtXj8oUGoNjnAdfdAyrElj
-         F60Hy4KxDjuOthCwjuaafWqBucSOZk9gHyXNX1lE8JmNNsPgjHh23WIlTixuNABp0sWT
-         vgrRZueezSGYh53LdUctwo6XgVN5Dq/VMcxQpT753h8/4zWSd9Qp9WLbXuZJ7flCGWe7
-         hDkue56H61e9kqPCS7sIGZZzsuOq47lCkvTGfyW63NRFwHcjzG/rETtkjRmHV/iO8V2Z
-         UoOs5pCbbpQAJeNQAFj801o3JOkgRZ6NrPW1bmj0ibpc9TmFGKfS76SCuhliEJjs0KOE
-         Gycg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=uoJYLIHHHjRUlcSWF2YViw14Az/2buBG2YospGQueX8=;
+        b=ndO8wa7g6x/rz1znb5hdh21Q0uBBxhTdNs26jP3CIJT7afpz1+4hmShtLLGXcX0KyG
+         XpYXfHTRoNAsIDFjKV7rDyBge0KapWnzeyJDof5eJFgvWDj4eAzE9nBzhC20onkWPwAD
+         60tlxDVruxqllcZ5C6StbErd8P64OvO5bkBMeMtmh8mzVRQfG4UaGq/fHa6BGN7IGAsb
+         54gryP56UB/0SnjDiQ52JyExRKEdhttxVA4qU9F9TUStxpP8aHjPdUpG26VAnrbGAzAP
+         8iZSNmR2cI+pLsRiutlyAjvQdqR7cEazOwd9P9MT9Y/C08kZM3nAgPEeXSymKHtVg3cd
+         gZQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=jm4oaFfkmD/+5eIJfHdHuxSE/aJeOl4qQvuhCXxa91I=;
-        b=gKfn4+SPk3IymTw2z4vVvDCFsK3NfEI0zALMoGrJ7XQUA2EthwGj9nAov5/Y0zJnAO
-         XcHEX9rP1wDTXaqCj/XnOYyEV1Mc4JDrmTs4me5zK1CQD5ip/cPNJ2SIhgGs2CDXfkXZ
-         g2zssrMZ+2pIhY5L1xsNRL5B1F7pYxF8SVvIoEFEhNsJl/ou1GgeNZo7lyOtLZoW/UDH
-         NDX+BkDWbw/Nfqsj5WU8aNbiVKrZJWT2IhPzUVm+jmwOfy3DRNNJn6bd8yE6jCHGCE/G
-         ST/I7oWPZ+rzXG5oNt/FeIvcLTkdfYOSa47sQqmgoybIHm3C/EuMLQmK3SkGia5sZocp
-         /ojw==
-X-Gm-Message-State: AOAM530FWFMFlZQ1eDaL2UioTchV+Caij5aClnU2Juo5tjxcLg4MiWH6
-        EO3GrAwSpCk4quCmZQpFMvk=
-X-Google-Smtp-Source: ABdhPJwPfFjpb1GTP5pQzLR3MLF+7QhB/kzP8gxPfLvwZ/w2XgSKK7LplR4b7z6lvceyAePS/EKKKQ==
-X-Received: by 2002:a17:902:6902:b029:106:50e3:b2db with SMTP id j2-20020a1709026902b029010650e3b2dbmr21925991plk.35.1623136399518;
-        Tue, 08 Jun 2021 00:13:19 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.107.60])
-        by smtp.gmail.com with ESMTPSA id t17sm3531054pfg.1.2021.06.08.00.13.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Jun 2021 00:13:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=uoJYLIHHHjRUlcSWF2YViw14Az/2buBG2YospGQueX8=;
+        b=uk3gk2uuYKwBrMVqrE859bWB/XWhNy7/1PihZI3hctZJ1GZMJF5u5q3jpeo/66r3HS
+         gKt1tzzGn5qMiv68As1ApL1FL1czxirIIiJkIiuGnUnubdZeTQLiMdsRqIH0eQFqBpBu
+         gpRKSWTxXVxQqHAk9gMYnuKnJb9Go0fEBWY5ibCnm/5nobK96prjnCSe1woqCcRZHea4
+         j0VslCf+qf/EWLm0jImOTon/ZSmStJazknR8vK4hrODqyhUmUxaGidLVIrA4+7grYmzf
+         E7kuUahzQcxCXGtZFhKZvbeDdRG8FAtpf9bFq0jx6N6SLFFzgnVrNnkih6icFZLi7QDU
+         UkTQ==
+X-Gm-Message-State: AOAM530vQh+JeVOqaCHZXwYkgF0Em7Q/vmmkGPVLjTk6itXg8X2M6FqG
+        dt/eSEAybj2IuFFprhJkivI=
+X-Google-Smtp-Source: ABdhPJzpVQzg+FtS5VvMmMPgY7CXGZs7vXtwxQU/Xe85KJmypxlO9Js7lOPtHFl/5gJ5o2u31QGQYw==
+X-Received: by 2002:aca:1805:: with SMTP id h5mr1857741oih.166.1623136665525;
+        Tue, 08 Jun 2021 00:17:45 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id s6sm2875055otk.71.2021.06.08.00.17.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 00:17:45 -0700 (PDT)
+Date:   Tue, 08 Jun 2021 02:17:43 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Message-ID: <60bf1997b1a72_1a2ac520865@natae.notmuch>
+In-Reply-To: <YL8KiiGXF8LdGmQ2@coredump.intra.peff.net>
+References: <20210605011339.2202-1-felipe.contreras@gmail.com>
+ <87czt059sn.fsf@evledraar.gmail.com>
+ <YLv8NWL7WfBRkiGe@coredump.intra.peff.net>
+ <60be41f6473e2_39c0a208f6@natae.notmuch>
+ <YL8KiiGXF8LdGmQ2@coredump.intra.peff.net>
+Subject: Re: [PATCH] branch: make -v useful
+Mime-Version: 1.0
 Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [GSoC] My Git Dev Blog - Week 3
-From:   Atharva Raykar <raykar.ath@gmail.com>
-In-Reply-To: <4a4a3d6f-7d06-ccdb-7d5a-4057c7549927@gmail.com>
-Date:   Tue, 8 Jun 2021 12:43:16 +0530
-Cc:     git <git@vger.kernel.org>
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <CBC56A4C-2D47-4C96-9621-73BCB1119B90@gmail.com>
-References: <FC56DF49-CEC5-4C9F-BDE4-B0119558E4B2@gmail.com>
- <4a4a3d6f-7d06-ccdb-7d5a-4057c7549927@gmail.com>
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08-Jun-2021, at 00:25, Kaartic Sivaraam <kaartic.sivaraam@gmail.com> =
-wrote:
->=20
-> Hi Atharva,
->=20
-> On 06/06/21 5:56 pm, Atharva Raykar wrote:
->> Hi,
->> Here is my latest instalment in my weekly Git blog:
->> http://atharvaraykar.me/gitnotes/week3
->=20
-> Nice post!
->=20
->> My not-so-well-read guess: Some users want certain submodules
->> active in one worktree, but not the other. For that, there
->> presumably exists a per-worktree configuration, and the current
->> implementation just assumes a configuration that applies to the
->> full repo. Changing this is definitely a patch for some other time.
->=20
-> I get to the same presumption. You could try exploring worktrees more =
-to
-> confirm as you point out. You could also try Cc-ing people who you =
-think
-> would have an idea of this. 'git blame' could you here.
+Jeff King wrote:
+> On Mon, Jun 07, 2021 at 10:57:42AM -0500, Felipe Contreras wrote:
+> > Jeff King wrote:
+> > > On Sat, Jun 05, 2021 at 10:18:14PM +0200, =C3=86var Arnfj=C3=B6r=C3=
+=B0 Bjarmason wrote:
 
-Yes, I have actually been noting down these "leftover bits" as
-things to look into after my GSoC period.
+> > > > As for the proposal, I don't use "branch -v" all that much much, =
+so I
+> > > > don't have strong knee-jerk feelings on it, but just considering =
+it now
+> > > > I'd think that the current default is a fundamentally better
+> > > > approximation of what most users would like as a default.
+> > > > =
 
-> > A painful merge
->=20
-> You don't mention which branches you were trying to merge but
-> from the context I sort of figured out it was the
-> 'submodule-add-in-c-add-config-v2' and
-> 'submodule-add-in-c-add-clone-v3' branches in your repository: =
-https://github.com/tfidfwastaken/git/
+> > > > I.e. I think it's fair to say that to the extent that most users =
+have
+> > > > topic branches they're part of some pull-request workflow where t=
+hey're
+> > > > always tracking the one upstream they always care about, usually
+> > > > origin/master.
+> > > =
 
-That is correct. I felt like adding too many details like that
-might make it harder for someone to get the big picture about
-what happened at a later time (like one year from now).
+> > > I'm in the same boat. I don't use "branch -v" either, but showing t=
+he
+> > > upstream name wouldn't be at all helpful to me, since it they would=
+ all
+> > > just be "origin/master".
+> > =
 
-> You mention trying 'recursive' strategy. Given this isn't a
-> fast-forward merge, I would've expected it to be one that would've
-> been triggered by default. Was that not the case for you?
+> > But this patch is not for you, it's for the majority of git users.
+> =
 
-This was my bad. I had it mixed up in my head and assumed
-'resolve' was the default strategy. Between all the
-strategies I tried, 'recursive', ie, the default one worked
-best. I'll tweak my post to reflect this.
+> In the quoted text above, =C3=86var mentioned that many users will have=
+ a
+> pull-request workflow tracking one upstream.
 
-> Also, which version of Git did you use to do the merge ?
+A pull-request workflow tracks *two* upstreams.
 
-2.31.1
+Option 1: track the base:
 
-Since I'm now a Git developer, I should probably be running
-on a more bleeding edge version, but I have still not got
-around to it.
+  git checkout -b fix -t origin/master # like you, =C3=86var, and me
 
-> I tried reproducing the merge and it's indeed interesting that
-> even '-Xpatience' didn't do the trick.
+Option 2: track the branch you push to:
 
-Yeah. It looks deceptively straightforward for the human eye,
-not so much for algorithms. Most likely because both the
-patches have structurally very similar code, and many lines in
-between are identical.
+  git push --set-upstream github fix # like apparently most users
 
->> I still wonder how non-Emacs users deal with situations like these.
->=20
-> Git lets you invoke external merge tools which could help you resolve
-> merge conflicts in a easy way. See mergetool doc [1] to get an idea
-> about it. `git mergetool --tool-help` would give you a list of =
-supported
-> tools. In your case, I happened to notice that P4Merge[2] does a good
-> job of properly resolving the conflict by itself.
->=20
-> [1]: https://www.git-scm.com/docs/git-mergetool
-> [2]: =
-https://www.perforce.com/products/helix-core-apps/merge-diff-tool-p4merge
+It's two different preferences for the same workflow.
 
-Thanks for the pointers. I currently use Ediff, which is what is
-the default mergetool that is invoked from Magit (the porcelain
-I use). Magit is great, Ediff not so much.
+> So no, I don't think it's just for me, but anybody with that workflow.
+> =
 
-> Speaking of resolving conflicts, there's also rerere [3] which should
-> save you from having to resolve the same conflict again and again.
+> But of course i also mentioned other workflows, like...
 
-Yes. I had that enabled after learning about it from last week's
-discussion, that lead to it being the default in the next release.
+No. The same workflow can have two very different upstreams.
 
-[https://lore.kernel.org/git/xmqqfsxvxjj2.fsf@gitster.g/]
+> > > (This will vary based on workflow, but the
+> > > other common workflow would probably just show "topic" being based =
+on
+> > > "origin/topic").
+> > =
 
-> [3]: https://www.git-scm.com/book/en/v2/Git-Tools-Rerere
->=20
->> So I=E2=80=99m glad there=E2=80=99s the reflog.
->=20
-> Now that you've learned about and used reflog, I thought I'll let you
-> know about `git fsck --lost-found` [4] in case it might come in handy
-> someday ;-)
->=20
-> [4]: =
-https://git-scm.com/docs/git-fsck#Documentation/git-fsck.txt---lost-found
+> > Based on what evidence?
+> > =
 
-Thanks for showing me this. Looks very useful. I hope I never
-need it ;-)
+> > As I showed in [1], all the top results when googling "upstream branc=
+h"
+> > show the upstream branch being used in the opposite way: it's set to =
+the
+> > place you push to:
+> > =
 
->> Have a great weekend, and stay safe!
->=20
-> Thanks. Hope you stay safe too!
->=20
-> --=20
-> Sivaraam
+> >   git push --set-upstream @ github/my-pull-request
+> =
 
+> That's exactly what I was talking about in the quoted text above.  If
+> you use --set-upstream, then your local "topic" will track something
+> like "origin/topic".
+
+But it's not origin/topic. I'm not talking about
+`git branch --set-upstream-to`, I'm talking `git *push* --set-upstream`.
+
+Git is a distributed VCS, most people don't have commit access to the
+original repository, therefore they push to their personal repository
+(e.g. github fork).
+
+So their upstream is not origin/topic, it's github-personal-repo/topic.
+
+> > But even if that was implemented, the whole point of this patch is ab=
+out
+> > what the default value of branch.verboseFormat should be.
+> =
+
+> I'm saying that I find your proposed value for that default to be
+> useless, and I suspect many other users will, too.
+
+Explain how.
+
+If most people use `git push --set-upstream`, their upstream is most
+definitely not origin/master (nor origin/topic).
+
+Even git itself recommends setting the upstream to where they push to:
+
+  fatal: The current branch fix has no upstream branch.
+  To push the current branch and set the remote as upstream, use
+
+      git push --set-upstream origin fix
+
+So they will get a benefit from seeing the upstream in `git branch -v`.
+
+Would they not?
+
+> > Do I need to produce a list of the top 10 Google results of
+> > "git branch -v" vs. "git branch -vv", to show that most people don't
+> > find the output of -v useful?
+> > =
+
+> > Or what kind of evidence would satisfy you?
+> =
+
+> Don't bother on my account. I have generally found that going more than=
+
+> one round deep of discussion with you does not lead anywhere productive=
+,
+> and I don't intend to continue this thread.
+
+If there's no evidence that will ever convince you otherwise, that means
+you are not interested in actual real users, only in your idea of users.
+
+
+For the people who are actually interested in what actual users do, I
+ran a poll on reddit [1], and so far:
+
+  15: The base branch (e.g. origin/master)
+  15: The branch you push to (e.g. github/my-pull-request)
+
+They are tied, 50% use the same upstream as you, 50% don't... For the
+*same* workflow.
+
+Cheers.
+
+[1] https://www.reddit.com/r/git/comments/nuf3p5/where_do_you_point_your_=
+upstream_branch_to/
+
+-- =
+
+Felipe Contreras=
