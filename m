@@ -8,106 +8,102 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F98C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3249C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:38:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E52F60FEE
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:00:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 981656120F
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230366AbhFHCCK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 22:02:10 -0400
-Received: from mail-pj1-f50.google.com ([209.85.216.50]:40901 "EHLO
-        mail-pj1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbhFHCCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 22:02:09 -0400
-Received: by mail-pj1-f50.google.com with SMTP id mp5-20020a17090b1905b029016dd057935fso4911909pjb.5
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 19:00:04 -0700 (PDT)
+        id S230365AbhFHCkZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 22:40:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44016 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230233AbhFHCkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 22:40:24 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB74C061574
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 19:38:20 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id v142so19712788oie.9
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 19:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EPhhOi/fu94KLyGoR0Tv5xpUKx0k2+xmzgCu2dd88Ag=;
-        b=oUbIE49bobmo3q0LyCdNQqGira5U5H9gPeeooPPnCRzJlFzO09qYabA7eyS4ibKEfl
-         69OkiZGe+zn3HI/v0oPMPF+DmEGZEq0S2V7lT3UxCM/R5HL25YckiZTnMsJ0V5XgfmWa
-         /eoO8wvegwQEynQgnZMvJPHgBd2Ef4cydkm/S0g0jY0IhozMRE2pxHhn65fnJpJltHP+
-         pvvgaNUtGLZ74I+DKM1mzr6SgG69MIIDFeBjhCx+9ncoXaO53N+sjLHq2wg6v8MAp66/
-         NyCiMIkRRM/nYlmEUw1MbouE5BXycdPyLRrEb66udvebwDObbpdNl8iQbJ2DOpS8JCAH
-         cVXQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WHhocZkXWhRFEwVR6K+G7ygTzsmFewp/nDkXSmxSQh0=;
+        b=Hm5wdP7eeNA4CsoBs4boLtRTxYG/Q3N/TDWwr1dgLUL/VpvP9rok9sYN7RAWLwpkM1
+         KsoH9mX+XdhPncc6MKBDdtIJJwro/8ItL+O5AN+67vfqguMPvFutxkwsR+Y9TEG0LmsL
+         DD0NimbUE6U8qxlSnAEnXsx7eYN+ep5WjjUrDhcr3Ha6e8VwtnavYDy+XPDrLw+yLXcp
+         BwH18ABhXcAhr6XpZtOwSZk8/KDEggQWSiZgPSKa3bbEQVlVRzb75WlZUgi1xSSC6r6A
+         uUV8WM+uBLJggLZvf5sbz/08KhWdaXHHusDcaIgnDqq+M1JIBNvcu6hZVePg4ocHE2iQ
+         L9Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EPhhOi/fu94KLyGoR0Tv5xpUKx0k2+xmzgCu2dd88Ag=;
-        b=Lp70WN5J3T5QcJ8f51bnN4XoW13RzMJNpVM7i5m+DneTvejWo+6YD6sBBB0/cQ+I0f
-         Nro0LV9lXEjn1tIVtZa7ZqRyEhAgw0+vMXlZk4zbeqlCk080UmGM5mtA+LxMooEyepN2
-         jE+A4czvJ41CjpL3wXJHPqP4GEZ4tgafpMJPJ/YH1AA8mh4rITPfZWzQtWsZQ4OTYV8g
-         phcMEhDYD+kYPURIrhOQz7y6vuCreyLizgvO4LeQcI9C/vLal/Ia/IJ22ieN8BqVIm4O
-         K4NXExFOYlmcPUj9pLv6DdQW6BHZyocjmF9JLwMOlWq488kyRq+90wiH0UwsbRRBy3rC
-         mAFQ==
-X-Gm-Message-State: AOAM531eVZzMdNI1EvML+MF1E/pTpU7S61xvdV3QE/bvIdZXJhQCcIuB
-        AOf5tBKGYdypklltlz2b+tnB7M4+U0AbOA==
-X-Google-Smtp-Source: ABdhPJztTaWvdGcaOG0130AvGWF7eFfHJtgzoe3u2OpKB9vxtWYW0ZMx6Z4OcwXjX6LQLbZ0zKwdRA==
-X-Received: by 2002:a17:902:9348:b029:f0:d51a:7a4c with SMTP id g8-20020a1709029348b02900f0d51a7a4cmr20947343plp.60.1623117544375;
-        Mon, 07 Jun 2021 18:59:04 -0700 (PDT)
-Received: from athena.localdomain ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
-        by smtp.gmail.com with ESMTPSA id z18sm6798680pfn.37.2021.06.07.18.59.02
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WHhocZkXWhRFEwVR6K+G7ygTzsmFewp/nDkXSmxSQh0=;
+        b=JawTYq2nj965vblTXtI42SfMC2rjGy/Wrs1mmHpZLi4N6vUNrWT7YmAVL23Pm/bx1Z
+         aT7wcqdxKcFQMRjZuB5gRmdnY8AY8oKEivBHruKTYkI3N2G870VNuMwWHWcdBwkBYTzQ
+         Gcmajeabcbsr3gQprDNte/gyp6SmpSG+Hp8BYnbGqBzHKohpdXV2xaDxir7DV/7wX/lD
+         +QdzWiaPcWv3hfRJsDptNhu9BqwFM0nJGsrqt2K4fUGWK0exv302UCAalA6Y0z3sMo0X
+         XWfDZuanzizjvlqxaJ3emxUxpPkTbi+6m2+D4d9+uluGs9SizMMmsxjd835d+LOICbPF
+         PzbQ==
+X-Gm-Message-State: AOAM532YIE8Jkn/f3XQdTtJ6TKFKoerfmdICN3zuxq+5UOWlxFAmzJGe
+        49aRlQ49DJ5+OjZoiMPliltTcOFaDvcC0Q==
+X-Google-Smtp-Source: ABdhPJxtOrpVVVzVc0fdwSdxpADZ4Zj+GjPqOZOaiTuiDIvuAAW/ogK598USBL5fDyozK1b5wssTcA==
+X-Received: by 2002:a05:6808:6c4:: with SMTP id m4mr1467892oih.88.1623119899499;
+        Mon, 07 Jun 2021 19:38:19 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id 6sm1382202otp.47.2021.06.07.19.38.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 18:59:04 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
+        Mon, 07 Jun 2021 19:38:19 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andy AO <zen96285@gmail.com>
-Subject: [PATCH] doc/log: correct default for --decorate
-Date:   Tue,  8 Jun 2021 08:58:40 +0700
-Message-Id: <20210608015840.24532-1-congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.32.0.5.gc7fdd17fde
-In-Reply-To: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
-References: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] completion: zsh: trivial improvement
+Date:   Mon,  7 Jun 2021 21:38:07 -0500
+Message-Id: <20210608023807.907883-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There're two different default options for log --decorate:
-* Should `--decorate` be given without any arguments, it's default to
-  `short`
-* Should neither `--decorate` nor `--no-decorate` be given, it's default
-  to the `log.decorate` or `auto`.
+$words has basically all the words we need, except the first one: git.
 
-We documented the former, but not the latter.
+Lets simply add that instead of passing the original, which contains
+options we don't want to pass downstream (like --git-dir).
 
-Let's document them, too.
-
-Reported-by: Andy AO <zen96285@gmail.com>
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
+ contrib/completion/git-completion.zsh | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
- I'm reluctant to send this out since I would like to see Andy get familiar
- with the list.  However, it's a while since the original patch.
-
- Documentation/git-log.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 1bbf865a1b..0498e7bacb 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -39,7 +39,9 @@ OPTIONS
- 	full ref name (including prefix) will be printed. If 'auto' is
- 	specified, then if the output is going to a terminal, the ref names
- 	are shown as if 'short' were given, otherwise no ref names are
--	shown. The default option is 'short'.
-+	shown. The option `--decorate` is short-hand for `--decorate=short`.
-+	Default to configuration value of `log.decorate` if configured,
-+	otherwise, `auto`.
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index cac6f61881..50f89145f3 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -219,9 +219,6 @@ __git_zsh_main ()
+ {
+ 	local curcontext="$curcontext" state state_descr line
+ 	typeset -A opt_args
+-	local -a orig_words
+-
+-	orig_words=( ${words[@]} )
  
- --decorate-refs=<pattern>::
- --decorate-refs-exclude=<pattern>::
+ 	_arguments -C \
+ 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
+@@ -261,7 +258,7 @@ __git_zsh_main ()
+ 
+ 		(( $+opt_args[--help] )) && command='help'
+ 
+-		words=( ${orig_words[@]} )
++		words=( git ${words[@]} )
+ 
+ 		__git_zsh_bash_func $command
+ 		;;
 -- 
-2.32.0.5.gc7fdd17fde
+2.32.0.2.g41be0a4e50
 
