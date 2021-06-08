@@ -2,224 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14698C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B81BC47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:24:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBD7F6127A
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:18:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1629361184
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 07:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230261AbhFHHTx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 03:19:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbhFHHTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 03:19:50 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328ADC061574
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 00:17:46 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id d21so20650876oic.11
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 00:17:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=uoJYLIHHHjRUlcSWF2YViw14Az/2buBG2YospGQueX8=;
-        b=ndO8wa7g6x/rz1znb5hdh21Q0uBBxhTdNs26jP3CIJT7afpz1+4hmShtLLGXcX0KyG
-         XpYXfHTRoNAsIDFjKV7rDyBge0KapWnzeyJDof5eJFgvWDj4eAzE9nBzhC20onkWPwAD
-         60tlxDVruxqllcZ5C6StbErd8P64OvO5bkBMeMtmh8mzVRQfG4UaGq/fHa6BGN7IGAsb
-         54gryP56UB/0SnjDiQ52JyExRKEdhttxVA4qU9F9TUStxpP8aHjPdUpG26VAnrbGAzAP
-         8iZSNmR2cI+pLsRiutlyAjvQdqR7cEazOwd9P9MT9Y/C08kZM3nAgPEeXSymKHtVg3cd
-         gZQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=uoJYLIHHHjRUlcSWF2YViw14Az/2buBG2YospGQueX8=;
-        b=uk3gk2uuYKwBrMVqrE859bWB/XWhNy7/1PihZI3hctZJ1GZMJF5u5q3jpeo/66r3HS
-         gKt1tzzGn5qMiv68As1ApL1FL1czxirIIiJkIiuGnUnubdZeTQLiMdsRqIH0eQFqBpBu
-         gpRKSWTxXVxQqHAk9gMYnuKnJb9Go0fEBWY5ibCnm/5nobK96prjnCSe1woqCcRZHea4
-         j0VslCf+qf/EWLm0jImOTon/ZSmStJazknR8vK4hrODqyhUmUxaGidLVIrA4+7grYmzf
-         E7kuUahzQcxCXGtZFhKZvbeDdRG8FAtpf9bFq0jx6N6SLFFzgnVrNnkih6icFZLi7QDU
-         UkTQ==
-X-Gm-Message-State: AOAM530vQh+JeVOqaCHZXwYkgF0Em7Q/vmmkGPVLjTk6itXg8X2M6FqG
-        dt/eSEAybj2IuFFprhJkivI=
-X-Google-Smtp-Source: ABdhPJzpVQzg+FtS5VvMmMPgY7CXGZs7vXtwxQU/Xe85KJmypxlO9Js7lOPtHFl/5gJ5o2u31QGQYw==
-X-Received: by 2002:aca:1805:: with SMTP id h5mr1857741oih.166.1623136665525;
-        Tue, 08 Jun 2021 00:17:45 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id s6sm2875055otk.71.2021.06.08.00.17.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 00:17:45 -0700 (PDT)
-Date:   Tue, 08 Jun 2021 02:17:43 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Message-ID: <60bf1997b1a72_1a2ac520865@natae.notmuch>
-In-Reply-To: <YL8KiiGXF8LdGmQ2@coredump.intra.peff.net>
-References: <20210605011339.2202-1-felipe.contreras@gmail.com>
- <87czt059sn.fsf@evledraar.gmail.com>
- <YLv8NWL7WfBRkiGe@coredump.intra.peff.net>
- <60be41f6473e2_39c0a208f6@natae.notmuch>
- <YL8KiiGXF8LdGmQ2@coredump.intra.peff.net>
-Subject: Re: [PATCH] branch: make -v useful
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S230280AbhFHH0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 03:26:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48722 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229678AbhFHH0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 03:26:42 -0400
+Received: (qmail 28587 invoked by uid 109); 8 Jun 2021 07:24:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Jun 2021 07:24:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7396 invoked by uid 111); 8 Jun 2021 07:24:50 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Jun 2021 03:24:50 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 8 Jun 2021 03:24:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: [PATCH] doc: warn people against --max-pack-size
+Message-ID: <YL8bQMOAHxApjVVe@coredump.intra.peff.net>
+References: <776cb2f9-5fef-4486-5aef-f3ee62fcda7e@gmail.com>
+ <YL8RfGijMY95miHI@coredump.intra.peff.net>
+ <xmqqfsxsq1l4.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfsxsq1l4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Mon, Jun 07, 2021 at 10:57:42AM -0500, Felipe Contreras wrote:
-> > Jeff King wrote:
-> > > On Sat, Jun 05, 2021 at 10:18:14PM +0200, =C3=86var Arnfj=C3=B6r=C3=
-=B0 Bjarmason wrote:
+On Tue, Jun 08, 2021 at 04:04:23PM +0900, Junio C Hamano wrote:
 
-> > > > As for the proposal, I don't use "branch -v" all that much much, =
-so I
-> > > > don't have strong knee-jerk feelings on it, but just considering =
-it now
-> > > > I'd think that the current default is a fundamentally better
-> > > > approximation of what most users would like as a default.
-> > > > =
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Mon, Jun 07, 2021 at 01:42:47PM +0700, Bagas Sanjaya wrote:
+> >
+> >> I would like to create packfiles with charm-numbered size (that is for
+> >> example use 49.99M instead of 50M) with git-repack:
+> >> 
+> >> $ git repack --max-pack-size=49.99M -a -d
+> >
+> > The parser for numbers with units is shared by many options and config
+> > variables. In general, I'm not really opposed to allowing floating point
+> > values which get rounded to the nearest byte for any of them. So no
+> > objection for the general feature if somebody wants to implement it.
+> >
+> > But I would note that --max-pack-size is almost never a good idea in
+> > general. I don't know what you think it's accomplishing, but it is
+> > probably making your repository larger than it needs to be, as well as
+> > less performant.
+> 
+> Perhaps a doc update is in order?  It might have been cute and
+> superficially useful to be able to cut packfiles in 650M chunks to
+> fit on a CD-ROM, but I suspect that it would be more useful to feed
+> a single large file to a generic multi-volume archive tool and let
+> it split it to fit the physical volume the tool deals with.
 
-> > > > I.e. I think it's fair to say that to the extent that most users =
-have
-> > > > topic branches they're part of some pull-request workflow where t=
-hey're
-> > > > always tracking the one upstream they always care about, usually
-> > > > origin/master.
-> > > =
+Yeah. Let's do that while we're thinking about it. Here's what I came up
+with.
 
-> > > I'm in the same boat. I don't use "branch -v" either, but showing t=
-he
-> > > upstream name wouldn't be at all helpful to me, since it they would=
- all
-> > > just be "origin/master".
-> > =
+-- >8 --
+Subject: [PATCH] doc: warn people against --max-pack-size
 
-> > But this patch is not for you, it's for the majority of git users.
-> =
+This option is almost never a good idea, as the resulting repository is
+larger and slower (see the new explanations in the docs).
 
-> In the quoted text above, =C3=86var mentioned that many users will have=
- a
-> pull-request workflow tracking one upstream.
+I outlined the potential problems. We could go further and make the
+option harder to find (or at least, make the command-line option
+descriptions a much more terse "you probably don't want this; see
+pack.packsizeLimit for details"). But this seems like a minimal change
+that may prevent people from thinking it's more useful than it is.
 
-A pull-request workflow tracks *two* upstreams.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/config/pack.txt      | 23 +++++++++++++++++------
+ Documentation/git-pack-objects.txt |  6 +++---
+ Documentation/git-repack.txt       |  4 +++-
+ 3 files changed, 23 insertions(+), 10 deletions(-)
 
-Option 1: track the base:
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index c0844d8d8e..763f7af7c4 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -99,12 +99,23 @@ pack.packSizeLimit::
+ 	packing to a file when repacking, i.e. the git:// protocol
+ 	is unaffected.  It can be overridden by the `--max-pack-size`
+ 	option of linkgit:git-repack[1].  Reaching this limit results
+-	in the creation of multiple packfiles; which in turn prevents
+-	bitmaps from being created.
+-	The minimum size allowed is limited to 1 MiB.
+-	The default is unlimited.
+-	Common unit suffixes of 'k', 'm', or 'g' are
+-	supported.
++	in the creation of multiple packfiles.
+++
++Note that this option is rarely useful, and may result in a larger total
++on-disk size (because Git will not store deltas between packs), as well
++as worse runtime performance (object lookup within multiple packs is
++slower than a single pack, and optimizations like reachability bitmaps
++cannot cope with multiple packs).
+++
++If you need to actively run Git using smaller packfiles (e.g., because your
++filesystem does not support large files), this option may help. But if
++your goal is to transmit a packfile over a medium that supports limited
++sizes (e.g., removable media that cannot store the whole repository),
++you are likely better off creating a single large packfile and splitting
++it using a generic multi-volume archive tool (e.g., Unix `split`).
+++
++The minimum size allowed is limited to 1 MiB. The default is unlimited.
++Common unit suffixes of 'k', 'm', or 'g' are supported.
+ 
+ pack.useBitmaps::
+ 	When true, git will use pack bitmaps (if available) when packing
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 25d9fbe37a..dbfd1f9017 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -128,10 +128,10 @@ depth is 4095.
+ 	into multiple independent packfiles, each not larger than the
+ 	given size. The size can be suffixed with
+ 	"k", "m", or "g". The minimum size allowed is limited to 1 MiB.
+-	This option
+-	prevents the creation of a bitmap index.
+ 	The default is unlimited, unless the config variable
+-	`pack.packSizeLimit` is set.
++	`pack.packSizeLimit` is set. Note that this option may result in
++	a larger and slower repository; see the discussion in
++	`pack.packSizeLimit`.
+ 
+ --honor-pack-keep::
+ 	This flag causes an object already in a local pack that
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index ef310f362e..24c00c9384 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -121,7 +121,9 @@ depth is 4095.
+ 	If specified, multiple packfiles may be created, which also
+ 	prevents the creation of a bitmap index.
+ 	The default is unlimited, unless the config variable
+-	`pack.packSizeLimit` is set.
++	`pack.packSizeLimit` is set. Note that this option may result in
++	a larger and slower repository; see the discussion in
++	`pack.packSizeLimit`.
+ 
+ -b::
+ --write-bitmap-index::
+-- 
+2.32.0.527.gfd0058899e
 
-  git checkout -b fix -t origin/master # like you, =C3=86var, and me
-
-Option 2: track the branch you push to:
-
-  git push --set-upstream github fix # like apparently most users
-
-It's two different preferences for the same workflow.
-
-> So no, I don't think it's just for me, but anybody with that workflow.
-> =
-
-> But of course i also mentioned other workflows, like...
-
-No. The same workflow can have two very different upstreams.
-
-> > > (This will vary based on workflow, but the
-> > > other common workflow would probably just show "topic" being based =
-on
-> > > "origin/topic").
-> > =
-
-> > Based on what evidence?
-> > =
-
-> > As I showed in [1], all the top results when googling "upstream branc=
-h"
-> > show the upstream branch being used in the opposite way: it's set to =
-the
-> > place you push to:
-> > =
-
-> >   git push --set-upstream @ github/my-pull-request
-> =
-
-> That's exactly what I was talking about in the quoted text above.  If
-> you use --set-upstream, then your local "topic" will track something
-> like "origin/topic".
-
-But it's not origin/topic. I'm not talking about
-`git branch --set-upstream-to`, I'm talking `git *push* --set-upstream`.
-
-Git is a distributed VCS, most people don't have commit access to the
-original repository, therefore they push to their personal repository
-(e.g. github fork).
-
-So their upstream is not origin/topic, it's github-personal-repo/topic.
-
-> > But even if that was implemented, the whole point of this patch is ab=
-out
-> > what the default value of branch.verboseFormat should be.
-> =
-
-> I'm saying that I find your proposed value for that default to be
-> useless, and I suspect many other users will, too.
-
-Explain how.
-
-If most people use `git push --set-upstream`, their upstream is most
-definitely not origin/master (nor origin/topic).
-
-Even git itself recommends setting the upstream to where they push to:
-
-  fatal: The current branch fix has no upstream branch.
-  To push the current branch and set the remote as upstream, use
-
-      git push --set-upstream origin fix
-
-So they will get a benefit from seeing the upstream in `git branch -v`.
-
-Would they not?
-
-> > Do I need to produce a list of the top 10 Google results of
-> > "git branch -v" vs. "git branch -vv", to show that most people don't
-> > find the output of -v useful?
-> > =
-
-> > Or what kind of evidence would satisfy you?
-> =
-
-> Don't bother on my account. I have generally found that going more than=
-
-> one round deep of discussion with you does not lead anywhere productive=
-,
-> and I don't intend to continue this thread.
-
-If there's no evidence that will ever convince you otherwise, that means
-you are not interested in actual real users, only in your idea of users.
-
-
-For the people who are actually interested in what actual users do, I
-ran a poll on reddit [1], and so far:
-
-  15: The base branch (e.g. origin/master)
-  15: The branch you push to (e.g. github/my-pull-request)
-
-They are tied, 50% use the same upstream as you, 50% don't... For the
-*same* workflow.
-
-Cheers.
-
-[1] https://www.reddit.com/r/git/comments/nuf3p5/where_do_you_point_your_=
-upstream_branch_to/
-
--- =
-
-Felipe Contreras=
