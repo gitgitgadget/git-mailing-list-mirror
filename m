@@ -2,112 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45DD9C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 06:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D78DC47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 06:39:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2519061183
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 06:32:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E7E561185
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 06:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235954AbhFIGev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 02:34:51 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56543 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231508AbhFIGeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 02:34:50 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B24F4146DFA;
-        Wed,  9 Jun 2021 02:32:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WHaOwsSTQO6bm3DeUSt1VGA93ry+nGeok0e2Ei
-        ui5WU=; b=NeS3abwnPDN0l55zqRaD1699mHqopEfgqnncaKRQoiWWdIuemMboHU
-        x/H+Fv6gnPDx8LyCkl6a7cWa8onA++clbFUwhicQc15ERZGvODFsW9T9odmjp9ML
-        zQ2LoAeDHSnG4ShGkHMgBvY78UmupSwPVlDBH6YmBjV1nJi7yd/h4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AB8E0146DF9;
-        Wed,  9 Jun 2021 02:32:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S236805AbhFIGlS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 02:41:18 -0400
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:45660 "EHLO
+        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236795AbhFIGlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 02:41:16 -0400
+Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:7bea:9345:5cb6:1f04])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EB45E146DF8;
-        Wed,  9 Jun 2021 02:32:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v5 10/14] diff-lib: handle index diffs with sparse dirs
-References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
-        <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
-        <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
-        <CABPp-BEp0NzUqW_pWpTGoUvrB1JMp9fVHr28Sp8RZqV6w0-hEw@mail.gmail.com>
-Date:   Wed, 09 Jun 2021 15:32:51 +0900
-In-Reply-To: <CABPp-BEp0NzUqW_pWpTGoUvrB1JMp9fVHr28Sp8RZqV6w0-hEw@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 8 Jun 2021 22:47:27 -0700")
-Message-ID: <xmqqfsxrk0oc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id 3502548846F;
+        Wed,  9 Jun 2021 08:39:20 +0200 (CEST)
+Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
+        t=1623220760; bh=cE0peeJ4c5tXoucS/im+TBQ7uIDWq7o/rKSLhuX4UqA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=S3bfow+6Fr3Nc2g0lF1h01e7ES7fTs2MgGC4SQeZC3YEba588n1URwe6e0FgfEh1v
+         AiBhVaEooXYUYaDW41uvw6iea7qbVGNLpT4N1W+zNv+gyw1MV0G5Zu+TXvuOjq/VGI
+         iBhES7nAH5eIiB8Bv5GS61MdKxtss8VzO2q54E6M=
+From:   =?ISO-8859-1?Q?L=E9na=EFc?= Huard <lenaic@lhuard.fr>
+To:     git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 1/1] maintenance: use systemd timers on Linux
+Date:   Tue, 08 Jun 2021 16:55:29 +0200
+Message-ID: <13530009.9cuodmXfNX@coruscant.lhuard.fr>
+In-Reply-To: <3fd17223-8667-24be-2e65-f1970d411bdf@gmail.com>
+References: <20210501145220.2082670-1-lenaic@lhuard.fr> <20210509213217.449489-2-lenaic@lhuard.fr> <3fd17223-8667-24be-2e65-f1970d411bdf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 84BDDA5E-C8EC-11EB-BD57-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hello Phillip,
 
-> On Mon, Jun 7, 2021 at 5:34 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> While comparing an index to a tree, we may see a sparse directory entry.
->> In this case, we should compare that portion of the tree to the tree
->> represented by that entry. This could include a new tree which needs to
->> be expanded to a full list of added files. It could also include an
->> existing tree, in which case all of the changes inside are important to
->> describe, including the modifications, additions, and deletions. Note
->> that the case where the tree has a path and the index does not remains
->> identical to before: the lack of a cache entry is the same with a sparse
->> index.
->>
->> In the case where a tree is modified, we need to expand the tree
->> recursively, and start comparing each contained entry as either an
->> addition, deletion, or modification. This causes an interesting
->> recursion that did not exist before.
->
-> So, I haven't read through this in detail yet...but there's a big
-> question I'm curious about:
->
-> Git already has code for comparing an index to a tree, a tree to a
-> tree, or a tree to the working directory, right?  So, when comparing a
-> sparse-index to a tree...can't we re-use the compare a tree to a tree
-> code when we hit a sparse directory?
+Le lundi 10 mai 2021, 20:03:58 CEST Phillip Wood a =C3=A9crit :
+> > +	unit =3D "# This file was created and is maintained by Git.\n"
+> > +	       "# Any edits made in this file might be replaced in the=20
+future\n"
+> > +	       "# by a Git command.\n"
+> > +	       "\n"
+> > +	       "[Unit]\n"
+> > +	       "Description=3DOptimize Git repositories data\n"
+> > +	       "\n"
+> > +	       "[Service]\n"
+> > +	       "Type=3Doneshot\n"
+> > +	       "ExecStart=3D\"%1$s/git\" --exec-path=3D\"%1$s\" for-each-repo
+> > --config=3Dmaintenance.repo maintenance run --schedule=3D%%i\n" +	     =
+=20
+> > "LockPersonality=3Dyes\n"
+> > +	       "MemoryDenyWriteExecute=3Dyes\n"
+> > +	       "NoNewPrivileges=3Dyes\n"
+> > +	       "RestrictAddressFamilies=3DAF_UNIX AF_INET AF_INET6\n"
+> > +	       "RestrictNamespaces=3Dyes\n"
+> > +	       "RestrictRealtime=3Dyes\n"
+> > +	       "RestrictSUIDSGID=3Dyes\n"
+>=20
+> After a quick read of the systemd.exec man page it is unclear to me if
+> these Restrict... lines are needed as we already have
+> NoNewPrivileges=3Dyes - maybe they have some effect if `git maintence` is
+> run as root?
 
-Offhand I do not think of a reason why that cannot work.
+I think that the only thing that `NoNewPrivileges=3Dyes` do is to set the n=
+o new=20
+privileges flag described in [1] on the process.
 
-The tree-diff machinery takes two trees, walks them in parallel and
-repeatedly calls either diff_addremove() or diff_change(), which
-appends diff_filepair() to the diff_queue[] structure.  If you see
-an unexpanded tree on the index side, you should be able to pass
-that tree with the subtree you are comparing against to the tree-diff
-machinery to come up with a series of filepairs, and then tweak the
-pathnames of these filepairs (as such a two-tree comparison would be
-comparing two trees representing a single subdirectory of two different
-vintages) before adding them to the diff_queue[] you are collecting
-the index-vs-tree diff, for example.
+The `Restrict=E2=80=A6` options are enabling some other sandboxing features=
+ by=20
+blocking some syscalls through a seccomp profile.
 
-But if a part of the index is represented as a tree because it is
-outside the cone of interest, should we even be showing the
-difference in that part of the tree?  If t/ directory is outside the
-cone of interest, should "git diff HEAD~100 HEAD t/" show anything
-to begin with (the same question for "git diff --cached HEAD t/")?
+My understanding of the systemd.exec man page is the other way round, i.e.:=
+ as=20
+soon as there=E2=80=99s a `Restrict=E2=80=A6` option, the `NoNewPrivileges=
+=3Dyes` is implied.
+
+So, I would say that strictly speaking `NoNewPrivileges=3Dyes` isn=E2=80=99=
+t needed.
+But `NoNewPrivileges=3Dyes` doesn=E2=80=99t imply the `Restrict=E2=80=A6` o=
+ptions.
+
+But I thought that, from a security point of view, it=E2=80=99s better to s=
+et as many=20
+sandboxing options as possible and be as explicit as possible.
+
+[1] https://www.kernel.org/doc/html/latest/userspace-api/no_new_privs.html
+
+
+
