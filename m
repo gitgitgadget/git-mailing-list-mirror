@@ -7,153 +7,142 @@ X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91B63C47094
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 01:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CD91C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 01:30:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EE766124C
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 01:26:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73A3D61263
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 01:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbhFHB2G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 21:28:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50323 "EHLO
+        id S230314AbhFHBcL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 21:32:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63364 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbhFHB2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 21:28:00 -0400
+        with ESMTP id S230209AbhFHBcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 21:32:11 -0400
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 738CBC3415;
-        Mon,  7 Jun 2021 21:26:07 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED529C34A4;
+        Mon,  7 Jun 2021 21:30:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=61RSDcfLs4WcsEnnFZUauUF3E7k/emumFquOIb
-        Xv1MI=; b=eO62Wm35JYd8mPFuV3lWrM5QgcCkr41CaYME93g6XP74W/Qu3MzjYB
-        pJ/1Vmjz6y179y82aKIGUMygcydx77kE3wLiVUl+MUwDXt/qMwRPL7yMRSa/ZWRq
-        wR79qsqTu3mfn3rl1PlzbxCn+thEcknA7JBspDL08IqextBqAE5ww=
+        :content-type; s=sasl; bh=wGehlPAl3vgNq+R9yFrKLgaahJXnXiKMpAxN9b
+        66nUQ=; b=r9miI+7VzDejMV/nv6T9ogCrj62diV5LCNoT5VF+NqFtj2ptwjY8Fo
+        X0Xi/DJsgC5ooxpO9AABm0phBLH23d37XX9CioVRUMtJ8urkiQ+M4GvzvbTQ8v7p
+        u8o0ORxGFb3OsnZc5jFRqtFJpfhMD1hMyl61hCGPFeJBcrUbM/zwQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6AAF8C3413;
-        Mon,  7 Jun 2021 21:26:07 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5D46C34A2;
+        Mon,  7 Jun 2021 21:30:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE4D3C3412;
-        Mon,  7 Jun 2021 21:26:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6A82BC34A1;
+        Mon,  7 Jun 2021 21:30:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Michael Schindler via GitGitGadget" <gitgitgadget@gmail.com>
+To:     "Michael Schindler via GitGitGadget" <gitgitgadget@gmail.com>,
+        David Aguilar <davvid@gmail.com>
 Cc:     git@vger.kernel.org,
         Michael Schindler <michael@compressconsult.com>
-Subject: Re: [PATCH] mergetools/kdiff3: make kdiff3 work on windows too
-References: <pull.952.git.git.1623097114277.gitgitgadget@gmail.com>
-Date:   Tue, 08 Jun 2021 10:26:05 +0900
-In-Reply-To: <pull.952.git.git.1623097114277.gitgitgadget@gmail.com> (Michael
-        Schindler via GitGitGadget's message of "Mon, 07 Jun 2021 20:18:33
+Subject: Re: [PATCH] use get_merge_tool_path() also in is_available() to
+ honor settings
+References: <pull.1032.git.git.1623098845733.gitgitgadget@gmail.com>
+Date:   Tue, 08 Jun 2021 10:30:17 +0900
+In-Reply-To: <pull.1032.git.git.1623098845733.gitgitgadget@gmail.com> (Michael
+        Schindler via GitGitGadget's message of "Mon, 07 Jun 2021 20:47:25
         +0000")
-Message-ID: <xmqqbl8hrvte.fsf@gitster.g>
+Message-ID: <xmqq7dj5rvme.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7F774930-C7F8-11EB-8079-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 1562B9D4-C7F9-11EB-8862-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+Adding David Aguilar as an area expert for help reviewing.
+
+Thanks.
 
 "Michael Schindler via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
 > From: Michael Schindler <michael@compressconsult.com>
-
-Thanks.  The proposed log message is overly long and looks unusual
-to have "Bug cause:" and "Fix:" markers in it.  It would be nice if
-it fit well when found in say "git log --no-merges" output with
-other commits.
-
-> Currently the native kdiff3 mergetool is not found by git mergetool on windows.
-> The message "The merge tool kdiff3 is not available as 'kdiff3'" is displayed.
-
-Very well explained.  You can lose "Currently", though.  Also wrap
-the line at around 70 columns and it would be perfect.
-
-> But it is important especially for GUI to use this native version on windows.
-> Kdiff3 for various systems can be downloaded from https://download.kde.org/stable/kdiff3/
-
-I am not sure how these two lines help.  We've established with the
-first two lines that the native kdiff3 is not found, even though
-kdiff3 is available on windows, so it is clear that we'd want to
-make it available.  If I were writing this, I'd drop these two lines.
-
-So, after the first two lines to describe what is wrong, we can just
-say something like
-
-    Just like we translate the name of the binary and look for the
-    program on search path for winmerge, do the same for kdiff3.
-
-and all the remainder, up to but not including your sign-off, can be
-removed, I think.
-
-> Bug cause:
-> On Windows the executable name has to be translated (kdiff3.exe instead of kdiff) and the windows path has to be searched - similar to winmerge.
 >
-> Fix:
-> This change is using mergetool_find_win32_cmd from the library in the translate_merge_tool_path().
-> This is done the same way as in winmerge.
+> fix the is_available test used in git mergetool --tool-help or
+> git difftool --tool-help or to check the list of tools available when no
+> tool is configured/given with --tool
 >
-> However this translation must not be made on linux/unix, so a "type kdiff3" test is made on kdiff3 and only if not found the windows search is tried.
+> symtoms: the actual tool running run_merge_tool () considers the difftool.
+> "$merge_tool".path and mergetool."$merge_tool".path and if configured
+> honors these. See get_merge_tool_path () in git-mergetool--lib.sh
+> If not set use fallback: translate_merge_tool_path "$merge_tool".
 >
-> Signed-off-by: Michael Schindler michael@compressconsult.com
+> The is_available () just uses translate_merge_tool_path "$merge_tool".
+>
+> repo 1: Configure an invalid path in mergetool."$merge_tool".path for a
+> tool of your choice.
+> You will be informed that the tool is available, but when trying to use
+> it will not be found because the invalid configured path is used.
+>
+> repo2: Install a tool of your choice on a nonstandard place (e.g. rename
+> the program) and configure mergetool."$merge_tool".path for this tool.
+> You will be informed that the tool is not available (because not found on
+> standard place), but when trying to run it will work.
+>
+> This fix will make the information consistent by using get_merge_tool_path()
+> also in is_available()
+>
+> Signed-off-by: Michael Schindler <michael@compressconsult.com>
 > ---
->     mergetools/kdiff3: make kdiff3 work on windows too
+>     use get_merge_tool_path() also in is_available() to honor settings
 >     
->     mergetools/kdiff3: make kdiff3 work on windows too
+>     fix the is_available() used in git mergetool --tool-help or git difftool
+>     --tool-help or used to check the list of tools available when no tool is
+>     configured/given with --tool
 >     
->     Currently the native kdiff3 mergetool is not found by git mergetool on
->     windows. The message "The merge tool kdiff3 is not available as
->     'kdiff3'" is displayed.
+>     symtoms: the actual tool running run_merge_tool () considers the
+>     difftool."$merge_tool".path and mergetool."$merge_tool".path and if
+>     configured honors these. See get_merge_tool_path () in
+>     git-mergetool--lib.sh If not defined use fallback:
+>     translate_merge_tool_path "$merge_tool".
 >     
->     But it is important especially for GUI to use this native version on
->     windows. Kdiff3 for various systems can be downloaded from
->     https://download.kde.org/stable/kdiff3/
+>     The is_available () just uses translate_merge_tool_path "$merge_tool".
 >     
->     Bug cause: On Windows the executable name has to be translated
->     (kdiff3.exe instead of kdiff) and the windows path has to be searched -
->     similar to winmerge.
+>     repo 1: Configure an invalid path in mergetool."$merge_tool".path for a
+>     tool of your choice. You will be informed that the tool is available,
+>     but when trying to use it it will not be found because the invalid
+>     configured path is used.
 >     
->     Fix: This change is using mergetool_find_win32_cmd from the library in
->     the translate_merge_tool_path(). This is done the same way as in
->     winmerge.
+>     repo2: Install a tool of your choice on a nonstandard place (e.g. rename
+>     the program) and configure mergetool."$merge_tool".path for this tool.
+>     You will be informed that the tool is not available (because not found
+>     on standard place), but when trying to run it will work.
 >     
->     However this translation must not be made on linux/unix, so a "type
->     kdiff3" test is made on kdiff3 and only if not found the windows search
->     is tried.
+>     This fix will make the information consistent by using
+>     get_merge_tool_path() also in is_available()
 >     
 >     Signed-off-by: Michael Schindler michael@compressconsult.com
-
-This is redundant---it says the same thing as your proposed commit
-log message.
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-952%2Fmichaelcompressconsult%2Fkdiff3_win-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-952/michaelcompressconsult/kdiff3_win-v1
-> Pull-Request: https://github.com/git/git/pull/952
 >
->  mergetools/kdiff3 | 9 +++++++++
->  1 file changed, 9 insertions(+)
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1032%2Fmichaelcompressconsult%2Fmergetoollib_is_available-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1032/michaelcompressconsult/mergetoollib_is_available-v1
+> Pull-Request: https://github.com/git/git/pull/1032
 >
-> diff --git a/mergetools/kdiff3 b/mergetools/kdiff3
-> index 0264ed5b20b2..520cb914a18b 100644
-> --- a/mergetools/kdiff3
-> +++ b/mergetools/kdiff3
-> @@ -25,3 +25,12 @@ merge_cmd () {
->  exit_code_trustable () {
->  	true
+>  git-mergetool--lib.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index 542a6a75eb3c..8b946e585d7f 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -18,7 +18,7 @@ mode_ok () {
 >  }
-> +
-> +translate_merge_tool_path() {
-> +	if type kdiff3 >/dev/null 2>/dev/null
-> +	then
-> +		echo kdiff3
-> +	else
-> +		mergetool_find_win32_cmd "kdiff3.exe" "Kdiff3"
-> +	fi
-> +}
-
-The change looks good.  Thanks.
+>  
+>  is_available () {
+> -	merge_tool_path=$(translate_merge_tool_path "$1") &&
+> +	merge_tool_path=$(get_merge_tool_path "$1") &&
+>  	type "$merge_tool_path" >/dev/null 2>&1
+>  }
+>  
+>
+> base-commit: c09b6306c6ca275ed9d0348a8c8014b2ff723cfb
