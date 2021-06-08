@@ -2,61 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA039C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 15:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3919C4743D
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:12:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BA9261285
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 15:38:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4F8A61183
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231308AbhFHPke (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 11:40:34 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:30043 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231231AbhFHPke (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 11:40:34 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 158Fcdh9073647
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Tue, 8 Jun 2021 11:38:39 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [RFE] Teach git textconv to support %f
-Date:   Tue, 8 Jun 2021 11:38:33 -0400
-Message-ID: <01f901d75c7c$5a8bcb10$0fa36130$@nexbridge.com>
+        id S230222AbhFHQOB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 12:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54160 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231461AbhFHQNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 12:13:52 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FA7EC061789
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 09:11:47 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id t4-20020a1c77040000b029019d22d84ebdso2344786wmi.3
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 09:11:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IdQ1AZ3jf+euaUA6ZoFECd5OLFX5TngbTgmvbjYrSPw=;
+        b=lNyvlJ9TYOpvl/iZXbDwY9bGHZqKO2IC54DN/dP37Zjh94GKHdPx4MLUl1X081Ck+i
+         0bZY0TBgmyAlhFGlVdrUQumblYt7hVf50iIqgX/+KOCohVLIa719JKAp4nD2OvqcMtFH
+         eHLTDfiP4AUSskMYfRb9KeZgVx9AeVBVZ4UVXI36Yrzx5v7Yl2tKVbmQwyqOs4gurX77
+         Qj/kW0hYZFGnoVNeNJnzud4hI+dbpVdFCMF9TBhqbofC8rb1NMmObVGq0Gs8a9gdqhsw
+         ubcx8M00ZI0g3x4NXlmXJ60MT0WAl7Qh6Wuo0kMVugh53RPMgCjbS5os2iywTOP8rsd1
+         9prw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=IdQ1AZ3jf+euaUA6ZoFECd5OLFX5TngbTgmvbjYrSPw=;
+        b=ad9o0yfw//2lvljDTjMqo3Fet9+o62CCoPCZP4ASqCA3fKZRSeRbYuynMOOqFQhRPk
+         Lmzl4IcBozWKVWu3WMYCs7kTxAjhIyjr9owLH2D1c6HxllCAtZhRonsYLRiENt8A+ZTW
+         L1adl10R8ZqT70gJ8wqrNp4Z6BoxBtt0j8aIe3d/7iuLUPFhw/LiV5B4Fg5Q+6LLgUuW
+         AJVCr3Wrst/nPlDq4MA6wI82rphuQsjycfLybBEbPE6CxjtoGn8P8ixls4tFlJwGSkvy
+         ef3/FDTwBoYB4VKZLdYUbxo4KWDMJ4/8F3YW+AgCLXNy7NV5nsO1+eRQF9y+kM4F4jFF
+         xoRg==
+X-Gm-Message-State: AOAM5335hQct3/RJugo526bDkAxxOxy6Iy3hpOLq9mbl/R11tlxdFLYj
+        Io6cIFCjpg9D/1H/g5OfbvCJwAX2kCM=
+X-Google-Smtp-Source: ABdhPJw+KbrSzFmkomixUEwB1fDYrpdQf1E1YZb3VLvhzvAhUBPNm6dv0HU5MIl4iUSD2XvMB+KFBg==
+X-Received: by 2002:a05:600c:243:: with SMTP id 3mr22929881wmj.35.1623168705764;
+        Tue, 08 Jun 2021 09:11:45 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j34sm3202000wms.19.2021.06.08.09.11.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 09:11:45 -0700 (PDT)
+Message-Id: <be858c46cfe76e59b526f6d7af497ef70280765e.1623168703.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.962.v4.git.1623168703.gitgitgadget@gmail.com>
+References: <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
+        <pull.962.v4.git.1623168703.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 08 Jun 2021 16:11:40 +0000
+Subject: [PATCH v4 2/4] diffcore-rename: avoid unnecessary strdup'ing in
+ break_idx
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AddcfFaR9bzvppBzT0OQ9uQSMkuHxw==
-Content-Language: en-ca
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The filter structure provides a mechanism for providing the working directory's file name path to a filter using a %f argument. This
-request is to teach the textconv mechanism to support the same capability.
+From: Elijah Newren <newren@gmail.com>
 
-The use case comes from a complex content renderer that needs to know what the original file name is, so as to be able to find
-additional content, by name, that describes the file (base name+different extension).
+The keys of break_idx are strings from the diff_filepairs of
+diff_queued_diff.  break_idx is only used in location_rename_dst(), and
+that usage is always before any free'ing of the pairs (and thus the
+strings in the pairs).  As such, there is no need to strdup these keys;
+we can just reuse the existing strings as-is.
 
-If this is considered a good idea, I would be happy to implement this but need a pointer or two of where to look in the code to make
-it happen.
+The merge logic doesn't make use of break detection, so this does not
+affect the performance of any of my testcases.  It was just a minor
+unrelated optimization noted in passing while looking at the code.
 
-Thanks,
-Randall
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ diffcore-rename.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 3375e24659ea..e333a6d64791 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -54,7 +54,7 @@ static void register_rename_src(struct diff_filepair *p)
+ 	if (p->broken_pair) {
+ 		if (!break_idx) {
+ 			break_idx = xmalloc(sizeof(*break_idx));
+-			strintmap_init(break_idx, -1);
++			strintmap_init_with_options(break_idx, -1, NULL, 0);
+ 		}
+ 		strintmap_set(break_idx, p->one->path, rename_dst_nr);
+ 	}
+-- 
+gitgitgadget
 
