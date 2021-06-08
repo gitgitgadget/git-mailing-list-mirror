@@ -2,288 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4263C4743E
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02438C4743D
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:49:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB3BE61375
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:44:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DED0061370
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232246AbhFHRqD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 13:46:03 -0400
-Received: from mail-oi1-f179.google.com ([209.85.167.179]:45936 "EHLO
-        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233916AbhFHRpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 13:45:55 -0400
-Received: by mail-oi1-f179.google.com with SMTP id w127so22295173oig.12
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:43:51 -0700 (PDT)
+        id S233679AbhFHRvT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 13:51:19 -0400
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:43819 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233082AbhFHRvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 13:51:16 -0400
+Received: by mail-ot1-f43.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso21118744otu.10
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:49:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bJI3s1HUMIwfPgOS35bfpO4RdpqWw4EQQJITVa4Qgbo=;
-        b=ug6hHpjmIcqY1oTYCIKhIqq71Fg9AtRk+hRnOrbTurhG+vzzCBQp/P8ysRGnmf6PHd
-         kTk92TzpIga9plJrMkMpw6sKJmkZ6rK8XohPxKhw8172ZibsHSt1TIAJEgt27pVNujmc
-         o7HbMnY/wVe9ayLxC1YLQd8szvv6EWRXpGnW70BvxC8GNt/zPCQAffRSnPlrkqpUhHAa
-         rlkmFZZp33rZULcHxEvmpPaOEwZc/edCIE05ihji6ePvKOlgcxgcB/k2+tN5OQIeYRV9
-         D2uesmX9r5eTpuJoZh084GvXDNVaxASJpwmr/DqK8cmVAY250SF7qDDzqWVU6F75bwdS
-         ysMA==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=V/0lmrM9zxYij6tBvLXwhnSLhkOJ5Qxw9CpfJ5Wi/Xs=;
+        b=OGTLhcwa0G7l3uegRLuNECd7ed6iLlvKyPxc+I7Jn/k7pgulU4EYYuwRbKERGLuRl+
+         MhZViGY8bm2tbxAPoF45521GYFTUJ+xXZdUFHVitr08Vl1gpHQWN5RuFp6JtcputL9la
+         FvcIkiqN+9uFMnTgybhXlRoM3G3erIlDCXl0w4j3LHKN5BKBRnmzM/oMiuYjrqbXlSNr
+         Vs/PQmReLEq9FYkxQmPQHkEW0tWwg4eX41wcPBsEHBMBFrcAxgg98erKEYHFj/xB9mCq
+         FizuPl5xKs+MrhD+MtEfprujEI85Qch86nLn3AfRfQkS5jPMMfqD6tk4OkT1NH2eQkZZ
+         vnvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bJI3s1HUMIwfPgOS35bfpO4RdpqWw4EQQJITVa4Qgbo=;
-        b=JKf+CCAQ28rF+SuICBnSjimfrAJRPdOdpS10PhiZNZae2boX3lwaMyAt3yA94IExZm
-         om4V7cayOUFacXSrLeejkbPtxG2eyp68GCLZgHpEfGtFhgC5SKml2mUuUTt/OXc8oaQ8
-         BkZhPxAsg7JnYdhQV9QE/wXko7HFTllbXdOMRHo1+ysV71QWvbFZzp+KrnztRixk3cJD
-         FUlDUNGcqnC8HVwVYftBREvAha3ppYc+5yCLxnrFSQtSHMq1Y3E+j+fKCWWk26TH/bEM
-         h2ZcG1D1eqrj51llsd9mwVQJFMEEayaslAJ9R+sL7c2Q4NBURYAavTpA0pRzUh4MXQfW
-         k2Nw==
-X-Gm-Message-State: AOAM532X/AnBazi9qyLLn6KM3jf+XTiwct1gOsmVHDprhUODweirOs43
-        qQAbUiYlPzIByMzGZklreI9XXAAqgGZGaEFJaOk=
-X-Google-Smtp-Source: ABdhPJzmLftWzn1kesnQYQyqZBLdbartgbEvqG98tAr1luJBRRQRuLeWbuAXx6WSLNDy7f8ZRBYDQQEgVOjGskO7qGw=
-X-Received: by 2002:aca:f482:: with SMTP id s124mr3454735oih.167.1623174171247;
- Tue, 08 Jun 2021 10:42:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1622580781.git.jonathantanmy@google.com>
- <cover.1623111879.git.jonathantanmy@google.com> <5b41569aced7fbd95ee2d0b4e871d03ffd8dcd67.1623111879.git.jonathantanmy@google.com>
-In-Reply-To: <5b41569aced7fbd95ee2d0b4e871d03ffd8dcd67.1623111879.git.jonathantanmy@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 8 Jun 2021 10:42:40 -0700
-Message-ID: <CABPp-BGG7tKq6D-4mo+Lakrihrz=35EVT2SMLUWx0z1BZdxd-w@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] promisor-remote: teach lazy-fetch in any repo
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=V/0lmrM9zxYij6tBvLXwhnSLhkOJ5Qxw9CpfJ5Wi/Xs=;
+        b=t3bWRfGNJreRsVe7LEFV2t2UC9YLAUT4Pm1VS5PDCnPMiEOVHWExwycO7ELVv8E7RE
+         gdpO049YU707XaOBmNI0011ngHRaz/Zh9fP52KfuNeZPfMTPMOvYYvFvUDYJr3JiHV7z
+         rngF8+fcBUCbGIjwS2ZZjAx6Us5K1FoHhjfMwBnq4zXQE3CGD1Ww1lbsObhvn9faMPxr
+         1U7dTwOwdgLKQ4dhII3hD9DuPTEop/zQRVKrEwsh1qDAiYdOVAzb/UlTwiT/vIwD/JzO
+         0ck3M+Cuzyqmm37i5lJuxDuzzL192n3Xu2OAxfct/NvdTAaXeAVepJ5HRHCDgP8lV3sO
+         uLtw==
+X-Gm-Message-State: AOAM533hqcBvWnA2ubMIFFQemn+cvDpZ2B8m+zPlJaPi2u0j2wEWqRfq
+        TyGcL/aFCGzTJBCqrxsJtco=
+X-Google-Smtp-Source: ABdhPJwbeaP7oBwKv7XgnsFtzNgggHyHEx+H9aR7h8EEAg+i3Yf0LRtXd1fcMtkby+LYgg5U54hksA==
+X-Received: by 2002:a9d:39e3:: with SMTP id y90mr19788837otb.257.1623174497085;
+        Tue, 08 Jun 2021 10:48:17 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id k14sm2933482ooi.21.2021.06.08.10.48.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jun 2021 10:48:16 -0700 (PDT)
+Date:   Tue, 08 Jun 2021 12:48:15 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>
+Message-ID: <60bfad5f170df_1abb47208c1@natae.notmuch>
+In-Reply-To: <xmqq4ke8pig9.fsf@gitster.g>
+References: <20210523054454.1188757-1-felipe.contreras@gmail.com>
+ <87o8cg34t8.fsf@evledraar.gmail.com>
+ <xmqq4ke8pig9.fsf@gitster.g>
+Subject: Re: [PATCH v6] help: colorize man pages
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 7, 2021 at 5:26 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> This is one step towards supporting partial clone submodules.
->
-> Even after this patch, we will still lack partial clone submodules
-> support, primarily because a lot of Git code that accesses submodule
-> objects does so by adding their object stores as alternates, meaning
-> that any lazy fetches that would occur in the submodule would be done
-> based on the config of the superproject, not of the submodule. This also
-> prevents testing of the functionality in this patch by user-facing
-> commands. So for now, test this mechanism using a test helper.
+Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> =
 
-I wonder if this commit message is a good place to call out that we
-also want to eventually audit codepaths using the old
-has_promisor_remote() wrapper function (particularly the ones
-protected by a repo == the_repository check) as well.
+> > I've been running with this on my personal git build since May 26th. =
+I
+> > haven't had any issues with it, and I like the new coloring.
+> > ...
+> > I think this is a good example of a change that we're better off just=
 
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  Makefile                      |  1 +
->  object-file.c                 |  7 ++----
->  promisor-remote.c             | 14 ++++++++----
->  t/helper/test-partial-clone.c | 43 +++++++++++++++++++++++++++++++++++
->  t/helper/test-tool.c          |  1 +
->  t/helper/test-tool.h          |  1 +
->  t/t0410-partial-clone.sh      | 23 +++++++++++++++++++
->  7 files changed, 80 insertions(+), 10 deletions(-)
->  create mode 100644 t/helper/test-partial-clone.c
->
-> diff --git a/Makefile b/Makefile
-> index c3565fc0f8..f6653bcd5e 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -725,6 +725,7 @@ TEST_BUILTINS_OBJS += test-oidmap.o
->  TEST_BUILTINS_OBJS += test-online-cpus.o
->  TEST_BUILTINS_OBJS += test-parse-options.o
->  TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
-> +TEST_BUILTINS_OBJS += test-partial-clone.o
->  TEST_BUILTINS_OBJS += test-path-utils.o
->  TEST_BUILTINS_OBJS += test-pcre2-config.o
->  TEST_BUILTINS_OBJS += test-pkt-line.o
-> diff --git a/object-file.c b/object-file.c
-> index f233b440b2..ebf273e9e7 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1570,15 +1570,12 @@ static int do_oid_object_info_extended(struct repository *r,
->                 }
->
->                 /* Check if it is a missing object */
-> -               if (fetch_if_missing && has_promisor_remote() &&
-> -                   !already_retried && r == the_repository &&
-> +               if (fetch_if_missing && repo_has_promisor_remote(r) &&
-> +                   !already_retried &&
->                     !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
->                         /*
->                          * TODO Investigate checking promisor_remote_get_direct()
->                          * TODO return value and stopping on error here.
-> -                        * TODO Pass a repository struct through
-> -                        * promisor_remote_get_direct(), such that arbitrary
-> -                        * repositories work.
->                          */
->                         promisor_remote_get_direct(r, real, 1);
->                         already_retried = 1;
-> diff --git a/promisor-remote.c b/promisor-remote.c
-> index e1e1f7e93a..1491374d65 100644
-> --- a/promisor-remote.c
-> +++ b/promisor-remote.c
-> @@ -11,7 +11,8 @@ struct promisor_remote_config {
->         struct promisor_remote **promisors_tail;
->  };
->
-> -static int fetch_objects(const char *remote_name,
-> +static int fetch_objects(struct repository *repo,
-> +                        const char *remote_name,
->                          const struct object_id *oids,
->                          int oid_nr)
->  {
-> @@ -21,6 +22,11 @@ static int fetch_objects(const char *remote_name,
->
->         child.git_cmd = 1;
->         child.in = -1;
-> +       if (repo != the_repository) {
-> +               prepare_other_repo_env(&child.env_array);
-> +               strvec_pushf(&child.env_array, "%s=%s", GIT_DIR_ENVIRONMENT,
-> +                            repo->gitdir);
-> +       }
->         strvec_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=noop",
->                      "fetch", remote_name, "--no-tags",
->                      "--no-write-fetch-head", "--recurse-submodules=no",
-> @@ -154,7 +160,7 @@ static void promisor_remote_init(struct repository *r)
->                 xcalloc(sizeof(*r->promisor_remote_config), 1);
->         config->promisors_tail = &config->promisors;
->
-> -       git_config(promisor_remote_config, config);
-> +       repo_config(r, promisor_remote_config, config);
->
->         if (config->repository_format_partial_clone) {
->                 struct promisor_remote *o, *previous;
-> @@ -252,10 +258,8 @@ int promisor_remote_get_direct(struct repository *repo,
->
->         promisor_remote_init(repo);
->
-> -       if (repo != the_repository)
-> -               BUG("only the_repository is supported for now");
->         for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
-> -               if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
-> +               if (fetch_objects(repo, r->name, remaining_oids, remaining_nr) < 0) {
->                         if (remaining_nr == 1)
->                                 continue;
->                         remaining_nr = remove_fetched_oids(repo, &remaining_oids,
-> diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
-> new file mode 100644
-> index 0000000000..3f102cfddd
-> --- /dev/null
-> +++ b/t/helper/test-partial-clone.c
-> @@ -0,0 +1,43 @@
-> +#include "cache.h"
-> +#include "test-tool.h"
-> +#include "repository.h"
-> +#include "object-store.h"
-> +
-> +/*
-> + * Prints the size of the object corresponding to the given hash in a specific
-> + * gitdir. This is similar to "git -C gitdir cat-file -s", except that this
-> + * exercises the code that accesses the object of an arbitrary repository that
-> + * is not the_repository. ("git -C gitdir" makes it so that the_repository is
-> + * the one in gitdir.)
-> + */
-> +static void object_info(const char *gitdir, const char *oid_hex)
-> +{
-> +       struct repository r;
-> +       struct object_id oid;
-> +       unsigned long size;
-> +       struct object_info oi = {.sizep = &size};
-> +       const char *p;
-> +
-> +       if (repo_init(&r, gitdir, NULL))
-> +               die("could not init repo");
-> +       if (parse_oid_hex(oid_hex, &oid, &p))
-> +               die("could not parse oid");
-> +       if (oid_object_info_extended(&r, &oid, &oi, 0))
-> +               die("could not obtain object info");
-> +       printf("%d\n", (int) size);
-> +}
-> +
-> +int cmd__partial_clone(int argc, const char **argv)
-> +{
-> +       setup_git_directory();
-> +
-> +       if (argc < 4)
-> +               die("too few arguments");
-> +
-> +       if (!strcmp(argv[1], "object-info"))
-> +               object_info(argv[2], argv[3]);
-> +       else
-> +               die("invalid argument '%s'", argv[1]);
-> +
-> +       return 0;
-> +}
-> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-> index c5bd0c6d4c..b21e8f1519 100644
-> --- a/t/helper/test-tool.c
-> +++ b/t/helper/test-tool.c
-> @@ -46,6 +46,7 @@ static struct test_cmd cmds[] = {
->         { "online-cpus", cmd__online_cpus },
->         { "parse-options", cmd__parse_options },
->         { "parse-pathspec-file", cmd__parse_pathspec_file },
-> +       { "partial-clone", cmd__partial_clone },
->         { "path-utils", cmd__path_utils },
->         { "pcre2-config", cmd__pcre2_config },
->         { "pkt-line", cmd__pkt_line },
-> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-> index e8069a3b22..f845ced4b3 100644
-> --- a/t/helper/test-tool.h
-> +++ b/t/helper/test-tool.h
-> @@ -35,6 +35,7 @@ int cmd__oidmap(int argc, const char **argv);
->  int cmd__online_cpus(int argc, const char **argv);
->  int cmd__parse_options(int argc, const char **argv);
->  int cmd__parse_pathspec_file(int argc, const char** argv);
-> +int cmd__partial_clone(int argc, const char **argv);
->  int cmd__path_utils(int argc, const char **argv);
->  int cmd__pcre2_config(int argc, const char **argv);
->  int cmd__pkt_line(int argc, const char **argv);
-> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-> index 584a039b85..a211a66c67 100755
-> --- a/t/t0410-partial-clone.sh
-> +++ b/t/t0410-partial-clone.sh
-> @@ -604,6 +604,29 @@ test_expect_success 'do not fetch when checking existence of tree we construct o
->         git -C repo cherry-pick side1
->  '
->
-> +test_expect_success 'lazy-fetch when accessing object not in the_repository' '
-> +       rm -rf full partial.git &&
-> +       test_create_repo full &&
-> +       test_commit -C full create-a-file file.txt &&
-> +
-> +       test_config -C full uploadpack.allowfilter 1 &&
-> +       test_config -C full uploadpack.allowanysha1inwant 1 &&
-> +       git clone --filter=blob:none --bare "file://$(pwd)/full" partial.git &&
-> +       FILE_HASH=$(git -C full rev-parse HEAD:file.txt) &&
-> +
-> +       # Sanity check that the file is missing
-> +       git -C partial.git rev-list --objects --missing=print HEAD >out &&
-> +       grep "[?]$FILE_HASH" out &&
-> +
-> +       git -C full cat-file -s "$FILE_HASH" >expect &&
-> +       test-tool partial-clone object-info partial.git "$FILE_HASH" >actual &&
-> +       test_cmp expect actual &&
-> +
-> +       # Sanity check that the file is now present
-> +       git -C partial.git rev-list --objects --missing=print HEAD >out &&
-> +       ! grep "[?]$FILE_HASH" out
-> +'
-> +
->  . "$TEST_DIRECTORY"/lib-httpd.sh
->  start_httpd
->
-> --
-> 2.32.0.rc1.229.g3e70b5a671-goog
->
+> > merging down and then reverting if the wider audience of git users ha=
+tes
+> > it, rather than trying to come to some perfect consensus here
+> > on-list.
+> =
+
+> My impression was tht we already had a rough consensus here on-list
+> that it may be good to educate users who like this "new coloring"
+> like you do to configure their "less",
+
+Not true.
+
+Jeff said users would probably have configured man to use colors
+themselves, but he never responded back when I asked him *how* [1].
+
+It is a tricky question, because I already know it's not possible to do
+it in a way that works in all distributions, for all programs without
+polluting the user environment to do things she probably doesn't want.
+
+> so that they consistently get the "new coloring" they like whether
+> they are doing "git help git", "man git", or even "man ls", and the
+> approach the posted patch takes will not help (it only affects "git
+> help git" among these).
+
+Please explain exactly *how* the user will be able to do that.
+
+
+Moreover. I don't think git should be in the business of educating users
+how to use other software. The way they use less in conjunction with
+other software is up to them.
+
+And in fact we already help naive users that have not configured their
+pager, so that it works better in git.
+
+We do this for them:
+
+  LESS=3DFRX LV=3D-c # see PAGER_ENV
+
+Why aren't we "educating them" about LESS=3DFRX instead?
+
+We have set good defaults for less since pretty much the start:
+
+  f67b45f862 (Introduce trivial new pager.c helper infrastructure, 2006-0=
+2-28)
+
+
+I don't think Jeff is the consensus. He expressed an opinion that
+perhaps X is better, but without clearly defining X, that's not really
+a viable option.
+
+> I'd rather not to take it.
+
+Can you explain why? All the outstanding comments have been addressed.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/60a96e76a4b20_857e92085c@natae.notmuch/
+
+-- =
+
+Felipe Contreras=
