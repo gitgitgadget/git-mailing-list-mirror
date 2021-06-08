@@ -4,130 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CB56C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7FA4C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:51:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07A51610E5
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:51:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E9CB61370
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233881AbhFHRxE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 13:53:04 -0400
-Received: from mail-oo1-f52.google.com ([209.85.161.52]:40811 "EHLO
-        mail-oo1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233699AbhFHRxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 13:53:04 -0400
-Received: by mail-oo1-f52.google.com with SMTP id j17-20020a0568200231b029024900620310so3947560oob.7
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:50:54 -0700 (PDT)
+        id S233931AbhFHRxM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 13:53:12 -0400
+Received: from mail-ot1-f42.google.com ([209.85.210.42]:37730 "EHLO
+        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233699AbhFHRxJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 13:53:09 -0400
+Received: by mail-ot1-f42.google.com with SMTP id v19-20020a0568301413b0290304f00e3d88so21142188otp.4
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:subject:mime-version
-         :content-transfer-encoding;
-        bh=APNm+tB2mFmo8+IWM4efx4JgofaROoyKPQrO2FWcblY=;
-        b=khioT42ta+3dQHYqNRf6GIFRnvPWe70p8wmHTDrEbAZ3LyB4pLELtCjRRcyjcPhmx0
-         0yzrtjxvABiTg2bNYU6s52LaVLsJpwNo1PWr0W4w5gVmuWiFHyv+kCg4VLGd2EiKPC0p
-         4o1ufF3lbn9tbVHc4ibDOjmzUS2YY7ErXOaAyXuYos8Bq6qnJQW+WdSbuVXAIocGyVxC
-         MyKnfQp11Gd1kEeg6uSVzzqpEYRik8QqCIwl8f+zriFz9tsFfYSpjvmwML13hslofHTU
-         zIfRCVlPXfEBMSrX23gnsMgCtBNXw+ctn0XhCWTR+EbJ3uKtjcCHDZhznbfDBCzf50Ll
-         zG1w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=f96nXztP7mtv4hJl7WSVkdopBKpTi6+fs0s+wXSk26E=;
+        b=VHZIfc1pobiVV9QsEm63fDA04u0Irr/JJ2n/SYTE6tTy4elBgosXLg6WMyQ1k5IkIb
+         jC1/xrsF0uO4qCWaJiNHOZKGzE4ScHr9+6BkwZAD8NOsSLMMVE6wyWAsc1k9hXskamDA
+         rlhWQrr5TZd2QepyzVMtnCWbOa4KET2WBs5Y/xcZarjJhkfaSMb1+iZZQjPyi89FHMeR
+         Z4GoacStPR31QgAur5ACa5iHpsA6oo32vDlo260JxUN+/xvalZug6C8yljUzoO49CNvo
+         m/EDBgWpd5cM3LY0EEPwEW/3pnvuhA+O4ckbM1m1K666zAnI3iMcgEzD46DsEyD3WyiS
+         TuBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:subject:mime-version
-         :content-transfer-encoding;
-        bh=APNm+tB2mFmo8+IWM4efx4JgofaROoyKPQrO2FWcblY=;
-        b=KLU2fwRNkC6i8zGhs/4dKyuawJ3sUPajNlI7Cctad6xp0aJacMUKyHDh6VA1jRI7b2
-         NjeDS28pujCZ/xpcS9kKAAWDfq262qJGQ/yvJc5ZfMhkhYbXT5fw4nc8fgFK1OJ7+i/3
-         7tvWnU15NMvdVa+vouslxnbacQLGfIeJ6XsqJ12am6H/ArwcekktrY9hJ4nmAPdeLq9f
-         BZaPG8/TLfBNv2j6/iHxkH4X2Kr1kOY82llkCq1iD2Zb3t4Wz9SZp2eHfDSNHHNGOUNT
-         R3wYcm00ORP5dbSf8OlapyvvoV0EE05UbndvaT3ZS/DhcoHxn+cVaqjrEEYH1IRLEBDB
-         5WSA==
-X-Gm-Message-State: AOAM530UMRpm6dWsJz6OipCERLhzrGiwo/yvPDOZr4IWoJJZNgnzBhVf
-        oIW/ElM3aqbDlLZE8TpBq009GwzmSAm8YA==
-X-Google-Smtp-Source: ABdhPJxcdJM0u0QgwY387xbZ2sH1HXNGYPfZ2BpepjwkhtyNVXJkKs1QTkOMOXxgs4zfOicN9yPCtw==
-X-Received: by 2002:a4a:be86:: with SMTP id o6mr18432372oop.67.1623174594432;
-        Tue, 08 Jun 2021 10:49:54 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id r25sm2954085oos.44.2021.06.08.10.49.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 10:49:53 -0700 (PDT)
-Date:   Tue, 08 Jun 2021 12:49:52 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Message-ID: <60bfadc0aca09_1abb8f208fd@natae.notmuch>
-Subject: How dow we educate our users to configure less?
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=f96nXztP7mtv4hJl7WSVkdopBKpTi6+fs0s+wXSk26E=;
+        b=AtnkMkvfg5nqLMldJB07QKVE8p0+6dUcVII8FyM9XcZPn+lKTBvhhBQGPhjJQePuMw
+         m5qiULtClXiz9NzGYxUAgdKpOLvZClbPFzq3IFpkXAYNhzsB/nD7APgx2QOguTQT6Srj
+         2KmScVUQUzMf5CnNLpRpDICz1Y719B9WG7rE1el7nhA+zHfkH3WFUDy6f+V6Bfm4Xlec
+         BEFQ6mIVcxnARtNm37dNISfBOhnxvYPd19tnV07Ib3L71dUuZ8iN2n2HLdVd6TuEho3B
+         yYl3U83nbkPhEHxf+uMjRMz/3fBpW9djY0jOoEnIK4frmP/OlN+nm2cvLTGXHc/++1ao
+         9F5g==
+X-Gm-Message-State: AOAM530vX/vSopUB/cf3DnncXB3uD1SnNYp+abmpfGLaTYPCs25IM8Ws
+        dvjnmVowIwOk7zGPFKKWMX6AIrNAVe+MDr8qIn4=
+X-Google-Smtp-Source: ABdhPJyuYz86k0lPrj6dBljSAmkiDMZsmRj/ngmYJxy5hDtGusLT69G1DXy2nNNlVmbSUAPUBBiWNx9jBKB8UiA0/ug=
+X-Received: by 2002:a9d:7c8f:: with SMTP id q15mr3614980otn.162.1623174616642;
+ Tue, 08 Jun 2021 10:50:16 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1622580781.git.jonathantanmy@google.com> <cover.1623111879.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1623111879.git.jonathantanmy@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 8 Jun 2021 10:50:05 -0700
+Message-ID: <CABPp-BGL3L5uReVHtSUsNJ7fYgBV_Us5ZYv7e9FPHT2DuY-dyg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] First steps towards partial clone submodules
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It has been suggested that we "educate our users" to configure less in
-the right way, instead of colorizing man pages ourselves [1].
+On Mon, Jun 7, 2021 at 5:26 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> Thanks everyone for your reviews. I believe I've addressed all review
+> comments, including the one from Elijah about the test failing with
+> sha256 (which turns out to be because I didn't add a call to
+> setup_git_directory(), which the other test helpers do).
 
-The question is *how*? Nobody has answered that.
+Thanks for fixing those up.  I spotted some minor nits/questions, but
+nothing big.
 
-This is a continuation of the thread below.
+Looks like Junio did spot some bigger items...which raises a question
+for me.  I have a series
+(https://lore.kernel.org/git/pull.969.git.1622856485.gitgitgadget@gmail.com/)
+that also touches partial clones.  Our series are semantically
+independent, but we both add a repository parameter to
+fetch_objects().  So we both make the same change, but you also make
+additional nearby changes, resulting in two trivial conflicts.  So,
+should I rebase my series on yours, should you rebase on mine, or
+should we just let both proceed independently and double-check Junio
+resolves the trivial conflicts in favor of your side?
 
-Felipe Contreras wrote:
-> Jeff King wrote:
-
-> > Moreover, I think that if they like colorized manpages, they'd probably
-> > want them when running "man" themselves.
-> 
-> This doesn't matter.
-> 
-> The user might have "configured" man like this:
-> 
->   man() {
->       LESS_TERMCAP_md=$'\e[01;31m' \
->       LESS_TERMCAP_me=$'\e[0m' \
->       LESS_TERMCAP_so=$'\e[01;44;33m' \
->       LESS_TERMCAP_se=$'\e[0m' \
->       LESS_TERMCAP_us=$'\e[01;32m' \
->       LESS_TERMCAP_ue=$'\e[0m' \
->       command man "$@"
->   }
-> 
-> Git isn't going utilize that.
-> 
-> Arch Linux recommends the above, and so does many online resources.
-> 
-> So even if it's the case what you said, that they want colorized man
-> pages, *and* they have man configured, that doesn't matter.
-> 
-> In addition, not everyone is a Linux guru. Some might want colorized man
-> pages, but not know how to get them.
-> 
-> I myself only learned it was possible to configure that about a year ago
-> when reading Arch Linux's installation guide. Luckily I clicked "Color
-> output in console", even though I thought I already had most console
-> software configured.
-> 
-> I have 20 years of experience using Linux. Some people have less.
-> 
-> You presume too much of our users.
-> 
-> And you still haven't explained how they can properly configure
-> colorized man pages for both man and git, in a way that works in all
-> distributions.
-> 
-> [1] https://wiki.archlinux.org/title/Color_output_in_console
-
-I am still waiting for an explanation.
-
-How does the user properly colorize man pages for both man and git in a
-way that works in all distributions?
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20210523054454.1188757-1-felipe.contreras@gmail.com/
-
--- 
-Felipe Contreras
+Thoughts?
