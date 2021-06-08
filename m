@@ -2,198 +2,288 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31731C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4263C4743E
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:44:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C5BA61360
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:40:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB3BE61375
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 17:44:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233425AbhFHRml (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 13:42:41 -0400
-Received: from mail-pf1-f178.google.com ([209.85.210.178]:36599 "EHLO
-        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233081AbhFHRmk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 13:42:40 -0400
-Received: by mail-pf1-f178.google.com with SMTP id c12so16301743pfl.3
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:40:47 -0700 (PDT)
+        id S232246AbhFHRqD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 13:46:03 -0400
+Received: from mail-oi1-f179.google.com ([209.85.167.179]:45936 "EHLO
+        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233916AbhFHRpz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 13:45:55 -0400
+Received: by mail-oi1-f179.google.com with SMTP id w127so22295173oig.12
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 10:43:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ASoBwAxLtEfMXtVdCZ8R/jXDSzr8wPFXGWhHL0RDu0E=;
-        b=slTC8oQFbkl0U718yX1tSWtm6Uz+CCky+K8AKWC+c3i9DyVHaSrZZxF0MLDKywIqKU
-         QlVHk2SkJy3UaxteMqva6RECGir38nN5mAFmXDvnJsiDxbVI/die3lnvLsdt5u7H6cd+
-         7159DsZcX2wpriTCEfIHzdswbKqNfiXt7Q3JHzSqckmDgIfqis/HfpBkCzRLEvXkJh3g
-         uynmZ7t5+0wTSlQP+gNvgesVIPX+q8lSCxxNvKZoBNLsJpzuYEazYtC+gHA0aDsEj0EW
-         R4htZqeo5TSqJ0ql8qLp/vntjMy7OuoiHEnQ6SuY03OIn9PRvHzrWgrl02Dg04X0yNnt
-         uCRA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bJI3s1HUMIwfPgOS35bfpO4RdpqWw4EQQJITVa4Qgbo=;
+        b=ug6hHpjmIcqY1oTYCIKhIqq71Fg9AtRk+hRnOrbTurhG+vzzCBQp/P8ysRGnmf6PHd
+         kTk92TzpIga9plJrMkMpw6sKJmkZ6rK8XohPxKhw8172ZibsHSt1TIAJEgt27pVNujmc
+         o7HbMnY/wVe9ayLxC1YLQd8szvv6EWRXpGnW70BvxC8GNt/zPCQAffRSnPlrkqpUhHAa
+         rlkmFZZp33rZULcHxEvmpPaOEwZc/edCIE05ihji6ePvKOlgcxgcB/k2+tN5OQIeYRV9
+         D2uesmX9r5eTpuJoZh084GvXDNVaxASJpwmr/DqK8cmVAY250SF7qDDzqWVU6F75bwdS
+         ysMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ASoBwAxLtEfMXtVdCZ8R/jXDSzr8wPFXGWhHL0RDu0E=;
-        b=XnbPqImqxIGQkcbVhUqxxxVDiF9hrCX6ziGmMGfswDA3sFuw/ls9pE4pVDNjMEPAxz
-         3q4ZXdf0PHRWCIWCVtnGrn0utN03LpcSQ2x70Xe+AX64Jw6MdXmga/ZEPVDdJA0hdt/t
-         8FSVB3mjwK1x0SNojYqfnqVOednIusp+NFFl57Zo86AKPDmsnbxxZY5d3r3szArPLhk/
-         s/F9WfyUOb47gEVaeYq26U4rgDxg2haeW12YsfsN+znVjYTM8z2S3aKPLWEfV3vcfphF
-         XRXrB1TRpYgPDQpu+OCY+PE/xVWWdw8oUSmVqoyIzfOIJAKaKrw3jj/rXwiHB55fxl9Z
-         imtw==
-X-Gm-Message-State: AOAM530A8JIQHQpfV4ISf2hjc7ReWUZF4t1PWvlSemieVYG3KVGwmeYT
-        H2JGonjv5ziX14DETPlCNHxbHA==
-X-Google-Smtp-Source: ABdhPJys9EDhkrv1XhAfmpCn446zSdIQuP60RyKXvJkp7Cexiz2O6lQsO5LYJklMQV4UlewntS1f2Q==
-X-Received: by 2002:a65:6256:: with SMTP id q22mr23935395pgv.391.1623173987499;
-        Tue, 08 Jun 2021 10:39:47 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:f819:e238:f61a:a961])
-        by smtp.gmail.com with ESMTPSA id w125sm11025743pfw.214.2021.06.08.10.39.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 10:39:46 -0700 (PDT)
-Date:   Tue, 8 Jun 2021 10:39:42 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        sandals@crustytoothpaste.net, stolee@gmail.com, jrnieder@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 4/4] CodingGuidelines: recommend singular they
-Message-ID: <YL+rXqDMIPvA2a3+@google.com>
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <d2c079264955b3bd6c3a5ef77a9c3684206f8475.1623085069.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bJI3s1HUMIwfPgOS35bfpO4RdpqWw4EQQJITVa4Qgbo=;
+        b=JKf+CCAQ28rF+SuICBnSjimfrAJRPdOdpS10PhiZNZae2boX3lwaMyAt3yA94IExZm
+         om4V7cayOUFacXSrLeejkbPtxG2eyp68GCLZgHpEfGtFhgC5SKml2mUuUTt/OXc8oaQ8
+         BkZhPxAsg7JnYdhQV9QE/wXko7HFTllbXdOMRHo1+ysV71QWvbFZzp+KrnztRixk3cJD
+         FUlDUNGcqnC8HVwVYftBREvAha3ppYc+5yCLxnrFSQtSHMq1Y3E+j+fKCWWk26TH/bEM
+         h2ZcG1D1eqrj51llsd9mwVQJFMEEayaslAJ9R+sL7c2Q4NBURYAavTpA0pRzUh4MXQfW
+         k2Nw==
+X-Gm-Message-State: AOAM532X/AnBazi9qyLLn6KM3jf+XTiwct1gOsmVHDprhUODweirOs43
+        qQAbUiYlPzIByMzGZklreI9XXAAqgGZGaEFJaOk=
+X-Google-Smtp-Source: ABdhPJzmLftWzn1kesnQYQyqZBLdbartgbEvqG98tAr1luJBRRQRuLeWbuAXx6WSLNDy7f8ZRBYDQQEgVOjGskO7qGw=
+X-Received: by 2002:aca:f482:: with SMTP id s124mr3454735oih.167.1623174171247;
+ Tue, 08 Jun 2021 10:42:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d2c079264955b3bd6c3a5ef77a9c3684206f8475.1623085069.git.gitgitgadget@gmail.com>
+References: <cover.1622580781.git.jonathantanmy@google.com>
+ <cover.1623111879.git.jonathantanmy@google.com> <5b41569aced7fbd95ee2d0b4e871d03ffd8dcd67.1623111879.git.jonathantanmy@google.com>
+In-Reply-To: <5b41569aced7fbd95ee2d0b4e871d03ffd8dcd67.1623111879.git.jonathantanmy@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 8 Jun 2021 10:42:40 -0700
+Message-ID: <CABPp-BGG7tKq6D-4mo+Lakrihrz=35EVT2SMLUWx0z1BZdxd-w@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] promisor-remote: teach lazy-fetch in any repo
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 07, 2021 at 04:57:48PM +0000, Derrick Stolee via GitGitGadget wrote:
-> 
-> 
-> Technical writing seeks to convey information with minimal friction. One
-> way that a reader can experience friction is if they encounter a
-> description of "a user" that is later simplified using a gendered
-> pronoun. If the reader does not consider that pronoun to apply to them,
-> then they can experience cognitive dissonance that removes focus from
-> the information.
-> 
-> If we use singular "they/them" pronouns instead of "he/him" or "she/her"
-> pronouns, then we can avoid this congitive load on the reader.
-> 
-> Using singular "they" is also incredibly efficient. Choosing a gendered
-> pronoun is usually arbitrary between "he" or "she". Using constructs
-> such as "he or she", "s/he", or "(s)he" are more complicated than
-> singular "they".
-> 
-> When choosing a gendered pronoun, that pronoun no longer applies to
-> nearly half of possible readers. Even if we alternated between "he/him"
-> and "she/her" perfectly evenly, we would still expect male and female
-> readers to experience an incorrect pronoun half the time. However, some
-> readers will not prescribe to either of these binary genders. Those
-> readers hence suffer an incorrect pronoun the entire time. Singular
-> "they" applies to every reader.
-> 
-> Perhaps due to similar reasons, official style guides have changed their
-> stance on singuler "they" in recent years. For example, the APA style
-> guide changed their official recommendation in 2019 [1]. The MLA
-> handbook also references helpful ways to use singular "they" [2]. While
-> not fully endorsing it, the Chicago Manual of Style has removed its
-> blanket ban on singular "they" [3] (the previous recommendation was to
-> only use "it" as a singular non-gendered pronoun).
-> 
-> [1] https://apastyle.apa.org/blog/singular-they
-> [2] https://style.mla.org/using-singular-they/
-> [3] https://libraries.indiana.edu/chicago-manual-style-singular-pronoun-they
-> 
-> While not all styleguides are updating their recommendations, we can
-> make a choice as a project to adopt the concept because of the
-> efficiencies above, as well as the benefits of increased inclusion.
-> 
-> To futher justify singular "they" as an acceptable grammatical concept,
-> I include the careful research of brian m. carlson who collected their
-> thoughts on this matter [2] (lightly edited):
-> 
->   Singular "they" has been used by native English speakers as part of
->   the language for over half a millennium and is widely used and
->   understood. This usage is specified in Merriam Webster[3]:
-> 
->     The use of they, their, them, and themselves as pronouns of
->     indefinite gender and indefinite number is well established in
->     speech and writing, even in literary and formal contexts.
-> 
->   Wiktionary notes[4] (references omitted):
-> 
->     Usage of they as a singular pronoun began in the 1300s and has been
->     common ever since, despite attempts by some grammarians, beginning
->     in 1795, to condemn it as a violation of traditional (Latinate)
->     agreement rules. Some other grammarians have countered that criticism
->     since at least 1896. Fowler's Modern English Usage (third edition)
->     notes that it "is being left unaltered by copy editors" and is "not
->     widely felt to lie in a prohibited zone." Some authors compare use of
->     singular they to widespread use of singular you instead of thou.
-> 
->   Linguists fit roughly into two camps: prescriptive and descriptive.
->   The former specify rules for people to use, and the latter document
->   language as it is actually used without forming a judgment.
-> 
->   Some prescriptivists think it is acceptable, and some do not. But
->   descriptivists will rightly note that it is and has been commonly
->   used in English across countries, cultures, and contexts for an
->   extended period of time and is therefore generally accepted by most
->   English speakers as a normal part of the language.  Since we are
->   writing text for an English language audience who are mostly not
->   linguists, we should probably consider using the language that most
->   people will use in this context.
-> 
-> [2] https://lore.kernel.org/git/YKrk4dEjEm6+48ji@camp.crustytoothpaste.net/
-> [3] https://www.merriam-webster.com/dictionary/they
-> [4] https://en.wiktionary.org/wiki/they
-> 
-> If we refer to a specific person, then using a gendered pronoun is
-> appropriate. Examples within the Git codebase include:
-> 
-> * References to real people (e.g. Linus Torvalds, "the Git maintainer").
->   Do not misgender real people. If there is any doubt to the gender of a
->   person, then use singular "they".
-> 
-> * References to fictional people with clear genders (e.g. Alice and
->   Bob).
-> 
-> * Sample text used in test cases (e.g t3702, t6432).
-> 
-> * The official text of the GPL license contains uses of "he or she", but
->   modifying the license this way is not within the scope of the Git
->   project.
-> 
-> Other cases within the Git project were cleaned up by the previous
-> changes.
-> 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+On Mon, Jun 7, 2021 at 5:26 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> This is one step towards supporting partial clone submodules.
+>
+> Even after this patch, we will still lack partial clone submodules
+> support, primarily because a lot of Git code that accesses submodule
+> objects does so by adding their object stores as alternates, meaning
+> that any lazy fetches that would occur in the submodule would be done
+> based on the config of the superproject, not of the submodule. This also
+> prevents testing of the functionality in this patch by user-facing
+> commands. So for now, test this mechanism using a test helper.
 
-Well said.
-Acked-by: Emily Shaffer <emilyshaffer@google.com>
+I wonder if this commit message is a good place to call out that we
+also want to eventually audit codepaths using the old
+has_promisor_remote() wrapper function (particularly the ones
+protected by a repo == the_repository check) as well.
 
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
->  Documentation/CodingGuidelines | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index e3af089ecf26..78cd399f7cf5 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -648,3 +648,8 @@ Writing Documentation:
->   inline substituted text+ instead of `monospaced literal text`, and with
->   the former, the part that should not get substituted must be
->   quoted/escaped.
+>  Makefile                      |  1 +
+>  object-file.c                 |  7 ++----
+>  promisor-remote.c             | 14 ++++++++----
+>  t/helper/test-partial-clone.c | 43 +++++++++++++++++++++++++++++++++++
+>  t/helper/test-tool.c          |  1 +
+>  t/helper/test-tool.h          |  1 +
+>  t/t0410-partial-clone.sh      | 23 +++++++++++++++++++
+>  7 files changed, 80 insertions(+), 10 deletions(-)
+>  create mode 100644 t/helper/test-partial-clone.c
+>
+> diff --git a/Makefile b/Makefile
+> index c3565fc0f8..f6653bcd5e 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -725,6 +725,7 @@ TEST_BUILTINS_OBJS += test-oidmap.o
+>  TEST_BUILTINS_OBJS += test-online-cpus.o
+>  TEST_BUILTINS_OBJS += test-parse-options.o
+>  TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
+> +TEST_BUILTINS_OBJS += test-partial-clone.o
+>  TEST_BUILTINS_OBJS += test-path-utils.o
+>  TEST_BUILTINS_OBJS += test-pcre2-config.o
+>  TEST_BUILTINS_OBJS += test-pkt-line.o
+> diff --git a/object-file.c b/object-file.c
+> index f233b440b2..ebf273e9e7 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1570,15 +1570,12 @@ static int do_oid_object_info_extended(struct repository *r,
+>                 }
+>
+>                 /* Check if it is a missing object */
+> -               if (fetch_if_missing && has_promisor_remote() &&
+> -                   !already_retried && r == the_repository &&
+> +               if (fetch_if_missing && repo_has_promisor_remote(r) &&
+> +                   !already_retried &&
+>                     !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
+>                         /*
+>                          * TODO Investigate checking promisor_remote_get_direct()
+>                          * TODO return value and stopping on error here.
+> -                        * TODO Pass a repository struct through
+> -                        * promisor_remote_get_direct(), such that arbitrary
+> -                        * repositories work.
+>                          */
+>                         promisor_remote_get_direct(r, real, 1);
+>                         already_retried = 1;
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index e1e1f7e93a..1491374d65 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -11,7 +11,8 @@ struct promisor_remote_config {
+>         struct promisor_remote **promisors_tail;
+>  };
+>
+> -static int fetch_objects(const char *remote_name,
+> +static int fetch_objects(struct repository *repo,
+> +                        const char *remote_name,
+>                          const struct object_id *oids,
+>                          int oid_nr)
+>  {
+> @@ -21,6 +22,11 @@ static int fetch_objects(const char *remote_name,
+>
+>         child.git_cmd = 1;
+>         child.in = -1;
+> +       if (repo != the_repository) {
+> +               prepare_other_repo_env(&child.env_array);
+> +               strvec_pushf(&child.env_array, "%s=%s", GIT_DIR_ENVIRONMENT,
+> +                            repo->gitdir);
+> +       }
+>         strvec_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=noop",
+>                      "fetch", remote_name, "--no-tags",
+>                      "--no-write-fetch-head", "--recurse-submodules=no",
+> @@ -154,7 +160,7 @@ static void promisor_remote_init(struct repository *r)
+>                 xcalloc(sizeof(*r->promisor_remote_config), 1);
+>         config->promisors_tail = &config->promisors;
+>
+> -       git_config(promisor_remote_config, config);
+> +       repo_config(r, promisor_remote_config, config);
+>
+>         if (config->repository_format_partial_clone) {
+>                 struct promisor_remote *o, *previous;
+> @@ -252,10 +258,8 @@ int promisor_remote_get_direct(struct repository *repo,
+>
+>         promisor_remote_init(repo);
+>
+> -       if (repo != the_repository)
+> -               BUG("only the_repository is supported for now");
+>         for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
+> -               if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
+> +               if (fetch_objects(repo, r->name, remaining_oids, remaining_nr) < 0) {
+>                         if (remaining_nr == 1)
+>                                 continue;
+>                         remaining_nr = remove_fetched_oids(repo, &remaining_oids,
+> diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
+> new file mode 100644
+> index 0000000000..3f102cfddd
+> --- /dev/null
+> +++ b/t/helper/test-partial-clone.c
+> @@ -0,0 +1,43 @@
+> +#include "cache.h"
+> +#include "test-tool.h"
+> +#include "repository.h"
+> +#include "object-store.h"
 > +
-> + When referring to an anonymous user, use singular "they/them" pronouns
-> + as opposed to choosing between "he/him" and "she/her". Do not use more
-> + complicated constructs such as "he or she" or "s/he". This recommendation
-> + also applies to code comments and commit messages.
-> -- 
-> gitgitgadget
+> +/*
+> + * Prints the size of the object corresponding to the given hash in a specific
+> + * gitdir. This is similar to "git -C gitdir cat-file -s", except that this
+> + * exercises the code that accesses the object of an arbitrary repository that
+> + * is not the_repository. ("git -C gitdir" makes it so that the_repository is
+> + * the one in gitdir.)
+> + */
+> +static void object_info(const char *gitdir, const char *oid_hex)
+> +{
+> +       struct repository r;
+> +       struct object_id oid;
+> +       unsigned long size;
+> +       struct object_info oi = {.sizep = &size};
+> +       const char *p;
+> +
+> +       if (repo_init(&r, gitdir, NULL))
+> +               die("could not init repo");
+> +       if (parse_oid_hex(oid_hex, &oid, &p))
+> +               die("could not parse oid");
+> +       if (oid_object_info_extended(&r, &oid, &oi, 0))
+> +               die("could not obtain object info");
+> +       printf("%d\n", (int) size);
+> +}
+> +
+> +int cmd__partial_clone(int argc, const char **argv)
+> +{
+> +       setup_git_directory();
+> +
+> +       if (argc < 4)
+> +               die("too few arguments");
+> +
+> +       if (!strcmp(argv[1], "object-info"))
+> +               object_info(argv[2], argv[3]);
+> +       else
+> +               die("invalid argument '%s'", argv[1]);
+> +
+> +       return 0;
+> +}
+> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+> index c5bd0c6d4c..b21e8f1519 100644
+> --- a/t/helper/test-tool.c
+> +++ b/t/helper/test-tool.c
+> @@ -46,6 +46,7 @@ static struct test_cmd cmds[] = {
+>         { "online-cpus", cmd__online_cpus },
+>         { "parse-options", cmd__parse_options },
+>         { "parse-pathspec-file", cmd__parse_pathspec_file },
+> +       { "partial-clone", cmd__partial_clone },
+>         { "path-utils", cmd__path_utils },
+>         { "pcre2-config", cmd__pcre2_config },
+>         { "pkt-line", cmd__pkt_line },
+> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+> index e8069a3b22..f845ced4b3 100644
+> --- a/t/helper/test-tool.h
+> +++ b/t/helper/test-tool.h
+> @@ -35,6 +35,7 @@ int cmd__oidmap(int argc, const char **argv);
+>  int cmd__online_cpus(int argc, const char **argv);
+>  int cmd__parse_options(int argc, const char **argv);
+>  int cmd__parse_pathspec_file(int argc, const char** argv);
+> +int cmd__partial_clone(int argc, const char **argv);
+>  int cmd__path_utils(int argc, const char **argv);
+>  int cmd__pcre2_config(int argc, const char **argv);
+>  int cmd__pkt_line(int argc, const char **argv);
+> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+> index 584a039b85..a211a66c67 100755
+> --- a/t/t0410-partial-clone.sh
+> +++ b/t/t0410-partial-clone.sh
+> @@ -604,6 +604,29 @@ test_expect_success 'do not fetch when checking existence of tree we construct o
+>         git -C repo cherry-pick side1
+>  '
+>
+> +test_expect_success 'lazy-fetch when accessing object not in the_repository' '
+> +       rm -rf full partial.git &&
+> +       test_create_repo full &&
+> +       test_commit -C full create-a-file file.txt &&
+> +
+> +       test_config -C full uploadpack.allowfilter 1 &&
+> +       test_config -C full uploadpack.allowanysha1inwant 1 &&
+> +       git clone --filter=blob:none --bare "file://$(pwd)/full" partial.git &&
+> +       FILE_HASH=$(git -C full rev-parse HEAD:file.txt) &&
+> +
+> +       # Sanity check that the file is missing
+> +       git -C partial.git rev-list --objects --missing=print HEAD >out &&
+> +       grep "[?]$FILE_HASH" out &&
+> +
+> +       git -C full cat-file -s "$FILE_HASH" >expect &&
+> +       test-tool partial-clone object-info partial.git "$FILE_HASH" >actual &&
+> +       test_cmp expect actual &&
+> +
+> +       # Sanity check that the file is now present
+> +       git -C partial.git rev-list --objects --missing=print HEAD >out &&
+> +       ! grep "[?]$FILE_HASH" out
+> +'
+> +
+>  . "$TEST_DIRECTORY"/lib-httpd.sh
+>  start_httpd
+>
+> --
+> 2.32.0.rc1.229.g3e70b5a671-goog
+>
