@@ -8,87 +8,106 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC105C47094
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 01:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F98C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:00:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6B3361130
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 01:59:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E52F60FEE
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230330AbhFHCBQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 22:01:16 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:44882 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbhFHCBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 22:01:15 -0400
-Received: by mail-oi1-f181.google.com with SMTP id d21so20041864oic.11
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 18:59:11 -0700 (PDT)
+        id S230366AbhFHCCK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 22:02:10 -0400
+Received: from mail-pj1-f50.google.com ([209.85.216.50]:40901 "EHLO
+        mail-pj1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230209AbhFHCCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 22:02:09 -0400
+Received: by mail-pj1-f50.google.com with SMTP id mp5-20020a17090b1905b029016dd057935fso4911909pjb.5
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 19:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/mbvgb/dsxhUSWrZwCSZ8o/R9Fq99UwBx2TPA+jmiMw=;
-        b=mSItZonuxLrbU9+yKFM29UqTs/ygA0XGA9uDuh7ZSJS/jMuPkblA6ysikpvFr0BK0G
-         A82lumiBDEza6tQg/3Ow2fTHD4ScYd7NbW0N6PCbZb+bmOjPMP1MkX8RVoMaflZdciG/
-         ikkQNorS0ORQanml2cpPW8jRji6dTPYSBaGW9l65It0R2Naz7tNCTaoUAAJiaNcVBLu1
-         3Il++2w6jpKeX0ea8Kfnl/TWUEmScHNa1sTSLd8AdzKIZ6le5ivdZjF13UOXdEBssxYf
-         GcfVMg+bZZV+u4IjMiTW/3dB/hACJAVsEworCoAfkD+VcSJAPl5FD1wGDbnaKU6wrBcn
-         hwqw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EPhhOi/fu94KLyGoR0Tv5xpUKx0k2+xmzgCu2dd88Ag=;
+        b=oUbIE49bobmo3q0LyCdNQqGira5U5H9gPeeooPPnCRzJlFzO09qYabA7eyS4ibKEfl
+         69OkiZGe+zn3HI/v0oPMPF+DmEGZEq0S2V7lT3UxCM/R5HL25YckiZTnMsJ0V5XgfmWa
+         /eoO8wvegwQEynQgnZMvJPHgBd2Ef4cydkm/S0g0jY0IhozMRE2pxHhn65fnJpJltHP+
+         pvvgaNUtGLZ74I+DKM1mzr6SgG69MIIDFeBjhCx+9ncoXaO53N+sjLHq2wg6v8MAp66/
+         NyCiMIkRRM/nYlmEUw1MbouE5BXycdPyLRrEb66udvebwDObbpdNl8iQbJ2DOpS8JCAH
+         cVXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/mbvgb/dsxhUSWrZwCSZ8o/R9Fq99UwBx2TPA+jmiMw=;
-        b=P4dZSgm7ltiX8KRYpwCge/7tRMOrpJDwRjerIy1qw3jusn4aUfiwItcjX1bnAD9DZ7
-         7IUeQVeR/SL6waR5jBf/vBacwwz9JC1kQzzOYfnL+/sm30FgYSeN2TkiS5ChHIg4/QFq
-         YZMSHss1Z8pcoZlNCjobPf086pHV6nEi62kT9eN8cMY2b+k+iaVGE/KEelopQpFpn1/H
-         02bIQhXcDBSNzdyGWPkBM3tV3IauSKYdfGTypBbFmv/nUmMIKQ+ZUeSS4/zYQ4daiptL
-         n1zh8DI5GQ5X+5kAkkUfD7NyetDpaWD/1RcudPqhgJfUQvM28BSoPrUjHJct4DP7THCV
-         nE9g==
-X-Gm-Message-State: AOAM532SWaAtinJT8GYT60tiK2evNzupiKwSv6LKuNUuUIuO7sxlStu3
-        tF0Dim2zUSwEE2fH5MOrn0aEPGfnZPeWIw==
-X-Google-Smtp-Source: ABdhPJx4crL0Ph21tOmJuDclhFsgA/36YAyMumAW4yxbxoxVawrXk+FMQtJiJwPWKMT1pwwh+Di5dw==
-X-Received: by 2002:aca:4244:: with SMTP id p65mr1249135oia.8.1623117490993;
-        Mon, 07 Jun 2021 18:58:10 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id a6sm2571874oon.20.2021.06.07.18.58.10
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EPhhOi/fu94KLyGoR0Tv5xpUKx0k2+xmzgCu2dd88Ag=;
+        b=Lp70WN5J3T5QcJ8f51bnN4XoW13RzMJNpVM7i5m+DneTvejWo+6YD6sBBB0/cQ+I0f
+         Nro0LV9lXEjn1tIVtZa7ZqRyEhAgw0+vMXlZk4zbeqlCk080UmGM5mtA+LxMooEyepN2
+         jE+A4czvJ41CjpL3wXJHPqP4GEZ4tgafpMJPJ/YH1AA8mh4rITPfZWzQtWsZQ4OTYV8g
+         phcMEhDYD+kYPURIrhOQz7y6vuCreyLizgvO4LeQcI9C/vLal/Ia/IJ22ieN8BqVIm4O
+         K4NXExFOYlmcPUj9pLv6DdQW6BHZyocjmF9JLwMOlWq488kyRq+90wiH0UwsbRRBy3rC
+         mAFQ==
+X-Gm-Message-State: AOAM531eVZzMdNI1EvML+MF1E/pTpU7S61xvdV3QE/bvIdZXJhQCcIuB
+        AOf5tBKGYdypklltlz2b+tnB7M4+U0AbOA==
+X-Google-Smtp-Source: ABdhPJztTaWvdGcaOG0130AvGWF7eFfHJtgzoe3u2OpKB9vxtWYW0ZMx6Z4OcwXjX6LQLbZ0zKwdRA==
+X-Received: by 2002:a17:902:9348:b029:f0:d51a:7a4c with SMTP id g8-20020a1709029348b02900f0d51a7a4cmr20947343plp.60.1623117544375;
+        Mon, 07 Jun 2021 18:59:04 -0700 (PDT)
+Received: from athena.localdomain ([2402:800:63b8:97c0:59aa:7727:6cb5:cccf])
+        by smtp.gmail.com with ESMTPSA id z18sm6798680pfn.37.2021.06.07.18.59.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 18:58:10 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
+        Mon, 07 Jun 2021 18:59:04 -0700 (PDT)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] doc: merge: mention default of defaulttoupstream
-Date:   Mon,  7 Jun 2021 20:58:07 -0500
-Message-Id: <20210608015807.906101-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Andy AO <zen96285@gmail.com>
+Subject: [PATCH] doc/log: correct default for --decorate
+Date:   Tue,  8 Jun 2021 08:58:40 +0700
+Message-Id: <20210608015840.24532-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.32.0.5.gc7fdd17fde
+In-Reply-To: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
+References: <pull.1030.git.git.1622440856607.gitgitgadget@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit a01f7f2ba0 (merge: enable defaulttoupstream by default,
-2014-04-20) forgot to mention the new default in the configuration
-documentation.
+There're two different default options for log --decorate:
+* Should `--decorate` be given without any arguments, it's default to
+  `short`
+* Should neither `--decorate` nor `--no-decorate` be given, it's default
+  to the `log.decorate` or `auto`.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+We documented the former, but not the latter.
+
+Let's document them, too.
+
+Reported-by: Andy AO <zen96285@gmail.com>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- Documentation/config/merge.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
-index cb2ed58907..6b66c83eab 100644
---- a/Documentation/config/merge.txt
-+++ b/Documentation/config/merge.txt
-@@ -14,7 +14,7 @@ merge.defaultToUpstream::
- 	branches at the remote named by `branch.<current branch>.remote`
- 	are consulted, and then they are mapped via `remote.<remote>.fetch`
- 	to their corresponding remote-tracking branches, and the tips of
--	these tracking branches are merged.
-+	these tracking branches are merged. Defaults to true.
+ I'm reluctant to send this out since I would like to see Andy get familiar
+ with the list.  However, it's a while since the original patch.
+
+ Documentation/git-log.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 1bbf865a1b..0498e7bacb 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -39,7 +39,9 @@ OPTIONS
+ 	full ref name (including prefix) will be printed. If 'auto' is
+ 	specified, then if the output is going to a terminal, the ref names
+ 	are shown as if 'short' were given, otherwise no ref names are
+-	shown. The default option is 'short'.
++	shown. The option `--decorate` is short-hand for `--decorate=short`.
++	Default to configuration value of `log.decorate` if configured,
++	otherwise, `auto`.
  
- merge.ff::
- 	By default, Git does not create an extra merge commit when merging
+ --decorate-refs=<pattern>::
+ --decorate-refs-exclude=<pattern>::
 -- 
-2.32.0.2.g41be0a4e50
+2.32.0.5.gc7fdd17fde
 
