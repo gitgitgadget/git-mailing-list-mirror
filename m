@@ -2,114 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23B17C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94EC9C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:13:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F091A61249
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:11:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 735F161249
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:13:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230321AbhFHGMx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 02:12:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33698 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbhFHGMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 02:12:52 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24160C061574
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 23:11:00 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id k22so21000768ioa.9
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 23:11:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=n+3XM200YPiDH1xLwVJJQ2JMOZgqrZiy9jtZLd2J2AE=;
-        b=i9NcPPESorGYNuUOvSk/yGNleoeFyB+Kdk1b+KcrGNI80FFH/bdzb84DdQtXGVG/BQ
-         j/vct7otVgTBrit7iuVHIpBQoB9tLepAr+U7XC7BpcnvUbCG8A5ByJFcdjYcawq5OOai
-         my//v+oPOx9LxT4c7cb665QpV0kV0AZfxFlUOPfg41T+r3wArsTZhvM0RfeQzHiqgdpV
-         oBKoVtEnISIQS1dqByQ+HOZreuG9bxsWj4r6rUmcw4L4hgrm/qzWtu3BKiJRHzdZyP/l
-         QupggTb/YDAtdUR+s4QPwAHt6H28fW9mXVQlYvIeV5Uk7Qz+jeclL3eUYpyyiDU8hlbX
-         gNgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=n+3XM200YPiDH1xLwVJJQ2JMOZgqrZiy9jtZLd2J2AE=;
-        b=VnRKazgQQ8+An8bwYqquqz8tqoIU53wv0U11nUrO5LOQSFGb9t7ziIiVi6nTcFx03l
-         Lzwi14TidxPDAVQUZl6wg1XzrsoUEh6+iwr9FR36lwJK+PV8+txcppJ/9CRa/XQs/G2V
-         g7K3Rl5ScsLqVxavabnHIc/T3UeFzIfEAczqPaxRB0adzLO6XMk13WkPVa9wQVkJ3QkN
-         XyK4Vieo532M5haFj8erBTJ44qhUMNziC8SA2O+pbwg9rI6WAqqUbRht7lpFd6NKpW1+
-         8ZkYUA5IHwTWIKrzAs9Tjw1Uw6/6umrS6dYTUdA/dHpgkwnsEtVkwhDHTU/VdfYFW+fb
-         0YUg==
-X-Gm-Message-State: AOAM533oB0kpXla6ldu7ziXMMHllei+ADPlhupP9MOcbbRYq5Mw+K/JK
-        FV0PsLU7KIxrElFFnl1WjnXBoAnBVukhGArlre5KWN0vJxiNqQ==
-X-Google-Smtp-Source: ABdhPJyff8YURs8b8uu5uFn24+vCQR2kpV0ah1RQjpVimhr1J5wxHi4s33DGLfFR5T61YmOtc/LW8TC5rn8v3JKY7Vk=
-X-Received: by 2002:a5e:8a08:: with SMTP id d8mr17986400iok.192.1623132659324;
- Mon, 07 Jun 2021 23:10:59 -0700 (PDT)
+        id S230266AbhFHGPZ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 8 Jun 2021 02:15:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48566 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229512AbhFHGPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 02:15:23 -0400
+Received: (qmail 27911 invoked by uid 109); 8 Jun 2021 06:13:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Jun 2021 06:13:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6653 invoked by uid 111); 8 Jun 2021 06:13:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Jun 2021 02:13:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 8 Jun 2021 02:13:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] branch: make -v useful
+Message-ID: <YL8KiiGXF8LdGmQ2@coredump.intra.peff.net>
+References: <20210605011339.2202-1-felipe.contreras@gmail.com>
+ <87czt059sn.fsf@evledraar.gmail.com>
+ <YLv8NWL7WfBRkiGe@coredump.intra.peff.net>
+ <60be41f6473e2_39c0a208f6@natae.notmuch>
 MIME-Version: 1.0
-References: <pull.972.git.1622884415.gitgitgadget@gmail.com>
- <0efed9435b59098f3ad928acd46c3c7e9f13677d.1622884415.git.gitgitgadget@gmail.com>
- <xmqqa6o1q6zz.fsf@gitster.g>
-In-Reply-To: <xmqqa6o1q6zz.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 8 Jun 2021 14:10:48 +0800
-Message-ID: <CAOLTT8QPMVueHMFCYP6YJ9_ODsKFxk2gyB1dO5ak=UFX-8Cm-A@mail.gmail.com>
-Subject: Re: [PATCH 2/6] [GSOC] ref-filter: add %(raw) atom
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <60be41f6473e2_39c0a208f6@natae.notmuch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=888=E6=97=
-=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=881:07=E5=86=99=E9=81=93=EF=BC=9A
->
-> This breaks -Wdecl-after-stmt.  A possible fix below.
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 46aec291de..648f9cabff 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2459,13 +2459,13 @@ static int cmp_ref_sorting(struct ref_sorting *s,=
- struct ref_array_item *a, stru
->                                 ? strcasecmp : strcmp;
->                         cmp =3D cmp_fn(va->s, vb->s);
->                 } else {
-> -                       int (*cmp_fn)(const void *, const void *, size_t)=
-;
-> -                       cmp_fn =3D s->sort_flags & REF_SORTING_ICASE
-> +                       size_t a_size =3D va->s_size =3D=3D ATOM_VALUE_S_=
-SIZE_INIT
-> +                                       ? strlen(va->s) : va->s_size;
-> +                       size_t b_size =3D vb->s_size =3D=3D ATOM_VALUE_S_=
-SIZE_INIT
-> +                                       ? strlen(vb->s) : vb->s_size;
-> +                       int (*cmp_fn)(const void *, const void *, size_t)=
- =3D
-> +                               s->sort_flags & REF_SORTING_ICASE
->                                 ? memcasecmp : memcmp;
-> -                       size_t a_size =3D va->s_size =3D=3D ATOM_VALUE_S_=
-SIZE_INIT ?
-> -                                       strlen(va->s) : va->s_size;
-> -                       size_t b_size =3D vb->s_size =3D=3D ATOM_VALUE_S_=
-SIZE_INIT ?
-> -                                       strlen(vb->s) : vb->s_size;
->
->                         cmp =3D cmp_fn(va->s, vb->s, b_size > a_size ?
->                                      a_size : b_size);
+On Mon, Jun 07, 2021 at 10:57:42AM -0500, Felipe Contreras wrote:
 
-You are right.
+> Jeff King wrote:
+> > On Sat, Jun 05, 2021 at 10:18:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > 
+> > > As for the proposal, I don't use "branch -v" all that much much, so I
+> > > don't have strong knee-jerk feelings on it, but just considering it now
+> > > I'd think that the current default is a fundamentally better
+> > > approximation of what most users would like as a default.
+> > > 
+> > > I.e. I think it's fair to say that to the extent that most users have
+> > > topic branches they're part of some pull-request workflow where they're
+> > > always tracking the one upstream they always care about, usually
+> > > origin/master.
+> > 
+> > I'm in the same boat. I don't use "branch -v" either, but showing the
+> > upstream name wouldn't be at all helpful to me, since it they would all
+> > just be "origin/master".
+> 
+> But this patch is not for you, it's for the majority of git users.
 
-Thanks.
---
-ZheNing Hu
+In the quoted text above, Ævar mentioned that many users will have a
+pull-request workflow tracking one upstream. So no, I don't think it's
+just for me, but anybody with that workflow.
+
+But of course i also mentioned other workflows, like...
+
+> > (This will vary based on workflow, but the
+> > other common workflow would probably just show "topic" being based on
+> > "origin/topic").
+> 
+> Based on what evidence?
+> 
+> As I showed in [1], all the top results when googling "upstream branch"
+> show the upstream branch being used in the opposite way: it's set to the
+> place you push to:
+> 
+>   git push --set-upstream @ github/my-pull-request
+
+That's exactly what I was talking about in the quoted text above.  If
+you use --set-upstream, then your local "topic" will track something
+like "origin/topic".
+
+> > So we could document them as: behave as if "--format=..." was given on
+> > the command line (unfortunately "..." here is a complex set of %(if)
+> > mechanisms, but it would mostly be for reference; nobody would need to
+> > type it).
+> 
+> You mean like this?
+> 
+>   %(if:notequals=refs/remotes)%(refname:rstrip=-2)%(then)%(if)%(HEAD)%(then)* [32m%(else)%(if)%(worktreepath)%(then)+ [36m%(else)  %(end)%(end)%(align:34,left)%(refname:lstrip=2)%(end)[m %(objectname:short) %(if)%(upstream:track)%(then)%(upstream:track) %(end)%(contents:subject)%(else)  [31m%(align:34,left)remotes/%(refname:lstrip=2)%(end)[m%(if)%(symref)%(then) -> %(symref:short)%(else) %(objectname:short) %(contents:subject)%(end)%(end)
+> 
+> I don't think that's particularly useful to anyone.
+
+I agree it's hard to follow. It's probably only useful for people who
+want to modify it to create a custom format (and any documentation could
+certainly explain it in human-readable terms and then make a mention of
+the actual code).
+
+> > And then it is not a far leap to change that to: behave as if --format
+> > was set to the value of branch.verboseFormat, and the default of that
+> > config option is "...". And then anybody can make "branch -v" behave
+> > however they like.
+> 
+> I don't think telling users to do `git command --code="type here the
+> code you want git to do"` is very user friendly.
+
+I'm not quite sure what you think I'm proposing, but it's certainly not
+that people would type in that code on the command line. It's that "-v"
+would be documented to behave _as if_ that code had been used with
+--format.  And then extended to use another format of the user's choice
+from a config variable (which could be based on that format, if they so
+chose).
+
+Of course they can do that already with an alias. The only thing I'm
+actually suggesting is making "-v" configurable.
+
+> But even if that was implemented, the whole point of this patch is about
+> what the default value of branch.verboseFormat should be.
+
+I'm saying that I find your proposed value for that default to be
+useless, and I suspect many other users will, too. Which is why making
+it configurable may actually help people.
+
+> Do I need to produce a list of the top 10 Google results of
+> "git branch -v" vs. "git branch -vv", to show that most people don't
+> find the output of -v useful?
+> 
+> Or what kind of evidence would satisfy you?
+
+Don't bother on my account. I have generally found that going more than
+one round deep of discussion with you does not lead anywhere productive,
+and I don't intend to continue this thread.
+
+-Peff
