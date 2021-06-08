@@ -2,122 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28818C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D6FDC47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:14:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0218261059
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:13:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30AA861183
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 16:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232007AbhFHQO6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 12:14:58 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:41802 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229724AbhFHQO4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 12:14:56 -0400
-Received: by mail-wr1-f41.google.com with SMTP id o3so3813261wri.8
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 09:12:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0YqrfPqhOZkvS87u14mSd9+jPXQ4zsmGbqUyI/4q29c=;
-        b=stabryr+XZRzsvF0iVPCUQhCC9pF2AfaLULasYJPqOpg/mv07n9yhcsTvpUhllhCyC
-         XJDHocbpEipOv0qVBgU1sglQlMnTucS5qdfjvoizHp0m67qrCDXFdQt9u0KFvOPgaTYC
-         3DZzcX0b2qZDh3OjdX+Se3djbIgXXi2+cKHxKVIC41wv/XV64hx4cZrpcH1UuQIfxWYZ
-         F632GXx86b4aUu/hLbE/p2DHpLs4jZSdk+d00zAONYfywb+FT6eDe51w3GJQjeBrNhKx
-         QlZs3J5QEZRkzPTC/iNnrmXtUtV/jAfpk+vq/3oHfsJ/xlyCp8BNYmZgZnQRrQ5wc53F
-         o0qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0YqrfPqhOZkvS87u14mSd9+jPXQ4zsmGbqUyI/4q29c=;
-        b=QzKxZQ8QrTaibNUvHAiVQNJSeZ2Z74i4vftnRFwsH6kU+Y/pP8fVBixt+MFbBruLDZ
-         GEP+ObLxiqVaU2XUid7Y9s3iuAltLdOHUnPt2IsKKeRcrCxKfzefSebGhk891X2n8c1q
-         Ce8vddSDHfQbXi0h/2U7rVH5KaWX0nV79az+ww3ni97ForJjuLUcltAUDIeGc45ShUbB
-         yo2sTSZeIUrtY/QajrIp55Mc3/9W+C181QtwnzLeoidf1i5tBAF5MEtqx/5l6fgwN9nB
-         bJWTTV59y6pSRj4nWll8gWJGEYsbW1IJATdalIVf59Hnv+j6zH9CW2r0xhZyfePSFzye
-         +Ksg==
-X-Gm-Message-State: AOAM532DzyPoFBhOXX+cELxrah/mWt6rDmUIcMDShM3BfG8NJ+zcrGda
-        4I4IqWjS1CimYBeqKFSBLc69PNx8/7U=
-X-Google-Smtp-Source: ABdhPJzjINbwFz0tg05KvBZWAAuZBIXhZAoa/4A0SMi4GsSM5/cBrccB9pDkF/+h6QrpyCi6147Fsg==
-X-Received: by 2002:a5d:6b52:: with SMTP id x18mr22921643wrw.11.1623168706876;
-        Tue, 08 Jun 2021 09:11:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s1sm3398096wmj.8.2021.06.08.09.11.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 09:11:46 -0700 (PDT)
-Message-Id: <6de569e6ac492213e81321ca35f1f1b365ba31e3.1623168703.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.962.v4.git.1623168703.gitgitgadget@gmail.com>
-References: <pull.962.v3.git.1622781578.gitgitgadget@gmail.com>
-        <pull.962.v4.git.1623168703.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Jun 2021 16:11:42 +0000
-Subject: [PATCH v4 4/4] merge-ort: miscellaneous touch-ups
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S231175AbhFHQQn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 12:16:43 -0400
+Received: from mout.web.de ([212.227.15.4]:46103 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230222AbhFHQQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 12:16:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1623168884;
+        bh=5MokERLg8ogrRDqmDcYkRhCJz1oGmzwyF5WJytqliE8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=T5JPS6BPk5IuB2D+JHRSro7VvCOrijQQygOWsXThnOLLVj6R7HQUfUU7IyfrwKHLu
+         b/hStFsoa6a2VegqQJ02ldY8HxvZwo6CUkA0YNOr/MYpwTmEEUub0uKdjwrx8ue81n
+         iqSGMVbfVH5Tpu7Vz3fSc9C4WjhcDaeDhqsluX80=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
+ (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0Lfipe-1l1OF41JEI-00pMYV; Tue, 08 Jun 2021 18:14:44 +0200
+Subject: Re: [PATCH 2/2] read-cache: fix incorrect count and progress bar
+ stalling
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
+ <patch-2.2-042f598826-20210607T144206Z-avarab@gmail.com>
+ <8f336b1b-6cb7-8277-79d5-0f331159b00c@gmail.com>
+ <87k0n54qb6.fsf@evledraar.gmail.com>
+ <eaf2b6b0-4202-d5ea-87a2-b828fdbc60a1@web.de>
+ <8735tt4fhx.fsf@evledraar.gmail.com> <xmqqczsxtf8g.fsf@gitster.g>
+ <87wnr4394y.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <74183ce6-e17f-1b11-1ceb-7a8d873bc1c7@web.de>
+Date:   Tue, 8 Jun 2021 18:14:42 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+In-Reply-To: <87wnr4394y.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ORCB4o+jgZ+c7f8KnqvR1BE55ge9SAGKxCkg2HEmX5/vXKrUcZh
+ Mqfo/IPnXonVmvpdWEBff18s9WtsyIOuddDvaQXwe9FnTsuehMaU37QNIUS3DgCjH7cMg2v
+ w/8mgueD59DJJ8Swx7kphKmaZdLp0y+fpyhBRC8fvU5+SsCTZz975hxJdTW37jc4NB/ULVr
+ 224Uu6JBT4DshQf/N5jMA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cNeQB72T+3M=:UvN5Wn9DWfKqulL1Rrzlm3
+ Q+N97BL9QDRfRjtWC52qG/YwpJheNXfGFVE5+yeDjgteK6nUCHwOkWj6jgEbuHCtlOirDTVGa
+ jJnzrC7ekfgXtnph/Tb8gtAXUkJPYDHzA5BYP6lNUHQThSV56EZ8nj7szG1pQN0zBIklec9lZ
+ EtZv5YOalgJdpH7LC6rN623QWUYLdwZ2TBxsfXs6r/YKox0jLBAPDjTFnbbblfkZP0I5EF9dz
+ AjS+vRdqhPp67aDweNrpBQsatFQ9PAeyMsLgnyF56ifI/m59yJG5OTZ4BcEyGQXtzWdi6HOcP
+ nN4Ey5MsEtjayKLk+u2lIA+gfiatjDkjXPbKAWt3vZAMCgr0uH3U6Z19lweRAX/oXtRsGStOf
+ qtVrFJb+Q8/u5m7GeNIDj+j181bPeI6IYZiqxuYokrLE3NlP6jhvgXb3RTBpRvG5kzWqnSzAy
+ R2ZPnLHnNzauC6Z7TCQQQLg9PAppXQK+oxEOhEijYur+W9LV1JB2kki1kKF3IFRrZz6B2IDwx
+ cK+SvvYjO2iC+5j4S/oX5SYm82QEDTrTMB1ubdVQm0zwyo9HcPXf/a6ds6LPZLH3xtiov+rI2
+ rozbYtNfApvj71oNe0e8GKNR0pmt8YHsgf+IODe5F8AI2Bt4chKYIf+UAtsN5/4Uxu3KS7trU
+ QOzlqpWvrxTU4at7/3i8XHdjSEeQs26rpz/zvpRcmYfnBtq96nPGIoA3tnSTWgKF1kmotxJb7
+ xcx4UxwKYH6MHuNLKdkUG4XAvi1zCppNWdxPuzX7GQ5Z8f7T7gSMnwKh8BTeiQOsX11p5Gyrf
+ LGrrU77fz67U0BQ42dQvbuLSnIZSS3AgNQXj5T300pyv/S2DJxAKnDCPbiPA/7rxhE7m/9TmP
+ K8v8vmGuqgui4ii0WRlK21T8je85NUMV/N2PvZapyDj7ohKTlgGnzpLEm+RutPaGWNgj90GkP
+ e8qTpPBBFn6c6vphvF+TYBddiUdApzzzgGfL9IqWaBKIN4f18pUNSkaE/LR8rNH9u5tNTXIBB
+ QZ1fGqjiw0opZ/UUcWs2CeupSRAafif7jpUtvIpgwTaVbHlGvCabvDR9clFuNL3JOLO9yXZUf
+ rNqOtbVia9XmcgxeRi/izzYvO/W6LlAaaiv
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Am 08.06.21 um 12:58 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> On Tue, Jun 08 2021, Junio C Hamano wrote:
+>
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>>> So I think this pattern works:
+>>>>
+>>>> 	for (i =3D 0; i < nr; i++) {
+>>>> 		display_progress(p, i);
+>>>> 		/* work work work */
+>>>> 	}
+>>>> 	display_progress(p, nr);
+>>>>
+>>>> Alternatively, if the work part doesn't contain continue statements:
+>>>>
+>>>> 	for (i =3D 0; i < nr; i++) {
+>>>> 		/* work work work */
+>>>> 		display_progress(p, i + 1);
+>>>> 	}
+>>>
+>>> But yes, I agree with the issue in theory, but I think in practice we
+>>> don't need to worry about these 100% cases.
+>>
+>> Hmph, but in practice we do need to worry, don't we?  Otherwise you
+>> wouldn't have started this thread and Ren=C3=A9 wouldn't have responded=
+.
+>
+> I started this thread because of:
+>
+> 	for (i =3D 0; i < large_number; i++) {
+> 		if (maybe_branch_here())
+> 			continue;
+> 		/* work work work */
+> 		display_progress(p, i);
+> 	}
+> 	display_progress(p, large_number);
+>
+> Mainly because it's a special snowflake in how the process.c API is
+> used, with most other callsites doing:
+>
+> 	for (i =3D 0; i < large_number; i++) {
+> 		display_progress(p, i + 1);
+> 		/* work work work */
+> 	}
 
-Add some notes in the code about invariants with match_mask when adding
-pairs.  Also add a comment that seems to have been left out in my work
-of pushing these changes upstream.
+Moving the first call to the top of the loop makes sense.  It ensures
+all kind of progress -- skipping and actual work -- is reported without
+undue delay.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
----
- merge-ort.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Adding one would introduce an off-by-one error.  Removing the call after
+the loop would leave the progress report at one short of 100%.  I don't
+see any benefits of these additional changes, only downsides.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 2ec382e292a6..cfa751053b01 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -765,6 +765,7 @@ static void add_pair(struct merge_options *opt,
- 	int names_idx = is_add ? side : 0;
- 
- 	if (is_add) {
-+		assert(match_mask == 0 || match_mask == 6);
- 		if (strset_contains(&renames->cached_target_names[side],
- 				    pathname))
- 			return;
-@@ -772,6 +773,8 @@ static void add_pair(struct merge_options *opt,
- 		unsigned content_relevant = (match_mask == 0);
- 		unsigned location_relevant = (dir_rename_mask == 0x07);
- 
-+		assert(match_mask == 0 || match_mask == 3 || match_mask == 5);
-+
- 		/*
- 		 * If pathname is found in cached_irrelevant[side] due to
- 		 * previous pick but for this commit content is relevant,
-@@ -3477,6 +3480,8 @@ static void process_entry(struct merge_options *opt,
- 	 */
- 	if (!ci->merged.clean)
- 		strmap_put(&opt->priv->conflicted, path, ci);
-+
-+	/* Record metadata for ci->merged in dir_metadata */
- 	record_entry_for_tree(dir_metadata, path, &ci->merged);
- }
- 
--- 
-gitgitgadget
+If other callsites have an off-by-one error and we care enough then we
+should fix them.  Copying their style and spreading the error doesn't
+make sense -- correctness trumps consistency.
+
+> Fair enough, but in the meantime can we take this patch? I think fixing
+> that (IMO in practice hypothetical issue) is much easier when we
+> consistently use that "i + 1" pattern above (which we mostly do
+> already). We can just search-replace "++i" to "i++" and "i + 1" to "i"
+> and have stop_progress() be what bumps it to 100%.
+
+This assumes the off-by-one error is consistent.  Even if that is the
+case you could apply your mechanical fix and leave out read-cache.
+This would happen automatically because when keeping i there is no ++i
+to be found.
+
+stop_progress() doesn't set the progress to 100%:
+
+   $ (echo progress 0; echo update) |
+     ./t/helper/test-tool progress --total 1 test
+   test:   0% (0/1), done.
+
+I wonder (only in a semi-curious way, though) if we can detect
+off-by-one errors by adding an assertion to display_progress() that
+requires the first update to have the value 0, and in stop_progress()
+one that requires the previous display_progress() call to have a value
+equal to the total number of work items.  Not sure it'd be worth the
+hassle..
+
+Ren=C3=A9
