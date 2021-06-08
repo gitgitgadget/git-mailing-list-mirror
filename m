@@ -2,154 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31D8EC48BCD
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B29ADC47082
 	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:00:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 194836101A
+	by mail.kernel.org (Postfix) with ESMTP id 9C7426127A
 	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230396AbhFHJCa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 05:02:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43040 "EHLO
+        id S230523AbhFHJCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 05:02:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbhFHJC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 05:02:26 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE54CC06178B
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 02:00:33 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id j17-20020a0568200231b029024900620310so3577700oob.7
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 02:00:33 -0700 (PDT)
+        with ESMTP id S230425AbhFHJCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 05:02:25 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4ABBC061789
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 02:00:31 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id u11so20888617oiv.1
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 02:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h8/eyV1qb+6mgBqjY/qSKB6syPC8l5ytbfE60lrcFfM=;
-        b=U1eGASghxaSOhfgJcuk8gTDtaPuaqJvDqByDd0awyY2iH1lj24F/61zlNsdu0tCdAK
-         NP9SKk9nViDrUbu7qPscSUXHqyVrRN7Mvy7Jx+lpHSNvkuzl9B2usCmGwif5HX8ZJ6I7
-         F7B93QlipJLDmdnvyf1/HzoV96X9UawM0F8nu/iSOcE0zwflMEuXJ6MQntDaiASwXT+i
-         yWP8mMMrh+ZKbgCMyqtZ+vmDSgdh7hQYq4ltzy49VP4DaFaw5DpBF9HShdB4OuUTP7Ng
-         FYrV2a1YbNDGYqYK1z05n+YGX+CbvYouZt/0pD9aaI57+LiO83SAOaw5UUGtyzEVIZf4
-         gjpg==
+        bh=kqH8wwsHCWokbeTva2op1ZqKhg5E6HsIYHzw6wTYOhQ=;
+        b=Brj0WF/PPJb8elDa+O5P9MEkSAo/N9zTAW2DKl9ttGwG+GFMo3YlN4mkjXnGrQVAlF
+         oyO/CenU7OK1hqrT9WT0V0OcehIWs3RYsKwIW7nNojU97ryK24sPC4bfefWiQlbCkAHc
+         X0Oq0npL8aiMbvgxcVDtkFJ553txld7GT0OCCrDixy+gIjTR4sqBVGb9DP9D7oL4c/KX
+         VvcvV0SX7EaeqffA8RKP2tUHV25hTiGe8EuZfYB+Ok2OpRBZXZ7EhMosNc24ZiE47U22
+         rKy1QrzqwXlVN6winGBKLWFwW2HZAFVOax/XN6TOmW+WT6r0UaRhIV1diiyIUf09nOJ/
+         pJ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h8/eyV1qb+6mgBqjY/qSKB6syPC8l5ytbfE60lrcFfM=;
-        b=TYzgGHky6wx5MBf3pw0KRM85ULseQSt3Dwq+78CObKujgofkENG4m/ZVWIA2eGpMcV
-         2Hv+Tq6q6I2sERuUiXRTvDk3ZenRxDE6ofeekxKUTQ2iT1q9fFlA38zYeDl/wcuiexNO
-         VFwyEx1bWsjV9teEaGrOAcPMAkqguUB/CEx9P/IZ6dPPyOgrY55UCbZqntMPxHRNci+u
-         wCEESk0EzPHn81SVFsNF0TS9N1rHEYzB0eJfybZPBip6mlmDWTn62KvUfzkQVz1HwfdC
-         +nuIsgc1gX3xpTR6D6eL1fgWDtbP3gGNZeyL0PQDX9gUu+WisLDeOmFZRNgnubqbPwoE
-         T76A==
-X-Gm-Message-State: AOAM531WGfLeCHzXpqu8n922a6ux+cJ8NGBzZaU8L0dMwIgsKT+ABpka
-        ub2KCo3nPE0bwgzRsB+98fkDVhv1jHnxiA==
-X-Google-Smtp-Source: ABdhPJznJD26wR6l0UF1ZFuMCYBNdD+uS+5//waLrRANXV3s72iuOU7WJtxFLNEydoSF+QCbCT1SSA==
-X-Received: by 2002:a4a:3e8e:: with SMTP id t136mr16642151oot.83.1623142832811;
-        Tue, 08 Jun 2021 02:00:32 -0700 (PDT)
+        bh=kqH8wwsHCWokbeTva2op1ZqKhg5E6HsIYHzw6wTYOhQ=;
+        b=FU8ADO2Yp4ya/Jv5Nv06qhNUlHYPI2xerRJuxSS3OpFv+QxPfeirIo4lIjb3Narsa+
+         htd2qsmKU0jnTLO6X/lhkjDVS0+FUwizihrW5T5coYFqD7+nNJ8K7kMG+43xdl2t8f4u
+         pMV/BYdi8/eGwivCzpwJnoYujUW90PRclabYRWpIWmlArIBy3pJMduGNH0Ha1A/6V2Tx
+         n4YP57ha30gzt2P5GJm9G71wUs1Cml+j7RlzFitx7f5cHw+sEFspm+PAi38Geyok+DB6
+         CvBgJCUK5ActnYRhb4QlPZca+8pWQ6OJbcUu2Ov2/x2hsvdH7GeK3XeNla9VIEg3rYy5
+         Otng==
+X-Gm-Message-State: AOAM531Aj1nPIYq6SDRSOMBVqdSGCP2DX7cs/R3qY3LKkGZA4PqpTTlS
+        5bFMrLIQynNVSOCn+fsaYkwe9Ojgcduugg==
+X-Google-Smtp-Source: ABdhPJwnhEKBwlXfqqg0MwBavSRA1BfKrCRN2fjizPQ8KYXWd9bb9JV+lCky0XNDxEjQv0elQYnQRA==
+X-Received: by 2002:a54:448a:: with SMTP id v10mr2160390oiv.133.1623142830797;
+        Tue, 08 Jun 2021 02:00:30 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id x2sm1803950oog.10.2021.06.08.02.00.32
+        by smtp.gmail.com with ESMTPSA id w13sm2935251otp.10.2021.06.08.02.00.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 02:00:32 -0700 (PDT)
+        Tue, 08 Jun 2021 02:00:30 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 02/12] doc: use --stringparam in xmlto
-Date:   Tue,  8 Jun 2021 04:00:16 -0500
-Message-Id: <20210608090026.1737348-3-felipe.contreras@gmail.com>
+Subject: [PATCH v4 01/12] doc: remove GNU troff workaround
+Date:   Tue,  8 Jun 2021 04:00:15 -0500
+Message-Id: <20210608090026.1737348-2-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
 In-Reply-To: <20210608090026.1737348-1-felipe.contreras@gmail.com>
 References: <20210608090026.1737348-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 50d9bbba92 (Documentation: Avoid use of xmlto --stringparam,
-2009-12-04) introduced manpage-base-url.xsl because ancient versions of
-xmlto did not have --stringparam.
+In 2007 the docbook project made the mistake of converting ' to \' for
+man pages [1]. It's a problem because groff interprets \' as acute
+accent which is rendered as ' in ASCII, but as ´ in utf-8.
 
-However, that was more than ten years ago, no need for that complexity
-anymore.
+This started a cascade of bug reports in git [2], debian [3], Arch Linux
+[4], docbook itself [5], and probably many others.
 
+A solution was to use the correct groff character: \(aq, which is always
+rendered as ', but the problem is that such character doesn't work in
+other troff programs.
+
+A portable solution required the use of a conditional character that is
+\(aq in groff, but ' in all others:
+
+  .ie \n(.g .ds Aq \(aq
+  .el .ds Aq '
+
+The proper solution took time to be implemented in docbook, but in 2010
+they did it [6]. So the docbook man page stylesheets were broken from
+1.73 to 1.76.
+
+Unfortunately by that point many workarounds already existed. In the
+case of git GNU_ROFF was introduced, and in the case of Arch Linux
+a mappig from \' to ' was added to groff's man.local. Other
+distributions might have done the same, or similar workarounds.
+
+Since 2010 there is not need for this workaround, which is fixed
+elsewhere not just in docbook, but other layers as well.
+
+Let's remove it.
+
+Also, it's GNU troff, not GNU roff.
+
+[1] https://github.com/docbook/xslt10-stylesheets/commit/ea2a0bac56c56eec1892ac3d9254dca89f7c5746
+[2] https://lore.kernel.org/git/20091012102926.GA3937@debian.b2j/
+[3] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=507673#65
+[4] https://bugs.archlinux.org/task/9643
+[5] https://sourceforge.net/p/docbook/bugs/1022/
+[6] https://github.com/docbook/xslt10-stylesheets/commit/fb553434265906ed81edc6d5f533d0b08d200046
+
+Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/.gitignore              |  1 -
- Documentation/Makefile                |  8 ++------
- Documentation/manpage-base-url.xsl.in | 10 ----------
- 3 files changed, 2 insertions(+), 17 deletions(-)
- delete mode 100644 Documentation/manpage-base-url.xsl.in
+ Documentation/Makefile               |  8 --------
+ Documentation/manpage-quote-apos.xsl | 16 ----------------
+ Makefile                             |  4 ----
+ 3 files changed, 28 deletions(-)
+ delete mode 100644 Documentation/manpage-quote-apos.xsl
 
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index 9022d48355..e9f8d693b1 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -10,7 +10,6 @@ howto-index.txt
- doc.dep
- cmds-*.txt
- mergetools-*.txt
--manpage-base-url.xsl
- SubmittingPatches.txt
- tmp-doc-diff/
- GIT-ASCIIDOCFLAGS
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index bf1f66b3eb..84643a34e9 100644
+index f5605b7767..bf1f66b3eb 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -176,7 +176,7 @@ endif
- ifndef MAN_BASE_URL
- MAN_BASE_URL = file://$(htmldir)/
+@@ -178,14 +178,6 @@ MAN_BASE_URL = file://$(htmldir)/
  endif
--XMLTO_EXTRA += -m manpage-base-url.xsl
-+XMLTO_EXTRA += --stringparam man.base.url.for.relative.links='$(MAN_BASE_URL)'
+ XMLTO_EXTRA += -m manpage-base-url.xsl
  
+-# If your target system uses GNU groff, it may try to render
+-# apostrophes as a "pretty" apostrophe using unicode.  This breaks
+-# cut&paste, so you should set GNU_ROFF to force them to be ASCII
+-# apostrophes.  Unfortunately does not work with non-GNU roff.
+-ifdef GNU_ROFF
+-XMLTO_EXTRA += -m manpage-quote-apos.xsl
+-endif
+-
  ifdef USE_ASCIIDOCTOR
  ASCIIDOC = asciidoctor
-@@ -342,7 +342,6 @@ clean:
- 	$(RM) technical/*.html technical/api-index.txt
- 	$(RM) SubmittingPatches.txt
- 	$(RM) $(cmds_txt) $(mergetools_txt) *.made
--	$(RM) manpage-base-url.xsl
- 	$(RM) GIT-ASCIIDOCFLAGS
- 
- $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
-@@ -351,10 +350,7 @@ $(MAN_HTML): %.html : %.txt $(ASCIIDOC_DEPS)
- $(OBSOLETE_HTML): %.html : %.txto $(ASCIIDOC_DEPS)
- 	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) -o $@ $<
- 
--manpage-base-url.xsl: manpage-base-url.xsl.in
--	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
--
--%.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
-+%.1 %.5 %.7 : %.xml $(wildcard manpage*.xsl)
- 	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
- 
- %.xml : %.txt $(ASCIIDOC_DEPS)
-diff --git a/Documentation/manpage-base-url.xsl.in b/Documentation/manpage-base-url.xsl.in
+ ASCIIDOC_CONF =
+diff --git a/Documentation/manpage-quote-apos.xsl b/Documentation/manpage-quote-apos.xsl
 deleted file mode 100644
-index e800904df3..0000000000
---- a/Documentation/manpage-base-url.xsl.in
+index aeb8839f33..0000000000
+--- a/Documentation/manpage-quote-apos.xsl
 +++ /dev/null
-@@ -1,10 +0,0 @@
--<!-- manpage-base-url.xsl:
--     special settings for manpages rendered from newer docbook -->
+@@ -1,16 +0,0 @@
 -<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 -		version="1.0">
 -
--<!-- set a base URL for relative links -->
--<xsl:param name="man.base.url.for.relative.links"
--	>@@MAN_BASE_URL@@</xsl:param>
+-<!-- work around newer groff/man setups using a prettier apostrophe
+-     that unfortunately does not quote anything when cut&pasting
+-     examples to the shell -->
+-<xsl:template name="escape.apostrophe">
+-  <xsl:param name="content"/>
+-  <xsl:call-template name="string.subst">
+-    <xsl:with-param name="string" select="$content"/>
+-    <xsl:with-param name="target">'</xsl:with-param>
+-    <xsl:with-param name="replacement">\(aq</xsl:with-param>
+-  </xsl:call-template>
+-</xsl:template>
 -
 -</xsl:stylesheet>
+diff --git a/Makefile b/Makefile
+index c3565fc0f8..7588c43f05 100644
+--- a/Makefile
++++ b/Makefile
+@@ -278,10 +278,6 @@ all::
+ # Define NO_ST_BLOCKS_IN_STRUCT_STAT if your platform does not have st_blocks
+ # field that counts the on-disk footprint in 512-byte blocks.
+ #
+-# Define GNU_ROFF if your target system uses GNU groff.  This forces
+-# apostrophes to be ASCII so that cut&pasting examples to the shell
+-# will work.
+-#
+ # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
+ # documentation.
+ #
 -- 
 2.32.0.2.g41be0a4e50
 
