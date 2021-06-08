@@ -3,107 +3,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3249C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DF6BC47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 03:18:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 981656120F
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 02:38:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 299F361078
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 03:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230365AbhFHCkZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Jun 2021 22:40:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44016 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbhFHCkY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jun 2021 22:40:24 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB74C061574
-        for <git@vger.kernel.org>; Mon,  7 Jun 2021 19:38:20 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id v142so19712788oie.9
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 19:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WHhocZkXWhRFEwVR6K+G7ygTzsmFewp/nDkXSmxSQh0=;
-        b=Hm5wdP7eeNA4CsoBs4boLtRTxYG/Q3N/TDWwr1dgLUL/VpvP9rok9sYN7RAWLwpkM1
-         KsoH9mX+XdhPncc6MKBDdtIJJwro/8ItL+O5AN+67vfqguMPvFutxkwsR+Y9TEG0LmsL
-         DD0NimbUE6U8qxlSnAEnXsx7eYN+ep5WjjUrDhcr3Ha6e8VwtnavYDy+XPDrLw+yLXcp
-         BwH18ABhXcAhr6XpZtOwSZk8/KDEggQWSiZgPSKa3bbEQVlVRzb75WlZUgi1xSSC6r6A
-         uUV8WM+uBLJggLZvf5sbz/08KhWdaXHHusDcaIgnDqq+M1JIBNvcu6hZVePg4ocHE2iQ
-         L9Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=WHhocZkXWhRFEwVR6K+G7ygTzsmFewp/nDkXSmxSQh0=;
-        b=JawTYq2nj965vblTXtI42SfMC2rjGy/Wrs1mmHpZLi4N6vUNrWT7YmAVL23Pm/bx1Z
-         aT7wcqdxKcFQMRjZuB5gRmdnY8AY8oKEivBHruKTYkI3N2G870VNuMwWHWcdBwkBYTzQ
-         Gcmajeabcbsr3gQprDNte/gyp6SmpSG+Hp8BYnbGqBzHKohpdXV2xaDxir7DV/7wX/lD
-         +QdzWiaPcWv3hfRJsDptNhu9BqwFM0nJGsrqt2K4fUGWK0exv302UCAalA6Y0z3sMo0X
-         XWfDZuanzizjvlqxaJ3emxUxpPkTbi+6m2+D4d9+uluGs9SizMMmsxjd835d+LOICbPF
-         PzbQ==
-X-Gm-Message-State: AOAM532YIE8Jkn/f3XQdTtJ6TKFKoerfmdICN3zuxq+5UOWlxFAmzJGe
-        49aRlQ49DJ5+OjZoiMPliltTcOFaDvcC0Q==
-X-Google-Smtp-Source: ABdhPJxtOrpVVVzVc0fdwSdxpADZ4Zj+GjPqOZOaiTuiDIvuAAW/ogK598USBL5fDyozK1b5wssTcA==
-X-Received: by 2002:a05:6808:6c4:: with SMTP id m4mr1467892oih.88.1623119899499;
-        Mon, 07 Jun 2021 19:38:19 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id 6sm1382202otp.47.2021.06.07.19.38.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 19:38:19 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     David Aguilar <davvid@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] completion: zsh: trivial improvement
-Date:   Mon,  7 Jun 2021 21:38:07 -0500
-Message-Id: <20210608023807.907883-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
+        id S231535AbhFHDUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Jun 2021 23:20:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57893 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231169AbhFHDUK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jun 2021 23:20:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 27A7D143181;
+        Mon,  7 Jun 2021 23:18:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1Mf+0XrEQGDHebk3xultnnBLnM1DGU43EEAZcp
+        kHQKA=; b=Rkq7O2x7PRa5nr9axV9tcDGXYsb2yl4M6QGRBpOygXbn+j9DwwI/69
+        5KduHtHVSp197I0aUAuAoqmcE8np6hde0JumG/djaKrUn+EqYEpm7Y7h1eyRqgyh
+        15Ylg/oo591pbp3Ans3Ttmd+4SLLVgykRM+RydPL70Usc1ZYoiFRU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1FD3A143180;
+        Mon,  7 Jun 2021 23:18:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6A36414317F;
+        Mon,  7 Jun 2021 23:18:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        emilyshaffer@google.com
+Subject: Re: [PATCH v2 1/4] promisor-remote: read partialClone config here
+References: <cover.1622580781.git.jonathantanmy@google.com>
+        <cover.1623111879.git.jonathantanmy@google.com>
+        <07290cba86fda73ee329a47db8e524b32dba25af.1623111879.git.jonathantanmy@google.com>
+Date:   Tue, 08 Jun 2021 12:18:12 +0900
+In-Reply-To: <07290cba86fda73ee329a47db8e524b32dba25af.1623111879.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 7 Jun 2021 17:25:56 -0700")
+Message-ID: <xmqq35ttrqmj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 29621C0E-C808-11EB-904E-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-$words has basically all the words we need, except the first one: git.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Lets simply add that instead of passing the original, which contains
-options we don't want to pass downstream (like --git-dir).
+> Currently, the reading of config related to promisor remotes is done in
+> two places: once in setup.c (which sets the global variable
+> repository_format_partial_clone, to be read by the code in
+> promisor-remote.c), and once in promisor-remote.c. This means that care
+> must be taken to ensure that repository_format_partial_clone is set
+> before any code in promisor-remote.c accesses it.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.zsh | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+The above is very true, but I am puzzled by the chosen direction of
+the code movement.
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index cac6f61881..50f89145f3 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -219,9 +219,6 @@ __git_zsh_main ()
- {
- 	local curcontext="$curcontext" state state_descr line
- 	typeset -A opt_args
--	local -a orig_words
--
--	orig_words=( ${words[@]} )
- 
- 	_arguments -C \
- 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
-@@ -261,7 +258,7 @@ __git_zsh_main ()
- 
- 		(( $+opt_args[--help] )) && command='help'
- 
--		words=( ${orig_words[@]} )
-+		words=( git ${words[@]} )
- 
- 		__git_zsh_bash_func $command
- 		;;
--- 
-2.32.0.2.g41be0a4e50
+Given that the value in the field repository_format.partial_clone
+comes from an extension, and an extension that is not understood by
+the version of Git that is running MUST abort the execution of Git,
+wouldn't it be guaranteed that, in a correctly written program, the
+.partial_clone field must already be set up correctly before
+anything else, including those in promissor-remote.c, accesses it?
 
+> To simplify the code, move all such config reading to promisor-remote.c.
+> By doing this, it will be easier to see when
+> repository_format_partial_clone is written and, thus, to reason about
+> the code. This will be especially helpful in a subsequent commit, which
+> modifies this code.
+
+So, I am not sure if this simplifies the code the way we want to
+read our code.  Doing a thing in one place is indeed simpler than
+doing it in two places, but it looks like promisor-remote code
+should be using the repository-format data more, not the other way
+around, at least to me.
+
+Perhaps I am missing some other motivation, though.
+
+Thanks.
+
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  cache.h           |  1 -
+>  promisor-remote.c | 14 +++++++++-----
+>  promisor-remote.h |  6 ------
+>  setup.c           | 10 +++++++---
+>  4 files changed, 16 insertions(+), 15 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index ba04ff8bd3..dbdcec8601 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1061,7 +1061,6 @@ extern int repository_format_worktree_config;
+>  struct repository_format {
+>  	int version;
+>  	int precious_objects;
+> -	char *partial_clone; /* value of extensions.partialclone */
+>  	int worktree_config;
+>  	int is_bare;
+>  	int hash_algo;
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index da3f2ca261..c0e5061dfe 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -7,11 +7,6 @@
+>  
+>  static char *repository_format_partial_clone;
+>  
+> -void set_repository_format_partial_clone(char *partial_clone)
+> -{
+> -	repository_format_partial_clone = xstrdup_or_null(partial_clone);
+> -}
+> -
+>  static int fetch_objects(const char *remote_name,
+>  			 const struct object_id *oids,
+>  			 int oid_nr)
+> @@ -99,6 +94,15 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+>  	size_t namelen;
+>  	const char *subkey;
+>  
+> +	if (!strcmp(var, "extensions.partialclone")) {
+> +		/*
+> +		 * NULL value is handled in handle_extension_v0 in setup.c.
+> +		 */
+> +		if (value)
+> +			repository_format_partial_clone = xstrdup(value);
+> +		return 0;
+> +	}
+> +
+>  	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
+>  		return 0;
+>  
+> diff --git a/promisor-remote.h b/promisor-remote.h
+> index c7a14063c5..687210ab87 100644
+> --- a/promisor-remote.h
+> +++ b/promisor-remote.h
+> @@ -32,10 +32,4 @@ int promisor_remote_get_direct(struct repository *repo,
+>  			       const struct object_id *oids,
+>  			       int oid_nr);
+>  
+> -/*
+> - * This should be used only once from setup.c to set the value we got
+> - * from the extensions.partialclone config option.
+> - */
+> -void set_repository_format_partial_clone(char *partial_clone);
+> -
+>  #endif /* PROMISOR_REMOTE_H */
+> diff --git a/setup.c b/setup.c
+> index 59e2facd9d..d60b6bc554 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -470,7 +470,13 @@ static enum extension_result handle_extension_v0(const char *var,
+>  		} else if (!strcmp(ext, "partialclone")) {
+>  			if (!value)
+>  				return config_error_nonbool(var);
+> -			data->partial_clone = xstrdup(value);
+> +			/*
+> +			 * This config variable will be read together with the
+> +			 * other relevant config variables in
+> +			 * promisor_remote_config() in promisor_remote.c, so we
+> +			 * do not need to read it here. Just report that this
+> +			 * extension is known.
+> +			 */
+>  			return EXTENSION_OK;
+>  		} else if (!strcmp(ext, "worktreeconfig")) {
+>  			data->worktree_config = git_config_bool(var, value);
+> @@ -566,7 +572,6 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+>  	}
+>  
+>  	repository_format_precious_objects = candidate->precious_objects;
+> -	set_repository_format_partial_clone(candidate->partial_clone);
+>  	repository_format_worktree_config = candidate->worktree_config;
+>  	string_list_clear(&candidate->unknown_extensions, 0);
+>  	string_list_clear(&candidate->v1_only_extensions, 0);
+> @@ -650,7 +655,6 @@ void clear_repository_format(struct repository_format *format)
+>  	string_list_clear(&format->unknown_extensions, 0);
+>  	string_list_clear(&format->v1_only_extensions, 0);
+>  	free(format->work_tree);
+> -	free(format->partial_clone);
+>  	init_repository_format(format);
+>  }
