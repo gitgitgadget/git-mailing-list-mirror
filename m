@@ -2,131 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B66C47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23B17C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:11:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8326961108
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:01:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F091A61249
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 06:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbhFHGDV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 02:03:21 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:46033 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230226AbhFHGDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 02:03:19 -0400
-Received: by mail-oi1-f181.google.com with SMTP id w127so20477579oig.12
-        for <git@vger.kernel.org>; Mon, 07 Jun 2021 23:01:26 -0700 (PDT)
+        id S230321AbhFHGMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 02:12:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33698 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229507AbhFHGMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 02:12:52 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24160C061574
+        for <git@vger.kernel.org>; Mon,  7 Jun 2021 23:11:00 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id k22so21000768ioa.9
+        for <git@vger.kernel.org>; Mon, 07 Jun 2021 23:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Y31lWlpplvd4owJMF1sOGObRVW/efTHEkQOeVeSM9JA=;
-        b=EjQYiMk1HxudPZFl6AAKrFZl5zp2LNXiUjlq2S3yhhIiwXSP76s4z2bmVm6I/3nWQX
-         g9o79lYKd7C/KcZC4AC9rBMp2yC2knD+PIJJ4dBbM42Zx+7rdUYtRFE1pn7VVb3hOSJx
-         tiIWhL4mKvOL4Sc3kcywIQ3GnKLIsQU8Yh/FcbL5OKpB0uTht9fitqxKrVN4YDvZKzBs
-         CM0KPNyico8Uw+t3EflV+r+7ky/fzR+ghk9B1ami6/AZIpa+a0KB07zBs7szBnRzbSsy
-         M8oTOzbSLprDuEgsexnLiK8nyHLnajtO0BbSb6lC/xM/v74Ijney7C7Rwyk0mxF9KcWR
-         Bfew==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=n+3XM200YPiDH1xLwVJJQ2JMOZgqrZiy9jtZLd2J2AE=;
+        b=i9NcPPESorGYNuUOvSk/yGNleoeFyB+Kdk1b+KcrGNI80FFH/bdzb84DdQtXGVG/BQ
+         j/vct7otVgTBrit7iuVHIpBQoB9tLepAr+U7XC7BpcnvUbCG8A5ByJFcdjYcawq5OOai
+         my//v+oPOx9LxT4c7cb665QpV0kV0AZfxFlUOPfg41T+r3wArsTZhvM0RfeQzHiqgdpV
+         oBKoVtEnISIQS1dqByQ+HOZreuG9bxsWj4r6rUmcw4L4hgrm/qzWtu3BKiJRHzdZyP/l
+         QupggTb/YDAtdUR+s4QPwAHt6H28fW9mXVQlYvIeV5Uk7Qz+jeclL3eUYpyyiDU8hlbX
+         gNgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Y31lWlpplvd4owJMF1sOGObRVW/efTHEkQOeVeSM9JA=;
-        b=MzhptRvNzhRiMFMfqzj8exX6FefpA13VTamRJ2maUhfM28U5W3o45/SRiAFCxNjDzr
-         i5Pm62qfDC7ahMSyT+8vY0z1WBdPLvU7n6Di7bx/MsPjE64HbqkNuTILHjPSGP1qcej1
-         4W6xaB7ATY1Ff9Gfg7ZGl8nda/GsNq9Pj9/WGz57GVuOMh2Yjpc1VhyD6j1RSdFygqVm
-         1PwwCQI4a/89CEXc0REwP3QH3PL9UGXEkyY8HM5dhNzSDzOcdB0NN6NBUga1B0LxsYBo
-         xJmMw9dO8wIl5RVMXKFpb5aFSC/SL1wgG6XqLSE7Tx0UXm2HuHQsA4/mSXzU2el9NEsJ
-         BDSQ==
-X-Gm-Message-State: AOAM533z3h2Q52GK9RXWsO/PK4PIVmkYmEZiH6PIBlx3Um4NW4xZHjzx
-        hsdWp0QLNOx/d50UQUw61IHgCWL3pVja2A==
-X-Google-Smtp-Source: ABdhPJy2XgVF9CG5CWtd6fm79pZq0NwnqTNegSK8jfrv4bfzwdds9PNIDf1QfFrGtEk/hbHp6CG6OA==
-X-Received: by 2002:a54:448a:: with SMTP id v10mr1824807oiv.133.1623132025866;
-        Mon, 07 Jun 2021 23:00:25 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id t26sm2930902oth.14.2021.06.07.23.00.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jun 2021 23:00:25 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        David Aguilar <davvid@gmail.com>
-Subject: [PATCH v3 4/4] completion: bash: add correct suffix in variables
-Date:   Tue,  8 Jun 2021 01:00:10 -0500
-Message-Id: <20210608060010.1676208-5-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
-In-Reply-To: <20210608060010.1676208-1-felipe.contreras@gmail.com>
-References: <20210606184726.1018460-1-felipe.contreras@gmail.com>
- <20210608060010.1676208-1-felipe.contreras@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=n+3XM200YPiDH1xLwVJJQ2JMOZgqrZiy9jtZLd2J2AE=;
+        b=VnRKazgQQ8+An8bwYqquqz8tqoIU53wv0U11nUrO5LOQSFGb9t7ziIiVi6nTcFx03l
+         Lzwi14TidxPDAVQUZl6wg1XzrsoUEh6+iwr9FR36lwJK+PV8+txcppJ/9CRa/XQs/G2V
+         g7K3Rl5ScsLqVxavabnHIc/T3UeFzIfEAczqPaxRB0adzLO6XMk13WkPVa9wQVkJ3QkN
+         XyK4Vieo532M5haFj8erBTJ44qhUMNziC8SA2O+pbwg9rI6WAqqUbRht7lpFd6NKpW1+
+         8ZkYUA5IHwTWIKrzAs9Tjw1Uw6/6umrS6dYTUdA/dHpgkwnsEtVkwhDHTU/VdfYFW+fb
+         0YUg==
+X-Gm-Message-State: AOAM533oB0kpXla6ldu7ziXMMHllei+ADPlhupP9MOcbbRYq5Mw+K/JK
+        FV0PsLU7KIxrElFFnl1WjnXBoAnBVukhGArlre5KWN0vJxiNqQ==
+X-Google-Smtp-Source: ABdhPJyff8YURs8b8uu5uFn24+vCQR2kpV0ah1RQjpVimhr1J5wxHi4s33DGLfFR5T61YmOtc/LW8TC5rn8v3JKY7Vk=
+X-Received: by 2002:a5e:8a08:: with SMTP id d8mr17986400iok.192.1623132659324;
+ Mon, 07 Jun 2021 23:10:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.972.git.1622884415.gitgitgadget@gmail.com>
+ <0efed9435b59098f3ad928acd46c3c7e9f13677d.1622884415.git.gitgitgadget@gmail.com>
+ <xmqqa6o1q6zz.fsf@gitster.g>
+In-Reply-To: <xmqqa6o1q6zz.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 8 Jun 2021 14:10:48 +0800
+Message-ID: <CAOLTT8QPMVueHMFCYP6YJ9_ODsKFxk2gyB1dO5ak=UFX-8Cm-A@mail.gmail.com>
+Subject: Re: [PATCH 2/6] [GSOC] ref-filter: add %(raw) atom
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-__gitcomp automatically adds a suffix, but __gitcomp_nl and others
-don't, we need to specify a space by default.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=888=E6=97=
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=881:07=E5=86=99=E9=81=93=EF=BC=9A
+>
+> This breaks -Wdecl-after-stmt.  A possible fix below.
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 46aec291de..648f9cabff 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -2459,13 +2459,13 @@ static int cmp_ref_sorting(struct ref_sorting *s,=
+ struct ref_array_item *a, stru
+>                                 ? strcasecmp : strcmp;
+>                         cmp =3D cmp_fn(va->s, vb->s);
+>                 } else {
+> -                       int (*cmp_fn)(const void *, const void *, size_t)=
+;
+> -                       cmp_fn =3D s->sort_flags & REF_SORTING_ICASE
+> +                       size_t a_size =3D va->s_size =3D=3D ATOM_VALUE_S_=
+SIZE_INIT
+> +                                       ? strlen(va->s) : va->s_size;
+> +                       size_t b_size =3D vb->s_size =3D=3D ATOM_VALUE_S_=
+SIZE_INIT
+> +                                       ? strlen(vb->s) : vb->s_size;
+> +                       int (*cmp_fn)(const void *, const void *, size_t)=
+ =3D
+> +                               s->sort_flags & REF_SORTING_ICASE
+>                                 ? memcasecmp : memcmp;
+> -                       size_t a_size =3D va->s_size =3D=3D ATOM_VALUE_S_=
+SIZE_INIT ?
+> -                                       strlen(va->s) : va->s_size;
+> -                       size_t b_size =3D vb->s_size =3D=3D ATOM_VALUE_S_=
+SIZE_INIT ?
+> -                                       strlen(vb->s) : vb->s_size;
+>
+>                         cmp =3D cmp_fn(va->s, vb->s, b_size > a_size ?
+>                                      a_size : b_size);
 
-Can be tested with:
+You are right.
 
-  git config branch.autoSetupMe<tab>
-
-This fix only works for versions of bash greater than 4.0, before that
-"local sfx" creates an empty string, therefore the unset expansion
-doesn't work. The same happens in zsh.
-
-Therefore we don't add the test for that for now.
-
-The correct fix for all shells requires semantic changes in __gitcomp,
-but that can be done later.
-
-Cc: SZEDER Gábor <szeder.dev@gmail.com>
-Tested-by: David Aguilar <davvid@gmail.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1feb2ee108..c72b5465f9 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2652,7 +2652,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
--		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "$sfx"
-+		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	guitool.*.*)
-@@ -2686,7 +2686,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__git_compute_all_commands
--		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "$sfx"
-+		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	remote.*.*)
-@@ -2702,7 +2702,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
--		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "$sfx"
-+		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	url.*.*)
--- 
-2.32.0.2.g41be0a4e50
-
+Thanks.
+--
+ZheNing Hu
