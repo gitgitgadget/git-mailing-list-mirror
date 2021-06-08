@@ -2,70 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A226BC47082
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 10:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3419C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 11:10:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 810DC61285
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 10:57:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC3AB6134F
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 11:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231435AbhFHK7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 06:59:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40862 "EHLO
+        id S231409AbhFHLMA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 07:12:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230522AbhFHK7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 06:59:42 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC49C061574
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 03:57:49 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id k25so26407782eja.9
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 03:57:49 -0700 (PDT)
+        with ESMTP id S231266AbhFHLMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 07:12:00 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2428EC061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 04:09:52 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id t3so24042616edc.7
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 04:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=hBrzaFgUV3HhSnUEpdSFyYjg0nzyz9GJCINFJC0jV34=;
-        b=bnc/bUiiHcS4DZ9/bqj60kuPayCqqsdt1HdJytxYxnW1VNGqAhSX41k2cnUCJvTg2I
-         efrMZmrqv8E1zF6wtHt3KAzsqCACMdY8eooKNxhQ9hcCFtEW4gdIy/ydivfOx9+PArKP
-         8GHjKVrkeewsX/7cehYNbFO/cGYSct+i45SdS0I+usonz/Jf/1PgjCwID1ET+yVFUlwf
-         rFj+W8kOPE19mCHECj/Fqkt8bWF9su8DQG4SF1FN6QwfKobZeKMxFUnmDygKd/QjTFA2
-         5TzVVKQFkfQnW5IuVKBqNMNUsUYy3f4/QOK7prtqqpGDpmt+JsqhHlBFokWlR0RrlblI
-         Ejmg==
+        bh=CtDvOJZ7N8gH5IPjVoXTwgT7VobqApvqxSHqXDCHf2c=;
+        b=kA9zYyqgnzI9TLDZuPGUoaw7jnferFft4M03rS6KB1LFIcv3r3L/1tLnOY22esIRXp
+         12tD/+lfiKfTAypYpnkp0cA4XSFcxTw6OUTlAKrReDwpX1I6wYNPOIp8ei1WQlF2/PiA
+         sRklKsdAOJ/D+1zH0bSFrHtL6zfRL7i0/2rAnK4OiazvvOYEEu9OCaX2E2/vDmd2AKVK
+         OgbhnQerSlDvyfFHOxGR2/Koo45pO6shJ5wqHjoZtfkhV9lTCz2/ju/5wXL11jt1D+qG
+         3og8X2m21BlfZ/m84V6lKTB/GJ1QSuUloNX6Ftt5qsMaBZVgQmePfOGMRC86yN9zugYD
+         rRwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=hBrzaFgUV3HhSnUEpdSFyYjg0nzyz9GJCINFJC0jV34=;
-        b=gxbDdfcyCowESs0afuZt20bGJHjccEwKXY1IEQGIQWXLu1eoA3gymfS2RhEtxlEj1s
-         wCFCAwXOZavr0qKvkjP2j490AhgpPR1MI4Ehnmtl0GPTrpJrICt+vMMZCxCXEvwmv/Bm
-         /J0Nt890WKzlXDJpia9N9pXNlaa54/SazD/YXXBuawzxWsyjWgvpYQjpjAMS0iXth8qk
-         5bvcZe56WIZCsqR3vYS458iIWSNa/M4tKgCbOwxBRXno2Qj30ouS2aqrflhe0RoIPM3m
-         k47fNyglCf9QZjRS+0E70eNTxqH5nLjo1Icdg068TwypLF1abKzQuine4eBwPyz3Nlut
-         WPVQ==
-X-Gm-Message-State: AOAM530VFweVvo+hYiqK/niOLo2ytm0569m32frwcizOclVvbVcaHk5E
-        +DO28RGUgNeiMrrOlDLdhZ0=
-X-Google-Smtp-Source: ABdhPJwTigOfVIyWkFSO6k3+Vv1gktSoyTAvc2gmwGQCf3MqUc5OmMmWlUShXs8c6kbcFaqO7DfDjA==
-X-Received: by 2002:a17:907:270c:: with SMTP id w12mr23230262ejk.175.1623149867917;
-        Tue, 08 Jun 2021 03:57:47 -0700 (PDT)
+        bh=CtDvOJZ7N8gH5IPjVoXTwgT7VobqApvqxSHqXDCHf2c=;
+        b=Ilb+ogoTqRvCypN0hb2fVrxyNSWmf96ujktpgccs2lSqPiGYTG9SLrklwuuIV6lY6j
+         HSWPLOOPYm3awFiClYiFEO7XFflvaLAnUmc77K0i441MCa7/RZc2SWQLKzv3EJnk+Cew
+         W1kisgemsI+FsEgcyStqm2pRq/bQgNsoKgX3XoiWMGDY3lOoOnLwpNV+2sDi63gduZ4T
+         MFE9ApDTUIA5weEGbyVv5rniRviQKV0Ecv5m+CQ0EwsqR1rgk1tBwMHMjxve1+fcFBmg
+         9TL1fx8G59xFfMmV6tjTRINqqKekRUyNmyGzF0W44npj9ApqYZt5YZYCRaLNV35drDwT
+         1LKQ==
+X-Gm-Message-State: AOAM530VTst4H/0BkQpT6XxZ41Fr8BrQNwEWAeZhvdcStlz6Pa2UoFFj
+        podx+/81E9LrUe1Wl6aFtUM=
+X-Google-Smtp-Source: ABdhPJyxAKsqz8eSeuEG8JowHpkr+i97dNvRpxY71wGicLGkXLAA+dljc0A844e4CDhlNWZ3HRQVeg==
+X-Received: by 2002:a50:9345:: with SMTP id n5mr6049572eda.289.1623150590606;
+        Tue, 08 Jun 2021 04:09:50 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id x4sm8706051edq.23.2021.06.08.03.57.47
+        by smtp.gmail.com with ESMTPSA id v4sm4307729ejh.86.2021.06.08.04.09.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 03:57:47 -0700 (PDT)
+        Tue, 08 Jun 2021 04:09:50 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtins + test helpers: use return instead of exit()
- in cmd_*
-Date:   Tue, 08 Jun 2021 12:53:52 +0200
-References: <patch-1.1-61d7e6e079-20210607T111008Z-avarab@gmail.com>
- <YL8S9jDmrtdKr5N+@coredump.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] read-cache: fix incorrect count and progress bar
+ stalling
+Date:   Tue, 08 Jun 2021 12:58:42 +0200
+References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
+ <patch-2.2-042f598826-20210607T144206Z-avarab@gmail.com>
+ <8f336b1b-6cb7-8277-79d5-0f331159b00c@gmail.com>
+ <87k0n54qb6.fsf@evledraar.gmail.com>
+ <eaf2b6b0-4202-d5ea-87a2-b828fdbc60a1@web.de>
+ <8735tt4fhx.fsf@evledraar.gmail.com> <xmqqczsxtf8g.fsf@gitster.g>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YL8S9jDmrtdKr5N+@coredump.intra.peff.net>
-Message-ID: <87zgw039p1.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqczsxtf8g.fsf@gitster.g>
+Message-ID: <87wnr4394y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -74,67 +80,62 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Jun 08 2021, Jeff King wrote:
+On Tue, Jun 08 2021, Junio C Hamano wrote:
 
-> On Mon, Jun 07, 2021 at 01:12:48PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->> Change various cmd_* functions to use "return" instead of exit() to
->> indicate an exit code. On Solaris with SunCC the compiler legitimately
->> complains about these, since we'll e.g. skip the cleanup (e.g. closing
->> fd's, erroring if we can't) in git.c's run_builtin() when we exit()
->> directly like this.
+>>> So I think this pattern works:
+>>>
+>>> 	for (i =3D 0; i < nr; i++) {
+>>> 		display_progress(p, i);
+>>> 		/* work work work */
+>>> 	}
+>>> 	display_progress(p, nr);
+>>>
+>>> Alternatively, if the work part doesn't contain continue statements:
+>>>
+>>> 	for (i =3D 0; i < nr; i++) {
+>>> 		/* work work work */
+>>> 		display_progress(p, i + 1);
+>>> 	}
+>>
+>> But yes, I agree with the issue in theory, but I think in practice we
+>> don't need to worry about these 100% cases.
 >
-> Each of these cases looks like a simple and obvious conversion, and I
-> certainly don't mind us doing it.
->
-> But I do wonder what SunCC is complaining about exactly. Calling exit()
-> means you don't have to worry about cleanup anymore. Does the compiler
-> not have any notion of NORETURN or equivalent? If so, I'd expect many
-> more complaints in general that we probably _won't_ want to silence,
-> because it will be awkward to do so.
+> Hmph, but in practice we do need to worry, don't we?  Otherwise you
+> wouldn't have started this thread and Ren=C3=A9 wouldn't have responded.
 
-It does, but in this case there's no NORETURN and we declared the
-command to return int, and it's not the "main" function.
+I started this thread because of:
 
-I believe that's what trips it up, as noted in a v2 I just submitted
-now:
-https://lore.kernel.org/git/patch-1.1-f225b78e01-20210608T104454Z-avarab@gm=
-ail.com/
+	for (i =3D 0; i < large_number; i++) {
+		if (maybe_branch_here())
+			continue;
+		/* work work work */
+		display_progress(p, i);
+	}
+	display_progress(p, large_number);
 
-It's not whining about every instance of "exit" in the codebase.
+Mainly because it's a special snowflake in how the process.c API is
+used, with most other callsites doing:
 
->> diff --git a/builtin/difftool.c b/builtin/difftool.c
->> index 89334b77fb..6a9242a803 100644
->> --- a/builtin/difftool.c
->> +++ b/builtin/difftool.c
->> @@ -675,7 +675,7 @@ static int run_file_diff(int prompt, const char *pre=
-fix,
->>  		"GIT_PAGER=3D", "GIT_EXTERNAL_DIFF=3Dgit-difftool--helper", NULL,
->>  		NULL
->>  	};
->> -	int ret =3D 0, i;
->> +	int i;
->>=20=20
->>  	if (prompt > 0)
->>  		env[2] =3D "GIT_DIFFTOOL_PROMPT=3Dtrue";
->> @@ -686,8 +686,7 @@ static int run_file_diff(int prompt, const char *pre=
-fix,
->>  	strvec_push(&args, "diff");
->>  	for (i =3D 0; i < argc; i++)
->>  		strvec_push(&args, argv[i]);
->> -	ret =3D run_command_v_opt_cd_env(args.v, RUN_GIT_CMD, prefix, env);
->> -	exit(ret);
->> +	return run_command_v_opt_cd_env(args.v, RUN_GIT_CMD, prefix, env);
->>  }
->
-> This one I'm not surprised that a compiler would complain about. The
-> function returns an int, but there are no return paths from the
-> function (and hence the caller doing "return run_diff_files()" likewise
-> could not ever return there. Which is not quite what you said it
-> complained about above, hence my curiosity. :)
+	for (i =3D 0; i < large_number; i++) {
+		display_progress(p, i + 1);
+		/* work work work */
+	}
 
-I sent a few miscellaneous fixes recently for 15-20 SunCC
-warnings. Around 1/2 of these are legitimate issues like these, the rest
-are bugs in SunCC or flaws in it flow analysis or other known bugs in
-the compiler.
+Which yes, as Ren=C3=A9 points out *could* hang on 100%, but I think in
+practice isn't an issue here, and changing the code per my patch here
+solves the practical issue with us always taking the maybe_branch_here()
+(or enough that the progress bar hangs).
+
+> I agree with the issue and I think we should count what we have
+> finished.
+
+Fair enough, but in the meantime can we take this patch? I think fixing
+that (IMO in practice hypothetical issue) is much easier when we
+consistently use that "i + 1" pattern above (which we mostly do
+already). We can just search-replace "++i" to "i++" and "i + 1" to "i"
+and have stop_progress() be what bumps it to 100%.
+
+I have some unsent patches queued on top of this which has some general
+fixes to edge cases in the progress.c API making that & more easier...q
