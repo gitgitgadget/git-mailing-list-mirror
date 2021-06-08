@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8ABAC4743D
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C8C7C47082
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:00:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92DDB61263
-	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:00:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37B0A61263
+	for <git@archiver.kernel.org>; Tue,  8 Jun 2021 09:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231236AbhFHJCq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 05:02:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
+        id S231192AbhFHJCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 05:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230522AbhFHJCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 05:02:45 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47387C06178B
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 02:00:41 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id j11-20020a9d738b0000b02903ea3c02ded8so6031115otk.5
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 02:00:41 -0700 (PDT)
+        with ESMTP id S230522AbhFHJCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 05:02:49 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBBCC061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 02:00:46 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so15225293oth.9
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 02:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+HiXRJzWoSCCsCEp32rzDC0Al1zgvKH07HmijAfP2EQ=;
-        b=Mi6h33Ik4sqH112q3SjZgFMseL9BN+yqiAR5LOOVq9Kf5HHZcc+wVUK3k8PCOFkauV
-         P9oMpiWxGYx7XmhDm5S8w3Xlu0KcN6mdQ3x2cTMneOvXJIjewsa20qw3mKk8GDNWTGrl
-         2sj0zj/FiSiq55tFCH1r8om8vmgmlLgUfBNcDgvF3vD1BMDbT2nY+b8JqZEpD+X7DGop
-         ADg8c7DA/Nf5NIExAyoGNmWsRDkvwrT/YTPlv0wxlRROpporhPmwMtnQ7X3kQ1ew8abG
-         IK+q/yuHmQYFZuJL4NXcCf23UapDxV7mfmyzuUjGOleuvC/wjNcGxxdM3iPzd6mWb6/K
-         kNtw==
+        bh=f1t7zOZhVPCUxouHSRryjqnFh7JxXhD3yg2wCAlDRtI=;
+        b=Vio/GiZW3XQXH583MSCMNHSv/s8Oq4gAUWtBqWMww/8k/4Hnqf55mtBozXc7i+IrKx
+         85He8AZmeIceD9QCkOIskpvyAsjKk4QcpCOJPQLDNvPbiw6OPRKYy3au2ZZrJ1Il15OJ
+         zzc+LOHMdG5ByW7tT01L1p679AKKfg4ti0p2ksDYgnKbgF37ZLZrDWTp3e2aIYFllpcT
+         qckaVQ+9RRwqhQWhoX3++JCB+lHjvjr9Sp3jkLHRJ0YlpwDhGOGhp3KTSygji3JcZRs+
+         zA1pe0umtnXByFzWKGIZo7G2kAUWLxiRG+yeMMGYPVYIjSNTTy/zBl19Yl3j1eosf4gz
+         EoNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+HiXRJzWoSCCsCEp32rzDC0Al1zgvKH07HmijAfP2EQ=;
-        b=ntD9trbeJp7w0m5sKb/sum/+oX0KwWtXpFUynRoR2F25Hx1C+/1my9IbQBEy3YBaca
-         a8fd3vtHiRSr+qMk1L705gKXn2E9TIsVAOLJO4uuogAB/7YRvJJU93ijDKTtLiPnKAeo
-         nH3Dr96E/kJnuub8Ui8oLii2c/uRfSIqeJQlJqfpI0FlKg3fT8G95WIYKF4i+xdJSJ2f
-         O+Fwjfcu1uroycZu8h7/Pd/y5dNf6tQBUgpvfIM8Ixlw31Bf/ERIIjqz5aXyCWzaBpRZ
-         R3nlGbuhhI1lZPmv/HbCLpZTvVoM/tcFlTFzZJ3GimyP7yADnwV9MFAPYWV+378X+WbF
-         ys+w==
-X-Gm-Message-State: AOAM531zqYFperpz4pqDQRtmkbgWRnjtp7i3H33oOgXIe2SbumpUnr+W
-        WU5bmi1NsORQOBIiCy2Ue+waIoB3adv18Q==
-X-Google-Smtp-Source: ABdhPJxs2Xf1+I1uF5W+Udot14Cp4wyjosyJaGikpU6T1/Z4LwPQPTAA3lwr0kUA25ylD8WN9mWgmQ==
-X-Received: by 2002:a9d:6453:: with SMTP id m19mr17643522otl.63.1623142840509;
-        Tue, 08 Jun 2021 02:00:40 -0700 (PDT)
+        bh=f1t7zOZhVPCUxouHSRryjqnFh7JxXhD3yg2wCAlDRtI=;
+        b=OOYwBMnygdWH4hBw/+n6Vxtr2eGNNAzwP1xZhCZRx9CZJ29p5YghBVJdvAJIfq53Np
+         YnpSCoqqVtJ71f/IlOZLp/pl0qWo9Wz+CgN3o0a+ZORifYdsqa0UMqwWKXtBbNYTeTGt
+         WMBJgZy3wVUC54gHv5z3Oi7HT0dH9bekckiYOpDg1mMGZ8Py9cVhzT8L/uRXjLy4VH1d
+         kxXt06JuvF1nW24u37IIfKf93cIXJOr7oPfvpEo32bGu4cPg5b1DcTVnV+O7tH6aUYSz
+         0QCFVfcbBTT4DKrvlMv3JVdtug3PriZQG5M5Kp3765ZO4UKXcmGwsOfPULh5rQbzVoVB
+         AWLw==
+X-Gm-Message-State: AOAM5322cpvSSrG/mw4B58dOLccYO6AhRxinMvOEo9ozduP9nplKCZEN
+        Nh4pGxCDIKQNP23Z34IBHBGbAq5oruAk/A==
+X-Google-Smtp-Source: ABdhPJxh0Mk/2SnrpHP8NVD1rwWkls+UrUur/hJlBZo6Y7Fb1OD9imdX3jN/Jrj2os9H0JA1P5Aybg==
+X-Received: by 2002:a9d:4c0a:: with SMTP id l10mr18132914otf.363.1623142846082;
+        Tue, 08 Jun 2021 02:00:46 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id n11sm571313otq.63.2021.06.08.02.00.39
+        by smtp.gmail.com with ESMTPSA id c205sm2744962oib.20.2021.06.08.02.00.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jun 2021 02:00:40 -0700 (PDT)
+        Tue, 08 Jun 2021 02:00:45 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 06/12] doc: asciidoctor: remove cruft
-Date:   Tue,  8 Jun 2021 04:00:20 -0500
-Message-Id: <20210608090026.1737348-7-felipe.contreras@gmail.com>
+Subject: [PATCH v4 09/12] doc: asciidoctor: refactor macro registration
+Date:   Tue,  8 Jun 2021 04:00:23 -0500
+Message-Id: <20210608090026.1737348-10-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
 In-Reply-To: <20210608090026.1737348-1-felipe.contreras@gmail.com>
 References: <20210608090026.1737348-1-felipe.contreras@gmail.com>
@@ -74,29 +74,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These were probably copy-pasted from other extensions. The name is
-already defined (:linkgit), and we are not using the DSL mode.
+There is no need to execute extra code every time the process block is
+called.
+
+In Ruby the lexical scope is shared, so we can define variables in the
+register block scope, and all the rest will inherit those variables.
+
+Based on the doctype and basebackend one of three blocks is selected for
+the inline_macro. However, the conditionals will be run only once.
+
+In the end Ruby will only run the code between `process do end`, nothing
+else.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/asciidoctor-extensions.rb | 4 ----
- 1 file changed, 4 deletions(-)
+ Documentation/asciidoctor-extensions.rb | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index 423450392d..3dea106d00 100644
+index c77b6de350..a678704e17 100644
 --- a/Documentation/asciidoctor-extensions.rb
 +++ b/Documentation/asciidoctor-extensions.rb
-@@ -3,10 +3,6 @@ require 'asciidoctor/extensions'
- module Git
-   module Documentation
-     class LinkGitProcessor < Asciidoctor::Extensions::InlineMacroProcessor
--      use_dsl
--
--      named :chrome
--
-       def process(parent, target, attrs)
-         prefix = parent.document.attr('git-relative-html-prefix')
-         if parent.document.doctype == 'book'
+@@ -2,15 +2,21 @@ require 'asciidoctor/extensions'
+ 
+ Asciidoctor::Extensions.register do
+ 
++  doc = document
++
+   inline_macro :linkgit do
+-    process do |parent, target, attrs|
+-      if parent.document.doctype == 'book'
++    if doc.doctype == 'book'
++      process do |parent, target, attrs|
+         "<ulink url=\"#{target}.html\">" \
+         "#{target}(#{attrs[1]})</ulink>"
+-      elsif parent.document.basebackend? 'html'
+-        prefix = parent.document.attr('git-relative-html-prefix')
++      end
++    elsif doc.basebackend? 'html'
++      prefix = doc.attr('git-relative-html-prefix')
++      process do |parent, target, attrs|
+         %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
+-      elsif parent.document.basebackend? 'docbook'
++      end
++    elsif doc.basebackend? 'docbook'
++      process do |parent, target, attrs|
+         "<citerefentry>\n" \
+           "<refentrytitle>#{target}</refentrytitle>" \
+           "<manvolnum>#{attrs[1]}</manvolnum>\n" \
 -- 
 2.32.0.2.g41be0a4e50
 
