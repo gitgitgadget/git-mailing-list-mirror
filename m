@@ -2,202 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A89EBC48BCF
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 14:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4651EC48BCD
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 15:00:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89270613B6
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 14:55:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F146613B6
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 15:00:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236564AbhFIO4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 10:56:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbhFIO4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 10:56:54 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B0CC061574
-        for <git@vger.kernel.org>; Wed,  9 Jun 2021 07:54:44 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id f2so25789134wri.11
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 07:54:43 -0700 (PDT)
+        id S238783AbhFIPCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 11:02:50 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:45055 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238770AbhFIPCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 11:02:50 -0400
+Received: by mail-ed1-f46.google.com with SMTP id u24so28944092edy.11
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 08:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UjjPsI8gKwfjWGXNDUSg1cfuDv7ehy6xMyjCgr86CvU=;
-        b=JKrqhSlvagQ6QtYbXUrLPWJpWJSKtJo4PDpIq/SwnpXCBzPGQllYxgU+9GldCtcH/l
-         t2znIFNHkn7h94DTIgDvmkGTTTlxvzF4BirSHeFAgo0B2ecpbaneS8k+0GXuvSGzJeqI
-         kX5T8Va5e9cE9PtESYLoDPeBN0H4pBaeDx8BbyYF913zhRwm5rypLaUlSRmsIzT/gFd7
-         PysevQzoP6nu4x3Jri7V+78Xv47Zr6xtjE9hbJtr06iOmKxIVg8rjf4VqKwUJ24QbitT
-         IRHAJTl3lb/DVkMnsiln2SDU5N6C72wcgRkiA3FP9V7pAAbE6XGh7Peyn4rNkzI5uo1o
-         KAIA==
+        h=from:to:cc:subject:date:user-agent:message-id:mime-version;
+        bh=/HWRkABeFQbZQnGcYmUa81D9LTNqAaKHy2GiOIWcauQ=;
+        b=Z0pDmfGFw8dD+pYuQZ+EFf+ZOuh9Xn6IAqjge2mqa+sNFJQB49RuUIEvzKh7NOrnF7
+         Gn2ZfOY5zZ59bCJgXQ1WWp0WGqD7z0LKkn5vcRVmnU7LWZqg76DvEX0bn2Vk6KTYiiMJ
+         HUwKX7M6l2gO7f1KlN7JM+r8jZxy6CY00pMU5HaBQlOBu9RQQhz2NTs9Z59nXJHtNcxh
+         55b9HbBTOGflGDC7jvjcTuZvmRMVhKNHBC6y3um1fV4vb2De6gMV7XFhDqp1joJgrV3b
+         8/dZHxpk+5cqreD89g8UhRc61wMXh3F0MkcGxabo2QgYpRZwZQGKvEbco3/+rzXqcuXn
+         k+rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=UjjPsI8gKwfjWGXNDUSg1cfuDv7ehy6xMyjCgr86CvU=;
-        b=EOeICULaJdqWKhBqNCLc67esAIcXVsxPVEHgCibp+m6yb8sMCSwhILUbnVFK0yeaCl
-         38LN5rXES7MuJSbMhe4FrYRNoeRjwbmm3jbViPFUvJkwT/rtEPi9jCPRAncS4Q+Z75TK
-         B7ugM+qv5XR/WP8qnIGRKrYGgqVCYf3JdC3vpM/ACVCkV55gD9gxSAbRWQlSPZzP2+h7
-         KMDLkbT0wzKPA62me7Y3Me9Ao8BNw/eDIXrgORDPTtmlu1EvzfD6M3emOinsKzIcqbek
-         B7Rh83I14ps4w7txAeuiD9HFX/Ke1AM6QI5hWJBarRn0aPm+v+GZfG0JFZ5AFLdWZHUF
-         zI6A==
-X-Gm-Message-State: AOAM530rEMWOnPcRdERZuR+lJijXzDT08c7gqD+brKGmyqvwVmpRtxXW
-        FZOs34wZXerNwtOtbFMn7A4KUqlfObM=
-X-Google-Smtp-Source: ABdhPJzu7Fk7DVn3VSdxJB3si+2hNMBCWUrItBYjTylDHJbACejoi27vsAabahrAmgy2BPiRetueuw==
-X-Received: by 2002:a05:6000:1862:: with SMTP id d2mr240797wri.186.1623250482605;
-        Wed, 09 Jun 2021 07:54:42 -0700 (PDT)
-Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
-        by smtp.gmail.com with ESMTPSA id v7sm206075wrf.82.2021.06.09.07.54.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jun 2021 07:54:42 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/3] add support for systemd timers on Linux
-To:     =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20210524071538.46862-1-lenaic@lhuard.fr>
- <20210608134000.663398-1-lenaic@lhuard.fr>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <01774318-93c3-d3e9-6303-7f375008a9b8@gmail.com>
-Date:   Wed, 9 Jun 2021 15:54:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+        h=x-gm-message-state:from:to:cc:subject:date:user-agent:message-id
+         :mime-version;
+        bh=/HWRkABeFQbZQnGcYmUa81D9LTNqAaKHy2GiOIWcauQ=;
+        b=tZhxmBeL6IbBTNKDmEyodZnqhjQGBTxfjgoFD0TmEmw9CSVAUhuewIPh6pSXqczrN4
+         sccKv6kpuercSZCaQjV9aACrly8XxvAkUY93irk5i86IGYGDuIdtuZ6VJL97t/KWl1uv
+         YBMtrOkzGbfgVuYyTWTET4bENTYLKbvfHplNXasj6yPce9uYtfxK4ciZb6/Q/Xj8tY4p
+         Oc8y8uwsOHpDZHBboONNnfyCzhyqgqKTt9HIgnf0ixQF7CdDqnMR9FB6YO9amg0twD1q
+         fNJE17E9vXYTffWMJnqfWzqXKyHl958fn1cZn65Y9NiJHI7RrzReYZO84fiT5MJy2G3c
+         MvhA==
+X-Gm-Message-State: AOAM533Jeegxg87zbNn2pOlEKJ34QgQZnczseu/hRL3bPlILt25U+TXP
+        lhlEkpZSIR62EaFwThFrN9BfM30rlfE=
+X-Google-Smtp-Source: ABdhPJy/KLdN6ft20RRpDwdPO0PjAYCFPtVNsU1LDw0HdA87Ldtr1waUeGDT0CgUBB8Nfwb9sEriTg==
+X-Received: by 2002:a05:6402:177a:: with SMTP id da26mr31259089edb.40.1623250794319;
+        Wed, 09 Jun 2021 07:59:54 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id d25sm1223705ejd.59.2021.06.09.07.59.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jun 2021 07:59:53 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Andrzej Hunt <ajrhunt@google.com>
+Cc:     git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: UNLEAK(), leak checking in the default tests etc.
+Date:   Wed, 09 Jun 2021 16:38:52 +0200
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+Message-ID: <87czsv2idy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210608134000.663398-1-lenaic@lhuard.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lénaïc
 
-Thanks for the excellent cover letter, I found it very useful while 
-reviewing these patches. I think the changes address all of my previous 
-concerns, the error handling in the last patch looks good. Having read 
-through the patches I don't have anything to add to Peff's comments - 
-with those small memory management fixed I think this will be a good shape.
+[In-Reply-To
+<a74bbcae7363df03bf8e93167d9274d16dc807f3.1615747662.git.gitgitgadget@gmail.com>,
+but intentionally breaking threading for a new topic]
 
-Thanks for your work on this
+On Sun, Mar 14 2021, Andrzej Hunt via GitGitGadget wrote:
 
-Phillip
+> Most of these pointers can safely be freed when cmd_clone() completes,
+> therefore we make sure to free them. The one exception is that we
+> have to UNLEAK(repo) because it can point either to argv[0], or a
+> malloc'd string returned by absolute_pathdup().
 
-On 08/06/2021 14:39, Lénaïc Huard wrote:
->[...] > The patchset contains now the following patches:
-> 
-> * cache.h: Introduce a generic "xdg_config_home_for(…)" function
-> 
->    This patch introduces a function to compute configuration files
->    paths inside $XDG_CONFIG_HOME or ~/.config for other programs than
->    git itself.
->    It is used in the latest patch of this series to compute systemd
->    unit files location.
-> 
->    The only change in this patch compared to its previous version is
->    the renaming of the first parameter of the `xdg_config_home_for(…)`
->    function from `prog` to `subdir`.
-> 
-> * maintenance: introduce ENABLE/DISABLE for code clarity
-> 
->    I just completely dropped this patch as it turned out that replacing
->    some 0/1 values by `ENABLE`/`DISABLE` enum values wasn’t making the
->    code look nicer as initially expected.
-> 
-> * maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
-> 
->    This patch contains all the code that is related to the addition of
->    the new `--scheduler` parameter of the `git maintenance start`
->    command, independently of the systemd timers.
-> 
->    The main changes in this patch compared to its previous version are:
-> 
->      * Revert all the changes that were previously introduced by the
->        `ENABLE`/`DISABLE` enum values.
-> 
->      * Remove the `strlcpy` in the testing framework inside the
->        `get_schedule_cmd` function.
-> 
->      * `update_background_schedule` loops over all the available
->        schedulers, disables all of them except the one which is
->        enabled.
->        In this new version of the patch, it is now ensured that all the
->        schedulers deactivation are done before the activation.
->        The goal of this change is avoid a potential race condition
->        where two schedulers could be enabled at the same time.
->        This behaviour change has been reflected in the tests.
-> 
->      * The local variable `builtin_maintenance_start_options` has been
->        shortened.
-> 
-> * maintenance: add support for systemd timers on Linux
-> 
->    This patch implements the support of systemd timers on top of
->    crontab scheduler on Linux systems.
-> 
->    The main changes in this patch compared to its previous version are:
-> 
->      * The caching logic of `is_systemd_timer_available` has been
->        dropped.
->        I initially wanted to cache the outcome of forking and executing
->        an external command to avoid doing it several times as
->        `is_systemd_timer_available` is invoked from several places
->        (`resolve_auto_scheduler`, `validate_scheduler` and
->        `update_background_scheduler`).
->        But it’s true they’re not always all called.
->        In the case of `maintenance stop`, `resolve_auto_scheduler` and
->        `validate_scheduler` are not called.
->        In the case of `maintenance start`, the `if (enable &&
->        opts->scheduler == i)` statement inside
->        `update_background_schedule` skips the execution of
->        `is_systemd_timer_available`.
-> 
->      * The `is_systemd_timer_available` has been split in two parts:
->        * `is_systemd_timer_available` is the entry point and holds the
->          platform agnostic testing framework logic.
->        * `real_is_systemd_timer_available` contains the platform
->          specific logic.
-> 
->      * The error management of `systemd_timer_write_unit_templates` has
->        been reviewed.
->        The return code of `fopen`, `fputs`, `fclose`, etc. are now
->        checked.
->        If this function manages to write one file, but fails at writing
->        the second one, it will attempt to delete the first one to not
->        leave the system in an inconsistent state.
-> 
->      * The error management of `systemd_timer_delete_unit_templates`
->        has also been reviewed. The error code of `unlink` is now
->        checked.
-> 
-> I hope I’ve addressed all your valuable feedback. Do not hesitate to
-> let me know if I’ve forgotten anything.
-> 
-> Lénaïc Huard (3):
->    cache.h: Introduce a generic "xdg_config_home_for(…)" function
->    maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
->    maintenance: add support for systemd timers on Linux
-> 
->   Documentation/git-maintenance.txt |  60 ++++
->   builtin/gc.c                      | 564 ++++++++++++++++++++++++++----
->   cache.h                           |   7 +
->   path.c                            |  13 +-
->   t/t7900-maintenance.sh            | 110 +++++-
->   5 files changed, 676 insertions(+), 78 deletions(-)
-> 
+I ran into this when manually checking with valgrind and discovered that
+you need SANITIZERS for -DSUPPRESS_ANNOTATED_LEAKS to squash it.
+
+I wonder if that shouldn't be in DEVOPTS (or even a default under
+DEVELOPER=1). I.e. you don't need any other special compile flags, just
+a compiled git that you then run under valgrind to spot this.
+
+>  builtin/clone.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 51e844a2de0a..952fe3d8fc88 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -964,10 +964,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  {
+>  	int is_bundle = 0, is_local;
+>  	const char *repo_name, *repo, *work_tree, *git_dir;
+> -	char *path, *dir, *display_repo = NULL;
+> +	char *path = NULL, *dir, *display_repo = NULL;
+>  	int dest_exists, real_dest_exists = 0;
+>  	const struct ref *refs, *remote_head;
+> -	const struct ref *remote_head_points_at;
+> +	struct ref *remote_head_points_at = NULL;
+>  	const struct ref *our_head_points_at;
+>  	struct ref *mapped_refs;
+>  	const struct ref *ref;
+> @@ -1017,9 +1017,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	repo_name = argv[0];
+>  
+>  	path = get_repo_path(repo_name, &is_bundle);
+> -	if (path)
+> +	if (path) {
+> +		FREE_AND_NULL(path);
+>  		repo = absolute_pathdup(repo_name);
+> -	else if (strchr(repo_name, ':')) {
+> +	} else if (strchr(repo_name, ':')) {
+>  		repo = repo_name;
+>  		display_repo = transport_anonymize_url(repo);
+>  	} else
+
+In this case it seems better to just have a :
+
+    int repo_heap = 0;
+
+    Then set "repo_heap = 1" in that absolute_pathdup(repo_name) branch,
+    and...
+
+> @@ -1393,6 +1394,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	strbuf_release(&reflog_msg);
+>  	strbuf_release(&branch_top);
+>  	strbuf_release(&key);
+> +	free_refs(mapped_refs);
+> +	free_refs(remote_head_points_at);
+> +	free(dir);
+> +	free(path);
+> +	UNLEAK(repo);
+
+Here do:
+
+    if (repo_heap)
+        free(repo);
+
+But maybe there's some other out of the box way to make leak checking
+Just Work without special flags in this case. I'm just noting this one
+because it ended up being the only one that leaked unless I compiled
+with -DSUPPRESS_ANNOTATED_LEAKS. I was fixing some leaks in the bundle
+code.
+
+Anyway, getting to the "default tests" point. I fixed a memory leak, and
+wanted to it tested that the specific command doesn't leak in git's
+default tests.
+
+Do we have such a thing, if not why not?
+
+The closest I got to getting this was:
+
+    GIT_VALGRIND_MODE=memcheck GIT_VALGRIND_OPTIONS="--leak-check=full --errors-for-leak-kinds=definite --error-exitcode=123" <SOME TEST> --valgrind
+
+But as t/README notes it implies --verbose so we can't currently run it
+under the test harness (although I have out-of-tree patches to fix that
+in general).
+
+It seems pretty straightforward to turn that specific thing into a test
+with a prereq to detect if valgrind works in that mode at all, and then
+do (in some dedicated test file):
+
+	# Exit/skip if we can't setup valgrind, then setup relevant
+        # valgrind options (maybe needing to re-source test-lib.sh, ew!)
+	test_expect_successs 'ls-heads should not leak' '
+		git bundle ls-heads a.bdl
+	'
+
+But from what I've found so far no such thing exists, and it seems to
+the extent that this is checked it's run manually as a one-off (see git
+log --grep=valgrind), but we don't explicitly test for this
+anywhere. Have I missed something?
