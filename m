@@ -2,131 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A3F2C48BCF
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 19:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 113D0C48BCF
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 19:28:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59CD4613F5
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 19:28:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC3E9613FE
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 19:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbhFITa3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 15:30:29 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:43627 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229472AbhFITa2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 9 Jun 2021 15:30:28 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id F336C5C019C;
-        Wed,  9 Jun 2021 15:28:23 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 09 Jun 2021 15:28:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm2; bh=Bx32nAmDHDLD1
-        otnyO3WDyJXJIoJ4cVzL5fNuBY1b+Q=; b=IAIuVF9UIdsygrnzsuk3TAOrfwV31
-        lhuPyY0ktK/KN9uCD5IgMVEbU7cGJYQyoiUQcgZFGU0OiDQcXSMvDWOXn/zZvQtx
-        Om9WL+dX0XT4irK+wyMrwF0dnUAAi1GaX4mNT9n89hO4zsM0iklLHggPjrZ5tT7h
-        76AvFcPNzyNVHjen6hU0IM9hTELpUCAEJTcwt8xtW95mOlvrZ2N7L84oa2aR0Owf
-        rWpaDrgcOLoI3v8F9NVORTkwgU2BulKUXOKrxjVkzLIAJ/8G1dSiNx43bTDglTk8
-        03zGu1zVkhZtTtZCSfmCyh9zsbgJwMQ0XhXqci1UYvvLT7i7WogKYDS5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=Bx32nAmDHDLD1otnyO3WDyJXJIoJ4cVzL5fNuBY1b+Q=; b=legxlEU8
-        ZeDkrcM/tBvH19AnhZB9iyZ4cHl2UL+kaYxlN/wDBx4VpMbtUJD3ZkbuTAqR0Q3Z
-        UmQIE75oKtVjV2HGLMI3+qsOLX8tw45c3JQS+G0hNGMy3CmXFW7OKAFTR05wAc/X
-        BfGL0MaM+xwIIg/DTMGEQ9zqBt2R0GHh2LvHYlItZBX5ujIdyCfoxhTH+8q0aKjH
-        EWq69fxbJv5UVdGbym3xRtOatEPqxs7qTVc/jJrShSZDW7jqETV/69DG0L25oGnx
-        RGEteF6uNb7UAOurwaqfi6Z6acMM5fWo23iFlnUps9+9uQiz86JYpIi9ztnNU8LM
-        9YS84ucBCq232Q==
-X-ME-Sender: <xms:VxbBYOHhYdxl-MrL7aSvQxixDbmpmrCbbntAENmxJhHIVAsTHzXgJg>
-    <xme:VxbBYPVu_2dlMIGFZIidi6mhsdxxrgXDGmNGg7EEY0BClXXvLJus1jZgPUi1BNOel
-    avmwOywFXmzU2hUDjE>
-X-ME-Received: <xmr:VxbBYIK0rnyVrdocBwPtx0iw9H2YkYFTcndB6kfs4iwKcC5aDv3uqBTjJWZ4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeduuddgudefhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpefirhgvghcujfhurhhrvghllhcuoehgrhgvgheshhhurhhr
-    vghllhdrnhgvtheqnecuggftrfgrthhtvghrnhepueetvdeiffdugeegheduhedtudefle
-    ejhedttdetvdetfefhveekueduleehtdefnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhrvghgsehhuhhrrhgvlhhlrdhnvght
-X-ME-Proxy: <xmx:VxbBYIETS3UD5aGT-e3Jx53a1Y_9Y78JiF060StIKBIi-V1RSe65sQ>
-    <xmx:VxbBYEX4rHmngbPIvYKJT0bqeB7GpuY4AhIUSy544p3iTtnWkYg3OQ>
-    <xmx:VxbBYLNPNmziAJ2Z0gYZBz09gXCmWRJECYOUhjHJINfmYO-RRoNFrg>
-    <xmx:VxbBYPetxsuxRfNVEX-au8W_2yDlCi74QrBefatXLJXRXgv4xpWPNg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jun 2021 15:28:23 -0400 (EDT)
-From:   Greg Hurrell <greg@hurrell.net>
+        id S229715AbhFITaw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 15:30:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48910 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229472AbhFITav (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 15:30:51 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7761C061574
+        for <git@vger.kernel.org>; Wed,  9 Jun 2021 12:28:56 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso2043223otj.4
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 12:28:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WRSjgvAnvinC9jsqMJ0bgTAJIM41vhXijompJfNqYpw=;
+        b=SX0urmlnb+75B21kH5AhRb3etrvXUq6ghw8cozjAMODIZ4E9cQnuWBJrbI0HvmcdG/
+         HFCP2idQ2FW2RspMZcb/+MR8KdrnTTv68B+yqSxpGXaqzqozd6TIe5XKu2nBH3B82euM
+         kcc+5sBaDUkboJlIbC/6M4fTrPjYiwexcFsuBeI+4pis5XkTNhGP5MloJoKZVeLRdEBU
+         NIwDPJjojJb/mi6eIP6+i7O0wwJpNBy9eYoRmohpN3iZUe6AxXLCaoKYvXX4djj7lu4G
+         33XDZeFL/IDd9nbljiuSX4monLJgsOqNkjeHDGzDPMDT2/7G2x8plpG1EXnJXjhRzEOt
+         vPRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WRSjgvAnvinC9jsqMJ0bgTAJIM41vhXijompJfNqYpw=;
+        b=qYD2Jq8so4gIN2n25fLybAzYI3Lex1aYn6AwSsO+a2py8zthkPV7OHlIqpIeErZn/d
+         DtiPurCRuSymfOMDNyYjWMjyhQgGNh01MoZSPFyTVMokjm/qMJV9+KVx9pJ1yb+cdOIw
+         gFM89wlVnocimT0QJLUBOuo5Q/BcwJBjJVeAVZRlT7fyZBbHWhrCK5IKzMar8mEIEzdx
+         S3gLgQntONB887FDZGDD1zw+I/3gKAjYh+cYZ/0BqzIrtl3fMc18gIumXZwtQOgVdHD2
+         3VqcalaFp751dHsL1HH4zw1nlBKPdTpJK24tcxr/uI8Lh+jaV8O/LVqKvH1/428ecSB6
+         9pZA==
+X-Gm-Message-State: AOAM530I4tIOeLQLTEtRn7VxTceHdDK4Y88pHymQM3FEcPTZjUB/ECvV
+        XstofIYVh7qHv9v8nt92R9pGvwS1sapPSw==
+X-Google-Smtp-Source: ABdhPJw/VtB+8gHZSgDiUpOBoMsglROHd7MkAuHQ1LW6PsmfYoH5AnkJgWasqWCZnWEDNqJQYovweA==
+X-Received: by 2002:a9d:7012:: with SMTP id k18mr815471otj.179.1623266935985;
+        Wed, 09 Jun 2021 12:28:55 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id t39sm125728ooi.42.2021.06.09.12.28.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jun 2021 12:28:55 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Greg Hurrell <greg@hurrell.net>
-Subject: [PATCH v2] gitweb: use HEAD as secondary sort key in git_get_heads_list()
-Date:   Wed,  9 Jun 2021 21:28:06 +0200
-Message-Id: <20210609192806.45406-1-greg@hurrell.net>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <xmqqpmwviinb.fsf@gitster.g>
-References: <xmqqpmwviinb.fsf@gitster.g>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 1/7] test: add merge style config test
+Date:   Wed,  9 Jun 2021 14:28:36 -0500
+Message-Id: <20210609192842.696646-2-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
+In-Reply-To: <20210609192842.696646-1-felipe.contreras@gmail.com>
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "heads" section on the gitweb summary page shows heads in
-`-committerdate` order (ie. the most recently-modified ones at the
-top), tie-breaking equal-dated refs using the implicit `refname` sort
-fallback. This recency-based ordering appears in multiple places in the
-UI, such as the project listing, the tags list, and even the
-shortlog and log views.
+We want to test different combinations of merge.conflictstyle, and a new
+file is the best place to do that.
 
-Given two equal-dated refs, however, sorting the `HEAD` ref before
-the non-`HEAD` ref provides more useful signal than merely sorting by
-refname. For example, say we had "master" and "trunk" both pointing at
-the same commit but "trunk" was `HEAD`, sorting "trunk" first helps
-communicate its special status as the default branch that you'll check
-out if you clone the repo.
-
-Add `-HEAD` as a secondary sort key to the `git for-each-ref` call
-in `git_get_heads_list()` to provide the desired behavior. The most
-recently committed refs will appear first, but `HEAD`-ness will be used
-as a tie-breaker. Note that `refname` is the implicit fallback sort key,
-which means that two same-dated non-`HEAD` refs will continue to be
-sorted in lexicographical order, as they are today.
-
-Signed-off-by: Greg Hurrell <greg@hurrell.net>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
+ t/t6440-config-conflict-markers.sh | 44 ++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+ create mode 100755 t/t6440-config-conflict-markers.sh
 
-As per list discussion, this is an easier sell than the prior version
-of this patch (which made `HEAD` the _primary_ sort key). I'm dropping
-the RFC qualifier accordingly.
-
-Sorry for the back-and-forth on this one. Using `HEAD` is the
-tie-breaker is what I wanted to do originally, but because I was
-testing on an ancient Git version with a sorting bug, the
-straightforward approach didn't work (:facepalm:), and I went off into
-the weeds.
-
- gitweb/gitweb.perl | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e09e024a09..fbd1c20a23 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3796,7 +3796,8 @@ sub git_get_heads_list {
- 	my @headslist;
- 
- 	open my $fd, '-|', git_cmd(), 'for-each-ref',
--		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
-+		($limit ? '--count='.($limit+1) : ()),
-+		'--sort=-HEAD', '--sort=-committerdate',
- 		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
- 		@patterns
- 		or return;
+diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
+new file mode 100755
+index 0000000000..6952552c58
+--- /dev/null
++++ b/t/t6440-config-conflict-markers.sh
+@@ -0,0 +1,44 @@
++#!/bin/sh
++
++test_description='merge style conflict markers configurations'
++
++. ./test-lib.sh
++
++fill () {
++	for i
++	do
++		echo "$i"
++	done
++}
++
++test_expect_success 'merge' '
++	test_create_repo merge &&
++	(
++		cd merge &&
++
++		fill 1 2 3 >content &&
++		git add content &&
++		git commit -m base &&
++
++		git checkout -b r &&
++		echo six >>content &&
++		git commit -a -m right &&
++
++		git checkout master &&
++		echo 7 >>content &&
++		git commit -a -m left &&
++
++		test_must_fail git merge r &&
++		! grep -E "\|+" content &&
++
++		git reset --hard &&
++		test_must_fail git -c merge.conflictstyle=diff3 merge r &&
++		grep -E "\|+" content &&
++
++		git reset --hard &&
++		test_must_fail git -c merge.conflictstyle=merge merge r &&
++		! grep -E "\|+" content
++	)
++'
++
++test_done
 -- 
-2.29.2
+2.32.0.2.g41be0a4e50
 
