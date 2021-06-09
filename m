@@ -2,131 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C21C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D6D4C47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:24:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13DC860C3F
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:11:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A1FF61351
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbhFIENr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 00:13:47 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49854 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230166AbhFIENp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 00:13:45 -0400
-Received: (qmail 967 invoked by uid 109); 9 Jun 2021 04:11:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Jun 2021 04:11:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17106 invoked by uid 111); 9 Jun 2021 04:11:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Jun 2021 00:11:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 9 Jun 2021 00:11:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-Subject: Re: [RFE] Teach git textconv to support %f
-Message-ID: <YMA/h9Hpb8z+D3W3@coredump.intra.peff.net>
-References: <01f901d75c7c$5a8bcb10$0fa36130$@nexbridge.com>
- <xmqq8s3jna0w.fsf@gitster.g>
+        id S231408AbhFIE0e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 00:26:34 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58273 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231363AbhFIE0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 00:26:33 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6F69BD6D1;
+        Wed,  9 Jun 2021 00:24:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=h9uKZKFR8NcyrPVmBZI0FBk3k96VJCp3wZDjk6
+        YlU/Q=; b=wHiaA0HMYpnA80BkA/hXl3KJUiqMB9TPfCep40hU6sYEj6VOGmvZbz
+        sLFWcdF19Y24xWEKwRjLsy9Rj3LUOup/Bt8eND+luzsPn2Dkel5J2e3YY1VJfFaS
+        hTtTkwedqDUG+ERsMnaicg5UyT2QO3Vfk9kcEzG4tO4oaPEu5A1uE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AED7CBD6D0;
+        Wed,  9 Jun 2021 00:24:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38310BD6CE;
+        Wed,  9 Jun 2021 00:24:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [GSoC] [PATCH v2 1/2] submodule--helper: introduce add-clone
+ subcommand
+References: <20210605113913.29005-1-raykar.ath@gmail.com>
+        <20210608095655.47324-1-raykar.ath@gmail.com>
+        <20210608095655.47324-2-raykar.ath@gmail.com>
+Date:   Wed, 09 Jun 2021 13:24:38 +0900
+In-Reply-To: <20210608095655.47324-2-raykar.ath@gmail.com> (Atharva Raykar's
+        message of "Tue, 8 Jun 2021 15:26:54 +0530")
+Message-ID: <xmqqh7i7ll6h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8s3jna0w.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9AEBB808-C8DA-11EB-8530-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 09, 2021 at 09:42:39AM +0900, Junio C Hamano wrote:
+Just a bit of random comments, leaving the full review to mentors.
 
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
-> 
-> > The filter structure provides a mechanism for providing the
-> > working directory's file name path to a filter using a %f
-> > argument. This request is to teach the textconv mechanism to
-> > support the same capability.
-> >
-> > The use case comes from a complex content renderer that needs to
-> > know what the original file name is, so as to be able to find
-> > additional content, by name, that describes the file (base
-> > name+different extension).
-> >
-> > If this is considered a good idea, I would be happy to implement
-> > this but need a pointer or two of where to look in the code to
-> > make it happen.
-> 
-> Both in diff, grep and cat-file, textconv eventually triggers
-> diff.c::fill_textconv() and calls run_textconv() unless there is a
-> cached copy of the resut of running textconv earlier on the same
-> contents.  This is because for each textconv driver, the output is
-> expected to be purely a function of the input bytestream, and that
-> is why it does not take any other input.
-> 
-> So, if we have two identical blobs in a tree object under different
-> pathnames, making the output from textconv different for them
-> because they sit at different pathnames directly goes against the
-> basic design of the system at the philosophical level.
-> 
-> Having said that, I _suspect_ (but not verified) that as long as the
-> driver is marked as non-cacheable, it may be acceptable to export a
-> new environment variable, say, GIT_TEXTCONV_PATH, and allow the
-> textconv program to produce different results for the same input.  I
-> am not offhand sure if it is OK to allow command line substitutions
-> like the filter scripts, though.  It would be nice from the point of
-> view of consistency if we could do so, but those who use an existing
-> textconv program at a pathname with per-cent in it may get negatively
-> affected.
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index d55f6262e9..c9cb535312 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2745,6 +2745,204 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
+>  	return !!ret;
+>  }
+>  
+> +struct add_data {
+> +	const char *prefix;
+> +	const char *branch;
+> +	const char *reference_path;
+> +	const char *sm_path;
+> +	const char *sm_name;
+> +	const char *repo;
+> +	const char *realrepo;
+> +	int depth;
+> +	unsigned int force: 1;
+> +	unsigned int quiet: 1;
+> +	unsigned int progress: 1;
+> +	unsigned int dissociate: 1;
+> +};
+> +#define ADD_DATA_INIT { .depth = -1 }
+> +
+> +static char *parse_token(char **begin, const char *end, int *tok_len)
+> +{
+> +	char *tok_start, *pos = *begin;
 
-As the person who implemented both textconv and its caching, all of that
-sounds quite sensible to me. :)
+Make it a habit to have a blank line between the initial block
+of declarations and the first statement.
 
-The caching mechanism has never been turned on by default, and probably
-will never be (because one of the original uses for which I wanted
-textconv is decrypting blobs on the fly, and storing the result would
-defeat the purpose). So it may be sufficient to say "if it hurts to turn
-on caching with a filter that depends on the path, then don't do it".
+> +	while (pos != end && (*pos != ' ' && *pos != '\t' && *pos != '\n'))
+> +		pos++;
+> +	tok_start = *begin;
+> +	*tok_len = pos - *begin;
+> +	*begin = pos + 1;
+> +	return tok_start;
+> +}
+> +static char *get_next_line(char *const begin, const char *const end)
+> +{
+> +	char *pos = begin;
+> +	while (pos != end && *pos++ != '\n');
 
-It may be possible to make it work with a cache, too. The caching
-mechanism also has a validity key, which looks something like this:
+Write an empty loop on two lines, like this:
 
-  [prime the cache with a silly filter]
-  $ git -c diff.perl.textconv='tr a-z A-Z <' \
-        -c diff.perl.cachetextconv=true \
-        log -p '*.perl' >/dev/null
+	while (... condition ...)
+		; /* keep scanning */
 
-  [the result is stored via git-notes; the body is the cache-key]
-  $ git cat-file commit refs/notes/textconv/perl
-  tree a27c3c18d222e47a7943c2844f9ed6c75710d8c4
-  author Jeff King <peff@peff.net> 1623211550 -0400
-  committer Jeff King <peff@peff.net> 1623211550 -0400
-  
-  tr a-z A-Z <
+If there is a NUL byte between begin and end, this keeps going and
+the resulting string will contain one.  Is that a problem?
 
-I thought at first we could put the pathname into that key, but it's
-really a key for the _whole_ cache, not an individual entry. So that
-wouldn't work. You'd have to redesign the cache mechanism (which in turn
-might require assistance from the notes code). So I lean towards "if it
-hurts, don't do it". :)
+> +	return pos;
+> +}
 
-One final note. Randall said:
+In general, this project is mature enough that we should question
+ourselves if there is already a suitable line parser we can reuse
+when tempted to write another one.
 
-> > The use case comes from a complex content renderer that needs to
-> > know what the original file name is, so as to be able to find
-> > additional content, by name, that describes the file (base
-> > name+different extension).
+> +static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
+> +{
+> +	struct child_process cp_remote = CHILD_PROCESS_INIT;
+> +	struct strbuf sb_remote_out = STRBUF_INIT;
+> +
+> +	cp_remote.git_cmd = 1;
+> +	strvec_pushf(&cp_remote.env_array,
+> +		     "GIT_DIR=%s", git_dir_path);
+> +	strvec_push(&cp_remote.env_array, "GIT_WORK_TREE=.");
+> +	strvec_pushl(&cp_remote.args, "remote", "-v", NULL);
+> +	if (!capture_command(&cp_remote, &sb_remote_out, 0)) {
+> +		char *line;
+> +		char *begin = sb_remote_out.buf;
+> +		char *end = sb_remote_out.buf + sb_remote_out.len;
+> +		while (begin != end && (line = get_next_line(begin, end))) {
 
-That needs the filename, but there's also the implication there that
-ancillary data would be coming from _other_ files based on that name.
-That seems a lot more complicated. If I'm a filter and am asked to
-convert "foo.one", I might want to see "foo.two". But how do I know from
-which commit to get it? It is OK if "foo.two" is a globally unambiguous
-name across time, but I'd imagine in most cases you want "foo.two" that
-accompanied "foo.one" at the time. And now the cache is not even a
-property of a blob/filename pair, but rather of the whole tree.
+OK, so this tries to parse output from "git remote -v", so NUL will
+not be an issue at all.  We will get a string that is NUL terminated
+and has zero or more lines, terminated with LFs.
 
--Peff
+If that is the case, I think it is far easier to read without
+a custom get-next-line wrapper, e.g.
+
+	for (this_line = begin;
+	     *this_line;
+	     this_line = next_line) {
+		next_line = strchrnul(this_line, '\n');
+		... process bytes between this_line..next_line ...
+	}                
+
+> +			int namelen = 0, urllen = 0, taillen = 0;
+> +			char *name = parse_token(&begin, line, &namelen);
+
+Similarly, consider if strcspn() is useful in implementing
+parse_token().  See how existing code uses the standard system
+function with
+
+	$ git grep strcspn \*.c
+
+> +			char *url = parse_token(&begin, line, &urllen);
+> +			char *tail = parse_token(&begin, line, &taillen);
+> +			if (!memcmp(tail, "(fetch)", 7))
+
+At this point do we know there are enough number of bytes after
+tail[0] to allow us to do this comparison safely?  Otherwise,
+
+			if (starts_with(tail, "(fetch)")
+
+may be preferrable.
