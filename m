@@ -2,149 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7CEEC48BD1
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 13:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E885C48BCF
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 14:17:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83B8E61364
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 13:55:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BD96613B1
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 14:17:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236513AbhFIN5i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 09:57:38 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:53148 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234326AbhFIN5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 09:57:36 -0400
-Received: by mail-wm1-f41.google.com with SMTP id f17so4084980wmf.2
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 06:55:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=CblJ3OfMeVETAhnc8n/9uVF841+kXTAaqtBApW37/yQ=;
-        b=blX3VMB6n8QDS1bZXy8sbn+EC282jWhROARrof7403HazVGS/DctPPX0Q2GDIPZTqo
-         UxyAGgQ4+SVHcbEse6eH+HaBvYk7gDlBa3yY/BPLSh9enBWIPkjhKVvX/xeF9t06K70l
-         +icp7xSHAQHKjSykHZHKKIsdK0CjVJtSjLk/BYeZbiIuXbICm+stCEfTUnPzZhekUsMI
-         o7XMyiCavjmCJIhlNGyTd9DpB/ifcAtPuLYbWyU676Dz2ZlOPY0kxEtWvMca2FwJ/NBS
-         MHirpN35ivfNXNDPsN1H+Qauee+F31Cp8hfq1qnFgJv3fPhiSjW1L6UDtwGL2mECRPni
-         cL8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CblJ3OfMeVETAhnc8n/9uVF841+kXTAaqtBApW37/yQ=;
-        b=dGJOIUuBnM+vA5EYO0ryZtegztmBWXH1X38jIAQW1rZ81RbnxQV0/6dLYgHEdxSa1q
-         k66fQRFgOyWgDPQmHoOQNHUELvpi54iCByKSdrg45N6RLYpQPuGAPuadaV53f05kg4k7
-         Wa5c+CQs3TWrhAGvVuVXO2S0auu6EDPZK3Z7TKBMe8mDi5vX+8/irg7J7b2ag/uj6LDL
-         SyBHl+AsuRACKaBnhx/M1Y6K6Vm8UmpSvgBANKjSR1Nqa+zeQB6j/0OXNf/fpy32MQYK
-         lFDVJTp2UkyMpwye4yhTaKilzttl2kHdz9Qa2IkfhXQhy8bpdUwRok0PSc8em763u2J/
-         fjFQ==
-X-Gm-Message-State: AOAM531raxnawMMoP5HOaKZ57cSHGp37j7J4x/RqdO6WzBLW9UybvrY4
-        y7TSVOaN9H5T684PXrrwRij53ZyjHSQ=
-X-Google-Smtp-Source: ABdhPJwTOHU+wgDmWCrhsEBNmgutlkm0g6LNhIrgrt5s2LOPCA50meFHIkSGLF6a8BQERGV7iaS17Q==
-X-Received: by 2002:a7b:c0cb:: with SMTP id s11mr28080719wmh.21.1623246880918;
-        Wed, 09 Jun 2021 06:54:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z19sm6152355wmf.31.2021.06.09.06.54.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 06:54:40 -0700 (PDT)
-Message-Id: <fb7a7573782ae8ba3bc5341d6aaee704af88fdcf.1623246878.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
-        <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Jun 2021 13:54:35 +0000
-Subject: [PATCH v2 1/4] Documentation: use singular they when appropriate
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S234271AbhFIOTC convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 9 Jun 2021 10:19:02 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:44949 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233642AbhFIOTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 10:19:01 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 159EGum1089466
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 9 Jun 2021 10:16:56 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>,
+        "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <01f901d75c7c$5a8bcb10$0fa36130$@nexbridge.com> <xmqq8s3jna0w.fsf@gitster.g> <YMA/h9Hpb8z+D3W3@coredump.intra.peff.net>
+In-Reply-To: <YMA/h9Hpb8z+D3W3@coredump.intra.peff.net>
+Subject: RE: [RFE] Teach git textconv to support %f
+Date:   Wed, 9 Jun 2021 10:16:49 -0400
+Message-ID: <002401d75d3a$19a837a0$4cf8a6e0$@nexbridge.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, stolee@gmail.com,
-        jrnieder@gmail.com, emilyshaffer@google.com,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHpOr3p7X//LpuBa7CIpZ84sn1qVwGW4J1qAk/TNOiqyMgkgA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On June 9, 2021 12:12 AM, Peff wrote:
+>On Wed, Jun 09, 2021 at 09:42:39AM +0900, Junio C Hamano wrote:
+>
+>> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+>>
+>> > The filter structure provides a mechanism for providing the working
+>> > directory's file name path to a filter using a %f argument. This
+>> > request is to teach the textconv mechanism to support the same
+>> > capability.
+>> >
+>> > The use case comes from a complex content renderer that needs to
+>> > know what the original file name is, so as to be able to find
+>> > additional content, by name, that describes the file (base
+>> > name+different extension).
+>> >
+>> > If this is considered a good idea, I would be happy to implement
+>> > this but need a pointer or two of where to look in the code to make
+>> > it happen.
+>>
+>> Both in diff, grep and cat-file, textconv eventually triggers
+>> diff.c::fill_textconv() and calls run_textconv() unless there is a
+>> cached copy of the resut of running textconv earlier on the same
+>> contents.  This is because for each textconv driver, the output is
+>> expected to be purely a function of the input bytestream, and that is
+>> why it does not take any other input.
+>>
+>> So, if we have two identical blobs in a tree object under different
+>> pathnames, making the output from textconv different for them because
+>> they sit at different pathnames directly goes against the basic design
+>> of the system at the philosophical level.
+>>
+>> Having said that, I _suspect_ (but not verified) that as long as the
+>> driver is marked as non-cacheable, it may be acceptable to export a
+>> new environment variable, say, GIT_TEXTCONV_PATH, and allow the
+>> textconv program to produce different results for the same input.  I
+>> am not offhand sure if it is OK to allow command line substitutions
+>> like the filter scripts, though.  It would be nice from the point of
+>> view of consistency if we could do so, but those who use an existing
+>> textconv program at a pathname with per-cent in it may get negatively
+>> affected.
+>
+>As the person who implemented both textconv and its caching, all of that sounds quite sensible to me. :)
+>
+>The caching mechanism has never been turned on by default, and probably will never be (because one of the original uses for which I
+>wanted textconv is decrypting blobs on the fly, and storing the result would defeat the purpose). So it may be sufficient to say "if it hurts to
+>turn on caching with a filter that depends on the path, then don't do it".
+>
+>It may be possible to make it work with a cache, too. The caching mechanism also has a validity key, which looks something like this:
+>
+>  [prime the cache with a silly filter]
+>  $ git -c diff.perl.textconv='tr a-z A-Z <' \
+>        -c diff.perl.cachetextconv=true \
+>        log -p '*.perl' >/dev/null
+>
+>  [the result is stored via git-notes; the body is the cache-key]
+>  $ git cat-file commit refs/notes/textconv/perl
+>  tree a27c3c18d222e47a7943c2844f9ed6c75710d8c4
+>  author Jeff King <peff@peff.net> 1623211550 -0400
+>  committer Jeff King <peff@peff.net> 1623211550 -0400
+>
+>  tr a-z A-Z <
+>
+>I thought at first we could put the pathname into that key, but it's really a key for the _whole_ cache, not an individual entry. So that
+>wouldn't work. You'd have to redesign the cache mechanism (which in turn might require assistance from the notes code). So I lean
+>towards "if it hurts, don't do it". :)
+>
+>One final note. Randall said:
+>
+>> > The use case comes from a complex content renderer that needs to
+>> > know what the original file name is, so as to be able to find
+>> > additional content, by name, that describes the file (base
+>> > name+different extension).
+>
+>That needs the filename, but there's also the implication there that ancillary data would be coming from _other_ files based on that
+>name.
+>That seems a lot more complicated. If I'm a filter and am asked to convert "foo.one", I might want to see "foo.two". But how do I know
+>from which commit to get it? It is OK if "foo.two" is a globally unambiguous name across time, but I'd imagine in most cases you want
+>"foo.two" that accompanied "foo.one" at the time. And now the cache is not even a property of a blob/filename pair, but rather of the
+>whole tree.
 
-There are several instances in our documentation where we refer to an
-anonymous user as "a contributor" or "an integrator" or similar. To
-avoid repeating this role, pronouns are used. Previous examples
-chose a gender for this user, using "he/him" or "she/her" arbitrarily.
+Well, sadly, I see the points you both make. It might be better for my team to come up with a self-describing file format with embedded metadata instead. Thing is, the whole approach of idempotency in git where the commit would immutably contain both the file and its metadata in a separate blob but same commit is appealing - which is the only condition where I would see my original suggestion applying.
 
-Replace these uses with "they/them" to ensure that these documentation
-examples apply to all potential users without exception.
-
-Helped-by: Richard Kerry <richard.kerry@atos.net>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/SubmittingPatches | 8 ++++----
- Documentation/git-push.txt      | 4 ++--
- Documentation/user-manual.txt   | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 55287d72e0ef..f519a8dfff7c 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -372,10 +372,10 @@ If you like, you can put extra tags at the end:
-   the patch attempts to fix.
- . `Acked-by:` says that the person who is more familiar with the area
-   the patch attempts to modify liked the patch.
--. `Reviewed-by:`, unlike the other tags, can only be offered by the
--  reviewer and means that she is completely satisfied that the patch
--  is ready for application.  It is usually offered only after a
--  detailed review.
-+. `Reviewed-by:`, unlike the other tags, can only be offered by a
-+  reviewer when they are completely satisfied with the patch.  It is
-+  offered only after reviews by reviewers who are known to be experts
-+  in the affected area by the community members.
- . `Tested-by:` is used to indicate that the person applied the patch
-   and found it to have the desired effect.
- 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index a953c7c38790..2f25aa3a291b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -244,8 +244,8 @@ Imagine that you have to rebase what you have already published.
- You will have to bypass the "must fast-forward" rule in order to
- replace the history you originally published with the rebased history.
- If somebody else built on top of your original history while you are
--rebasing, the tip of the branch at the remote may advance with her
--commit, and blindly pushing with `--force` will lose her work.
-+rebasing, the tip of the branch at the remote may advance with their
-+commit, and blindly pushing with `--force` will lose their work.
- +
- This option allows you to say that you expect the history you are
- updating is what you rebased and want to replace. If the remote ref
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index f9e54b867417..4fe9be117c4a 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -2792,7 +2792,7 @@ A fast-forward looks something like this:
- 
- In some cases it is possible that the new head will *not* actually be
- a descendant of the old head.  For example, the developer may have
--realized she made a serious mistake, and decided to backtrack,
-+realized they made a serious mistake, and decided to backtrack,
- resulting in a situation like:
- 
- ................................................
--- 
-gitgitgadget
+-Randall
 
