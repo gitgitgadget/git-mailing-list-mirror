@@ -5,93 +5,102 @@ X-Spam-Level:
 X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46EB5C48BCD
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 17:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2F46C48BCD
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 17:38:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B29A613CB
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 17:32:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9669D613D2
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 17:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230422AbhFIRec (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 13:34:32 -0400
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:37419 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230527AbhFIRe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 13:34:28 -0400
-Received: by mail-ot1-f41.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso1676157otj.4
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 10:32:17 -0700 (PDT)
+        id S231512AbhFIRjz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 13:39:55 -0400
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:41917 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229947AbhFIRjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 13:39:54 -0400
+Received: by mail-ot1-f49.google.com with SMTP id 36-20020a9d0ba70000b02902e0a0a8fe36so24732082oth.8
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 10:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=ZGZ8rFjNIBWXLGmD6+BrUPJ7Dv9qZemjn74f8B2c6pQ=;
-        b=hbhdwsaIZfwGED066VBpjclJs6b7/fr3eH2H4D9dC3uLFnXoDTBDdlWqIK1y75vWgM
-         sCSy7P63JSgFEm2BHX2VeAE2ZJGCdO05I7WNL++Galou6sGx5dzD2RtGEVlCk3Sm3zZk
-         W691x4Bn/OLVSRo7CrnMe9djwyNTzdeJ3OLLWefLqczra+3kHKEBY9fVZZjTaV7a7VCx
-         dPANaVXRsb0lPmPxeXaS/aswQFwpKkoDcwqWtRexpFYiH765R7X6TNquYO0X+IiUED0L
-         MqDce+KBkZtB38TlOKF7XBdsri1Y/7Acj9LucIgc74gLYGTdAcNeoz1ZGycD+Kd8p9jM
-         7Wmg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=JlTw5uL2Tpe0r3gQreLwraHbRXn86j/tXiQRYGh+QSg=;
+        b=shMn/dnmmTB3BpTdTm6V/bj6XHP8ilXXf/EU4Zmexqr3gYNy2GNqWa5+NZ5ND71pns
+         mTV/VgDFZMlL0b9B72z/flwDILD4iLP/zNe+M2mtBdjL8ID2Wvw6Kxg9qOsVZd8TxzRO
+         BZ8bykXfEvD0ca3eg7q/Jiho5o8WjJgAn3gi2RuLfgMNEUBZshKL1wayIIfsmp+auyZF
+         ENOLOppYSHZvSBetEAMNTbzdMOxSmhTDb9mFW8BddJ0QGhEZuhjrXFfL3cW/nhKFrmzK
+         l4keEmSs7C8Rx89FQudflXog+KgAoSpXZEwm1AFxtp8fS9gthexmlnJPN4sZmyRumvpM
+         0RRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=ZGZ8rFjNIBWXLGmD6+BrUPJ7Dv9qZemjn74f8B2c6pQ=;
-        b=qItd57zgorMxmjuJ0ydxBxxTI947FDHXeV5ZylaWBYjCo1GrPn//dtkY66YPQxAkiY
-         kLZ/oihqTwRwXIBlQ1MegIDNi+yJJ//4Su8Cvu40RPCBcSVhTSoGfu+oN37rPgor3GqN
-         Rvp2ZBJWMXjvum1uFuaPwuQIeGkHg0b0HcCSuuJP2YR2wOqUOmGaIrseZvAryEEVLMjC
-         yGhvla2S2mDkvoUaxDbSW9IEqHEuzqzcDlU6SmI8SCqc+jzNcTCMTkBbQberimMTbqYI
-         noMwIN8xNuKr7FMq9MDS0oneCY31jG2ttqTEUJfg54cmjSmJcM6YtREtMkJ/QPukqbXR
-         mFkA==
-X-Gm-Message-State: AOAM530PTjntqeDd0ASpv+Dn96YZmJddOTsjlKfpml5+fgHZGmpHih/R
-        KOCNugL1/cCKHaqzxnsDROU=
-X-Google-Smtp-Source: ABdhPJwCUQLqUBKPGVRzI0D3ckRNqVgh0U/iXP679IGavKngwnJBkac3KyL+1bHtv93mVb3z9kl2zg==
-X-Received: by 2002:a05:6830:1386:: with SMTP id d6mr486859otq.122.1623259877057;
-        Wed, 09 Jun 2021 10:31:17 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=JlTw5uL2Tpe0r3gQreLwraHbRXn86j/tXiQRYGh+QSg=;
+        b=AiZy9mtkScyGQ/LGHg7EH2hBw9kEi9aSf2PHgX+fT6g7XaP2Tne4KWPy3XluOSxrhR
+         1RfF7J85OIn9F0M9E5Zjch/VzkxxsAAAfV00ZreVKImECr58wo8y6GrH+nl7rnJJm4VO
+         8EuzbHFSPzEVwHkFyQ7inLyOSnvHAleTwq+4T0w2JPS1bFHoAePAuDiDH5jFvH+ps8so
+         mraM3T/hDiWijoQ2WjnNWOwDEuA1dSnvGpqBGlBSA05VGsn+QP9UlpJAGhDuOS/SQ9pm
+         fcJaU98/fMOgKybEiZa5Nj7A7rwLC1+MOTUqP7l4a1z+bl1KJ4b1s9elH05u/Iq/TdNz
+         V2tQ==
+X-Gm-Message-State: AOAM532/MbcK1SV6wqZtl8rhalTgFqDLnIR+aCX7UAUEcOjtt40R1JXc
+        7aSVGa4RLullVvsX8oevVxU=
+X-Google-Smtp-Source: ABdhPJyJP7K0LWYPqEMUnoOk6Q/epW6Pt+zNNI6cntFyyI24IR4cuQmV2QJXZpa7BCG2LdDneOi7UA==
+X-Received: by 2002:a9d:6453:: with SMTP id m19mr463886otl.63.1623260210770;
+        Wed, 09 Jun 2021 10:36:50 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id x2sm67166oog.10.2021.06.09.10.31.16
+        by smtp.gmail.com with ESMTPSA id o26sm127670otk.77.2021.06.09.10.36.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 10:31:16 -0700 (PDT)
-Date:   Wed, 09 Jun 2021 12:31:05 -0500
+        Wed, 09 Jun 2021 10:36:50 -0700 (PDT)
+Date:   Wed, 09 Jun 2021 12:36:49 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
-Message-ID: <60c0fad989b58_1074920884@natae.notmuch>
-In-Reply-To: <20210609102641.3531183-1-rybak.a.v@gmail.com>
-References: <20210609102641.3531183-1-rybak.a.v@gmail.com>
-Subject: RE: [PATCH] fix typos which duplicate a word
+To:     Dave Huseby <dwh@linuxprogrammer.org>, git@vger.kernel.org
+Cc:     christian.couder@gmail.com, felipe.contreras@gmail.com,
+        gitster@pobox.com, stefanmoch@mail.de, philipoak@iee.email,
+        bagasdotme@gmail.com, sunshine@sunshineco.com, avarab@gmail.com
+Message-ID: <60c0fc311144f_1096b2081f@natae.notmuch>
+In-Reply-To: <20210512233412.10737-1-dwh@linuxprogrammer.org>
+References: <20210512031821.6498-2-dwh@linuxprogrammer.org>
+ <20210512233412.10737-1-dwh@linuxprogrammer.org>
+Subject: RE: [PATCH v3] doc: writing down Git mailing list etiquette
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrei Rybak wrote:
-> Fix typos in documentation and code comments which repeat various words.
-> These typos were found by searching using scripts like this:
-> 
-> 	for w in $(grep '^....$' /usr/share/dict/words)
-> 	do
-> 		git grep -P "\b$w $w\b"
-> 	done
-> 
-> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+Dave Huseby wrote:
+> After violating a few unspoken etiquette rules while submitting patches=
 
-Other than the 'that that' in t6416-recursive-corner-cases.sh everything
-looks obviously correct.
+> to the Git mailing list, it was suggeted that somebody write a guide.
+> Since I was the latest cause of this perenial discussion, I took it upo=
+n
+> myself to learn from my mistakes and document the Git mailing list
+> etiquette and the fixes I made to my email setup.
+> =
 
-Reviewed-by: Felipe Contreras <felipe.contreras@gmail.com>
+> * Add documentation specifically on Git mailing list etiquette
+> * Add alternative actions for patches that receive no response.
+> * Add section on submitting a final, merge-ready patch.
+> * Add section on Mutt MUA settings.
+> =
 
-> ---
-> 
-> I'm not sure what to put as the "area: " prefix for this patch, as it touches
-> both docs and code comments.
+> Reported-by: Christian Couder <christian.couder@gmail.com>
+> Reported-by: Filipe Contreras <felipe.contreras@gmail.com>
+> Thanks-to: Junio C Hamano <gitster@pobox.com>
+> Thanks-to: Philip Oakley <philipoakley@iee.email>
+> Thanks-to: Bagas Sanjaya <bagasdotme@gmail.com>
+> Thanks-to: Eric Sunshine <sunshine@sunshineco.com>
+> Thanks-to: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Dave Huseby <dwh@linuxprogrammer.org>
 
-Not every patch needs to have an area, but when there's no area you
-need to use uppercase.
+What happened to this? I see value in having this document, so I would
+be glad to pick it up if you've lost interest.
 
-  Fix typos which duplicate a word
+Cheers.
 
--- 
-Felipe Contreras
+-- =
+
+Felipe Contreras=
