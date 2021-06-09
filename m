@@ -2,118 +2,335 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ADA4C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 05:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF359C47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 05:47:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E742A61285
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 05:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 901E461354
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 05:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232473AbhFIFhb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 01:37:31 -0400
-Received: from mail-oi1-f176.google.com ([209.85.167.176]:35763 "EHLO
-        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230222AbhFIFha (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 01:37:30 -0400
-Received: by mail-oi1-f176.google.com with SMTP id v22so24056817oic.2
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 22:35:36 -0700 (PDT)
+        id S232922AbhFIFtm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 01:49:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35722 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230152AbhFIFtl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 01:49:41 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10953C061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 22:47:39 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id x196so23651159oif.10
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 22:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=OtKzMTCxjI0V1dOAdGLSrAsxRNRgfDCHf5666aIEamI=;
-        b=Kww3L9Aryz64LwhXMRipae4Wv/Uh32MXXLucCMvDGiyz5WTicKh7/KFMmt1xkB1SNe
-         O3+eo3LIftMj7Tr4AntiLzk4hIiu3XrO1UGvG3X5G8E9FM0Duz13XwsuIqAco7Df/tEd
-         s1pq5ejmUgGIAUhYf02r53Rn5QK3XZsuzIRhkJWcgDpyx4XduQ+3GpE+WFufaOM2AM4k
-         rviNfxSmyuA4amQFalOMu0NzulKQVNW7FZCY/x6AlnBOsQ9LfOiZobPnzi8tTBAcqh/u
-         YtY8YytxCNPYj/tuVXm5fDDsFp0adSN5xVMKjSOVqlZdjN2sJxhrLbL/voYMVYb4be2O
-         h1Eg==
+        bh=yykwsKVAERgHnOrUkvtcaLXt4/0z0VjAUNahkr+zH8w=;
+        b=Hi9HOEV+aBxUa9Fe908orMs6oJ1jviNdrkA5GvJKXY5ehEe6bQcnsepwKORNMQUxd4
+         zcMcpXFp9pJYN9xnMjDqfWacwasL/Z2jlgLa2mFs01WGWHGYOly9XDpnxv9txIUbeh7a
+         RaygZS/ek2CJwJhcFo+hgoS5K2DqIhYg/8ggL8QVx6kERQOFLub1pTs8HHf4OoBgUQ/W
+         itrP74opIp8XIbZB04cCKCdPuPREepIBhq2Vbgkb6q62WieiC3m62dGu6EUDtmk6eWFR
+         +bOUnrLUpxNCyMDazCmAibefdVpBz4PtffgXXJtF5e+rKrP2ANNUUrayAkFCHJwLhvkl
+         gPnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OtKzMTCxjI0V1dOAdGLSrAsxRNRgfDCHf5666aIEamI=;
-        b=L47wgYyDiL6TNip/Ioj1iOV70R3I4lksfklsSFYQ0rEwyVibKb84w+LmpQN9PGXkaT
-         JbkfhNNLoz+2JCQj7sD7zGecegc18IWIE8nvpRCdPSDxhYu8DNi3ND5H/ggo9FYJ2f4S
-         Mculq2HgXRZCgzZlFXnzWlHgqXRQYMOCi3b84A37EKgwQciliWwN/G3xMoljocWbd5xW
-         K8cRosq2lnAqhH+BL3ML7u/YJJ0QQQAxydwbOxcxN9kKXIPpYaqtd491TKpMEupfonBo
-         V9IwaPr055azX2+KA1tokeejmFsVsmDwBRxInl7c6ttj1Y2MZfSYWFlpHDhRyzSH+gKz
-         8PKQ==
-X-Gm-Message-State: AOAM531Lm+oXcBYMrs67Gh2bppPVJK9IqqvDwi8Lf4fGt7mDLA8zzPBx
-        sGfGEnAPQpBstcmn7mvAE43bX3YF8bo5MIti5mo=
-X-Google-Smtp-Source: ABdhPJwbPadawkbFUz/EM3GS7ix3nhbUd/EgCDJC4TWvwivvobzPZYSyH2PHpwU6L1V4TgiC7/cVcUWksIBeh80juDg=
-X-Received: by 2002:a05:6808:13d5:: with SMTP id d21mr5403500oiw.31.1623216876685;
- Tue, 08 Jun 2021 22:34:36 -0700 (PDT)
+        bh=yykwsKVAERgHnOrUkvtcaLXt4/0z0VjAUNahkr+zH8w=;
+        b=NXlTxwT6z0recFm2Ev1ATLHBZtqGxYyizfurAN5IwiYwYDD3G2N3eLEf/rWxtrJK9K
+         kTzkoOmD1FH+TwqLlutquTvssOLZ0uI3bK7beY8D1lfZhrmip3t1j8ttAMqgCZ6bmjnB
+         8lnIILtm8ZAak2uAvl4Yx0MORpZlvIHd2nJrCC7ogUzqeoQXNvt5AwQsUx2B5qqtpZfW
+         0r9l/0s5IZvKQMiCmGaWM4hH8+PER5fWh9CHRA/3RZq3IUvkscGF8A+1To29vj6iStx/
+         1JIOMqtv9qaeNueY+JsHTBWfWWGALu7ieL4EJjyKsYCFmD5q8NhvJf2dZGLWfsNia6Ml
+         F9rg==
+X-Gm-Message-State: AOAM533a6XFV6O76fjFjZ500Oyt467m4SNscsJsH/Bg82u1JBIcVJX0P
+        NnJj7uuCqzG9HB+8jJjrTw9unPBfnOw8A4OWVd4=
+X-Google-Smtp-Source: ABdhPJwB7ffiivfW6yPcIeQUp5Sbw1RqqIlFRzcMpx2bbF79vrqYPinQYhAZSKJXXpSvUcCDKuDQm7TZqMQUeP4AGcc=
+X-Received: by 2002:aca:f482:: with SMTP id s124mr5184715oih.167.1623217658419;
+ Tue, 08 Jun 2021 22:47:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABPp-BEn+yksK1KhncL8jWAya+ikGPUtsWpoZhrJrgRH2ORajw@mail.gmail.com>
- <20210609044441.2326555-1-jonathantanmy@google.com>
-In-Reply-To: <20210609044441.2326555-1-jonathantanmy@google.com>
+References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
+ <pull.932.v5.git.1623069252.gitgitgadget@gmail.com> <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
+In-Reply-To: <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 8 Jun 2021 22:34:25 -0700
-Message-ID: <CABPp-BHt3db__cMpTY1a7y4u064NdVZGNCmnoR25aqhrWMfJcg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] promisor-remote: read partialClone config here
-To:     Jonathan Tan <jonathantanmy@google.com>
+Date:   Tue, 8 Jun 2021 22:47:27 -0700
+Message-ID: <CABPp-BEp0NzUqW_pWpTGoUvrB1JMp9fVHr28Sp8RZqV6w0-hEw@mail.gmail.com>
+Subject: Re: [PATCH v5 10/14] diff-lib: handle index diffs with sparse dirs
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 8, 2021 at 9:44 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+On Mon, Jun 7, 2021 at 5:34 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> > > @@ -99,6 +94,15 @@ static int promisor_remote_config(const char *var, const char *value, void *data
-> > >         size_t namelen;
-> > >         const char *subkey;
-> > >
-> > > +       if (!strcmp(var, "extensions.partialclone")) {
-> > > +               /*
-> > > +                * NULL value is handled in handle_extension_v0 in setup.c.
-> > > +                */
-> > > +               if (value)
-> > > +                       repository_format_partial_clone = xstrdup(value);
-> > > +               return 0;
-> > > +       }
-> >
-> > This is actually slightly hard to parse out.  I was trying to figure
-> > out where repository_format_partial_clone was initialized, and it's
-> > not handled when value is NULL in handle_extension_v0; it's the fact
-> > that repository_format_partial_clone is declared a static global
-> > variable.
-> >
-> > But in the next patch you make it a member of struct
-> > promisor_remote_config, and instead rely on the xcalloc call in
-> > promisor_remote_init().
-> >
-> > That means everything is properly initialized and you haven't made any
-> > mistakes here, but the logic is a bit hard to follow.  Perhaps it'd be
-> > nicer to just write this as
-> >
-> > +       if (!strcmp(var, "extensions.partialclone")) {
-> > +               repository_format_partial_clone = xstrdup_or_null(value);
-> > +               return 0;
-> > +       }
-> >
-> > which makes the code shorter and easier to follow, at least for me.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Hmm...is your concern about the case in which
-> repository_format_partial_clone is uninitialized, or about ignoring a
-> potential NULL value? If the former, I don't see how your suggestion
-> fixes things, since extensions.partialclone may never have been in the
-> config in the first place (and would thus leave
-> repository_format_partial_clone uninitialized, if it weren't for the
-> fact that it is in static storage and thus initialized to 0). If the
-> latter, I guess I should be more detailed about how it's being handled
-> in setup.c (or maybe just leave out the comment altogether - the code
-> here can handle a NULL repository_format_partial_clone for some reason).
+> While comparing an index to a tree, we may see a sparse directory entry.
+> In this case, we should compare that portion of the tree to the tree
+> represented by that entry. This could include a new tree which needs to
+> be expanded to a full list of added files. It could also include an
+> existing tree, in which case all of the changes inside are important to
+> describe, including the modifications, additions, and deletions. Note
+> that the case where the tree has a path and the index does not remains
+> identical to before: the lack of a cache entry is the same with a sparse
+> index.
+>
+> In the case where a tree is modified, we need to expand the tree
+> recursively, and start comparing each contained entry as either an
+> addition, deletion, or modification. This causes an interesting
+> recursion that did not exist before.
 
-My comment was about the latter; I was trying to understand what the
-comment meant relative to that case, and how and where that case would
-be handled in the code.  With that frame of reference, the comment
-seemed misleading to me...though perhaps the comment was intended to
-answer some other question entirely.
+So, I haven't read through this in detail yet...but there's a big
+question I'm curious about:
+
+Git already has code for comparing an index to a tree, a tree to a
+tree, or a tree to the working directory, right?  So, when comparing a
+sparse-index to a tree...can't we re-use the compare a tree to a tree
+code when we hit a sparse directory?
+
+Maybe there's a really good reason to conceptually duplicate the
+compare a tree to a tree code, but it seems the commit message should
+at least address that reason and why we need to reimplement that
+logic.
+
+
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  diff-lib.c | 188 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 188 insertions(+)
+>
+> diff --git a/diff-lib.c b/diff-lib.c
+> index b73cc1859a49..ba4c683d4bc4 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -314,6 +314,48 @@ static int get_stat_data(const struct cache_entry *ce,
+>         return 0;
+>  }
+>
+> +struct show_new_tree_context {
+> +       struct rev_info *revs;
+> +       unsigned added:1;
+> +};
+> +
+> +static int show_new_file_from_tree(const struct object_id *oid,
+> +                                  struct strbuf *base, const char *path,
+> +                                  unsigned int mode, void *context)
+> +{
+> +       struct show_new_tree_context *ctx = context;
+> +       struct cache_entry *new_file = make_transient_cache_entry(mode, oid, path, /* stage */ 0);
+> +
+> +       diff_index_show_file(ctx->revs, ctx->added ? "+" : "-", new_file, oid, !is_null_oid(oid), mode, 0);
+> +       discard_cache_entry(new_file);
+> +       return 0;
+> +}
+> +
+> +static void show_directory(struct rev_info *revs,
+> +                          const struct cache_entry *new_dir,
+> +                          int added)
+> +{
+> +       /*
+> +        * new_dir is a sparse directory entry, so we want to collect all
+> +        * of the new files within the tree. This requires recursively
+> +        * expanding the trees.
+> +        */
+> +       struct show_new_tree_context ctx = { revs, added };
+> +       struct repository *r = revs->repo;
+> +       struct strbuf base = STRBUF_INIT;
+> +       struct pathspec ps;
+> +       struct tree *tree = lookup_tree(r, &new_dir->oid);
+> +
+> +       memset(&ps, 0, sizeof(ps));
+> +       ps.recursive = 1;
+> +       ps.has_wildcard = 1;
+> +       ps.max_depth = -1;
+> +
+> +       strbuf_add(&base, new_dir->name, new_dir->ce_namelen);
+> +       read_tree_at(r, tree, &base, &ps,
+> +                       show_new_file_from_tree, &ctx);
+> +}
+> +
+>  static void show_new_file(struct rev_info *revs,
+>                           const struct cache_entry *new_file,
+>                           int cached, int match_missing)
+> @@ -322,6 +364,11 @@ static void show_new_file(struct rev_info *revs,
+>         unsigned int mode;
+>         unsigned dirty_submodule = 0;
+>
+> +       if (new_file && S_ISSPARSEDIR(new_file->ce_mode)) {
+> +               show_directory(revs, new_file, /*added */ 1);
+> +               return;
+> +       }
+> +
+>         /*
+>          * New file in the index: it might actually be different in
+>          * the working tree.
+> @@ -333,6 +380,136 @@ static void show_new_file(struct rev_info *revs,
+>         diff_index_show_file(revs, "+", new_file, oid, !is_null_oid(oid), mode, dirty_submodule);
+>  }
+>
+> +static int show_modified(struct rev_info *revs,
+> +                        const struct cache_entry *old_entry,
+> +                        const struct cache_entry *new_entry,
+> +                        int report_missing,
+> +                        int cached, int match_missing);
+> +
+> +static int compare_within_sparse_dir(int n, unsigned long mask,
+> +                                    unsigned long dirmask, struct name_entry *entry,
+> +                                    struct traverse_info *info)
+> +{
+> +       struct rev_info *revs = info->data;
+> +       struct object_id *oid0 = &entry[0].oid;
+> +       struct object_id *oid1 = &entry[1].oid;
+> +
+> +       if (oideq(oid0, oid1))
+> +               return mask;
+> +
+> +       /* Directory/file conflicts are handled earlier. */
+> +       if (S_ISDIR(entry[0].mode) && S_ISDIR(entry[1].mode)) {
+> +               struct tree_desc t[2];
+> +               void *buf[2];
+> +               struct traverse_info info_r = { NULL, };
+> +
+> +               info_r.name = xstrfmt("%s%s", info->traverse_path, entry[0].path);
+> +               info_r.namelen = strlen(info_r.name);
+> +               info_r.traverse_path = xstrfmt("%s/", info_r.name);
+> +               info_r.fn = compare_within_sparse_dir;
+> +               info_r.prev = info;
+> +               info_r.mode = entry[0].mode;
+> +               info_r.pathlen = entry[0].pathlen;
+> +               info_r.df_conflicts = 0;
+> +               info_r.data = revs;
+> +
+> +               buf[0] = fill_tree_descriptor(revs->repo, &t[0], oid0);
+> +               buf[1] = fill_tree_descriptor(revs->repo, &t[1], oid1);
+> +
+> +               traverse_trees(NULL, 2, t, &info_r);
+> +
+> +               free((char *)info_r.name);
+> +               free((char *)info_r.traverse_path);
+> +               free(buf[0]);
+> +               free(buf[1]);
+> +       } else {
+> +               char *old_path = NULL, *new_path = NULL;
+> +               struct cache_entry *old_entry = NULL, *new_entry = NULL;
+> +
+> +               if (entry[0].path) {
+> +                       old_path = xstrfmt("%s%s", info->traverse_path, entry[0].path);
+> +                       old_entry = make_transient_cache_entry(
+> +                                       entry[0].mode, &entry[0].oid,
+> +                                       old_path, /* stage */ 0);
+> +                       old_entry->ce_flags |= CE_SKIP_WORKTREE;
+> +               }
+> +               if (entry[1].path) {
+> +                       new_path = xstrfmt("%s%s", info->traverse_path, entry[1].path);
+> +                       new_entry = make_transient_cache_entry(
+> +                                       entry[1].mode, &entry[1].oid,
+> +                                       new_path, /* stage */ 0);
+> +                       new_entry->ce_flags |= CE_SKIP_WORKTREE;
+> +               }
+> +
+> +               if (entry[0].path && entry[1].path)
+> +                       show_modified(revs, old_entry, new_entry, 0, 1, 0);
+> +               else if (entry[0].path)
+> +                       diff_index_show_file(revs, revs->prefix,
+> +                                            old_entry, &entry[0].oid,
+> +                                            0, entry[0].mode, 0);
+> +               else if (entry[1].path)
+> +                       show_new_file(revs, new_entry, 1, 0);
+> +
+> +               discard_cache_entry(old_entry);
+> +               discard_cache_entry(new_entry);
+> +               free(old_path);
+> +               free(new_path);
+> +       }
+> +
+> +       return mask;
+> +}
+> +
+> +static void show_modified_sparse_directory(struct rev_info *revs,
+> +                        const struct cache_entry *old_entry,
+> +                        const struct cache_entry *new_entry,
+> +                        int report_missing,
+> +                        int cached, int match_missing)
+> +{
+> +       struct tree_desc t[2];
+> +       void *buf[2];
+> +       struct traverse_info info = { NULL };
+> +       struct strbuf name = STRBUF_INIT;
+> +       struct strbuf parent_path = STRBUF_INIT;
+> +       char *last_dir_sep;
+> +
+> +       if (oideq(&old_entry->oid, &new_entry->oid))
+> +               return;
+> +
+> +       info.fn = compare_within_sparse_dir;
+> +       info.prev = &info;
+> +
+> +       strbuf_add(&name, new_entry->name, new_entry->ce_namelen - 1);
+> +       info.name = name.buf;
+> +       info.namelen = name.len;
+> +
+> +       strbuf_add(&parent_path, new_entry->name, new_entry->ce_namelen - 1);
+> +       if ((last_dir_sep = find_last_dir_sep(parent_path.buf)) > parent_path.buf)
+> +               strbuf_setlen(&parent_path, (last_dir_sep - parent_path.buf) - 1);
+> +       else
+> +               strbuf_setlen(&parent_path, 0);
+> +
+> +       info.pathlen = parent_path.len;
+> +
+> +       if (parent_path.len)
+> +               info.traverse_path = parent_path.buf;
+> +       else
+> +               info.traverse_path = "";
+> +
+> +       info.mode = new_entry->ce_mode;
+> +       info.df_conflicts = 0;
+> +       info.data = revs;
+> +
+> +       buf[0] = fill_tree_descriptor(revs->repo, &t[0], &old_entry->oid);
+> +       buf[1] = fill_tree_descriptor(revs->repo, &t[1], &new_entry->oid);
+> +
+> +       traverse_trees(NULL, 2, t, &info);
+> +
+> +       free(buf[0]);
+> +       free(buf[1]);
+> +       strbuf_release(&name);
+> +       strbuf_release(&parent_path);
+> +}
+> +
+>  static int show_modified(struct rev_info *revs,
+>                          const struct cache_entry *old_entry,
+>                          const struct cache_entry *new_entry,
+> @@ -343,6 +520,17 @@ static int show_modified(struct rev_info *revs,
+>         const struct object_id *oid;
+>         unsigned dirty_submodule = 0;
+>
+> +       /*
+> +        * If both are sparse directory entries, then expand the
+> +        * modifications to the file level.
+> +        */
+> +       if (old_entry && new_entry &&
+> +           S_ISSPARSEDIR(old_entry->ce_mode) &&
+> +           S_ISSPARSEDIR(new_entry->ce_mode)) {
+> +               show_modified_sparse_directory(revs, old_entry, new_entry, report_missing, cached, match_missing);
+> +               return 0;
+> +       }
+> +
+>         if (get_stat_data(new_entry, &oid, &mode, cached, match_missing,
+>                           &dirty_submodule, &revs->diffopt) < 0) {
+>                 if (report_missing)
+> --
+> gitgitgadget
+>
