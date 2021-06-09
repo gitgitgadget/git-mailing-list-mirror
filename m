@@ -2,171 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D6D4C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D03B6C47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:28:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A1FF61351
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:24:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A82B761246
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231408AbhFIE0e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 00:26:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58273 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbhFIE0d (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 00:26:33 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6F69BD6D1;
-        Wed,  9 Jun 2021 00:24:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h9uKZKFR8NcyrPVmBZI0FBk3k96VJCp3wZDjk6
-        YlU/Q=; b=wHiaA0HMYpnA80BkA/hXl3KJUiqMB9TPfCep40hU6sYEj6VOGmvZbz
-        sLFWcdF19Y24xWEKwRjLsy9Rj3LUOup/Bt8eND+luzsPn2Dkel5J2e3YY1VJfFaS
-        hTtTkwedqDUG+ERsMnaicg5UyT2QO3Vfk9kcEzG4tO4oaPEu5A1uE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AED7CBD6D0;
-        Wed,  9 Jun 2021 00:24:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38310BD6CE;
-        Wed,  9 Jun 2021 00:24:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [GSoC] [PATCH v2 1/2] submodule--helper: introduce add-clone
- subcommand
-References: <20210605113913.29005-1-raykar.ath@gmail.com>
-        <20210608095655.47324-1-raykar.ath@gmail.com>
-        <20210608095655.47324-2-raykar.ath@gmail.com>
-Date:   Wed, 09 Jun 2021 13:24:38 +0900
-In-Reply-To: <20210608095655.47324-2-raykar.ath@gmail.com> (Atharva Raykar's
-        message of "Tue, 8 Jun 2021 15:26:54 +0530")
-Message-ID: <xmqqh7i7ll6h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9AEBB808-C8DA-11EB-8530-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+        id S231484AbhFIEaE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 00:30:04 -0400
+Received: from mail-pj1-f74.google.com ([209.85.216.74]:37564 "EHLO
+        mail-pj1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229638AbhFIEaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 00:30:03 -0400
+Received: by mail-pj1-f74.google.com with SMTP id fu20-20020a17090ad194b0290163ff5d5867so746991pjb.2
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 21:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=aUzCTNY38s4lfYqX8OVjXSJZwYmjccP1CBCyRtPw97o=;
+        b=vR/h5izdnsDIBSoQHmnTFd4JFW3IFRbSp5NJlRJyO3whpAynD1HUn4KwxMhe8qrvb1
+         FtuDhMFHEecRo5HV8kDKmu8Wa1dpw97cShOjbOpaZifa5P8+JXZX1GhVmp03zfGilnzI
+         EjbwBG8h+gYJmkn1S4egjh5UB1+VOSG1CHeZYDDKcLzVy3R8fIB/ouddSEjwmB32fOzu
+         x7PwLO+blOzuQ8OBvBuPF/7KaoP/j+V8PMUhcSCRFzewUhSape8SGBtQo1yVyaEUFW4y
+         aHIfIBcpjqilejRIHlqAqeCDPy2yiSaemNK0xxwtQrARWtyvMtb03jDoosN1xOIoOnn5
+         aTbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=aUzCTNY38s4lfYqX8OVjXSJZwYmjccP1CBCyRtPw97o=;
+        b=a/qEk1Mp1Sxmh3So6A/VXWfqIhjbQYWQNZ4GTIc3lG3VMBd6N2hKmSVFJstKOLOWlB
+         W8SUMs0GXWxbcxJbt7C2/0KHa78LhQMgoFb1BYnj3lXa/VtfsSO7Iqh4Fne+ZB4i8Jdn
+         RjYBiDiVpT4s+UkIJaYa4Kv25AjKL5OkJss83i7TV03nddqQwi5wY4QGKespSKnORQci
+         uouUuCYoo3f8u0G/O4FH4h9I+KDhYDJkHGIw5K3ts0rk377Q8mLH0UEooPWHbovARWY2
+         SAulbwW7qd4aOegZIwCR6gFr7PjOTYbn0xXdGICy/sGV088mmBrDkwedbTjzxQsMVNCS
+         KDiA==
+X-Gm-Message-State: AOAM530VPMEa4AFiZceXzuQcG2lI1Ar4HO8mxyHfrpbBQgU5bkX6Bgu1
+        ao2AC1hPb2mXblsz7wiOaT4k60agRtwuRZPdhASa
+X-Google-Smtp-Source: ABdhPJyoOXPxOwEQl7Qs5E4PTTV7/19TXb5lyW/FlFaDpTfWMIO9xtNvs4ZfE00fzzQcK9tVq4XjIwZX6vb+twrHkvqT
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:3796:: with SMTP id
+ mz22mr8609209pjb.177.1623212813465; Tue, 08 Jun 2021 21:26:53 -0700 (PDT)
+Date:   Tue,  8 Jun 2021 21:26:49 -0700
+In-Reply-To: <xmqq35ttrqmj.fsf@gitster.g>
+Message-Id: <20210609042649.2322758-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq35ttrqmj.fsf@gitster.g>
+X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
+Subject: Re: [PATCH v2 1/4] promisor-remote: read partialClone config here
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, me@ttaylorr.com,
+        newren@gmail.com, emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just a bit of random comments, leaving the full review to mentors.
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > Currently, the reading of config related to promisor remotes is done in
+> > two places: once in setup.c (which sets the global variable
+> > repository_format_partial_clone, to be read by the code in
+> > promisor-remote.c), and once in promisor-remote.c. This means that care
+> > must be taken to ensure that repository_format_partial_clone is set
+> > before any code in promisor-remote.c accesses it.
+> 
+> The above is very true, but I am puzzled by the chosen direction of
+> the code movement.
+> 
+> Given that the value in the field repository_format.partial_clone
+> comes from an extension, and an extension that is not understood by
+> the version of Git that is running MUST abort the execution of Git,
+> wouldn't it be guaranteed that, in a correctly written program, the
+> .partial_clone field must already be set up correctly before
+> anything else, including those in promissor-remote.c, accesses it?
+> 
+> > To simplify the code, move all such config reading to promisor-remote.c.
+> > By doing this, it will be easier to see when
+> > repository_format_partial_clone is written and, thus, to reason about
+> > the code. This will be especially helpful in a subsequent commit, which
+> > modifies this code.
+> 
+> So, I am not sure if this simplifies the code the way we want to
+> read our code.  Doing a thing in one place is indeed simpler than
+> doing it in two places, but it looks like promisor-remote code
+> should be using the repository-format data more, not the other way
+> around, at least to me.
+> 
+> Perhaps I am missing some other motivation, though.
+> 
+> Thanks.
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index d55f6262e9..c9cb535312 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2745,6 +2745,204 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
->  	return !!ret;
->  }
->  
-> +struct add_data {
-> +	const char *prefix;
-> +	const char *branch;
-> +	const char *reference_path;
-> +	const char *sm_path;
-> +	const char *sm_name;
-> +	const char *repo;
-> +	const char *realrepo;
-> +	int depth;
-> +	unsigned int force: 1;
-> +	unsigned int quiet: 1;
-> +	unsigned int progress: 1;
-> +	unsigned int dissociate: 1;
-> +};
-> +#define ADD_DATA_INIT { .depth = -1 }
-> +
-> +static char *parse_token(char **begin, const char *end, int *tok_len)
-> +{
-> +	char *tok_start, *pos = *begin;
+I'm reluctant to add more fields to struct repository_format. Right
+now, the way it is used is to hold any information we gathered (e.g.
+hash type) while determining if a repo is one that we can handle. Any
+information we still need is copied somewhere else, and the struct
+itself is immediately freed.
 
-Make it a habit to have a blank line between the initial block
-of declarations and the first statement.
+If we were to use it for promisor remote config, we would have to
+read config into struct repository_format's fields and copy those fields
+into struct repository in setup.c, and then access the same fields in
+promisor-remote.c. It seems more straightforward to just do everything
+in promisor-remote.c - for example, if we needed to change the type of
+one of those fields, we would just need to change it in one file instead
+of two.
 
-> +	while (pos != end && (*pos != ' ' && *pos != '\t' && *pos != '\n'))
-> +		pos++;
-> +	tok_start = *begin;
-> +	*tok_len = pos - *begin;
-> +	*begin = pos + 1;
-> +	return tok_start;
-> +}
-> +static char *get_next_line(char *const begin, const char *const end)
-> +{
-> +	char *pos = begin;
-> +	while (pos != end && *pos++ != '\n');
+I acknowledge that there still remains the duplication that setup.c
+needs to know that extensions.partialClone is a valid extension, and
+that promsior-remote.c needs to interpret extensions.partialClone.
 
-Write an empty loop on two lines, like this:
-
-	while (... condition ...)
-		; /* keep scanning */
-
-If there is a NUL byte between begin and end, this keeps going and
-the resulting string will contain one.  Is that a problem?
-
-> +	return pos;
-> +}
-
-In general, this project is mature enough that we should question
-ourselves if there is already a suitable line parser we can reuse
-when tempted to write another one.
-
-> +static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
-> +{
-> +	struct child_process cp_remote = CHILD_PROCESS_INIT;
-> +	struct strbuf sb_remote_out = STRBUF_INIT;
-> +
-> +	cp_remote.git_cmd = 1;
-> +	strvec_pushf(&cp_remote.env_array,
-> +		     "GIT_DIR=%s", git_dir_path);
-> +	strvec_push(&cp_remote.env_array, "GIT_WORK_TREE=.");
-> +	strvec_pushl(&cp_remote.args, "remote", "-v", NULL);
-> +	if (!capture_command(&cp_remote, &sb_remote_out, 0)) {
-> +		char *line;
-> +		char *begin = sb_remote_out.buf;
-> +		char *end = sb_remote_out.buf + sb_remote_out.len;
-> +		while (begin != end && (line = get_next_line(begin, end))) {
-
-OK, so this tries to parse output from "git remote -v", so NUL will
-not be an issue at all.  We will get a string that is NUL terminated
-and has zero or more lines, terminated with LFs.
-
-If that is the case, I think it is far easier to read without
-a custom get-next-line wrapper, e.g.
-
-	for (this_line = begin;
-	     *this_line;
-	     this_line = next_line) {
-		next_line = strchrnul(this_line, '\n');
-		... process bytes between this_line..next_line ...
-	}                
-
-> +			int namelen = 0, urllen = 0, taillen = 0;
-> +			char *name = parse_token(&begin, line, &namelen);
-
-Similarly, consider if strcspn() is useful in implementing
-parse_token().  See how existing code uses the standard system
-function with
-
-	$ git grep strcspn \*.c
-
-> +			char *url = parse_token(&begin, line, &urllen);
-> +			char *tail = parse_token(&begin, line, &taillen);
-> +			if (!memcmp(tail, "(fetch)", 7))
-
-At this point do we know there are enough number of bytes after
-tail[0] to allow us to do this comparison safely?  Otherwise,
-
-			if (starts_with(tail, "(fetch)")
-
-may be preferrable.
+Having said that, I don't feel very strongly about keeping everything in
+promisor-remote.c, so I can move it into setup.c if that's the reviewer
+consensus.
