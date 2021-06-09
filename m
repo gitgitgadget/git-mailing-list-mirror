@@ -2,216 +2,220 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F164C48BCF
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 10:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA06C48BCD
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 10:32:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E784A611AE
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 10:26:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F252608FE
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 10:32:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236658AbhFIK2l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 06:28:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40902 "EHLO
+        id S237096AbhFIKeB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 06:34:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234037AbhFIK2k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 06:28:40 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738B5C061574
-        for <git@vger.kernel.org>; Wed,  9 Jun 2021 03:26:46 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id ho18so26679387ejc.8
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 03:26:46 -0700 (PDT)
+        with ESMTP id S234179AbhFIKd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 06:33:58 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F9CC061574
+        for <git@vger.kernel.org>; Wed,  9 Jun 2021 03:31:47 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id k15so18061026pfp.6
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 03:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pqMpA+gw2mc9nUdTL1iAvIjWhZLHblbgXlhGBFQa7V4=;
-        b=h1pRPw7G3rBvRtFJU7CQh7CvI+xsSKZmaW779+oVNrcZZXCLvR95iK6methv7ewK7l
-         qBld8k1GDE8dVfFqrvkclkUXOCIkvCYTEf91QzhnhdddcL39sORnzyNIBMydYoq6SgDu
-         kE3EeBsEkJz8MrYJ/6NiSzJXYd1Kl4B6yFP0POkcDM9VRAviSBDrQEzNPudVPSrSaJCY
-         UEW1OSH9/T50pGAXhkk0BIvT93KOCN5TfufuNDB4ZHyCbw8cWzB9S3CKFJYA5BTMYCIE
-         a9TRHZIQOEEJovlhsKCHcreTYT+XjJ168wOnI80KD1xk3HTU6fCE0UPCQYN/4QO09Klf
-         4nRw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=laxRGubYXbzHUhaxWXpsNkRWtLfG/+J1AA4WVIJU3IE=;
+        b=HBLg0MnBUovQ8t8XfNofYWwTwQR1MnvA+X2YtmENBgPczVtSEfYW72OIF6Y8DISwDY
+         JbduqWJVvbMljruaMiFjEpMQ+bYPgHWOcwnhDeWX1+DuajA7ps8VSkiJi/pXN+yqhgZY
+         /znVlxAYIjVpfcobNweZOOgrMJuVT0lpX+puOeh5mbosarPy4MxOOUenxfJalJh0dn2V
+         rH5FDVhlSD0GCKg2m2AyFGEI9F5s5KT4lTS7i3cqJ4CYxKKuT5cFKhQnAU66GI+y0Rn1
+         luHdSd8s4SlumXE9yL+ZFRRxr2qIyjVc3UcR1ec5VMUHS8rjnz+kkIs2Xe6Iur4exTkn
+         2YiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pqMpA+gw2mc9nUdTL1iAvIjWhZLHblbgXlhGBFQa7V4=;
-        b=c1kOwVEqzUGOG394N2l7tHsqriXs86Qj+v68Atz9tddWfp4BZasxAFHs2qAvR/dywg
-         VhavgxJy0MznZl3r/YkH37QvzOl9GVo4v1UdnpiVLIb7f/jUlzHHosfkPaVYat0pnedM
-         K/AXS/OgJUrdJMtiBljGxOMStmGeGdPYK5X4GPXJacAYqoin/rnLNEM1Nx4T9siZxQvm
-         0463NTXHC1akQ0W6Jn+iXxvzEl4r1JUClSoYQ0PfULhKOHbU5WZDS/ajE4XU5jdkcITj
-         xk7sVJb5LFmup17kPxwT72oVIOx/nr1M09QAxNu+0ZcgObkdRxNhrJ0mlbhCGk4RozwF
-         ALmA==
-X-Gm-Message-State: AOAM5327gvbGU4pjELlrKRjbdr/lddoKzoGaMjHSVklgVJS7YBp7wNUt
-        qjSvUHzeft75rEQT2Pqpn9a+ejhbZQI=
-X-Google-Smtp-Source: ABdhPJwbUXkuE8ggkxeB1TWHqg/Acbaw0mauTi3Qu+7659gNS2U6wDi8eOIfX1KjVPXC1TEWcmy8uA==
-X-Received: by 2002:a17:906:3a05:: with SMTP id z5mr27303372eje.505.1623234404629;
-        Wed, 09 Jun 2021 03:26:44 -0700 (PDT)
-Received: from localhost.localdomain ([212.102.57.83])
-        by smtp.gmail.com with ESMTPSA id gz5sm907665ejb.113.2021.06.09.03.26.43
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 03:26:44 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] fix typos which duplicate a word
-Date:   Wed,  9 Jun 2021 12:26:41 +0200
-Message-Id: <20210609102641.3531183-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.31.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=laxRGubYXbzHUhaxWXpsNkRWtLfG/+J1AA4WVIJU3IE=;
+        b=YGNNMG81IJks8Qq152uVTemnGa4pwBfYqUC6olzoHOZrODz7b4yxNnGl8A8XYsoyXr
+         Z5vifb0hb5jbY7rR2Q50OpB+gMLiDDBpXVurkowowkazJfB6xoYNB94MGXVS4rzOjq3i
+         KN+BWrBlfK2o0DFBHOTwNLoYyeNqSyy/dU4bnF1CPS8RWyLq4Po4E2rrTzXj0R84veSY
+         wEDcA1HxbhPrAXZXq2WYNbQsyjxg0UttO9qI0Xa/plfQRWafnSroZ8zj7JYdFRbsODe5
+         +wZVQYu7BTxQZAf2rhIxa5srnB7vPLBszEPAfTx5BQjrcjoD7H07KdpQlIeyWm5iHa/2
+         L2Ag==
+X-Gm-Message-State: AOAM531tRChjiGJ/W0GzC+h8BoYEHLljNzhS5pkgKQRffwv3hDuvY5EX
+        UQlNV6YfbbqjSo4bvbWioR0=
+X-Google-Smtp-Source: ABdhPJyVm0A2LiV5EpsM8WBx7Euct6itWobtFFQFMgBqkLOKrdBwNyvPn/frfe4eWXH2z3WQaIg0Yw==
+X-Received: by 2002:a62:3003:0:b029:28e:74d9:1e16 with SMTP id w3-20020a6230030000b029028e74d91e16mr4765607pfw.21.1623234707404;
+        Wed, 09 Jun 2021 03:31:47 -0700 (PDT)
+Received: from atharva-on-air.dlink ([119.82.107.60])
+        by smtp.gmail.com with ESMTPSA id j7sm4935662pjf.0.2021.06.09.03.31.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 Jun 2021 03:31:47 -0700 (PDT)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: [GSoC] [PATCH v2 1/2] submodule--helper: introduce add-clone
+ subcommand
+From:   Atharva Raykar <raykar.ath@gmail.com>
+In-Reply-To: <xmqqh7i7ll6h.fsf@gitster.g>
+Date:   Wed, 9 Jun 2021 16:01:42 +0530
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <25A3EBAB-AD9A-4FF4-8E6E-63E8ACFF2739@gmail.com>
+References: <20210605113913.29005-1-raykar.ath@gmail.com>
+ <20210608095655.47324-1-raykar.ath@gmail.com>
+ <20210608095655.47324-2-raykar.ath@gmail.com> <xmqqh7i7ll6h.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix typos in documentation and code comments which repeat various words.
-These typos were found by searching using scripts like this:
+On 09-Jun-2021, at 09:54, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Just a bit of random comments, leaving the full review to mentors.
+>=20
+>> diff --git a/builtin/submodule--helper.c =
+b/builtin/submodule--helper.c
+>> index d55f6262e9..c9cb535312 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -2745,6 +2745,204 @@ static int module_set_branch(int argc, const =
+char **argv, const char *prefix)
+>> 	return !!ret;
+>> }
+>>=20
+>> +struct add_data {
+>> +	const char *prefix;
+>> +	const char *branch;
+>> +	const char *reference_path;
+>> +	const char *sm_path;
+>> +	const char *sm_name;
+>> +	const char *repo;
+>> +	const char *realrepo;
+>> +	int depth;
+>> +	unsigned int force: 1;
+>> +	unsigned int quiet: 1;
+>> +	unsigned int progress: 1;
+>> +	unsigned int dissociate: 1;
+>> +};
+>> +#define ADD_DATA_INIT { .depth =3D -1 }
+>> +
+>> +static char *parse_token(char **begin, const char *end, int =
+*tok_len)
+>> +{
+>> +	char *tok_start, *pos =3D *begin;
+>=20
+> Make it a habit to have a blank line between the initial block
+> of declarations and the first statement.
+>=20
+>> +	while (pos !=3D end && (*pos !=3D ' ' && *pos !=3D '\t' && *pos =
+!=3D '\n'))
+>> +		pos++;
+>> +	tok_start =3D *begin;
+>> +	*tok_len =3D pos - *begin;
+>> +	*begin =3D pos + 1;
+>> +	return tok_start;
+>> +}
+>> +static char *get_next_line(char *const begin, const char *const end)
+>> +{
+>> +	char *pos =3D begin;
+>> +	while (pos !=3D end && *pos++ !=3D '\n');
+>=20
+> Write an empty loop on two lines, like this:
+>=20
+> 	while (... condition ...)
+> 		; /* keep scanning */
 
-	for w in $(grep '^....$' /usr/share/dict/words)
-	do
-		git grep -P "\b$w $w\b"
-	done
+OK.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
+> If there is a NUL byte between begin and end, this keeps going and
+> the resulting string will contain one.  Is that a problem?
+>=20
+>> +	return pos;
+>> +}
+>=20
+> In general, this project is mature enough that we should question
+> ourselves if there is already a suitable line parser we can reuse
+> when tempted to write another one.
 
-I'm not sure what to put as the "area: " prefix for this patch, as it touches
-both docs and code comments.
+I will keep this in mind.
 
- Documentation/technical/protocol-v2.txt | 2 +-
- attr.c                                  | 2 +-
- builtin/log.c                           | 3 +--
- git-compat-util.h                       | 2 +-
- git-cvsserver.perl                      | 2 +-
- remote.c                                | 2 +-
- t/t5505-remote.sh                       | 2 +-
- t/t6416-recursive-corner-cases.sh       | 2 +-
- t/t9100-git-svn-basic.sh                | 2 +-
- 9 files changed, 9 insertions(+), 10 deletions(-)
+>> +static void show_fetch_remotes(FILE *output, const char *sm_name, =
+const char *git_dir_path)
+>> +{
+>> +	struct child_process cp_remote =3D CHILD_PROCESS_INIT;
+>> +	struct strbuf sb_remote_out =3D STRBUF_INIT;
+>> +
+>> +	cp_remote.git_cmd =3D 1;
+>> +	strvec_pushf(&cp_remote.env_array,
+>> +		     "GIT_DIR=3D%s", git_dir_path);
+>> +	strvec_push(&cp_remote.env_array, "GIT_WORK_TREE=3D.");
+>> +	strvec_pushl(&cp_remote.args, "remote", "-v", NULL);
+>> +	if (!capture_command(&cp_remote, &sb_remote_out, 0)) {
+>> +		char *line;
+>> +		char *begin =3D sb_remote_out.buf;
+>> +		char *end =3D sb_remote_out.buf + sb_remote_out.len;
+>> +		while (begin !=3D end && (line =3D get_next_line(begin, =
+end))) {
+>=20
+> OK, so this tries to parse output from "git remote -v", so NUL will
+> not be an issue at all.  We will get a string that is NUL terminated
+> and has zero or more lines, terminated with LFs.
+>=20
+> If that is the case, I think it is far easier to read without
+> a custom get-next-line wrapper, e.g.
+>=20
+> 	for (this_line =3D begin;
+> 	     *this_line;
+> 	     this_line =3D next_line) {
+> 		next_line =3D strchrnul(this_line, '\n');
+> 		... process bytes between this_line..next_line ...
+> 	}               =20
+>=20
+>> +			int namelen =3D 0, urllen =3D 0, taillen =3D 0;
+>> +			char *name =3D parse_token(&begin, line, =
+&namelen);
+>=20
+> Similarly, consider if strcspn() is useful in implementing
+> parse_token().  See how existing code uses the standard system
+> function with
+>=20
+> 	$ git grep strcspn \*.c
+>=20
+>> +			char *url =3D parse_token(&begin, line, =
+&urllen);
+>> +			char *tail =3D parse_token(&begin, line, =
+&taillen);
+>> +			if (!memcmp(tail, "(fetch)", 7))
+>=20
+> At this point do we know there are enough number of bytes after
+> tail[0] to allow us to do this comparison safely?  Otherwise,
+>=20
+> 			if (starts_with(tail, "(fetch)")
+>=20
+> may be preferrable.
 
-diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-index a1e31367f4..1040d85319 100644
---- a/Documentation/technical/protocol-v2.txt
-+++ b/Documentation/technical/protocol-v2.txt
-@@ -540,7 +540,7 @@ An `object-info` request takes the following arguments:
- 	Indicates to the server an object which the client wants to obtain
- 	information for.
- 
--The response of `object-info` is a list of the the requested object ids
-+The response of `object-info` is a list of the requested object ids
- and associated requested information, each separated by a single space.
- 
- 	output = info flush-pkt
-diff --git a/attr.c b/attr.c
-index 9e897e43f5..d029e681f2 100644
---- a/attr.c
-+++ b/attr.c
-@@ -685,7 +685,7 @@ static struct attr_stack *read_attr_from_array(const char **list)
-  * Callers into the attribute system assume there is a single, system-wide
-  * global state where attributes are read from and when the state is flipped by
-  * calling git_attr_set_direction(), the stack frames that have been
-- * constructed need to be discarded so so that subsequent calls into the
-+ * constructed need to be discarded so that subsequent calls into the
-  * attribute system will lazily read from the right place.  Since changing
-  * direction causes a global paradigm shift, it should not ever be called while
-  * another thread could potentially be calling into the attribute system.
-diff --git a/builtin/log.c b/builtin/log.c
-index 6102893fcc..516a1142dd 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1968,8 +1968,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	} else if (rev.diffopt.close_file) {
- 		/*
- 		 * The diff code parsed --output; it has already opened the
--		 * file, but but we must instruct it not to close after each
--		 * diff.
-+		 * file, but we must instruct it not to close after each diff.
- 		 */
- 		rev.diffopt.no_free = 1;
- 	} else {
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a508dbe5a3..df7dae9be1 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1368,7 +1368,7 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
- 	(type *)container_of_or_null_offset(ptr, offsetof(type, member))
- 
- /*
-- * like offsetof(), but takes a pointer to a a variable of type which
-+ * like offsetof(), but takes a pointer to a variable of type which
-  * contains @member, instead of a specified type.
-  * @ptr is subject to multiple evaluation since we can't rely on __typeof__
-  * everywhere.
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index f6f3fc192c..ed035f32c2 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2149,7 +2149,7 @@ sub req_diff
-                    ( $meta2->{revision} or "workingcopy" ));
- 
-         # TODO: Use --label instead of -L because -L is no longer
--        #  documented and may go away someday.  Not sure if there there are
-+        #  documented and may go away someday.  Not sure if there are
-         #  versions that only support -L, which would make this change risky?
-         #  http://osdir.com/ml/bug-gnu-utils-gnu/2010-12/msg00060.html
-         #    ("man diff" should actually document the best migration strategy,
-diff --git a/remote.c b/remote.c
-index 6d1e8d02df..dfb863d808 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1592,7 +1592,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 			else
- 				/*
- 				 * If the ref isn't stale, and is reachable
--				 * from from one of the reflog entries of
-+				 * from one of the reflog entries of
- 				 * the local branch, force the update.
- 				 */
- 				force_ref_update = 1;
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index c7b392794b..e6e3c8f552 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -182,7 +182,7 @@ test_expect_success 'rename errors out early when deleting non-existent branch'
- 	)
- '
- 
--test_expect_success 'rename errors out early when when new name is invalid' '
-+test_expect_success 'rename errors out early when new name is invalid' '
- 	test_config remote.foo.vcs bar &&
- 	echo "fatal: '\''invalid...name'\'' is not a valid remote name" >expect &&
- 	test_must_fail git remote rename foo invalid...name 2>actual &&
-diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
-index 84f5082366..57be4a4cbb 100755
---- a/t/t6416-recursive-corner-cases.sh
-+++ b/t/t6416-recursive-corner-cases.sh
-@@ -871,7 +871,7 @@ test_expect_failure 'merge of D2 & E4 merges a2s & reports conflict for a/file'
- # it feels sound to say "B and C do not agree what the final pathname
- # should be, but we know this content was derived from the common A:a so we
- # use one path whose name is arbitrary in the virtual merge base X between
--# D and E" and then further let the rename detection to notice that that
-+# D and E" and then further let the rename detection to notice that
- # arbitrary path gets renamed between X-D to "newname" and X-E also to
- # "newname" to resolve it as both sides renaming it to the same new
- # name. It is akin to what we do at the content level, i.e. "B and C do not
-diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-index 1d3fdcc997..ef35a54885 100755
---- a/t/t9100-git-svn-basic.sh
-+++ b/t/t9100-git-svn-basic.sh
-@@ -330,7 +330,7 @@ test_expect_success 'git-svn works in a bare repository' '
- 	git svn fetch ) &&
- 	rm -rf bare-repo
- 	'
--test_expect_success 'git-svn works in in a repository with a gitdir: link' '
-+test_expect_success 'git-svn works in a repository with a gitdir: link' '
- 	mkdir worktree gitdir &&
- 	( cd worktree &&
- 	git svn init "$svnrepo" &&
--- 
-2.31.1
+This solution is definitely an improvement over what I was doing.
 
+That said, I like Danh's suggestion[1] more, because it eliminates the
+need for parsing tokens entirely.
+
+The fundamental thing that piece of code was meant to do is:
+
+"If this line ends with '(fetch)', print the line, but without the =
+'(fetch)'"
+
+Parsing tokens only to put them back together through fprintf() may
+not be necessary for this usage, so using strchr() with
+strip_suffix_mem() should do the trick.
+
+[1] https://lore.kernel.org/git/YL9jTFAoEBP+mDA2@danh.dev/
+
+Thanks for the comments :^)=
