@@ -2,137 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 518AAC48BCD
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A261CC48BCD
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:18:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E283613E6
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:18:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 839A3613DC
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbhFIUUW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 16:20:22 -0400
-Received: from mail-pg1-f173.google.com ([209.85.215.173]:40648 "EHLO
-        mail-pg1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbhFIUUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 16:20:21 -0400
-Received: by mail-pg1-f173.google.com with SMTP id j12so20591004pgh.7
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 13:18:27 -0700 (PDT)
+        id S229678AbhFIUUe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 16:20:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229504AbhFIUUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 16:20:34 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC4D1C061574
+        for <git@vger.kernel.org>; Wed,  9 Jun 2021 13:18:25 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id q5-20020a9d66450000b02903f18d65089fso8993404otm.11
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 13:18:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=A9fEOIDGGFctv/hGibLauNm0ly0j+fmgrHjfqxg7yr8=;
-        b=QmAIl+CnoGSJI9iZrRDWBg4WJBRVwDfh+2uRYWzcTyeGiXTnrvyWHoPgYXBHSeyptI
-         rwVoHe8Xl/t5GFGgFokvYdV/BQPtYdTquXlzilGw5KkrTNIxFRxV/AzrPXmp6i5ErG6O
-         x8slV8lOLF/t6MT5kQFAz3PMOHvlUDDRDOTr2ENCUl/vXRnbGYC1wW6oT5Mxy4V53r8f
-         osAh4LlwUqB3a3IgVngey/E0NwEJSpp/wBhgxNT6OBjGs5StEygLFyWM3MMRcwBDg9AX
-         RZ+s29A3ZFBDdfkbB29sMTDFbdeE1ZtfSCmfxjm4M/l8zj5/b4O22D8QWBfrdq9yU25x
-         y0KQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=ayk9LMsAY2PazgO98xFZlmRE7CFnH/XW2sTWLs5mcwI=;
+        b=O2ELV7yMf+V3x0XWK5cPS5D4lJgT0JyxLg26T36gwFj9j1l639G2S0kYvm62K2QQgb
+         2wwT4TvgtW7xg4kGu4SJc+d74tu8/iOS9t/PZK6Lnqiwdwr1bche4LiL/C7oLhlVtaQa
+         hWchYO/mknXEYsAiDQ+6WW1NutvjbgUL1mT2JP6BXQ3U13HpI0DWUvGOwHoX1+UcxOO1
+         3htZdNMB2lJbt8p4e/8eky42i4seXdaO3McnpaWMfagoHtCYShEOUyfFti5OCTh+gT3S
+         VU1+NIVhPIDYUahCvsZBhYkN2JVH+yD+/OEk3JBWxwy6pg2EqkErI8LDV5LGwqxGVnBv
+         g8kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=A9fEOIDGGFctv/hGibLauNm0ly0j+fmgrHjfqxg7yr8=;
-        b=jo9CaR2KmUaM3jTWMqkHvTRld0QsRv/LG18QGDK1iWKWjKGcIdJht3hKZZhGiBfo3a
-         nHS4HC4HflLEuqHFbXjvlp7u1gimvAiq5qQun3gWS6Bac72lwi4xVqqKnqLF5EM48xML
-         exNnJfl+vbRyOVMb0vZmwMIJ/2bOKW4XMzRJ/BLbtmM0NNPmaLgFAhP3UPpzw4DCrdfX
-         fY56heCSwguLwogEyegTkOqXPrnSEgxfzcpMwV234FKuPpGdADxR15BoBzB2Yjgtyw3f
-         WTp5MTQH8ZlyQyoaNKJbYfGgBmVUagYWfDzjGgOv9vi8vV0ctORM9X+k5s+8OZaVlSmw
-         wvuQ==
-X-Gm-Message-State: AOAM532jhFo3VmP9CKGK6sTVCh4NPzgzZ4gL9hvaKGFcBMIvGfydEhK+
-        uXVoJ+u4R5NGXMxJrWaWb6k4TftnlzxvfA==
-X-Google-Smtp-Source: ABdhPJxPXnXPSbDork1xkhgzMxPPvCJGsAUkWDNFKsTB7jxv4/+kvLlgWNn7NZaDmbNhtTU77oKf7w==
-X-Received: by 2002:a65:6a0f:: with SMTP id m15mr1374469pgu.253.1623269846790;
-        Wed, 09 Jun 2021 13:17:26 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:0:2f68:a87b:28f9:3d54])
-        by smtp.gmail.com with ESMTPSA id m5sm517898pgl.75.2021.06.09.13.17.25
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=ayk9LMsAY2PazgO98xFZlmRE7CFnH/XW2sTWLs5mcwI=;
+        b=H5757PWX75l8YM6hnbimJQbDeHFoq8i4SmhIjLmrRsoZwFMISW2n984gIljCuXZhW4
+         sxuPejVE4Vwwe8DRTm/xJNN0OZyzOn0RjVT17s/PkFoyRgk4OvJ23sWk5IJadFB5mMJ/
+         zJtU73H2GCayr9eAiV8/WPnMARWbmSkUVFAGxerTa9Ma5Q/2wzbqqn/kjIjJQ7x8tLYY
+         VFHyprV3ykD4qqMas6VyxdBMrRuW7cLvMhtPwBjE92cTZTboO7ilFFFFVW2SAz1CKRG/
+         66ky+nRrMqtkZ8X5FZfMweSNHUd+5FTDMfc7FfMG2ZmO+k7eRh7tbaEnhwT7wb7PFIiJ
+         khFg==
+X-Gm-Message-State: AOAM531eXQdS7UfSoA05D4BsLb7GiH3RsDJfJkzQxPuOk9wiI1rJ7pUi
+        CpqKjpCA6/9Ck5HkNclDF7KnJkwYGND+Gg==
+X-Google-Smtp-Source: ABdhPJwLJXZvi+UTOQQx+7+uo3M027Dhyi1nrJUmNPLglvcRznhfYD1XoDJ0hd/oug8OAXbKE6b9cA==
+X-Received: by 2002:a9d:718d:: with SMTP id o13mr952995otj.271.1623269905076;
+        Wed, 09 Jun 2021 13:18:25 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id w186sm157141oib.58.2021.06.09.13.18.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 13:17:25 -0700 (PDT)
-Date:   Wed, 9 Jun 2021 13:17:20 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0?= Bjarmason' 
-        <avarab@gmail.com>, 'Junio C Hamano' <gitster@pobox.com>,
-        'Jeff Hostetler' <git@jeffhostetler.com>,
-        'Bagas Sanjaya' <bagasdotme@gmail.com>
-Subject: Re: [PATCH v5] tr2: log parent process name
-Message-ID: <YMEh0P3sVM8qMZji@google.com>
-References: <20210608185855.668050-1-emilyshaffer@google.com>
- <20210608221059.1935021-1-emilyshaffer@google.com>
- <023201d75cb4$02006d10$06014730$@nexbridge.com>
- <YL/uNYuADscBJUu2@google.com>
- <023701d75cb7$1ff995a0$5fecc0e0$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <023701d75cb7$1ff995a0$5fecc0e0$@nexbridge.com>
+        Wed, 09 Jun 2021 13:18:24 -0700 (PDT)
+Date:   Wed, 09 Jun 2021 15:18:23 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Phillip Susi <phill@thesusis.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com,
+        sandals@crustytoothpaste.net, stolee@gmail.com, jrnieder@gmail.com,
+        emilyshaffer@google.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60c1220f1ce69_aa2ee2088c@natae.notmuch>
+In-Reply-To: <87fsxq98xq.fsf@vps.thesusis.net>
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+ <d2c079264955b3bd6c3a5ef77a9c3684206f8475.1623085069.git.gitgitgadget@gmail.com>
+ <60be7adcdf3b_db9162081e@natae.notmuch>
+ <87fsxq98xq.fsf@vps.thesusis.net>
+Subject: Re: [PATCH 4/4] CodingGuidelines: recommend singular they
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 08, 2021 at 06:39:15PM -0400, Randall S. Becker wrote:
-> On June 8, 2021 6:25 PM, Emily Shaffer wrote"
-> >> We are probably going to have to discuss this one at more length. On
-> >> NonStop, in some cases, I have access to the program arguments of the
-> >> parent (rather like ps -ef) in POSIX-land, but not from the other
-> >> personality. I do have access to the program object name, in both
-> >> sides, although if someone replaces the object - which is not actually
-> >> possible for a running program, but a rename is - the object may end
-> >> up being somewhat meaningless or mangled. My suspicion is that I'm
-> >> going to have to supply different things for the two personalities,
-> >> but I'm not sure what as of yet.
-> >
-> >I guess I'm having trouble understanding - it sounds like you're
-> >describing one process with a graph of ancestry instead of a line.
-> >Does that mean we shouldn't be tracing the ancestry the way we are?
+Phillip Susi wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> It's more like this (g = Guardian, p=Posix, for illustration), for a
-> typical interactive situation coming from the non-POSIX side):
+> > Derrick Stolee via GitGitGadget wrote:
+> >> From: Derrick Stolee <dstolee@microsoft.com>
+> >> 
+> >> Technical writing seeks to convey information with minimal friction. One
+> >> way that a reader can experience friction is if they encounter a
+> >> description of "a user" that is later simplified using a gendered
+> >> pronoun. If the reader does not consider that pronoun to apply to them,
+> >> then they can experience cognitive dissonance that removes focus from
+> >> the information.
 > 
-> gMonitor -> gAncestor1 -> gAncestor2 -> pAncestor3 (/bin/sh) -> git
-> 
-> And when started from an SSH window:
-> 
-> gMonitor -> gAncestor1 (SSH) -> pAncestor2 (/bin/sh) -> git
-> 
-> I can get the program object name from any of the above, and the pid
-> from a POSIX process, or the name (or cpu and process number) of a
-> Guardian process. In the case of POSIX, obtaining program arguments
-> may be possible. An ancestor, as with Linux, can have multiple
-> children in a tree but a child can only have one parent - well,
-> technically one at a time anyway because there are some funky
-> exceptions where a child can adopt a different parent in
-> Guardian-land. In both cases, I can get the program object file of the
-> process (like /usr/local/bin/git), but if someone renames git because
-> an install happened during a long-running operation, like git gc
-> --aggressive, the object may be named something else, like
-> /usr/local/bin/ZZLDAG01, for argument sake).
+> Why should the pronoun apply to the reader?  If the documentation wants
+> to refer to the reader, it should use "you".  If it's using "he" then
+> it's referring to someone else previously mentioned in the
+> documentation, not to me.
 
-Interesting. One thing that might be helpful (if you don't care about
-the later name, since it looks like it might be junk) is that
-trace2_collect_process_info() provides some hint about when it was
-invoked, via the 'enum trace2_process_info_reason' arg. So if you're
-worried about a long-running process being renamed, the
-TRACE2_PROCESS_INFO_STARTUP reason happens very early in common-main.c.
-(And you could capture info like "the name changed later" at
-TRACE2_PROCESS_INFO_EXIT if you wanted.)
+Indeed, and the patches don't apply exclusively to the reader. Here [1]
+the relevant person is somebody else who rebased a branch. It is unclear
+what kind of "cognitive dissonance" would a reader experience when she
+reads that that somebody happens to be a she.
 
-> I'm not sure any of this is really relevant, but describes some of
-> what is possible. It also might be useful to pull out the tty that the
-> process was running on. That is easy to get if the terminal is still
-> connected. I think that particular bit of information might be very
-> useful, as well as user information.
+> > You can use "nucular" if you want (many people do). I will use
+> > "nuclear".
 > 
-> -Randall
+> You can use "nucular", but you will look stupid.
+
+I do think so, but that doesn't stop people from using it.
+
+Such is the nature of language.
+
+> > Both can be valid, and we shouldn't demand the use of one over the
+> > other.
 > 
+> Sure we can; one is not valid.  You also may not "axe" me a question, or
+> drink an "expresso".
 
-(I don't have much insight into what would or wouldn't be useful to log
-here in your case, but I will say that it all sounds very cool and I
-appreciate your thorough explanation.)
+According to some dictionaries "nucular" is valid [2].
 
- - Emily
+Plus, I don't think "valid" is the right word. Some people have a
+descpritive view of language, and in that view all words are valid, or
+rather: no word is invalid.
+
+What makes words land in a dictionary is simply how much people use
+them. The word "cute" used to mean "clever" [3], and it was "invalid" to
+use it as we use it today. But people didn't care, and the meaning of
+the word was forced to change. Dictioaries simply recorded the will of
+the people.
+
+> Also you argued against using they because it is not standard English,
+> but then argued that it is fine to use non standard English.
+
+I didn't argue either of those things.
+
+Yes, I did argue that "single they" isn't part of standard English (with
+a semantically singular antecedent), that doesn't necessary mean we
+shouldn't use it.
+
+And I did argue "nucular" is part of standard English (many people use
+it), that doesn't mean we should use it.
+
+Basically whether or not a word is part of "standard English" is
+orthogonal to the fact that we should use it. In my view.
+
+
+Let me be clear on what I do argue: we shouldn't ban perfectly standard
+words such as "she" and "he".
+
+Cheers.
+
+[1] https://lore.kernel.org/git/fb7a7573782ae8ba3bc5341d6aaee704af88fdcf.1623246878.git.gitgitgadget@gmail.com/
+[2] https://www.lexico.com/en/definition/nucular
+[3] https://slate.com/human-interest/2015/02/cute-etymology-and-history-from-sharp-keen-or-shrewd-to-charming-and-attractive.html
+
+-- 
+Felipe Contreras
