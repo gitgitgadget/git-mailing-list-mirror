@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90882C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F17CBC47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:32:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 78C736128A
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:29:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D56F861289
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbhFIEb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 00:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46950 "EHLO
+        id S233721AbhFIEev (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 00:34:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231513AbhFIEb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 00:31:27 -0400
-Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC795C061789
-        for <git@vger.kernel.org>; Tue,  8 Jun 2021 21:29:21 -0700 (PDT)
-Received: by mail-qt1-x84a.google.com with SMTP id d12-20020ac85acc0000b0290248a842f529so3414084qtd.15
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 21:29:21 -0700 (PDT)
+        with ESMTP id S231335AbhFIEeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 00:34:50 -0400
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C029C061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 21:32:41 -0700 (PDT)
+Received: by mail-qv1-xf4a.google.com with SMTP id i16-20020a0cf4900000b029022023514900so12774726qvm.11
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 21:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=iO3QH2y2+cy8CbFOIsfkVmmXYTX7eVUMCCDUNxmAjhM=;
-        b=aWLkKxaUoL7clHWJvKsAk9DxSdcNfdTspox2NXG//8LQjE1YNzBOtCKKA5YpUToyuG
-         HDOTHHoq9oea30GfpIOK5mPlkThG3mBKdspZ5IJPH7pU8oTi3x54f0v2VhaBg4Mt7X4i
-         TFN28yCHspmVM9KCizMuMRAmqIqC5Ajn+AjmfbSI4+shgA2Jckqrhn6l5g8+vk6//gFk
-         A5pPlMLwsRtTK3q1/dzskIYz3y1E1iX6mTvUyk7z8SNiLIbYWQOSjkp5k/PhGMoDkxSu
-         wBGf8v189HpEhTIRmrrTOdWIVKCQkywWqqHz1gDh+VY5qmlQjW8mPL/hzi5GWAgcK1nx
-         d6YA==
+        bh=i9IRpsh/D4RM17qVVU5lfQx5gPps0jts74Lg5um8smQ=;
+        b=H1kgfdUfBG9eQqjpLm1HaUkg7Z7a1aDv7w22kli8bEe9URdcd0UxCzlGL8mo2xJJDw
+         MoT8/BeQCTqB3FpqYMMj4z5h0ifnsVLHxzMpKhYdoP4GKlKdZg+XMyhpmNPEaO+BxWd6
+         0ZClfejYCqg7hcKPrW1Ap7xbh6yIPoWuFmmEFyd1oqHZ0sr9UhBzr/dWBNfW9Jm5bn+R
+         6iB2Ej3z+l8WgfuWaZd0jeHB60gbWtrjseQ4Cj3fTd0yhiLKbUQUsCBl9tuntreJK57s
+         23/cTF9/LZDDcb7U83leZpZsmR5ACqdXrA9xEqxeIrrqyIMAhzz9yghG+R9/sYEoHCx5
+         15zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=iO3QH2y2+cy8CbFOIsfkVmmXYTX7eVUMCCDUNxmAjhM=;
-        b=rqvK4CDaCBxVzwXp/6404kQ0IGtaZlgmCYjGhfRJ/W+Z++L+D65GgITGRO0iLaJF0x
-         03xJKe3oUHHKi+CWjHnltwkvnra8hwVws2qiduwZ7e6ZIox/ByyCRO2ctEvj7jvX0r8e
-         hikwD3guoWunjxZzOvxhq3IVQJri6BSXc9ejGpEHnkBN4MOMuDccD/QVDjgZhoXPmgRh
-         tdcKY/GLxpd8ht+qxyYWlWQeGfZnz9kKpQKSuGN3FP4AVf8100LUJw3tlrVptXNyql54
-         pyeNCKeu9Im/VAlcM0MJDzci2eGo+CGJUeG7LPRcwtkhyy9/RLfv8/Rqv2nNidP7I/zJ
-         smhA==
-X-Gm-Message-State: AOAM5321qt+EQfjlFnSoPTnHGvvnXVlrnlsUOdyF60mqUWdke9OmOiWz
-        5Z73uiAMnlETqOr4Y9tXP7mfdwImr1Qd2SUee/4C
-X-Google-Smtp-Source: ABdhPJxM5shGglZ64CqDNhp/slfwXK2pP//5mWwLwsimpsUDfw88z3AkA6+PJxj+jgNprzUm2nACOXTgzjnbWGq0+hH+
+        bh=i9IRpsh/D4RM17qVVU5lfQx5gPps0jts74Lg5um8smQ=;
+        b=PUr3VuHSa16p7tQ9EYWWdnijfKKsvcTTOd0g4lOMPMIleag5gLlvPmrQbgouomkPkQ
+         fBw5nq7Yl1g10P9MJDa2he/oR7YuGmAuSAsb/CrbR7nEkchjeW5XRjZYsBCPKii12UQI
+         PIAwqYZiYbmbhXFSrM9pDOHA9648V/oI+TGoJtqAtuE5V0rNYju9myGrE5jg8/lmBC9J
+         AmiVspDYPVGSQaYXyniOdBd1mfwtW+LR2vj8aUV2MQBfNasJdApNpZA3QkufZbJ9dz2w
+         KzsWVzaokOblREuoZMM/KYhdRunW9RzNMHUA2pc3aAgGpUel18k/IZu1s+e/qdKycGba
+         S3AA==
+X-Gm-Message-State: AOAM533UQfsDad0htuiRojKDyuGF2Uhli/LlFYtlO92BjzTWinC+B06y
+        O4oe2lIR1+K1Dh5rJmfl9JqgfkT/RCNpbh5E/lgT
+X-Google-Smtp-Source: ABdhPJy6hBLnEnJuB9+LIid0RfoNrVZG8ajEANcP8rRQeX9vm9U89aX7eQhXS6NxvKW4AJPXxtqwsFqc1CxoDRvTVoKA
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:d41:: with SMTP id
- 1mr3957709qvr.6.1623212959335; Tue, 08 Jun 2021 21:29:19 -0700 (PDT)
-Date:   Tue,  8 Jun 2021 21:29:17 -0700
-In-Reply-To: <xmqqy2blqbhh.fsf@gitster.g>
-Message-Id: <20210609042917.2323660-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:2aa3:: with SMTP id
+ js3mr3632381qvb.56.1623213160407; Tue, 08 Jun 2021 21:32:40 -0700 (PDT)
+Date:   Tue,  8 Jun 2021 21:32:38 -0700
+In-Reply-To: <xmqqo8chq9g8.fsf@gitster.g>
+Message-Id: <20210609043238.2324303-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <xmqqy2blqbhh.fsf@gitster.g>
+References: <xmqqo8chq9g8.fsf@gitster.g>
 X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
-Subject: Re: [PATCH v2 2/4] promisor-remote: support per-repository config
+Subject: Re: [PATCH v2 3/4] run-command: move envvar-resetting function
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     gitster@pobox.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org, me@ttaylorr.com,
@@ -68,27 +68,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> It does make sense to move this to run-command.c from submodule.c
+> and the function name is already suitable for being global.  I
+> however cannot help wondering if we should also pay attention to the
+> GIT_CONFIG_KEY_$n and GIT_CONFIG_VALUE_$n pairs (which is not a new
+> problem in this patch).
+
+Note that I changed the function name (the previous one was too
+submodule-specific). As for the config pairs, they are currently being
+passed through - do you have a situation in mind in which they should
+not be passed through?
+
+> This helper may sit better next to prep_childenv(), instead of just
+> saying "the location does not matter, just append randomly at the
+> end", though.
 > 
-> > Instead of using global variables to store promisor remote information,
-> > store this config in struct repository instead, and add
-> > repository-agnostic non-static functions corresponding to the existing
-> > non-static functions that only work on the_repository.
-> 
-> This does make sense.  In general, repository extensions are per
-> repository, so anything read from "extensions.*" should be stored
-> per in-core repository structure.
-> 
-> But doesn't that mean the thing that should be fixed is on the
-> setup.c side, where not just extensions.partialClone but other data
-> is read into "struct repository_format *format"?  Shouldn't we have
-> a pointer to that struct in the in-core repository object?
-> 
-> Special casing the "partialClone" field alone feels somewhat strange
-> to me.
+> Otherwise looking good.
 > 
 > Thanks.
 
-My reply is the same as what I replied to the query in patch 1 [1].
-
-[1] https://lore.kernel.org/git/20210609042649.2322758-1-jonathantanmy@google.com/
+Thanks - I'll move it.
