@@ -2,137 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF860C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 08:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E14C47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 09:05:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A419061364
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 08:11:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AE0661185
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 09:05:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237386AbhFIINN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 04:13:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237405AbhFIINI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 04:13:08 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DFE6C061574
-        for <git@vger.kernel.org>; Wed,  9 Jun 2021 01:11:14 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id t140so19096609oih.0
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 01:11:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fLn+3TdovrAQMH05w5atFScB0HPjONmRAwZwN234tuE=;
-        b=P2pDkf5Wdj8pXxyc+z770mGE7BxvrlWlmTh4wbvHPUwXZHO6n0v5CKxRW8MSMkxb2O
-         SvIXTFm21joYcQMDqIvRq5Sq9A9UFBz7mCVaXiToqG1wnXjbq3J61HEhyfpKX7cPTlE9
-         Qo14tjL4DQHBbQb8P4sg1aFXers12n+MP1SnHcDBpnlmqSLVzWSwA8NkarZOaSCV7lip
-         cp2DmjVXPFKZivhC7wbropVkfrHCs8nb2fk4q/4jzl+cg3mjAUbzKVp9B8PlWJbAXxsG
-         Y9/61imuSWS0YuCNWGm+1pTw6uc2NB12lfjj+f7bki6qAvV8823sS90nufubfqGWhDTH
-         OUUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fLn+3TdovrAQMH05w5atFScB0HPjONmRAwZwN234tuE=;
-        b=VJd4ejBg5nA2rgl0WZmCR4ayfjNa68w1CG6aN3C7kZ0nJrM82t4nRumn5zcFgh01AR
-         8ULSsvaukd4aVI8R/0zY4KmbzEumfT147XtCr5IaDGP3zfP+O2czNBDJoQLANIVvdeqM
-         gOWscdX7/Fa4GdJt5AjW6ENG+TL+SwvaY82Ms7hClL0pU8YPxr+yUgY/dpzpq+O94k8I
-         lehvADjvoHDGFC6nC8CkkVk3heVBbdAQwSdKs4bGyMsS+gKNj2Qrcnr42ZUQx3tbDXhl
-         sK/hm0fotp2mnjr/92JTB/8Lhm//XMTAvYRhXGvSWP/NUSuNdl6LW1pPL6Il78eeDWmU
-         JKqA==
-X-Gm-Message-State: AOAM5312eioezI85uF4AHNmrz7rS4/3sYjIydBzXKYSW0TQXEwwTVNhD
-        L4XivU9J1e5dtc4QVdvDvUTOF+vUOGG2tdQdu/w=
-X-Google-Smtp-Source: ABdhPJyc/65mC1ajeDK23U3wSqouHpsk/Vtxejav2NHzaHx79Q3Eyv/rkcSXzrYXWN1Uothig/aKWVJWPo1v6hnT+go=
-X-Received: by 2002:aca:f482:: with SMTP id s124mr5526625oih.167.1623226273876;
- Wed, 09 Jun 2021 01:11:13 -0700 (PDT)
+        id S237554AbhFIJHU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 05:07:20 -0400
+Received: from mail-eopbgr50084.outbound.protection.outlook.com ([40.107.5.84]:18657
+        "EHLO EUR03-VE1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S232943AbhFIJHT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 05:07:19 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OpfZIh/+xzA7NMTvD8o0Qp3GANJqQF7WtvFKgMSbfyLJhRIoAWTn1XhqYhbcbao+eueVsaPeKo9k3DIyLV1h7Et+PHLOFhTcta4ifwxhhAhZMSJB2YFrMj1KqixjlDY5VdcR60B67IvIP99EABauRc8NJ4vrCVW5sZI/cxmEKatXZShuONeUDT1w2n3/lS1JHQMk4Qz2NL7cNPuTD4rN09a2GGafVmxQTJbRNUZC387rrfzWV9Z2bW0tqSUjTyV1Y8OUgWF743Q1FhKMhryD5luJ+DFUaggG8zvGlpkEt9U9eWe6hBUlF9yoJjq8Bqx7nS+TFXxNTpFJ2zORxroQjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=M6RQEZJVY5NRIKYCcVsgC0HZGzMCMcq2QZI0kVVmjwE=;
+ b=K54abkP0+6uuCOHSjRIeq7gggvnAvO4xZUdd+rmckTUvKX3gdhikvMdsZpALzaF9C3zmgs5aV74i1vbEbmPKGuauMDQwtO8U3D7mYDN7ztmEcgnpUMNbQi3hUuW4qVZF4utC8mcSNn05iHi1JCtndl75mRPjVYX+qDmwFha0QZExGWJrFPWk1hzwyIPHhWxE34wO266DjefZvYB+KZe1NUPNs7x1eOYT8I/btSlMM4R1aX3v1CzHh5uiZvRmvbVzUqfNcB25WLthtiG1M7pyGJ/WMhj8NYks5zPNMlmLg7de8vetzHiBpoShHeURkdTCGq2Jebds8NKM+whn8gQo8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=velux.com; dmarc=pass action=none header.from=velux.com;
+ dkim=pass header.d=velux.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=velux.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=M6RQEZJVY5NRIKYCcVsgC0HZGzMCMcq2QZI0kVVmjwE=;
+ b=N+75IfqyEVFbhxWcvRldwbz7lF6ZD0Lemms1wFtqyTnvL2VdseD8Y+H0tvpNvDSEaPmd6XXjrSx+Jq7BbokoXsx6As5KcdBK9Zgx3MAJSOz9Df3GrJGr/CHbGXuYfqbjpmS7XHcPObZoMScv+wkoJKQtxrryBzr7OLYXeJUvjpw=
+Received: from DBAPR05MB7510.eurprd05.prod.outlook.com (2603:10a6:10:1a9::9)
+ by DB6PR0501MB2245.eurprd05.prod.outlook.com (2603:10a6:4:4d::27) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4219.21; Wed, 9 Jun
+ 2021 09:05:22 +0000
+Received: from DBAPR05MB7510.eurprd05.prod.outlook.com
+ ([fe80::4c3b:2076:6e5:7fef]) by DBAPR05MB7510.eurprd05.prod.outlook.com
+ ([fe80::4c3b:2076:6e5:7fef%7]) with mapi id 15.20.4195.030; Wed, 9 Jun 2021
+ 09:05:22 +0000
+From:   =?iso-8859-2?Q?Vojt=ECch_Vladyka?= <Vojtech.Vladyka@velux.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Removing fully-merged branches
+Thread-Topic: Removing fully-merged branches
+Thread-Index: AdddDebS75P0rtSWR/qqamRC1aNRGg==
+Date:   Wed, 9 Jun 2021 09:05:22 +0000
+Message-ID: <DBAPR05MB7510441970BA87A456B8C0D8EC369@DBAPR05MB7510.eurprd05.prod.outlook.com>
+Accept-Language: cs-CZ, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none header.from=velux.com;
+x-originating-ip: [31.30.173.188]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 790f9c51-60da-413a-da47-08d92b25b688
+x-ms-traffictypediagnostic: DB6PR0501MB2245:
+x-microsoft-antispam-prvs: <DB6PR0501MB2245C95E43288EF739CA181DEC369@DB6PR0501MB2245.eurprd05.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: rzNmC7JX0XnnxZzONWg48qBgW9lsH5bJLaw8Xc+WKQWURs3QeXUrOdbTbSI8MozkE5nEUVAYa4goc4OPzIcwL4M89F2naiUE2txJ6n2CvnenfCjEzLUzBjmDi/icOvXfr6k20F6Xf/ugnYAB25WrZ42cw8y8mIye9DVR0CIAUb5qe9JlsPVzvK2PkpixPQhVfdVibc5dFRKTWbXO4V8ec7tenGszwW2yoYiSIi2So13rTglP58keh/hOfVYHE8l76/mv19iePOmq9doIyOHJ/sVYRubgWDvJ9nh4oKcAcFSJTCjcR42jPVXkFdhdBL3DxSzASznmHt8Rc7T/WAjb6I56XONGpLVUNq3B20oEMumYL5EyKQAglwZjcRAF+h+nic50jWjDjL55slQk7XuFxVSyD9Z78XfWG9N+zCicCMeOleBMEZx5IL+CRgx9Ron5OsNAaNhpRg7BrfUipooH92gBaS35m4GlBKEuaStddSQlGi8HAvixqoK6ST83MVJDyLnH0MH1BjmNiKxHUhMcq9UUQnOVIYmIdC1SJq1I1nHOVblPYtDBof0zJkjy5A78EdSWEFzJ3y50+4aX1SZ4l99QtrhRtB4y9f8K9nG2Jto=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBAPR05MB7510.eurprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(376002)(396003)(366004)(346002)(136003)(26005)(55016002)(186003)(4744005)(71200400001)(76116006)(66556008)(6506007)(7696005)(66476007)(64756008)(66446008)(5660300002)(66946007)(33656002)(122000001)(9686003)(316002)(38100700002)(8936002)(52536014)(478600001)(86362001)(8676002)(6916009)(2906002)(3480700007);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata: =?iso-8859-2?Q?qARVvQARY7H8dU2ji8G4It8bGz8bkcWvWdsRMUkuJie3v1siUQtyA7DS5t?=
+ =?iso-8859-2?Q?oWvJ2CAzHIcwPvz7wsw+xLWMOD6J4sgXnoPTdxJI9FBnLi57HjnO9g4+ho?=
+ =?iso-8859-2?Q?67goUnanzPchUEYnRaLdZMuSyWwNmRkeRfSBZQgk/QMjFRRigosSqwCMSY?=
+ =?iso-8859-2?Q?O91PWLxTBHY2XuwbSGIz/DmVu3SF+G1vBnstuM4oDZ9G9i3251iz5vGKWK?=
+ =?iso-8859-2?Q?LywHUk2OfiqxTOBVRvFQsStsfLioE10k2CZDete8bXihmTBG2Vc990rWT9?=
+ =?iso-8859-2?Q?DHCu4CWpK+JmTNvUR7fGm2c4dxiqKA60W1H/QZz+QoPmOpVdAIotsfujoA?=
+ =?iso-8859-2?Q?PaH+jhi69vxiiWEPbqWPm+bOVGP3Fm2bPfE5g+6c3nh+VOYix3WAPwuqE6?=
+ =?iso-8859-2?Q?5piRx/hjT708BzCZcSx2bVmkxGFyNWuukinET4k8TWUK0uYcMYLM3ejeY7?=
+ =?iso-8859-2?Q?S1KLiX0abmnz9PPAD1NEkT3r8DPUElj/N+mdWjMxws19gsflUhHeslLvf2?=
+ =?iso-8859-2?Q?Zw5aYUfIBhW3UVJc1mc/F0tGwOGoKP+HVCX05iD03n+41ssoFF/KDkCWf3?=
+ =?iso-8859-2?Q?dNghYxtNBw54Z60LXpoRKunwwcYjICwxcQ/qCUzKuFh2heEH8aJAsz9q7E?=
+ =?iso-8859-2?Q?psM8nOlegIWeiXXjQd88xGINtGTrcWZVwOKZYx1a1uGwdYNlhqD5NnGUav?=
+ =?iso-8859-2?Q?avWck3PfXiASf4CdC4DQOuev0VUfLwJ/hAp8f73h3SKroO1PsBNVw5/9tL?=
+ =?iso-8859-2?Q?NUnpyh/cqcULKO8BXaoUg7sNT8RLu2yqVOrX8kH7WYLnz5PTnp2tdMipn5?=
+ =?iso-8859-2?Q?z94xLHd1QEBwZKBzUuwTmh3z7teyGR3KKHIxnw0GeidVMBdOxVJcarCsoS?=
+ =?iso-8859-2?Q?i1QGBwfmy3TIGOLQjCy+k3Mu0C7NVu0QRJ7IytfurmrC51WNl280zJWLNg?=
+ =?iso-8859-2?Q?VqRJaUguk6p2GaqHLnAR/bZm7y8csvA74f5nEYnLkL1NErKu+G9Si1sdTk?=
+ =?iso-8859-2?Q?SgIw6Erzuyv6tK1BBw0mqML0Xtlzzn9BfnMaOg11b2CbfM67+ZnCkhvaEk?=
+ =?iso-8859-2?Q?PBxN/84rkICTaRSWmKsOssVbMsL/MVCRrAjPBt3LIlDt/mJzpbjcP3JuYZ?=
+ =?iso-8859-2?Q?DW2zxoipoS26NfC0roSB0wxJOAC/K6spnMboNeYFuhHapZd0tjycmiYD2K?=
+ =?iso-8859-2?Q?5kjXl8x8k61OCDybmgqbhosii253gRb6Lu05+gy23tuojgyRjjpb3Bgg1R?=
+ =?iso-8859-2?Q?LL/+At/MUB7fqcn/JRyrY9zD/KRDMTAlfhVMZdgvoe1w5S3+BbXbf8IzjE?=
+ =?iso-8859-2?Q?PiqMaElP5SXKaT98ljCOxIGuLgrp1rrQVsGd9IK3PCt8i/wehkv9YUSZjt?=
+ =?iso-8859-2?Q?5ZfwQXw1rt?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
- <pull.932.v5.git.1623069252.gitgitgadget@gmail.com> <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
- <CABPp-BEp0NzUqW_pWpTGoUvrB1JMp9fVHr28Sp8RZqV6w0-hEw@mail.gmail.com> <xmqqfsxrk0oc.fsf@gitster.g>
-In-Reply-To: <xmqqfsxrk0oc.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 9 Jun 2021 01:11:02 -0700
-Message-ID: <CABPp-BHEp6mH3jx6BeRk+u8C-9Q+go0=hHiaxenN_5KQKsR5iw@mail.gmail.com>
-Subject: Re: [PATCH v5 10/14] diff-lib: handle index diffs with sparse dirs
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: velux.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DBAPR05MB7510.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 790f9c51-60da-413a-da47-08d92b25b688
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jun 2021 09:05:22.4010
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9a3f3f0f-95b6-4766-93f1-6bd07de19cea
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xdW46/W4tKwl7trKRvAi/uf071i8qUT+vsLBo/BeRLNDEGgyLBrO16u0qEZwqRjv8xVfHkHC/2W7PJts720cj8j68PybYOOKA21aFNmJWro=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0501MB2245
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 8, 2021 at 11:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Mon, Jun 7, 2021 at 5:34 AM Derrick Stolee via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Derrick Stolee <dstolee@microsoft.com>
-> >>
-> >> While comparing an index to a tree, we may see a sparse directory entry.
-> >> In this case, we should compare that portion of the tree to the tree
-> >> represented by that entry. This could include a new tree which needs to
-> >> be expanded to a full list of added files. It could also include an
-> >> existing tree, in which case all of the changes inside are important to
-> >> describe, including the modifications, additions, and deletions. Note
-> >> that the case where the tree has a path and the index does not remains
-> >> identical to before: the lack of a cache entry is the same with a sparse
-> >> index.
-> >>
-> >> In the case where a tree is modified, we need to expand the tree
-> >> recursively, and start comparing each contained entry as either an
-> >> addition, deletion, or modification. This causes an interesting
-> >> recursion that did not exist before.
-> >
-> > So, I haven't read through this in detail yet...but there's a big
-> > question I'm curious about:
-> >
-> > Git already has code for comparing an index to a tree, a tree to a
-> > tree, or a tree to the working directory, right?  So, when comparing a
-> > sparse-index to a tree...can't we re-use the compare a tree to a tree
-> > code when we hit a sparse directory?
->
-> Offhand I do not think of a reason why that cannot work.
->
-> The tree-diff machinery takes two trees, walks them in parallel and
-> repeatedly calls either diff_addremove() or diff_change(), which
-> appends diff_filepair() to the diff_queue[] structure.  If you see
-> an unexpanded tree on the index side, you should be able to pass
-> that tree with the subtree you are comparing against to the tree-diff
-> machinery to come up with a series of filepairs, and then tweak the
-> pathnames of these filepairs (as such a two-tree comparison would be
-> comparing two trees representing a single subdirectory of two different
-> vintages) before adding them to the diff_queue[] you are collecting
-> the index-vs-tree diff, for example.
+Hello!
 
-Good to know it seems my idea might be reasonable.
+Permanent issue popping up in our team is removing local branches which wer=
+e fully merged.=20
 
-> But if a part of the index is represented as a tree because it is
-> outside the cone of interest, should we even be showing the
-> difference in that part of the tree?  If t/ directory is outside the
-> cone of interest, should "git diff HEAD~100 HEAD t/" show anything
-> to begin with (the same question for "git diff --cached HEAD t/")?
+I know there are command chains doing this job usually starting with git br=
+anch --merged followed by grep and ending with git branch -d but my point i=
+s why such functionality isn't in git client already when he has all pieces=
+ of information already and ability to do all of that. Maybe I am missing s=
+ome reason behind that but to me it looks like missing feature.
 
-Excellent question...and not just for diff, but log, grep with
-revisions, and other commands.  We discussed this a while back[1] and
-we seemed to lean towards eventually adding a flag because there are
-usecases both for (1) viewing full history while having sparsity paths
-restrict just the working copy, and (2) also restricting the view of
-history to the sparsity paths.
-
-[1] It's been discussed a few times, but there's a relatively
-comprehensive discussion at the "Commands that would change for
-behavior A" section from
-https://lore.kernel.org/git/CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com/
+Thank you for your answers,
+Vojtech Vladyka
