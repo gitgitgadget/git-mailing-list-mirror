@@ -2,72 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E083EC48BCF
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33543C48BCF
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:29:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFC31613C0
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:27:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09BD261278
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 20:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbhFIU3d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 16:29:33 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:37653 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbhFIU3c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 16:29:32 -0400
-Received: by mail-ot1-f46.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso2219416otj.4
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 13:27:23 -0700 (PDT)
+        id S229535AbhFIUbc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 16:31:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229507AbhFIUbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 16:31:32 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A8CC061574
+        for <git@vger.kernel.org>; Wed,  9 Jun 2021 13:29:30 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id k21-20020a4a2a150000b029024955603642so4072062oof.8
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 13:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=Jtc78f5iBvL7nY/X65dpaRbU6o/udJT0V6SGqbRkn9Y=;
-        b=axTwFomqDcW5+tJA0pZbuIBQ/dgpEWm1zkmSU46n5rUlvhWdRI8rNBwn+FLRhnYUvL
-         UZZs7HRdYwZ9Ax2aZZ5JXI5uN9ibziRnaJ0Pe4dUcngsQH3wpHIux/29z8FwWeXPXF52
-         Ki5/+ZHT4X6hJyRfyJrznflwyE4HbECwmb7xap9bp5uBKGAZ8vNiQR1Pw+c4vaOl9/fl
-         uZJ1RTZoUfYSl/vtxr3bW8hPP5T0g71mvY7O01bjsaqxMTet5n5I8pV80E9O8BeaOioJ
-         0RQuwSiC40imR7ooVFdx9rAOhdjPqNzfUQQEYJMwMH/p7iyhTwUN976/da9ub3EoIIOC
-         B1pg==
+        bh=L+xW5hhQj0KVzfcpl2YXMu0sfEPg7f3dankMytlNIGk=;
+        b=GUD+8dK6fKGx5sL4yZUwCMN2pwym4cp0Pl2g+0giuTn+4nAeCnWbAzXajJXsfxOFwc
+         vs5s3T9+lqW6Js07brvYWhNKh9IAnHrJIak7HqR20ssZmAGaR28PbRsHG6lxkstpYv/x
+         RVDlIeyD1K96dZTdxR5LlwLemOsmnGZDhEul3alpMOOTMTdnbpz0GqmMs8Ko67XqifE4
+         wEefSU2yIdFR8Esgg5xRlJNMJo0X5tiplw7n4N6k/0gGf2Z3qvSU6+wMM3nOgAo0hpqD
+         3puOUA7u81tOpZh1LU/hywnB0F/cPsHOHM1Y6chDOtrnZcqkVDykjRwj90q652lfdRgB
+         qNMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=Jtc78f5iBvL7nY/X65dpaRbU6o/udJT0V6SGqbRkn9Y=;
-        b=SAFHo6UMggCRZzy+cl2hE2gvLqFZPD7zi/XpZ/fGmpreS+ytuE/WL9WjCHqUte3jLc
-         gQZWo3c3lvor1lnykcE7kIyRdp/+ZxuMVkR1/NqY/4BBjb7gYhdYJ2RNFfOBJmzg+TcT
-         puG7B/zT027YNBqD/7d95olAkCIl81ZChPQ6OgS65sKAklWyy7p6vERWP7h3GHQiOt60
-         aObR9UoVegkY1XFxYkeu46YzpSOf/U5SB2MBoPSefGagt70/S9e5cJYOedzimRTse+gJ
-         ezK8XC70/lyZvHarhFmd3qwl18yQpN4kgWjGwEmI47nHNaSaQRqIOHk04ct5RLSPu6Gi
-         uUGw==
-X-Gm-Message-State: AOAM531a1VHVtAlVGnjGPUOIZMZcCpal8UbRF79DNlurX5WzsHX0YZNt
-        xa141CuC1QS7kG1GEWhp2eg=
-X-Google-Smtp-Source: ABdhPJw/2TOKaECx+5qc/ihAphj7eyF7wjzAnyuA+4m2Wqe081JY3ulYh/cBFUMx0ikxbmHPpuuHbA==
-X-Received: by 2002:a9d:475:: with SMTP id 108mr1011184otc.69.1623270383471;
-        Wed, 09 Jun 2021 13:26:23 -0700 (PDT)
+        bh=L+xW5hhQj0KVzfcpl2YXMu0sfEPg7f3dankMytlNIGk=;
+        b=JXg3wUsHaDhAXKx2zu5qkH0VwWxw+zQCNrxTMzN6OyJDQeoiWXYNP7PNjTAAeaDeJq
+         uFz2J2ya8NSIYIf3AIIggUX1UVV7yLqacoMZjiJsdJ/8hxDyn69GOa9aGb6vUkmoDDnx
+         NBnHU0LryLUbqTJL0qjzdDaEKhCNG0wQ9Fa0pvOzmsFqF+ipAg/bKojl2Jl0ph2Vjsbq
+         SBuUyhPUc6Z1U9NAXvZ+fAi1TSQVyQqkKH3yla7b50StgEa6/Fvckk4I3qbVTKJx1voz
+         4RAExtFk3HApIuvXHwkozmnDtvAS81M0gTljv0V3jLxY1fu6xhVwqzDpOUrlctOtt+Vs
+         tLjg==
+X-Gm-Message-State: AOAM530mq+6HIEJsHFKnSzBfYPDM8ZfvTCpLAnwKh9hi6CWVG6T9WD3l
+        9FBZutoMr31H2roNbPg8BCfkReCBFjka2w==
+X-Google-Smtp-Source: ABdhPJwj83henBGCZa7YKiNUu3XnCN17OOLCwUSORQKpKVFsiEWHr9b9XClO+ANn/45zouf2H84SDA==
+X-Received: by 2002:a4a:6107:: with SMTP id n7mr1454825ooc.12.1623270569756;
+        Wed, 09 Jun 2021 13:29:29 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id x13sm208706ote.70.2021.06.09.13.26.22
+        by smtp.gmail.com with ESMTPSA id l131sm167584oia.0.2021.06.09.13.29.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 13:26:23 -0700 (PDT)
-Date:   Wed, 09 Jun 2021 15:26:21 -0500
+        Wed, 09 Jun 2021 13:29:29 -0700 (PDT)
+Date:   Wed, 09 Jun 2021 15:29:28 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Phillip Susi <phill@thesusis.net>,
+To:     Eric Sunshine <sunshine@sunshineco.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com,
-        sandals@crustytoothpaste.net, stolee@gmail.com, jrnieder@gmail.com,
-        emilyshaffer@google.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Message-ID: <60c123edcae35_aa2ee20886@natae.notmuch>
-In-Reply-To: <87czsu98ar.fsf@vps.thesusis.net>
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <afc51c5e6edec7935a6d0d0a05d396e11311ca6c.1623085069.git.gitgitgadget@gmail.com>
- <60be91757c6ca_db80d2086e@natae.notmuch>
- <87czsu98ar.fsf@vps.thesusis.net>
-Subject: Re: [PATCH 1/4] Documentation: use singular they when appropriate
+Cc:     Git List <git@vger.kernel.org>, David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Message-ID: <60c124a82436_aa2ee208d9@natae.notmuch>
+In-Reply-To: <CAPig+cSK1YkFwQASuV1n4fr5Ko8tH8QGxvVgQ=Vd0MeY9BSrzw@mail.gmail.com>
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+ <20210609192842.696646-2-felipe.contreras@gmail.com>
+ <CAPig+cSK1YkFwQASuV1n4fr5Ko8tH8QGxvVgQ=Vd0MeY9BSrzw@mail.gmail.com>
+Subject: Re: [PATCH 1/7] test: add merge style config test
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -76,48 +81,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Susi wrote:
+Eric Sunshine wrote:
+> On Wed, Jun 9, 2021 at 3:29 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> > We want to test different combinations of merge.conflictstyle, and a new
+> > file is the best place to do that.
+> >
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> > diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
+> > @@ -0,0 +1,44 @@
+> > +fill () {
+> > +       for i
+> > +       do
+> > +               echo "$i"
+> > +       done
+> > +}
 > 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Derrick Stolee via GitGitGadget wrote:
-> >> From: Derrick Stolee <dstolee@microsoft.com>
-> >> --- a/Documentation/SubmittingPatches
-> >> +++ b/Documentation/SubmittingPatches
-> >> @@ -373,7 +373,7 @@ If you like, you can put extra tags at the end:
-> >>  . `Acked-by:` says that the person who is more familiar with the area
-> >>    the patch attempts to modify liked the patch.
-> >>  . `Reviewed-by:`, unlike the other tags, can only be offered by the
-> >> -  reviewer and means that she is completely satisfied that the patch
-> >> +  reviewer and means that they are completely satisfied that the patch
-> 
-> Say wait a minute.  If that is a "singular they", then why was the "is"
-> changed to "are"?
+> This seems to duplicate the behavior of test_write_lines()...
 
-Great point. I doubt any linguist would be happy with:
+Right, I'll update the patch.
 
-  can only be offered by the reviewer and means that they is completely
-  satisfied...
+The above function is used in:
 
-Unless we are in the context of African-American Vernacular English.
+  t6440-config-conflict-markers.sh
+  t7201-co.sh
 
-> I think that belies the fact that there is no such thing as a
-> "singular they".
-
-There is such a thing as singular they, but it's not what the proponents
-of this patch think [1]:
-
-This is a good use of singular they:
-
-  Everyone returned to their seats
-
-This isn't:
-
-  We thank the anonymous reviewer for their helpful comments
+So those two probably should be updated.
 
 Cheers.
-
-[1] https://ahdictionary.tumblr.com/post/147597257733/updated-usage-note-they
 
 -- 
 Felipe Contreras
