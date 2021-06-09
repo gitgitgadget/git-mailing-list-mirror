@@ -6,74 +6,79 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CDD3C48BD1
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 03:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2953EC47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 03:39:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DFE761354
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 03:38:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08BDC60FEA
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 03:39:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236512AbhFIDkL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Jun 2021 23:40:11 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61998 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236501AbhFIDkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jun 2021 23:40:10 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 04245132766;
-        Tue,  8 Jun 2021 23:38:16 -0400 (EDT)
+        id S236527AbhFIDla (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Jun 2021 23:41:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65290 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236450AbhFIDl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jun 2021 23:41:29 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29C76D31FE;
+        Tue,  8 Jun 2021 23:39:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ph7ON4aQL7eY
-        cBzz9vyBBLnrVSg++3XjAFdsT+Y2dOg=; b=quZkitoJQlyxpEhFSni/b4wUOmBH
-        BzuOhYS0sszFuRafPsEUdbpiQ7xoGO48ahTO+yw8C4LMYB3IEdajYvWjh4+6GO8u
-        ssOyeoBlO4a94x+Ndzdq1aJL/PL8FYZwUWB8+zIqcmmiDqZbhrdSNp05bKLBCTnu
-        4c+p9j7b/aB2AEE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F1B25132765;
-        Tue,  8 Jun 2021 23:38:15 -0400 (EDT)
+        :content-type; s=sasl; bh=w1b/phmZ3B8ddhIVOeVqz0B+jHBbgRLToriPDN
+        8iwII=; b=cKxmBzI0cixqD0oDrluhKWLG9mFcXsfRvyfjk+FTrJ1GDBUg066QBr
+        stNpamRlA+u5jbsZZN+QjEu7u1YwlixI7J8i1zGNVeSIMQT3+nlCMqFnqyMvZJWO
+        VxlZxd3x/ODRWIiiC7GOXYIcH9LtGXv/feZyEhuXRK6j3VOszu+vc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2221FD31FD;
+        Tue,  8 Jun 2021 23:39:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 34173132763;
-        Tue,  8 Jun 2021 23:38:13 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A2965D31FC;
+        Tue,  8 Jun 2021 23:39:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] builtins + test helpers: use return instead of
- exit() in cmd_*
-References: <patch-1.1-61d7e6e079-20210607T111008Z-avarab@gmail.com>
-        <patch-1.1-f225b78e01-20210608T104454Z-avarab@gmail.com>
-        <xmqqwnr3nc7i.fsf@gitster.g> <87im2n3gje.fsf@evledraar.gmail.com>
-Date:   Wed, 09 Jun 2021 12:38:11 +0900
-In-Reply-To: <87im2n3gje.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 09 Jun 2021 03:54:22 +0200")
-Message-ID: <xmqqy2bjlnbw.fsf@gitster.g>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH 0/4] [GSOC][RFC] ref-filter: add %(rest) atom
+References: <pull.976.git.1623163082.gitgitgadget@gmail.com>
+Date:   Wed, 09 Jun 2021 12:39:33 +0900
+In-Reply-To: <pull.976.git.1623163082.gitgitgadget@gmail.com> (ZheNing Hu via
+        GitGitGadget's message of "Tue, 08 Jun 2021 14:37:58 +0000")
+Message-ID: <xmqqtum7ln9m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1E526B30-C8D4-11EB-8B74-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4EDF9318-C8D4-11EB-96EF-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> So it's really the opposite of what you're saying. If you have cleanups
-> that are truly important, i.e. so important that you'd like to notify
-> the user with a non-zero exit code if they fail, you *don't* want them
-> in an atexit handler. That won't work.
+> In order to let git cat-file --batch reuse ref-filter logic, in this
+> version, the atom %(rest) is added to ref-filter.
+>
+> Change from last version:
+>
+>  1. Deleted two commit about %(raw:textconv) and %(raw:filters), their
+>     construction will be after letting cat-file --batch uses ref-filter
+>     logic.
+>  2. Exchange the order of the definition of "cmp_fn" and the declaration of
+>     "a_size" and "b_size" in cmp_ref_sorting(), to avoid breaking
+>     -Wdecl-after-stmt.
+>  3. Delete --rest option, "git for-each-ref" family will reject %(rest) by
+>     default.
+>  4. Add GPG prefix to some %(raw) tests.
+>
+> ZheNing Hu (4):
+>   [GSOC] ref-filter: add obj-type check in grab contents
+>   [GSOC] ref-filter: add %(raw) atom
+>   [GSOC] ref-filter: use non-const ref_format in *_atom_parser()
+>   [GSOC] ref-filter: add %(rest) atom
 
-Ah, OK.  What I had in mind was things like removing the directory
-"clone" attempted to create and populate, removing temporary files,
-etc.  when a function that is not marked as NORETURN calls die(), by
-the atexit handler.  But you're right.  We leave a final clean-up
-for normal returns (i.e. when cmd_foo() intends to return or exit
-with 0) to be done to the caller that is git.::run_builtin().
-
-Thanks.
+Thanks, will replace.
