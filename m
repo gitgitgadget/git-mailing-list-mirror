@@ -7,160 +7,108 @@ X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04015C47095
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27AF7C47095
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:44:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB4A56128A
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:41:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF9DC60234
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 04:44:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236058AbhFIEnI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 00:43:08 -0400
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:35357 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234932AbhFIEnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 00:43:05 -0400
-Received: by mail-pl1-f202.google.com with SMTP id o12-20020a170902778cb02900ff01bc1ddbso10823142pll.2
-        for <git@vger.kernel.org>; Tue, 08 Jun 2021 21:40:56 -0700 (PDT)
+        id S236058AbhFIEqj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 00:46:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50348 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232633AbhFIEqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 00:46:38 -0400
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63D7C061574
+        for <git@vger.kernel.org>; Tue,  8 Jun 2021 21:44:44 -0700 (PDT)
+Received: by mail-qv1-xf49.google.com with SMTP id q8-20020ad45ca80000b02902329fd23199so5099156qvh.7
+        for <git@vger.kernel.org>; Tue, 08 Jun 2021 21:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=BeMVnqXIotHk1bvE2sTEZmQbjdqeEEGRoL3SWBPE8lo=;
-        b=lD+nYIx7ZbCE2s3tqEJT7l8H0tGlqFf14AASrmuSbtny866k/W61r+cn0T0H0VrrKZ
-         T2fJEWKcWLap0KZrthvQD3qehDXguLTHLy7sbmKQCTACmH8RbQ4iQCw6EjdgYZoCO3W6
-         MCspkPM0nAyds9mv/RuBqVeCN92a+7n8tUcFuoELjxZE7fwqDPdqqSe1c7ihYTVkCzOc
-         swbdxDR8GtVoctWlrRMoMwswkYTz2sTElz9j8WjIqcU159aTpYkWDr0N5hCzYJBJXY1n
-         y00TjxaTYiNTw0hooSMcGgDyccZN8Ximn3xIuNAeLIOhi2Lg5m+DNzLXWZEGZT5pnur2
-         Y6OA==
+        bh=MZbeHxK3oghVB6gzTQNMKIKgqGhGb32k0k5M13XDkeg=;
+        b=DPDcy3lo/dBlbUofvmj8p7Q71eoTKxTOIqMrDyaMiXkLKmuCectaKqqHGEqVL8fNIz
+         Q8j3x04dJNcbdoMObDs0ZWffwHuxXERcyQNfSKaxAKbng1KXAPMMhCKuTq1OAEjXDcq7
+         a2YlkDzdbfJCDfqVB5YixmOjN9DvczPgsjeRYnsU9in3yHjZmII5+WwOoDPOaUSuFZBi
+         yuQbTebNlMa5zuS4lHkVqy3rbhwjnmGz1lgkcy7fB2lQFInUBRxlG2SN/7WgkCKdFVwz
+         XLzynJXqGzjr7bxP6OLmxcbOnsqpF4nYIwUbQGusSZvPWRbj+zx8rT3ENTURiJKdQWOR
+         6BSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=BeMVnqXIotHk1bvE2sTEZmQbjdqeEEGRoL3SWBPE8lo=;
-        b=lApTz3EoBkKIPeO5IZiCxBNpTU/YPFFodgGr5HyRWjJCsB7JB0VchMaHI4hRWmls65
-         pfgWGjFIEAs8aPUNx0QrnZzFHepBC4MawUB0rdGceG3O7WpdTOB6JOLY88RkH3tGKIGS
-         xvt8J+UFhykMewC1WVChv0+DYMADoVlASd25rA75RKtjcLeaBBkso03efj8g0DJeOUjS
-         jPGMzDblHKowV3pCtYMtOnVdN8OppJo+r8dcXUXZ2KKaSLcdsIJdGCiuDmQyha0sP+Zu
-         vQtqY0O3cTnlt6aSQJTv++7PjRPFZCU5Pg/j+exVTo7w1mYs8/Q5DWN2NQIA498EIUZQ
-         EqzA==
-X-Gm-Message-State: AOAM5322j4wReFyWQX6t4C9fj5q7rc5yleut+H8asufs8dNSyPvW7XnP
-        r5e7kkBweBrNOeTp1zy/Addd4hUg9MCYCWom00t9
-X-Google-Smtp-Source: ABdhPJxJ0cGaTpUsrGfqMhciaGretl3YOhzDjBgDRKFsRMqQIwl3r1jgJo/+TRinZI5nanTMti2Fcrq105VlbxY48IIc
+        bh=MZbeHxK3oghVB6gzTQNMKIKgqGhGb32k0k5M13XDkeg=;
+        b=l4JMhXDNuQ6g4hIxzHdbMf6DyrQ6XHTIPLIpu5goFpd0wE9zA5TmsM4V4u60HlvvJv
+         CDtVhcbwiJ2/poo1t03hGpDITzQAIs64t7q6rivag3gR5EQ7+jIqOYBWbtfRxB2jQRVa
+         fcBv5jVavvUHeXT+Sgw5LTk+gsuONEfLRlgKR4D6W0cLvuMD+bJLO/xZnB5rxeZkETM7
+         wWqfrROE54RQMqG6iRKaIxjrrAK4nmUQTuWG0qYJS/0iQLQzR0kyo2GABzHxdYGHya3m
+         7C2uEx+CuxAQq4aNBEI9U7YJwdXT+nLFT2ANwxMHzNWfMaBK13ISQdA7pNfv1WMs/HIX
+         uTZg==
+X-Gm-Message-State: AOAM5300Vu9fvIIsCAvP9nIZ22MyO1WtP1tJP5UeW5BDwPe+F4HrW6eB
+        U4TsfEGiHKRv3eHrZVzV/cZAfT9MI7MkkZl1/5Cv
+X-Google-Smtp-Source: ABdhPJzX9gkkCfPj4/y0JhWiV8N91Xt52ZkaY2vCqkiCtyPiaYUHKm3CbRJ5ZVxE+ItM0GJ56BlL8P8oJ6D7Mw9YlNGx
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:d104:b029:113:4f33:47b8 with
- SMTP id w4-20020a170902d104b02901134f3347b8mr3591896plw.14.1623213596565;
- Tue, 08 Jun 2021 21:39:56 -0700 (PDT)
-Date:   Tue,  8 Jun 2021 21:39:50 -0700
-In-Reply-To: <xmqqim2pq8kj.fsf@gitster.g>
-Message-Id: <20210609043950.2325124-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:ad4:4b71:: with SMTP id
+ m17mr3630287qvx.45.1623213883400; Tue, 08 Jun 2021 21:44:43 -0700 (PDT)
+Date:   Tue,  8 Jun 2021 21:44:41 -0700
+In-Reply-To: <CABPp-BEn+yksK1KhncL8jWAya+ikGPUtsWpoZhrJrgRH2ORajw@mail.gmail.com>
+Message-Id: <20210609044441.2326555-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <xmqqim2pq8kj.fsf@gitster.g>
+References: <CABPp-BEn+yksK1KhncL8jWAya+ikGPUtsWpoZhrJrgRH2ORajw@mail.gmail.com>
 X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
-Subject: Re: [PATCH v2 4/4] promisor-remote: teach lazy-fetch in any repo
+Subject: Re: [PATCH v2 1/4] promisor-remote: read partialClone config here
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
+To:     newren@gmail.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org, me@ttaylorr.com,
-        newren@gmail.com, emilyshaffer@google.com
+        emilyshaffer@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> > @@ -99,6 +94,15 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+> >         size_t namelen;
+> >         const char *subkey;
+> >
+> > +       if (!strcmp(var, "extensions.partialclone")) {
+> > +               /*
+> > +                * NULL value is handled in handle_extension_v0 in setup.c.
+> > +                */
+> > +               if (value)
+> > +                       repository_format_partial_clone = xstrdup(value);
+> > +               return 0;
+> > +       }
 > 
-> >  		/* Check if it is a missing object */
-> > -		if (fetch_if_missing && has_promisor_remote() &&
-> > -		    !already_retried && r == the_repository &&
-> > +		if (fetch_if_missing && repo_has_promisor_remote(r) &&
-> > +		    !already_retried &&
+> This is actually slightly hard to parse out.  I was trying to figure
+> out where repository_format_partial_clone was initialized, and it's
+> not handled when value is NULL in handle_extension_v0; it's the fact
+> that repository_format_partial_clone is declared a static global
+> variable.
 > 
-> Turning has_promisor_remote() into repo_has_promisor_remote(r) does
-> make tons of sense.  Is this part of the code ready to lose "'r' must
-> be the_repository because has_promisor_remote() only works on the
-> primary in-core repository" we had before?
-
-Yes - that is precisely what I test with the test helper (running this
-code path with "r" that is not the_repository).
-
-> > @@ -21,6 +22,11 @@ static int fetch_objects(const char *remote_name,
-> >  
-> >  	child.git_cmd = 1;
-> >  	child.in = -1;
-> > +	if (repo != the_repository) {
-> > +		prepare_other_repo_env(&child.env_array);
-> > +		strvec_pushf(&child.env_array, "%s=%s", GIT_DIR_ENVIRONMENT,
-> > +			     repo->gitdir);
-> > +	}
+> But in the next patch you make it a member of struct
+> promisor_remote_config, and instead rely on the xcalloc call in
+> promisor_remote_init().
 > 
-> This is what prepare_submodule_repo_env_in_gitdir() does; it makes
-> me wonder if it (i.e. set up environment for that other repository,
-> including the GIT_DIR and possibly other per-repository environment
-> variable override) should be the primary API callers would want,
-> instead of a more limited prepare_other_repo_env() that does not
-> even take 'repo' parameter.  Doesn't it feel somewhat strange for a
-> function that is supposed to help preparing a part of child process
-> by filling appropriate environ[] array to be run in a repository
-> that is different from ours (which is "other repo" part of its name)
-> not to want to even know which repository the "other" repo is?
-
-Good point. I'll update prepare_other_repo_env() to have a gitdir
-parameter.
-
-> > diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
-> > new file mode 100644
-> > index 0000000000..3f102cfddd
-> > --- /dev/null
-> > +++ b/t/helper/test-partial-clone.c
-> > @@ -0,0 +1,43 @@
-> > +#include "cache.h"
-> > +#include "test-tool.h"
-> > +#include "repository.h"
-> > +#include "object-store.h"
-> > +
-> > +/*
-> > + * Prints the size of the object corresponding to the given hash in a specific
-> > + * gitdir. This is similar to "git -C gitdir cat-file -s", except that this
-> > + * exercises the code that accesses the object of an arbitrary repository that
-> > + * is not the_repository. ("git -C gitdir" makes it so that the_repository is
-> > + * the one in gitdir.)
-> > + */
+> That means everything is properly initialized and you haven't made any
+> mistakes here, but the logic is a bit hard to follow.  Perhaps it'd be
+> nicer to just write this as
 > 
-> The reason why this only gives size is because it will eventually
-> become unnecessary once the main code starts running things in a
-> submodule repository properly (i.e. without doing the alternate odb
-> thing),
-
-If you mean that this code path can be tested through user-visible
-commands (e.g. git grep with submodule recursion) once the main code
-starts avoiding doing the alternate odb thing, so this helper will
-eventually be unnecessary, then the answer is yes.
-
-> and a more elaborate check is not worth your engineering
-> effort?
-
-Even now, I don't think a more elaborate check is worth the engineering
-effort - I just want to check that the file indeed was lazy-fetched, so
-any minor datum would suffice.
-
-> Object type and object sizes are something that you can
-> safely express in plain text, would be handy for testing, and would
-> not require too much extra code, I'd imagine.
-
-It would, but we can already use "git cat-file -s" (or -t) for that. The
-helper is meant to test a specific code path wherein we access a
-submodule object during a process running in the superproject.
-
-> > +	printf("%d\n", (int) size);
+> +       if (!strcmp(var, "extensions.partialclone")) {
+> +               repository_format_partial_clone = xstrdup_or_null(value);
+> +               return 0;
+> +       }
 > 
-> Mimicking what builtin/cat-file.c::cat_one_file() does, for example, and
-> using
-> 
-> 	printf("%"PRIuMAX"\n", (uintmax_t)size);
-> 
-> might be better (I was wondering if we can extract reusable helpers,
-> but I do not think that is worth doing, if this is meant to be
-> temporary stop-gap measure).
-> 
-> Thanks.
+> which makes the code shorter and easier to follow, at least for me.
 
-Sounds good - I'll change this.
+Hmm...is your concern about the case in which
+repository_format_partial_clone is uninitialized, or about ignoring a
+potential NULL value? If the former, I don't see how your suggestion
+fixes things, since extensions.partialclone may never have been in the
+config in the first place (and would thus leave
+repository_format_partial_clone uninitialized, if it weren't for the
+fact that it is in static storage and thus initialized to 0). If the
+latter, I guess I should be more detailed about how it's being handled
+in setup.c (or maybe just leave out the comment altogether - the code
+here can handle a NULL repository_format_partial_clone for some reason).
