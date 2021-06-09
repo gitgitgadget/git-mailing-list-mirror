@@ -2,167 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A33BC48BCF
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 16:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B62ADC48BCF
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 17:05:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1977961375
-	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 16:13:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D4C3613CB
+	for <git@archiver.kernel.org>; Wed,  9 Jun 2021 17:05:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237140AbhFIQPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Jun 2021 12:15:13 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:45818 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236678AbhFIQPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jun 2021 12:15:12 -0400
-Received: by mail-wr1-f41.google.com with SMTP id z8so26077542wrp.12
-        for <git@vger.kernel.org>; Wed, 09 Jun 2021 09:13:04 -0700 (PDT)
+        id S229638AbhFIRHc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Jun 2021 13:07:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45486 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230382AbhFIRHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jun 2021 13:07:30 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 001A5C061574
+        for <git@vger.kernel.org>; Wed,  9 Jun 2021 10:05:24 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id u11so25773103oiv.1
+        for <git@vger.kernel.org>; Wed, 09 Jun 2021 10:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=sslxU2Zj/H3zu0TbnQu1d/Mc+WxpiqXZj8t9ARAzits=;
-        b=gx00H0WQu6BLoEQl130f4tS3qnuIfqcNCB316H5MTYC/CyeB+bQzQWVqqmxGweqyYJ
-         4qQfUq+U9IOIn9W1iGJHjoRai+Jd0txNUBZE6BG94ILVZHGmqf6L3FkwhgYvmqIYLELH
-         rM4ZV89crMD9pfwJsdayvBf3UeiirBzl/+hWsJ5GrdsTWtytJOylx2GlweP2sGFBuVrS
-         NCEPHu9SXyz/L09fdBHjEe+GvKUgpzKn/jnUel8Oidg5Mtbl1aqxsnR6SjoVoCr0RhU3
-         id7AgA0dYFamrFoRBJPkKiGYOiAcglrfG/BoJHwL8YIeWYwvUgw2QPkhVnMjOi3XqbVC
-         tkaw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GiZUDjAilGEz6vwubDd+jCtsmXE3d7jzfl/LGz6cg/s=;
+        b=Rhd5zdXXD1DCcPJnj1mFRNJH08m4ICVgiKocTpyzxWf1jZ1MV8APpswqhswQl9gVB+
+         z2sbrF9kkbvoUvaUSf6PECYON9JkJOV7rCV43rSM/C5pNUQcOzfwovCf49UjLPuSGbcq
+         NVz4azyTxtrZgsof2oXJUwurT3Rtbsk9mCplosQo5KJlsdcdv///Su5JdCvWb2bS5bjD
+         J3p05AOHaFKHiswmfQv7YQKQOdTWsgFd3J1ls+nqiUaTZAz/d2KI6PpeMyYx3Zy/FyZh
+         rjOtDT7ASv7+pnRtUoi/oKC17CDxXcEKy2W2mhSh5w0OnKiuvhberK9XSFCuyBd45dZ/
+         Pqfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sslxU2Zj/H3zu0TbnQu1d/Mc+WxpiqXZj8t9ARAzits=;
-        b=nKnpMzhro7aRbXx6g9N228SsQx8ynGZZSTYlkvoHbBCbm0r5yXBrg8BsdPwr47uywu
-         UtiNDHpqsqnXtRzHrhvBBybpMaRvCEjRz09wuU6m+LZu+tC4QV11gmUzEyULxxh5+zra
-         qiFpWfUyDpURctXAlEN6lsAUJkNmGW3T6eUI6+7zh93dfYSTIBw9lFeZ/kKzNpHCOCJF
-         a6+s2p8vVR5bznDkQWVpQfJMuRntg9r4YFVjIbq2NjVu7S6v/ZtosC7cmYQ5IgdK7dMb
-         NU/gMZ+rTbwMQdh6t0xQY+MdwHnQyT6jgp9JS7fzqJPcCjF6DK/Cgucz6GeHfT49fEhO
-         eTWA==
-X-Gm-Message-State: AOAM531ULDL5VkazyAO8G7mzWm1h6eiYxkoqR5I5mUgCOkusyJ/aq06U
-        saBymrMy7zneKIGKxFgaALttqJ1lVDQ=
-X-Google-Smtp-Source: ABdhPJz2IP+7Mn7Up2mpGI8BS01thBajdsjN3sbyvJpeJLqYfdgzx0+nED7TkuqEZUC6w7InLyTnzw==
-X-Received: by 2002:adf:df8a:: with SMTP id z10mr681900wrl.62.1623255123507;
-        Wed, 09 Jun 2021 09:12:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h9sm197067wmb.35.2021.06.09.09.12.03
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GiZUDjAilGEz6vwubDd+jCtsmXE3d7jzfl/LGz6cg/s=;
+        b=Dmlplc3p+igrVPXhdhJQAev74JWIukXxc8Lpk1bEwvgJmehrf4b6DDDcAnh8iQNs1d
+         p0SxZvcJ1HlGTeiGlyw3fR2D2hp45VzJ+WzCOJQwt68a181E1sEOwW3/subbRArrmgio
+         UGPUR6EFvdTqaIWhLxHotOgkxCvSYVAlXEzA+8VPNVGj5kcCnAKExStZGQAXZ8SmKtbT
+         CzZGDxn3DLcW2Nj5Gdxmwsw3WQZRsdl8Amsl6rUEhJDxyyTzuXq65MDoWDLL51UE2avs
+         8N3nFzY+ySVo/G4r2JhaE765W66EY61FncApmzaNHJDnCLtB8EIuK5I03NM0BALEHdLN
+         Tryw==
+X-Gm-Message-State: AOAM530Tc0+VZy3GwwVavOzHkGxGjQO7RH+H/+qOB1xKZscI2nnTMr3P
+        plLxWc3lSEzMCfph3a6eag9VWuiATHdWiA==
+X-Google-Smtp-Source: ABdhPJwmxvXxYBjRnU4kmWSXE5Dd+cFaF7Td4DPCiakFA5zN0a+FgOnIR9yCRRfnRKs39HCkrejWnQ==
+X-Received: by 2002:a05:6808:10d4:: with SMTP id s20mr451937ois.70.1623258324092;
+        Wed, 09 Jun 2021 10:05:24 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id e29sm69715oiy.53.2021.06.09.10.05.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jun 2021 09:12:03 -0700 (PDT)
-Message-Id: <48d256db5c349c1fa0615bb60d74039c78a831fd.1623255121.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.976.v2.git.1623255121.gitgitgadget@gmail.com>
-References: <pull.976.git.1623163082.gitgitgadget@gmail.com>
-        <pull.976.v2.git.1623255121.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Jun 2021 16:11:58 +0000
-Subject: [PATCH v2 1/4] [GSOC] ref-filter: add obj-type check in grab contents
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Wed, 09 Jun 2021 10:05:23 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
+        John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] test: fix for TEST_OUTPUT_DIRECTORY
+Date:   Wed,  9 Jun 2021 12:05:20 -0500
+Message-Id: <20210609170520.67014-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0.2.g41be0a4e50
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+The test_atexit unit test relies on the specific location of the
+generated files.
 
-Only tag and commit objects use `grab_sub_body_contents()` to grab
-object contents in the current codebase.  We want to teach the
-function to also handle blobs and trees to get their raw data,
-without parsing a blob (whose contents looks like a commit or a tag)
-incorrectly as a commit or a tag.
+When TEST_OUTPUT_DIRECTORY is unset, _run_sub_test_lib_test_common sets
+it to pwd, which is two levels under the pwd of the parent unit test,
+and the parent can find the generated files just fine.
 
-Skip the block of code that is specific to handling commits and tags
-early when the given object is of a wrong type to help later
-addition to handle other types of objects in this function.
+But when TEST_OUTPUT_DIRECTORY is set, it's stored in GIT-BUILD-OPTIONS,
+and even though _run_sub_test_lib_test_common correctly overrides it,
+when the child script is run, it sources GIT-BUILD-OPTIONS, and
+TEST_OUTPUT_DIRECTORY is overridden.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+Effectively both the parent and child scripts output to the same
+directory.
+
+  make TEST_OUTPUT_DIRECTORY=/tmp/foobar GIT-BUILD-OPTIONS &&
+  make -C t t0000-basic.sh
+
+We could simply revert 2d14e13c56 (test output: respect
+$TEST_OUTPUT_DIRECTORY, 2013-04-29), but presumably it was done for some
+reason.
+
+On the other hand we could follow the alternate path suggested in
+6883047071 (t0000: set TEST_OUTPUT_DIRECTORY for sub-tests, 2013-12-28):
+pass the --root parameter to the child scripts.
+
+The alternate solution works, so let's do that instead.
+
+Presumably this was broken since 900721e15c (test-lib: introduce
+'test_atexit', 2019-03-13).
+
+Cc: John Keeping <john@keeping.me.uk>
+Cc: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- ref-filter.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ t/t0000-basic.sh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 4db0e40ff4c6..5cee6512fbaf 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1356,11 +1356,12 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 705d62cc27..16b70ef940 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -93,14 +93,12 @@ _run_sub_test_lib_test_common () {
+ 		EOF
+ 		cat >>"$name.sh" &&
+ 		export TEST_DIRECTORY &&
+-		TEST_OUTPUT_DIRECTORY=$(pwd) &&
+-		export TEST_OUTPUT_DIRECTORY &&
+ 		sane_unset GIT_TEST_FAIL_PREREQS &&
+ 		if test -z "$neg"
+ 		then
+-			./"$name.sh" "$@" >out 2>err
++			./"$name.sh" --root="$(pwd)" "$@" >out 2>err
+ 		else
+-			! ./"$name.sh" "$@" >out 2>err
++			! ./"$name.sh" --root="$(pwd)" "$@" >out 2>err
+ 		fi
+ 	)
  }
- 
- /* See grab_values */
--static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
-+static void grab_sub_body_contents(struct atom_value *val, int deref, struct expand_data *data)
- {
- 	int i;
- 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
- 	size_t sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
-+	void *buf = data->content;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct used_atom *atom = &used_atom[i];
-@@ -1371,10 +1372,13 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
- 			continue;
- 		if (deref)
- 			name++;
--		if (strcmp(name, "body") &&
--		    !starts_with(name, "subject") &&
--		    !starts_with(name, "trailers") &&
--		    !starts_with(name, "contents"))
-+
-+		if ((data->type != OBJ_TAG &&
-+		     data->type != OBJ_COMMIT) ||
-+		    (strcmp(name, "body") &&
-+		     !starts_with(name, "subject") &&
-+		     !starts_with(name, "trailers") &&
-+		     !starts_with(name, "contents")))
- 			continue;
- 		if (!subpos)
- 			find_subpos(buf,
-@@ -1438,17 +1442,19 @@ static void fill_missing_values(struct atom_value *val)
-  * pointed at by the ref itself; otherwise it is the object the
-  * ref (which is a tag) refers to.
-  */
--static void grab_values(struct atom_value *val, int deref, struct object *obj, void *buf)
-+static void grab_values(struct atom_value *val, int deref, struct object *obj, struct expand_data *data)
- {
-+	void *buf = data->content;
-+
- 	switch (obj->type) {
- 	case OBJ_TAG:
- 		grab_tag_values(val, deref, obj);
--		grab_sub_body_contents(val, deref, buf);
-+		grab_sub_body_contents(val, deref, data);
- 		grab_person("tagger", val, deref, buf);
- 		break;
- 	case OBJ_COMMIT:
- 		grab_commit_values(val, deref, obj);
--		grab_sub_body_contents(val, deref, buf);
-+		grab_sub_body_contents(val, deref, data);
- 		grab_person("author", val, deref, buf);
- 		grab_person("committer", val, deref, buf);
- 		break;
-@@ -1678,7 +1684,7 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
- 					       oid_to_hex(&oi->oid), ref->refname);
- 		}
--		grab_values(ref->value, deref, *obj, oi->content);
-+		grab_values(ref->value, deref, *obj, oi);
- 	}
- 
- 	grab_common_values(ref->value, deref, oi);
 -- 
-gitgitgadget
+2.32.0.2.g41be0a4e50
 
