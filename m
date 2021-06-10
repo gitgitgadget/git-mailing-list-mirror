@@ -2,75 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2EC6C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3065DC48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:51:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6D67613E3
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:47:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12E0E610E6
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:51:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbhFJOto (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 10:49:44 -0400
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:36476 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230298AbhFJOtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 10:49:43 -0400
-Received: by mail-oi1-f174.google.com with SMTP id r16so2025513oiw.3
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 07:47:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=QNdbqpZouFMJmfkIKCpE41oA4hhzxSqNynxetj9cJqU=;
-        b=dNmSqD639moQAlaXO3pQaxDpRWIlZbTysJ4K/77s2wRx1drB0sIVmH5Ck39UUHKl26
-         EvfTYE3jMsA0yO+9n4KuHmVYHj3gBARsvcGj485Z8IDJeRH36FTkR/6aQJK699A4pBfJ
-         9yNPxnklhzbqqOk79NZE3qIY5BmMRb8vF+NcG9Xm1rELudigP93KIg5uZ/sRAe56o5iI
-         PdtJaz1MJyXYy2lSlsdK9vCyUpRpZ8wuS4UH8PkhAty5fUW7Xj5s9N6lgPGq5iiEgp+q
-         Zx2XZrRwlWJl5C4Q1muCRVP9o1AYQwsFmCZQr6Ey1RJFOdYerWw5wa1/XxI6yZ1R2LjX
-         9obA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=QNdbqpZouFMJmfkIKCpE41oA4hhzxSqNynxetj9cJqU=;
-        b=h8FBXJ8pGSSdnwvzf4NZJsg8Ftyw3YuX5OJnE/vIrd6XoA7L/mHNJlMbmQlXSABHKS
-         nq1826Mct28WB7/KpL0y+WViQc+5NGSL3Wvfmy/zeDxglUA/bp+nOUzP33O30EzM4PFI
-         WoKNknkOydmUz5KCfTviCylnZ30We6OwGIHk7QMnlivYvevZ8IqnAzw9jY3ePGAsmaEq
-         HQOKHPOeRo462VndjBRwwMuSddeTYvuwcdFdBksfVVRJml4ZbF+zvKdMpgbJm8OuQ2/I
-         djwBIo3dA9n+fqVxpWDrgsLAWPrq4zFj+qM30ftauL8NJLMyhNM4oJV0V7Bv9/QVnNMV
-         nhqQ==
-X-Gm-Message-State: AOAM532wui3Qtoi7sKnz68jjJGxgbXzuWijSdfcfbhlB6uIw6XfFLqj2
-        iWd1SyBfgDf1V2dSrFFr5qA=
-X-Google-Smtp-Source: ABdhPJzBHIA5SRH4bLZx4BKeZIBW7wXew2nxQlDmu/d5OpeA3OQ/eYp7HFZhcdkq1D1TUj5VO1QGVw==
-X-Received: by 2002:aca:b145:: with SMTP id a66mr3549430oif.177.1623336406954;
-        Thu, 10 Jun 2021 07:46:46 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id v22sm585095oic.37.2021.06.10.07.46.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 07:46:46 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 09:46:45 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
-Message-ID: <60c225d540231_b25b1208cd@natae.notmuch>
-In-Reply-To: <20210610072406.10203-1-rybak.a.v@gmail.com>
-References: <20210609102641.3531183-1-rybak.a.v@gmail.com>
- <20210610072406.10203-1-rybak.a.v@gmail.com>
-Subject: RE: [PATCH v2] *: fix typos which duplicate a word
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S231239AbhFJOxg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 10:53:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51388 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230298AbhFJOxf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 10:53:35 -0400
+Received: (qmail 7990 invoked by uid 109); 10 Jun 2021 14:51:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 14:51:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30942 invoked by uid 111); 10 Jun 2021 14:51:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 10:51:38 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Jun 2021 10:51:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Nikhil Gupta <nikhilgupta2102@gmail.com>,
+        git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
+Subject: Re: Build errors when building git on MacOS 11 (x86-64) and for M1
+ macs
+Message-ID: <YMIm+hqqeY2IjEW3@coredump.intra.peff.net>
+References: <f5487adb-b7dc-4f97-bca1-749701337759n@googlegroups.com>
+ <87sg1p24zc.fsf@evledraar.gmail.com>
+ <YMIjaytMYslKjK6z@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YMIjaytMYslKjK6z@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Subject: *: fix typos which duplicate a word
+On Thu, Jun 10, 2021 at 10:36:27AM -0400, Jeff King wrote:
 
-This is still awkward to me. "Fix typos..." is much better.
+> Most compilers put the directory of the source file at the start of the
+> search path. E.g., gcc says under -I:
+> 
+>   1. For the quote form of the include directive, the directory of the
+>      current file is searched first.
+> 
+> Which is why we need "-I." at all; we are finding "archive.h" from
+> "builtin/*.c". I'm not sure what "current file" there means, or how
+> portable it is. Is it the source file being filed, or the file
+> containing the #include directive?
+> 
+> I'd hope it's consistently the latter. Otherwise "foo.h" which includes
+> "bar.h" cannot be included as "../foo.h" (from builtin/foo.c) and as
+> "foo.h" (from top-level foo.c).
+> 
+> If so, then yeah, using "../archive.h" (and dropping -I. entirely) would
+> be an option. Which is nice, because it makes things less magical and
+> more predictable (think what confusion we'd see if we introduced
+> "archive.h" into builtin/ ourselves).
 
--- 
-Felipe Contreras
+There's a related case, which is that within trace2/foo.c, we'd include
+trace2/foo.h. Without "-I.", the correct include there is just "foo.h".
+
+So what was explicit actually becomes implicit. Here's a real example to
+make this file work without -I:
+
+  diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+  index a8018f18cc..592c194ab4 100644
+  --- a/trace2/tr2_tgt_perf.c
+  +++ b/trace2/tr2_tgt_perf.c
+  @@ -1,15 +1,15 @@
+  -#include "cache.h"
+  -#include "config.h"
+  -#include "run-command.h"
+  -#include "quote.h"
+  -#include "version.h"
+  -#include "json-writer.h"
+  -#include "trace2/tr2_dst.h"
+  -#include "trace2/tr2_sid.h"
+  -#include "trace2/tr2_sysenv.h"
+  -#include "trace2/tr2_tbuf.h"
+  -#include "trace2/tr2_tgt.h"
+  -#include "trace2/tr2_tls.h"
+  +#include "../cache.h"
+  +#include "../config.h"
+  +#include "../run-command.h"
+  +#include "../quote.h"
+  +#include "../version.h"
+  +#include "../json-writer.h"
+  +#include "tr2_dst.h"
+  +#include "tr2_sid.h"
+  +#include "tr2_sysenv.h"
+  +#include "tr2_tbuf.h"
+  +#include "tr2_tgt.h"
+  +#include "tr2_tls.h"
+
+So I dunno. I had hoped it would be a strict readability improvement,
+but now I'm not so sure.
+
+-Peff
