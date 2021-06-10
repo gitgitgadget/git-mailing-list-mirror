@@ -2,107 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 888E7C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 13:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A75A8C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 13:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69B8D60FF0
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 13:33:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89E9F61374
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 13:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230311AbhFJNfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 09:35:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33454 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230188AbhFJNfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 09:35:46 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C277AC061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 06:33:35 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id h9so2127605oih.4
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 06:33:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=rKlERWmGWR2CVhRsyK6YmkjA62YthqlaCXWPCxuucXc=;
-        b=Bnnfhe/W8smzky+eMnwcW5/JAgjpXjsJFCjRveDcxjLWL3vQAc8j9E7xskUPPDFqmo
-         Ig1F/TPRFBwMrkw45xXXCWK/7O351e4y0Vp5x9AAxoCmgLHoH6FIfgaOEhUXKjOno5Wq
-         hvNIT1gTmiJMXztywDTonEi+JmoCsCXwNf8/I0BnVSjNmAMNMELO0zFFluxUTIApOFvy
-         4POhMNn7jA1P4Kwgy/BdoadctWwe26rvgAmvXk1g47eOwE3nGSvDXgzdsXlrJEZzphoC
-         9laZ7u3OYKZaXKhP753NkfCZbE5+zTC+B0EyUP86zL9JgeyO7VEZipiEM+iKw0uQDi87
-         8gMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=rKlERWmGWR2CVhRsyK6YmkjA62YthqlaCXWPCxuucXc=;
-        b=d3r2VqU6bquXhHy6uoQ4dV6Xr7zBlH8TdqIZK5FTmfVxqpwvpZgDzcPMrvQ1uq+qdb
-         /d3cGc/GqQ2oN1wBvBuhNo76KbeBRZBMp+sK23DnZIvpO+SqaqSzplnB7RVADAIKKDO2
-         dmnvciHg42wJ9qrSyw0JizTBzD5LN5xb/b0IVS7B/LxH6Mkj0SeoOvq26CmLVchx+p8K
-         1v/+lwOg+LRqqxmeW8oHDf2Hsd/1tu7H2ZNsqZlvAsau4nJeU3TFtNH3G8gSq/1iubUa
-         69it9KIT1MyO3XI6ecvqI1f2Hm3o/9BdlJdVa7rGAfER53l+ct+x+PdFdXwQKREyQ1xv
-         zT3g==
-X-Gm-Message-State: AOAM53275WXtD2Gt8W7pT8smZ+tN9RzJcqHmLlk+Cmslpu1eYk/8HKdQ
-        9niriAP7Sb32PlP/jkSJLAc=
-X-Google-Smtp-Source: ABdhPJxUcmWo4gCUE+rw0ACrnO610/Wj/C5eIIi1725KbTWAm4HN804/hVi9HBvTMT9kylExwq63Iw==
-X-Received: by 2002:aca:e009:: with SMTP id x9mr1889363oig.154.1623332014381;
-        Thu, 10 Jun 2021 06:33:34 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id z6sm561597oiz.39.2021.06.10.06.33.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 06:33:34 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 08:33:32 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     David Aguilar <davvid@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>
-Message-ID: <60c214ace1191_b25b12086e@natae.notmuch>
-In-Reply-To: <3168eb15-25a6-a3eb-a498-8effa0c79855@gmail.com>
-References: <20210609192842.696646-1-felipe.contreras@gmail.com>
- <20210609192842.696646-6-felipe.contreras@gmail.com>
- <3168eb15-25a6-a3eb-a498-8effa0c79855@gmail.com>
-Subject: Re: [PATCH 5/7] xdiff: rename XDL_MERGE_STYLE_DIFF3
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S231158AbhFJNkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 09:40:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51288 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230483AbhFJNkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 09:40:19 -0400
+Received: (qmail 7743 invoked by uid 109); 10 Jun 2021 13:38:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 13:38:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30225 invoked by uid 111); 10 Jun 2021 13:38:22 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 09:38:22 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Jun 2021 09:38:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Andrzej Hunt <andrzej@ahunt.org>, git@vger.kernel.org,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: UNLEAK(), leak checking in the default tests etc.
+Message-ID: <YMIVzYgNddsR4FSd@coredump.intra.peff.net>
+References: <87czsv2idy.fsf@evledraar.gmail.com>
+ <fcb0eaee-6ae1-f2cc-51d5-103eea64532a@ahunt.org>
+ <87y2bi0vvl.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y2bi0vvl.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood wrote:
-> On 09/06/2021 20:28, Felipe Contreras wrote:
+On Thu, Jun 10, 2021 at 12:56:55PM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> > More significantly: I get the impression it's easier to do leak
+> > checking using LSAN, which requires recompiling git anyway - at which
+> > point you get the flag for free - so how often will people actually
+> > perform leak checking with Valgrind in the first place?
 > 
-> The subject would make more sense as 'xdiff: rename XDL_MERGE_DIFF3 to 
-> XDL_MERGE_STYLE_DIFF3' rather than using the new name of the constant alone.
+> *Nod*, I didn't investigate the runtime penalty you and Jeff point
+> out. In any case, it seems that can also be done with valgrind exclusion
+> rules and/or manually ignoring these cases in the test wrapper.
 
-That is 55 characters, more than the recommended commit title length.
+I had trouble using valgrind's exclusions; there's more discussion in
+0e5bba53af (add UNLEAK annotation for reducing leak false positives,
+2017-09-08), but the gist of it is that it's awkward to annotate the
+point of leak, rather than the point of allocation (so you have to
+provide the complete callstack to the allocation, which is a maintenance
+headache).
 
-> > If we don't specify we are talking about a style, XDL_MERGE_MINIMAL
-> > could be confused with a valid value instead of XDL_MERGE_DIFF3, which
-> > it isn't.
+Of course, if you find ways to make useful annotations with valgrind,
+I'm all for it. We have a few in t/valgrind already.
+
+> But maybe it's not even worth pursuing. Have you (or anyone else) tried
+> e.g. benchmarking git's tests or t/perf tests where free() is defined to
+> be some noop stub? I'd expect it not to matter, but maybe I'm wrong...
+
+I haven't. Even though I originated UNLEAK(), I'm not really all that
+concerned about the cost of free() in general. My motivation for
+introducing it (versus adding free() calls) was mostly about convenience
+(complex data structures that don't have an easy free/release function,
+but also the fact that you can still access data after marking it with
+unleak).
+
+The fact that it also preempts any arguments about the performance of
+calling free() was just a bonus. ;)
+
+To be clear, I could easily be convinced by real numbers that the cost
+of free() at program end matters. I am just saying I am not one of the
+people who is going to argue that position in the meantime.
+
+> I didn't know how to set that up, that seems easy enough.
 > 
-> I don't object to the rename but what is the source of the confusion 
-> with XDL_MERGE_MINIMAL?
+> This works for me:
+> 
+>     make CC=clang SANITIZE=address,leak CFLAGS="-00 -g"
+>     (cd t && make ASAN_OPTIONS="<what you said>" [...])
+> 
+> I.e. it's just SANITIZE & flags that's important at compile-time. You
+> doubtless knew that, mainly for my own notes & others following along.
 
-XDL_MERGE_MINIMAL and other XDL_MERGE_FOO constants go into xmparam_t.level,
-XDL_MERGE_DIFF3 does not.
+It should Just Work with:
 
-As stated in the commit message, the name XDL_MERGE_DIFF3 doesn't
-distinguish it as a style.
+  make SANITIZE=leak test
 
-Chers.
+for both gcc and clang. You do need ASAN_OPTIONS if you're asking ASan
+to do leak-checking (since we usually suppress that for the obvious
+reason that almost every test fails). I'm not sure if using both ASan
+and LSan together confuses LSan there (if so, it may be reasonable for
+test-lib.sh to modify its ASAN_OPTIONS setting if LSan is enabled).
 
--- 
-Felipe Contreras
+> I ran it, noted the failing tests, produced a giant GIT_SKIP_TESTS list
+> and hacked ci/ to run that as a new linux-clang-SANITIZE job. That messy
+> WIP code is currently running at:
+> https://github.com/avar/git/runs/2793150092
+> 
+> Wouldn't it be a good idea to have such a job and slowly work on the
+> exclusion list?
+> 
+> E.g. I saw that t0004 failed, which was trivially fixed with a single
+> strbuf_release(), and we could guard against regressions.
+
+I don't mind that. My intent was to get the whole suite clean
+eventually, and then start worrying about regressions. But that may take
+a while.
+
+I do think it would be worth splitting out ASan from leak-checking. The
+whole suite should run clean with regular ASan already, and we'd want to
+find regressions there even in the tests that aren't leak-clean. I do
+periodic ASan runs already; the main argument against doing it for every
+CI run is just that's a lot more CPU. But maybe not enough to be
+prohibitive? It's probably still way cheaper than running the test suite
+on Windows.
+
+-Peff
