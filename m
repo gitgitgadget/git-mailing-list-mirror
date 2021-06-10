@@ -7,134 +7,126 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD411C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF5A5C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:12:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0DE7613BD
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:02:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C69C6613D9
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231259AbhFJOEA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 10:04:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39718 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231261AbhFJOD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 10:03:59 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8370EC061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 07:01:46 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id b11so33181346edy.4
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 07:01:46 -0700 (PDT)
+        id S230330AbhFJOOx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 10:14:53 -0400
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:43523 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230153AbhFJOOw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 10:14:52 -0400
+Received: by mail-ot1-f52.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso27597831otu.10
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 07:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=DQGdLwkM65bTGpRpPLPA2VGIwEBSPQyjP13l7Yy/+Cw=;
-        b=mXmzsy7u6EQYzgn+ZwYsZFgZwPULKeccL1/ykbSAbbz9JY9JhLIQuf2g3FPn1whhxX
-         JeIpc86VIxA+gOxJ2Rc700K0vpZBikxWJyVc8G/oj++bh0WxxblfSWFKKsbEQNkNNfW2
-         6D7HVSTgsu9BzMCdDGSaRfC6Oqag4YEyUto6G7Og5POEuelLAudILwpNpqVYYm+wWeaQ
-         Xn/Xk3Yk5oi0J//Ja0mSLsYQZGp/UgPlXixJdNxiBvD+Vja0JpuzNFkClFd578XoWaFg
-         Gg5x1nXxwFTrlKdG7Ho3gZKSHzv4PN0OEcjDj/6dxIzsHLrSjKT3UGYHwC/tjWh8c8rU
-         o6uQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=EI/4yt9kCybngGxWbW3ut92JavCNtzsQ3Eq0x8clkwQ=;
+        b=cPU2YJ/fXBmYo9f9eWGB2EcFOd0z3zC90Kpr3s4/DcvxfUwUxwh5aPOvqJJpb81A8g
+         4dHWy9yceIW+dosnNbHsIW8qkHJTFUCQDTSek29qYC4gllm0LcaMSRuW88AX2QMRH9pu
+         qMu3FQ3OP2oH7shrFVxEfKYdFP+CGIY2olmkUU8tEAKCOmndwqYxc1W3d2S/nZxFeQyw
+         xi9DSs1DeBABK0OYg7ekI0e5JKDmjlHKHYREH6DCgL+R2YJl2VmrkSiBTl/hh9QQqsJK
+         5UJ1yT5bwCqF52wSmRV8q61RouB7c8dCWFNVSB5i+cOD0qDK72mivYEvD5/C+1La/EXz
+         hkyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=DQGdLwkM65bTGpRpPLPA2VGIwEBSPQyjP13l7Yy/+Cw=;
-        b=VmoLIvrk4ErxxASMLofOeFeqdoGG3FEqvMoH13fDC41PUqp5Psxfh7mzC6aEkcGe62
-         P7KooykqyNqCRbzEf2UEqUidRtABV1H9lAPaTTQMXCRbQtGC2hY3kvT8wtOAdRJt+ojj
-         WNlJLwekPQmkr6otl7oYsv2LpFjvCxYLJmok1M0BCJOF8u66m5rbIi+HDpFYlSgaANbn
-         kznOA34RPm+02JuIrp2c3OziLK0O7RbDvCdZNiJjSh/7nFnL5KU2vHXRPylmhFNofHGp
-         FXLyr7LjIhsJxDJio6gOS5lDJHUJ7491t3tha5IJ0t7TFfn5dW2KJgYdrKTvijWN5W9P
-         JVVA==
-X-Gm-Message-State: AOAM530PU3AZ2Mu7BpyIF3WuAaxSozTpvIwye4ze9xMUqu9nArIlD5BO
-        4j4/c5+qMOxVJD6E3SHlhzg=
-X-Google-Smtp-Source: ABdhPJztWBFUoIVtYK8CYhuM7PBuIOPn2VuUOPriDa3t4VnXwpSViI4E2hnIsswie3CiNfx6HPOEYw==
-X-Received: by 2002:a05:6402:1a4b:: with SMTP id bf11mr4926220edb.286.1623333705062;
-        Thu, 10 Jun 2021 07:01:45 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id ot30sm1080538ejb.61.2021.06.10.07.01.44
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=EI/4yt9kCybngGxWbW3ut92JavCNtzsQ3Eq0x8clkwQ=;
+        b=gLaNqNAH0Vc8wnODIWD994gB/eZeTXkeqhCQitRKdGYZg4z77hWcs0pVo4Adg9//EB
+         cTIiu47fFUKmsQuWoioYe8KJltvZ5u5vfiAcqwhfJC2suljiVLewxCDqcASkgHkqn5D2
+         F10ZewUTHWvkIAWGjBE08ge442XRBzL1UnW1Xl/2HPIQ1fYU3WlZLcEohAHaMSkVFpDl
+         S8LFq2/cHfflCRfzqfutCOw3Z4jzuDI/Olhhg9suW+sYIohn7Pj67Em1ZNr4VVr6yKlv
+         hKNDp8kc6LO5WWqZPesbD+BcoWektGXeb+kbbyd+cdDkue6MQ/KtzODTUeRnvCfAKiJY
+         /PqQ==
+X-Gm-Message-State: AOAM530xZ+DQqSQywmztAsm8tqXp6b5NHlVUNbTM/FYHp9q10OiUyA+E
+        lO2hC/BIwIu3GfcMewbgSQ4=
+X-Google-Smtp-Source: ABdhPJx+9eCxCAwZIlDVwlVywcr9o69mkE41TppUku4GYC16dUmTyQ0aBwU4y7F77l3KCLgZ7t6xyw==
+X-Received: by 2002:a9d:a78:: with SMTP id 111mr846583otg.93.1623334302569;
+        Thu, 10 Jun 2021 07:11:42 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id e29sm564834oiy.53.2021.06.10.07.11.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 07:01:44 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Nikhil Gupta <nikhilgupta2102@gmail.com>
-Cc:     git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
-Subject: Re: Build errors when building git on MacOS 11 (x86-64) and for M1
- macs
-Date:   Thu, 10 Jun 2021 15:52:09 +0200
-References: <f5487adb-b7dc-4f97-bca1-749701337759n@googlegroups.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <f5487adb-b7dc-4f97-bca1-749701337759n@googlegroups.com>
-Message-ID: <87sg1p24zc.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        Thu, 10 Jun 2021 07:11:42 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 09:11:40 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Message-ID: <60c21d9ce8848_b25b120884@natae.notmuch>
+In-Reply-To: <b4b9264d-1c17-1a62-f0ec-2791ab20adeb@gmail.com>
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+ <20210609192842.696646-5-felipe.contreras@gmail.com>
+ <b4b9264d-1c17-1a62-f0ec-2791ab20adeb@gmail.com>
+Subject: Re: [PATCH 4/7] checkout: fix merge.conflictstyle handling
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Phillip Wood wrote:
+> On 09/06/2021 20:28, Felipe Contreras wrote:
+> > Currently both merge.conflictStyle and `git commit --merge
+> > --conflict=diff3` don't work together, since the former wrongly
+> > overrides the later.
+> > 
+> > The way merge configurations are handled is not correct.
+> > It should be possible to do git_config(merge_recursive_config, ...) just
+> > like we can with git_diff_basic_config and others.
+> 
+> It would be helpful to explain what the problem with 
+> merge_recursive_config() actually is rather than just saying "it should 
+> be possible ..."
 
-[CC-ing the main git@ list for the "bug in git" aspect of this]
+The problem is that you can't do this:
 
-On Thu, Jun 10 2021, Nikhil Gupta wrote:
+  git_config(merge_recursive_config, NULL);
 
-> &nbsp; | The following shell command exited with status 2:
-> &nbsp; | &nbsp;
-> &nbsp; | $ CFLAGS=-I/opt/chef-workstation/embedded/include -O3 -D_FORTIFY_SOURCE=2 -fstack-protector CPPFLAGS=-I/opt/chef-workstation/embedded/include -O3
-> -D_FORTIFY_SOURCE=2 -fstack-protector CXXFLAGS=-I/opt/chef-workstation/embedded/include -O3 -D_FORTIFY_SOURCE=2 -fstack-protector
-> LDFLAGS=-Wl,-rpath,/opt/chef-workstation/embedded/lib -L/opt/chef-workstation/embedded/lib LD_RUN_PATH=/opt/chef-workstation/embedded/lib MAKE=gmake
-> OMNIBUS_INSTALL_DIR=/opt/chef-workstation
-> PATH=/opt/chef-workstation/bin:/opt/chef-workstation/embedded/bin:/Users/administrator/.buildkite-agent/builds/MM009-local-1/chef/chef-chef-workstation-master-omnibus-adhoc/omnibus/vendor/bundle/ruby/2.7.0/bin:/opt/angry-omnibus-toolchain/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-> PKG_CONFIG_PATH=/opt/chef-workstation/embedded/lib/pkgconfig gmake prefix=/opt/chef-workstation/embedded bindir=/opt/chef-workstation/gitbin -j 10
-> [...]
-> &nbsp; | * new script parameters
-> &nbsp; | builtin/archive.c:48:24: error: implicit declaration of function 'archive_format_from_filename' is invalid in C99
-> [-Werror,-Wimplicit-function-declaration]
-> &nbsp; | const char *format = archive_format_from_filename(name_hint);
-> &nbsp; | ^
-> &nbsp; | builtin/archive.c:48:24: note: did you mean 'archive_read_open_filename'?
-> &nbsp; | /opt/chef-workstation/embedded/include/archive.h:527:15: note: 'archive_read_open_filename' declared here
-> &nbsp; | __LA_DECL int archive_read_open_filename(struct archive *,
-> &nbsp; | ^
-> &nbsp; | builtin/archive.c:48:15: warning: incompatible integer to pointer conversion initializing 'const char *' with an expression of type 'int'
-> [-Wint-conversion]
-> &nbsp; | const char *format = archive_format_from_filename(name_hint);
-> &nbsp; | ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> &nbsp; | builtin/archive.c:101:2: error: implicit declaration of function 'init_archivers' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
-> &nbsp; | init_archivers();
-> &nbsp; | ^
-> &nbsp; | builtin/archive.c:111:9: error: implicit declaration of function 'write_archive' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
-> &nbsp; | return write_archive(argc, argv, prefix, the_repository, output, 0);
-> &nbsp; | ^
-> &nbsp; | builtin/archive.c:111:9: note: did you mean 'write_or_die'?
-> &nbsp; | ./cache.h:1737:6: note: 'write_or_die' declared here
-> &nbsp; | void write_or_die(int fd, const void *buf, size_t count);
-> &nbsp; | ^
-> &nbsp; | 1 warning and 3 errors generated.
-> &nbsp; | gmake: *** [Makefile:2431: builtin/archive.o] Error 1
-> &nbsp; | gmake: *** Waiting for unfinished jobs....
-> &nbsp; | &nbsp;
-> &nbsp; | &nbsp;
+As it was explained.
 
-I have no access to such a system, but I think think I see the problem
-from what you've supplied here.
+That is the problem. I don't know how that's not clear.
 
-You supplied a CFLAGS=-I/opt/chef-workstation/embedded/include which has
-an archive.h file that's unrelated to the archive.h file git expects.
+> > Therefore builtins like `git merge` can't call this function at the
+> > right time.
+>  >
+> > We shuffle the functions a little bit so at least merge_recursive_config
+> > doesn't call git_xmerge_config directly and thus override previous
+> > configurations.
+> 
+> Rather than papering of the problem, how difficult would it be to add a 
+> field to ll_merge_options and pass the conflict style with that rather 
+> than fiddling with the order that we set a global variable.
 
-Thus we include that and find things unrelated to git, and error when we
-encounter a function we expected to have declared in our own archive.h.
+Probably not that difficult, but then we also need a parser that
+converts from "diff3" to whatever values we decide in that new field. We
+would need a new parse_config_conflict_style() function.
 
-The solution is something like defining a config.mak file where you add
-flags with BASIC_CFLAGS +=, not =. See config.mak.uname for an
-example. You'll then add new directories after our own -I.
+And that function will be only used by `git checkout` and nothing else.
+So I don't think there's much value in it.
 
-This is arguably a bug in git's Makefile in that we should have that
-"-I." in an ESSENTIAL_CFLAGS variable or something, I can't think of a
-scenario where git would compile without it. That or things in builtin/
-should include e.g. ../archive.h, perhaps such a thing isn't portable.
+That problem whoever, is orthogonal to this series.
 
-I think (but have not confirmed) that you probably got this far because
-your compiler will stick -I. at the /end/ of the flags implicitly (or is
-that standardized C behavior? I can't remember).
+> Does this change affect 'am/apply -3'? - Do they still read the config 
+> setting properly?
 
-So it worked until we had a filename conflict, i.e. we'd find strbuf.h
-in our own sources, but have an issue with a common name like archive.h.
+Good question. I'll have to add more tests to make sure that works
+properly.
+
+Cheers.
+
+-- 
+Felipe Contreras
