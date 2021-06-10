@@ -2,106 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD16C48BD1
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 995D6C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:46:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4ABFA60FD8
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:31:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7DA08613CB
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:46:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230169AbhFJKdh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 06:33:37 -0400
-Received: from mout.gmx.net ([212.227.15.19]:42779 "EHLO mout.gmx.net"
+        id S230144AbhFJKsN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 06:48:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51102 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230035AbhFJKdb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 06:33:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1623321092;
-        bh=7SLGt18NJ5VVamswmxDeAi1f7Fy5RLiFM4Uai7GilbM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Sre9cGEKU1e/9c9j4e5Ly5ZoCNqapfCJcsD5EQMuBC34pqOU+Y+UCGhABKzxY7ZtT
-         P2gXAyGItBPdQLz6he5Ld5VhQ4rBxJWGVEWi/tRD8MMSVtDK47oWy5RwnA9hygULCM
-         ZF6Z16va2VgVOvciViFg5G6bc8LdAGVAJUQEndRw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.14.142] ([89.1.213.18]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuDc7-1l3JBR0VcT-00uXXd; Thu, 10
- Jun 2021 12:31:32 +0200
-Date:   Thu, 10 Jun 2021 12:31:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] multimail: stop shipping a copy
-In-Reply-To: <pull.977.git.1623313765122.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2106101230340.57@tvgsbejvaqbjf.bet>
-References: <pull.977.git.1623313765122.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229778AbhFJKsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 06:48:12 -0400
+Received: (qmail 7228 invoked by uid 109); 10 Jun 2021 10:46:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 10:46:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28377 invoked by uid 111); 10 Jun 2021 10:46:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 06:46:16 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Jun 2021 06:46:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andrzej Hunt <andrzej@ahunt.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: UNLEAK(), leak checking in the default tests etc.
+Message-ID: <YMHtdYxNCf6DwUZG@coredump.intra.peff.net>
+References: <87czsv2idy.fsf@evledraar.gmail.com>
+ <fcb0eaee-6ae1-f2cc-51d5-103eea64532a@ahunt.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7fszZXGGmRHla/t5OU8DVbjovaVa9FvgrhqjVJg6a//vT3KgZ3x
- CBsRnklnzDAq0sxf+HRenygA0izrTRuU6UTtOtNmpbzGABzCbFXQaG8ieVAtQX2kvPH4wZW
- JzdUz/f+iDytZtEiAY8r20JtAdxLV8zgp4tkbGPfeoGjjFzZ7ZvtF67udRjARrOUcAzIsVK
- SFd0HmbzESIduZXX9+Uuw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3Pe37iR2cBE=:Mtnf9NfY5EH8HVdv3n0zPz
- cxtPog0Us0yzvIvGLI7TSc3ar+5Kh6+Xi/YDHnsDmN5DtN+IsG6EG6Q79qu9qGv+YPs+QeoPX
- aMSD/IBi+zKrpWv28AfMSB9ZP52WXhMoWByMCZqrJl5eFcny99InGXPMvAczFjwQB1r8oh9ZP
- 72MDSh58Y1N2G7rdkR1Za1uW9it6PQ1VH/wFm5GWWopLlrDnK1xm9DeyMmu3felVqoIV/htT5
- gpwPF/lMbrJqc32GZpeRGP75B2oLjTF2AseIvCsHmkwjFTvb0bOFHPn0oClz/pssLwlafb5eG
- x1wiDBPd0F+p5VTiM4c4FsO0rMq2/DZImCsbMgzQbCkqLIjr0f3kgJot8LrHpDeKPcUrQs2Gq
- UX/80i+YepFkWgbojuU2iE527hqCfMgDOELgLtzjDQqAd3ZHLSkBT1SQa/ipYtpTNpSgWr1dO
- EYjFaC8hIQzZuCyOlp+zWio/SfYgwbJ7V61Yw701K3+d1vE5tGr+zHdEv2OZbzwlP4FxBHrW2
- WEp+/Fag3dDvrX6PF3IOAh6YrRpiAjs+7ctLOl2rVmVhmk0BKuyfF3IW3tRZm+/75IfijPJry
- mLSeTugGnsAkGdz8I7UCXCAzrVOX8dOzZPUS2BIcNRmZaRxtcy5Jy2SUnvm/gMN9+BLUCCSeQ
- 1l9MekjW0sTVKIMiYK9p98clY+KCGdNtWIUBzUsPEfuo6YWXsLXCdWXZkM0OhHo+m9AWDwzU5
- ph3BK+Zops8RCDRgIpcpuGM5LAe5+FXtLK+WCbSHPFA5t/kax0nsgwsFjAYGw6jUkBhh5xzpN
- MXQqDye9tfTLV8sT7ShwFLSSfGXrJuRqy+Fs8xLbADWAJKvuTYFJB+Ehnqqkcn9obX/WD87ZY
- AnwJFBhrEXO6GXSnYFsdsHtgfRF2Sq0kLdA176jtEz+Qm3EsezVAHIDjs02HFaXmDZ0rc0tn1
- SJk4rLioIbbK6sHynMh9+b7AMHU2IBtwDawbgoGCRXK7bionuICPk0HwAy+c9wfshgeTD/6qX
- aD24c2VQmkIMVeQ0LlD/zzZbghga8dDG4dKr9uonENQ+zXcm/y3NZOvBDhWSujAidlStx4U9w
- 10jZMEzsgV7XRVg/Te2J61jyac9/fQdz5iWgQIU1rHOyhr+wmbj+KMn2g==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fcb0eaee-6ae1-f2cc-51d5-103eea64532a@ahunt.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Jun 09, 2021 at 07:44:12PM +0200, Andrzej Hunt wrote:
 
-On Thu, 10 Jun 2021, Johannes Schindelin via GitGitGadget wrote:
+> > I ran into this when manually checking with valgrind and discovered that
+> > you need SANITIZERS for -DSUPPRESS_ANNOTATED_LEAKS to squash it.
+> > 
+> > I wonder if that shouldn't be in DEVOPTS (or even a default under
+> > DEVELOPER=1). I.e. you don't need any other special compile flags, just
+> > a compiled git that you then run under valgrind to spot this.
+> 
+> I'm not familiar with git's development conventions/philosophy, but my 2c is
+> that it's better not to enable it by default in order to minimise divergence
+> from the code that users are running. OTOH it's not a major difference in
+> behaviour so perhaps that's not a concern here.
 
->  contrib/hooks/multimail/README.Git            |   12 +-
+Yeah, I'd rather not enable the option during normal builds. It carries
+a run-time penalty (it is actually building a pointless data structure
+that _does_ effectively leak the pointers, but backed by a global so
+they're "findable" by leak checkers). So it changes speed and possibly
+correctness of the final binary in a way that is different from what
+people would actually run in practice.
 
-I should point out that this could easily get lost between all those
-deleted files... The diff looks like this:
+That might be worth it if there was some advantage to just turning it
+on (i.e., if by running with it all the time we might detect some bug).
+But by itself it does nothing useful.
 
-> diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimai=
-l/README.Git
-> index 044444245d09..c427efc7bd8e 100644
-> --- a/contrib/hooks/multimail/README.Git
-> +++ b/contrib/hooks/multimail/README.Git
-> @@ -1,15 +1,7 @@
-> -This copy of git-multimail is distributed as part of the "contrib"
-> -section of the Git project as a convenience to Git users.
->  git-multimail is developed as an independent project at the following
->  website:
->
->      https://github.com/git-multimail/git-multimail
->
-> -The version in this directory was obtained from the upstream project
-> -on January 07 2019 and consists of the "git-multimail" subdirectory fro=
-m
-> -revision
-> -
-> -    04e80e6c40be465cc62b6c246f0fcb8fd2cfd454 refs/tags/1.5.0
-> -
-> -Please see the README file in this directory for information about how
-> -to report bugs or contribute to git-multimail.
-> +Please refer to that project page for information about how to report
-> +bugs or contribute to git-multimail.
+If you really want to leak-check more thoroughly the normal binary, then
+IMHO you'd be better off to convert UNLEAK() sites to actual free calls.
 
-Ciao,
-Dscho
+> More significantly: I get the impression it's easier to do leak checking
+> using LSAN, which requires recompiling git anyway - at which point you get
+> the flag for free - so how often will people actually perform leak checking
+> with Valgrind in the first place?
+
+And yeah, I'd very much agree here. It's definitely not wrong to run
+with Valgrind. But it's slower and much less thorough than ASan (probably not for
+leak detection, but definitely for bug-finding, since it can't look at
+stack variables).
+
+If you do use it, and want to build with -DSUPPRESS_ANNOTATED_LEAKS all
+the time, that's OK, but I don't think it makes sense for it to the
+default even under DEVELOPER=1. I'm not opposed to a patch to make it
+easier to flip the switch, though (but I also find sticking a line in
+your config.mak to be pretty easy already).
+
+-Peff
