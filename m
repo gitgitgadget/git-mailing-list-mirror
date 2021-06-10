@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A43D2C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B8E1C48BCD
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:32:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D0CC61182
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:26:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F46D610A7
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbhFJJ2a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 05:28:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34976 "EHLO
+        id S230055AbhFJJep (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 05:34:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229715AbhFJJ2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 05:28:30 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325D4C061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 02:26:34 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id m3so514147wms.4
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 02:26:34 -0700 (PDT)
+        with ESMTP id S229770AbhFJJeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 05:34:44 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FA0DC061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 02:32:32 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id b145-20020a1c80970000b029019c8c824054so6092174wmd.5
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 02:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=RXkhjDJLUpgy/qLS6UiJP0hJGEDdspatee5ZqhaLjBg=;
-        b=Ys6VglFI2sktzwD/tJ4F9u+EmPtzxHGVe7tLVhyb4JqA3Jq9yJBr2KoVzFUIlh8oFL
-         f6XDWVR9IbQnQkczbOsajwJFFQTos2RvzJZc7JQwdfSO7m8ipopRCmxZwnE35Tjg4qQo
-         9gqkm64Wjh9jShZqb3riUNdtSStTvFS3F7RAssaj4HrqpKXN6Yu7y7SQXawT2yqE0ZwV
-         f2fulgnZf2itpw1DCYhptzbGlYoPt9OzLCadoJwWHkoQtN3NAv+qZfK1tBrSpSUhtJz9
-         AwxsizBfjIjkm507fjC7NLMpQxJibjNhsu2L9KvuZj32Pf8RacIdlf8STeE0juH2W0pB
-         dl7g==
+        bh=kLMfFq9H1RUKG4vru3WlRkDgYG9xcrG50Ylz7Ri0ENw=;
+        b=WqRiSaWIfWLoBQvMXgutYLI3zw3mPziUqvAv3qz9fyCpIUfGrLN1kJagJayusn39yi
+         olHG/HYF4DWFHo/ATK8Dvb+0THZF0ZiwMEVT0Wj10qje0E/mFk6QAyoPR3Q162A9Ft9L
+         5Uw/zw6iT7QLFxCC3k0JrsM7/zoKn04vh4mo6YL2E5gpGjOEPfSFWpkcn9vZz2JGNPvG
+         f2+9QFO3NF7Fq+cRxQYM9tMbhVgxruStUUEnWx0owfM8F7yN5NK6cQ0sIlpeATOaxPng
+         kOM4PBMVPhFjZWKKeCfYsB2YcUTGRq0ulDLjdnirT+t1Ja2ShYhUnH8kUCdsUhboxdpv
+         rHFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=RXkhjDJLUpgy/qLS6UiJP0hJGEDdspatee5ZqhaLjBg=;
-        b=iDg0S37Qy2O4nI2Wtk18aPzQEcs3g1P+KsJsmPX1tdg0zXxxnmUeD9t5Z9X1tjuuyk
-         P6VdDVumXx+C985PNaX4mouHUmgE3VZ0v/+dpz2ovCKdTkOy4Pe96WXTkCzlAmHr5DOT
-         lHuuNfBY3/4MAjhv2ta3OtV1+ajHxnwHGKunjVTvWsnykeMTWpK5wjI9c8kquS4BbG/c
-         1gDY+xgO0+5GJBq4PIIgJkGalAfkctnQdN7gWmcDppOVKK8bh1MPqtl1q3LDISh+HwEj
-         X88Fdd0ZsuIpphzt/GxljUn4nmhk5GqMSpGr9ldYi4wHYVC6Z1Rpzz2NuTvYRdDNaDL0
-         e7AQ==
-X-Gm-Message-State: AOAM531FdQuans/D0VqhCHpI6R0ircYa8hhQGyDznUog63++XByiHfCe
-        mWGdXcww+tEd9sOoMoW3hfTtnZyHyn8=
-X-Google-Smtp-Source: ABdhPJzQhPq2+ZV/Y0L4wRmlU9nms9M/32yc+Sjcm8J6ve1OOT9sHjGzMVsSFyQWIrd7LjZxyceSkw==
-X-Received: by 2002:a05:600c:35c1:: with SMTP id r1mr3992562wmq.13.1623317192817;
-        Thu, 10 Jun 2021 02:26:32 -0700 (PDT)
+        bh=kLMfFq9H1RUKG4vru3WlRkDgYG9xcrG50Ylz7Ri0ENw=;
+        b=QNj6yQB4vMagHVw6HrWRy6SfWlEQ1GoOQR2iB7ArFQE93s0yhV+qKpOakv7RFqXW1I
+         I0cHhuFDm3A7ixw4in5LBVcY0RA0zEwVgSN+cwulP+FHGBdlnTVotU5s3WCJjl4Sw7hG
+         SUTarcL3KpfSMyBqnXCz63KuKugxfZpkma0FYo5CQW4ucK1mcA4buKLuYxJ8zULHVLmf
+         NFIX73dohGfc05h4wXCG48wvqgnCXyFXzhf1igcdGEg6yjtnPQZR1ruHknmxf5iR4xKX
+         p7nb3yy8ee1LTlKLwx+XOqQDSuZzPPmENR7nKV7eAtI0Gddd7kygEnWH5mNuncxFMks+
+         lcwQ==
+X-Gm-Message-State: AOAM530eAmHs6tEgppV/6K3+Kh0IQlFS/En6r7e5VJTJFx1BHWkwUTru
+        RzcF/LFOMGUyb915lwC2wEE=
+X-Google-Smtp-Source: ABdhPJyvczA42DVGRWf4kku1KrpDZDcZW3sCGUjxGzzcUG0WCfh4YFuKislpzt8Tpoa2BdgQywA82A==
+X-Received: by 2002:a1c:2384:: with SMTP id j126mr4020132wmj.59.1623317548648;
+        Thu, 10 Jun 2021 02:32:28 -0700 (PDT)
 Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
-        by smtp.gmail.com with ESMTPSA id x18sm2824402wrw.19.2021.06.10.02.26.31
+        by smtp.gmail.com with ESMTPSA id o3sm3044217wrm.78.2021.06.10.02.32.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jun 2021 02:26:32 -0700 (PDT)
+        Thu, 10 Jun 2021 02:32:28 -0700 (PDT)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/7] xdiff: simplify style assignments
+Subject: Re: [PATCH 4/7] checkout: fix merge.conflictstyle handling
 To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
 Cc:     David Aguilar <davvid@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
@@ -68,14 +68,14 @@ Cc:     David Aguilar <davvid@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
         <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>
 References: <20210609192842.696646-1-felipe.contreras@gmail.com>
- <20210609192842.696646-7-felipe.contreras@gmail.com>
+ <20210609192842.696646-5-felipe.contreras@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <cc8bbc34-1048-0e7b-c783-33f556843a3f@gmail.com>
-Date:   Thu, 10 Jun 2021 10:26:28 +0100
+Message-ID: <b4b9264d-1c17-1a62-f0ec-2791ab20adeb@gmail.com>
+Date:   Thu, 10 Jun 2021 10:32:24 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.2
 MIME-Version: 1.0
-In-Reply-To: <20210609192842.696646-7-felipe.contreras@gmail.com>
+In-Reply-To: <20210609192842.696646-5-felipe.contreras@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -84,102 +84,162 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 09/06/2021 20:28, Felipe Contreras wrote:
-
-I don't find the commit message explains this change very well
-
-> There is little value in checking that git_xmerge_style isn't 0 before
-> changing it's default value.
-
-I think the check is actually that git_xmerge_style isn't -1. Why is 
-there little value in the check?
-
-> Most of the time it isn't 0 anyway, so just assign the value directly.
-
-Why to the times when it is zero (or -1) not matter?
-
-> Also, add the missing constant for the default value: XDL_MERGE_STYLE_MERGE.
+> Currently both merge.conflictStyle and `git commit --merge
+> --conflict=diff3` don't work together, since the former wrongly
+> overrides the later.
 > 
-> Additionally this change has the benefit that it gets rid of a Yoda
-> condition.
-> 
-> No functional changes.
+> The way merge configurations are handled is not correct.
+> It should be possible to do git_config(merge_recursive_config, ...) just
+> like we can with git_diff_basic_config and others.
 
-I think that is probably correct but it would be helpful if the commit 
-message offered a bit more explanation.
+It would be helpful to explain what the problem with 
+merge_recursive_config() actually is rather than just saying "it should 
+be possible ..."
+
+> Therefore builtins like `git merge` can't call this function at the
+> right time.
+ >
+> We shuffle the functions a little bit so at least merge_recursive_config
+> doesn't call git_xmerge_config directly and thus override previous
+> configurations.
+
+Rather than papering of the problem, how difficult would it be to add a 
+field to ll_merge_options and pass the conflict style with that rather 
+than fiddling with the order that we set a global variable.
+
+Does this change affect 'am/apply -3'? - Do they still read the config 
+setting properly?
 
 Best Wishes
 
 Phillip
 
-> 
 > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 > ---
->   builtin/merge-file.c | 3 +--
->   ll-merge.c           | 3 +--
->   xdiff-interface.c    | 4 ++--
->   xdiff/xdiff.h        | 1 +
->   4 files changed, 5 insertions(+), 6 deletions(-)
+>   builtin/merge-recursive.c          |  3 +++
+>   builtin/merge.c                    |  4 ++++
+>   merge-recursive.c                  |  2 +-
+>   sequencer.c                        |  5 +++++
+>   t/t6440-config-conflict-markers.sh | 31 ++++++++++++++++++++++++++++++
+>   5 files changed, 44 insertions(+), 1 deletion(-)
 > 
-> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-> index a4097a596f..01951762ec 100644
-> --- a/builtin/merge-file.c
-> +++ b/builtin/merge-file.c
-> @@ -55,8 +55,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
->   	if (startup_info->have_repository) {
->   		/* Read the configuration file */
->   		git_config(git_xmerge_config, NULL);
-> -		if (0 <= git_xmerge_style)
-> -			xmp.style = git_xmerge_style;
-> +		xmp.style = git_xmerge_style;
->   	}
+> diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+> index a4bfd8fc51..80f9279b4c 100644
+> --- a/builtin/merge-recursive.c
+> +++ b/builtin/merge-recursive.c
+> @@ -4,6 +4,7 @@
+>   #include "tag.h"
+>   #include "merge-recursive.h"
+>   #include "xdiff-interface.h"
+> +#include "config.h"
 >   
->   	argc = parse_options(argc, argv, prefix, options, merge_file_usage, 0);
-> diff --git a/ll-merge.c b/ll-merge.c
-> index 9a8a2c365c..4ce8d3f9cc 100644
-> --- a/ll-merge.c
-> +++ b/ll-merge.c
-> @@ -124,8 +124,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
->   	xmp.level = XDL_MERGE_ZEALOUS;
->   	xmp.favor = opts->variant;
->   	xmp.xpp.flags = opts->xdl_opts;
-> -	if (git_xmerge_style >= 0)
-> -		xmp.style = git_xmerge_style;
-> +	xmp.style = git_xmerge_style;
->   	if (marker_size > 0)
->   		xmp.marker_size = marker_size;
->   	xmp.ancestor = orig_name;
-> diff --git a/xdiff-interface.c b/xdiff-interface.c
-> index 64e2c4e301..19a030fbe2 100644
-> --- a/xdiff-interface.c
-> +++ b/xdiff-interface.c
-> @@ -299,7 +299,7 @@ int xdiff_compare_lines(const char *l1, long s1,
->   	return xdl_recmatch(l1, s1, l2, s2, flags);
+>   static const char builtin_merge_recursive_usage[] =
+>   	"git %s <base>... -- <head> <remote> ...";
+> @@ -30,6 +31,8 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+>   	char *better1, *better2;
+>   	struct commit *result;
+>   
+> +	git_config(git_xmerge_config, NULL);
+> +
+>   	init_merge_options(&o, the_repository);
+>   	if (argv[0] && ends_with(argv[0], "-subtree"))
+>   		o.subtree_shift = "";
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index eddb8ae70d..7aa3dbb111 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -43,6 +43,7 @@
+>   #include "commit-reach.h"
+>   #include "wt-status.h"
+>   #include "commit-graph.h"
+> +#include "xdiff-interface.h"
+>   
+>   #define DEFAULT_TWOHEAD (1<<0)
+>   #define DEFAULT_OCTOPUS (1<<1)
+> @@ -659,6 +660,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+>   	if (status)
+>   		return status;
+>   	status = git_gpg_config(k, v, NULL);
+> +	if (status)
+> +		return status;
+> +	status = git_xmerge_config(k, v, NULL);
+>   	if (status)
+>   		return status;
+>   	return git_diff_ui_config(k, v, cb);
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index d146bb116f..10e6e1e4d1 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3845,7 +3845,7 @@ static void merge_recursive_config(struct merge_options *opt)
+>   		} /* avoid erroring on values from future versions of git */
+>   		free(value);
+>   	}
+> -	git_config(git_xmerge_config, NULL);
+> +	git_config(git_default_config, NULL);
 >   }
 >   
-> -int git_xmerge_style = -1;
-> +int git_xmerge_style = XDL_MERGE_STYLE_MERGE;
+>   void init_merge_options(struct merge_options *opt,
+> diff --git a/sequencer.c b/sequencer.c
+> index 0bec01cf38..9e2bdca0f6 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -34,6 +34,7 @@
+>   #include "commit-reach.h"
+>   #include "rebase-interactive.h"
+>   #include "reset.h"
+> +#include "xdiff-interface.h"
 >   
->   int git_xmerge_config(const char *var, const char *value, void *cb)
->   {
-> @@ -309,7 +309,7 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
->   		if (!strcmp(value, "diff3"))
->   			git_xmerge_style = XDL_MERGE_STYLE_DIFF3;
->   		else if (!strcmp(value, "merge"))
-> -			git_xmerge_style = 0;
-> +			git_xmerge_style = XDL_MERGE_STYLE_MERGE;
->   		/*
->   		 * Please update _git_checkout() in
->   		 * git-completion.bash when you add new merge config
-> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-> index 45883f5eb3..d24cd9f6ae 100644
-> --- a/xdiff/xdiff.h
-> +++ b/xdiff/xdiff.h
-> @@ -64,6 +64,7 @@ extern "C" {
->   #define XDL_MERGE_FAVOR_UNION 3
+>   #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
 >   
->   /* merge output styles */
-> +#define XDL_MERGE_STYLE_MERGE 0
->   #define XDL_MERGE_STYLE_DIFF3 1
+> @@ -224,6 +225,10 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+>   	if (status)
+>   		return status;
 >   
->   typedef struct s_mmfile {
+> +	status = git_xmerge_config(k, v, NULL);
+> +	if (status)
+> +		return status;
+> +
+>   	return git_diff_basic_config(k, v, NULL);
+>   }
+>   
+> diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
+> index 44f79ac91b..485ad0eee0 100755
+> --- a/t/t6440-config-conflict-markers.sh
+> +++ b/t/t6440-config-conflict-markers.sh
+> @@ -89,4 +89,35 @@ test_expect_success 'notes' '
+>   	)
+>   '
+>   
+> +test_expect_success 'checkout' '
+> +	test_create_repo checkout &&
+> +	(
+> +		test_commit checkout &&
+> +
+> +		fill a b c d e >content &&
+> +		git add content &&
+> +		git commit -m initial &&
+> +
+> +		git checkout -b simple master &&
+> +		fill a c e >content &&
+> +		git commit -a -m simple &&
+> +
+> +		fill b d >content &&
+> +		git checkout --merge master &&
+> +		! grep -E "\|+" content &&
+> +
+> +		git config merge.conflictstyle merge &&
+> +
+> +		git checkout -f simple &&
+> +		fill b d >content &&
+> +		git checkout --merge --conflict=diff3 master &&
+> +		grep -E "\|+" content &&
+> +
+> +		git checkout -f simple &&
+> +		fill b d >content &&
+> +		git checkout --merge --conflict=merge master &&
+> +		! grep -E "\|+" content
+> +	)
+> +'
+> +
+>   test_done
 > 
