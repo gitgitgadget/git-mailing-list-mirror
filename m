@@ -2,88 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D74ADC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF9D2C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:11:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDD92613DD
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:05:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B188613E3
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbhFJPHw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 11:07:52 -0400
-Received: from mail-pj1-f49.google.com ([209.85.216.49]:41687 "EHLO
-        mail-pj1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbhFJPHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 11:07:51 -0400
-Received: by mail-pj1-f49.google.com with SMTP id go18-20020a17090b03d2b029016e4ae973f7so2915062pjb.0
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 08:05:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=j4vsF0crkAw0JYs0KedSCi/1Kc0ZQhIFnNzG0jGPWLc=;
-        b=bEYfy6QZ1j2S8FnH03+r0ozGZoFMhFt8C1ok0C1wDBrm9dQ9QRvkgnbyGVJ1ele0Y/
-         D1E8Txd/oWqY2P48rQew6Antq9hfNwjqfnWR80JoadVJkniCuxd3psbfItbOURASlWt6
-         FgRVNDDK5bKKOmyjkNTuClLmdFAcd/HH6UjEgZnCPCWrSXoGTohUXGWouuXriQt5DLgL
-         KtgdZAPFYb8zgy2hJo833cJNs2f7P73+WAUHewIM/kF7NGFDm2tFzVOfGqoYzKw8BIJr
-         Bkt0m6BHXhnjrX+ODXrnCWfajCpWFR3pJx84P4qtBV6d0K/fzzOStBrXIenm8POoTzTO
-         zRaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=j4vsF0crkAw0JYs0KedSCi/1Kc0ZQhIFnNzG0jGPWLc=;
-        b=Izxa8g4yqmwqufKh+nM5UhT//udte4RLEaxbEWun4k8210OUlgdYOdoIuCKNNniIDa
-         Nay1h7u3EkVfJTzrHrnPq31/wGI9A1H8aD/Kk7NTsi/vOaQ44uthDKDG3UCToAZX43kp
-         VAnHiftQh4WqGG8fjktsi/5ChReEyRdCDtgbb38ue682Q9g+0YAM+CiU4xJnq/kguTQ8
-         Kex4cmgfO14F5/L3R2sJ5S+Ds4NQbrlzi7XSHi7kSeiUpILb2XAjL5ea8Sxreq1FTFPv
-         Ad8hOO9g17W/r1HUd8VlJYkK9iSRJEqqe4A2z5Es8DEMFbNglo6usRszDevGBKO1sUa4
-         YM1w==
-X-Gm-Message-State: AOAM531EninrKyG0/+9hLJ0dg65gWWjU/y2gvO8soR9BFCgJiAa35m7F
-        j/nc8UH5AHQ9DM3Sl4TE0XJT/6Dk5xc8lWjBidulLVpdMO4=
-X-Google-Smtp-Source: ABdhPJwM5Y0MILtff2wEz5hIqvy9L4xE0IZe7zaJMJavYN2a3E38W97sORfHOgZ7hM/0MQBaOyyUiglU51DWVDaACRI=
-X-Received: by 2002:a17:90a:4308:: with SMTP id q8mr3734566pjg.78.1623337478998;
- Thu, 10 Jun 2021 08:04:38 -0700 (PDT)
-MIME-Version: 1.0
-From:   Nikita Bobko <nikitabobko@gmail.com>
-Date:   Thu, 10 Jun 2021 17:04:58 +0200
-Message-ID: <CAMJzOtzu-fKxtseSPQ8riTC-kfg1CphnXN=EN-rnxVo85dZvFw@mail.gmail.com>
-Subject: [Bug report] git format-patch + git am doesn't preserve original
+        id S231384AbhFJPNK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 11:13:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51424 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230410AbhFJPNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 11:13:10 -0400
+Received: (qmail 8096 invoked by uid 109); 10 Jun 2021 15:11:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 15:11:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31228 invoked by uid 111); 10 Jun 2021 15:11:13 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 11:11:13 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Jun 2021 11:11:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Nikita Bobko <nikitabobko@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug report] git format-patch + git am doesn't preserve original
  commit message
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <YMIrkBiCpUXcUwsW@coredump.intra.peff.net>
+References: <CAMJzOtzu-fKxtseSPQ8riTC-kfg1CphnXN=EN-rnxVo85dZvFw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAMJzOtzu-fKxtseSPQ8riTC-kfg1CphnXN=EN-rnxVo85dZvFw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Steps to reproduce:
-```
-git init
-git commit --allow-empty -m 'root'
-echo foo > foo
-git add .
-git commit -m '[tag] foo'
-git checkout @~
-git format-patch master~..master
-cat 0001-tag-foo.patch | git am
-```
-Expected: commit message generated by `git am` is `[tag] foo`
-Actual: commit message generated by `git am` is `foo`
+On Thu, Jun 10, 2021 at 05:04:58PM +0200, Nikita Bobko wrote:
 
-[System Info]
-git version:
-git version 2.31.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.4.98-1-lts #1 SMP Sat, 13 Feb 2021 19:22:14 +0000 x86_64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.33
-$SHELL (typically, interactive shell): /bin/zsh
+> Steps to reproduce:
+> ```
+> git init
+> git commit --allow-empty -m 'root'
+> echo foo > foo
+> git add .
+> git commit -m '[tag] foo'
+> git checkout @~
+> git format-patch master~..master
+> cat 0001-tag-foo.patch | git am
+> ```
+> Expected: commit message generated by `git am` is `[tag] foo`
+> Actual: commit message generated by `git am` is `foo`
 
+This is working as intended. See the "-k" option of git-am and
+git-mailinfo (and also "-b" for mailinfo).
 
-[Enabled Hooks]
+-Peff
