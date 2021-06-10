@@ -2,182 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC6EEC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD90C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:26:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C98A1613E9
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:24:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EABB601FD
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbhFJR0H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 13:26:07 -0400
-Received: from mail-qt1-f171.google.com ([209.85.160.171]:35553 "EHLO
-        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229802AbhFJR0G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 13:26:06 -0400
-Received: by mail-qt1-f171.google.com with SMTP id g12so436757qtb.2
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:24:00 -0700 (PDT)
+        id S230360AbhFJR2t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 13:28:49 -0400
+Received: from mail-pj1-f74.google.com ([209.85.216.74]:61063 "EHLO
+        mail-pj1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230179AbhFJR2s (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 13:28:48 -0400
+Received: by mail-pj1-f74.google.com with SMTP id t8-20020a17090aba88b029016baed73c00so4207654pjr.5
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:26:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Hu5iNqxx+2EeK7N9j4rSpJUB2AS04mmgWZZluwUvaPM=;
-        b=lMiu8Rx9B7mgZ+hkxZCOBZaI2gkK7gdW7auFicdKocL8Tyc6Gb8EN0S6weXJSCH6P7
-         XjXFZ4FtP0s1hV11hvgrObBfu4rK+i1fBtTNKlvMkpyIsXLH7PmE35hcmfHLcls00kp9
-         KlgGL4EpHvHvnDWdaUn1N2Csic/LYJ5xWlvO9pahZrUg54xtE9S+3doQl6+/klaP09eX
-         PRmFZeapfUTXpOVUHerr8gdlEKVms4yQ9JiNSZ46B7RACQkgflhD1eSnQkfODVdbrk19
-         S94ogXdvk4psesBIvVmoh31PF96jjQsS7sx819x3tvQGyobSPU9CoNGJPv1oAqNcMSDn
-         0jEA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=wT1tEYJXmWIv0hZS6o2O95OdaV/CYS3JMKsvb3cClVU=;
+        b=FrMPI3Lwt2Gv+9UbuGWq4PtokJMQmYYyDXANm7L2+TsgJHXBsmZ/xmdCUUWMLPuie7
+         lQEKVHRfXmsarRrcOl07vBpsjRd3vbq+CxqQ/IKsFoo3kZgDB9tFoF7mPz5eWkp+OeRS
+         diRquorE9ls5kRfA5FSn/dScF7j+/19LuJALhvm7n6nguJmuaOkk8NTBINEgdAiBYU5q
+         99J+k7R198P+0z8NtHPK11CS3sWT17vmEmYQiHTo8MM8cxGKolwtlzpBVxv9vK/VCNaq
+         511h7X+2ZoCx1lEAsB+keF9nC6m7TPSAUO2S/4AKRvk6rB05QopWEszs9GPruhFn2Qap
+         aLgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Hu5iNqxx+2EeK7N9j4rSpJUB2AS04mmgWZZluwUvaPM=;
-        b=eHAaUNynss3ZqxYFNzui45j9HIZFxXp/61h8AMw3gzaxwoQ6r6VqiA6IlZ3YYxEQhr
-         wbQxG5xmhUxPF5cRACoIUUBxf3RuNHUQZaNdJ+CrdiwzBsphySO5W/X8OOnWEKN4wtLP
-         R+JOLKkyPZ577yITtMaRXyGh7+ZYYk5MEG4cCVV6uiyiuO85Ae5Sq7y0V+Rmj0UX1d0a
-         AxTs0B4s5NHf5aBxsWoNYGJjQPwOFVwUabimMYbA8caCBg5sLdb11MgsTyzG4SYoxVhN
-         NvnH5tzq+pqeUEukUWCPZsFz/8HYup049Bj6yylP+EmN9zkOs9Lsq2JwIQNECpdf1Ags
-         A4OA==
-X-Gm-Message-State: AOAM532S7d4JalPQgKoRhJmeVuMFrcZhi+S3DMWUWN94c8fkwEasRXqp
-        VktUjQ4g7CC9Xje5dGjUCeoQaw==
-X-Google-Smtp-Source: ABdhPJzlE32wxUKjpSdJPWyY6IgDyYOGAIDnBqaQZN00qVqy+H+9Uqefg0l4RokoUT3ZH5awsp/9sg==
-X-Received: by 2002:ac8:4b4c:: with SMTP id e12mr720607qts.78.1623345779851;
-        Thu, 10 Jun 2021 10:22:59 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:b6b5:2c95:5f61:efec])
-        by smtp.gmail.com with ESMTPSA id h68sm2636681qkf.126.2021.06.10.10.22.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 10:22:59 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 13:22:56 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
-        szeder.dev@gmail.com
-Subject: Re: Making split commit graphs pick up new options (namely
- --changed-paths)
-Message-ID: <YMJKcHpN/gL5U6KK@nand.local>
-References: <871r9a2dol.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <871r9a2dol.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=wT1tEYJXmWIv0hZS6o2O95OdaV/CYS3JMKsvb3cClVU=;
+        b=baG/gKmHUkDNv7WEQqV58dMSoq+Krd1ugMQ/Jml8yVMNsb/pgUvkZdRDgN95EG2dVw
+         BH9xlHZT51nx1FH1mNISPZ7QZFLN5v0qJeJMkByBVE7jY4/cN+d279ahPn4lGuXdsKxf
+         1GIXvoMMpnmK/x6xI9uTRUbAQAmBryzYxFdRjoyjdpUL+zBKc2oey1IU5ysNoK8Ic2bC
+         VjhZv7DV9nalXvZUZ9nHQoOsUJx4UZcQJv89JJ82baZ18L+JtBLOguGa2J4BeA8IIu8D
+         FVlsE0nuuqzKd9F9WSIZBfFAsR6KLnRcjeViHwSiIoTvaRjiNQsiEvgDPkJ1UvTYna2Y
+         lYmA==
+X-Gm-Message-State: AOAM530/anyk11w/a2hRWv+RCpdPbmDnsffof8sQ3TAL1O0nDyDp6PiH
+        WcBOWBHcLeq+jipxI5r/cL0gguBvq1Czso/5tU5l
+X-Google-Smtp-Source: ABdhPJzNyFSE6BPS/7l/4Yjha/4+/nmP8vrjW0g7MW+RTgZeOqFXV0PfX6lupu2o+Meo+JjZfqZsKp8r7f7NQ+TWTsTW
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a62:1545:0:b029:2ea:a1f:992d with
+ SMTP id 66-20020a6215450000b02902ea0a1f992dmr4077261pfv.63.1623345951942;
+ Thu, 10 Jun 2021 10:25:51 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 10:25:48 -0700
+In-Reply-To: <CABPp-BHt3db__cMpTY1a7y4u064NdVZGNCmnoR25aqhrWMfJcg@mail.gmail.com>
+Message-Id: <20210610172548.356847-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CABPp-BHt3db__cMpTY1a7y4u064NdVZGNCmnoR25aqhrWMfJcg@mail.gmail.com>
+X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
+Subject: Re: [PATCH v2 1/4] promisor-remote: read partialClone config here
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     newren@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, me@ttaylorr.com,
+        emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 10, 2021 at 12:40:33PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Is there any way with an existing --split setup that introduces a
-> --changed-paths to make the "add bloom filters to the graph" eventually
-> consistent, or is some one-off --split=replace the only way to
-> grandfather in such a feature?
+> > Hmm...is your concern about the case in which
+> > repository_format_partial_clone is uninitialized, or about ignoring a
+> > potential NULL value? If the former, I don't see how your suggestion
+> > fixes things, since extensions.partialclone may never have been in the
+> > config in the first place (and would thus leave
+> > repository_format_partial_clone uninitialized, if it weren't for the
+> > fact that it is in static storage and thus initialized to 0). If the
+> > latter, I guess I should be more detailed about how it's being handled
+> > in setup.c (or maybe just leave out the comment altogether - the code
+> > here can handle a NULL repository_format_partial_clone for some reason).
+> 
+> My comment was about the latter; I was trying to understand what the
+> comment meant relative to that case, and how and where that case would
+> be handled in the code.  With that frame of reference, the comment
+> seemed misleading to me...though perhaps the comment was intended to
+> answer some other question entirely.
 
-I'm assuming what you mean is "can I introduce changed-path Bloom
-filters into an existing split commit-graph with many layers without
-having to recompute the whole thing at once?" If so, then the answer is
-yes.
+Junio suggested [1] that repository_format_partial_clone be handled when
+the repo format is validated, so this part of the code can just make use
+of the repository_format_partial_clone value in struct repository and
+not read the config itself. So I believe that this part is now
+obsolete (but you can take a look at patches 1 and 2 to verify, if you
+want).
 
-Passing --changed-paths causes the commit-graph machinery to compute
-missing Bloom filters for every commit in the graph layer it is writing.
-So, if you do something like:
-
-  git commit-graph write --split --reachable --size-multiple=2 \
-    --changed-paths
-
-(--size-multiple=2 is the default, but I'm including it for clarity),
-then you'll get changed-path Bloom filters for all commits in the new
-layer, including any layers which may have been merged to create that
-layer.
-
-That all still respects `--max-new-filters`, with preference going to
-commits with lower generation numbers before higher ones (unless
-including commits from packs explicitly with --stdin-packs, in which
-case preference is given in pack order; see
-commit-graph.c:commit_pos_cmp() for details).
-
-t4216 shows this for --split=replace, but you could just as easily
-imagine a test like this:
-
-    #!/bin/sh
-
-    rm -fr repo
-    git init repo
-    cd repo
-
-    commit () {
-      >$1
-      git add $1
-      git commit -m "$1"
-    }
-
-    # no changed-path Bloom filter
-    commit missing
-    git commit-graph write --split --reachable --no-changed-paths
-
-    missing="$(git rev-parse HEAD)"
-    ~/src/git/t/helper/test-tool bloom get_filter_for_commit "$missing"
-
-    # >= 2x the size of the previous layer, so they will be merged
-    commit bloom1
-    commit bloom2
-    git commit-graph write --split --reachable --changed-paths
-
-    # and the $missing commit has a Bloom filter
-    ~/src/git/t/helper/test-tool bloom get_filter_for_commit "$missing"
-
-(One caveat is that if you run that script unmodified, you'll get a
-filter on both invcations of the test-tool: that's because it computes
-filters on the fly if they are missing. You can change that by s/1/0 in
-the call to get_or_compute_bloom_filter()).
-
-> Reading the code there seems to be no way to do that, and we have the
-> "chunk_bloom_data" in the graph, as well as "bloom_filter_settings".
->
-> I'd expect some way to combine the "max_new_filters" and --split with
-> some eventual-consistency logic so that graphs not matching our current
-> settings are replaced, or replaced some <limit> at a time.
-
-This is asking about something slightly different, Bloom filter
-settings rather than the existence of chagned-path Bloom filters
-themselves. The Bloom settings aren't written to the commit-graph
-although there has been some discussion about doing this in the past.
-
-If we ever did encode the Bloom settings, I imagine that accomplishing a
-sort of "eventually replace all changed-path Bloom filters with these
-new settings" would be as simple as considering all filters computed
-under different settings to be "uncomputed".
-
-> Also, am I reading the expire_commit_graphs() logic correctly that we
-> first write the split graph, and then unlink() things that are too old?
-> I.e. if you rely on the commit-graph to optimize things this will make
-> things slower until the next run of writing the graph?
-
-Before expire_commit_graphs() is called, we call mark_commit_graphs()
-which freshens the mtimes of all surviving commit-graph layers, and then
-expire_commit_graphs() removes the stale layers. I'm not sure what
-things getting slower is referring to since the resulting commit-graph
-has at least as many commits as the commit-graph that existed prior to
-the write.
-
-> I expected to find something more gentle there [...]
-
-FWIW, I also find this "expire based on mtimes" thing a little odd for
-writing split commit-graphs because we know exactly which layers we want
-to get rid of. I suspect that the reuse comes from wanting to unify the
-logic for handling '--expire-time' with the expiration that happens
-after writing a split commit-graph that merged two or more previous
-layers.
-
-I would probably change mark_commit_graphs() to remove those merged
-layers explicitly (but still run expire_commit_graphs() to handle
---expire-time). But, come to think of it... if merging >2 layers already
-causes the merged layers to be removed, then why would you ever set an
---expire-time yourself?
-
-Thanks,
-Taylor
+[1] https://lore.kernel.org/git/xmqqeedbidvy.fsf@gitster.g/
