@@ -2,98 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F133C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7119C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:42:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3475F60FEB
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:36:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B91EC613AE
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:42:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231674AbhFJPiU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 11:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60672 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbhFJPiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 11:38:20 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04751C061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 08:36:24 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id p13so1966477pfw.0
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 08:36:23 -0700 (PDT)
+        id S231442AbhFJPoS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 11:44:18 -0400
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:42597 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230366AbhFJPoS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 11:44:18 -0400
+Received: by mail-ot1-f50.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so90997oth.9
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 08:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DmcVknj6SUVRy2r+Ed32VdkelTPWKVv749Vvwv239sM=;
-        b=iTzeVrXfBy60GAVlC1wi1X9HpLSoR1DvN9XWRCVmuKlf+BDQRwpR0WrdorFUFY1fO9
-         pPC4NmU5o2ec60GWdDTtCk5wBZkRRSEE1lJBzskNww5LV+84FC5/Zc1F+IqMDTWO5lHb
-         I6afVa21h3Bj4AaMOV1bWQf8nv83dc9mTmlo/HZdB+HLQ+sZK8K/DZvPuQBbPQbFOKg/
-         CUg3w/rFT94h33lL0H+iIC2Xwiofj5yOlXtzExTs6CEqVLgkoB2TDdiBS5HBnAEM+B/B
-         DHZQ3CttfdBiO+JXFEHqXmbg2dV9+O0Jc1pwPS9gDVLnMSF4TbscUXPR7xw+hyFoXmiU
-         LZjQ==
+         :cc:content-transfer-encoding;
+        bh=6VFNZ+QT+RYo3WmF5zOM3AIBvOLEWYR5TV82+CyDEt0=;
+        b=mnrcvKvtsVgDVJLZdYkG7Q6F+FRVRk7S76pRsV6A7d6JO2RQjMuK62HtKxGI0IF9rH
+         ZIMxF3SKXaknzZZe7TWyvbgoHv1QJLF0k+YfJ6JKJujy6FI7HVSbiW9V6okAc0iaQ0sc
+         xAylhPHo6CzV+MWZ7V+P40aAyXPsDlCWofT4wXw2XM2VAQS1l1npGXWAES66E0agLCE2
+         I2Z21DKUMY1Hqg8dmfgjx1+qz3xr3N9GhtKi8T45wFPPIPb2Hysd9/qVkNikspEezm0t
+         3WggQqpaUUJ2W6m9zu1M0huQlT579LIseD3IGryH9lTZgOQVlF6Vl74iQ328vOgHVH0K
+         EzFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DmcVknj6SUVRy2r+Ed32VdkelTPWKVv749Vvwv239sM=;
-        b=UIik4cvcG0H8yGr1v+4pnwnmvL7yCgYubp1SjEgnn3Yhdub97QfC5opktXNTVEc1of
-         AzlNti18krmiO5qMxqNBNLNDa7F+hTaFLdcCnjarWoQZEHO6R2ENdkmJlg9dEbuIL6X9
-         zkFr/HUH5Bz1kGKNjc8JncqOZJR66lQHw79d8YlrNm2CYw/LmdJB2l+c0t7oNuMPlmaJ
-         ESXqwvfl2ww1cRo74rudp4Om69T6EaQqkaoAO4+dmWTtoOk/ufOvTChwL5zLzEN+xeQC
-         1wr8peo/xHB2OZeYaY7060p3sk7sEwb9XAQWPYPq0J2exRtGqTens3G/RruvP0L16rBI
-         iYBQ==
-X-Gm-Message-State: AOAM530+28QxoZVQdhnF/qboE6s831c6XEq649OJG9Z+c4eW1dRxv9E0
-        vvzKMT4GXwYwdPmRk01n7yRUIX5vG4emp4Jdumo=
-X-Google-Smtp-Source: ABdhPJwO9dUbAWHeoxWoniNEKAdhi8iq0R2pl6Rjj7FHqb0zoFNn875BQOrKAIMIwPDz80vgs6ekyse/HttrW1mvFhQ=
-X-Received: by 2002:a62:4e86:0:b029:2ea:25ce:b946 with SMTP id
- c128-20020a624e860000b02902ea25ceb946mr3662399pfb.30.1623339383553; Thu, 10
- Jun 2021 08:36:23 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6VFNZ+QT+RYo3WmF5zOM3AIBvOLEWYR5TV82+CyDEt0=;
+        b=nZYcDzYAMxW32Qsw0dRbS+/ZBuc1wnlE3SMQ8nVC3mRA7EwstQ96f0qMdYwr3ff9Mx
+         sIij+QD4bHkFtwFJ9FBewWaNFowYndghqTEZg70Jpqv7cFwS9o0BzHuv/+oJZkrdzUat
+         1kwAKPizSr/sNjwKLeoQIQI5opUFGfDifwoF9RRrqlwnT+gZD6N9qrdd3GMaFvzTGa6w
+         1K1Q4TiMVwsNY06pSEqoXg0mxdHlPDZjh2veCt8mYp/hTSvBx1QRLOnoTAaU6AeZIPsN
+         NxeYFsKlZiTAMwfvU0HGHmRW10m2TDLBIbioFnG0JEHxYNYTBzgSCC0TsmCIA/+8D2Qt
+         Dtqw==
+X-Gm-Message-State: AOAM532ky2zGthc87AGtuP39qwDxCmE/YWL4K4na87BwQO664LFUVjnA
+        YYmksLwmMh/V1ypo/faROWh/KwrMVQ9U5fi2hVU=
+X-Google-Smtp-Source: ABdhPJzpdKLrZX6dvI8PVa/YYpQ2cqUHU2aitC86YzLIf7EAYu1OsApa5htNcn2GhbjveNkdgNqy9ldqCM2RN+PDwrs=
+X-Received: by 2002:a9d:426:: with SMTP id 35mr1908482otc.162.1623339664979;
+ Thu, 10 Jun 2021 08:41:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAMJzOtzu-fKxtseSPQ8riTC-kfg1CphnXN=EN-rnxVo85dZvFw@mail.gmail.com>
- <YMIrkBiCpUXcUwsW@coredump.intra.peff.net>
-In-Reply-To: <YMIrkBiCpUXcUwsW@coredump.intra.peff.net>
-From:   Nikita Bobko <nikitabobko@gmail.com>
-Date:   Thu, 10 Jun 2021 17:36:43 +0200
-Message-ID: <CAMJzOtx9D7KthsUi7eLcmz7rszOQh8t=-VhXeOGDX1CMV1iERQ@mail.gmail.com>
-Subject: Re: [Bug report] git format-patch + git am doesn't preserve original
- commit message
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+References: <pull.977.git.1623313765122.gitgitgadget@gmail.com>
+ <877dj22fly.fsf@evledraar.gmail.com> <1554066605.61418500.1623333784687.JavaMail.zimbra@matthieu-moy.fr>
+In-Reply-To: <1554066605.61418500.1623333784687.JavaMail.zimbra@matthieu-moy.fr>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 10 Jun 2021 08:40:53 -0700
+Message-ID: <CABPp-BEQs=n2YhZGVNvLAUVedO1rnWaM=DXYMvVwqDnst3s-sQ@mail.gmail.com>
+Subject: Re: [PATCH] multimail: stop shipping a copy
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oh, I see, thank you, it works.
+On Thu, Jun 10, 2021 at 7:03 AM Matthieu Moy <git@matthieu-moy.fr> wrote:
+>
+> "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason" <avarab@gmail.com>:
+>
+> > On Thu, Jun 10 2021, Johannes Schindelin via GitGitGadget wrote:
+> >
+> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > > The multimail project is developed independently and has its own proj=
+ect
+> > > page. Traditionally, we shipped a copy in contrib/.
+> >
+> > > However, such a copy is prone to become stale, and users are much bet=
+ter
+> > > served to be directed to the actual project instead.
+> >
+> > Let's CC its maintainer / other people who've actively contributed to
+> > it. I've taken the liberty to do that.
+>
+> Thanks.
 
-But actually, I am not sure that it's "expected" behavior. I would
-expect git to preserve original message by default without any
-additional flags. Shouldn't `--keep-non-patch` flag in `git am` be
-enabled by default then?
+I only authored ~2% of the commits in git-multimail, compared to
+Matthieu's ~55% and Michael's ~32%.  So I'm not sure my opinion should
+matter, even if I had a strong opinion.
 
-On Thu, Jun 10, 2021 at 5:11 PM Jeff King <peff@peff.net> wrote:
+And I don't have a strong opinion.  git-multimail was awesome and very
+helpful for a few years, but it did everything I needed as of 2015 and
+I didn't really contribute further because it was perfect for my needs
+by that point.  (Well, okay, I did apparently contribute 563c41ed05ae
+(Ficks a phew simpul speling erors., 2019-11-04) after 2015, but those
+were just typo fixes in comments, not particularly important.)
+
+Also, back when I did use it, I always used the version from upstream
+rather than the copy from git.
+
+> > Having written a system in the past that made use of git-multimail.py
+> > (and sourced it from git.git's copy) I'd think a better direction would
+> > be to keep this and modify githooks(5) to actively recommend it over th=
+e
+> > older and less featureful post-receive-email script.
+
+Recommending git-multimail over the existing post-receive-email script
+makes a lot of sense; git-multimail is much, much better.
+
+> I'm all for recommending it in githooks, but this can be done by pointing
+> to GitHub's URL instead of a local path. Actually the sample script could
+> look like
 >
-> On Thu, Jun 10, 2021 at 05:04:58PM +0200, Nikita Bobko wrote:
->
-> > Steps to reproduce:
-> > ```
-> > git init
-> > git commit --allow-empty -m 'root'
-> > echo foo > foo
-> > git add .
-> > git commit -m '[tag] foo'
-> > git checkout @~
-> > git format-patch master~..master
-> > cat 0001-tag-foo.patch | git am
-> > ```
-> > Expected: commit message generated by `git am` is `[tag] foo`
-> > Actual: commit message generated by `git am` is `foo`
->
-> This is working as intended. See the "-k" option of git-am and
-> git-mailinfo (and also "-b" for mailinfo).
->
-> -Peff
+> # Fetch git-multimail.py from https://github.com/git-multimail/git-multim=
+ail/
+> # adapt and uncomment the following line:
+> #exec /path/to/git_multimail.py
+
+This seems like a good idea.
