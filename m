@@ -2,40 +2,39 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66746C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16A4FC47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:15:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EF57613C8
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:15:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB766613C8
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231589AbhFJPQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 11:16:56 -0400
-Received: from mout.web.de ([212.227.17.12]:38863 "EHLO mout.web.de"
+        id S230267AbhFJPQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 11:16:58 -0400
+Received: from mout.web.de ([212.227.17.12]:52259 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231542AbhFJPQz (ORCPT <rfc822;git@vger.kernel.org>);
+        id S231365AbhFJPQz (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Jun 2021 11:16:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1623338091;
-        bh=0KXsAKNUm5MzTwnv7yLTy79mEIRx0zY3iwyevVSX4O0=;
+        s=dbaedf251592; t=1623338094;
+        bh=cVOZsaPzFayagZ6RMmTffVyw3ELGQQ3qyj2bKBeapDo=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=pkNMEMDT+tGIJX4WAuwJLOo/tQj5Xn5NFGo4QKnpdrAyvPBc8bxztMX/iOVIlk2Hk
-         8m5+SmkNKpj5v5wARfMyb3r5i4gjt8oMzz6tScueqEaA7XWJUUq+Njn+c4FtjfL41j
-         S+CldgzC+aU04RJttNKvdhQ44A2pAO0Y8krP54/g=
+        b=s1/x1iY3MxYYM6M18NCizdopq8EUD+IHXl/Q+0uvC2AA72kKMGTJ6ku9CZZO7qNrm
+         4ZscQggGnDLp7CcMyzM99WK3DRAhpKxkvFTr4bxp9M3W3xS+2aekU6P43ud2nRW32P
+         N/HKkj3Z6hN6nakrTURKbcF7zkE2dTZ94rg8U+Jg=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
  (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0Lo0V2-1lOuOp0kiu-00g4BB; Thu, 10 Jun 2021 17:14:51 +0200
+ 0M7snk-1l5Bev3cYK-00vOB4; Thu, 10 Jun 2021 17:14:53 +0200
 Subject: Re: [PATCH 2/2] read-cache: fix incorrect count and progress bar
  stalling
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
@@ -46,143 +45,97 @@ References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
  <8735tt4fhx.fsf@evledraar.gmail.com> <xmqqczsxtf8g.fsf@gitster.g>
  <87wnr4394y.fsf@evledraar.gmail.com>
  <74183ce6-e17f-1b11-1ceb-7a8d873bc1c7@web.de>
- <87lf7k2bem.fsf@evledraar.gmail.com> <xmqq4ke6ffqv.fsf@gitster.g>
+ <87lf7k2bem.fsf@evledraar.gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f7a54b2d-42c6-1308-f1b0-2f67b2dcadc7@web.de>
-Date:   Thu, 10 Jun 2021 17:14:50 +0200
+Message-ID: <f5e181fc-af94-bccf-051f-a58a04fe1ffc@web.de>
+Date:   Thu, 10 Jun 2021 17:14:52 +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <xmqq4ke6ffqv.fsf@gitster.g>
+In-Reply-To: <87lf7k2bem.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:HExekTEUJ4Bn5QiUaLQK5CkrpyYL34wZiCm0dfp8vDmtbzZFKlR
- v2jeP52l5HBxzoMtSahtrCH3SJhoiQG/zr+Q5BH9koWdIM1lwfWSRmW0FoGIqgOeM9TQF98
- OQCsYBNWy3xSiVuqysFSRySs5pKGhhMcHxHqeug4LG+W4+CFFHvS33bnK4IABui1A/6MsR8
- 9tNof7E0aaTA6G2bhAgFQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0Ni4lnXXQ+U=:8bdY0u5glIaA7NGGBuLpJm
- 1dl8sECCLCRfeccrbKHwZGjVbPWJek3KU8FIHuU4+c3lUeYPMuoLOXCu4onaezxCSkhwWRpQM
- evJDWt2kY7DiCmSvszbljraJzKL72Xjl/7xtyK0Urc7VJMZOMXTMwX6El7hbrSi0u4c2Fhibo
- SNxdA800qLGzIee2eNkKsgj+8m0N09uQ/qsgXvBjRyTTNkYfkZJC+3tY+gCytOCK5gRegfkYM
- uIYFkrBLqruwK1Bt56iY2pIHDayIqZ+9ZW1oDBXfdM/D5ZyZ6qzsXDUSJd/Z+Zg7LU95FkzCh
- 9I4CZWkK8sLsTK2XQ7dzZ7vrIhNa5y5YRMD389ALDatFcNgp+rkgiKOpqY91JiSuChvJajYWS
- QNvi76BNl5tKZ4HJHK2T3CGW/nCrEz4eAfRWWLQNh5jN9HyrT1XwQ97Pz0+1OhKn9Q1uIozgw
- K//quPCr8Zlq03RyBDqigfbjnE/lw3ePcwi1ONQsTIwzdAfvDIkSa/avmqAJP01kV4UqH2I09
- M+AqE6PUh/S7R7+AfBXkirOVzvIex5MiMAO9TDAW4xjLuFWdiY1wqkxYTeyXqPyZNYP4GDU5r
- ysRe1pmk3ImmqIuPVVDJUK2ORayHD4NTtMJh2J/16jXhr+UdqRQS3pf2tfMkp8bqkWUQBjX9i
- jv8C/ED+BRz7elNrFtBkL41sIOl6DeHdvCIua45HIm8UM7U0iGU54YrjIwhpCh9gzC1+gyO2x
- Dy09Da7TMEO2w515O4w3xca/rCMSYBAVtCgAed0I6q/hXRlF1iWDNfnHCD3NaU64/bl7rCGJ/
- CSCqKjYzUYc9lfI8QPCSquHEzd1D7iWb+qNrjKtkzp8WDTMfRZIHo4b1CJUsfAJKXZYKX8DYQ
- OBtjMo/yN2L4DiaW62rXjxRRWWDjEsO+svBCh9ry/rjNRT8grO2SBmWlJYPecwydDDasEYVMy
- Msjh4DPE2nV/o2YLQOg9assW8SU6utW8CAyaCvpV/ibHxI6gSS49JFSg547c1XbyXugTfNXSG
- c+AdEXWtBgMilRTMkupHstWnCccmiA3g25AMi9Em1bak5L5xGUPMU5CfYNDRgZrVKKBfUWwny
- OeXT7cuaXQcbevf1G1paAjnKMKrm+hBTfPL
+X-Provags-ID: V03:K1:WqLnaH4Qj5JfAJbaHA6y1furV2HesZTqHa+7ujhME1eoHD+aBqM
+ nx6xeSkYebrdunjPvUcojV1E9IHbHFTwIjQ1VSFSrXFAN22NLcr6grkzOfIYCZm3Ja/nq+7
+ vjmmnDcY0FQlXHhYPmFE0dCDr4eBTjk/SBFalp5sV4X0hSZm0eAD25zvnUdLr7mUsVjz2QY
+ /7NgGg8jKghZvcVrPSnzg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cwH15WBj/9U=:Nqfp5v2uFNnVKKlmuxpiZi
+ bKlSizeGARms7xvAANHa3TgCdmP019bEr2qTSx6Y7sUAfdcgy+u9d8yCax4kgR5p/ObuDbFKI
+ oN1dVTG0kJYz/wXxniOdeNCqQGzRhZcy4iT4Axh5sowAnwQAUJ+5C6IBkoJwruiqD9k5tpEzh
+ 8H98u5eOv8PzWI4agDY/jWlKgYpGTdtQlaqzgM4wxdRKL2NPbx7aWqvysUavYCyQjml8gsD+/
+ 8wfECOJqBzFMoD0qTlPL+zIR4mt9wxSbxrXZ3c4f0+a+/vVn5+NxpYhXyDc7JDI13SbYE9GuJ
+ w1T8/yJew+iCn1C4msrecQqTAdLs2CEtfhK1LAI6dLQlHDlpyf9TYanlo2QT0MNP+CE0H4Nus
+ KlSw5RbZp6Oq/TcaQmuH6ciLzE9lPyb47gzYuAP9tD5s+REAxD7o7AN0HH87P/qUVcUFqiCkT
+ O7rQMIBG1IhkDv8LBVYKPmwaqFoSG1ICn4J6SaYlNfPftiClZqVBs9m7na0Nnhav9gUVx0/mU
+ XJLmS3HatbnSfuHC5n7eDwIkGiBWPDK73ho2xi+qBBcCMt//u+NcfFhXi3eloiIjSHeOUuopR
+ uFEQMitlXvla6+7xMy6lZDeDbJSr6fxOG7db0FwdZSS/19pQmVu6q/0rj4IXJbIgBImYXLEs0
+ HdurbXY4AQ+5Xvhd5FiOJSP3zG2zaaTUjVNRuGckahEpFOd0KsFply6dq9n9b8YfvDzNNQfp5
+ VwNPlW4a09K+mHFqirnYFGZG22qgwUZ0ODy2f9aaIBevmi1VCpWQnaSnok9+C0FDJOjvApI4f
+ gjImWSdM1qRSUbOSy2kJjmXAAFgLZz+G2Pimwoz2of+zQj+8Jctz26NMx9Kx5ZLeJW+4uHcf1
+ 5REFvN/ulA+VVFrZ0+DRsE2/5pGiAGSkYuVmXp1zEytg86GSZPsrz7Rk6yCaitaMnzJ8mFoBI
+ 7N2LVVJ8QXKCpRtnepByhepYq3YT17VyQ5usCy5IwiVrZFVeiVVfy3YWreHYLTjnQyJ5AlcDH
+ m6zLHNR3hjyuPdaiHuuMnBWLaJ89GlvIB52zC1MApQc2qEbxZakyTotPc3V8dxXgUyyFv08Zv
+ xPJq12lB5sKiHd5JBYOCN2WZtWO8Psx1ATJ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.06.21 um 07:30 schrieb Junio C Hamano:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Am 09.06.21 um 00:12 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
->> I was too quick with that "But yes, I agree with the issue in theory".
->>
->> Having thought about it some more I think you're wrong, it doesn't make
->> sense to use the API in the way you're suggesting.
+> On Tue, Jun 08 2021, Ren=C3=A9 Scharfe wrote:
 >
-> Sorry, I've read the message I am responding to a few times, but I
-> couldn't tell what you are arguing against in the suggestion given
-> earlier by Ren=C3=A9, which offered two possibile ways to consistently
-> call display() with the number of things that we have DONE
-> processing (not the number of things that we are about to touch) [*1*].
+>> I wonder (only in a semi-curious way, though) if we can detect
+>> off-by-one errors by adding an assertion to display_progress() that
+>> requires the first update to have the value 0, and in stop_progress()
+>> one that requires the previous display_progress() call to have a value
+>> equal to the total number of work items.  Not sure it'd be worth the
+>> hassle..
+>
+> That's intentional. We started eating 3 apples, got to one, but now our
+> house is on fire and we're eating no more apples today, even if we
+> planned to eat 3 when we sat down.
+>
+> The progress bar reflects this unexpected but recoverable state:
+>
+>     $ perl -wE 'for (0..1) { say "update"; say "progress $_" }' |
+>       ./helper/test-tool progress --total=3D3 Apples 2>&1 |
+>       cat -v | perl -pe 's/\^M\K/\n/g'
+>     Apples:   0% (0/3)^M
+>     Apples:  33% (1/3)^M
+>     Apples:  33% (1/3), done.
+>
+> We're at 1/3, but we're done. No more apples.
+>
+> This isn't just some hypothetical, e.g. consider neeing to unlink() or
+> remove files/directories one at a time in a directory and getting the
+> estimated number from st_nlink (yeah yeah, unportable, but it was the
+> first thing I thought of).
+>
+> We might think we're processing 10 entries, but another other processes
+> might make our progress bar end at more or less than the 100% we
+> expected. That's OK, not something we should invoke BUG() about.
 
-Same here.
+It doesn't have to be a BUG; a warning would suffice.  And I hope not
+finishing the expected number of items due to a catastrophic event is
+rare enough that an additional warning wouldn't cause too much pain.
 
-Perhaps a demo helps.  The patch at the bottom adds an echo command to
-the test helper.  This way we can intersperse the progress lines with
-indications when items are processed.
+Loops that *regularly* end early are not a good fit for progress
+percentages, I think.
 
-So here's the pattern for calling display_progress at the top of the
-loop and again with the number of items after the loop:
+> Similarly, the n=3D0 being distinguishable from the first
+> display_progress() is actually useful in practice. It's something I've
+> seen git.git emit (not recently, I patched the relevant code to emit
+> more granular progress).
+>
+> It's useful to know that we're stalling on the setup code before the
+> for-loop, not on the first item.
 
-  $ (
-    for i in 0 1 2
-    do
-      echo progress $i
-      echo update
-      echo echo WORK
-    done
-    echo progress 3
-  ) | ./t/helper/test-tool progress --total 3 test 2>&1 | tr '\r' '\n'
+Hmm, preparations that take a noticeable time might deserve their own
+progress line.
 
-  test:   0% (0/3)
-  WORK
-  test:  33% (1/3)
-  WORK
-  test:  66% (2/3)
-  WORK
-  test: 100% (3/3)
-  test: 100% (3/3), done.
-
-The progress lines reflect the number of finished items at all times.
-
-Here's the pattern for display_progress at the bottom of the loop:
-
-
-  $ (
-    for i in 0 1 2
-    do
-      echo echo WORK
-      echo progress $(( $i + 1 ))
-      echo update
-    done
-  ) | ./t/helper/test-tool progress --total 3 test 2>&1 | tr '\r' '\n'
-
-  WORK
-  test:  33% (1/3)
-  WORK
-  test:  66% (2/3)
-  WORK
-  test: 100% (3/3)
-  test: 100% (3/3), done.
-
-Same here, the progress line shows the correct number of finished items.
-
-Here's the pattern suggested in your patch:
-
-  $ (
-    for i in 0 1 2
-    do
-      echo progress $(( $i + 1 ))
-      echo update
-      echo echo WORK
-    done
-  ) | ./t/helper/test-tool progress --total 3 test 2>&1 | tr '\r' '\n'
-
-  test:  33% (1/3)
-  WORK
-  test:  66% (2/3)
-  WORK
-  test: 100% (3/3)
-  WORK
-  test: 100% (3/3), done.
-
-It reports one item too many in the intermediate progress lines and
-is correct only at the very end.
+Anyway, if no guard rails can be built then we have to rely on our math
+skills alone.  Off-by-one errors may look silly, but are no joke -- they
+are surprisingly easy to make.
 
 Ren=C3=A9
-
-
-diff --git a/t/helper/test-progress.c b/t/helper/test-progress.c
-index 5d05cbe789..b6589f3878 100644
-=2D-- a/t/helper/test-progress.c
-+++ b/t/helper/test-progress.c
-@@ -65,6 +65,8 @@ int cmd__progress(int argc, const char **argv)
- 			display_throughput(progress, byte_count);
- 		} else if (!strcmp(line.buf, "update"))
- 			progress_test_force_update();
-+		else if (skip_prefix(line.buf, "echo ", (const char **) &end))
-+			fprintf(stderr, "%s\n", end);
- 		else
- 			die("invalid input: '%s'\n", line.buf);
- 	}
