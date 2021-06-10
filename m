@@ -8,58 +8,57 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F231C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8308C48BDF
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:37:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A0DA613E9
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:37:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADF7D613E9
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbhFJRjC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 13:39:02 -0400
-Received: from mail-pj1-f73.google.com ([209.85.216.73]:63135 "EHLO
-        mail-pj1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbhFJRjB (ORCPT <rfc822;git@vger.kernel.org>);
+        id S231354AbhFJRjD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 13:39:03 -0400
+Received: from mail-yb1-f201.google.com ([209.85.219.201]:34548 "EHLO
+        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231337AbhFJRjB (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Jun 2021 13:39:01 -0400
-Received: by mail-pj1-f73.google.com with SMTP id on11-20020a17090b1d0bb029016bba777f5fso4224740pjb.7
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:36:51 -0700 (PDT)
+Received: by mail-yb1-f201.google.com with SMTP id x187-20020a25e0c40000b029052a5f0bf9acso479110ybg.1
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+DntY3mGg8ZHetqUmUaAm8s2ntVKR1QED6xkd2ix26o=;
-        b=jpx4VHqH5jUpa+P+DTamrpwmLZgynA1dCepUWDpAPDI3jK2Z+V55WmZH16plkqq+ko
-         1LCr8Sw3MvHUYtHHUEDxSnTRIk+A8+PnKh2nPMgGUeKFnK4UYo4eBtuVqs4Cx+slhliE
-         jsS6pQYfEXJ4UxbiroJNauSyZFUq4hX4WWi+0xGj2qVFc9TsT3RuKILF8zYVreNnmzSw
-         VP+Hojf2LrNnPjjKndTr1txtsJAo9jS79zOtPXKpdsCQZY65xthVWh0IZH59xB2rRi6S
-         UYqOkdBNatn9Ri8ELMw7gt1cpd7AsD/wvwrz/tjgahHfO3jL6t/QNLeXk820z+uESX6e
-         NCqg==
+        bh=LGXGM//1Kj1bmhp2Je6sCwChdFI8inBUJ2Xnb++2U18=;
+        b=HWaage/G5/0WLMjWnuRuZM3N2IvETFAKiF1QQE0+ZIa8Jx+aZutwltzwnGl1zLwF5F
+         fKv2/AO5ZOFIDREMlQphgrCDeTkJijwrAy3EROrcEKvcl3SWV1JOjq73j/o6ro6xAri9
+         uD49YqLIfIJEJmkd8PmLi6Zj6vKPMAuLBDCsCMXJ1at7v+Ua+gLZS9F4CLm9WfqLAkFG
+         59rwYgWIXlsM14d6jQssI2SC2E9fYUBNmPqfS5TMX3E1qFgT04fvmikvUZQriPLXKAqq
+         u3niUmJlDqMw4Z3eTgwMxRVTgxoWw6dVFyyCzSXXUcFTrUN3QPKVw5lvlEvEUS12M8WV
+         cOzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=+DntY3mGg8ZHetqUmUaAm8s2ntVKR1QED6xkd2ix26o=;
-        b=WBYficJ4MrA1eCoQUvr3fQj7X8VelrZyucDgGRCAnQVk3CQ+8CIopBKkDh1baBNus/
-         Wn8QlvslagEfVwQkDkyqcFZlsRTVbVWjQnlhS1oQwj/SAPLWBJZDwNmjrTSG/8fbQIG1
-         hIKzB6qIYgsENVPjMccgE8o/cYT1q3/xKD9zDK4H7GmiX/Y9OmcyBon6R/XJ6DfSS2ba
-         om8QDa7CJz8gSX+TCJ96Ad/RrMpyvJTehgeXtbBrPJchOaJc684Gn9gz0FrWJdTB6aI8
-         KSEx4qyirso3mlVkfTcHOgyvdoY5Rzw0YpxrhWj3mlbdzXPJl3v1osGs+Pfnno0hF0WC
-         oPwQ==
-X-Gm-Message-State: AOAM530JDnUnLJtTm9CI6OadnaRJIquBV21oUzcF8XDzCV5nBt32xMt1
-        YoW48ekAKOJpn6AtXuqFZmbhSGVcV47nV20B/lJf8Xi+TC2gv3GECmDOO3zf+EBipgoTiG9HwcS
-        41IAmp2C6x3xNOsLWbn+jDMBuGqVqshhE9aZqf8zvqpB5hgytEnhN3eehbzSSByWfuBMbaOkAok
-        nS
-X-Google-Smtp-Source: ABdhPJyLKpk0jr7o2ZnMlr/cY8NcmNs1RIsWYRyKjNKKfgiix+winAJYQT4ceWpxbpzTsuqvAM694k/80UwuGPV48TNB
+        bh=LGXGM//1Kj1bmhp2Je6sCwChdFI8inBUJ2Xnb++2U18=;
+        b=M6Ni/9C7B2IBgmnVi/4pImL9bYnwk7+sHIAszmEOjRLcXxDqb16oQAW85u03BWjtUM
+         e5U5LKKwRZbic9g/l6Q6ZnConV2nhmEMfMbHNUWs1mmQd5KJ387dQz+ic4BwtomzPmQz
+         kUXRqkg2bePpRV8DFZhxg+NwGVZXKn2uxx+1i/KnPw4d5N3Pl4hcWuqeEEHuH0m9RmKK
+         10MsUpXL0+SZ+EtAXfJJGn8yQiYyBkth6bmjLiPn9S5njlMOravvgIJs97u8kTTVLxFN
+         tKZkzHKmbFOZC1tPRmQK/vPwxyzNFyn1DderGot4Y15r6eQy4bBdjjtmtJ+bRkUb2zrO
+         3QzQ==
+X-Gm-Message-State: AOAM533jsjNIsZxCPvqRoVN4epdtPJehpmiozESTmU/a955m47YNvwJJ
+        dTs+R2TKDhd4N34F5tkYWlTJj82ffSNNK0FJ7ZEgFLLKmqUzf8D0rueYyOmZiw9omPGm075xlDE
+        Xb2zU6RjN6tTuv7jMLIDBLeFBU5Ce52o3dAOVonNwE8gTD9xCYUKPZGfsVXU4Og4iEGz21b7i0F
+        DM
+X-Google-Smtp-Source: ABdhPJwcNl2Z1FOtpCAmpMppGQ9p5m4U+mUewgkIWzr9/ZJm/h5lpyzdbG5Y/ggB5yBj9Fwmxc+B12lzTn+jgWIctBRE
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:1789:b029:2f4:cb41:ec1d
- with SMTP id s9-20020a056a001789b02902f4cb41ec1dmr4089804pfg.3.1623346551282;
- Thu, 10 Jun 2021 10:35:51 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 10:35:41 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a25:9a04:: with SMTP id
+ x4mr9073501ybn.440.1623346553017; Thu, 10 Jun 2021 10:35:53 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 10:35:42 -0700
 In-Reply-To: <cover.1623345496.git.jonathantanmy@google.com>
-Message-Id: <e1a40108f42addf8a589c1d0ac4ed76fb525be9b.1623345496.git.jonathantanmy@google.com>
+Message-Id: <fd6907822cf4cb12023999a61682676de193bff9.1623345496.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1622580781.git.jonathantanmy@google.com> <cover.1623345496.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
-Subject: [PATCH v3 3/5] submodule: refrain from filtering GIT_CONFIG_COUNT
+Subject: [PATCH v3 4/5] run-command: refactor subprocess env preparation
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com,
@@ -69,38 +68,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-14111fc492 ("git: submodule honor -c credential.* from command line",
-2016-03-01) taught Git to pass through the GIT_CONFIG_PARAMETERS
-environment variable when invoking a subprocess on behalf of a
-submodule. But when d8d77153ea ("config: allow specifying config entries
-via envvar pairs", 2021-01-15) introduced support for GIT_CONFIG_COUNT
-(and its associated GIT_CONFIG_KEY_? and GIT_CONFIG_VALUE_?), the
-subprocess mechanism wasn't updated to also pass through these
-variables.
-
-Since they are conceptually the same (d8d77153ea was written to address
-a shortcoming of GIT_CONFIG_PARAMETERS), update the submodule subprocess
-mechanism to also pass through GIT_CONFIG_COUNT.
+submodule.c has functionality that prepares the environment for running
+a subprocess in a new repo. The lazy-fetching code (used in partial
+clones) will need this in a subsequent commit, so move it to a more
+central location.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- submodule.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ run-command.c | 12 ++++++++++++
+ run-command.h | 10 ++++++++++
+ submodule.c   | 18 ++----------------
+ 3 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 0b1d9c1dde..f09031e397 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -489,7 +489,8 @@ static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
- 	const char * const *var;
+diff --git a/run-command.c b/run-command.c
+index be6bc128cd..549a94a6a4 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1892,3 +1892,15 @@ int run_auto_maintenance(int quiet)
  
- 	for (var = local_repo_env; *var; var++) {
--		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+ 	return run_command(&maint);
+ }
++
++void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir)
++{
++	const char * const *var;
++
++	for (var = local_repo_env; *var; var++) {
 +		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
 +		    strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
- 			strvec_push(out, *var);
- 	}
++			strvec_push(env_array, *var);
++	}
++	strvec_pushf(env_array, "%s=%s", GIT_DIR_ENVIRONMENT, new_git_dir);
++}
+diff --git a/run-command.h b/run-command.h
+index d08414a92e..92f1c00b11 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -483,4 +483,14 @@ int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
+ 			       task_finished_fn, void *pp_cb,
+ 			       const char *tr2_category, const char *tr2_label);
+ 
++/**
++ * Convenience function which prepares env_array for a command to be run in a
++ * new repo. This adds all GIT_* environment variables to env_array with the
++ * exception of GIT_CONFIG_PARAMETERS (which cause the corresponding
++ * environment variables to be unset in the subprocess) and adds an environment
++ * variable pointing to new_git_dir. See local_repo_env in cache.h for more
++ * information.
++ */
++void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir);
++
+ #endif
+diff --git a/submodule.c b/submodule.c
+index f09031e397..8e611fe1db 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -484,28 +484,14 @@ static void print_submodule_diff_summary(struct repository *r, struct rev_info *
+ 	strbuf_release(&sb);
  }
+ 
+-static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
+-{
+-	const char * const *var;
+-
+-	for (var = local_repo_env; *var; var++) {
+-		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
+-		    strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
+-			strvec_push(out, *var);
+-	}
+-}
+-
+ void prepare_submodule_repo_env(struct strvec *out)
+ {
+-	prepare_submodule_repo_env_no_git_dir(out);
+-	strvec_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
+-		     DEFAULT_GIT_DIR_ENVIRONMENT);
++	prepare_other_repo_env(out, DEFAULT_GIT_DIR_ENVIRONMENT);
+ }
+ 
+ static void prepare_submodule_repo_env_in_gitdir(struct strvec *out)
+ {
+-	prepare_submodule_repo_env_no_git_dir(out);
+-	strvec_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
++	prepare_other_repo_env(out, ".");
+ }
+ 
+ /*
 -- 
 2.32.0.rc1.229.g3e70b5a671-goog
 
