@@ -2,125 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 472EEC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F133C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:36:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2624160FEB
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:32:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3475F60FEB
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 15:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231587AbhFJPev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 11:34:51 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:5748 "EHLO mx.kolabnow.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231365AbhFJPev (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 11:34:51 -0400
-Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id C72DF4067D;
-        Thu, 10 Jun 2021 17:32:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-        content-transfer-encoding:content-language:content-type
-        :content-type:in-reply-to:mime-version:date:date:message-id:from
-        :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1623339172; x=1625153573; bh=fFLGaqVD7m1/g1AUVpv
-        8r9EnWUUkGr3PGRm4t3D8lhQ=; b=p57/ru2+NmzNVKzvmXKdDRNSOoFILMjvBKh
-        yti9R3wco9iaS5lgxsO8aPBb+M2RsDToTA2qZa9Ms7cHN4RDmIlz0PylSyP1Bqkr
-        ZCnfnODspv4AAGjVVKHAXghJNIF4MPCk6XZn1ZlTFkqYsgQD1QlvifzabvTKOZLx
-        01vzpHU4r5fTQAKvDrPFmLisHu/MJCKzmtdQ3iclsy790wnO5526jFMgXQvOVX0h
-        3S//+6TmDZ2TQ5nsYSCP6PZnZjFiSX+3ZlSnm+TTG/OaJmtsHCTZg5Eyn7WAzM3S
-        BJfjS/Mg1G1PBOopWvK7rPChluK34v9Aqu1bgoInhzbrv6Oab0g0KJISVaOcSh2t
-        ZWBMcKQxkUk5HHB9H/hv8LmHN1stB61hnwI8B2q+TK1x0hjLSC3q2fsWGdTDAe9C
-        0qnCFJ7R4JGTNXSYBpb84agxE//50oqIFpmyx0r5XEMU1bJpAS9Z5Nbd4doBiasM
-        sh9lFFjfMGti8aIZN0GPDWs0r34C7R6tnxAdJnRBWaAb3PJBSCyAlTIdqJxs6S5T
-        m7/4ZrT6hNeY7OWBJEyVDObSy0vVuWIJbtFP3ig+0MoEJWVcj7hsCVJvrmt7K1Qj
-        byvX6n1NRbaO8Pu64konurZaokStvr5jMWy4M9dl0DqdcjVXKZucBZIz0QTwkbSK
-        E2e8fZxk=
-X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id cwRnDvvycjD8; Thu, 10 Jun 2021 17:32:52 +0200 (CEST)
-Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id DD5C8404BD;
-        Thu, 10 Jun 2021 17:32:51 +0200 (CEST)
-Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id 12A7518F;
-        Thu, 10 Jun 2021 17:32:46 +0200 (CEST)
-Subject: Re: UNLEAK(), leak checking in the default tests etc.
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?TMOpbmHDr2MgSHVhcmQ=?= <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <87czsv2idy.fsf@evledraar.gmail.com>
- <fcb0eaee-6ae1-f2cc-51d5-103eea64532a@ahunt.org>
- <87y2bi0vvl.fsf@evledraar.gmail.com>
- <YMIVzYgNddsR4FSd@coredump.intra.peff.net>
-From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <bd212451-d8f0-e041-3460-bbbff57542d8@ahunt.org>
-Date:   Thu, 10 Jun 2021 17:32:41 +0200
+        id S231674AbhFJPiU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 11:38:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60672 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230366AbhFJPiU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 11:38:20 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04751C061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 08:36:24 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id p13so1966477pfw.0
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 08:36:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DmcVknj6SUVRy2r+Ed32VdkelTPWKVv749Vvwv239sM=;
+        b=iTzeVrXfBy60GAVlC1wi1X9HpLSoR1DvN9XWRCVmuKlf+BDQRwpR0WrdorFUFY1fO9
+         pPC4NmU5o2ec60GWdDTtCk5wBZkRRSEE1lJBzskNww5LV+84FC5/Zc1F+IqMDTWO5lHb
+         I6afVa21h3Bj4AaMOV1bWQf8nv83dc9mTmlo/HZdB+HLQ+sZK8K/DZvPuQBbPQbFOKg/
+         CUg3w/rFT94h33lL0H+iIC2Xwiofj5yOlXtzExTs6CEqVLgkoB2TDdiBS5HBnAEM+B/B
+         DHZQ3CttfdBiO+JXFEHqXmbg2dV9+O0Jc1pwPS9gDVLnMSF4TbscUXPR7xw+hyFoXmiU
+         LZjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DmcVknj6SUVRy2r+Ed32VdkelTPWKVv749Vvwv239sM=;
+        b=UIik4cvcG0H8yGr1v+4pnwnmvL7yCgYubp1SjEgnn3Yhdub97QfC5opktXNTVEc1of
+         AzlNti18krmiO5qMxqNBNLNDa7F+hTaFLdcCnjarWoQZEHO6R2ENdkmJlg9dEbuIL6X9
+         zkFr/HUH5Bz1kGKNjc8JncqOZJR66lQHw79d8YlrNm2CYw/LmdJB2l+c0t7oNuMPlmaJ
+         ESXqwvfl2ww1cRo74rudp4Om69T6EaQqkaoAO4+dmWTtoOk/ufOvTChwL5zLzEN+xeQC
+         1wr8peo/xHB2OZeYaY7060p3sk7sEwb9XAQWPYPq0J2exRtGqTens3G/RruvP0L16rBI
+         iYBQ==
+X-Gm-Message-State: AOAM530+28QxoZVQdhnF/qboE6s831c6XEq649OJG9Z+c4eW1dRxv9E0
+        vvzKMT4GXwYwdPmRk01n7yRUIX5vG4emp4Jdumo=
+X-Google-Smtp-Source: ABdhPJwO9dUbAWHeoxWoniNEKAdhi8iq0R2pl6Rjj7FHqb0zoFNn875BQOrKAIMIwPDz80vgs6ekyse/HttrW1mvFhQ=
+X-Received: by 2002:a62:4e86:0:b029:2ea:25ce:b946 with SMTP id
+ c128-20020a624e860000b02902ea25ceb946mr3662399pfb.30.1623339383553; Thu, 10
+ Jun 2021 08:36:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YMIVzYgNddsR4FSd@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAMJzOtzu-fKxtseSPQ8riTC-kfg1CphnXN=EN-rnxVo85dZvFw@mail.gmail.com>
+ <YMIrkBiCpUXcUwsW@coredump.intra.peff.net>
+In-Reply-To: <YMIrkBiCpUXcUwsW@coredump.intra.peff.net>
+From:   Nikita Bobko <nikitabobko@gmail.com>
+Date:   Thu, 10 Jun 2021 17:36:43 +0200
+Message-ID: <CAMJzOtx9D7KthsUi7eLcmz7rszOQh8t=-VhXeOGDX1CMV1iERQ@mail.gmail.com>
+Subject: Re: [Bug report] git format-patch + git am doesn't preserve original
+ commit message
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Oh, I see, thank you, it works.
 
+But actually, I am not sure that it's "expected" behavior. I would
+expect git to preserve original message by default without any
+additional flags. Shouldn't `--keep-non-patch` flag in `git am` be
+enabled by default then?
 
-On 10/06/2021 15:38, Jeff King wrote:
->> I ran it, noted the failing tests, produced a giant GIT_SKIP_TESTS list
->> and hacked ci/ to run that as a new linux-clang-SANITIZE job. That messy
->> WIP code is currently running at:
->> https://github.com/avar/git/runs/2793150092
->>
->> Wouldn't it be a good idea to have such a job and slowly work on the
->> exclusion list?
->>
->> E.g. I saw that t0004 failed, which was trivially fixed with a single
->> strbuf_release(), and we could guard against regressions.
-> 
-> I don't mind that. My intent was to get the whole suite clean
-> eventually, and then start worrying about regressions. But that may take
-> a while.
-> 
-> I do think it would be worth splitting out ASan from leak-checking. The
-> whole suite should run clean with regular ASan already, and we'd want to
-> find regressions there even in the tests that aren't leak-clean. I do
-> periodic ASan runs already; the main argument against doing it for every
-> CI run is just that's a lot more CPU. But maybe not enough to be
-> prohibitive? It's probably still way cheaper than running the test suite
-> on Windows.
-
-I've been running tests with ASAN in the Github Actions environment, and 
-a single run takes just over 30 minutes [1] - which I believe is similar 
-to the normal test jobs (they do run the test suite twice in that time I 
-think).
-
-I've been doing the same with UBSAN, and that's even faster at 15-20 
-minutes [2]. However I get the impression that ASAN issues are both more 
-common (at least on seen), and more impactful - so I would argue that 
-ASAN should be prioritised if there's spare capacity. (I have no idea if 
-ASAN+UBSAN can be combined, but I suspect that doing so would make the 
-tests slower?)
-
-I'm also running LSAN tests in CI to try and catch regressions, but I've 
-only enabled a handful of tests so far. My much simpler approach was to 
-specify the range of tests to run as 0-X, and as we make progress on 
-fixing leaks, X will slowly approach 9999 (currently we're at something 
-like X~=5, although I'm not too far off sending out some patches to 
-boost that to 99). The skip-tests approach seems much more useful!
-
-ATB,
-
-   Andrzej
-
-[1] https://github.com/ahunt/git/runs/2789921851?check_suite_focus=true
-[2] https://github.com/ahunt/git/runs/2760632000?check_suite_focus=true
-
+On Thu, Jun 10, 2021 at 5:11 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jun 10, 2021 at 05:04:58PM +0200, Nikita Bobko wrote:
+>
+> > Steps to reproduce:
+> > ```
+> > git init
+> > git commit --allow-empty -m 'root'
+> > echo foo > foo
+> > git add .
+> > git commit -m '[tag] foo'
+> > git checkout @~
+> > git format-patch master~..master
+> > cat 0001-tag-foo.patch | git am
+> > ```
+> > Expected: commit message generated by `git am` is `[tag] foo`
+> > Actual: commit message generated by `git am` is `foo`
+>
+> This is working as intended. See the "-k" option of git-am and
+> git-mailinfo (and also "-b" for mailinfo).
+>
+> -Peff
