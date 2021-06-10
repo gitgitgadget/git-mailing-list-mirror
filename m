@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F2BDC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05640C48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8315C613C9
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D681B613C9
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbhFJNAM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 09:00:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53376 "EHLO
+        id S230317AbhFJNAN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 09:00:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230298AbhFJNAH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230247AbhFJNAH (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Jun 2021 09:00:07 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E7DC061760
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:57:54 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id k5-20020a05600c1c85b02901affeec3ef8so6537217wms.0
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:57:54 -0700 (PDT)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22647C0617A8
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:57:56 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id f2so2193440wri.11
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=64mz7XOZtANGvbIXOxuTCZ/Y32JaXbRfNk+XitbMcgY=;
-        b=tgm+obF3kzxRTjLjpbMTWZn4rS3DhJk5jHY6DCHhwDkfNd3JfhCE9H99NZFANrLWXj
-         S3HslgAOTqi4+ZFxaKgUF28Ng3Co7PCkAsqLngDKtQ0HqAf9YUgVvjQrVqqA4msWbigP
-         V5R1RufAkjBEoWPILRGG0LPzkqq7xMdKo+AXQ0f4M4cirTOgFFot1HFn9FRpVLhrBXBR
-         sR75hRctVUv7syha7Jkui5jDsZP7iWyAR/nOReAB5gPxr+9kpqicqrFqpgMYm7MEFODt
-         n8602lfViWpRjc91RQ8c5raBM7VrZjNgKTz0CQSzzhgeHTrBtarFp9zlMXcXX1Xx0GL3
-         Df5Q==
+        bh=/GbomKuqk5Dom33iQGel4Kf1HS0OwkV76inPEQSI9nM=;
+        b=sgUbSR96JerMUkIExLfgNL9926vG7fCRDKpmUieL3WaBSbKcexWqny2Eie6WGBIMBE
+         guUbssICgeOjjVwwXpX5NnL6ZvqTJ8iXGFDPtY2vu6rVry09Flt6wMwNQao5smaj39xd
+         vseJXy36+GKBRWbekBU7KmNawASc+4kdDLFJvPu5dQcHKPeSq4NHGaj+qOnZNJ9vWTif
+         8B6GTNxKBLNZfYguFSvJe6KSJFSz20OrMkkYixkfIL0dvqNqzvIPTtXqtCrPH/t6txHq
+         N/zDgN91CSEmEh+Ti1JTlGui80phk27GdP0+NP0xovcGhZbXXM3U/3iJMIaiAdRPimRx
+         qpSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=64mz7XOZtANGvbIXOxuTCZ/Y32JaXbRfNk+XitbMcgY=;
-        b=iFNU3IeS10csMMPqI6R4SjO1dXYkLy5j+A5N851/6Vx/JD0709c9bJZzRnL50NahXe
-         TwnY+9V/30s3ZEi0o3L+Nm34Og5xcaeC53EoOyEJR4lFbyf6wJKv6Q2i2hBie2tXWqob
-         cTPjCK2VW5DqHlyAHDZHc3AJDLaLYF384GfGo+pG2xbOne22UG6w7UWFyVrWVCL6iec9
-         LCLGNkzxYd4nfRNr78H9H25zq4Km/DzRNRBPobze0Z8hutY6qPvBFvnn2Vx2pV/w0vUP
-         Fe//LVOl0zDakjwJmqzRfm+fejlvP59vkQatWoZEap9nl5TcGxUrQn54q+swmGpntraM
-         Wt6A==
-X-Gm-Message-State: AOAM530Ayq68kNMB/RyVBveIfYjCi8ByO4JTJgY/V1RGQqE718QXsPdi
-        GROxxS12TR6roUCVYKupLSjEeAanWgk=
-X-Google-Smtp-Source: ABdhPJyFA+QcbPAmvAT7ERfba7Qq/U7Gf95eRvayIk8c1vHkyVFl/Cssh+GuHNimcsUCCoaYtHfh5Q==
-X-Received: by 2002:a05:600c:ad2:: with SMTP id c18mr4879512wmr.93.1623329872735;
-        Thu, 10 Jun 2021 05:57:52 -0700 (PDT)
+        bh=/GbomKuqk5Dom33iQGel4Kf1HS0OwkV76inPEQSI9nM=;
+        b=lqo3HxIO8VsnOTYpyut63KFCdzZmYhP4EK4B1jD/wfEAG58sf/aKlNcdlxnKL2BhY9
+         QmkJ2jBs2VDv3jqj3gtFoAbtMkfe2mvgpv8sf7D0EPbD9uzGiKUcySfU0l3QWaPKag6B
+         mwcarYFixEgpEbj6GJ398EeCc0rK/TkRzSkl7WEjMFpqa3pf2fQoWng1H0WWiWfo4gp6
+         Af04SbgozHrAM95kgXTd8nsU4tqVu540FzQK5/Km67d2smHfOezBIItwHL27OiOJbwoO
+         gIB35QvU/0I7ZXI0TyOus6Y0vh7/BaRaBZDYJ/18hcMXJe8vYCw14rpR9yqSr5MdPucL
+         QIrQ==
+X-Gm-Message-State: AOAM531+7b3D7YPlDxJEMnd1uLdha35fizIckUIkj8+R0yj9ikW6Mfl4
+        POFZR2lZadjN3UhrDSQFZzsCzZbCZho=
+X-Google-Smtp-Source: ABdhPJwiNEAkbb+MeiWlrf/R96WZ2DWMfob1qi829RD8tFZvowAXp2SW+ID1HOucLRfn0ARMNOAOHA==
+X-Received: by 2002:a5d:6dce:: with SMTP id d14mr5346099wrz.236.1623329874793;
+        Thu, 10 Jun 2021 05:57:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p187sm2958529wmp.28.2021.06.10.05.57.52
+        by smtp.gmail.com with ESMTPSA id k16sm2876166wmr.42.2021.06.10.05.57.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 05:57:52 -0700 (PDT)
-Message-Id: <11b2184044d766183edf5ee1888f38945e8a7fd1.1623329869.git.gitgitgadget@gmail.com>
+        Thu, 10 Jun 2021 05:57:54 -0700 (PDT)
+Message-Id: <2a9ebe43deac3da9baf241ff1e494f8210c27981.1623329869.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
 References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
         <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Jun 2021 12:57:44 +0000
-Subject: [PATCH v2 4/8] refs: make errno output explicit for
- refs_resolve_ref_unsafe
+Date:   Thu, 10 Jun 2021 12:57:48 +0000
+Subject: [PATCH v2 8/8] refs: explicitly propagate errno from
+ refs_read_raw_ref
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,66 +79,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This introduces refs_resolve_ref_unsafe_with_errno(), which makes the API
-contract for the errno output explicit. The implementation still relies on
-the global errno variable to ensure no side effects of this refactoring.
-
-In a follow-on commits, we will
-
-* migrate callers that need this error information
-
-* clear errno in refs_resolve_ref_unsafe() to make sure these other callers
-aren't using the error output accidentally.
+The function refs_resolve_ref_unsafe_with_errno should produce an errno output.
+Rather than taking the value from the errno (which might contain garbage
+beforehand), explicitly propagate the failure_errno coming out of
+refs_read_raw_ref().
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- refs.c               | 12 ++++++++++++
- refs/refs-internal.h |  8 ++++++++
- 2 files changed, 20 insertions(+)
+ refs.c | 38 ++++++++++++++------------------------
+ 1 file changed, 14 insertions(+), 24 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index bebe3f584da7..64e2d55adcfb 100644
+index 191cbf5a330f..92c4796078bb 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1781,6 +1781,18 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
- 	return NULL;
+@@ -1686,11 +1686,11 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 					   type, failure_errno);
  }
  
+-/* This function needs to return a meaningful errno on failure */
+-static const char *
+-refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
+-				       const char *refname, int resolve_flags,
+-				       struct object_id *oid, int *flags)
 +const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
 +					       const char *refname,
 +					       int resolve_flags,
 +					       struct object_id *oid,
 +					       int *flags, int *failure_errno)
-+{
-+	const char *result = refs_resolve_ref_unsafe(refs, refname,
-+						     resolve_flags, oid, flags);
-+	*failure_errno = errno;
-+	return result;
-+}
-+
- /* backend functions */
- int refs_init_db(struct strbuf *err)
  {
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 904b2a9e51ae..eb97023658f8 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -153,6 +153,14 @@ int refs_read_raw_ref(struct ref_store *ref_store,
- 		      const char *refname, struct object_id *oid,
- 		      struct strbuf *referent, unsigned int *type);
+ 	static struct strbuf sb_refname = STRBUF_INIT;
+ 	struct object_id unused_oid;
+@@ -1703,11 +1703,12 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
+ 		flags = &unused_flags;
  
-+/* Like refs_resolve_ref_unsafe, but provide access to errno code that lead to a
-+ * failure. */
-+const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
-+					       const char *refname,
-+					       int resolve_flags,
-+					       struct object_id *oid,
-+					       int *flags, int *failure_errno);
+ 	*flags = 0;
++	*failure_errno = 0;
+ 
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 		    !refname_is_safe(refname)) {
+-			errno = EINVAL;
++			*failure_errno = EINVAL;
+ 			return NULL;
+ 		}
+ 
+@@ -1730,6 +1731,8 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
+ 				      &read_flags, &read_failure)) {
+ 			*flags |= read_flags;
+ 
++			*failure_errno = read_failure;
 +
- /*
-  * Write an error to `err` and return a nonzero value iff the same
-  * refname appears multiple times in `refnames`. `refnames` must be
+ 			/* In reading mode, refs must eventually resolve */
+ 			if (resolve_flags & RESOLVE_REF_READING)
+ 				return NULL;
+@@ -1767,7 +1770,7 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
+ 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
+ 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
+ 			    !refname_is_safe(refname)) {
+-				errno = EINVAL;
++				*failure_errno = EINVAL;
+ 				return NULL;
+ 			}
+ 
+@@ -1775,7 +1778,7 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
+ 		}
+ 	}
+ 
+-	errno = ELOOP;
++	*failure_errno = ELOOP;
+ 	return NULL;
+ }
+ 
+@@ -1783,22 +1786,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
+ 				    int resolve_flags, struct object_id *oid,
+ 				    int *flags)
+ {
+-	const char *result = refs_resolve_ref_unsafe_implicit_errno(
+-		refs, refname, resolve_flags, oid, flags);
+-	errno = 0;
+-	return result;
+-}
+-
+-const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
+-					       const char *refname,
+-					       int resolve_flags,
+-					       struct object_id *oid,
+-					       int *flags, int *failure_errno)
+-{
+-	const char *result = refs_resolve_ref_unsafe_implicit_errno(
+-		refs, refname, resolve_flags, oid, flags);
+-	*failure_errno = errno;
+-	return result;
++	int ignore;
++	return refs_resolve_ref_unsafe_with_errno(refs, refname, resolve_flags,
++						  oid, flags, &ignore);
+ }
+ 
+ /* backend functions */
 -- 
 gitgitgadget
-
