@@ -2,128 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9426C48BDF
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9264C48BE0
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:51:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD3096139A
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:35:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC038611CD
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:51:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230301AbhFJVg7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 17:36:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47672 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230169AbhFJVg7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Jun 2021 17:36:59 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BCBA360400;
-        Thu, 10 Jun 2021 21:35:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1623360902;
-        bh=woeB5goId8NVBOg/+DXo7xYiLT4Bun27PHx8jkORgUo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=GDMgS5vAWrFnu80OVd7p5QTo5RavoyqPqH0BXkjj4Ztx8JRpQPeTpkuyQMhFlO6EN
-         rAQ1fSjls9S41p+bzxZnFztRXBjpGPy167/2O9gdZU/fppOVLd2yIu5jASzJ7As0qe
-         7cK9o+d62nRN57IPNyjTvjR9eXCODoLlSSSMTEroOLg61Aqxf7lM8WUiPEeZXTcUOJ
-         rRMwzqeMDW+F/qVAyOx6/KC27eUnlvIDbru+JESMzPwcUqK7DMOTO4N1/wWI9k8prp
-         LRBePWcCSX5nzHJ2gMPNlTFuzr/SUR77gVEY135EtPdBcUec3KsF837A6W3GIK5djd
-         v5ZCBhMpGu1hbxS8fCjBnc/UIg1Zc9NO/e7BdI6vLadevM7YN+UUArUkVTDbmf2IeB
-         24hTipgltkfyiFocWSR6Dhwze7k9bkIew3USYK1xoSZhkoSdWzRX2fkbx0gUZ1Ofzu
-         mG4o5QYQWM+VIHPpw2vNSpzHLW+BP3kLBWVaU0LAFS3OaBBxnlP
-Date:   Thu, 10 Jun 2021 21:34:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 4/4] CodingGuidelines: recommend singular they
-Message-ID: <YMKFeZdwD/BSeKmx@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <d2c079264955b3bd6c3a5ef77a9c3684206f8475.1623085069.git.gitgitgadget@gmail.com>
- <xmqq4ke9v6za.fsf@gitster.g>
- <a66ed39c-926d-d887-526b-dc0f9c049085@gmail.com>
+        id S230444AbhFJVxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 17:53:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51870 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230421AbhFJVxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 17:53:04 -0400
+Received: (qmail 9527 invoked by uid 109); 10 Jun 2021 21:51:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 21:51:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1864 invoked by uid 111); 10 Jun 2021 21:51:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 17:51:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Jun 2021 17:51:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/5] submodule: refrain from filtering GIT_CONFIG_COUNT
+Message-ID: <YMKJSuin9fS/4acr@coredump.intra.peff.net>
+References: <cover.1622580781.git.jonathantanmy@google.com>
+ <cover.1623345496.git.jonathantanmy@google.com>
+ <e1a40108f42addf8a589c1d0ac4ed76fb525be9b.1623345496.git.jonathantanmy@google.com>
+ <CABPp-BFpW7KLQGbe1kz5FNWABrTNaHOCZw3poXBMWQ9MP91GuQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9tSlZzdRigiKVkvW"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a66ed39c-926d-d887-526b-dc0f9c049085@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <CABPp-BFpW7KLQGbe1kz5FNWABrTNaHOCZw3poXBMWQ9MP91GuQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jun 10, 2021 at 02:13:49PM -0700, Elijah Newren wrote:
 
---9tSlZzdRigiKVkvW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > diff --git a/submodule.c b/submodule.c
+> > index 0b1d9c1dde..f09031e397 100644
+> > --- a/submodule.c
+> > +++ b/submodule.c
+> > @@ -489,7 +489,8 @@ static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
+> >         const char * const *var;
+> >
+> >         for (var = local_repo_env; *var; var++) {
+> > -               if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+> > +               if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
+> > +                   strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
+> >                         strvec_push(out, *var);
+> >         }
+> >  }
+> > --
+> > 2.32.0.rc1.229.g3e70b5a671-goog
+> 
+> I'm super confused.  It appears that
+> prepare_submodule_repo_env_no_git_dir() is filtering out
+> "GIT_CONFIG_PARAMETERS" (CONFIG_DATA_ENVIRONMENT) and
+> "GIT_CONFIG_COUNT" (CONFIG_COUNT_ENVIRONMENT), using all environment
+> variables other than these ones.  But the commit message talks about
+> adding an extra environment variable, rather than filtering another
+> out.  I must be mis-reading something somewhere, but I'm struggling to
+> figure it out.
 
-On 2021-06-07 at 19:05:19, Derrick Stolee wrote:
-> On 6/7/2021 2:56 PM, Junio C Hamano wrote:
-> > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >=20
-> >> To futher justify singular "they" as an acceptable grammatical concept,
-> >> I include the careful research of brian m. carlson who collected their
-> >> thoughts on this matter [2] (lightly edited):
-> >=20
-> > The use of "their" here I found going overboard, given that (1) it
-> > is outside the topic of this change, where you are not referring to
-> > a non-specific person, and (2) as Brian's siglines indicate, the
-> > preferred pronouns for the particular person you are referring to is
-> > "he/him or they/them".
->=20
-> I'll admit that I was trying to be instructive in my commit message
-> whenever possible, so specifically chose that option among brian's
-> preferred pronouns. If I misinterpreted the purpose of "he/him or
-> they/them" then I will absolutely change this instance.
+I think there might be a double (triple?) negative here:
 
-The intended meaning is that either is fine, whichever the speaker
-prefers.  Most people do use he/him for me, probably because most people
-are more comfortable doing that, but either option is equally
-acceptable.
+  - we want to pass through the config parameters variable, but not
+    other local repo env variables;
 
-> For my part, I did run this message by brian before sending the patch,
-> to be sure that my use of the quote was appropriate. (Also, I'm
-> purposefully lower-casing "brian m. carlson" to match chosen email
-> signatures, but perhaps that is also incorrect?)
+  - so we _don't_ want the config variable to appear in the "out"
+    strvec, because its presence would cause it to be cleared
+    from the child process environment;
 
-Also correct.  I typically lowercase my name, and I prefer it that way.
-For legal purposes, at least in the locales which are relevant to me,
-case is not considered important, and most legal documents scream my
-name in uppercase.  But when I have an option, I prefer lowercase when
-that's possible.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+  - so we go through the list adding everything _except_ that variable;
 
---9tSlZzdRigiKVkvW
-Content-Type: application/pgp-signature; name="signature.asc"
+  - and we match using strcmp(), so a true value means "did not match",
+    so we should add it to the list
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+> Also, from looking at the other commit messages you reference, it
+> appears GIT_CONFIG_PARAMETERS was just one big environment variable,
+> whereas GIT_CONFIG_COUNT is closely associated with 2*N other
+> environment variables...so shouldn't your loop (and perhaps also
+> git-submodule.sh) also be checking GIT_CONFIG_KEY_\d+ and
+> GIT_CONFIG_VALUE_\d+ ?
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMKFeAAKCRB8DEliiIei
-geMGAP0fEf9OXnHp+6cegDuWyenMKAg+53TcyKkW5gNgq7JtVwEA2EX2vqD/kYyZ
-OTR8cf+1cCOBoVcW8TPWfPXKsdzEBAw=
-=8aap
------END PGP SIGNATURE-----
+We definitely could clean out those GIT_CONFIG_KEY_* values. But the
+COUNT serves as a master parameter. Anybody who sets COUNT would then
+also set the individual key/value parameters, too (and even it only sets
+it to "5", and there is a crufty GIT_CONFIG_KEY_6 in the environment,
+that is not wrong).
 
---9tSlZzdRigiKVkvW--
+-Peff
