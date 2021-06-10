@@ -2,244 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65FB4C48BDF
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 23:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99CA1C48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 23:59:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4916A61403
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 23:45:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78DFA613CF
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 23:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230411AbhFJXrW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 19:47:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56014 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbhFJXrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 19:47:19 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83E4FC061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 16:45:07 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id g8so1736253ejx.1
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 16:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=PrI/XN03pPqtWzXWgjfQ6LdG3oDg931MRJIXZtB1obc=;
-        b=MNSLypbjqPuNUSVM6AQl4KLmlmM22Fa9bn4PRSQ2vc6DtMnQARxFH+6cvnSN3QuqjQ
-         P5hSjIdYnCEmGifmuVqU3Henyv1qxX59Jf1MmaXEIW0Jvjv2aBv5BCojda5lzhA78KhV
-         WW6TY2GvgMhxW+8M+kV9Wh4tkxU/vUwHtc0HnIGHvIaTiZLHHGCyhFvXQPuESS6jmRvR
-         X7cBiQVSFAlI4IdEbByeKLhw0W+Eq9HZOeJ1bp7Ea/L2+u11h158B/peZF+m6l8W+Fhq
-         ieK671768XQKzsr6p5cKtmhOCcpoW3t5+ru0RmuYhXwLyNrho7PKtB/BLr+h/Wr+gIII
-         Klew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=PrI/XN03pPqtWzXWgjfQ6LdG3oDg931MRJIXZtB1obc=;
-        b=bhLmIA59q6uk8FmHtRMjnuGeIgO2NKMOQpIXHNuzMg79uBL2j96X4pn1TBpxiSt4s1
-         cIngDatz7g0xggeE5gVwotyxGgabdIVcdVhQwyCiAEqOV2WckPh+D3B712xPspo4OJn/
-         HVlQsztuii3BhwhzMpIQptWYxhTuxZYy9P9sADmB0ttnlx/6WXkT28ZpW5nxu806faYd
-         u0DJlzaDqghTXE3CiMZiQYWHfXQB7ulR2JPcnO/meY413lhSdUoxkxIWhvfWdOY8PGe9
-         lFBx3YGSgQoSg7FFgUSPE2GJPPwDK+bSrBV6xTHULQSWYARFkLM8PYloTzLoXMP+zmeU
-         TujA==
-X-Gm-Message-State: AOAM532zzWrE2MG6pPl+LiNI1lmtDKb3pUIr0ARywBZeLefh9YkAW7wm
-        slH+2r0T3cV/6V5yjc/k9GQ=
-X-Google-Smtp-Source: ABdhPJzTRHJ+A/QRuDYX9hPb66/+jlyoX+9JnTYmZwtazqarb3cY8sihljxfrbjDe18AkuTMJlMSIg==
-X-Received: by 2002:a17:906:b55:: with SMTP id v21mr844425ejg.88.1623368705957;
-        Thu, 10 Jun 2021 16:45:05 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id b14sm1365053ejk.120.2021.06.10.16.45.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 16:45:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
-        jrnieder@gmail.com, emilyshaffer@google.com,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 0/4] Use singular "they" when appropriate
-Date:   Fri, 11 Jun 2021 00:58:22 +0200
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
- <87a6nz2fda.fsf@evledraar.gmail.com>
- <YMKTARn368Qzsqc2@camp.crustytoothpaste.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YMKTARn368Qzsqc2@camp.crustytoothpaste.net>
-Message-ID: <87pmwt1dz3.fsf@evledraar.gmail.com>
+        id S230434AbhFKABP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 20:01:15 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54347 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229578AbhFKABO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 20:01:14 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0CB7CA065;
+        Thu, 10 Jun 2021 19:59:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eEOguqrxcu2zab4aKoMNsRZF8BQbck5261cCkI
+        MikBg=; b=q3U51amkp5L9xIO5SVFs97pPl+T1jD7yPFEpKhfEKz7EZGBde/6fBR
+        fX2Sl99A63Y2T4aV6Rog68Fm9AubFiFJ7pdBoBQgMAQh5r/E5jDqMEE6+EyTeOjr
+        2OEGkHT2Uk5NDKFRWRnyOiGhsDqc0Uk+O/JRjOgYG/eaXDP3yVQrs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A81BFCA063;
+        Thu, 10 Jun 2021 19:59:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.172.107])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3198ECA062;
+        Thu, 10 Jun 2021 19:59:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] *: fix typos which duplicate a word
+References: <20210609102641.3531183-1-rybak.a.v@gmail.com>
+        <20210610072406.10203-1-rybak.a.v@gmail.com>
+Date:   Fri, 11 Jun 2021 08:59:16 +0900
+In-Reply-To: <20210610072406.10203-1-rybak.a.v@gmail.com> (Andrei Rybak's
+        message of "Thu, 10 Jun 2021 09:24:06 +0200")
+Message-ID: <xmqq1r99e0ff.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: DD79EFFA-CA47-11EB-8732-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-On Thu, Jun 10 2021, brian m. carlson wrote:
+> Subject: Re: [PATCH v2] *: fix typos which duplicate a word
 
-> [[PGP Signed Part:Undecided]]
-> On 2021-06-09 at 15:44:59, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Wed, Jun 09 2021, Derrick Stolee via GitGitGadget wrote:
->>=20
->> > Updates in v2
->> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> >
->> >  * Some edits were removed because they were in contrib/ or
->> >    Documentation/howto/ and these are now listed as exclusions in the
->> >    message of Patch 4.
->>=20
->> Thanks.
->>=20
->> >  * Several recommendations to improve the edits in the documentation a=
-nd
->> >    code comments were incorporated. Those who recommended these edits =
-are
->> >    credited with "Helped-by" tags.
->>=20
->> I think a v2 is a bit premature with all the active discussion on the v1
->> thread, a lot of which isn't addressed by the v2 or this CL, e.g. many
->> point I[1] and others raised.
->>=20
->> My main objection of extending this to commit messages and thus making
->> e.g. non-native speakers be on their toes when contributing to the
->> project is gone, so that's good.
->>=20
->> I'm still not in favor of this change because I think an active
->> recommendation like "Refer to an anonymous user in a gender neutral way"
->> probably isn't needed if we simply document that our preferred prose is
->> to avoid the issue entirely, which is the case in most of our
->> documentation.
+I think Derrick started this use of "*:" prefix to mean "not limited
+to any particular area, but applies to everything" and it makes
+sense.
+
+> Fix typos in documentation and code comments which repeat various words.
+
+Thanks.
+
+> These typos were found by searching using scripts like this:
 >
-> I agree that in many cases in technical writing that the passive voice
-> (or another technique) may be preferable.  For example, this selection
-> about O_TRUNC from open(2):
+> 	for w in $(grep '^....$' /usr/share/dict/words)
+> 	do
+> 		git grep -P "\b$w $w\b"
+> 	done
+
+This is clarifying and somewhat puzzling at the same time.
+
+It says that doubled words that span across line folding, and
+doubled words that do not have exactly a single space in between,
+have gone undetected (which is fine and may be useful information)
+by showing that it grepped for lines that has doubled words.  But it
+also says that you only looked for four-letter words, which I do not
+believe is the case (you fixed "the the", for example), which is
+misleading.  The "like this" part can be an excuse for that
+inaccuracy, but then the whole thing pretty much has already been
+summarized nicely with your first line already, i.e. "which repeate
+various words".  If you update it the end part of the sentence to
+"which repeat various words on the same line", then the entire
+paragaph can go without losing clarity.
+
+Not a huge deal, though.
+
+The changes themselves all look good to me.  Thanks.  Will apply.
+
+> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+> ---
 >
->   If  the  file already exists and is a regular file and the access mode
->   allows writing (i.e., is O_RDWR or O_WRONLY) it will be truncated to
->   length 0.  If the file is a FIFO or terminal device file, the O_TRUNC
->   flag is ignored.  Otherwise, the effect of O_TRUNC is unspecified.
+> Thanks to Felipe Contreras for review.
 >
-> Who is truncating it?  Who is ignoring it?  Who is not specifying it?
-> In all three cases, the specific actor is unimportant or irrelevant, and
-> we're better off using the passive voice here than trying to enumerate
-> the actor.
-
-Exactly. The preferred prose in Git's documentation in this regard
-should be the same matter of fact prose found in C library, binutils
-etc. documentation.
-
->> The below for-show patch[2] shows an alternate approach that I think is
->> a better direction than this series.
->>=20
->> It shows how some of the s/he|she/they/g search-replacements you did
->> could IMO be better if we simply reduced the amount of prose, e.g. in
->> strbuf.h changing:
->>=20
->>     passes a context pointer, which can be used by the programmer of the
->>     callback as she sees fit.
->>=20
->> To:
->>=20
->>     passes a `void *context` to the callback `fn`
+> Changes from v1:
 >
-> In many cases, saying less is better, I agree.  If we don't need to
-> refer to a human being, then we don't need to consider any pronouns for
-> that human being.  If we communicate things more simply with fewer
-> words, then that's clearly better overall for everyone involved.
-> Nobody's reading documentation for pleasure, after all.
+>   - added "*: " as area prefix to follow example of Derrick Stolee
+>     https://lore.kernel.org/git/c40ad4a058a75d57adc97b8252ad0f57600b8d86.1623085069.git.gitgitgadget@gmail.com/
+>   - Dropped change in t/t6416-recursive-corner-cases.sh where I misread a
+>     sentence and the duplicated word "that" is used correctly. Quote for
+>     reference:
 >
-> I do think that the recommendation that we refer to an anonymous user in
-> a gender-neutral way still stands, though.  Sometimes we will need to
-> refer to the user or another human actor and that will be the most
-> natural way to express the idea, so we should use gender-neutral
-> language to do so.
+>       ... so we use one path whose name is arbitrary in the virtual merge base X
+>       between D and E" and then further let the rename detection to notice that
+>       that arbitrary path gets renamed ...
 >
-> So roughly here, I'm in favor of both approaches.
-
-When do we need or even prefer to refer to a user like that?
-
-I haven't seen an example in our documentation that's actually better
-off because we're talking about things as if two "people" we need to
-invent pronouns for are interacting.
-
-Can anyone name one that'll stand up under scrutiny, i.e. once we can
-look at it and see if we couldn't phrase it better by avoiding the issue
-this series tries to address with a regex search-replacement?
-
-The diffstat of this series is only:
-
- 12 files changed, 22 insertions(+), 15 deletions(-)
-
-I've looked at all of them and I can't see one that wouldn't be better
-if the relevant text was changed similarly to what I've suggested
-upthread.
-
-That's why I don't think this proposal is useful. If we accept this
-series we're going to be left with an active recommendation for a
-pattern that's already almost nonexistent in our documentation.
-
-Perhaps that's because we're doing it 98% right already and aren't using
-"he" or "she" but "they" or "their". The multiple ways you can use
-"they" or "their" in the English language makes that hard to grep for. A
-lot of our "they"'s are referring e.g. to a command-line option, or
-"their" referring to "their arguments", as in the argv vector of a
-program.
-
-The skepticism about this being needed at all isn't an opinion I hold
-about software documentation in general, but about software in Git's
-problem space specifically.
-
-Git isn't something like software to track medical records or tax
-filings where we can make a hard assumption that the software is dealing
-with data from people, and thus the software's documentation might
-regularly expect to need to discuss such an invented cast of characters.
-
-We just have:
-
- * You: The "user" of the software. Maybe a human being, but that's
-   usually no more assumed than the "user" of chmod(2) being a human
-   being.
-
- * Other users, not people, but users in the UID/GID sense of the
-   word. Describing system-local interactions that are really two
-   operating system users interacting in terms of assuming that they map
-   onto two people just adds confusion.
-
-   Note how e.g. chmod(2) and other such documentation rightly avoids
-   bringing people into the matter. At most it refers to "owner" or
-   "another user" etc.
-
- * "Other users" on the network, e.g. you make a change, it conflicts
-   with upstream. I think in all these cases saying something like:
-
-       You can add data and commit it, then push it. Once you push it
-       you might find another person has made changes on the same
-       branch, he/she/it/they changed the same file as you, now you've
-       got a conflict...
-
-   Is worse than:
-
-       When push your branch you might get a conflict with the remote's
-       upstream branch, if merging it results in a conflict then...
-
-   In such scenarios we're talking about e.g. our local state
-   interacting with remote network state, those are ultimately commits
-   or other data we have to deal with in some way.
-
-   It's almost never important whether that data was made by a human or
-   some automated system. Inventing a cast of characters just makes
-   things more confusing.
-
-I think the nearest we come to rightly discussing actual people in the
-context of git's documentation is things like commit envelope data
-(names, E-Mail addresses). Even those don't cleanly map to human beings,
-so our documentation probably shouldn't be implying that in its prose.
+>     where first "that" is a conjunction between clauses "we let" and "path gets
+>     renamed" and second "that" is a determiner to qualify "arbitrary path" to
+>     refer to "one path" mentioned in the first clause
+>
+>  Documentation/technical/protocol-v2.txt | 2 +-
+>  attr.c                                  | 2 +-
+>  builtin/log.c                           | 3 +--
+>  git-compat-util.h                       | 2 +-
+>  git-cvsserver.perl                      | 2 +-
+>  remote.c                                | 2 +-
+>  t/t5505-remote.sh                       | 2 +-
+>  t/t9100-git-svn-basic.sh                | 2 +-
+>  8 files changed, 8 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index a1e31367f4..1040d85319 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -540,7 +540,7 @@ An `object-info` request takes the following arguments:
+>  	Indicates to the server an object which the client wants to obtain
+>  	information for.
+>  
+> -The response of `object-info` is a list of the the requested object ids
+> +The response of `object-info` is a list of the requested object ids
+>  and associated requested information, each separated by a single space.
+>  
+>  	output = info flush-pkt
+> diff --git a/attr.c b/attr.c
+> index 9e897e43f5..d029e681f2 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -685,7 +685,7 @@ static struct attr_stack *read_attr_from_array(const char **list)
+>   * Callers into the attribute system assume there is a single, system-wide
+>   * global state where attributes are read from and when the state is flipped by
+>   * calling git_attr_set_direction(), the stack frames that have been
+> - * constructed need to be discarded so so that subsequent calls into the
+> + * constructed need to be discarded so that subsequent calls into the
+>   * attribute system will lazily read from the right place.  Since changing
+>   * direction causes a global paradigm shift, it should not ever be called while
+>   * another thread could potentially be calling into the attribute system.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 6102893fcc..516a1142dd 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1968,8 +1968,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  	} else if (rev.diffopt.close_file) {
+>  		/*
+>  		 * The diff code parsed --output; it has already opened the
+> -		 * file, but but we must instruct it not to close after each
+> -		 * diff.
+> +		 * file, but we must instruct it not to close after each diff.
+>  		 */
+>  		rev.diffopt.no_free = 1;
+>  	} else {
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index a508dbe5a3..df7dae9be1 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1368,7 +1368,7 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
+>  	(type *)container_of_or_null_offset(ptr, offsetof(type, member))
+>  
+>  /*
+> - * like offsetof(), but takes a pointer to a a variable of type which
+> + * like offsetof(), but takes a pointer to a variable of type which
+>   * contains @member, instead of a specified type.
+>   * @ptr is subject to multiple evaluation since we can't rely on __typeof__
+>   * everywhere.
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index f6f3fc192c..ed035f32c2 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -2149,7 +2149,7 @@ sub req_diff
+>                     ( $meta2->{revision} or "workingcopy" ));
+>  
+>          # TODO: Use --label instead of -L because -L is no longer
+> -        #  documented and may go away someday.  Not sure if there there are
+> +        #  documented and may go away someday.  Not sure if there are
+>          #  versions that only support -L, which would make this change risky?
+>          #  http://osdir.com/ml/bug-gnu-utils-gnu/2010-12/msg00060.html
+>          #    ("man diff" should actually document the best migration strategy,
+> diff --git a/remote.c b/remote.c
+> index 6d1e8d02df..dfb863d808 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1592,7 +1592,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+>  			else
+>  				/*
+>  				 * If the ref isn't stale, and is reachable
+> -				 * from from one of the reflog entries of
+> +				 * from one of the reflog entries of
+>  				 * the local branch, force the update.
+>  				 */
+>  				force_ref_update = 1;
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index c7b392794b..e6e3c8f552 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -182,7 +182,7 @@ test_expect_success 'rename errors out early when deleting non-existent branch'
+>  	)
+>  '
+>  
+> -test_expect_success 'rename errors out early when when new name is invalid' '
+> +test_expect_success 'rename errors out early when new name is invalid' '
+>  	test_config remote.foo.vcs bar &&
+>  	echo "fatal: '\''invalid...name'\'' is not a valid remote name" >expect &&
+>  	test_must_fail git remote rename foo invalid...name 2>actual &&
+> diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+> index 1d3fdcc997..ef35a54885 100755
+> --- a/t/t9100-git-svn-basic.sh
+> +++ b/t/t9100-git-svn-basic.sh
+> @@ -330,7 +330,7 @@ test_expect_success 'git-svn works in a bare repository' '
+>  	git svn fetch ) &&
+>  	rm -rf bare-repo
+>  	'
+> -test_expect_success 'git-svn works in in a repository with a gitdir: link' '
+> +test_expect_success 'git-svn works in a repository with a gitdir: link' '
+>  	mkdir worktree gitdir &&
+>  	( cd worktree &&
+>  	git svn init "$svnrepo" &&
