@@ -2,181 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05640C48BD1
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D86BC47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D681B613C9
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69F53613DE
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbhFJNAN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 09:00:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230247AbhFJNAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 09:00:07 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22647C0617A8
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:57:56 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id f2so2193440wri.11
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/GbomKuqk5Dom33iQGel4Kf1HS0OwkV76inPEQSI9nM=;
-        b=sgUbSR96JerMUkIExLfgNL9926vG7fCRDKpmUieL3WaBSbKcexWqny2Eie6WGBIMBE
-         guUbssICgeOjjVwwXpX5NnL6ZvqTJ8iXGFDPtY2vu6rVry09Flt6wMwNQao5smaj39xd
-         vseJXy36+GKBRWbekBU7KmNawASc+4kdDLFJvPu5dQcHKPeSq4NHGaj+qOnZNJ9vWTif
-         8B6GTNxKBLNZfYguFSvJe6KSJFSz20OrMkkYixkfIL0dvqNqzvIPTtXqtCrPH/t6txHq
-         N/zDgN91CSEmEh+Ti1JTlGui80phk27GdP0+NP0xovcGhZbXXM3U/3iJMIaiAdRPimRx
-         qpSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/GbomKuqk5Dom33iQGel4Kf1HS0OwkV76inPEQSI9nM=;
-        b=lqo3HxIO8VsnOTYpyut63KFCdzZmYhP4EK4B1jD/wfEAG58sf/aKlNcdlxnKL2BhY9
-         QmkJ2jBs2VDv3jqj3gtFoAbtMkfe2mvgpv8sf7D0EPbD9uzGiKUcySfU0l3QWaPKag6B
-         mwcarYFixEgpEbj6GJ398EeCc0rK/TkRzSkl7WEjMFpqa3pf2fQoWng1H0WWiWfo4gp6
-         Af04SbgozHrAM95kgXTd8nsU4tqVu540FzQK5/Km67d2smHfOezBIItwHL27OiOJbwoO
-         gIB35QvU/0I7ZXI0TyOus6Y0vh7/BaRaBZDYJ/18hcMXJe8vYCw14rpR9yqSr5MdPucL
-         QIrQ==
-X-Gm-Message-State: AOAM531+7b3D7YPlDxJEMnd1uLdha35fizIckUIkj8+R0yj9ikW6Mfl4
-        POFZR2lZadjN3UhrDSQFZzsCzZbCZho=
-X-Google-Smtp-Source: ABdhPJwiNEAkbb+MeiWlrf/R96WZ2DWMfob1qi829RD8tFZvowAXp2SW+ID1HOucLRfn0ARMNOAOHA==
-X-Received: by 2002:a5d:6dce:: with SMTP id d14mr5346099wrz.236.1623329874793;
-        Thu, 10 Jun 2021 05:57:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k16sm2876166wmr.42.2021.06.10.05.57.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jun 2021 05:57:54 -0700 (PDT)
-Message-Id: <2a9ebe43deac3da9baf241ff1e494f8210c27981.1623329869.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
-References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
-        <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Jun 2021 12:57:48 +0000
-Subject: [PATCH v2 8/8] refs: explicitly propagate errno from
- refs_read_raw_ref
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S230294AbhFJNAk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 09:00:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51196 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230247AbhFJNAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 09:00:40 -0400
+Received: (qmail 7598 invoked by uid 109); 10 Jun 2021 12:58:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 12:58:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29648 invoked by uid 111); 10 Jun 2021 12:58:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 08:58:43 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 10 Jun 2021 08:58:43 -0400
+From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] ll_union_merge(): pass name labels to ll_xdl_merge()
+Message-ID: <YMIMg+uXDjzS70g5@coredump.intra.peff.net>
+References: <YMIKwsEFnkqz6PWa@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YMIKwsEFnkqz6PWa@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+Since cd1d61c44f (make union merge an xdl merge favor, 2010-03-01), we
+pass NULL to ll_xdl_merge() for the "name" labels of the ancestor, ours
+and theirs buffers. We usually use these for annotating conflict markers
+left in a file. For a union merge, these shouldn't matter; the point of
+it is that we'd never leave conflict markers in the first place.
 
-The function refs_resolve_ref_unsafe_with_errno should produce an errno output.
-Rather than taking the value from the errno (which might contain garbage
-beforehand), explicitly propagate the failure_errno coming out of
-refs_read_raw_ref().
+But there is one code path where we may dereference them: if the file
+contents appear to be binary, ll_binary_merge() will give up and pass
+them to warning() to generate a message for the user (that was true even
+when cd1d61c44f was written, though the warning was in ll_xdl_merge()
+back then).
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
+That can result in a segfault, though on many systems (including glibc),
+the printf routines will helpfully just say "(null)" instead. We can
+extend our binary-union test in t6406 to check stderr, which catches the
+problem on all systems.
+
+This also fixes a warning from "gcc -O3". Unlike lower optimization
+levels, it inlines enough to see that the NULL can make it to warning()
+and complains:
+
+  In function ‘ll_binary_merge’,
+      inlined from ‘ll_xdl_merge’ at ll-merge.c:115:10,
+      inlined from ‘ll_union_merge’ at ll-merge.c:151:9:
+  ll-merge.c:74:4: warning: ‘%s’ directive argument is null [-Wformat-overflow=]
+     74 |    warning("Cannot merge binary files: %s (%s vs. %s)",
+        |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     75 |     path, name1, name2);
+        |     ~~~~~~~~~~~~~~~~~~~
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- refs.c | 38 ++++++++++++++------------------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+ ll-merge.c            | 2 +-
+ t/t6406-merge-attr.sh | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 191cbf5a330f..92c4796078bb 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1686,11 +1686,11 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 					   type, failure_errno);
+diff --git a/ll-merge.c b/ll-merge.c
+index 145deb12fa..0ee34d8a01 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -151,7 +151,7 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 	o = *opts;
+ 	o.variant = XDL_MERGE_FAVOR_UNION;
+ 	return ll_xdl_merge(drv_unused, result, path_unused,
+-			    orig, NULL, src1, NULL, src2, NULL,
++			    orig, orig_name, src1, name1, src2, name2,
+ 			    &o, marker_size);
  }
  
--/* This function needs to return a meaningful errno on failure */
--static const char *
--refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
--				       const char *refname, int resolve_flags,
--				       struct object_id *oid, int *flags)
-+const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
-+					       const char *refname,
-+					       int resolve_flags,
-+					       struct object_id *oid,
-+					       int *flags, int *failure_errno)
- {
- 	static struct strbuf sb_refname = STRBUF_INIT;
- 	struct object_id unused_oid;
-@@ -1703,11 +1703,12 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
- 		flags = &unused_flags;
+diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+index c1c458d933..8494645837 100755
+--- a/t/t6406-merge-attr.sh
++++ b/t/t6406-merge-attr.sh
+@@ -221,7 +221,8 @@ test_expect_success 'binary files with union attribute' '
+ 	printf "two\0" >bin.txt &&
+ 	git commit -am two &&
  
- 	*flags = 0;
-+	*failure_errno = 0;
+-	test_must_fail git merge bin-main
++	test_must_fail git merge bin-main 2>stderr &&
++	grep -i "warning.*cannot merge.*HEAD vs. bin-main" stderr
+ '
  
- 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 		if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 		    !refname_is_safe(refname)) {
--			errno = EINVAL;
-+			*failure_errno = EINVAL;
- 			return NULL;
- 		}
- 
-@@ -1730,6 +1731,8 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
- 				      &read_flags, &read_failure)) {
- 			*flags |= read_flags;
- 
-+			*failure_errno = read_failure;
-+
- 			/* In reading mode, refs must eventually resolve */
- 			if (resolve_flags & RESOLVE_REF_READING)
- 				return NULL;
-@@ -1767,7 +1770,7 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
- 		if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
- 			if (!(resolve_flags & RESOLVE_REF_ALLOW_BAD_NAME) ||
- 			    !refname_is_safe(refname)) {
--				errno = EINVAL;
-+				*failure_errno = EINVAL;
- 				return NULL;
- 			}
- 
-@@ -1775,7 +1778,7 @@ refs_resolve_ref_unsafe_implicit_errno(struct ref_store *refs,
- 		}
- 	}
- 
--	errno = ELOOP;
-+	*failure_errno = ELOOP;
- 	return NULL;
- }
- 
-@@ -1783,22 +1786,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
- 				    int resolve_flags, struct object_id *oid,
- 				    int *flags)
- {
--	const char *result = refs_resolve_ref_unsafe_implicit_errno(
--		refs, refname, resolve_flags, oid, flags);
--	errno = 0;
--	return result;
--}
--
--const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
--					       const char *refname,
--					       int resolve_flags,
--					       struct object_id *oid,
--					       int *flags, int *failure_errno)
--{
--	const char *result = refs_resolve_ref_unsafe_implicit_errno(
--		refs, refname, resolve_flags, oid, flags);
--	*failure_errno = errno;
--	return result;
-+	int ignore;
-+	return refs_resolve_ref_unsafe_with_errno(refs, refname, resolve_flags,
-+						  oid, flags, &ignore);
- }
- 
- /* backend functions */
+ test_done
 -- 
-gitgitgadget
+2.32.0.529.g079a794268
