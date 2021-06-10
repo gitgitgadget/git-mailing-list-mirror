@@ -2,157 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D602C48BD1
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 18:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F1AEC48BDF
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 18:30:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 786D761404
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 18:22:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48750613FE
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 18:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231302AbhFJSYS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 14:24:18 -0400
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:37764 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231303AbhFJSYO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 14:24:14 -0400
-Received: by mail-qt1-f180.google.com with SMTP id z4so584829qts.4
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 11:22:18 -0700 (PDT)
+        id S230215AbhFJScE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 14:32:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43110 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229935AbhFJScD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 14:32:03 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89765C061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 11:30:06 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id im10so14361548qvb.3
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 11:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DCFzyr8H4Dd9uhFhnepw2TGXq7BXBRapdAZ7pPpCNSs=;
-        b=UueowoP1yo/KEC5LTNyN9PGHXN5LNEXuIYtpsRGzJAe3QjmU1Pj/AsifgxUSO0xHpk
-         Nw4m7JI6KFOC3zT7jdUs8rRaktBU2hAc1AjwpMb2m/kTMrMN3+ElmH56DupPdxUU+cVU
-         jySz60hVmSTR+HpSqzFDzsi5xfguIuarA4Cj7YgMJ3/IcgYSenoVXWCPW/wAIxaVAoWX
-         dWEaqclV8ma7dA8OL3rlt7VKiIVdbb/KjuJl4RDzENSoLxCq530O511EFYOrxWart0E0
-         /MvanaTeetGePQDY3aBjdYMGrDqfvJtPg1S9IwUfydHVzJe791csSbj69DSBqhW17/Co
-         u1Vg==
+        bh=OnZ0LwZ6eGXLlWzB/Ok9/0xfIMmeIb0N9chqxUyF6Lw=;
+        b=k3I95Uh2hKue3c9dvzb9ggNYToKk4yesT5b9lUdMxif53c2UkMwidraiPSjbOUXOee
+         K5tyDmjv2u1lBhfpzsppsMRk46IIKIvXM5Mk3k8+lUL/DKM7nieo4oZjXHbvqtqR78QW
+         zWI9BlfcUzggEi2g3njylJiS01hmweByR/6noNo5ZpUmqwGv0IC+gixpQkNS23PmD+AP
+         VEiL0xBaMKxJ51cl0Yiu8vahI7PojYSnExSw3szvT/VMLKlCT2UTNd8SDyLXGlgNZ+iK
+         3YsNcFk8w9GgehJ/QQqJvjFI+2iPDo3A7N02XLXZ2JkloSqmcz2hB+HJxkrL+JiQxHYg
+         kKEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=DCFzyr8H4Dd9uhFhnepw2TGXq7BXBRapdAZ7pPpCNSs=;
-        b=ErCv43HM1OSTEZmseQ8rCV03gGaHJ3jXGYLLCKr6dzjBon8x2ecpgEDDob8Lym3TD+
-         IsT6SmlLHu3/X1L1uvgoNGHOWijcY1QehQB+ZKQk91K0IW+pUq0nK8ea9wgjND6m/CSd
-         iT/4YqyrepNcIi+e4JlGjkXh2AWg/B27QTqhkILMB2YGASTguCwBdhJlDPu4uapQ2cR2
-         AbFPSazV2G4DfV5lYGudqSYSd3cd3G1fuYV73FuTv693DXFSzMT/c8JllvlTR0FjnDpL
-         CEY9rurIvxYGS2tXh3WvJHFO/dzNoKkpl+3oz4L6HXiIVaTmL4QmNlFS+LG4WAKZGKgE
-         NGbg==
-X-Gm-Message-State: AOAM5324vK7wrDQXYbbwdsS3Woh1aXzy9qetBKuqdRqcTHAPBw5jzucv
-        FWZdUzZx7uihiCXS2xHIXrU=
-X-Google-Smtp-Source: ABdhPJwCflfJkXQSFYgP2gOJfLMuc09y4/IiO3KVO6wSfo1XEEbvPsyZu+ShRGVs/JCxprUn67LwtA==
-X-Received: by 2002:ac8:5815:: with SMTP id g21mr110182qtg.266.1623349277636;
-        Thu, 10 Jun 2021 11:21:17 -0700 (PDT)
+        bh=OnZ0LwZ6eGXLlWzB/Ok9/0xfIMmeIb0N9chqxUyF6Lw=;
+        b=BbrmV4/euVH5kQ0AN1z6VjS2hACgxe01zLkIfrbp4v9xVquGI1vJ8A+jxSo8pnIhFY
+         7HYpG/7DFbpUHteMoIX+tClXK2DNRMNaX76M2wNbiardCm+duNYmBH+76O46ixxPtlo0
+         6j6a8/7leBD9MJ8H9W7rBX5ZckXOyAyYWZBpneo1xoz4L2nAPSIwo7TzlcYosXTQKkbr
+         kxfmIUd2v+HheYn2Bv8q7cmVPD9G3UmRYfCAlai4IidlZ7GSjH4PKW2SjwC3akolnTw4
+         RVvtQF+/94U2e76tA6btEtq4FbS2fz2058MSHVxAYlieFybf8YRSSZXeInyeqP1oko4E
+         9gZg==
+X-Gm-Message-State: AOAM532A2knUmrvhTdams63hkNXg3rQRo8MkvYGP/Kp3I5NPNLGhqe60
+        4aFv6it7xty22k/Ci6uLKRQ=
+X-Google-Smtp-Source: ABdhPJxI6LX/RUTKOSql+q5XCyHD1ZztQzmwyZ9p/+et8yheD1803REoiXmj/Tlf11KhrA4/+6W2MQ==
+X-Received: by 2002:a05:6214:ccb:: with SMTP id 11mr970882qvx.43.1623349805638;
+        Thu, 10 Jun 2021 11:30:05 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:8dd3:e726:fe78:a0d9? ([2600:1700:e72:80a0:8dd3:e726:fe78:a0d9])
-        by smtp.gmail.com with ESMTPSA id y20sm2665391qtv.64.2021.06.10.11.21.16
+        by smtp.gmail.com with ESMTPSA id f9sm2882280qkl.46.2021.06.10.11.30.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jun 2021 11:21:17 -0700 (PDT)
-Subject: Re: Making split commit graphs pick up new options (namely
- --changed-paths)
-To:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
-        peff@peff.net, szeder.dev@gmail.com
-References: <871r9a2dol.fsf@evledraar.gmail.com> <YMJKcHpN/gL5U6KK@nand.local>
+        Thu, 10 Jun 2021 11:30:05 -0700 (PDT)
+Subject: Re: [PATCH 1/4] Documentation: use singular they when appropriate
+To:     Phillip Susi <phill@thesusis.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com,
+        sandals@crustytoothpaste.net, jrnieder@gmail.com,
+        emilyshaffer@google.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+ <afc51c5e6edec7935a6d0d0a05d396e11311ca6c.1623085069.git.gitgitgadget@gmail.com>
+ <60be91757c6ca_db80d2086e@natae.notmuch> <87czsu98ar.fsf@vps.thesusis.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <39a675dc-d6fd-c81c-3d73-c1b1a163f10d@gmail.com>
-Date:   Thu, 10 Jun 2021 14:21:16 -0400
+Message-ID: <790688e5-6816-9837-85e7-2fdbbdf24169@gmail.com>
+Date:   Thu, 10 Jun 2021 14:30:04 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <YMJKcHpN/gL5U6KK@nand.local>
+In-Reply-To: <87czsu98ar.fsf@vps.thesusis.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/10/2021 1:22 PM, Taylor Blau wrote:
-> On Thu, Jun 10, 2021 at 12:40:33PM +0200, Ævar Arnfjörð Bjarmason wrote:
-...
->> Reading the code there seems to be no way to do that, and we have the
->> "chunk_bloom_data" in the graph, as well as "bloom_filter_settings".
->>
->> I'd expect some way to combine the "max_new_filters" and --split with
->> some eventual-consistency logic so that graphs not matching our current
->> settings are replaced, or replaced some <limit> at a time.
+On 6/9/2021 2:47 PM, Phillip Susi wrote:
 > 
-> This is asking about something slightly different, Bloom filter
-> settings rather than the existence of chagned-path Bloom filters
-> themselves. The Bloom settings aren't written to the commit-graph
-> although there has been some discussion about doing this in the past.
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+>> Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <dstolee@microsoft.com>
+>>> --- a/Documentation/SubmittingPatches
+>>> +++ b/Documentation/SubmittingPatches
+>>> @@ -373,7 +373,7 @@ If you like, you can put extra tags at the end:
+>>>  . `Acked-by:` says that the person who is more familiar with the area
+>>>    the patch attempts to modify liked the patch.
+>>>  . `Reviewed-by:`, unlike the other tags, can only be offered by the
+>>> -  reviewer and means that she is completely satisfied that the patch
+>>> +  reviewer and means that they are completely satisfied that the patch
+> 
+> Say wait a minute.  If that is a "singular they", then why was the "is"
+> changed to "are"?  I think that belies the fact that there is no such
+> thing as a "singular they".
 
-Some of the settings are included, but not the "maximum size" of a
-filter. Thus, if that maximum size changes we do not have a way to
-determine if a missing filter is larger than that limit or not.
-Further, the existing filters might be larger than the new maximum
-which means we would need to check if some of those filters should
-be dropped.
+Singular "they" works the same as singular "you". For example:
 
-Here is the spec of the BDAT chunk:
+	...means that _you are_ completely satisfied...
 
-Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
-    * It starts with header consisting of three unsigned 32-bit integers:
-      - Version of the hash algorithm being used. We currently only support
-	value 1 which corresponds to the 32-bit version of the murmur3 hash
-	implemented exactly as described in
-	https://en.wikipedia.org/wiki/MurmurHash#Algorithm and the double
-	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
-	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
-	in Probabilistic Verification"
-      - The number of times a path is hashed and hence the number of bit positions
-	      that cumulatively determine whether a file is present in the commit.
-      - The minimum number of bits 'b' per entry in the Bloom filter. If the filter
-	      contains 'n' entries, then the filter size is the minimum number of 64-bit
-	      words that contain n*b bits.
-    * The rest of the chunk is the concatenation of all the computed Bloom
-      filters for the commits in lexicographic order.
+Singular "you" had a similar backlash in the 1660s as singular "they"
+is having in this thread, but singular "you" has lasted (and we use
+"thou" only to signify someone using old-timey language).
 
-> If we ever did encode the Bloom settings, I imagine that accomplishing a
-> sort of "eventually replace all changed-path Bloom filters with these
-> new settings" would be as simple as considering all filters computed
-> under different settings to be "uncomputed".
-> 
->> Also, am I reading the expire_commit_graphs() logic correctly that we
->> first write the split graph, and then unlink() things that are too old?
->> I.e. if you rely on the commit-graph to optimize things this will make
->> things slower until the next run of writing the graph?
-> 
-> Before expire_commit_graphs() is called, we call mark_commit_graphs()
-> which freshens the mtimes of all surviving commit-graph layers, and then
-> expire_commit_graphs() removes the stale layers. I'm not sure what
-> things getting slower is referring to since the resulting commit-graph
-> has at least as many commits as the commit-graph that existed prior to
-> the write.
-> 
->> I expected to find something more gentle there [...]
-> 
-> FWIW, I also find this "expire based on mtimes" thing a little odd for
-> writing split commit-graphs because we know exactly which layers we want
-> to get rid of. I suspect that the reuse comes from wanting to unify the
-> logic for handling '--expire-time' with the expiration that happens
-> after writing a split commit-graph that merged two or more previous
-> layers.
-> 
-> I would probably change mark_commit_graphs() to remove those merged
-> layers explicitly (but still run expire_commit_graphs() to handle
-> --expire-time). But, come to think of it... if merging >2 layers already
-> causes the merged layers to be removed, then why would you ever set an
-> --expire-time yourself?
+There is more of this in [1] and [2]
 
-The --expire-time is intended to leave the old layers around a while
-so concurrent processes who already parsed the commit-graph-chain file
-can discover the layers it referenced. It's not a perfect mechanism, so
-there is room for improvement here.
+[1] https://public.oed.com/blog/a-brief-history-of-singular-they/
+[2] https://en.wikipedia.org/wiki/T%E2%80%93V_distinction#English
 
 Thanks,
 -Stolee
