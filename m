@@ -2,191 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F243C48BDF
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D602C48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 18:22:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F5DB61181
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:46:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 786D761404
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 18:22:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbhFJRsM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 13:48:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229802AbhFJRsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 13:48:11 -0400
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDA9FC061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:45:59 -0700 (PDT)
-Received: by mail-qt1-x82e.google.com with SMTP id a15so452908qtx.13
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:45:59 -0700 (PDT)
+        id S231302AbhFJSYS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 14:24:18 -0400
+Received: from mail-qt1-f180.google.com ([209.85.160.180]:37764 "EHLO
+        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231303AbhFJSYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 14:24:14 -0400
+Received: by mail-qt1-f180.google.com with SMTP id z4so584829qts.4
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 11:22:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qw9Ilkt9IDvJ34PV6P2xK8mbqAtK/YuVZm2OWMOq9q4=;
-        b=vDswgnezbkNXE/rkbuusYcTmTXtwIIK9DnHKCoyM4ozQqlfyzH5iB42XCHnNlnzyvE
-         Io1M6RAA8gacegqDMGFv2QAno/bc3azfqmWGHQS6eHThSWEWdIPcvwUXSUh0ncSoqYbW
-         cpePALHIPMlAXtYHemNIf8kXTmRDQ1Pzxm54HeXBckI9U+84O9yhRjvFap2rPeTCAd72
-         i0tghWOcLYThNB1JoBsrzr96MNSxqnr8wjlZ77AbUvPIoynJg3Bh31KOK4+AfIKkMyLL
-         300vkF8R45lflY7xf8yXq6bR5FFR7trP156yRDX4lM9Pb+JNJ+yQnL/xQSZOv7Cg8pzi
-         U2Dg==
+        bh=DCFzyr8H4Dd9uhFhnepw2TGXq7BXBRapdAZ7pPpCNSs=;
+        b=UueowoP1yo/KEC5LTNyN9PGHXN5LNEXuIYtpsRGzJAe3QjmU1Pj/AsifgxUSO0xHpk
+         Nw4m7JI6KFOC3zT7jdUs8rRaktBU2hAc1AjwpMb2m/kTMrMN3+ElmH56DupPdxUU+cVU
+         jySz60hVmSTR+HpSqzFDzsi5xfguIuarA4Cj7YgMJ3/IcgYSenoVXWCPW/wAIxaVAoWX
+         dWEaqclV8ma7dA8OL3rlt7VKiIVdbb/KjuJl4RDzENSoLxCq530O511EFYOrxWart0E0
+         /MvanaTeetGePQDY3aBjdYMGrDqfvJtPg1S9IwUfydHVzJe791csSbj69DSBqhW17/Co
+         u1Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=qw9Ilkt9IDvJ34PV6P2xK8mbqAtK/YuVZm2OWMOq9q4=;
-        b=UXvTCsv5vammB4Yne+zVr8CjwjCA7lLMUAa7FSRJmM+PI94OqlsPkODpZTiuGzU8oV
-         wen9+R6byNeEDslLZOrcaG++9nK0ejgrJFNG9wKJ7+keChh+Swdq7r6X7CBDFSCquBSq
-         +bRR318xcooRIz+0yLd5PL7G1TY2XFGv5Zrzh8F4syqU3xGSGpVOuJrKxmMdXJfHFKJg
-         ZNjiS8uwloaRf4UnbUl3TV7e1ul6M09mZGxxrymO3JBpWYvDKfROadqbW1BHkIe5yLZ9
-         6K5L/HBswcTNlB7UIxEFZ3unmiwbU/NRSIJ47bFEbMkoyxXbNPyyWHr8osURi8GZpGm0
-         okUA==
-X-Gm-Message-State: AOAM532HdgmDK2xp38IsQ2jQ5GG8BBNaYVApYET1RDKgF3r9rdnlEOi0
-        dC0CI+JoS14kXabzxyqSxA8=
-X-Google-Smtp-Source: ABdhPJwGh171dybyUyU72u/zW+TgvXK0xZKHzjU6lY9BUkETC3P/jzx1Welyl1DeVKOKSQKUqFi4/w==
-X-Received: by 2002:ac8:5394:: with SMTP id x20mr813747qtp.192.1623347158832;
-        Thu, 10 Jun 2021 10:45:58 -0700 (PDT)
+        bh=DCFzyr8H4Dd9uhFhnepw2TGXq7BXBRapdAZ7pPpCNSs=;
+        b=ErCv43HM1OSTEZmseQ8rCV03gGaHJ3jXGYLLCKr6dzjBon8x2ecpgEDDob8Lym3TD+
+         IsT6SmlLHu3/X1L1uvgoNGHOWijcY1QehQB+ZKQk91K0IW+pUq0nK8ea9wgjND6m/CSd
+         iT/4YqyrepNcIi+e4JlGjkXh2AWg/B27QTqhkILMB2YGASTguCwBdhJlDPu4uapQ2cR2
+         AbFPSazV2G4DfV5lYGudqSYSd3cd3G1fuYV73FuTv693DXFSzMT/c8JllvlTR0FjnDpL
+         CEY9rurIvxYGS2tXh3WvJHFO/dzNoKkpl+3oz4L6HXiIVaTmL4QmNlFS+LG4WAKZGKgE
+         NGbg==
+X-Gm-Message-State: AOAM5324vK7wrDQXYbbwdsS3Woh1aXzy9qetBKuqdRqcTHAPBw5jzucv
+        FWZdUzZx7uihiCXS2xHIXrU=
+X-Google-Smtp-Source: ABdhPJwCflfJkXQSFYgP2gOJfLMuc09y4/IiO3KVO6wSfo1XEEbvPsyZu+ShRGVs/JCxprUn67LwtA==
+X-Received: by 2002:ac8:5815:: with SMTP id g21mr110182qtg.266.1623349277636;
+        Thu, 10 Jun 2021 11:21:17 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:8dd3:e726:fe78:a0d9? ([2600:1700:e72:80a0:8dd3:e726:fe78:a0d9])
-        by smtp.gmail.com with ESMTPSA id g24sm2607205qts.60.2021.06.10.10.45.57
+        by smtp.gmail.com with ESMTPSA id y20sm2665391qtv.64.2021.06.10.11.21.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jun 2021 10:45:58 -0700 (PDT)
-Subject: Re: [PATCH v5 10/14] diff-lib: handle index diffs with sparse dirs
+        Thu, 10 Jun 2021 11:21:17 -0700 (PDT)
+Subject: Re: Making split commit graphs pick up new options (namely
+ --changed-paths)
+To:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        peff@peff.net, szeder.dev@gmail.com
+References: <871r9a2dol.fsf@evledraar.gmail.com> <YMJKcHpN/gL5U6KK@nand.local>
 From:   Derrick Stolee <stolee@gmail.com>
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
- <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
- <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
- <CABPp-BEp0NzUqW_pWpTGoUvrB1JMp9fVHr28Sp8RZqV6w0-hEw@mail.gmail.com>
- <xmqqfsxrk0oc.fsf@gitster.g>
- <CABPp-BHEp6mH3jx6BeRk+u8C-9Q+go0=hHiaxenN_5KQKsR5iw@mail.gmail.com>
- <60844f4b-33d4-b6d7-3611-a93cf012d3ff@gmail.com>
-Message-ID: <38d0900b-c677-a32d-cc63-e615828e9a5d@gmail.com>
-Date:   Thu, 10 Jun 2021 13:45:57 -0400
+Message-ID: <39a675dc-d6fd-c81c-3d73-c1b1a163f10d@gmail.com>
+Date:   Thu, 10 Jun 2021 14:21:16 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <60844f4b-33d4-b6d7-3611-a93cf012d3ff@gmail.com>
+In-Reply-To: <YMJKcHpN/gL5U6KK@nand.local>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/9/2021 4:33 PM, Derrick Stolee wrote:
-> On 6/9/2021 4:11 AM, Elijah Newren wrote:
->> On Tue, Jun 8, 2021 at 11:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> Elijah Newren <newren@gmail.com> writes:
->>>
->>> The tree-diff machinery takes two trees, walks them in parallel and
->>> repeatedly calls either diff_addremove() or diff_change(), which
->>> appends diff_filepair() to the diff_queue[] structure.  If you see
->>> an unexpanded tree on the index side, you should be able to pass
->>> that tree with the subtree you are comparing against to the tree-diff
->>> machinery to come up with a series of filepairs, and then tweak the
->>> pathnames of these filepairs (as such a two-tree comparison would be
->>> comparing two trees representing a single subdirectory of two different
->>> vintages) before adding them to the diff_queue[] you are collecting
->>> the index-vs-tree diff, for example.
+On 6/10/2021 1:22 PM, Taylor Blau wrote:
+> On Thu, Jun 10, 2021 at 12:40:33PM +0200, Ævar Arnfjörð Bjarmason wrote:
+...
+>> Reading the code there seems to be no way to do that, and we have the
+>> "chunk_bloom_data" in the graph, as well as "bloom_filter_settings".
 >>
->> Good to know it seems my idea might be reasonable.
+>> I'd expect some way to combine the "max_new_filters" and --split with
+>> some eventual-consistency logic so that graphs not matching our current
+>> settings are replaced, or replaced some <limit> at a time.
 > 
-> I agree that this is reasonable. I just didn't look hard enough
-> to find existing code for this, since I found traverse_trees and
-> thought that _was_ the library for this.
+> This is asking about something slightly different, Bloom filter
+> settings rather than the existence of chagned-path Bloom filters
+> themselves. The Bloom settings aren't written to the commit-graph
+> although there has been some discussion about doing this in the past.
 
-This was surprisingly simple, since most of the complicated stuff
-is built into diff_tree_oid() and its use of revs->diffopt. The
-new patch works as shown below the cut-line.
+Some of the settings are included, but not the "maximum size" of a
+filter. Thus, if that maximum size changes we do not have a way to
+determine if a missing filter is larger than that limit or not.
+Further, the existing filters might be larger than the new maximum
+which means we would need to check if some of those filters should
+be dropped.
 
-I was incredibly suspicious of how quickly this came together,
-but it passes all the tests I have for it (including Scalar
-functional tests with the commit, checkout, and add integrations).
+Here is the spec of the BDAT chunk:
 
-I'll send a new version with this patch tomorrow, as well as the
-other recommended edits.
+Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
+    * It starts with header consisting of three unsigned 32-bit integers:
+      - Version of the hash algorithm being used. We currently only support
+	value 1 which corresponds to the 32-bit version of the murmur3 hash
+	implemented exactly as described in
+	https://en.wikipedia.org/wiki/MurmurHash#Algorithm and the double
+	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
+	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
+	in Probabilistic Verification"
+      - The number of times a path is hashed and hence the number of bit positions
+	      that cumulatively determine whether a file is present in the commit.
+      - The minimum number of bits 'b' per entry in the Bloom filter. If the filter
+	      contains 'n' entries, then the filter size is the minimum number of 64-bit
+	      words that contain n*b bits.
+    * The rest of the chunk is the concatenation of all the computed Bloom
+      filters for the commits in lexicographic order.
+
+> If we ever did encode the Bloom settings, I imagine that accomplishing a
+> sort of "eventually replace all changed-path Bloom filters with these
+> new settings" would be as simple as considering all filters computed
+> under different settings to be "uncomputed".
+> 
+>> Also, am I reading the expire_commit_graphs() logic correctly that we
+>> first write the split graph, and then unlink() things that are too old?
+>> I.e. if you rely on the commit-graph to optimize things this will make
+>> things slower until the next run of writing the graph?
+> 
+> Before expire_commit_graphs() is called, we call mark_commit_graphs()
+> which freshens the mtimes of all surviving commit-graph layers, and then
+> expire_commit_graphs() removes the stale layers. I'm not sure what
+> things getting slower is referring to since the resulting commit-graph
+> has at least as many commits as the commit-graph that existed prior to
+> the write.
+> 
+>> I expected to find something more gentle there [...]
+> 
+> FWIW, I also find this "expire based on mtimes" thing a little odd for
+> writing split commit-graphs because we know exactly which layers we want
+> to get rid of. I suspect that the reuse comes from wanting to unify the
+> logic for handling '--expire-time' with the expiration that happens
+> after writing a split commit-graph that merged two or more previous
+> layers.
+> 
+> I would probably change mark_commit_graphs() to remove those merged
+> layers explicitly (but still run expire_commit_graphs() to handle
+> --expire-time). But, come to think of it... if merging >2 layers already
+> causes the merged layers to be removed, then why would you ever set an
+> --expire-time yourself?
+
+The --expire-time is intended to leave the old layers around a while
+so concurrent processes who already parsed the commit-graph-chain file
+can discover the layers it referenced. It's not a perfect mechanism, so
+there is room for improvement here.
 
 Thanks,
 -Stolee
-
---- >8 ---
-
-
-diff --git a/diff-lib.c b/diff-lib.c
-index c2ac9250fe9..b631df89343 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -316,6 +316,13 @@ static int get_stat_data(const struct index_state *istate,
- 	return 0;
- }
- 
-+static void show_directory(struct rev_info *revs,
-+			   const struct cache_entry *new_dir,
-+			   int added)
-+{
-+	diff_tree_oid(NULL, &new_dir->oid, new_dir->name, &revs->diffopt);
-+}
-+
- static void show_new_file(struct rev_info *revs,
- 			  const struct cache_entry *new_file,
- 			  int cached, int match_missing)
-@@ -325,6 +332,11 @@ static void show_new_file(struct rev_info *revs,
- 	unsigned dirty_submodule = 0;
- 	struct index_state *istate = revs->diffopt.repo->index;
- 
-+	if (new_file && S_ISSPARSEDIR(new_file->ce_mode)) {
-+		show_directory(revs, new_file, /*added */ 1);
-+		return;
-+	}
-+
- 	/*
- 	 * New file in the index: it might actually be different in
- 	 * the working tree.
-@@ -336,6 +348,15 @@ static void show_new_file(struct rev_info *revs,
- 	diff_index_show_file(revs, "+", new_file, oid, !is_null_oid(oid), mode, dirty_submodule);
- }
- 
-+static void show_modified_sparse_directory(struct rev_info *revs,
-+			 const struct cache_entry *old_entry,
-+			 const struct cache_entry *new_entry,
-+			 int report_missing,
-+			 int cached, int match_missing)
-+{
-+	diff_tree_oid(&old_entry->oid, &new_entry->oid, new_entry->name, &revs->diffopt);
-+}
-+
- static int show_modified(struct rev_info *revs,
- 			 const struct cache_entry *old_entry,
- 			 const struct cache_entry *new_entry,
-@@ -347,6 +368,17 @@ static int show_modified(struct rev_info *revs,
- 	unsigned dirty_submodule = 0;
- 	struct index_state *istate = revs->diffopt.repo->index;
- 
-+	/*
-+	 * If both are sparse directory entries, then expand the
-+	 * modifications to the file level.
-+	 */
-+	if (old_entry && new_entry &&
-+	    S_ISSPARSEDIR(old_entry->ce_mode) &&
-+	    S_ISSPARSEDIR(new_entry->ce_mode)) {
-+		show_modified_sparse_directory(revs, old_entry, new_entry, report_missing, cached, match_missing);
-+		return 0;
-+	}
-+
- 	if (get_stat_data(istate, new_entry, &oid, &mode, cached, match_missing,
- 			  &dirty_submodule, &revs->diffopt) < 0) {
- 		if (report_missing)
