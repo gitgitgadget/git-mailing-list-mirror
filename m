@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,GAPPY_SUBJECT,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48438C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83949C48BDF
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:36:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 307FA61040
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:36:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68C90613E1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:36:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbhFJRio (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231258AbhFJRip (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 13:38:45 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:55864 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230381AbhFJRio (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Jun 2021 13:38:44 -0400
-Received: from mail-yb1-f202.google.com ([209.85.219.202]:56276 "EHLO
-        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbhFJRin (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 13:38:43 -0400
-Received: by mail-yb1-f202.google.com with SMTP id m194-20020a2526cb0000b02905375d41acd7so351049ybm.22
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:36:47 -0700 (PDT)
+Received: by mail-pl1-f202.google.com with SMTP id t7-20020a170902bc47b02900fd1eb0b2e8so1463704plz.22
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=w7JaKTVfJmQLnWnfMzIJy8mQbmke+tC+gJOgjFkKVXA=;
-        b=EfXpnLyAB1cylnZ5F4cQf3fVkrAcYrBpIyaey37+ShannMnUci0kXEgCG63T2CAvIE
-         +TFxFo8jrfXFLvB+S10oiFjaVj/j7bZgQL8nJReOc+YtHYzIdv10hdkKzAhL7i/4j6kR
-         x+V2wFm7YUU1gy02Tuwa+ugyID/ttgzZCGLzInM+s9hhKB+FbQt9nE4nIyjhn85oVRdk
-         Tjo5fV4JYQHsggI2YKtIbnaarohNVMYPFqyLWkTm/k7fmrvQip9PlCSo0t/y+/dyNpWo
-         izN+Pp37GbehL/xaMLM97HjXylSta8TGW2ih5f8qS/LFio6UzfSv0Tw87QG7R4B5QTb4
-         omaQ==
+        bh=MRbfA65cmjHdDDLoN90SigmBjVewcwifAC8cv973JT8=;
+        b=sYB16Ecn0ozddzEFgxhNdSws8telazz5CYS+++/qSsoBMIlSQR8M+GuujbJLlBoKQR
+         MHUVu87OCEYcQE4qdHSk4jf52+Dhgpj9/rN5gdFYHJa3xAvYrjDwJNzH1rl3VD8w4paM
+         NqcM6SyfihKwj6FgzBB/cF50F5trrBhVjwF4dSAWjwW0+n0EYQIqOa1HF3eUR4RDKDoa
+         zXUbJKN2sXwDDu6QJBbMSr6Y6kh1P2RuS7aEF1OjGcV4AaIqwPQbzqP1vivVN8dhYtKD
+         Ft9iDEfLlclh44WjCrsisnRQ+ZhtVr5ikDmMR9y29TW7ctLpuNnQV9zof7N2HqcnfOOF
+         mV1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=w7JaKTVfJmQLnWnfMzIJy8mQbmke+tC+gJOgjFkKVXA=;
-        b=TOSJgAEHH45i586ib5JihrfBMROQ2QrEblSFoT0aKj2tujP/317v9Gw2ktShm+vO7B
-         9fb2a/Xx+2AGvt7luqynej4eGipF/thLfgzsrTWGH0+/1MWzjeKMH71om8IqrZfYSptK
-         f5OeY1p51sUX0oK25947xX8fkPOzbTXeIc1W0iz52ZKAabAvgnzpj6GLSjc7cLABcTrO
-         N1IFLoVIzOWUvV6SrlCYI6T6jlktt8lKxritybD/doDPwwilHhYjzLLWyTw4JhKaR0IM
-         CEP2NyospYkvo34IRJrjedb7GHlq5IGBnimLmBhHmKLNi+7LfgcwO7DWNZPVaSuXjrWZ
-         3elA==
-X-Gm-Message-State: AOAM532Tl4+6IFs9F7Wnqif7rb/4jwLbFfA+2Ws9DXxg+zURRQDRIchf
-        qBgnTbtGDjUNI9lWy/7jOA+Ml1eDwfaZJSwW4N+7MWD0zViYXvdO4AsZewqV1AIU6GxLHO1Jnr4
-        Hg0UzvcxNEfAcQXUH9Nuq/7compEpRUqQ9zod671KvE4sU8fhMhmaAO+FUi3UXSYpbC1Azzf9q2
-        rg
-X-Google-Smtp-Source: ABdhPJzCaJY1QVEsiU+cwCnk06dslnLVSu1JLGkpL8j5FIHq/LqOSIT+2aAB0kHZO3Ti+uXT1hMybbRcnIgtCjr2PccU
+        bh=MRbfA65cmjHdDDLoN90SigmBjVewcwifAC8cv973JT8=;
+        b=bn/OCjk88MQM/cv1+XjH5h7BmaNNdMsaqpNck94on1cdJKTaiP2gXx7QUsbmDJyihl
+         j3ts5+fJR/ILW2OA9mMLzb19yjDWA2Oe8INfCSsBPDqn4jVAjO44YCVZ2JJaCgdsqExR
+         tMl+qxWYFg7gnOF9QEr3lAuLrNfjcFhRnKou3sMjtklOrA3C/muVhrx0J89Yys+wGdhb
+         MN8m4577AitWcBnq8gN5sG0KXszbgfU51BR35RmFrzB5ymPbXeUYLueL8IQuyQwdny+C
+         lTgQ00A82Y6BuAcw4qAI/M/ixoLGzE8K2PkDeDJnPm/JDsLzmomEC5jXAvECHmJOZg66
+         wa1A==
+X-Gm-Message-State: AOAM531hqe3VGNM3rTwTvKLzc6h/cXaz6CLc+z8WxCRoLsitP5tSxTiv
+        nPUyn0jGKh2wjPx5DnjwAxbgBsqCQhPjw1S4Txra97ApXGvqkL0LSrHzaBxmfRv2Ce8H6STBZon
+        GL5WoE8H5vD8e/qdSjpCIcAna28+AIm/wnIlCYORAQKqqMfciaK0M9yunttW9uefOpmjP4OSXhb
+        O3
+X-Google-Smtp-Source: ABdhPJx41NhjIG7ItQpriZqU2tcKVZ2C4sRRvJEZWHFboHe+hUSwuFTU1XVeG1wnpyIBVc/TC9k/nfDL31qB4N6lpIr6
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:b18c:: with SMTP id
- h12mr8709557ybj.500.1623346546580; Thu, 10 Jun 2021 10:35:46 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 10:35:38 -0700
-In-Reply-To: <cover.1622580781.git.jonathantanmy@google.com>
-Message-Id: <cover.1623345496.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:b585:b029:f6:5cd5:f128 with
+ SMTP id a5-20020a170902b585b02900f65cd5f128mr5904889pls.43.1623346548067;
+ Thu, 10 Jun 2021 10:35:48 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 10:35:39 -0700
+In-Reply-To: <cover.1623345496.git.jonathantanmy@google.com>
+Message-Id: <255d1122569dabc4654f7521698744bcc0f13a42.1623345496.git.jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <cover.1622580781.git.jonathantanmy@google.com>
+References: <cover.1622580781.git.jonathantanmy@google.com> <cover.1623345496.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
-Subject: [PATCH v3 0/5] First steps towards partial clone submodules
+Subject: [PATCH v3 1/5] repository: move global r_f_p_c to repo struct
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com,
@@ -68,267 +69,174 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think I've addressed all review comments. As for Junio's suggestion
-about also printing the type in the former patch 4 (now patch 5) [1], I
-decided to just leave the code as-is and not also print the type.
+Move repository_format_partial_clone, which is currently a global
+variable, into struct repository. (Full support for per-repository
+partial clone config will be done in a subsequent commit - this is split
+into its own commit because of the extent of the changes needed.)
 
-The main changes are that patch 1 is somewhat rewritten - we still
-remove the global variable, but we no longer read the
-extensions.partialClone config directly from promisor-remote.c. Instead,
-we store it in struct repository when the format of a repository is
-being verified, and promisor-remote.c merely reads it from there. Patch
-3 is a new patch that updates the environment variable preparation
-before it is moved in patch 4 (formerly patch 3).
+The new repo-specific variable cannot be set in
+check_repository_format_gently() (as is currently), because that
+function does not know which repo it is operating on (or even whether
+the value is important); therefore this responsibility is delegated to
+the outermost caller that knows. Of all the outermost callers that know
+(found by looking at all functions that call clear_repository_format()),
+I looked at those that either read from the main Git directory or write
+into a struct repository. These callers have been modified accordingly
+(write to the_repository in the former case and write to the given
+struct repository in the latter case).
 
-[1] https://lore.kernel.org/git/xmqq7dj2ik7k.fsf@gitster.g/
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ promisor-remote.c | 13 +++----------
+ promisor-remote.h |  6 ------
+ repository.c      |  3 +++
+ repository.h      |  3 +++
+ setup.c           | 16 +++++++++++-----
+ 5 files changed, 20 insertions(+), 21 deletions(-)
 
-Jonathan Tan (5):
-  repository: move global r_f_p_c to repo struct
-  promisor-remote: support per-repository config
-  submodule: refrain from filtering GIT_CONFIG_COUNT
-  run-command: refactor subprocess env preparation
-  promisor-remote: teach lazy-fetch in any repo
-
- Makefile                      |   1 +
- object-file.c                 |   7 +--
- promisor-remote.c             | 108 ++++++++++++++++++----------------
- promisor-remote.h             |  28 ++++++---
- repository.c                  |   9 +++
- repository.h                  |   5 ++
- run-command.c                 |  12 ++++
- run-command.h                 |  10 ++++
- setup.c                       |  16 +++--
- submodule.c                   |  17 +-----
- t/helper/test-partial-clone.c |  43 ++++++++++++++
- t/helper/test-tool.c          |   1 +
- t/helper/test-tool.h          |   1 +
- t/t0410-partial-clone.sh      |  23 ++++++++
- 14 files changed, 196 insertions(+), 85 deletions(-)
- create mode 100644 t/helper/test-partial-clone.c
-
-Range-diff against v2:
-1:  d99598ca50 < -:  ---------- promisor-remote: read partialClone config here
--:  ---------- > 1:  255d112256 repository: move global r_f_p_c to repo struct
-2:  5a1ccae335 ! 2:  a52448cff2 promisor-remote: support per-repository config
-    @@ promisor-remote.c
-      #include "transport.h"
-      #include "strvec.h"
-      
-    --static char *repository_format_partial_clone;
-     +struct promisor_remote_config {
-    -+	char *repository_format_partial_clone;
-     +	struct promisor_remote *promisors;
-     +	struct promisor_remote **promisors_tail;
-     +};
-    - 
-    ++
-      static int fetch_objects(const char *remote_name,
-      			 const struct object_id *oids,
-    + 			 int oid_nr)
-     @@ promisor-remote.c: static int fetch_objects(const char *remote_name,
-      	return finish_command(&child) ? -1 : 0;
-      }
-    @@ promisor-remote.c: static void promisor_remote_move_to_tail(struct promisor_remo
-      	const char *name;
-      	size_t namelen;
-      	const char *subkey;
-    -@@ promisor-remote.c: static int promisor_remote_config(const char *var, const char *value, void *data
-    - 		 * NULL value is handled in handle_extension_v0 in setup.c.
-    - 		 */
-    - 		if (value)
-    --			repository_format_partial_clone = xstrdup(value);
-    -+			config->repository_format_partial_clone = xstrdup(value);
-    - 		return 0;
-    - 	}
-    - 
-     @@ promisor-remote.c: static int promisor_remote_config(const char *var, const char *value, void *data
-      
-      		remote_name = xmemdupz(name, namelen);
-    @@ promisor-remote.c: static int promisor_remote_config(const char *var, const char
-     +	config->promisors_tail = &config->promisors;
-      
-     -	git_config(promisor_remote_config, NULL);
-    -+	git_config(promisor_remote_config, config);
-    ++	repo_config(r, promisor_remote_config, config);
-      
-    --	if (repository_format_partial_clone) {
-    -+	if (config->repository_format_partial_clone) {
-    +-	if (the_repository->repository_format_partial_clone) {
-    ++	if (r->repository_format_partial_clone) {
-      		struct promisor_remote *o, *previous;
-      
-    --		o = promisor_remote_lookup(repository_format_partial_clone,
-    +-		o = promisor_remote_lookup(the_repository->repository_format_partial_clone,
-     +		o = promisor_remote_lookup(config,
-    -+					   config->repository_format_partial_clone,
-    ++					   r->repository_format_partial_clone,
-      					   &previous);
-      		if (o)
-     -			promisor_remote_move_to_tail(o, previous);
-     +			promisor_remote_move_to_tail(config, o, previous);
-      		else
-    --			promisor_remote_new(repository_format_partial_clone);
-    -+			promisor_remote_new(config, config->repository_format_partial_clone);
-    +-			promisor_remote_new(the_repository->repository_format_partial_clone);
-    ++			promisor_remote_new(config, r->repository_format_partial_clone);
-      	}
-      }
-      
-    @@ promisor-remote.c: static int promisor_remote_config(const char *var, const char
-     -	while (promisors) {
-     -		struct promisor_remote *r = promisors;
-     -		promisors = promisors->next;
-    -+	FREE_AND_NULL(config->repository_format_partial_clone);
-    -+
-     +	while (config->promisors) {
-     +		struct promisor_remote *r = config->promisors;
-     +		config->promisors = config->promisors->next;
-    @@ repository.h: struct lock_file;
-      enum untracked_cache_setting {
-      	UNTRACKED_CACHE_UNSET = -1,
-     @@ repository.h: struct repository {
-    - 	/* True if commit-graph has been disabled within this process. */
-    - 	int commit_graph_disabled;
-      
-    -+	/* Configurations related to promisor remotes. */
-    + 	/* Configurations related to promisor remotes. */
-    + 	char *repository_format_partial_clone;
-     +	struct promisor_remote_config *promisor_remote_config;
-    -+
-    + 
-      	/* Configurations */
-      
-    - 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
--:  ---------- > 3:  e1a40108f4 submodule: refrain from filtering GIT_CONFIG_COUNT
-3:  3f7c4e6e67 ! 4:  fd6907822c run-command: move envvar-resetting function
-    @@ Metadata
-     Author: Jonathan Tan <jonathantanmy@google.com>
-     
-      ## Commit message ##
-    -    run-command: move envvar-resetting function
-    +    run-command: refactor subprocess env preparation
-     
-    -    There is a function that resets environment variables, used when
-    -    invoking a sub-process in a submodule. The lazy-fetching code (used in
-    -    partial clones) will need this function in a subsequent commit, so move
-    -    it to a more central location.
-    +    submodule.c has functionality that prepares the environment for running
-    +    a subprocess in a new repo. The lazy-fetching code (used in partial
-    +    clones) will need this in a subsequent commit, so move it to a more
-    +    central location.
-     
-         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-     
-    @@ run-command.c: int run_auto_maintenance(int quiet)
-      	return run_command(&maint);
-      }
-     +
-    -+void prepare_other_repo_env(struct strvec *env_array)
-    ++void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir)
-     +{
-     +	const char * const *var;
-     +
-     +	for (var = local_repo_env; *var; var++) {
-    -+		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
-    ++		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
-    ++		    strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
-     +			strvec_push(env_array, *var);
-     +	}
-    ++	strvec_pushf(env_array, "%s=%s", GIT_DIR_ENVIRONMENT, new_git_dir);
-     +}
-     
-      ## run-command.h ##
-    @@ run-command.h: int run_processes_parallel_tr2(int n, get_next_task_fn, start_fai
-      			       const char *tr2_category, const char *tr2_label);
-      
-     +/**
-    -+ * Convenience function which adds all GIT_* environment variables to env_array
-    -+ * with the exception of GIT_CONFIG_PARAMETERS. When used as the env_array of a
-    -+ * subprocess, these entries cause the corresponding environment variables to
-    -+ * be unset in the subprocess. See local_repo_env in cache.h for more
-    ++ * Convenience function which prepares env_array for a command to be run in a
-    ++ * new repo. This adds all GIT_* environment variables to env_array with the
-    ++ * exception of GIT_CONFIG_PARAMETERS (which cause the corresponding
-    ++ * environment variables to be unset in the subprocess) and adds an environment
-    ++ * variable pointing to new_git_dir. See local_repo_env in cache.h for more
-     + * information.
-     + */
-    -+void prepare_other_repo_env(struct strvec *env_array);
-    ++void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir);
-     +
-      #endif
-     
-    @@ submodule.c: static void print_submodule_diff_summary(struct repository *r, stru
-     -	const char * const *var;
-     -
-     -	for (var = local_repo_env; *var; var++) {
-    --		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
-    +-		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
-    +-		    strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
-     -			strvec_push(out, *var);
-     -	}
-     -}
-    @@ submodule.c: static void print_submodule_diff_summary(struct repository *r, stru
-      void prepare_submodule_repo_env(struct strvec *out)
-      {
-     -	prepare_submodule_repo_env_no_git_dir(out);
-    -+	prepare_other_repo_env(out);
-    - 	strvec_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
-    - 		     DEFAULT_GIT_DIR_ENVIRONMENT);
-    +-	strvec_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
-    +-		     DEFAULT_GIT_DIR_ENVIRONMENT);
-    ++	prepare_other_repo_env(out, DEFAULT_GIT_DIR_ENVIRONMENT);
-      }
-      
-      static void prepare_submodule_repo_env_in_gitdir(struct strvec *out)
-      {
-     -	prepare_submodule_repo_env_no_git_dir(out);
-    -+	prepare_other_repo_env(out);
-    - 	strvec_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
-    +-	strvec_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
-    ++	prepare_other_repo_env(out, ".");
-      }
-      
-    + /*
-4:  655607d575 ! 5:  a6d73662b1 promisor-remote: teach lazy-fetch in any repo
-    @@ Commit message
-         prevents testing of the functionality in this patch by user-facing
-         commands. So for now, test this mechanism using a test helper.
-     
-    +    Besides that, there is some code that uses the wrapper functions
-    +    like has_promisor_remote(). Those will need to be checked to see if they
-    +    could support the non-wrapper functions instead (and thus support any
-    +    repository, not just the_repository).
-    +
-         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-     
-      ## Makefile ##
-    @@ promisor-remote.c: static int fetch_objects(const char *remote_name,
-      
-      	child.git_cmd = 1;
-      	child.in = -1;
-    -+	if (repo != the_repository) {
-    -+		prepare_other_repo_env(&child.env_array);
-    -+		strvec_pushf(&child.env_array, "%s=%s", GIT_DIR_ENVIRONMENT,
-    -+			     repo->gitdir);
-    -+	}
-    ++	if (repo != the_repository)
-    ++		prepare_other_repo_env(&child.env_array, repo->gitdir);
-      	strvec_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=noop",
-      		     "fetch", remote_name, "--no-tags",
-      		     "--no-write-fetch-head", "--recurse-submodules=no",
-    -@@ promisor-remote.c: static void promisor_remote_init(struct repository *r)
-    - 		xcalloc(sizeof(*r->promisor_remote_config), 1);
-    - 	config->promisors_tail = &config->promisors;
-    - 
-    --	git_config(promisor_remote_config, config);
-    -+	repo_config(r, promisor_remote_config, config);
-    - 
-    - 	if (config->repository_format_partial_clone) {
-    - 		struct promisor_remote *o, *previous;
-     @@ promisor-remote.c: int promisor_remote_get_direct(struct repository *repo,
-      
-      	promisor_remote_init(repo);
+diff --git a/promisor-remote.c b/promisor-remote.c
+index da3f2ca261..d24081dc21 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -5,13 +5,6 @@
+ #include "transport.h"
+ #include "strvec.h"
+ 
+-static char *repository_format_partial_clone;
+-
+-void set_repository_format_partial_clone(char *partial_clone)
+-{
+-	repository_format_partial_clone = xstrdup_or_null(partial_clone);
+-}
+-
+ static int fetch_objects(const char *remote_name,
+ 			 const struct object_id *oids,
+ 			 int oid_nr)
+@@ -145,15 +138,15 @@ static void promisor_remote_init(void)
+ 
+ 	git_config(promisor_remote_config, NULL);
+ 
+-	if (repository_format_partial_clone) {
++	if (the_repository->repository_format_partial_clone) {
+ 		struct promisor_remote *o, *previous;
+ 
+-		o = promisor_remote_lookup(repository_format_partial_clone,
++		o = promisor_remote_lookup(the_repository->repository_format_partial_clone,
+ 					   &previous);
+ 		if (o)
+ 			promisor_remote_move_to_tail(o, previous);
+ 		else
+-			promisor_remote_new(repository_format_partial_clone);
++			promisor_remote_new(the_repository->repository_format_partial_clone);
+ 	}
+ }
+ 
+diff --git a/promisor-remote.h b/promisor-remote.h
+index c7a14063c5..687210ab87 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -32,10 +32,4 @@ int promisor_remote_get_direct(struct repository *repo,
+ 			       const struct object_id *oids,
+ 			       int oid_nr);
+ 
+-/*
+- * This should be used only once from setup.c to set the value we got
+- * from the extensions.partialclone config option.
+- */
+-void set_repository_format_partial_clone(char *partial_clone);
+-
+ #endif /* PROMISOR_REMOTE_H */
+diff --git a/repository.c b/repository.c
+index 448cd557d4..4878c297d9 100644
+--- a/repository.c
++++ b/repository.c
+@@ -172,6 +172,9 @@ int repo_init(struct repository *repo,
+ 
+ 	repo_set_hash_algo(repo, format.hash_algo);
+ 
++	repo->repository_format_partial_clone = format.partial_clone;
++	format.partial_clone = NULL;
++
+ 	if (worktree)
+ 		repo_set_worktree(repo, worktree);
+ 
+diff --git a/repository.h b/repository.h
+index a45f7520fd..6fb16ed336 100644
+--- a/repository.h
++++ b/repository.h
+@@ -139,6 +139,9 @@ struct repository {
+ 	/* True if commit-graph has been disabled within this process. */
+ 	int commit_graph_disabled;
+ 
++	/* Configurations related to promisor remotes. */
++	char *repository_format_partial_clone;
++
+ 	/* Configurations */
+ 
+ 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
+diff --git a/setup.c b/setup.c
+index 59e2facd9d..fbedfe8e03 100644
+--- a/setup.c
++++ b/setup.c
+@@ -468,8 +468,6 @@ static enum extension_result handle_extension_v0(const char *var,
+ 			data->precious_objects = git_config_bool(var, value);
+ 			return EXTENSION_OK;
+ 		} else if (!strcmp(ext, "partialclone")) {
+-			if (!value)
+-				return config_error_nonbool(var);
+ 			data->partial_clone = xstrdup(value);
+ 			return EXTENSION_OK;
+ 		} else if (!strcmp(ext, "worktreeconfig")) {
+@@ -566,7 +564,6 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
+ 	}
+ 
+ 	repository_format_precious_objects = candidate->precious_objects;
+-	set_repository_format_partial_clone(candidate->partial_clone);
+ 	repository_format_worktree_config = candidate->worktree_config;
+ 	string_list_clear(&candidate->unknown_extensions, 0);
+ 	string_list_clear(&candidate->v1_only_extensions, 0);
+@@ -1193,6 +1190,10 @@ int discover_git_directory(struct strbuf *commondir,
+ 		return -1;
+ 	}
+ 
++	the_repository->repository_format_partial_clone =
++		candidate.partial_clone;
++	candidate.partial_clone = NULL;
++
+ 	clear_repository_format(&candidate);
+ 	return 0;
+ }
+@@ -1300,8 +1301,12 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
+ 			setup_git_env(gitdir);
+ 		}
+-		if (startup_info->have_repository)
++		if (startup_info->have_repository) {
+ 			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
++			the_repository->repository_format_partial_clone =
++				repo_fmt.partial_clone;
++			repo_fmt.partial_clone = NULL;
++		}
+ 	}
+ 	/*
+ 	 * Since precompose_string_if_needed() needs to look at
+@@ -1319,7 +1324,6 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+ 	}
+ 
+-
+ 	strbuf_release(&dir);
+ 	strbuf_release(&gitdir);
+ 	clear_repository_format(&repo_fmt);
+@@ -1386,6 +1390,8 @@ void check_repository_format(struct repository_format *fmt)
+ 	check_repository_format_gently(get_git_dir(), fmt, NULL);
+ 	startup_info->have_repository = 1;
+ 	repo_set_hash_algo(the_repository, fmt->hash_algo);
++	the_repository->repository_format_partial_clone =
++		xstrdup_or_null(fmt->partial_clone);
+ 	clear_repository_format(&repo_fmt);
+ }
+ 
 -- 
 2.32.0.rc1.229.g3e70b5a671-goog
 
