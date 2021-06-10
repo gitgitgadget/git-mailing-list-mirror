@@ -2,109 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D86BC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B460FC48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 69F53613DE
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 922B4613C9
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 12:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbhFJNAk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 09:00:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51196 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230247AbhFJNAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 09:00:40 -0400
-Received: (qmail 7598 invoked by uid 109); 10 Jun 2021 12:58:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 12:58:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29648 invoked by uid 111); 10 Jun 2021 12:58:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 08:58:43 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 10 Jun 2021 08:58:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] ll_union_merge(): pass name labels to ll_xdl_merge()
-Message-ID: <YMIMg+uXDjzS70g5@coredump.intra.peff.net>
-References: <YMIKwsEFnkqz6PWa@coredump.intra.peff.net>
+        id S230336AbhFJNAs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 09:00:48 -0400
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:35354 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230272AbhFJNAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 09:00:47 -0400
+Received: by mail-wr1-f51.google.com with SMTP id m18so2224479wrv.2
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 05:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=xKCmthvcMA1CIUHOXUrBOBBrgHdjSTInnxe0oXM78tM=;
+        b=XaXkTwR8/pJMuo6/C+Mvri9yG4z8laT5IpwJZQrYZ05Stwj+HrJCLFsD+P9wdYpw4F
+         RFO3EedDkfJWzdkWxH1TGRXcrQS8bZejMtMV3oISN1cy7ww4pm0Sf93+SsNnd1W212/u
+         dYq6NR1eUl+YR0/9MxTK/LbNTFKtwo1x7v+gcp+35r5KnsBOk4Kjj9U1hhHlDHGwe0RS
+         OuGA0fYBZ4SWljP1NgPtipTywEshEwprMn89vAiVqEegtcBNQ3LJMiBcXocbPZbLaQCr
+         pnID3FjhCuYPR7ux2W39bdx9Y0BmNDKBaMfZn9vzCNLHrHocs8h6dtNNdabX7t/7yN7G
+         9few==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=xKCmthvcMA1CIUHOXUrBOBBrgHdjSTInnxe0oXM78tM=;
+        b=bFu6/dd1rjuQSMygVl3g3w75GqIpa5zEFUsJEjAxoegQXU0121tO6aHdqPMQdd85T0
+         ssFcsCxTugjOXtuNQ+T6rLigNPh9pWfgXPm2BB4JCCz2ZK0W24sc2dFWQCZGoAqTmHaJ
+         UCqzHYbLSg2ORiO3ckomL1O1NtxrKlRQE4x3ako+JLWX6+qTjMAzDARv/D3DtBnPz7et
+         iuw0duA1N2UdEabVmHQo0q3uT3isRrWEFX+216BTLbhOJzoFmWvzaaYg5yKV08W6EqhC
+         MQ/K56EWqKaU/UyLxbPkVcpO3SboWsjm6s/Y2j2ZnY3l6/OkpDtGS+11vdjP691WHWrt
+         ovxg==
+X-Gm-Message-State: AOAM533LHAzw2SzRf5iBrwKcCopHEI98/hrmtMvkJWGzGc7r/T04e8N1
+        SDZL/0NqgPXqa7HrYMOcfg2VJw3EKrA=
+X-Google-Smtp-Source: ABdhPJx2V3lvt1nPrunV/2W2+VmEBJlTHLrBTWIAQF8fM8rZVjCrWyXXnd0pkffg94I3CjcplhBniw==
+X-Received: by 2002:a5d:6e11:: with SMTP id h17mr5213205wrz.331.1623329870792;
+        Thu, 10 Jun 2021 05:57:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k36sm2863940wms.30.2021.06.10.05.57.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jun 2021 05:57:50 -0700 (PDT)
+Message-Id: <f9b92e62b5987e8ab51cac07ee1c44d3ec02f7a0.1623329869.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
+References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
+        <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 10 Jun 2021 12:57:41 +0000
+Subject: [PATCH v2 1/8] refs: remove EINVAL errno output from specification of
+ read_raw_ref_fn
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YMIKwsEFnkqz6PWa@coredump.intra.peff.net>
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since cd1d61c44f (make union merge an xdl merge favor, 2010-03-01), we
-pass NULL to ll_xdl_merge() for the "name" labels of the ancestor, ours
-and theirs buffers. We usually use these for annotating conflict markers
-left in a file. For a union merge, these shouldn't matter; the point of
-it is that we'd never leave conflict markers in the first place.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-But there is one code path where we may dereference them: if the file
-contents appear to be binary, ll_binary_merge() will give up and pass
-them to warning() to generate a message for the user (that was true even
-when cd1d61c44f was written, though the warning was in ll_xdl_merge()
-back then).
+This commit does not change code; it documents the fact that an alternate ref
+backend does not need to return EINVAL from read_raw_ref_fn to function
+properly.
 
-That can result in a segfault, though on many systems (including glibc),
-the printf routines will helpfully just say "(null)" instead. We can
-extend our binary-union test in t6406 to check stderr, which catches the
-problem on all systems.
+This is correct, because refs_read_raw_ref is only called from;
 
-This also fixes a warning from "gcc -O3". Unlike lower optimization
-levels, it inlines enough to see that the NULL can make it to warning()
-and complains:
+* resolve_ref_unsafe(), which does not care for the EINVAL errno result.
 
-  In function ‘ll_binary_merge’,
-      inlined from ‘ll_xdl_merge’ at ll-merge.c:115:10,
-      inlined from ‘ll_union_merge’ at ll-merge.c:151:9:
-  ll-merge.c:74:4: warning: ‘%s’ directive argument is null [-Wformat-overflow=]
-     74 |    warning("Cannot merge binary files: %s (%s vs. %s)",
-        |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     75 |     path, name1, name2);
-        |     ~~~~~~~~~~~~~~~~~~~
+* refs_verify_refname_available(), which does not inspect errno.
 
-Signed-off-by: Jeff King <peff@peff.net>
+* files-backend.c, where errno is overwritten on failure.
+
+* packed-backend.c (is_packed_transaction_needed), which calls it for the
+  packed ref backend, which never emits EINVAL.
+
+A grep for EINVAL */*c reveals that no code checks errno against EINVAL after
+reading references. In addition, the refs.h file does not mention errno at all.
+
+A grep over resolve_ref_unsafe() turned up the following callers that inspect
+errno:
+
+* sequencer.c::print_commit_summary, which uses it for die_errno
+
+* lock_ref_oid_basic(), which only treats EISDIR and ENOTDIR specially.
+
+The files ref backend does use EINVAL. The files backend does not call into
+the generic API (refs_read_raw), but into the files-specific function
+(files_read_raw_ref), which we are not changing in this commit.
+
+As the errno sideband is unintuitive and error-prone, remove EINVAL
+value, as a step towards getting rid of the errno sideband altogether.
+
+Spotted by Ævar Arnfjörð Bjarmason <avarab@gmail.com>.
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- ll-merge.c            | 2 +-
- t/t6406-merge-attr.sh | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ refs/refs-internal.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/ll-merge.c b/ll-merge.c
-index 145deb12fa..0ee34d8a01 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -151,7 +151,7 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
- 	o = *opts;
- 	o.variant = XDL_MERGE_FAVOR_UNION;
- 	return ll_xdl_merge(drv_unused, result, path_unused,
--			    orig, NULL, src1, NULL, src2, NULL,
-+			    orig, orig_name, src1, name1, src2, name2,
- 			    &o, marker_size);
- }
- 
-diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
-index c1c458d933..8494645837 100755
---- a/t/t6406-merge-attr.sh
-+++ b/t/t6406-merge-attr.sh
-@@ -221,7 +221,8 @@ test_expect_success 'binary files with union attribute' '
- 	printf "two\0" >bin.txt &&
- 	git commit -am two &&
- 
--	test_must_fail git merge bin-main
-+	test_must_fail git merge bin-main 2>stderr &&
-+	grep -i "warning.*cannot merge.*HEAD vs. bin-main" stderr
- '
- 
- test_done
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 467f4b3c936d..f4445e329045 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -619,9 +619,9 @@ typedef int reflog_expire_fn(struct ref_store *ref_store,
+  *
+  * Return 0 on success. If the ref doesn't exist, set errno to ENOENT
+  * and return -1. If the ref exists but is neither a symbolic ref nor
+- * an object ID, it is broken; set REF_ISBROKEN in type, set errno to
+- * EINVAL, and return -1. If there is another error reading the ref,
+- * set errno appropriately and return -1.
++ * an object ID, it is broken; set REF_ISBROKEN in type, and return -1
++ * (errno should not be ENOENT) If there is another error reading the
++ * ref, set errno appropriately and return -1.
+  *
+  * Backend-specific flags might be set in type as well, regardless of
+  * outcome.
 -- 
-2.32.0.529.g079a794268
+gitgitgadget
+
