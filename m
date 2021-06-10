@@ -2,136 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F279C48BDF
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C982C48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:22:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3EA02613F1
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:14:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E15D661362
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 21:22:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230130AbhFJVQJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 17:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbhFJVQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 17:16:08 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2045AC061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 14:14:01 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso1110215otj.4
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 14:14:01 -0700 (PDT)
+        id S230181AbhFJVY0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 17:24:26 -0400
+Received: from mail-oo1-f46.google.com ([209.85.161.46]:43537 "EHLO
+        mail-oo1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230103AbhFJVY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 17:24:26 -0400
+Received: by mail-oo1-f46.google.com with SMTP id e27-20020a056820061bb029020da48eed5cso217999oow.10
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 14:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EOJucmytYnOnlogweMSlLu9vqyxB0lUyGEJraz04fGU=;
-        b=DvzNUitIdEdiYwNg+7vkCI31Mb7eHxbYv+XiOKERHRpf+GN/jbqHEA+AXRaGhuqJv1
-         dgrQFHz+15gKcOhZSR9x1i54nq3Br5W7pqUwCI82vFZwh5Lkf9M/qzPRFE+nH+AoWoN5
-         SZj7NWSY9JLn7Ou9xuYQsIJniM6mECBxh5cGNqyKvQ3ElmQ9sKAND/zPqKMU78xYpd5/
-         NpSL3vXDOY0487Q2OE5Fa7ZFFSSI0xHa04iluD0jsoIIOrffZ1BRypH+Hi5Vyp3GyA4R
-         FjXTmrEn5IJR5es93+5/MPwkDQNNzfu+cURRip18s/+LwVdjl858rqNKfd5kMbfF2pPt
-         pSHg==
+        bh=D+iLBYOg6OXbiADBR+AnUcmr06/QUzFmIKjSX1vw6Lc=;
+        b=LryVxXHQ4ehQiQZNwC6ShE/7dxSGZeKH3ocgIXfVjdOMl63PC4H490rRJRvJbMz8QY
+         6dPavbwovfZtdc+XK4JyaIiHpm2WD4SR1UXA4rMb+91YF7GdXTjgA041LzG+3GyEkgY0
+         Ew4KqAN0SqbceEWQBxTYtFKnNWYVnqC/jiv5jFMsKzKMciQSdvxpQDxiXkXCiTZ+aBkZ
+         SKUwB+/NR6XCMHyqBQvTezHaV08BjazTv5fvU6gjfM01oLlFUZsc039PgKRdcsnz3kzH
+         QOqnp1VVelamM0rGYexVU3Zfakp9BOi6/icv7xUyQ4F0Bg16/Sjojxt8T6MxoS6ronOB
+         5v6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EOJucmytYnOnlogweMSlLu9vqyxB0lUyGEJraz04fGU=;
-        b=n4V7NW6H7aSHvUn5lP+8lhTlHJN1suZytSk3+tTKdtuORh2QW4yK7V9Me0NP93bZvh
-         vJK1EWKRoPkB/Y5TMyiji2WKwIf6TYSxtpABI531sfGnHd7eeMWse419CkpcQ/soKkFm
-         SHW56knirw4sy3sF5HwjZdBSONf1z7KkUC/r2H5Ess61tTKPUE0rbu8KAcaatWtsn4bf
-         WPoLnLgzMX5UAjnoGFpYwtIpZl36pApz+h75OllFgQUoC1cvlKCbfE1vnm24nlnTsdir
-         LkaH4tp9pZE/jkdFcPifKnaClThB98kiSDqQmP0x3UIEIkLWXOTIpTi9QTDyBVM+CCf+
-         dBBQ==
-X-Gm-Message-State: AOAM530V8dS9+iVen7w4xLIcG3Tl/6q+3G6Zo4BiMv/jyhk0Pjg9imIP
-        CUwPhExDt0B2Zqb66Um6/Rcbtf7eEJf5AqJNqw4=
-X-Google-Smtp-Source: ABdhPJwhRYOBqjLiQLVIFkxcwklAqbLW5jdhFFvmjCwrsHN+wDL0eQu6qwepz7sMqCX6VtW4O+xTZVwn2qaifcUGxrw=
-X-Received: by 2002:a9d:426:: with SMTP id 35mr293814otc.162.1623359640348;
- Thu, 10 Jun 2021 14:14:00 -0700 (PDT)
+        bh=D+iLBYOg6OXbiADBR+AnUcmr06/QUzFmIKjSX1vw6Lc=;
+        b=J5UH8U8LI6LuUVcamyigEsXRv/BB522XeZ9RVBkJF0fjkbSv06IhneDXrqVvcLW31+
+         pLJiLjEOiXOam/qPAOkz7cHzNkOuZKgyUPKv9tXN0ecI5EelmUjc79kPp+qA7ADL6EKn
+         4Z7rsfqns5mMvlqBGPDAqJYPmg0Ta7Le2ctnqynp0k413RTsnBksckkIFzt8XBrfJP82
+         kQvr/o6l5RqFkgH+6iBQ7giwyVoZRauD07nk2kHk6XSjzF3bOis6ca725MNX0Cpo00C6
+         aTxEPZ+g5rVEEqzyyRiX92VFtj92eLpQcPXJAS1sY6ZGGGlxOvROl4HArUgipdZh9tKS
+         p3yw==
+X-Gm-Message-State: AOAM533sovuA9bCWjk69UYixZ90lLmfAs+szDqiZuOtoG+1lLuzUJVVD
+        DmNs8ml2IvQijgycsgAHANt/X5sbSRPPtnjNuE4=
+X-Google-Smtp-Source: ABdhPJzetAfUS0Py382pG/3YOnbcqm4T+kGjG4IBGbiqOIVX/USi7HGnBIYVLWxAASvVe/NVWNU4JUSLz4jdmzyslCQ=
+X-Received: by 2002:a4a:b789:: with SMTP id a9mr430051oop.45.1623360089599;
+ Thu, 10 Jun 2021 14:21:29 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1622580781.git.jonathantanmy@google.com>
- <cover.1623345496.git.jonathantanmy@google.com> <e1a40108f42addf8a589c1d0ac4ed76fb525be9b.1623345496.git.jonathantanmy@google.com>
-In-Reply-To: <e1a40108f42addf8a589c1d0ac4ed76fb525be9b.1623345496.git.jonathantanmy@google.com>
+ <cover.1623345496.git.jonathantanmy@google.com> <fd6907822cf4cb12023999a61682676de193bff9.1623345496.git.jonathantanmy@google.com>
+In-Reply-To: <fd6907822cf4cb12023999a61682676de193bff9.1623345496.git.jonathantanmy@google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 10 Jun 2021 14:13:49 -0700
-Message-ID: <CABPp-BFpW7KLQGbe1kz5FNWABrTNaHOCZw3poXBMWQ9MP91GuQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/5] submodule: refrain from filtering GIT_CONFIG_COUNT
+Date:   Thu, 10 Jun 2021 14:21:18 -0700
+Message-ID: <CABPp-BGgdQ02-gUwK1vPSBw8Fw_OCKZskd+5P7_4Bj0sYX++Gg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] run-command: refactor subprocess env preparation
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Taylor Blau <me@ttaylorr.com>,
         Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adding Peff to cc as per comments about 89044baa8b ("submodule: stop
-sanitizing config options", 2016-05-04) below.
-
 On Thu, Jun 10, 2021 at 10:35 AM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> 14111fc492 ("git: submodule honor -c credential.* from command line",
-> 2016-03-01) taught Git to pass through the GIT_CONFIG_PARAMETERS
-> environment variable when invoking a subprocess on behalf of a
-> submodule. But when d8d77153ea ("config: allow specifying config entries
-> via envvar pairs", 2021-01-15) introduced support for GIT_CONFIG_COUNT
-> (and its associated GIT_CONFIG_KEY_? and GIT_CONFIG_VALUE_?), the
-> subprocess mechanism wasn't updated to also pass through these
-> variables.
->
-> Since they are conceptually the same (d8d77153ea was written to address
-> a shortcoming of GIT_CONFIG_PARAMETERS), update the submodule subprocess
-> mechanism to also pass through GIT_CONFIG_COUNT.
+> submodule.c has functionality that prepares the environment for running
+> a subprocess in a new repo. The lazy-fetching code (used in partial
+> clones) will need this in a subsequent commit, so move it to a more
+> central location.
 >
 > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
->  submodule.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  run-command.c | 12 ++++++++++++
+>  run-command.h | 10 ++++++++++
+>  submodule.c   | 18 ++----------------
+>  3 files changed, 24 insertions(+), 16 deletions(-)
 >
-> diff --git a/submodule.c b/submodule.c
-> index 0b1d9c1dde..f09031e397 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -489,7 +489,8 @@ static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
->         const char * const *var;
+> diff --git a/run-command.c b/run-command.c
+> index be6bc128cd..549a94a6a4 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1892,3 +1892,15 @@ int run_auto_maintenance(int quiet)
 >
->         for (var = local_repo_env; *var; var++) {
-> -               if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
+>         return run_command(&maint);
+>  }
+> +
+> +void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir)
+> +{
+> +       const char * const *var;
+> +
+> +       for (var = local_repo_env; *var; var++) {
 > +               if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
 > +                   strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
->                         strvec_push(out, *var);
->         }
+> +                       strvec_push(env_array, *var);
+> +       }
+> +       strvec_pushf(env_array, "%s=%s", GIT_DIR_ENVIRONMENT, new_git_dir);
+> +}
+> diff --git a/run-command.h b/run-command.h
+> index d08414a92e..92f1c00b11 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -483,4 +483,14 @@ int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
+>                                task_finished_fn, void *pp_cb,
+>                                const char *tr2_category, const char *tr2_label);
+>
+> +/**
+> + * Convenience function which prepares env_array for a command to be run in a
+> + * new repo. This adds all GIT_* environment variables to env_array with the
+> + * exception of GIT_CONFIG_PARAMETERS (which cause the corresponding
+> + * environment variables to be unset in the subprocess) and adds an environment
+> + * variable pointing to new_git_dir. See local_repo_env in cache.h for more
+> + * information.
+
+This comment is out-of-date as of your previous patch.  There's (at
+least) one more variable that is also excluded.
+
+> + */
+> +void prepare_other_repo_env(struct strvec *env_array, const char *new_git_dir);
+> +
+>  #endif
+> diff --git a/submodule.c b/submodule.c
+> index f09031e397..8e611fe1db 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -484,28 +484,14 @@ static void print_submodule_diff_summary(struct repository *r, struct rev_info *
+>         strbuf_release(&sb);
 >  }
+>
+> -static void prepare_submodule_repo_env_no_git_dir(struct strvec *out)
+> -{
+> -       const char * const *var;
+> -
+> -       for (var = local_repo_env; *var; var++) {
+> -               if (strcmp(*var, CONFIG_DATA_ENVIRONMENT) &&
+> -                   strcmp(*var, CONFIG_COUNT_ENVIRONMENT))
+> -                       strvec_push(out, *var);
+> -       }
+> -}
+> -
+>  void prepare_submodule_repo_env(struct strvec *out)
+>  {
+> -       prepare_submodule_repo_env_no_git_dir(out);
+> -       strvec_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
+> -                    DEFAULT_GIT_DIR_ENVIRONMENT);
+> +       prepare_other_repo_env(out, DEFAULT_GIT_DIR_ENVIRONMENT);
+>  }
+>
+>  static void prepare_submodule_repo_env_in_gitdir(struct strvec *out)
+>  {
+> -       prepare_submodule_repo_env_no_git_dir(out);
+> -       strvec_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
+> +       prepare_other_repo_env(out, ".");
+>  }
+>
+>  /*
 > --
 > 2.32.0.rc1.229.g3e70b5a671-goog
-
-I'm super confused.  It appears that
-prepare_submodule_repo_env_no_git_dir() is filtering out
-"GIT_CONFIG_PARAMETERS" (CONFIG_DATA_ENVIRONMENT) and
-"GIT_CONFIG_COUNT" (CONFIG_COUNT_ENVIRONMENT), using all environment
-variables other than these ones.  But the commit message talks about
-adding an extra environment variable, rather than filtering another
-out.  I must be mis-reading something somewhere, but I'm struggling to
-figure it out.
-
-Digging around for a while led me to commit 89044baa8b ("submodule:
-stop sanitizing config options", 2016-05-04), which suggests that the
-passing of GIT_CONFIG_PARAMETERS is not done here but in
-git-submodule.sh.  It still didn't make it clear to me why it's
-stripped out here, but something makes me thing that git-submodule.sh
-should be affected by your change as well.
-
-Also, from looking at the other commit messages you reference, it
-appears GIT_CONFIG_PARAMETERS was just one big environment variable,
-whereas GIT_CONFIG_COUNT is closely associated with 2*N other
-environment variables...so shouldn't your loop (and perhaps also
-git-submodule.sh) also be checking GIT_CONFIG_KEY_\d+ and
-GIT_CONFIG_VALUE_\d+ ?
-
-I've been looking at this patch longer than I care to admit and I
-still feel like I don't have a clue what's going on.
