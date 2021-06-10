@@ -2,92 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E5BDC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 16:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 498E9C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 16:48:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4642E61362
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 16:36:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29D2A613E7
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 16:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230494AbhFJQiR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 12:38:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51582 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229823AbhFJQiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 12:38:17 -0400
-Received: (qmail 8399 invoked by uid 109); 10 Jun 2021 16:36:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jun 2021 16:36:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31890 invoked by uid 111); 10 Jun 2021 16:36:20 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 10 Jun 2021 12:36:20 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 10 Jun 2021 12:36:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     Andrzej Hunt <andrzej@ahunt.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?TMOpbmHDr2M=?= Huard <lenaic@lhuard.fr>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: UNLEAK(), leak checking in the default tests etc.
-Message-ID: <YMI/g1sHxJgb8/YD@coredump.intra.peff.net>
-References: <87czsv2idy.fsf@evledraar.gmail.com>
- <fcb0eaee-6ae1-f2cc-51d5-103eea64532a@ahunt.org>
- <87y2bi0vvl.fsf@evledraar.gmail.com>
- <YMIVzYgNddsR4FSd@coredump.intra.peff.net>
- <bd212451-d8f0-e041-3460-bbbff57542d8@ahunt.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bd212451-d8f0-e041-3460-bbbff57542d8@ahunt.org>
+        id S230355AbhFJQuR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 12:50:17 -0400
+Received: from mail-oi1-f176.google.com ([209.85.167.176]:38881 "EHLO
+        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230184AbhFJQuQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 12:50:16 -0400
+Received: by mail-oi1-f176.google.com with SMTP id z3so2788011oib.5
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 09:48:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=4/5vH52oW2/p51Dlbm5JKccBu14h39lzvgUXP0RelxY=;
+        b=GqpcFu2uEB7R9agXjPJW88tc+qW/QPTVMEVuSu4my7FsXzX5X7bOZlit05LPiRmAbv
+         bAH9S0anxDj8Zr0KX5SPfwng9FaAwaEQUoQfjN/Q0IiMqwQwLGBxC+xka8x6xMO2u6RK
+         pf/BpEbFx5ln0AUmvZM28buPShMs0RkYKEGwcKnd5LIIE44DJqR63PiWJn2lCqFAdEEZ
+         HdxcyVC9xo9hEPXYZtWHVu4RUiRF8a3JKf9iUsiB/Gf6bqUYC6J9qMfT/VOM0uoRGGMo
+         D9Vnr4vNll4FFuUHjKoVP+vekT/Yr5Fe+ZSJ+VKPk6PcYQaD/0z723U1qFVvZAGoscIa
+         C9xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=4/5vH52oW2/p51Dlbm5JKccBu14h39lzvgUXP0RelxY=;
+        b=NMS9T4osSspt+slNLIa7MUiHkwXsV69dQcQD5ubk70z+ImKWz4bMDyDffBe9sNjpJV
+         ehSqmkwIRvMsXfGzbrUa/IaipvM7SptidvhXyjmtvMDNRfVJmSp9HnTvY8bBL0Er40ed
+         DSKBtw9aXuixkbMRnPqx50hHFroNVeOBzL5BViPJpdYJSLKkUAzZK/cHhJ+HzEAlGRSA
+         a8NStzG606VACckcyz6zrKJPHJcbIK9ZyIoccgh0wvTVR5CO7mapPwfA/bngkx6uvC8H
+         xDAir077P21pBw3oyTLt8JKcyDtddG/VIxt0Koewn7ZaLH0Jxu1an9mROXBclJKyNsW1
+         wgUQ==
+X-Gm-Message-State: AOAM530IgqnlRemMzbP/OJcP954glh1PaYnHyQW9m8TB1TRlnlrsNZaN
+        Ca2pt4y/USjkxvOQRR9lAJg=
+X-Google-Smtp-Source: ABdhPJy+ArZtXRtmU1fcMHcNpcSaMVeLN8ahxxRS63zI1azf+ckuwgaZy7qbAjCqoxwKPKbKt0MTFw==
+X-Received: by 2002:aca:1210:: with SMTP id 16mr5223518ois.14.1623343627965;
+        Thu, 10 Jun 2021 09:47:07 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id 102sm704018otf.37.2021.06.10.09.47.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jun 2021 09:47:07 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 11:47:06 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>
+Message-ID: <60c2420a2dd73_b25b1208f1@natae.notmuch>
+In-Reply-To: <bef8e373-20d8-3545-ba43-00108b2e77df@gmail.com>
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+ <20210609192842.696646-2-felipe.contreras@gmail.com>
+ <b2436790-bbf0-2623-5e29-a6f6b4959974@gmail.com>
+ <60c2130178831_b25b1208f5@natae.notmuch>
+ <bef8e373-20d8-3545-ba43-00108b2e77df@gmail.com>
+Subject: Re: [PATCH 1/7] test: add merge style config test
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 10, 2021 at 05:32:41PM +0200, Andrzej Hunt wrote:
-
-> > I do think it would be worth splitting out ASan from leak-checking. The
-> > whole suite should run clean with regular ASan already, and we'd want to
-> > find regressions there even in the tests that aren't leak-clean. I do
-> > periodic ASan runs already; the main argument against doing it for every
-> > CI run is just that's a lot more CPU. But maybe not enough to be
-> > prohibitive? It's probably still way cheaper than running the test suite
-> > on Windows.
+Phillip Wood wrote:
+> On 10/06/2021 14:26, Felipe Contreras wrote:
+> > Phillip Wood wrote:
+> >> On 09/06/2021 20:28, Felipe Contreras wrote:
+> >>> We want to test different combinations of merge.conflictstyle, and a new
+> >>> file is the best place to do that.
+> >>[...]
+> >>> diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
+> >>> new file mode 100755
+> > 
+> >>> +test_expect_success 'merge' '
+> >>> +	test_create_repo merge &&
+> >>> +	(
+> >>> +		cd merge &&
+> >>> +
+> >>> +		fill 1 2 3 >content &&
+> >>> +		git add content &&
+> >>> +		git commit -m base &&
+> >>> +
+> >>> +		git checkout -b r &&
+> >>> +		echo six >>content &&
+> >>> +		git commit -a -m right &&
+> >>> +
+> >>> +		git checkout master &&
+> >>> +		echo 7 >>content &&
+> >>> +		git commit -a -m left &&
+> >>> +
+> >>> +		test_must_fail git merge r &&
+> >>> +		! grep -E "\|+" content &&
+> >>
+> >> ! grep "|"  would be simpler and just as effective.
+> > 
+> > But that would fail if there's a "command1 | command2".
 > 
-> I've been running tests with ASAN in the Github Actions environment, and a
-> single run takes just over 30 minutes [1] - which I believe is similar to
-> the normal test jobs (they do run the test suite twice in that time I
-> think).
+> I don't understand. What are you expecting content to contain?
+
+Not a sequence of |.
+
+> Why doesn't "\|+" fail in that case?
+
+It would, perhaps "\|\|+" would be better, or maybe "\|{2,}".
+
+> >> This is quite a weak
+> >> test, something like "^|||||| " would be a stronger test for conflict
+> >> markers
+> > 
+> > But that doesn't work in all the tests.
 > 
-> I've been doing the same with UBSAN, and that's even faster at 15-20 minutes
-> [2]. However I get the impression that ASAN issues are both more common (at
-> least on seen), and more impactful - so I would argue that ASAN should be
-> prioritised if there's spare capacity. (I have no idea if ASAN+UBSAN can be
-> combined, but I suspect that doing so would make the tests slower?)
+> So test for what you actually expect, you don't need to have the same 
+> check in all the tests if the expected output is different.
 
-I routinely do SANITIZE=address,undefined since they are both useful
-(and we do not trigger either in the current test suite). I never
-measured the time of their combined use versus just one, but surely it's
-faster the two-at-once approach is faster than running the test suite
-twice.
+I don't need to, but it makes the tests simpler, and as you pointed out
+in another comment: more tests are needed.
 
-> I'm also running LSAN tests in CI to try and catch regressions, but I've
-> only enabled a handful of tests so far. My much simpler approach was to
-> specify the range of tests to run as 0-X, and as we make progress on fixing
-> leaks, X will slowly approach 9999 (currently we're at something like X~=5,
-> although I'm not too far off sending out some patches to boost that to 99).
-> The skip-tests approach seems much more useful!
+Perhaps once we know exactly what we want to test, and how to fix the
+current issues it would make sense to revisit these.
 
-Depending how fine-grained you get with skip-tests, it can create a
-hassle as individual tests are removed or reordered (and now somebody
-has to maintain the skip list). Doing it with whole scripts (whether
-saying "these ones are OK" or "these ones are known bad") seems like
-less maintenance overall. The results aren't as fine-grained, but for
-something that is meant to be a transitional step, I'm not sure it's
-worth the trouble to get more specific.
-
--Peff
+-- 
+Felipe Contreras
