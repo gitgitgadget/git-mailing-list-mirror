@@ -2,212 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B385BC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A43D2C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:26:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98FC7613FE
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:25:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D0CC61182
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbhFJJ05 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 05:26:57 -0400
-Received: from mout.gmx.net ([212.227.15.15]:42917 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229935AbhFJJ04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 05:26:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1623317094;
-        bh=nyMtpDtf/lbdNKrCRvtX9QL6pqxMsmpxsp9SZI7HbIU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FpmcJjuuXLXzBKlV2vIVp0L9y3oE/75nspX0sD18hkWnaj5/9yWfEFFbRMRzollZB
-         skG2k7qa+4F+B26rFT6n/hWv38q3gGwFWZmXyU2Cb/B3SczBu1ny6VrKVlMu64tGRO
-         rGEHM7UF/+q6sE3O5bHAmwMktnzrMTDs25xY/Psg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.14.142] ([89.1.213.18]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1fis-1lBIJp45Si-011zbQ; Thu, 10
- Jun 2021 11:24:54 +0200
-Date:   Thu, 10 Jun 2021 11:24:52 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] remote: initialize values that might not be set
-In-Reply-To: <xmqqlf7ltg4q.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2106101046470.57@tvgsbejvaqbjf.bet>
-References: <pull.974.git.1623069570553.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2106072355110.55@tvgsbejvaqbjf.bet> <xmqqlf7ltg4q.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229941AbhFJJ2a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 05:28:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34976 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229715AbhFJJ2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 05:28:30 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325D4C061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 02:26:34 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id m3so514147wms.4
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 02:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RXkhjDJLUpgy/qLS6UiJP0hJGEDdspatee5ZqhaLjBg=;
+        b=Ys6VglFI2sktzwD/tJ4F9u+EmPtzxHGVe7tLVhyb4JqA3Jq9yJBr2KoVzFUIlh8oFL
+         f6XDWVR9IbQnQkczbOsajwJFFQTos2RvzJZc7JQwdfSO7m8ipopRCmxZwnE35Tjg4qQo
+         9gqkm64Wjh9jShZqb3riUNdtSStTvFS3F7RAssaj4HrqpKXN6Yu7y7SQXawT2yqE0ZwV
+         f2fulgnZf2itpw1DCYhptzbGlYoPt9OzLCadoJwWHkoQtN3NAv+qZfK1tBrSpSUhtJz9
+         AwxsizBfjIjkm507fjC7NLMpQxJibjNhsu2L9KvuZj32Pf8RacIdlf8STeE0juH2W0pB
+         dl7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=RXkhjDJLUpgy/qLS6UiJP0hJGEDdspatee5ZqhaLjBg=;
+        b=iDg0S37Qy2O4nI2Wtk18aPzQEcs3g1P+KsJsmPX1tdg0zXxxnmUeD9t5Z9X1tjuuyk
+         P6VdDVumXx+C985PNaX4mouHUmgE3VZ0v/+dpz2ovCKdTkOy4Pe96WXTkCzlAmHr5DOT
+         lHuuNfBY3/4MAjhv2ta3OtV1+ajHxnwHGKunjVTvWsnykeMTWpK5wjI9c8kquS4BbG/c
+         1gDY+xgO0+5GJBq4PIIgJkGalAfkctnQdN7gWmcDppOVKK8bh1MPqtl1q3LDISh+HwEj
+         X88Fdd0ZsuIpphzt/GxljUn4nmhk5GqMSpGr9ldYi4wHYVC6Z1Rpzz2NuTvYRdDNaDL0
+         e7AQ==
+X-Gm-Message-State: AOAM531FdQuans/D0VqhCHpI6R0ircYa8hhQGyDznUog63++XByiHfCe
+        mWGdXcww+tEd9sOoMoW3hfTtnZyHyn8=
+X-Google-Smtp-Source: ABdhPJzQhPq2+ZV/Y0L4wRmlU9nms9M/32yc+Sjcm8J6ve1OOT9sHjGzMVsSFyQWIrd7LjZxyceSkw==
+X-Received: by 2002:a05:600c:35c1:: with SMTP id r1mr3992562wmq.13.1623317192817;
+        Thu, 10 Jun 2021 02:26:32 -0700 (PDT)
+Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
+        by smtp.gmail.com with ESMTPSA id x18sm2824402wrw.19.2021.06.10.02.26.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Jun 2021 02:26:32 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 6/7] xdiff: simplify style assignments
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+ <20210609192842.696646-7-felipe.contreras@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <cc8bbc34-1048-0e7b-c783-33f556843a3f@gmail.com>
+Date:   Thu, 10 Jun 2021 10:26:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XITryIljrAF8Gv4js6lS9LHyIIA7SiPs6ivvlUVjdXorD8HxauI
- I4O4uZiboiwADTLfE8jx5ycvsAmqj1NqeUABlzokp8iwBy1FkYvpOncFYu39VbCNwecAXp0
- MsIS9MzGpGxZGyyLEskuw55LiGdzYe9cmYsvz0U2BlqmQlMclZKM5nWd6KamWB76mbqA5Y3
- pNX4EHx6aBaLiBotDyxDg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zfmL2GjQNmA=:zXvRFqqlvAmgAkelQVz/jS
- c6XQ91HFHK0DGiiz5FX1vS92+dcalZZtPoSxhuxE4hAjsYZeIt/QZuoN9zo8ZYz+UIQPEPie7
- 7KthGz5n1rbtT+TD8SuADOJ8sTqb5WGbv725f2fZBgKq9VbcuH2OOESW5GzXVNHNiRN+1hef/
- /wqZo1lxfXmkNbhCNeRZ5H/H4sJ0bpqoBRfyNnqjhY/ujDYFODemqOr4oPkMcUlpAUkzH/4d0
- 6ZtXIfNBtV84gc2adIVFWix+QMXPxzzI8hqE/OA4KnNO3TOIj5vS2XWaBTOsIFioGIDmycTKm
- LAHtw324fTieGPwkWfyZ9bgC74LVSeQNmBbBGxxNkDPk1Q8mW4wzh2FdvhuM5YipJOhimYutf
- 5HpvJzjXXw73gNPPaU6+lrBgVk9kgUJEhqPQPJnRRSoGwovc801c77e/dwFnY+YBpHcxomrmU
- ZCBonuV7un1FA9ZHsN/oGDrkK88mb8tkL0ScS1s+5JYlEx55kcOu7icokD7GUBhlzYfhB2QAK
- bHLHLIY3XZS8uF/FLyUsx1pSR+Kb46el0aCkSw7q3lsfCPHhV4VaxD/1LNleeXTjj/lc9U7Ad
- 3dxC9Y1RvIHmuUYyIEKT35Iw+iKDO+HIKqJ/BgXB22lrYEza3PzmvcweOLxMImHG6qGDAlW4H
- Avf2WWHoojpZev4vtLZTuADKLtWcD0RYFCZef989615+ssXS4MsDIAdKd6iOq4KFOnqwCkClJ
- J/OZoHXIpV+sfmDX7yGvubaUKZIqYfNgIYaigYtD5TGhiUYqr7SSGvadEEx3asl35z0JwyBB6
- g57e8/MKBaOQ8qySepgFjMfxCCo23h8PSRlvstENT0rTwtLsJXQ1Q+zUo9wNArjtDUWG6EfHR
- 3Rbm65fhpIoHSOV53A5GbTQLTt9wiSduqZ5HeUypZ65/iw0Me+lDTZyFkszZkTcwHd3n9Rlcl
- 3U32rO0S9KPk2lZdVToGVlArnlZm/xMCe+5afzOX+BjwzJpy7s5gm7lA2/EoaLVk3xVpKjQ9+
- zlQsUXEqBQ+Kfy6IprAHqfXIb45yuxv3xYIaUXtlkh86njbHyVhzVSAXDrvU43oWX/bj1gHrd
- Rrc+xMMmyKIcdVvgaFSQMk5PWG9TAF9+T7GlWeRAVFRVmrOqTDaxHwABg==
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210609192842.696646-7-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 09/06/2021 20:28, Felipe Contreras wrote:
 
-On Tue, 8 Jun 2021, Junio C Hamano wrote:
+I don't find the commit message explains this change very well
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> diff --git a/remote.c b/remote.c
-> >> index c3f85c17ca7c..a116392fb057 100644
-> >> --- a/remote.c
-> >> +++ b/remote.c
-> >> @@ -2101,7 +2101,7 @@ int stat_tracking_info(struct branch *branch, i=
-nt *num_ours, int *num_theirs,
-> >>  int format_tracking_info(struct branch *branch, struct strbuf *sb,
-> >>  			 enum ahead_behind_flags abf)
-> >>  {
-> >> -	int ours, theirs, sti;
-> >> +	int ours =3D 0, theirs =3D 0, sti =3D 0;
-> >
-> > While I like this change, I am somewhat confused where the values are =
-used
-> > for branching. The only time I see them used when `stat_branch_pair()`=
- has
-> > _not_ initialized `ours` and `theirs` is in those `trace2_data_intmax(=
-)`
-> > calls. Otherwise `sti` is set to -1 and the other users of `ours` and
-> > `theirs` aren't reached.
-> >
-> > If my reading of the code is correct, maybe the commit message could b=
-e
-> > adjusted to talk about tracing instead of branching?
->
-> I too wondered why initializing them to 0 is safe (instead of hiding
-> latent bugs).  I think that stat_tracking_info() would always return
-> -1 if returns before reaching the point in stat_branch_pair(),
+> There is little value in checking that git_xmerge_style isn't 0 before
+> changing it's default value.
 
-While that is true, I was trying to make a different point: I noticed that
-the `ours`/`theirs` variables _are_ used, even if `sti` is negative. The
-code that I looked at reads like this:
+I think the check is actually that git_xmerge_style isn't -1. Why is 
+there little value in the check?
 
-	int format_tracking_info(struct branch *branch, struct strbuf *sb,
-				 enum ahead_behind_flags abf)
-	{
-		int ours, theirs, sti;
-		const char *full_base;
-		char *base;
-		int upstream_is_gone =3D 0;
+> Most of the time it isn't 0 anyway, so just assign the value directly.
 
-		trace2_region_enter("tracking", "stat_tracking_info", NULL);
-		sti =3D stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-		trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_flags", abf)=
-;
-		trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_result", sti=
-);
-		if (abf =3D=3D AHEAD_BEHIND_FULL) {
-		    trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_ahead", =
-ours);
-		    trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_behind",=
- theirs);
-		}
-		trace2_region_leave("tracking", "stat_tracking_info", NULL);
+Why to the times when it is zero (or -1) not matter?
 
-		if (sti < 0) {
-			if (!full_base)
-				return 0;
-			upstream_is_gone =3D 1;
-		}
+> Also, add the missing constant for the default value: XDL_MERGE_STYLE_MERGE.
+> 
+> Additionally this change has the benefit that it gets rid of a Yoda
+> condition.
+> 
+> No functional changes.
 
-You will notice that there are two Trace2 calls in that conditional `abf
-=3D=3D AHEAD_BEHIND_FULL` block.
+I think that is probably correct but it would be helpful if the commit 
+message offered a bit more explanation.
 
-Now, what I failed to realize when reviewing this code (and I _bet_ Stolee
-was in the same boat when they contributed the patch) is that this version
-of `format_tracking_info()` is different from what is in v2.32.0. It is
-the version we have in the `microsoft/git` fork, and it has not yet made
-it upstream. To be precise, it is this commit:
-https://github.com/microsoft/git/commit/91209e591b0398c8334a78001a245807f7=
-eb348a
+Best Wishes
 
-In light of this, it might make more sense for us to fixup! this commit
-thusly:
+Phillip
 
-=2D- snip --
-diff --git a/remote.c b/remote.c
-index caed9cbc31b1..cfb7b6bd8d30 100644
-=2D-- a/remote.c
-+++ b/remote.c
-@@ -2110,7 +2110,7 @@ int format_tracking_info(struct branch *branch, stru=
-ct strbuf *sb,
- 	sti =3D stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
- 	trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_flags", abf)=
-;
- 	trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_result", sti=
-);
--	if (abf =3D=3D AHEAD_BEHIND_FULL) {
-+	if (sti >=3D 0 && abf =3D=3D AHEAD_BEHIND_FULL) {
- 	    trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_ahead", =
-ours);
- 	    trace2_data_intmax("tracking", NULL, "stat_tracking_info/ab_behind",=
- theirs);
- 	}
-=2D- snap --
-
-This would be in line with how `format_tracking_info()` avoids accessing
-`ours` and `theirs` if `stat_tracking_info()` returned a negative value.
-
-I opened the corresponding PR here:
-https://github.com/microsoft/git/pull/373
-
-> but it is not clear how we can futureproof the whole thing.
->
-> If these two are initialized to say -1 here, and then we had some
-> sanity check, perhaps like so:
->
-> 	sti =3D stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
-> +	assert(sti < 0 || (0 <=3D ours && 0 <=3D theirs));
-> 	if (sti < 0) {
-> 		if (!full_base)
-> 	...
->
-> to enforce the invariant we assume (i.e. OK sti means ours and
-> theirs are set), it would allow us to sleep better, perhaps?
-
-As I have stated elsewhere, I am somewhat doubtful of the benefit those
-`assert()` calls give us.
-
-I wish there was a way to integrate some sort of static analysis that
-would warn us about using uninitialized values.
-
-Of course, we would have to make sure that it does not show as many false
-positives about `struct strbuf` and `struct strvec` "overrunning" on their
-buffer. This is what dominates Coverity's report, for example.
-
-FWIW I played a little with CodeQL on GitHub, but have not found time to
-continue on that in a long time... my current state is pushed as `codeql`
-to my fork: https://github.com/git/git/compare/master...dscho:codeql, just
-in case somebody interested wants to take this further).
-
-Ciao,
-Dscho
+> 
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>   builtin/merge-file.c | 3 +--
+>   ll-merge.c           | 3 +--
+>   xdiff-interface.c    | 4 ++--
+>   xdiff/xdiff.h        | 1 +
+>   4 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+> index a4097a596f..01951762ec 100644
+> --- a/builtin/merge-file.c
+> +++ b/builtin/merge-file.c
+> @@ -55,8 +55,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+>   	if (startup_info->have_repository) {
+>   		/* Read the configuration file */
+>   		git_config(git_xmerge_config, NULL);
+> -		if (0 <= git_xmerge_style)
+> -			xmp.style = git_xmerge_style;
+> +		xmp.style = git_xmerge_style;
+>   	}
+>   
+>   	argc = parse_options(argc, argv, prefix, options, merge_file_usage, 0);
+> diff --git a/ll-merge.c b/ll-merge.c
+> index 9a8a2c365c..4ce8d3f9cc 100644
+> --- a/ll-merge.c
+> +++ b/ll-merge.c
+> @@ -124,8 +124,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+>   	xmp.level = XDL_MERGE_ZEALOUS;
+>   	xmp.favor = opts->variant;
+>   	xmp.xpp.flags = opts->xdl_opts;
+> -	if (git_xmerge_style >= 0)
+> -		xmp.style = git_xmerge_style;
+> +	xmp.style = git_xmerge_style;
+>   	if (marker_size > 0)
+>   		xmp.marker_size = marker_size;
+>   	xmp.ancestor = orig_name;
+> diff --git a/xdiff-interface.c b/xdiff-interface.c
+> index 64e2c4e301..19a030fbe2 100644
+> --- a/xdiff-interface.c
+> +++ b/xdiff-interface.c
+> @@ -299,7 +299,7 @@ int xdiff_compare_lines(const char *l1, long s1,
+>   	return xdl_recmatch(l1, s1, l2, s2, flags);
+>   }
+>   
+> -int git_xmerge_style = -1;
+> +int git_xmerge_style = XDL_MERGE_STYLE_MERGE;
+>   
+>   int git_xmerge_config(const char *var, const char *value, void *cb)
+>   {
+> @@ -309,7 +309,7 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
+>   		if (!strcmp(value, "diff3"))
+>   			git_xmerge_style = XDL_MERGE_STYLE_DIFF3;
+>   		else if (!strcmp(value, "merge"))
+> -			git_xmerge_style = 0;
+> +			git_xmerge_style = XDL_MERGE_STYLE_MERGE;
+>   		/*
+>   		 * Please update _git_checkout() in
+>   		 * git-completion.bash when you add new merge config
+> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+> index 45883f5eb3..d24cd9f6ae 100644
+> --- a/xdiff/xdiff.h
+> +++ b/xdiff/xdiff.h
+> @@ -64,6 +64,7 @@ extern "C" {
+>   #define XDL_MERGE_FAVOR_UNION 3
+>   
+>   /* merge output styles */
+> +#define XDL_MERGE_STYLE_MERGE 0
+>   #define XDL_MERGE_STYLE_DIFF3 1
+>   
+>   typedef struct s_mmfile {
+> 
