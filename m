@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04E8FC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C975C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:06:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D11F960FDA
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:03:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0883F61184
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbhFJKF1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 06:05:27 -0400
-Received: from mail-ua1-f41.google.com ([209.85.222.41]:43537 "EHLO
-        mail-ua1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229937AbhFJKF0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 06:05:26 -0400
-Received: by mail-ua1-f41.google.com with SMTP id f1so1060755uaj.10
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 03:03:19 -0700 (PDT)
+        id S229990AbhFJKI3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 06:08:29 -0400
+Received: from mail-vs1-f51.google.com ([209.85.217.51]:42756 "EHLO
+        mail-vs1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229910AbhFJKI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 06:08:28 -0400
+Received: by mail-vs1-f51.google.com with SMTP id l25so1532694vsb.9
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 03:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=T/MXoo71C1nB5kWH4xh0bd2JC/2ECQ/NC4zfcsHwEVY=;
-        b=XmTnGFvwTmgB6M/JyC0+kB6UzBFL9HeiZXXcRjXUhjzxiftj9Tyt0xr6zxEmwyri21
-         An4wB2Y8eu88ko7JerQoFMDjgUkamTXRrEdI+p+9uMkn2hTw0764VtBKoM0K7ClPU47X
-         GrYKQsxKRTcta1fAHJMbiSVBXH6vGWHbCm6JnzwqS0NVm42QSubwXHFRrcfok+9AeYnL
-         elky7t9QLJkEQA/A75rxoPpnP0gbm863Q+dloNKDsqNV5/9XrSQ5Oi0vLFfn2Qc03Vu+
-         pdJabxGgPkJd5mbWuR6ekJrJN2iUx7M/5BacOWu83anCUuNid2GLuh6/W8Z4F/aaEMPq
-         7bSg==
+        bh=QXT37WOe5vcecXFYqWiQ7mb2PHyWdIcKKS0prMl9eyw=;
+        b=m9rCcgxXNh3+WFkwhoaK6agQsTdKTe33h3Ao/G01fGX1ep/4hf4lVDAmLF5uUgQ4WN
+         Odu9BCgNIiHozh8uMBQeRc/VB4e5mgFE6pNsysp9bEKICFLQubRm0i30c8G/GrBskLab
+         zzBJV3yx6GY57BolMxrotjIlEWDkZsOnoGnJv2KC3/Dy8ikeS3zCaXJyFeOMKObH14UT
+         0K+8dJbOZX50mgLf16TMAGNwwiKfiyeycWh3rxgVqr6JDxDfM6vxUVJ4vSSQ6xFCStgQ
+         NmmSUzJsLdRvTHxzzEA/NZ7APPvT0rAsW5h2b40+S71totZLOaxDDXcx7yoB/aI3Wha9
+         ysJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T/MXoo71C1nB5kWH4xh0bd2JC/2ECQ/NC4zfcsHwEVY=;
-        b=J9oWbjfF4PwIm3jMds3J2X2AgmiWOqUMbAuCm0ZVL+683WMAwzN71lsoldRY+v52I1
-         3ibiETpT9gTe/O7ewd0Hcv29cmAlkQE3mvLw3PnK0wQaNl5sOPKp6Cc2aPykOFop6A1i
-         sZDVXlyUdE5iwOa1qBjpJZFqOF8d0gxMLvElCDeehA4RfKB7FcIA7HxP951jkyNHv1zQ
-         O3zBR1L1GNP7C3LdNswxSUa7LhZbkaP0RuH4axs+eMFJIuJ37lFsLIAht/xSdRpDOhhE
-         jmD9x6Xtkwzx/p5EcbkLFuXQUixk5tTzouZBbZZ3o3pfFJhS+YEmBhrWqfM0kLMDuKDc
-         zuow==
-X-Gm-Message-State: AOAM531vOOZn/T+tmsA8GAhxvo/jgtBV4+2gela99F+Oa0zMdrQWGS8M
-        982QbYiew76CVPqgU4bcqH5r/SohOmaT0Pc6DuWMfA==
-X-Google-Smtp-Source: ABdhPJwMfHmpDmvuzY2aUVtlzm+KQUU4kA8++i4qjkeQkREkeUxuQdU5F/CEDucL36y7B4tFldARssBKJdTPPTgafdo=
-X-Received: by 2002:ab0:30a8:: with SMTP id b8mr3288461uam.85.1623319338848;
- Thu, 10 Jun 2021 03:02:18 -0700 (PDT)
+        bh=QXT37WOe5vcecXFYqWiQ7mb2PHyWdIcKKS0prMl9eyw=;
+        b=rAJldBXwO5CohnUkm6w0+PQ3G4O4L2ERP96G4FT8tQRcn/BN4r+7oH2yk7WyuBQ5dT
+         HVrZe+SH0qCq9RgvzP9My9ZhaltxggKBAryaUzK3JLRPa4GWlCEw6aY44Rny27drCMgT
+         EalFHsw3KHNBvoJAKkB+pUAlxI1DaKEqvR9iO3ryWoBoj1XbgLfwg4gZXdDjVE+LyqOi
+         CMpcv9MCFqP9dAUpcGhsPbUn+EKiSmhepUNFl632wODYQUf9lo350GF66QnaAmWoXXi+
+         mvd0OgixpdploLTJ3xSZsQM+4BMcL4ZRhYI7gQ1vpd0WSldgjWLSzN/1hH0GD8E/jGZ3
+         ZN0w==
+X-Gm-Message-State: AOAM531Qq69Oc5hBE3UZ0VmkVBkLK+iAOdEegd4IiIAfUQXJtcb2UW0V
+        j0TUbfuzMVCAa/NZjrfqZjANMvFBdYTmb9jVe0ZfBQ==
+X-Google-Smtp-Source: ABdhPJx1maD661oEGHiYkMypZOqttrdrdiZa4uIA6g9MnCxJ2UQS9+4WCerRE/CSPP8ifFk+ldABKOcmeUjLvbTcQrE=
+X-Received: by 2002:a67:b24e:: with SMTP id s14mr3180118vsh.28.1623319532211;
+ Thu, 10 Jun 2021 03:05:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <b2c72097e5e8985e7fdd8e3eee66cdf43d1b65c0.1619710329.git.gitgitgadget@gmail.com>
- <20210603023304.344682-1-jonathantanmy@google.com>
-In-Reply-To: <20210603023304.344682-1-jonathantanmy@google.com>
+References: <ebd7b8380bf7aed84d23973a4809d1441aa21692.1619710329.git.gitgitgadget@gmail.com>
+ <20210603023709.345324-1-jonathantanmy@google.com>
+In-Reply-To: <20210603023709.345324-1-jonathantanmy@google.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 10 Jun 2021 12:02:07 +0200
-Message-ID: <CAFQ2z_N5B4FC0z8_EHH9msBewQEZ1iyzgWbi7GJB0h9ztD-kQw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] refs/files-backend: stop setting errno from lock_ref_oid_basic
+Date:   Thu, 10 Jun 2021 12:05:21 +0200
+Message-ID: <CAFQ2z_N--3UeLFg7acPX6pmvvoRs0oKyBUE3zebb05G4m7_a5Q@mail.gmail.com>
+Subject: Re: [PATCH 3/8] refs: make errno output explicit for read_raw_ref_fn
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
@@ -65,44 +65,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 3, 2021 at 4:33 AM Jonathan Tan <jonathantanmy@google.com> wrot=
+On Thu, Jun 3, 2021 at 4:37 AM Jonathan Tan <jonathantanmy@google.com> wrot=
 e:
-> > Errno is a global variable written by almost all system calls, and ther=
-efore it
-> > is hard to reason about its state. It's also useless for user-visible e=
-rrors, as
-> > it leaves no place to report the offending file and/or syscall.
->
-> I don't think this paragraph is useful.
+> Should we initialize "failure" to 0 here? As a reader, I would assume
+> that "failure" has the semantics of errno here, which upon success, may
+> or may not be set.
 
-Dropped.
-
-> This is probably written more clearly as follows:
->
->  No call to the static function lock_ref_oid_basic() is immediately
->  followed by an errno check, so stopping setting errno is safe. But as a
->  sanity check, lock_ref_oid_basic() is used in these functions:
->  - files_copy_or_rename_ref() - here, calls are followed by error() (whic=
-h
->    performs I/O) or write_ref_to_lockfile() (which calls parse_object() w=
-hich
->    may perform I/O)
->  - files_create_symref() - here, calls are followed by error() or
->    create_symref_locked() (which performs I/O and does not inspect
->    errno)
->  - files_reflog_expire() - here, calls are followed by error() or
->    refs_reflog_exists() (which calls a function in a vtable that is not
->    documented to use and/or preserve errno)
->
->  So it is safe to stop setting errno in lock_ref_oid_basic().
-
-I used some of the above text.
+Done.
 
 --=20
 Han-Wen Nienhuys - Google Munich
 I work 80%. Don't expect answers from me on Fridays.
 --
+
 Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
 Registergericht und -nummer: Hamburg, HRB 86891
+
 Sitz der Gesellschaft: Hamburg
+
 Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
