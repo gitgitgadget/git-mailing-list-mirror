@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 684A0C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64028C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:36:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48AB161285
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:35:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40C6F613D0
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 17:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231208AbhFJRhr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 13:37:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59326 "EHLO
+        id S230051AbhFJRiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 13:38:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230394AbhFJRhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 13:37:47 -0400
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35D4C061574
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:35:50 -0700 (PDT)
-Received: by mail-qk1-x74a.google.com with SMTP id c15-20020ae9e20f0000b02903aafa8c83e7so5441112qkc.21
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:35:50 -0700 (PDT)
+        with ESMTP id S231260AbhFJRiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 13:38:00 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D43C061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:35:55 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id u7-20020a6345470000b02902211e79e4c1so252734pgk.18
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 10:35:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=NpwZXJq8DBMnGDaVx99iP0vuVUAl9/3LA5o2JoLsmeY=;
-        b=SyXaoRzfwKL+EBOQGrW1b4mlaQYpP4fipZ5UwsXg9v7cHjpAOmZ+ANaIKNdfTzA6QS
-         A1doUoNrkZBECriks+dOw6LsGRJdrOVZPpyuFlHGmGe+vLUBUxJIyP+YteV8cxsNqsvy
-         q6j6W7QB24IY4ZFsJdVfVHNM45d1Z1DKYQ8PNIqBZ8kHWTnrvw80YR5JMbi6qAsNdXTw
-         e/PVOzfAXJM2EgqDbComtSr/BwkhGUzmr/VZZI0gwfo0z08a3ZqFniKM0O9hYrfK6YcW
-         6AvgfsBCmMaQOeL2hrXFn25kF0uizACAOSZE4LE7z97nYrQev39kBz3T2ROZVJTvy6Ya
-         C/jw==
+        bh=kWCum8+R5X7aFiGUltRP+KkPG9xmITm8ctbyykhxCMo=;
+        b=EIQl47Rn9KViruvvYvyqUsYhEExUpb+EFAd/hlgm8uU2OgSlMJMIBmKubQpxqEbmdB
+         dbLnal9yBreB2cSXFNNh7wIW4BWlA3rd7a5cLK7b7BQ5tCvYA3ggSKx2Nih7+WukGWpy
+         T+r/ML3YvvpVBR3I/KwBlq3CL2vfzHbwSVpUqljytmPoZq+Mg7RlluQVjgqcz3LF7sAe
+         h3rnSlRvJpU6ZSPQodYlyV13M5ONfRCYJY0+McinYYMhIkMr0LkIm8aMqpLScPDOIdVe
+         YTgHtz7kbaoh8Fam1qVCSp3khGDpnd1LRbuLVDa6LKC3nCfusZOKhGyTDLnSDGhLM086
+         BIvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=NpwZXJq8DBMnGDaVx99iP0vuVUAl9/3LA5o2JoLsmeY=;
-        b=sycATVMPQ3urXGP5aG1/ztpIhs0fDBXltvI988ZCmvv67fuohi8ycdfTEvmEwPK4FJ
-         h1C8ZGzk11A6DT8HUw2gcwOP++V8sFsTAAC/F+1rcFDcqEXs6cll9vIUejaOfr10fYdB
-         3NTo5YykTpn6KJN54/1S7yneNuSidF8m/vaCUoHU0y9jPwMu+ZCgMzlHacJgPYVyWLlP
-         okRQ6hjx21soNl6figkmQNcBXLc6Zc0F4rBJUDuJD0xbEvFwmmL9v0tgLl2BUFl9rZ6a
-         1LwgOSYdFaP5lN4JoP478EGuC6XXxf/NT473f3lwqpCh8/iAfzYo/OeLPr9g2rKke/GO
-         JncA==
-X-Gm-Message-State: AOAM533DVVJIZFpY2NiRHwkx+suxHChgc4I+pquZ5HWDoHifes0oS0RE
-        d45G3jUS9Gk8AZDNuGEb7MHKKNFtiz3DC5lSATXTaBH/HEkKY/OtjLAf1xO4B2pGGiRapJ6QgJo
-        6FDqCVIYS9sxZeqG7Xu/BxgmSHhF12ykRPfVHHKekdvA2mqPB9cPZkNL0/EABcpvs4FxzcCg1fM
-        vo
-X-Google-Smtp-Source: ABdhPJw/QvG50+fbl+r5/fG6R/n6VYCldfr8IGlKZCcg0vxuR/I7outoa+7OqS+tb7vpbxfScOAkmr4LVL67aKF94lXm
+        bh=kWCum8+R5X7aFiGUltRP+KkPG9xmITm8ctbyykhxCMo=;
+        b=ZHMduorA6J61BLFtGlHbJhoHSG1Dx6ndlQWA4v6D7rZlaveyeLItzPGV57UiAZvQDP
+         UWeGLEW9pFFMJ8dfiZoipNz2Jpdc/7opdg3w9j9DHs2zmIDGkcy4vasmBAJdbjaT5TjX
+         yZ7IprgqOvOSx1Brzx8XEO2GRHAIVx86zyZEcBLVhEeBThfDSw7IW/V6C9rerS0euHXN
+         Na89YUpzsEVSc78DTNsoKZvGioDqL85P1w+tLSNA0OA9DFSr6Mqy3IimK0ZKrnaUfdm4
+         p42p8cLM+1V3jLQRx2QHz98EUSriPne3sxAdTmUH50p606FoqI6ev2W7dxO5KWwo0d/h
+         0xLQ==
+X-Gm-Message-State: AOAM533ZOzjjYDEtNfh1leC2mRSTImRoH0Kp1UhTa3hO06QMAg6qdkLO
+        n78nBI7p9qrKND+K5Nya56TpBolm2bdfU63Rp8z6OdDrvfbCh4ZX8IM01rZ+gRR16C0W5HjiLWA
+        ItjRo8961Z6Bb6AyaYrmGOqoyX9YE5x9m3/ciCWma5f/9l5/4IG1XafcENj9r1OmVtn6YoO6kZY
+        MG
+X-Google-Smtp-Source: ABdhPJxqmdk6FHFL61B4F/ldrHvYWemyo5FO+GqihJGXia90NHtj5j+ryTGtIZxS62cmgNYG8Xh/qeTdCXA6NKWNVlsQ
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:c6a:: with SMTP id
- t10mr782635qvj.0.1623346549814; Thu, 10 Jun 2021 10:35:49 -0700 (PDT)
-Date:   Thu, 10 Jun 2021 10:35:40 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:ce02:: with SMTP id
+ f2mr4408899pju.45.1623346554484; Thu, 10 Jun 2021 10:35:54 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 10:35:43 -0700
 In-Reply-To: <cover.1623345496.git.jonathantanmy@google.com>
-Message-Id: <a52448cff2dcb6abbbf4a490e6fd38af461c1cbf.1623345496.git.jonathantanmy@google.com>
+Message-Id: <a6d73662b1908e3fcb7243bf30bc128e1c4440c0.1623345496.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1622580781.git.jonathantanmy@google.com> <cover.1623345496.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
-Subject: [PATCH v3 2/5] promisor-remote: support per-repository config
+Subject: [PATCH v3 5/5] promisor-remote: teach lazy-fetch in any repo
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com,
@@ -71,308 +71,208 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of using global variables to store promisor remote information,
-store this config in struct repository instead, and add
-repository-agnostic non-static functions corresponding to the existing
-non-static functions that only work on the_repository.
+This is one step towards supporting partial clone submodules.
 
-The actual lazy-fetching of missing objects currently does not work on
-repositories other than the_repository, and will still not work after
-this commit, so add a BUG message explaining this. A subsequent commit
-will remove this limitation.
+Even after this patch, we will still lack partial clone submodules
+support, primarily because a lot of Git code that accesses submodule
+objects does so by adding their object stores as alternates, meaning
+that any lazy fetches that would occur in the submodule would be done
+based on the config of the superproject, not of the submodule. This also
+prevents testing of the functionality in this patch by user-facing
+commands. So for now, test this mechanism using a test helper.
+
+Besides that, there is some code that uses the wrapper functions
+like has_promisor_remote(). Those will need to be checked to see if they
+could support the non-wrapper functions instead (and thus support any
+repository, not just the_repository).
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- promisor-remote.c | 98 ++++++++++++++++++++++++++---------------------
- promisor-remote.h | 22 +++++++++--
- repository.c      |  6 +++
- repository.h      |  2 +
- 4 files changed, 82 insertions(+), 46 deletions(-)
+ Makefile                      |  1 +
+ object-file.c                 |  7 ++----
+ promisor-remote.c             |  9 ++++----
+ t/helper/test-partial-clone.c | 43 +++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c          |  1 +
+ t/helper/test-tool.h          |  1 +
+ t/t0410-partial-clone.sh      | 23 +++++++++++++++++++
+ 7 files changed, 76 insertions(+), 9 deletions(-)
+ create mode 100644 t/helper/test-partial-clone.c
 
+diff --git a/Makefile b/Makefile
+index c3565fc0f8..f6653bcd5e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -725,6 +725,7 @@ TEST_BUILTINS_OBJS += test-oidmap.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-parse-options.o
+ TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
++TEST_BUILTINS_OBJS += test-partial-clone.o
+ TEST_BUILTINS_OBJS += test-path-utils.o
+ TEST_BUILTINS_OBJS += test-pcre2-config.o
+ TEST_BUILTINS_OBJS += test-pkt-line.o
+diff --git a/object-file.c b/object-file.c
+index f233b440b2..ebf273e9e7 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1570,15 +1570,12 @@ static int do_oid_object_info_extended(struct repository *r,
+ 		}
+ 
+ 		/* Check if it is a missing object */
+-		if (fetch_if_missing && has_promisor_remote() &&
+-		    !already_retried && r == the_repository &&
++		if (fetch_if_missing && repo_has_promisor_remote(r) &&
++		    !already_retried &&
+ 		    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
+ 			/*
+ 			 * TODO Investigate checking promisor_remote_get_direct()
+ 			 * TODO return value and stopping on error here.
+-			 * TODO Pass a repository struct through
+-			 * promisor_remote_get_direct(), such that arbitrary
+-			 * repositories work.
+ 			 */
+ 			promisor_remote_get_direct(r, real, 1);
+ 			already_retried = 1;
 diff --git a/promisor-remote.c b/promisor-remote.c
-index d24081dc21..1e00e16b0f 100644
+index 1e00e16b0f..c088dcbff3 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -5,6 +5,11 @@
- #include "transport.h"
- #include "strvec.h"
- 
-+struct promisor_remote_config {
-+	struct promisor_remote *promisors;
-+	struct promisor_remote **promisors_tail;
-+};
-+
- static int fetch_objects(const char *remote_name,
- 			 const struct object_id *oids,
- 			 int oid_nr)
-@@ -35,10 +40,8 @@ static int fetch_objects(const char *remote_name,
- 	return finish_command(&child) ? -1 : 0;
- }
- 
--static struct promisor_remote *promisors;
--static struct promisor_remote **promisors_tail = &promisors;
--
--static struct promisor_remote *promisor_remote_new(const char *remote_name)
-+static struct promisor_remote *promisor_remote_new(struct promisor_remote_config *config,
-+						   const char *remote_name)
- {
- 	struct promisor_remote *r;
- 
-@@ -50,18 +53,19 @@ static struct promisor_remote *promisor_remote_new(const char *remote_name)
- 
- 	FLEX_ALLOC_STR(r, name, remote_name);
- 
--	*promisors_tail = r;
--	promisors_tail = &r->next;
-+	*config->promisors_tail = r;
-+	config->promisors_tail = &r->next;
- 
- 	return r;
- }
- 
--static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
-+static struct promisor_remote *promisor_remote_lookup(struct promisor_remote_config *config,
-+						      const char *remote_name,
- 						      struct promisor_remote **previous)
- {
- 	struct promisor_remote *r, *p;
- 
--	for (p = NULL, r = promisors; r; p = r, r = r->next)
-+	for (p = NULL, r = config->promisors; r; p = r, r = r->next)
- 		if (!strcmp(r->name, remote_name)) {
- 			if (previous)
- 				*previous = p;
-@@ -71,7 +75,8 @@ static struct promisor_remote *promisor_remote_lookup(const char *remote_name,
- 	return NULL;
- }
- 
--static void promisor_remote_move_to_tail(struct promisor_remote *r,
-+static void promisor_remote_move_to_tail(struct promisor_remote_config *config,
-+					 struct promisor_remote *r,
- 					 struct promisor_remote *previous)
- {
- 	if (r->next == NULL)
-@@ -80,14 +85,15 @@ static void promisor_remote_move_to_tail(struct promisor_remote *r,
- 	if (previous)
- 		previous->next = r->next;
- 	else
--		promisors = r->next ? r->next : r;
-+		config->promisors = r->next ? r->next : r;
- 	r->next = NULL;
--	*promisors_tail = r;
--	promisors_tail = &r->next;
-+	*config->promisors_tail = r;
-+	config->promisors_tail = &r->next;
- }
- 
- static int promisor_remote_config(const char *var, const char *value, void *data)
- {
-+	struct promisor_remote_config *config = data;
- 	const char *name;
- 	size_t namelen;
- 	const char *subkey;
-@@ -103,8 +109,8 @@ static int promisor_remote_config(const char *var, const char *value, void *data
- 
- 		remote_name = xmemdupz(name, namelen);
- 
--		if (!promisor_remote_lookup(remote_name, NULL))
--			promisor_remote_new(remote_name);
-+		if (!promisor_remote_lookup(config, remote_name, NULL))
-+			promisor_remote_new(config, remote_name);
- 
- 		free(remote_name);
- 		return 0;
-@@ -113,9 +119,9 @@ static int promisor_remote_config(const char *var, const char *value, void *data
- 		struct promisor_remote *r;
- 		char *remote_name = xmemdupz(name, namelen);
- 
--		r = promisor_remote_lookup(remote_name, NULL);
-+		r = promisor_remote_lookup(config, remote_name, NULL);
- 		if (!r)
--			r = promisor_remote_new(remote_name);
-+			r = promisor_remote_new(config, remote_name);
- 
- 		free(remote_name);
- 
-@@ -128,59 +134,63 @@ static int promisor_remote_config(const char *var, const char *value, void *data
- 	return 0;
- }
- 
--static int initialized;
--
--static void promisor_remote_init(void)
-+static void promisor_remote_init(struct repository *r)
- {
--	if (initialized)
-+	struct promisor_remote_config *config;
-+
-+	if (r->promisor_remote_config)
- 		return;
--	initialized = 1;
-+	config = r->promisor_remote_config =
-+		xcalloc(sizeof(*r->promisor_remote_config), 1);
-+	config->promisors_tail = &config->promisors;
- 
--	git_config(promisor_remote_config, NULL);
-+	repo_config(r, promisor_remote_config, config);
- 
--	if (the_repository->repository_format_partial_clone) {
-+	if (r->repository_format_partial_clone) {
- 		struct promisor_remote *o, *previous;
- 
--		o = promisor_remote_lookup(the_repository->repository_format_partial_clone,
-+		o = promisor_remote_lookup(config,
-+					   r->repository_format_partial_clone,
- 					   &previous);
- 		if (o)
--			promisor_remote_move_to_tail(o, previous);
-+			promisor_remote_move_to_tail(config, o, previous);
- 		else
--			promisor_remote_new(the_repository->repository_format_partial_clone);
-+			promisor_remote_new(config, r->repository_format_partial_clone);
- 	}
- }
- 
--static void promisor_remote_clear(void)
-+void promisor_remote_clear(struct promisor_remote_config *config)
- {
--	while (promisors) {
--		struct promisor_remote *r = promisors;
--		promisors = promisors->next;
-+	while (config->promisors) {
-+		struct promisor_remote *r = config->promisors;
-+		config->promisors = config->promisors->next;
- 		free(r);
- 	}
- 
--	promisors_tail = &promisors;
-+	config->promisors_tail = &config->promisors;
- }
- 
--void promisor_remote_reinit(void)
-+void repo_promisor_remote_reinit(struct repository *r)
- {
--	initialized = 0;
--	promisor_remote_clear();
--	promisor_remote_init();
-+	promisor_remote_clear(r->promisor_remote_config);
-+	FREE_AND_NULL(r->promisor_remote_config);
-+	promisor_remote_init(r);
- }
- 
--struct promisor_remote *promisor_remote_find(const char *remote_name)
-+struct promisor_remote *repo_promisor_remote_find(struct repository *r,
-+						  const char *remote_name)
- {
--	promisor_remote_init();
-+	promisor_remote_init(r);
- 
- 	if (!remote_name)
--		return promisors;
-+		return r->promisor_remote_config->promisors;
- 
--	return promisor_remote_lookup(remote_name, NULL);
-+	return promisor_remote_lookup(r->promisor_remote_config, remote_name, NULL);
- }
- 
--int has_promisor_remote(void)
-+int repo_has_promisor_remote(struct repository *r)
- {
--	return !!promisor_remote_find(NULL);
-+	return !!repo_promisor_remote_find(r, NULL);
- }
- 
- static int remove_fetched_oids(struct repository *repo,
-@@ -228,9 +238,11 @@ int promisor_remote_get_direct(struct repository *repo,
- 	if (oid_nr == 0)
- 		return 0;
- 
--	promisor_remote_init();
-+	promisor_remote_init(repo);
- 
--	for (r = promisors; r; r = r->next) {
-+	if (repo != the_repository)
-+		BUG("only the_repository is supported for now");
-+	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
- 		if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
- 			if (remaining_nr == 1)
- 				continue;
-diff --git a/promisor-remote.h b/promisor-remote.h
-index 687210ab87..edc45ab0f5 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -17,9 +17,25 @@ struct promisor_remote {
- 	const char name[FLEX_ARRAY];
+@@ -10,7 +10,8 @@ struct promisor_remote_config {
+ 	struct promisor_remote **promisors_tail;
  };
  
--void promisor_remote_reinit(void);
--struct promisor_remote *promisor_remote_find(const char *remote_name);
--int has_promisor_remote(void);
-+void repo_promisor_remote_reinit(struct repository *r);
-+static inline void promisor_remote_reinit(void)
+-static int fetch_objects(const char *remote_name,
++static int fetch_objects(struct repository *repo,
++			 const char *remote_name,
+ 			 const struct object_id *oids,
+ 			 int oid_nr)
+ {
+@@ -20,6 +21,8 @@ static int fetch_objects(const char *remote_name,
+ 
+ 	child.git_cmd = 1;
+ 	child.in = -1;
++	if (repo != the_repository)
++		prepare_other_repo_env(&child.env_array, repo->gitdir);
+ 	strvec_pushl(&child.args, "-c", "fetch.negotiationAlgorithm=noop",
+ 		     "fetch", remote_name, "--no-tags",
+ 		     "--no-write-fetch-head", "--recurse-submodules=no",
+@@ -240,10 +243,8 @@ int promisor_remote_get_direct(struct repository *repo,
+ 
+ 	promisor_remote_init(repo);
+ 
+-	if (repo != the_repository)
+-		BUG("only the_repository is supported for now");
+ 	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
+-		if (fetch_objects(r->name, remaining_oids, remaining_nr) < 0) {
++		if (fetch_objects(repo, r->name, remaining_oids, remaining_nr) < 0) {
+ 			if (remaining_nr == 1)
+ 				continue;
+ 			remaining_nr = remove_fetched_oids(repo, &remaining_oids,
+diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
+new file mode 100644
+index 0000000000..3f102cfddd
+--- /dev/null
++++ b/t/helper/test-partial-clone.c
+@@ -0,0 +1,43 @@
++#include "cache.h"
++#include "test-tool.h"
++#include "repository.h"
++#include "object-store.h"
++
++/*
++ * Prints the size of the object corresponding to the given hash in a specific
++ * gitdir. This is similar to "git -C gitdir cat-file -s", except that this
++ * exercises the code that accesses the object of an arbitrary repository that
++ * is not the_repository. ("git -C gitdir" makes it so that the_repository is
++ * the one in gitdir.)
++ */
++static void object_info(const char *gitdir, const char *oid_hex)
 +{
-+	repo_promisor_remote_reinit(the_repository);
++	struct repository r;
++	struct object_id oid;
++	unsigned long size;
++	struct object_info oi = {.sizep = &size};
++	const char *p;
++
++	if (repo_init(&r, gitdir, NULL))
++		die("could not init repo");
++	if (parse_oid_hex(oid_hex, &oid, &p))
++		die("could not parse oid");
++	if (oid_object_info_extended(&r, &oid, &oi, 0))
++		die("could not obtain object info");
++	printf("%d\n", (int) size);
 +}
 +
-+void promisor_remote_clear(struct promisor_remote_config *config);
-+
-+struct promisor_remote *repo_promisor_remote_find(struct repository *r, const char *remote_name);
-+static inline struct promisor_remote *promisor_remote_find(const char *remote_name)
++int cmd__partial_clone(int argc, const char **argv)
 +{
-+	return repo_promisor_remote_find(the_repository, remote_name);
-+}
++	setup_git_directory();
 +
-+int repo_has_promisor_remote(struct repository *r);
-+static inline int has_promisor_remote(void)
-+{
-+	return repo_has_promisor_remote(the_repository);
-+}
- 
- /*
-  * Fetches all requested objects from all promisor remotes, trying them one at
-diff --git a/repository.c b/repository.c
-index 4878c297d9..a14074d964 100644
---- a/repository.c
-+++ b/repository.c
-@@ -11,6 +11,7 @@
- #include "lockfile.h"
- #include "submodule-config.h"
- #include "sparse-index.h"
-+#include "promisor-remote.h"
- 
- /* The main repository */
- static struct repository the_repo;
-@@ -261,6 +262,11 @@ void repo_clear(struct repository *repo)
- 		if (repo->index != &the_index)
- 			FREE_AND_NULL(repo->index);
- 	}
++	if (argc < 4)
++		die("too few arguments");
 +
-+	if (repo->promisor_remote_config) {
-+		promisor_remote_clear(repo->promisor_remote_config);
-+		FREE_AND_NULL(repo->promisor_remote_config);
-+	}
- }
++	if (!strcmp(argv[1], "object-info"))
++		object_info(argv[2], argv[3]);
++	else
++		die("invalid argument '%s'", argv[1]);
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index c5bd0c6d4c..b21e8f1519 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -46,6 +46,7 @@ static struct test_cmd cmds[] = {
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "parse-options", cmd__parse_options },
+ 	{ "parse-pathspec-file", cmd__parse_pathspec_file },
++	{ "partial-clone", cmd__partial_clone },
+ 	{ "path-utils", cmd__path_utils },
+ 	{ "pcre2-config", cmd__pcre2_config },
+ 	{ "pkt-line", cmd__pkt_line },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index e8069a3b22..f845ced4b3 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -35,6 +35,7 @@ int cmd__oidmap(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
+ int cmd__parse_pathspec_file(int argc, const char** argv);
++int cmd__partial_clone(int argc, const char **argv);
+ int cmd__path_utils(int argc, const char **argv);
+ int cmd__pcre2_config(int argc, const char **argv);
+ int cmd__pkt_line(int argc, const char **argv);
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 584a039b85..a211a66c67 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -604,6 +604,29 @@ test_expect_success 'do not fetch when checking existence of tree we construct o
+ 	git -C repo cherry-pick side1
+ '
  
- int repo_read_index(struct repository *repo)
-diff --git a/repository.h b/repository.h
-index 6fb16ed336..3740c93bc0 100644
---- a/repository.h
-+++ b/repository.h
-@@ -10,6 +10,7 @@ struct lock_file;
- struct pathspec;
- struct raw_object_store;
- struct submodule_cache;
-+struct promisor_remote_config;
- 
- enum untracked_cache_setting {
- 	UNTRACKED_CACHE_UNSET = -1,
-@@ -141,6 +142,7 @@ struct repository {
- 
- 	/* Configurations related to promisor remotes. */
- 	char *repository_format_partial_clone;
-+	struct promisor_remote_config *promisor_remote_config;
- 
- 	/* Configurations */
++test_expect_success 'lazy-fetch when accessing object not in the_repository' '
++	rm -rf full partial.git &&
++	test_create_repo full &&
++	test_commit -C full create-a-file file.txt &&
++
++	test_config -C full uploadpack.allowfilter 1 &&
++	test_config -C full uploadpack.allowanysha1inwant 1 &&
++	git clone --filter=blob:none --bare "file://$(pwd)/full" partial.git &&
++	FILE_HASH=$(git -C full rev-parse HEAD:file.txt) &&
++
++	# Sanity check that the file is missing
++	git -C partial.git rev-list --objects --missing=print HEAD >out &&
++	grep "[?]$FILE_HASH" out &&
++
++	git -C full cat-file -s "$FILE_HASH" >expect &&
++	test-tool partial-clone object-info partial.git "$FILE_HASH" >actual &&
++	test_cmp expect actual &&
++
++	# Sanity check that the file is now present
++	git -C partial.git rev-list --objects --missing=print HEAD >out &&
++	! grep "[?]$FILE_HASH" out
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
  
 -- 
 2.32.0.rc1.229.g3e70b5a671-goog
