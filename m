@@ -2,132 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DF94C47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD16C48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:31:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F04BA6135C
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:25:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4ABFA60FD8
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 10:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbhFJK1N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 06:27:13 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:34721 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229935AbhFJK1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 06:27:12 -0400
-Received: by mail-ed1-f44.google.com with SMTP id cb9so32389938edb.1
-        for <git@vger.kernel.org>; Thu, 10 Jun 2021 03:25:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6l0HNO6DbeKCSEWJxTX14GbLlxxnOWL86Y3ndUv4P5I=;
-        b=uu43C6PNPiIDGXlSxyA8zyfMMJ33IhniI72z1CXA4rCjxd+yoJDNVd2KfeU/w6gpCq
-         OMqc32rq4GAb02iEOVT9yCuiosX6ZdyYuWf3rbGv5x+dq4uPXNz4vD7HNiEe9V3mMHpm
-         nypqTCa7WRFKziJ6ookKlRkoi2C667UvYWTpBEe3gOtGzLG1e8GBF7iV/2SHDgev/AmZ
-         af3cezkk1xJD/1qNSEkyC/mCmjjeMcSFoQ8QJNXU0P1u8OxcgdC6MUdSMkqWNTPJSHBQ
-         XrpK0hmcjCdmZ3bQzxPmSoPldxRakkIfCeGXYvWORnUrMkR5bhF7oYiJ2ujFz9ZL5TL9
-         3fdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6l0HNO6DbeKCSEWJxTX14GbLlxxnOWL86Y3ndUv4P5I=;
-        b=LvQXgGkgNDMj0MjffXiK+1EeG5GWic+YDQgmL/3enPXIusrM4FkRB7uLkY/WeTi/uG
-         obkLSveBNKVDvmtdrHB9WcYcvrkGvdagRPybTRwMsOXMJ8TjBQGtgDqDLZTvdB8YX6cG
-         99zxUIJ1+zGeNCaEsW0E3xhH9/fB3LlRYaAdXmJpCkkrcB6XmW9xBd2u1WNANE0IyOEJ
-         v6S5mwJgKPfF1/EpZtVJdicaP7Ui9zPHfJgygJG7VwOcM2788Az5mMwFojVbPoge8kay
-         UoRu4GoTTYJfT85EseBZdjEAMLMVHCtQajjTz3pWIYaAaiy87w/bU9VTiXfrmb6fIJDc
-         ashA==
-X-Gm-Message-State: AOAM531p4fF5sG3uk3LAfq09VnMCl/4ivtEUEETCvOWebz9jxODnMg5l
-        9++3U6EzoHY1wB6hIXS4+7SCBPCXe3TCtxqxLSCeuhWPs94zcC1B
-X-Google-Smtp-Source: ABdhPJyVZyN4UNeRc8SHQdMwlrh55difVfR2zpyz/k0GqWAKz16YAe+yE/+M6Iimx+pWH+MVQ6CE1CEo/1t8TMscr4M=
-X-Received: by 2002:aa7:ca1a:: with SMTP id y26mr3897439eds.314.1623320655602;
- Thu, 10 Jun 2021 03:24:15 -0700 (PDT)
+        id S230169AbhFJKdh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 06:33:37 -0400
+Received: from mout.gmx.net ([212.227.15.19]:42779 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230035AbhFJKdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 06:33:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1623321092;
+        bh=7SLGt18NJ5VVamswmxDeAi1f7Fy5RLiFM4Uai7GilbM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Sre9cGEKU1e/9c9j4e5Ly5ZoCNqapfCJcsD5EQMuBC34pqOU+Y+UCGhABKzxY7ZtT
+         P2gXAyGItBPdQLz6he5Ld5VhQ4rBxJWGVEWi/tRD8MMSVtDK47oWy5RwnA9hygULCM
+         ZF6Z16va2VgVOvciViFg5G6bc8LdAGVAJUQEndRw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.14.142] ([89.1.213.18]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuDc7-1l3JBR0VcT-00uXXd; Thu, 10
+ Jun 2021 12:31:32 +0200
+Date:   Thu, 10 Jun 2021 12:31:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] multimail: stop shipping a copy
+In-Reply-To: <pull.977.git.1623313765122.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2106101230340.57@tvgsbejvaqbjf.bet>
+References: <pull.977.git.1623313765122.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 10 Jun 2021 12:24:04 +0200
-Message-ID: <CAPMMpog7bNNPm3suZKu6OppHA+KDYgCfmaxW4HqTAr7_tTVAPQ@mail.gmail.com>
-Subject: Windows: core.useBuiltinFSMonitor without core.untrackedcache -
- performance hazard?
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7fszZXGGmRHla/t5OU8DVbjovaVa9FvgrhqjVJg6a//vT3KgZ3x
+ CBsRnklnzDAq0sxf+HRenygA0izrTRuU6UTtOtNmpbzGABzCbFXQaG8ieVAtQX2kvPH4wZW
+ JzdUz/f+iDytZtEiAY8r20JtAdxLV8zgp4tkbGPfeoGjjFzZ7ZvtF67udRjARrOUcAzIsVK
+ SFd0HmbzESIduZXX9+Uuw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3Pe37iR2cBE=:Mtnf9NfY5EH8HVdv3n0zPz
+ cxtPog0Us0yzvIvGLI7TSc3ar+5Kh6+Xi/YDHnsDmN5DtN+IsG6EG6Q79qu9qGv+YPs+QeoPX
+ aMSD/IBi+zKrpWv28AfMSB9ZP52WXhMoWByMCZqrJl5eFcny99InGXPMvAczFjwQB1r8oh9ZP
+ 72MDSh58Y1N2G7rdkR1Za1uW9it6PQ1VH/wFm5GWWopLlrDnK1xm9DeyMmu3felVqoIV/htT5
+ gpwPF/lMbrJqc32GZpeRGP75B2oLjTF2AseIvCsHmkwjFTvb0bOFHPn0oClz/pssLwlafb5eG
+ x1wiDBPd0F+p5VTiM4c4FsO0rMq2/DZImCsbMgzQbCkqLIjr0f3kgJot8LrHpDeKPcUrQs2Gq
+ UX/80i+YepFkWgbojuU2iE527hqCfMgDOELgLtzjDQqAd3ZHLSkBT1SQa/ipYtpTNpSgWr1dO
+ EYjFaC8hIQzZuCyOlp+zWio/SfYgwbJ7V61Yw701K3+d1vE5tGr+zHdEv2OZbzwlP4FxBHrW2
+ WEp+/Fag3dDvrX6PF3IOAh6YrRpiAjs+7ctLOl2rVmVhmk0BKuyfF3IW3tRZm+/75IfijPJry
+ mLSeTugGnsAkGdz8I7UCXCAzrVOX8dOzZPUS2BIcNRmZaRxtcy5Jy2SUnvm/gMN9+BLUCCSeQ
+ 1l9MekjW0sTVKIMiYK9p98clY+KCGdNtWIUBzUsPEfuo6YWXsLXCdWXZkM0OhHo+m9AWDwzU5
+ ph3BK+Zops8RCDRgIpcpuGM5LAe5+FXtLK+WCbSHPFA5t/kax0nsgwsFjAYGw6jUkBhh5xzpN
+ MXQqDye9tfTLV8sT7ShwFLSSfGXrJuRqy+Fs8xLbADWAJKvuTYFJB+Ehnqqkcn9obX/WD87ZY
+ AnwJFBhrEXO6GXSnYFsdsHtgfRF2Sq0kLdA176jtEz+Qm3EsezVAHIDjs02HFaXmDZ0rc0tn1
+ SJk4rLioIbbK6sHynMh9+b7AMHU2IBtwDawbgoGCRXK7bionuICPk0HwAy+c9wfshgeTD/6qX
+ aD24c2VQmkIMVeQ0LlD/zzZbghga8dDG4dKr9uonENQ+zXcm/y3NZOvBDhWSujAidlStx4U9w
+ 10jZMEzsgV7XRVg/Te2J61jyac9/fQdz5iWgQIU1rHOyhr+wmbj+KMn2g==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+Hi,
 
-With the new "core.useBuiltinFSMonitor" support in the Windows
-installer, I think this subject is worth calling out explicitly (and
-my apologies if I missed prior discussion):
+On Thu, 10 Jun 2021, Johannes Schindelin via GitGitGadget wrote:
 
-TL;DR:
- - I believe "core.untrackedcache" should be enabled by default in
-Windows (and it does not appear to be)
- - If a user enables "core.useBuiltinFSMonitor" (eg in the installer)
-in the hopes of getting snappy "git status" on a repo with a large
-deep working tree, they will be *unnecessarily* disappointed if
-"core.untrackedcache" is not enabled
- - There is also a lingering "problem" with "git status -uall", with
-both "core.useBuiltinFSMonitor" and "core.fsmonitor", but that seems
-far less trivial to address
+>  contrib/hooks/multimail/README.Git            |   12 +-
 
-Detail:
+I should point out that this could easily get lost between all those
+deleted files... The diff looks like this:
 
-I just started testing the new "core.useBuiltinFSMonitor" option in
-the new installer, and it's amazing, thanks Ben, Alex, Johannes and
-Kevin!
+> diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimai=
+l/README.Git
+> index 044444245d09..c427efc7bd8e 100644
+> --- a/contrib/hooks/multimail/README.Git
+> +++ b/contrib/hooks/multimail/README.Git
+> @@ -1,15 +1,7 @@
+> -This copy of git-multimail is distributed as part of the "contrib"
+> -section of the Git project as a convenience to Git users.
+>  git-multimail is developed as an independent project at the following
+>  website:
+>
+>      https://github.com/git-multimail/git-multimail
+>
+> -The version in this directory was obtained from the upstream project
+> -on January 07 2019 and consists of the "git-multimail" subdirectory fro=
+m
+> -revision
+> -
+> -    04e80e6c40be465cc62b6c246f0fcb8fd2cfd454 refs/tags/1.5.0
+> -
+> -Please see the README file in this directory for information about how
+> -to report bugs or contribute to git-multimail.
+> +Please refer to that project page for information about how to report
+> +bugs or contribute to git-multimail.
 
-However, when I first enabled it, I was getting slightly *worse* git
-status times than without it... and those worse git status times were
-accompanied by a message along the lines of:
----
-It took 5.88 seconds to enumerate untracked files. 'status -uno' may
-speed it up, but you have to be careful not to forget to add new files
-yourself (see 'git help status').
----
-
-For context, this is in a repo with 200,000 or so files, within 40,000
-folders (avg path depth 4 I think?), with a reasonably-intricate set
-of .gitignore patterns. Obviously that's not "your average user", but
-I would imagine it matches "the target audience for
-'core.useBuiltinFSMonitor'" pretty well.
-
-After a little head-scratching, I recalled an exchange with Johannes
-from last year:
-https://lore.kernel.org/git/CAPMMpohJicVeCaKsPvommYbGEH-D1V02TTMaiVTV8ux+9z9vkQ@mail.gmail.com/
-
-I never did understand the relevant code paths in much detail, but the
-practical conclusions were:
- - Without "core.untrackedcache" enabled, git ends up iterating
-through the entire path structure of the working tree *even if
-"core.fsmonitor" (and now "core.useBuiltinFSMonitor") is enabled*,
-looking for untracked files to report
- - Even with "core.untrackedcache" enabled, if "core.fsmonitor" (and
-now "core.useBuiltinFSMonitor") is enabled, git iterates through the
-entire path structure of the working tree *single-threaded* when the
-"--untracked-files" mode is set to "all" (by config or command-line)
-
-Now, I imagine that addressing/improving these behaviors is very
-non-trivial, but the impact could be reasonably limited if:
- - core.untrackedcache were defaulted to "true", at least under
-Windows, at least when the installer is asked to set
-core.useBuiltinFSMonitor
- - The "It took N.NN seconds to enumerate untracked files" message
-were to include a hint about core.untrackedcache, at least when the
-"--untracked-files" mode is set to "normal".
-
-Final note: I personally would love to see "core.useBuiltinFSMonitor
-actually makes things slower, when --untracked-files=all is specified"
-behavior be addressed, because common windows git integrations or
-front-ends like Git Extensions or IntelliJ IDEA commonly use those
-options, and therefore "suffer" a performance degradation on at least
-some operations when core.useBuiltinFSMonitor is enabled.
-
-I don't know whether this is the right place to report Windows-centric
-concerns, if not, my apologies.
-
-Thanks,
-Tao
+Ciao,
+Dscho
