@@ -2,151 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A640AC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAAF3C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:24:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A236613E7
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:22:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEADF613E9
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 14:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbhFJOYv convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 10 Jun 2021 10:24:51 -0400
-Received: from mut-mta1-se01b-zose1-fr.yulpa.io ([185.49.22.247]:51147 "EHLO
-        mut-mta1-se01b-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230488AbhFJOYt (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Jun 2021 10:24:49 -0400
-X-Greylist: delayed 1181 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Jun 2021 10:24:49 EDT
-Received: from [185.217.155.54] (helo=mut-zose1-mta-hub-outweb01a-fr.yulpa.io)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:AES128-GCM-SHA256:128)
-        (Exim 4.92)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1lrLH0-000PD3-CJ; Thu, 10 Jun 2021 16:03:08 +0200
-Received: from localhost (localhost [127.0.0.1])
-        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id D567BC0EF8;
-        Thu, 10 Jun 2021 16:03:05 +0200 (CEST)
-Received: from mut-zose1-mta-hub-outweb01a-fr.yulpa.io ([127.0.0.1])
-        by localhost (mut-zose1-mta-hub-outweb01a-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 6Tk6-NHf6XoA; Thu, 10 Jun 2021 16:03:05 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id 2D1BEC0F06;
-        Thu, 10 Jun 2021 16:03:05 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
-Received: from mut-zose1-mta-hub-outweb01a-fr.yulpa.io ([127.0.0.1])
-        by localhost (mut-zose1-mta-hub-outweb01a-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id y78LomeJ_Fm2; Thu, 10 Jun 2021 16:03:05 +0200 (CEST)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id F4025C0EF8;
-        Thu, 10 Jun 2021 16:03:04 +0200 (CEST)
-Date:   Thu, 10 Jun 2021 16:03:04 +0200 (CEST)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Elijah Newren <newren@gmail.com>
-Message-ID: <1554066605.61418500.1623333784687.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <877dj22fly.fsf@evledraar.gmail.com>
-References: <pull.977.git.1623313765122.gitgitgadget@gmail.com> <877dj22fly.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH] multimail: stop shipping a copy
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Zimbra 8.8.15_GA_3980 (ZimbraWebClient - FF89 (Linux)/8.8.15_GA_3980)
-Thread-Topic: multimail: stop shipping a copy
-Thread-Index: 8UmyICAFRlDrwn25D7ougG9T9ll3Fw==
-X-Originating-IP: 185.217.155.54
-X-yulPa-Domain: mut-zose1.yulpa.io
-X-yulPa-Username: 185.217.155.54
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.217.155.54@mut-zose1.yulpa.io
-X-yulPa-Outgoing-Class: ham
-X-yulPa-Outgoing-Evidence: Combined (0.12)
-X-Recommended-Action: accept
-X-Filter-ID: Pt3MvcO5N4iKaDQ5O6lkdGlMVN6RH8bjRMzItlySaT/1V4CmmMTVf8FwWHPoeKulPUtbdvnXkggZ
- 3YnVId/Y5jcf0yeVQAvfjHznO7+bT5yQjexTtlmymV+xi79keHPxA7x/QEF6miwe6wqECmRy+8OG
- Nf1Fo2VTmfbm65KbNw51OzNTkEkyI1Jjcv0k345MsoCaIk/P6xeJoQi/AU+4AW4KbNAaaCvFi+lg
- tv0PeP/a0SZJ7ortTriB/Phu05/DCR0q1Z/I4eH9B1xR4YgM9xqU4slMuZzrs+tT2mKwxPnLjlV5
- cBkg2E15FOz6ftN7lYw140f3591IjYh259zyTCZUPGRkGZbm3/2UDupFLsWaJsvBnk+tAbmnYgF9
- 2FCsBcTaduYwulQTLJz9aeZvqiBM/UV5EAVEw6mkcmYRpOzmLK/QANIM7sX3L9bTb3c30Pt8ocdu
- zh57oiIh5VIJb1/+vIgka+4FOShOoZ3m7qaEUCviaS0t0WJXqjhsaw0IyyBw5hLCdgddneKYuFKS
- 4P9UJ754NhFEEOf6aAzYtTyyfxK4iKcUPX7JCeaCI9Nw1zQtLTNPdyKAqnXUTerx1YmSEp4iFuKA
- pilqBZWiJicirIuw/++O/o3churN542n8Nn/2TLlfz7ibiBnj9D8HfYtQLYQpwUf7KSftolpBstk
- V1u1ql12/tVG1nBSlza3BaBldjaj1+vhII7uaMy67bmXThWsKXvSCfd3222lYH703be02AN0SJxC
- n15qY5waTprKF3BtcOkgFWV817PeV60jiD6XqsJZtjQxlyCdsezWUITaTD7+rV1AhSY2qqjWhKHM
- ZMgZkLwzvpC4bhgo1w5u7MlMPcJdmszkw9cSAWscsO1ib7S1x+yVYDiaKSP0luEQowjaup0/Q2e/
- fMrB8U16fja4lA21sbHz5yJf4WvnDq/3bR0wrBvPnE07I0NKTh8D/fZeI9w8CWdjMuEcDiWqvXhJ
- chk5jfDCmPKlUENSOYE66SFhT6NVrQT/pWDnH2BItqYH/1C2S9VtzK9rbcrW1ENIxeYUVa6S/bQe
- GUMIPhNjaxV43BtKlykuwv4TafnCRpB1wyqTi749ASgh/Y/p/WbLuZFyVkpvagLXEg9+UQvDTilb
- OBqY+/Zon3xkUsl+Panl58ybCfWuwwt2PYUd1sHKnHeyYVXDFjxe3lbdkZRVQfEMBL65E83ZZjde
- lWbUYHSfWR4OS5PQAvw2OFk9SJqKJVt6zKpxPOqtgZg=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+        id S231321AbhFJO0R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 10:26:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230267AbhFJO0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 10:26:16 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8219EC061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 07:24:06 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id q5-20020a9d66450000b02903f18d65089fso11448420otm.11
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 07:24:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=xuwsWaV0NDVeu4cFrbTTw3NyZzn9jsPW2UbkO3BJNj4=;
+        b=QcguvgWb3jWRh9elJa71Di83bwRo2V04QXGV83d4S1HA84cCaBXKyVZjqZZiVCTQb9
+         pAa/2NI8bQ0Gs4P5geKQ5FErAunMu8TxsVHYImpX+Tk9Evtu4UlLeJdubfJvEBBVs8x1
+         4HQyKnFfSzUKk9xjm9iZ/N62BPZAyvXT+BsKgNDwW23wgmJJW1rMufenPWtp1HzURB8Y
+         28ZoAhMJVkVgrepr0MQ+MZI8zudauLGRhahO7+SelQBQhd01OYd+BuEf4gCxOWwkTsDx
+         JLpIy4aCArnwbSIGxHuK6bSv+v9d6rdkecpdvclUhFYRnyQ+Sc4jZj81Bi2mfXTC+dM7
+         6WKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=xuwsWaV0NDVeu4cFrbTTw3NyZzn9jsPW2UbkO3BJNj4=;
+        b=kV2jBrwV2KZcwg800vZUPvVdHB51ECOlRTnODUlgHVSg0tFn8fZF0G9CbRaD7m44V8
+         R7aEtllgVMZLbL+Zga3N7FdpdaG9gzCx4kVp7miWj22zdbEuI0zWoIOP2nAFdmvMtY9T
+         Ycp8fujLTA0P7lE6p9GEsRNidR16Y9YzeI08Ee+Wjbu7IyKOqtjmEgp2bhZrg9/kuY07
+         5RtZNtruW7QVInLii7gjyfJ19C3GKXADUMQUi/gORwX2FSEDNheKCQ83sG9ewaVkHxtB
+         JB/rjxBr+u8JtNOm+d4Ua7/Mj+sal0D/FM3nvgnpsA/XL8vEX+NDikjT+QAFjqbqZpkT
+         Yikg==
+X-Gm-Message-State: AOAM530k9Rn8DN+dNq9TVAqTLUxnoxWT7Qv6X3EnTXE93ROwtq9PlMxr
+        kQgkYrWkvO+yCca6PUUr8WQ=
+X-Google-Smtp-Source: ABdhPJwnOCDPhUk20MjC2RmbJgJ2Oki0Yy4iz0DnugOvpd57Uq8TzovuUf4VKaPs3GhyODo4fFF32w==
+X-Received: by 2002:a9d:1e4:: with SMTP id e91mr2621616ote.211.1623335045749;
+        Thu, 10 Jun 2021 07:24:05 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id z4sm651078otq.48.2021.06.10.07.24.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jun 2021 07:24:05 -0700 (PDT)
+Date:   Thu, 10 Jun 2021 09:24:03 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Nikhil Gupta <nikhilgupta2102@gmail.com>
+Cc:     git-packagers@googlegroups.com, Git List <git@vger.kernel.org>
+Message-ID: <60c22083b4131_b25b1208f6@natae.notmuch>
+In-Reply-To: <87sg1p24zc.fsf@evledraar.gmail.com>
+References: <f5487adb-b7dc-4f97-bca1-749701337759n@googlegroups.com>
+ <87sg1p24zc.fsf@evledraar.gmail.com>
+Subject: Re: Build errors when building git on MacOS 11 (x86-64) and for M1
+ macs
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ævar Arnfjörð Bjarmason" <avarab@gmail.com>:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> On Thu, Jun 10 2021, Johannes Schindelin via GitGitGadget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> > The multimail project is developed independently and has its own project
-> > page. Traditionally, we shipped a copy in contrib/.
->
-> > However, such a copy is prone to become stale, and users are much better
-> > served to be directed to the actual project instead.
->
-> Let's CC its maintainer / other people who've actively contributed to
-> it. I've taken the liberty to do that.
+> This is arguably a bug in git's Makefile in that we should have that
+> "-I." in an ESSENTIAL_CFLAGS variable or something, I can't think of a
+> scenario where git would compile without it.
 
-Thanks.
+If they are so essential we probably don't even need a variable, just
+put it directly into the $(CC) command.
 
-> It seems to me that the state is that we're on the 1.5.0 release, and
-> upstream hasn't cut a new release.
+-- =
 
-Yes. In practice, I am no longer a user of git-multimail.py (my use of Git
-moved from some self-hosted repo on a server accessible through SSH to some
-more black-box hosting like GitLab where I can't use it anymore), and I
-receive very few pull-requests and issues, so the project is essentially
-stalled. Not dead, but probably just good enough so no real evolution
-happen these days.
-
-> The upstream maintainer(s) are active contributors to git,
-
-Actually, I used to, but it's been a while since I contributed to Git. I've
-been busy with other stuff, and I'm struggling to find time to come back.
-
-Michael used to be the maintainer, but completely left the project after I
-took it over.
-
-> so the risk of this becoming stale seems low.
-
-This part is still true: sending the patch to Git is part of my release
-checklist, I'm unlikely to forget.
-
-That said, the benefit of keeping a copy in git.git is debatable, and
-probably low. I have no objection in removing it, i.e. applying Dscho's
-patch.
-
-> Having written a system in the past that made use of git-multimail.py
-> (and sourced it from git.git's copy) I'd think a better direction would
-> be to keep this and modify githooks(5) to actively recommend it over the
-> older and less featureful post-receive-email script.
-
-I'm all for recommending it in githooks, but this can be done by pointing
-to GitHub's URL instead of a local path. Actually the sample script could
-look like
-
-# Fetch git-multimail.py from https://github.com/git-multimail/git-multimail/
-# adapt and uncomment the following line:
-#exec /path/to/git_multimail.py
-
-Cheers,
-
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+Felipe Contreras=
