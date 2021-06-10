@@ -4,166 +4,170 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 382B3C48BDF
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 22:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4432C48BD1
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 22:32:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16A506135C
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 22:06:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C14B960231
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 22:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230298AbhFJWIn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 18:08:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47698 "EHLO
+        id S230396AbhFJWef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 18:34:35 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47708 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229941AbhFJWIn (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Jun 2021 18:08:43 -0400
+        by vger.kernel.org with ESMTP id S230103AbhFJWee (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Jun 2021 18:34:34 -0400
 Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B5A2260400;
-        Thu, 10 Jun 2021 22:06:15 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CB3E660400;
+        Thu, 10 Jun 2021 22:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1623362775;
-        bh=HdV+V7KWgp2U/L4xMowGnpMW1Ee+qA/8ZcY71DMtQbQ=;
+        s=default; t=1623364357;
+        bh=IqdPr32eIQu7dgA58qxBpQ2cC4O4AkUOAod1MUNwXzc=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=jMcBrqxIaBq8LQOYBSCX+EbWHnDcGzEsmvquYB29eIhwVbRUNR7ToIOARnrTpGEm3
-         kzb7yOCTeeyJoCg4WEis5Y4E8+A1CHMRw/pFbK4TjHj+ukmsCaHqXAs1gQtjAiDucJ
-         Iwno7dAr0qAmuGE2dJHD7Jx7CpCtX/JAlckZBYrTfrvAxbz5S1ElyF1K3vnHo+RQjb
-         0fSoRfqxIqQASCQ+T6FsASzc5eVGZNnANBuIs8Afbg6wUnPdTr39XbQtexErv3asmM
-         8wx9o8zu9pr421L2GOoH5WdCTg6FZiKsPbpfpm4/0UIrbp67mRgZ0slF7EtNuU/oVH
-         Y/xaZGpcXoY70CFXr/0xpmF1+EwAc0iDvR1YSD37Z37Kq3yg8tubv3X/JuCIwMGvAK
-         6TsO3n6oIjXRJyhUKvVSUfRjuFneERzLcFr2Wh7/VzNhFjEE5ONBo/0mHgV+fG14TB
-         yi99YmyaFKvM7sCNCX5x/lh8sXq1P7DkJQzgNZevNwSilnA+6ZQ
-Date:   Thu, 10 Jun 2021 22:06:10 +0000
+        b=Do/HHFoIPIoigf9Xbyzlu7fZ71h0n/m//5IsmH8+ArE1RILqlt1AVS7w7Cg1qzghU
+         C84k23KuCT1HhDYj26igPfL47t6hOsaYO2awLsEvgMdd4ituFIdUH4AAWoXChWuvXu
+         Oq60BNav6Jt0u2iLXIQvPo7RTDQFG98vqkLLHSMchgejx7PNwQxNkmL9qD/M06jkQw
+         FDHbu5ksw1ACaUUDpTVHBFvnwHlRmf2o0hihnPc/gQpENxw2GF7Fnt9pzLCPb0bB02
+         61R/to82wjvAjBoKBjw7b/FSKJdRVSwrsh2exwk4SfVO1dUhQ6CxVsn8Q6yGodhcBV
+         Kkef00Y/aLgeqpnmilJWgpdVO0LQQu7Voq+EA9evYlGDm75G3XwqZJU+6IPpgLlsG0
+         ik22GQGq/S8paAN88QCVkgQDPbUo4mW5mChXIeui3hChQ/+P+/pBzkfKrhMFzVdph0
+         OpQXh/Y1Q1Zu7eqCxxpDwYqEfmuxxtlp47tmYNfSt0EsKfNYuBg
+Date:   Thu, 10 Jun 2021 22:32:33 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
         jrnieder@gmail.com, emilyshaffer@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 4/4] CodingGuidelines: recommend singular they
-Message-ID: <YMKM0lVYjblbkK/I@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
         Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 0/4] Use singular "they" when appropriate
+Message-ID: <YMKTARn368Qzsqc2@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
         jrnieder@gmail.com, emilyshaffer@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>, Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Derrick Stolee <derrickstolee@github.com>
 References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <d2c079264955b3bd6c3a5ef77a9c3684206f8475.1623085069.git.gitgitgadget@gmail.com>
- <YL8X7PepIggpKlSl@coredump.intra.peff.net>
+ <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <87a6nz2fda.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hTgKnL0dKPCzIVKe"
+        protocol="application/pgp-signature"; boundary="s55KZqGV89kIJkIa"
 Content-Disposition: inline
-In-Reply-To: <YL8X7PepIggpKlSl@coredump.intra.peff.net>
+In-Reply-To: <87a6nz2fda.fsf@evledraar.gmail.com>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---hTgKnL0dKPCzIVKe
+--s55KZqGV89kIJkIa
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2021-06-08 at 07:10:36, Jeff King wrote:
-> On Mon, Jun 07, 2021 at 04:57:48PM +0000, Derrick Stolee via GitGitGadget=
- wrote:
+On 2021-06-09 at 15:44:59, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >=20
-> > If we use singular "they/them" pronouns instead of "he/him" or "she/her"
-> > pronouns, then we can avoid this congitive load on the reader.
-> >=20
-> > Using singular "they" is also incredibly efficient. Choosing a gendered
-> > pronoun is usually arbitrary between "he" or "she". Using constructs
-> > such as "he or she", "s/he", or "(s)he" are more complicated than
-> > singular "they".
+> On Wed, Jun 09 2021, Derrick Stolee via GitGitGadget wrote:
 >=20
-> In general, I do like the efficiency and readability of singular "they".
-> As a native speaker, I have no problem reading it, and I have little
-> sense that most of my native-speaker acquaintances would, either.
-
-I agree.  I'm very much in favor of singular "they".
-
-> I _do_ worry that it would be jarring or difficult to read for
-> non-native speakers (or perhaps native speakers who aren't in my circle
-> of acquaintances). There have been a few comments to that effect on the
-> list, but it's hard to consider that data and not anecdotes.
-
-I have heard these arguments, and as a someone who speaks two other
-languages, I'm sympathetic to the argument that this is a little tricky.
-For me, personally, I liken it to the French "on" (one), which can be
-used in many, but not all, places that "nous" (we) is used, to reflect
-the first-person plural, but with some slightly different shades of
-meaning.  This is a tricky part of the language and it's a hard one to
-get right, but it's also extremely commonly used, so it's nearly
-obligatory to be comfortable with it in order to be reasonably
-conversant in French.
-
-Similarly, singular "they" is extremely common in informal written
-English (e.g., texts and tweets) and nearly ubiquitous in spoken
-English, where people use it routinely without thinking[0].  So while I am
-in favor of making things easier for non-native speakers, this is so
-common in actual usage that it's practically unavoidable and it's a
-feature of the language that almost every speaker will be exposed to and
-they will need to be comfortable with it to function effectively.
-
-Given this context, I'm comfortable with adopting this change.
-
-> One thing that gives me some comfort is your research here:
+> > Updates in v2
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> >  * Some edits were removed because they were in contrib/ or
+> >    Documentation/howto/ and these are now listed as exclusions in the
+> >    message of Patch 4.
 >=20
-> > Perhaps due to similar reasons, official style guides have changed their
-> > stance on singuler "they" in recent years. For example, the APA style
-> > guide changed their official recommendation in 2019 [1]. The MLA
-> > handbook also references helpful ways to use singular "they" [2]. While
-> > not fully endorsing it, the Chicago Manual of Style has removed its
-> > blanket ban on singular "they" [3] (the previous recommendation was to
-> > only use "it" as a singular non-gendered pronoun).
-> >=20
-> > [1] https://apastyle.apa.org/blog/singular-they
-> > [2] https://style.mla.org/using-singular-they/
-> > [3] https://libraries.indiana.edu/chicago-manual-style-singular-pronoun=
--they
+> Thanks.
 >=20
-> I don't know to what degree those style guidelines take into account
-> non-native speakers. But they at least provide a sense that this style
-> is in wide-ish use. And probably growing use, as well, considering that
-> they have changed recently. So even if it may be surprising to some
-> readers at first, I hope it may become less so as time goes on and
-> projects (like ours) make it more commonplace.
+> >  * Several recommendations to improve the edits in the documentation and
+> >    code comments were incorporated. Those who recommended these edits a=
+re
+> >    credited with "Helped-by" tags.
+>=20
+> I think a v2 is a bit premature with all the active discussion on the v1
+> thread, a lot of which isn't addressed by the v2 or this CL, e.g. many
+> point I[1] and others raised.
+>=20
+> My main objection of extending this to commit messages and thus making
+> e.g. non-native speakers be on their toes when contributing to the
+> project is gone, so that's good.
+>=20
+> I'm still not in favor of this change because I think an active
+> recommendation like "Refer to an anonymous user in a gender neutral way"
+> probably isn't needed if we simply document that our preferred prose is
+> to avoid the issue entirely, which is the case in most of our
+> documentation.
 
-I agree that this is becoming more common, not less, and that it is
-gaining acceptance by many authorities.
+I agree that in many cases in technical writing that the passive voice
+(or another technique) may be preferable.  For example, this selection
+about O_TRUNC from open(2):
 
-> So I think this is a reasonable style suggestion to put in our
-> guidelines.
+  If  the  file already exists and is a regular file and the access mode
+  allows writing (i.e., is O_RDWR or O_WRONLY) it will be truncated to
+  length 0.  If the file is a FIFO or terminal device file, the O_TRUNC
+  flag is ignored.  Otherwise, the effect of O_TRUNC is unspecified.
 
-I agree with this as well.
+Who is truncating it?  Who is ignoring it?  Who is not specifying it?
+In all three cases, the specific actor is unimportant or irrelevant, and
+we're better off using the passive voice here than trying to enumerate
+the actor.
 
-[0] I have noticed this to be true of non-native but fluent colleagues,
-for example.
+> The below for-show patch[2] shows an alternate approach that I think is
+> a better direction than this series.
+>=20
+> It shows how some of the s/he|she/they/g search-replacements you did
+> could IMO be better if we simply reduced the amount of prose, e.g. in
+> strbuf.h changing:
+>=20
+>     passes a context pointer, which can be used by the programmer of the
+>     callback as she sees fit.
+>=20
+> To:
+>=20
+>     passes a `void *context` to the callback `fn`
+
+In many cases, saying less is better, I agree.  If we don't need to
+refer to a human being, then we don't need to consider any pronouns for
+that human being.  If we communicate things more simply with fewer
+words, then that's clearly better overall for everyone involved.
+Nobody's reading documentation for pleasure, after all.
+
+I do think that the recommendation that we refer to an anonymous user in
+a gender-neutral way still stands, though.  Sometimes we will need to
+refer to the user or another human actor and that will be the most
+natural way to express the idea, so we should use gender-neutral
+language to do so.
+
+So roughly here, I'm in favor of both approaches.
 --=20
 brian m. carlson (he/him or they/them)
 Toronto, Ontario, CA
 
---hTgKnL0dKPCzIVKe
+--s55KZqGV89kIJkIa
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMKM0QAKCRB8DEliiIei
-gaa/AQClulP6nOxpO2tHoyNkStncmGwlgbXt5jMcRdvYEioAVgEA80k50hZ0Ed9i
-f552hCesHmI3YKQyhxmPe6rJUREk6A0=
-=oyHX
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMKTAAAKCRB8DEliiIei
+gSvBAQCBEwF9LASFq2kyQjh/7G5KOgMaauHKOuIl45DF6MpsKwD/SsWFi4hK0nU7
+643SyTQ9Cx4wSKoivCdErMeKknr3qAk=
+=ln/8
 -----END PGP SIGNATURE-----
 
---hTgKnL0dKPCzIVKe--
+--s55KZqGV89kIJkIa--
