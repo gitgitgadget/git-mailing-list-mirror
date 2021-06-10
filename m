@@ -5,78 +5,79 @@ X-Spam-Level:
 X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA8CC47094
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31E86C47094
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:45:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54D7560C40
-	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:43:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16A89613E3
+	for <git@archiver.kernel.org>; Thu, 10 Jun 2021 09:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbhFJJpm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 05:45:42 -0400
-Received: from mout.gmx.net ([212.227.15.15]:47497 "EHLO mout.gmx.net"
+        id S230171AbhFJJrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Jun 2021 05:47:32 -0400
+Received: from mout.gmx.net ([212.227.15.15]:40067 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229895AbhFJJpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 05:45:40 -0400
+        id S229990AbhFJJrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jun 2021 05:47:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1623318222;
-        bh=VZ7n6ppX0Ar8/Pui8OQMnBgH9KphL3EWkaH0LOJdz10=;
+        s=badeba3b8450; t=1623318329;
+        bh=2IsgQtFkcHr1WJrZukdHgCOVbs7WnxRsrs9mIIjT2MM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=H6MLg/Eco1Sh73wTXHit8tKZwN93fKggP8qBzeIsjSJ3rw/KOvkq5r35lFswKn/7s
-         Ynhgrctpr4qedLZaEwpwe6UGaMWQX+LZYMMUPzfk6+vR5bs4dQOjgrxFiCPZQpHQtv
-         6kL3GfW5vmDc8hf2XyWP+8A3kdV5yFI2+DW8eW/w=
+        b=dGYiPUogNDYYXGj/6Xkjg9TQugo9C7Oy8oZdA2iGNkbNRiwxNBUTAMZtUxMORKR9l
+         c/l+auMtgO7UeMElDOTQSivM5VqsQw6LV7L6dA9V2Uwn8Mz+CMbK3QGzVnAS1BLnMq
+         cej0VN5w4aRVC/ti0jK45lLisObPa15Zcod8j8vg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.14.142] ([89.1.213.18]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M26rD-1ltC6B1tDF-002WGN; Thu, 10
- Jun 2021 11:43:42 +0200
-Date:   Thu, 10 Jun 2021 11:43:40 +0200 (CEST)
+Received: from [172.24.14.142] ([89.1.213.18]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnJhO-1lRs7R1Y8q-00jMH1; Thu, 10
+ Jun 2021 11:45:29 +0200
+Date:   Thu, 10 Jun 2021 11:45:27 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
-        Danh Doan <congdanhqx@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
         Matthew Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH 0/3] Make CMake work out of the box
-In-Reply-To: <6a9150ca-5c1a-1874-5f8b-35187f197d47@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2106101140590.57@tvgsbejvaqbjf.bet>
-References: <pull.970.git.1622828605.gitgitgadget@gmail.com> <6a9150ca-5c1a-1874-5f8b-35187f197d47@gmail.com>
+Subject: Re: [PATCH v2 0/3] Make CMake work out of the box
+In-Reply-To: <xmqqpmwywl2z.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2106101144050.57@tvgsbejvaqbjf.bet>
+References: <pull.970.git.1622828605.gitgitgadget@gmail.com>        <pull.970.v2.git.1622980974.gitgitgadget@gmail.com> <xmqqpmwywl2z.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3tbqDgJCZLD8jX3nKBDMp2tYjbaF9digu7IQgt9RU0c3x6q0sND
- FG8CC34FW9I96IedMpjVxRza20L2QJ5t39sts/aLd558DWp17594D1mmmR+dMp/ZUCsycie
- OsX5hPv0f9T2LimvWszbjpdPrbow+dw61L//25RRrt3hy268R/REtOm59x9EL553R0GfVXX
- /ElNuI1Z97d4Blwekt4qg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Wu2uh/C8uGc=:iRfSfP1tn/gX+lhdGz0VFK
- 6n8xLO0eNiS4nLIcsbfE0IQQPxWz0kLI5+YX/ey8KcOWChUzrn8da1gD/XLJzt2+bzuHwQeQl
- 5VJQH6lewZxhQiAtS6cqjdU8GwhccAUFNr3krYKvPimr39qPLsLWP+4RrEtuf3WjhgtI82vOG
- zreJsi0jErsfEi4T7jSe1Nko6VbOKlL988KyX5Z2LPKuQNnV65p+gLHSrFJ6ZcXVloDV6eJuj
- eww0gsjk02w3f6dharnf01N7bmmTZWwqQVIrTkfnJxRzy+9L6QvmxlM68EJ/cc+qXvnzKltcO
- aE0ug0SDlnM/sC8Di6u5A2nShArRcI4Y3iVYGUyvIGCIHzESnDg5zDiHPacXki7O7kKRONs1e
- gix8nmLzXE97H18YHqFpilTAkty34EaIo/9OcsxDCX41bziOcoCTuHZ4ipz4FUc9udkaDTNXv
- ljK4qhqcoueVFO4cte/BbtLKIkt0rNmgqv8q+BdgQz/uD77kM+Ur7HN89lj+o/SeCZ/yMgzMu
- KDkzn0eYdNIzPBMq9lfBHAEPY3cVZJ72Go9QOYyBnF15c2PvVP36XJpr8D4REpOA7pEb4WDBK
- HuuPhsTeyKJuVOlB1pufvrlwB8vs58kFmTZV8iloXmmseYIYe4BhWRhs++w5lNhgn2xYvVDGS
- pNzi4EcaOTwHdw3sk9RyRFKhjQnm7i9rl2SuDt7TdhIP+QY6rdOgY+PkUomzQ0iF8/z1hcnwt
- wODgzTTN5pwYHBnqdpPQW/3cyMDRGHwDL7cmKf/kslowkzkOCnz4HvvrfzJkD08KrIEeY4Pdp
- SFlKkKiFnGF28WLaY6TUiRhUB2JyToYja2fEoa8MIX6pz9iWzHWY4zwvOr2iO5NxJ2kNLTOmQ
- wnMnTA/kaCfdjo5ElozNeTSi4CpBwgHRxFLpzfhf59jl7+s/r1Me1R97v0a7j6xLdb28BoMqW
- PJ00qsQhXjgZxVp5ua3wlaUZAxzh7MKtGsVCblFD7AeLnjX+ro4Ofn7b+FrsxM1Q1oW3bno/z
- aPjefI+gY3GKtO2Li1aY3XkH0VLtFITLiMB1XjSA0H7sOwWlLUNjRh6IZP03UUai6vhBvwmUR
- asUWi4MzFK2mo5RN775TqhPyKYIXvBbLhwf4zY1cbznYnjmg/d7cEZ82w==
+X-Provags-ID: V03:K1:n9xRCqbr2LPnNNJ8HNE1OMbnx76swVlmbSOQscxM7H0mG0VkAP9
+ SOtQ0QNHVMRtlogMahOF522hq9C2GDXe/ivUiYXGYDURutUZLo8lRDU1TbWLsMVYSGsAZ3k
+ gj4SDtmR5SINWL60NUbxSSJ2k9d0uoOFvVv/+LWjfHDoCoOdBnHRN6f+Vgm1OVkx9C0lZjU
+ lmTfDIRq/p9qz5prdxTEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6OlnzgoY+z0=:2qxjXDageHT8SkUNwLD5b/
+ 6oTGB/yO9/5Mn7fT+sbchvuS/SC32Qdtp/T+PFrjim/S7xmj9lYJSEy5xMotmwquQv3rYNCxM
+ gOL4le3IXlVOwxPJcrHOZHOy2c1nfcMNUJRGzPPbLurgf0dIF8g/AnUX4P6cUFlZVpPXbzFbL
+ jhz13OmXKjR1knI11OoZpHiHToMARIw77fIBXddkfIeB7enDC6+dEg0WBgAyvmdLJBLZ9X5f8
+ mVuK38vbbrnY/7m2j3tyRv0IMO1eBOs1xnhJ0LZ+UKnJknphjGOOxVB7O7/yb+FEZ5/hyrxop
+ a+kxGs/1yg/e8Dpz19kRPvGTwYD7bAl1OxEbfIa/4ryuQaJnujd1vyd6Jdm3csj+64U23wY3U
+ EDYxKGGTV/a+EJV2EPpfFddzX7ytfzH87HHERAeoIZ1U5i673pLLZZGq6US245GhLYhG02gkN
+ AJItCfH0JDb7ZnoOwwyJIErFaW6BjTLPGnqDXHPK2xwSQj3vJBQhZd1Bdbd/+oaoxXWXj23sD
+ KjYwf3KCqjEBuRckJyqnXR6jS2MwwKfXGeJO0WU5Ukqz10PxM8/aP+3K+1JGeop2+Tz/u0qz0
+ szz5UXoZDsHWBR3nww5JHtyxq9QyFQJDzENg7LYDoa35bxovhy4rN8Rvj2PESqWHN14S8dWoO
+ g9t5QGOZGbWXKXmhDSZbXVAwxTreQDuBIEMyXfj4W8DTRqu09cxXGsb1JnERyo4yWwa+0EI/e
+ Lur6yLm1YJzVegzWxFWrqV27Knw+Hu0HtnPDPQWybigX3VTI8gjG+Hm/6sYsg9++PjmZ/muQp
+ dCyT4V8TOOcc8bVe7miot7RKJy1w1H+6enK7I3O/FMrqCPfwl/i956LPvlqxh3QA1UiBciAAA
+ WoR4u+LptcpMZB54zTKJ+sU1poUZBeVKIKaJ0FeRD0iChRuWS7NV/sOwNoRvtkWh0QtqnoUka
+ 5JtTxDLjsWVI6KQDCum9RlXlO5MduoU9Vl8rLp+KGGw7YizqfzdR74aBNi6qCcWHpM+v2MueE
+ ltlLEBnfc4ERL1jTW+JUdqJWiSj9fLi21FnpQOc9mJCFK8Oq100EhmXLYwYXdml5Js0SNVBmg
+ tb6MVOqPocRyCmIYL24PIyaPHhB7mHSc2qC1Ue/3nx5l4wSHQpoeuHmQQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-On Sat, 5 Jun 2021, Bagas Sanjaya wrote:
+On Mon, 7 Jun 2021, Junio C Hamano wrote:
 
-> On 05/06/21 00.43, Matthew Rogers via GitGitGadget wrote:
+> "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
 > > This pull request comes from our discussion here[1], and I think these
 > > patches provide a good compromise around the concerns discussed there
 > >
@@ -84,32 +85,64 @@ On Sat, 5 Jun 2021, Bagas Sanjaya wrote:
 > > https://lore.kernel.org/git/CAOjrSZusMSvs7AS-ZDsV8aQUgsF2ZA754vSDjgFKM=
 Rgi_oZAWw@mail.gmail.com/
 > >
-> > CCing the people involved in the original discussion.
+> > CCing the people involved in the original discussion. cc: Philip Oakle=
+y
+> > philipoakley@iee.email cc: Sibi Siddharthan
+> > sibisiddharthan.github@gmail.com, cc: Johannes Schindelin
+> > johannes.schindelin@gmx.de, cc: Danh Doan congdanhqx@gmail.com
+> >
+> > Matthew Rogers (3):
+> >   cmake: add knob to disable vcpkg
+> >   cmake: create compile_commands.json by default
+> >   cmake: add warning for ignored MSGFMT_EXE
 >
-> This focused on improving CMake support, especially on Visual Studio, ri=
-ght?
->
-> Then so we have three ways to build Git:
-> 1. plain Makefile
-> 2. ./configure (really just wrapper on top of Makefile)
-> 3. generate build file with CMake
->
-> If we want to support all of them, it may makes sense to have CI jobs th=
-at
-> perform build with each options above.
+> I am neither cmake nor windows person, so I'll queue this as-is and
+> wait for the stakeholders to chime in.
 
-We already exercise the plain Makefile plenty, and the CMake-based build
-using Windows (in the `vs-build` job in `.github/workflows/main.yml`).
+As long as the CI builds pass, I am in favor of integrating the patch
+series.
 
-I do not see that it is worth spending many electrons exercising the
-`./configure` way, seeing as the preferred way to build Git is by using
-the `Makefile` directly.
+> I did wonder if we want this to be applicable to the maintenance
+> track for 2.31, though.  There is a textual conflict with the
+> addition of SIMPLE_IPC that happened during 2.32 cycle, which is
+> easily resolvable.
 
-And our CMake configuration only really works on Windows, the attempts to
-get it to work on Linux were met with less enthusiasm, seeing as the
-`Makefile` approach is the recommended (and supported) one.
+If it isn't much work, sure. But I would think that developers who want to
+build using Visual Studio really should stay on newer branches.
 
-tl;dr I don't think we need to augment our CI jobs as suggested.
-
-Ciao,
+Thanks,
 Dscho
+
+> I am tempted to queue a version of these three patches rebased on to
+> 'maint' after making sure that the result of merging that into
+> 'master' is byte-for-byte identical to applying these three patches
+> directly on to 'master'.
+>
+> The range-diff looks like the attached.  Thanks.
+>
+> 1:  546c49cc88 ! 1:  585b7ca371 cmake: add knob to disable vcpkg
+>     @@ contrib/buildsystems/CMakeLists.txt: endif()
+>       	if(NOT EXISTS ${MSGFMT_EXE})
+>       		message(WARNING "Text Translations won't be built")
+>       		unset(MSGFMT_EXE)
+>     -@@ contrib/buildsystems/CMakeLists.txt: file(APPEND ${CMAKE_BINARY_=
+DIR}/GIT-BUILD-OPTIONS "X=3D'${EXE_EXTENSION}'\n")
+>     - file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT=3D'$=
+{NO_GETTEXT}'\n")
+>     +@@ contrib/buildsystems/CMakeLists.txt: file(APPEND ${CMAKE_BINARY_=
+DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT=3D'${NO_GETTEXT}'\n"
+>       file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX=
+=3D'${RUNTIME_PREFIX}'\n")
+>       file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON=3D'${=
+NO_PYTHON}'\n")
+>     + file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SUPPORTS_SIMPLE=
+_IPC=3D'${SUPPORTS_SIMPLE_IPC}'\n")
+>      -if(WIN32)
+>      +if(USE_VCPKG)
+>       	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=3D\"$PATH=
+:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+> 2:  efa8681a22 =3D 2:  1cba2f9bd1 cmake: create compile_commands.json by=
+ default
+> 3:  ceeca2bc0d =3D 3:  7824e74976 cmake: add warning for ignored MSGFMT_=
+EXE
+>
