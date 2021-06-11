@@ -2,84 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3458DC4743D
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 03:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F74FC4743D
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 04:31:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B5646023C
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 03:52:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00D1F60231
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 04:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231416AbhFKDyK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Jun 2021 23:54:10 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51227 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230329AbhFKDyK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jun 2021 23:54:10 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E4E70133874;
-        Thu, 10 Jun 2021 23:52:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jahxZuFIaz+0r/ZWtBpMsW4kgGQQcTDOzxsUKn
-        LY56k=; b=iENap9P3VIVMOqgFTXHZroUtvhxWPm/jmhBZ6WeJh7tdhACMd5B87I
-        og46UOi/U3dGXU+3FuUTlTH8LnZqWkR63D1l1Nazj9rkyZ26hJdEqu7TTfjyXpAS
-        SstZ7Ay/8SXP2SbUuPLtuj5RAHo9kZ50yLSIBat4Cn39iYOmHN8hY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DDB1C133873;
-        Thu, 10 Jun 2021 23:52:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 35A91133872;
-        Thu, 10 Jun 2021 23:52:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] add_pending_object_with_path(): work around "gcc -O3"
- complaint
-References: <YMIOY6Hp6//yGrFm@coredump.intra.peff.net>
-        <YMIPb+9e2PtaLZhl@coredump.intra.peff.net>
-Date:   Fri, 11 Jun 2021 12:52:08 +0900
-In-Reply-To: <YMIPb+9e2PtaLZhl@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 10 Jun 2021 09:11:11 -0400")
-Message-ID: <xmqqzgvx3vo7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 660B1C2A-CA68-11EB-B4AD-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+        id S230281AbhFKEdP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 00:33:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34130 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230332AbhFKEdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 00:33:09 -0400
+Received: from mav.lukeshu.com (mav.lukeshu.com [IPv6:2001:19f0:5c00:8069:5400:ff:fe26:6a86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D30C061574
+        for <git@vger.kernel.org>; Thu, 10 Jun 2021 21:31:12 -0700 (PDT)
+Received: from lukeshu-dw-thinkpad (unknown [IPv6:2601:281:8200:42e:4e34:88ff:fe48:5521])
+        by mav.lukeshu.com (Postfix) with ESMTPSA id 85F0A80590;
+        Fri, 11 Jun 2021 00:31:10 -0400 (EDT)
+Date:   Thu, 10 Jun 2021 22:31:09 -0600
+Message-ID: <877dj16n02.wl-lukeshu@lukeshu.com>
+From:   Luke Shumaker <lukeshu@lukeshu.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
+        "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] subtree: fix the GIT_EXEC_PATH sanity check to work on Windows
+In-Reply-To: <xmqqim2l5ghj.fsf@gitster.g>
+References: <pull.978.git.1623316412.gitgitgadget@gmail.com>
+        <a91ac6c18938116c4a74e19466da456b67376fa5.1623316412.git.gitgitgadget@gmail.com>
+        <87bl8d6xoq.wl-lukeshu@lukeshu.com>
+        <xmqqim2l5ghj.fsf@gitster.g>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/27.2 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, 10 Jun 2021 19:37:12 -0600,
+Junio C Hamano wrote:
+> Luke Shumaker <lukeshu@lukeshu.com> writes:
+> 
+> >> +if test -z "$GIT_EXEC_PATH" || {
+> >> +	test "${PATH#"${GIT_EXEC_PATH}:"}" = "$PATH" && {
+> >> +		# On Windows, PATH might be Unix-style, GIT_EXEC_PATH not
+> >> +		! type -p cygpath >/dev/null 2>&1 ||
+> >> +		test "${PATH#$(cygpath -au "$GIT_EXEC_PATH"):}" = "$PATH"
+> >
+> > Nit: That should have a couple more `"` in it:
+> >
+> >     test "${PATH#"$(cygpath -au "$GIT_EXEC_PATH"):"}" = "$PATH"
+> >
+> > But no need to re-roll for just that.
+> 
+> Does the nit purely cosmetic, or does it affect correctness?  I'd
+> assume the former, as it would not make sense to say "no need to
+> reroll" if leaving it as-is would mean a breakage, but trying to
+> make sure.
+> 
+> Thanks.
 
-> On Thu, Jun 10, 2021 at 09:06:44AM -0400, Jeff King wrote:
->
->> We can work around this by replacing our "did we hit the trailing NUL"
->> subscript dereference with a length check. We do not even have to pay
->> the cost for an extra strlen(), as we can pass our new length into
->> interpret_branch_name(), which was converting our "0" into a call to
->> strlen() anyway.
->> [...]
->> -		if (0 < len && name[len] && buf.len)
->> +		if (0 < len && len < namelen && buf.len)
->>  			strbuf_addstr(&buf, name + len);
->
-> I guess another option would be to drop the check entirely. It is only
-> protecting us from calling strbuf_addstr() with an empty string, which
-> is a noop anyway (it would not even cause a useless allocation, since we
-> know that buf is non-empty, and that it won't need to grow).
->
-> I think I still prefer my original solution, though.
+Quoting in that shell construct can in theory affect correctness, but
+my intuition was that it can't affect this specific case.  However,
+upon thinking about it a bit more, I realize that I was mistaken.  If
+the git exec path contains a shell glob that is not self-matching,
+then it will break in that `git subtree` will refuse to run even
+though the install is fine.
 
-It may still work without the guard but it is not apparent to the
-readers if it just happens to work by accident or by design.  At
-least the guard makes it clear what is going on, I would think.
+For instance,
 
+    GIT_EXEC_PATH => \Home\Tricky[x]User\git-core
+    PATH          => /Home/Tricky[x]User/git-core:/bin
+
+I'd think that this type of thing would be unlikely to happen in the
+wild, but yeah, it needs to be fixed.  So a reroll is needed.
+
+It is also broken in the other direction (it might run even though the
+install is broken), but only in situations that I don't think I
+actually care about.  It would happen if the glob is self-matching,
+your GIT_EXEC_PATH and PATH disagree, and the glob matches PATH.  The
+point of the check is to look for ways that installs are actually
+accidentally broken in the wild, I'm pretty sure the only way all 3 of
+those things can happen together is if you're actively trying to break
+it.  And if you're actively trying to break a shell script, you can do
+so a lot simpler by just setting PATH to something silly.
+
+-- 
+Happy hacking,
+~ Luke Shumaker
