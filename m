@@ -3,86 +3,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96CBFC4743D
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 07:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA66C4743D
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 07:21:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73CBB61364
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 07:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B5616100B
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 07:21:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231177AbhFKHQp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 03:16:45 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60172 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230374AbhFKHQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 03:16:40 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 465F3134CF2;
-        Fri, 11 Jun 2021 03:14:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+/ZIHk7vjPyRhYX45Ds7n0WA+qskWVIOsyVVC9
-        j1GHU=; b=abfVxSSUAvL5IAa33pTkWy0otDKxForFYzm8J47iqSY9p7rr8313Fr
-        nevj/vgIzmRNaj6oFlkWVLlQe8rQ/u5dIQcW/oVCysPDrqhQa6wPIDaucjtnmWTy
-        jUXy1V/C8T5GEI0XCionH3fuW4ZwD/v6kDNmOI2CXE0BE4Tr+ajAU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 30818134CF1;
-        Fri, 11 Jun 2021 03:14:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 636A4134CF0;
-        Fri, 11 Jun 2021 03:14:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 7/7] xdiff: make diff3 the default conflictStyle
-References: <20210609192842.696646-1-felipe.contreras@gmail.com>
-        <20210609192842.696646-8-felipe.contreras@gmail.com>
-        <60883e1b-787f-5ec2-a9af-f2f6757d3c43@kdbg.org>
-        <YMIYUgo71aKJ1Nnx@coredump.intra.peff.net>
-        <xmqqh7i5ci3t.fsf@gitster.g>
-        <638a0500-459a-a25b-afca-904ec0e09866@kdbg.org>
-        <xmqqy2bg3nqw.fsf@gitster.g>
-        <07ef3a3b-4812-4fa1-c60c-b9085a268bc3@kdbg.org>
-Date:   Fri, 11 Jun 2021 16:14:37 +0900
-In-Reply-To: <07ef3a3b-4812-4fa1-c60c-b9085a268bc3@kdbg.org> (Johannes Sixt's
-        message of "Fri, 11 Jun 2021 09:02:54 +0200")
-Message-ID: <xmqqo8cc3maq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230168AbhFKHXb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 03:23:31 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57837 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229965AbhFKHX1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 03:23:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1623396089;
+        bh=E/JimwxUCmi9H3Q9nxopbjwRngFrHE3XCcX2oQZUmdY=;
+        h=X-UI-Sender-Class:From:To:Subject:Date;
+        b=DVKou8XXUzYfS4zCPpMpG3auYe0fhcS3Wsb7ZVE+RkKY700iljd1vRiyMHJe11cDp
+         9OBZC5Ao0wasEPA7Vsf8cb5yrMFy/95d5TFN3g1a5qT6Oo7zV7SrPLEhwsPMY2yzR/
+         Zz5jSrhTLRxItExopilLMS1HXtUqCnNJDJFWThg4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [217.162.243.56] ([217.162.243.56]) by web-mail.gmx.net
+ (3c-app-gmx-bap17.server.lan [172.19.172.87]) (via HTTP); Fri, 11 Jun 2021
+ 09:21:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AF86932C-CA84-11EB-A369-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Message-ID: <trinity-ccbae402-c6b8-4280-abe0-7fecf75af9f3-1623396089396@3c-app-gmx-bap17>
+From:   Axel Obermeier <axel.obermeier@gmx.com>
+To:     git@vger.kernel.org
+Subject: Optionally include submodules in git archive - status?
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 11 Jun 2021 09:21:29 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K1:3g5YpW9Bdl9zoz8dFj4GpCQZfj4ahQhBl7O15KYRqt9yDGn44qCZ9Zy124WnVB/OVjQsT
+ k/UEKZU0t0Yj9d6ZuMUjAh+nB45kj2pEE6hyJpDHbKXiZU6wv8KPff9IT5wLejaCKVy5JbRDRDjv
+ APZ42dEXHtqSJ5a6hjnLvteThcESqDfpyoCy/tRnkVlVEmKsVBLVAnxDlGNlUHckKfpaDHciymBe
+ ifm7h64qQZ39xIR/wm9hInWQ9GnOThvSkgNZiRwmvRNTI+7mdfHER3fvMHVptleTPcJa5g4jAZSz
+ V4=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RJZUzcjMANQ=:eBPhGp7JKWCwMObJTuxwIa
+ qEEHtIndLpc+nvLkw24+crCjMVu2nUIiJcajj1eMQmOJq41/BQYAJdfHkJXtAiZpiUSer2fGP
+ 9t5qcJfoKe2E3YQIF3q8q7c8zuurg11a4vL+6uoB9N/A+A+zhQez3iYwHlJXy2VyjRYXHoO+n
+ zMFuJtxUXzfVHIVfJGELG0KrDmGXnOUucO+f/+TjaxtaEsJjKH/8jOi6HCUhca55Jl0MG8Ee0
+ RACJ21KEvYnXDQlttW9UkYscjDIv+dOXTH6QH8njfbofPzE8ibUQJLaiKZKcqqGa9Xen++Ugm
+ Lx5pDI9Yr2oAHuU8ZxQ9g2lEvBzL0D6gIwZzNfVyc4Lf8HFpjUGzMUXtdMa+ZZAipgcLwqXrZ
+ NndLRur9D4H9rAaQvUHvyBZqGpbfpKy+uOGvOzn+rriAwFbI1hHMbJtMvVI6mo4YZntTY5/Fw
+ 8raz2wR90/tbqZJkXz2RTJTy9fn1NWHErnG4xL8u6hgJ6OhWXCUohOQQiVmhV0WUtTn73J8xx
+ XttsOuFJOgTvT2ulY3KjU3Z8Y0FPqjF25D7yNqUx8r1rbFZvCXMNaxL/wOPGIB/ChVqi9JCD7
+ IwpmZbpb4DqcF42e065cvm/LzIUvlJQq5ehzSjmsynIoI12dM3apTRCxOVQClt65BFygrkeko
+ B0O6jf9vzKaOQMnqW7InJP4bVVTb2qzCYulcP2VRpX3KBhMJLPY52qtTOGy2IoP4apOgAN9JZ
+ KPIx5onGTtogxSPZdoNu5Pz3atfreSgp0ijssj2JuW8x7ddvZFpjSHJA++A/D9/KSJfkyPI+d
+ Cy7ruvYly4xoTkT9l5w087B8xlQgGRvID3wSCZa6sroMpz8+84=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Dear git developers & community,
 
-> The case that inner conflicts are presented sub-optimally under diff3
-> remains, though.
+I'm trying to find out the status of including submodules in git archive
+- I'm sure this has come up before, because it creates lots of pain,
+especially in packaging [0].
 
-I agree that until that happens (necessary but not sufficient
-condition), it is premature to recommend diff3 style to be the
-default.
+Github in particular punts on including submodules in the automatically
+generated tarballs (which are therefore often broken, i.e. not including
+all necessary parts to build), and this is in part because the underlying
+git archive command does not provide that option.
 
-I notice that "git merge --help" tells what each part separated by
-conflict markers mean in both output styles, but does not make a
-specific recommendation as to which one to use in what situation,
-and it might benefit a few additional sentences to help readers
-based on what you said, i.e. the "RCS merge" style that hides the
-original is succinct and easier to work with when you are familiar
-with what both sides did, while a more verbose "diff3" style helps
-when you are unfamiliar with what one side (or both sides) did.
+I could not find a bug tracker for git (though I noted with interest
+from [1] that the git-scm website has one...), and could not easily find
+something on the ML [2].
+
+It's creating enough friction for me that I feel tempted to implement it
+(e.g. with a switch to recurse one or all levels of submodules), even
+though I don't know the git codebase at all. In any case, before rushing
+ahead, I wanted to check first what the status of this topic is.
+
+Best regards
+H.
+
+[0] https://github.com/dear-github/dear-github/issues/214
+[1] https://git-scm.com/community
+[2] https://public-inbox.org/git/?q=3Dsubmodule+%22git+archive%22
