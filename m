@@ -2,294 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C08A4C48BE0
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 11:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22CC5C48BD1
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 11:52:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2D12613B8
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 11:20:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED123613CA
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 11:52:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231310AbhFKLWG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 07:22:06 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:40623 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230248AbhFKLWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 07:22:06 -0400
-Received: by mail-ed1-f43.google.com with SMTP id t3so36685895edc.7
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 04:19:54 -0700 (PDT)
+        id S231326AbhFKLyf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 07:54:35 -0400
+Received: from mail-lf1-f45.google.com ([209.85.167.45]:45801 "EHLO
+        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230370AbhFKLye (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 07:54:34 -0400
+Received: by mail-lf1-f45.google.com with SMTP id a1so8108984lfr.12
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 04:52:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NM3bHNp6opZ7P4HkjttchdQc2pk9SI1IqT+Qkpj5bMk=;
-        b=aGkFQx/Xyhxw+vDI75VLCpKOWbxmTIlPoo/NYKnFIsV/sQ2Vp47ElpZ4f7eKZBi3hj
-         wQNZsV3gIF5chrZqzjhoM2QcIFe48ClMT24FP0jCLrXKnOGnPWkCgvGmACvSO9MNDXKI
-         9dFYB/cVKbx6r/qMExQXBV/ymWGlKRsBkMwrFrv3exD2EIGJoc8/ePA081/slulnb9C3
-         1FgvtSWyyKi8+Vvzad0DzqU237I7NE1D5hqHPNwKIj825pCZ8umF/ZQRGhwessl688s/
-         ZonF76dbciPn4uIrGUZWoP/aJE73La5GB3k2DCxIjlb/MoKhC9BTADtpaKznvBbGrh2o
-         axwg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=wAL1BPo7FtV7gzrgjuYJzTFAzYIEkuSPz5CKBaLp8Jg=;
+        b=InlqFZI7SdbIJtRVl1He/xR5TQgV8q9fK4iFX/wiIEBkE3O030zvczXQPlV1BoIelf
+         9mswjM78pBlaIWxfG4T8qB2VK9HIudXzkEuJVMJZPUNi9Y29WETP+1LZ4D87oy3BHeVi
+         lmLVBZdD811nRNVyo0NZ6DkMdZ6B/RAmsVyEmp+xRMZgjYN434X2UfGlbNohhX0HHgkz
+         mjjrAsSdueyQuYML70rwaGLQuc0Xat7wYQQ8m1mm4V2Sqv7beiPKyZdmw8B++BEV8VRz
+         1v0OW6qf6O1COR27OEKeph3UjG3phsVR+ObWnSj/3MuYYMYmn/tL7Cn3MOXi/RfmhmJj
+         jPLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NM3bHNp6opZ7P4HkjttchdQc2pk9SI1IqT+Qkpj5bMk=;
-        b=Txr+2id8kDvPDsyz1w3SBLB60RThre+jbhhveZIo9u8rzGroLcjo9XSzVVlSv4SmRG
-         NCFV5L6tZOUkIbQC+2hsPHrAPFespTWmbhm5Pga9Zc/+8qls8LgaxGPi1u3Be83oxzBx
-         fSJZwM535qojs/TgBmB4kAck/gh8VCpPX9z9J7yhaF5FSvSdCDZcgZUti//xxmX/USPS
-         t/7FdxDDBEwP7SNulFG6v2Oico8/42oaUDPcfRXvkWXZNu1r8TsjrL2SPFtkl/1zEb2m
-         MYVsniwX8l7Rk24PaEdNE7tvNWFfOui+PtzVuujZGjBHQUzB/BxpEexQqabZTl4jkszM
-         zcHQ==
-X-Gm-Message-State: AOAM533p5v4eCV8cP02lKf6PazOjySEoZsseI4iZE90YnX4PxSXT+Ugi
-        RXlaEUGUyWZrim0dZT39KkMDB0ctStX/mjqg
-X-Google-Smtp-Source: ABdhPJxXxhNcvhrPm416zGzl5DBIFvaSM+BbBtXvpwEKiPm/MfAtTfRmUVQpttNIngwHvwMd2CMNcw==
-X-Received: by 2002:a50:ee16:: with SMTP id g22mr3191035eds.27.1623410333307;
-        Fri, 11 Jun 2021 04:18:53 -0700 (PDT)
-Received: from localhost.localdomain ([138.199.18.64])
-        by smtp.gmail.com with ESMTPSA id p13sm2005795ejr.87.2021.06.11.04.18.52
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=wAL1BPo7FtV7gzrgjuYJzTFAzYIEkuSPz5CKBaLp8Jg=;
+        b=i6WQrBs5oGk0CZn6SQM+q2mlEe195k4PY/3NO05b+GZSvPjaEt9kZwbbRoDIkUal4o
+         YaLT9Qj1mBv9A9rbt55txPBOEihO467ErssTt+1AJJAB6rdbvYdglL1KXx2JDeIFCxLd
+         f2p6gV3ZW1tn1A8VtPTpPZejbK2K05+LVwPP5FRu11lZaRRdLNlasJASLJndMF6gb29J
+         3TojAbkq2E3MOD2XOGvpweAkvHtgg5wcaNuUEqh1aflnX2Css2t6+GI9Fr30lr8ty9Ca
+         he7Otn3YtzOddAWE2JXS0BxHjY3vtU4S46rQ0+c2tbfblH2L/hesykDcEt0Yw/Kdz5Y2
+         PGHA==
+X-Gm-Message-State: AOAM532dNP+O1AR7XLCZvPlZ361ReGxkr0KsLL8mjI59imdBD4xlSiiU
+        FeUU6rfqRaJs+Ms13zWAU485gb+SeyI=
+X-Google-Smtp-Source: ABdhPJyKTDDuZoApIa6B14Uj++EpWkH483QpB4V9gLZidHWnv6pmd0XTgPHJp6zNVeAAmUdIUAcOsA==
+X-Received: by 2002:a05:6512:32ab:: with SMTP id q11mr2302425lfe.21.1623412295197;
+        Fri, 11 Jun 2021 04:51:35 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id k20sm569689lfu.177.2021.06.11.04.51.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 04:18:52 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     felipe.contreras@gmail.com, gitster@pobox.com
-Subject: [PATCH v3] *: fix typos which duplicate a word
-Date:   Fri, 11 Jun 2021 13:18:50 +0200
-Message-Id: <20210611111850.3430523-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210609102641.3531183-1-rybak.a.v@gmail.com>
-References: <20210609102641.3531183-1-rybak.a.v@gmail.com>
+        Fri, 11 Jun 2021 04:51:34 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        David Aguilar <davvid@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 7/7] xdiff: make diff3 the default conflictStyle
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+        <20210609192842.696646-8-felipe.contreras@gmail.com>
+        <60883e1b-787f-5ec2-a9af-f2f6757d3c43@kdbg.org>
+        <YMIYUgo71aKJ1Nnx@coredump.intra.peff.net>
+        <xmqqh7i5ci3t.fsf@gitster.g>
+        <638a0500-459a-a25b-afca-904ec0e09866@kdbg.org>
+        <xmqqy2bg3nqw.fsf@gitster.g>
+        <07ef3a3b-4812-4fa1-c60c-b9085a268bc3@kdbg.org>
+        <xmqqo8cc3maq.fsf@gitster.g>
+Date:   Fri, 11 Jun 2021 14:51:33 +0300
+In-Reply-To: <xmqqo8cc3maq.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        11 Jun 2021 16:14:37 +0900")
+Message-ID: <875yykipq2.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix typos in documentation, code comments, and RelNotes which repeat
-various words.  In trivial cases, just delete the duplicated word and
-rewrap text, if needed.  Reword the affected sentence in
-Documentation/RelNotes/1.8.4.txt for it to make sense.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> The case that inner conflicts are presented sub-optimally under diff3
+>> remains, though.
+>
+> I agree that until that happens (necessary but not sufficient
+> condition), it is premature to recommend diff3 style to be the
+> default.
 
-Thanks to Felipe Contreras and Junio C Hamano for review.
+Yep. A work-around could be to fix diff3 to rather produce RCS merge
+style in such situations?
 
-Changes since v2:
+>
+> I notice that "git merge --help" tells what each part separated by
+> conflict markers mean in both output styles, but does not make a
+> specific recommendation as to which one to use in what situation,
+> and it might benefit a few additional sentences to help readers
+> based on what you said, i.e. the "RCS merge" style that hides the
+> original is succinct and easier to work with when you are familiar
+> with what both sides did, while a more verbose "diff3" style helps
+> when you are unfamiliar with what one side (or both sides) did.
 
-  - reworded commit message
-  - new fixes in files:
-    - Documentation/RelNotes/1.6.0.3.txt
-    - Documentation/RelNotes/1.8.4.txt
-    - Documentation/RelNotes/2.29.0.txt
-    - Documentation/RelNotes/2.8.0.txt
-    - Documentation/technical/hash-function-transition.txt
-    - merge-recursive.c
+I don't get it. Once you have diff3 output, and you want something
+simpler, you just kill the inner section, right? RCS merge output style
+is simply inferior.
 
- Documentation/RelNotes/1.6.0.3.txt                   | 2 +-
- Documentation/RelNotes/1.8.4.txt                     | 2 +-
- Documentation/RelNotes/2.29.0.txt                    | 4 ++--
- Documentation/RelNotes/2.8.0.txt                     | 2 +-
- Documentation/technical/hash-function-transition.txt | 2 +-
- Documentation/technical/protocol-v2.txt              | 2 +-
- attr.c                                               | 2 +-
- builtin/log.c                                        | 3 +--
- git-compat-util.h                                    | 2 +-
- git-cvsserver.perl                                   | 2 +-
- merge-recursive.c                                    | 2 +-
- remote.c                                             | 2 +-
- t/t5505-remote.sh                                    | 2 +-
- t/t9100-git-svn-basic.sh                             | 2 +-
- 14 files changed, 15 insertions(+), 16 deletions(-)
-
-diff --git a/Documentation/RelNotes/1.6.0.3.txt b/Documentation/RelNotes/1.6.0.3.txt
-index ae0577836a..ad36c0f0b7 100644
---- a/Documentation/RelNotes/1.6.0.3.txt
-+++ b/Documentation/RelNotes/1.6.0.3.txt
-@@ -50,7 +50,7 @@ Fixes since v1.6.0.2
-   if the working tree is currently dirty.
- 
- * "git for-each-ref --format=%(subject)" fixed for commits with no
--  no newline in the message body.
-+  newline in the message body.
- 
- * "git remote" fixed to protect printf from user input.
- 
-diff --git a/Documentation/RelNotes/1.8.4.txt b/Documentation/RelNotes/1.8.4.txt
-index 255e185af6..882fa713ef 100644
---- a/Documentation/RelNotes/1.8.4.txt
-+++ b/Documentation/RelNotes/1.8.4.txt
-@@ -365,7 +365,7 @@ details).
-    (merge 2fbd4f9 mh/maint-lockfile-overflow later to maint).
- 
-  * Invocations of "git checkout" used internally by "git rebase" were
--   counted as "checkout", and affected later "git checkout -" to the
-+   counted as "checkout", and affected later "git checkout -" which took
-    the user to an unexpected place.
-    (merge 3bed291 rr/rebase-checkout-reflog later to maint).
- 
-diff --git a/Documentation/RelNotes/2.29.0.txt b/Documentation/RelNotes/2.29.0.txt
-index 06ba2f803f..1f41302ebb 100644
---- a/Documentation/RelNotes/2.29.0.txt
-+++ b/Documentation/RelNotes/2.29.0.txt
-@@ -184,8 +184,8 @@ Performance, Internal Implementation, Development Support etc.
-    the ref backend in use, as its format is much richer than the
-    normal refs, and written directly by "git fetch" as a plain file..
- 
-- * An unused binary has been discarded, and and a bunch of commands
--   have been turned into into built-in.
-+ * An unused binary has been discarded, and a bunch of commands
-+   have been turned into built-in.
- 
-  * A handful of places in in-tree code still relied on being able to
-    execute the git subcommands, especially built-ins, in "git-foo"
-diff --git a/Documentation/RelNotes/2.8.0.txt b/Documentation/RelNotes/2.8.0.txt
-index 27320b6a9f..38453281b8 100644
---- a/Documentation/RelNotes/2.8.0.txt
-+++ b/Documentation/RelNotes/2.8.0.txt
-@@ -377,7 +377,7 @@ notes for details).
-    on that order.
- 
-  * "git show 'HEAD:Foo[BAR]Baz'" did not interpret the argument as a
--   rev, i.e. the object named by the the pathname with wildcard
-+   rev, i.e. the object named by the pathname with wildcard
-    characters in a tree object.
-    (merge aac4fac nd/dwim-wildcards-as-pathspecs later to maint).
- 
-diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 7c1630bf83..260224b033 100644
---- a/Documentation/technical/hash-function-transition.txt
-+++ b/Documentation/technical/hash-function-transition.txt
-@@ -599,7 +599,7 @@ supports four different modes of operation:
-     convert any object names written to output to SHA-1, but store
-     objects using SHA-256.  This allows users to test the code with no
-     visible behavior change except for performance.  This allows
--    allows running even tests that assume the SHA-1 hash function, to
-+    running even tests that assume the SHA-1 hash function, to
-     sanity-check the behavior of the new mode.
- 
-  2. ("early transition") Allow both SHA-1 and SHA-256 object names in
-diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-index a1e31367f4..1040d85319 100644
---- a/Documentation/technical/protocol-v2.txt
-+++ b/Documentation/technical/protocol-v2.txt
-@@ -540,7 +540,7 @@ An `object-info` request takes the following arguments:
- 	Indicates to the server an object which the client wants to obtain
- 	information for.
- 
--The response of `object-info` is a list of the the requested object ids
-+The response of `object-info` is a list of the requested object ids
- and associated requested information, each separated by a single space.
- 
- 	output = info flush-pkt
-diff --git a/attr.c b/attr.c
-index 9e897e43f5..d029e681f2 100644
---- a/attr.c
-+++ b/attr.c
-@@ -685,7 +685,7 @@ static struct attr_stack *read_attr_from_array(const char **list)
-  * Callers into the attribute system assume there is a single, system-wide
-  * global state where attributes are read from and when the state is flipped by
-  * calling git_attr_set_direction(), the stack frames that have been
-- * constructed need to be discarded so so that subsequent calls into the
-+ * constructed need to be discarded so that subsequent calls into the
-  * attribute system will lazily read from the right place.  Since changing
-  * direction causes a global paradigm shift, it should not ever be called while
-  * another thread could potentially be calling into the attribute system.
-diff --git a/builtin/log.c b/builtin/log.c
-index 6102893fcc..516a1142dd 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1968,8 +1968,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	} else if (rev.diffopt.close_file) {
- 		/*
- 		 * The diff code parsed --output; it has already opened the
--		 * file, but but we must instruct it not to close after each
--		 * diff.
-+		 * file, but we must instruct it not to close after each diff.
- 		 */
- 		rev.diffopt.no_free = 1;
- 	} else {
-diff --git a/git-compat-util.h b/git-compat-util.h
-index a508dbe5a3..df7dae9be1 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1368,7 +1368,7 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
- 	(type *)container_of_or_null_offset(ptr, offsetof(type, member))
- 
- /*
-- * like offsetof(), but takes a pointer to a a variable of type which
-+ * like offsetof(), but takes a pointer to a variable of type which
-  * contains @member, instead of a specified type.
-  * @ptr is subject to multiple evaluation since we can't rely on __typeof__
-  * everywhere.
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index f6f3fc192c..ed035f32c2 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2149,7 +2149,7 @@ sub req_diff
-                    ( $meta2->{revision} or "workingcopy" ));
- 
-         # TODO: Use --label instead of -L because -L is no longer
--        #  documented and may go away someday.  Not sure if there there are
-+        #  documented and may go away someday.  Not sure if there are
-         #  versions that only support -L, which would make this change risky?
-         #  http://osdir.com/ml/bug-gnu-utils-gnu/2010-12/msg00060.html
-         #    ("man diff" should actually document the best migration strategy,
-diff --git a/merge-recursive.c b/merge-recursive.c
-index d146bb116f..4327e0cfa3 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2152,7 +2152,7 @@ static char *handle_path_level_conflicts(struct merge_options *opt,
-  *      implicit renaming of files that should be left in place.  (See
-  *      testcase 6b in t6043 for details.)
-  *   2. Prune directory renames if there are still files left in the
-- *      the original directory.  These represent a partial directory rename,
-+ *      original directory.  These represent a partial directory rename,
-  *      i.e. a rename where only some of the files within the directory
-  *      were renamed elsewhere.  (Technically, this could be done earlier
-  *      in get_directory_renames(), except that would prevent us from
-diff --git a/remote.c b/remote.c
-index 6d1e8d02df..dfb863d808 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1592,7 +1592,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 			else
- 				/*
- 				 * If the ref isn't stale, and is reachable
--				 * from from one of the reflog entries of
-+				 * from one of the reflog entries of
- 				 * the local branch, force the update.
- 				 */
- 				force_ref_update = 1;
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index c7b392794b..e6e3c8f552 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -182,7 +182,7 @@ test_expect_success 'rename errors out early when deleting non-existent branch'
- 	)
- '
- 
--test_expect_success 'rename errors out early when when new name is invalid' '
-+test_expect_success 'rename errors out early when new name is invalid' '
- 	test_config remote.foo.vcs bar &&
- 	echo "fatal: '\''invalid...name'\'' is not a valid remote name" >expect &&
- 	test_must_fail git remote rename foo invalid...name 2>actual &&
-diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
-index 1d3fdcc997..ef35a54885 100755
---- a/t/t9100-git-svn-basic.sh
-+++ b/t/t9100-git-svn-basic.sh
-@@ -330,7 +330,7 @@ test_expect_success 'git-svn works in a bare repository' '
- 	git svn fetch ) &&
- 	rm -rf bare-repo
- 	'
--test_expect_success 'git-svn works in in a repository with a gitdir: link' '
-+test_expect_success 'git-svn works in a repository with a gitdir: link' '
- 	mkdir worktree gitdir &&
- 	( cd worktree &&
- 	git svn init "$svnrepo" &&
--- 
-2.31.1
-
+Thanks,
+-- Sergey Organov
