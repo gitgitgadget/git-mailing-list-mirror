@@ -2,125 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1821DC48BE0
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 19:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D702CC48BE0
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 19:04:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED94F613D0
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 19:03:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF54A6128A
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 19:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231371AbhFKTFh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 15:05:37 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47740 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231617AbhFKTFa (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Jun 2021 15:05:30 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 445E560400;
-        Fri, 11 Jun 2021 19:03:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1623438211;
-        bh=0vk9qjXcbPLtwzMviTBoAMhkwGH7I3lXNWH5+d7BonA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=cOsBUVMW1Rb7Q27ndJzH9ttOdBHcqZP1WdB62wxNIfACAgjBUX5p28xC/p/GKXeC/
-         6s2rpQMDOZXXkB4tONmhDDZ54HuYrew2LVtaPR/f6YJDZtbuFNpOyaew3/aocZ2MO5
-         SMmq6OeQ9XsDQyY1AB6SvUykJxBMvaFt7ICck3DiFDtKZCALqD/fM3vFC+lexSd/NX
-         mRmW77c8+QpN9EvdWkaSB8wdxz0pNmBCCJNakY4ix2uj+gT0e2lMGbIDBEAzvsPpfB
-         1jZKBp0sIIi9ywts2iwPOdo1KcNepPRJSz9ZaeRx5gCzsIRvUjxuIwJp+MKrTm1sOl
-         wBurr0LWNWApJXcAPnxPG0aBNg3MUBFx9zrCqxJt+c6R+WyUXVBSs1upY0E2p6ulLv
-         r6X44W3S/VhJSIDnm5Zlp1vpwcFUVOlnK1fjp5SwhRfSC2AHEEVH8NFVToM8Lu+04g
-         2CH9dul8QFawFPF7AtZEo1191hOlKsL11z9I1MD7AVJYbQ3J3Vx
-Date:   Fri, 11 Jun 2021 19:03:27 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Axel Obermeier <axel.obermeier@gmx.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Optionally include submodules in git archive - status?
-Message-ID: <YMOzf2I+SRfHcMdd@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Axel Obermeier <axel.obermeier@gmx.com>, git@vger.kernel.org
-References: <trinity-ccbae402-c6b8-4280-abe0-7fecf75af9f3-1623396089396@3c-app-gmx-bap17>
+        id S231510AbhFKTGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 15:06:19 -0400
+Received: from mail-pg1-f172.google.com ([209.85.215.172]:41885 "EHLO
+        mail-pg1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229969AbhFKTGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 15:06:16 -0400
+Received: by mail-pg1-f172.google.com with SMTP id l184so3202190pgd.8
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 12:04:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UYMvkmuPXGWgfHXjdBfoZ+KHP/htL+kRezYMrMTIVr4=;
+        b=NPYvcjkaTGxxm8mgiti0BXEaCPw7hWRQ9wIRZ+QSypxP1qfeiRP7wy48cGO3U3AnV7
+         UtxU0MI0J8mPqQTuyX4UdokASr9FXb3gl0YRgIU+u56Aa4Tc1KQDo2txDSI2l5tg7dYU
+         cSJv03Yk3xWdNbV2pYuNsiSk3nj8DYr0M3GYAMlerh0br0Lkhi3G6CvhbOyi+IBsJec0
+         cG0T3K7qASh7aTdA+t3YOGKojFjGPm3pNhCmmuR1TN+OlQGVyhYpiSOteu/W/oi8R4QP
+         fsOI6IAqwYG1ejMZOeQbhbbV03Fm2y3A61aw4xhZAvXUUS/On1hoRKvE+GvhsIicsKb1
+         qWfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UYMvkmuPXGWgfHXjdBfoZ+KHP/htL+kRezYMrMTIVr4=;
+        b=a+RpCtifXP/tPDwht8RXYLAIXcRXl9l89hUV0oOplq9UQR8XTIr1rqZl8K1gZR3k1s
+         xaZuS8tJoBNrAMaQSiiBqYujl+pAi1IH+1EUJL9wZOsvS+Oq2yMEvDEtAnsVIbbJrUdE
+         UAJy1HiCeKt3ZGChVlq9s52Ad8WhGq+RQdrTWAZilsmr29x9Yo80iceuicGSKP7CBQ6p
+         EwL0NkLeMZUOIambXI+D42h6S1iaSCgjVWak9/l5OH3aaxHpKVR6elO294zqI8OyD8sW
+         YnhJbNnuVVaThvhXVb1mBXG+tbEql6hPMzbdGjsU7V7IiW+PlYXdmAI+tdzSwQdXGSMI
+         5v9g==
+X-Gm-Message-State: AOAM532MbzTSHYssjBoJHP4hcvvHhwzla3CArN7ykDX+JeHk6iHNciFs
+        2c2lsu2QlrJ1CPCfjQR5IaQ=
+X-Google-Smtp-Source: ABdhPJwKX6CPQ+MBf708f3wl8FQmX6DiPt0HAkLmUnKjWpQtpm5TdNarBEoiDox2wPZQT2iNVOMpbQ==
+X-Received: by 2002:a65:434c:: with SMTP id k12mr5069498pgq.17.1623438187045;
+        Fri, 11 Jun 2021 12:03:07 -0700 (PDT)
+Received: from tiger.hsd1.ca.comcast.net ([2601:646:8d01:eb40::14a3])
+        by smtp.gmail.com with ESMTPSA id w21sm6083508pfq.143.2021.06.11.12.03.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jun 2021 12:03:06 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        David Aguilar <davvid@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 7/7] xdiff: make diff3 the default conflictStyle
+Date:   Fri, 11 Jun 2021 12:02:35 -0700
+Message-Id: <20210611190235.1970106-1-newren@gmail.com>
+X-Mailer: git-send-email 2.32.0.59.g86dff2990a.dirty
+In-Reply-To: <60c3a41bd25e3_8d0f2089e@natae.notmuch>
+References: <60c3a41bd25e3_8d0f2089e@natae.notmuch>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZLiEGofsoCIp2J2T"
-Content-Disposition: inline
-In-Reply-To: <trinity-ccbae402-c6b8-4280-abe0-7fecf75af9f3-1623396089396@3c-app-gmx-bap17>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ZLiEGofsoCIp2J2T
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, Jun 11, 2021 at 10:57 AM Felipe Contreras <felipe.contreras@gmail.com> wrote:
 
-On 2021-06-11 at 07:21:29, Axel Obermeier wrote:
-> Dear git developers & community,
->=20
-> I'm trying to find out the status of including submodules in git archive
-> - I'm sure this has come up before, because it creates lots of pain,
-> especially in packaging [0].
+> Elijah Newren wrote:
+> > On Fri, Jun 11, 2021 at 8:32 AM Felipe Contreras <felipe.contreras@gmail.com>
+> > wrote:
+...
+> > The alternative to the above two options was the
+> > make-a-virtual-merge-base-by-merging-merge-bases strategy.  It apparently
+> > was very successful.
+> 
+> OK. That makes sense.
+> 
+> > But it does mean that merge bases can have conflict markers in them.
+> 
+> But why? And even if they do, why do they have to be diff3 conflict
+> markers?
 
-Nobody has implemented it yet.  It could theoretically be implemented
-for submodules where the submodule is already downloaded and populated
-on disk, but if the submodule isn't populated, then the data won't exist
-and it wouldn't be possible to put it in the archive.
+This could be changed; I suspect it just was a natural consequence of how
+the code was built.  (Recursive means there's not a separate code-path for
+merging the merge-bases, so they get the same merge style by default.)
 
-So it can be done, but it's a bit tricky.
+> This would be more human-friendly:
+> 
+>   <<<<<<< HEAD
+>   D
+>   ||||||| merged common ancestors
+>   <<<<<<<<< Temporary merge branch 1
+>   B
+>   =========
+>   A
+>   >>>>>>>>> Temporary merge branch 2
+>   =======
+>   C
+>   >>>>>>> C
 
-> Github in particular punts on including submodules in the automatically
-> generated tarballs (which are therefore often broken, i.e. not including
-> all necessary parts to build), and this is in part because the underlying
-> git archive command does not provide that option.
+I suspect that would be as easy as this (not compiled or tested):
 
-It is unlikely that GitHub will implement this anytime soon.  GitHub
-essentially invokes git archive to generate its archives, and even when
-git archive supports that, the submodules will usually live on a
-different set of file servers than the main repository, so the data will
-likely not be accessible.
+diff --git a/ll-merge.c b/ll-merge.c
+index 095a4d820e..bdd129cbd6 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -131,7 +131,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 	xmp.level = XDL_MERGE_ZEALOUS;
+ 	xmp.favor = opts->variant;
+ 	xmp.xpp.flags = opts->xdl_opts;
+-	if (git_xmerge_style >= 0)
++	if (git_xmerge_style >= 0 && !opts->virtual_ancestor)
+ 		xmp.style = git_xmerge_style;
+ 	if (marker_size > 0)
+ 		xmp.marker_size = marker_size;
 
-For Git LFS, we issue our own source tarballs for different reasons (the
-fact that git archive is not guaranteed to produce stable archives and
-we want to provide signed hashes), so at least for now, the solution
-would be to provide your own tarballs if you need something special.
 
-> I could not find a bug tracker for git (though I noted with interest
-> from [1] that the git-scm website has one...), and could not easily find
-> something on the ML [2].
+> Or just put a stub conflict marker:
+> 
+>   <<<<<<< HEAD
+>   D
+>   ||||||| merged common ancestors
+>   <<<<<<<<< Temporary merge >>>>>>>>>
+>   =======
+>   C
+>   >>>>>>> C
 
-The list is the place to report bugs and request new features, so you're
-in the right place.
+I don't know what would be involved to do this one; I think it wouldn't
+be too hard, but I don't think we'd want to pursue this option.
 
-> It's creating enough friction for me that I feel tempted to implement it
-> (e.g. with a switch to recurse one or all levels of submodules), even
-> though I don't know the git codebase at all. In any case, before rushing
-> ahead, I wanted to check first what the status of this topic is.
+> Or just use the base of the virtual merge:
+> 
+>   <<<<<<< HEAD
+>   D
+>   ||||||| merged common ancestors
+>   1
+>   =======
+>   C
+>   >>>>>>> C
 
-We would love to see a patch.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+I think that implementing this choice would look like this (again, not
+compiled or tested and I'm not familiar with xdiff so take it with a
+big grain of salt):
 
---ZLiEGofsoCIp2J2T
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+diff --git a/ll-merge.c b/ll-merge.c
+index 095a4d820e..dbc7f76951 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -130,6 +130,8 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 	memset(&xmp, 0, sizeof(xmp));
+ 	xmp.level = XDL_MERGE_ZEALOUS;
+ 	xmp.favor = opts->variant;
++	if (git_xmerge_style >= 0 && opts->virtual_ancestor)
++		xmp.favor = XDL_MERGE_FAVOR_BASE;
+ 	xmp.xpp.flags = opts->xdl_opts;
+ 	if (git_xmerge_style >= 0)
+ 		xmp.style = git_xmerge_style;
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index 8629ae287c..b8d1a536c2 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -62,6 +62,7 @@ extern "C" {
+ #define XDL_MERGE_FAVOR_OURS 1
+ #define XDL_MERGE_FAVOR_THEIRS 2
+ #define XDL_MERGE_FAVOR_UNION 3
++#define XDL_MERGE_FAVOR_BASE 4
+ 
+ /* merge output styles */
+ #define XDL_MERGE_DIFF3 1
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 95871a0b6e..a8dc42595a 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -313,6 +313,9 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
+ 			if (m->mode & 2)
+ 				size += xdl_recs_copy(xe2, m->i2, m->chg2, 0, 0,
+ 						      dest ? dest + size : NULL);
++		} else if (m->mode == 4) {
++			size += xdl_orig_copy(xe1, m->i0, m->chg0, needs_cr, 0,
++					      dest ? dest + size : NULL);
+ 		} else
+ 			continue;
+ 		i = m->i1 + m->chg1;
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMOzfwAKCRB8DEliiIei
-gRh7AQC9dr3+ahXH01HYHlKGyO+jC8oCg16qSXZEtgbcaAMnzwEAp1YOIwshKZRa
-Z9uwjnAAgcEv3PDIS3MGspq1k1vj2QQ=
-=Kin1
------END PGP SIGNATURE-----
+> We don't have to use diff3 all the way.
 
---ZLiEGofsoCIp2J2T--
+Right, thus my mention in the other email to consider adding a
+XDL_MERGE_FAVOR_BASE -- which you then also mention here in your third
+option, and which I've now given at least a partial patch for.  Not
+sure if it's a crazy idea or a great idea, since I don't do very many
+criss-cross merges myself.
+
+
+
+Hope that helps,
+Elijah
