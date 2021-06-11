@@ -7,130 +7,105 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52009C48BE0
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 15:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A271C48BD1
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 15:54:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 367E3613DF
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 15:50:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5D1A61004
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 15:54:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229951AbhFKPwY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 11:52:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhFKPwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 11:52:23 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59718C061574
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 08:50:25 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id l15-20020a05683016cfb02903fca0eacd15so3559972otr.7
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 08:50:25 -0700 (PDT)
+        id S230364AbhFKP4K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 11:56:10 -0400
+Received: from mail-lf1-f43.google.com ([209.85.167.43]:38408 "EHLO
+        mail-lf1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229942AbhFKP4J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 11:56:09 -0400
+Received: by mail-lf1-f43.google.com with SMTP id r5so9258599lfr.5
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 08:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=Uq2yiXCHZqHs7XJ6qZSdssS1aykciuUhubbAT9h00XU=;
-        b=rSRGaRll8On0mupoi+Y/tRxDQmpX+h2Jexrm9adsPBKCsBJhOy7Pb9T7Z3wE5GrBBH
-         KfLtXRBZUKgPI+4OvoZsOqNuVHbtM0ZKztEbbPoKOfAIGWyLtk8nfqCMjJ97A1DPnIvx
-         roYAZQrIOlY1+Docujg9ZGZmeaRRWShxSopLHerhcYwNQWzwECwlYvDAOni8DyCPdLpm
-         lYcjWOfF2qF36w9lE4HUe3nwqJ9VFxD7bM94TPMocm+A9D1LG/moQ7oON63pdS/GiG7t
-         EpbexUj4gxLAUZIxoWSLVmO/0OUu3PFCRPm3dtPJOpw+0eBNe9MWNA0re/INIQ8rCBnI
-         aUyg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=7RQvoJ1jxf4zzfJsjLQjo9PKCt16UD2e6ZD8Z7bISYU=;
+        b=mOOsjkDG8vFTKJjU/aEsmIHOi6hiq4zBZ28Qu5/JzpVI45gUEBiVkBnqaqvBpjWkYh
+         wPnMzS0b2dSpx13s1dumgb8C7aqvUk0ViaiSzxtYAz0U2kE57q1mxuD5CO9cuiQG2pmY
+         Ur/Yg32la1UoGUUKLkzqdBn9EHTrBx+oShnfy/PZzLtxaPKTUMg7NS+hna+3KNfFb59U
+         Rqv80kw1Qk5Krhed/ZLLQ5EP1c0tucKB+UFLpMIH5vcKLNMTkB+BBxpO/sDCnOz9kV+t
+         D0oEuDsI0BvIiMxbquDKTNqo4DOubIPGbS5qfL+EWqRR/hT2W7tnEc8jHsTGLuknwvqu
+         buug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=Uq2yiXCHZqHs7XJ6qZSdssS1aykciuUhubbAT9h00XU=;
-        b=mJohMEmViHkNgVghbiSjeVUTcrRrVbuZhSkfKxjDbSlXboX/O1qvhcyiGcp2q0jMPw
-         gJ38lM3uKQctU+PfqBok7gNp6rj4WUa9v1LKmOj0QqTUufcdI5bVZb9eS+go8JoPI2BL
-         /pBPJldUVFe5m6qr6ViO1OKN2NvWitzcGgmUPwFO8Se9FkTNGCgoxGmOFhzq6KfbEgPu
-         58fem1SbFp5rPkwRBbE/6fRQVL2tigBkj41B8Ctfre3BPHVI9z0z8AOiVYGNKlefxTuR
-         0L5v0xEFkB8leMe/3dFDa596NB4FwqUxMyCB02MrQsNwmGbiNDzuAg/rqjh7q6aB7Vy5
-         kOGw==
-X-Gm-Message-State: AOAM531k04JaZMzXI0bpNQB8tZWiHnDBRrz8Z0sg3xOlXedPG2W1x1XE
-        n8+9A4SXW7nBH1+os1nDuLw=
-X-Google-Smtp-Source: ABdhPJwLjcaHheZatyOUH/6xiHxHyyTOf9WDZ17/hY6ozZ+Nkz4eWNxMJB8vD/C5oVTDf00xIZ3AfA==
-X-Received: by 2002:a9d:4f0e:: with SMTP id d14mr3567563otl.70.1623426624726;
-        Fri, 11 Jun 2021 08:50:24 -0700 (PDT)
-Received: from localhost ([187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id o24sm1326269otp.13.2021.06.11.08.50.23
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=7RQvoJ1jxf4zzfJsjLQjo9PKCt16UD2e6ZD8Z7bISYU=;
+        b=EqR4vpp95Hj+67Q4ym1cQJBLynYY+/mCR/v8PbbFsXpiwdb0FjULJJrs7myYnWyzdh
+         UgnUgiYzau7UnPQGn3UosNk43ye2LRjbL2dUuJiE3HFAZWlBkbZKMXDm1cImqxHU/8wx
+         Mdx9l30f1PhL3wGb/VnNL5FkX8ybjLI2w7wRV+CHZsINnwplW/O74o5gEzM5ftd5/t8c
+         yW/xO7zbyLHNGYzTVDjHhOX8ZIRSSIs6K6iigvKqFN/N1AfC7kv4t+S6hdrnibuBydyI
+         jnbRyD/YVpHh57bfdukS2VRrmKGEwZZJpB3qs6Ztbr8vtwsMh3BXubyCNXhxrb22mnUE
+         sdhA==
+X-Gm-Message-State: AOAM532YP0KHkpR/6VCa0Ooq2il0HIsO+PtphXQJ3+b5ivonwpX3ZsvR
+        JRWju6zpUvhNJbvx4j5YXoJMrsJ/Iro=
+X-Google-Smtp-Source: ABdhPJz++biUAk3nPv6PbUrpapYimJ/hb4L8tAzN6eJLmDKyl6mu5JIP866OTKBELkLPhD6Ok1/DVw==
+X-Received: by 2002:ac2:44c2:: with SMTP id d2mr2975019lfm.337.1623426773618;
+        Fri, 11 Jun 2021 08:52:53 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id z9sm622273lfu.53.2021.06.11.08.52.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 08:50:24 -0700 (PDT)
-Date:   Fri, 11 Jun 2021 10:50:18 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Luke Shumaker <lukeshu@lukeshu.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <60c3863ad8971_85c8208e@natae.notmuch>
-In-Reply-To: <nycvar.QRO.7.76.6.2106111224060.57@tvgsbejvaqbjf.bet>
-References: <pull.978.git.1623316412.gitgitgadget@gmail.com>
- <87a6nx6wtv.wl-lukeshu@lukeshu.com>
- <nycvar.QRO.7.76.6.2106111224060.57@tvgsbejvaqbjf.bet>
-Subject: Re: [PATCH 0/2] Fix git subtree on Windows
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Fri, 11 Jun 2021 08:52:53 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jeff King <peff@peff.net>, David Aguilar <davvid@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 7/7] xdiff: make diff3 the default conflictStyle
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+        <20210609192842.696646-8-felipe.contreras@gmail.com>
+        <60883e1b-787f-5ec2-a9af-f2f6757d3c43@kdbg.org>
+        <YMIYUgo71aKJ1Nnx@coredump.intra.peff.net>
+        <xmqqh7i5ci3t.fsf@gitster.g>
+        <638a0500-459a-a25b-afca-904ec0e09866@kdbg.org>
+        <xmqqy2bg3nqw.fsf@gitster.g>
+        <07ef3a3b-4812-4fa1-c60c-b9085a268bc3@kdbg.org>
+        <xmqqo8cc3maq.fsf@gitster.g> <875yykipq2.fsf@osv.gnss.ru>
+        <60c38205cdbf8_3ad92084@natae.notmuch>
+Date:   Fri, 11 Jun 2021 18:52:52 +0300
+In-Reply-To: <60c38205cdbf8_3ad92084@natae.notmuch> (Felipe Contreras's
+        message of "Fri, 11 Jun 2021 10:32:21 -0500")
+Message-ID: <87a6nwflez.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
-> On Thu, 10 Jun 2021, Luke Shumaker wrote:
-> =
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> > On Thu, 10 Jun 2021 03:13:29 -0600,
-> > Johannes Schindelin via GitGitGadget wrote:
-> > > This particular condition, however, was never tested on Windows,
-> >
-> > I was going to say that I do have CI set up[0] to run the subtree
-> > tests on Windows, and was going to ask for assistance in figuring out=
+> Sergey Organov wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> > I notice that "git merge --help" tells what each part separated by
+>> > conflict markers mean in both output styles, but does not make a
+>> > specific recommendation as to which one to use in what situation,
+>> > and it might benefit a few additional sentences to help readers
+>> > based on what you said, i.e. the "RCS merge" style that hides the
+>> > original is succinct and easier to work with when you are familiar
+>> > with what both sides did, while a more verbose "diff3" style helps
+>> > when you are unfamiliar with what one side (or both sides) did.
+>> 
+>> I don't get it. Once you have diff3 output, and you want something
+>> simpler, you just kill the inner section, right? RCS merge output style
+>> is simply inferior.
+>
+> The issue here is not a mere inner section, it's a nested inner section
+> due to a recursive merge.
 
-> > how to set up CI's Windows to match the behavior that you're seeing
-> > with Cygwin.
-> >
-> > However, upon closer inspection: Because of how run-test-slice.sh
-> > works, it wasn't actually running the subtree test on Windows.  Oops.=
+No, this one is just generic suggestion by Junio to improve
+documentation, unrelated to particular problematic contents of the inner
+section of diff3.
 
-> =
-
-> Right, I am sorry about that, it did bite me recently, too.
-> =
-
-> > Now, that CI setup was just on my personal copies and hadn't been
-> > submitted upstream, since I wasn't sure if it was welcome[1].  I neve=
-r
-> > really got a reply to that part, but but now that we've got buy-in
-> > from =C3=86var for running the tests in contrib/,[2] I might spend so=
-me
-> > more time on it and try to get that submitted.
-> =
-
-> I am not so sure about running tests in contrib/ as part of the CI.
-
-But we already do run contrib tests:
-
-  t1021-rerere-in-workdir.sh
-  t3000-ls-files-others.sh
-  t9902-completion.sh
-  t9903-bash-prompt.sh
-
-> Those bits and pieces are in contrib/ to indicate that they should
-> _not_ be considered as adding to Junio's maintenance burden, and
-> adding them to CI would contradict that.
-
-People rely on contrib and distributions build packages enabling what is
-in contrib.
-
-Part of a successful release is contrib not being broken, so Junio can't
-just ignore the status of contrib.
-
-I agree this is not goood, but that's the current situation we are in,
-and that's because we have allowed perfectly widely used and stable
-software on the same cohort as unmaintained waste nobody cares about.
-
--- =
-
-Felipe Contreras=
+Thanks
+-- Sergey Organov
