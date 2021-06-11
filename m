@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C692C48BD1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC6DBC48BE5
 	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 22:55:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45EDF61374
+	by mail.kernel.org (Postfix) with ESMTP id AD92C61374
 	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 22:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230302AbhFKW54 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230305AbhFKW54 (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 11 Jun 2021 18:57:56 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:36660 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbhFKW5y (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:39618 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229951AbhFKW5y (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Jun 2021 18:57:54 -0400
-Received: by mail-qk1-f202.google.com with SMTP id c3-20020a37b3030000b02903ad0001a2e8so739459qkf.3
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 15:55:41 -0700 (PDT)
+Received: by mail-qk1-f201.google.com with SMTP id v16-20020ae9e3100000b02903aafadba721so7948157qkf.6
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 15:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=LOPYuWoJG1GmLXx5cVSAjfxC6H+fFWbsSGMiDMrsKN0=;
-        b=Zp+dNTFP+gTBLsL4e8+e4U49W02ASOVzN4U9Xku2K+ywWNqzDxPf0HnRKY6GT7xaWZ
-         P6ZcA3hjy6HGyoM9ajbBwDEfCFPg8G0AAgnegvGCsDyeFOqjuoAqMHiq7GznszPwgEHL
-         5CKWXuOqJQnv8B5g4WWUCGyrJ5/m1aAo0unXm+SrldaKNFosQElMvuCmmL2WLPPb4H3b
-         GVYeq3WdVe/kp1dfZq+4ibaC1Y9auCWHIdNa+5O2f9tEv8IwVahfaFyIu1QxnIukNl5+
-         SdhTWH7zacfTtNxUzSM/zbKqNKQ+fuKtNaDyjWHDKc8BJj6EUih6erDLwvP6k3h2ARyn
-         PXDQ==
+        bh=C4Ecs1VoZMSdLkgCKV06ArCy7TfqUq6TKSoKEmyI068=;
+        b=asEayoDm68oJHd6DRQSVu7778wXoKeuz+rN2zcv9oR+jx9XtVQyev/Xoc9/3O0ml2A
+         /LH+Lh0yksu54QRHm98T7Z417cbu8dzUGvwjN8hMlWXjzM9ekt+c6FHkLLpxoy8ySXVD
+         k/G+PEcDA+8ViI9XUcXJJaQ7joDxg54vT46mE+i3Up1+qROLNRHFlUy34DFbQ2bZ9bEQ
+         9cNoALuX2czE06sRHAQus+5OyqicZXm2PGVF2c4nt/a1XrAJ2Ds6TNm3U7uDtEuEprvA
+         dDH8I2jjTtoZReMfBdqe+QBnVLhT03zS0jsX2ow9lo41NGzJ2pchI8neLVVnJoTB0Pc0
+         qUXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=LOPYuWoJG1GmLXx5cVSAjfxC6H+fFWbsSGMiDMrsKN0=;
-        b=mn0UvkFlMCrR5HmKls3fD099ByFVm8mW5HBC2jUCbbfqNKkm0wHgYZ/6/t3uKRGtme
-         VZftSLVgPI7VVPzvyG/yGv96BgMah9dR4WBpiD3nvhQaf2Nuf9aLSQr6QWLuJq928Psb
-         PEJZcg6MB4SHEbYxev3qzL4FSubXW5OIhPjr/5s0K9YW6FjUjK8mnZ8ysFI05nd3mJ/G
-         RNG9cgyDo4Z0r+WyAqqnglKlTnl4VVQ0NnDOeKZ7f7ppo5a1zlxV4u9BWiPv1i5cmKMR
-         vamdzgnSt8FnhIAcudKbyJ6dZHgY9X4Di3pVA1C4wnim9DCf98Rafvbeh0wA9FFeoXUH
-         6ehw==
-X-Gm-Message-State: AOAM532LYCR0cBqBhrAKJ11OlskSLHDKGkleUgEpQUJgKqog/DNqCpvt
-        IaQvS2huL/9WelQGXi7fSrZFL4ojZuyng0oCeT22fn39dw6NfyvbmtdNFCItOuc0RbnRyySUO2y
-        OQgfrvACObL7uc31ngmMkjeRyZ1jfzSH/ndyUwCjY8QOYgzgq4D8rGyhvgwHP1o4Mtf3K2OA/zA
+        bh=C4Ecs1VoZMSdLkgCKV06ArCy7TfqUq6TKSoKEmyI068=;
+        b=cZcji4ziHpp9Uut4ywCQJZd86yqJWvCN4r0FvVTpop1JY/4xmoWQThXdGrTgMdcckS
+         ykOCwzSOFLyz2gIYtj5UcsF/ox/dQNMUTFUQmcOQvwOgECDFb4/NCJk2uTMrO0upmi02
+         Bx20QRMqfwNvFczlcEZAuSMH/83xNeV2jClNuULqKHYb2nZY+hbL5Ggr8nYctXBJ5AvJ
+         I5vXGC5W82wM9BM4uwEm/HWLJJzbYt2jk071tSdiFiBo92+GWeN6o1BWs+POBsDitILd
+         0hxJI0NymEl6uHABoY+GQEuQ+3pmTNRIJYL4+532DO0FN4hwpuPIfNHYJ1dnpjDosSsU
+         N/5Q==
+X-Gm-Message-State: AOAM532IU5StmIzb5awfisPzrB8++7on/+ZXnp/1vwvayh1M18tLjdUO
+        sWTJxoCOv+hDZPSUCVUUuhDTdhV8CWyVZBZR/Q3RoGdFcors2S6oq82E+vIXXaSkak2g+X2ciH0
+        XXe+rvJl0n+bMRPua2b7/NXZiJModRh7/ilgNR5Ol98vOppAAw3pzQZpA4CErO63v2x0Fc1mwVg
         ==
-X-Google-Smtp-Source: ABdhPJxuWpB83nxS4qi5af2VwBCDum+boKycm3wnNoBVeQgKGx0Kr4kVOodsvCWKPea+oh/MOzJ5aPmSjGMU98Jvj1Q=
+X-Google-Smtp-Source: ABdhPJwQx6/RWMwzJFsBEHA7mTRknDVpnGeZkvKPpmzDaBpQY2t1NKFuoyV3S3mE3OZ4dE6R+JLr9x/mFUIkpw6j8RI=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:c894:862c:2364:ff78])
- (user=emilyshaffer job=sendgmr) by 2002:ad4:4241:: with SMTP id
- l1mr7326118qvq.2.1623452081474; Fri, 11 Jun 2021 15:54:41 -0700 (PDT)
-Date:   Fri, 11 Jun 2021 15:54:27 -0700
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:20e3:: with SMTP id
+ 3mr7231493qvk.48.1623452083496; Fri, 11 Jun 2021 15:54:43 -0700 (PDT)
+Date:   Fri, 11 Jun 2021 15:54:28 -0700
 In-Reply-To: <20210611225428.1208973-1-emilyshaffer@google.com>
-Message-Id: <20210611225428.1208973-4-emilyshaffer@google.com>
+Message-Id: <20210611225428.1208973-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210611225428.1208973-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
-Subject: [RFC PATCH 3/4] submodule: cache superproject gitdir during absorbgitdirs
+Subject: [RFC PATCH 4/4] submodule: cache superproject gitdir during 'update'
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -67,58 +67,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Already during 'git submodule add' we cache a pointer to the
-superproject's gitdir. However, this doesn't help brand-new
-submodules created with 'git init' and later absorbed with 'git
-submodule absorbgitdir'. Let's start adding that pointer during 'git
-submodule absorbgitdir' too.
+A cached path to the superproject's gitdir might be added during 'git
+submodule add', but in some cases - like submodules which were created
+before 'git submodule add' learned to cache that info - it might be
+useful to update the cache. Let's do it during 'git submodule update',
+when we already have a handle to the superproject while calling
+operations on the submodules.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- submodule.c                        | 10 ++++++++++
- t/t7412-submodule-absorbgitdirs.sh |  1 +
- 2 files changed, 11 insertions(+)
+ git-submodule.sh            |  9 +++++++++
+ t/t7406-submodule-update.sh | 10 ++++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/submodule.c b/submodule.c
-index 9767ba9893..09dfc4ee38 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2064,6 +2064,7 @@ static void relocate_single_git_dir_into_superproject(const char *path)
- 	char *old_git_dir = NULL, *real_old_git_dir = NULL, *real_new_git_dir = NULL;
- 	char *new_git_dir;
- 	const struct submodule *sub;
-+	struct strbuf config_path = STRBUF_INIT, sb = STRBUF_INIT;
+diff --git a/git-submodule.sh b/git-submodule.sh
+index eb90f18229..ddda751cfa 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -648,6 +648,15 @@ cmd_update()
+ 			fi
+ 		fi
  
- 	if (submodule_uses_worktrees(path))
- 		die(_("relocate_gitdir for submodule '%s' with "
-@@ -2095,6 +2096,15 @@ static void relocate_single_git_dir_into_superproject(const char *path)
- 
- 	relocate_gitdir(path, real_old_git_dir, real_new_git_dir);
- 
-+	/* cache pointer to superproject's gitdir */
-+	/* NEEDSWORK: this may differ if experimental.worktreeConfig is enabled */
-+	strbuf_addf(&config_path, "%s/config", real_new_git_dir);
-+	git_config_set_in_file(config_path.buf, "submodule.superprojectGitdir",
-+			       relative_path(get_super_prefix_or_empty(),
-+					     path, &sb));
++		# Cache a pointer to the superproject's gitdir. This may have
++		# changed, so rewrite it unconditionally. Writes it to worktree
++		# if applicable, otherwise to local.
 +
-+	strbuf_release(&config_path);
-+	strbuf_release(&sb);
- 	free(old_git_dir);
- 	free(real_old_git_dir);
- 	free(real_new_git_dir);
-diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-index 1cfa150768..70fc282937 100755
---- a/t/t7412-submodule-absorbgitdirs.sh
-+++ b/t/t7412-submodule-absorbgitdirs.sh
-@@ -29,6 +29,7 @@ test_expect_success 'absorb the git dir' '
- 	test -d .git/modules/sub1 &&
- 	git status >actual.1 &&
- 	git -C sub1 rev-parse HEAD >actual.2 &&
-+	test . -ef "$(git -C sub1 config submodule.superprojectGitDir)" &&
- 	test_cmp expect.1 actual.1 &&
- 	test_cmp expect.2 actual.2
++		sp_gitdir="$(git rev-parse --absolute-git-dir)"
++		relative_gitdir="$(realpath --relative-to "$sm_path" "$sp_gitdir")"
++		git -C "$sm_path" config --worktree \
++			submodule.superprojectgitdir "$relative_gitdir"
++
+ 		if test -n "$recursive"
+ 		then
+ 			(
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index ff3ba5422e..96023cbb6a 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1037,4 +1037,14 @@ test_expect_success 'submodule update --quiet passes quietness to merge/rebase'
+ 	)
  '
+ 
++test_expect_success 'submodule update adds superproject gitdir to older repos' '
++	(cd super &&
++	 git -C submodule config --unset submodule.superprojectGitdir &&
++	 git submodule update &&
++	 echo "../.git" >expect &&
++	 git -C submodule config submodule.superprojectGitdir >actual &&
++	 test_cmp expect actual
++	)
++'
++
+ test_done
 -- 
 2.32.0.272.g935e593368-goog
 
