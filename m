@@ -2,92 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76988C4743D
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 07:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B889C48BE0
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 09:19:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57586613B3
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 07:59:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AB4660FEB
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 09:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbhFKIBa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 04:01:30 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58771 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbhFKIB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 04:01:27 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0C8D714A06C;
-        Fri, 11 Jun 2021 03:59:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sJo4a03ObETlbLIY/KvlIiIh1PnIszp5pW5RTT
-        6A2GY=; b=FcOJlbQK05S5Da6lTyWXyW9BzJu1nk4YDSFohnJVLKTlJYb/4zcVXw
-        VecZ6EYFi8MVvTbbPKeW6qqMAiLPRtwDU4UZMTfQAIbKiBnO0/9myq9gEgyvJ24s
-        W7uXrAr3JrOjJHY/eyP7JWa93n4AsU9ltBfGmnY74US2rQuwC78l8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0427014A06B;
-        Fri, 11 Jun 2021 03:59:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 34FD414A06A;
-        Fri, 11 Jun 2021 03:59:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH v3 1/2] submodule--helper: introduce add-clone subcommand
-References: <20210608095655.47324-1-raykar.ath@gmail.com>
-        <20210610083916.96243-1-raykar.ath@gmail.com>
-        <20210610083916.96243-2-raykar.ath@gmail.com>
-        <xmqqim2l3p92.fsf@gitster.g>
-        <EAB5ABE4-B032-41AE-B39D-44D0D0A40D52@gmail.com>
-Date:   Fri, 11 Jun 2021 16:59:23 +0900
-In-Reply-To: <EAB5ABE4-B032-41AE-B39D-44D0D0A40D52@gmail.com> (Atharva
-        Raykar's message of "Fri, 11 Jun 2021 13:02:57 +0530")
-Message-ID: <xmqqk0n03k84.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S231386AbhFKJVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 05:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231145AbhFKJVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 05:21:12 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9357C061574
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 02:19:01 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id m41-20020a05600c3b29b02901b9e5d74f02so4961730wms.3
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 02:19:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=t2+pym2cFfo+MLFozanGaZsO/LCSuJyBlqv08veNhIo=;
+        b=ldAR10xfmejESnN/VS9EwnTzFnT8Wyt3pZbsiRoHt05DA5cPshlCzKJR4sQzZhLDHo
+         0/jq6MpePrhSrnlUyEKd27CdxxgJCxOEWMX1y28dihS3G5z803ex+ZnUxJg1eKttLNWR
+         XGiQAyckknSF967fE97PYfcXAbMrWKlJU2RncwDiMsV/66wHAYQOTAJoc3/VlXYcx0um
+         hvEOQPmVeOIbs7pg5poEwrS82AVPcgCeMqu54nxv035mQPbwbUhVgrO+pXE8io2+QIUY
+         kJdgYhis0CeS3AgQFx8YH9u1ogYyZTRQearwbt1CSX3C6cg3AAR9CClbqSD+t9mJ96rS
+         qxrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=t2+pym2cFfo+MLFozanGaZsO/LCSuJyBlqv08veNhIo=;
+        b=t4lQpWnNZc8RkPp5ctYqglVcPUEWknsbeodS3XCGD7OvBKsa0t/wKWuc0T6axqHh0r
+         PLpwV7VStkoJkkD2UZAyXUglUC25jfxNKe/g1PhkoxJLkpEzD6FO15yrVWRFf4UuiHTg
+         B2/1zEd+B6KENIBB8zh7g7cbyyAJJh7UMD8lo6oB/zIKb4Yud5MSZOL+BmG8gXVGpQao
+         YOT8iNAbhvwI8h0MjejSEOwZjl95wVXqlxTRMEalPBq4qeK86Qm97L5E7xIwnePN4SSE
+         t3ZnmOPu3zHLweMMAvyYyb0KZt/9hCOM6To79s7fCTDv6m+XBN8g0U9a0F2VYopPiRkr
+         jmyw==
+X-Gm-Message-State: AOAM531GjC12l3AK4qKRdCoQyOUVOoXOxNlBwiZV8kLn4bvmgXtkFB8q
+        Od5X/xE4qMZ/41M0DT5ekefuW4pr96M=
+X-Google-Smtp-Source: ABdhPJxCesMXw+6SrZxn1kVBt0TYiuZWZLm3+6BplFYDQ5Mrj5koiOBA5MdjVV4qLGgf/7YPhi7GQg==
+X-Received: by 2002:a1c:ddc3:: with SMTP id u186mr19208033wmg.44.1623403140322;
+        Fri, 11 Jun 2021 02:19:00 -0700 (PDT)
+Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
+        by smtp.gmail.com with ESMTPSA id k5sm6120384wmk.11.2021.06.11.02.18.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jun 2021 02:18:59 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/7] checkout: fix merge.conflictstyle handling
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     David Aguilar <davvid@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>
+References: <20210609192842.696646-1-felipe.contreras@gmail.com>
+ <20210609192842.696646-5-felipe.contreras@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <bf1125b9-fbf1-f937-5197-e5128233952c@gmail.com>
+Date:   Fri, 11 Jun 2021 10:18:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F06471A6-CA8A-11EB-A8BD-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+In-Reply-To: <20210609192842.696646-5-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar <raykar.ath@gmail.com> writes:
+On 09/06/2021 20:28, Felipe Contreras wrote:
+>[...]
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index d146bb116f..10e6e1e4d1 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -3845,7 +3845,7 @@ static void merge_recursive_config(struct merge_options *opt)
+>   		} /* avoid erroring on values from future versions of git */
+>   		free(value);
+>   	}
+> -	git_config(git_xmerge_config, NULL);
+> +	git_config(git_default_config, NULL);
 
-> I think the larger concern I have to balance here is what level of
-> "faithfulness" should I be having with this conversion. My current
-> thoughts on this are:
->
->  - Functionality and behaviour should be as similar as possible.
->
->  - If there is an *obvious* bug that can be fixed in translation,
->    then I should fix it.
->
->  - If there are error messages that can be made more clear and
->    consistent with the rest of the Porcelain, then I'll make the
->    required change.
+Now that all callers are required to call git_config(git_xmerge_config) 
+before calling init_merge_options() this line can be deleted.
 
-I have been assuming that we would draw the line between the second
-one and the third one, that is, as little end-user visible behaviour
-changes as possible, unless the behaviour being changed is a clear
-bugfix, during the conversion.  Polishing the results into an even
-better shape can and should be done after the initial conversion is
-completed.  Switching from die() to fprintf() with error return would
-be very desirable in the end result, but that would be a bit distracting
-to read during the review of the initial conversion.
+Best Wishes
 
-Thanks.
+Phillip
 
+>   }
+ >
+>   void init_merge_options(struct merge_options *opt,
+> diff --git a/sequencer.c b/sequencer.c
+> index 0bec01cf38..9e2bdca0f6 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -34,6 +34,7 @@
+>   #include "commit-reach.h"
+>   #include "rebase-interactive.h"
+>   #include "reset.h"
+> +#include "xdiff-interface.h"
+>   
+>   #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>   
+> @@ -224,6 +225,10 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+>   	if (status)
+>   		return status;
+>   
+> +	status = git_xmerge_config(k, v, NULL);
+> +	if (status)
+> +		return status;
+> +
+>   	return git_diff_basic_config(k, v, NULL);
+>   }
+>   
+> diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
+> index 44f79ac91b..485ad0eee0 100755
+> --- a/t/t6440-config-conflict-markers.sh
+> +++ b/t/t6440-config-conflict-markers.sh
+> @@ -89,4 +89,35 @@ test_expect_success 'notes' '
+>   	)
+>   '
+>   
+> +test_expect_success 'checkout' '
+> +	test_create_repo checkout &&
+> +	(
+> +		test_commit checkout &&
+> +
+> +		fill a b c d e >content &&
+> +		git add content &&
+> +		git commit -m initial &&
+> +
+> +		git checkout -b simple master &&
+> +		fill a c e >content &&
+> +		git commit -a -m simple &&
+> +
+> +		fill b d >content &&
+> +		git checkout --merge master &&
+> +		! grep -E "\|+" content &&
+> +
+> +		git config merge.conflictstyle merge &&
+> +
+> +		git checkout -f simple &&
+> +		fill b d >content &&
+> +		git checkout --merge --conflict=diff3 master &&
+> +		grep -E "\|+" content &&
+> +
+> +		git checkout -f simple &&
+> +		fill b d >content &&
+> +		git checkout --merge --conflict=merge master &&
+> +		! grep -E "\|+" content
+> +	)
+> +'
+> +
+>   test_done
+> 
