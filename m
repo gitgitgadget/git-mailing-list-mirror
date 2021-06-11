@@ -2,95 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A62FC48BE0
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 19:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83519C48BD1
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 20:28:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49AF261364
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 19:26:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69FDA610F8
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 20:28:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230440AbhFKT2e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 15:28:34 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:36471 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230312AbhFKT2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 15:28:34 -0400
-Received: by mail-ed1-f51.google.com with SMTP id w21so38272506edv.3
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 12:26:27 -0700 (PDT)
+        id S230184AbhFKUaU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 16:30:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49392 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229937AbhFKUaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 16:30:20 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E46C061574
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 13:28:21 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id w127so7046058oig.12
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 13:28:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:subject:to:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=PQ4fLa0CPaGkF8EEW8TbJ4lbXkM6taGft1tn5xR/W1A=;
-        b=DmHDnNI0Ta7P5l79WOoEqstY2prkAqUbMUo8rlq0nkLxtC/FoTHxkj0h43pQ/EqDhp
-         c8KwkHRFJqeo2hJm4jspG/ASqnXy5Bjgn86ukq1WsTWc+vAhxi8OHElXYCjTm3qyy3KB
-         413M8b1pJOsGzdXKECuH/5pN/OUUSexZsGHY/jWXbNcwOd4DZzmxvyxNW8yuoVAquFiA
-         +ZCbeofBmGVWg29mOJVF6bAOaqwloq5iLOzB6T7xHWTPG1ftIaooHZWZBebvHo1rTFMT
-         UTkUxuhms/J7PkPlf8K17xGCw+pZyTy+oqPSj6rdVrRpH8NkUsqu5p6YJmQq5Qcp4wXW
-         9Ctw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0M+npTlnpqALwyeSQhg7Zxc/jvy5vgCSIaToCOjZ09s=;
+        b=T8UJ/acA0viQkQotBlgoxqwVfChE/DG7kzD9PJP9DVdwyP4vXSaI5pU4xTJLCJp/1B
+         mrxoAuHUiJHRhHK8ewVyqH4MZ0a/OAYEAMetXJ0NdlCG227oRFR7VYjc6elza9TsgpUL
+         1uSp1Kzk/S/6dR/HzT9HdDI6NK1cNp3bwC3JD3rFp0fazREw5E8cTW563pE4VK7jBR8H
+         /pSsaoJh0nN2xEnbXLoU/QeSEKTgktDmEXPg3/mPfaPgB6A0qOig25ExkDXo4ejLXKqO
+         HUqZGHCP6SyTPMyegoWf1p6B/mits2komtOHJ4Zgb/ZELQJYasO77rAjZW5YPVrggwdd
+         Cd3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=PQ4fLa0CPaGkF8EEW8TbJ4lbXkM6taGft1tn5xR/W1A=;
-        b=bXn9JNwstf6upMJ5nBIpWkUaep9eFD/5WcK7pERyMjrTD9wJcBphxTO2+XmiACbbe0
-         jQPjivbos2ZgQHaJYXBBlFJGKh7/cE20ETStnFd3lSMf8ND5kvLzhr5NAcgb1wasXlji
-         XIvn9h4Kssu9HCcbfqq3w5KQ+wLhARKZkpVBOfG+dJyASa9x8IzAeAIH8pSAEUk636YI
-         mEVWakqeoUsbneSu7gu5DJHRoEQWN8mDerBQ1g88bK/5lGxR9ejyY70l8/3wi7Qe36js
-         VIKqkgyRVUgMexzPcP3Bt7pMkinEHpMg+chAxvzd+nRUbTZsTyaiKigNJyoWN53JVxdt
-         HdQQ==
-X-Gm-Message-State: AOAM530JI04y4d48lmbssXwAbz5g0H1UDfnNb3UW1rjd1LdP68TTcOEg
-        25cZrH0caskuzeKeCqnjChGYPuW4ufZSvpc=
-X-Google-Smtp-Source: ABdhPJxmdPxfCP9k5SL/hzwZFgTAnTg9zTars29l80v0CVZKX74dLJeevelB5/mBLJfmTMcKoZUCVA==
-X-Received: by 2002:aa7:cb8b:: with SMTP id r11mr5227393edt.233.1623439526575;
-        Fri, 11 Jun 2021 12:25:26 -0700 (PDT)
-Received: from ?IPv6:2a04:2419:8503:3080:e190:2f64:3160:22af? ([2a04:2419:8503:3080:e190:2f64:3160:22af])
-        by smtp.gmail.com with ESMTPSA id a2sm2396087ejp.1.2021.06.11.12.25.25
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Jun 2021 12:25:26 -0700 (PDT)
-From:   Timothy Madden <terminatorul@gmail.com>
-Subject: Wrong tabs in terminal output for git diff
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0M+npTlnpqALwyeSQhg7Zxc/jvy5vgCSIaToCOjZ09s=;
+        b=RSjGv3YzAUBnBHqI3d0feItoygVrBlIIDutQXFL+38LoHbMrfpkWZ2nvfzNiM5R5Hm
+         F2UmS6hMUyprIDR4EMi/6gVNRNre+JOtRlaWtwXGmkGdfGjwnNT3r6k7mq08aUzLZkuG
+         xeyzqUhrsRT7sQjyI+7/ywKu9a/u6OWvEixOJ/UygszXxt3is/r/MjfiXfssC2I9ESmc
+         mx0fCwiucdNRNWQDlfmcdi1VijQ0lwLUev68XUqRhONT76Ra2PjwU6EIjcy9dM4FMg0Z
+         hicYDpadWIjc1MolOL6MAVYLWNY4w47dOhScDRXbOX/A1x6Wh6YIJbkHG2YT+ECE7E81
+         USXA==
+X-Gm-Message-State: AOAM533K3IVsH9BK9X+ig+AHJm2G4tBrEcj7C6D81PKx87HUGn6C4oMD
+        czj0/sRxZ3grJTFPwolhlPjo+gu9EEdzxw==
+X-Google-Smtp-Source: ABdhPJwzxeRNbhBBqazjoPT8xssfn8A38IO7zr/zE+qo5AVuJvv3GGnt1lE1FaXBcIuJ6h31LQPl9g==
+X-Received: by 2002:a05:6808:319:: with SMTP id i25mr2248324oie.95.1623443300974;
+        Fri, 11 Jun 2021 13:28:20 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id c11sm1375149oot.25.2021.06.11.13.28.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jun 2021 13:28:20 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <8d3f8cf4-24ec-1271-ccd3-70db24f53523@gmail.com>
-Date:   Fri, 11 Jun 2021 22:25:24 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] Avoid gender pronouns
+Date:   Fri, 11 Jun 2021 15:28:17 -0500
+Message-Id: <20210611202819.47077-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: ro
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+The latest solution looking for a problem [1] is to use the actively
+debated among linguists singular "they" [2].
 
-For git diff and git show commands, terminal output appears with wrong 
-tab stops (missaligned).
+Leaving aside the linguistic intricacies that not all singular "they" are
+equal [3], and the overwhelming sentiment that these kinds of political
+discussions don't provide value for this community [4], the "issue" can
+be easily solved by simply using different wording.
 
-Because diff operation inserts a new column at character position 1, for 
-the +, - and space characters, the diff content appears shifted to the 
-right by 1 column. But not the tab stop positions. So relative to the 
-text, the tab stops now appear off-by-one (shifted to the left).
+  - The reviewer herself
+  + The reviewers themselves
 
-This results in text that appearing missaligned, even though the 
-original file looks fine before the diff.
+Problem solved.
 
-I believe this is not a new issue, since git gui does the right thing 
-and the tab stops are aligned properly in the GUI.
+Cheers.
 
-Is it possible please to fix diff output as well, when used in the 
-terminal (interactive mode) ?
+[1] https://lore.kernel.org/git/pull.975.git.1623085069.gitgitgadget@gmail.com/
+[2] https://www.theatlantic.com/culture/archive/2013/01/singular-their-affront-good-writing/319329/
+[3] https://ahdictionary.tumblr.com/post/147597257733/updated-usage-note-they
+[4] https://lore.kernel.org/git/87wnrooa17.fsf@evledraar.gmail.com/
 
-(I can include screenshots but I am not sure what the mailing list 
-policy is about that)
+Felipe Contreras (2):
+  doc: avoid using the gender of other people
+  comments: avoid using the gender of our users
 
---
-Thank you,
-Timothy Madden
+ Documentation/SubmittingPatches | 5 ++---
+ Documentation/git-push.txt      | 4 ++--
+ Documentation/user-manual.txt   | 2 +-
+ commit.c                        | 2 +-
+ config.h                        | 4 ++--
+ date.c                          | 2 +-
+ pathspec.h                      | 2 +-
+ strbuf.h                        | 4 ++--
+ wt-status.c                     | 2 +-
+ 9 files changed, 13 insertions(+), 14 deletions(-)
+
+-- 
+2.32.0
 
