@@ -2,113 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22CC5C48BD1
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 11:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AC8DC48BD1
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 12:59:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED123613CA
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 11:52:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1944E61029
+	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 12:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231326AbhFKLyf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 07:54:35 -0400
-Received: from mail-lf1-f45.google.com ([209.85.167.45]:45801 "EHLO
-        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230370AbhFKLye (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 07:54:34 -0400
-Received: by mail-lf1-f45.google.com with SMTP id a1so8108984lfr.12
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 04:52:36 -0700 (PDT)
+        id S230468AbhFKNBC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 09:01:02 -0400
+Received: from mail-oi1-f173.google.com ([209.85.167.173]:40493 "EHLO
+        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230349AbhFKNBB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 09:01:01 -0400
+Received: by mail-oi1-f173.google.com with SMTP id d19so1657530oic.7
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 05:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wAL1BPo7FtV7gzrgjuYJzTFAzYIEkuSPz5CKBaLp8Jg=;
-        b=InlqFZI7SdbIJtRVl1He/xR5TQgV8q9fK4iFX/wiIEBkE3O030zvczXQPlV1BoIelf
-         9mswjM78pBlaIWxfG4T8qB2VK9HIudXzkEuJVMJZPUNi9Y29WETP+1LZ4D87oy3BHeVi
-         lmLVBZdD811nRNVyo0NZ6DkMdZ6B/RAmsVyEmp+xRMZgjYN434X2UfGlbNohhX0HHgkz
-         mjjrAsSdueyQuYML70rwaGLQuc0Xat7wYQQ8m1mm4V2Sqv7beiPKyZdmw8B++BEV8VRz
-         1v0OW6qf6O1COR27OEKeph3UjG3phsVR+ObWnSj/3MuYYMYmn/tL7Cn3MOXi/RfmhmJj
-         jPLg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zIp4/GHmJsTNRxbyhNIk9PEEm1koULwwbK2+k2oyqbs=;
+        b=ip2kcap/3n9SLhzamHjbZykiUxCJxr8MSZrcskFC1pdG12+nCIXGoxyhrf/gOJDxAM
+         xdSJ9XIxf9zpyn6eBjOJkkTkQXXUESixU/MdTtkegetWAg3gZv5UnBPP6BMH2oPFmCod
+         T1yYDSxSGwqfkk4580OfiaEFfAwaQFID0vMVG2qfec+9U42aKLt+z5WwJD6pAloUln4w
+         qvycbjmVWrlbGrXiv3FGU0abEtDGnvSn6lhH8Wc7bWnpCJVI/Mf4rAfwsoBmM/Ur8S00
+         bP7sTRzkNPaeQajSwuVTavOrcD74lz4GiMNLOIYsnNUfRC/ImG86a1jHS5Lx5omFyn4I
+         KFDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=wAL1BPo7FtV7gzrgjuYJzTFAzYIEkuSPz5CKBaLp8Jg=;
-        b=i6WQrBs5oGk0CZn6SQM+q2mlEe195k4PY/3NO05b+GZSvPjaEt9kZwbbRoDIkUal4o
-         YaLT9Qj1mBv9A9rbt55txPBOEihO467ErssTt+1AJJAB6rdbvYdglL1KXx2JDeIFCxLd
-         f2p6gV3ZW1tn1A8VtPTpPZejbK2K05+LVwPP5FRu11lZaRRdLNlasJASLJndMF6gb29J
-         3TojAbkq2E3MOD2XOGvpweAkvHtgg5wcaNuUEqh1aflnX2Css2t6+GI9Fr30lr8ty9Ca
-         he7Otn3YtzOddAWE2JXS0BxHjY3vtU4S46rQ0+c2tbfblH2L/hesykDcEt0Yw/Kdz5Y2
-         PGHA==
-X-Gm-Message-State: AOAM532dNP+O1AR7XLCZvPlZ361ReGxkr0KsLL8mjI59imdBD4xlSiiU
-        FeUU6rfqRaJs+Ms13zWAU485gb+SeyI=
-X-Google-Smtp-Source: ABdhPJyKTDDuZoApIa6B14Uj++EpWkH483QpB4V9gLZidHWnv6pmd0XTgPHJp6zNVeAAmUdIUAcOsA==
-X-Received: by 2002:a05:6512:32ab:: with SMTP id q11mr2302425lfe.21.1623412295197;
-        Fri, 11 Jun 2021 04:51:35 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id k20sm569689lfu.177.2021.06.11.04.51.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jun 2021 04:51:34 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 7/7] xdiff: make diff3 the default conflictStyle
-References: <20210609192842.696646-1-felipe.contreras@gmail.com>
-        <20210609192842.696646-8-felipe.contreras@gmail.com>
-        <60883e1b-787f-5ec2-a9af-f2f6757d3c43@kdbg.org>
-        <YMIYUgo71aKJ1Nnx@coredump.intra.peff.net>
-        <xmqqh7i5ci3t.fsf@gitster.g>
-        <638a0500-459a-a25b-afca-904ec0e09866@kdbg.org>
-        <xmqqy2bg3nqw.fsf@gitster.g>
-        <07ef3a3b-4812-4fa1-c60c-b9085a268bc3@kdbg.org>
-        <xmqqo8cc3maq.fsf@gitster.g>
-Date:   Fri, 11 Jun 2021 14:51:33 +0300
-In-Reply-To: <xmqqo8cc3maq.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        11 Jun 2021 16:14:37 +0900")
-Message-ID: <875yykipq2.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zIp4/GHmJsTNRxbyhNIk9PEEm1koULwwbK2+k2oyqbs=;
+        b=WPNNQZtPyk/6Q/AboxNJxKuncrFxPvpaeSdamMhmapTNqhKh6qEug/wUKA12+RiYnZ
+         CRCLjD5z1wKh7/lW1NYW2anEMwXwpFQmZdHDgq7v8Y9HKvv90IYnY5QMqHhwL9yq9brQ
+         ctyQAV923e8Z4ZTE35HYWwMjJy4hV+lGRMF4SbCqcqkx+q2WKThL4wiSTjrSnaeHIMyM
+         mEbyXb0yKvjRuoUUE4VGMHZe93NFhGCVIhVDoQJFXc1ktVE08HRBhRmALgcZrt3um37V
+         YU4lWRHJr9/a5ykLWumth4EaO22PLJw1bbjPFosDrwUXI9woEvQntg26MVJc5wDg22rS
+         6mYw==
+X-Gm-Message-State: AOAM533CgXqwm2RnGvZdckLtBa7SYO2gbwT96p3zp/Hjj6FRDZ+fbNhA
+        VbA3r+mibZRFfmJ6232QNaRjsXK4w4o0hg==
+X-Google-Smtp-Source: ABdhPJwPRrb+48rZ6fBBE60NCSw/HPLeFIUCgSBUlqTk69ho1HRyUP2K7BPZ8OokywbFskyDE97v3g==
+X-Received: by 2002:aca:fc0d:: with SMTP id a13mr2379079oii.14.1623416274383;
+        Fri, 11 Jun 2021 05:57:54 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:3c70:274a:799:2c37? ([2600:1700:e72:80a0:3c70:274a:799:2c37])
+        by smtp.gmail.com with ESMTPSA id h23sm1166056oih.30.2021.06.11.05.57.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jun 2021 05:57:53 -0700 (PDT)
+Subject: Re: [PATCH v5 10/14] diff-lib: handle index diffs with sparse dirs
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.932.v4.git.1621598382.gitgitgadget@gmail.com>
+ <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
+ <b9b97e0112939d1787ff1d2a13c48e5b406408db.1623069252.git.gitgitgadget@gmail.com>
+ <CABPp-BEp0NzUqW_pWpTGoUvrB1JMp9fVHr28Sp8RZqV6w0-hEw@mail.gmail.com>
+ <xmqqfsxrk0oc.fsf@gitster.g>
+ <CABPp-BHEp6mH3jx6BeRk+u8C-9Q+go0=hHiaxenN_5KQKsR5iw@mail.gmail.com>
+ <60844f4b-33d4-b6d7-3611-a93cf012d3ff@gmail.com>
+ <38d0900b-c677-a32d-cc63-e615828e9a5d@gmail.com>
+ <CABPp-BHFdG9=JfR7fnwSjNgJ2o=ttHn--ogD3_LQLYKe4dV9SQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7d6ca59b-2713-5c10-88de-963efc7779fc@gmail.com>
+Date:   Fri, 11 Jun 2021 08:57:52 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CABPp-BHFdG9=JfR7fnwSjNgJ2o=ttHn--ogD3_LQLYKe4dV9SQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 6/10/2021 5:31 PM, Elijah Newren wrote:
+> On Thu, Jun 10, 2021 at 10:45 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 6/9/2021 4:33 PM, Derrick Stolee wrote:
+>>> On 6/9/2021 4:11 AM, Elijah Newren wrote:
+>>>> On Tue, Jun 8, 2021 at 11:32 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>>>>
+>>>>> Elijah Newren <newren@gmail.com> writes:
+>>>>>
+>>>>> The tree-diff machinery takes two trees, walks them in parallel and
+>>>>> repeatedly calls either diff_addremove() or diff_change(), which
+>>>>> appends diff_filepair() to the diff_queue[] structure.  If you see
+>>>>> an unexpanded tree on the index side, you should be able to pass
+>>>>> that tree with the subtree you are comparing against to the tree-diff
+>>>>> machinery to come up with a series of filepairs, and then tweak the
+>>>>> pathnames of these filepairs (as such a two-tree comparison would be
+>>>>> comparing two trees representing a single subdirectory of two different
+>>>>> vintages) before adding them to the diff_queue[] you are collecting
+>>>>> the index-vs-tree diff, for example.
+>>>>
+>>>> Good to know it seems my idea might be reasonable.
+>>>
+>>> I agree that this is reasonable. I just didn't look hard enough
+>>> to find existing code for this, since I found traverse_trees and
+>>> thought that _was_ the library for this.
+>>
+>> This was surprisingly simple, since most of the complicated stuff
+>> is built into diff_tree_oid() and its use of revs->diffopt. The
+>> new patch works as shown below the cut-line.
+>>
+>> I was incredibly suspicious of how quickly this came together,
+>> but it passes all the tests I have for it (including Scalar
+>> functional tests with the commit, checkout, and add integrations).
+> 
+> Nice!
+> 
+>> I'll send a new version with this patch tomorrow, as well as the
+>> other recommended edits.
 
-> Johannes Sixt <j6t@kdbg.org> writes:
->
->> The case that inner conflicts are presented sub-optimally under diff3
->> remains, though.
->
-> I agree that until that happens (necessary but not sufficient
-> condition), it is premature to recommend diff3 style to be the
-> default.
+...still planning on this today, but...
 
-Yep. A work-around could be to fix diff3 to rather produce RCS merge
-style in such situations?
+>> +       /*
+>> +        * If both are sparse directory entries, then expand the
+>> +        * modifications to the file level.
+>> +        */
+>> +       if (old_entry && new_entry &&
+>> +           S_ISSPARSEDIR(old_entry->ce_mode) &&
+>> +           S_ISSPARSEDIR(new_entry->ce_mode)) {
+>> +               show_modified_sparse_directory(revs, old_entry, new_entry, report_missing, cached, match_missing);
+>> +               return 0;
+>> +       }
+> 
+> What if S_ISSPARSEDIR(old_entry->ce_mode) != S_ISSPARSEDIR(new_entry->ce_mode) ?
 
->
-> I notice that "git merge --help" tells what each part separated by
-> conflict markers mean in both output styles, but does not make a
-> specific recommendation as to which one to use in what situation,
-> and it might benefit a few additional sentences to help readers
-> based on what you said, i.e. the "RCS merge" style that hides the
-> original is succinct and easier to work with when you are familiar
-> with what both sides did, while a more verbose "diff3" style helps
-> when you are unfamiliar with what one side (or both sides) did.
+You make a good point that something different would happen
+in the case of a directory/file conflict on the sparse checkout
+boundary. This can be as simple as the trivial "only files at
+root" cone-mode sparse-checkout definition, with "folder/" (tree)
+changing to "folder" (blob).
 
-I don't get it. Once you have diff3 output, and you want something
-simpler, you just kill the inner section, right? RCS merge output style
-is simply inferior.
+I'll see what I can do to create a test scenario for
+this and add the correct cases.
 
 Thanks,
--- Sergey Organov
+-Stolee
