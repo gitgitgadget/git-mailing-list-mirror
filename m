@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC3CC48BE5
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13974C48BE5
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:15:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA475613AD
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:15:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4C606138C
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbhFLLRY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Jun 2021 07:17:24 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:37506 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231168AbhFLLRX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Jun 2021 07:17:23 -0400
-Received: by mail-wr1-f50.google.com with SMTP id i94so8774689wri.4
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 04:15:23 -0700 (PDT)
+        id S231236AbhFLLRj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Jun 2021 07:17:39 -0400
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:44830 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231168AbhFLLRj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Jun 2021 07:17:39 -0400
+Received: by mail-wm1-f53.google.com with SMTP id m41-20020a05600c3b29b02901b9e5d74f02so6945182wms.3
+        for <git@vger.kernel.org>; Sat, 12 Jun 2021 04:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3Fid+7OckGySR2AJZFibe1HMckvBm8uS33f/PmUPjFg=;
-        b=Kxcby+ZRfUVQFsN56wc3RSQSV1sShdwOAdbOJt6w4FS96FuuuHDQWmEtDxGMXnwoRo
-         ofzVHWy08NHiKpBDjOPQf8XX933FqwqYx5bF/c1I+cMTyU4NdbB33cVuV50pbfAPxWPW
-         yrNLq+nGanVceUwXaKy4MMx1OI43cGOeBrzbUIxTdkipn0B4zBXsAINkgGrvWNNQai4w
-         /iWz9jlGv1Lf+8JQkg8EEJpEXAAUPSO0isfph/WNvV/QNgqcM3DsdPoQKqqD4PYORSm3
-         sHiIb3/NBFw5H1pRfiCPTOvMrP2MxW2/ioYF1ygnDLCDm9avK8to0gVQWP41d3IvNYFy
-         ZQ9Q==
+        bh=okALitkcKva7heF8096V0K05WIWu9EcjbHVSTAoEeTI=;
+        b=DQCUsFgzTKwz7rbddWUgpUegq2Y6yXdS9XDxcH8nFybkuUXSsGGj7KZ1Pt34Du/uQt
+         r79l5qbJc5FbtfUpsiUSBHR+0LVB9T3AJtehxEeJ+N7YZEZD6pyb/o0dDMXlrlA0X/bD
+         Hpmdv130t27ALPtySBiGtyi+KMZMH/Y8/e5JaOoZPz44CcrYixZ42Th7Ifb4amr9zYGS
+         l5xE+2nXAuQ3gDHD48ZNIWdGMY+MkHXUEBHtAzj03PnlwzBZGp93eHJMlgr7S4/Owuce
+         zkQSZ3D/XMm/Ny4UTolYBot/G2lqflitSyg+PnKHLQ7Afy7zy3BcMFaT/XXv5d2uK4Lw
+         CFqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3Fid+7OckGySR2AJZFibe1HMckvBm8uS33f/PmUPjFg=;
-        b=g1cswH3/1K7clqFXxfSTKQmUIREyOjh2M2Xm+6nWZ4OLZ/0ShUoAANRpjzvUXct7uT
-         UBA1mvv+Ww81p9nrybh2LHKDBRhFrtWBFWAL7II2QxdZq09Hzs5E1tStY4zpTm2vl1OZ
-         KWHZeMCgBV+VGTj7yEGtFoHINHpniesZAwoe41I6wVrceAhdVECQXupIMXpHrbbCiFyD
-         CmTpbN7sOd8nsXpz2QGBSUYkzMBFYeAV0cB/QUujtdqDaEenHGZX8mLP3i0CaD3Z459+
-         f2Yey6hI/xLP3ZNvWGSSxFlbY4IjVqIKKSAIi27LhADPQPOqdyZwAIgy4KTdfFNGV2bR
-         uKWw==
-X-Gm-Message-State: AOAM532y7zJ18DeZ1zPXF0TyNdZVnUU/Ri/vhdsUrWCYtXVJafxGxfPU
-        9jHh5N/7iORSM/RAe0zqzyn0i38K8BQ=
-X-Google-Smtp-Source: ABdhPJx/g1v+4XgMMiQ/4D5CfLOcpMcSYXLV9I3dQ8GekHDlmecTTMdnxq8ABc/yaJQAc04X0pA2lQ==
-X-Received: by 2002:adf:f5c9:: with SMTP id k9mr8446187wrp.180.1623496463022;
-        Sat, 12 Jun 2021 04:14:23 -0700 (PDT)
+        bh=okALitkcKva7heF8096V0K05WIWu9EcjbHVSTAoEeTI=;
+        b=uMI4fZDKj2vmWY96NKEv9YZ8R54vFe9Oqps/N1jZ0WJJ+0eWCByYWCEObxLg9Ec7Od
+         kuJRmieTyBMVte/kLB3+vM5QtSuSR+H1zWhETPuoiLGJcKtoKSgnNSW0a3cYAPr13fR0
+         A+pLuG+179qQ+7hKJz804b1aPJuhchWbwp4UQifdju3pKzsTi1xWZ8aMz89QSdryNs/R
+         dF3rHJgn/E7CCJIsw90LBoelaJx1nZCLCso7dKQ8GjHnuHdvMzVot05CyCYnHaJVEgVV
+         j91JX5EtdhSOBgTJOIyobeXJFXkmHY1DDw2nMfAk8D2w74rrmC8r8uC2nxyWuQQQkrOD
+         fU1Q==
+X-Gm-Message-State: AOAM531GJe1Z/wWGzRsqTGFjRqWZ7Lk0+DEIneDCRJkrC88y0tZJuQiL
+        8dfIvZ38IpqYDNnLYWHxxVBZKFs3ESQ=
+X-Google-Smtp-Source: ABdhPJyInkZAQQQJpN1na52vW94CWyjIJeYpWZiz1arX7t7bPQf+1BV2WPpipbYBLcgsVnnYLt+K/A==
+X-Received: by 2002:a1c:808c:: with SMTP id b134mr24729662wmd.187.1623496464227;
+        Sat, 12 Jun 2021 04:14:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c7sm11179042wrc.42.2021.06.12.04.14.22
+        by smtp.gmail.com with ESMTPSA id a12sm8492764wmj.36.2021.06.12.04.14.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Jun 2021 04:14:22 -0700 (PDT)
-Message-Id: <c208b8a45d66556a3f905063bc7c5026ac4f1e82.1623496458.git.gitgitgadget@gmail.com>
+        Sat, 12 Jun 2021 04:14:23 -0700 (PDT)
+Message-Id: <d31059c391d0c3f40ba45be0803a5ac6d49d5c6f.1623496458.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.980.git.1623496458.gitgitgadget@gmail.com>
 References: <pull.980.git.1623496458.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 12 Jun 2021 11:14:14 +0000
-Subject: [PATCH 5/8] [GSOC] ref-filter: teach get_object() return useful value
+Date:   Sat, 12 Jun 2021 11:14:16 +0000
+Subject: [PATCH 7/8] [GSOC] cat-file: reuse err buf in batch_objet_write()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,86 +76,124 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Let `populate_value()`, `get_ref_atom_value()` and
-`format_ref_array_item()` get the return value of `get_value()`
-correctly. This can help us later let `cat-file --batch` get the
-correct error message and return value of `get_value()`.
+Reuse the `err` buffer in batch_object_write(), as the
+buffer `scratch` does. This will reduce the overhead
+of multiple allocations of memory of the err buffer.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ builtin/cat-file.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 8868cf98f090..420c0bf9384f 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1808,7 +1808,7 @@ static char *get_worktree_path(const struct used_atom *atom, const struct ref_ar
- static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0bc524e656e1..1a73c3d23dde 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -212,33 +212,32 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
+ 
+ static void batch_object_write(const char *obj_name,
+ 			       struct strbuf *scratch,
++			       struct strbuf *err,
+ 			       struct batch_options *opt,
+ 			       struct expand_data *data)
  {
- 	struct object *obj;
--	int i;
-+	int i, ret = 0;
- 	struct object_info empty = OBJECT_INFO_INIT;
+ 	int ret = 0;
+-	struct strbuf err = STRBUF_INIT;
+ 	struct ref_array_item item = { data->oid, data->rest };
  
- 	CALLOC_ARRAY(ref->value, used_atom_cnt);
-@@ -1965,8 +1965,8 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 	strbuf_reset(scratch);
++	strbuf_reset(err);
  
- 
- 	oi.oid = ref->objectname;
--	if (get_object(ref, 0, &obj, &oi, err))
--		return -1;
-+	if ((ret = get_object(ref, 0, &obj, &oi, err)))
-+		return ret;
- 
- 	/*
- 	 * If there is no atom that wants to know about tagged
-@@ -1997,9 +1997,11 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- static int get_ref_atom_value(struct ref_array_item *ref, int atom,
- 			      struct atom_value **v, struct strbuf *err)
- {
-+	int ret = 0;
-+
- 	if (!ref->value) {
--		if (populate_value(ref, err))
--			return -1;
-+		if ((ret = populate_value(ref, err)))
-+			return ret;
- 		fill_missing_values(ref->value);
+-	ret = format_ref_array_item(&item, &opt->format, scratch, &err);
++	ret = format_ref_array_item(&item, &opt->format, scratch, err);
+ 	if (!ret) {
+ 		strbuf_addch(scratch, '\n');
+ 		batch_write(opt, scratch->buf, scratch->len);
+-		strbuf_release(&err);
+ 	} else if (ret < 0) {
+-		die("%s\n", err.buf);
+-		strbuf_release(&err);
++		die("%s\n", err->buf);
+ 	} else {
+ 		/* when ret > 0 , don't call die and print the err to stdout*/
+-		printf("%s\n", err.buf);
++		printf("%s\n", err->buf);
+ 		fflush(stdout);
+-		strbuf_release(&err);
  	}
- 	*v = &ref->value[atom];
-@@ -2573,6 +2575,7 @@ int format_ref_array_item(struct ref_array_item *info,
- {
- 	const char *cp, *sp, *ep;
- 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
-+	int ret = 0;
- 
- 	state.quote_style = format->quote_style;
- 	push_stack_element(&state.stack);
-@@ -2585,10 +2588,10 @@ int format_ref_array_item(struct ref_array_item *info,
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
- 		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
--		if (pos < 0 || get_ref_atom_value(info, pos, &atomv, error_buf) ||
-+		if (pos < 0 || (ret = get_ref_atom_value(info, pos, &atomv, error_buf)) ||
- 		    atomv->handler(atomv, &state, error_buf)) {
- 			pop_stack_element(&state.stack);
--			return -1;
-+			return ret ? ret : -1;
- 		}
- 	}
- 	if (*cp) {
-@@ -2610,7 +2613,7 @@ int format_ref_array_item(struct ref_array_item *info,
- 	}
- 	strbuf_addbuf(final_buf, &state.stack->output);
- 	pop_stack_element(&state.stack);
--	return 0;
-+	return ret;
  }
  
- void pretty_print_ref(const char *name, const struct object_id *oid,
+ static void batch_one_object(const char *obj_name,
+ 			     struct strbuf *scratch,
++			     struct strbuf *err,
+ 			     struct batch_options *opt,
+ 			     struct expand_data *data)
+ {
+@@ -292,7 +291,7 @@ static void batch_one_object(const char *obj_name,
+ 		return;
+ 	}
+ 
+-	batch_object_write(obj_name, scratch, opt, data);
++	batch_object_write(obj_name, scratch, err, opt, data);
+ }
+ 
+ struct object_cb_data {
+@@ -300,13 +299,14 @@ struct object_cb_data {
+ 	struct expand_data *expand;
+ 	struct oidset *seen;
+ 	struct strbuf *scratch;
++	struct strbuf *err;
+ };
+ 
+ static int batch_object_cb(const struct object_id *oid, void *vdata)
+ {
+ 	struct object_cb_data *data = vdata;
+ 	oidcpy(&data->expand->oid, oid);
+-	batch_object_write(NULL, data->scratch, data->opt, data->expand);
++	batch_object_write(NULL, data->scratch, data->err, data->opt, data->expand);
+ 	return 0;
+ }
+ 
+@@ -362,6 +362,7 @@ static int batch_objects(struct batch_options *opt, const struct option *options
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	struct strbuf output = STRBUF_INIT;
++	struct strbuf err = STRBUF_INIT;
+ 	struct strbuf format = STRBUF_INIT;
+ 	struct expand_data data;
+ 	int save_warning;
+@@ -390,6 +391,7 @@ static int batch_objects(struct batch_options *opt, const struct option *options
+ 		cb.opt = opt;
+ 		cb.expand = &data;
+ 		cb.scratch = &output;
++		cb.err = &err;
+ 
+ 		if (opt->unordered) {
+ 			struct oidset seen = OIDSET_INIT;
+@@ -414,6 +416,7 @@ static int batch_objects(struct batch_options *opt, const struct option *options
+ 
+ 		strbuf_release(&format);
+ 		strbuf_release(&output);
++		strbuf_release(&err);
+ 		return 0;
+ 	}
+ 
+@@ -442,11 +445,12 @@ static int batch_objects(struct batch_options *opt, const struct option *options
+ 			data.rest = p;
+ 		}
+ 
+-		batch_one_object(input.buf, &output, opt, &data);
++		batch_one_object(input.buf, &output, &err, opt, &data);
+ 	}
+ 	strbuf_release(&format);
+ 	strbuf_release(&input);
+ 	strbuf_release(&output);
++	strbuf_release(&err);
+ 	warn_on_object_refname_ambiguity = save_warning;
+ 	return retval;
+ }
 -- 
 gitgitgadget
 
