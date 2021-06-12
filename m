@@ -2,36 +2,36 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65575C48BCF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73983C48BE5
 	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 16:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3474661287
+	by mail.kernel.org (Postfix) with ESMTP id 40BD86120E
 	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 16:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231401AbhFLQxC (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231411AbhFLQxC (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 12 Jun 2021 12:53:02 -0400
-Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:39504 "EHLO
+Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:39522 "EHLO
         mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230372AbhFLQxB (ORCPT <rfc822;git@vger.kernel.org>);
+        id S230403AbhFLQxB (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 12 Jun 2021 12:53:01 -0400
 Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:4c5e:b9bc:baad:cb60])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by mail.lhuard.fr (Postfix) with ESMTPSA id BA09548C9D2;
-        Sat, 12 Jun 2021 18:50:56 +0200 (CEST)
+        by mail.lhuard.fr (Postfix) with ESMTPSA id D64A648C9D3;
+        Sat, 12 Jun 2021 18:50:57 +0200 (CEST)
 Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
-        t=1623516656; bh=fODGpUQ6aCVgW2ROHbr6/aULGQ4VdhPaldNavSmf7jM=;
+        t=1623516657; bh=A1FTOTrexqZlmdyVSk0o0r0AB7iFhdmsQEEjTLaREmY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=83f9uexVtXKSs7msmghJL6Jj4xCa0bQaszxJMgtaVzdnBcHqAggwUTOY1aAv3or56
-         Slr3enMdraTLoxlMleo0gOCUOtlewtbE8ta1maM923KXBjVDM1U8w++36E2i0A5LhR
-         +ovwxOQRgnzuTpJPLVhpkZhFDMTiBFtR+o+0eClk=
+        b=zAyYmAl8EZvr6JbGisTfxU7QdTehQy5iKAZpEvxFrHgob58PZv4jXa4ps92MQHZRW
+         p2A54Tjxo3IXXtTHmK6xiDOb9p5NPhiAtpfYsqkGsXPDnau49JNh8in82/ua/IT2cL
+         QqsfvucjV+7hMGj+sUceGAwTlrHxjpKQXL8006Nw=
 From:   =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -48,12 +48,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?L=C3=A9na=C3=AFc=20Huard?= <lenaic@lhuard.fr>
-Subject: [PATCH v6 0/3] maintenance: add support for systemd timers on Linux
-Date:   Sat, 12 Jun 2021 18:50:40 +0200
-Message-Id: <20210612165043.165579-1-lenaic@lhuard.fr>
+Subject: [PATCH v6 1/3] =?UTF-8?q?cache.h:=20Introduce=20a=20generic=20"xd?= =?UTF-8?q?g=5Fconfig=5Fhome=5Ffor(=E2=80=A6)"=20function?=
+Date:   Sat, 12 Jun 2021 18:50:41 +0200
+Message-Id: <20210612165043.165579-2-lenaic@lhuard.fr>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210608134000.663398-1-lenaic@lhuard.fr>
+In-Reply-To: <20210612165043.165579-1-lenaic@lhuard.fr>
 References: <20210608134000.663398-1-lenaic@lhuard.fr>
+ <20210612165043.165579-1-lenaic@lhuard.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,61 +62,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Current implementation of `xdg_config_home(filename)` returns
+`$XDG_CONFIG_HOME/git/$filename`, with the `git` subdirectory inserted
+between the `XDG_CONFIG_HOME` environment variable and the parameter.
 
-Please find hereafter my fixed patchset to add support for systemd
-timers on Linux for the `git maintenance start` command.
+This patch introduces a `xdg_config_home_for(subdir, filename)` function
+which is more generic. It only concatenates "$XDG_CONFIG_HOME", or
+"$HOME/.config" if the former isn’t defined, with the parameters,
+without adding `git` in between.
 
-There are very few changes compared to the previous version.
-The main change is the fix for the use-after-free bug that Jeff
-pointed out.
-Except from that, I’ve done some minor style fixes based on the `git
-clang-format --diff …` recommendations.
+`xdg_config_home(filename)` is now implemented by calling
+`xdg_config_home_for("git", filename)` but this new generic function can
+be used to compute the configuration directory of other programs.
 
-The patches are:
+Signed-off-by: Lénaïc Huard <lenaic@lhuard.fr>
+---
+ cache.h |  7 +++++++
+ path.c  | 13 ++++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-* cache.h: Introduce a generic "xdg_config_home_for(…)" function
-
-  This patch introduces a function to compute configuration files
-  paths inside $XDG_CONFIG_HOME.
-
-  This patch is unchanged compared to its previous version.
-
-* maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
-
-  This patch adds a new parameter to the `git maintenance run` to let
-  the user choose a scheduler.
-
-  The only changes in this patch compared to its previous version are
-  some code alignment changes that were suggested by `git clang-format
-  --diff …`
-
-* maintenance: add support for systemd timers on Linux
-
-  This patch implements the support of systemd timers on top of
-  crontab scheduler on Linux systems.
-
-  The only change in this patch compared to its previous version is
-  the fix of the use-after-free bug that Jeff pointed out.
-  I’ve moved the `free(filename)` after the last usage of `filename`.
-  I left the `free(filename)` below the `error` label as the
-  `filename` will always be allocated at each `goto error`.
-
-Best wishes,
-Lénaïc.
-
-Lénaïc Huard (3):
-  cache.h: Introduce a generic "xdg_config_home_for(…)" function
-  maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
-  maintenance: add support for systemd timers on Linux
-
- Documentation/git-maintenance.txt |  60 ++++
- builtin/gc.c                      | 562 ++++++++++++++++++++++++++----
- cache.h                           |   7 +
- path.c                            |  13 +-
- t/t7900-maintenance.sh            | 110 +++++-
- 5 files changed, 674 insertions(+), 78 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index ba04ff8bd3..2a0fb3e4ba 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1286,6 +1286,13 @@ int is_ntfs_dotmailmap(const char *name);
+  */
+ int looks_like_command_line_option(const char *str);
+ 
++/**
++ * Return a newly allocated string with the evaluation of
++ * "$XDG_CONFIG_HOME/$subdir/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
++ * "$HOME/.config/$subdir/$filename". Return NULL upon error.
++ */
++char *xdg_config_home_for(const char *subdir, const char *filename);
++
+ /**
+  * Return a newly allocated string with the evaluation of
+  * "$XDG_CONFIG_HOME/git/$filename" if $XDG_CONFIG_HOME is non-empty, otherwise
+diff --git a/path.c b/path.c
+index 7bccd830e9..1b1de3be09 100644
+--- a/path.c
++++ b/path.c
+@@ -1503,21 +1503,28 @@ int looks_like_command_line_option(const char *str)
+ 	return str && str[0] == '-';
+ }
+ 
+-char *xdg_config_home(const char *filename)
++char *xdg_config_home_for(const char *subdir, const char *filename)
+ {
+ 	const char *home, *config_home;
+ 
++	assert(subdir);
+ 	assert(filename);
+ 	config_home = getenv("XDG_CONFIG_HOME");
+ 	if (config_home && *config_home)
+-		return mkpathdup("%s/git/%s", config_home, filename);
++		return mkpathdup("%s/%s/%s", config_home, subdir, filename);
+ 
+ 	home = getenv("HOME");
+ 	if (home)
+-		return mkpathdup("%s/.config/git/%s", home, filename);
++		return mkpathdup("%s/.config/%s/%s", home, subdir, filename);
++
+ 	return NULL;
+ }
+ 
++char *xdg_config_home(const char *filename)
++{
++	return xdg_config_home_for("git", filename);
++}
++
+ char *xdg_cache_home(const char *filename)
+ {
+ 	const char *home, *cache_home;
 -- 
 2.32.0
 
