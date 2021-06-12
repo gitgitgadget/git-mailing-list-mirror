@@ -7,87 +7,91 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE2DC48BCF
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 04:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BDACC48BCF
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 04:41:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8480611CD
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 04:34:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0196C61073
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 04:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbhFLEgw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Jun 2021 00:36:52 -0400
-Received: from mail-pf1-f171.google.com ([209.85.210.171]:39930 "EHLO
-        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbhFLEgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Jun 2021 00:36:51 -0400
-Received: by mail-pf1-f171.google.com with SMTP id k15so6083430pfp.6
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 21:34:52 -0700 (PDT)
+        id S230218AbhFLEnh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Jun 2021 00:43:37 -0400
+Received: from mail-pj1-f42.google.com ([209.85.216.42]:38412 "EHLO
+        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229968AbhFLEnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Jun 2021 00:43:37 -0400
+Received: by mail-pj1-f42.google.com with SMTP id m13-20020a17090b068db02901656cc93a75so6974491pjz.3
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 21:41:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zukXmWI6ADsbCbLXctvsONVlMgp07kq8R5J4+EdjkAs=;
-        b=hiOPYXxby+ZoZx01SBR47DTcqLHxXa68RbFw6QCwrKEtHTa51o1XhF1uQR27qrO8J9
-         A/8kLfohDTCBH2HI/s3+tA/OB0doKzOSodOY3j2Qf3Ry67a0h+rAVKP/9OnjM+wmNPmK
-         mw7yYpca6wu+0zDZALxUUxBNuEA7ZzPTv8llYitfTU/socmgYZKXRrDbs4CceUhS5uup
-         q/PgjpaobB7SdWOG4M2CzkzWDQhHxXQczI72hm5jGfiHEzK4fbye/KBk4swzcD1P/1hg
-         ZMzpA3R96QvXXUUscYputRMIHT+hfQak6Yyen7YFzJrja6kJfPSMSRk7VLAHECabQw+w
-         5o2g==
+        bh=bjPOwgab3lgCo08YCF7nFyCHXH0euPOyQfoWfJ7KNtc=;
+        b=nORJKinwJ5C/ekfCiWVulrkuYFYsgD/6Qsbol252d5xrc3Z46ym1Lg4XaFoMpJsfSn
+         1zVr6lnAncvhDjvm7+k+kAUhNpXlceJq285/bDOvwDoUExq2MdvZ1JN1cWcz3Dw2Trau
+         ZQQpwEb1d6q5THp4h1p5nFzm6fwIpW7ymn6TLcXJlnQdT9Dk7jVc3rcoWal9j09EvAQm
+         dQTDjVdw03+zf49LDCp6M6SMbHZXR3suadeiCywrrH/HTBV2EHj8tfCV0QlWKrO70DjT
+         A+xN91cJ/R/vdaTXqIQlddscKYQBu721Z9HorJTcb+p67IItZHm79WL3MsPFZ5abOL0v
+         I3tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=zukXmWI6ADsbCbLXctvsONVlMgp07kq8R5J4+EdjkAs=;
-        b=Ng3h7PainDRohI/mqRRXvZdUdnao4jjz1E6ZwGPohw9M+RWkJo/RJJ6jPO6h8kZzv0
-         GGJb8gVMUE3E/OBQg7/7MYhg5fXcgU//0nvhmx0vdpn5/NExfpmHmDS3MRmIxfmmPicQ
-         bVHDTL9CH8dZuQpvnpZfwG5maPs2HCStvCuMIQzLQ36UoaEO7zWWA0fZ2wN3S8xDXYPj
-         LwlFl73jepNEYl0+YlO02d3lAnBtUhj/SmLMsnN4vkpBkXckmhVLoCsb0mSGZoA951ux
-         kv8ALxbBlIsP8F/13COvgn6BBt6HIgLh49izFM09cGmKOHXktk0DeL+Ta6lmPrgkr5ib
-         rbdA==
-X-Gm-Message-State: AOAM533PviuHTv+G+4rkCSpNB6isnw4kKP3YHK3hDfyjMhXipZfJRUWC
-        Q973WonM2LANBfAiWIA1PhU=
-X-Google-Smtp-Source: ABdhPJyeGCgyh+OBqgLJbtWJCMYaPguflYgpY0+S0OfxZXNnsINVxmOJm2b7KfOIBj3QrcPOAFCXYw==
-X-Received: by 2002:a63:2f05:: with SMTP id v5mr6741724pgv.449.1623472432660;
-        Fri, 11 Jun 2021 21:33:52 -0700 (PDT)
+        bh=bjPOwgab3lgCo08YCF7nFyCHXH0euPOyQfoWfJ7KNtc=;
+        b=t6VvF/zSzyd8OScWiqawLyJ6b36M4aOMybgR0eGyEdOlR5enxXVZCuV10tAkeAW5Uc
+         ogL6kX1iI3BajfMyYvI/gSOCMtrmjgPHIfbw72qU5AFIEzNiPge0EfVvbefxIJ63hpU2
+         3qo3JnE+q9v9M+DCYyNV1KapksgzlPbsylh0qYgNs3/fE/EOLB9+mNQEx7lSrZdzg3fP
+         ysgRzUq+2dDKBEqAOjR8hyRTAZCkxQ3dkdbNeWgPC7K6tJBefPnBQU701kqNIB6RwusO
+         OCdYl3CfQnDLyuun/GTU0egZK5WIu5/O2g5V3s0Tjq7TOl21e7dj0iE/N6rnzmvBESPA
+         7QSw==
+X-Gm-Message-State: AOAM530ivB0syxwO5gs55iYnskUbk48DMEy2x/RBE3iS6hVn/ImtHE03
+        6cOTZMpY9sJDUOkeksUbIHE=
+X-Google-Smtp-Source: ABdhPJyUZzvAfJfe1nzHkPKzXnWF1s6OPYkmb43UT39iIwp4cN4uqOk9NKR7VBgbUTdrkYEy2qHFmA==
+X-Received: by 2002:a17:90b:3e8d:: with SMTP id rj13mr12545663pjb.159.1623472838221;
+        Fri, 11 Jun 2021 21:40:38 -0700 (PDT)
 Received: from [192.168.43.80] (subs03-180-214-233-78.three.co.id. [180.214.233.78])
-        by smtp.gmail.com with ESMTPSA id p17sm11684084pjg.54.2021.06.11.21.33.50
+        by smtp.gmail.com with ESMTPSA id j24sm6176119pfe.58.2021.06.11.21.40.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Jun 2021 21:33:52 -0700 (PDT)
-Subject: Re: [PATCH 3/4] t6400: use test_line_count_cmd to count # of lines in
- stdout
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Fri, 11 Jun 2021 21:40:37 -0700 (PDT)
+Subject: Re: [PATCH 0/4] Use singular "they" when appropriate
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20210612042755.28342-1-congdanhqx@gmail.com>
- <20210612042755.28342-4-congdanhqx@gmail.com>
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, stolee@gmail.com,
+        jrnieder@gmail.com, emilyshaffer@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
 From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <68b41d84-e9ac-6cf1-184b-5ce9bbfbb18e@gmail.com>
-Date:   Sat, 12 Jun 2021 11:33:49 +0700
+Message-ID: <3fcda131-1e59-341d-d4fa-473f203d5f9d@gmail.com>
+Date:   Sat, 12 Jun 2021 11:40:34 +0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210612042755.28342-4-congdanhqx@gmail.com>
+In-Reply-To: <pull.975.git.1623085069.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Đoàn,
+Hi,
 
-> -	test 5 -eq $(git ls-files -s | wc -l) &&
-> -	test 4 -eq $(git ls-files -u | wc -l) &&
-> +	test_line_count_cmd --out = 5 git ls-files -s &&
-> +	test_line_count_cmd --out = 4 git ls-files -u  &&
+On 07/06/21 23.57, Derrick Stolee via GitGitGadget wrote:
+> This patch series officially adopts singular "they" as a contributor
+> guideline; see Patch 4 for the change to the guidelines and the reasoning
+> for the change. Before modifying the guidelines, documentation and comments
+> are updated to not use gendered pronouns, which provides examples of how to
+> use it.
 
-I read lines above as "Formerly I tested that 5/4 should be equal to 
-output of git ls-files -s/-u piped to wc -l, now I do the same with 
-test_line_count_cmd".
+Sorry for late into this debate, because I'm still on recovering from 
+fever a week ago (I still have headache and prefer eating less).
 
-Am I right?
+Honestly I'm against this patchset. There are concerns from ESL learners 
+(myself included) which have been taught that `they` MUST be used as 
+plural pronoun.
+
+As an alternative while still keeping singular constructs, why don't we 
+use gender neutral pronoun "it"?
 
 -- 
 An old man doll... just what I always wanted! - Clara
