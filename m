@@ -5,63 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2487C48BE5
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2682C48BCF
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:14:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D63761376
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:14:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 891AA60FE5
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 11:14:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231180AbhFLLQZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Jun 2021 07:16:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42556 "EHLO
+        id S231186AbhFLLQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Jun 2021 07:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbhFLLQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230526AbhFLLQZ (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 12 Jun 2021 07:16:25 -0400
 Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 199DAC0617AF
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 04:14:25 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id n7so2640836wri.3
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 04:14:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 333F6C0613A2
+        for <git@vger.kernel.org>; Sat, 12 Jun 2021 04:14:26 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id y7so8754714wrh.7
+        for <git@vger.kernel.org>; Sat, 12 Jun 2021 04:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ps2C1v5Nv9Tzl350x/WeVk3iATTTg01UFgc+9ZL8++s=;
-        b=oN+6PUumXw/Ob07ArPQ7xHq8No/gDhaAIiZPcpe9ANCPeQrYToTcUugf60bOQzKXyw
-         cVPIZC0JRiEAC8IXDXXIQpBzmi04vVTTTjP3gy1tqyzqJw8xM9lFaYyo02WTGLUj/Iyr
-         pWrA0UUP3Ar+LX2XF5VXN1VYt+jezfEpFIuoUelBuE57YiKMZLigX/3Uu5khnWSK56nH
-         FsT9bFT5qWDAPAG8Tn7MtWVR7B+ldz07uBqU1UmuUawJvjQUHP0PSjW4hagrPhFpFows
-         KeBUk+18Ribm98IqS6s9VR+0AlHkMY3IA/940yZonudHAO4U32w0cZ1tqo7n50d8kv42
-         gxjg==
+        bh=+Gj/5slRCNm1ugwYLXxY3m9qTDg3ZVwm9LJP9cr+S5Y=;
+        b=IqmrjDEgZ2t0d/OBHev9Gc9gYJMqoVZSOmkKzK911MnNmCMploO8O7R66j8TFbs3Cp
+         aIDrHvKqvh602v6+qDJ38ZKVhHDl1ShIZQd+WD9Q9WYoYOmv5DqjLFfZaVEPlqmKJqUB
+         /594RlDzyT13PMFlolc9TQ5Rr+Qqz3whmmiaZ7SM5cGtHEhHmgvVUcjt+PHoveWgog60
+         4nQ3tmuUkQ7BFk2ZsLFh32e2uHoA4c4/2fn57HjpD6qBHfu51uJkXqfehXeh2U+M3G+o
+         wwyeH8ukTn9wXT+pZCyffbNytAyNVeorejithAUt+vWHqrwA2T930fekL2D9KmMKJW1o
+         IiOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ps2C1v5Nv9Tzl350x/WeVk3iATTTg01UFgc+9ZL8++s=;
-        b=DppMdLJtccZveTPshLTvz90jULenwzc3CmnHfrgnyvZg9zvEYtBiiY6l2q/VrqCMEc
-         Z0dxfjPcyPEIYKneeP6BTEFHMjEL1EZKsth1JLJwS8b+EAt4zFNvgOaRyqO7lXPHrbxl
-         uCSAD8WtC3mUsyGgRbnFDcfUllIOm9rfLeBgh+/ZpfLUr10h7cVKjJAfvnuHCHN+YgRo
-         0fNlKsYYS1ViH/AG5YS2BPBMWpNuGnqb6uNfJFQtYwcGX575oS0KkjAKBmohD2b+z5N7
-         hFLizzJyG5HTEGSqgC5NIwP8+j8tBEVcUWhYzR5GVHPPGO9IyF2AV+X230/BHWWb/eBF
-         nZng==
-X-Gm-Message-State: AOAM533Wf/UVMVqaIxlsStagjr+R8AaiH+k9MHQz0py3CifCCX6uqohl
-        87zhwq+93WjLllCmUgQd6KZnma1BXvQ=
-X-Google-Smtp-Source: ABdhPJx1027qkv7DKhs18we+3oAAtKQ16Jp2RHspQk2wF8QhD9HeAtoyowys6hT31zF7wLMmVJxd1A==
-X-Received: by 2002:a5d:6984:: with SMTP id g4mr8635451wru.7.1623496463634;
-        Sat, 12 Jun 2021 04:14:23 -0700 (PDT)
+        bh=+Gj/5slRCNm1ugwYLXxY3m9qTDg3ZVwm9LJP9cr+S5Y=;
+        b=UEfSkI3p8GrZyrekk/w/c53Vb+TEezq7uu5iaPYgixKRaeiit1DJ0XoHZafZWiu46+
+         Wz7OSi9g5+oiT0FX6UyQMAssZOYeac2Yg8nBXNyNjq9lNzL0PgoTACKtpCAhmfmhHUf0
+         zODnmeSruUY7/Fp7iGZYWGJ5yeBW5MRjbwDX1X50gAN4pNbO1U6uv2Wzjan0dC7pqX6N
+         ipt8Bp8POYm2dVCfL5S70BzvT6QV0F5TY7xe+LDnWkNMuO1QO8VbeXZ1a7tYZxxXaPH1
+         rflVmIyCNOt3anvDbGm6lhdKYsJM3yk6X8j4ajRMrV94VTqX/CTYvneLGjdy1XMTk/oH
+         9z9Q==
+X-Gm-Message-State: AOAM531eK+U+szuHfs2cxXd1bea4BGikCRndZgFVljkfNL7N+j1vscBu
+        6mThGa6aV6wPOYAZFH/RVpwWe6csfls=
+X-Google-Smtp-Source: ABdhPJwsCNhhYVs4EfPe041aZBxAZwrwJrabld+6Cw/qlzm2Waee/sFJFKWEq7O/IhSUuUBoVGN7bA==
+X-Received: by 2002:adf:9ccf:: with SMTP id h15mr3330167wre.217.1623496464865;
+        Sat, 12 Jun 2021 04:14:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z12sm10051906wrw.97.2021.06.12.04.14.23
+        by smtp.gmail.com with ESMTPSA id k5sm9943793wmk.11.2021.06.12.04.14.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Jun 2021 04:14:23 -0700 (PDT)
-Message-Id: <44ebf75e2e937b76a7c2887cd98da2912240811c.1623496458.git.gitgitgadget@gmail.com>
+        Sat, 12 Jun 2021 04:14:24 -0700 (PDT)
+Message-Id: <0004d5b24a0fb735d7fa9cb9a8e214d6e838baeb.1623496458.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.980.git.1623496458.gitgitgadget@gmail.com>
 References: <pull.980.git.1623496458.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 12 Jun 2021 11:14:15 +0000
-Subject: [PATCH 6/8] [GSOC] cat-file: reuse ref-filter logic
+Date:   Sat, 12 Jun 2021 11:14:17 +0000
+Subject: [PATCH 8/8] [GSOC] cat-file: re-implement --textconv, --filters
+ options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,759 +80,190 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-In order to let cat-file use ref-filter logic, the following
-methods are used:
+After cat-file reuses the ref-filter logic, we re-implement the
+functions of --textconv and --filters options.
 
-1. Add `cat_file_mode` member in struct `ref_format`, this can
-help us reject atoms in verify_ref_format() which cat-file
-cannot use, e.g. `%(refname)`, `%(push)`, `%(upstream)`...
-2. Change the type of member `format` in struct `batch_options`
-to `ref_format`, We can add format data in it.
-3. Let `batch_objects()` add atoms to format, and use
-`verify_ref_format()` to check atoms.
-4. Use `has_object_file()` in `batch_one_object()` to check
-whether the input object exists.
-5. Use `format_ref_array_item()` in `batch_object_write()` to
-get the formatted data corresponding to the object. If the
-return value of `format_ref_array_item()` is equals to zero,
-use `batch_write()` to print object data; else if the return
-value less than zero, use `die()` to print the error message
-and exit; else return value greater than zero, only print the
-error message, but not exit.
-6. Let get_object() return 1 and print "<oid> missing" instead
-of returning -1 and printing "missing object <oid> for <refname>",
-this can help `format_ref_array_item()` just report that the
-object is missing without letting Git exit.
+Add members `use_textconv` and `use_filters` in struct `ref_format`,
+and use global variables `use_filters` and `use_textconv` in
+`ref-filter.c`, so that we can filter the content of the object
+in get_object(). Use `actual_oi` to record the real expand_data:
+it may point to the original `oi` or the `act_oi` processed by
+`textconv_object()` or `convert_to_working_tree()`. `grab_values()`
+will grab the contents of `actual_oi` and `grab_common_values()`
+to grab the contents of origin `oi`, this ensures that `%(objectsize)`
+still uses the size of the unfiltered data.
 
-Most of the atoms in `for-each-ref --format` are now supported,
-such as `%(tree)`, `%(parent)`, `%(author)`, `%(tagger)`, `%(if)`,
-`%(then)`, `%(else)`, `%(end)`. But these atoms will be rejected:
-`%(refname)`, `%(symref)`, `%(upstream)`, `%(push)`, `%(worktreepath)`,
-`%(flag)`, `%(HEAD)`, because our objects don't have refname.
+In `get_object()`, we made an optimization: Firstly, get the size and
+type of the object instead of directly getting the object data.
+If using --textconv, after successfully obtaining the filtered object
+data, an extra oid_object_info_extended() will be skipped, which can
+reduce the cost of object data copy; If using --filter, the data of
+the object first will be getted first, and then convert_to_working_tree()
+will be used to get the filtered object data.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- Documentation/git-cat-file.txt |   6 +
- builtin/cat-file.c             | 250 +++++++-------------------------
- ref-filter.c                   |  15 +-
- ref-filter.h                   |   3 +-
- t/t1006-cat-file.sh            | 252 +++++++++++++++++++++++++++++++++
- t/t6301-for-each-ref-errors.sh |   2 +-
- 6 files changed, 324 insertions(+), 204 deletions(-)
+ builtin/cat-file.c |  5 ++++
+ ref-filter.c       | 66 ++++++++++++++++++++++++++++++++++++++++++++--
+ ref-filter.h       |  5 ++--
+ 3 files changed, 72 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 4eb0421b3fd9..ef8ab952b2fa 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -226,6 +226,12 @@ newline. The available atoms are:
- 	after that first run of whitespace (i.e., the "rest" of the
- 	line) are output in place of the `%(rest)` atom.
- 
-+Note that most of the atoms in `for-each-ref --format` are now supported,
-+such as `%(tree)`, `%(parent)`, `%(author)`, `%(tagger)`, `%(if)`,
-+`%(then)`, `%(else)`, `%(end)`. But these atoms will be rejected:
-+`%(refname)`, `%(symref)`, `%(upstream)`, `%(push)`, `%(worktreepath)`,
-+`%(flag)`, `%(HEAD)`. See linkgit:git-for-each-ref[1].
-+
- If no format is specified, the default format is `%(objectname)
- %(objecttype) %(objectsize)`.
- 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 5ebf13359e83..0bc524e656e1 100644
+index 1a73c3d23dde..3fde2587201b 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "ref-filter.h"
- 
- struct batch_options {
- 	int enabled;
-@@ -25,7 +26,7 @@ struct batch_options {
- 	int all_objects;
- 	int unordered;
- 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
--	const char *format;
-+	struct ref_format format;
- };
- 
- static const char *force_path;
-@@ -195,99 +196,10 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 
- struct expand_data {
- 	struct object_id oid;
--	enum object_type type;
--	unsigned long size;
--	off_t disk_size;
- 	const char *rest;
--	struct object_id delta_base_oid;
--
--	/*
--	 * If mark_query is true, we do not expand anything, but rather
--	 * just mark the object_info with items we wish to query.
--	 */
--	int mark_query;
--
--	/*
--	 * Whether to split the input on whitespace before feeding it to
--	 * get_sha1; this is decided during the mark_query phase based on
--	 * whether we have a %(rest) token in our format.
--	 */
- 	int split_on_whitespace;
--
--	/*
--	 * After a mark_query run, this object_info is set up to be
--	 * passed to oid_object_info_extended. It will point to the data
--	 * elements above, so you can retrieve the response from there.
--	 */
--	struct object_info info;
--
--	/*
--	 * This flag will be true if the requested batch format and options
--	 * don't require us to call oid_object_info, which can then be
--	 * optimized out.
--	 */
--	unsigned skip_object_info : 1;
- };
- 
--static int is_atom(const char *atom, const char *s, int slen)
--{
--	int alen = strlen(atom);
--	return alen == slen && !memcmp(atom, s, alen);
--}
--
--static void expand_atom(struct strbuf *sb, const char *atom, int len,
--			void *vdata)
--{
--	struct expand_data *data = vdata;
--
--	if (is_atom("objectname", atom, len)) {
--		if (!data->mark_query)
--			strbuf_addstr(sb, oid_to_hex(&data->oid));
--	} else if (is_atom("objecttype", atom, len)) {
--		if (data->mark_query)
--			data->info.typep = &data->type;
--		else
--			strbuf_addstr(sb, type_name(data->type));
--	} else if (is_atom("objectsize", atom, len)) {
--		if (data->mark_query)
--			data->info.sizep = &data->size;
--		else
--			strbuf_addf(sb, "%"PRIuMAX , (uintmax_t)data->size);
--	} else if (is_atom("objectsize:disk", atom, len)) {
--		if (data->mark_query)
--			data->info.disk_sizep = &data->disk_size;
--		else
--			strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
--	} else if (is_atom("rest", atom, len)) {
--		if (data->mark_query)
--			data->split_on_whitespace = 1;
--		else if (data->rest)
--			strbuf_addstr(sb, data->rest);
--	} else if (is_atom("deltabase", atom, len)) {
--		if (data->mark_query)
--			data->info.delta_base_oid = &data->delta_base_oid;
--		else
--			strbuf_addstr(sb,
--				      oid_to_hex(&data->delta_base_oid));
--	} else
--		die("unknown format element: %.*s", len, atom);
--}
--
--static size_t expand_format(struct strbuf *sb, const char *start, void *data)
--{
--	const char *end;
--
--	if (*start != '(')
--		return 0;
--	end = strchr(start + 1, ')');
--	if (!end)
--		die("format element '%s' does not end in ')'", start);
--
--	expand_atom(sb, start + 1, end - start - 1, data);
--
--	return end - start + 1;
--}
--
- static void batch_write(struct batch_options *opt, const void *data, int len)
- {
- 	if (opt->buffer_output) {
-@@ -297,86 +209,31 @@ static void batch_write(struct batch_options *opt, const void *data, int len)
- 		write_or_die(1, data, len);
- }
- 
--static void print_object_or_die(struct batch_options *opt, struct expand_data *data)
--{
--	const struct object_id *oid = &data->oid;
--
--	assert(data->info.typep);
--
--	if (data->type == OBJ_BLOB) {
--		if (opt->buffer_output)
--			fflush(stdout);
--		if (opt->cmdmode) {
--			char *contents;
--			unsigned long size;
--
--			if (!data->rest)
--				die("missing path for '%s'", oid_to_hex(oid));
--
--			if (opt->cmdmode == 'w') {
--				if (filter_object(data->rest, 0100644, oid,
--						  &contents, &size))
--					die("could not convert '%s' %s",
--					    oid_to_hex(oid), data->rest);
--			} else if (opt->cmdmode == 'c') {
--				enum object_type type;
--				if (!textconv_object(the_repository,
--						     data->rest, 0100644, oid,
--						     1, &contents, &size))
--					contents = read_object_file(oid,
--								    &type,
--								    &size);
--				if (!contents)
--					die("could not convert '%s' %s",
--					    oid_to_hex(oid), data->rest);
--			} else
--				BUG("invalid cmdmode: %c", opt->cmdmode);
--			batch_write(opt, contents, size);
--			free(contents);
--		} else {
--			stream_blob(oid);
--		}
--	}
--	else {
--		enum object_type type;
--		unsigned long size;
--		void *contents;
--
--		contents = read_object_file(oid, &type, &size);
--		if (!contents)
--			die("object %s disappeared", oid_to_hex(oid));
--		if (type != data->type)
--			die("object %s changed type!?", oid_to_hex(oid));
--		if (data->info.sizep && size != data->size)
--			die("object %s changed size!?", oid_to_hex(oid));
--
--		batch_write(opt, contents, size);
--		free(contents);
--	}
--}
- 
- static void batch_object_write(const char *obj_name,
- 			       struct strbuf *scratch,
- 			       struct batch_options *opt,
- 			       struct expand_data *data)
- {
--	if (!data->skip_object_info &&
--	    oid_object_info_extended(the_repository, &data->oid, &data->info,
--				     OBJECT_INFO_LOOKUP_REPLACE) < 0) {
--		printf("%s missing\n",
--		       obj_name ? obj_name : oid_to_hex(&data->oid));
--		fflush(stdout);
--		return;
--	}
-+	int ret = 0;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_array_item item = { data->oid, data->rest };
- 
- 	strbuf_reset(scratch);
--	strbuf_expand(scratch, opt->format, expand_format, data);
--	strbuf_addch(scratch, '\n');
--	batch_write(opt, scratch->buf, scratch->len);
- 
--	if (opt->print_contents) {
--		print_object_or_die(opt, data);
--		batch_write(opt, "\n", 1);
-+	ret = format_ref_array_item(&item, &opt->format, scratch, &err);
-+	if (!ret) {
-+		strbuf_addch(scratch, '\n');
-+		batch_write(opt, scratch->buf, scratch->len);
-+		strbuf_release(&err);
-+	} else if (ret < 0) {
-+		die("%s\n", err.buf);
-+		strbuf_release(&err);
-+	} else {
-+		/* when ret > 0 , don't call die and print the err to stdout*/
-+		printf("%s\n", err.buf);
-+		fflush(stdout);
-+		strbuf_release(&err);
- 	}
- }
- 
-@@ -428,6 +285,13 @@ static void batch_one_object(const char *obj_name,
- 		return;
- 	}
- 
-+	if (!has_object_file(&data->oid)) {
-+		printf("%s missing\n",
-+		       obj_name ? obj_name : oid_to_hex(&data->oid));
-+		fflush(stdout);
-+		return;
-+	}
-+
- 	batch_object_write(obj_name, scratch, opt, data);
- }
- 
-@@ -488,42 +352,34 @@ static int batch_unordered_packed(const struct object_id *oid,
- 	return batch_unordered_object(oid, data);
- }
- 
--static int batch_objects(struct batch_options *opt)
-+static const char * const cat_file_usage[] = {
-+	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
-+	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
-+	NULL
-+};
-+
-+static int batch_objects(struct batch_options *opt, const struct option *options)
- {
- 	struct strbuf input = STRBUF_INIT;
- 	struct strbuf output = STRBUF_INIT;
-+	struct strbuf format = STRBUF_INIT;
- 	struct expand_data data;
- 	int save_warning;
- 	int retval = 0;
- 
--	if (!opt->format)
--		opt->format = "%(objectname) %(objecttype) %(objectsize)";
--
--	/*
--	 * Expand once with our special mark_query flag, which will prime the
--	 * object_info to be handed to oid_object_info_extended for each
--	 * object.
--	 */
- 	memset(&data, 0, sizeof(data));
--	data.mark_query = 1;
--	strbuf_expand(&output, opt->format, expand_format, &data);
--	data.mark_query = 0;
--	strbuf_release(&output);
--	if (opt->cmdmode)
--		data.split_on_whitespace = 1;
--
--	if (opt->all_objects) {
--		struct object_info empty = OBJECT_INFO_INIT;
--		if (!memcmp(&data.info, &empty, sizeof(empty)))
--			data.skip_object_info = 1;
--	}
--
--	/*
--	 * If we are printing out the object, then always fill in the type,
--	 * since we will want to decide whether or not to stream.
--	 */
-+	if (!opt->format.format)
-+		strbuf_addstr(&format, "%(objectname) %(objecttype) %(objectsize)");
-+	else
-+		strbuf_addstr(&format, opt->format.format);
+@@ -376,6 +376,11 @@ static int batch_objects(struct batch_options *opt, const struct option *options
  	if (opt->print_contents)
--		data.info.typep = &data.type;
-+		strbuf_addstr(&format, "\n%(raw)");
-+	opt->format.format = format.buf;
-+	if (verify_ref_format(&opt->format))
-+		usage_with_options(cat_file_usage, options);
+ 		strbuf_addstr(&format, "\n%(raw)");
+ 	opt->format.format = format.buf;
++	if (opt->cmdmode == 'c')
++		opt->format.use_textconv = 1;
++	if (opt->cmdmode == 'w')
++		opt->format.use_filters = 1;
 +
-+	if (opt->cmdmode || opt->format.use_rest)
-+		data.split_on_whitespace = 1;
+ 	if (verify_ref_format(&opt->format))
+ 		usage_with_options(cat_file_usage, options);
  
- 	if (opt->all_objects) {
- 		struct object_cb_data cb;
-@@ -556,6 +412,7 @@ static int batch_objects(struct batch_options *opt)
- 			oid_array_clear(&sa);
- 		}
- 
-+		strbuf_release(&format);
- 		strbuf_release(&output);
- 		return 0;
- 	}
-@@ -587,19 +444,13 @@ static int batch_objects(struct batch_options *opt)
- 
- 		batch_one_object(input.buf, &output, opt, &data);
- 	}
--
-+	strbuf_release(&format);
- 	strbuf_release(&input);
- 	strbuf_release(&output);
- 	warn_on_object_refname_ambiguity = save_warning;
- 	return retval;
- }
- 
--static const char * const cat_file_usage[] = {
--	N_("git cat-file (-t [--allow-unknown-type] | -s [--allow-unknown-type] | -e | -p | <type> | --textconv | --filters) [--path=<path>] <object>"),
--	N_("git cat-file (--batch[=<format>] | --batch-check[=<format>]) [--follow-symlinks] [--textconv | --filters]"),
--	NULL
--};
--
- static int git_cat_file_config(const char *var, const char *value, void *cb)
- {
- 	if (userdiff_config(var, value) < 0)
-@@ -622,7 +473,7 @@ static int batch_option_callback(const struct option *opt,
- 
- 	bo->enabled = 1;
- 	bo->print_contents = !strcmp(opt->long_name, "batch");
--	bo->format = arg;
-+	bo->format.format = arg;
- 
- 	return 0;
- }
-@@ -631,7 +482,9 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- {
- 	int opt = 0;
- 	const char *exp_type = NULL, *obj_name = NULL;
--	struct batch_options batch = {0};
-+	struct batch_options batch = {
-+		.format = REF_FORMAT_INIT
-+	};
- 	int unknown_type = 0;
- 
- 	const struct option options[] = {
-@@ -670,6 +523,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	git_config(git_cat_file_config, NULL);
- 
- 	batch.buffer_output = -1;
-+	batch.format.cat_file_mode = 1;
- 	argc = parse_options(argc, argv, prefix, options, cat_file_usage, 0);
- 
- 	if (opt) {
-@@ -713,7 +567,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 		batch.buffer_output = batch.all_objects;
- 
- 	if (batch.enabled)
--		return batch_objects(&batch);
-+		return batch_objects(&batch, options);
- 
- 	if (unknown_type && opt != 't' && opt != 's')
- 		die("git cat-file --allow-unknown-type: use with -s or -t");
 diff --git a/ref-filter.c b/ref-filter.c
-index 420c0bf9384f..d4c88d496698 100644
+index d4c88d496698..8264ef7d2786 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1017,8 +1017,15 @@ int verify_ref_format(struct ref_format *format)
- 		at = parse_ref_filter_atom(format, sp + 2, ep, &err);
- 		if (at < 0)
- 			die("%s", err.buf);
--		if (used_atom[at].atom_type == ATOM_REST)
--			die("this command reject atom %%(%.*s)", (int)(ep - sp - 2), sp + 2);
-+		if ((!format->cat_file_mode && used_atom[at].atom_type == ATOM_REST) ||
-+		    (format->cat_file_mode && (used_atom[at].atom_type == ATOM_FLAG ||
-+					       used_atom[at].atom_type == ATOM_HEAD ||
-+					       used_atom[at].atom_type == ATOM_PUSH ||
-+					       used_atom[at].atom_type == ATOM_REFNAME ||
-+					       used_atom[at].atom_type == ATOM_SYMREF ||
-+					       used_atom[at].atom_type == ATOM_UPSTREAM ||
-+					       used_atom[at].atom_type == ATOM_WORKTREEPATH)))
-+			die(_("this command reject atom %%(%.*s)"), (int)(ep - sp - 2), sp + 2);
+@@ -1,3 +1,4 @@
++#define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+ #include "cache.h"
+ #include "parse-options.h"
+@@ -84,6 +85,9 @@ static struct expand_data {
+ 	struct object_info info;
+ } oi, oi_deref;
  
++int use_filters;
++int use_textconv;
++
+ struct ref_to_worktree_entry {
+ 	struct hashmap_entry ent;
+ 	struct worktree *wt; /* key is wt->head_ref */
+@@ -1027,6 +1031,9 @@ int verify_ref_format(struct ref_format *format)
+ 					       used_atom[at].atom_type == ATOM_WORKTREEPATH)))
+ 			die(_("this command reject atom %%(%.*s)"), (int)(ep - sp - 2), sp + 2);
+ 
++		use_filters = format->use_filters;
++		use_textconv = format->use_textconv;
++
  		if (format->quote_style && used_atom[at].atom_type == ATOM_RAW &&
  		    used_atom[at].u.raw_data.option == RAW_BARE)
-@@ -1735,8 +1742,8 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
+ 			die(_("--format=%.*s cannot be used with"
+@@ -1735,10 +1742,41 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
+ {
+ 	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
+ 	int eaten = 1;
++	struct expand_data *actual_oi = oi;
++	struct expand_data act_oi = {0};
++
+ 	if (oi->info.contentp) {
+ 		/* We need to know that to use parse_object_buffer properly */
++		void **temp_contentp = oi->info.contentp;
++		oi->info.contentp = NULL;
+ 		oi->info.sizep = &oi->size;
+ 		oi->info.typep = &oi->type;
++
++		/* get the type and size */
++		if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
++					OBJECT_INFO_LOOKUP_REPLACE))
++			return strbuf_addf_ret(err, 1, _("%s missing"),
++					       oid_to_hex(&oi->oid));
++
++		oi->info.sizep = NULL;
++		oi->info.typep = NULL;
++		oi->info.contentp = temp_contentp;
++
++		if (use_textconv) {
++			act_oi = *oi;
++
++			if(!ref->rest)
++				return strbuf_addf_ret(err, -1, _("missing path for '%s'"),
++						       oid_to_hex(&act_oi.oid));
++			if (act_oi.type == OBJ_BLOB) {
++				if (textconv_object(the_repository,
++						    ref->rest, 0100644, &act_oi.oid,
++						    1, (char **)(&act_oi.content), &act_oi.size)) {
++					actual_oi = &act_oi;
++					goto success;
++				}
++			}
++		}
  	}
  	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
  				     OBJECT_INFO_LOOKUP_REPLACE))
--		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
--				       oid_to_hex(&oi->oid), ref->refname);
-+		return strbuf_addf_ret(err, 1, _("%s missing"),
-+				       oid_to_hex(&oi->oid));
- 	if (oi->info.disk_sizep && oi->disk_size < 0)
+@@ -1748,19 +1786,43 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
  		BUG("Object size is less than zero.");
  
+ 	if (oi->info.contentp) {
+-		*obj = parse_object_buffer(the_repository, &oi->oid, oi->type, oi->size, oi->content, &eaten);
++		if (use_filters) {
++			if(!ref->rest)
++				return strbuf_addf_ret(err, -1, _("missing path for '%s'"),
++						       oid_to_hex(&oi->oid));
++			if (oi->type == OBJ_BLOB) {
++				struct strbuf strbuf = STRBUF_INIT;
++				struct checkout_metadata meta;
++				act_oi = *oi;
++
++				init_checkout_metadata(&meta, NULL, NULL, &act_oi.oid);
++				if (convert_to_working_tree(&the_index, ref->rest, act_oi.content, act_oi.size, &strbuf, &meta)) {
++					act_oi.size = strbuf.len;
++					act_oi.content = strbuf_detach(&strbuf, NULL);
++					actual_oi = &act_oi;
++				} else {
++					die("could not convert '%s' %s",
++					    oid_to_hex(&oi->oid), ref->rest);
++				}
++			}
++		}
++
++success:
++		*obj = parse_object_buffer(the_repository, &actual_oi->oid, actual_oi->type, actual_oi->size, actual_oi->content, &eaten);
+ 		if (!*obj) {
+ 			if (!eaten)
+ 				free(oi->content);
+ 			return strbuf_addf_ret(err, -1, _("parse_object_buffer failed on %s for %s"),
+ 					       oid_to_hex(&oi->oid), ref->refname);
+ 		}
+-		grab_values(ref->value, deref, *obj, oi);
++		grab_values(ref->value, deref, *obj, actual_oi);
+ 	}
+ 
+ 	grab_common_values(ref->value, deref, oi);
+ 	if (!eaten)
+ 		free(oi->content);
++	if (actual_oi != oi)
++		free(actual_oi->content);
+ 	return 0;
+ }
+ 
 diff --git a/ref-filter.h b/ref-filter.h
-index 9dc07476a584..bece9583cf18 100644
+index bece9583cf18..cf7bad4e8b49 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -78,6 +78,7 @@ struct ref_format {
- 	 */
- 	const char *format;
+@@ -80,14 +80,15 @@ struct ref_format {
  	const char *rest;
-+	int cat_file_mode;
+ 	int cat_file_mode;
  	int quote_style;
++	int use_textconv;
++	int use_filters;
  	int use_rest;
  	int use_color;
-@@ -86,7 +87,7 @@ struct ref_format {
+-
+ 	/* Internal state to ref-filter */
  	int need_color_reset_at_eol;
  };
  
--#define REF_FORMAT_INIT { NULL, NULL, 0, 0, -1 }
-+#define REF_FORMAT_INIT { NULL, NULL, 0, 0, 0, -1 }
+-#define REF_FORMAT_INIT { NULL, NULL, 0, 0, 0, -1 }
++#define REF_FORMAT_INIT { NULL, NULL, 0, 0, 0, 0, 0, -1 }
  
  /*  Macros for checking --merged and --no-merged options */
  #define _OPT_MERGED_NO_MERGED(option, filter, h) \
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 5d2dc99b74ad..5efa7397cfbc 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -586,4 +586,256 @@ test_expect_success 'cat-file --unordered works' '
- 	test_cmp expect actual
- '
- 
-+. "$TEST_DIRECTORY"/lib-gpg.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
-+
-+test_expect_success 'cat-file --batch|--batch-check setup' '
-+	echo 1>blob1 &&
-+	printf "a\0b\0\c" >blob2 &&
-+	git add blob1 blob2 &&
-+	git commit -m "Commit Message" &&
-+	git branch -M main &&
-+	git tag -a -m "v0.0.0" testtag &&
-+	git update-ref refs/myblobs/blob1 HEAD:blob1 &&
-+	git update-ref refs/myblobs/blob2 HEAD:blob2 &&
-+	git update-ref refs/mytrees/tree1 HEAD^{tree}
-+'
-+
-+batch_test_atom() {
-+	if test "$3" = "fail"
-+	then
-+		test_expect_${4:-success} $PREREQ "basic atom: $1 $2 mast failed" "
-+			test_must_fail git cat-file --batch-check='$2' >bad <<-EOF
-+			$1
-+			EOF
-+		"
-+	else
-+		test_expect_${4:-success} $PREREQ "basic atom: $1 $2" "
-+			git for-each-ref --format='$2' $1 >expected &&
-+			git cat-file --batch-check='$2' >actual <<-EOF &&
-+			$1
-+			EOF
-+			sanitize_pgp <actual >actual.clean &&
-+			cmp expected actual.clean
-+		"
-+	fi
-+}
-+
-+batch_test_atom refs/heads/main '%(refname)' fail
-+batch_test_atom refs/heads/main '%(refname:)' fail
-+batch_test_atom refs/heads/main '%(refname:short)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=1)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=2)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(refname:lstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=1)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=2)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(refname:rstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=1)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=2)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=-1)' fail
-+batch_test_atom refs/heads/main '%(refname:strip=-2)' fail
-+batch_test_atom refs/heads/main '%(upstream)' fail
-+batch_test_atom refs/heads/main '%(upstream:short)' fail
-+batch_test_atom refs/heads/main '%(upstream:lstrip=2)' fail
-+batch_test_atom refs/heads/main '%(upstream:lstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(upstream:rstrip=2)' fail
-+batch_test_atom refs/heads/main '%(upstream:rstrip=-2)' fail
-+batch_test_atom refs/heads/main '%(upstream:strip=2)' fail
-+batch_test_atom refs/heads/main '%(upstream:strip=-2)' fail
-+batch_test_atom refs/heads/main '%(push)' fail
-+batch_test_atom refs/heads/main '%(push:short)' fail
-+batch_test_atom refs/heads/main '%(push:lstrip=1)' fail
-+batch_test_atom refs/heads/main '%(push:lstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(push:rstrip=1)' fail
-+batch_test_atom refs/heads/main '%(push:rstrip=-1)' fail
-+batch_test_atom refs/heads/main '%(push:strip=1)' fail
-+batch_test_atom refs/heads/main '%(push:strip=-1)' fail
-+batch_test_atom refs/heads/main '%(objecttype)'
-+batch_test_atom refs/heads/main '%(objectsize)'
-+batch_test_atom refs/heads/main '%(objectsize:disk)'
-+batch_test_atom refs/heads/main '%(deltabase)'
-+batch_test_atom refs/heads/main '%(objectname)'
-+batch_test_atom refs/heads/main '%(objectname:short)'
-+batch_test_atom refs/heads/main '%(objectname:short=1)'
-+batch_test_atom refs/heads/main '%(objectname:short=10)'
-+batch_test_atom refs/heads/main '%(tree)'
-+batch_test_atom refs/heads/main '%(tree:short)'
-+batch_test_atom refs/heads/main '%(tree:short=1)'
-+batch_test_atom refs/heads/main '%(tree:short=10)'
-+batch_test_atom refs/heads/main '%(parent)'
-+batch_test_atom refs/heads/main '%(parent:short)'
-+batch_test_atom refs/heads/main '%(parent:short=1)'
-+batch_test_atom refs/heads/main '%(parent:short=10)'
-+batch_test_atom refs/heads/main '%(numparent)'
-+batch_test_atom refs/heads/main '%(object)'
-+batch_test_atom refs/heads/main '%(type)'
-+batch_test_atom refs/heads/main '%(raw)'
-+batch_test_atom refs/heads/main '%(*objectname)'
-+batch_test_atom refs/heads/main '%(*objecttype)'
-+batch_test_atom refs/heads/main '%(author)'
-+batch_test_atom refs/heads/main '%(authorname)'
-+batch_test_atom refs/heads/main '%(authoremail)'
-+batch_test_atom refs/heads/main '%(authoremail:trim)'
-+batch_test_atom refs/heads/main '%(authoremail:localpart)'
-+batch_test_atom refs/heads/main '%(authordate)'
-+batch_test_atom refs/heads/main '%(committer)'
-+batch_test_atom refs/heads/main '%(committername)'
-+batch_test_atom refs/heads/main '%(committeremail)'
-+batch_test_atom refs/heads/main '%(committeremail:trim)'
-+batch_test_atom refs/heads/main '%(committeremail:localpart)'
-+batch_test_atom refs/heads/main '%(committerdate)'
-+batch_test_atom refs/heads/main '%(tag)'
-+batch_test_atom refs/heads/main '%(tagger)'
-+batch_test_atom refs/heads/main '%(taggername)'
-+batch_test_atom refs/heads/main '%(taggeremail)'
-+batch_test_atom refs/heads/main '%(taggeremail:trim)'
-+batch_test_atom refs/heads/main '%(taggeremail:localpart)'
-+batch_test_atom refs/heads/main '%(taggerdate)'
-+batch_test_atom refs/heads/main '%(creator)'
-+batch_test_atom refs/heads/main '%(creatordate)'
-+batch_test_atom refs/heads/main '%(subject)'
-+batch_test_atom refs/heads/main '%(subject:sanitize)'
-+batch_test_atom refs/heads/main '%(contents:subject)'
-+batch_test_atom refs/heads/main '%(body)'
-+batch_test_atom refs/heads/main '%(contents:body)'
-+batch_test_atom refs/heads/main '%(contents:signature)'
-+batch_test_atom refs/heads/main '%(contents)'
-+batch_test_atom refs/heads/main '%(HEAD)' fail
-+batch_test_atom refs/heads/main '%(upstream:track)' fail
-+batch_test_atom refs/heads/main '%(upstream:trackshort)' fail
-+batch_test_atom refs/heads/main '%(upstream:track,nobracket)' fail
-+batch_test_atom refs/heads/main '%(upstream:nobracket,track)' fail
-+batch_test_atom refs/heads/main '%(push:track)' fail
-+batch_test_atom refs/heads/main '%(push:trackshort)' fail
-+batch_test_atom refs/heads/main '%(worktreepath)' fail
-+batch_test_atom refs/heads/main '%(symref)' fail
-+batch_test_atom refs/heads/main '%(flag)' fail
-+
-+batch_test_atom refs/tags/testtag '%(refname)' fail
-+batch_test_atom refs/tags/testtag '%(refname:short)' fail
-+batch_test_atom refs/tags/testtag '%(upstream)' fail
-+batch_test_atom refs/tags/testtag '%(push)' fail
-+batch_test_atom refs/tags/testtag '%(objecttype)'
-+batch_test_atom refs/tags/testtag '%(objectsize)'
-+batch_test_atom refs/tags/testtag '%(objectsize:disk)'
-+batch_test_atom refs/tags/testtag '%(*objectsize:disk)'
-+batch_test_atom refs/tags/testtag '%(deltabase)'
-+batch_test_atom refs/tags/testtag '%(*deltabase)'
-+batch_test_atom refs/tags/testtag '%(objectname)'
-+batch_test_atom refs/tags/testtag '%(objectname:short)'
-+batch_test_atom refs/tags/testtag '%(tree)'
-+batch_test_atom refs/tags/testtag '%(tree:short)'
-+batch_test_atom refs/tags/testtag '%(tree:short=1)'
-+batch_test_atom refs/tags/testtag '%(tree:short=10)'
-+batch_test_atom refs/tags/testtag '%(parent)'
-+batch_test_atom refs/tags/testtag '%(parent:short)'
-+batch_test_atom refs/tags/testtag '%(parent:short=1)'
-+batch_test_atom refs/tags/testtag '%(parent:short=10)'
-+batch_test_atom refs/tags/testtag '%(numparent)'
-+batch_test_atom refs/tags/testtag '%(object)'
-+batch_test_atom refs/tags/testtag '%(type)'
-+batch_test_atom refs/tags/testtag '%(*objectname)'
-+batch_test_atom refs/tags/testtag '%(*objecttype)'
-+batch_test_atom refs/tags/testtag '%(author)'
-+batch_test_atom refs/tags/testtag '%(authorname)'
-+batch_test_atom refs/tags/testtag '%(authoremail)'
-+batch_test_atom refs/tags/testtag '%(authoremail:trim)'
-+batch_test_atom refs/tags/testtag '%(authoremail:localpart)'
-+batch_test_atom refs/tags/testtag '%(authordate)'
-+batch_test_atom refs/tags/testtag '%(committer)'
-+batch_test_atom refs/tags/testtag '%(committername)'
-+batch_test_atom refs/tags/testtag '%(committeremail)'
-+batch_test_atom refs/tags/testtag '%(committeremail:trim)'
-+batch_test_atom refs/tags/testtag '%(committeremail:localpart)'
-+batch_test_atom refs/tags/testtag '%(committerdate)'
-+batch_test_atom refs/tags/testtag '%(tag)'
-+batch_test_atom refs/tags/testtag '%(tagger)'
-+batch_test_atom refs/tags/testtag '%(taggername)'
-+batch_test_atom refs/tags/testtag '%(taggeremail)'
-+batch_test_atom refs/tags/testtag '%(taggeremail:trim)'
-+batch_test_atom refs/tags/testtag '%(taggeremail:localpart)'
-+batch_test_atom refs/tags/testtag '%(taggerdate)'
-+batch_test_atom refs/tags/testtag '%(creator)'
-+batch_test_atom refs/tags/testtag '%(creatordate)'
-+batch_test_atom refs/tags/testtag '%(subject)'
-+batch_test_atom refs/tags/testtag '%(subject:sanitize)'
-+batch_test_atom refs/tags/testtag '%(contents:subject)'
-+batch_test_atom refs/tags/testtag '%(body)'
-+batch_test_atom refs/tags/testtag '%(contents:body)'
-+batch_test_atom refs/tags/testtag '%(contents:signature)'
-+batch_test_atom refs/tags/testtag '%(contents)'
-+batch_test_atom refs/tags/testtag '%(HEAD)' fail
-+
-+batch_test_atom refs/myblobs/blob1 '%(refname)' fail
-+batch_test_atom refs/myblobs/blob1 '%(upstream)' fail
-+batch_test_atom refs/myblobs/blob1 '%(push)' fail
-+batch_test_atom refs/myblobs/blob1 '%(HEAD)' fail
-+
-+batch_test_atom refs/myblobs/blob1 '%(objectname)'
-+batch_test_atom refs/myblobs/blob1 '%(objecttype)'
-+batch_test_atom refs/myblobs/blob1 '%(objectsize)'
-+batch_test_atom refs/myblobs/blob1 '%(objectsize:disk)'
-+batch_test_atom refs/myblobs/blob1 '%(deltabase)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(contents)'
-+batch_test_atom refs/myblobs/blob2 '%(contents)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(raw)'
-+batch_test_atom refs/myblobs/blob2 '%(raw)'
-+batch_test_atom refs/mytrees/tree1 '%(raw)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(raw:size)'
-+batch_test_atom refs/myblobs/blob2 '%(raw:size)'
-+batch_test_atom refs/mytrees/tree1 '%(raw:size)'
-+
-+batch_test_atom refs/myblobs/blob1 '%(if:equals=blob)%(objecttype)%(then)commit%(else)not commit%(end)'
-+batch_test_atom refs/myblobs/blob2 '%(if:equals=blob)%(objecttype)%(then)commit%(else)not commit%(end)'
-+batch_test_atom refs/mytrees/tree1 '%(if:equals=tree)%(objecttype)%(then)tree%(else)not tree%(end)'
-+
-+batch_test_atom refs/heads/main '%(align:60) objectname is %(objectname)%(end)|%(objectname)'
-+batch_test_atom refs/heads/main '%(align:left,60) objectname is %(objectname)%(end)|%(objectname)'
-+batch_test_atom refs/heads/main '%(align:middle,60) objectname is %(objectname)%(end)|%(objectname)'
-+batch_test_atom refs/heads/main '%(align:60,right) objectname is %(objectname)%(end)|%(objectname)'
-+
-+batch_test_atom refs/heads/main 'VALID'
-+batch_test_atom refs/heads/main '%(INVALID)' fail
-+batch_test_atom refs/heads/main '%(authordate:INVALID)' fail
-+
-+test_expect_success 'cat-file refs/heads/main refs/tags/testtag %(rest)' '
-+	cat >expected <<-EOF &&
-+	123 commit 123
-+	456 tag 456
-+	EOF
-+	git cat-file --batch-check="%(rest) %(objecttype) %(rest)" >actual <<-EOF &&
-+	refs/heads/main 123
-+	refs/tags/testtag 456
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+batch_test_atom refs/heads/main '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+batch_test_atom refs/tags/testtag '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+batch_test_atom refs/myblobs/blob1 '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+batch_test_atom refs/myblobs/blob2 '%(objectname) %(objecttype) %(objectsize)
-+%(raw)'
-+
-+
-+test_expect_success 'cat-file --batch equals to --batch-check with atoms' '
-+	git cat-file --batch-check="%(objectname) %(objecttype) %(objectsize)
-+%(raw)" >expected <<-EOF &&
-+	refs/heads/main
-+	refs/tags/testtag
-+	EOF
-+	git cat-file --batch >actual <<-EOF &&
-+	refs/heads/main
-+	refs/tags/testtag
-+	EOF
-+	cmp expected actual
-+'
-+
- test_done
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index 40edf9dab534..3553f84a00c1 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -41,7 +41,7 @@ test_expect_success 'Missing objects are reported correctly' '
- 	r=refs/heads/missing &&
- 	echo $MISSING >.git/$r &&
- 	test_when_finished "rm -f .git/$r" &&
--	echo "fatal: missing object $MISSING for $r" >missing-err &&
-+	echo "fatal: $MISSING missing" >missing-err &&
- 	test_must_fail git for-each-ref 2>err &&
- 	test_cmp missing-err err &&
- 	(
 -- 
 gitgitgadget
-
