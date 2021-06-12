@@ -2,74 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,BODY_SINGLE_WORD,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39580C48BE6
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 01:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8A08C48BE6
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 01:40:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1069761184
-	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 01:22:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7BF0610A1
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 01:40:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230160AbhFLBX6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 21:23:58 -0400
-Received: from mail-pj1-f52.google.com ([209.85.216.52]:40782 "EHLO
-        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbhFLBX5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 21:23:57 -0400
-Received: by mail-pj1-f52.google.com with SMTP id mp5-20020a17090b1905b029016dd057935fso6792807pjb.5
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 18:21:44 -0700 (PDT)
+        id S230103AbhFLBmA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 21:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229622AbhFLBmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 21:42:00 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7F8C061574
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 18:39:46 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id q10so3487798oij.5
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 18:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=7zPquDCtZyzOA5PY0kmGl8Aq5WV/QI7GoaYVVezsWQc=;
-        b=kPEHsyTGX/JLk5Ya4ShnmZT3mqRZR7TtbCLvP3ptR+TjORicqYN1qaNpcmwMiDdkeV
-         xWXuHJTiPRZNovrmJKhQD/3gSqDTA9c8uJjhOhF8OXH1wGgPcMFMEOAjn20NZFsRIntT
-         H77sa2Dx01GudkF1IG0AnszdNQgWzEZFpR9tgaffpOiRS45G9iVKCC/bbbahOpDCrLxP
-         eMC4t/vDXvt4wRWRV4PRdlxZJKKZj3L3YMXjcmDR+Gz8qEnNIn/KV6nLSeQoUWK3WbVy
-         4oO6OCV32/7FVXNKOzOaMyIckpNfbDeX6V5w0bH7x3KIPVICjy5sFPFTt3bCCr/KDvbX
-         OfRg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=m0a8EGSBL87xaV5Q+nO+VJ4hbKTYOqhcTmFA6c7JTqs=;
+        b=En2yMcrEvXbP7V55UHr303vk1f0RLgatoEvf7KEie/G/Pd8su5fe6rImIoKX86jIY3
+         TCkQBD79/IgitPJYK2f21UaDNuS0Niyag96TedtLs+/wc0FwU+bmZCegXptxQaCQ0VjL
+         hO79sGsjj8OWup31baXh+15Hoe9GzMdyCjFJfAb54ANGNIRLTOiUpzXaymbJxSAaJlz0
+         a2pZx/mNUFb2hKp7GOKRy8WJgwph1tu5wmrNEvxJicF1Ts/MX4jz8T2nSXiJnZ9Gv3Tu
+         XYpKczCfK6uJ6Rua4W+rtPZDCe0lS+IxeKsHnU38m0q1jGBCyGazDoVjhB13kuu/NBp2
+         bAMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7zPquDCtZyzOA5PY0kmGl8Aq5WV/QI7GoaYVVezsWQc=;
-        b=YkemgL0pnNzRo4IaKldoL8JJt/Q20iJzpenRr6Kiu/eKTEOU3fFKR7xWsxbhGvQGFv
-         uBoruLaQ5k1uFxUlf+h+nm09Mag9/AMsFHvhz3O3xkn0z8DYLv9M1gtsID3yLhJBox9D
-         ZIzGhuJPisUqJpn89KiG+l+6Sw83xgm4qKDL5bul3NR33UtNQ3weYTlBVw9rIBdAZNy+
-         aqBGqB4SlvhZYtKKjZ0hnFCxvIWbpAVHSe8QTDpl0ioOGJJv6DkJZbvYZh48EnPpaMSd
-         /9Vkz2n7Ry1hG6oiDyEEzCteqTHEWkZi0bs0N7pSvizccrDF35xE/sUSlKqxWCTJZNzD
-         37Jg==
-X-Gm-Message-State: AOAM533E/GQ/uN/NM4zZMfTxUW9UAoVmTclT+fORN+79sanb3pHO3mtg
-        7CxkRvwSrvUoYhsnrAWXTzMAlAIsPqS3Rw==
-X-Google-Smtp-Source: ABdhPJzNZmzlUf1sPAA3whUUAydB+sun791utl6EhMjN6X96L0acv0LsmRmjt+EGQ4ygu6vBjkOK9Q==
-X-Received: by 2002:a17:902:b482:b029:114:7531:a52e with SMTP id y2-20020a170902b482b02901147531a52emr6365968plr.70.1623460843893;
-        Fri, 11 Jun 2021 18:20:43 -0700 (PDT)
-Received: from [192.168.43.80] (subs09b-223-255-225-226.three.co.id. [223.255.225.226])
-        by smtp.gmail.com with ESMTPSA id o186sm6161088pfb.59.2021.06.11.18.20.42
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Jun 2021 18:20:43 -0700 (PDT)
-Subject: Re: [suggestion] support non-negative float number in git-repack
- --max-pack-size
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Git Users <git@vger.kernel.org>
-References: <776cb2f9-5fef-4486-5aef-f3ee62fcda7e@gmail.com>
-Message-ID: <c8723ccc-7167-796f-59ed-2cdaadccdc6f@gmail.com>
-Date:   Sat, 12 Jun 2021 08:20:41 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <776cb2f9-5fef-4486-5aef-f3ee62fcda7e@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=m0a8EGSBL87xaV5Q+nO+VJ4hbKTYOqhcTmFA6c7JTqs=;
+        b=E7kjvBtaJP/TrrUrbtf8FQfX6Dku9qC0Y+zYmPE4hcJEeg7g0RMEQLXOcVPkFiUx1s
+         Fx1E1l/BctEEQFJqanEZ2w5Q2ZPLveFXnksuyE4O/AmWGEPOy+XFbX9EK4/JbTgxazxp
+         qPx0LURL2sU0JYv2HYMIXwUDTh3Woz9J0Dgtll8Ubfr3gNJaeHhyx6DLD+UWnI0gkEpq
+         YtXNHDNdatnnOsvBVi8Z4BSRFRLyXDxz3ahUs+tyS6D5cnJyBfXQMLnWriI2v4OFfeLv
+         xRAC9zP8d3hG1G1gi+ERf86W0NYAXUPFmg+sbK+zSfYwpeHu//jUXnWNunWRmA7ysD3X
+         Y23A==
+X-Gm-Message-State: AOAM532nLyo7k8f7Byb2kijvnRzzRjApWYUPoijwc8iwQiDDFvj2VE98
+        xp56EBMsMWUPI1LTx3re15U=
+X-Google-Smtp-Source: ABdhPJya2VJoLXBA4GFrFBGoCjWJY5rlzfJKeepX4chfmmIDn5rd6havVCbOmitA+0ndZYS18FhFPw==
+X-Received: by 2002:aca:e142:: with SMTP id y63mr4199980oig.57.1623461982224;
+        Fri, 11 Jun 2021 18:39:42 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id x13sm1638369ote.70.2021.06.11.18.39.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jun 2021 18:39:41 -0700 (PDT)
+Date:   Fri, 11 Jun 2021 20:39:40 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60c4105c2de76_bd9208d2@natae.notmuch>
+In-Reply-To: <57c48ef2-7fac-4d3f-e74b-a3ad44c49480@gmail.com>
+References: <20210611202819.47077-1-felipe.contreras@gmail.com>
+ <57c48ef2-7fac-4d3f-e74b-a3ad44c49480@gmail.com>
+Subject: Re: [PATCH 0/2] Avoid gender pronouns
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ping
+Bagas Sanjaya wrote:
+> Hi Felipe,
+> 
+> On 12/06/21 03.28, Felipe Contreras wrote:
+> > The latest solution looking for a problem [1] is to use the actively
+> > debated among linguists singular "they" [2].
+> > 
+> > Leaving aside the linguistic intricacies that not all singular "they" are
+> > equal [3], and the overwhelming sentiment that these kinds of political
+> > discussions don't provide value for this community [4], the "issue" can
+> > be easily solved by simply using different wording.
+> > 
+> >    - The reviewer herself
+> >    + The reviewers themselves
+> > 
+> > Problem solved.
+> 
+> So this patchset avoids any gender pronouns by changing single subject 
+> to many objects (plural), right?
+
+That is just one example. A good writer like a good programmer uses
+different tools for different situations.
+
+Another tool used in this patchset is to make use of the passive voice:
+she made a mistake -> a mistake was made. Another is singular "they"
+(but used properly). And another is to just completely reword the
+offending sentence.
+
+Cheers.
+
+-- 
+Felipe Contreras
