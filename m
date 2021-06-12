@@ -2,123 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC6DBC48BE5
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 22:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F6EC48BE6
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 01:17:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD92C61374
-	for <git@archiver.kernel.org>; Fri, 11 Jun 2021 22:55:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E180F6101A
+	for <git@archiver.kernel.org>; Sat, 12 Jun 2021 01:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230305AbhFKW54 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Jun 2021 18:57:56 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:39618 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbhFKW5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jun 2021 18:57:54 -0400
-Received: by mail-qk1-f201.google.com with SMTP id v16-20020ae9e3100000b02903aafadba721so7948157qkf.6
-        for <git@vger.kernel.org>; Fri, 11 Jun 2021 15:55:43 -0700 (PDT)
+        id S230035AbhFLBTb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Jun 2021 21:19:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230060AbhFLBTa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jun 2021 21:19:30 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 482CCC061574
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 18:17:17 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d16so5802516pfn.12
+        for <git@vger.kernel.org>; Fri, 11 Jun 2021 18:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=C4Ecs1VoZMSdLkgCKV06ArCy7TfqUq6TKSoKEmyI068=;
-        b=asEayoDm68oJHd6DRQSVu7778wXoKeuz+rN2zcv9oR+jx9XtVQyev/Xoc9/3O0ml2A
-         /LH+Lh0yksu54QRHm98T7Z417cbu8dzUGvwjN8hMlWXjzM9ekt+c6FHkLLpxoy8ySXVD
-         k/G+PEcDA+8ViI9XUcXJJaQ7joDxg54vT46mE+i3Up1+qROLNRHFlUy34DFbQ2bZ9bEQ
-         9cNoALuX2czE06sRHAQus+5OyqicZXm2PGVF2c4nt/a1XrAJ2Ds6TNm3U7uDtEuEprvA
-         dDH8I2jjTtoZReMfBdqe+QBnVLhT03zS0jsX2ow9lo41NGzJ2pchI8neLVVnJoTB0Pc0
-         qUXQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=TlTLuslQ4y3N0bLXm0hh2fqsrAEh1i4MhYcvAgzy6s0=;
+        b=RXx5j1Ust54KNXaOyReezxG8byJ340zUbyyrrGx7J66umuFeL4XPowuWmYyL47KyBT
+         QJ5X1ZPiOvOXm4YQQ8yS6O1197x4wKyMHaTdKN6j4uJS6VwBe5PM1k/VegSytudJZCu2
+         HZOSVPliqS9HE4vvyMqCJHIbv5wux/Pj7KW/k0QUPvhgW8sgEURKq6iFCKoA5SVfj7Cc
+         xsj9QHiYyc69lzi3wEAH/TcHD2FbGaEvxrLcMlfR0YipR6pNeMgYcVMlCKj0XYMCMYLq
+         RihD8NQ0in6o3VwSGXQw0Wq0QscQwuB8V05T/hzCbX2u78ofFKIij+7d0KS6hEI5Ysrg
+         jd5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=C4Ecs1VoZMSdLkgCKV06ArCy7TfqUq6TKSoKEmyI068=;
-        b=cZcji4ziHpp9Uut4ywCQJZd86yqJWvCN4r0FvVTpop1JY/4xmoWQThXdGrTgMdcckS
-         ykOCwzSOFLyz2gIYtj5UcsF/ox/dQNMUTFUQmcOQvwOgECDFb4/NCJk2uTMrO0upmi02
-         Bx20QRMqfwNvFczlcEZAuSMH/83xNeV2jClNuULqKHYb2nZY+hbL5Ggr8nYctXBJ5AvJ
-         I5vXGC5W82wM9BM4uwEm/HWLJJzbYt2jk071tSdiFiBo92+GWeN6o1BWs+POBsDitILd
-         0hxJI0NymEl6uHABoY+GQEuQ+3pmTNRIJYL4+532DO0FN4hwpuPIfNHYJ1dnpjDosSsU
-         N/5Q==
-X-Gm-Message-State: AOAM532IU5StmIzb5awfisPzrB8++7on/+ZXnp/1vwvayh1M18tLjdUO
-        sWTJxoCOv+hDZPSUCVUUuhDTdhV8CWyVZBZR/Q3RoGdFcors2S6oq82E+vIXXaSkak2g+X2ciH0
-        XXe+rvJl0n+bMRPua2b7/NXZiJModRh7/ilgNR5Ol98vOppAAw3pzQZpA4CErO63v2x0Fc1mwVg
-        ==
-X-Google-Smtp-Source: ABdhPJwQx6/RWMwzJFsBEHA7mTRknDVpnGeZkvKPpmzDaBpQY2t1NKFuoyV3S3mE3OZ4dE6R+JLr9x/mFUIkpw6j8RI=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:c894:862c:2364:ff78])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6214:20e3:: with SMTP id
- 3mr7231493qvk.48.1623452083496; Fri, 11 Jun 2021 15:54:43 -0700 (PDT)
-Date:   Fri, 11 Jun 2021 15:54:28 -0700
-In-Reply-To: <20210611225428.1208973-1-emilyshaffer@google.com>
-Message-Id: <20210611225428.1208973-5-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20210611225428.1208973-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
-Subject: [RFC PATCH 4/4] submodule: cache superproject gitdir during 'update'
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TlTLuslQ4y3N0bLXm0hh2fqsrAEh1i4MhYcvAgzy6s0=;
+        b=PNsxYp30+SfDfZdQck6kgcrC/rudl2Pue6Aktb3pN2TvrqfWh6qkucJsXB0T5zYnVu
+         w2gXbYK8lUQT629QvVOiTbd/NlJkTEeklFtTKd/ZHrcNgZXBmoEWzMyTl54M/impzHj6
+         /4nJgZqfbPETEi3+f4ukYYWCK2iqH/rklnfmguVNaMei6RLlkP+r35e/SxW6btd9I2h9
+         SjFiwZETbDyRb9D+ipr+6R+IwS0u+A6TJ+R/lDOjXT9ajIqpzvWN6rSrei30ErYNhN7Y
+         OOkXWa9act4SmmLjqDPvfb8C5GYvGG7zcfIllsHvBB2CCOiwRH0TAYcYhG+b6l/qZnqq
+         PtBg==
+X-Gm-Message-State: AOAM531cdXnxGWjhFVmlis8VHCegNrh/eNwIZ51RJuBvWOM77rpJtXvv
+        y5FLTW/X+oAge51HkmrXjvucXxkrXdXmWQ==
+X-Google-Smtp-Source: ABdhPJxtMyVATtFoTBoNspD+FOuTbPFx6P7U2THEtQzzdh0vplv56M2VGVNM1/v6qWJ7gzhbOltPYw==
+X-Received: by 2002:a63:8f0b:: with SMTP id n11mr6194671pgd.342.1623460636782;
+        Fri, 11 Jun 2021 18:17:16 -0700 (PDT)
+Received: from [192.168.43.80] (subs09b-223-255-225-226.three.co.id. [223.255.225.226])
+        by smtp.gmail.com with ESMTPSA id p9sm87591pfo.106.2021.06.11.18.17.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jun 2021 18:17:16 -0700 (PDT)
+Subject: Re: [PATCH 0/2] Avoid gender pronouns
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <20210611202819.47077-1-felipe.contreras@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <57c48ef2-7fac-4d3f-e74b-a3ad44c49480@gmail.com>
+Date:   Sat, 12 Jun 2021 08:17:12 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20210611202819.47077-1-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A cached path to the superproject's gitdir might be added during 'git
-submodule add', but in some cases - like submodules which were created
-before 'git submodule add' learned to cache that info - it might be
-useful to update the cache. Let's do it during 'git submodule update',
-when we already have a handle to the superproject while calling
-operations on the submodules.
+Hi Felipe,
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- git-submodule.sh            |  9 +++++++++
- t/t7406-submodule-update.sh | 10 ++++++++++
- 2 files changed, 19 insertions(+)
+On 12/06/21 03.28, Felipe Contreras wrote:
+> The latest solution looking for a problem [1] is to use the actively
+> debated among linguists singular "they" [2].
+> 
+> Leaving aside the linguistic intricacies that not all singular "they" are
+> equal [3], and the overwhelming sentiment that these kinds of political
+> discussions don't provide value for this community [4], the "issue" can
+> be easily solved by simply using different wording.
+> 
+>    - The reviewer herself
+>    + The reviewers themselves
+> 
+> Problem solved.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index eb90f18229..ddda751cfa 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -648,6 +648,15 @@ cmd_update()
- 			fi
- 		fi
- 
-+		# Cache a pointer to the superproject's gitdir. This may have
-+		# changed, so rewrite it unconditionally. Writes it to worktree
-+		# if applicable, otherwise to local.
-+
-+		sp_gitdir="$(git rev-parse --absolute-git-dir)"
-+		relative_gitdir="$(realpath --relative-to "$sm_path" "$sp_gitdir")"
-+		git -C "$sm_path" config --worktree \
-+			submodule.superprojectgitdir "$relative_gitdir"
-+
- 		if test -n "$recursive"
- 		then
- 			(
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index ff3ba5422e..96023cbb6a 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1037,4 +1037,14 @@ test_expect_success 'submodule update --quiet passes quietness to merge/rebase'
- 	)
- '
- 
-+test_expect_success 'submodule update adds superproject gitdir to older repos' '
-+	(cd super &&
-+	 git -C submodule config --unset submodule.superprojectGitdir &&
-+	 git submodule update &&
-+	 echo "../.git" >expect &&
-+	 git -C submodule config submodule.superprojectGitdir >actual &&
-+	 test_cmp expect actual
-+	)
-+'
-+
- test_done
+So this patchset avoids any gender pronouns by changing single subject 
+to many objects (plural), right?
+
 -- 
-2.32.0.272.g935e593368-goog
-
+An old man doll... just what I always wanted! - Clara
