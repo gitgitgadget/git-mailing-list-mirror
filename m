@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 126F0C48BDF
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CCADC48BE8
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8C2461363
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E201161363
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232231AbhFMXB6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 19:01:58 -0400
-Received: from mail-ot1-f50.google.com ([209.85.210.50]:44852 "EHLO
-        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232181AbhFMXB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 19:01:57 -0400
-Received: by mail-ot1-f50.google.com with SMTP id q5-20020a9d66450000b02903f18d65089fso9065060otm.11
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 15:59:41 -0700 (PDT)
+        id S232236AbhFMXCA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 19:02:00 -0400
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:42509 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232181AbhFMXB7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 19:01:59 -0400
+Received: by mail-ot1-f49.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so9076676oth.9
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 15:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bvnzbM1V/v21TQTXSkhY6XD51NKXzk91beoDIhOObL8=;
-        b=Fa4B46/cgHCGPwcAd2HHPXOeSu88pIvwJW5jbymBGFsQnKFlk6+wB/PPz51C1+ewgS
-         64U68W2ArwcxoGm1j6OCEgvS8+Dw0KlLpA8qufR2ks39CwdcgSxwmJ8vXn2UF2BcDv7h
-         vKmOgy8hY8QY9nAaRFhOIFVuL3Yb/8W/u8Q3C6WO2Ra+45PESmxA4jlUymtRYHoaW5jF
-         eVEii6vsitksauwHJH80ZDJGMQqxnBI5aeZJ+FCuq/MFHX0zkfMWxnHh1GeIxE8b+DXM
-         j0CfffC91R7gKtFeRzomtgIuCOXYG+1OBKi0B6uLq2sSa/faJPn/zEqU3pDysP1xbiZQ
-         3M5A==
+        bh=TsewPFur6US8iCogUp0fhQqt3tQPgXXXzcJV06V66uE=;
+        b=Jo+ZwWo/0iImxd2aFDEQomNPMPeujSfZyrFAYtlP5om4vZAyQKzphy8EeHfT8jk9zB
+         FnH2a99+p+Zy52BK7ZPFty5llN7TXQW3MFjDcNv/yGtDNdngLPwIwpjQKNIPTxBqw5Un
+         jW41DgGVYGgwVxwfQRA35ikzJtBB2gXuSEe5Wa+mE0zdVxU5g0qklWqZQHlOtmtPPcZN
+         oxzJ1PcS/z26ayTWqx5oaa8qQSF5kxmcC14wr9LPY0Z6GDPgoPTsIcWkwFNeqEe5f2fU
+         PWMhk4kAZkNkvYkbI2BQ/oj66/quk8sZxpGENidpnM1x2ZgNuEHcShzN8eIEaMslhYK1
+         nsyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bvnzbM1V/v21TQTXSkhY6XD51NKXzk91beoDIhOObL8=;
-        b=mACqmvd64CHMcZ8XWRWXg0CWYTR2V6m43hf+y0hLU6ThOcx89tJobyPVm8ySxjST3j
-         dIsYvRQcQNzL3Mz2q7oRfrz1HVtlyT8u+tohJUI0tZHYdiAz0oV4kFJvAIsn7620Za+h
-         2HW5y7ktsRY3hMya5f6nSY2YSW4nhsGKcLE8suMj7QGO2nuIJWIDqDXQhOnb5SEPqgHl
-         5O7BEwvPV0uuOC+6nVYMbfVXfFP/AaZrOjMo+In+5eKR26n5/GdvIxKW2rS6gWJ+7ZG9
-         u+MaE38BmBHaR4O5yphTQlr+ApbcvlEANjlx82NhsGsv0q3NMyGmiO3ZRTBbgF4Ef7BA
-         EP4w==
-X-Gm-Message-State: AOAM532cvUTVXBf0OLhq+APpKrn0dKm/vdPhohDS0c/Vo2i0qH8rkN0I
-        5xivhZJ4qcLheYkyW6QHByBg0dkVVxkJ3w==
-X-Google-Smtp-Source: ABdhPJzzhrBeRRQuVIrO7Lr7PP8jcz32vmouslUuV6e7T6IzSs/8w1LLkkHkXZmumW910+0haoNDBw==
-X-Received: by 2002:a9d:8cc:: with SMTP id 70mr10809423otf.289.1623625121308;
-        Sun, 13 Jun 2021 15:58:41 -0700 (PDT)
+        bh=TsewPFur6US8iCogUp0fhQqt3tQPgXXXzcJV06V66uE=;
+        b=hF3pyIbysM6jSlrsrrFloUlG2osjMYPTt/bTLNbxLPKu7A5DLQC01rniqJtKeCWrIH
+         kw2yepDtddvFnV0Dagv4nS+7tOwNGMawgDN0c5SdTCk8gOdPCiN5uuyqSEB6R4dkqHek
+         dNmY+KlTD4daaeFrKApwiYqccXKM9olh7HT/VZpsrcWxusIhW0DZUdpirSZs0ctMfgWq
+         SyF0lJpXndajHiEPCsmVYqcilKHhYAge18JqFeUSdg5VBU7NlvwMdFeKMVqz/Gj5u4hq
+         LWf1Wf/qiCAZ4/O27P7kzd6m49WvAvi5+qXNFzUoaP5izEPP/k4NE/VW9Aq523KHTN9/
+         1O0g==
+X-Gm-Message-State: AOAM5320uLUoa+wI5pZonvnNfYc5uqstRZcMGWpe8s5DdkP08Q2Zqe77
+        ceOnGHNI7EoF2QNlNXxeKsdUZmic3Z8c9w==
+X-Google-Smtp-Source: ABdhPJxwtwS/N5rraMjRxVM9+PtiPZ2l6w0Z5yd9qUtfuJJZV2RfoY7PGyYuawEkJ71PC525CQuwcA==
+X-Received: by 2002:a05:6830:16cd:: with SMTP id l13mr10998258otr.171.1623625122831;
+        Sun, 13 Jun 2021 15:58:42 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id 30sm2407123ott.78.2021.06.13.15.58.40
+        by smtp.gmail.com with ESMTPSA id p9sm2868410otl.64.2021.06.13.15.58.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jun 2021 15:58:40 -0700 (PDT)
+        Sun, 13 Jun 2021 15:58:42 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/4] merge: fix Yoda conditions
-Date:   Sun, 13 Jun 2021 17:58:34 -0500
-Message-Id: <20210613225836.1009569-3-felipe.contreras@gmail.com>
+Subject: [PATCH 3/4] xdiff/xmerge: simplify xdl_recs_copy_0
+Date:   Sun, 13 Jun 2021 17:58:35 -0500
+Message-Id: <20210613225836.1009569-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210613225836.1009569-1-felipe.contreras@gmail.com>
 References: <20210613225836.1009569-1-felipe.contreras@gmail.com>
@@ -69,51 +69,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Remove one unnecessary indentation level.
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/merge-file.c | 2 +-
- xdiff/xmerge.c       | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ xdiff/xmerge.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 0186f4156a..6affccaf19 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -51,7 +51,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	if (startup_info->have_repository) {
- 		/* Read the configuration file */
- 		git_config(git_xmerge_config, NULL);
--		if (0 <= git_xmerge_style)
-+		if (git_xmerge_style >= 0)
- 			xmp.style = git_xmerge_style;
- 	}
- 
 diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 1659edb453..ab3448ca88 100644
+index ab3448ca88..b5b3f56f92 100644
 --- a/xdiff/xmerge.c
 +++ b/xdiff/xmerge.c
-@@ -487,7 +487,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- 		 * "diff3 -m" output does not make sense for anything
- 		 * more aggressive than XDL_MERGE_EAGER.
- 		 */
--		if (XDL_MERGE_EAGER < level)
-+		if (level > XDL_MERGE_EAGER)
- 			level = XDL_MERGE_EAGER;
+@@ -122,19 +122,19 @@ static int xdl_recs_copy_0(int use_orig, xdfenv_t *xe, int i, int count, int nee
+ 	for (i = 0; i < count; size += recs[i++]->size)
+ 		if (dest)
+ 			memcpy(dest + size, recs[i]->ptr, recs[i]->size);
+-	if (add_nl) {
+-		i = recs[count - 1]->size;
+-		if (i == 0 || recs[count - 1]->ptr[i - 1] != '\n') {
+-			if (needs_cr) {
+-				if (dest)
+-					dest[size] = '\r';
+-				size++;
+-			}
+-
++	if (!add_nl)
++		return size;
++	i = recs[count - 1]->size;
++	if (i == 0 || recs[count - 1]->ptr[i - 1] != '\n') {
++		if (needs_cr) {
+ 			if (dest)
+-				dest[size] = '\n';
++				dest[size] = '\r';
+ 			size++;
+ 		}
++
++		if (dest)
++			dest[size] = '\n';
++		size++;
  	}
- 
-@@ -603,10 +603,10 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- 	if (!changes)
- 		changes = c;
- 	/* refine conflicts */
--	if (XDL_MERGE_ZEALOUS <= level &&
-+	if (level >= XDL_MERGE_ZEALOUS &&
- 	    (xdl_refine_conflicts(xe1, xe2, changes, xpp) < 0 ||
- 	     xdl_simplify_non_conflicts(xe1, changes,
--					XDL_MERGE_ZEALOUS < level) < 0)) {
-+					level > XDL_MERGE_ZEALOUS) < 0)) {
- 		xdl_cleanup_merge(changes);
- 		return -1;
- 	}
+ 	return size;
+ }
 -- 
 2.32.0
 
