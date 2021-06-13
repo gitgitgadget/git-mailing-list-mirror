@@ -2,76 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DBB8C48BCF
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 17:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36B7CC48BDF
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 18:03:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C58661107
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 17:13:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E894E6108E
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 18:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232011AbhFMRPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 13:15:34 -0400
-Received: from mail-oi1-f177.google.com ([209.85.167.177]:41623 "EHLO
-        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231951AbhFMRPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 13:15:33 -0400
-Received: by mail-oi1-f177.google.com with SMTP id t40so11889051oiw.8
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 10:13:18 -0700 (PDT)
+        id S232008AbhFMSDh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 14:03:37 -0400
+Received: from mail-ot1-f46.google.com ([209.85.210.46]:40886 "EHLO
+        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231997AbhFMSDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 14:03:37 -0400
+Received: by mail-ot1-f46.google.com with SMTP id l15-20020a05683016cfb02903fca0eacd15so8592634otr.7
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 11:01:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=I6rIhvUkpM5JeDCHHAwVNlsx1QHrOtdL+9CXBr7nkoM=;
-        b=HCWiDJYGTIAcFvAuC3iYcGomE6AbxE6+2o9Mn9uBk8nAlrYwibmKlUFU3PC/9jx5z9
-         hdxPYiCf9SjkVLfE05IbPfvLD6SFCDVPEzB/vzfFYr1OE1qBJ9M8pf5UpXTjGVqIl8zo
-         /Sb7+v7Vp+rDAf7pKjxkAiaK2BgYcYhDgoaRfEna+laKao5n6coEmTZVO1O4/4vj1ZkL
-         OXYHSYos3LOURI5iImhZNklDWlovmYvcInXAE8Uz/D6xpPR+ddN8q8Ykv4bfLpXO5m30
-         xOpgW2WXSgwo4U6GUQCM1NvztV2cad30FXFpIxcBqQS5D9NpdUQzkKJ4EF/g90nv42XA
-         oaTA==
+        bh=8j57p/AxxLHw4eeWd4bW7A3f8dWJ4TCO5QKSMZ3q9VI=;
+        b=HKXKoJ0GsAtbCMZxsLE6ZWr23BdY5aj9WVV8EbMOzmflFEQKAIy80aQ36jwyNSIFVn
+         twlFmc0MVF6sMJvYfl7dRoDp/7AmI3XZCa2/b4cCa9OQWSqOC689x9J+Nb9dZVekP35K
+         gmN8o93+rgHpNjtYLCdtdogZJZyA6WRRHGp2eYNCFLV73m0GUXd6H0qDyN9aa981YpMh
+         vZN5TqcklyN8Gxiyk0ihidb1Sidp6OyP0zNKwCdHmE3cA2v40mv96DR2EyJ++1XL+wq0
+         y1e/WHwcY4TEo/G4U0hijS1wNyEGT1usIZyPiYLlAojHhSrj5wbGVqT7t0gkMA6RHbzF
+         177g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=I6rIhvUkpM5JeDCHHAwVNlsx1QHrOtdL+9CXBr7nkoM=;
-        b=OnDf34EY12iMu6AO8bbDHywYlDWCivFpANKoqWvqFmKjz6BcRK7/EwZUeJqxhIFiKn
-         G7UIJeu8j2/CnhWCqQmSjaZIDEm4P7G4Jw/Zis+cPoHS/Zze7Tyw3YXnU12uEU/wzKKY
-         fyIGAgBDGIPpmPTClpBCVsBYd1tcNKOeD4EPHgnz9uX2Yy+f9p+TK1aGe0iFdsqVB82H
-         x6MIazCZS8EsOhzscQ6aFT3DGjlozIisugTIYnYJL7/o/QeenH8zP6UVj27Gh/p+5DAR
-         PAGdQza2mb4rL2jBlrOTakhDPPDz3y16YFWO+0SSDlAFsQ9rNSe2a0seRnh7+nQSLYvT
-         Zf1Q==
-X-Gm-Message-State: AOAM532seuKMfe1eUo9kvKmt/1av8XEhz3phAT9AgOFA8XMYGHJkYbbh
-        5fXgY7lTiyC+Bt10jdEyaNY=
-X-Google-Smtp-Source: ABdhPJy2VRApJUz6wEYpFEaUCJJwollHnQFC1psykv7Lf1lFl6Mkqd9cgpAGHU7TTeHtTZR/wtSvyA==
-X-Received: by 2002:aca:6207:: with SMTP id w7mr19697924oib.177.1623604338390;
-        Sun, 13 Jun 2021 10:12:18 -0700 (PDT)
+        bh=8j57p/AxxLHw4eeWd4bW7A3f8dWJ4TCO5QKSMZ3q9VI=;
+        b=sIKaFUo/YzU3QauEWm7zffT86/EgCeUHCeeStgolJfe0ngeiupgUfJS3GbnkjimkZV
+         GtbvguZH59FBq14vVppPo1z3L20D4g8AdqQ73zOiU6dROLiCJOWn+KsDK9XW5T+gODV4
+         eSkoM3N9JVuAastPIfuIJKr/Q7rozbZ8DjOy5qvTkGCIZ7bE21vUWN7F4d/hdSpzlebZ
+         WEf01Cmm5fR/FIHfBKjaVoF9fwF2GWEdPhWRYndJV0qNK6afeMwgbb5MPQH6X7RR4QG9
+         BCESBTMDzrJziDmD4WYj21H8a6pe2ACyHq8Zq6G/4Xhxc6LWgwfE6d6L/nYGI6z9+uG+
+         EbgQ==
+X-Gm-Message-State: AOAM53219NH588qKC/G+XtUp6YGLXB4TywTPfblWt6T+4Sn8visWVoci
+        s4EBWo5aDB16+vA0gSOcOl4=
+X-Google-Smtp-Source: ABdhPJxVl/p8leob9/PtAoY648IT0omIQgYs/Suyen0oUcQHeeq/UTAoQX4NXbDvkGUww4qXDca1Yw==
+X-Received: by 2002:a9d:7987:: with SMTP id h7mr11201735otm.98.1623607235597;
+        Sun, 13 Jun 2021 11:00:35 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id i5sm863560oov.21.2021.06.13.10.12.17
+        by smtp.gmail.com with ESMTPSA id p7sm2483491otq.9.2021.06.13.11.00.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jun 2021 10:12:17 -0700 (PDT)
-Date:   Sun, 13 Jun 2021 12:12:16 -0500
+        Sun, 13 Jun 2021 11:00:35 -0700 (PDT)
+Date:   Sun, 13 Jun 2021 13:00:33 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?TWljaGFsIFN1Y2jDoW5law==?= <msuchanek@suse.de>,
+To:     Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Varun Varada <varuncvarada@gmail.com>,
-        Robert Coup <robert.coup@koordinates.com>, git@vger.kernel.org
-Message-ID: <60c63c70c7cbe_41f4520874@natae.notmuch>
-In-Reply-To: <20210613162802.GG8544@kitsune.suse.cz>
-References: <20210513074622.GG8544@kitsune.suse.cz>
- <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
- <20210513094818.GH8544@kitsune.suse.cz>
- <CAD2i4DDY1z1ZNigRfVog1205hKBk+U5KfinzXCk-2mkaYy4cjQ@mail.gmail.com>
- <20210527114629.GD8544@kitsune.suse.cz>
- <60afa7d9d4ca_2056d208d9@natae.notmuch>
- <20210527143541.GH8544@kitsune.suse.cz>
- <CAD2i4DC0zH8WQvfZiHJA7f+DXubZjG6fKSuMbXdaztDC_PU4ZA@mail.gmail.com>
- <20210613114007.GF8544@kitsune.suse.cz>
- <60c610f04b288_41f2b208ce@natae.notmuch>
- <20210613162802.GG8544@kitsune.suse.cz>
-Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?VXdlIEtsZWluZS1Lw7ZuaWc=?= 
+        <u.kleine-koenig@pengutronix.de>
+Message-ID: <60c647c1d9b5c_41f452089@natae.notmuch>
+In-Reply-To: <YMYnVWSEgxvKRU9j@coredump.intra.peff.net>
+References: <20210613143155.836591-1-felipe.contreras@gmail.com>
+ <YMYnVWSEgxvKRU9j@coredump.intra.peff.net>
+Subject: Re: [PATCH] xdiff: implement a zealous diff3
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -80,33 +75,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Such=C3=A1nek wrote:
-> On Sun, Jun 13, 2021 at 09:06:40AM -0500, Felipe Contreras wrote:
-> > Michal Such=C3=A1nek wrote:
+Jeff King wrote:
+> On Sun, Jun 13, 2021 at 09:31:55AM -0500, Felipe Contreras wrote:
+> =
 
-> > > We already received such reviews as response to your patch. It's no=
-t
-> > > what-if.
+> > From: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
 > > =
 
-> > In case you haven't been following this thread closely, you are the o=
-nly
-> > person that says the use of "impact" is OK. One person said "impact" =
-was
+> > "zdiff3" is identical to ordinary diff3, only it allows more aggressi=
+ve
+> > compaction than diff3. This way the displayed base isn't necessary
+> > technically correct, but still this mode might help resolving merge
+> > conflicts between two near identical additions.
+> > =
+
+> > Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>=
+
+> > ---
+> > =
+
+> > I'm re-sending this patch from 2013 because I do think it provides va=
+lue
+> > and we might want to make it the default.
 > =
 
-> Apparently you have not followed this thread closely yourself.
+> I take it you didn't investigate the segfault I mentioned.
 
-I have. If you think you have, then list all the people that agree with
-you that there's no problem with "impact" for the general population.
+I don't know how I was supposed to investigate the few segfaults you
+mentioned. All you said is that you never tracked the bug.
 
-> > It's OK to merge patches where one person objects.
+> Try this:
 > =
 
-> Apprantly you also missed that I am not opposed to the patch.
+>    commit=3Da5170794372cf1325710a3419473c91ec4af53bf
+>    for style in merge diff3 zdiff3; do
+>      git reset --hard
+>      git checkout $commit^1
+>      git -c merge.conflictstyle=3D$style merge $commit^2
+>    done
+> =
 
-Good. So some people are in favor of the patch, and nobody is against
-it.
+> The first two are fine; the zdiff3 one segfaults within the xmerge.c
+> code.
+
+I can reproduct the segfault, and here is a simpler way to reproduce it:
+
+(I have a hacked version of diff3 until merge-file learns how to use
+merge.conflictstyle)
+
+  cat >b <<EOF
+  A
+  EOF
+
+  cat >l <<EOF
+  A
+
+  B
+  C
+  D
+  E
+  F
+  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  H
+  I
+  EOF
+
+  cat >r <<EOF
+  A
+
+  b
+  C
+  D
+  E
+  F
+  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  H
+  i
+  EOF
+
+  $git merge-file --diff3 -p l b r
 
 -- =
 
