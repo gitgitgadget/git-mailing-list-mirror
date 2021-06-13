@@ -2,122 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3E3EC48BE5
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 00:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D6BCC48BCF
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 02:22:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF8B061040
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 00:54:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E804A61105
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 02:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbhFMAqu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Jun 2021 20:46:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48384 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbhFMAqs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Jun 2021 20:46:48 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B423CC061574
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 17:44:39 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id 67-20020a4a01460000b0290245b81f6261so1730301oor.6
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 17:44:39 -0700 (PDT)
+        id S231556AbhFMCYx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Jun 2021 22:24:53 -0400
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:39619 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230136AbhFMCYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Jun 2021 22:24:52 -0400
+Received: by mail-pf1-f174.google.com with SMTP id k15so7760590pfp.6
+        for <git@vger.kernel.org>; Sat, 12 Jun 2021 19:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EZmXvKBYeEeUDtrbQApgaFsYSEgAvFI0iMVjxYGYPWM=;
-        b=LRVh1W6s4ihbRD1HhcOHlkWE4Wo6wvxP2cFs4i+9Bo2/Y2dC549ChurtTKJi9s8mAJ
-         hI8/lectwV+DxSQUIpjvTsrEUeEbscedWI3KRoa38jYRzI6pN8qUVYmu9uGY6YA83tDf
-         zDJyOkiSfs8EyBfgysyJQbbicfUPAEcZpOdC2EptEAZ69eBt29KFqthEEackx9IrXRZi
-         e6G74Dsy9Le+31IYLgW93fNriwzX2e6pfZb/s+lP/71lTZHxoW3/dc2E2+QgXEBHBIUp
-         VGC5KPsst4w0QYg1Mguvc1/9/HKJQ8rTe/Lei6In9nlLSWycPA8coWXEOcuGxf7F1QQ9
-         Mp7Q==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=mX6IzoWbqPxsZ7P/qjh7F5tFoBvVzUipIzVt8QBvdH4=;
+        b=Bjx+GP2CLfyNNm06/2dVjSAbXb9s1WJ1/g/4xh5G7Hpqxq8rTpG/da3popG4wLE2q+
+         DANlCQ1j8CG+s9Vjn2+h8Ac/kRN/tbxgjpYtdGb5i7NGOIRjYYGF0hYrr7RC+F1CoYE2
+         irfa+Lh0tBjgFu5OkVElxCWzAb6hBEYwXRntzVhSy9HDRkKlT/doppwCnao7fW/C/vs9
+         aoF7PHJwMrVkl+4D39YHKnDEJq36/8AY13tZY/0hvIUaMevxehT4kNECyvswuFO+S/2y
+         49AmPotbVdtyZig4c3t2D7hIMS82XcKbxgeYoDZdy/0V/kFWTx/+ROwqycOu+/+6Um9U
+         vKjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=EZmXvKBYeEeUDtrbQApgaFsYSEgAvFI0iMVjxYGYPWM=;
-        b=ZBZ1eGAfoIOx0+PRJ1vA1ZqioCYZOGJORmO85f2bdGkmL0Xi6SlzwksGca1dtIbWiS
-         l9gzwJc834Eu5VKUyzCncKDdmcVfYAimfgHNoCqSXeU8EltEl4vrV1VnToeJejJSsvBx
-         5J9i6wXhHbywKSnrk0FIY+gxHl3qvZIooG/rjGvcojnPPtsxxb1+mWleECMLdzT+IoJh
-         FkRQ3SZhGR9IEWpro/tad+BVWUn6v+bpr1U1kbJSkUsVsncvhcz8kYwun+aYfflZPbM6
-         hZgcteAPbS5HFdLwJx90AvMLaIV1fldGw+6m0Fw8CUzb7pL8YbMKt89ZCai7fU+GD5MZ
-         bKzA==
-X-Gm-Message-State: AOAM532DY4l5zrEAiBibUJ8l6Oeh5C/vboGjq5yiZfn9QlBUcHrXAHS+
-        vcsLCJAkOG3h4sDkIqbkhbTi6eH9RAuhig==
-X-Google-Smtp-Source: ABdhPJy/OWSvslIeczuezC2XGvPEf4HTCF9svzJd7hH+bpnGXWCyGXTnqCaNhbtohRJE/n87fbIY2A==
-X-Received: by 2002:a4a:3e8e:: with SMTP id t136mr8558695oot.83.1623545078635;
-        Sat, 12 Jun 2021 17:44:38 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id f2sm2121810ooj.22.2021.06.12.17.44.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Jun 2021 17:44:38 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] doc: revisions: improve single range explanation
-Date:   Sat, 12 Jun 2021 19:44:34 -0500
-Message-Id: <20210613004434.10278-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0
+        bh=mX6IzoWbqPxsZ7P/qjh7F5tFoBvVzUipIzVt8QBvdH4=;
+        b=bnxFScSU/L6TBycDY9OKFDAVXacRf+a/VRFKXNzmG7TOvFAY45Bg6vvUs6E4zHiIfC
+         WsU3df0dqJ1eJ/jnhA75/yusE1N7yNXZuiKlVdwHtk0ZL2ShSCpnY19BnrJ7a6MSJkNg
+         iIqDia2pMTkEZ2EY3c2/DepUI2xW9Wb9CZkGXpZqjc4zK82x8zfqANH/hl1Dp4bn5W7Y
+         DEyVHEA29dv/AhWAS7ZssTq+vJnpDnbUsSlqQZweVhsOftuBfJd+pY/7/yeNi0XR5fUk
+         E0Iofhwgi6aSOqYiYDQhi/gGX0GJ7QU/ud9y/TWpr8Y2NRYPzzYZI2+jhFcgPUPNK0ZZ
+         xL3Q==
+X-Gm-Message-State: AOAM533Ymz8gGx8ykVI1nBhCMyUdb+IIfqMszDV8x/rurpTcpgvQS7pj
+        u3CN1+sUVKjxX6EtDtjwetJuNJ3w9n3bTA==
+X-Google-Smtp-Source: ABdhPJxgG2thm0tX2PWE73ZlZPzHs9jmp+3L6UwekoSqSH88JE6EHeqrWa0qaDuZ0Z01PX8P++zQ3A==
+X-Received: by 2002:a65:47ca:: with SMTP id f10mr2894266pgs.94.1623550896812;
+        Sat, 12 Jun 2021 19:21:36 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-75.three.co.id. [180.214.232.75])
+        by smtp.gmail.com with ESMTPSA id p11sm8459031pjo.19.2021.06.12.19.21.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 12 Jun 2021 19:21:36 -0700 (PDT)
+Subject: Re: [PATCH resend] graph: improve grammar of "invalid color" error
+ message
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com
+References: <20210612184144.6894-1-alexhenrie24@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <21c43663-9d2a-0173-bd5c-4e2c9f95bc05@gmail.com>
+Date:   Sun, 13 Jun 2021 09:21:33 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210612184144.6894-1-alexhenrie24@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The original explanation didn't seem clear enough to some people.
+Hi,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/revisions.txt | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+On 13/06/21 01.41, Alex Henrie wrote:
+> Without the "d", it sounds like a command, not an error, and is liable
+> to be translated incorrectly.
+> 
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index f5f17b65a1..d8cf512686 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -299,22 +299,22 @@ empty range that is both reachable and unreachable from HEAD.
- 
- Commands that are specifically designed to take two distinct ranges
- (e.g. "git range-diff R1 R2" to compare two ranges) do exist, but
--they are exceptions.  Unless otherwise noted, all "git" commands
-+they are exceptions.  Unless otherwise noted, all git commands
- that operate on a set of commits work on a single revision range.
--In other words, writing two "two-dot range notation" next to each
--other, e.g.
- 
--    $ git log A..B C..D
-+For example, if you have a linear history like this:
- 
--does *not* specify two revision ranges for most commands.  Instead
--it will name a single connected set of commits, i.e. those that are
--reachable from either B or D but are reachable from neither A or C.
--In a linear history like this:
-+    ---A---B---C---D---E---F
- 
--    ---A---B---o---o---C---D
-+Doing A..F will retrieve 5 commits, and doing B..E will retrieve 3
-+commits, but doing A..F B..E will not retrieve two revision ranges
-+totalling 8 commits. Instead the starting point A gets overriden by B,
-+and the ending point of E by F, effectively becoming B..F, a single
-+revision range.
- 
--because A and B are reachable from C, the revision range specified
--by these two dotted ranges is a single commit D.
-+With more complex graphs the result is not so simple and might result in
-+two disconnected sets of commits, but that is still considered a single
-+revision range.
- 
- 
- Other <rev>{caret} Parent Shorthand Notations
+s/liable/prone/
+
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+> Resending to make sure that this patch isn't forgotten.
+> ---
+>   graph.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/graph.c b/graph.c
+> index c128ad0cce..e3828eb8f2 100644
+> --- a/graph.c
+> +++ b/graph.c
+> @@ -95,7 +95,7 @@ static void parse_graph_colors_config(struct strvec *colors, const char *string)
+>   		if (!color_parse_mem(start, comma - start, color))
+>   			strvec_push(colors, color);
+>   		else
+> -			warning(_("ignore invalid color '%.*s' in log.graphColors"),
+> +			warning(_("ignored invalid color '%.*s' in log.graphColors"),
+>   				(int)(comma - start), start);
+>   		start = comma + 1;
+>   	}
+> 
+
+Why did you resend the patch?
+
 -- 
-2.32.0
-
+An old man doll... just what I always wanted! - Clara
