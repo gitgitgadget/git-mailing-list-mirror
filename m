@@ -2,215 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3949C48BDF
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 16:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C96AEC48BCF
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 16:28:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D561061245
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 16:14:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5EDA610FB
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 16:28:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231928AbhFMQQp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 12:16:45 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:35609 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231887AbhFMQQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 12:16:45 -0400
-Received: by mail-oi1-f181.google.com with SMTP id l12so4084738oig.2
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 09:14:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=+02fbGD2Gca/hZ3tmeeAI+NcmEWmoFjRG/7kvlFka+4=;
-        b=YPVDKByWcA6vhvdgWRQaqvCwYrDWbOaKyVj2PpuAP60syadsiAiAsqiGEyR8dRVnRe
-         ItHAcfSZ+1ZvA+ZtO/r71Om7ScLGI0Pvtma7JbcpK21G+8FFgSEKEPIOgYP7B8HSJfLy
-         9aFL0bQYE2MUCDGe04Qrn1m+HimRQvNhEwq/9BRW4O2ne9/bhQg69S2QsAuyPY4vsJEL
-         pcUBoG4/EXmQf25fvZfmBzQxeQn5x2ylxqGt6LKADL+BAmaFehfSgwppIDEcLP4EJHwM
-         wieFZjpq0QqYOAb2e1PiZCB/B2LjA2ujrWiMHugTJir0UgkdacY1b6RzTGwjhpdo2RL9
-         ICGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=+02fbGD2Gca/hZ3tmeeAI+NcmEWmoFjRG/7kvlFka+4=;
-        b=fq9SvoQlom17prvnhO1kH9dNyfC0pS4uvimdKOXM/upWX2zVeY9p2xo7iyQ2cZ7Mxr
-         8uAY+fsruzu6PNvOo69xg6evw95wK67n2y4QyTxZpa/7pyQLMEGN9h5YXWciGt2GAfDI
-         oj97QH9gODL4C6YbsZCwAoOgHEmTGKPTkBzq/a8JD06M5AzDPsrNKqKlQ1UWn9pGYeTt
-         pCRFaVfbmpBFOhJQzxJOi2mby96bwEMRYcxfYrKkAu4s2j5kq8ujRMJgxGhYR9YjNKwL
-         6/A0jE6rRrcC5stxfdngU9SNn7Uo+kotb2hHpiOndFSr4inFtU5y8lG4XfUGCPjzCTBk
-         8u+A==
-X-Gm-Message-State: AOAM532Krb/w74Wi+yqQfvzs88QhvWB0MeODLbj6eRsDKwiYR8XVHTfS
-        obEIwX2RGTQohWDPeXnzeAs=
-X-Google-Smtp-Source: ABdhPJzxV4nWXZNZlD6Tlhf0aastFk705y1tIG7PXrshg8togBOra8OZArIRkI1H65B5PoJP0KHa2g==
-X-Received: by 2002:a05:6808:9:: with SMTP id u9mr5781517oic.48.1623600812284;
-        Sun, 13 Jun 2021 09:13:32 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id s2sm2481683oom.17.2021.06.13.09.13.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jun 2021 09:13:31 -0700 (PDT)
-Date:   Sun, 13 Jun 2021 11:13:30 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <60c62eaa7d538_41f4520899@natae.notmuch>
-In-Reply-To: <CAPig+cQhve3pTdrm8ZeJ8-YPJj4gWrk=BB9rLqRojXgYJrAi2Q@mail.gmail.com>
-References: <20210613004434.10278-1-felipe.contreras@gmail.com>
- <CAPig+cSE2h7A52drhELfZJLDEgQ1z+nEXoXhYMUSA00Z+S=OUA@mail.gmail.com>
- <60c588d452750_3d86c2085c@natae.notmuch>
- <CAPig+cQhve3pTdrm8ZeJ8-YPJj4gWrk=BB9rLqRojXgYJrAi2Q@mail.gmail.com>
-Subject: Re: [PATCH] doc: revisions: improve single range explanation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S231960AbhFMQaG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 12:30:06 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:56900 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231922AbhFMQaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 12:30:05 -0400
+Received: from imap.suse.de (imap-alt.suse-dmz.suse.de [192.168.254.47])
+        (using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 7A1421FD32;
+        Sun, 13 Jun 2021 16:28:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1623601683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=4lJyibllKP3nYW35IpW3XRdj3O3OHQoZerRNJgpy2UU=;
+        b=l7T55LiJGbMemSUd1VS46xQHc+EIPzES2VzmruaM1IHaLjrb9qjkBhM7Zx2rg+f46ud1AH
+        2RlFCVeSgJSRS+p2+U80NAiO+hIJmAx3xl5yj6+36EaE2tNpKVKeBbU6ePVUw+o99nYLHo
+        Zq3NQS30D8F9LvDtnc36cFX4plYnE0U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1623601683;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=4lJyibllKP3nYW35IpW3XRdj3O3OHQoZerRNJgpy2UU=;
+        b=niNiAUNpk4tQzHiZNNE+x89RCyBNlUCqn6T2bs+3P2vgej7FTe0Wm34CMYUHSKgSAgD64H
+        sARd/JvOM2JjhTBg==
+Received: from imap3-int (imap-alt.suse-dmz.suse.de [192.168.254.47])
+        by imap.suse.de (Postfix) with ESMTP id 50185118DD;
+        Sun, 13 Jun 2021 16:28:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1623601683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=4lJyibllKP3nYW35IpW3XRdj3O3OHQoZerRNJgpy2UU=;
+        b=l7T55LiJGbMemSUd1VS46xQHc+EIPzES2VzmruaM1IHaLjrb9qjkBhM7Zx2rg+f46ud1AH
+        2RlFCVeSgJSRS+p2+U80NAiO+hIJmAx3xl5yj6+36EaE2tNpKVKeBbU6ePVUw+o99nYLHo
+        Zq3NQS30D8F9LvDtnc36cFX4plYnE0U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1623601683;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=4lJyibllKP3nYW35IpW3XRdj3O3OHQoZerRNJgpy2UU=;
+        b=niNiAUNpk4tQzHiZNNE+x89RCyBNlUCqn6T2bs+3P2vgej7FTe0Wm34CMYUHSKgSAgD64H
+        sARd/JvOM2JjhTBg==
+Received: from director2.suse.de ([192.168.254.72])
+        by imap3-int with ESMTPSA
+        id J+9XEhMyxmBWWQAALh3uQQ
+        (envelope-from <msuchanek@suse.de>); Sun, 13 Jun 2021 16:28:03 +0000
+Date:   Sun, 13 Jun 2021 18:28:02 +0200
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Varun Varada <varuncvarada@gmail.com>,
+        Robert Coup <robert.coup@koordinates.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: replace jargon word "impact" with "effect"/"affect"
+Message-ID: <20210613162802.GG8544@kitsune.suse.cz>
+References: <20210513074622.GG8544@kitsune.suse.cz>
+ <CAFLLRpJeU3BFKmsGgFoKQRLCw-uGRRH1Ob7PZBHUEQu_Pqshgw@mail.gmail.com>
+ <20210513094818.GH8544@kitsune.suse.cz>
+ <CAD2i4DDY1z1ZNigRfVog1205hKBk+U5KfinzXCk-2mkaYy4cjQ@mail.gmail.com>
+ <20210527114629.GD8544@kitsune.suse.cz>
+ <60afa7d9d4ca_2056d208d9@natae.notmuch>
+ <20210527143541.GH8544@kitsune.suse.cz>
+ <CAD2i4DC0zH8WQvfZiHJA7f+DXubZjG6fKSuMbXdaztDC_PU4ZA@mail.gmail.com>
+ <20210613114007.GF8544@kitsune.suse.cz>
+ <60c610f04b288_41f2b208ce@natae.notmuch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <60c610f04b288_41f2b208ce@natae.notmuch>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine wrote:
-> On Sun, Jun 13, 2021 at 12:26 AM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > Eric Sunshine wrote:
-> > > For what it's worth, as a person who is far from expert at revision
-> > > ranges, I had to read this revised text five or six times and think
-> > > about it quite a bit to understand what it is saying,
-> >
-> > Can you explain why?
+On Sun, Jun 13, 2021 at 09:06:40AM -0500, Felipe Contreras wrote:
+> Michal Suchánek wrote:
+> > On Sat, Jun 12, 2021 at 06:13:02PM -0500, Varun Varada wrote:
+
 > 
-> Probably not to a degree which will satisfy you. And I'm not being
-> flippant by saying that. I mean only that it is more than a little
-> difficult to explain why one thing "clicks" easily in the brain while
-> something else doesn't. I can only relate (to some extent) what I
-> experienced while reading your revised text.
-
-Yes, but the documentation is not for you, it's for the majority of
-users, so it behooves to try to understand the reason to see if it
-applies to the population in general.
-
-> > This is the context: commands don't generally take two ranges:
-> >
-> >  1. Unless otherwise noted, all git commands that operate on a set of
-> >     commits work on a single revision range.
-> >
-> >  2. Doing A..F will retrieve 5 commits, and doing B..E will retrieve 3
-> >     commits, but doing A..F B..E will not retrieve two revision ranges
-> >     totalling 8 commits.
-> >
-> > At this point what isn't clear? Isn't it clear that `A..F B..E` aren't
-> > two revision ranges?
+> > > > This will bring in reviews that focus on hairsplitting when the
+> > > > formulation with 'impact' reads better than 'effect' and where the
+> > > > change does not make it read any better so it should not be changed.
+> > > >
+> > > > It also brings in reviews of the sort that simply say that use of
+> > > > 'impact' is OK, and there is no need to change.
+> > > 
+> > > That's an "if". This, however, is a situation where multiple people
+> > 
+> > We already received such reviews as response to your patch. It's not
+> > what-if.
 > 
-> The documentation stating explicitly that `A..F B..E` is not two
-> ranges is fine. What was difficult to understand was your explanation
-> of _why_ those are not two ranges.
+> In case you haven't been following this thread closely, you are the only
+> person that says the use of "impact" is OK. One person said "impact" was
 
-At this point the _why_ has not been explained, merely that these two
-things don't result in two ranges.
+Apparently you have not followed this thread closely yourself.
 
-> >  3. Instead the starting point A gets overridden by B, and the ending
-> >     point of E by F, effectively becoming B..F, a single revision range.
-> >
-> > What isn't clear about that? A gets superseded by B because it's higher
-> > in the graph. And if you do `git log D E F` it's clear that doing
-> > `git log F` will get you the same thing, isn't it?
+> OK for him, but he didn't say anything of anybody else. Another person
+> asked if they were synonyms. That's it.
 > 
-> One of the reasons I had to re-read your text so many times was
-> because it was difficult to build a mental model of what you were
-> saying, and to follow along with all the "this replaces that" and
-> "this other thing replaces that other thing". While doing so, I
-> repeatedly had to glance back at the original `A..F B..E` to make sure
-> the mental model I was building was correct or still made sense.
+> I say Varun should resend the patch separate from all other patches,
+> explain why they aren't synonyms and mention for the record that one
+> person objects to the change.
 
-I wonder why that is the case. A..F is so simple it doesn't have to be
-explained, Ruby even expands that obvious range.
+No if he really wants the thing merged he should resend the patch with
+proper reasoning how replacing the word 'impact' improves the
+documentation and perhaps say for the record that two people find the
+word confusing.
 
-  ---A---B---C---D---E---F
-     ^                   ^
-    from                 to
-
-And B..E:
-
-  ---A---B---C---D---E---F
-         ^           ^
-        from         to
-
-In Ruby the range can be defined simply as: 'A'..'F'
-
-  ["A", "B", "C", "D", "E", "F"]
-
-Would 1..6 be easier to picture?
-
-> The word "overridden" didn't help because I couldn't tell if, by
-> "overridden", you meant that something got replaced by something else
-> or if something was merely ignored. (Or maybe those are the same thing
-> in this case, but how will a newcomer -- who is trying to learn this
-> from scratch -- know which it is?)
-
-If I say Lucy is available from 1 to 6 p.m. and Michael from 2 to 5 p.m.
-why would 2 p.m supersede 1 p.m.?
-
-If we are trying to define a starting point, obviously the latest
-starting point is the one that wins. No?
-
-> However, an even bigger problem I experienced while reading your
-> revised text is that it felt like it was trying to express some rule
-> which the reader should internalize ("replace this with that, and
-> replace this other thing too")
-
-The text starts with *for example*. Therefore it's not something
-general, it's an example.
-
-> Junio's explanation, on the other hand, was simple and to the point,
-> and (for whatever reason) clicked easily in my brain, such that I came
-> away feeling that I could apply the knowledge immediately to other
-> situations.
-
-Junio's explanation is inaccurate because it stated that this:
-
- Unless otherwise noted, all git commands that operate on a set of
- commits work on a single revision range.
-
-Is the same as this:
-
- writing two "two-dot range notation" next to each does *not* specify
- two revision ranges for most commands.
-
-But it is not the same.
-
-Can you tell me why?
-
-> On the other hand, after reading your proposed text, I did not feel as
-> if I had gained any knowledge, and even had I picked up the rule which
-> seems to be in there,
-
-The text never mentioned any rule.
-
-> > > Also, if this explanation is aimed at newcomers, then saying only
-> > > "doing A..F will retrieve 5 commits" without actually saying _which_
-> > > commits those are is perhaps not so helpful.
-> >
-> > It doesn't matter which specific commits are retrieved, the only thing
-> > that matters is that `X op Y` is not additive.
 > 
-> The very first question which popped into my head upon reading "Doing
-> A..F will retrieve 5 commits" was "which five commits?".
+> It's OK to merge patches where one person objects.
 
-Keep reading.
+Apprantly you also missed that I am not opposed to the patch.
 
-> So, whatever precision your above statement might have, it is likely
-> to be lost on the general newcomer who is simply trying to learn about
-> and understand Git revisions.
+Best regards
 
-Or maybe it's something that only applies to you.
-
-Cheers.
-
--- 
-Felipe Contreras
+Michal
+> 
+> -- 
+> Felipe Contreras
