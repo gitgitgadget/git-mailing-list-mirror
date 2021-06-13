@@ -2,184 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08291C48BE8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 062ACC48BCF
 	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 14:36:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D83BF61285
+	by mail.kernel.org (Postfix) with ESMTP id C9A7B6128A
 	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 14:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbhFMOgI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 10:36:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231755AbhFMOgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 10:36:08 -0400
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C233C061766
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 07:34:07 -0700 (PDT)
-Received: by mail-oo1-xc2e.google.com with SMTP id v17-20020a4aa5110000b0290249d63900faso2040043ook.0
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 07:34:06 -0700 (PDT)
+        id S231799AbhFMOfc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 10:35:32 -0400
+Received: from mail-oi1-f178.google.com ([209.85.167.178]:39542 "EHLO
+        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231755AbhFMOf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 10:35:28 -0400
+Received: by mail-oi1-f178.google.com with SMTP id m137so11616313oig.6
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 07:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=3CBqCzZX7WZhn7Q2xCyW6evMJYEu9OWMmfKvDQvhI8Q=;
-        b=OU2e8QxWq56jssxGKbrlfPzpahUK2E7phHN8FG1UGPwECdyqMIhXPYbOA2eKy81YvZ
-         fGdI4wyTyIBnm6AzUpq5H37t7xxhgz6NJWcgsyH4MefotpB7vQaD0fDZHiqnCmqbnAYu
-         05C8eRZNtJ6GFxydabPWNvmWqWqCYDpgKUVFfD29fbA4+vU++GG7/3Pj8g+0pFWbbmyD
-         1AtXGiHXPkKNS34PKycG9jVarsi4x6fCCd8HoF0Xp+SOlSdFzKEFKBmH26p0gmZs1MCR
-         m361+MzlrgmCFTfAvr6hUCkLHdsMLzfthq2Kbzdu7Hqv2q9ckSosbW9DiIVILe7GFL9f
-         u0KA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pXZW6frsgci46wOzKK/WcBmrisXdw6gVbLr2vTWqRpU=;
+        b=tuvhS4x1IpJB/JtfpWuGmV7czN86bndafij4cd7un8q+dFPaf0MGrTdDGPYM0bCquB
+         ww1MHhGR7H5POECafDMYjBJ8KpaRtEvElxyo3JA/r0WESv4REvqzDUED2eK7E92LVTgW
+         cCeOlWsIAX+VrpwQXAMcu616r9Kt0XWm1Lrmvb2v3sFimvRzXLjM3BW13RW5alp9bBY5
+         j+wkYVjs3nA3Vqv8k2HR5WLST8HfcrQgkyj/X7EZOwjPdfrhNqxvHijVVL+iD4BDrcJ9
+         +8e2hjMD+iivR0xKPnEEeYl2G5n5roo76a2SSoOmvz7uJmuJaiRKeDiDlkoQr9JYwhit
+         5Amw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=3CBqCzZX7WZhn7Q2xCyW6evMJYEu9OWMmfKvDQvhI8Q=;
-        b=YwfeCQN6IChs98Ga1u8QzucLSLnBj0Guh40jGRBmnDmWgN8UfeRYvroEVBOv0TBszp
-         RbuVOvc+eSvNT/k7ReQvztV4JLCwlOlRjyDA4L2WSu25vWZrZoabq5Gsnp8M9sGhrL9M
-         mlRYzojk6H3TQyxZLrKf4Gmu2j2MuzwaC064C+z3z+rZ2MNxdjt7LfqSfXB7OzQTJU1o
-         bPXNUtJvrLhwNQaE2jFWcCLGhBNyElET/2QtPVm9GXJk4ov6YmjM29sWosdVHyU1Gg1f
-         M5/aBRdBwFUJUWLwCg9rVpWcAX1K4ROwunPPmSRXcncqD0BX6ccN14v6HOggIhu0da92
-         +FUw==
-X-Gm-Message-State: AOAM5329e/n2LMCvttxe6NQk5A1uNDf4j9v6PwN4lCcNgtJ+n0B+Fa4j
-        7E34o3HSTJ4Nv0N4Bgn16e8=
-X-Google-Smtp-Source: ABdhPJyEHCfecH9MrqFSddL4AGscJRNjbWjT5n7ra6nXjY5I3ra2GWOHxnvhZnS5sRNDPJvYDFvd9A==
-X-Received: by 2002:a4a:d052:: with SMTP id x18mr10147870oor.21.1623594846393;
-        Sun, 13 Jun 2021 07:34:06 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pXZW6frsgci46wOzKK/WcBmrisXdw6gVbLr2vTWqRpU=;
+        b=KM3p/bQQUCw+4/d6+Mi0CN3k7IC+qPk3Yrou4VQOk3KDPUnlRhDXZOxu6s+Uv7iq7Z
+         rKr2BFZP8LyRfmjif+2B3V+ilqRphE+bB7BQf/zLUohLHivyfyJ+tnJRyjqnoUyG3cgW
+         9kpOII0DJPCWsW57dAM7ugB3y4bCgemfZN9dHAqwV7E9F5HjuZb6gOXUTqeS5noDVdxC
+         hdGMvD0nb9kwhzeaH5ppkCjq+vioi6cnAtkLVw6rBG74Ls2p/OehEoAavGOKElC6qLe2
+         4HTxTKg8Bx1ByrLz3h/i/LjWqAdFVV/RT7c823eOQX0excI/tuW4IrEKQkwj3jbH+UCS
+         8JNQ==
+X-Gm-Message-State: AOAM532WLIUUfN4RgsuodHBaURcsSFU3bftpwLYNlHeaWaZQAIeHoAYu
+        ZxLU6xJwwZCBuK8+lDfm5Jspbl64F5mfyw==
+X-Google-Smtp-Source: ABdhPJx/GmhMtV8GQnVtIy9kGo47mg4tKWKsmcMX9oafW+D7bGZ7p995tVtykBwG9UHs8POLxT25jw==
+X-Received: by 2002:aca:2106:: with SMTP id 6mr9637784oiz.127.1623594720978;
+        Sun, 13 Jun 2021 07:32:00 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id f19sm2735515ots.41.2021.06.13.07.34.05
+        by smtp.gmail.com with ESMTPSA id x2sm2461069oog.10.2021.06.13.07.32.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jun 2021 07:34:05 -0700 (PDT)
-Date:   Sun, 13 Jun 2021 09:34:04 -0500
+        Sun, 13 Jun 2021 07:32:00 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>,
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-        David Aguilar <davvid@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <60c6175ca6840_41f2b208fc@natae.notmuch>
-In-Reply-To: <CABPp-BGhaSJmqXFKpCVcUKexNXaa8sLEms-6q-qno7uETzGQ=A@mail.gmail.com>
-References: <60c3a41bd25e3_8d0f2089e@natae.notmuch>
- <20210611190235.1970106-1-newren@gmail.com>
- <60c3d0296f869_8d0f208ec@natae.notmuch>
- <CABPp-BGhaSJmqXFKpCVcUKexNXaa8sLEms-6q-qno7uETzGQ=A@mail.gmail.com>
-Subject: Re: [PATCH 7/7] xdiff: make diff3 the default conflictStyle
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] xdiff: implement a zealous diff3
+Date:   Sun, 13 Jun 2021 09:31:55 -0500
+Message-Id: <20210613143155.836591-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> On Fri, Jun 11, 2021 at 2:05 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> >
-> > Elijah Newren wrote:
-> > > On Fri, Jun 11, 2021 at 10:57 AM Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> >
-> > > > Or just use the base of the virtual merge:
-> > > >
-> > > >   <<<<<<< HEAD
-> > > >   D
-> > > >   ||||||| merged common ancestors
-> > > >   1
-> > > >   =======
-> > > >   C
-> > > >   >>>>>>> C
-> > >
-> > > I think that implementing this choice would look like this (again, not
-> > > compiled or tested and I'm not familiar with xdiff so take it with a
-> > > big grain of salt):
-> > >
-> > >
-> > > diff --git a/ll-merge.c b/ll-merge.c
-> > > index 095a4d820e..dbc7f76951 100644
-> > > --- a/ll-merge.c
-> > > +++ b/ll-merge.c
-> > > @@ -130,6 +130,8 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
-> > >       memset(&xmp, 0, sizeof(xmp));
-> > >       xmp.level = XDL_MERGE_ZEALOUS;
-> > >       xmp.favor = opts->variant;
-> > > +     if (git_xmerge_style >= 0 && opts->virtual_ancestor)
-> > > +             xmp.favor = XDL_MERGE_FAVOR_BASE;
-> >
-> > The only time git_xmerge_style isn't >= 0 is when no merge style has
-> > been configured by the user.
-> 
-> Yep, probably should have just been
-> 
-> +     if (opts->virtual_ancestor)
-> +             xmp.favor = XDL_MERGE_FAVOR_BASE;
-> 
-> Though the difference doesn't matter a lot.  Since
-> merge.conflictStyle=merge (which is the current default) doesn't
-> display the contents from the merge base in a three-way content merge,
-> setting xmp.favor to XDL_MERGE_FAVOR_BASE vs. leaving it as 0 for the
-> recursive/intermediate merges won't generally end up affecting the end
-> result.  It'd only matter for diff3 and zdiff3 users.
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-OK, so:
+"zdiff3" is identical to ordinary diff3, only it allows more aggressive
+compaction than diff3. This way the displayed base isn't necessary
+technically correct, but still this mode might help resolving merge
+conflicts between two near identical additions.
 
-  if (git_xmerge_style > 0 && opts->virtual_ancestor)
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
 
-> Going on a slight tangent, I think there's actually a related bug
-> here.  We probably should not honor XDL_MERGE_FAVOR_{OURS,THEIRS} when
-> opts->virtual_ancestor is true; that's just asking for trouble.  I
-> think it'd paradoxically result in reversing the desired behavior
-> (e.g. users would see what they'd consider XDL_MERGE_FAVOR_THEIRS
-> behavior when they asked for XDL_MERGE_FAVOR_OURS) in some cases as a
-> result.
+I'm re-sending this patch from 2013 because I do think it provides value
+and we might want to make it the default.
 
-Maybe write a test-case and find out?
+I hardcoded diff3 to be zdiff3 and all the tests passed, so if our tests
+don't care about the simplification level of diff3 perhaps many (or even
+most) our users don't either.
 
-> > In fact, I don't see why any style should change that desired behavior.
-> > If you said there's issues with the "merge" style too, perhaps the above
-> > will help for those cases too.
-> >
-> > > > We don't have to use diff3 all the way.
-> > >
-> > > Right, thus my mention in the other email to consider adding a
-> > > XDL_MERGE_FAVOR_BASE -- which you then also mention here in your third
-> > > option, and which I've now given at least a partial patch for.  Not
-> > > sure if it's a crazy idea or a great idea, since I don't do very many
-> > > criss-cross merges myself.
-> >
-> > I thought you meant as a separate configurable flag, not something done
-> > by default.
-> >
-> > Now that I understand what you meant I think it could be a great idea.
-> 
-> If someone that does lots of criss-cross merges can comment on the
-> idea, and agree that it's worth a shot, I can try to turn it into real
-> patches.
+FTR: this patch applied cleanly.
 
-I would flip the conditional: if nobody that does lots of criss-crosses
-objects...
+ builtin/merge-file.c                   | 2 ++
+ contrib/completion/git-completion.bash | 2 +-
+ xdiff-interface.c                      | 2 ++
+ xdiff/xdiff.h                          | 1 +
+ xdiff/xmerge.c                         | 8 +++++++-
+ 5 files changed, 13 insertions(+), 2 deletions(-)
 
-If we waited for a tiny minority of users to speak up before doing
-something we migth wait forever.
-
-> (I might even try to investigate the zdiff3 stuff too, which sounds
-> like something I've wanted many times...but I'd really rather
-> concentrate on merge-ort until its upstreaming is finished.)
-
-Well, I just re-sent the patch:
-
-https://lore.kernel.org/git/20210613143155.836591-1-felipe.contreras@gmail.com/
-
-Cheers.
-
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index 06a2f90c48..e695867ee5 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -34,6 +34,8 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_BOOL('p', "stdout", &to_stdout, N_("send results to standard output")),
+ 		OPT_SET_INT(0, "diff3", &xmp.style, N_("use a diff3 based merge"), XDL_MERGE_DIFF3),
++		OPT_SET_INT(0, "zdiff3", &xmp.style, N_("use a zealous diff3 based merge"),
++				XDL_MERGE_ZEALOUS_DIFF3),
+ 		OPT_SET_INT(0, "ours", &xmp.favor, N_("for conflicts, use our version"),
+ 			    XDL_MERGE_FAVOR_OURS),
+ 		OPT_SET_INT(0, "theirs", &xmp.favor, N_("for conflicts, use their version"),
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b50c5d0ea3..8594559298 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1566,7 +1566,7 @@ _git_checkout ()
+ 
+ 	case "$cur" in
+ 	--conflict=*)
+-		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
++		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
+ 		;;
+ 	--*)
+ 		__gitcomp_builtin checkout
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 609615db2c..9977813a9d 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -308,6 +308,8 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
+ 			die("'%s' is not a boolean", var);
+ 		if (!strcmp(value, "diff3"))
+ 			git_xmerge_style = XDL_MERGE_DIFF3;
++		else if (!strcmp(value, "zdiff3"))
++			git_xmerge_style = XDL_MERGE_ZEALOUS_DIFF3;
+ 		else if (!strcmp(value, "merge"))
+ 			git_xmerge_style = 0;
+ 		/*
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index 7a04605146..8629ae287c 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -65,6 +65,7 @@ extern "C" {
+ 
+ /* merge output styles */
+ #define XDL_MERGE_DIFF3 1
++#define XDL_MERGE_ZEALOUS_DIFF3 2
+ 
+ typedef struct s_mmfile {
+ 	char *ptr;
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 1659edb453..95871a0b6e 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -230,7 +230,7 @@ static int fill_conflict_hunk(xdfenv_t *xe1, const char *name1,
+ 	size += xdl_recs_copy(xe1, m->i1, m->chg1, needs_cr, 1,
+ 			      dest ? dest + size : NULL);
+ 
+-	if (style == XDL_MERGE_DIFF3) {
++	if (style == XDL_MERGE_DIFF3 || style == XDL_MERGE_ZEALOUS_DIFF3) {
+ 		/* Shared preimage */
+ 		if (!dest) {
+ 			size += marker_size + 1 + needs_cr + marker3_size;
+@@ -482,6 +482,12 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+ 	int style = xmp->style;
+ 	int favor = xmp->favor;
+ 
++	/*
++	 * This is the only change between XDL_MERGE_DIFF3 and
++	 * XDL_MERGE_ZEALOUS_DIFF3. "zdiff3" isn't 100% technically correct (as
++	 * the base might be considerably simplified), but still it might help
++	 * interpreting conflicts between two big and near identical additions.
++	 */
+ 	if (style == XDL_MERGE_DIFF3) {
+ 		/*
+ 		 * "diff3 -m" output does not make sense for anything
 -- 
-Felipe Contreras
+2.32.0
+
