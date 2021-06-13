@@ -8,61 +8,58 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8E91C48BDF
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 06:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24281C48BDF
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 06:38:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C6EB611ED
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 06:37:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7058611CE
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 06:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230470AbhFMGjI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 02:39:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38802 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbhFMGjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 02:39:08 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B52C061574
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 23:37:07 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id m137so10807572oig.6
-        for <git@vger.kernel.org>; Sat, 12 Jun 2021 23:37:07 -0700 (PDT)
+        id S230238AbhFMGkZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 02:40:25 -0400
+Received: from mail-oi1-f176.google.com ([209.85.167.176]:43796 "EHLO
+        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229939AbhFMGkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 02:40:24 -0400
+Received: by mail-oi1-f176.google.com with SMTP id x196so10807294oif.10
+        for <git@vger.kernel.org>; Sat, 12 Jun 2021 23:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K0fFnPjEE3Uw/puOE22dXNei2U/hAUwHp2fzJpXmVis=;
-        b=gWDmCXSpiwwLIhC0Btwlilk/QWFNrsvWl5wKqpPtUR01LMlcD4NzI0/XlrBXAniU52
-         P1JkO62mBbmWutyXpsg2gwkgc0iqGRWu9Mdx1/NxgIoBmHsOFJBj8FDyIkmseIcYxMyV
-         RkUTwfezAmSumM+kUSFwWvJOeShJXMEKhBdUjBbf15l/eODJ4g4MoPre4q4m3kSj5Hz7
-         g/+wtCYwEyWZmSe3Ex5ysp8K//6x6ZMG/U6WAnr1Je1+HYzsfScgXIAIirD+Mq+FDF+s
-         cjlf896lzFEFDat3i7ZrEOx0geNJR2sPeeqfJxKXS8X4rlbc17gYsuXSyOua7CAQkkm2
-         hGuQ==
+        bh=A+dwL0mhAlJfg1HkIlHpLtLtoeqqoWFje+ZS26UInkA=;
+        b=ezWNpKyKNsbG4pCte99RT+Gyems1mDgHyLNZmtZXG49eC6Cd1OpzFvTjCfFdKETjRu
+         Bw42ALUSEgJmtSf/iTkwKLTVkC/L9hzwHF8SHZS8qBIeNxuBBOViquvRX1NeY6+yEXyB
+         l6Qlw0t/NyQ3hpr0SfWnDVU2AJZmU9lm1spz2mwjW3QzQbhH11ziYVtwo3fsjw7DEFIW
+         /MMaT+gwoQKPtZbqBJyCYIf16icpRonLLxc2TnPHKnz2CiZ5NRTcbnkO5b7Bq02Gywg7
+         6BTVuFCs4NjHsl5Kbgy4hmih8K3Hsjmf1JQDkfR1V8tsu7X72b88zZvv4D+S7834eg+u
+         zxOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K0fFnPjEE3Uw/puOE22dXNei2U/hAUwHp2fzJpXmVis=;
-        b=HhBapYaNqhnaMrI3rilBMkDoch1NXOZsIM1yHqPXzPE8b6DwaKxNrKpA0Qs9iHz/Ty
-         ujPLenRxkKeaf0NvRHBE4x/EMetXGbcwGybOQ2vMkoE6WcIUyyyOq5yZMwGL7sxjG4/r
-         YAQRha9HdphQofUaHojg5G4WJrC8J+uhIPiRxP1wIOU9LkisIOEah3wltqnwkiGylLLF
-         DeLsTOiUf0MiOnQt4cu9L5cETqJA3aAMQNzMc/SIX9DWPd1iF9lU4WYQveqNO4TcCtdo
-         du04QhwlZtsjpLRJos7thEUtAhvxKUOgP4gwFTW/lw7uNOjdmTIJOlPIN5sndnng+e4H
-         ASpw==
-X-Gm-Message-State: AOAM533vWQO0LPQ+8MSdH2sTdi2JKD39Zg4NVCDuHborZFvyFoc9aDZE
-        eEQ0i5uypEEgC2XUAQ1UxRzWRXNalmq5aA==
-X-Google-Smtp-Source: ABdhPJxahFsQerGA8I+xqNK3bd7EIoA2LJkDhFKEMBlXIOazlIGYS8STb0CkjgK8dtTCSv8lb3CZ3w==
-X-Received: by 2002:a54:4690:: with SMTP id k16mr18443294oic.57.1623566226781;
-        Sat, 12 Jun 2021 23:37:06 -0700 (PDT)
+        bh=A+dwL0mhAlJfg1HkIlHpLtLtoeqqoWFje+ZS26UInkA=;
+        b=TBRL+hCYk0sT6e+lMrVcZN+Ggu2VpHbYhwWyhTNGE4m7Jpe8ToDM66QLV5Kuzuw6or
+         XTxrdLAdzOzgiWayzsV0Q+SlUD00hC1O06aCsZZ3TVXOjctQtBXH9ZATCWNJ9x9A3H68
+         UgsmcqiTEjGCdcpJONjMU2ptuWfarFRNnv+witc9adXCAZljrlj9VcsZjHuPqChfNLhR
+         JOyn2NmkOKbyCLk0NqYr0zM6raWQL3UWRjqxFFpPUS/S/5cln51SzrXrQbSJd4Z9HoY7
+         McBAbCWfCA6miXJ6LD/o3Zs70/SY84mWuBoj0KJ5YJtrWLbdfBv4lphdzYdxl6DLytKq
+         1MEg==
+X-Gm-Message-State: AOAM533BXsJJK/6yOZbFgbJVsfEeb2QfkEbmdSuYXmJN0B/vjA9Zf+sB
+        iHxtFuqKgI+fkPCV0ZLXisg9PM7Tj47Uow==
+X-Google-Smtp-Source: ABdhPJzUo7H/VuwXhRduhZXZoH2AUnohAGxvi+FbNq7sDU3zEAX03Ag0I9mKmtpbwmQBN+UQp8DmwA==
+X-Received: by 2002:aca:c441:: with SMTP id u62mr17974768oif.31.1623566228337;
+        Sat, 12 Jun 2021 23:37:08 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id l8sm2287411ooo.13.2021.06.12.23.37.05
+        by smtp.gmail.com with ESMTPSA id t63sm2181750oih.31.2021.06.12.23.37.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Jun 2021 23:37:06 -0700 (PDT)
+        Sat, 12 Jun 2021 23:37:08 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/2] config: avoid yoda conditions
-Date:   Sun, 13 Jun 2021 01:37:01 -0500
-Message-Id: <20210613063702.269816-2-felipe.contreras@gmail.com>
+Subject: [PATCH 2/2] add: avoid yoda condition
+Date:   Sun, 13 Jun 2021 01:37:02 -0500
+Message-Id: <20210613063702.269816-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210613063702.269816-1-felipe.contreras@gmail.com>
 References: <20210613063702.269816-1-felipe.contreras@gmail.com>
@@ -72,33 +69,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+18 is younger than person's age.
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- config.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/add.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/config.c b/config.c
-index f9c400ad30..7094530b04 100644
---- a/config.c
-+++ b/config.c
-@@ -1232,7 +1232,7 @@ static int git_parse_maybe_bool_text(const char *value)
- int git_parse_maybe_bool(const char *value)
- {
- 	int v = git_parse_maybe_bool_text(value);
--	if (0 <= v)
-+	if (v >= 0)
- 		return v;
- 	if (git_parse_int(value, &v))
- 		return !!v;
-@@ -1242,7 +1242,7 @@ int git_parse_maybe_bool(const char *value)
- int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
- {
- 	int v = git_parse_maybe_bool_text(value);
--	if (0 <= v) {
-+	if (v >= 0) {
- 		*is_bool = 1;
- 		return v;
- 	}
+diff --git a/builtin/add.c b/builtin/add.c
+index b773b5a499..8c2a5a5094 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -510,7 +510,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	argc--;
+ 	argv++;
+ 
+-	if (0 <= addremove_explicit)
++	if (addremove_explicit >= 0)
+ 		addremove = addremove_explicit;
+ 	else if (take_worktree_changes && ADDREMOVE_DEFAULT)
+ 		addremove = 0; /* "-u" was given but not "-A" */
 -- 
 2.32.0
 
