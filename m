@@ -7,109 +7,196 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1480C48BDF
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 13:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DFC2C48BDF
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 13:41:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3F0061153
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 13:38:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2067C6128A
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 13:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231776AbhFMNk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 09:40:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44322 "EHLO
+        id S231925AbhFMNnw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 09:43:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231738AbhFMNkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 09:40:25 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192B3C061574
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 06:38:08 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id k7so8244199pjf.5
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 06:38:08 -0700 (PDT)
+        with ESMTP id S231923AbhFMNnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 09:43:52 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07BAC061766
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 06:41:50 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id h24so12006049ejy.2
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 06:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :cc:to;
-        bh=5je3ZZs4tDZmN+jN5PRojIqKaIzKJ50KM9mYU+0otqA=;
-        b=UT84Oc36erUIhWdxKa1QnyX+W1XwyAv7ds5c6NnXO3N0YvWHa6zePF6s9/4HhMUwEs
-         ET9rt4A/AXNEXvGAoA0KVFu94E6aIS2AZDevlQXTe4eH9tVIRmAw/oj+ZHMdKxBC1p1x
-         k9ixmjAiImuY13HvoTzsWvt5KFc6lcqAN56iPTJiEM0qtauGqtJg6d5VfgGLDK+Qxonw
-         VJfhEdPEfGH1d6OklSfRAH45jSFP0D6lNZfR+JcsS4lf/TPjQjJgInPn+0+MPSlOKdWs
-         m1yo0PZP2EpP/smzUN9godzuRVzlmS8isu7w/uq+wPIQe3NRe4trBN8znFDCG0BY4vMG
-         OdcA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=bfuJfB9ZYh544M8XxNCSKvm9Xd2IZWx3h0g6CSGdWSQ=;
+        b=OQfbaBdcC3ULlXmVHhCGVWp5jw0zpq0Hza94CWZV1qcJbzbuPEL7ogbWZF7yLHjtv8
+         gdW2PK/PtKmqFIWrPmc1ZmFaVVZM1h7pUhJ3XimY/NfmpDEeCLlZTKmFRANB70DKDSL1
+         0SmcJ5GuH89nmU1ksOL/VRYRnhhhTpxoRd8ZzF2IsbRsnXgYu5/pmL80ZJy9HexMfLcS
+         iC0bzKaMWhzR8XrFsnabpPO6hMAcyvFAC7yqODVKDenTnvxDK+BC5P4zqqkkdiHPKvkh
+         XlYm05dptkGcCjMP/AuRFzutVflQvUATCqaWSVTR2Uv27r/21QSVfnwVlapa/4dLMSk5
+         vImw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:cc:to;
-        bh=5je3ZZs4tDZmN+jN5PRojIqKaIzKJ50KM9mYU+0otqA=;
-        b=TfJSLJHpjOsjrl+jvc30sLUF3J2YUnTu1Jb42BTZzAK0zXHIoCnFvrVp2PMxj+6/Yg
-         7QzI7FsHBEoUduDD2S7ymfR+nMAWrpZmTU3KmsJDEPku/heRkG+ys3zZDaLj4PAp/g4p
-         NLfi1uQuCjlCFrceZx1TUv5/MKUtBYlaAhUiZhkSU3jMeZLhNUI616/RW9ynabJDBbOz
-         H7P/rSl3uKGSqPYiVavHTXKN7ankuOi771ixoMrlgbptBj2A96lXTwdPLSXiDkg5HjUi
-         gY9ydjPasUQn8qbIRrCQRJusDyE/uo1eebAnt9Y0+sSKBhM9umuqPnKmhLagyjVf+GV6
-         6PqA==
-X-Gm-Message-State: AOAM530DTdVAKos3n2SKZehd+Q+7vnx7m4ZsghH0P+/Isi6IvME6bsN1
-        FxBruBFPihyTRVCHMbWznQD0C8l2DdI6AmqtoSY=
-X-Google-Smtp-Source: ABdhPJwtgvt7AF9FQ91ivsVH+4PCev5HPZAUaXf2e9wjFcSZwGmDJd7OTI6UHG7b+RwHiWQSt46obw==
-X-Received: by 2002:a17:902:9a01:b029:11a:d4e:8f4 with SMTP id v1-20020a1709029a01b029011a0d4e08f4mr5473823plp.52.1623591487340;
-        Sun, 13 Jun 2021 06:38:07 -0700 (PDT)
-Received: from atharva-on-air.dlink ([119.82.107.60])
-        by smtp.gmail.com with ESMTPSA id z3sm1636294pgl.77.2021.06.13.06.38.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 13 Jun 2021 06:38:07 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: [GSoC] My Git Dev Blog - Week 4
-Message-Id: <155ED50C-F11A-4ACC-A8A5-C31896449348@gmail.com>
-Date:   Sun, 13 Jun 2021 19:08:02 +0530
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=bfuJfB9ZYh544M8XxNCSKvm9Xd2IZWx3h0g6CSGdWSQ=;
+        b=pmt/mcjJP08nRvApscvYLLhKbFqqK0EtYPqKykaNEIzIxBMFs0gRGX+K+MzCFNd+kW
+         0Fja/19wG5JyUSg4tP/7ANRlV/fS1GpcShYBk9st5cPuek6UzDUqaoP5+IKuDBxoRX37
+         yoHXUDwXtdjBKONFRGX/iVjyzVE0Y4wdQceNZpKYT71iN5ofju6cDDi+16wAnMGAhkRy
+         Gwjm0YQUEqAp7dUjAyUegPewH9AoNEZjlIUo3bnG4gNg1gKvvzjGcC9BQkjiZydOq/rZ
+         mFjdq08J2xhcdphcVLIUFP36vQILgmusCLCxZ+6mhji+KgKtdCYUPVMS+Mx7kRdClpga
+         JbsA==
+X-Gm-Message-State: AOAM532dfCVqbgmoMCPZOAI8NW/LDwQgV5mYtrM1b74MH/Q9pFxFhgeX
+        9CfgMwg2pjTWeBQZjOB/kNg=
+X-Google-Smtp-Source: ABdhPJx5lqyH4PTPL59BvP8LjJpZ3AI82/BR4BjPwCz6wTWtmENZes/K8ioq66zTHgf9Qz0Khxc6XQ==
+X-Received: by 2002:a17:906:1912:: with SMTP id a18mr11477857eje.117.1623591709345;
+        Sun, 13 Jun 2021 06:41:49 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id o20sm5837370eds.20.2021.06.13.06.41.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Jun 2021 06:41:49 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-To:     git <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
+Subject: Re: [PATCH 1/4] test-lib-functions: introduce test_line_count_cmd
+Date:   Sun, 13 Jun 2021 15:36:11 +0200
+References: <20210612042755.28342-1-congdanhqx@gmail.com>
+ <20210612042755.28342-2-congdanhqx@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210612042755.28342-2-congdanhqx@gmail.com>
+Message-ID: <878s3d286c.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
 
-This is the fourth instalment of my blog series:
-http://atharvaraykar.me/gitnotes/week4
+On Sat, Jun 12 2021, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
 
-Here's an overview of what's in it (feel free to only skim a section):
+> In Git project, we have multiple occasions that requires checking number
+> of lines of text in stdout and/or stderr of a command. One of such
+> example is t6400, which checks number of files in various states.
 
- * My Progress and what's next
-   (Relevant to mentors):
-   Section link(s):
-   =
-http://atharvaraykar.me/gitnotes/week4#what-i-have-done-since-the-last-pos=
-t
-   http://atharvaraykar.me/gitnotes/week4#whats-next
+Thanks for following up on this.
 
- * An obstacle I'm facing with converting an ls-files invocation
-   (Relevant to: people familiar with the cache internals. Help is =
-appreciated!)
-   Section link: =
-http://atharvaraykar.me/gitnotes/week4#current-obstacles
-=20
- * just some thoughts on being ok.
-   (Relevant to: future new contributors to Git, but mostly myself)
-   Section link: http://atharvaraykar.me/gitnotes/week4#i-am-just-ok
+> Some of those commands are Git command, and we would like to check their
+> exit status.  In some of those checks, we pipe the stdout of those
+> commands to "wc -l" to check for line count, thus loosing the exit status.
+>
+> Introduce a helper function to check for number of lines in stdout and
+> stderr from those commands.
+>
+> This helper will create 2 temporary files in process, thus it may affect
+> output of some checks.
 
- * On obviousness and new contributors
-   (Of interest to: All potential reviewers in the mailing list)
-   Section link: http://atharvaraykar.me/gitnotes/week4#on-obviousness
+I think it's fine to just blindly stick the name into a file in the CWD
+as long as it's not "actual" or some other such obviously likely to
+conflict name.
 
-Have a great weekend!
+The convention you've picked here (I'm not sure if it's existing
+already) of naming the temp files after the test lib function name is a
+good one.
 
----
-Atharva Raykar
-=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
-=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
-=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
-=A4=95=E0=A4=B0
+More generally speaking we have a bunch of helpers that have this
+potential issue/bug, in practice it's not a big deal.  A test that's
+being overly specific and doing a test_cmp on unbounded "find" output or
+whatever is likely buggy anyway.
+
+If it ever becomes a bigger issue we can easily set up two scratch
+directories during the test, one for the use of the test itself, and one
+for the internals of the test run itself.
+
+> +# test_line_count_cmd checks the number of lines of captured stdout and/=
+or
+> +# stderr of a command.
+> +#
+> +# NOTE: this helper function will create 2 temporary files named:
+> +# * test_line_count_cmd_.out; and
+> +# * test_line_count_cmd_.err
+> +#
+> +# And this helper function will remove those 2 files if the check is suc=
+ceed.
+> +# In case of failure, those files will be preserved.
+> +test_line_count_cmd () {
+> +	local outop outval
+> +	local errop errval
+> +
+> +	while test $# -ge 3
+> +	do
+> +		case "$1" in
+> +		--out)
+> +			outop=3D"$2"
+> +			outval=3D"$3"
+> +			;;
+> +		--err)
+> +			errop=3D"$2"
+> +			errval=3D"$3"
+> +			;;
+
+It looks like the end-state of the series leaves us with no user of the
+--err option; Maybe it's good to have it anyway for completeness, or
+just skip it? ...
+
+> +		*)
+> +			break
+> +			;;
+> +		esac
+> +		shift 3
+> +	done &&
+> +	if test $# =3D 0 ||
+> +	   { test "x$1" =3D "x!" && test $# =3D 1 ; }
+> +	then
+> +		BUG "test_line_count_cmd: no command to be run"
+> +	fi &&
+> +	if test -z "$outop$errop"
+> +	then
+> +		BUG "test_line_count_cmd: check which stream?"
+> +	fi &&
+> +
+> +	if test "x$1" =3D "x!"=20
+> +	then
+> +		shift &&
+> +		if "$@" >test_line_count_cmd_.out 2>test_line_count_cmd_.err
+> +		then
+> +			echo "error: '$@' succeed!"
+> +			return 1
+> +		fi
+> +	elif ! "$@" >test_line_count_cmd_.out 2>test_line_count_cmd_.err
+> +	then
+> +		echo "error: '$@' run into failure!"
+> +		return 1
+> +	fi &&
+
+...I think it's better to not pipe to *.err if we haven't requested it,
+so under "-v" etc. we can get the stderr.
+
+If we're unifying them I think a better pattern is to only run that "$@"
+once, get $?, and then act differently on that in the "!" and ""
+cases. It requires less careful reading of the critical function path,
+especially with the differing indentation.
+
+> +	if test -n "$outop"
+> +	then
+> +		test_line_count "$outop" "$outval" test_line_count_cmd_.out
+> +	fi &&
+> +	if test -n "$errop"
+> +	then
+> +		test_line_count "$errop" "$errval" test_line_count_cmd_.err
+> +	fi &&
+> +	rm -f test_line_count_cmd_.out test_line_count_cmd_.err
+
+Let's do that "rm -f" as a "test_when_finished" before we first pipe to
+them. It's fine to do that in a test lib function, see e.g. test_config.
+
+We'll get the benefit of preseving these files under -di etc.
+
+> +}
+> +
+>  test_file_size () {
+>  	test "$#" -ne 1 && BUG "1 param"
+>  	test-tool path-utils file-size "$1"
 
