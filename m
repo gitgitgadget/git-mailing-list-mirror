@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC05C48BDF
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 126F0C48BDF
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD4826135F
-	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8C2461363
+	for <git@archiver.kernel.org>; Sun, 13 Jun 2021 22:59:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232230AbhFMXBm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 19:01:42 -0400
-Received: from mail-oi1-f173.google.com ([209.85.167.173]:42910 "EHLO
-        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232181AbhFMXBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 19:01:41 -0400
-Received: by mail-oi1-f173.google.com with SMTP id s23so12482661oiw.9
-        for <git@vger.kernel.org>; Sun, 13 Jun 2021 15:59:40 -0700 (PDT)
+        id S232231AbhFMXB6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 19:01:58 -0400
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:44852 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232181AbhFMXB5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 19:01:57 -0400
+Received: by mail-ot1-f50.google.com with SMTP id q5-20020a9d66450000b02903f18d65089fso9065060otm.11
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 15:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EWTeNABEujHxG4bFYTR71RWN5RYFRTpnd3Cjx6YCkS0=;
-        b=iHBozdfAXHYmuLFGsSLRk3gkVxTwgp/95TPEk+V0V8GDbpYDkVP2f9sAiMOSF8kevz
-         yA0Xnf8CJ93b3CSl2F5EuLaXV2sKJ6E4L9X4glIYUjEM7zdIpXxMC0DuNxd/Ohrg6h3n
-         wxBcDcrSgoa9YXZt2PkcN428wBoXAJbVm6KcGI4xvEXDESWqK4rMcpWATWLKmEVkE6k7
-         UWAPyU9+V03aEHSCnrtkYgQDVjAqEnGOWtqg4CfA7nxqdnkDrdx1JB3bOH171cDGOvyt
-         7KK2oHRvgbFpRdpn5vQ6ZQkELhORBRJcmh7VkTYMtjdZJy0fp8ipjzEUBSDqwcQk1ovU
-         eQ5Q==
+        bh=bvnzbM1V/v21TQTXSkhY6XD51NKXzk91beoDIhOObL8=;
+        b=Fa4B46/cgHCGPwcAd2HHPXOeSu88pIvwJW5jbymBGFsQnKFlk6+wB/PPz51C1+ewgS
+         64U68W2ArwcxoGm1j6OCEgvS8+Dw0KlLpA8qufR2ks39CwdcgSxwmJ8vXn2UF2BcDv7h
+         vKmOgy8hY8QY9nAaRFhOIFVuL3Yb/8W/u8Q3C6WO2Ra+45PESmxA4jlUymtRYHoaW5jF
+         eVEii6vsitksauwHJH80ZDJGMQqxnBI5aeZJ+FCuq/MFHX0zkfMWxnHh1GeIxE8b+DXM
+         j0CfffC91R7gKtFeRzomtgIuCOXYG+1OBKi0B6uLq2sSa/faJPn/zEqU3pDysP1xbiZQ
+         3M5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EWTeNABEujHxG4bFYTR71RWN5RYFRTpnd3Cjx6YCkS0=;
-        b=U9LocRAVzOezIo0nn4W66hkT5cUR3GR7c5mUgcSEd/UEp09IUzeukfCxFC3QTYkIf9
-         BN5LhKtZ2O6ubxT9R0qR2HBugn9UAaFDHkxNluIkro5WmEnR2kSe9gZISJNKUjlpf7gD
-         JJpk9XygdcXXuZ8X/rSHKS9pBO1roZgEKwfrs7+n9saCEb2W0k/3LWfvo/vvQJP5vj6M
-         mEcHlhKxaDgLxZnLBRAye2DmvsZTMTDxUcmC9Ida6yijPnDBE07dkaz/16HlvtF904L2
-         mCd0scAtKSoSCuAk1Es9ArwiLlNNhanm97VVa3irYr89oibZ9HUVNlpJwC3iZOIK3RoE
-         pLAw==
-X-Gm-Message-State: AOAM532xl6HCjfk5hQykV7HyNbt9av5+odc7Y0DkjKq4ZczX8QWcgDPS
-        as8AsLQBeAWyp0nyVC2GOS4kFqEdLD6rFg==
-X-Google-Smtp-Source: ABdhPJwRZHpA0W9s8TBQRJrpL/xJXyv6nW7vnk8ZlS1TpPSPSIGzBcN7qjInKNisYIOdkTqzWaPKtA==
-X-Received: by 2002:a05:6808:919:: with SMTP id w25mr10004363oih.30.1623625119617;
-        Sun, 13 Jun 2021 15:58:39 -0700 (PDT)
+        bh=bvnzbM1V/v21TQTXSkhY6XD51NKXzk91beoDIhOObL8=;
+        b=mACqmvd64CHMcZ8XWRWXg0CWYTR2V6m43hf+y0hLU6ThOcx89tJobyPVm8ySxjST3j
+         dIsYvRQcQNzL3Mz2q7oRfrz1HVtlyT8u+tohJUI0tZHYdiAz0oV4kFJvAIsn7620Za+h
+         2HW5y7ktsRY3hMya5f6nSY2YSW4nhsGKcLE8suMj7QGO2nuIJWIDqDXQhOnb5SEPqgHl
+         5O7BEwvPV0uuOC+6nVYMbfVXfFP/AaZrOjMo+In+5eKR26n5/GdvIxKW2rS6gWJ+7ZG9
+         u+MaE38BmBHaR4O5yphTQlr+ApbcvlEANjlx82NhsGsv0q3NMyGmiO3ZRTBbgF4Ef7BA
+         EP4w==
+X-Gm-Message-State: AOAM532cvUTVXBf0OLhq+APpKrn0dKm/vdPhohDS0c/Vo2i0qH8rkN0I
+        5xivhZJ4qcLheYkyW6QHByBg0dkVVxkJ3w==
+X-Google-Smtp-Source: ABdhPJzzhrBeRRQuVIrO7Lr7PP8jcz32vmouslUuV6e7T6IzSs/8w1LLkkHkXZmumW910+0haoNDBw==
+X-Received: by 2002:a9d:8cc:: with SMTP id 70mr10809423otf.289.1623625121308;
+        Sun, 13 Jun 2021 15:58:41 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id x29sm2845450ott.68.2021.06.13.15.58.38
+        by smtp.gmail.com with ESMTPSA id 30sm2407123ott.78.2021.06.13.15.58.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jun 2021 15:58:39 -0700 (PDT)
+        Sun, 13 Jun 2021 15:58:40 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/4] merge: simplify initialization
-Date:   Sun, 13 Jun 2021 17:58:33 -0500
-Message-Id: <20210613225836.1009569-2-felipe.contreras@gmail.com>
+Subject: [PATCH 2/4] merge: fix Yoda conditions
+Date:   Sun, 13 Jun 2021 17:58:34 -0500
+Message-Id: <20210613225836.1009569-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210613225836.1009569-1-felipe.contreras@gmail.com>
 References: <20210613225836.1009569-1-felipe.contreras@gmail.com>
@@ -71,33 +71,49 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/merge-file.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ builtin/merge-file.c | 2 +-
+ xdiff/xmerge.c       | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 06a2f90c48..0186f4156a 100644
+index 0186f4156a..6affccaf19 100644
 --- a/builtin/merge-file.c
 +++ b/builtin/merge-file.c
-@@ -28,7 +28,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	const char *names[3] = { NULL, NULL, NULL };
- 	mmfile_t mmfs[3];
- 	mmbuffer_t result = {NULL, 0};
--	xmparam_t xmp = {{0}};
-+	xmparam_t xmp = { .level = XDL_MERGE_ZEALOUS_ALNUM };
- 	int ret = 0, i = 0, to_stdout = 0;
- 	int quiet = 0;
- 	struct option options[] = {
-@@ -48,10 +48,6 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 
--	xmp.level = XDL_MERGE_ZEALOUS_ALNUM;
--	xmp.style = 0;
--	xmp.favor = 0;
--
+@@ -51,7 +51,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
  	if (startup_info->have_repository) {
  		/* Read the configuration file */
  		git_config(git_xmerge_config, NULL);
+-		if (0 <= git_xmerge_style)
++		if (git_xmerge_style >= 0)
+ 			xmp.style = git_xmerge_style;
+ 	}
+ 
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 1659edb453..ab3448ca88 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -487,7 +487,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+ 		 * "diff3 -m" output does not make sense for anything
+ 		 * more aggressive than XDL_MERGE_EAGER.
+ 		 */
+-		if (XDL_MERGE_EAGER < level)
++		if (level > XDL_MERGE_EAGER)
+ 			level = XDL_MERGE_EAGER;
+ 	}
+ 
+@@ -603,10 +603,10 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+ 	if (!changes)
+ 		changes = c;
+ 	/* refine conflicts */
+-	if (XDL_MERGE_ZEALOUS <= level &&
++	if (level >= XDL_MERGE_ZEALOUS &&
+ 	    (xdl_refine_conflicts(xe1, xe2, changes, xpp) < 0 ||
+ 	     xdl_simplify_non_conflicts(xe1, changes,
+-					XDL_MERGE_ZEALOUS < level) < 0)) {
++					level > XDL_MERGE_ZEALOUS) < 0)) {
+ 		xdl_cleanup_merge(changes);
+ 		return -1;
+ 	}
 -- 
 2.32.0
 
