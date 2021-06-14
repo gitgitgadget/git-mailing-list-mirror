@@ -2,229 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1CBDC2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4132EC2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:56:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ACB5061185
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:53:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F26E61185
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235223AbhFNLzS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 07:55:18 -0400
-Received: from mail-yb1-f172.google.com ([209.85.219.172]:37461 "EHLO
-        mail-yb1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235585AbhFNLyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 07:54:38 -0400
-Received: by mail-yb1-f172.google.com with SMTP id b13so15018303ybk.4
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 04:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NLwm0UeLIOL4cawPb/TNpBqsp6UCLBRlZkEAKEpDrIY=;
-        b=K8iB9kstjQPXM1Z3D2Ikl44vCFkdqkaTCo7rRSPvrnD2tGq/M0DHcJDL6gK2Mn8n2S
-         8luycUsVCkDTmfvJsV8vVgXknuHqARhnjaw5hK+DUIjBmXh75YZ2hDL+ASoboMHB5EwC
-         jL6CASQlfrvg2XwG7crHRfJpb8tvbA2k1vrUe5LqTNXC/actX+IqI0AvNFtYQw3ToqIA
-         NgvlOk0G84d1h4nVXExre+GOdNQLa5MNFO42nPnfaTaIm+Zb9ebZKm+r1ydH4m9RsvpV
-         +tyfwJL/Kmcjk3Pna/POovhvhYgS9pqHXtH1jnyT7wY5+dj4gW9kRAjTjlahqDMo5OCp
-         s1IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NLwm0UeLIOL4cawPb/TNpBqsp6UCLBRlZkEAKEpDrIY=;
-        b=KOgouDLXz6Ja1Hp57JDQANMd7StmXR5MTga3Lgby+bOWFMtLOOW6qWsyeALX2OP6XE
-         whTdK7wAgTchjt49a1qmRGhgqYGN9Bu/Dn4E3WyYKUhtoHvDyqcyTPbk2HAX3aMAGCWd
-         oKW+VSVWv+ehj1CLkzYbgAMgCGc1yQWA2lBgoh2XRRLbmVKA/NnELsQD2piBe2GXfSaI
-         ugIPLT9UNp+NnBNTAXw87jNYAoNCK236uW8cAbHpkWoq25xLE/NX6PVwLqjF1vpPaGv2
-         i3IyCYv2y5VFygxWRpTyIcfe5J0znW89GsqPeD+ALhfaq0zfO/lsCyl9z76EjiqQ6t3P
-         jjiw==
-X-Gm-Message-State: AOAM532nxrEcRYQJ1UVmGzfNmjmZb1i9F+xCB/hcpfXpl5FN71OZDr+6
-        96UmA4xdq+D0dH4VT5kHhSaw/Ias2XTl3ZGgEO8=
-X-Google-Smtp-Source: ABdhPJwEDQIpV4cUdi5S9ye1D/C9JbJquVdN9a22bZcNAMWS/ncdAZcDFrEiMcHTN29JPaxehO+NYIflGrIK/7OisoU=
-X-Received: by 2002:a25:558b:: with SMTP id j133mr24037937ybb.520.1623671495125;
- Mon, 14 Jun 2021 04:51:35 -0700 (PDT)
+        id S233354AbhFNL60 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 07:58:26 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40281 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233240AbhFNL6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 07:58:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1623671769;
+        bh=KdazNBJt07EVMAKeXMRmX6gcpLoKODfmM1rtLQAJbos=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BgGecidBx7H1/oKr8kR5jPeiVDOo6YhwYxGS6TIvNGKu5fUMuGQee5NNIuf5Jun5j
+         m4t/VV3XtmXllrLepXeClzkvn1uAtUhiIzuqmff0PoDtEhxHJDjv6+QyIUDjdsdwuD
+         DUMjoxHgqHXZvqO8rBk/qPZRfT6+zOeJP/b2h7tI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.24.14.142] ([89.1.214.113]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mz9Yv-1l5cWB3t4N-00wBVB; Mon, 14
+ Jun 2021 13:56:09 +0200
+Date:   Mon, 14 Jun 2021 13:56:07 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Luke Shumaker <lukeshu@lukeshu.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>
+Subject: Re: [PATCH 1/2] subtree: fix the GIT_EXEC_PATH sanity check to work
+ on Windows
+In-Reply-To: <875yyk7c3j.wl-lukeshu@lukeshu.com>
+Message-ID: <nycvar.QRO.7.76.6.2106141330410.57@tvgsbejvaqbjf.bet>
+References: <pull.978.git.1623316412.gitgitgadget@gmail.com> <a91ac6c18938116c4a74e19466da456b67376fa5.1623316412.git.gitgitgadget@gmail.com> <87bl8d6xoq.wl-lukeshu@lukeshu.com> <nycvar.QRO.7.76.6.2106111213050.57@tvgsbejvaqbjf.bet>
+ <875yyk7c3j.wl-lukeshu@lukeshu.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <87im2s5jjm.fsf@evledraar.gmail.com> <20210612050711.4057-4-worldhello.net@gmail.com>
- <xmqqim2hyuj1.fsf@gitster.g>
-In-Reply-To: <xmqqim2hyuj1.fsf@gitster.g>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 14 Jun 2021 19:51:23 +0800
-Message-ID: <CANYiYbGtfgZepnfTWGjbmOh2bxa8tZ7bvgtVTo6qTQpCP9MPag@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] sideband: append suffix for message whose CR in
- next pktline
-To:     Junio C Hamano <gitster@pobox.com>,
-        Nicolas Pitre <nico@fluxnic.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XFKgNvlgaKyWi+LcmORKaIO7Doz8SJj1BmoYyeTFfBhg7xjZhvs
+ Jpkm9fWOSMqQ1J/XrNJhUUdqBmwxjwBUaIxf4eP49ofVXvK42M0IRVT1aU62lnaTrGCR97G
+ ecJcCUJOj7Q6esQwoDtA3nPf0v5DoOD6tBIqLzgA5MP8GpohT6hClSRXZjSvyPqYz/HcyDc
+ lGGK+qKOUXq2QgH+NlaQA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:j2HUdIWlLSI=:v0Pgmyir/0v9bUFNqQxfDb
+ 9ct1ZPUdZdGAYoO47/DqIHewi59M2lW7xSv1CYwYXJFCjRgqkfl8ReYchZuCVjwi80iwMdTdQ
+ GHc/ob2efmsCE0FUxNgplKXwBB4tJB/Y1DFHKFWhMfSJb7GBUGenyVd4JkSNb0k6eQAXlx72a
+ sgkR6jYNjXa+QuQZwP64DtI7y5ApmMQ/Rr3h8IeVjc276tsJcoyfZDJEWzxaD3+hakw82kGVX
+ eM/sn6b9LTj5NXiLClorehTCDX4MWV2+mTN2cJ6MsJKQgcUebxraH63e5GfjczQABq94k2Cwl
+ CfN/dUOHWGDb7+yyhIy8tgnyTb4g5IYmfo1doKyypjEBvHABi4qqWmIiZc7XQB1SPWDSgSv+Z
+ BFG9FpdZEuibWqECVMixbthFjbhkTd1rc4naDyOmOBiRuKcq3Oanb+2bxp+C7RpJEWsbDnodq
+ JmUku32s4zylckjB4iI894FkEjY13tEOzmY4/zlmxUepm/G4MRosn0Ck8fRr2ZciBX99hj+9K
+ dRKF/IYLy598i9YBNtJ0D44EV3yfrQqmbqHgUk9SLQzsrWSqbjiirSkUQkkED/MGxJVfr/9Zb
+ u1pcn4rM3kjSos5OfJErC0NvV4jJvCmUrfMTlY+f1jQy1rigxQtNWLUhPJ2jwgoOg4AwAvCEz
+ ZiLnDhSpnmSDNX19XZkd3nmvJdtd0l/UMJGV6nmnoqqHQ8g+n07JnAbpJjMH1Ay7oisYDfwRR
+ YB6jbtgHG5PKcw5KI+k1gVmNN6RpYPZcGQQJyzvUlTsXTPp3Gh9xVOhBusEEdnVPU5ie+5nKp
+ KpqzBkeLO+eXXg2DlxRy1lVqb049Gjpmt/3TVSSK2cIUhBHP6VyIAimlLreIMZdv0jMgxqWDb
+ zGFEk9ug1wYWpHdxlbDNKVok+33akkCbvUmJ3yV0yPQF/y0myfirRGQLEELT9F2Ju+Fpa6qab
+ dbwfS8/u+XxX8jJTWnqoCzzxGqduoJlduPQrmMVDPzan7W7p3PmnbvUIQbkbhKsTDTmjFVIgS
+ 80yGxDnqgtMDNQr+lhbY2ELphmJbAwDSKRovdS4iQ9IIS+wVf0VzRwZK3MLDzMYxuz0FMrL/g
+ pV9PoWs8BEEWD7Z/nVBbeym8IgROdw/eaumIkdsQ7i5vbTDK7zIBaCtnQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=8814=E6=97=
-=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8811:50=E5=86=99=E9=81=93=EF=BC=9A
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > When calling "demultiplex_sideband" on a sideband-2 message, will try t=
-o
-> > split the message by line breaks, and append a suffix to each nonempty
-> > line to clear the end of the screen line.
->
-> Subject of "will try" and "append" is missing.  Do you mean that
-> the helper function in question does these two things?  I.e.
->
->         demultiplex_sideband() used on a sideband #2 will try
->         to... and appends ...
->
-> > But in the following example,
-> > there will be no suffix (8 spaces) for "<message-3>":
-> >
-> >     PKT-LINE(\2 <message-1> CR <message-2> CR <message-3>)
-> >     PKT-LINE(\2 CR <message-4> CR <message-5> CR)
->
-> That description may mechanically correct, but
->
->    after <message-3>, we fail to clear to the end of line
->
-> may make it easier to understand what the problem we are trying to
-> solve for those who do not remember what these suffix games are
-> about.
->
-> > This is because the line break of "<message-3>" is placed in the next
-> > pktline message.
-> >
-> > Without this fix, t5411 must remove trailing spaces of the actual outpu=
-t
-> > of "git-push" command before comparing.
-> >
-> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > ---
-> >  sideband.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/sideband.c b/sideband.c
-> > index 6f9e026732..abf2be98e1 100644
-> > --- a/sideband.c
-> > +++ b/sideband.c
-> > @@ -185,6 +185,10 @@ int demultiplex_sideband(const char *me, int statu=
-s,
-> >
-> >                       if (!scratch->len)
-> >                               strbuf_addstr(scratch, DISPLAY_PREFIX);
-> > +                     else if (!linelen)
-> > +                             /* buf has a leading CR which ends the re=
-maining
-> > +                              * scratch of last round of "demultiplex_=
-sideband" */
-> > +                             strbuf_addstr(scratch, suffix);
->
-> The style of multi-line comment needs fixing, but the contents of
-> the comment is a bit hard to grok.
->
-> >                       if (linelen > 0) {
-> >                               maybe_colorize_sideband(scratch, b, linel=
-en);
-> >                               strbuf_addstr(scratch, suffix);
->
-> I wonder if the following is simpler to read, though.
->
-> -- >8 --
-> Subject: [PATCH] sideband: don't lose clear-to-eol at packet boundary
->
-> When demultiplex_sideband() sees a CR or LF on the sideband #2, it
-> adds "suffix" string to clear to the end of the current line, which
-> helps when relaying a progress display whose records are terminated
-> with CRs.
->
-> The code however forgot that depending on the length of the payload
-> line, such a CR may fall exactly at the packet boundary and the
-> number of bytes before the CR from the beginning of the packet could
-> be zero.  In such a case, the message that was terminated by the CR
-> were leftover in the "scratch" buffer in the previous call to the
-> function and we still need to clear to the end of the current line.
->
-> Just remove the unnecessary check on linelen; maybe_colorize_sideband()
-> on 0-byte payload turns into a no-op, and we should be adding clear-to-eo=
-l
-> for each and every CR/LF anyway.
->
->  sideband.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git c/sideband.c w/sideband.c
-> index 6f9e026732..1575bf16dd 100644
-> --- c/sideband.c
-> +++ w/sideband.c
-> @@ -185,10 +185,9 @@ int demultiplex_sideband(const char *me, int status,
->
->                         if (!scratch->len)
->                                 strbuf_addstr(scratch, DISPLAY_PREFIX);
-> -                       if (linelen > 0) {
-> -                               maybe_colorize_sideband(scratch, b, linel=
-en);
-> -                               strbuf_addstr(scratch, suffix);
-> -                       }
-> +
-> +                       maybe_colorize_sideband(scratch, b, linelen);
-> +                       strbuf_addstr(scratch, suffix);
->
->                         strbuf_addch(scratch, *brk);
->                         xwrite(2, scratch->buf, scratch->len);
+Hi Luke,
 
-The above changes will add suffix to the end of each line, and even an
-empty lines.  However, according to the comment in commit ebe8fa738d
-(fix display overlap between remote and local progress, 2007-11-04)
-which introduced the suffix implementation for the first time, no
-suffix should be appended for empty lines.
+On Fri, 11 Jun 2021, Luke Shumaker wrote:
 
-    /*
-     * Let's insert a suffix to clear the end
-     * of the screen line, but only if current
-     * line data actually contains something.
-     */
+> On Fri, 11 Jun 2021 04:19:17 -0600,
+> Johannes Schindelin wrote:
+> >
+> > On Thu, 10 Jun 2021, Luke Shumaker wrote:
+> >
+> > > On Thu, 10 Jun 2021 03:13:30 -0600,
+> > > Johannes Schindelin via GitGitGadget wrote:
+> > > > -if test -z "$GIT_EXEC_PATH" || test "${PATH#"${GIT_EXEC_PATH}:"}"=
+ =3D "$PATH" || ! test -f "$GIT_EXEC_PATH/git-sh-setup"
+> > > > +if test -z "$GIT_EXEC_PATH" || {
+> > > > +	test "${PATH#"${GIT_EXEC_PATH}:"}" =3D "$PATH" && {
+> > > > +		# On Windows, PATH might be Unix-style, GIT_EXEC_PATH not
+> > > > +		! type -p cygpath >/dev/null 2>&1 ||
+> > > > +		test "${PATH#$(cygpath -au "$GIT_EXEC_PATH"):}" =3D "$PATH"
+> > >
+> > > Nit: That should have a couple more `"` in it:
+> > >
+> > >     test "${PATH#"$(cygpath -au "$GIT_EXEC_PATH"):"}" =3D "$PATH"
+> >
+> > Are you sure about that?
+> >
+> > 	$ P=3D'*:hello'; echo "${P#$(echo '*'):}"
+> > 	hello
+> >
+> > As you can see, there is no problem with that `echo '*'` producing a
+> > wildcard character.
+> >
+> > In any case, neither '*' nor '?' are valid filename characters on Wind=
+ows,
+> > therefore there is little danger here.
+>
+> In the other email (the reply to Junio), I specified that it's only a
+> problem if the glob isn't self-matching.  So * and ? are fine, but
+> [charset] probably isn't.
+>
+>     $ P=3D'f[o]o:bar'; echo "${P#$(echo 'f[o]o'):}"
+>     f[o]o:bar
+>
+>     $ P=3D'f[o]o:bar'; echo "${P#"$(echo 'f[o]o'):"}"
+>     bar
 
-So my implementation is to try not to break the original
-implementation, and keep the linelen unchanged.
+Thank you for clarifying.
 
-The strbuf "scratch" will be reset at line 18th in the while block, so
-the nonempty scratch at line 7 indicates the parameter scratch of
-demultiplex_sideband() is not empty. With the following patch,
-additional suffix is only added before a leading CR in a packet which
-is seperated with its message by packet boundary.
+This is actually a valid concern also on Windows because according to
+https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file the
+brackets _are_ valid file name characters.
 
-```
-01    while ((brk =3D strpbrk(b, "\n\r"))) {
-02            int linelen =3D brk - b;
-03
-04 +         /* Has no empty scratch from last call of "demultiplex_sideban=
-d"
-05 +          * and has a leading CR in buf.
-06 +          */
-07 +         if (scratch->len && !linelen)
-08 +                   strbuf_addstr(scratch, suffix);
-09            if (!scratch->len)
-10                    strbuf_addstr(scratch, DISPLAY_PREFIX);
-11            if (linelen > 0) {
-12                    maybe_colorize_sideband(scratch, b, linelen);
-13                    strbuf_addstr(scratch, suffix);
-14            }
-15
-16            strbuf_addch(scratch, *brk);
-17            xwrite(2, scratch->buf, scratch->len);
-18            strbuf_reset(scratch);
-19
-20            b =3D brk + 1;
-21    }
-```
+> > To be honest, I was looking more for reviews focusing on
+> > potentially-better solutions, such as looking at the inodes, or even
+> > comparing the contents of `$GIT_EXEC_PATH/git-subtree` and
+> > `${PATH%%:*}/git-subtree`, and complaining if they're not identical.
+>
+> So the check right now is gross, but I don't know what would be
+> better.  The point of the check is more to check "is the environment
+> set up the way that `git` sets it up for us", not so much to actually
+> check the filesystem.
+>
+> Plus, it shouldn't actually care if it's installed in `$GIT_EXEC_PATH`
+> or not, it should be totally happy for $GIT_EXEC_PATH/git-subtree to
+> not exist and for git-subtree to be elsewhere in the PATH.  So an
+> inode or content check would be wrong.  Perhaps checking git-sh-setup
+> instead of git-subtree though...
+>
+> > Those two ideas look a bit ham-handed to me, though, the latter becaus=
+e it
+> > reads the file twice, for _every_ `git subtree` invocation, and the fo=
+mer
+> > because there simply is no easy portable way to look at the inode of a
+> > file (stat(1) has different semantics depending whether it is the GNU =
+or
+> > the BSD flavor, and it might not even be present to begin with).
+>
+> `test FILE1 -ef FILE2` checks wether the inode is the same.  And it's
+> POSIX, so I'm assuming that it's sufficiently portable, though I
+> haven't actually tested whether things other than Bash implement it.
+
+It's not POSIX. From
+https://pubs.opengroup.org/onlinepubs/009695399/utilities/test.html:
+
+	Some additional primaries newly invented or from the KornShell
+	appeared in an early proposal as part of the conditional command
+	([[]]): s1 > s2, s1 < s2, str =3D pattern, str !=3D pattern,
+	f1 -nt f2, f1 -ot f2, and f1 -ef f2.
+
+Having said that, it appears that Bash implements it (what non-standard
+behavior _doesn't_ it implement ;-))
+
+And since Git for Windows ships with Bash, we can actually use it!
+
+> > I was also looking forward to hear whether there are opinions about ma=
+ybe
+> > dropping this check altogether because there were indications that thi=
+s
+> > condition is not even common anymore.
+>
+> I think it would be good for it to eventually go away.  But having
+> removed the hacks that allowed it to work in broken setups, I have no
+> way of knowing how many people had setups like that unless they tell
+> me now that it's telling them, and if those users are now broken, I
+> don't want them to be *silently* broken.  So I think we do need to
+> have the check for a longish period of time.
+>
+> > > But no need to re-roll for just that.
+> > >
+> > > Do we also need to handle the reverse case, where PATH uses
+> > > backslashes but GIT_EXEC_PATH uses forward slashes?
+> >
+> > In Git for Windows, we ensure to use forward slashes in `GIT_EXEC_PATH=
+`.
+>
+> Did you mean to write `PATH` here instead of `GIT_EXEC_PATH`?  Because
+> if not, then I'm confused.
+
+Ah, I thought it was clear that the `PATH` variable is already _not_ the
+standard Windows version (which contains backslashes and _semicolons_),
+but it is adjusted automatically by the MSYS2 runtime to look more
+Unix-like (with forward slashes and _colons_).
+
+Ciao,
+Dscho
