@@ -2,166 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6640C48BE8
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1CBDC2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:53:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFF8E61185
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:24:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACB5061185
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 11:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235468AbhFNL0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 07:26:19 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:34643 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235858AbhFNLXu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 07:23:50 -0400
-Received: by mail-ed1-f49.google.com with SMTP id cb9so46039036edb.1
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 04:21:47 -0700 (PDT)
+        id S235223AbhFNLzS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 07:55:18 -0400
+Received: from mail-yb1-f172.google.com ([209.85.219.172]:37461 "EHLO
+        mail-yb1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235585AbhFNLyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 07:54:38 -0400
+Received: by mail-yb1-f172.google.com with SMTP id b13so15018303ybk.4
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 04:52:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Wbp5KQ266lGfw33WbgrvDRVwykt6xDuv8Z5+blqq7ng=;
-        b=QvsMWG67Dn3H4d5fdWM9UhxBSKbDVsM/TJXBXWefuE/Ep94W0F8P0PHc8BHFGgxWZx
-         ZKPEHzVVj664h34EaTXmnFzwBIbbt5FZEnxMDlpupN6tOFiHBiiPy248ENPDkDynsHcD
-         BUam81wwsybSXAMAROqEXR/fTD4RLmMXgIK6VUoYW7jQc7ibdDA+O499OBmilAhkv/S6
-         ISbg1l1ksLWkL09E7w6NUX9qll9IKBziUIgDF5NNqubDRpbvJTI6Pn2/dqwXAhSBSGD3
-         N6B/gCwTyt7JrZrm4+KDhQs7OLTq0MLl1r6K/nDWzpAuv11Od5n77MyHZI/o+pZ7vNgY
-         v4pw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NLwm0UeLIOL4cawPb/TNpBqsp6UCLBRlZkEAKEpDrIY=;
+        b=K8iB9kstjQPXM1Z3D2Ikl44vCFkdqkaTCo7rRSPvrnD2tGq/M0DHcJDL6gK2Mn8n2S
+         8luycUsVCkDTmfvJsV8vVgXknuHqARhnjaw5hK+DUIjBmXh75YZ2hDL+ASoboMHB5EwC
+         jL6CASQlfrvg2XwG7crHRfJpb8tvbA2k1vrUe5LqTNXC/actX+IqI0AvNFtYQw3ToqIA
+         NgvlOk0G84d1h4nVXExre+GOdNQLa5MNFO42nPnfaTaIm+Zb9ebZKm+r1ydH4m9RsvpV
+         +tyfwJL/Kmcjk3Pna/POovhvhYgS9pqHXtH1jnyT7wY5+dj4gW9kRAjTjlahqDMo5OCp
+         s1IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Wbp5KQ266lGfw33WbgrvDRVwykt6xDuv8Z5+blqq7ng=;
-        b=Y9v4m9mY48M3/6AC1SraFA6C59t8Ilcm1NIgamMgOl+OvShQXzW2cE1MAYoAbzAc9G
-         SohC1Vgifv1PS7WgPSB5nPLPYEcrAsPElzmHRDepbv1QStZ+7HT1TqKjks1K0A1JPTfi
-         IbObFzvIjAeAtd2zzSfNL8/xEhIXTqiFGCI9RYKqPSBSG3slsHUnYtY/Xv4JNvxydERz
-         LqtuTEWhRjiqJvflmDvUXOPfRxEAEcHbghIxb1HDLm0jbWW4iJxM1osVBOkR8vlEZn/L
-         +3Iw2Ns16px/yOcoPoX2N4heoReSBTvI88jgR7Ph/9Gu9LrraFDhDMkE8Lckpf3xSrdV
-         lxOg==
-X-Gm-Message-State: AOAM530lcChEwtLkaQEUw5h7j10F2A48vYo5LbqzRFDCbrFAZec1qmJ2
-        if1V1rgU/T41y79A4A5G57A=
-X-Google-Smtp-Source: ABdhPJwmesPHuE5lm/Npi9Jf5WKQK16M4GJYvdSyiPBZC6I4FYxl1VlEAKl3PXyLzyYhYRvsa9RQfA==
-X-Received: by 2002:a05:6402:344:: with SMTP id r4mr16140514edw.226.1623669646945;
-        Mon, 14 Jun 2021 04:20:46 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id g11sm8615361eds.24.2021.06.14.04.20.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 04:20:46 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] read-cache: fix incorrect count and progress bar
- stalling
-Date:   Mon, 14 Jun 2021 13:07:50 +0200
-References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
-        <patch-2.2-042f598826-20210607T144206Z-avarab@gmail.com>
-        <8f336b1b-6cb7-8277-79d5-0f331159b00c@gmail.com>
-        <87k0n54qb6.fsf@evledraar.gmail.com>
-        <eaf2b6b0-4202-d5ea-87a2-b828fdbc60a1@web.de>
-        <8735tt4fhx.fsf@evledraar.gmail.com> <xmqqczsxtf8g.fsf@gitster.g>
-        <87wnr4394y.fsf@evledraar.gmail.com>
-        <74183ce6-e17f-1b11-1ceb-7a8d873bc1c7@web.de>
-        <87lf7k2bem.fsf@evledraar.gmail.com>
-        <f5e181fc-af94-bccf-051f-a58a04fe1ffc@web.de>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <f5e181fc-af94-bccf-051f-a58a04fe1ffc@web.de>
-Message-ID: <87zgvszo8i.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NLwm0UeLIOL4cawPb/TNpBqsp6UCLBRlZkEAKEpDrIY=;
+        b=KOgouDLXz6Ja1Hp57JDQANMd7StmXR5MTga3Lgby+bOWFMtLOOW6qWsyeALX2OP6XE
+         whTdK7wAgTchjt49a1qmRGhgqYGN9Bu/Dn4E3WyYKUhtoHvDyqcyTPbk2HAX3aMAGCWd
+         oKW+VSVWv+ehj1CLkzYbgAMgCGc1yQWA2lBgoh2XRRLbmVKA/NnELsQD2piBe2GXfSaI
+         ugIPLT9UNp+NnBNTAXw87jNYAoNCK236uW8cAbHpkWoq25xLE/NX6PVwLqjF1vpPaGv2
+         i3IyCYv2y5VFygxWRpTyIcfe5J0znW89GsqPeD+ALhfaq0zfO/lsCyl9z76EjiqQ6t3P
+         jjiw==
+X-Gm-Message-State: AOAM532nxrEcRYQJ1UVmGzfNmjmZb1i9F+xCB/hcpfXpl5FN71OZDr+6
+        96UmA4xdq+D0dH4VT5kHhSaw/Ias2XTl3ZGgEO8=
+X-Google-Smtp-Source: ABdhPJwEDQIpV4cUdi5S9ye1D/C9JbJquVdN9a22bZcNAMWS/ncdAZcDFrEiMcHTN29JPaxehO+NYIflGrIK/7OisoU=
+X-Received: by 2002:a25:558b:: with SMTP id j133mr24037937ybb.520.1623671495125;
+ Mon, 14 Jun 2021 04:51:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <87im2s5jjm.fsf@evledraar.gmail.com> <20210612050711.4057-4-worldhello.net@gmail.com>
+ <xmqqim2hyuj1.fsf@gitster.g>
+In-Reply-To: <xmqqim2hyuj1.fsf@gitster.g>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Mon, 14 Jun 2021 19:51:23 +0800
+Message-ID: <CANYiYbGtfgZepnfTWGjbmOh2bxa8tZ7bvgtVTo6qTQpCP9MPag@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] sideband: append suffix for message whose CR in
+ next pktline
+To:     Junio C Hamano <gitster@pobox.com>,
+        Nicolas Pitre <nico@fluxnic.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Jun 10 2021, Ren=C3=A9 Scharfe wrote:
-
-> Am 09.06.21 um 00:12 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>
->> On Tue, Jun 08 2021, Ren=C3=A9 Scharfe wrote:
->>
->>> I wonder (only in a semi-curious way, though) if we can detect
->>> off-by-one errors by adding an assertion to display_progress() that
->>> requires the first update to have the value 0, and in stop_progress()
->>> one that requires the previous display_progress() call to have a value
->>> equal to the total number of work items.  Not sure it'd be worth the
->>> hassle..
->>
->> That's intentional. We started eating 3 apples, got to one, but now our
->> house is on fire and we're eating no more apples today, even if we
->> planned to eat 3 when we sat down.
->>
->> The progress bar reflects this unexpected but recoverable state:
->>
->>     $ perl -wE 'for (0..1) { say "update"; say "progress $_" }' |
->>       ./helper/test-tool progress --total=3D3 Apples 2>&1 |
->>       cat -v | perl -pe 's/\^M\K/\n/g'
->>     Apples:   0% (0/3)^M
->>     Apples:  33% (1/3)^M
->>     Apples:  33% (1/3), done.
->>
->> We're at 1/3, but we're done. No more apples.
->>
->> This isn't just some hypothetical, e.g. consider neeing to unlink() or
->> remove files/directories one at a time in a directory and getting the
->> estimated number from st_nlink (yeah yeah, unportable, but it was the
->> first thing I thought of).
->>
->> We might think we're processing 10 entries, but another other processes
->> might make our progress bar end at more or less than the 100% we
->> expected. That's OK, not something we should invoke BUG() about.
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=8814=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8811:50=E5=86=99=E9=81=93=EF=BC=9A
 >
-> It doesn't have to be a BUG; a warning would suffice.  And I hope not
-> finishing the expected number of items due to a catastrophic event is
-> rare enough that an additional warning wouldn't cause too much pain.
-
-It's not a catastrophic event, just a run of the mill race condition
-we'll expect if we're dealing with the real world.
-
-E.g. you asked to unlink 1000 files, we do so, we find 10 are unlinked
-already, or the command is asked to recursively unlink all files in a
-directory tree, and new ones have showed up.
-
-In those cases we should just just shrug and move on, no need for a
-warning. We just don't always have perfect information about future
-state at the start of the loop.
-
-> Loops that *regularly* end early are not a good fit for progress
-> percentages, I think.
-
-Arguably yes, but in these fuzzy cases not providing a "total" means
-showing no progress at all, just a counter. Perhaps we should have some
-other "provide total, and it may be fuzzy" flag. Not providing it might
-run into your proposed BUG(), my point was that the current API
-providing this flexibility is intentional.
-
->> Similarly, the n=3D0 being distinguishable from the first
->> display_progress() is actually useful in practice. It's something I've
->> seen git.git emit (not recently, I patched the relevant code to emit
->> more granular progress).
->>
->> It's useful to know that we're stalling on the setup code before the
->> for-loop, not on the first item.
+> Jiang Xin <worldhello.net@gmail.com> writes:
 >
-> Hmm, preparations that take a noticeable time might deserve their own
-> progress line.
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > When calling "demultiplex_sideband" on a sideband-2 message, will try t=
+o
+> > split the message by line breaks, and append a suffix to each nonempty
+> > line to clear the end of the screen line.
+>
+> Subject of "will try" and "append" is missing.  Do you mean that
+> the helper function in question does these two things?  I.e.
+>
+>         demultiplex_sideband() used on a sideband #2 will try
+>         to... and appends ...
+>
+> > But in the following example,
+> > there will be no suffix (8 spaces) for "<message-3>":
+> >
+> >     PKT-LINE(\2 <message-1> CR <message-2> CR <message-3>)
+> >     PKT-LINE(\2 CR <message-4> CR <message-5> CR)
+>
+> That description may mechanically correct, but
+>
+>    after <message-3>, we fail to clear to the end of line
+>
+> may make it easier to understand what the problem we are trying to
+> solve for those who do not remember what these suffix games are
+> about.
+>
+> > This is because the line break of "<message-3>" is placed in the next
+> > pktline message.
+> >
+> > Without this fix, t5411 must remove trailing spaces of the actual outpu=
+t
+> > of "git-push" command before comparing.
+> >
+> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > ---
+> >  sideband.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/sideband.c b/sideband.c
+> > index 6f9e026732..abf2be98e1 100644
+> > --- a/sideband.c
+> > +++ b/sideband.c
+> > @@ -185,6 +185,10 @@ int demultiplex_sideband(const char *me, int statu=
+s,
+> >
+> >                       if (!scratch->len)
+> >                               strbuf_addstr(scratch, DISPLAY_PREFIX);
+> > +                     else if (!linelen)
+> > +                             /* buf has a leading CR which ends the re=
+maining
+> > +                              * scratch of last round of "demultiplex_=
+sideband" */
+> > +                             strbuf_addstr(scratch, suffix);
+>
+> The style of multi-line comment needs fixing, but the contents of
+> the comment is a bit hard to grok.
+>
+> >                       if (linelen > 0) {
+> >                               maybe_colorize_sideband(scratch, b, linel=
+en);
+> >                               strbuf_addstr(scratch, suffix);
+>
+> I wonder if the following is simpler to read, though.
+>
+> -- >8 --
+> Subject: [PATCH] sideband: don't lose clear-to-eol at packet boundary
+>
+> When demultiplex_sideband() sees a CR or LF on the sideband #2, it
+> adds "suffix" string to clear to the end of the current line, which
+> helps when relaying a progress display whose records are terminated
+> with CRs.
+>
+> The code however forgot that depending on the length of the payload
+> line, such a CR may fall exactly at the packet boundary and the
+> number of bytes before the CR from the beginning of the packet could
+> be zero.  In such a case, the message that was terminated by the CR
+> were leftover in the "scratch" buffer in the previous call to the
+> function and we still need to clear to the end of the current line.
+>
+> Just remove the unnecessary check on linelen; maybe_colorize_sideband()
+> on 0-byte payload turns into a no-op, and we should be adding clear-to-eo=
+l
+> for each and every CR/LF anyway.
+>
+>  sideband.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git c/sideband.c w/sideband.c
+> index 6f9e026732..1575bf16dd 100644
+> --- c/sideband.c
+> +++ w/sideband.c
+> @@ -185,10 +185,9 @@ int demultiplex_sideband(const char *me, int status,
+>
+>                         if (!scratch->len)
+>                                 strbuf_addstr(scratch, DISPLAY_PREFIX);
+> -                       if (linelen > 0) {
+> -                               maybe_colorize_sideband(scratch, b, linel=
+en);
+> -                               strbuf_addstr(scratch, suffix);
+> -                       }
+> +
+> +                       maybe_colorize_sideband(scratch, b, linelen);
+> +                       strbuf_addstr(scratch, suffix);
+>
+>                         strbuf_addch(scratch, *brk);
+>                         xwrite(2, scratch->buf, scratch->len);
 
-Sure, and I've split some of those up in the past, but this seems like
-ducking/not addressing the point that the API use we disagree on has
-your preferred use conflating these conditions, but mine does not...
+The above changes will add suffix to the end of each line, and even an
+empty lines.  However, according to the comment in commit ebe8fa738d
+(fix display overlap between remote and local progress, 2007-11-04)
+which introduced the suffix implementation for the first time, no
+suffix should be appended for empty lines.
 
-> Anyway, if no guard rails can be built then we have to rely on our math
-> skills alone.  Off-by-one errors may look silly, but are no joke -- they
-> are surprisingly easy to make.
+    /*
+     * Let's insert a suffix to clear the end
+     * of the screen line, but only if current
+     * line data actually contains something.
+     */
 
-...which, regardless of whether one views a progress of "1/5 items" has
-"finished 1/5" or "working on 1/5", which I think *in general* is an
-arbitrary choice, I think the progress.c API we have in git.git clearly
-fits the usage I'm describing better.
+So my implementation is to try not to break the original
+implementation, and keep the linelen unchanged.
+
+The strbuf "scratch" will be reset at line 18th in the while block, so
+the nonempty scratch at line 7 indicates the parameter scratch of
+demultiplex_sideband() is not empty. With the following patch,
+additional suffix is only added before a leading CR in a packet which
+is seperated with its message by packet boundary.
+
+```
+01    while ((brk =3D strpbrk(b, "\n\r"))) {
+02            int linelen =3D brk - b;
+03
+04 +         /* Has no empty scratch from last call of "demultiplex_sideban=
+d"
+05 +          * and has a leading CR in buf.
+06 +          */
+07 +         if (scratch->len && !linelen)
+08 +                   strbuf_addstr(scratch, suffix);
+09            if (!scratch->len)
+10                    strbuf_addstr(scratch, DISPLAY_PREFIX);
+11            if (linelen > 0) {
+12                    maybe_colorize_sideband(scratch, b, linelen);
+13                    strbuf_addstr(scratch, suffix);
+14            }
+15
+16            strbuf_addch(scratch, *brk);
+17            xwrite(2, scratch->buf, scratch->len);
+18            strbuf_reset(scratch);
+19
+20            b =3D brk + 1;
+21    }
+```
