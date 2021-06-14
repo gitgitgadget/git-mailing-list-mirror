@@ -2,213 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F9FAC48BE8
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 09:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6711AC2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:10:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35B4760233
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 09:56:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47786611AB
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232729AbhFNJ6r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 05:58:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52114 "EHLO
+        id S232763AbhFNKMU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 06:12:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232579AbhFNJ6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 05:58:46 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19442C061574
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 02:56:27 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id b11so45684195edy.4
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 02:56:27 -0700 (PDT)
+        with ESMTP id S232579AbhFNKMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 06:12:20 -0400
+Received: from mail-vk1-xa2b.google.com (mail-vk1-xa2b.google.com [IPv6:2607:f8b0:4864:20::a2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19FBC061574
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:10:17 -0700 (PDT)
+Received: by mail-vk1-xa2b.google.com with SMTP id h19so4050636vkh.9
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=oKwJqCiy3QbGEaIex4NhBrWqrLYqAw5+s6Av3vvDyTY=;
-        b=TWY6f6ojblXVwjy/PpTHU9ZoP/dmvoVzPLJxFkMJb6tIcqyfuH7ZmbI+LghdUnTW1S
-         bXJf5OWrtLzO9wr2tUzx27Y/IuysiWGAcmg+KiVsTSioewkpnNByVvGn/+ymcOamZpFw
-         XkL0YGICajxHyOm9vps408lYZGilkyjsU6ESXJZmu5oExIbu/aabnyLq/TiY805xfEmI
-         LSxIdRtmj5q4XsTQOhyiC/44Sabcw+XO7e5inIBCD/kJWcy72CF/Bg/GH1mZBI1aZrNm
-         fIbNPNXbSUG0M1KbJ5eoYkuIU8aWR40s/kIGFVLo7P2jGd6pIv05wDTHvNdzgV5BA1p6
-         clDA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=AuyuVVBcZH7XyLkvxlb5B8mmwnC9DwHiSWdFBYqAO20=;
+        b=kTN92ddFHUkusnV9frecxyl0dzX3Dta73FyqJyRaVgiNIDmxly5ZUEzP347HqXcBX0
+         +Sk4xPOB9xN+b5k1/TLNgaDjhNvUYI2LiUPy65V5qLE6MWl5sFcCSt9xb9VOT1ElgQlZ
+         wKHNpfbBqaULlevCWN4KxPDPItHBdTN81RlZBhMH/kOXj/oCr0xN7dhAS/p3ovbCwyIt
+         DR/UID7bbbHtsyz5v6JUQBy5nd608cpxLJwUo78Cngjn3QKoUw6T93PMsLO9css7vNeT
+         SoxttlRCEaUAdtx0ETzPucVNgzio7BA0VZysA4IVwS+nM8ql9RLI7HFDAhjPs/ejAXco
+         Y9yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=oKwJqCiy3QbGEaIex4NhBrWqrLYqAw5+s6Av3vvDyTY=;
-        b=FxsiyuHCjeJoCFWFMPGRpok6/1vHHT8Ww/qAMd913TnMZDgY/5O/OWQkaK6jfvvDnS
-         M8lvccwjtyD0VG7eJgooZEwFh0xgTlN5P2Kwdbo64J8yxJXjj13x+tJhM/GB78E5yorC
-         yhBX0NXoaZNoOdpQoNm/4KpFTA522fu3K/iuNRTvHCRw0LuwgyrPt7xCmeD1SujVsadm
-         JQQcXT8viuUjbeQaa9B6/0qK4thtLuu1Q+nstBQxf68BO+nwq2VR8snjtIZdiRys4/UL
-         4tJ+Q95rqcA0Humxu0Nv8JfIl5qOjv4HNfLOFfkLB//0VOUOxg+YkLHfy91yzT5fWqlc
-         foxg==
-X-Gm-Message-State: AOAM533C43cUfYNxbIjhDvnF32HLMIXtto1xmmXeosB3eAInd7eGXOWk
-        b4ahwkdSYUcqx4PT/I+WGy8=
-X-Google-Smtp-Source: ABdhPJygzpJuYcg84e0ToW6SVctuWXspZswYYczJLOBZSTx6InnwFIfp1UIAGGb/XY3kNg0XISV+sw==
-X-Received: by 2002:aa7:d6cc:: with SMTP id x12mr16182459edr.55.1623664585600;
-        Mon, 14 Jun 2021 02:56:25 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id bn7sm7088595ejb.111.2021.06.14.02.56.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 02:56:25 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, John Keeping <john@keeping.me.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] test: fix for TEST_OUTPUT_DIRECTORY
-Date:   Mon, 14 Jun 2021 11:33:12 +0200
-References: <20210609170520.67014-1-felipe.contreras@gmail.com>
- <YMWMuDbctae7tF6J@coredump.intra.peff.net>
- <60c627cac29b3_41f45208a7@natae.notmuch>
- <YMcIv7q1ctyJ0EZn@coredump.intra.peff.net>
- <60c715dd9939e_436208f3@natae.notmuch>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <60c715dd9939e_436208f3@natae.notmuch>
-Message-ID: <8735tk22if.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AuyuVVBcZH7XyLkvxlb5B8mmwnC9DwHiSWdFBYqAO20=;
+        b=LroF82szM9afzBmAJ+iNHII/ndoaoZigm6KN0uNtVngNjVqkXH/raYDYBQ/lggLH3w
+         7Fb388iX0/WFaAzZRZT1LdBf9yWcYaHaeLBuA2RmUH3YKKB+dIJb1YRkxRJbBEzrc3qV
+         RjrVaQil5hff4nXt9Yx/j4vRjfnIBLnPIlKm/DNyaXTKoqNKN+7OGjmqbKhmeSUFBuN+
+         Niy2m6pmp9znP4Vvq9fwgHSasyj3ovsmqFtQf562ww3yOQzRqgvZSgaSeLaOVZhkkCRK
+         9QK44Uytf+3qiAz4Tr4VI7/wcMOyPQM/b6TzLsaoNAUG5Wmt/9L7rdo6xN/aIVspBXmj
+         SEHw==
+X-Gm-Message-State: AOAM530AsBFmogUqSn/3VC08tXAiMeRO2MwORZ6S+bREM9XQRd/13+yL
+        ipzCghwOMWlOXbgxZ3pE5+imGrnJmSAbDT+KukkYBQ==
+X-Google-Smtp-Source: ABdhPJwdJVn09gw4XbEZfmMgTEKajdGL9zIip5kdh/vvw9AVY2bDTY8f0ucgiFhN2M58BgEYw52W3Sa6c24vi1knW7U=
+X-Received: by 2002:a1f:9950:: with SMTP id b77mr15531775vke.25.1623665416654;
+ Mon, 14 Jun 2021 03:10:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com> <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 14 Jun 2021 12:10:05 +0200
+Message-ID: <CAFQ2z_NgAvvPTL2khMjVBSfUyBBA__pWS9NABHvGxTOyc0KnTQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] refs: cleanup errno sideband ref related functions
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jun 14 2021, Felipe Contreras wrote:
-
-> Jeff King wrote:
->> On Sun, Jun 13, 2021 at 10:44:10AM -0500, Felipe Contreras wrote:
->> 
->> > > Unfortunately, this isn't a complete solution.
->> > 
->> > Software will never be perfect.
->> > 
->> > We don't need to wait for a perfect solution, all we need is something
->> > better than the current siuation.
->> 
->> Sure, but if you don't fully understand the situation (e.g., that --root
->> and TEST_OUTPUT_DIRECTORY are not equivalent), then you may end up
->> revisiting the incomplete fix later,
+On Thu, Jun 10, 2021 at 2:57 PM Han-Wen Nienhuys via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> v4
 >
-> The fact that you may end up revisiting a solution is a fact for *all*
-> changes (including 2d14e13c56 (test output: respect
-> $TEST_OUTPUT_DIRECTORY, 2013-04-29)).
->
->> or even making things worse (as this patch did).
->
-> I think breaking the test suite is objectively worse than having a few
-> extra files in the output directory, but to each his own.
+>  * commit msg tweaks in response to Jun.
 
-We've got both in-tree and out-tree things that rely on e.g. the
-*.counts in that directory to have a 1=1 mapping with "real"
-tests. E.g. "make aggregate-results".
+I forgot to update the cover letter, but this includes the updates in
+response to review by Jonathan Tan.
 
->> > > I think solving the whole issue would require a mechanism for passing
->> > > TEST_OUTPUT_DIRECTORY in a way that can't be overridden (whether in an
->> > > environment variable or the command-line).
->> > 
->> > Why do we even have TEST_OUTPUT_DIRECTORY in GIT-BUILD-OPTIONS? Looking
->> > for a reason there's 2d14e13c56 (test output: respect
->> > $TEST_OUTPUT_DIRECTORY, 2013-04-29), there it says it's for
->> > valgrind/analyze.sh.
->> > 
->> > I don't know who uses that script, or how. There's no documentaion,
->> > nothing on the mailing list, and nothing found on Google.
->> 
->> Perhaps 268fac6919 (Add a script to coalesce the valgrind outputs,
->> 2009-02-04) is enlightening.
->
-> That makes it clearer.
->
->> I don't know if anybody still uses it these days, though. I suspect it's
->> outlived its usefulness, in that we would typically not have any
->> valgrind errors at all (so coalescing them is not that interesting).
->> 
->> Possibly folks investigating leak-checking via valgrind could find it
->> useful, but even there I think LSan is a much better path forward.
->
-> Yeah, but even if they do run this tool, they can set
-> TEST_OUTPUT_DIRECTORY manually.
->
-> The needs of the few should not otweight needs of the many.
+I think this topic could graduate?
 
-Do we need to bring Spock into this?:)
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-I think the following alternate/on-top patch (which you should feel free
-to squash in with my SOB if you agree) solves the issue both of you are
-noting.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-It will barf if you run the tests under e.g. --tee with that environment
-variable, but that's intentional. It's better to loudly error if we
-don't have the expected test-results than to silently write in the wrong
-place.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 2c6e34b9478..29bf67d49bf 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -76,6 +76,12 @@ _run_sub_test_lib_test_common () {
- 		# this variable, so we need a stable setting under which to run
- 		# the sub-test.
- 		sane_unset HARNESS_ACTIVE &&
-+
-+		# These tests should emit no metrics or output that
-+		# would normally go in the "test-results" directory.
-+		TEST_NO_RESULTS_OUTPUT=1 &&
-+		export TEST_NO_RESULTS_OUTPUT &&
-+
- 		cd "$name" &&
- 		write_script "$name.sh" "$TEST_SHELL_PATH" <<-EOF &&
- 		test_description='$descr (run in sub test-lib)
-@@ -89,14 +95,12 @@ _run_sub_test_lib_test_common () {
- 		EOF
- 		cat >>"$name.sh" &&
- 		export TEST_DIRECTORY &&
--		TEST_OUTPUT_DIRECTORY=$(pwd) &&
--		export TEST_OUTPUT_DIRECTORY &&
- 		sane_unset GIT_TEST_FAIL_PREREQS &&
- 		if test -z "$neg"
- 		then
--			./"$name.sh" "$@" >out 2>err
-+			./"$name.sh" --root="$(pwd)" "$@" >out 2>err
- 		else
--			! ./"$name.sh" "$@" >out 2>err
-+			! ./"$name.sh" --root="$(pwd)" "$@" >out 2>err
- 		fi
- 	)
- }
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 54938c64279..9e9696a3185 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -252,8 +252,14 @@ TEST_STRESS_JOB_SFX="${GIT_TEST_STRESS_JOB_NR:+.stress-$GIT_TEST_STRESS_JOB_NR}"
- TEST_NAME="$(basename "$0" .sh)"
- TEST_NUMBER="${TEST_NAME%%-*}"
- TEST_NUMBER="${TEST_NUMBER#t}"
--TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
--TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME$TEST_STRESS_JOB_SFX"
-+if test -n "$TEST_NO_RESULTS_OUTPUT"
-+then
-+	TEST_RESULTS_DIR=/dev/null
-+	TEST_RESULTS_BASE=/dev/null
-+else
-+	TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
-+	TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME$TEST_STRESS_JOB_SFX"
-+fi
- TRASH_DIRECTORY="trash directory.$TEST_NAME$TEST_STRESS_JOB_SFX"
- test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
- case "$TRASH_DIRECTORY" in
-@@ -1124,7 +1130,7 @@ test_done () {
- 
- 	finalize_junit_xml
- 
--	if test -z "$HARNESS_ACTIVE"
-+	if test -z "$HARNESS_ACTIVE$TEST_NO_RESULTS_OUTPUT"
- 	then
- 		mkdir -p "$TEST_RESULTS_DIR"
- 
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
