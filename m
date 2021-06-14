@@ -4,94 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65F09C48BE6
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 05:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC679C48BE6
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 06:18:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34158613C0
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 05:09:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B250E610A2
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 06:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhFNFL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 01:11:26 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65199 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbhFNFLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 01:11:22 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F2C1133EDC;
-        Mon, 14 Jun 2021 01:09:20 -0400 (EDT)
+        id S232416AbhFNGUQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 02:20:16 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61575 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232278AbhFNGUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 02:20:15 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C234CD884D;
+        Mon, 14 Jun 2021 02:18:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wx+H+YiwtMrOLyO27cDXDAGPIJzz9pN9b30SeI
-        O9FZQ=; b=DY6faqqMbbpiH1mkL4B7ICvQ6z0v+BPrJYHemZnXy5loTVEyn/QYvv
-        ABTckAPPMjRG5w/iYZT2s6v4HrcD7wHEMlgWFynB5S9/fSgGDhF85O/B7AdB3osE
-        zlhuM5ZHOrtoH9ulsD76jbEGmFK5Lzay7DYOAtgU1a0kzARq3tzb0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D5D9133EDB;
-        Mon, 14 Jun 2021 01:09:20 -0400 (EDT)
+        :content-type; s=sasl; bh=xC3X3U11+mHH+wsznnTNwoS5FzNzHcdZJc2Bcr
+        Ojukc=; b=dp52tK7WbojQvbZU7Ibo6khS+hlaX3w0aAwRyHH0OVOdXuqtAajowk
+        uckVJbp35l4VW+NhOf16lYJB2QHQ4GVFXUHQFSclY2E87zcRIACo7zqsmuGxyhR+
+        AxiBxrNM+kQKQnrFfj/OMyQ1KJG9WWXodG0c6KrBGuvnZCPK+IpFs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A8F40D884B;
+        Mon, 14 Jun 2021 02:18:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.172.107])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B3144133EDA;
-        Mon, 14 Jun 2021 01:09:17 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 210CFD884A;
+        Mon, 14 Jun 2021 02:18:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/4] introduce submodule.superprojectGitDir cache
+Subject: Re: [RFC PATCH 3/4] submodule: cache superproject gitdir during
+ absorbgitdirs
 References: <20210611225428.1208973-1-emilyshaffer@google.com>
-        <20210611225428.1208973-3-emilyshaffer@google.com>
-Date:   Mon, 14 Jun 2021 14:09:15 +0900
-In-Reply-To: <20210611225428.1208973-3-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Fri, 11 Jun 2021 15:54:26 -0700")
-Message-ID: <xmqqzgvtxcas.fsf@gitster.g>
+        <20210611225428.1208973-4-emilyshaffer@google.com>
+Date:   Mon, 14 Jun 2021 15:18:11 +0900
+In-Reply-To: <20210611225428.1208973-4-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Fri, 11 Jun 2021 15:54:27 -0700")
+Message-ID: <xmqqim2hx93w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AB7F2A4A-CCCE-11EB-8115-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4BCACD52-CCD8-11EB-8CE7-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Emily Shaffer <emilyshaffer@google.com> writes:
 
-> Teach submodules a reference to their superproject's gitdir. This allows
-> us to A) know that we're running from a submodule, and B) have a
-> shortcut to the superproject's vitals, for example, configs.
->
-> By using a relative path instead of an absolute path, we can move the
-> superproject directory around on the filesystem without breaking the
-> submodule's cache.
+> +	test . -ef "$(git -C sub1 config submodule.superprojectGitDir)" &&
 
-As the function this new thing is added assumes the modern layout of
-having submodule "repository" in .git/modules/* of the repository of
-the superproject, it is rather easy to move the whole thing together,
-so recording it as relative path is all the more important.
+Unfortunately "test f1 -ef f2", "test f1 -nt f2", etc. are not part
+of POSIX.
 
-Can a submodule repository be bound to two or more superproject at
-the same time?  "We assume no, and we will forbid such a layout, and
-that is why we can afford to make submodules aware of their
-superprojects" is a totally acceptable answer, but it would make it
-easier to follow the reasoning behind a design change like this
-series does if such an assumption is recorded somewhere.
+When in doubt, check
 
-> +	git_config_set_in_file(p, "submodule.superprojectGitdir",
-> +			       relative_path(absolute_path(get_git_dir()),
-> +					     path, &sb));
-> +
-
-OK, so even when the superproject is used as a submodule of somebody
-else, we could get to the top of its working tree, because (1) the
-submodule we are currently working in can find out where the gitdir
-of the superproject is, and (2) in that gitdir, which is very likely
-different from the ".git/" subdirectory of the working tree of the
-superproject (instead, it would be a directory in ".git/modules/" of
-its superproject), we could find the core.worktree configuration to
-reach the working tree of the superproject.
-
-OK, makes sense.
+  https://pubs.opengroup.org/onlinepubs/9699919799/utilities/toc.html
 
 Thanks.
