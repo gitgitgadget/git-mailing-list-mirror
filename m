@@ -2,64 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF82BC2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 12:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F081C2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 12:43:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCF0B61208
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 12:42:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4483A610A2
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 12:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232930AbhFNMpA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 08:45:00 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:38511 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232791AbhFNMpA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 08:45:00 -0400
-Received: by mail-wm1-f48.google.com with SMTP id t4-20020a1c77040000b029019d22d84ebdso12949023wmi.3
+        id S233040AbhFNMpQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 08:45:16 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:44606 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232992AbhFNMpM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 08:45:12 -0400
+Received: by mail-wr1-f49.google.com with SMTP id f2so14388752wri.11
         for <git@vger.kernel.org>; Mon, 14 Jun 2021 05:42:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4Nfma+yiJ07laTTpuKcJKMskGPMmX82CjKW2AbCfzq0=;
-        b=VYifQO6IuHP25iWgVRMxK9/FJG3g4hCY2Vu5F7Jxh8lHlKSn1jSvvdeDYacvbR4k70
-         XsXnHS+nFTL8UElHWOtAnYQW4OC69JSoaD8A+1TvvkbkLelUHnwHDHk3TQ+WN3j4uLXZ
-         kmbGBwfLAKsthQcxJmzTmeemRO4gnUSeQzmKG9uwGo1vd9Ro0j64AQeDp/YHMNmXzGCK
-         YMiF8qJkyPTGc+hnHGgraA9l1bNwhuyXWjxw6HOkL2oIZI/Z7zPspnXBwU1tUQgIdstE
-         gYwY4EJq1uAhNcVvu9ApsoTBo8R0gULIZkLUWoLj+1MBfqzhzsOHIrs21qrDvtyW2loB
-         LCbQ==
+        bh=MVEj0jyayJxj5N468DdFOi+lC7SHo1qyJKTRRJ3RsOs=;
+        b=NHdmJHvGFH7cIvLawfq3RvwDroP6Um8GxMZxIv9gBoSCqNeBRKpOviAv8dnE7qp++B
+         O6R8KXEUvZSqUeioOQ8k/rpgvy95dLhAfi91xetkcORNwJyBohXvcs70VfV2OD8sbLMn
+         2r3xu+BWoXbvEbfqKiNqhZodYZEjbcXL9pZIm/kGRbPqrBK60IR/GhiL0NDfRsm3xrUy
+         fYV6Tlmrhgnhs6WjwPyHs2x/zxCGXXMiYh27WHIpnF2hB0AKfo7sMLtG5vYmWx7I1OFf
+         QB4r764iO9A/CJUVhtnnbty8Kq59VlxOKXjO5lLAJ/VoIo/Itvcgz0y/cZ574V6derWK
+         TFjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4Nfma+yiJ07laTTpuKcJKMskGPMmX82CjKW2AbCfzq0=;
-        b=qSdBEW0A3JZPsKPGj/D3H/pEYFbLJL+KA+0v6ltoqort81sVw57sb/dglzUuhSlN12
-         NMapkZNFIl4b8uGeN2I/PZ+1QF9w7X8q0g+70HGM9EvQhwS1RleuO6nbo1TFPTOka2TV
-         BQ1N7xIgpKTAj46BPg3fEWCJRL1TXIwINf0PKRjsNgrA+v8o/tD+Y4junaTvqNJLg3Ko
-         3A4yW4xj681R3p7FbRXGN4e308xjg4Z9YcKJoGDSIW6+licGcrkrLkokc3XWX3Q0W0MN
-         zN0ciYDYtTXrYDb8vv+FWRKdQ8N/lV4LO1J6VfWlvgYo8c7VWdqCyrANHD3uMe3glti5
-         wRow==
-X-Gm-Message-State: AOAM531d4bHyT+d0CEBBEnE/Mq2BsfDaHiLtzAEqBZ6putvgHEm1HTv8
-        Y8bjUqBQaLEYDzKFJyVk8fIU8rodbqE=
-X-Google-Smtp-Source: ABdhPJyUOlCDx0g81bK7bReEpZCZtcDVFBKLW20s+zjt+kdjBJGxRoVbGZfTxZs5oK4WLWlr1d36dg==
-X-Received: by 2002:a7b:cd8f:: with SMTP id y15mr15796174wmj.20.1623674516563;
-        Mon, 14 Jun 2021 05:41:56 -0700 (PDT)
+        bh=MVEj0jyayJxj5N468DdFOi+lC7SHo1qyJKTRRJ3RsOs=;
+        b=U6OOo3dG+WmfcufW225xIfUnXwX4Jo3DeH1wV2b1qvzsMQMoZlSMIlwxpRbFO5FzfU
+         Cje5GiS2KP0D8Ia2yc0Vke9ktoYnc0dFzVqQiLjRfVj+uptbirsoftGzQIizt0DomxNz
+         gX5zkmF7d0FzUX7/LpQ/oz5Oj3kfa1enVQUR+QkVrLnPDFMYfgeWDaesRhbN1EpgS4/H
+         3Gn/MpLwy3S+mfxp+iHI1d9QoRjZ2v9Ovhj9WDOVxc9vbKmBQw3H5nEMSxiQcJQxKVia
+         yhxkvMbOPR2OvrkZMV7I+CIf+7BoVBHaraoESyGT8SE0ioDb5VGOT3M4IKL6+nRohfDb
+         BkGg==
+X-Gm-Message-State: AOAM533yXwRjr/qaCEflAWgAicgycyj8gLeJK1EqsajZLFnUnczIoSDO
+        vfbtH1KZkh3c7QrjBCJ179Y67/h5F4Q=
+X-Google-Smtp-Source: ABdhPJw+SObKL4VwWYDWWPuAuBdwTC9bTLybxIheIwe1bWP1iBik1GlmINDYwxGZRosSGcuIMuswNQ==
+X-Received: by 2002:a5d:5988:: with SMTP id n8mr18485556wri.261.1623674515995;
+        Mon, 14 Jun 2021 05:41:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k82sm20585224wmf.11.2021.06.14.05.41.56
+        by smtp.gmail.com with ESMTPSA id 125sm21515609wmb.34.2021.06.14.05.41.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 05:41:56 -0700 (PDT)
-Message-Id: <a6f7aa40485f6bdd271ff8797159d8affbd024a2.1623674514.git.gitgitgadget@gmail.com>
+        Mon, 14 Jun 2021 05:41:55 -0700 (PDT)
+Message-Id: <5f2d9434b4ebb66131ea2fb9fbb62d6338af1294.1623674513.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.978.v2.git.1623674513.gitgitgadget@gmail.com>
 References: <pull.978.git.1623316412.gitgitgadget@gmail.com>
         <pull.978.v2.git.1623674513.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Jun 2021 12:41:53 +0000
-Subject: [PATCH v2 2/2] subtree: fix assumption about the directory separator
+Date:   Mon, 14 Jun 2021 12:41:52 +0000
+Subject: [PATCH v2 1/2] subtree: fix the GIT_EXEC_PATH sanity check to work on
+ Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,42 +75,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Windows, both forward and backslash are valid separators. In
-22d550749361 (subtree: don't fuss with PATH, 2021-04-27), however, we
-added code that assumes that it can only be the forward slash.
+In 22d550749361 (subtree: don't fuss with PATH, 2021-04-27), `git
+subtree` was broken thoroughly on Windows.
 
-Let's fix that.
+The reason is that it assumes Unix semantics, where `PATH` is
+colon-separated, and it assumes that `$GIT_EXEC_PATH:` is a verbatim
+prefix of `$PATH`. Neither are true, the latter in particular because
+`GIT_EXEC_PATH` is a Windows-style path, while `PATH` is a Unix-style
+path list.
+
+Let's make extra certain that `$GIT_EXEC_PATH` and the first component
+of `$PATH` refer to different entities before erroring out.
+
+We do that by using the `test <path1> -ef <path2>` command that verifies
+that the inode of `<path1>` and of `<path2>` is the same.
+
+Sadly, this construct is non-portable, according to
+https://pubs.opengroup.org/onlinepubs/009695399/utilities/test.html.
+However, it does not matter in practice because we still first look
+whether `$GIT_EXEC_PREFIX` is string-identical to the first component of
+`$PATH`. This will give us the expected result everywhere but in Git for
+Windows, and Git for Windows' own Bash _does_ handle the `-ef` operator.
+
+Just in case that we _do_ need to show the error message _and_ are
+running in a shell that lacks support for `-ef`, we simply suppress the
+error output for that part.
+
+This fixes https://github.com/git-for-windows/git/issues/3260
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/subtree/git-subtree.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ contrib/subtree/git-subtree.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 3935cea7dd13..7f767b5c38fe 100755
+index b06782bc7955..3935cea7dd13 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -10,6 +10,7 @@ if test -z "$GIT_EXEC_PATH" || ! test -f "$GIT_EXEC_PATH/git-sh-setup" || {
- 	test ! "$GIT_EXEC_PATH" -ef "${PATH%%:*}" 2>/dev/null
- }
+@@ -5,7 +5,10 @@
+ # Copyright (C) 2009 Avery Pennarun <apenwarr@gmail.com>
+ #
+ 
+-if test -z "$GIT_EXEC_PATH" || test "${PATH#"${GIT_EXEC_PATH}:"}" = "$PATH" || ! test -f "$GIT_EXEC_PATH/git-sh-setup"
++if test -z "$GIT_EXEC_PATH" || ! test -f "$GIT_EXEC_PATH/git-sh-setup" || {
++	test "${PATH#"${GIT_EXEC_PATH}:"}" = "$PATH" &&
++	test ! "$GIT_EXEC_PATH" -ef "${PATH%%:*}" 2>/dev/null
++}
  then
-+	basename=${0##*[/\\]}
  	echo >&2 'It looks like either your git installation or your'
  	echo >&2 'git-subtree installation is broken.'
- 	echo >&2
-@@ -17,10 +18,10 @@ then
- 	echo >&2 " - If \`git --exec-path\` does not print the correct path to"
- 	echo >&2 "   your git install directory, then set the GIT_EXEC_PATH"
- 	echo >&2 "   environment variable to the correct directory."
--	echo >&2 " - Make sure that your \`${0##*/}\` file is either in your"
-+	echo >&2 " - Make sure that your \`$basename\` file is either in your"
- 	echo >&2 "   PATH or in your git exec path (\`$(git --exec-path)\`)."
--	echo >&2 " - You should run git-subtree as \`git ${0##*/git-}\`,"
--	echo >&2 "   not as \`${0##*/}\`." >&2
-+	echo >&2 " - You should run git-subtree as \`git ${basename#git-}\`,"
-+	echo >&2 "   not as \`$basename\`." >&2
- 	exit 126
- fi
- 
 -- 
 gitgitgadget
+
