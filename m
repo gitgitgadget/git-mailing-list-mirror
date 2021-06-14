@@ -2,177 +2,367 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,LONGWORDS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EA62C2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 15:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B444C2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 16:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5FAB761245
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 15:52:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AA3161356
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 16:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234122AbhFNPyW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 11:54:22 -0400
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:42558 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233484AbhFNPyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 11:54:21 -0400
-Received: by mail-wm1-f51.google.com with SMTP id l7-20020a05600c1d07b02901b0e2ebd6deso261996wms.1
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 08:52:18 -0700 (PDT)
+        id S234054AbhFNQV7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 12:21:59 -0400
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:42999 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233593AbhFNQV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 12:21:58 -0400
+Received: by mail-wm1-f45.google.com with SMTP id l7-20020a05600c1d07b02901b0e2ebd6deso313414wms.1
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 09:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=kD8MGl98wy0ecB3dkV9gUTfjbJCNTzAsPNCuCXnsEwY=;
-        b=HG4wpmkzBiT/IyqOe3Qyi+PjqwGjGD2K1nFXVLXNdEyBliVUqj87a+Z1BiAgR4hJDW
-         a9h/UmGZHjxW/Exti/lPEeukcx9kMDo5v35KAGgl75+AFNItUhQynxUQxKt9UrIu//Q+
-         c/Ta1ntZBnOxnuNHo/W8I8YEm2Vfs6Ju2I60xHf19bhW9sAZywLxEO3aTDmGmh8eJ50U
-         TADERPxG6JSzeWNQs3MjofTp1Ojcvb7pjqc8GFl4/c8q6S3CTk/ZxGeqjqnWky9PeY/D
-         w3iRyjSp5UVQHUAmgRtsMnPkzn4hrtOBakgyZVskea+kHc46XnF6GRTKT6bYPAiBJuvz
-         oC6A==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Z1aO65cyDdk2AX6kxE4uNbnu5XtBcN7vK9JLQkrzU9E=;
+        b=eOudTMlfkgVFFXc3r8XEMZtVy6neCzpNf5JydfUKyjrM8DyBQULS1mZ88vvjQmxh/F
+         AugwGH3BGC9oi3RCcaO2imha+wYQ1EYYsAF0sM+Lrrp43ZVHMKGAvwSYPONwwS48Acpm
+         jmGzmoeFwZOBFM840D7mWMyIDrLyToSger4+QRzv7LKGHF1M1QbYpbAnXx9qb3wNnKt3
+         wdSU6WdjvQLqYge1vh9x2w8XIZXF//lQXNNzXDRKZFf24baUrFoCX1NHVm3l4Hy04YEj
+         bTGEUbjm+suxuXuaGzWpia3tZjZY3zAxIyZnd6+5Dd7Wlgr0dyXt5s1v+CnunAhvrCi7
+         FzwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kD8MGl98wy0ecB3dkV9gUTfjbJCNTzAsPNCuCXnsEwY=;
-        b=W9itF9bIDNPwHWM1vL2ibOKvocshzdrjrGUN9DTGiOGbH43sOd2TtXcY2y40afoSU9
-         6MJ+UBH+zYs22xsrHdo4XOMRdo0rXIiFAv85Rv5tgx7AA1UMnhacCApp6TrYDsVFc7ao
-         Ltj3AkTVb6bd1lWAjT/BIngGZhy7qOLgil2dF1fBsirGr57mhqny6Jx4q5qXhKfhvX/5
-         C7Seva/0pR5soifbX6wyA5TACgc+iSI/i5gmPLkWnk3Lt7wohjjGMApQ4LBsiK5kE4QS
-         iznTMZ/mgxcnlRPZKbwz+5GfNSbFf39WcgfaENmD9zTP5PBk0MdSA1x9OSglqq7Gck7K
-         Zxaw==
-X-Gm-Message-State: AOAM533F7Idf6GzlTJ92GxHJA7mz3dXAmdT5FSUGQGirWDXwJnW9kWi1
-        jSEeWZiU8wSUEbSHZVH0VDfGiu3Wfz8=
-X-Google-Smtp-Source: ABdhPJybXi0wGa/p0w5pHobXocYYecToUVZuudIrYA6S2ujKfOvi6RbLagX3WOhsiy25Ywl5jHuXrg==
-X-Received: by 2002:a1c:2155:: with SMTP id h82mr17440574wmh.115.1623685878274;
-        Mon, 14 Jun 2021 08:51:18 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Z1aO65cyDdk2AX6kxE4uNbnu5XtBcN7vK9JLQkrzU9E=;
+        b=beVVkn7uVVM17CUlTrbaFqFeT/NBz2DClshnQHzJV4KSx/H28okz24NWUbQZVJe0x+
+         6YgVckuia+R1FLHlCuJGk6OZCWFovHcZfpKlzG83djJwv8ypFpHKVISaI9fYT5Gkgnoy
+         LH0w0kq95+1WfcxylSxwfJ48dsVHclsW9Ixv10uVMvqacH7Q00n+9DzyODNsdHFJw5TM
+         IFljlaHz33Sw5hXVT8CI9n8NidX4RFv9130yVUMi+JrN7EDPn/O9nnxbLUp8Zefhmq/f
+         7E/e7aUvi0KbCCEHeX/+yLFm5O2+orcofNHPg06AdhX9oukZMku03Yt+oOcFCti+95mP
+         D3sA==
+X-Gm-Message-State: AOAM532SB+p945xFCWp9vRIVJQmlptWmNanBAxi2fzylu3oDEe1W67Bt
+        FHrKTLtIZViXfnUgMr3WRAZP8BTbFfI=
+X-Google-Smtp-Source: ABdhPJzWRhQdRqdQLHI0g0cLS7+wQTQDcrGJPsh1wFXhU0LFY95ZJWv/Uq8OluhghZtKMiLGGX+jBA==
+X-Received: by 2002:a05:600c:19d1:: with SMTP id u17mr34237233wmq.31.1623687521233;
+        Mon, 14 Jun 2021 09:18:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v132sm21281724wmb.14.2021.06.14.08.51.17
+        by smtp.gmail.com with ESMTPSA id r3sm13086151wmq.8.2021.06.14.09.18.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 08:51:17 -0700 (PDT)
-Message-Id: <pull.1033.v2.git.git.1623685877.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1033.git.git.1623343712.gitgitgadget@gmail.com>
-References: <pull.1033.git.git.1623343712.gitgitgadget@gmail.com>
-From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Jun 2021 15:51:13 +0000
-Subject: [PATCH v2 0/3] Fix uninitialised reads found with MSAN
+        Mon, 14 Jun 2021 09:18:40 -0700 (PDT)
+Message-Id: <pull.979.git.1623687519832.gitgitgadget@gmail.com>
+From:   "Rostislav Krasny via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 14 Jun 2021 16:18:39 +0000
+Subject: [PATCH] Add a basic support of SHA256 repositories into Gitk
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Chris Torek <chris.torek@gmail.com>, Jeff King <peff@peff.net>,
-        Andrzej Hunt <andrzej@ahunt.org>
+Cc:     Rostislav Krasny <rosti.bsd@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-V2 replaces an #if'd memset with some brace initialisation (patch 3/3) as
-per review comments.
+From: Rostislav Krasny <rosti.bsd@gmail.com>
 
-I've also removed an irrelevant "technically" from commit message 2/3, and
-fixed a typo in commit message 3/3.
+Signed-off-by: Rostislav Krasny <rosti.bsd@gmail.com>
+---
+    gitk: Add a basic support of SHA256 repositories into Gitk
+    
+    This PR makes Gitk working on both SHA256 and SHA1 repositories without
+    errors/crashes. I made it by changing and testing the gitk script of Git
+    for Windows [https://gitforwindows.org/] version 2.32.0.windows.1 that
+    is a little bit different than the mainstream 2.32.0 version.
+    
+    Still not fixed functionality: [1] There is the "Auto-select SHA1
+    (length)" configuration preference that affects "Copy commit reference"
+    on both SHA1 and SHA256 repositories.
+    
+    A new "Auto-select SHA256 (length)" configuration preference should be
+    added and used on SHA256 repositories instead of the old one. Since I'm
+    not familiar with Tcl/Tk and this issue isn't critical I didn't
+    implement it.
 
-Andrzej Hunt (3):
-  bulk-checkin: make buffer reuse more obvious and safer
-  split-index: use oideq instead of memcmp to compare object_id's
-  builtin/checkout--worker: zero-initialise struct to avoid MSAN
-    complaints
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-979%2Frosti-il%2Fgitk-sha256-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-979/rosti-il/gitk-sha256-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/979
 
- builtin/checkout--worker.c | 2 +-
- bulk-checkin.c             | 3 +--
- split-index.c              | 3 ++-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ gitk-git/gitk | 66 ++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 47 insertions(+), 19 deletions(-)
 
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 23d9dd1fe0d0..2da53604cdc8 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -290,6 +290,7 @@ proc parseviewargs {n arglist} {
+ 
+ proc parseviewrevs {view revs} {
+     global vposids vnegids
++    global hashlength
+ 
+     if {$revs eq {}} {
+         set revs HEAD
+@@ -303,7 +304,7 @@ proc parseviewrevs {view revs} {
+         set badrev {}
+         for {set l 0} {$l < [llength $errlines]} {incr l} {
+             set line [lindex $errlines $l]
+-            if {!([string length $line] == 40 && [string is xdigit $line])} {
++            if {!([string length $line] == $hashlength && [string is xdigit $line])} {
+                 if {[string match "fatal:*" $line]} {
+                     if {[string match "fatal: ambiguous argument*" $line]
+                         && $badrev ne {}} {
+@@ -507,6 +508,7 @@ proc updatecommits {} {
+     global hasworktree
+     global varcid vposids vnegids vflags vrevs
+     global show_notes
++    global hashlength
+ 
+     set hasworktree [hasworktree]
+     rereadrefs
+@@ -540,7 +542,7 @@ proc updatecommits {} {
+             # take out positive refs that we asked for before or
+             # that we have already seen
+             foreach rev $revs {
+-                if {[string length $rev] == 40} {
++                if {[string length $rev] == $hashlength} {
+                     if {[lsearch -exact $oldpos $rev] < 0
+                         && ![info exists varcid($view,$rev)]} {
+                         lappend newrevs $rev
+@@ -1418,6 +1420,7 @@ proc getcommitlines {fd inst view updating}  {
+     global parents children curview hlview
+     global idpending ordertok
+     global varccommits varcid varctok vtokmod vfilelimit vshortids
++    global hashlength
+ 
+     set stuff [read $fd 500000]
+     # git log doesn't terminate the last commit with a null...
+@@ -1500,7 +1503,7 @@ proc getcommitlines {fd inst view updating}  {
+             }
+             set ok 1
+             foreach id $ids {
+-                if {[string length $id] != 40} {
++                if {[string length $id] != $hashlength} {
+                     set ok 0
+                     break
+                 }
+@@ -1780,6 +1783,7 @@ proc readrefs {} {
+     global selecthead selectheadid
+     global hideremotes
+     global tclencoding
++    global hashlength
+ 
+     foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
+         unset -nocomplain $v
+@@ -1789,9 +1793,9 @@ proc readrefs {} {
+         fconfigure $refd -encoding $tclencoding
+     }
+     while {[gets $refd line] >= 0} {
+-        if {[string index $line 40] ne " "} continue
+-        set id [string range $line 0 39]
+-        set ref [string range $line 41 end]
++        if {[string index $line $hashlength] ne " "} continue
++        set id [string range $line 0 [expr {$hashlength - 1}]]
++        set ref [string range $line [expr {$hashlength + 1}] end]
+         if {![string match "refs/*" $ref]} continue
+         set name [string range $ref 5 end]
+         if {[string match "remotes/*" $name]} {
+@@ -2082,6 +2086,7 @@ proc makewindow {} {
+     global have_tk85 use_ttk NS
+     global git_version
+     global worddiff
++    global hashlength hashalgorithm
+ 
+     # The "mc" arguments here are purely so that xgettext
+     # sees the following string as needing to be translated
+@@ -2203,11 +2208,11 @@ proc makewindow {} {
+     set sha1entry .tf.bar.sha1
+     set entries $sha1entry
+     set sha1but .tf.bar.sha1label
+-    button $sha1but -text "[mc "SHA1 ID:"] " -state disabled -relief flat \
++    button $sha1but -text "[mc "$hashalgorithm ID:"] " -state disabled -relief flat \
+         -command gotocommit -width 8
+     $sha1but conf -disabledforeground [$sha1but cget -foreground]
+     pack .tf.bar.sha1label -side left
+-    ${NS}::entry $sha1entry -width 40 -font textfont -textvariable sha1string
++    ${NS}::entry $sha1entry -width $hashlength -font textfont -textvariable sha1string
+     trace add variable sha1string write sha1change
+     pack $sha1entry -side left -pady 2
+ 
+@@ -3926,6 +3931,7 @@ proc stopblaming {} {
+ 
+ proc read_line_source {fd inst} {
+     global blamestuff curview commfd blameinst nullid nullid2
++    global hashlength
+ 
+     while {[gets $fd line] >= 0} {
+         lappend blamestuff($inst) $line
+@@ -3946,7 +3952,7 @@ proc read_line_source {fd inst} {
+     set line [split [lindex $blamestuff($inst) 0] " "]
+     set id [lindex $line 0]
+     set lnum [lindex $line 1]
+-    if {[string length $id] == 40 && [string is xdigit $id] &&
++    if {[string length $id] == $hashlength && [string is xdigit $id] &&
+         [string is digit -strict $lnum]} {
+         # look for "filename" line
+         foreach l $blamestuff($inst) {
+@@ -5269,13 +5275,14 @@ proc get_viewmainhead {view} {
+ # git rev-list should give us just 1 line to use as viewmainheadid($view)
+ proc getviewhead {fd inst view} {
+     global viewmainheadid commfd curview viewinstances showlocalchanges
++    global hashlength
+ 
+     set id {}
+     if {[gets $fd line] < 0} {
+         if {![eof $fd]} {
+             return 1
+         }
+-    } elseif {[string length $line] == 40 && [string is xdigit $line]} {
++    } elseif {[string length $line] == $hashlength && [string is xdigit $line]} {
+         set id $line
+     }
+     set viewmainheadid($view) $id
+@@ -7039,10 +7046,11 @@ proc commit_descriptor {p} {
+ # Also look for URLs of the form "http[s]://..." and make them web links.
+ proc appendwithlinks {text tags} {
+     global ctext linknum curview
++    global hashlength
+ 
+     set start [$ctext index "end - 1c"]
+     $ctext insert end $text $tags
+-    set links [regexp -indices -all -inline {(?:\m|-g)[0-9a-f]{6,40}\M} $text]
++    set links [regexp -indices -all -inline [string map "@@ $hashlength" {(?:\m|-g)[0-9a-f]{6,@@}\M}] $text]
+     foreach l $links {
+         set s [lindex $l 0]
+         set e [lindex $l 1]
+@@ -8716,13 +8724,17 @@ proc incrfont {inc} {
+ 
+ proc clearsha1 {} {
+     global sha1entry sha1string
+-    if {[string length $sha1string] == 40} {
++    global hashlength
++
++    if {[string length $sha1string] == $hashlength} {
+         $sha1entry delete 0 end
+     }
+ }
+ 
+ proc sha1change {n1 n2 op} {
+     global sha1string currentid sha1but
++    global hashalgorithm
++
+     if {$sha1string == {}
+         || ([info exists currentid] && $sha1string == $currentid)} {
+         set state disabled
+@@ -8733,12 +8745,13 @@ proc sha1change {n1 n2 op} {
+     if {$state == "normal"} {
+         $sha1but conf -state normal -relief raised -text "[mc "Goto:"] "
+     } else {
+-        $sha1but conf -state disabled -relief flat -text "[mc "SHA1 ID:"] "
++        $sha1but conf -state disabled -relief flat -text "[mc "$hashalgorithm ID:"] "
+     }
+ }
+ 
+ proc gotocommit {} {
+     global sha1string tagids headids curview varcid
++    global hashlength hashalgorithm
+ 
+     if {$sha1string == {}
+         || ([info exists currentid] && $sha1string == $currentid)} return
+@@ -8748,11 +8761,11 @@ proc gotocommit {} {
+         set id $headids($sha1string)
+     } else {
+         set id [string tolower $sha1string]
+-        if {[regexp {^[0-9a-f]{4,39}$} $id]} {
++        if {[regexp [string map "@@ [expr $hashlength - 1]" {^[0-9a-f]{4,@@}$}] $id]} {
+             set matches [longid $id]
+             if {$matches ne {}} {
+                 if {[llength $matches] > 1} {
+-                    error_popup [mc "Short SHA1 id %s is ambiguous" $id]
++                    error_popup [mc "Short $hashalgorithm id %s is ambiguous" $id]
+                     return
+                 }
+                 set id [lindex $matches 0]
+@@ -8769,7 +8782,7 @@ proc gotocommit {} {
+         return
+     }
+     if {[regexp {^[0-9a-fA-F]{4,}$} $sha1string]} {
+-        set msg [mc "SHA1 id %s is not known" $sha1string]
++        set msg [mc "$hashalgorithm id %s is not known" $sha1string]
+     } else {
+         set msg [mc "Revision %s is not in the current view" $sha1string]
+     }
+@@ -9446,10 +9459,11 @@ proc mktaggo {} {
+ 
+ proc copyreference {} {
+     global rowmenuid autosellen
++    global hashlength
+ 
+     set format "%h (\"%s\", %ad)"
+     set cmd [list git show -s --pretty=format:$format --date=short]
+-    if {$autosellen < 40} {
++    if {$autosellen < $hashlength} {
+         lappend cmd --abbrev=$autosellen
+     }
+     set reference [eval exec $cmd $rowmenuid]
+@@ -9460,6 +9474,7 @@ proc copyreference {} {
+ 
+ proc writecommit {} {
+     global rowmenuid wrcomtop commitinfo wrcomcmd NS
++    global hashlength
+ 
+     set top .writecommit
+     set wrcomtop $top
+@@ -9469,7 +9484,7 @@ proc writecommit {} {
+     ${NS}::label $top.title -text [mc "Write commit to file"]
+     grid $top.title - -pady 10
+     ${NS}::label $top.id -text [mc "ID:"]
+-    ${NS}::entry $top.sha1 -width 40
++    ${NS}::entry $top.sha1 -width $hashlength
+     $top.sha1 insert 0 $rowmenuid
+     $top.sha1 conf -state readonly
+     grid $top.id $top.sha1 -sticky w
+@@ -9549,6 +9564,7 @@ proc mvbranch {} {
+ 
+ proc branchdia {top valvar uivar} {
+     global NS commitinfo
++    global hashlength
+     upvar $valvar val $uivar ui
+ 
+     catch {destroy $top}
+@@ -9557,7 +9573,7 @@ proc branchdia {top valvar uivar} {
+     ${NS}::label $top.title -text $ui(title)
+     grid $top.title - -pady 10
+     ${NS}::label $top.id -text [mc "ID:"]
+-    ${NS}::entry $top.sha1 -width 40
++    ${NS}::entry $top.sha1 -width $hashlength
+     $top.sha1 insert 0 $val(id)
+     $top.sha1 conf -state readonly
+     grid $top.id $top.sha1 -sticky w
+@@ -12320,6 +12336,18 @@ if {$tclencoding == {}} {
+     puts stderr "Warning: encoding $gitencoding is not supported by Tcl/Tk"
+ }
+ 
++set objformat [exec git rev-parse --show-object-format]
++if {$objformat eq "sha1"} {
++    set hashlength 40
++} elseif {$objformat eq "sha256"} {
++    set hashlength 64
++} else {
++    error_popup "[mc "Not supported hash algorithm:"] {$objformat}"
++    exit 1
++}
++set hashalgorithm [string toupper $objformat]
++unset objformat
++
+ set gui_encoding [encoding system]
+ catch {
+     set enc [exec git config --get gui.encoding]
 
-base-commit: 62a8d224e6203d9d3d2d1d63a01cf5647ec312c9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1033%2Fahunt%2Fmsan-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1033/ahunt/msan-v2
-Pull-Request: https://github.com/git/git/pull/1033
-
-Range-diff vs v1:
-
- 1:  7659d4bf13c2 = 1:  7659d4bf13c2 bulk-checkin: make buffer reuse more obvious and safer
- 2:  14b0d5dd7fce ! 2:  6943eb511bee split-index: use oideq instead of memcmp to compare object_id's
-     @@ Commit message
-          include that field when calling memcmp on a subset of the cache_entry.
-          Depending on which hashing algorithm is being used, only part of
-          object_id.hash is actually being used, therefore including it in a
-     -    memcmp() is technically incorrect. Instead we choose to exclude the
-     -    object_id when calling memcmp(), and call oideq() separately.
-     +    memcmp() is incorrect. Instead we choose to exclude the object_id when
-     +    calling memcmp(), and call oideq() separately.
-      
-          This issue was found when running t1700-split-index with MSAN, see MSAN
-          output below (on my machine, offset 76 corresponds to 4 bytes after the
- 3:  cd1e1f6985c7 ! 3:  4bdc0b77f6f2 builtin/checkout--worker: memset struct to avoid MSAN complaints
-     @@ Metadata
-      Author: Andrzej Hunt <ajrhunt@google.com>
-      
-       ## Commit message ##
-     -    builtin/checkout--worker: memset struct to avoid MSAN complaints
-     +    builtin/checkout--worker: zero-initialise struct to avoid MSAN complaints
-      
-          report_result() sends a struct to the parent process, but that struct
-     -    contains unintialised padding bytes. Running this code under MSAN
-     -    rightly triggers a warning - but we also don't care about this warning
-     -    because we control the receiving code, and we therefore know that those
-     -    padding bytes won't be read on the receiving end. Therefore we add a
-     -    memset to convince MSAN that this memory is safe to read - but only
-     -    when building with MSAN to avoid this cost in normal usage.
-     +    would contain uninitialised padding bytes. Running this code under MSAN
-     +    rightly triggers a warning - but we don't particularly care about this
-     +    warning because we control the receiving code, and we therefore know
-     +    that those padding bytes won't be read on the receiving end.
-     +
-     +    We could simply suppress this warning under MSAN with the approporiate
-     +    ifdef'd attributes, but a less intrusive solution is to 0-initialise the
-     +    struct, which guarantees that the padding will also be initialised.
-      
-          Interestingly, in the error-case branch, we only try to copy the first
-          two members of pc_item_result, by copying only PC_ITEM_RESULT_BASE_SIZE
-     @@ Commit message
-          after the end of the second last member. We could avoid doing this by
-          redefining PC_ITEM_RESULT_BASE_SIZE as
-          'offsetof(second_last_member) + sizeof(second_last_member)', but there's
-     -    no huge benefit to doing so (and our memset hack silences the MSAN
-     -    warning in this scenario either way).
-     +    no huge benefit to doing so (and this patch silences the MSAN warning in
-     +    this scenario either way).
-      
-          MSAN output from t2080 (partially interleaved due to the
-          parallel work :) ):
-     @@ Commit message
-          Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
-      
-       ## builtin/checkout--worker.c ##
-     -@@ builtin/checkout--worker.c: static void report_result(struct parallel_checkout_item *pc_item)
-     - 	struct pc_item_result res;
-     +@@ builtin/checkout--worker.c: static void packet_to_pc_item(const char *buffer, int len,
-     + 
-     + static void report_result(struct parallel_checkout_item *pc_item)
-     + {
-     +-	struct pc_item_result res;
-     ++	struct pc_item_result res = { 0 };
-       	size_t size;
-       
-     -+#if defined(__has_feature)
-     -+#  if __has_feature(memory_sanitizer)
-     -+	// MSAN workaround: res contains padding bytes, which will remain
-     -+	// permanently unintialised. Later, we read all of res in order to send
-     -+	// it to the parent process - and MSAN (rightly) complains that we're
-     -+	// reading those unintialised padding bytes. By memset'ing res we
-     -+	// guarantee that there are no uninitialised bytes.
-     -+	memset(&res, 0, sizeof(res));
-     -+#endif
-     -+#endif
-     -+
-       	res.id = pc_item->id;
-     - 	res.status = pc_item->status;
-     - 
-
+base-commit: ebf3c04b262aa27fbb97f8a0156c2347fecafafb
 -- 
 gitgitgadget
