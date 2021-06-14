@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1EBEC4743C
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A28BDC2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:38:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF3646145C
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:38:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D4EA6141B
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:38:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233492AbhFNKkR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 06:40:17 -0400
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:42930 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233704AbhFNKhK (ORCPT <rfc822;git@vger.kernel.org>);
+        id S233613AbhFNKkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 06:40:22 -0400
+Received: from mail-wm1-f46.google.com ([209.85.128.46]:46754 "EHLO
+        mail-wm1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233707AbhFNKhK (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 14 Jun 2021 06:37:10 -0400
-Received: by mail-wm1-f54.google.com with SMTP id l7-20020a05600c1d07b02901b0e2ebd6deso12495033wms.1
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:34:53 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id h22-20020a05600c3516b02901a826f84095so12473092wmq.5
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WqB5TOSPl2zwh8YNxAlEV2KiLZYYnpFRMKrG+o1Ixfg=;
-        b=qSL7IVsFpSF6YGXPRK7DqbFkF6KprrBhwC8MkqOD9pz60zs+oO6+AFHWLZYu5PZBbR
-         tUgPI35fzKVUG2R2gWZ/LOM860bivUR0QCBnMXdyK7ptBniO84F1IZ+lYgNFYh6QbzNi
-         blRXwcODRjNAwAUHAayyJGezpkigeAlK4jwgQck6qt80RJ6qi1h7UDaSA/ce+lWOL3Y6
-         brNnZVwsQdP86NrQQ4tI8ltVxQ0l+8vNTX5avwpzn62ZIFd8RDTdtR4QJZciLxXshtQH
-         1yK0speehHTQLshhDMNbFo0hl33lu3EwEEsmdC7dMDVzt6fz0ch7agJ8QkwkGwCL8i8G
-         KTtw==
+        bh=LESMR97jcTsx8/DDjybCC6129jMzHgP48FHyDQmD1QE=;
+        b=QvsE6ds/LQlewS6EOQKD1SdIiTdqafzwrAD0ja05ly1a4LTrFiNQUMZN8Xxn9Ga/VE
+         2oDODJVGh8lnC/hdUR2UarlsbMyg6MS/zSoejCdvjyBs6D+K+TFcCYVubLxV7mB4KxSI
+         GmoYpaT0AmyXwlVCvnXtA0mJJjLlJ4/TUtlL2ITcRnpUHrmFhjMMHGZKxp06DFsYcy3O
+         F0sRm+wGnbThpfzwvPFu4mBRZmv8oZoqpbeilujMr1bzGR2UdSeM45IvCObMayrq86b3
+         fMdT4C1vM4oKyIOBLF4sLzvJDZJLfwhwy1CyrqPeVfRvwXD46IQ33LDCcw1aOYl21po1
+         g7oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WqB5TOSPl2zwh8YNxAlEV2KiLZYYnpFRMKrG+o1Ixfg=;
-        b=kvfIZ42g3H/QJcP82U01PD0ngJQFMRZxuag/9EC/LzKclpAt8UewpFQE5R4mXr2CuQ
-         f9hik6RswrqJV6VMTTt1Oux91zGORXWbQr5AnO3a9V4hf8WtlNBW/D/PPLfiUkZjzova
-         L/P867a0PGnnT6Vz3DTwHXssprXEZqRxvxJHPYZIP/c3dXJI0HrwCtWJBR0lDwnGkkOv
-         qUMo4lzPEjh0MZSqTpFi3vFjPgn6kTnhAvq6e7XqZ28d/Z3mMlMYqpfyxyXA8ltzSmUU
-         U5QmUKcrairdESdmiqnZUb2b9l37+O/GXkoNF58YlaHtk5sG7a6Q5CABwo0QlkFRC0qb
-         nl8Q==
-X-Gm-Message-State: AOAM530lyZ1xqPABVYmC5dToz4qyzjWTaVcAoi6EdWzbr+uXHeZNTIWn
-        SKKEgfLmN9E8LzSi4nWlwmL/C7xuj1n/3Q==
-X-Google-Smtp-Source: ABdhPJyV1vjHmNuhZ8ojAWk9cmmtZxvWYW759g65XC4gzus9L6u14kPHgkyUqLDM5rwhYwpKkdMe2g==
-X-Received: by 2002:a1c:bb45:: with SMTP id l66mr32295920wmf.29.1623666833026;
-        Mon, 14 Jun 2021 03:33:53 -0700 (PDT)
+        bh=LESMR97jcTsx8/DDjybCC6129jMzHgP48FHyDQmD1QE=;
+        b=BM4AH/n8j2yc3rY0d90z4Y7anAwF61+k2Wi/+6ZAqTi1Qs7BloNjsMr5MVN1KKnHAY
+         HDQFmjcpzDmc5uzkSmgejRJq+pnS7lkP83UySAIT0Dm8HkfKA4fMwQHdxOXiYOAW8eIl
+         yPgPC8toOtoiBMEECySvEhmKs69GHH7O6S69TwTvuTHum6Xol/QE0Jav9EMTLpxG5dpR
+         A3HF1/qRF3HGBaVASimKaTRobhtmMxcFjeOQLlwSSOuZTstnnZZ7ZntDxN/TAIqgJNIG
+         xqPn1uTZLp89zHUVUiSj8Yi9Ix8XxU5cPK6Yg8TZO8v3ZJz0edlaISxzxAjdar5Vfbui
+         YmBA==
+X-Gm-Message-State: AOAM530XlA3AaahfmEMSwAWXOYmpl85UDx1a/f9GJwy/FlB1ee0qlAEe
+        KBpjIQ/KTWyYC59bNdWCMWIlzLHPKwFUSA==
+X-Google-Smtp-Source: ABdhPJyTxllVJdS3d8w8/n2DzwXaEt0hL1xSsoyvo5Ar8KCCYr8P3jSURw3HxREgf85aXO9RrsXGug==
+X-Received: by 2002:a7b:c24a:: with SMTP id b10mr31702919wmj.25.1623666847123;
+        Mon, 14 Jun 2021 03:34:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w18sm15911843wrt.55.2021.06.14.03.33.52
+        by smtp.gmail.com with ESMTPSA id w18sm15911843wrt.55.2021.06.14.03.34.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 03:33:52 -0700 (PDT)
+        Mon, 14 Jun 2021 03:34:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 10/30] send-email: use 'git hook run' for 'sendemail-validate'
-Date:   Mon, 14 Jun 2021 12:32:59 +0200
-Message-Id: <patch-10.30-1953326d1db-20210614T101920Z-avarab@gmail.com>
+Subject: [PATCH v2 26/30] receive-pack: convert 'update' hook to hook.h
+Date:   Mon, 14 Jun 2021 12:33:15 +0200
+Message-Id: <patch-26.30-e11a8f60071-20210614T101920Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
 In-Reply-To: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
 References: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com> <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
@@ -82,98 +82,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Change the "sendmail-validate" hook to be run via the "git hook run"
-wrapper instead of via a direct invocation.
-
-This is the smallest possibly change to get "send-email" using "git
-hook run". We still check the hook itself with "-x", and set a
-"GIT_DIR" variable, both of which are asserted by our tests. We'll
-need to get rid of this special behavior if we start running N hooks,
-but for now let's be as close to bug-for-bug compatible as possible.
+This makes use of the new sideband API in hook.h added in the
+preceding commit.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl   | 20 ++++++++++++--------
- t/t9001-send-email.sh |  4 ++--
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ builtin/receive-pack.c | 65 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 44 insertions(+), 21 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 7ba0b3433d7..9e474304036 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -214,13 +214,13 @@ sub format_2822_time {
- my $editor;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 5248228ebfe..378f8f6b5d1 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -938,33 +938,56 @@ static int run_receive_hook(struct command *commands,
+ 	return status;
+ }
  
- sub system_or_msg {
--	my ($args, $msg) = @_;
-+	my ($args, $msg, $cmd_name) = @_;
- 	system(@$args);
- 	my $signalled = $? & 127;
- 	my $exit_code = $? >> 8;
- 	return unless $signalled or $exit_code;
+-static int run_update_hook(struct command *cmd)
++static void hook_output_to_sideband(struct strbuf *output, void *cb_data)
+ {
+-	const char *argv[5];
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	int code;
++	int keepalive_active = 0;
  
--	my @sprintf_args = ($args->[0], $exit_code);
-+	my @sprintf_args = ($cmd_name ? $cmd_name : $args->[0], $exit_code);
- 	if (defined $msg) {
- 		# Quiet the 'redundant' warning category, except we
- 		# need to support down to Perl 5.8, so we can't do a
-@@ -1979,9 +1979,9 @@ sub validate_patch {
- 	my ($fn, $xfer_encoding) = @_;
+-	argv[0] = find_hook("update");
+-	if (!argv[0])
+-		return 0;
++	if (keepalive_in_sec <= 0)
++		use_keepalive = KEEPALIVE_NEVER;
++	if (use_keepalive == KEEPALIVE_ALWAYS)
++		keepalive_active = 1;
  
- 	if ($repo) {
-+		my $hook_name = 'sendemail-validate';
- 		my $hooks_path = $repo->command_oneline('rev-parse', '--git-path', 'hooks');
--		my $validate_hook = catfile($hooks_path,
--					    'sendemail-validate');
-+		my $validate_hook = catfile($hooks_path, $hook_name);
- 		my $hook_error;
- 		if (-x $validate_hook) {
- 			my $target = abs_path($fn);
-@@ -1990,13 +1990,17 @@ sub validate_patch {
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
--			$hook_error = system_or_msg([$validate_hook, $target]);
-+			my @validate_hook = ("git", "hook", "run", "--ignore-missing", $hook_name, "--", $target);
-+			$hook_error = system_or_msg(\@validate_hook, undef,
-+						       "git hook run $hook_name -- <patch>");
- 			chdir($cwd_save) or die("chdir: $!");
- 		}
- 		if ($hook_error) {
--			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
--				       "%s\n" .
--				       "warning: no patches were sent\n"), $fn, $hook_error);
-+			$hook_error = sprintf(__("fatal: %s: rejected by %s hook\n" .
-+						 $hook_error . "\n" .
-+						 "warning: no patches were sent\n"),
-+					      $fn, $hook_name);
-+			die $hook_error;
- 		}
- 	}
+-	argv[1] = cmd->ref_name;
+-	argv[2] = oid_to_hex(&cmd->old_oid);
+-	argv[3] = oid_to_hex(&cmd->new_oid);
+-	argv[4] = NULL;
++	/* send a keepalive if there is no data to write */
++	if (keepalive_active && !output->len) {
++		static const char buf[] = "0005\1";
++		write_or_die(1, buf, sizeof(buf) - 1);
++		return;
++	}
  
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 30eff725a96..6d4e25df8dc 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -539,7 +539,7 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
- 	test_path_is_file my-hooks.ran &&
- 	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
--	fatal: command '"'"'my-hooks/sendemail-validate'"'"' died with exit code 1
-+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
-@@ -558,7 +558,7 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
- 	test_path_is_file my-hooks.ran &&
- 	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
--	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
-+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
+-	proc.no_stdin = 1;
+-	proc.stdout_to_stderr = 1;
+-	proc.err = use_sideband ? -1 : 0;
+-	proc.argv = argv;
+-	proc.trace2_hook_name = "update";
++	if (use_keepalive == KEEPALIVE_AFTER_NUL && !keepalive_active) {
++		const char *first_null = memchr(output->buf, '\0', output->len);
++		if (first_null) {
++			/* The null bit is excluded. */
++			size_t before_null = first_null - output->buf;
++			size_t after_null = output->len - (before_null + 1);
++			keepalive_active = 1;
++			send_sideband(1, 2, output->buf, before_null, use_sideband);
++			send_sideband(1, 2, first_null + 1, after_null, use_sideband);
++
++			return;
++		}
++	}
++
++	send_sideband(1, 2, output->buf, output->len, use_sideband);
++}
++
++static int run_update_hook(struct command *cmd)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	int code;
++
++	strvec_pushl(&opt.args,
++		     cmd->ref_name,
++		     oid_to_hex(&cmd->old_oid),
++		     oid_to_hex(&cmd->new_oid),
++		     NULL);
+ 
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+ 	if (use_sideband)
+-		copy_to_sideband(proc.err, -1, NULL);
+-	return finish_command(&proc);
++		opt.consume_sideband = hook_output_to_sideband;
++
++	code = run_hooks("update", &opt);
++	run_hooks_opt_clear(&opt);
++	return code;
+ }
+ 
+ static struct command *find_command_by_refname(struct command *list,
 -- 
 2.32.0.rc3.434.gd8aed1f08a7
 
