@@ -2,95 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 592EAC2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 14:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9775C2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 14:25:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 262DA61244
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 14:24:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B30226128C
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 14:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234235AbhFNOZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 10:25:51 -0400
-Received: from mail-ej1-f50.google.com ([209.85.218.50]:42523 "EHLO
-        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232890AbhFNOZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 10:25:25 -0400
-Received: by mail-ej1-f50.google.com with SMTP id k25so16999911eja.9
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 07:23:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=jQ9cDHQXAgRM9gd8PZWmKqrnlfp7/0jyLsyXJQw0yko=;
-        b=lgqLqa1BO1E94014bcahf7Yfp/tqijisHlWnA1RSO/iDKAG22VciYvL67Kdwb4JR/6
-         /dnSLiGjFzYA6mqcEEc6XYo9c8QUriGwKKnf2nLUgdhTGhgMDKnc4ssYC009AuvX09oA
-         LcwYuNUcyrF/r0c1gZxY083a0qo3oBUj8MAsxJ/7tJIbHUlXWUiAk+Oa+hg2svAVgntG
-         5J+53BAWOdMua14sH45kDfCMQLk9a/QA0H+aT5HE6f1JFypHc8n42w5hakW8oaywjOJe
-         ASLMW2yYWx1ywbWZP08l1ZXRl9Wfj0CLeXJB3m1yghoV+kmRZC8w+17q9g1Zd0IbK0qA
-         jenQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=jQ9cDHQXAgRM9gd8PZWmKqrnlfp7/0jyLsyXJQw0yko=;
-        b=f3nUDiQ1JD+i9GgJHFeSPz0CeTsNLu/0S5wI/oB0PR/NCEUshqd2prreG59kae/erK
-         KMrM8bg0aP8Mnk02b3AGaeqxxQ5sfYAdnWyUC05f/uP4SZNLt+Dyc0jaWdG4kei3xFXM
-         4Z1cl7kS/9VVWr6BlD8BzT3aR8OVuACR3bT7qyl2urC32BSXNrIQOcZ+EO/3yIgRAeFE
-         SLS0wpCybRZxCXlrV8JRssAYNyj6OkV8MyCE/jbei5rTvPWOZDwdpX6kd5zCkil4wmOj
-         UPDf+BjF1CSu8PMwQXvVWJ/ap49ulzI0vg9wsNrhmD6Lt0z2JOFkVHuqW4LZsKPLuBdP
-         dbjg==
-X-Gm-Message-State: AOAM532NFJdID+2EhTSkpW10BOaYGDGaxI6W+yfp3dcimE6Li+ouc0p3
-        l0GczlPWIIBmgfXxczekbTadunODMga6WA==
-X-Google-Smtp-Source: ABdhPJycPkwG4ResK5DBYgkOuj517yzNtuA2QocrudK9mVlG4PztCuLf2XLFpJhQRYrincIdRzyMdQ==
-X-Received: by 2002:a17:906:6d43:: with SMTP id a3mr15602195ejt.142.1623680525956;
-        Mon, 14 Jun 2021 07:22:05 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id d24sm9058083edr.95.2021.06.14.07.22.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 07:22:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@lukeshu.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] extra: new concept of extra components
-Date:   Mon, 14 Jun 2021 16:18:30 +0200
-References: <20210614043450.1047571-1-felipe.contreras@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210614043450.1047571-1-felipe.contreras@gmail.com>
-Message-ID: <87tum0zfub.fsf@evledraar.gmail.com>
+        id S234440AbhFNO1r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 10:27:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54848 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232809AbhFNO1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 10:27:46 -0400
+Received: (qmail 2357 invoked by uid 109); 14 Jun 2021 14:25:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 14 Jun 2021 14:25:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1906 invoked by uid 111); 14 Jun 2021 14:25:42 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 14 Jun 2021 10:25:42 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 14 Jun 2021 10:25:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test: fix for TEST_OUTPUT_DIRECTORY
+Message-ID: <YMdm5XayUfp4/atY@coredump.intra.peff.net>
+References: <20210609170520.67014-1-felipe.contreras@gmail.com>
+ <YMWMuDbctae7tF6J@coredump.intra.peff.net>
+ <60c627cac29b3_41f45208a7@natae.notmuch>
+ <YMcIv7q1ctyJ0EZn@coredump.intra.peff.net>
+ <60c715dd9939e_436208f3@natae.notmuch>
+ <8735tk22if.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8735tk22if.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jun 14, 2021 at 11:33:12AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Sun, Jun 13 2021, Felipe Contreras wrote:
+> > I think breaking the test suite is objectively worse than having a few
+> > extra files in the output directory, but to each his own.
+> 
+> We've got both in-tree and out-tree things that rely on e.g. the
+> *.counts in that directory to have a 1=1 mapping with "real"
+> tests. E.g. "make aggregate-results".
 
-> This patch series introduces the concept of extra components. These are
-> components which are not yet part of the core but are good enough for
-> distributions to ship, and in fact, they already do.
+Indeed. With Felipe's original patch, the "test" target (but not
+"prove") in t/Makefile will report, whether you set
+TEST_OUTPUT_DIRECTORY or not:
 
-I like this direction.
+  failed test(s): t1234 t2345
 
-> The measuring stick I'm using to gauge if a component in contrib belongs
-> in extra is simple: are we already running tests for them with
-> 'make test'?
+  fixed   0
+  success 23243
+  failed  2
+  broken  221
+  total   23647
 
-I have a CI failure in one series of mine that seems to be a lack of
-updating to CMake in contrib/buildsystems, perhaps we should be adding
-that to extra/ too, i.e. extending this to the "make test" run by CI?
+though curiously it doesn't exit non-zero back to make (usually we'd
+also see the failures from the individual make targets, and barf there).
 
-Not something that should hinder or necessarily be included in this
-series, just a note about a related component.
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index 2c6e34b9478..29bf67d49bf 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -76,6 +76,12 @@ _run_sub_test_lib_test_common () {
+>  		# this variable, so we need a stable setting under which to run
+>  		# the sub-test.
+>  		sane_unset HARNESS_ACTIVE &&
+> +
+> +		# These tests should emit no metrics or output that
+> +		# would normally go in the "test-results" directory.
+> +		TEST_NO_RESULTS_OUTPUT=1 &&
+> +		export TEST_NO_RESULTS_OUTPUT &&
 
-> And we might move some components from the core which aren't realy part
-> of the core to extra, like gitk, git-gui, git-p4, and git-svn.
+I'm OK with this general approach. I do think it would be nice if we let
+the environment supersede the on-disk GIT-BUILD-OPTIONS, which IMHO is
+the real root of the problem (and possibly others), but that may be more
+challenging to get right (I posted a patch earlier, but it does rely on
+stuffing all of "set" into a variable, which makes me concerned some
+less-able shells may complain).
 
-I'd also like to see us run the tests for the likes of mw-to-git,
-diff-highlight and subtree by default, at least under CI or some
-"extended tests" mode, even though we may not install them by default.
+It also means that t0000 can't test the results output (since we don't
+write it), but I assume we don't do that now (I didn't actually try
+running with your patch).
+
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 54938c64279..9e9696a3185 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -252,8 +252,14 @@ TEST_STRESS_JOB_SFX="${GIT_TEST_STRESS_JOB_NR:+.stress-$GIT_TEST_STRESS_JOB_NR}"
+>  TEST_NAME="$(basename "$0" .sh)"
+>  TEST_NUMBER="${TEST_NAME%%-*}"
+>  TEST_NUMBER="${TEST_NUMBER#t}"
+> -TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
+> -TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME$TEST_STRESS_JOB_SFX"
+> +if test -n "$TEST_NO_RESULTS_OUTPUT"
+> +then
+> +	TEST_RESULTS_DIR=/dev/null
+> +	TEST_RESULTS_BASE=/dev/null
+> +else
+> +	TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
+> +	TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME$TEST_STRESS_JOB_SFX"
+> +fi
+
+I wondered about this use of /dev/null, since we'd generally use this as
+a directory, and writing to "/dev/null/foo" is going to throw an error.
+
+But...
+
+>  TRASH_DIRECTORY="trash directory.$TEST_NAME$TEST_STRESS_JOB_SFX"
+>  test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+>  case "$TRASH_DIRECTORY" in
+> @@ -1124,7 +1130,7 @@ test_done () {
+>  
+>  	finalize_junit_xml
+>  
+> -	if test -z "$HARNESS_ACTIVE"
+> +	if test -z "$HARNESS_ACTIVE$TEST_NO_RESULTS_OUTPUT"
+>  	then
+>  		mkdir -p "$TEST_RESULTS_DIR"
+
+...here we would never look at those variables at all, so it is just a
+sentinel that would let us know the assumption has been violated.
+
+We do look at them elsewhere, though (in --tee as you noted, and I think
+for --stress). I'd prefer to notice the "no results" flag explicitly
+there and report something sensible, rather than getting:
+
+  mkdir: cannot create directory ‘/dev/null’: Not a directory
+
+or similar.
+
+-Peff
