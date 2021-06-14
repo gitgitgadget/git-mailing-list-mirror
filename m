@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF323C2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 13:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D493C48BE6
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 13:05:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C263C61244
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 13:05:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FD126128B
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 13:05:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233532AbhFNNH4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233445AbhFNNH5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 09:07:57 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:38515 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233098AbhFNNH4 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 14 Jun 2021 09:07:56 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:37501 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232761AbhFNNHz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 09:07:55 -0400
-Received: by mail-wr1-f43.google.com with SMTP id i94so14449026wri.4
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 06:05:52 -0700 (PDT)
+Received: by mail-wr1-f50.google.com with SMTP id c9so14467829wrt.5
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 06:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=PQa5L1KH6AkV1ZWZqO7SPqfKkza6UvqSXdHO3NSlWVM=;
-        b=AlDgWZTNL7JEr2Sg7qLSNddX3PJXCDVv1grhEsaJDjitnIMT/7kKYXt7lR2fNGlaaq
-         34St4Ph0CNn4mr7SQsXaL3FrfMyqJFq1S3/nmE8eWYtRwLDZ/bIcihjqjAYrKY0+fyp/
-         h50pBV91MfjL5otMCnHhkGfLXv9kiZTdruhlpp3T0u368074YzigAzR7a+yE1fUF6PkK
-         rG29At0ubz4/hTpE/IP/tTtHIy0y3XkiqzJcWYHwGWkwdpBjesV0TGcwfhJq5YjrbAW3
-         Nu4wlxJxDotE3T/i/5QMEE/XDQDLGWz60puGrge4gZkS7iktt0q/BGKMPEWgq9Y1hU9Q
-         Rdbg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=7ptADnsdV5jSqQyjKSoWpUjp24y32fJyMkCdCIo/HpY=;
+        b=p1VIYBmfc4Sfv47pzBthmbkOOfcpmMmjjdlmnxNE8ppakE34zlHYeY1T+IjRyutlGH
+         JHRiPW6oONnzn6E6p+HBrMQujM8LGQ6NxLpYF3/f0XBxSUt0BbyRGQbXMF5jp1laHEYq
+         k5D2sd7Je2laZa8TqEoNn1sycllECPxRcswv4oostBk6yHfdEAmlMZXgGdDNeimYGybg
+         GvcvgsoaR5z+RuJrehUUZFYXmBQrENr7pRU4gxjJE/SjaSyzwehXTbGwRzRwvrUrVhJp
+         zxNz0J3kFAyzSrKulS9UQsbGQVeICrm/gynsJP5Uos+jeFj/xDlbUaNOLNNP84ghF1rX
+         jebg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=PQa5L1KH6AkV1ZWZqO7SPqfKkza6UvqSXdHO3NSlWVM=;
-        b=L9gfS50MV+/4JG4SQcJ6LXhhOaL3Pf3LmZZcJym50uHSDF0BXIgMYgNJiZOnbOiX9W
-         WOaZR2+QVvlpaH8CFAe8rEaJBU46s9NZYXcxGxYXw3XTDdMvNxGmNRADBviK2umzsOul
-         0iYaObuyaraxNYqfTJ8XC4Ks36oWhYw/gW/39yFf5ZXnCIN7vOwswmIRTQFfrmwVCI5t
-         0cFgeM5b6cxjCCO5GAGuBsY+ANi5vi7o2Oc9n8Ch6rh+OG/RVGgw7aHOo8YdzbQVbfko
-         VV/BfvI6zGw8VX7ac7X436nEWMzC+4LqxOPcYG4gM/JTIa/0V2g6t25B7mxcuMhDfgMc
-         X1Sg==
-X-Gm-Message-State: AOAM530ICuuVrkTnjRGtckt4q2vLWRSU4cCyFFY5sinIM0JQP4f1jI1E
-        oNEScF2VievLBUpmmxTJ67xch6CdFKg=
-X-Google-Smtp-Source: ABdhPJwyGxCY19InqctOJBwOFAyd9T0qW9EU8VsMBLIBg6xcjrXvQbqf7Woz2A1wlEI+pUgGCbpPGw==
-X-Received: by 2002:adf:ff88:: with SMTP id j8mr18729917wrr.10.1623675892364;
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=7ptADnsdV5jSqQyjKSoWpUjp24y32fJyMkCdCIo/HpY=;
+        b=HbrgHezwQPIIRKHBFZceP7hy8XHxpJ+LeKkPNpEcIX3X8B/hR7W/1EnwWcDIwtWqXV
+         mVFMtw1o+gtJiP8MIoPhtVYa6cb9HRx5KaxledrdJihRiII6cIEIZJ9LMBJTLlHoOCgJ
+         URobNLY4jYUUrtOvKmmPTZWN05h7KKZdv4Sa+apjYY4qt6Z38dBhwKHYE/50pFvVeO3I
+         oKAHV12TFDuxPqZXUr1B+o+w8GDybKg5XXRNX0iWutBiPQKMiwaF6fWOtqSMXMgz/44H
+         IzI6UrxnTzip/USwjS5R9IyiMQkiHJEeuCLiYSVh6D7I5S0jntnd5XjibfoRDji+6/Bo
+         5Xlg==
+X-Gm-Message-State: AOAM532u6HurJLgvqZwbc9bvulYBTmnMCRt3ISqhe1mN8ewDumUNu1Bl
+        7L8KzXGFa/2YJjQ8icIo0dZM9A+Sa+s=
+X-Google-Smtp-Source: ABdhPJy9ADasxiJnpMencYUDOrJ4Kjsf1pFtSF4yXOHhvmnKOFHGLjHP7jYwLxGQ5x31SJuf9baD+Q==
+X-Received: by 2002:adf:9031:: with SMTP id h46mr18862057wrh.125.1623675892884;
         Mon, 14 Jun 2021 06:04:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h9sm20100291wmm.33.2021.06.14.06.04.52
+        by smtp.gmail.com with ESMTPSA id j1sm13290825wmi.44.2021.06.14.06.04.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 14 Jun 2021 06:04:52 -0700 (PDT)
-Message-Id: <30f0ed447683506735ecc37f553b655f23769385.1623675889.git.gitgitgadget@gmail.com>
+Message-Id: <ebb6eec1d928e02c9d85afad8b18551ec245fc71.1623675889.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.981.git.1623675888.gitgitgadget@gmail.com>
 References: <pull.981.git.1623675888.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Jun 2021 13:04:41 +0000
-Subject: [PATCH 03/10] diff: simplify allow-indentation-change delta
- calculation
-Fcc:    Sent
+Date:   Mon, 14 Jun 2021 13:04:42 +0000
+Subject: [PATCH 04/10] diff --color-moved-ws=allow-indentation-change:
+ simplify and optimize
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
@@ -73,55 +73,155 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Now that we reliably end a block when the sign changes we don't need
-the whitespace delta calculation to rely on the sign.
+If we already have a block of potentially moved lines then as we move
+down the diff we need to check if the next line of each potentially
+moved line matches the current line of the diff. The implementation of
+--color-moved-ws=allow-indentation-change was needlessly performing
+this check on all the lines in the diff that matched the current line
+rather than just the current line. To exacerbate the problem finding
+all the other lines in the diff that match the current line involves a
+fuzzy lookup so we were wasting even more time performing a second
+comparison to filter out the non-matching lines. Fixing this reduces
+time to run
+  git diff --color-moved-ws=allow-indentation-change v2.28.0 v2.29.0
+by 88% and simplifies the code.
+
+Before this change
+Benchmark #1: bin-wrappers/git diff --diff-algorithm=myers --color-moved --color-moved-ws=allow-indentation-change v2.28.0 v2.29.0
+  Time (mean ± σ):      9.978 s ±  0.042 s    [User: 9.905 s, System: 0.057 s]
+  Range (min … max):    9.917 s … 10.037 s    10 runs
+
+After this change
+Benchmark #1: bin-wrappers/git diff --diff-algorithm=myers --color-moved --color-moved-ws=allow-indentation-change v2.28.0 v2.29.0
+  Time (mean ± σ):      1.220 s ±  0.004 s    [User: 1.160 s, System: 0.058 s]
+  Range (min … max):    1.214 s …  1.226 s    10 runs
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- diff.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ diff.c | 65 ++++++++++++++++------------------------------------------
+ 1 file changed, 18 insertions(+), 47 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index a0c43a104768..19c8954ec546 100644
+index 19c8954ec546..5d5d168107a6 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -864,23 +864,17 @@ static int compute_ws_delta(const struct emitted_diff_symbol *a,
- 	    a_width = a->indent_width,
- 	    b_off = b->indent_off,
- 	    b_width = b->indent_width;
--	int delta;
+@@ -881,35 +881,20 @@ static int compute_ws_delta(const struct emitted_diff_symbol *a,
  
- 	if (a_width == INDENT_BLANKLINE && b_width == INDENT_BLANKLINE) {
- 		*out = INDENT_BLANKLINE;
- 		return 1;
- 	}
+ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 				 const struct moved_entry *cur,
+-				 const struct moved_entry *match,
+-				 struct moved_block *pmb,
+-				 int n)
++				 const struct emitted_diff_symbol *l,
++				 struct moved_block *pmb)
+ {
+-	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
+-	int al = cur->es->len, bl = match->es->len, cl = l->len;
++	int al = cur->es->len, bl = l->len;
+ 	const char *a = cur->es->line,
+-		   *b = match->es->line,
+-		   *c = l->line;
++		   *b = l->line;
+ 	int a_off = cur->es->indent_off,
+ 	    a_width = cur->es->indent_width,
+-	    c_off = l->indent_off,
+-	    c_width = l->indent_width;
++	    b_off = l->indent_off,
++	    b_width = l->indent_width;
+ 	int delta;
  
--	if (a->s == DIFF_SYMBOL_PLUS)
--		delta = a_width - b_width;
--	else
--		delta = b_width - a_width;
+-	/*
+-	 * We need to check if 'cur' is equal to 'match'.  As those
+-	 * are from the same (+/-) side, we do not need to adjust for
+-	 * indent changes. However these were found using fuzzy
+-	 * matching so we do have to check if they are equal. Here we
+-	 * just check the lengths. We delay calling memcmp() to check
+-	 * the contents until later as if the length comparison for a
+-	 * and c fails we can avoid the call all together.
+-	 */
+-	if (al != bl)
+-		return 1;
 -
- 	if (a_len - a_off != b_len - b_off ||
- 	    memcmp(a->line + a_off, b->line + b_off, a_len - a_off))
+ 	/* If 'l' and 'cur' are both blank then they match. */
+-	if (a_width == INDENT_BLANKLINE && c_width == INDENT_BLANKLINE)
++	if (a_width == INDENT_BLANKLINE && b_width == INDENT_BLANKLINE)
  		return 0;
  
--	*out = delta;
-+	*out = a_width - b_width;
- 
- 	return 1;
- }
-@@ -924,10 +918,7 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 	/*
+@@ -918,7 +903,7 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
  	 * match those of the current block and that the text of 'l' and 'cur'
  	 * after the indentation match.
  	 */
--	if (cur->es->s == DIFF_SYMBOL_PLUS)
--		delta = a_width - c_width;
--	else
--		delta = c_width - a_width;
-+	delta = c_width - a_width;
+-	delta = c_width - a_width;
++	delta = b_width - a_width;
  
  	/*
  	 * If the previous lines of this block were all blank then set its
+@@ -927,9 +912,8 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 	if (pmb->wsd == INDENT_BLANKLINE)
+ 		pmb->wsd = delta;
+ 
+-	return !(delta == pmb->wsd && al - a_off == cl - c_off &&
+-		 !memcmp(a, b, al) && !
+-		 memcmp(a + a_off, c + c_off, al - a_off));
++	return !(delta == pmb->wsd && al - a_off == bl - b_off &&
++		 !memcmp(a + a_off, b + b_off, al - a_off));
+ }
+ 
+ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+@@ -1030,36 +1014,23 @@ static void pmb_advance_or_null(struct diff_options *o,
+ }
+ 
+ static void pmb_advance_or_null_multi_match(struct diff_options *o,
+-					    struct moved_entry *match,
+-					    struct hashmap *hm,
++					    struct emitted_diff_symbol *l,
+ 					    struct moved_block *pmb,
+-					    int pmb_nr, int n)
++					    int pmb_nr)
+ {
+ 	int i;
+-	char *got_match = xcalloc(1, pmb_nr);
+-
+-	hashmap_for_each_entry_from(hm, match, ent) {
+-		for (i = 0; i < pmb_nr; i++) {
+-			struct moved_entry *prev = pmb[i].match;
+-			struct moved_entry *cur = (prev && prev->next_line) ?
+-					prev->next_line : NULL;
+-			if (!cur)
+-				continue;
+-			if (!cmp_in_block_with_wsd(o, cur, match, &pmb[i], n))
+-				got_match[i] |= 1;
+-		}
+-	}
+ 
+ 	for (i = 0; i < pmb_nr; i++) {
+-		if (got_match[i]) {
++		struct moved_entry *prev = pmb[i].match;
++		struct moved_entry *cur = (prev && prev->next_line) ?
++			prev->next_line : NULL;
++		if (cur && !cmp_in_block_with_wsd(o, cur, l, &pmb[i])) {
+ 			/* Advance to the next line */
+-			pmb[i].match = pmb[i].match->next_line;
++			pmb[i].match = cur;
+ 		} else {
+ 			moved_block_clear(&pmb[i]);
+ 		}
+ 	}
+-
+-	free(got_match);
+ }
+ 
+ static int shrink_potential_moved_blocks(struct moved_block *pmb,
+@@ -1181,7 +1152,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 
+ 		if (o->color_moved_ws_handling &
+ 		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
+-			pmb_advance_or_null_multi_match(o, match, hm, pmb, pmb_nr, n);
++			pmb_advance_or_null_multi_match(o, l, pmb, pmb_nr);
+ 		else
+ 			pmb_advance_or_null(o, match, hm, pmb, pmb_nr);
+ 
 -- 
 gitgitgadget
 
