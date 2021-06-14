@@ -2,72 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D20C6C48BE6
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0B2C2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:28:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD15860FF4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:23:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 986706100B
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235368AbhFNVZZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 17:25:25 -0400
-Received: from mout.gmx.net ([212.227.15.18]:48191 "EHLO mout.gmx.net"
+        id S234894AbhFNVa3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 17:30:29 -0400
+Received: from mout.gmx.net ([212.227.15.18]:36599 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234935AbhFNVZY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 17:25:24 -0400
+        id S234143AbhFNVa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 17:30:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1623705795;
-        bh=siJzvmTRX5Ec9b7xZa57MFrU3dp7UnH+59PCxaQSps8=;
+        s=badeba3b8450; t=1623706100;
+        bh=NzWPweDt+g9bpYg9GBKkTKJ1oTlzWl6hsibDV4yeAcQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Z5/dOgrelrCcQOlU3Q6nsqEdrqJP8S2+qpk4O5oZ1OQSsP194N7KWdj6HW1DN2WFT
-         z+i08TgymmBudJ6gzfUKyF2VT4kDgqNz4RNV5i/Jiyk0zMlYLhG1HxxiccfCTJCrRK
-         FsmUbmMCQZbXSypAu5gpw+CniS219pTDjYFlBJbo=
+        b=OhbOtCjIkEXFz42JSQjG2vcPyOWzP45QcPbHWCR2VciSXU8NAmi6Lkwqw1vdBFWox
+         eIPRguho6WaNRh7YgIlhye4D81+ypTjy+PKDXAWayEeS/qc24K5zcCtUhwHjnVEksV
+         pl16YJp+xKnmqBnOV0MZft0gg4+CuEM9VxWRfxzU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.14.142] ([89.1.214.113]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQ5rO-1lfeUd1rV2-00M1yN; Mon, 14
- Jun 2021 23:23:15 +0200
-Date:   Mon, 14 Jun 2021 23:23:13 +0200 (CEST)
+Received: from [172.24.14.142] ([89.1.214.113]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mjj8D-1lTlmR2d4d-00lAeO; Mon, 14
+ Jun 2021 23:28:20 +0200
+Date:   Mon, 14 Jun 2021 23:28:18 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 04/28] fsmonitor-ipc: create client routines for
- git-fsmonitor--daemon
-In-Reply-To: <nycvar.QRO.7.76.6.2106021320490.55@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2106142320070.57@tvgsbejvaqbjf.bet>
-References: <pull.923.git.1617291666.gitgitgadget@gmail.com> <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <e4a263728773381a64b8662c0577a3f12eff4ca0.1621691828.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2106021320490.55@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH v2 07/28] fsmonitor: introduce `core.useBuiltinFSMonitor`
+ to call the daemon via IPC
+In-Reply-To: <7e097cebc14328bc1ec6e30fc164270e0889ff06.1621691828.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2106142324250.57@tvgsbejvaqbjf.bet>
+References: <pull.923.git.1617291666.gitgitgadget@gmail.com> <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <7e097cebc14328bc1ec6e30fc164270e0889ff06.1621691828.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:o0NAzuQ1hWnvqtstvMkicXwMeYGontOk4NJJK03CrSIIogmV0DS
- 6L5Irw4N//gW8zgL1MyS+PDSu4JO1LN150PNzfCJrmOLh0l6TE0iW7X20QVW7MVOVLkyBmF
- MbD5EGO5EYuq414SAOToEnI7CA12Fpth1wVhsSgyOu4NCzxbp4Rjv5yV56StwdY3FAQ331e
- bk4LUu+FZU/DY5xX34yuA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Kru6kCeSBNA=:TYPjhqefmLokavHs+oux3V
- ALMVdyBUzxlc0s7WkBvC6WXer8Jp8K6/4gfnDXWC1mFdymXVpmOWTESV+G5dROUqvjaNOIVDG
- mkg+QSszw1bvgEj5lyCAcf/YOEUiIZBs4OVH/49QQ97K5i230Ty3DTKyv7Laph2p+P8BSAAjm
- LZjo8TzGc6C0LUfOSpjwWA8WgboiLa1zHlNTGYZ2oaDc7dsITf1157hvterkRELHStKyBjxCp
- 3Mu4rY1Qit+pE7qlFobtuik/3aj1zHzNm863HisV+JpOHeNRFzVqBnl36L0UPrzp6wAt/zWe3
- f+OqFVLv64vjV1VTMYFlW9/NKcXbox0uLKh9/IJwkiqf2ytWb3k8j4ruoaaU84p+XxTQ7sRZq
- sz2NhmeJ9eUHHmeM0aFhYewCVSeZ2wWnpLJFyHjSMW8cHldT5RxI4EDFN9x9puy8S0Af5nBBp
- eEiWrkqcfDM52pz2uf31LXLkBN/7EkCgrOnyHuzjj4qR7sYeQuO8jgfJh49Y+UHLC0bloHa0Y
- lemf1hnBSbraxEOcoIyoGgSnnHmoCU7btEz1CAmCXn5g2OisdL5XRI+2a14GFRkc6qng0iu4+
- bq1wL8GJ4zmto4mJJSK8tl7jDyhbUVQs1Z/PLu+137xnhyKS+BQBtfksaV/6vJetp9pN1A1v6
- 4LuzYjVJ1e6RHKa6Ii/2TaOBBqa8iaAIvNsLrzjo+oO3qqPU7/7n5pvoLLiJXvqpS3BEqKffJ
- H/v9lKEhDl3qTkoP+/Ltf1XMN8r+sxeNRmbxvm65XwBQGbPdSbXEqs+knoFu6kDdzRPzYe/rs
- MCtCglwkFWgR9TGHaoJZ98FE7XgxjhrvFvS4P2kmnvXBRBcG3QOmh14JT4L6N0uuCnGVWmAlm
- 4YBYwxGfcKYGnjpxeDdVIb2BAY+CooWkwRe03MJW42lFu5DpTvcZZdBxUQsqF1PrrUs1hOes9
- xjaUldvtPW5BomqN4KXseuk4YN4pgpMSQkqUH08kosp71j+JtlR6EipS44A9eSt7L/P4ZLdnQ
- y0ACwb/NTsQ53d7oY6FXBbHHy+sYO3lj5oEIfB658+gBCC0fR8chfM23B+h2vY9PfD3cUXjq+
- RWkF1mtgv7PkdlOi+x5NbsGhghfxCIX76M4KM78GOuikyMUH8QHCD10Uw==
+X-Provags-ID: V03:K1:4XwJzzxbtPtm8OtfsL1KobPg0bgg+j6F1q0Uc1w3yuJvBH7fpV7
+ ww+HDBVk8ZVyFvxtdda0nDL+j6DtNNyO51pCyvTh6zQieqloS5tCtaYT3NkLM/wHjitwV3k
+ 8TbXgp9n4Z/ivf3mEyOJCCF1SV/qVpyG8KAiCdSwA1vsMxM5ZGde+V+OTre3J6TE70EBn6b
+ YJTQDMF/LLH93Yzu0Si7g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rWj3eb8qR3U=:y4IRIoeat7ViQXu37kqavu
+ c7RsEoGvxZ5t1kT4T8SNs0+JVVJbbzlGEbguzF8DZ4WkWkJwY1WnzcD5xAovsxmrciRV45vTN
+ ioOBZ31XAieZaVh2bb0UWVvTcc6mQ6TSEtIcefvMs28n7TGLWcIJB9ZsDHDxQZtJpoYQ6Ji8v
+ ldapfXLn43TWbci1FZUWxtHIdKpWm3nnet47bLYX1Gg4bAjnWxwOjsdFzyif9w8Cw0K/2ywqZ
+ 1Ub2ELeA2YDXM5O3twZ18IG62+/33LKFjmramrTbzqC2IgEWmP4YaXH5eT7dMP19UTwXQjtl7
+ NW6snsjsqHu2GWL0OrPvmsphe5r2BKiI3Qtuxh2E0SeIMhf5YIDkDRyGacYKBewDUH3zsCleO
+ 8ANoYW7cxYOBfyin3hnWKPl14Cb0YPJb/yzr9pE5jIOxEHYMwFRLXANdXL7FajaqGWmZYKzhn
+ 6QEBEPpBCVOby7weMHK4C3YVrtb5mbVnvCTvkay/RrWMPJ2g3P0MMv8eISH+ut4HV1HNYhbh8
+ GssqOwKS/fnNVXRxkJFZgvtFxMex26UoU5P/jdPT5ZuKlzuyDuaXTMv8zBKLp4e/k6xHu8rnM
+ dtwX1qyPs6ny8rQRc9uQIwhYz2uhLNJqjxxrZW8ry+7LXov+XHUj2Yro2EmpgqFIQtwLbR9OK
+ +Gy6+YPe5ul+JjUxSwRbfHjMnZ5GF2gGak4pbU5a3pzoY2Q/9GNyuf1A+LIjuDOQ60c8np04n
+ ZLXfaIFhtkrgfRIVHmdP5Ua32AtVFcDybPsZGpNmFDxo2VE9dEM3uNAqIXAxkVjAw74uUzwfa
+ UlLP05CamjRYXr+6MvzhUQ/VASC8wSZSQqTy2C64WNem43zZG8Ou1QPvbwAmsj+yfWRrW7gf+
+ JwXRcFXs+n3Mlw2j2/uLXS/n6mhb19a3Sa453tepVWllKNzOYUt7nX9uWRKA977N7DUQMHKbs
+ 6ltSYka2e2KBddPtvPODRycb65qM2Ed+K/fbFZuTkCpAaEErFqy6rhCv7Gk0lDVji9Xso4tQs
+ dLSeuRDexPMSYFd//YL7qWXY2XLfEptA5HCBJbjwuAvUlguK53doPa7KvXKl6y3h/er2WvCHE
+ Kjmgj0VQ+gPxviyJXR2Gn3KIOpBeHt7PNn/4YYSLTMqKEqC9gSPODpJJQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -75,93 +73,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Jeff,
 
-On Wed, 2 Jun 2021, Johannes Schindelin wrote:
+On Sat, 22 May 2021, Johannes Schindelin via GitGitGadget wrote:
 
-> I know you're on vacation, therefore I would like to apologize for addin=
-g
-> to your post-vacation notification overload, but...
-
-Now that you're back from vacation...
-
-> On Sat, 22 May 2021, Jeff Hostetler via GitGitGadget wrote:
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index 9c9b2abc9414..c6d3c34ad78e 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -3,6 +3,7 @@
+>  #include "dir.h"
+>  #include "ewah/ewok.h"
+>  #include "fsmonitor.h"
+> +#include "fsmonitor-ipc.h"
+>  #include "run-command.h"
+>  #include "strbuf.h"
 >
-> > From: Jeff Hostetler <jeffhost@microsoft.com>
-> >
-> > diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-> > new file mode 100644
-> > index 000000000000..e62901a85b5d
-> > --- /dev/null
-> > +++ b/fsmonitor-ipc.c
-> > @@ -0,0 +1,179 @@
-> > [...]
-> > +
-> > +int fsmonitor_ipc__send_query(const char *since_token,
-> > +			      struct strbuf *answer)
-> > +{
-> > +	int ret =3D -1;
-> > +	int tried_to_spawn =3D 0;
-> > +	enum ipc_active_state state =3D IPC_STATE__OTHER_ERROR;
-> > +	struct ipc_client_connection *connection =3D NULL;
-> > +	struct ipc_client_connect_options options
-> > +		=3D IPC_CLIENT_CONNECT_OPTIONS_INIT;
-> > +
-> > +	options.wait_if_busy =3D 1;
-> > +	options.wait_if_not_found =3D 0;
-> > +
-> > +	trace2_region_enter("fsm_client", "query", NULL);
-> > +
-> > +	trace2_data_string("fsm_client", NULL, "query/command",
-> > +			   since_token);
-> > +
-> > +try_again:
-> > +	state =3D ipc_client_try_connect(fsmonitor_ipc__get_path(), &options=
-,
-> > +				       &connection);
-> > +
-> > +	switch (state) {
-> > +	case IPC_STATE__LISTENING:
-> > +		ret =3D ipc_client_send_command_to_connection(
-> > +			connection, since_token, strlen(since_token), answer);
+> @@ -231,6 +232,7 @@ static void fsmonitor_refresh_callback(struct index_=
+state *istate, char *name)
 >
-> Here, `since_token` can be `NULL` (and hence the `strlen(since_token)` c=
-an
-> lead to a segmentation fault). I ran into this situation while `git reba=
-se
-> -i --autostash` wanted to apply the stashed changes.
+>  void refresh_fsmonitor(struct index_state *istate)
+>  {
+> +	struct repository *r =3D istate->repo ? istate->repo : the_repository;
+>  	struct strbuf query_result =3D STRBUF_INIT;
+>  	int query_success =3D 0, hook_version =3D -1;
+>  	size_t bol =3D 0; /* beginning of line */
+> @@ -247,6 +249,46 @@ void refresh_fsmonitor(struct index_state *istate)
+>  	istate->fsmonitor_has_run_once =3D 1;
 >
-> Since I picked up your v2 and included it in Git for Windows v2.32.0-rc2=
-,
-> I needed this hotfix: https://github.com/git-for-windows/git/pull/3241
+>  	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
+> +
+> +	if (r->settings.use_builtin_fsmonitor > 0) {
+> +		query_success =3D !fsmonitor_ipc__send_query(
+> +			istate->fsmonitor_last_update, &query_result);
 
-I actually noticed another similar issue and fixed it in time for Git for
-Windows v2.32.0, but eventually figured out the actual culprit, with a
-much better fix:
+As I pointed out elsewhere in the thread, this is a slight change in
+behavior: in the previous iteration, we had this call in
+`query_fsmonitor()`, which was only ever called if
+`istate->fsmonitor_last_update` is non-`NULL`.
+
+The code in `fsmonitor_ipc__send_query()` does actually depend on this,
+therefore we need this change to be squashed in:
 
 =2D- snip --
-commit bc40a560d3c95040b55fd7be6fe5b7012d267f8f
-Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Date:   Wed Jun 9 09:49:50 2021 +0200
-
-    fixup! fsmonitor: introduce `core.useBuiltinFSMonitor` to call the dae=
-mon via IPC
-
-    In FSMonitor v1, we made sure to only use a valid `since_token` when
-    querying the FSMonitor. This condition was accidentally lost in v2, an=
-d
-    caused segmentation faults uncovered by Scalar's Functional Tests.
-
-    I had tried to fix this in https://github.com/git-for-windows/pull/324=
-1,
-    but the fix was incomplete, and I had to follow up with
-    https://github.com/git-for-windows/pull/3258. However, it turns out th=
-at
-    both of them were actually only work-arounds; I should have dug deeper
-    to figure out _why_ the `since_token` was no longer guaranteed not to =
-be
-    `NULL`, and I finally did.
-
-    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
 diff --git a/fsmonitor.c b/fsmonitor.c
 index 22623fd228f..0b40643442e 100644
 =2D-- a/fsmonitor.c
@@ -178,10 +130,89 @@ index 22623fd228f..0b40643442e 100644
  		if (query_success) {
  			/*
  			 * The response contains a series of nul terminated
-
 =2D- snap --
 
-Would you mind squashing this in when you re-roll?
-
-Ciao,
+Thanks,
 Dscho
+
+> +		if (query_success) {
+> +			/*
+> +			 * The response contains a series of nul terminated
+> +			 * strings.  The first is the new token.
+> +			 *
+> +			 * Use `char *buf` as an interlude to trick the CI
+> +			 * static analysis to let us use `strbuf_addstr()`
+> +			 * here (and only copy the token) rather than
+> +			 * `strbuf_addbuf()`.
+> +			 */
+> +			buf =3D query_result.buf;
+> +			strbuf_addstr(&last_update_token, buf);
+> +			bol =3D last_update_token.len + 1;
+> +		} else {
+> +			/*
+> +			 * The builtin daemon is not available on this
+> +			 * platform -OR- we failed to get a response.
+> +			 *
+> +			 * Generate a fake token (rather than a V1
+> +			 * timestamp) for the index extension.  (If
+> +			 * they switch back to the hook API, we don't
+> +			 * want ambiguous state.)
+> +			 */
+> +			strbuf_addstr(&last_update_token, "builtin:fake");
+> +		}
+> +
+> +		/*
+> +		 * Regardless of whether we successfully talked to a
+> +		 * fsmonitor daemon or not, we skip over and do not
+> +		 * try to use the hook.  The "core.useBuiltinFSMonitor"
+> +		 * config setting ALWAYS overrides the "core.fsmonitor"
+> +		 * hook setting.
+> +		 */
+> +		goto apply_results;
+> +	}
+> +
+>  	/*
+>  	 * This could be racy so save the date/time now and query_fsmonitor
+>  	 * should be inclusive to ensure we don't miss potential changes.
+> @@ -301,6 +343,7 @@ void refresh_fsmonitor(struct index_state *istate)
+>  			core_fsmonitor, query_success ? "success" : "failure");
+>  	}
+>
+> +apply_results:
+>  	/* a fsmonitor process can return '/' to indicate all entries are inva=
+lid */
+>  	if (query_success && query_result.buf[bol] !=3D '/') {
+>  		/* Mark all entries returned by the monitor as dirty */
+> diff --git a/repo-settings.c b/repo-settings.c
+> index f7fff0f5ab83..93aab92ff164 100644
+> --- a/repo-settings.c
+> +++ b/repo-settings.c
+> @@ -58,6 +58,9 @@ void prepare_repo_settings(struct repository *r)
+>  		r->settings.core_multi_pack_index =3D value;
+>  	UPDATE_DEFAULT_BOOL(r->settings.core_multi_pack_index, 1);
+>
+> +	if (!repo_config_get_bool(r, "core.usebuiltinfsmonitor", &value) && va=
+lue)
+> +		r->settings.use_builtin_fsmonitor =3D 1;
+> +
+>  	if (!repo_config_get_bool(r, "feature.manyfiles", &value) && value) {
+>  		UPDATE_DEFAULT_BOOL(r->settings.index_version, 4);
+>  		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE=
+_WRITE);
+> diff --git a/repository.h b/repository.h
+> index b385ca3c94b6..d6e7f61f9cf7 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -29,6 +29,8 @@ enum fetch_negotiation_setting {
+>  struct repo_settings {
+>  	int initialized;
+>
+> +	int use_builtin_fsmonitor;
+> +
+>  	int core_commit_graph;
+>  	int commit_graph_read_changed_paths;
+>  	int gc_write_commit_graph;
+> --
+> gitgitgadget
+>
+>
