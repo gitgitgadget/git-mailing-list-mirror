@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A149C48BE8
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3FD2C48BE6
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:36:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1BF1613D3
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:36:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 963B761442
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 10:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233470AbhFNKid (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 06:38:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59560 "EHLO
+        id S233638AbhFNKie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 06:38:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233452AbhFNKga (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 06:36:30 -0400
+        with ESMTP id S233312AbhFNKg0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 06:36:26 -0400
 Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9308C0611BD
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:33:47 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id d184so11861678wmd.0
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:33:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47A8CC061146
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:33:56 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id k5-20020a05600c1c85b02901affeec3ef8so12719610wms.0
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 03:33:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7BpEL71EQnjnOXfyfoe1LPfsOQuAL5fbTlyR8FIKMAQ=;
-        b=BedbhMXFa99i8gnBybXVbNKVqciuDWluEumBVPohCRKtMM1/HZns4XVBXWRKymsl22
-         uqM4g/ShCsSQChAoLJMhmzHhjYZu7yHSzDgKqK7C7xW+3SfvW/cvRuseZzsqwmeQ+FI1
-         NcTXTJv9ZKT/1CXJSCTftRx29h310yl/3HWtL8rOVwiCF8PzfC8D8DpUAeGo9l4sZy7r
-         NDWhN1YJlJpwVLhFJyQs1scETYvyuXfwN4drOSlIZGaX2bk2gV84Wozbfwnrn8pl2YEe
-         iG7hJ4Xx3GPYQ9cMlv6bFLN6pApJRu6sTyrPbGNWQ7ziUb6cFHh25+naAXBq0LTtoOya
-         dWZA==
+        bh=XDj19W/ZMPD1pE1RrzzE8ywI3DvZNTt9FGRMV/zGuOs=;
+        b=Eie817kywaAve2NKs+60zCm+X8nVvuVtGMB4eYQ3/J108JvAt2AHEMTgva/+k4sQRV
+         Xqv3ZDYsU1HNdgD/OxVDF8NBIGodCVDTYoHGWRXUHLCefihLEGKbgKnaWD5rrj7sYEUh
+         NjrdAIyxjnxjoU6Ue8GpA1YkeHWIcmsI0cTjvvl9TB+216OFTtTmWYt92xjlpf3i0BWr
+         CVZjORD6Y9q5R2s8ZpRtFKEu1E3+4ssVgwzHFfBSAlsxgeckXF2Scb/V68UGGMT+9CpD
+         UppKZX0BIOeDHW9t/GcIqHFaTcktR5TnwUijP5cdpzZHlVAe2QXKWcTv7F5oVFcpzh/9
+         NXkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7BpEL71EQnjnOXfyfoe1LPfsOQuAL5fbTlyR8FIKMAQ=;
-        b=c9tPOSfjz2dAemuui6RM3dZc98vTwvKvIeTG5WmqgM+kihSrBduHXWHiYMAgaGTxqV
-         WLs/guaQCrZ31eLkt1FDUvp5F+7oWXqqbu/I7HTBt8JzXbUC2TEFoty6Hbi4kDFZ0Vuv
-         VsE8W2APehzOe0VqnTJrYRyju9EnYzRvlVsXNOGk6rG/oxSlaWpHDR0oAjf/X5aEp45N
-         7YJT0KvkoxMufc40dgn2RmYw4ABmh5a5gq0QBw2oe72iRVxILZIbvZfNwN8Euy/Mm7Kk
-         aEFgO2S63Bz2pUOjT9X2BHYJt6sw2xO2CU9oEPoTT6588ROenbKOBcUF1g4I6ey/AG5j
-         khMw==
-X-Gm-Message-State: AOAM533EsyIk0g0xzmLLYvyDQ+/XjOFYq1rhuh8CYUMVU8o/eK/fLm96
-        awwSPGXMOoqHHeYchf9fN/rlvNgZOjZg2w==
-X-Google-Smtp-Source: ABdhPJyuBNLNkYepLCcX+8B3IW2DdeoUFwTsFmKVxm8kpY0+BCRfRbqCzJKwJfMgHCuT7KL0QpDbXQ==
-X-Received: by 2002:a1c:7210:: with SMTP id n16mr31071749wmc.75.1623666826267;
-        Mon, 14 Jun 2021 03:33:46 -0700 (PDT)
+        bh=XDj19W/ZMPD1pE1RrzzE8ywI3DvZNTt9FGRMV/zGuOs=;
+        b=OZrtCgf3pFp6esYjS6wkttnwOX2g4YCCiVvPfUxa7jFM8tHWHIaLo9hK0KGnskI3eq
+         3t1KsCOb8MIgDPyPnKnQYzcdmBU9egzdkLKX/9TELzr1XlWj9W5GP4myoSn/tPavwPxo
+         UQmnDLThufgwWRRO3THOF3xboOK9DmaSoRwcrYcMvmWV5Vo4vz+9Jf/N2V1IeejekWKf
+         G+1nHg465kZvZ0V6A2xyqMCTJNicWS6mrFGdTMM0HkEPWZ/pvytTjmM+CbpAiTDHVSD1
+         mqJ+scL9muMGrAaDDlDXhF8V+SLuzPpuLNtzW5rRbufwzbF4MIiHkN/8OcWokm5BJakU
+         Ei+w==
+X-Gm-Message-State: AOAM530e8iYYVxIOzoUXzZC6HPmCSnjFjVWJryUtsjDB7pilINHGfMFg
+        NxkgUH8bmq59q4sNUw1yuMFtz1bWOzJNRQ==
+X-Google-Smtp-Source: ABdhPJw9FUxTzOogh6BOlTY3inGbV5F76n6PG5fVcrA/epAHbR+QPgyMOxoQXbzJDwnxvwa0y58Oaw==
+X-Received: by 2002:a1c:c90f:: with SMTP id f15mr32161774wmb.142.1623666834699;
+        Mon, 14 Jun 2021 03:33:54 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id w18sm15911843wrt.55.2021.06.14.03.33.45
+        by smtp.gmail.com with ESMTPSA id w18sm15911843wrt.55.2021.06.14.03.33.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 03:33:45 -0700 (PDT)
+        Mon, 14 Jun 2021 03:33:54 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 02/30] run-command.h: move find_hook() to hook.h
-Date:   Mon, 14 Jun 2021 12:32:51 +0200
-Message-Id: <patch-02.30-85195a78cfb-20210614T101920Z-avarab@gmail.com>
+Subject: [PATCH v2 12/30] commit: use hook.h to execute hooks
+Date:   Mon, 14 Jun 2021 12:33:01 +0200
+Message-Id: <patch-12.30-7756f10aac9-20210614T101920Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3.434.gd8aed1f08a7
 In-Reply-To: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
 References: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com> <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
@@ -83,271 +83,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the find_hook() command to hook.h. Eventually all the hook
-related code will live there, let's move this function over as-is.
+From: Emily Shaffer <emilyshaffer@google.com>
 
+Teach run_commit_hook() to call hook.h instead of run-command.h. This
+covers 'pre-commit', 'commit-msg', and
+'prepare-commit-msg'.
+
+Additionally, ask the hook library - not run-command - whether any
+hooks will be run, as it's possible hooks may exist in the config but
+not the hookdir.
+
+Because all but 'post-commit' hooks are expected to make some state
+change, force all but 'post-commit' hook to run in series. 'post-commit'
+"is meant primarily for notification, and cannot affect the outcome of
+`git commit`," so it is fine to run in parallel.
+
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/am.c           |  1 +
- builtin/bugreport.c    |  2 +-
- builtin/commit.c       |  1 +
- builtin/merge.c        |  1 +
- builtin/receive-pack.c |  1 +
- builtin/worktree.c     |  1 +
- hook.c                 | 36 ++++++++++++++++++++++++++++++++++++
- hook.h                 |  7 +++++++
- refs.c                 |  1 +
- run-command.c          | 35 +----------------------------------
- run-command.h          |  7 -------
- sequencer.c            |  1 +
- transport.c            |  1 +
- 13 files changed, 53 insertions(+), 42 deletions(-)
+ builtin/commit.c |  2 +-
+ commit.c         | 16 ++++++++++------
+ sequencer.c      |  2 +-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0b2d886c81b..1c8a5489035 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -11,6 +11,7 @@
- #include "parse-options.h"
- #include "dir.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "quote.h"
- #include "tempfile.h"
- #include "lockfile.h"
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 9915a5841de..596f079a7f9 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -3,7 +3,7 @@
- #include "strbuf.h"
- #include "help.h"
- #include "compat/compiler.h"
--#include "run-command.h"
-+#include "hook.h"
- 
- 
- static void get_system_info(struct strbuf *sys_info)
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 190d215d43b..f1aafd67d46 100644
+index f1aafd67d46..dad4e565443 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -19,6 +19,7 @@
- #include "revision.h"
- #include "wt-status.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "refs.h"
- #include "log-tree.h"
- #include "strbuf.h"
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a8a843b1f54..be98d66b0a8 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -13,6 +13,7 @@
- #include "builtin.h"
- #include "lockfile.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "diff.h"
- #include "diff-merges.h"
- #include "refs.h"
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index a34742513ac..1e0e04c62fc 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -7,6 +7,7 @@
- #include "pkt-line.h"
- #include "sideband.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "exec-cmd.h"
- #include "commit.h"
- #include "object.h"
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 976bf8ed063..b1350640fed 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -8,6 +8,7 @@
- #include "branch.h"
- #include "refs.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "sigchain.h"
- #include "submodule.h"
- #include "utf8.h"
-diff --git a/hook.c b/hook.c
-index aa66c968186..06842f50e5c 100644
---- a/hook.c
-+++ b/hook.c
-@@ -2,6 +2,42 @@
- #include "hook.h"
- #include "run-command.h"
+@@ -1045,7 +1045,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
+ 	}
  
-+const char *find_hook(const char *name)
-+{
-+	static struct strbuf path = STRBUF_INIT;
-+
-+	strbuf_reset(&path);
-+	strbuf_git_path(&path, "hooks/%s", name);
-+	if (access(path.buf, X_OK) < 0) {
-+		int err = errno;
-+
-+#ifdef STRIP_EXTENSION
-+		strbuf_addstr(&path, STRIP_EXTENSION);
-+		if (access(path.buf, X_OK) >= 0)
-+			return path.buf;
-+		if (errno == EACCES)
-+			err = errno;
-+#endif
-+
-+		if (err == EACCES && advice_ignored_hook) {
-+			static struct string_list advise_given = STRING_LIST_INIT_DUP;
-+
-+			if (!string_list_lookup(&advise_given, name)) {
-+				string_list_insert(&advise_given, name);
-+				advise(_("The '%s' hook was ignored because "
-+					 "it's not set as executable.\n"
-+					 "You can disable this warning with "
-+					 "`git config advice.ignoredHook false`."),
-+				       path.buf);
-+			}
-+		}
-+		return NULL;
-+	}
-+	return path.buf;
-+}
-+
-+
-+
- void run_hooks_opt_clear(struct run_hooks_opt *o)
+-	if (!no_verify && find_hook("pre-commit")) {
++	if (!no_verify && hook_exists("pre-commit")) {
+ 		/*
+ 		 * Re-read the index as pre-commit hook could have updated it,
+ 		 * and write it out as a tree.  We must do this before we invoke
+diff --git a/commit.c b/commit.c
+index 8ea55a447fa..e8147a88fc6 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "hook.h"
+ 
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ 
+@@ -1698,22 +1699,25 @@ size_t ignore_non_trailer(const char *buf, size_t len)
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    const char *name, ...)
  {
- 	strvec_clear(&o->env);
-diff --git a/hook.h b/hook.h
-index ebfee26bcf2..291ee19469a 100644
---- a/hook.h
-+++ b/hook.h
-@@ -37,6 +37,13 @@ struct hook_cb_data {
- 	struct run_hooks_opt *options;
- };
+-	struct strvec hook_env = STRVEC_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	va_list args;
++	const char *arg;
+ 	int ret;
+-
+-	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
++	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
  
-+/*
-+ * Returns the path to the hook file, or NULL if the hook is missing
-+ * or disabled. Note that this points to static storage that will be
-+ * overwritten by further calls to find_hook and run_hook_*.
-+ */
-+const char *find_hook(const char *name);
+ 	/*
+ 	 * Let the hook know that no editor will be launched.
+ 	 */
+ 	if (!editor_is_used)
+-		strvec_push(&hook_env, "GIT_EDITOR=:");
++		strvec_push(&opt.env, "GIT_EDITOR=:");
+ 
+ 	va_start(args, name);
+-	ret = run_hook_ve(hook_env.v, name, args);
++	while ((arg = va_arg(args, const char *)))
++		strvec_push(&opt.args, arg);
+ 	va_end(args);
+-	strvec_clear(&hook_env);
 +
- void run_hooks_opt_clear(struct run_hooks_opt *o);
++	ret = run_hooks(name, &opt);
++	run_hooks_opt_clear(&opt);
  
- /*
-diff --git a/refs.c b/refs.c
-index 8c9490235ea..59be29cf081 100644
---- a/refs.c
-+++ b/refs.c
-@@ -10,6 +10,7 @@
- #include "refs.h"
- #include "refs/refs-internal.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "object-store.h"
- #include "object.h"
- #include "tag.h"
-diff --git a/run-command.c b/run-command.c
-index be6bc128cd9..82fdf296569 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -8,6 +8,7 @@
- #include "string-list.h"
- #include "quote.h"
- #include "config.h"
-+#include "hook.h"
- 
- void child_process_init(struct child_process *child)
- {
-@@ -1320,40 +1321,6 @@ int async_with_fork(void)
- #endif
+ 	return ret;
  }
- 
--const char *find_hook(const char *name)
--{
--	static struct strbuf path = STRBUF_INIT;
--
--	strbuf_reset(&path);
--	strbuf_git_path(&path, "hooks/%s", name);
--	if (access(path.buf, X_OK) < 0) {
--		int err = errno;
--
--#ifdef STRIP_EXTENSION
--		strbuf_addstr(&path, STRIP_EXTENSION);
--		if (access(path.buf, X_OK) >= 0)
--			return path.buf;
--		if (errno == EACCES)
--			err = errno;
--#endif
--
--		if (err == EACCES && advice_ignored_hook) {
--			static struct string_list advise_given = STRING_LIST_INIT_DUP;
--
--			if (!string_list_lookup(&advise_given, name)) {
--				string_list_insert(&advise_given, name);
--				advise(_("The '%s' hook was ignored because "
--					 "it's not set as executable.\n"
--					 "You can disable this warning with "
--					 "`git config advice.ignoredHook false`."),
--				       path.buf);
--			}
--		}
--		return NULL;
--	}
--	return path.buf;
--}
--
- int run_hook_ve(const char *const *env, const char *name, va_list args)
- {
- 	struct child_process hook = CHILD_PROCESS_INIT;
-diff --git a/run-command.h b/run-command.h
-index d08414a92e7..b58531a7eb3 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -201,13 +201,6 @@ int finish_command_in_signal(struct child_process *);
-  */
- int run_command(struct child_process *);
- 
--/*
-- * Returns the path to the hook file, or NULL if the hook is missing
-- * or disabled. Note that this points to static storage that will be
-- * overwritten by further calls to find_hook and run_hook_*.
-- */
--const char *find_hook(const char *name);
--
- /**
-  * Run a hook.
-  * The first argument is a pathname to an index file, or NULL
 diff --git a/sequencer.c b/sequencer.c
-index 0bec01cf38e..3de479f90e1 100644
+index 3de479f90e1..8f46984ffb7 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -8,6 +8,7 @@
- #include "sequencer.h"
- #include "tag.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "exec-cmd.h"
- #include "utf8.h"
- #include "cache-tree.h"
-diff --git a/transport.c b/transport.c
-index 50f5830eb6b..2ed270171f0 100644
---- a/transport.c
-+++ b/transport.c
-@@ -2,6 +2,7 @@
- #include "config.h"
- #include "transport.h"
- #include "run-command.h"
-+#include "hook.h"
- #include "pkt-line.h"
- #include "fetch-pack.h"
- #include "remote.h"
+@@ -1446,7 +1446,7 @@ static int try_to_commit(struct repository *r,
+ 		}
+ 	}
+ 
+-	if (find_hook("prepare-commit-msg")) {
++	if (hook_exists("prepare-commit-msg")) {
+ 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
+ 		if (res)
+ 			goto out;
 -- 
 2.32.0.rc3.434.gd8aed1f08a7
 
