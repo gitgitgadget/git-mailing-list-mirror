@@ -8,167 +8,259 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B61B3C2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 15:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F9DCC2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 15:51:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95DFC61185
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 15:35:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AD4761352
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 15:51:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233574AbhFNPhx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 11:37:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42646 "EHLO
+        id S233671AbhFNPxY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 11:53:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233361AbhFNPhX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 11:37:23 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F900C061574
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 08:35:04 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id q20-20020a4a6c140000b029024915d1bd7cso2740663ooc.12
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 08:35:04 -0700 (PDT)
+        with ESMTP id S233035AbhFNPxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 11:53:23 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 213C6C061574
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 08:51:20 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id c5so15061773wrq.9
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 08:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KVjDGqKmIWSbqhcaYL8TJlkumaT7AWGZtWCAneBCNak=;
-        b=aEhANkz93FBP6DLABXT8QgcwaQFsH+mMCm3YHuI7ZSP6nUdWKosRpTWJsWcOKl21+L
-         atWZM5oYK/a/BS6yj/E0IM86nolKovgKYajArLnFftVNPKF2Z3Qgk8h81+M3kGkJ3RJR
-         t5q8AQxRPTPCMSnsUfLyuYaVvnHb6n6ZEPShHp6k8H+/4muoq1FOZn5MpvMS2cXyOXvx
-         oFo3+6Ir/lbetvLbBmSEtqw08mymcr73p4JNTcSa9hn2yhwWMU8HT3tI1YooQmv6wc6Z
-         +ICnanTD9dRI6nc6ZbjghWKevBGQLJ5WCMnn5CyIIsjGIHBsii950Q7HTh2N9CVPIY3S
-         k93w==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1p2WaOD2ZwdKN14UkGwljtf/BsFG3qoPm4eI4vsEllA=;
+        b=mWi4j73X/gkDpHQzwP+QuV3cVBD8MDgyjo/BGEBCH6cIj7wN5L9WCwnEPwHbOLPc7H
+         CRxLPsHmjYel2voDl2c9xIH9P4O/9dR6L25kdjJAi4DVdn8UOdDfEwAYrgTDlTS01ZbT
+         NYl2t2UPKcxPA5B3wRMt8YzjNRpbRqb1oug7mXb2pMkM9OkgswpSd5f+mXEZ6u8U++Ve
+         ZS2idy/jzu7xtT4xyhwwWkbF85mtS1sy84UuwxFAHVnvM90LWLKVzrs0osRoq0rqUtvj
+         3EG4FNnujtKdbcaZP/W8J8R/lQs8vgUeHWsc2mP3L0Osrbq+EAM1q9iliUijbPhpg6+O
+         yP2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KVjDGqKmIWSbqhcaYL8TJlkumaT7AWGZtWCAneBCNak=;
-        b=cv/aEBH7/f8JST9zvAAIqCvY8ts/zITt+e7u+8kf7qmeHOZpuKAvGHN+hEB1VzrVGp
-         dZkSIOwqih/vRXro2GLVVXGSLj7EkEqurD3KipBDi7DqM3eGwNqp63FuJ/ZM9uS7fqkR
-         KrYM0WFq8KRBZBeGHZD91QOm+hHEPxNOBMkkmIrgnF++oAuOBwWO0+JIo8/K5y28Lazs
-         hyoppgQC7vIsEre5/L6S2V9+0x15cS4uoCovc+VMdPBxFbcRvoEOxA3fpcVHlNkmTvF1
-         RIdJxsaElS/591O7oaF8pDT6iVukd6YfuOEJ/hArvEqpXSt6mM1fD7RsPGDCaouiuPfU
-         PkXg==
-X-Gm-Message-State: AOAM532qMRrN6jzeTLnYNN06eWJ0SMEyBfs2WdwE5F/WRe/QiyBwetFW
-        O/iUO1AlcwzjAPvNo3OxHz4nvdyAUVKzlaFloKg=
-X-Google-Smtp-Source: ABdhPJyhkmiRhupTbOJ16yERF6UanzCI2WBH9npDK+k5/Bt6jeGNDLcrbQ12rBuGS4bRfMzu3KqtFGo7q7Nmlg3R1Cc=
-X-Received: by 2002:a4a:b301:: with SMTP id m1mr13396539ooo.7.1623684903499;
- Mon, 14 Jun 2021 08:35:03 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=1p2WaOD2ZwdKN14UkGwljtf/BsFG3qoPm4eI4vsEllA=;
+        b=LVEXxf5Qn+F3ZUNf8BzukkVx11BE62HCcndvieIesCFrDDnqxnvgLsbJOaxQSoyjZp
+         xVUTMQbU02SD5ZNBDnwl67aAAf6/9FRVLMjTP0dNIEbwnOFkJr3p275NuVzevawE5ypR
+         IZih6YuE5J2WBlV0wSrz+a21TJZWyDHKkG90wvWh+0B8Fno26VE/hm2MKnD783FY8GWL
+         aSBLWdGrJUe2w/PAcEH0HpKA3Z6U9s6CfazWL8+ONkpelu/9BmKryJpsfJAOjn7mQAoC
+         IaH0gTE+8OPGRfUUDz+k2fWVw6A3Bj0YHjpJX8KjPwhDbkIhF02zVSmaXMFLixtEAL3z
+         gQSQ==
+X-Gm-Message-State: AOAM530TdSbMnur7LQl2XaKglQtFsJUhXgsrU5KEW3Yn0GlztMJ9gwYm
+        KA8hYHCRmogJ4nFWeDhvShlnMx6IlSo=
+X-Google-Smtp-Source: ABdhPJzI1kbxBY4bQSyBpCjPADbw4BJVwMcUs1YuLPeslwlUT+D0am0hTGUYET5N04MJLj1tXQ2LCg==
+X-Received: by 2002:a5d:4f08:: with SMTP id c8mr19527783wru.197.1623685878790;
+        Mon, 14 Jun 2021 08:51:18 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p12sm18702756wme.43.2021.06.14.08.51.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Jun 2021 08:51:18 -0700 (PDT)
+Message-Id: <7659d4bf13c27ed0b1b793a19959b469063b85ec.1623685877.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1033.v2.git.git.1623685877.gitgitgadget@gmail.com>
+References: <pull.1033.git.git.1623343712.gitgitgadget@gmail.com>
+        <pull.1033.v2.git.git.1623685877.gitgitgadget@gmail.com>
+From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 14 Jun 2021 15:51:14 +0000
+Subject: [PATCH v2 1/3] bulk-checkin: make buffer reuse more obvious and safer
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20210613225836.1009569-1-felipe.contreras@gmail.com> <20210613225836.1009569-5-felipe.contreras@gmail.com>
-In-Reply-To: <20210613225836.1009569-5-felipe.contreras@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 14 Jun 2021 08:34:52 -0700
-Message-ID: <CABPp-BGZ2H1MVgw9RvSdogLMdqsX3n89NkkDYDa2VM3TRHn7tg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] xdiff/xmerge: fix chg0 initialization
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Chris Torek <chris.torek@gmail.com>, Jeff King <peff@peff.net>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 13, 2021 at 4:04 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> chg0 is needed when style is XDL_MERGE_DIFF3, xdl_refine_conflicts()
-> currently is only called when level >= XDL_MERGE_ZEALOUS, which cannot
-> happen since the level is capped to XDL_MERGE_EAGER.
->
-> However, if at some point in the future we decide to not cap diff3, or
-> introduce a similar uncapped mode, an uninitialized chg0 would cause a
-> crash.
+From: Andrzej Hunt <ajrhunt@google.com>
 
-If this cannot happen now, and is needed by your other posted patch,
-why aren't these two patches either combined or posted as part of the
-same series?  (I think a separate submission _only_ makes sense if you
-explicitly withdraw the other patch from consideration, otherwise it
-feels dangerous to submit patches this way).
+ibuf can be reused for multiple iterations of the loop. Specifically:
+deflate() overwrites s.avail_in to show how much of the input buffer
+has not been processed yet - and sometimes leaves 'avail_in > 0', in
+which case ibuf will be processed again during the loop's subsequent
+iteration.
 
-> Let's initialize it to be safe.
+But if we declare ibuf within the loop, then (in theory) we get a new
+(and uninitialised) buffer for every iteration. In practice, my compiler
+seems to resue the same buffer - meaning that this code does work - but
+it doesn't seem safe to rely on this behaviour. MSAN correctly catches
+this issue - as soon as we hit the 's.avail_in > 0' condition, we end up
+reading from what seems to be uninitialised memory.
 
-Is it being safe, or is it hacking around a hypothetical future
-segfault?  Are these values reasonable, or did you just initialize
-them to known garbage rather than letting them be unknown garbage?
-Are there other values that need to be changed for the xdiff data
-structures to be consistent?  Will future code readers be helped by
-this initialization, or will it introduce inconsistencies (albeit
-initialized ones) in existing data structures that make it harder for
-future readers to reason about?
+Therefore, we move ibuf out of the loop, making this reuse safe.
 
-I'm somewhat worried by the cavalier posting of the zdiff3 patch[1],
-and am worried you're continuing more of the same here, especially
-since in your previous post[2] you said that you didn't know whether
-this particular change made sense and haven't posted anything yet to
-state why it does.  Peff already pointed out that you reposted the
-zdiff3 patch that had knonw segfaults without even stating as much[3].
-That's one thing that needs to be corrected, but I think there are
-more that should be pointed out.  Peff linked to the old thread which
-is how you found out about the patches, but the old thread also
-included things that Junio wanted to see if zdiff3 were to be added as
-an option[4], and discussed some concerns about the implementation
-that would need to be addressed[5].  Given the fact that Peff liked
-the original zdiff3 patch and tried it for over a month and took time
-to report on it and argue for such a feature, I would have expected
-that when you reposted the zdiff3 patch that you would have provided
-some more detailed explanation of how it works and why it's right (and
-included some fixes with it rather than separate), and that you would
-have included multiple new testcases to the testsuite both to make
-sure we don't cause any obvious bugs and to provide some samples of
-how the option functions, and also likely include in the cover letter
-some kind of explanation of additional testing done to try to assure
-us that the new mode is safe to use (e.g. "I ran this on hundreds of
-linux kernel commits, with X% of them showing a difference.  They
-typically looked like <Y>" or "I've run with this for a month without
-issue, and occasionally have re-checked a merge afterwards and found
-that the conflicts were much easier to view because of...").  Short of
-all that, I would have at least expected the patches to be posted as
-RFC and stating any known shortcomings and additional work you planned
-on doing after gathering some feedback.
+See MSAN output from t1050-large below - the interesting part is the
+ibuf creation at the end, although there's a lot of indirection before
+we reach the read from unitialised memory:
 
-You didn't do any of that, making me wonder whether this patch is a
-solid fix, or whether it represents just hacking around the first edge
-case you ran into and posting a shot in the dark.  It could well be
-either; how are we to know whether we should trust these patches?
+==11294==WARNING: MemorySanitizer: use-of-uninitialized-value
+    #0 0x7f75db58fb1c in crc32_little crc32.c:283:9
+    #1 0x7f75db58d5b3 in crc32_z crc32.c:220:20
+    #2 0x7f75db59668c in crc32 crc32.c:242:12
+    #3 0x8c94f8 in hashwrite csum-file.c:101:15
+    #4 0x825faf in stream_to_pack bulk-checkin.c:154:5
+    #5 0x82467b in deflate_to_pack bulk-checkin.c:225:8
+    #6 0x823ff1 in index_bulk_checkin bulk-checkin.c:264:15
+    #7 0xa7cff2 in index_stream object-file.c:2234:9
+    #8 0xa7bff7 in index_fd object-file.c:2256:9
+    #9 0xa7d22d in index_path object-file.c:2274:7
+    #10 0xb3c8c9 in add_to_index read-cache.c:802:7
+    #11 0xb3e039 in add_file_to_index read-cache.c:835:9
+    #12 0x4a99c3 in add_files add.c:458:7
+    #13 0x4a7276 in cmd_add add.c:670:18
+    #14 0x4a1e76 in run_builtin git.c:461:11
+    #15 0x49e1e7 in handle_builtin git.c:714:3
+    #16 0x4a0c08 in run_argv git.c:781:4
+    #17 0x49d5a8 in cmd_main git.c:912:19
+    #18 0x7974da in main common-main.c:52:11
+    #19 0x7f75da66f349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #20 0x421bd9 in _start start.S:120
 
-(Having read the old zdiff3 thread after Peff pointed to it, I really
-like the idea of such an option.  I'd like to see it exist and I would
-use it.  But I think it needs to be introduced appropriately,
-otherwise it makes it even less likely we'll end up with such a
-thing.)
+  Uninitialized value was stored to memory at
+    #0 0x7f75db58fa6b in crc32_little crc32.c:283:9
+    #1 0x7f75db58d5b3 in crc32_z crc32.c:220:20
+    #2 0x7f75db59668c in crc32 crc32.c:242:12
+    #3 0x8c94f8 in hashwrite csum-file.c:101:15
+    #4 0x825faf in stream_to_pack bulk-checkin.c:154:5
+    #5 0x82467b in deflate_to_pack bulk-checkin.c:225:8
+    #6 0x823ff1 in index_bulk_checkin bulk-checkin.c:264:15
+    #7 0xa7cff2 in index_stream object-file.c:2234:9
+    #8 0xa7bff7 in index_fd object-file.c:2256:9
+    #9 0xa7d22d in index_path object-file.c:2274:7
+    #10 0xb3c8c9 in add_to_index read-cache.c:802:7
+    #11 0xb3e039 in add_file_to_index read-cache.c:835:9
+    #12 0x4a99c3 in add_files add.c:458:7
+    #13 0x4a7276 in cmd_add add.c:670:18
+    #14 0x4a1e76 in run_builtin git.c:461:11
+    #15 0x49e1e7 in handle_builtin git.c:714:3
+    #16 0x4a0c08 in run_argv git.c:781:4
+    #17 0x49d5a8 in cmd_main git.c:912:19
+    #18 0x7974da in main common-main.c:52:11
+    #19 0x7f75da66f349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-[1] https://lore.kernel.org/git/20210613143155.836591-1-felipe.contreras@gmail.com/
-[2] https://lore.kernel.org/git/60c677a2c2d24_f5651208cf@natae.notmuch/
-[3] https://lore.kernel.org/git/YMbexfeUG78yBix4@coredump.intra.peff.net/
-[4] https://lore.kernel.org/git/7vip42gfjc.fsf@alter.siamese.dyndns.org/
-[5] https://lore.kernel.org/git/20130307180157.GA6604@sigill.intra.peff.net/
+  Uninitialized value was stored to memory at
+    #0 0x447eb9 in __msan_memcpy msan_interceptors.cpp:1558:3
+    #1 0x7f75db5c2011 in flush_pending deflate.c:746:5
+    #2 0x7f75db5cafa0 in deflate_stored deflate.c:1815:9
+    #3 0x7f75db5bb7d2 in deflate deflate.c:1005:34
+    #4 0xd80b7f in git_deflate zlib.c:244:12
+    #5 0x825dff in stream_to_pack bulk-checkin.c:140:12
+    #6 0x82467b in deflate_to_pack bulk-checkin.c:225:8
+    #7 0x823ff1 in index_bulk_checkin bulk-checkin.c:264:15
+    #8 0xa7cff2 in index_stream object-file.c:2234:9
+    #9 0xa7bff7 in index_fd object-file.c:2256:9
+    #10 0xa7d22d in index_path object-file.c:2274:7
+    #11 0xb3c8c9 in add_to_index read-cache.c:802:7
+    #12 0xb3e039 in add_file_to_index read-cache.c:835:9
+    #13 0x4a99c3 in add_files add.c:458:7
+    #14 0x4a7276 in cmd_add add.c:670:18
+    #15 0x4a1e76 in run_builtin git.c:461:11
+    #16 0x49e1e7 in handle_builtin git.c:714:3
+    #17 0x4a0c08 in run_argv git.c:781:4
+    #18 0x49d5a8 in cmd_main git.c:912:19
+    #19 0x7974da in main common-main.c:52:11
 
-> Cc: Jeff King <peff@peff.net>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  xdiff/xmerge.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-> index b5b3f56f92..d9b3a0dccd 100644
-> --- a/xdiff/xmerge.c
-> +++ b/xdiff/xmerge.c
-> @@ -333,7 +333,7 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
->                 mmfile_t t1, t2;
->                 xdfenv_t xe;
->                 xdchange_t *xscr, *x;
-> -               int i1 = m->i1, i2 = m->i2;
-> +               int i0 = m->i0, i1 = m->i1, i2 = m->i2;
->
->                 /* let's handle just the conflicts */
->                 if (m->mode)
-> @@ -384,6 +384,8 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
->                         m->next = m2;
->                         m = m2;
->                         m->mode = 0;
-> +                       m->i0 = i0;
-> +                       m->chg0 = 0;
->                         m->i1 = xscr->i1 + i1;
->                         m->chg1 = xscr->chg1;
->                         m->i2 = xscr->i2 + i2;
-> --
-> 2.32.0
+  Uninitialized value was stored to memory at
+    #0 0x447eb9 in __msan_memcpy msan_interceptors.cpp:1558:3
+    #1 0x7f75db644241 in _tr_stored_block trees.c:873:5
+    #2 0x7f75db5cad7c in deflate_stored deflate.c:1813:9
+    #3 0x7f75db5bb7d2 in deflate deflate.c:1005:34
+    #4 0xd80b7f in git_deflate zlib.c:244:12
+    #5 0x825dff in stream_to_pack bulk-checkin.c:140:12
+    #6 0x82467b in deflate_to_pack bulk-checkin.c:225:8
+    #7 0x823ff1 in index_bulk_checkin bulk-checkin.c:264:15
+    #8 0xa7cff2 in index_stream object-file.c:2234:9
+    #9 0xa7bff7 in index_fd object-file.c:2256:9
+    #10 0xa7d22d in index_path object-file.c:2274:7
+    #11 0xb3c8c9 in add_to_index read-cache.c:802:7
+    #12 0xb3e039 in add_file_to_index read-cache.c:835:9
+    #13 0x4a99c3 in add_files add.c:458:7
+    #14 0x4a7276 in cmd_add add.c:670:18
+    #15 0x4a1e76 in run_builtin git.c:461:11
+    #16 0x49e1e7 in handle_builtin git.c:714:3
+    #17 0x4a0c08 in run_argv git.c:781:4
+    #18 0x49d5a8 in cmd_main git.c:912:19
+    #19 0x7974da in main common-main.c:52:11
+
+  Uninitialized value was stored to memory at
+    #0 0x447eb9 in __msan_memcpy msan_interceptors.cpp:1558:3
+    #1 0x7f75db5c8fcf in deflate_stored deflate.c:1783:9
+    #2 0x7f75db5bb7d2 in deflate deflate.c:1005:34
+    #3 0xd80b7f in git_deflate zlib.c:244:12
+    #4 0x825dff in stream_to_pack bulk-checkin.c:140:12
+    #5 0x82467b in deflate_to_pack bulk-checkin.c:225:8
+    #6 0x823ff1 in index_bulk_checkin bulk-checkin.c:264:15
+    #7 0xa7cff2 in index_stream object-file.c:2234:9
+    #8 0xa7bff7 in index_fd object-file.c:2256:9
+    #9 0xa7d22d in index_path object-file.c:2274:7
+    #10 0xb3c8c9 in add_to_index read-cache.c:802:7
+    #11 0xb3e039 in add_file_to_index read-cache.c:835:9
+    #12 0x4a99c3 in add_files add.c:458:7
+    #13 0x4a7276 in cmd_add add.c:670:18
+    #14 0x4a1e76 in run_builtin git.c:461:11
+    #15 0x49e1e7 in handle_builtin git.c:714:3
+    #16 0x4a0c08 in run_argv git.c:781:4
+    #17 0x49d5a8 in cmd_main git.c:912:19
+    #18 0x7974da in main common-main.c:52:11
+    #19 0x7f75da66f349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+  Uninitialized value was stored to memory at
+    #0 0x447eb9 in __msan_memcpy msan_interceptors.cpp:1558:3
+    #1 0x7f75db5ea545 in read_buf deflate.c:1181:5
+    #2 0x7f75db5c97f7 in deflate_stored deflate.c:1791:9
+    #3 0x7f75db5bb7d2 in deflate deflate.c:1005:34
+    #4 0xd80b7f in git_deflate zlib.c:244:12
+    #5 0x825dff in stream_to_pack bulk-checkin.c:140:12
+    #6 0x82467b in deflate_to_pack bulk-checkin.c:225:8
+    #7 0x823ff1 in index_bulk_checkin bulk-checkin.c:264:15
+    #8 0xa7cff2 in index_stream object-file.c:2234:9
+    #9 0xa7bff7 in index_fd object-file.c:2256:9
+    #10 0xa7d22d in index_path object-file.c:2274:7
+    #11 0xb3c8c9 in add_to_index read-cache.c:802:7
+    #12 0xb3e039 in add_file_to_index read-cache.c:835:9
+    #13 0x4a99c3 in add_files add.c:458:7
+    #14 0x4a7276 in cmd_add add.c:670:18
+    #15 0x4a1e76 in run_builtin git.c:461:11
+    #16 0x49e1e7 in handle_builtin git.c:714:3
+    #17 0x4a0c08 in run_argv git.c:781:4
+    #18 0x49d5a8 in cmd_main git.c:912:19
+    #19 0x7974da in main common-main.c:52:11
+
+  Uninitialized value was created by an allocation of 'ibuf' in the stack frame of function 'stream_to_pack'
+    #0 0x825710 in stream_to_pack bulk-checkin.c:101
+
+SUMMARY: MemorySanitizer: use-of-uninitialized-value crc32.c:283:9 in crc32_little
+Exiting
+
+Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
+---
+ bulk-checkin.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 127312acd1ed..b023d9959aae 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -100,6 +100,7 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+ 			  const char *path, unsigned flags)
+ {
+ 	git_zstream s;
++	unsigned char ibuf[16384];
+ 	unsigned char obuf[16384];
+ 	unsigned hdrlen;
+ 	int status = Z_OK;
+@@ -113,8 +114,6 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+ 	s.avail_out = sizeof(obuf) - hdrlen;
+ 
+ 	while (status != Z_STREAM_END) {
+-		unsigned char ibuf[16384];
+-
+ 		if (size && !s.avail_in) {
+ 			ssize_t rsize = size < sizeof(ibuf) ? size : sizeof(ibuf);
+ 			ssize_t read_result = read_in_full(fd, ibuf, rsize);
+-- 
+gitgitgadget
+
