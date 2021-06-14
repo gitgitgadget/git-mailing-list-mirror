@@ -2,217 +2,470 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB0B2C2B9F4
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3BF1C2B9F4
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:35:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 986706100B
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:28:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDE5D61166
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 21:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234894AbhFNVa3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 17:30:29 -0400
-Received: from mout.gmx.net ([212.227.15.18]:36599 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234143AbhFNVa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 17:30:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1623706100;
-        bh=NzWPweDt+g9bpYg9GBKkTKJ1oTlzWl6hsibDV4yeAcQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OhbOtCjIkEXFz42JSQjG2vcPyOWzP45QcPbHWCR2VciSXU8NAmi6Lkwqw1vdBFWox
-         eIPRguho6WaNRh7YgIlhye4D81+ypTjy+PKDXAWayEeS/qc24K5zcCtUhwHjnVEksV
-         pl16YJp+xKnmqBnOV0MZft0gg4+CuEM9VxWRfxzU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.14.142] ([89.1.214.113]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mjj8D-1lTlmR2d4d-00lAeO; Mon, 14
- Jun 2021 23:28:20 +0200
-Date:   Mon, 14 Jun 2021 23:28:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 07/28] fsmonitor: introduce `core.useBuiltinFSMonitor`
- to call the daemon via IPC
-In-Reply-To: <7e097cebc14328bc1ec6e30fc164270e0889ff06.1621691828.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2106142324250.57@tvgsbejvaqbjf.bet>
-References: <pull.923.git.1617291666.gitgitgadget@gmail.com> <pull.923.v2.git.1621691828.gitgitgadget@gmail.com> <7e097cebc14328bc1ec6e30fc164270e0889ff06.1621691828.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232908AbhFNVhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 17:37:18 -0400
+Received: from mail-pl1-f178.google.com ([209.85.214.178]:38498 "EHLO
+        mail-pl1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232803AbhFNVhR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 17:37:17 -0400
+Received: by mail-pl1-f178.google.com with SMTP id 69so7335075plc.5
+        for <git@vger.kernel.org>; Mon, 14 Jun 2021 14:35:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=gbnJ6dyepHECB5/BB+gOwXWWrnw2FahhrPPNYNapdxw=;
+        b=sIxvWJnINgSgLwvINeze4GcNk2+Rcn+Mz29SCVQ/9SqPyFXj97cgx6K+DaQ8j4yKY8
+         sw7gP5jmalHNPk68g/hP6tz7u0pnNh1PJ9rXksD3gub93+1azUB+vvBSr/NW2yvMxDwk
+         9o9eawa71b5IZz0ILZH02BDTY7BEpaWKF2GWS2cUAA1NCvuHnvmKD+Yhh6eNEvQiPAVM
+         bCwL2AIc56Ju2aue5+5pCS/PHZL77ZvTypIKqKUWZcprbnnY4+KfuF3buDMRjUQySyhw
+         v62RqxcM8kRAvrx3hP1QskihADRos5RmkU1IWn0CP4jxhz0hCqWKX9v7nO9oTFiW8CJK
+         UNDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=gbnJ6dyepHECB5/BB+gOwXWWrnw2FahhrPPNYNapdxw=;
+        b=uJdUqZsufrkVpWVm5Wa5CjSuIVCAiDiPJQI2uoAIIzKSa2PRwRS3WCoudqSCTTozuj
+         3Is87SSw5ewn3M6ft8hm29/cVfA7A9mkcFX1NwSZuioijlMSjKqqfhrgMvwGMS2e3YtI
+         tS5IWuu6o3RvbhnY9E/y9IIHreyZQRqsooxyA051fnlz40HELrBIDeI2wsw0yMDAKJtE
+         Xe2iVpAlZccfCs3RlwuVZQEL0+UnltgCiVOvLY7D6bD8D7TaAI7su2qKJdBzLfS+iNRy
+         BsoXYplw+thhwYX05s5g73hNp1frzw7xmJHeQDjQDU1haoCYnFdz68BMFpGkpX/NE1kw
+         Hb6g==
+X-Gm-Message-State: AOAM531rboJwbeLj/h2MQJiff+ZS0HoKTEh2PDdtbmKRgx7d87bRS/Np
+        yWpDxGELblqfxjRMsU4e6RCjkKtE98SFQQ==
+X-Google-Smtp-Source: ABdhPJwusyT+lv5yyjWt20J37pKJXq5xs0uqEGmYI81Lw5tH2I5wTljOkWiKQcVPgiA3tfrgKn9eJg==
+X-Received: by 2002:a17:90a:cd03:: with SMTP id d3mr19339651pju.31.1623706439709;
+        Mon, 14 Jun 2021 14:33:59 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:87fc:fefd:1365:fa14])
+        by smtp.gmail.com with ESMTPSA id iq15sm339346pjb.53.2021.06.14.14.33.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Jun 2021 14:33:58 -0700 (PDT)
+Date:   Mon, 14 Jun 2021 14:33:47 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 01/30] hook: add 'run' subcommand
+Message-ID: <YMfLO9CT+iIDR3OA@google.com>
+References: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
+ <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
+ <patch-01.30-447d349c738-20210614T101920Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4XwJzzxbtPtm8OtfsL1KobPg0bgg+j6F1q0Uc1w3yuJvBH7fpV7
- ww+HDBVk8ZVyFvxtdda0nDL+j6DtNNyO51pCyvTh6zQieqloS5tCtaYT3NkLM/wHjitwV3k
- 8TbXgp9n4Z/ivf3mEyOJCCF1SV/qVpyG8KAiCdSwA1vsMxM5ZGde+V+OTre3J6TE70EBn6b
- YJTQDMF/LLH93Yzu0Si7g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rWj3eb8qR3U=:y4IRIoeat7ViQXu37kqavu
- c7RsEoGvxZ5t1kT4T8SNs0+JVVJbbzlGEbguzF8DZ4WkWkJwY1WnzcD5xAovsxmrciRV45vTN
- ioOBZ31XAieZaVh2bb0UWVvTcc6mQ6TSEtIcefvMs28n7TGLWcIJB9ZsDHDxQZtJpoYQ6Ji8v
- ldapfXLn43TWbci1FZUWxtHIdKpWm3nnet47bLYX1Gg4bAjnWxwOjsdFzyif9w8Cw0K/2ywqZ
- 1Ub2ELeA2YDXM5O3twZ18IG62+/33LKFjmramrTbzqC2IgEWmP4YaXH5eT7dMP19UTwXQjtl7
- NW6snsjsqHu2GWL0OrPvmsphe5r2BKiI3Qtuxh2E0SeIMhf5YIDkDRyGacYKBewDUH3zsCleO
- 8ANoYW7cxYOBfyin3hnWKPl14Cb0YPJb/yzr9pE5jIOxEHYMwFRLXANdXL7FajaqGWmZYKzhn
- 6QEBEPpBCVOby7weMHK4C3YVrtb5mbVnvCTvkay/RrWMPJ2g3P0MMv8eISH+ut4HV1HNYhbh8
- GssqOwKS/fnNVXRxkJFZgvtFxMex26UoU5P/jdPT5ZuKlzuyDuaXTMv8zBKLp4e/k6xHu8rnM
- dtwX1qyPs6ny8rQRc9uQIwhYz2uhLNJqjxxrZW8ry+7LXov+XHUj2Yro2EmpgqFIQtwLbR9OK
- +Gy6+YPe5ul+JjUxSwRbfHjMnZ5GF2gGak4pbU5a3pzoY2Q/9GNyuf1A+LIjuDOQ60c8np04n
- ZLXfaIFhtkrgfRIVHmdP5Ua32AtVFcDybPsZGpNmFDxo2VE9dEM3uNAqIXAxkVjAw74uUzwfa
- UlLP05CamjRYXr+6MvzhUQ/VASC8wSZSQqTy2C64WNem43zZG8Ou1QPvbwAmsj+yfWRrW7gf+
- JwXRcFXs+n3Mlw2j2/uLXS/n6mhb19a3Sa453tepVWllKNzOYUt7nX9uWRKA977N7DUQMHKbs
- 6ltSYka2e2KBddPtvPODRycb65qM2Ed+K/fbFZuTkCpAaEErFqy6rhCv7Gk0lDVji9Xso4tQs
- dLSeuRDexPMSYFd//YL7qWXY2XLfEptA5HCBJbjwuAvUlguK53doPa7KvXKl6y3h/er2WvCHE
- Kjmgj0VQ+gPxviyJXR2Gn3KIOpBeHt7PNn/4YYSLTMqKEqC9gSPODpJJQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-01.30-447d349c738-20210614T101920Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On Mon, Jun 14, 2021 at 12:32:50PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+> In order to enable hooks to be run as an external process, by a
+> standalone Git command, or by tools which wrap Git, provide an external
+> means to run all configured hook commands for a given hook event.
 
-On Sat, 22 May 2021, Johannes Schindelin via GitGitGadget wrote:
+From what it says on the box, I'm slightly worried about this patch
+doing too much at once, but let's see... (I think this is also a common
+thing you and I disagree on - how much work to do per commit - so feel
+free to ignore me ;) )
 
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index 9c9b2abc9414..c6d3c34ad78e 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -3,6 +3,7 @@
->  #include "dir.h"
->  #include "ewah/ewok.h"
->  #include "fsmonitor.h"
-> +#include "fsmonitor-ipc.h"
->  #include "run-command.h"
->  #include "strbuf.h"
->
-> @@ -231,6 +232,7 @@ static void fsmonitor_refresh_callback(struct index_=
-state *istate, char *name)
->
->  void refresh_fsmonitor(struct index_state *istate)
->  {
-> +	struct repository *r =3D istate->repo ? istate->repo : the_repository;
->  	struct strbuf query_result =3D STRBUF_INIT;
->  	int query_success =3D 0, hook_version =3D -1;
->  	size_t bol =3D 0; /* beginning of line */
-> @@ -247,6 +249,46 @@ void refresh_fsmonitor(struct index_state *istate)
->  	istate->fsmonitor_has_run_once =3D 1;
->
->  	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+
+Thanks for including attribution - I appreciate it.
+
+> diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+> new file mode 100644
+> index 00000000000..902b9cffaef
+> --- /dev/null
+> +++ b/Documentation/git-hook.txt
+> @@ -0,0 +1,36 @@
+> +git-hook(1)
+> +===========
 > +
-> +	if (r->settings.use_builtin_fsmonitor > 0) {
-> +		query_success =3D !fsmonitor_ipc__send_query(
-> +			istate->fsmonitor_last_update, &query_result);
-
-As I pointed out elsewhere in the thread, this is a slight change in
-behavior: in the previous iteration, we had this call in
-`query_fsmonitor()`, which was only ever called if
-`istate->fsmonitor_last_update` is non-`NULL`.
-
-The code in `fsmonitor_ipc__send_query()` does actually depend on this,
-therefore we need this change to be squashed in:
-
-=2D- snip --
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 22623fd228f..0b40643442e 100644
-=2D-- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -290,8 +290,9 @@ void refresh_fsmonitor(struct index_state *istate)
- 	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
-
- 	if (r->settings.use_builtin_fsmonitor > 0) {
--		query_success =3D !fsmonitor_ipc__send_query(
--			istate->fsmonitor_last_update, &query_result);
-+		query_success =3D istate->fsmonitor_last_update &&
-+			!fsmonitor_ipc__send_query(istate->fsmonitor_last_update,
-+						   &query_result);
- 		if (query_success) {
- 			/*
- 			 * The response contains a series of nul terminated
-=2D- snap --
-
-Thanks,
-Dscho
-
-> +		if (query_success) {
-> +			/*
-> +			 * The response contains a series of nul terminated
-> +			 * strings.  The first is the new token.
-> +			 *
-> +			 * Use `char *buf` as an interlude to trick the CI
-> +			 * static analysis to let us use `strbuf_addstr()`
-> +			 * here (and only copy the token) rather than
-> +			 * `strbuf_addbuf()`.
-> +			 */
-> +			buf =3D query_result.buf;
-> +			strbuf_addstr(&last_update_token, buf);
-> +			bol =3D last_update_token.len + 1;
-> +		} else {
-> +			/*
-> +			 * The builtin daemon is not available on this
-> +			 * platform -OR- we failed to get a response.
-> +			 *
-> +			 * Generate a fake token (rather than a V1
-> +			 * timestamp) for the index extension.  (If
-> +			 * they switch back to the hook API, we don't
-> +			 * want ambiguous state.)
-> +			 */
-> +			strbuf_addstr(&last_update_token, "builtin:fake");
-> +		}
+> +NAME
+> +----
+> +git-hook - run git hooks
 > +
-> +		/*
-> +		 * Regardless of whether we successfully talked to a
-> +		 * fsmonitor daemon or not, we skip over and do not
-> +		 * try to use the hook.  The "core.useBuiltinFSMonitor"
-> +		 * config setting ALWAYS overrides the "core.fsmonitor"
-> +		 * hook setting.
-> +		 */
-> +		goto apply_results;
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git hook' run <hook-name> [-- <hook-args>]
+
+Interesting. This is definitely more user friendly than `-a foo -a bar -a
+aagh` ;)
+
+Can we think of a scenario when a user might want to alias to part of
+'git hook run' with an argument provided, but still wish to use the hook
+more generally? I thought maybe something like `git hook run -a
+"--user=Bob"` for a user who has a handful of hooks that can take some
+additional argument, but then I realized that most hooks need to meet a
+contract with which args they accept, so this isn't a reasonable use
+case.
+
+I also wondered whether accepting hook args this way implied that we
+can't also provide environment vars for the hooks later on, but I think
+it's fine to have those two interfaces be asymmetrical, e.g. `git hook
+run -e "USERID=Bob" -- blah.txt`.
+
+So I like this way of accepting them :)
+
+[snip]
+> +run::
+> +
+> +	Run the `<hook-name>` hook. Any positional arguments to the
+> +	hook should be passed after an optional "--" (or
+> +	"--end-of-options"). See "OPTIONS" below for the arguments
+> +	this accepts.
+
+Is it clear enough that users will need to provide arguments to certain
+hooks? (Should this have some reference to githooks.txt?)
+
+The "OPTIONS" reference is stale - there is no OPTIONS header in the
+manpage now.
+
+> --- /dev/null
+> +++ b/builtin/hook.c
+> @@ -0,0 +1,65 @@
+> +#include "cache.h"
+> +#include "builtin.h"
+> +#include "config.h"
+> +#include "hook.h"
+> +#include "parse-options.h"
+> +#include "strbuf.h"
+> +#include "strvec.h"
+> +
+> +static const char * const builtin_hook_usage[] = {
+> +	N_("git hook run <hook-name> [-- <hook-args>]"),
+> +	NULL
+> +};
+> +
+> +static int run(int argc, const char **argv, const char *prefix)
+> +{
+> +	int i;
+> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+> +	int rc = 0;
+> +	const char *hook_name;
+> +	const char *hook_path;
+> +
+> +	struct option run_options[] = {
+> +		OPT_END(),
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, run_options,
+> +			     builtin_hook_usage, PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
+> +
+> +	if (argc > 2) {
+> +		if (strcmp(argv[2], "--") &&
+> +		    strcmp(argv[2], "--end-of-options"))
+> +			/* Having a -- for "run" is mandatory */
+> +			usage_with_options(builtin_hook_usage, run_options);
+> +		/* Add our arguments, start after -- */
+> +		for (i = 3 ; i < argc; i++)
+> +			strvec_push(&opt.args, argv[i]);
 > +	}
 > +
->  	/*
->  	 * This could be racy so save the date/time now and query_fsmonitor
->  	 * should be inclusive to ensure we don't miss potential changes.
-> @@ -301,6 +343,7 @@ void refresh_fsmonitor(struct index_state *istate)
->  			core_fsmonitor, query_success ? "success" : "failure");
->  	}
->
-> +apply_results:
->  	/* a fsmonitor process can return '/' to indicate all entries are inva=
-lid */
->  	if (query_success && query_result.buf[bol] !=3D '/') {
->  		/* Mark all entries returned by the monitor as dirty */
-> diff --git a/repo-settings.c b/repo-settings.c
-> index f7fff0f5ab83..93aab92ff164 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -58,6 +58,9 @@ void prepare_repo_settings(struct repository *r)
->  		r->settings.core_multi_pack_index =3D value;
->  	UPDATE_DEFAULT_BOOL(r->settings.core_multi_pack_index, 1);
->
-> +	if (!repo_config_get_bool(r, "core.usebuiltinfsmonitor", &value) && va=
-lue)
-> +		r->settings.use_builtin_fsmonitor =3D 1;
+> +	/* Need to take into account core.hooksPath */
+> +	git_config(git_default_config, NULL);
 > +
->  	if (!repo_config_get_bool(r, "feature.manyfiles", &value) && value) {
->  		UPDATE_DEFAULT_BOOL(r->settings.index_version, 4);
->  		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE=
-_WRITE);
-> diff --git a/repository.h b/repository.h
-> index b385ca3c94b6..d6e7f61f9cf7 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -29,6 +29,8 @@ enum fetch_negotiation_setting {
->  struct repo_settings {
->  	int initialized;
->
-> +	int use_builtin_fsmonitor;
+> +	hook_name = argv[1];
+> +	hook_path = find_hook(hook_name);
+> +	if (!hook_path) {
+> +		error("cannot find a hook named %s", hook_name);
+> +		return 1;
+> +	}
+> +	rc = run_found_hooks(hook_name, hook_path, &opt);
+
+Hum, what's the reasoning for not letting the hook.h call look up the
+hook path for itself? I scanned through the v1 cover and older version
+of this patch and didn't see any reasoning. To me, having the builtin
+look up paths feels like incorrect layering.
+
+> +int cmd_hook(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct option builtin_hook_options[] = {
+> +		OPT_END(),
+> +	};
 > +
->  	int core_commit_graph;
->  	int commit_graph_read_changed_paths;
->  	int gc_write_commit_graph;
-> --
-> gitgitgadget
->
->
+> +	if (!strcmp(argv[1], "run"))
+> +		return run(argc, argv, prefix);
+
+Hum. This means that 'run' will still be included in argv for run(),
+which I see that it works around silently. I personally find that to be
+confusing - maybe at least a comment pointing it out, if you don't like
+the idea of adjusting argv before passing it to run()?
+
+> diff --git a/git.c b/git.c
+> index 18bed9a9964..540909c391f 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -538,6 +538,7 @@ static struct cmd_struct commands[] = {
+>  	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
+>  	{ "hash-object", cmd_hash_object },
+>  	{ "help", cmd_help },
+> +	{ "hook", cmd_hook, RUN_SETUP },
+
+Hm. RUN_SETUP requires a gitdir, which I suppose makes sense as this is
+a pre-config-hooks world.
+
+Does this mean "git send-email" will abort if I try to run it with no
+gitdir (which I often do)? I looked ahead to patch 10 and it doesn't
+look like there's a significant change to the error handling, so I guess
+that if it works for me today, it will work for me with this change too.
+
+Later config-based hooks will mean that such hooks could exist without a
+gitdir, but we can cross that bridge when we get there :)
+
+> --- /dev/null
+> +++ b/hook.c
+> @@ -0,0 +1,114 @@
+> +#include "cache.h"
+> +#include "hook.h"
+> +#include "run-command.h"
+> +
+> +void run_hooks_opt_clear(struct run_hooks_opt *o)
+> +{
+> +	strvec_clear(&o->env);
+> +	strvec_clear(&o->args);
+
+Maybe more graceful to nullcheck within the _clear() function before
+dereferencing 'o'? That way callers don't need to worry about NULL
+checking on their end.
+
+> +static int pick_next_hook(struct child_process *cp,
+> +			  struct strbuf *out,
+> +			  void *pp_cb,
+> +			  void **pp_task_cb)
+> +{
+> +	struct hook_cb_data *hook_cb = pp_cb;
+> +	struct hook *run_me = hook_cb->run_me;
+> +
+> +	if (!run_me)
+> +		BUG("did we not return 1 in notify_hook_finished?");
+
+I'm not sure I like this message, even as a BUG(), although the things
+I'd rather say ("run_me was NULL unexpectedly!") are obvious as soon as
+you grep the codebase. So I think I dislike it for no reason :)
+
+[...]
+
+> +static int notify_start_failure(struct strbuf *out,
+> +				void *pp_cb,
+> +				void *pp_task_cp)
+> +{
+> +	struct hook_cb_data *hook_cb = pp_cb;
+> +	struct hook *attempted = pp_task_cp;
+> +
+> +	/* |= rc in cb */
+> +	hook_cb->rc |= 1;
+
+Yuck, I think I wrote this comment... yikes. Maybe something like
+"hook_cb->rc reflects cumulative failure state" instead?
+
+> +static int notify_hook_finished(int result,
+> +				struct strbuf *out,
+> +				void *pp_cb,
+> +				void *pp_task_cb)
+> +{
+> +	struct hook_cb_data *hook_cb = pp_cb;
+> +
+> +	/* |= rc in cb */
+> +	hook_cb->rc |= result;
+
+(And same as above.)
+
+> +int run_found_hooks(const char *hook_name, const char *hook_path,
+> +		    struct run_hooks_opt *options)
+> +{
+> +	struct hook my_hook = {
+> +		.hook_path = hook_path,
+
+As mentioned earlier, I think it is neater - and better for config-based
+hooks in the future - if my_hook.hook_path is set by find_hooks()
+directly instead of by being passed in, here. (I expect you did it this
+way because one of the later hooks lives in an odd place - but I seem to
+remember that one being strange in other ways, too, and I ended up
+letting it manage its own affairs in my attempt. So I'll look forward to
+seeing whether you handled that differently.)
+
+[...]
+
+> +int run_hooks(const char *hook_name, struct run_hooks_opt *options)
+> +{
+> +	const char *hook_path;
+> +	int ret;
+> +	if (!options)
+> +		BUG("a struct run_hooks_opt must be provided to run_hooks");
+> +
+> +	hook_path = find_hook(hook_name);
+> +
+> +	/* Care about nonexistence? Use run_found_hooks() */
+> +	if (!hook_path)
+> +		return 0;
+
+Ah, I see - you've done it this way so that builtin/hook.c can complain
+"You tried to run pre-commit hook but you don't even have one!".
+
+Hm. I think I dislike this comment for the same reason I dislike the one
+much earlier in this patch - it's different from how I would have
+written it. But I do think it still conveys the exact same information (I
+would have said "If you need to act on a missing hook, use
+run_found_hooks() instead") so chalk it up to difference in tone
+preferences and ignore me :)
+
+> diff --git a/hook.h b/hook.h
+[...]
+> +	/* Number of threads to parallelize across */
+> +	int jobs;
+
+I wonder whether it's worth changing the comments here...
+
+[...]
+> +/*
+> + * Callback provided to feed_pipe_fn and consume_sideband_fn.
+> + */
+
+...and here, since they don't mean anything in the context of this
+specific commit? But they will mean something later on in the series.
+
+> +/*
+> + * Calls find_hook(hookname) and runs the hooks (if any) with
+> + * run_found_hooks().
+> + */
+> +int run_hooks(const char *hook_name, struct run_hooks_opt *options);
+> +
+> +/*
+> + * Takes an already resolved hook and runs it. Internally the simpler
+> + * run_hooks() will call this.
+> + */
+> +int run_found_hooks(const char *hookname, const char *hook_path,
+> +		    struct run_hooks_opt *options);
+
+The comments in the header here resolve any concerns I had about the
+comments in the run_hooks() implementation. I like these a lot.
+
+> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+> new file mode 100755
+> index 00000000000..f6ff6c4a493
+> --- /dev/null
+> +++ b/t/t1800-hook.sh
+> @@ -0,0 +1,131 @@
+> +#!/bin/bash
+> +
+> +test_description='git-hook command'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'git hook run -- nonexistent hook' '
+
+Nit: Since you take '--' in 'git hook run' now, can you use something else as
+a delimiter in the test names? I keep reading these as "here we will
+call `git hook run -- nonexistent hook`" :/
+
+> +	cat >stderr.expect <<-\EOF &&
+> +	error: cannot find a hook named does-not-exist
+> +	EOF
+> +	test_expect_code 1 git hook run does-not-exist 2>stderr.actual &&
+> +	test_cmp stderr.expect stderr.actual
+
+I'm not wild about matching directly against the error message; that
+means that the test will be a pain to update any time we update the
+error message language. I'd prefer an approach where we check that the
+error is for the reason we expect (by ensuring .git/hooks/does-not-exist
+is not there in the fs) and then check that 'git hook run' fails, but do
+not particularly care about the error message.
+
+> +test_expect_success 'git hook run -- stdout and stderr handling' '
+
+I have a slight preference towards "the name of the test tells me
+exactly what is supposed to happen" - which means I'd prefer to see this
+named "stdout and stderr both write to hook's stderr". Too chatty,
+maybe, though.
+
+> +test_expect_success 'git hook run -- out-of-repo runs excluded' '
+> +	write_script .git/hooks/test-hook <<-EOF &&
+> +	echo Test hook
+> +	EOF
+> +
+> +	nongit test_must_fail git hook run test-hook
+
+I wonder if it's necessary to enforce this. I'm just thinking, in a
+config-based hook world later on, it will make sense to allow nongit
+runs - specifically, I'd use the heck out of a send-email hook to fixup
+my In-Reply-To lines, and I always run git-send-email from a nongit dir,
+because I keep all my mailed patches stored away out of repo.
+
+What's the general feeling towards "this is how it works, but we don't
+have a good reason to require it"?
+
+> +test_expect_success 'git -c core.hooksPath=<PATH> hook run' '
+> +	mkdir my-hooks &&
+> +	write_script my-hooks/test-hook <<-EOF &&
+> +	echo Hook ran >>actual
+> +	EOF
+> +
+> +	cat >expect <<-\EOF &&
+> +	Test hook
+> +	Hook ran
+> +	Hook ran
+> +	Hook ran
+> +	Hook ran
+> +	EOF
+
+I'm not sure I like this - collecting multiple runs into one "actual"
+and only comparing it once at the end. Are there other places in the
+codebase that do this?
+
+> +
+> +	# Test various ways of specifying the path. See also
+> +	# t1350-config-hooks-path.sh
+> +	>actual &&
+> +	git hook run test-hook 2>>actual &&
+> +	git -c core.hooksPath=my-hooks hook run test-hook 2>>actual &&
+> +	git -c core.hooksPath=my-hooks/ hook run test-hook 2>>actual &&
+> +	git -c core.hooksPath="$PWD/my-hooks" hook run test-hook 2>>actual &&
+> +	git -c core.hooksPath="$PWD/my-hooks/" hook run test-hook 2>>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'set up a pre-commit hook in core.hooksPath' '
+> +	>actual &&
+> +	mkdir -p .git/custom-hooks .git/hooks &&
+> +	write_script .git/custom-hooks/pre-commit <<-\EOF &&
+> +	echo CUSTOM >>actual
+> +	EOF
+> +	write_script .git/hooks/pre-commit <<-\EOF
+> +	echo NORMAL >>actual
+> +	EOF
+> +'
+
+Is this setup test a leftover from a later commit?
+
+
+Overall, I think I like the direction your reroll is going - I've needed
+some time to process it. Hopefully I'll be able to get through all or
+most of the series this week, but there's a lot going on here, too. I'll
+do what I can. Thanks for the help.
+
+ - Emily
