@@ -2,94 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AA18C48BDF
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 03:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37800C48BE6
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 03:42:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB9BC61055
-	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 03:02:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3B0A6128E
+	for <git@archiver.kernel.org>; Mon, 14 Jun 2021 03:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232320AbhFNDEC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Jun 2021 23:04:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64362 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232302AbhFNDEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jun 2021 23:04:00 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6189ED7A27;
-        Sun, 13 Jun 2021 23:01:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WKBI3CQxmGYS
-        PZn7dWhmcRCzJVyr+uynGRN2O53cNJw=; b=JU8p+Yz1OR+nxyZM6Dl32u7z5GQE
-        KLf8t43Z7lz3NB2X3XX6ARIANHK/q98Cc6ro8EmAuH8Wnh7Z+9i3VBF2FAicijf1
-        w1l/U1UvdsBCvtAB/d/FtNSf+6MtnTKfeaCjCVp/0MLnBKKG4n+Qrh2cVq2M5Sqv
-        M/I8W3bIrNebC+Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5787ED7A26;
-        Sun, 13 Jun 2021 23:01:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.172.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA83FD7A25;
-        Sun, 13 Jun 2021 23:01:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/4] test-lib-functions: introduce test_line_count_cmd
-References: <20210612042755.28342-1-congdanhqx@gmail.com>
-        <20210612042755.28342-2-congdanhqx@gmail.com>
-        <878s3d286c.fsf@evledraar.gmail.com>
-Date:   Mon, 14 Jun 2021 12:01:57 +0900
-In-Reply-To: <878s3d286c.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sun, 13 Jun 2021 15:36:11 +0200")
-Message-ID: <xmqqtum1ywre.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232270AbhFNDo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Jun 2021 23:44:59 -0400
+Received: from mail-il1-f180.google.com ([209.85.166.180]:38648 "EHLO
+        mail-il1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232245AbhFNDo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jun 2021 23:44:58 -0400
+Received: by mail-il1-f180.google.com with SMTP id d1so10995232ils.5
+        for <git@vger.kernel.org>; Sun, 13 Jun 2021 20:42:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ioT0q7rkDYjwtRceJFxfd94mqdmjvmdACls0X9OFjXM=;
+        b=SruIJxyK4udAFy5s8aAymq/LHG93h2uK0gz4b9u9AwFaf39+BCnopDUdArNQIHzWbs
+         3SzkBU6kPLBBOx4Bx2IhCCIJL4QKyiUy/KmTizVf7QKbzoELw9Vtw08pgSO5FTysH7fZ
+         5qhfkMoF1H5d/NXqcUAuuAaI3QYIChZ0Q62e4gBUs0GIRwoA3sTzU92LitTwJq9jcE+8
+         G6b0mQz/ASrR27KV7FA7LbaQTAzOhdGeZ+KepkKR9wVF6NJNFr0GyVRO2QDBjn1W2lyp
+         uI/8ABXqUzsdPv3W8vJlBVyY/rshDqnxszWNfXUBdM0F93cLOwbMasurMl9O/ksWb4TI
+         NbRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ioT0q7rkDYjwtRceJFxfd94mqdmjvmdACls0X9OFjXM=;
+        b=aYw/p3279EBmEiHczoo88F3vZnlVdr4dYHNaXzbURbXvcbaHwHr0FOg7VXJtDqirNU
+         i0WFR91XvsMmTtn4H2kf6TpR4x22AD5k5VV+G3WHs8EAHxaDDNB0mAg+PJwqHwLkJXH5
+         aL9yO6N6qwmZO2iJJhU3npy1ZtPPm8lSF7ciwIvpjQeCFxM19iAgfR6yLqPaNSpXvvt4
+         Qa8nKY+4WwYFy43AtoJx462Dyh5A2hlaD1i2zWZYO1gOt4CfUU03WFW7x5csF4ZuQAv9
+         dXNNYO8hfJbjt1e3qHib+IsHhaETKeJMyuuO6zgMm0pkMSPxYMFppgWNjPxn+1mQRSGZ
+         NkNg==
+X-Gm-Message-State: AOAM530s2EOQ5CVVFEK12BGh5qEM+XR6H8bQCju9KXwTFZbo614alkiE
+        SlMtzkmitbmC43OwlJT8NC21qAya91Q0QM/L2bk=
+X-Google-Smtp-Source: ABdhPJxZ+N3bcPb0Y0FM/o+Iz00R9o6t6F63eeRJyqjjBakx2cG8KEBLTE6pon5XzJfQG4kzUQezqesWnVZeWkLItbk=
+X-Received: by 2002:a05:6e02:12c9:: with SMTP id i9mr12425085ilm.17.1623642101569;
+ Sun, 13 Jun 2021 20:41:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E1CC7E34-CCBC-11EB-866A-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+References: <CAOLTT8QHL-6-DxoRKtx5cVp_DePxtWYU4CuBweYfCG1hGZZhaA@mail.gmail.com>
+ <CAPig+cT09Y9GSTnbtY8d9e0=2C8398Ey=+p2e3L6tArOrsnaAw@mail.gmail.com>
+In-Reply-To: <CAPig+cT09Y9GSTnbtY8d9e0=2C8398Ey=+p2e3L6tArOrsnaAw@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 14 Jun 2021 11:41:30 +0800
+Message-ID: <CAOLTT8TegJSKgf97F_4AF8p40sifo_1=bjNDZFkhHmuozfd+bA@mail.gmail.com>
+Subject: Re: [GSoC] Git Blog 4
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> More generally speaking we have a bunch of helpers that have this
-> potential issue/bug, in practice it's not a big deal.  A test that's
-> being overly specific and doing a test_cmp on unbounded "find" output o=
-r
-> whatever is likely buggy anyway.
-
-Unless we are testing ".gitignore", "ls-files -o", or "git status".
-Carving out $TRASH_DIRECTORY/.git/trash/ directory to store these
-throwaway files would be less error prone from that point of view.
-
->> +		case "$1" in
->> +		--out)
->> +			outop=3D"$2"
->> +			outval=3D"$3"
->> +			;;
->> +		--err)
->> +			errop=3D"$2"
->> +			errval=3D"$3"
->> +			;;
+Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=8814=
+=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=887:28=E5=86=99=E9=81=93=EF=BC=
+=9A
 >
-> It looks like the end-state of the series leaves us with no user of the
-> --err option; Maybe it's good to have it anyway for completeness, or
-> just skip it? ...
+> On Sun, Jun 13, 2021 at 10:18 AM ZheNing Hu <adlternative@gmail.com> wrot=
+e:
+> > My fourth week blog finished:
+> > The web version is here:
+> > https://adlternative.github.io/GSOC-Git-Blog-3/
+>
+> I suppose you meant: https://adlternative.github.io/GSOC-Git-Blog-4/
 
-I'd rather not to see --out added if we have not yet any use for the
-other one.  When the time comes that we want to validate the error
-stream, we may find that we want to check _both_, and we'd have to
-discard dead code and replace with what we want, instead of just
-adding what we want to a working code without dead code.
+Yeah, it is 4. :-)
+
+--
+ZheNing Hu
