@@ -2,72 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34FB7C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8167FC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:39:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B51961625
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:36:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6965F61625
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230316AbhFOQip (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 12:38:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41020 "EHLO
+        id S231187AbhFOQlQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 12:41:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbhFOQio (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 12:38:44 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D7FC061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:36:38 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id p5-20020a9d45450000b029043ee61dce6bso7796053oti.8
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:36:38 -0700 (PDT)
+        with ESMTP id S229937AbhFOQlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 12:41:14 -0400
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FF72C061767
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:39:09 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id o5-20020a4a2c050000b0290245d6c7b555so3653659ooo.11
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=6Xitf3InIUVjBCq8K6+ZiaZU8EpbrWP9LBfAyw1E6js=;
-        b=awRlhEf7vDQnuSv3jWM5GMENUTbMBmxXcGg68LxJelAGbwILKXITixVs+teC8lJ1qJ
-         0pXP2NHYUu1tM03rIJ+rQD0B/Oyh3/YnLF5LnEohD2f2NuI7ahQGJE6AoKNTFdiRmdLi
-         eIdfv5xy37ankT1RLyJGuCVWAqx4J8Q85THavIqHSC7BvF99vBQu3bnKbQIett66nY9A
-         j/YE33304F6arIUb3FY7JGtora3Dvd+RfRXrEETNaTII2z87RRqZ37f5Hn2+ItImVA1x
-         ykmE4oHsjRktE/lu44sS3RH6y0z+HZ7eoenNxys2wk3sUvI2DefHnZQkWQ1QXFl5M5b1
-         1iPA==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=O3uuJfjrqqIEBgh1nfXPCfn07ei+j7Frqxee1DCtqcM=;
+        b=HvU65ASy1lAF+TgQsamVTQq+X8+etpezXvT1LFuvlNBM28W5xp7jlYdt+UjpLaMWGo
+         jPAuNGNhU/+OBLnOOPevwQZXczSd0iGJIZKvZIqlAGkNEDvj0f0cqC6RnDFoctfEcPGa
+         Ox1gp2br5xR73taRBK3driVpxyLk0Vx1pvm7xC5q301bHudlmAJ4U/1TYhJEKZhhXGS2
+         CQwMC0b+WwfoL8JFKL/2QVdnn14D9IHklA1qulSIglQ/KzVhAzCMs7CfNCe873SQ73g2
+         so2Aexq5V4HBbmrUkp7PoDU9Sgun9JdIanTSLGDDd6AYTD9d1JGbSOPYOuQlh0B5NZ9k
+         65/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=6Xitf3InIUVjBCq8K6+ZiaZU8EpbrWP9LBfAyw1E6js=;
-        b=OC65SclWZdKrniV8QR6WmX6TYzmM4BSrIL26VEXe7OTLfcLN7t9UuQ+xG+V6zi9gZg
-         ndnQSNbSKSHGPL1diClVXFwS1rHvXkGI9brCIqh384zMe/Lbr1WH2dKGcAupYFcqOLW3
-         CFvN2z62NjTK2WDasDtiFxmueNbBzQsx0cjF084LRX8YIjOpU0lxguovzXxEXm3tn94Z
-         Si5ky6ZJo15db54lF3fJI25lg+pqfqCA71pgxay4FJr45IVYTE3TAQkshedoZHJU6auP
-         lOTVE0Az4ao+GUH2WK8MTTu8PCYvJVldXBOEE6sW6+V3FM5fQ+iNGJpiUY0CG8AyAN4A
-         Xsyg==
-X-Gm-Message-State: AOAM530oa5gJna46NJBdOmCF4ylpo1h7nk6vVTOofp2BpBu/qa5p1L/c
-        kWBv+SpJd0uAlBCOzpxqoYc=
-X-Google-Smtp-Source: ABdhPJya8B7AOn9/XevRq+AmnLLp3Oi6z4s/rBWOIXj9Qn1AERWRnaJlQSVtz98Mav8XI9/+uqcyqg==
-X-Received: by 2002:a05:6830:1c3d:: with SMTP id f29mr150627ote.248.1623774996672;
-        Tue, 15 Jun 2021 09:36:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=O3uuJfjrqqIEBgh1nfXPCfn07ei+j7Frqxee1DCtqcM=;
+        b=ZwnUrGGgrOwmKVJXxAK5Yy8nHgNeOI+wcMbBy5blY55OT0HPNry9OW4tSpuyAC/AWJ
+         0pVq/lXXxinU9H9pTufxrYMds3JNUbsYv8+/tCM/ih5EahR9QSbuxYq0bxCb7tL6u6Qd
+         gRWCBLUrYKn+ISs7qgrPRMivPXYtO3jP5wbw5f1bif1nXaUPL+oIneAd5itxePNyTz59
+         KvF/dQ19fHhM2+v/TwEioaxEYg8h3iCZRN73BuqYYQGrBm3ED7AiJtmcHHKFveb2lkzw
+         fiyuoipxPjc6ERRJaDX/9GmZQ2pemyqTO0v5P/Je3CGzp3+mqliPnGkbBpE4xJRiS+jp
+         NwFA==
+X-Gm-Message-State: AOAM531H9iAWdk6/6bizbgBcQXei1HcvK/nPT31lxqjptz4n+2arv5gb
+        DAaRNJtImf+AbhwH93UAuL+qjAEe+G3a7g==
+X-Google-Smtp-Source: ABdhPJw7J+QsB+gckx5SBrWmJOAwJDtwGgt3cYJOkNtBh2kXRL9TcUuj0Yni8o85ZYbiGmRFZfzW3Q==
+X-Received: by 2002:a4a:ba03:: with SMTP id b3mr98772oop.70.1623775148684;
+        Tue, 15 Jun 2021 09:39:08 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id c64sm1738686oif.30.2021.06.15.09.36.35
+        by smtp.gmail.com with ESMTPSA id c64sm1740718oif.30.2021.06.15.09.39.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 09:36:36 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 11:36:35 -0500
+        Tue, 15 Jun 2021 09:39:08 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 11:39:07 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Message-ID: <60c8d713faf2_1296f20819@natae.notmuch>
-In-Reply-To: <94ce6d7d-f923-edb3-12f5-4b11149c9f6f@gmail.com>
+To:     Paul Smith <paul@mad-scientist.net>, git@vger.kernel.org
+Message-ID: <60c8d7ab2e5ce_1296f2089@natae.notmuch>
+In-Reply-To: <88d70774f702f32b6618c626f44b1f216e03c297.camel@mad-scientist.net>
 References: <20210611202819.47077-1-felipe.contreras@gmail.com>
  <20210611202819.47077-3-felipe.contreras@gmail.com>
  <94ce6d7d-f923-edb3-12f5-4b11149c9f6f@gmail.com>
+ <88d70774f702f32b6618c626f44b1f216e03c297.camel@mad-scientist.net>
 Subject: Re: [PATCH 2/2] comments: avoid using the gender of our users
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -77,39 +73,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 6/11/2021 4:28 PM, Felipe Contreras wrote:
-> > We generally avoid specifying the gender of our users in order to be
-> > more politically correct, but sometimes due to lack of time and/or
-> > creativity a few slip by.
+Paul Smith wrote:
+> On Tue, 2021-06-15 at 09:31 -0400, Derrick Stolee wrote:
+> >   but sometimes a few slip by due to habit.
 > 
-> s/politically correct/inclusive/
-
-I don't believe avoiding pronouns makes us more inclusive, and I've yet
-to see an example where any person would feel personally excluded from.
-
-> Instead of "lack of time and/or creativity" perhaps be more
-> generous to our fellow contributors and instead say...
-
-I believe my wording is more generous because it implies they tried,
-whereas yours implies they didn't even try.
-
->   but sometimes a few slip by due to habit.
+> Or perhaps just, "but sometimes a few slip by" ?
 > 
-> > @@ -908,7 +908,7 @@ int parse_expiry_date(const char *date, timestamp_t *timestamp)
-> >  		/*
-> >  		 * We take over "now" here, which usually translates
-> >  		 * to the current timestamp.  This is because the user
-> > -		 * really means to expire everything she has done in
-> > +		 * really means to expire everything that has been done in
-> 
-> nit: s/has been/was/
-> 
-> We can be a little more active here.
+> No need to suggest a reason IMO.
 
-True. That's probably better.
+There's no need, but I would prefer to imply no ill intent, nor neglect,
+iow: they tried.
 
-Cheers.
+But I'm fine with not specifying a reason too.
 
 -- 
 Felipe Contreras
