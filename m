@@ -2,150 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2DFEC48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3453C48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:24:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EEB3613ED
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:06:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C27F561410
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231220AbhFOKIi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 06:08:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34280 "EHLO
+        id S231214AbhFOK0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 06:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231214AbhFOKIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 06:08:37 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D5DC061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:06:30 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id s15so9386743edt.13
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:06:30 -0700 (PDT)
+        with ESMTP id S231220AbhFOK0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 06:26:13 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 470BBC061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:24:09 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id r16so17255164oiw.3
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=fbt67KeJrZ+vGnowLvcihNc+/u7AQ8c3TybcgJ/vT0g=;
-        b=qf+xdwNB6iTyS0HtejLiVyxErGQETGFhDxtw7q7UlfFacDKB0Viginmg6w3Razfp6U
-         S6G4/0VVk6LdvC8MqUBb77M/dXfF2sTHPTumOFyZoj1XDpCOpGXGUJpzHknWfs5H5fJ/
-         cWTNk8c6SX4qUZbZMaCBi3/OoLHhS83LfRgxfuTm0TAumkLbG1zeblQiSYYvn7tkHLlo
-         IcO8+ncz22pYJFW021elWcZ0itE6fcUqi7wLXOTW1moLlwhqLs2UOFq+695C2dd4+R5N
-         qOBD0FQFfWVhp7P68rdJS8puo87xVUxPsqkk77Sd7cyiPtcxZj4LOI2Txxthu5h9FS7g
-         ltRg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=pgeebM6pG83TaxfP1ycqnhzAIy39Ziq79ETq3Eqp/Bk=;
+        b=A9q01+fcV43MzmisR2CSn5fRX0kcEk5zw4JksurE/mXebk1ZRcPgI/nUz/Gi3n1Naa
+         VT98z9uzDbBEDFTUrE2UyrByqEvS1Kww3v5lGu4DQ90b+eL8eSN74va8qiqYDD1O/f3B
+         XNHaABg+9b34CZ3d+2+Onib8jqsaqGkiNeCgCgEBZbXjOIY74q32QaO3YpWqRGnh1Uq7
+         g3DFm4wRS3n/v3BvNXiDCVA3a3FI2jeA7rN7hdcvlaJXCl9dgsn/UU8pW4vOYNEUq8X/
+         Hp1hIw4ZcdVUNZLJytEzC2gzXZDdFS6Obh1D4IzfwAKnsSmTFFQYX9Tx1bCRzDxxsVVG
+         m01w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=fbt67KeJrZ+vGnowLvcihNc+/u7AQ8c3TybcgJ/vT0g=;
-        b=ntRmlG6hYRr5ZxcrjHlLLAoQriV3Kt+/OtLmq1O338OGPeFGTzBCoctjyg1H11ef2t
-         ukI3beNpdxK+E8f2ScP6doBcqNNbb5SolPuZIEQjvd31oA1WQ/dJdCUMTm3h1UNxjov7
-         loNWr8haVJgMKQUcAdYfKg6EgO/U8Gay/WhzX9yjrxv+uBR+ANe4pB/iyBJrFchD40Fs
-         NXDx2FEbo9ruC9Ne93JI4QUejAuKK7z3T/S5txzERthfFccnbUDT8Y1waHS5fA2YGiMD
-         muHanSkfBYb01UwMG6TRvnJ8G5mnI54lA8LkiiJepU13F5Dpnw/o1dNRrKKjH+Chrwmj
-         CZqQ==
-X-Gm-Message-State: AOAM530ECpMnAM258Vm7HELMUPc6U0WCV5q7qMcLys6gOAy58r1/bFsv
-        b6P3WWZXbikFagLlwfD0XfCQBpiXnnxO8Q==
-X-Google-Smtp-Source: ABdhPJwvg7vIGDew4oXlJJKqNHZ1cIxxl6kvU2BjDqniikYqwIfMA1JDgI7LQyB4MHb8fh9Zbh4KnQ==
-X-Received: by 2002:aa7:d84e:: with SMTP id f14mr22118528eds.12.1623751589052;
-        Tue, 15 Jun 2021 03:06:29 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id v21sm3997997eju.78.2021.06.15.03.06.28
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=pgeebM6pG83TaxfP1ycqnhzAIy39Ziq79ETq3Eqp/Bk=;
+        b=easte6jlK06JSA5XsCgT3Gg3XWB2jevdNvqiUU94m4jgicH8M8hjQOIBzT3SDG73S4
+         vSpnyjWGNV/dhqeTJEGYMeKa8AIMZl7k7KwgChk6/G0MHK/spQV2KmjMoNemo47Af37X
+         LYXHAQStCHtsVQNFUChRwU78eDg7ARpn5cVLxLHXSW8F5v7kiMKF2PbRTtCaUERoaqip
+         aidz8IFTWM81jly7r6anmgtghjryBHhXK8dH7bZh8FuiqGsNhi150rqU9lYRy9UKQBKV
+         Tlt2iykRCPyLbtoBPs0WUfoQmmmrNeJaAf3TyeRNM3OS3OkJ+wbTgUcVT1UjI5WlWfxk
+         cS9w==
+X-Gm-Message-State: AOAM531twExr5G4ZuXanXdQwDW6us3nV17ebtcibgW0pMm+HCMiYtcnL
+        ZGJSgYTk6Knr2H4wGesUsRI=
+X-Google-Smtp-Source: ABdhPJzJzoI9vQFbCqmz96AQTxRlh/SdVGFYOOrYbuL7E8Z4yPDgm1Y0ZsiczsbIrl/wC9sOs4yamQ==
+X-Received: by 2002:aca:4bd7:: with SMTP id y206mr14025404oia.40.1623752648616;
+        Tue, 15 Jun 2021 03:24:08 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id 16sm3606855oie.33.2021.06.15.03.24.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 03:06:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Sibi Siddharthan <sibisiv.siddharthan@gmail.com>
-Subject: Re: [PATCH v2 30/30] hook-list.h: add a generated list of hooks,
- like config-list.h
-Date:   Tue, 15 Jun 2021 12:02:31 +0200
-References: <cover-00.31-00000000000-20210528T110515Z-avarab@gmail.com>
- <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com>
- <patch-30.30-bc086454d68-20210614T101920Z-avarab@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <patch-30.30-bc086454d68-20210614T101920Z-avarab@gmail.com>
-Message-ID: <87im2fzbks.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        Tue, 15 Jun 2021 03:24:08 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 05:24:06 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?VXdlIEtsZWluZS1Lw7ZuaWc=?= 
+        <u.kleine-koenig@pengutronix.de>
+Message-ID: <60c87fc6a87ba_e6332084f@natae.notmuch>
+In-Reply-To: <YMhx2BFlwUxZ2aFJ@coredump.intra.peff.net>
+References: <20210613143155.836591-1-felipe.contreras@gmail.com>
+ <YMYnVWSEgxvKRU9j@coredump.intra.peff.net>
+ <60c647c1d9b5c_41f452089@natae.notmuch>
+ <YMbexfeUG78yBix4@coredump.intra.peff.net>
+ <60c82a622ae66_e5292087f@natae.notmuch>
+ <YMhx2BFlwUxZ2aFJ@coredump.intra.peff.net>
+Subject: Re: [PATCH] xdiff: implement a zealous diff3
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King wrote:
+> On Mon, Jun 14, 2021 at 11:19:46PM -0500, Felipe Contreras wrote:
+> 
+> > > My point is that if you are going to repost a patch that has known
+> > > problems,
+> > 
+> > It was not known that it had problems.
+> > 
+> > That fact that person X said patch Y had a problem doesn't necessarily
+> > mean that patch Y has a problem.
+> > 
+> >   1. The problem in the past might not apply in the present
+> >   2. The problem X person had might be specific to his/her setup
+> >   3. The problem might be due a combination of patches, not the patch
+> >      itself
+> > 
+> > Plus many others.
+> > 
+> > A logical person sees evidence for what it is, and the only thing that
+> > person X saying patch Y had a problem means, is that person X said patch
+> > Y had a problem.
+> 
+> Wow.
+> 
+> For one thing, you could still relay the _report_ of a problem along
+> with the patch, which would be valuable information for reviewers.
 
-On Mon, Jun 14 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Yes I could have, and knowing what I know now I wouldn't even have even
+posted the patch (not without a proposed fix). Woulda, coulda, shoulda.
 
-> Resolve a long-standing TODO item in bugreport.c of there being no
-> centralized listing of hooks, this fixes a bug with the bugreport
-> listing only knowing about 1/4 of the p4 hooks. It didn't know about
-> the "reference-transaction" hook either.
->
-> We can now make sure this is kept up-to-date, as the hook.c library
-> will die if asked to find a hook we don't know about yet. The only
-> (undocumented) exception is the artificial "test-hook" used in our own
-> test suite. Move some of the tests away from the "does-not-exist"
-> pseudo-hook, and test for the new behavior.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  .gitignore           |  1 +
->  Makefile             | 14 +++++++++++---
->  builtin/bugreport.c  | 44 ++++++++------------------------------------
->  generate-hooklist.sh | 24 ++++++++++++++++++++++++
->  hook.c               | 22 ++++++++++++++++++++++
->  t/t1800-hook.sh      | 14 +++++++++++---
->  6 files changed, 77 insertions(+), 42 deletions(-)
->  create mode 100755 generate-hooklist.sh
->
-> diff --git a/.gitignore b/.gitignore
-> index de39dc9961b..66189ca3cdc 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -191,6 +191,7 @@
->  /gitweb/static/gitweb.min.*
->  /config-list.h
->  /command-list.h
-> +/hook-list.h
->  *.tar.gz
->  *.dsc
->  *.deb
-> diff --git a/Makefile b/Makefile
-> index a6b71a0fbed..d0532f3c744 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -817,6 +817,7 @@ XDIFF_LIB =3D xdiff/lib.a
->=20=20
->  GENERATED_H +=3D command-list.h
->  GENERATED_H +=3D config-list.h
-> +GENERATED_H +=3D hook-list.h
+But that's not the point. The point is that I did not repost a patch with
+known problems *today*. Nor did I know what kind of problems, or
+how pervasive the issue was.
 
-This fails CI on the Windows boxes (or some of them...) because we hard
-rely on cmake there since semi-recently; See 4c2c38e800f (ci:
-modification of main.yml to use cmake for vs-build job, 2020-06-26).
+Presumably you had to try at least 2,500 merges to find *one* issue.
 
-Fixing that seems to be a matter of copying some similar boilerplate
-around, but I haven't tried.
+I ran all the tests for diff3 with zdiff3 and they passed without
+problems.
 
-I was somewhat surprised that cmake support being semi-mandatory seems
-to have snuck up on us (or at least on me). The docs in
-compat/vcbuild/README still suggest you need make, so perhaps the CI on
-Windows could be split up into something that uses "make" and one that
-just checks for the cmake compatibility.
 
-It's not that I much prefer the Makefile, but I do think the state of
-affairs of needing to duplicate any work of patching the Makefile would
-be a step back for me, but maybe the benefit on Windows is so large as
-to be worth it...
+Merging this patch would have:
+
+ 1. Not broken any tests
+ 2. Not changed any behavior for any user
+ 3. Not have caused any problem for the vast majority (> 99%) of
+    people trying out zdiff3
+
+So there was no carelessness here.
+
+Moreover, I provied the patch at 9:30, at 10:42 you commented about the
+segfault, and 16:24 I had the fix. On a Sunday.
+
+If this is not caring, I don't know what is.
+
+-- 
+Felipe Contreras
