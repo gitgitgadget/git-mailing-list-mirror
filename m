@@ -2,153 +2,356 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC7DEC48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 15:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E17DC48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 15:40:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADFED61621
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 15:21:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 462DB614A7
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 15:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230462AbhFOPYB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 11:24:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52238 "EHLO
+        id S231744AbhFOPm7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 11:42:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230076AbhFOPYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 11:24:00 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87649C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 08:21:55 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id q5-20020a9d66450000b02903f18d65089fso14620109otm.11
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 08:21:55 -0700 (PDT)
+        with ESMTP id S231722AbhFOPm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 11:42:57 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD58CC061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 08:40:51 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id v12so8657902plo.10
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 08:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+3a7qiuzCB18rWjWaTCbE3q0OEHwCrrOouOm2U1OkCQ=;
-        b=MGpueuFAUvurCqZFh6jjGLW1ycIkfS5Ii1OUYCp2kIKGWdqHqP+fz3Qya7LH9Zy9sO
-         FLS34jilAn5C3Uor0VEhwM7GFvz4oy1Qac5AsbrQQrEiD8q5F6NtNRHF2stuvdfOA2UC
-         NK1JFK54og9KL9sQAfMcS4Bo3OPQOaaPUGeGojqeVIJbceCXJETfCpV52WNuTdN8lGSm
-         KxTLe7+0Z+vZJGyFztiTFSmf/KHqB8ffwB9KFDb3LlKLMV1gGtRx8/ZnfrxnlQoJOazl
-         lQlM1iRMHeWqKUatP6Q9HoDJhqqjAneHQTByfQX0PhZ8f3jES7rN/V5RHiGPkSP5c2a8
-         2CVg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=TC6m+wJr3lYoQ5MDx1LAF7ZbJkNAcvMvl6FNI/i1ggw=;
+        b=fLikkr2g7GUwTgOCYdWj7WkqQbBiv8CDjyeRn43MM2/LmtHNItAyGNbjU/5dRmD7zX
+         FgixuVW2pZBqZJQRnyTSfEQsTUxFkhwz6/hunWoLdtxmr/t/y9jY3cFf3OWJ6y3JWxJu
+         l6qAdrXFuv3vRs8O4JNnC/Y5gIWLGFkvixtFCbiOhyCkn/L2e2GUAEkZTeGG2OUkAUzk
+         JfW9YyTwWJDH0mUY0eWtPOU3NOxlHTnZn/FM2fgXuTOoZb19WwABYj72nJ0tN2cSC30Q
+         B/O4L/gCQyU1hg7o7st5jaxIJ13nwnTV0A5QoS/Z8ZjO8GI2uQkm9eWAPzHbf4UevR23
+         wUVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+3a7qiuzCB18rWjWaTCbE3q0OEHwCrrOouOm2U1OkCQ=;
-        b=Xuo7RshB3SA3WzAqORKqadgJO9WGNKG2Y2G7S1q+ss1uyjgsPDR/jThSAi5IbHms0s
-         W0ZmtVDbocQvwj0HPa8hd+owpSndGmRq/MXvCc0zzqWmm2tOSB9fHIFAfopJI0SkYBuS
-         weauPjWjlcuL0darTCabQK++N4rg4d3/9GiM83Lciwk8x1lJ6jAN8nXaA9oNmL706AT2
-         w+hFM8R717tWjUX2HhGNQ9KzmS2jIWF39lcXF5tQIpX/iJPSQlr+Nz2MQ1II0aZ5K9n1
-         CNnidOrwidJzAb0d5iuYdG+HOcKclktQjoFz6t/+KKdlyhQOZCRJejhockA2MdViqIE3
-         XNqQ==
-X-Gm-Message-State: AOAM5312592pf3KFZhBoxsjgv022FLnSQdYy+qaVQZHfFUvyYnRQObsx
-        oUjHfG6aeOfcT+lTm0XJsZNXWUy/5C7pOagjvTI=
-X-Google-Smtp-Source: ABdhPJydueYxlI9M14ki1oQCrXVQqTTuHar6dTVBh1WPANR0DpcZ/7pMzURqvAqWfpPIarD0ZcO+MTs0rFAeui1xhzo=
-X-Received: by 2002:a9d:426:: with SMTP id 35mr17798320otc.162.1623770514836;
- Tue, 15 Jun 2021 08:21:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210613225836.1009569-1-felipe.contreras@gmail.com>
- <20210613225836.1009569-5-felipe.contreras@gmail.com> <CABPp-BGZ2H1MVgw9RvSdogLMdqsX3n89NkkDYDa2VM3TRHn7tg@mail.gmail.com>
- <60c85bfd112a9_e633208d5@natae.notmuch>
-In-Reply-To: <60c85bfd112a9_e633208d5@natae.notmuch>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 15 Jun 2021 08:21:43 -0700
-Message-ID: <CABPp-BEXtJtkkh9Diuo4e1K1ci=vggGxkLRDfkpOH12LM8TCfA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] xdiff/xmerge: fix chg0 initialization
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=TC6m+wJr3lYoQ5MDx1LAF7ZbJkNAcvMvl6FNI/i1ggw=;
+        b=DRqAjwJGhNEVRQzOuSYbOtS8k+C5Bwz9J2XHboYhA6CcRRubzq+m2aUHQ/t0xXMTiC
+         LtlIxdrE2dMJif+xGTKRB5IvfFPt6YzkiDtNe1Nq1VVSRZm7KawtfM8DIg0wCB9ep1lj
+         c9Eambs9fB5AsOrwWdMv4boENWAjKGMwqJ8iiMj+n8ikTLwAbmbNHbvpXujB8g0ZY4fJ
+         1yi0mRhDRi8XKgTCeWYsDTcRqbcOXzHDCyF+8YVa4EyhKYPWcBIc3Zj4XeCNkdkY1eX1
+         ORJVa4tr/OLZZu/Dd7tvuW/ZnKmT/JguDpDzAaZjgY9wFBjWJ2IwFwozCcHR9UHP7USE
+         cSnw==
+X-Gm-Message-State: AOAM5311fuiqYqVoqWkMsuVJ/DqqEYI5Hn+RVK6VchTYyZJhH1Rt5e7C
+        0tpEvBxykGKzUBhAmohaf/4=
+X-Google-Smtp-Source: ABdhPJzcx4vGa34eaUvUnibxctSppTryRzbG7JvV/FXLb/ukHEh9ohZHbj9dbxgXGu2r9CtMx70gdg==
+X-Received: by 2002:a17:90b:400c:: with SMTP id ie12mr25779756pjb.107.1623771651181;
+        Tue, 15 Jun 2021 08:40:51 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:a3d1:fb64:d06b:ab01:2de4])
+        by smtp.gmail.com with ESMTPSA id c62sm16030909pfa.12.2021.06.15.08.40.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jun 2021 08:40:50 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 22:40:48 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/4] test-lib-functions: introduce test_line_count_cmd
+Message-ID: <YMjKACeN1+k2+iBK@danh.dev>
+References: <20210612042755.28342-1-congdanhqx@gmail.com>
+ <20210612042755.28342-2-congdanhqx@gmail.com>
+ <878s3d286c.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <878s3d286c.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 15, 2021 at 12:51 AM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> Elijah Newren wrote:
-> > On Sun, Jun 13, 2021 at 4:04 PM Felipe Contreras
-> > <felipe.contreras@gmail.com> wrote:
-> > >
-...
-> > I'm somewhat worried by the cavalier posting of the zdiff3 patch[1],
->
-> When Uwe sent the patch [1] nobody said it was a "cavalier posting".
-> Jeff King said "I think the patch is correct".
+On 2021-06-13 15:36:11+0200, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> 
+> On Sat, Jun 12 2021, Đoàn Trần Công Danh wrote:
+> 
+> > In Git project, we have multiple occasions that requires checking number
+> > of lines of text in stdout and/or stderr of a command. One of such
+> > example is t6400, which checks number of files in various states.
+> 
+> Thanks for following up on this.
+> 
+> > Some of those commands are Git command, and we would like to check their
+> > exit status.  In some of those checks, we pipe the stdout of those
+> > commands to "wc -l" to check for line count, thus loosing the exit status.
+> >
+> > Introduce a helper function to check for number of lines in stdout and
+> > stderr from those commands.
+> >
+> > This helper will create 2 temporary files in process, thus it may affect
+> > output of some checks.
+> 
+> I think it's fine to just blindly stick the name into a file in the CWD
+> as long as it's not "actual" or some other such obviously likely to
+> conflict name.
+> 
+> The convention you've picked here (I'm not sure if it's existing
+> already) of naming the temp files after the test lib function name is a
+> good one.
+> 
+> More generally speaking we have a bunch of helpers that have this
+> potential issue/bug, in practice it's not a big deal.  A test that's
+> being overly specific and doing a test_cmp on unbounded "find" output or
+> whatever is likely buggy anyway.
 
-The difference here is that Jeff reported segfaults after Uwe sent the
-patch.  Uwe could not have read those reports before he posted the
-patch.  You did read those emails before re-posting the patch.
+I'm going to write into $TRASH_DIRECTORY/.git/trash if .git is-a-dir,
+otherwise to $TRASH_DIRECTORY in the next reroll.
 
-> > Peff already pointed out that you reposted the zdiff3 patch that had
-> > knonw segfaults without even stating as much[3].
->
-> He knew that. I didn't.
+> If it ever becomes a bigger issue we can easily set up two scratch
+> directories during the test, one for the use of the test itself, and one
+> for the internals of the test run itself.
+> 
+> > +# test_line_count_cmd checks the number of lines of captured stdout and/or
+> > +# stderr of a command.
+> > +#
+> > +# NOTE: this helper function will create 2 temporary files named:
+> > +# * test_line_count_cmd_.out; and
+> > +# * test_line_count_cmd_.err
+> > +#
+> > +# And this helper function will remove those 2 files if the check is succeed.
+> > +# In case of failure, those files will be preserved.
+> > +test_line_count_cmd () {
+> > +	local outop outval
+> > +	local errop errval
+> > +
+> > +	while test $# -ge 3
+> > +	do
+> > +		case "$1" in
+> > +		--out)
+> > +			outop="$2"
+> > +			outval="$3"
+> > +			;;
+> > +		--err)
+> > +			errop="$2"
+> > +			errval="$3"
+> > +			;;
+> 
+> It looks like the end-state of the series leaves us with no user of the
+> --err option; Maybe it's good to have it anyway for completeness, or
+> just skip it? ...
 
-You knew he had reported it as a possibility.  That behooved you to
-try to investigate, either by asking him for details to try to
-reproduce, or attempt it on a large range of merges, and then to
-report the results when you reposted the patch.  Or, at the absolute
-minimum, to at least report Peff's report along with your reposting of
-the patch.
+In the re-roll that being prepared, t0041 will be converted, too.
+So --err will have a user.
 
-> > and that you would have included multiple new testcases to the
-> > testsuite both to make sure we don't cause any obvious bugs and to
-> > provide some samples of how the option functions,
->
-> It is not uncommon for v1 of a patch series to be missing something.
-> Uwe's patch series [1] did not include tests either, and nobody focused
-> on that. It is completely reasonable to assume that a reboot of the
-> series wouldn't initially focus on that either.
+> > +		*)
+> > +			break
+> > +			;;
+> > +		esac
+> > +		shift 3
+> > +	done &&
+> > +	if test $# = 0 ||
+> > +	   { test "x$1" = "x!" && test $# = 1 ; }
+> > +	then
+> > +		BUG "test_line_count_cmd: no command to be run"
+> > +	fi &&
+> > +	if test -z "$outop$errop"
+> > +	then
+> > +		BUG "test_line_count_cmd: check which stream?"
+> > +	fi &&
+> > +
+> > +	if test "x$1" = "x!" 
+> > +	then
+> > +		shift &&
+> > +		if "$@" >test_line_count_cmd_.out 2>test_line_count_cmd_.err
+> > +		then
+> > +			echo "error: '$@' succeed!"
+> > +			return 1
+> > +		fi
+> > +	elif ! "$@" >test_line_count_cmd_.out 2>test_line_count_cmd_.err
+> > +	then
+> > +		echo "error: '$@' run into failure!"
+> > +		return 1
+> > +	fi &&
+> 
+> ...I think it's better to not pipe to *.err if we haven't requested it,
+> so under "-v" etc. we can get the stderr.
 
-Not when folks spent several emails in response to the original about
-the finer points of how splitting should or should not work.  Nor when
-folks had reported segfaults with the original patch.  With that
-background, I'd say it's completely unreasonable to assume that a
-reboot of the series comes without any tests unless marked as RFC.
+And with t0041 converted, it reveals some difficulty when implementing
+this suggestion.
 
-> > You didn't do any of that, making me wonder whether this patch is a
-> > solid fix, or whether it represents just hacking around the first edge
-> > case you ran into and posting a shot in the dark.  It could well be
-> > either; how are we to know whether we should trust these patches?
->
-> By assuming good faith [2], and simply asking questions. I don't think
-> assuming the worst and calling into question the competence of a
-> contributor is a good approach.
+Yes, it would be nice if we can get the stderr under -v,
+however, -x will make our life hard, since -x also writes into
+/dev/stderr, and below command is broken:
 
-I did not assume the worst with your patches.  I assumed good faith
-until I was provided with strong counter-evidence as perhaps best
-summarized at https://lore.kernel.org/git/YMbexfeUG78yBix4@coredump.intra.peff.net/.
-That made it clear something was heavily problematic.  If you hadn't
-reposted patches for which there were reported segfaults without
-saying anything about those reports, I would have asked you none of
-those pointed questions.  In fact, I probably wouldn't have asked them
-if your original response to Peff were along the lines of "sorry,
-won't do that again" rather than "I don't know how I was supposed to
-investigate the few segfaults you mentioned. All you said is that you
-never tracked the bug."  It was precisely that cavalier attitude that
-made me question this patch in this manner.
+	test_line_count_cmd --out = 0 test_must_fail git for-each-ref --no-contains something 2>actual.err &&
+	test_i18ngrep ! usage actual.err
 
-> If you want to deride the hours I
-> spent working for the community for free which resulted in a patch that
-> most likely is a net positive, feel free, I think this doesn't help the
-> community, which needs more of this kind of work, not less.
+> If we're unifying them I think a better pattern is to only run that "$@"
+> once, get $?, and then act differently on that in the "!" and ""
+> cases. It requires less careful reading of the critical function path,
+> especially with the differing indentation.
 
-I was not deriding your work.  I was asking deep and pointed questions
-due to the cavalier manner in which you were posting, and which you
-seem to be doubling down on.  I would say that after
-https://lore.kernel.org/git/YMhx2BFlwUxZ2aFJ@coredump.intra.peff.net/,
-I'd have to agree with Peff that you have displayed a level of
-carelessness with which I am not comfortable for the project.  That
-kind of carelessness leads to skepticism in others, moreso when you
-double down on it.  It makes me think that if I review any of your
-future patches, I need to check them far more rigorously because you
-are willing to eschew what I view as even the most basic of
-responsibilities in ensuring you are submitting valid patches, and
-even worse, you are unwilling to change how you approach the project
-even when those are pointed out to you.
+This is definitely doable.
+
+This is a replacement patch that still has trouble with "-x",
+I guess I should always exec 2>*.err
+---------8<--------
+Subject: [PATCH] test-lib-functions: introduce test_line_count_cmd
+
+In Git project, we have multiple occasions that requires checking number
+of lines of text in stdout and/or stderr of a command. One of such
+example is t6400, which checks number of files in various states.
+
+Some of those commands are Git command, and we would like to check their
+exit status.  In some of those checks, we pipe the stdout of those
+commands to "wc -l" to check for line count, thus loosing the exit status.
+
+Introduce a helper function to check for number of lines in stdout and
+stderr from those commands.
+
+This helper will create 2 temporary files in process, thus it may affect
+output of some checks.
+
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ t/test-lib-functions.sh | 116 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 116 insertions(+)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index f0448daa74..2261de7caa 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -845,6 +845,122 @@ test_line_count () {
+ 	fi
+ }
+ 
++# test_line_count_cmd checks exit status, and the number of lines in
++# captured stdout and/or stderr of a command.
++#
++# Usage:
++#
++# test_line_count_cmd [--[out|err] <binop> <value>]... [--] [!] cmd [args...]
++#
++# Options:
++# --out <binop> <value>:
++# --err <binop> <value>:
++#	Run sh's "test <# of lines> <binop> <value>" on # of lines in stdout
++#	(for --out) or stderr (for --err)
++# !:
++#	Instead of expecting "cmd [args...]" succeed, expect its failure.
++#	Note, if command under testing is "git", test_must_fail should be used
++#	instead of "!".
++#
++# Example:
++#	test_line_count_cmd --out -ge 10 --err = 0 git tag --no-contains v1.0.0
++#	test_line_count_cmd --out -le 10 ! grep some-text a-file
++#	test_line_count_cmd --out = 0 test_must_fail git rev-parse --verify abcd1234
++#
++# NOTE:
++# * if "--out" is specified, a temporary file named test_line_count_cmd_.out
++#   will be created.
++# * if "--err" is specified, a temporary file named test_line_count_cmd_.err
++#   will be created.
++# Those temporary files will be created under $TRASH_DIRECTORY/.git/trash
++# if $TRASH_DIRECTORY/.git directory existed.
++# Otherwise, they will be created in $TRASH_DIRECTORY.
++# Those temporary files will be cleant by test_when_finished
++test_line_count_cmd () {
++	local outop outval outfile
++	local errop errval errfile
++	local expect_failure actual_failure
++	local trashdir="$TRASH_DIRECTORY"
++
++	if test -d "$TRASH_DIRECTORY/.git"
++	then
++		trashdir="$TRASH_DIRECTORY/.git/trash" &&
++		mkdir -p "$trashdir"
++	fi &&
++	while test $# != 0
++	do
++		case "$1" in
++		--out)
++			outop="$2" &&
++			outval="$3" &&
++			outfile="$trashdir/test_line_count_cmd_.out" &&
++			shift 3
++			;;
++		--err)
++			errop="$2" &&
++			errval="$3" &&
++			errfile="$trashdir/test_line_count_cmd_.err" &&
++			shift 3
++			;;
++		--)
++			shift &&
++			break
++			;;
++		-*)
++			BUG "test_line_count_cmd: unknown options: '$1'"
++			;;
++		*)
++			break
++			;;
++		esac
++	done &&
++	if test "x$1" = "x!"
++	then
++		shift &&
++		expect_failure=yes
++	fi &&
++	if test $# = 0
++	then
++		BUG "test_line_count_cmd: no command to be run"
++	elif test -z "$outop$errop"
++	then
++		BUG "test_line_count_cmd: check which stream?"
++	else
++		if test -n "$outfile"
++		then
++			test_when_finished "rm -f '$outfile'" &&
++			exec 3>"$outfile"
++		fi &&
++		if test -n "$errfile"
++		then
++			test_when_finished "rm -f '$errfile'" &&
++			exec 5>"$errfile"
++		fi &&
++		if ! "$@" >&3 2>&5
++		then
++			actual_failure=yes
++		fi
++	# Don't use &4, it's used for test_must_fail
++	fi 3>&1 5>&2 &&
++	case "$expect_failure,$actual_failure" in
++	yes,)
++		echo "error: '$@' succeed!"
++		return 1
++		;;
++	,yes)
++		echo "error: '$@' run into failure!"
++		return 1
++	esac &&
++	if test -n "$outop"
++	then
++		test_line_count "$outop" "$outval" "$outfile"
++	fi &&
++	if test -n "$errop"
++	then
++		test_line_count "$errop" "$errval" "$errfile"
++	fi
++}
++
+ test_file_size () {
+ 	test "$#" -ne 1 && BUG "1 param"
+ 	test-tool path-utils file-size "$1"
+-- 
+
+
+-- 
+Danh
