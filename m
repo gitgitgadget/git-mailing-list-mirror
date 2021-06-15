@@ -2,132 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43EA1C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AEB9C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:59:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AC4F61457
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:59:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35E6961457
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 10:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231730AbhFOLBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 07:01:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47402 "EHLO
+        id S231685AbhFOLBT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 07:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231485AbhFOLBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 07:01:09 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7388C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:59:04 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso13841958otu.10
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:59:04 -0700 (PDT)
+        with ESMTP id S231652AbhFOLBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 07:01:16 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 741DEC06175F
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:59:11 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id z3-20020a17090a3983b029016bc232e40bso1973349pjb.4
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 03:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=ZwstatdYx3++JSyTjKAqA0Je/OOXv+YXV0HOCfOsN90=;
-        b=ZpvZNJ+expjlOfJsDp5fSyxSX8MgLrCE1KQc98KD/ixu3G+WfpOewy9g55MMkZOgL+
-         z4Apl30NeEOpLMkdVsBeEqgwr7oITp60o73xG8PyTroY57dNLJmwAdvWP8IgBAbA+wr7
-         09vzzjymoaLnU4/hKNB4P0Q0jElQW9/MUrizfKbgalUW2p8Wt3GA7SSuYM4JEdEa4AOO
-         +hJoeYwbDigexTkrfW0beiG5UlOGRD5oNAn3z4EyXDNEw2t/jdvgbKqrBfb/kw4XAaLd
-         rK5cGBpJqVKl8jufyp4Yo7BLjU2MKPbi8sVtCMJyNqWZCZpngpYAGXLMcEbyrObJE5vA
-         J1qA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=6mYzJtn66P4PRFu0DzPbRwQCoGcbG05h+H0cxLNMRRo=;
+        b=eqerm4dVlpuDwp0lNH7tt7xTSKyFUsSk64sqxuADeOrgkFnHxdZ7Ph97tfgP7sTUO6
+         qPo8be6qOEkeAmsuyfLrg7jEzs7ba9ImrIytb+BFIVGOhYiLUF8P7tjEx8/oBFI837R3
+         h1NocAfq1i4rT1tkCjR6o4yHsoIx52+WT8JDY7QP4o6K6AXDOPivNigdb1pJ+2u4LMvf
+         TyxIkWMi0MJKlKJucVDG4WUEDcUdpSIEfWc+ICjTAcZ64eMtdTdn5S+saH455mBMwYFp
+         i+vf4FWlKDCcK76ol48rBXCLtWYrP7M7mKOIkDpM8iaot1HWAuelpulon9SouKLpXrsX
+         WlIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=ZwstatdYx3++JSyTjKAqA0Je/OOXv+YXV0HOCfOsN90=;
-        b=rOzrnyVbOptKSxRgeyzXwGJPmH2WPjaNTEermGvTJOI6MzEhljN77dMdN/Yx9F9S8a
-         +tG5n2iwtxUagBE5fm640qPGTl9mRwsw7RAfHNE75cgkPGI11A3XLffLHoYKiIWm2Qor
-         S5qjHCJmtOXREM5dXV42w3CBy76CtArfExOs/AqDY8PJcqNpS5+ACwFaEmenYuuMXB5C
-         KbDbLhW2JuPlUzXS3PxL0ObESyvS6yCZMf380ZGJAiPjlHK6nq1Y27fmBAb6rhJFpmbJ
-         0XKWN9q5cENp9TCbQ8mQeuOFeiVRdbLZqDVxPvKk8qNqBGFuag3dRsShDA9j0+tg4Ctb
-         4XWQ==
-X-Gm-Message-State: AOAM532JDPXc38Jlwbqwi2+a/ZUapsecm8kM+AHTFpFzTa+6IssUvyN7
-        qw1P2tHiKkn65VDq5WQLmAw=
-X-Google-Smtp-Source: ABdhPJzAPfZ/FqTZpvG4mzhO+joenoBnsZJdooB9u6gpgyL1wdM2VJQfMYu68VrFyZgEyKGK/+d3KA==
-X-Received: by 2002:a9d:945:: with SMTP id 63mr17620930otp.47.1623754744135;
-        Tue, 15 Jun 2021 03:59:04 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id z4sm4070994otq.48.2021.06.15.03.59.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 03:59:03 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 05:59:02 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.email>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Message-ID: <60c887f678c88_e63320846@natae.notmuch>
-In-Reply-To: <CABPp-BGstXDbzxpySw7q_jn22HD05MsrZeHNv+kXFHOFS2_WCQ@mail.gmail.com>
-References: <20210613045949.255090-1-felipe.contreras@gmail.com>
- <20210613045949.255090-2-felipe.contreras@gmail.com>
- <CABPp-BGstXDbzxpySw7q_jn22HD05MsrZeHNv+kXFHOFS2_WCQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] pull: cleanup autostash check
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6mYzJtn66P4PRFu0DzPbRwQCoGcbG05h+H0cxLNMRRo=;
+        b=Y+203oz2OWYaem++Kodc9YES4bdxx/bMtiBTUls3KRpHHOnXQ69iiwllcsdF8Kblkc
+         Il1KOpiZVDjNclMTq4CkWssqCH7b+TxXOXDb+QGDcyTPyyvYF83bfeHQQF3FY2gg56+b
+         hbnxje3jaSlpJc1tToG3w8APsX8qq7t6zrZvlauFcxNIKNFlRZPtw6nvYmkJvW+hwJMR
+         5qZQxtj3xPo8ditxz9Fy0tKoYDg/l3miO2Guemgse6fWmckE7sbAXyan7gMQBM5accDG
+         saEHYG4GLTKLMg8DudUKn851EYytjWD+9gHbbI5V1aRPuJIOTLGAwS5wpTfb9dCfP0AI
+         HNCw==
+X-Gm-Message-State: AOAM5305XoohGUeNSXKtB2y/MTfBOsFE11ahC7FyG57yEk9AJBGKMwMY
+        U6ZD5VO3l5SbuU3wLbpPcvuA56jBlCzNeg==
+X-Google-Smtp-Source: ABdhPJwSZTh6yR2haaNL5E5/S2ZGDA/IRLxL0RAGj7uMO34MUf7q7CruIE/0BcD4ORbRbt9pMbNpxA==
+X-Received: by 2002:a17:90b:f07:: with SMTP id br7mr24901374pjb.141.1623754750751;
+        Tue, 15 Jun 2021 03:59:10 -0700 (PDT)
+Received: from [192.168.43.80] (subs28-116-206-12-38.three.co.id. [116.206.12.38])
+        by smtp.gmail.com with ESMTPSA id g63sm15160737pfb.55.2021.06.15.03.59.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Jun 2021 03:59:10 -0700 (PDT)
+Subject: Re: A suggestion: more readable human commands
+To:     it-developer@abelardolg.com, git@vger.kernel.org
+References: <fa2e886dd03a26c945d9deffe6f96d48@abelardolg.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <c3855aea-6cbd-af30-7791-07c212c52bbd@gmail.com>
+Date:   Tue, 15 Jun 2021 17:59:04 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <fa2e886dd03a26c945d9deffe6f96d48@abelardolg.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> On Sat, Jun 12, 2021 at 9:59 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> >
-> > Currently "git pull --rebase" takes a shortcut in the case a
-> > fast-forward merge is possible; run_merge() is called with --ff-only.
-> >
-> > However, "git merge" didn't have an --autostash option, so, when "git
-> > pull --rebase --autostash" was called *and* the fast-forward merge
-> > shortcut was taken, then the pull failed.
-> >
-> > This was fixed in commit f15e7cf5cc (pull: ff --rebase --autostash
-> > works in dirty repo, 2017-06-01) by simply skipping the fast-forward
-> > merge shortcut.
-> >
-> > Later on "git merge" learned the --autostash option [a03b55530a
-> > (merge: teach --autostash option, 2020-04-07)], and so did "git pull"
-> > [d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)].
-> >
-> > Therefore it's not necessary to skip the fast-forward merge shortcut
-> > anymore when called with --rebase --autostash.
-> >
-> > Let's always take the fast-forward merge shortcut by essentially
-> > reverting f15e7cf5cc.
-> >
-> > Reviewed-by: Elijah Newren <newren@gmail.com>
+On 15/06/21 17.51, it-developer@abelardolg.com wrote:
+> Hi there,
 > 
-> I think you are basing the Reviewed-by on
-> https://lore.kernel.org/git/CABPp-BEsQWsHMAmwc3gmJnXcS+aR-FtoMJxBRQ=BpARP49-L-Q@mail.gmail.com/;
-> is that correct?
+> I would like to suggest you a new improvement.
+> 
+> Why not adding a new layer of abstraction for commands or to make more 
+> explicitly the commands?
+> 
+> For instance:
+> 
+> To merge a single file from one branch to another:
+> 
+> git checkout <branch_name> <path_to_file> --patch
+> 
+> would be like more readable human like this:
+> 
+> git merge <path_file> to <dst_branch>
+> 
+> It uses a more natural language.
+> 
+> Best regards.
 
-No, more like:
-
-[1] https://lore.kernel.org/git/20201205195313.1557473-5-felipe.contreras@gmail.com/
-
-> Messages from folks that they seem to like the patch
-> or believe it looks good should be translated into an Acked-by rather
-> than a Reviewed-by; from Documentation/SubmittingPatches:
-
-To me an acknowledgment means something entirely different, and must be
-expressly given.
-
-> * `Reviewed-by:`, unlike the other tags, can only be offered by the
->   reviewer and means that she is completely satisfied that the patch
->   is ready for application.  It is usually offered only after a
->   detailed review.
-
-Yeah, I read that after I sent v3. In this series I simply cherry-picked
-it from a previous series.
-
-I guess I'll just avoid both.
+What workflow you do so that you need to merge single file?
 
 -- 
-Felipe Contreras
+An old man doll... just what I always wanted! - Clara
