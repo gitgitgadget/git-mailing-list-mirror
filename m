@@ -2,161 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71434C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB026C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:38:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A5F06128B
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:35:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BED7861350
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230162AbhFOThq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 15:37:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53122 "EHLO
+        id S230162AbhFOTkn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 15:40:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbhFOTho (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 15:37:44 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13CE5C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:35:40 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id q10so15236969oij.5
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:35:40 -0700 (PDT)
+        with ESMTP id S229749AbhFOTkm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 15:40:42 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DD8C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:38:36 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id f2so19539417wri.11
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:38:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KKtN5RBNkWR1Q9uMT8No2AhVOEMErg8HJr5fk3SlYMA=;
-        b=GZoExV3sbgg6c31Qmjwme1xwINYzZczA6MfRJzUprw3dY7Cc8SDP+dXE6Vn93PghZd
-         ePNSbvlY3PaPbqbfeplJLCQ48qK7C861Dh9YhtOZfYQuT5ZOJXNtqUJhcGEqWpAU/4XI
-         bMb/PPD6Ef3nkozp9Ee9IrwvSBV8VJzWPu0FbjydMm//i7qkoeEalq5Nr/W/PEp/qcrn
-         u9Pv7c0S54ujB14h3gT5pHijFgJcUfZkgsJsAG7JctBTp9L9vzo+/wJX9B12nE5ECcVj
-         zVWAnhMkrGs3eO0keQs/9PjP+xhe7ND8NqYs5CssJyIVvaKjMhsNS/tf4lHvup6JecQi
-         jq+Q==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=Vz2WalI0xsSWYR4w8QNNv0UShEYWnVyMtW/dylXHGgM=;
+        b=iNY8eNlUEb4RT12olJd25q+fvqQlX3siz6wAik1MCP1TNgkWF8nM7WMXd8o/ENxp4v
+         Y3/ByvyTH7MTzsk63lgSlj9Gf7Eh7ZJU3CD/MtUEtvQZbbYqD+fLnGbOebOEsQKmcTvf
+         tCU9WLxvmyDUIkR7fe0UqL+XwDNTs/Ez+bCz607kJYCNs6ZYOs8ypWZUBhI+2gMjp6kI
+         YuPgUqA9W1ivLLuc/VIREnJcDk4NAWDdYyEL+XTECFx6oE80VPg4AhIs8xKJWdmRFYEF
+         gaz+UApt1jbSqtyr5cLvzM8GzuuAfJe26Tu5ELLtZFE50dETd+jT9Ii7+Ckk6U8xXXhF
+         rNbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KKtN5RBNkWR1Q9uMT8No2AhVOEMErg8HJr5fk3SlYMA=;
-        b=qyF50vtg7CIeDGCzUdqOT0lNLHYb7UtP9RznM0kmGIYNq9KcaQMZggbLm0R8T6ZueY
-         vdpN6BuYi01D5C+qnpc5GAqpcgqelqbjvol4f6nzgrYX1SseKikus+4KfqSAsqxNPzg7
-         9AZsxyqb2Bn107vnoHDacGM6xhl+Z7K0hyDiTWBCbHITGXrQChLf3UqXHgqY4ZNOrnF7
-         t6sOxW/VqFaQpL/w0uXEbjMXRguas42qgtBnw7dV/bvboa9VYgfB0CU8kgx6y93O+ANw
-         badOQdY7VYaKmLBkCFVSfpI+PXmh3sPlCDC9qtapp7gV6nxR2VyDIRnXSvp0RCZ0zOpr
-         Ev0w==
-X-Gm-Message-State: AOAM531IQ5QkhUqlkpxJtpT3kkWXSWjL1rCuiIdFj6kZpURf90+Nea4F
-        fT7ANVf5oxDt00ajSQPwyy+OUncDscFR1N5M9XE=
-X-Google-Smtp-Source: ABdhPJwaMOjdMfSiuOv1Vpa1EZUjVpab19AZJ9kU7LgIEiw1vlXoi5BYvakMSciMyDj8gvLzZNfF+iyklF+J64QoW0I=
-X-Received: by 2002:aca:f482:: with SMTP id s124mr4312619oih.167.1623785739443;
- Tue, 15 Jun 2021 12:35:39 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=Vz2WalI0xsSWYR4w8QNNv0UShEYWnVyMtW/dylXHGgM=;
+        b=br0rtRuWsmF9DXa9v1x5V5407kpjf2lxh4t+boSEMAhEvK0i9Dx0aUTI6Ee10JVCEM
+         QXS4M9VYACryVU3/54g+V4YMDCZj5WYhtwXJ08zuYOuj+4RGHNmikaFBk10WmnMWpECp
+         bdS+1MXE6bdbYwOOfld/TLT/fo8yb8nkiC5BUnDWTu5IRn+4rHt5JpgXUXuqCdghGoHA
+         7dGYssFu/hEUUbrUopQvXYBhLm97R1sxFvPU0VTcL5y5Udz46A1eIoXwcROG7AdHAEZj
+         tsB0WyJnq9wxgTl7PmaMemKEz3iK3/C/f/DeO45DN8BHrDQ27OpCuIp1tIMDr4I5ZfJn
+         nT1g==
+X-Gm-Message-State: AOAM530zdr345pdzbKUddQFzF24tHO0KCgnpgaCMChlJqw+bMua0GyDD
+        Ru9DFnkPC/bRVSEbJZoITIF0peEgZWM=
+X-Google-Smtp-Source: ABdhPJzKRcPYER8kuiYOkAvRLUubpHWNo17Xi2709ZSXu3GLBVUzrT7gUNEKM65rZ7FpzqgK55i3iw==
+X-Received: by 2002:a5d:6a0d:: with SMTP id m13mr825721wru.318.1623785915165;
+        Tue, 15 Jun 2021 12:38:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 6sm16545927wmg.17.2021.06.15.12.38.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jun 2021 12:38:34 -0700 (PDT)
+Message-Id: <pull.912.git.git.1623785914202.gitgitgadget@gmail.com>
+From:   "Daniel =?UTF-8?Q?H=C3=B6pfl?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Tue, 15 Jun 2021 19:38:33 +0000
+Subject: [PATCH] Add config variable besides env variable to squelch
+ "do-not-use" warning.
 MIME-Version: 1.0
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com> <YMh2M8Ek/RUVjKkL@coredump.intra.peff.net>
-In-Reply-To: <YMh2M8Ek/RUVjKkL@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 15 Jun 2021 12:35:28 -0700
-Message-ID: <CABPp-BE7-E03+x38EK-=AE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.com>
-Subject: Re: [PATCH 0/2] RFC: implement new zdiff3 conflict style
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Daniel =?UTF-8?Q?H=C3=B6pfl?= <github@hoepfl.de>,
+        =?UTF-8?q?Daniel=20H=C3=B6pfl?= <daniel@hoepfl.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 15, 2021 at 2:43 AM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Jun 15, 2021 at 05:16:08AM +0000, Elijah Newren via GitGitGadget wrote:
->
-> > Implement a zealous diff3, or "zdiff3". This new mode is identical to
-> > ordinary diff3 except that it allows compaction of common lines between the
-> > two sides of history, if those common lines occur at the beginning or end of
-> > a conflict hunk.
-> >
-> > This is just RFC, because I need to add tests. Also, while I've remerged
-> > every merge, revert, or duly marked cherry-pick from both git.git and
-> > linux.git with this patch using the new zdiff3 mode, that only shows it
-> > doesn't segfault. (Though I also reran 10% of the linux remerges with zdiff3
-> > under valgrind without issues.) I looked through some differences between
-> > --remerge-diff with diff3 and --remerge-diff with zdiff3, but those are
-> > essentially diffs of a diff of a diff, which I found hard to read. I'd like
-> > to look through more examples, and use it for a while before submitting the
-> > patches without the RFC tag.
->
-> I did something similar (but I wasn't smart enough to try your
-> remerge-diff, and just re-ran a bunch of merges).
+From: =?UTF-8?q?Daniel=20H=C3=B6pfl?= <daniel@hoepfl.de>
 
-What I did was great for testing if there were funny merges that might
-cause segfaults or such with zdiff3, but not so clever for viewing the
-direct output from zdiff3.  Using remerge-diff in this way does not
-show the [z]diff3 output directly, but a diff of that output against
-what was ultimately recorded in the merge, forcing me to attempt to
-recreate the original in my head.
+In addition to the environment variable FILTER_BRANCH_SQUELCH_WARNING,
+the git config filter-branch.squelchWarning is checked to see if the
+usage warning should be squelched.
 
-(And, of course, I made it even worse by taking the remerge-diff
-output with diff3, and the remerge-diff output with zdiff3, and then
-diffing those, resulting in yet another layer of diffs that I'd have
-to undo in my head to attempt to construct the original.)
+Signed-off-by: Daniel Höpfl <daniel@hoepfl.de>
+---
+    Add filter-branch.squelchWarning git config alongside
+    FILTER_BRANCH_SQUELCH_WARNING
+    
+    In addition to the environment variable FILTER_BRANCH_SQUELCH_WARNING,
+    the git config filter-branch.squelchWarning is checked to see if the
+    usage warning should be squelched.
 
-> Skimming over the results, I didn't see anything that looked incorrect.
-> Many of them are pretty non-exciting, though. A common case seems to be
-> ones like 01a2a03c56 (Merge branch 'jc/diff-filter-negation',
-> 2013-09-09), where two sides both add functions in the same place, and
-> the common lines are just the closing "}" followed by a blank line.
->
-> Removing those shared lines actually makes things less readable, IMHO,
-> but I don't think it's the wrong thing to do. The usual "merge" zealous
-> minimization likewise produces the same unreadability. If we want to
-> address that, I think the best way would be by teaching the minimization
-> some heuristics about which lines are trivial.
->
-> Here's another interesting one. In 0c52457b7c (Merge branch
-> 'nd/daemon-informative-errors-typofix', 2014-01-10), the diff3 looks
-> like:
->
->   <<<<<<< ours
->                   if (starts_with(arg, "--informative-errors")) {
->   ||||||| base
->                   if (!prefixcmp(arg, "--informative-errors")) {
->   =======
->                   if (!strcmp(arg, "--informative-errors")) {
->   >>>>>>> theirs
->                           informative_errors = 1;
->                           continue;
->                   }
->   <<<<<<< ours
->                   if (starts_with(arg, "--no-informative-errors")) {
->   ||||||| base
->                   if (!prefixcmp(arg, "--no-informative-errors")) {
->   =======
->                   if (!strcmp(arg, "--no-informative-errors")) {
->   >>>>>>> theirs
->
-> A little clunky, but it's easy-ish to see what's going on. With zdiff3,
-> the context between the two hunks is rolled into a single hunk:
->
->   <<<<<<< ours
->                   if (starts_with(arg, "--informative-errors")) {
->                           informative_errors = 1;
->                           continue;
->                   }
->                   if (starts_with(arg, "--no-informative-errors")) {
->   ||||||| base
->                   if (!prefixcmp(arg, "--informative-errors")) {
->   =======
->                   if (!strcmp(arg, "--informative-errors")) {
->                           informative_errors = 1;
->                           continue;
->                   }
->                   if (!strcmp(arg, "--no-informative-errors")) {
->   >>>>>>> theirs
->
-> which seems worse. I haven't dug/thought carefully enough into your
-> change yet to know if this is expected, or if there's a bug.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-912%2Fdhoepfl%2FFILTER_BRANCH_SQUELCH_WARNING-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-912/dhoepfl/FILTER_BRANCH_SQUELCH_WARNING-v1
+Pull-Request: https://github.com/git/git/pull/912
 
-Yeah, I don't know for sure either but that does look buggy to me.
-Thanks for digging up these examples.  I'm a bit overdrawn on time for
-this, so I'll pick it back up in a week or two and investigate this
-case further.
+ git-filter-branch.sh | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index fea796461721..d33db14a2a84 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -83,7 +83,8 @@ set_ident () {
+ 	finish_ident COMMITTER
+ }
+ 
+-if test -z "$FILTER_BRANCH_SQUELCH_WARNING$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS"
++if test -z "$FILTER_BRANCH_SQUELCH_WARNING$GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS" &&
++   test "$(git config --bool filter-branch.squelchWarning)" != true
+ then
+ 	cat <<EOF
+ WARNING: git-filter-branch has a glut of gotchas generating mangled history
+@@ -91,7 +92,12 @@ WARNING: git-filter-branch has a glut of gotchas generating mangled history
+ 	 alternative filtering tool such as 'git filter-repo'
+ 	 (https://github.com/newren/git-filter-repo/) instead.  See the
+ 	 filter-branch manual page for more details; to squelch this warning,
+-	 set FILTER_BRANCH_SQUELCH_WARNING=1.
++	 set FILTER_BRANCH_SQUELCH_WARNING=1 or run the following command:
++
++	    git config filter-branch.squelchWarning true
++
++	 You can replace "git config" with "git config --global" to disable
++	 the warning for all repositories.
+ EOF
+ 	sleep 10
+ 	printf "Proceeding with filter-branch...\n\n"
+
+base-commit: e4d83eee9239207622e2b1cc43967da5051c189c
+-- 
+gitgitgadget
