@@ -6,80 +6,77 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7C70C2B9F4
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B852C2B9F4
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:34:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5838613F9
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:34:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B7F8613F9
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:34:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230218AbhFOCgH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 22:36:07 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60621 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbhFOCgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 22:36:06 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEF4F1250BF;
-        Mon, 14 Jun 2021 22:34:02 -0400 (EDT)
+        id S230236AbhFOCgR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 22:36:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55259 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230233AbhFOCgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 22:36:15 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12E55C6774;
+        Mon, 14 Jun 2021 21:17:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xHj0tAvACO3lws7l3gIvWIPsSqi8YIKXU8DK4v
-        uSDxU=; b=V+uLl09p+hwSMB2FavdU5DEl8QyLKxIy3UlLhxOnIBwg/Bnu/B+M6M
-        U6oRugoL9uvZF/2ypR0MzUtzpjNiSQYaIVOpoVQNyBLK2FMvVZmrc7WufoGC5C8+
-        VNlwQo6h9SK+2ElVEDQIsWGUTdfrSyq21PZEm3S2mIorKxH7By1A8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E81DC1250BD;
-        Mon, 14 Jun 2021 22:34:02 -0400 (EDT)
+        :content-type; s=sasl; bh=G8mpYis4ZDVZZnNBdiyUCy+fmg0ln7imkmwtv3
+        ITRpM=; b=E5+/r9W5CtKvla17ptl2xeqDgDh35a3JpVNXCrOSSgc8KWh4ktrQtV
+        k7yBQbB2lL/1Oh0XCmqQhbNVAMsjjdxCDyvdaApX2P2O5L0A2WojioYN3bNG7blz
+        CFVEXsybkw0ck/pPbYSgP7JhOftbt7Nz9b9nG3eJCd5Y6WW+Da+jw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 09DD5C6772;
+        Mon, 14 Jun 2021 21:17:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3AF1E1250BA;
-        Mon, 14 Jun 2021 22:34:00 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B181C6771;
+        Mon, 14 Jun 2021 21:17:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>
-Subject: Re: [PATCH 1/2] subtree: fix the GIT_EXEC_PATH sanity check to work
- on Windows
-References: <pull.978.git.1623316412.gitgitgadget@gmail.com>
-        <a91ac6c18938116c4a74e19466da456b67376fa5.1623316412.git.gitgitgadget@gmail.com>
-        <87bl8d6xoq.wl-lukeshu@lukeshu.com>
-        <nycvar.QRO.7.76.6.2106111213050.57@tvgsbejvaqbjf.bet>
-        <875yyk7c3j.wl-lukeshu@lukeshu.com>
-        <nycvar.QRO.7.76.6.2106141330410.57@tvgsbejvaqbjf.bet>
-Date:   Tue, 15 Jun 2021 11:33:58 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.2106141330410.57@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 14 Jun 2021 13:56:07 +0200 (CEST)")
-Message-ID: <xmqqtulzyhyh.fsf@gitster.g>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Nicolas Pitre <nico@fluxnic.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/4] sideband: append suffix for message whose CR in
+ next pktline
+References: <87im2s5jjm.fsf@evledraar.gmail.com>
+        <20210612050711.4057-4-worldhello.net@gmail.com>
+        <xmqqim2hyuj1.fsf@gitster.g>
+        <CANYiYbGtfgZepnfTWGjbmOh2bxa8tZ7bvgtVTo6qTQpCP9MPag@mail.gmail.com>
+Date:   Tue, 15 Jun 2021 10:17:51 +0900
+In-Reply-To: <CANYiYbGtfgZepnfTWGjbmOh2bxa8tZ7bvgtVTo6qTQpCP9MPag@mail.gmail.com>
+        (Jiang Xin's message of "Mon, 14 Jun 2021 19:51:23 +0800")
+Message-ID: <xmqqk0mwylhc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 24403BA0-CD82-11EB-B5C9-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 81B4EF70-CD77-11EB-AC59-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
->> `test FILE1 -ef FILE2` checks wether the inode is the same.  And it's
->> POSIX, so I'm assuming that it's sufficiently portable, though I
->> haven't actually tested whether things other than Bash implement it.
+>     /*
+>      * Let's insert a suffix to clear the end
+>      * of the screen line, but only if current
+>      * line data actually contains something.
+>      */
 >
-> It's not POSIX. From
-> https://pubs.opengroup.org/onlinepubs/009695399/utilities/test.html:
->
-> 	Some additional primaries newly invented or from the KornShell
-> 	appeared in an early proposal as part of the conditional command
-> 	([[]]): s1 > s2, s1 < s2, str = pattern, str != pattern,
-> 	f1 -nt f2, f1 -ot f2, and f1 -ef f2.
->
-> Having said that, it appears that Bash implements it (what non-standard
-> behavior _doesn't_ it implement ;-))
->
-> And since Git for Windows ships with Bash, we can actually use it!
+> So my implementation is to try not to break the original
+> implementation, and keep the linelen unchanged.
 
-So,... is contrib/subtree for Windows only?
+I knew what you wanted to do from your code---I am questioning if
+that "only when something is there" was really sensible, or if it
+was just attracting bugs.
+
+Thanks.
+
