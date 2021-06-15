@@ -2,86 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61D4EC48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 03:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF5FC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 04:03:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 459636140D
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 03:55:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DC8E611CE
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 04:03:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbhFOD5p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 23:57:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62406 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbhFOD5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 23:57:44 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 06529C7712;
-        Mon, 14 Jun 2021 23:55:40 -0400 (EDT)
+        id S229972AbhFOEFt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 00:05:49 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65429 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229528AbhFOEFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 00:05:48 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A5CB312588C;
+        Tue, 15 Jun 2021 00:03:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cKfTZ8ywr/b0/QviJlk1EjDk3ZQFg5k44KYeL9
-        FI+0c=; b=fa+0gT/pz8r7NoNqGqzKtKJ8DHjpkKoSbNRjlYELVMGwqdqBq9x4xB
-        3gLH/BjJUnxHObyDJuSBKJtXp672osozjGp++H9sSAeb98flh8xyR0PsoJMq0D1z
-        uKDm99sSp/yT+4/nXOAixPWuwKkHZT4IwwecCVRYZZwQHRwjLiOFY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F2B3FC7711;
-        Mon, 14 Jun 2021 23:55:39 -0400 (EDT)
+        :content-type; s=sasl; bh=d/eunVZpcVtl6E+vDXtjS9kE9fj22uddthFS7u
+        P+7ws=; b=KK9IJa42vthSUf5ZEz3vo6BATypWoKAGKddOSfiTL+38HACozX39qc
+        HlCNEMIHOJc9nLCVBm8zLkJAukpGsWy4BBBECmxrxjtj1Q+LLR1oRK1NRyTiYDyL
+        /FxkeEPcGq6M5qInxJIR7KDzqMVxsCy2fIrY/CGwYTmoYvJjWGbmQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9EDCA12588B;
+        Tue, 15 Jun 2021 00:03:44 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 86A32C7710;
-        Mon, 14 Jun 2021 23:55:39 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EC6A812588A;
+        Tue, 15 Jun 2021 00:03:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH resend] graph: improve grammar of "invalid color" error
- message
-References: <20210612184144.6894-1-alexhenrie24@gmail.com>
-Date:   Tue, 15 Jun 2021 12:55:38 +0900
-In-Reply-To: <20210612184144.6894-1-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Sat, 12 Jun 2021 12:41:44 -0600")
-Message-ID: <xmqqv96fwzlx.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Sergey Organov <sorganov@gmail.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH] xdiff: implement a zealous diff3
+References: <20210613143155.836591-1-felipe.contreras@gmail.com>
+        <YMYnVWSEgxvKRU9j@coredump.intra.peff.net>
+        <60c647c1d9b5c_41f452089@natae.notmuch>
+        <60c677a2c2d24_f5651208cf@natae.notmuch> <xmqq7divzxrr.fsf@gitster.g>
+        <CABPp-BFY7uU5Ugypv4xCHq+XHTc3UROWPdV1v-JbN7xBycDZTA@mail.gmail.com>
+Date:   Tue, 15 Jun 2021 13:03:40 +0900
+In-Reply-To: <CABPp-BFY7uU5Ugypv4xCHq+XHTc3UROWPdV1v-JbN7xBycDZTA@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 14 Jun 2021 20:43:54 -0700")
+Message-ID: <xmqqr1h3wz8j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8C777E08-CD8D-11EB-92CA-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: AC0315C4-CD8E-11EB-AB03-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Without the "d", it sounds like a command, not an error, and is liable
-> to be translated incorrectly.
+> This is going to sound harsh, but people shouldn't waste (any more)
+> time reviewing the patches in this thread or the "merge: cleanups and
+> fix" series submitted elsewhere.  They should all just be rejected.
 >
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
-> Resending to make sure that this patch isn't forgotten.
+> I do not think it is reasonable to expect reviewers to spend time
+> responding to re-posted patches when:
+>   * no attempt was made to make sure they were up-to-date with current
+> code beyond compiling (see below)
+>   * no attempt was made to address missing items pointed out in
+> response to the original submission[1]
+>   * no attempt was made to handle or even test particular cases
+> pointed out in response to the original submission (see [1] and below)
+>   * the patches were posted despite knowing they caused segfaults, and
+> without even stating as much![2]
+>   * the segfault "fixes" are submitted as a separate series from the
+> patch introducing the segfault[3], raising the risk that one gets
+> picked up without the other.
 
-Thanks, will queue.
-
-> ---
->  graph.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/graph.c b/graph.c
-> index c128ad0cce..e3828eb8f2 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -95,7 +95,7 @@ static void parse_graph_colors_config(struct strvec *colors, const char *string)
->  		if (!color_parse_mem(start, comma - start, color))
->  			strvec_push(colors, color);
->  		else
-> -			warning(_("ignore invalid color '%.*s' in log.graphColors"),
-> +			warning(_("ignored invalid color '%.*s' in log.graphColors"),
->  				(int)(comma - start), start);
->  		start = comma + 1;
->  	}
+Fair enough.  Thanks.
