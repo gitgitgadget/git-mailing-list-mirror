@@ -6,113 +6,86 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 961EAC48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 06:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 129CBC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 06:13:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EFA661410
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 06:02:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE36361059
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 06:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229811AbhFOGFA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 02:05:00 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51710 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhFOGFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 02:05:00 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EA10A13CBAF;
-        Tue, 15 Jun 2021 02:02:55 -0400 (EDT)
+        id S230028AbhFOGP5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 02:15:57 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58618 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229493AbhFOGP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 02:15:56 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A9EB912654F;
+        Tue, 15 Jun 2021 02:13:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MO1Yz1JW9iVu
-        uIxxqEPld4CCHMBwvicMxg+eW4ap2qc=; b=PXc2OW/EcUTLMsPDWa7vE114buUS
-        ZICuCwNKKW8qAqXKGjLbf4hPig2tToKqNF9rO9hiE9BVGnF4yYVlHv2k1B7CpH3V
-        cnZFmyZyqon8iJk2Y3OjeOEbuqSsm0jDNL2hXo13fXqtQHLCAXc++WiLVfTGtnIA
-        iUjGFQc3nMxxBxA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E2DD713CBAE;
-        Tue, 15 Jun 2021 02:02:55 -0400 (EDT)
+        :content-type; s=sasl; bh=iUv5jrIRA8OcIPFRevQs9sWEZgQoJVIQJciEEV
+        Vfs1g=; b=YRg6NOzFaRH/eVF2zd9pqb/AujVYEyhDVfDeECJQkES1THLQ+JvOX/
+        KNfuJrBXaFvMUp88kYD/W9DQNVWMOzEPbrQ2mqDjk97m/dEB5mhi7VfskXrgdv/I
+        ecEHdk2xhDoSz1/YZoC8Nv0/hUvwqim6RSO+47maXRtkn9x+Tn6Ps=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9473A12654E;
+        Tue, 15 Jun 2021 02:13:52 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EEC0413CBAD;
-        Tue, 15 Jun 2021 02:02:52 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 71B2F12654B;
+        Tue, 15 Jun 2021 02:13:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 0/4] Use singular "they" when appropriate
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
-        <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
-        <87a6nz2fda.fsf@evledraar.gmail.com>
-        <YMKTARn368Qzsqc2@camp.crustytoothpaste.net>
-        <87pmwt1dz3.fsf@evledraar.gmail.com>
-        <f4488360-bdaf-3e97-69c5-00087f797117@gmail.com>
-        <87h7i21a43.fsf@evledraar.gmail.com>
-Date:   Tue, 15 Jun 2021 15:02:51 +0900
-In-Reply-To: <87h7i21a43.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sun, 13 Jun 2021 09:17:21 +0200")
-Message-ID: <xmqqzgvrvf5g.fsf@gitster.g>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/2] xdiff: implement a zealous diff3, or "zdiff3"
+References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
+        <b7561a67c192d4bdede47fee5b7b1cb30c44b785.1623734171.git.gitgitgadget@gmail.com>
+Date:   Tue, 15 Jun 2021 15:13:46 +0900
+In-Reply-To: <b7561a67c192d4bdede47fee5b7b1cb30c44b785.1623734171.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Tue, 15 Jun 2021
+        05:16:09 +0000")
+Message-ID: <xmqqv96fven9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 52584880-CD9F-11EB-ACDB-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D90BAD08-CDA0-11EB-9EBD-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Or, if we just fix these existing occurrences as a one-off there'll be
-> no existing examples of it in-tree, and as people tend to imitate
-> existing documentation they're unlikely to introduce new
-> occurrences.
+[An example to reduce
+    1234<ABCDE|56=AXCYE>789
+to
+    1234A<BCD|56=XCY>E789
+elided]
 
-I suspect that may be a bit too optimistic.  It is too easy to
-discuss interaction among users and introduce pronouns to refer to
-them, and when it happens, it is far easier to have a document to
-point at and tell them why we want them to rephrase if not how
-exactly.  For that reason, I'd prefer to have some word about the
-desire to make examples and explanations gender-neutral in the
-guidelines.  The mechanics we recommend to achieve the goal does not
-have to be specified if we want brevity---that can be learned by
-imitating existing practices.
+> Note that the common lines, 'A', and 'E' were moved outside the
+> conflict.  Unlike with the two-way conflicts from the 'merge'
+> conflictStyle, the zdiff3 conflict is NOT split into multiple conflict
+> regions to allow the common 'C' lines to be shown outside a conflict,
+> because zdiff3 shows the base version too and the base version cannot be
+> reasonably split.
 
-> If and when Felipe's <20210611202819.47077-1-felipe.contreras@gmail.com=
->
-> is applied how small is the diff you'll still have rebased on top of
-> that?
-
-I just retried a "competing" merge that got ugly ;-)
-
-Between Derrick's two "singular they" patches (one for comments, the
-other for docs) and Felipe's two patches (the same split), they
-touch identical base text.  Only the way they neuter the description
-is different, and to me the latter feels a bit more ESL friendly.
-
-So, the main things that are missing from Felipe's version that we
-may want to build on top before the whole discussion can be
-concluded are:
-
- - Derrick's "typofix" patch, but if I recall correctly it needed a
-   fix-up in one of its hunks?
-
- - Guidelines; you had a more generic readability tips that would
-   (incidentally) result in nudging the writers to be more gender
-   neutral, which I think is going in the right direction, but I do
-   prefer to see an explicit mention of gender-neutrality as one
-   bullet item.
+Another thing that was brought up during the original discussion is
+that zdiff3 uses different meaning of "base version" from diff3.  In
+diff3 output, if you remove everything enclosed in <<< and |||, and
+everything enclosed in === and >>>, i.e. 123456789 in the original
+example above, you will get "the common ancestor" version, which is
+what is shown as the "base".  After zdiff3 munges the lines, that is
+not the case, 1234A56E789 never appeared in anybody's version.  It
+is a "starting from the common ancestor version, both sides agreed
+to make the same uncontroversial changes, which is already included
+in this base version" and zdiff3 inserts the conflict markers and
+material unique to each side into it.  Being able to recover the
+common ancestor version is not always necessary and that is what
+makes zdiff3 a plausible solution, but to some workflows and tools
+it may matter, so it would be helpful to mention it in the
+documentation.
 
 Thanks.
