@@ -2,103 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AA8DC48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4363C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:38:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A7E961441
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:38:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4F3D61443
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231674AbhFOJkH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 05:40:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55898 "EHLO
+        id S231262AbhFOJkn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 05:40:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbhFOJjs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 05:39:48 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4212DC0613A3
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:37:19 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 3-20020a05600c0243b029019f2f9b2b8aso1601769wmj.2
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:37:19 -0700 (PDT)
+        with ESMTP id S230519AbhFOJkm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 05:40:42 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EEF6C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:38:37 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id h1so8177666plt.1
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version;
-        bh=sZK3y2NCFpEv0PGDFf6gJZYqzplBuB8cxAA18rDeSy0=;
-        b=h65kI6OwoqHjXIW1SS+38Nok/zMFjDdPPRBdCF00cssf7XlwLP6ywHnC1/qjsoz+cU
-         kGkjFqDGh3g9aAjFZN8jn6h6G4hbOB2XfRRctPzvBAf/fvPOef2FnXz7P6rNvEye+iOe
-         UYPJhyRLOF6zF+6TWdZmdTnaiXdrrHVlWeoWONFW8/JuE7HWRuyNVh938hTSeGqiZqS+
-         FeIUIsS29gGkwLYvGwk13aA+m1vT9c8csGFZTXqTA3sOGXcKmb926SCr0W/5dg0hMDnI
-         ih523SE3QYEIvdBHyTDTHrTZhijQSoCkAp1UemlvVeWLUSS/oP5y9G/Rjg7H8emSwmqD
-         JC0Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EkhRD88c7c9bGFNcGwwSn47o9FW640cAlqK3CM9o8QY=;
+        b=SzKCAqfnP5itSyY7YpkCKXr6F66WaQ29Y0anoaGnR/DyRalPSAQgTVwina1HA14jaL
+         auTQCYLbxLqGfBp1XP5J1tfbS3gyy9o+SuC1SX0HyFXlsoCCuLIO3qKmaEJQfzN2jrUK
+         CBG+aNF3bqYvpWteHBhlGZif/WeRxLzHYxXrXrvAZ2HFLCH+4s99UmaMtpt3XI1lpr1a
+         EWbgm9ZOizng5gCR13YtW6IRzz94sILCN0tI+Sp8gGZ1cQiwvzwREzAmqcUjMEMKxBS4
+         x9QMQ9BIw9oy3KjtmKFNNL2sClq9PjOybAg7dSBYAGijCw+beZGj+0CJ1TGeakcTwDzO
+         Udug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version;
-        bh=sZK3y2NCFpEv0PGDFf6gJZYqzplBuB8cxAA18rDeSy0=;
-        b=KW7xtLHHkhnIQAdffc3jP2hQ1F7ib8e37Jz/xLgypEl9c7fTIJSPODtErL7K7EMMPc
-         rfFUf70DJx3HBIcBa51BH0aet6dTCYYPsMu0Xsv/wkRRnnxoGQW7vqsQ9i9DbcZCu9TT
-         WEwfEemT6eOEciOZZLcn7B6GFali1gZjNBB7dYuhmALAEcEmJTKt8YA4OF/5XlYEW1o1
-         G8byfaGQHylCLEQFAe6tsQ+seQ4XqqQrKsO2nS9YVFa2jk4T/RhWrnAjCMHG13zN6BzN
-         So+W6HfvBHg9jTOtH8yjZ+RqG5ZWGHdnnMm6PGX5QBciEEZFiLEyKaTQy2Celb00liag
-         1uLg==
-X-Gm-Message-State: AOAM531iBexR375jtpumzLtTmjOGQyZqFntuJJlPomlJ5S9m9S1U+pSz
-        D2AOsl6GZhXGPys7tLgORwg=
-X-Google-Smtp-Source: ABdhPJz2w4UCAJstY8BfPcNks5BsjS8/QiswnZPugYAajEn9c356isBrB8tg+lYEoTAc8LSD3X667Q==
-X-Received: by 2002:a1c:770b:: with SMTP id t11mr4187647wmi.79.1623749837896;
-        Tue, 15 Jun 2021 02:37:17 -0700 (PDT)
-Received: from cpm12071.local ([79.140.114.214])
-        by smtp.gmail.com with ESMTPSA id k42sm1987970wms.0.2021.06.15.02.37.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 02:37:17 -0700 (PDT)
-References: <20210610083916.96243-1-raykar.ath@gmail.com>
- <20210614125157.99426-1-raykar.ath@gmail.com>
- <20210614125157.99426-4-raykar.ath@gmail.com>
- <gohp6kh7i0xm08.fsf@cpm12071.fritz.box>
- <CAPig+cQQXEU2QvP6PGB7v=RGQDiu_s0kctFyqSHWvLe2ep0w9Q@mail.gmail.com>
-User-agent: mu4e 1.4.15; emacs 27.2
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EkhRD88c7c9bGFNcGwwSn47o9FW640cAlqK3CM9o8QY=;
+        b=CdY2+Qe9keAjsL2564Si6bqzglGqtrwAfTh+G2N8ngB/t2b3zQlUf6XCTT6iHIxj2j
+         mcVjSvCR0d0l4ckDSacIqtQe3KFemLLqh1TClCbZYz2WU0PNHSIcyZ/xRLl0K1aqD8nb
+         4ql+6VbFR0PyA/Sf/ETeiDIopdBspMjPeolPDKXLc7SQnRFJjowL0+a5aN6WQlMl42Hz
+         ZyLQ3ph1hdWmUD4epG9XdzeBSu7ta2NfshYdSgTp1OluyUgNOjHECRt9q1ve0IZgwIAg
+         5Qptf+3iPIizGVgy/+34TCseu/lPXIcTA3MfdwR9IBB+9cqBFpbJJT44skTUYw9xwsDX
+         6ptg==
+X-Gm-Message-State: AOAM5307sLpX3GdfZPKtgVhBXnHOHTdYaUxdo3twJs1VOQ2drEZ2YDIv
+        jmegM0cg+E+MxfSz4QE+a2qeq9a/AkrJSAGJfRA=
+X-Google-Smtp-Source: ABdhPJymAyBv5ujkIzBkGiIzXnG9vAzQFFtdHeRl0iQg71BPlUZbaqp0zwbf/Nlqsa/iYeWFS0Kvhw==
+X-Received: by 2002:a17:903:1d0:b029:118:307e:a9e1 with SMTP id e16-20020a17090301d0b0290118307ea9e1mr3593721plh.76.1623749916717;
+        Tue, 15 Jun 2021 02:38:36 -0700 (PDT)
+Received: from atharva-on-air.Dlink ([119.82.107.60])
+        by smtp.gmail.com with ESMTPSA id p11sm14669854pfo.126.2021.06.15.02.38.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Jun 2021 02:38:36 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+To:     git@vger.kernel.org
 Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Git List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH v4 3/3] submodule--helper: introduce add-config subcommand
-In-reply-to: <CAPig+cQQXEU2QvP6PGB7v=RGQDiu_s0kctFyqSHWvLe2ep0w9Q@mail.gmail.com>
-Message-ID: <gohp6k35tjqxix.fsf@gmail.com>
-Date:   Tue, 15 Jun 2021 11:37:11 +0200
+        Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [GSoC] [PATCH v5 0/3] submodule--helper: introduce subcommands for sh to C conversion
+Date:   Tue, 15 Jun 2021 15:08:07 +0530
+Message-Id: <20210615093810.27930-1-raykar.ath@gmail.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210614125157.99426-1-raykar.ath@gmail.com>
+References: <20210614125157.99426-1-raykar.ath@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Only two changes since v4:
+ - Add missing trailers and s.o.b in [1/3]
+ - In [3/3] introduce a wrapper function called 'config_submodule_in_gitmodules'
+   that sets the 'submodule.<name>.<var>' configuration, and before doing so,
+   checks if it is okay to write to '.gitmodules', which was the original
+   behaviour of the shell version.
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Atharva Raykar (3):
+  submodule--helper: refactor module_clone()
+  submodule--helper: introduce add-clone subcommand
+  submodule--helper: introduce add-config subcommand
 
-> On Mon, Jun 14, 2021 at 3:53 PM Rafael Silva
-> <rafaeloliveira.cs@gmail.com> wrote:
->> Just as an example, here's a diff to demonstrate the argument:
->> -- >8 --
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> @@ -2934,6 +2934,14 @@ static int add_clone(int argc, const char **argv, const char *prefix)
->> +void add_config_in_submodules_file(const char *keyfmt, const char *submodule,
->> +                         const char *value)
->> +{
->> +       char *key = xstrfmt(keyfmt, submodule);
->> +       config_set_in_gitmodules_file_gently(key, value);
->> +       free(key);
->> +}
->
-> The new function should be `static`, of course.
-
-Good catch! Indeed, it should be `static`. 
+ builtin/submodule--helper.c | 542 ++++++++++++++++++++++++++++--------
+ git-submodule.sh            |  66 +----
+ 2 files changed, 431 insertions(+), 177 deletions(-)
 
 -- 
-Thanks
-Rafael
+2.31.1
+
