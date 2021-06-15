@@ -2,298 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA6E4C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B3DC48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 15:14:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B42CF6145D
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:58:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BACC61584
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 15:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231309AbhFOPA2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 11:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231522AbhFOPA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 11:00:27 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF559C06175F
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:58:22 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id h1so8611568plt.1
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:58:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=im+sA4IbBl6ueIrbDtu6Z4cceKK7PM6NGSb1lMHZs4Q=;
-        b=nwKiewnkA9Sa/08ax4hjLznlpUDWtFLH5b7Iuu+NjEUEPUybZDThpwZntgQDUyYPOm
-         AnCopMWUXADaNKvT9yHhBnJ42frhy0InMCNfazyYbVNAiZzfXgOzNkx0CHb/Ol9sqW1x
-         fhlDqUewJvqXz5mm9qua9PkKSyDHEw5FfStZ4xsXdp4JzlWjgihhslVCiufB+Dx43JHM
-         SjGOppz9NXi4+8kF9VWvxGLy4XMvnvRSuDy/wzAj9xSLd8k9N2E6AZRiJ4NCYWjH7Z0l
-         FZRxkjU3oZbn0zVQZgoqHVUYIix9xgFjiyFY8RQzK2vVnPR1CjbGYVIkObLpCuBueAce
-         I1lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=im+sA4IbBl6ueIrbDtu6Z4cceKK7PM6NGSb1lMHZs4Q=;
-        b=no8ERgaAsJOYPKbXsGZHtv2wRPVI+j/yJdYnNQpy/C0wfHjxMQuRlRwsuu4VPeA3zo
-         YL/JF6WwZ0sfOF8TBtPJTBc6ANHHNoN2G8R/GnUbcLvuOomsiy14NO7zdLO9HhdRzxhI
-         U4otTTpWypSZJIRCmJoNQaEcnzGOCUY+n84kWDAnj/hlCgFPN2QET12S8neTx/Kzm5XF
-         EkToKfC34dDEfGEOWUxkvKHfu4oxT+G7X9IeaOnytaXajl0axU8AtFfJeu+aL1zkHSLw
-         KSNcBpmfF4HvqP8oYj5+UvBmoL3ZdjKtuM3KnCO636x9iPTyVA5LGixlbe7T3SwTA5X2
-         ByFA==
-X-Gm-Message-State: AOAM533Kim3ZKFE1p/zCZ60Tr0JIlu1nU/lpUO/DEKuPhG93Or5bqoRm
-        jaVXtUUTvy6OBkIVpeVMsb/LVRYEeK0oihpptg4=
-X-Google-Smtp-Source: ABdhPJzpr1qWo4P2vF0TVx06okwCMLL4AKKdrEEFi50vz4qjGS7tva6Ym6MZWH3MMcegaPadxJZoig==
-X-Received: by 2002:a17:903:2c3:b029:11b:cbb9:edfb with SMTP id s3-20020a17090302c3b029011bcbb9edfbmr4651291plk.12.1623769102214;
-        Tue, 15 Jun 2021 07:58:22 -0700 (PDT)
-Received: from atharva-on-air.Dlink ([119.82.107.60])
-        by smtp.gmail.com with ESMTPSA id u1sm16340120pgh.80.2021.06.15.07.58.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Jun 2021 07:58:21 -0700 (PDT)
-From:   Atharva Raykar <raykar.ath@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: [PATCH v6 3/3] submodule--helper: introduce add-config subcommand
-Date:   Tue, 15 Jun 2021 20:27:45 +0530
-Message-Id: <20210615145745.33382-4-raykar.ath@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210615145745.33382-1-raykar.ath@gmail.com>
-References: <20210615093810.27930-1-raykar.ath@gmail.com>
- <20210615145745.33382-1-raykar.ath@gmail.com>
+        id S231274AbhFOPQS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 11:16:18 -0400
+Received: from mout.web.de ([212.227.15.4]:40083 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231272AbhFOPQR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 11:16:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1623770048;
+        bh=HwODwdrdjGKAGJ/E4QLk1Y7v3GSnLjLKZQRcYwPIQ5A=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=fdlMArTzZ/LJuQDUc4lX/A9894B7FeAe0gJghHl74rgxmh1loKjNRZoMEsZ8sUevP
+         yy6iXKv33qlsalT4x8BUauZKlGIm6UqRoyOSGS0kz57E5M2Gdcj0CON2wstBhOTqI6
+         1K4DtYJSVMPwEJhjcrd6SHOPWw8hLIWiYQukSuX8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.31.60]) by smtp.web.de
+ (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0M6Df8-1l4wV01ioM-00y5L4; Tue, 15 Jun 2021 17:14:08 +0200
+Subject: Re: [PATCH 2/2] read-cache: fix incorrect count and progress bar
+ stalling
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
+ <patch-2.2-042f598826-20210607T144206Z-avarab@gmail.com>
+ <8f336b1b-6cb7-8277-79d5-0f331159b00c@gmail.com>
+ <87k0n54qb6.fsf@evledraar.gmail.com>
+ <eaf2b6b0-4202-d5ea-87a2-b828fdbc60a1@web.de>
+ <8735tt4fhx.fsf@evledraar.gmail.com> <xmqqczsxtf8g.fsf@gitster.g>
+ <87wnr4394y.fsf@evledraar.gmail.com>
+ <74183ce6-e17f-1b11-1ceb-7a8d873bc1c7@web.de>
+ <87lf7k2bem.fsf@evledraar.gmail.com>
+ <f5e181fc-af94-bccf-051f-a58a04fe1ffc@web.de>
+ <87zgvszo8i.fsf@evledraar.gmail.com>
+ <4f251a35-8b5e-30f0-c742-960cb7c30b57@web.de>
+ <87o8c8z105.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <34d5febf-508c-52b8-a04b-98298d75bd8d@web.de>
+Date:   Tue, 15 Jun 2021 17:14:07 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <87o8c8z105.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:aOaTLCbwA5a8FE1ldScBrb60xhNXE758OZnCwUYSjolvQFrqy/h
+ Zk51FLOCbwaDz5OUdAUw6Bmn1QOboz5unDrJByiNHAo8DxRp9O8fYGb1qQ0TjlA7jr2pqjF
+ N5x0LpmeT9gtLdGoV3R/xsos76lsvOnz/RbJg01nThL8V2RiEtxYoEsS+5LQ8TIOLS4l2es
+ eNHb30ihlOncr99MgwH0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:anEFVa6dCP0=:RI6gEiLwN0fGzcC+Q9Z8tS
+ uuYeSz6Hh5ohECpqyR3rW8dyt6t6MHZfhD7hS4uGhSJNNMFkJwxOgFIyTizeVBg7J39yGha1w
+ x57KMTSag/fMEUKmFtG9u+jFbGVboHDGTQMdNViuKcYD0BNWUxegqQ4t9tiidKoKipI+pPkWq
+ I+g4ItqHow//ULd6HoVobLQT8mk250uWUysGqmPevbUUpeADn7s2xUd2wL3ewMacrOJmtr1ZX
+ waxH9FdwQikSz8bxfbgwB6YrjWZKn7OK+eK5l6c8jCwm3Z4dsqUX6Mj291e7ZtN/75MFP5r9y
+ hjC2IH9JLgMeTz2QkamK6z7OVjVEzV3utKtqmKIKYtMQQ8TrtEgPZ1uzEFhqeIDMz1d/wW22W
+ FNkoUI8AzUoBdXfAiENlVRGWj1jya/r7QST1ArVyHCjUL8u/mnu/ht1kpV+Frd8r4VHyPg1Az
+ yjiPX+BU7v0glVyKAz04pGSVvraaYYLdJ41DM1Mod8EGi6TeYgNRYPEVxawhrk8JoZsKvFnb7
+ 9ARJ4d22LrQjPa/NryatjNRJqN8dGBr/TP6ZE1GA0sgP9xxNuzCl5spNO+drysBneUUuUBYxb
+ +IdrSlbiuOrjJMlU77A7d0Knq0Z+S2G1Yp2kiI9vz27GgIJmT0yLPzlkToDOi1Vmd41banyAu
+ khm2XSzBsu/Sg2fo/23GFcXq9ENkixTyErzUdN+AGg5VgwAJ8UsJdS/GaiM4va/1Dok8cXsmt
+ 0pVNJbipL3sYVmuT4/36AUJRNeJYUc+ksVMJ4Iz4OzL0Fk+HhJkZoQ2bU+00ZBIPdevf2qYp6
+ kj0kd2EehGpS1W+5G+Em8moGHoye1Y8DpAX4OqrxRUnq2MExjftJuJkv5g1Q6351/3W6dWRAM
+ rnDbniAwgVPTpaEcuSRIkFOoE1SnqNqaKnOXP419D2ej+UNCkcnU7CfWBlA+QllP+/vTMdlRk
+ gpV48TPLOcUdCJ+FHM/0XHaXR1zhiTLMxCrkLQHSF4Xy+yBF5zSrhjGmmW1VSEWcHHhIBBFll
+ SL3UYGjyEIxPEM6NNG7TrTs5/sEk6I+v00QtuTwo/loOPwZ7zzHfMVXsIpnhST2gxcR4jrsmo
+ AESQgXvxG1fzBi2w/6S+D6JpX81ll0vGoRu
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new "add-config" subcommand to `git submodule--helper` with the
-goal of converting part of the shell code in git-submodule.sh related to
-`git submodule add` into C code. This new subcommand sets the
-configuration variables of a newly added submodule, by registering the
-url in local git config, as well as the submodule name and path in the
-.gitmodules file. It also sets 'submodule.<name>.active' to "true" if
-the submodule path has not already been covered by any pathspec
-specified in 'submodule.active'.
+Am 14.06.21 um 21:08 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> On Mon, Jun 14 2021, Ren=C3=A9 Scharfe wrote:
+>
+>> Am 14.06.21 um 13:07 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>>
+>>> On Thu, Jun 10 2021, Ren=C3=A9 Scharfe wrote:
+>>>
+>>>> Am 09.06.21 um 00:12 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>>>>
+>>>>> On Tue, Jun 08 2021, Ren=C3=A9 Scharfe wrote:
+>>>>>
+>>>>>> I wonder (only in a semi-curious way, though) if we can detect
+>>>>>> off-by-one errors by adding an assertion to display_progress() that
+>>>>>> requires the first update to have the value 0, and in stop_progress=
+()
+>>>>>> one that requires the previous display_progress() call to have a va=
+lue
+>>>>>> equal to the total number of work items.  Not sure it'd be worth th=
+e
+>>>>>> hassle..
+>>>>>
+>>>>> That's intentional. We started eating 3 apples, got to one, but now =
+our
+>>>>> house is on fire and we're eating no more apples today, even if we
+>>>>> planned to eat 3 when we sat down.
+>>>>>
+>>>>> The progress bar reflects this unexpected but recoverable state:
+>>>>>
+>>>>>     $ perl -wE 'for (0..1) { say "update"; say "progress $_" }' |
+>>>>>       ./helper/test-tool progress --total=3D3 Apples 2>&1 |
+>>>>>       cat -v | perl -pe 's/\^M\K/\n/g'
+>>>>>     Apples:   0% (0/3)^M
+>>>>>     Apples:  33% (1/3)^M
+>>>>>     Apples:  33% (1/3), done.
+>>>>>
+>>>>> We're at 1/3, but we're done. No more apples.
+>>>>>
+>>>>> This isn't just some hypothetical, e.g. consider neeing to unlink() =
+or
+>>>>> remove files/directories one at a time in a directory and getting th=
+e
+>>>>> estimated number from st_nlink (yeah yeah, unportable, but it was th=
+e
+>>>>> first thing I thought of).
+>>>>>
+>>>>> We might think we're processing 10 entries, but another other proces=
+ses
+>>>>> might make our progress bar end at more or less than the 100% we
+>>>>> expected. That's OK, not something we should invoke BUG() about.
+>>>>
+>>>> It doesn't have to be a BUG; a warning would suffice.  And I hope not
+>>>> finishing the expected number of items due to a catastrophic event is
+>>>> rare enough that an additional warning wouldn't cause too much pain.
+>>>
+>>> It's not a catastrophic event, just a run of the mill race condition
+>>> we'll expect if we're dealing with the real world.
+>>>
+>>> E.g. you asked to unlink 1000 files, we do so, we find 10 are unlinked
+>>> already, or the command is asked to recursively unlink all files in a
+>>> directory tree, and new ones have showed up.
+>>>
+>>> In those cases we should just just shrug and move on, no need for a
+>>> warning. We just don't always have perfect information about future
+>>> state at the start of the loop.
+>>
+>> If a planned work item is cancelled then it can still be counted as
+>> done.  Or the total could be adjusted, but that might look awkward.
+>>
+>>>> Loops that *regularly* end early are not a good fit for progress
+>>>> percentages, I think.
+>>>
+>>> Arguably yes, but in these fuzzy cases not providing a "total" means
+>>> showing no progress at all, just a counter. Perhaps we should have som=
+e
+>>> other "provide total, and it may be fuzzy" flag. Not providing it migh=
+t
+>>> run into your proposed BUG(), my point was that the current API
+>>> providing this flexibility is intentional.
+>>
+>> Your patch turns a loop that doesn't immediately report skipped items
+>> into one with contiguous progress updates.  That's a good way to deal
+>> with the imagined restrictions for error detection.  Another would be
+>> to make the warnings optional.
+>
+> I don't see how there's anything wrong with the API use, how it needs a
+> warning etc.
 
-This is meant to be a faithful conversion from shell to C, with only one
-minor change: A warning is emitted if no value is specified in
-'submodule.active', ie, the config looks like: "[submodule] active\n",
-because it is an invalid configuration. It would be helpful to let the
-user know that the pathspec is unset, and the value of
-'submodule.<name>.active' might be set to 'true' so that they can
-rectify their configuration and prevent future surprises (especially
-given that the latter variable has a higher priority than the former).
+You pointed out that many callsites do:
 
-The structure of the conditional to check if we need to set the 'active'
-toggle looks different from the shell version -- but behaves the same.
-The change was made to decrease code duplication. A comment has been
-added to explain that only one value of 'submodule.active' is obtained
-to check if we need to call is_submodule_active() at all.
+	for (i =3D 0; i < large_number; i++) {
+		display_progress(p, i + 1);
+		/* work work work */
+	}
 
-This is part of a series of changes that will result in all of
-'submodule add' being converted to C.
+This is an off-by-one error because a finished item is reported before
+work on it starts.  Adding a warning can help find these cases reliably.
 
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-Based-on-patch-by: Shourya Shukla <shouryashukla.oo@gmail.com>
-Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
----
- builtin/submodule--helper.c | 125 ++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  28 +-------
- 2 files changed, 126 insertions(+), 27 deletions(-)
+>>>>> Similarly, the n=3D0 being distinguishable from the first
+>>>>> display_progress() is actually useful in practice. It's something I'=
+ve
+>>>>> seen git.git emit (not recently, I patched the relevant code to emit
+>>>>> more granular progress).
+>>>>>
+>>>>> It's useful to know that we're stalling on the setup code before the
+>>>>> for-loop, not on the first item.
+>>>>
+>>>> Hmm, preparations that take a noticeable time might deserve their own
+>>>> progress line.
+>>>
+>>> Sure, and I've split some of those up in the past, but this seems like
+>>> ducking/not addressing the point that the API use we disagree on has
+>>> your preferred use conflating these conditions, but mine does not...
+>>
+>> Subtle.  If preparation takes a long time and each item less than that
+>> then the progress display is likely to jump from "0/n" to "i/n", where
+>> i > 1, and the meaning of "1/n" becomes moot.
+>
+> In practice we're making humongous jumps all over the place, we don't
+> write to the terminal for every item processed, and if we did it would
+> be too fast to be perceptable to the user.
+>
+> So I don't think this is an issue in the first place, as noted upthread
+> in <8735tt4fhx.fsf@evledraar.gmail.com>. Regardless of what we think of
+> the supposed off-by-one issue you seemed to think that it was enough of
+> an issue to justify complexity at the API use level (needing to think
+> about "continue" statements in loops, etc.), but now you think it's
+> moot?
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6d52a73a57..bce1e06d74 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2936,6 +2936,130 @@ static int add_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static void config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
-+{
-+	char *key;
-+
-+	if (!is_writing_gitmodules_ok())
-+		die(_("please make sure that the .gitmodules file is in the working tree"));
-+
-+	key = xstrfmt("submodule.%s.%s", name, var);
-+	config_set_in_gitmodules_file_gently(key, value);
-+	free(key);
-+}
-+
-+static void configure_added_submodule(struct add_data *add_data)
-+{
-+	char *key, *submod_pathspec = NULL;
-+	struct child_process add_submod = CHILD_PROCESS_INIT;
-+	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
-+	int pathspec_key_exists, activate = 0;
-+
-+	key = xstrfmt("submodule.%s.url", add_data->sm_name);
-+	git_config_set_gently(key, add_data->realrepo);
-+	free(key);
-+
-+	add_submod.git_cmd = 1;
-+	strvec_pushl(&add_submod.args, "add",
-+		     "--no-warn-embedded-repo", NULL);
-+	if (add_data->force)
-+		strvec_push(&add_submod.args, "--force");
-+	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
-+
-+	if (run_command(&add_submod))
-+		die(_("Failed to add submodule '%s'"), add_data->sm_path);
-+
-+	config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path);
-+	config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo);
-+	if (add_data->branch)
-+		config_submodule_in_gitmodules(add_data->sm_name,
-+					       "branch", add_data->branch);
-+
-+	add_gitmodules.git_cmd = 1;
-+	strvec_pushl(&add_gitmodules.args,
-+		     "add", "--force", "--", ".gitmodules", NULL);
-+
-+	if (run_command(&add_gitmodules))
-+		die(_("Failed to register submodule '%s'"), add_data->sm_path);
-+
-+	/*
-+	 * NEEDSWORK: In a multi-working-tree world this needs to be
-+	 * set in the per-worktree config.
-+	 */
-+	pathspec_key_exists = !git_config_get_string("submodule.active",
-+						     &submod_pathspec);
-+	if (pathspec_key_exists && !submod_pathspec) {
-+		warning(_("The submodule.active configuration exists, but the "
-+			  "pathspec was unset. If the submodule is not already "
-+			  "active, the value of submodule.%s.active will be "
-+			  "be set to 'true'."), add_data->sm_name);
-+		activate = 1;
-+	}
-+
-+	/*
-+	 * If submodule.active does not exist, or if the pathspec was unset,
-+	 * we will activate this module unconditionally.
-+	 *
-+	 * Otherwise, we ask is_submodule_active(), which iterates
-+	 * through all the values of 'submodule.active' to determine
-+	 * if this module is already active.
-+	 */
-+	if (!pathspec_key_exists || activate ||
-+	    !is_submodule_active(the_repository, add_data->sm_path)) {
-+		key = xstrfmt("submodule.%s.active", add_data->sm_name);
-+		git_config_set_gently(key, "true");
-+		free(key);
-+	}
-+}
-+
-+static int add_config(int argc, const char **argv, const char *prefix)
-+{
-+	int force = 0;
-+	struct add_data add_data = ADD_DATA_INIT;
-+
-+	struct option options[] = {
-+		OPT_STRING('b', "branch", &add_data.branch,
-+			   N_("branch"),
-+			   N_("branch of repository to store in "
-+			      "the submodule configuration")),
-+		OPT_STRING(0, "url", &add_data.repo,
-+			   N_("string"),
-+			   N_("url to clone submodule from")),
-+		OPT_STRING(0, "resolved-url", &add_data.realrepo,
-+			   N_("string"),
-+			   N_("url to clone the submodule from, after it has "
-+			      "been dereferenced relative to parent's url, "
-+			      "in the case where <url> is a relative url")),
-+		OPT_STRING(0, "path", &add_data.sm_path,
-+			   N_("path"),
-+			   N_("where the new submodule will be cloned to")),
-+		OPT_STRING(0, "name", &add_data.sm_name,
-+			   N_("string"),
-+			   N_("name of the new submodule")),
-+		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
-+			   PARSE_OPT_NOCOMPLETE),
-+		OPT_END()
-+	};
-+
-+	const char *const usage[] = {
-+		N_("git submodule--helper add-config "
-+		   "[--force|-f] [--branch|-b <branch>] "
-+		   "--url <url> --resolved-url <resolved-url> "
-+		   "--path <path> --name <name>"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+
-+	if (argc != 0)
-+		usage_with_options(usage, options);
-+
-+	add_data.force = !!force;
-+	configure_added_submodule(&add_data);
-+
-+	return 0;
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
- 
- struct cmd_struct {
-@@ -2949,6 +3073,7 @@ static struct cmd_struct commands[] = {
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
- 	{"add-clone", add_clone, 0},
-+	{"add-config", add_config, 0},
- 	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index f71e1e5495..9826378fa6 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -242,33 +242,7 @@ cmd_add()
- 	fi
- 
- 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
--	git config submodule."$sm_name".url "$realrepo"
--
--	git add --no-warn-embedded-repo $force "$sm_path" ||
--	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
--
--	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
--	git submodule--helper config submodule."$sm_name".url "$repo" &&
--	if test -n "$branch"
--	then
--		git submodule--helper config submodule."$sm_name".branch "$branch"
--	fi &&
--	git add --force .gitmodules ||
--	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
--
--	# NEEDSWORK: In a multi-working-tree world, this needs to be
--	# set in the per-worktree config.
--	if git config --get submodule.active >/dev/null
--	then
--		# If the submodule being adding isn't already covered by the
--		# current configured pathspec, set the submodule's active flag
--		if ! git submodule--helper is-active "$sm_path"
--		then
--			git config submodule."$sm_name".active "true"
--		fi
--	else
--		git config submodule."$sm_name".active "true"
--	fi
-+	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
- }
- 
- #
--- 
-2.31.1
+I don't understand your question.  Let me rephrase what I find moot:
 
+You wrote that the first display_progress() call being made with n>0
+would be useful to you to see long-running preparations.  If items are
+processed quicker than one per second, then whatever number the first
+display_progress() call writes to the screen will be overwritten within
+a second.  So the value of the first update shouldn't actually matter
+much for your use case -- unless items takes a long time to process.
+
+Ren=C3=A9
