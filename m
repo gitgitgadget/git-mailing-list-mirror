@@ -2,164 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55669C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AA8DC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:38:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28BF16140C
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:34:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A7E961441
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231354AbhFOJgH convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 15 Jun 2021 05:36:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55066 "EHLO
+        id S231674AbhFOJkH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 05:40:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231327AbhFOJgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 05:36:06 -0400
-X-Greylist: delayed 576 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 15 Jun 2021 02:34:02 PDT
-Received: from mailproxy05.manitu.net (mailproxy05.manitu.net [IPv6:2a00:1828:1000:1110::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65FAC06175F
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:34:02 -0700 (PDT)
-Received: from localhost (200116b860a00300716b7f4f66be36b7.dip.versatel-1u1.de [IPv6:2001:16b8:60a0:300:716b:7f4f:66be:36b7])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: michael@grubix.eu)
-        by mailproxy05.manitu.net (Postfix) with ESMTPSA id 3E0D71B60147;
-        Tue, 15 Jun 2021 11:24:23 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
+        with ESMTP id S231748AbhFOJjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 05:39:48 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4212DC0613A3
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:37:19 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 3-20020a05600c0243b029019f2f9b2b8aso1601769wmj.2
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:37:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version;
+        bh=sZK3y2NCFpEv0PGDFf6gJZYqzplBuB8cxAA18rDeSy0=;
+        b=h65kI6OwoqHjXIW1SS+38Nok/zMFjDdPPRBdCF00cssf7XlwLP6ywHnC1/qjsoz+cU
+         kGkjFqDGh3g9aAjFZN8jn6h6G4hbOB2XfRRctPzvBAf/fvPOef2FnXz7P6rNvEye+iOe
+         UYPJhyRLOF6zF+6TWdZmdTnaiXdrrHVlWeoWONFW8/JuE7HWRuyNVh938hTSeGqiZqS+
+         FeIUIsS29gGkwLYvGwk13aA+m1vT9c8csGFZTXqTA3sOGXcKmb926SCr0W/5dg0hMDnI
+         ih523SE3QYEIvdBHyTDTHrTZhijQSoCkAp1UemlvVeWLUSS/oP5y9G/Rjg7H8emSwmqD
+         JC0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version;
+        bh=sZK3y2NCFpEv0PGDFf6gJZYqzplBuB8cxAA18rDeSy0=;
+        b=KW7xtLHHkhnIQAdffc3jP2hQ1F7ib8e37Jz/xLgypEl9c7fTIJSPODtErL7K7EMMPc
+         rfFUf70DJx3HBIcBa51BH0aet6dTCYYPsMu0Xsv/wkRRnnxoGQW7vqsQ9i9DbcZCu9TT
+         WEwfEemT6eOEciOZZLcn7B6GFali1gZjNBB7dYuhmALAEcEmJTKt8YA4OF/5XlYEW1o1
+         G8byfaGQHylCLEQFAe6tsQ+seQ4XqqQrKsO2nS9YVFa2jk4T/RhWrnAjCMHG13zN6BzN
+         So+W6HfvBHg9jTOtH8yjZ+RqG5ZWGHdnnMm6PGX5QBciEEZFiLEyKaTQy2Celb00liag
+         1uLg==
+X-Gm-Message-State: AOAM531iBexR375jtpumzLtTmjOGQyZqFntuJJlPomlJ5S9m9S1U+pSz
+        D2AOsl6GZhXGPys7tLgORwg=
+X-Google-Smtp-Source: ABdhPJz2w4UCAJstY8BfPcNks5BsjS8/QiswnZPugYAajEn9c356isBrB8tg+lYEoTAc8LSD3X667Q==
+X-Received: by 2002:a1c:770b:: with SMTP id t11mr4187647wmi.79.1623749837896;
+        Tue, 15 Jun 2021 02:37:17 -0700 (PDT)
+Received: from cpm12071.local ([79.140.114.214])
+        by smtp.gmail.com with ESMTPSA id k42sm1987970wms.0.2021.06.15.02.37.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jun 2021 02:37:17 -0700 (PDT)
+References: <20210610083916.96243-1-raykar.ath@gmail.com>
+ <20210614125157.99426-1-raykar.ath@gmail.com>
+ <20210614125157.99426-4-raykar.ath@gmail.com>
+ <gohp6kh7i0xm08.fsf@cpm12071.fritz.box>
+ <CAPig+cQQXEU2QvP6PGB7v=RGQDiu_s0kctFyqSHWvLe2ep0w9Q@mail.gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Atharva Raykar <raykar.ath@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH v4 3/3] submodule--helper: introduce add-config subcommand
+In-reply-to: <CAPig+cQQXEU2QvP6PGB7v=RGQDiu_s0kctFyqSHWvLe2ep0w9Q@mail.gmail.com>
+Message-ID: <gohp6k35tjqxix.fsf@gmail.com>
+Date:   Tue, 15 Jun 2021 11:37:11 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <patch-4.4-c54c6a7b205-20210614T171626Z-avarab@gmail.com>
-References: <cover-0.4-00000000000-20210614T171626Z-avarab@gmail.com> <patch-4.4-c54c6a7b205-20210614T171626Z-avarab@gmail.com>
-Subject: Re: [PATCH 4/4] show-branch tests: add missing tests
-From:   Michael J Gruber <git@grubix.eu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org,
-        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>
-Message-ID: <162374905722.40525.516266574605586007.git@grubix.eu>
-Date:   Tue, 15 Jun 2021 11:24:17 +0200
-User-Agent: alot/0.9.1
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason venit, vidit, dixit 2021-06-14 19:18:10:
-> Add missing tests for --remotes, --list and --merge-base. These are
-> not exhaustive, but better than the nothing we have now.
-> 
-> There were some tests for this command added in f76412ed6db ([PATCH]
-> Add 'git show-branch'., 2005-08-21) has never been properly tested,
-> namely for the --all option in t6432-merge-recursive-space-options.sh,
-> and some of --merge-base and --independent in t6010-merge-base.sh.
-> 
-> This fixes a few more blind spots, but there's still a lot of behavior
-> that's not tested for.
-> 
-> These new tests show the add (and possibly unintentional) behavior of
 
-"odd"
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Other than that, I don't think show-branch was broken, so I somehow
-contest the phrase "fix" in this series, it's more of a clean-up.
-
-Just to be sure: Users have no way of assigning a color code with
-background colors to the columns, which is why omitting
-the lookup and reset is correct for a space.
-
-Now, people scripting around show-branch might be bitten by that change
-because the number of (unprocessed) characters in the output changes, or
-because a control character which they used to "tr" is not there any more.
-They should not (script this command), I guess.
-
-> --merge-base with one argument, and how its output is the same as "git
-> merge-base" with N bases in this particular case. See the test added
-> in f621a8454d1 (git-merge-base/git-show-branch --merge-base:
-> Documentation and test, 2009-08-05) for a case where the two aren't
-> the same.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  t/t3202-show-branch.sh | 61 ++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
-> 
-> diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
-> index 54025f03379..ad9902a06b9 100755
-> --- a/t/t3202-show-branch.sh
-> +++ b/t/t3202-show-branch.sh
-> @@ -85,4 +85,65 @@ test_expect_success 'show-branch --color output' '
->         test_cmp expect actual
->  '
->  
-> +test_expect_success 'show branch --remotes' '
-> +       cat >expect.err <<-\EOF &&
-> +       No revs to be shown.
-> +       EOF
-> +       git show-branch -r 2>actual.err >actual.out &&
-> +       test_cmp expect.err actual.err &&
-> +       test_must_be_empty actual.out
-> +'
-> +
-> +test_expect_success 'setup show branch --list' '
-> +       sed "s/^> //" >expect <<-\EOF
-> +       >   [branch1] branch1
-> +       >   [branch2] branch2
-> +       >   [branch3] branch3
-> +       >   [branch4] branch4
-> +       >   [branch5] branch5
-> +       >   [branch6] branch6
-> +       >   [branch7] branch7
-> +       >   [branch8] branch8
-> +       >   [branch9] branch9
-> +       > * [branch10] branch10
-> +       EOF
-> +'
-> +
-> +test_expect_success 'show branch --list' '
-> +       git show-branch --list $(cat branches.sorted) >actual &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'show branch --list has no --color output' '
-> +       git show-branch --color=always --list $(cat branches.sorted) >actual &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'show branch --merge-base with one argument' '
-> +       for branch in $(cat branches.sorted)
-> +       do
-> +               git rev-parse $branch >expect &&
-> +               git show-branch --merge-base $branch >actual &&
-> +               test_cmp expect actual
-> +       done
-> +'
-> +
-> +test_expect_success 'show branch --merge-base with two arguments' '
-> +       for branch in $(cat branches.sorted)
-> +       do
-> +               git rev-parse initial >expect &&
-> +               git show-branch --merge-base initial $branch >actual &&
-> +               test_cmp expect actual
-> +       done
-> +'
-> +
-> +test_expect_success 'show branch --merge-base with N arguments' '
-> +       git rev-parse initial >expect &&
-> +       git show-branch --merge-base $(cat branches.sorted) >actual &&
-> +       test_cmp expect actual &&
-> +
-> +       git merge-base $(cat branches.sorted) >actual &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-> -- 
-> 2.32.0.555.g0268d380f7b
+> On Mon, Jun 14, 2021 at 3:53 PM Rafael Silva
+> <rafaeloliveira.cs@gmail.com> wrote:
+>> Just as an example, here's a diff to demonstrate the argument:
+>> -- >8 --
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> @@ -2934,6 +2934,14 @@ static int add_clone(int argc, const char **argv, const char *prefix)
+>> +void add_config_in_submodules_file(const char *keyfmt, const char *submodule,
+>> +                         const char *value)
+>> +{
+>> +       char *key = xstrfmt(keyfmt, submodule);
+>> +       config_set_in_gitmodules_file_gently(key, value);
+>> +       free(key);
+>> +}
 >
+> The new function should be `static`, of course.
+
+Good catch! Indeed, it should be `static`. 
+
+-- 
+Thanks
+Rafael
