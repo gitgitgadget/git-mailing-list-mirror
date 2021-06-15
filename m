@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A741BC48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 791A8C49361
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DEB3613DA
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B46C6140B
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231522AbhFOONj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 10:13:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36338 "EHLO
+        id S231531AbhFOONk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 10:13:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231307AbhFOONX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231442AbhFOONX (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Jun 2021 10:13:23 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95288C0613A4
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:17 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id q5so18545751wrm.1
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:17 -0700 (PDT)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A3BC0613A3
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id y13-20020a1c4b0d0000b02901c20173e165so2140534wma.0
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=Dw1HJSLJAyxT+7lYCLicwFIMmj5JMWgxMnTQoyremeE=;
-        b=QgHpDGtHOdzp7Sclwy4Z8FV+mRll1HLL+kyVobeVdvTQDUM1ia0b3jfXEu8Z3WzFqS
-         GBsqbZEvKGGlEHEZSUYCITRTOh+NWSge8pk5l3sTjhTTGvv10csc2UhD+zjSaQ+hOy8c
-         hzWeUgW2CDrjMkac2XNh0uF2z6ocGF5ifVYJKcTFEO8mfIexJ2kgwaHw8x4lRskcLrPn
-         w4/RhCDuIgq+XfncYInCpBJlJDe4QOSMjUvkwFvkwF12WfhcDz4VK+MmPIRwIP7Ddlj1
-         P/DOI/Hc7ocbS0aaU5EJACwhdBprAEhrGRY//9I0Gb0JnmWsRMJXhlRFoUWX6vowrURQ
-         U3iw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Q16gBMT1huu7BpCLhZyKDo4zDdTUuJLRUUVAFhN68bY=;
+        b=sU/xWnUDHzDXuukPhdcHRoNhQHEmEM+cGQdhuLpfnYjjCAOmODOTDFhMB1aiMl3ChC
+         KKosgJVMuzxaJ2j5ISdymDDPpp8Wyu1K2Fl0kfXup6neOxs+2OpKnIs25wOUADV/pSBX
+         xbjgom+3BPnGTqv12DFNBYSjvlo/lpj53ujkHDFax5Rv5xbjiiwWrb+OZFKiM5UZHxhY
+         10wXPQzfxDP0cOeoWmvCkpV2l5toFqR07MHupIaaKx1A5H2gI7oSyvO0i5iAE51jpDsq
+         ukZ5J5Pdlsbd4Pad7tkeXHubGyixyGB87tnVYt1jFMlhviKrl4xR4CO2CBGbqzD3Nzsi
+         jULw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=Dw1HJSLJAyxT+7lYCLicwFIMmj5JMWgxMnTQoyremeE=;
-        b=NXyyEnZLk9qpIuNR5QMegwwJeM6gL2U534/1vyK6DuSd+axjIwgHWC00VsL7ZrvTzc
-         y+yUT+Vcs33dv1FJjsFf7016nLolrH6Ef0JqDZ+X+eHb5g8tO8PuY4u/z2coS4mT8HOe
-         cE2VbPZfjz7Vs5KMJujpqixN0uroSHzFnNR4QYb+ccdhS9hcETVIGbNKaG539RReDgc6
-         yP0o+u62TZoyfkJkXva0blYql5qYGIN4oALaICyCWwlutIcwuZFASdlmwjeQs4QzCpas
-         0BpwaHuK+4RzrD2g9KAra4CdOByqZXqA0gYvw2+hF2krr/hLkYE1A8LqZVsxLV2fvdBe
-         aPbg==
-X-Gm-Message-State: AOAM530ZPeqpwbRoXBbmSw//RKnEJvEGWwDgH3u9Rut63zTjuuH/2o3g
-        pHr9ZeQLNf9U3X5VjvSqrrH4CBiVkMM=
-X-Google-Smtp-Source: ABdhPJzy7ItDXLK7sjVyOVuMzR2aONH2DeNyAqrW7zKR8sowyuko5paTu/k4Tj5caWsDT93C6fxNWw==
-X-Received: by 2002:adf:e38e:: with SMTP id e14mr3400433wrm.384.1623766276162;
-        Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Q16gBMT1huu7BpCLhZyKDo4zDdTUuJLRUUVAFhN68bY=;
+        b=YgTkQAvyG320EE7dhkZRdyKxMnxOHDxudeid+DvTbPi6ESdsxi18JW6Zs+pdtK2GWM
+         cfxrpam1udsBrQFEiHbpueeh07Tar7iw2TMTHhAJkYVW1UbVLGc7SS50GUOW4hRbcuG7
+         NajZmkx8G2RCeI600dcDvA/CqES57Lqraab/RJh/5TTW07QOtVTcPZcBGzCfxjalrVFh
+         YIM5qcgEnAoqdC2HQ+/S0TgctqTnKALSgXGT7L7Bw+HEGTeaHRsgpmbQ+vyADIFq9r/j
+         E9C4yRxxprsFuSqMwGmAb0JdOUTr6ELvDzgpKDGaVX5m9/pcue1vg7PKwHVoGRwktsrd
+         9ywA==
+X-Gm-Message-State: AOAM53128e4CLy0qjprTKj17C2ssKAu3LMYokmnoXqh4QcIDGXiSINNa
+        rqPJlKeI6lE0is5MAhhdKvuAIhv6KQM=
+X-Google-Smtp-Source: ABdhPJwl2qYjqC7CzplVT9/aBM7h961EdgYnkmkqxu+Uchn4oNwBlrAS9J79RuYk6HIBOHvg42tO0g==
+X-Received: by 2002:a7b:c1c5:: with SMTP id a5mr23369408wmj.134.1623766275503;
+        Tue, 15 Jun 2021 07:11:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 89sm19704565wrq.14.2021.06.15.07.11.15
+        by smtp.gmail.com with ESMTPSA id p6sm19897297wrf.51.2021.06.15.07.11.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 15 Jun 2021 07:11:15 -0700 (PDT)
-Message-Id: <57d8486ab7c842842ca95fb51437ff7a1d693481.1623766273.git.gitgitgadget@gmail.com>
+Message-Id: <5b942776bb0af2e5d697904a67d6d489bdaf6d2e.1623766273.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
 References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
         <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
 From:   "Felipe Contreras via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Jun 2021 14:11:10 +0000
-Subject: [PATCH v3 2/4] comments: avoid using the gender of our users
-MIME-Version: 1.0
+Date:   Tue, 15 Jun 2021 14:11:09 +0000
+Subject: [PATCH v3 1/4] doc: avoid using the gender of other people
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, stolee@gmail.com,
         jrnieder@gmail.com, emilyshaffer@google.com,
@@ -87,107 +87,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Felipe Contreras <felipe.contreras@gmail.com>
 
-We generally avoid specifying the gender of our users in order to be
-more inclusive, but sometimes a few slip by due to habit.
-
-Since by doing a little bit of rewording we can avoid this irrelevant
-detail, let's do so.
+Using gendered pronouns for an anonymous person applies a gender where
+none is known and further excludes readers who do not use gendered
+pronouns. Avoid such examples in the documentation by using "they" or
+passive voice to avoid the need for a pronoun.
 
 Inspired-by: Derrick Stolee <dstolee@microsoft.com>
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit.c    | 2 +-
- config.h    | 4 ++--
- date.c      | 2 +-
- pathspec.h  | 2 +-
- strbuf.h    | 4 ++--
- wt-status.c | 2 +-
- 6 files changed, 8 insertions(+), 8 deletions(-)
+ Documentation/SubmittingPatches | 5 ++---
+ Documentation/git-push.txt      | 4 ++--
+ Documentation/user-manual.txt   | 2 +-
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 8ea55a447fa9..143f472c0f24 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1178,7 +1178,7 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
- 	/*
- 	 * We could verify this signature and either omit the tag when
- 	 * it does not validate, but the integrator may not have the
--	 * public key of the signer of the tag he is merging, while a
-+	 * public key of the signer of the tag being merged, while a
- 	 * later auditor may have it while auditing, so let's not run
- 	 * verify-signed-buffer here for now...
- 	 *
-diff --git a/config.h b/config.h
-index 9038538ffdcb..a2200f311156 100644
---- a/config.h
-+++ b/config.h
-@@ -450,8 +450,8 @@ void git_configset_init(struct config_set *cs);
- /**
-  * Parses the file and adds the variable-value pairs to the `config_set`,
-  * dies if there is an error in parsing the file. Returns 0 on success, or
-- * -1 if the file does not exist or is inaccessible. The user has to decide
-- * if he wants to free the incomplete configset or continue using it when
-+ * -1 if the file does not exist or is inaccessible. The caller decides
-+ * whether to free the incomplete configset or continue using it when
-  * the function returns -1.
-  */
- int git_configset_add_file(struct config_set *cs, const char *filename);
-diff --git a/date.c b/date.c
-index f9ea807b3a9f..c55ea47e96ad 100644
---- a/date.c
-+++ b/date.c
-@@ -908,7 +908,7 @@ int parse_expiry_date(const char *date, timestamp_t *timestamp)
- 		/*
- 		 * We take over "now" here, which usually translates
- 		 * to the current timestamp.  This is because the user
--		 * really means to expire everything she has done in
-+		 * really means to expire everything that was done in
- 		 * the past, and by definition reflogs are the record
- 		 * of the past, and there is nothing from the future
- 		 * to be kept.
-diff --git a/pathspec.h b/pathspec.h
-index fceebb876f7a..2341dc990102 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -108,7 +108,7 @@ struct pathspec {
-  *
-  * A similar process is applied when a new pathspec magic is added. The designer
-  * lifts the GUARD_PATHSPEC restriction in the functions that support the new
-- * magic. At the same time (s)he has to make sure this new feature will be
-+ * magic while at the same time making sure this new feature will be
-  * caught at parse_pathspec() in commands that cannot handle the new magic in
-  * some cases. grepping parse_pathspec() should help.
-  */
-diff --git a/strbuf.h b/strbuf.h
-index 223ee2094af8..a86dcaaf44d1 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -337,8 +337,8 @@ const char *strbuf_join_argv(struct strbuf *buf, int argc,
-  * placeholder is unknown, then the percent sign is copied, too.
-  *
-  * In order to facilitate caching and to make it possible to give
-- * parameters to the callback, `strbuf_expand()` passes a context pointer,
-- * which can be used by the programmer of the callback as she sees fit.
-+ * parameters to the callback, `strbuf_expand()` passes a context
-+ * pointer with any kind of data.
-  */
- typedef size_t (*expand_fn_t) (struct strbuf *sb,
- 			       const char *placeholder,
-diff --git a/wt-status.c b/wt-status.c
-index 42b673571696..ebc0c0da1a84 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -639,7 +639,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 		 * mode by passing a command line option we do not ignore any
- 		 * changed submodule SHA-1s when comparing index and HEAD, no
- 		 * matter what is configured. Otherwise the user won't be
--		 * shown any submodules she manually added (and which are
-+		 * shown any submodules manually added (and which are
- 		 * staged to be committed), which would be really confusing.
- 		 */
- 		handle_ignore_submodules_arg(&rev.diffopt, "dirty");
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 55287d72e0ef..3e215f4d8085 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -373,9 +373,8 @@ If you like, you can put extra tags at the end:
+ . `Acked-by:` says that the person who is more familiar with the area
+   the patch attempts to modify liked the patch.
+ . `Reviewed-by:`, unlike the other tags, can only be offered by the
+-  reviewer and means that she is completely satisfied that the patch
+-  is ready for application.  It is usually offered only after a
+-  detailed review.
++  reviewers themselves when they are completely satisfied with the
++  patch after a detailed analysis.
+ . `Tested-by:` is used to indicate that the person applied the patch
+   and found it to have the desired effect.
+ 
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index a953c7c38790..2f25aa3a291b 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -244,8 +244,8 @@ Imagine that you have to rebase what you have already published.
+ You will have to bypass the "must fast-forward" rule in order to
+ replace the history you originally published with the rebased history.
+ If somebody else built on top of your original history while you are
+-rebasing, the tip of the branch at the remote may advance with her
+-commit, and blindly pushing with `--force` will lose her work.
++rebasing, the tip of the branch at the remote may advance with their
++commit, and blindly pushing with `--force` will lose their work.
+ +
+ This option allows you to say that you expect the history you are
+ updating is what you rebased and want to replace. If the remote ref
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index f9e54b867417..96240598e3f5 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2792,7 +2792,7 @@ A fast-forward looks something like this:
+ 
+ In some cases it is possible that the new head will *not* actually be
+ a descendant of the old head.  For example, the developer may have
+-realized she made a serious mistake, and decided to backtrack,
++realized a serious mistake was made and decided to backtrack,
+ resulting in a situation like:
+ 
+ ................................................
 -- 
 gitgitgadget
 
