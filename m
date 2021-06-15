@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF71AC48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 986ECC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:19:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AC236162F
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80EDB6162F
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhFOQVM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 12:21:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
+        id S230267AbhFOQVP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 12:21:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbhFOQVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 12:21:11 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DC86C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:19:07 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id v9so2700286wrx.6
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:19:07 -0700 (PDT)
+        with ESMTP id S229689AbhFOQVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 12:21:14 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F30C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:19:09 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id v9so2700394wrx.6
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qxCvKPwWS2aQofvI4ShA4mZyh/7/hisn2HMNxgYeTVs=;
-        b=r0oc4B6RWxNDQqYpF+NGhazMIcvRXKa0M9623f53q3YQ9RC17pjFuPakydWBWE1DTN
-         k7MyGNRUAqf6tRdp+4rPVsaG0SpuuFBKckZUDhSFMbwpEB19hetESZP+az18Lof4KuIv
-         2yXyoggJATRVFCWBKuIp9stnAt8JG7gt3D6WddHAUpVOrmmOMLwtb8eL/f1fLeGpU3O0
-         gaHekudvYJrXMF4hclobueVlBCfvcui7eKvza9BuzLDKW7INgj+xALfON+7DRBQtuWC/
-         MxPz9wRJDmGIUHpThCtMnQv3jjsPTkfiaAMJ2WmWq96K1tulRzA53B/cJjvvViev7h7+
-         Wjjw==
+        bh=AL8pZf3EzXl2cmYcCpzgbNDDcn3eIrO+d5VjL5wVxSo=;
+        b=dehqETJQtH6gwzzJyP/pxm0UUkZDSvZMWMDojSOZwAWZdRrxUQ/aalUpNA8WmYaN9N
+         iE8MaL4NdJ4qslhzB6AKEo6eqk+d+3uSyhAhf7G27nOwqDZWej+M20k6aIssgofWhZQv
+         O5kum7Mc3OQ/6bQy0bLrMAHAnNtfN2gI2WUF8yYep/SNAICwkYn9ogR8KdoBnSdGDta1
+         HcS4YG8TdKjTWgOZNzkFEAT4yvzgniGSoEYf4dXZWN6iaTaW+4lgfSg2x4sKqeUl0qS/
+         Br5xBfrEfqjd0bfXMcnTruV98HiwceisFRddsp7IPDN6M0N++JF+JFr+fy11XJErBwIc
+         lCWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qxCvKPwWS2aQofvI4ShA4mZyh/7/hisn2HMNxgYeTVs=;
-        b=D9APIxwvuPD8AmTkeTjVlNURLRnGAENp9jUGLcm67Lln++4GTFFSClPFZ0jQbJ6sym
-         o4yr/I8+Ji/k6f1ZIjI97pv/DNB1gc5QwNuJbvhMNIQR76bY4pvKrDdOf+G5uUFZCnKx
-         wmnbvB2hdbBK3ltznYPSk13PTnSwQoccNFZ54xsisA4oc2SqPZGTjphURr8qKZWeZjfr
-         nzHLMW0HTq9c89GGeAY1+HDe4a14ZIvlmU+Co7ilFwjDSjxirQto69MlBUopM8V0B3bS
-         yekscYmJ2G0zIGPkYK2WiZ2+977T8vkM5YF5Bd0go6oCbjL7w+inKFghfOcjfv9TKwON
-         LE3w==
-X-Gm-Message-State: AOAM532rvf9Di1gh9JVxinI18ldWxEApwX4s5jdftbiOZyvKGCIxnTAp
-        S0o0BhUl1JlgLlM/FE7my0/clH57/RD34Q==
-X-Google-Smtp-Source: ABdhPJzENxHIJ522Btx9OQ5NvbY8g8L6KqQuVLLlpaKiUDWuudUAYM/xify5/stW5Tmn+HfkaJ0Smg==
-X-Received: by 2002:a5d:47a6:: with SMTP id 6mr26103745wrb.203.1623773945526;
-        Tue, 15 Jun 2021 09:19:05 -0700 (PDT)
+        bh=AL8pZf3EzXl2cmYcCpzgbNDDcn3eIrO+d5VjL5wVxSo=;
+        b=DuCI+FDYmnC0MZy2DpowaTCkUT+Ska87KIMQqclZ2DE3CNdjy2UY5MwnNDs9SAoL7+
+         c4VYNR0vo0aBJSZ7+Q8AGWxIWcZroLfftLN82P7jkKJUCPccfRaoftx/JqQxCkSnQK2i
+         OHIlieq3GsHJvQN5Tlpv/XYWT5296IMdl0Eo2at6z0W7ehh20Sngrp7/K/z4lzPSrRzG
+         se4Vfe5M2yidwp7rC5GPgGn31JZ+7OVSjvHNMEpRs93vZ0HHnW/TNL3t8/DCuyxRO8P3
+         626m6J+nCpBZ2IJqV9zj30/RKytoSXmHu//AjOluBsw4ulc0Ue35VFOs5CHMuElOsMsq
+         TBcQ==
+X-Gm-Message-State: AOAM533TrPmmTy3SX8GJCI+MZAGkXD2lAghbMSCjjlislOAabRjuwluQ
+        ySnq0Z2YyjrMIoZlbE413qUd2+pxxUjiMg==
+X-Google-Smtp-Source: ABdhPJwm49/E6EbM5IZ99gtEVD/TzQ5yl9tcxo4226O6u7YgUhDyVajkR3oXJJu4AWTDPPiLhF4UpA==
+X-Received: by 2002:adf:d20a:: with SMTP id j10mr4677585wrh.157.1623773947629;
+        Tue, 15 Jun 2021 09:19:07 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b8sm2671901wmd.35.2021.06.15.09.18.53
+        by smtp.gmail.com with ESMTPSA id b8sm2671901wmd.35.2021.06.15.09.19.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 09:18:57 -0700 (PDT)
+        Tue, 15 Jun 2021 09:19:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/6] daemon doc + code comments: reword "alice" example
-Date:   Tue, 15 Jun 2021 18:18:00 +0200
-Message-Id: <patch-3.6-30cffc12410-20210615T161330Z-avarab@gmail.com>
+Subject: [PATCH 4/6] fast-import doc: change "bob" in an example to "file.txt"
+Date:   Tue, 15 Jun 2021 18:18:01 +0200
+Message-Id: <patch-4.6-0b464dc51d8-20210615T161330Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.555.g0268d380f7b
 In-Reply-To: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
@@ -80,79 +80,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve on the "alice" example added in 603968d22b1 (daemon: extend
-user-relative path notation., 2006-02-04). I found the previous
-version of this documentation a bit confusing, and had to read the
-code to see what it was doing.
+The example added in e7e5170f804 (Update fast-import documentation to
+discuss crash reports, 2008-02-14) is a bit confusing in that we're
+referring to a "bob" when we really just need a placeholder name for a
+file that has bad mode bits, let's use "file.txt" instead.
 
-I think explicitly spelling out that the --user-path option can be
-user to provide an infix to stash in-between what we'll resolve
-"~user" and the path after that is clearer, especially when coupled
-with explicit examples of path resolution.
+Let's also use "<<-" in the here-doc so this'll work if the reader
+copies this from e.g. a tab-indented manual page, none of the content
+needs leading whitespace, so that won't break anything if the content
+isn't indented.
 
-Finally, the previous documentation didn't mention that `path/foo`
-could actually resolve to `path/foo.git`. That's implicitly covered
-earlier in the documentation, let's make an explicit reference to that
-here.
+The fast-import error message and other output has also changed
+slightly since 2008, let's update the relevant parts of it, while
+retaining the original PID, time etc. of the 2007-era example.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-daemon.txt | 13 ++++++++-----
- daemon.c                     | 10 +++++-----
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ Documentation/git-fast-import.txt | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index fdc28c041c7..a109189756d 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -139,11 +139,14 @@ otherwise `stderr`.
- --user-path=<path>::
- 	Allow {tilde}user notation to be used in requests.  When
- 	specified with no parameter, requests to
--	git://host/{tilde}alice/foo is taken as a request to access
--	'foo' repository in the home directory of user `alice`.
--	If `--user-path=path` is specified, the same request is
--	taken as a request to access `path/foo` repository in
--	the home directory of user `alice`.
-+	git://host/{tilde}user/foo is taken as a request to access
-+	'foo' repository in the home directory of user `user`.
-++
-+If `--user-path=infix` is specified, the `infix` is appended to the path
-+found with the {tilde}user notation. E.g. a request to access a `some/foo`
-+repository (git://host/{tilde}user/some/foo) will resolve to (assuming that
-+`$HOME` is `/home`) either `/home/user/infix/some/foo` (or `[...]/foo.git`
-+etc., see `--strict-paths` above).
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 39cfa05b28b..ddaa8e5d755 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -1277,7 +1277,7 @@ must be applied manually if the update is needed.
+ An example crash:
  
- --verbose::
- 	Log details about the incoming connections and requested files.
-diff --git a/daemon.c b/daemon.c
-index 5c4cbad62d0..a939e5ee0e0 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -46,8 +46,8 @@ static const char *interpolated_path;
- static int base_path_relaxed;
+ ====
+-	$ cat >in <<END_OF_INPUT
++	$ cat >in <<-END_OF_INPUT
+ 	# my very first test commit
+ 	commit refs/heads/master
+ 	committer Shawn O. Pearce <spearce> 19283 -0400
+@@ -1289,12 +1289,13 @@ An example crash:
+ 	data <<EOF
+ 	.gitignore
+ 	EOF
+-	M 777 inline bob
++	M 777 inline file.txt
+ 	END_OF_INPUT
  
- /* If defined, ~user notation is allowed and the string is inserted
-- * after ~user/.  E.g. a request to git://host/~alice/frotz would
-- * go to /home/alice/pub_git/frotz with --user-path=pub_git.
-+ * after ~user/.  E.g. a request to git://host/~user/frotz would
-+ * go to /home/user/pub_git/frotz with --user-path=pub_git.
-  */
- static const char *user_path;
+ 	$ git fast-import <in
+-	fatal: Corrupt mode: M 777 inline bob
++	fatal: Corrupt mode: M 777 inline file.txt
+ 	fast-import: dumping crash report to .git/fast_import_crash_8434
++	Unpacking objects: 100% (1/1), 32 bytes | 32.00 KiB/s, done.
  
-@@ -188,9 +188,9 @@ static const char *path_ok(const char *directory, struct hostinfo *hi)
- 			return NULL;
- 		}
- 		if (*user_path) {
--			/* Got either "~alice" or "~alice/foo";
--			 * rewrite them to "~alice/%s" or
--			 * "~alice/%s/foo".
-+			/* Got either "~user" or "~user/foo";
-+			 * rewrite them to "~user/%s" or
-+			 * "~user/%s/foo".
- 			 */
- 			int namlen, restlen = strlen(dir);
- 			const char *slash = strchr(dir, '/');
+ 	$ cat .git/fast_import_crash_8434
+ 	fast-import crash report:
+@@ -1302,7 +1303,7 @@ An example crash:
+ 	    parent process     : 1391
+ 	    at Sat Sep 1 00:58:12 2007
+ 
+-	fatal: Corrupt mode: M 777 inline bob
++	fatal: Corrupt mode: M 777 inline file.txt
+ 
+ 	Most Recent Commands Before Crash
+ 	---------------------------------
+@@ -1313,7 +1314,7 @@ An example crash:
+ 	  data <<EOF
+ 	  M 644 inline .gitignore
+ 	  data <<EOF
+-	* M 777 inline bob
++	* M 777 inline file.txt
+ 
+ 	Active Branch LRU
+ 	-----------------
+@@ -1334,6 +1335,9 @@ An example crash:
+ 	  last pack   :
+ 
+ 
++	Marks
++	-----
++
+ 	-------------------
+ 	END OF CRASH REPORT
+ ====
 -- 
 2.32.0.555.g0268d380f7b
 
