@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 791A8C49361
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E07DC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B46C6140B
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20B3061481
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231531AbhFOONk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 10:13:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36336 "EHLO
+        id S231543AbhFOONl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 10:13:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231442AbhFOONX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231332AbhFOONX (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Jun 2021 10:13:23 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A3BC0613A3
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id y13-20020a1c4b0d0000b02901c20173e165so2140534wma.0
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE33C061280
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:18 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id f2so18511731wri.11
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Q16gBMT1huu7BpCLhZyKDo4zDdTUuJLRUUVAFhN68bY=;
-        b=sU/xWnUDHzDXuukPhdcHRoNhQHEmEM+cGQdhuLpfnYjjCAOmODOTDFhMB1aiMl3ChC
-         KKosgJVMuzxaJ2j5ISdymDDPpp8Wyu1K2Fl0kfXup6neOxs+2OpKnIs25wOUADV/pSBX
-         xbjgom+3BPnGTqv12DFNBYSjvlo/lpj53ujkHDFax5Rv5xbjiiwWrb+OZFKiM5UZHxhY
-         10wXPQzfxDP0cOeoWmvCkpV2l5toFqR07MHupIaaKx1A5H2gI7oSyvO0i5iAE51jpDsq
-         ukZ5J5Pdlsbd4Pad7tkeXHubGyixyGB87tnVYt1jFMlhviKrl4xR4CO2CBGbqzD3Nzsi
-         jULw==
+        bh=5GBBqDj3sAlzQLzqWAxVV3AqolGMSjRBCtydTjbOBA0=;
+        b=NulzNmQRp8gUwkUNJHJvvW0n9Jub1N7dgvRrWg24/DYbV0e50iNUympuOiXbn24PVs
+         27Xc19aqVLUMvF6w7Lw2dcjhI7Eky0/q+xXE+4xfGFk+Wy8zkmcK/1lxue7g2dvNoELx
+         XXZh6QxXPkGQ2OzqI0LlzO0z/k6YO23GxbduXn6AfDas+gP9Sn5IQ+EOAoK8wXUyNDZ0
+         bxBXDTxLnDH4Pw/bm7gdhtaa0BK0mYrWlEX5bxSXouf87+Pf30XR5qCp2PBjfGIo8ixo
+         Xh3frKtwXD0k2Tm6FRyXWLNG7TxaGbsQ7NPSbDNaAmbyzapwx/NLixrXp2KoXQ3RkGz8
+         B1Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Q16gBMT1huu7BpCLhZyKDo4zDdTUuJLRUUVAFhN68bY=;
-        b=YgTkQAvyG320EE7dhkZRdyKxMnxOHDxudeid+DvTbPi6ESdsxi18JW6Zs+pdtK2GWM
-         cfxrpam1udsBrQFEiHbpueeh07Tar7iw2TMTHhAJkYVW1UbVLGc7SS50GUOW4hRbcuG7
-         NajZmkx8G2RCeI600dcDvA/CqES57Lqraab/RJh/5TTW07QOtVTcPZcBGzCfxjalrVFh
-         YIM5qcgEnAoqdC2HQ+/S0TgctqTnKALSgXGT7L7Bw+HEGTeaHRsgpmbQ+vyADIFq9r/j
-         E9C4yRxxprsFuSqMwGmAb0JdOUTr6ELvDzgpKDGaVX5m9/pcue1vg7PKwHVoGRwktsrd
-         9ywA==
-X-Gm-Message-State: AOAM53128e4CLy0qjprTKj17C2ssKAu3LMYokmnoXqh4QcIDGXiSINNa
-        rqPJlKeI6lE0is5MAhhdKvuAIhv6KQM=
-X-Google-Smtp-Source: ABdhPJwl2qYjqC7CzplVT9/aBM7h961EdgYnkmkqxu+Uchn4oNwBlrAS9J79RuYk6HIBOHvg42tO0g==
-X-Received: by 2002:a7b:c1c5:: with SMTP id a5mr23369408wmj.134.1623766275503;
-        Tue, 15 Jun 2021 07:11:15 -0700 (PDT)
+        bh=5GBBqDj3sAlzQLzqWAxVV3AqolGMSjRBCtydTjbOBA0=;
+        b=JP5UzngyHbMVQppbesqc/DxHH9weC0uGjs9yrkuZWIQyQ/rSM9GNVSmsFwt9rOPaqd
+         kgM2rSh4Af5X3SWLZ3HdLYgaUDusrhlzGLgEToO82L8PZUzSFqeODbZ8nKzUVRFVmV8a
+         U5RAFj4Yb20T9Gn+wpc8kh9vEASVUSZ0FIy4CauKLAzVywzcv/aU25eRfPjDDCYZs43n
+         S7i5cQ40PfLFqgx/IljH+z+3W2L1jwvCiHFGf9Uaux90jXMCNQuHw17PWrZiQ8sKNnRC
+         AlQsGZQskolqiJRf+IqBn9Y02cAn98CiF4/Ak+1BQrfK9tQndlDUXKnaQMYKGhIr3jPt
+         zYTg==
+X-Gm-Message-State: AOAM533EujGP1hXEb3omboEjFdw88XQohprzb4d4kazZtxRXSwryyk7Q
+        yrYsz3okJmHSnUgHVYU4qr1aHRDXa7M=
+X-Google-Smtp-Source: ABdhPJzR+CNP5ifAlxZROto/Yb2K2EQpzRWpvMG2cm5zAE7D8Glmb1/AKJQxvs3Qgh+8lDjgPUwVsQ==
+X-Received: by 2002:a5d:48ce:: with SMTP id p14mr26003452wrs.170.1623766276840;
+        Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p6sm19897297wrf.51.2021.06.15.07.11.14
+        by smtp.gmail.com with ESMTPSA id z12sm18644216wrw.97.2021.06.15.07.11.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 07:11:15 -0700 (PDT)
-Message-Id: <5b942776bb0af2e5d697904a67d6d489bdaf6d2e.1623766273.git.gitgitgadget@gmail.com>
+        Tue, 15 Jun 2021 07:11:16 -0700 (PDT)
+Message-Id: <6f6fa1b9466eceec053c4cd20e1e4c61063806da.1623766273.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
 References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
         <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
-From:   "Felipe Contreras via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Jun 2021 14:11:09 +0000
-Subject: [PATCH v3 1/4] doc: avoid using the gender of other people
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 15 Jun 2021 14:11:11 +0000
+Subject: [PATCH v3 3/4] *: fix typos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,71 +80,48 @@ Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, stolee@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Using gendered pronouns for an anonymous person applies a gender where
-none is known and further excludes readers who do not use gendered
-pronouns. Avoid such examples in the documentation by using "they" or
-passive voice to avoid the need for a pronoun.
+These typos were found while searching the codebase for gendered
+pronouns. In the case of t9300-fast-import.sh, remove a confusing
+comment that is unnecessary to the understanding of the test.
 
-Inspired-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/SubmittingPatches | 5 ++---
- Documentation/git-push.txt      | 4 ++--
- Documentation/user-manual.txt   | 2 +-
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ config.c               | 2 +-
+ t/t9300-fast-import.sh | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 55287d72e0ef..3e215f4d8085 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -373,9 +373,8 @@ If you like, you can put extra tags at the end:
- . `Acked-by:` says that the person who is more familiar with the area
-   the patch attempts to modify liked the patch.
- . `Reviewed-by:`, unlike the other tags, can only be offered by the
--  reviewer and means that she is completely satisfied that the patch
--  is ready for application.  It is usually offered only after a
--  detailed review.
-+  reviewers themselves when they are completely satisfied with the
-+  patch after a detailed analysis.
- . `Tested-by:` is used to indicate that the person applied the patch
-   and found it to have the desired effect.
+diff --git a/config.c b/config.c
+index f9c400ad3062..7bb96f8f7124 100644
+--- a/config.c
++++ b/config.c
+@@ -2837,7 +2837,7 @@ static void maybe_remove_section(struct config_store_data *store,
+ 	begin = store->parsed[i].begin;
  
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index a953c7c38790..2f25aa3a291b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -244,8 +244,8 @@ Imagine that you have to rebase what you have already published.
- You will have to bypass the "must fast-forward" rule in order to
- replace the history you originally published with the rebased history.
- If somebody else built on top of your original history while you are
--rebasing, the tip of the branch at the remote may advance with her
--commit, and blindly pushing with `--force` will lose her work.
-+rebasing, the tip of the branch at the remote may advance with their
-+commit, and blindly pushing with `--force` will lose their work.
- +
- This option allows you to say that you expect the history you are
- updating is what you rebased and want to replace. If the remote ref
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index f9e54b867417..96240598e3f5 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -2792,7 +2792,7 @@ A fast-forward looks something like this:
- 
- In some cases it is possible that the new head will *not* actually be
- a descendant of the old head.  For example, the developer may have
--realized she made a serious mistake, and decided to backtrack,
-+realized a serious mistake was made and decided to backtrack,
- resulting in a situation like:
- 
- ................................................
+ 	/*
+-	 * Next, make sure that we are removing he last key(s) in the section,
++	 * Next, make sure that we are removing the last key(s) in the section,
+ 	 * and that there are no comments that are possibly about the current
+ 	 * section.
+ 	 */
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 5c47ac4465cb..7607ef65cb99 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1538,7 +1538,6 @@ test_expect_success 'O: comments are all skipped' '
+ 	commit refs/heads/O1
+ 	# -- ignore all of this text
+ 	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+-	# $GIT_COMMITTER_NAME has inserted here for his benefit.
+ 	data <<COMMIT
+ 	dirty directory copy
+ 	COMMIT
 -- 
 gitgitgadget
 
