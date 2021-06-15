@@ -2,341 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE815C48BE8
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F897C48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:26:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D51C961434
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:21:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F9A261403
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229494AbhFORXU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 13:23:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51178 "EHLO
+        id S230303AbhFOR2n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 13:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230261AbhFORXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 13:23:13 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC5B6C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:21:08 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id q15so12006675pgg.12
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:21:08 -0700 (PDT)
+        with ESMTP id S229743AbhFOR2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 13:28:42 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9F0C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:26:38 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso15038304otu.10
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:26:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=fgUOiuqvJB+xgCFZAbSDxhNV+dU2sGOWXwyrt+ySb0w=;
-        b=RS6Pq+r0hMm/DbGPPy3ya19qt1EdcC0r/G0x/DtVcX1BbnwTx7d8smCp7ylS7D3dLU
-         p3ruUsQPdGJG9Ry0yngGSy7L+4JlQkYf+b7ULgi2wusYosAmGJybVNFxnfnEZMfD1bL5
-         Hd19NvXR0ILme8b9I1+dIRIsRpc5GGEeE0exoSJhpk7qafAGZQVeYtM2zoi9f65A792y
-         /dYqrbEYRvJRFvVC7wPCNeAe5dDfn3tzX689OKx9fkx8L7aHenAggNIMKjF+ZJlScOfB
-         zlDsDxN0hN6HN+71W3lg79qS7tQ5TCj6qTxh0dQXOuqaKKCjREd+fxPw8ojHGbZOASIY
-         vBXQ==
+        bh=qPgRlirlVwk5WwM4DJbVbuFzFMET8//DBO6whKsIeXI=;
+        b=oFUgD6YxclyGXW1YPNIuw0u923AiezI9C+TKvdj48vLgAbouh0TY080vX0k0nOCoDZ
+         PNbXgZQoB6kLiaSKKNPNZX1xupix4sFZHKUm2an61gS5BP5UWAvEPpN77O/L2WzjxxJS
+         49mRv4cHyiEhVjeqmXb0N+VoCPK4DnS1NIt9kahmhvhCEbJ1rdAidUIfElAziPwQj95M
+         07IhVv3HI4OaCKGO9X40L5l52Iz5RhhakBRJ0bl/A+2Z/C3DZnaKd+jv6dO4ifDqqW2d
+         wZQI6pvdPnQ0FWRwItAYF18j4kHhEhbgR8dSWudy874+R4AJpQ4slTK4BMpj3IxrihMo
+         o0Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fgUOiuqvJB+xgCFZAbSDxhNV+dU2sGOWXwyrt+ySb0w=;
-        b=SzUMGI+d/EqoSBRB4spfGWmsliW8HyXqRxKvm+tbo4fhAbuczhCZ+0Ft02qxFXywND
-         R9Tocdm7FRozPi2ng+1DQAsicf/hIiHtUv69JTcSP0vTNzFfC0iMF+CbEcm2V1HLIFHQ
-         9VDNbtvaNzpfL1nD6PcHNrdRLWM6oYGkKGWUyqBWC0u0NBVp50cIvmBDmBGQXOMt5/sz
-         YN8bMHGXexWDfsJOq1SNIfDPMeZkCRSpBhsmS8X1br9G93V1N8xqkZbUD7UdIrRVf5pl
-         OdVHr+kLpoEPqvTHLH9O8UoBU4UIkBnm+IK75oRZpeqa4tgEV2LaCOLaD+PiNla1XGrD
-         Z8QA==
-X-Gm-Message-State: AOAM532QtUHYO/8+jcp4uyGe0jSH4VoDbb4G2wid8NGt3mxN0zNBowR8
-        y3ubTWPaGI3Dgm+uUnO9RzR7WR6CQ7M=
-X-Google-Smtp-Source: ABdhPJxf6v8higDZxP5UjEK8rjTZiaZ0RPeFF8qP5M4CRjcNuToDQKw7Fn5ptKYG7HXohlcawsz4Og==
-X-Received: by 2002:a05:6a00:bc1:b029:2f4:3461:c2ae with SMTP id x1-20020a056a000bc1b02902f43461c2aemr5382197pfu.9.1623777668109;
-        Tue, 15 Jun 2021 10:21:08 -0700 (PDT)
-Received: from athena.localdomain ([2402:800:63b8:a3d1:fb64:d06b:ab01:2de4])
-        by smtp.gmail.com with ESMTPSA id z22sm16864162pfa.157.2021.06.15.10.21.05
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=qPgRlirlVwk5WwM4DJbVbuFzFMET8//DBO6whKsIeXI=;
+        b=SEMzBkm9ozhl6zbXLk6LvkrAeDSuUZWdOe0t4uO1yZnr/iYhJPOrhEiiBGkTOVwyR0
+         L2ual0Rk3rx2Cq6Hq3oCUFgKbOLuaX1It1UzaVkKEm4SrnbVDzJ0jbbOKFV4TuzOKBhz
+         LIa+KmHx/lJydZrAP5jyXzfLmiGCfzduKqwTKny7oUX0N1OtqjXXBEjdVN3in2Xyvi1w
+         5zqzT2/+SVfFD5muttSGlQgKeAZ4/xEoUtv6WGEbDF4hN/IV1k2d8aCPWpK/esJHoyFb
+         UzUEXjTaoFzRKjFaymxMQK79GZg1u68g0Zw7UcqDluUAORF+Ekd8UztDf4G3UvpBut9O
+         Q0xA==
+X-Gm-Message-State: AOAM5316qkTTLbXCr13E42domrEuo5o8NmbzmqpInOFlUrn+iMcWDATL
+        2JBh33Xdk03tVzhbVLbv3O0=
+X-Google-Smtp-Source: ABdhPJx973Oz+L9IHvLuO/r8iU+C8YhVd5NG2kluQDgT/pcnO3E/q35AU2NTR39i0VbxY0iH6NKOFA==
+X-Received: by 2002:a9d:6a10:: with SMTP id g16mr281506otn.71.1623777997495;
+        Tue, 15 Jun 2021 10:26:37 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id c5sm2009186oiw.7.2021.06.15.10.26.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 10:21:07 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Tue, 15 Jun 2021 10:26:36 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 12:26:35 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        sandals@crustytoothpaste.net, stolee@gmail.com, jrnieder@gmail.com,
+        emilyshaffer@google.com, Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 5/5] t6402: use test_line_count_cmd to count # of lines in stdout
-Date:   Wed, 16 Jun 2021 00:20:38 +0700
-Message-Id: <20210615172038.28917-6-congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.32.0.278.gd42b80f139
-In-Reply-To: <20210615172038.28917-1-congdanhqx@gmail.com>
-References: <20210615172038.28917-1-congdanhqx@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60c8e2cb81e50_12c28208c2@natae.notmuch>
+In-Reply-To: <87a6nryt51.fsf@evledraar.gmail.com>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+ <87a6nryt51.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
- t/t6402-merge-rename.sh | 126 +++++++++++++++++++---------------------
- 1 file changed, 59 insertions(+), 67 deletions(-)
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Tue, Jun 15 2021, Derrick Stolee via GitGitGadget wrote:
 
-diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
-index 5d76cd6414..ca84588eb5 100755
---- a/t/t6402-merge-rename.sh
-+++ b/t/t6402-merge-rename.sh
-@@ -105,10 +105,8 @@ test_expect_success 'pull renaming branch into unrenaming one' \
- 	git show-branch &&
- 	test_expect_code 1 git pull . white &&
- 	git ls-files -s &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 3 b.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd --out = 3 git ls-files -u B &&
-+	test_line_count_cmd --out = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -122,10 +120,8 @@ test_expect_success 'pull renaming branch into another renaming one' \
- 	git reset --hard &&
- 	git checkout red &&
- 	test_expect_code 1 git pull . white &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 3 b.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd --out = 3 git ls-files -u B &&
-+	test_line_count_cmd --out = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -138,10 +134,8 @@ test_expect_success 'pull unrenaming branch into renaming one' \
- 	git reset --hard &&
- 	git show-branch &&
- 	test_expect_code 1 git pull . main &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 3 b.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd --out = 3 git ls-files -u B &&
-+	test_line_count_cmd --out = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -154,14 +148,10 @@ test_expect_success 'pull conflicting renames' \
- 	git reset --hard &&
- 	git show-branch &&
- 	test_expect_code 1 git pull . blue &&
--	git ls-files -u A >a.stages &&
--	test_line_count = 1 a.stages &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 1 b.stages &&
--	git ls-files -u C >c.stages &&
--	test_line_count = 1 c.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd --out = 1 git ls-files -u A &&
-+	test_line_count_cmd --out = 1 git ls-files -u B &&
-+	test_line_count_cmd --out = 1 git ls-files -u C &&
-+	test_line_count_cmd --out = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -330,8 +320,8 @@ test_expect_success 'Rename+D/F conflict; renamed file merges but dir in way' '
- 		test_i18ngrep "Adding as dir~HEAD instead" output
- 	fi &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd --out = 3 git ls-files -u &&
-+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -357,8 +347,8 @@ test_expect_success 'Same as previous, but merged other way' '
- 		test_i18ngrep "Adding as dir~renamed-file-has-no-conflicts instead" output
- 	fi &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd --out = 3 git ls-files -u &&
-+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -374,8 +364,8 @@ test_expect_success 'Rename+D/F conflict; renamed file cannot merge, dir not in
- 	git checkout -q renamed-file-has-conflicts^0 &&
- 	test_must_fail git merge --strategy=recursive dir-not-in-way &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 3 -eq "$(git ls-files -u dir | wc -l)" &&
-+	test_line_count_cmd --out = 3 git ls-files -u &&
-+	test_line_count_cmd --out = 3 git ls-files -u dir &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -409,14 +399,15 @@ test_expect_success 'Rename+D/F conflict; renamed file cannot merge and dir in t
- 	git checkout -q renamed-file-has-conflicts^0 &&
- 	test_must_fail git merge --strategy=recursive dir-in-way &&
- 
--	test 5 -eq "$(git ls-files -u | wc -l)" &&
-+	test_line_count_cmd --out = 5 git ls-files -u &&
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 3 -eq "$(git ls-files -u dir~HEAD | wc -l)"
-+		test_line_count_cmd --out = 3 git ls-files -u dir~HEAD
- 	else
--		test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)"
-+		git ls-files -u dir >out &&
-+		test_line_count_cmd --out = 3 grep -v file-in-the-way out
- 	fi &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -432,14 +423,15 @@ test_expect_success 'Same as previous, but merged other way' '
- 	git checkout -q dir-in-way^0 &&
- 	test_must_fail git merge --strategy=recursive renamed-file-has-conflicts &&
- 
--	test 5 -eq "$(git ls-files -u | wc -l)" &&
-+	test_line_count_cmd --out = 5 git ls-files -u &&
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 3 -eq "$(git ls-files -u dir~renamed-file-has-conflicts | wc -l)"
-+		test_line_count_cmd --out = 3 git ls-files -u dir~renamed-file-has-conflicts
- 	else
--		test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)"
-+		git ls-files -u dir >out &&
-+		test_line_count_cmd --out = 3 grep -v file-in-the-way out
- 	fi &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -496,9 +488,9 @@ test_expect_success 'both rename source and destination involved in D/F conflict
- 
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 2 -eq "$(git ls-files -u | wc -l)"
-+		test_line_count_cmd --out = 2 git ls-files -u
- 	else
--		test 1 -eq "$(git ls-files -u | wc -l)"
-+		test_line_count_cmd --out = 1 git ls-files -u
- 	fi &&
- 
- 	test_must_fail git diff --quiet &&
-@@ -540,9 +532,9 @@ then
- 		mkdir one &&
- 		test_must_fail git merge --strategy=recursive rename-two &&
- 
--		test 4 -eq "$(git ls-files -u | wc -l)" &&
--		test 2 -eq "$(git ls-files -u one | wc -l)" &&
--		test 2 -eq "$(git ls-files -u two | wc -l)" &&
-+		test_line_count_cmd --out = 4 git ls-files -u &&
-+		test_line_count_cmd --out = 2 git ls-files -u one &&
-+		test_line_count_cmd --out = 2 git ls-files -u two &&
- 
- 		test_must_fail git diff --quiet &&
- 
-@@ -559,9 +551,9 @@ else
- 		mkdir one &&
- 		test_must_fail git merge --strategy=recursive rename-two &&
- 
--		test 2 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two | wc -l)" &&
-+		test_line_count_cmd --out = 2 git ls-files -u &&
-+		test_line_count_cmd --out = 1 git ls-files -u one &&
-+		test_line_count_cmd --out = 1 git ls-files -u two &&
- 
- 		test_must_fail git diff --quiet &&
- 
-@@ -582,13 +574,13 @@ test_expect_success 'pair rename to parent of other (D/F conflicts) w/ clean sta
- 
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 4 -eq "$(git ls-files -u | wc -l)" &&
--		test 2 -eq "$(git ls-files -u one | wc -l)" &&
--		test 2 -eq "$(git ls-files -u two | wc -l)"
-+		test_line_count_cmd --out = 4 git ls-files -u &&
-+		test_line_count_cmd --out = 2 git ls-files -u one &&
-+		test_line_count_cmd --out = 2 git ls-files -u two
- 	else
--		test 2 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two | wc -l)"
-+		test_line_count_cmd --out = 2 git ls-files -u &&
-+		test_line_count_cmd --out = 1 git ls-files -u one &&
-+		test_line_count_cmd --out = 1 git ls-files -u two
- 	fi &&
- 
- 	test_must_fail git diff --quiet &&
-@@ -631,19 +623,19 @@ test_expect_success 'check handling of differently renamed file with D/F conflic
- 
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 5 -eq "$(git ls-files -s | wc -l)" &&
--		test 3 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one~HEAD | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two~second-rename | wc -l)" &&
--		test 1 -eq "$(git ls-files -u original | wc -l)" &&
--		test 0 -eq "$(git ls-files -o | wc -l)"
-+		test_line_count_cmd --out = 5 git ls-files -s &&
-+		test_line_count_cmd --out = 3 git ls-files -u &&
-+		test_line_count_cmd --out = 1 git ls-files -u one~HEAD &&
-+		test_line_count_cmd --out = 1 git ls-files -u two~second-rename &&
-+		test_line_count_cmd --out = 1 git ls-files -u original &&
-+		test_line_count_cmd --out = 0 git ls-files -o
- 	else
--		test 5 -eq "$(git ls-files -s | wc -l)" &&
--		test 3 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two | wc -l)" &&
--		test 1 -eq "$(git ls-files -u original | wc -l)" &&
--		test 2 -eq "$(git ls-files -o | wc -l)"
-+		test_line_count_cmd --out = 5 git ls-files -s &&
-+		test_line_count_cmd --out = 3 git ls-files -u &&
-+		test_line_count_cmd --out = 1 git ls-files -u one &&
-+		test_line_count_cmd --out = 1 git ls-files -u two &&
-+		test_line_count_cmd --out = 1 git ls-files -u original &&
-+		test_line_count_cmd --out = 2 git ls-files -o
- 	fi &&
- 
- 	test_path_is_file one/file &&
-@@ -679,11 +671,11 @@ test_expect_success 'check handling of differently renamed file with D/F conflic
- 	git checkout -q first-rename-redo^0 &&
- 	test_must_fail git merge --strategy=recursive second-rename-redo &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 1 -eq "$(git ls-files -u one | wc -l)" &&
--	test 1 -eq "$(git ls-files -u two | wc -l)" &&
--	test 1 -eq "$(git ls-files -u original | wc -l)" &&
--	test 0 -eq "$(git ls-files -o | wc -l)" &&
-+	test_line_count_cmd --out = 3 git ls-files -u &&
-+	test_line_count_cmd --out = 1 git ls-files -u one &&
-+	test_line_count_cmd --out = 1 git ls-files -u two &&
-+	test_line_count_cmd --out = 1 git ls-files -u original &&
-+	test_line_count_cmd --out = 0 git ls-files -o &&
- 
- 	test_path_is_file one &&
- 	test_path_is_file two &&
-@@ -861,8 +853,8 @@ test_expect_success 'setup merge of rename + small change' '
- test_expect_success 'merge rename + small change' '
- 	git merge rename_branch &&
- 
--	test 1 -eq $(git ls-files -s | wc -l) &&
--	test 0 -eq $(git ls-files -o | wc -l) &&
-+	test_line_count_cmd --out = 1 git ls-files -s &&
-+	test_line_count_cmd --out = 0 git ls-files -o &&
- 	test $(git rev-parse HEAD:renamed_file) = $(git rev-parse HEAD~1:file)
- '
- 
--- 
-2.32.0.278.gd42b80f139
+> Anyway, I don't think I'll be participating in this topic any
+> further. It seems you're not interested in pursuing alternate approache=
+s
+> that accomplish your goals, or in responding to specific point-by-point=
 
+> feedback on your series from myself and others.
+> =
+
+> I do think it would be a much better and respectful use of everyone's
+> time on this ML if you clearly stated your unwillingness to deviate fro=
+m
+> the narrow approach in the initial version of a series you're
+> submitting.
+
+For what it's worth I also feel that's the case. 95% of my suggestions
+for improvement were completely ignored, and it's only when the
+maintainer threatened to merge my competing series, that I started
+receiving responses.
+
+I don't believe critical feedback has been welcomed, I don't believe my
+time as a reviewer was respected, and mostly it felt like talking
+to a wall.
+
+I find it ironic that a patch series that boasts of promoting inclusion
+and diversity completely ignores the most important diversity the
+project should care about:
+
+Diversity of thought.
+
+While claiming to be trying to avoid hypothetical people from feeling
+excluded, it actively excluded the opinions of actual people.
+
+-- =
+
+Felipe Contreras=
