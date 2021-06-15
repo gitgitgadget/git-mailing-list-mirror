@@ -8,266 +8,228 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 300C5C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA6E4C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:58:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 197616145D
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:58:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B42CF6145D
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231520AbhFOPAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 11:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46916 "EHLO
+        id S231309AbhFOPA2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 11:00:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230462AbhFOPAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 11:00:22 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D331CC061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:58:17 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id z26so13456039pfj.5
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:58:17 -0700 (PDT)
+        with ESMTP id S231522AbhFOPA1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 11:00:27 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF559C06175F
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:58:22 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id h1so8611568plt.1
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OkgSEeH9ULVrrmSUGnpLpQj8nOgggoVDNaLNK/5lGBA=;
-        b=pCXh6qSEsV4afVGKotP1Z3iNpn2AB158aBX15Ei+9ruOho8edNfrC8mgiI6ooARSGX
-         qq0jNRsomNGFwHY/9VZrxall3ypgD8ajWAhB0BtCL4z+VG3GK1yv1eVQ37m2lqcnN2OP
-         F3XaEVoXcEjQVv3KYkvavtjRGfse/CkCjTr3XXePO1dfktcNIj6p25Zi64YWl64YKooL
-         ABufN84N68fKH+94PwebrZ3+uewpnsJNEdMusM6l1rHapnOtQC5ZAPyo8nn5aMxI/srO
-         Q3Vg+o3nw3JCg5JKnAUUAdtF+BO7V92gKb0UCx4N81OnVKVOuT/xHp6K15g7eoxMjsDF
-         OFcg==
+        bh=im+sA4IbBl6ueIrbDtu6Z4cceKK7PM6NGSb1lMHZs4Q=;
+        b=nwKiewnkA9Sa/08ax4hjLznlpUDWtFLH5b7Iuu+NjEUEPUybZDThpwZntgQDUyYPOm
+         AnCopMWUXADaNKvT9yHhBnJ42frhy0InMCNfazyYbVNAiZzfXgOzNkx0CHb/Ol9sqW1x
+         fhlDqUewJvqXz5mm9qua9PkKSyDHEw5FfStZ4xsXdp4JzlWjgihhslVCiufB+Dx43JHM
+         SjGOppz9NXi4+8kF9VWvxGLy4XMvnvRSuDy/wzAj9xSLd8k9N2E6AZRiJ4NCYWjH7Z0l
+         FZRxkjU3oZbn0zVQZgoqHVUYIix9xgFjiyFY8RQzK2vVnPR1CjbGYVIkObLpCuBueAce
+         I1lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OkgSEeH9ULVrrmSUGnpLpQj8nOgggoVDNaLNK/5lGBA=;
-        b=nRUYKrCBsizS+typ+Qyiysaf2a1zv03HwNavqeZBqw3e2wn1K7wS88L+MSbq5THbUu
-         GsB4ylfUzL2HjTiTLG+421KAWCaTVnKeFqMEej04xns5s+kuZeH9zDaMXGBrTnG5nGLl
-         NLvlX9nQdox3INVokKG3WFSz3NI/RQ5d4KUcbg6h1KGDWrvaLusNhMzpa1kWUctIrrKh
-         vuPyam19sftkRlBwxz9R2h0ikH037gt9yhqjE0DsjwHMEDjdYBOkQlo89SJ5PbciEk/+
-         UV4J1/DntKee7DAxuw14MHbOFvdHNZxfTtny++YKoGGNa17gdOQDcbS2OVT5G2YS0veW
-         DXiA==
-X-Gm-Message-State: AOAM5332+e0+TV3+Seb7LBmfdN9D2ReHCqZSeU1cMa0Hvebzn80XPaa0
-        Ybgkjf5mcRglfKd4Au55DWeYus6QY0Z/8801kcg=
-X-Google-Smtp-Source: ABdhPJzOzMgCPhkD1fc5F/ccY+PmH4iR89IYdGfJr8yWh84+SGX8Q4zVsikHb1vadW1iIa0C9l840w==
-X-Received: by 2002:a05:6a00:1794:b029:2ee:c59c:56bf with SMTP id s20-20020a056a001794b02902eec59c56bfmr4798887pfg.2.1623769096969;
-        Tue, 15 Jun 2021 07:58:16 -0700 (PDT)
+        bh=im+sA4IbBl6ueIrbDtu6Z4cceKK7PM6NGSb1lMHZs4Q=;
+        b=no8ERgaAsJOYPKbXsGZHtv2wRPVI+j/yJdYnNQpy/C0wfHjxMQuRlRwsuu4VPeA3zo
+         YL/JF6WwZ0sfOF8TBtPJTBc6ANHHNoN2G8R/GnUbcLvuOomsiy14NO7zdLO9HhdRzxhI
+         U4otTTpWypSZJIRCmJoNQaEcnzGOCUY+n84kWDAnj/hlCgFPN2QET12S8neTx/Kzm5XF
+         EkToKfC34dDEfGEOWUxkvKHfu4oxT+G7X9IeaOnytaXajl0axU8AtFfJeu+aL1zkHSLw
+         KSNcBpmfF4HvqP8oYj5+UvBmoL3ZdjKtuM3KnCO636x9iPTyVA5LGixlbe7T3SwTA5X2
+         ByFA==
+X-Gm-Message-State: AOAM533Kim3ZKFE1p/zCZ60Tr0JIlu1nU/lpUO/DEKuPhG93Or5bqoRm
+        jaVXtUUTvy6OBkIVpeVMsb/LVRYEeK0oihpptg4=
+X-Google-Smtp-Source: ABdhPJzpr1qWo4P2vF0TVx06okwCMLL4AKKdrEEFi50vz4qjGS7tva6Ym6MZWH3MMcegaPadxJZoig==
+X-Received: by 2002:a17:903:2c3:b029:11b:cbb9:edfb with SMTP id s3-20020a17090302c3b029011bcbb9edfbmr4651291plk.12.1623769102214;
+        Tue, 15 Jun 2021 07:58:22 -0700 (PDT)
 Received: from atharva-on-air.Dlink ([119.82.107.60])
-        by smtp.gmail.com with ESMTPSA id u1sm16340120pgh.80.2021.06.15.07.58.14
+        by smtp.gmail.com with ESMTPSA id u1sm16340120pgh.80.2021.06.15.07.58.20
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Jun 2021 07:58:16 -0700 (PDT)
+        Tue, 15 Jun 2021 07:58:21 -0700 (PDT)
 From:   Atharva Raykar <raykar.ath@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Atharva Raykar <raykar.ath@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH v6 2/3] submodule--helper: introduce add-clone subcommand
-Date:   Tue, 15 Jun 2021 20:27:44 +0530
-Message-Id: <20210615145745.33382-3-raykar.ath@gmail.com>
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: [PATCH v6 3/3] submodule--helper: introduce add-config subcommand
+Date:   Tue, 15 Jun 2021 20:27:45 +0530
+Message-Id: <20210615145745.33382-4-raykar.ath@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210615145745.33382-1-raykar.ath@gmail.com>
 References: <20210615093810.27930-1-raykar.ath@gmail.com>
  <20210615145745.33382-1-raykar.ath@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's add a new "add-clone" subcommand to `git submodule--helper` with
-the goal of converting part of the shell code in git-submodule.sh
-related to `git submodule add` into C code. This new subcommand clones
-the repository that is to be added, and checks out to the appropriate
-branch.
+Add a new "add-config" subcommand to `git submodule--helper` with the
+goal of converting part of the shell code in git-submodule.sh related to
+`git submodule add` into C code. This new subcommand sets the
+configuration variables of a newly added submodule, by registering the
+url in local git config, as well as the submodule name and path in the
+.gitmodules file. It also sets 'submodule.<name>.active' to "true" if
+the submodule path has not already been covered by any pathspec
+specified in 'submodule.active'.
 
-This is meant to be a faithful conversion that leaves the behaviour of
-'submodule add' unchanged. The only minor change is that if a submodule name has
-been supplied with a name that clashes with a local submodule, the message shown
-to the user ("A git directory for 'foo' is found locally...") is prepended with
-"error" for clarity.
+This is meant to be a faithful conversion from shell to C, with only one
+minor change: A warning is emitted if no value is specified in
+'submodule.active', ie, the config looks like: "[submodule] active\n",
+because it is an invalid configuration. It would be helpful to let the
+user know that the pathspec is unset, and the value of
+'submodule.<name>.active' might be set to 'true' so that they can
+rectify their configuration and prevent future surprises (especially
+given that the latter variable has a higher priority than the former).
 
-This is part of a series of changes that will result in all of 'submodule add'
-being converted to C.
+The structure of the conditional to check if we need to set the 'active'
+toggle looks different from the shell version -- but behaves the same.
+The change was made to decrease code duplication. A comment has been
+added to explain that only one value of 'submodule.active' is obtained
+to check if we need to call is_submodule_active() at all.
+
+This is part of a series of changes that will result in all of
+'submodule add' being converted to C.
 
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 Based-on-patch-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 Based-on-patch-by: Prathamesh Chavan <pc44800@gmail.com>
-Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- builtin/submodule--helper.c | 177 ++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  38 +-------
- 2 files changed, 178 insertions(+), 37 deletions(-)
+ builtin/submodule--helper.c | 125 ++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  28 +-------
+ 2 files changed, 126 insertions(+), 27 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ae246a35f9..6d52a73a57 100644
+index 6d52a73a57..bce1e06d74 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2760,6 +2760,182 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
- 	return !!ret;
+@@ -2936,6 +2936,130 @@ static int add_clone(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
-+struct add_data {
-+	const char *prefix;
-+	const char *branch;
-+	const char *reference_path;
-+	const char *sm_path;
-+	const char *sm_name;
-+	const char *repo;
-+	const char *realrepo;
-+	int depth;
-+	unsigned int force: 1;
-+	unsigned int quiet: 1;
-+	unsigned int progress: 1;
-+	unsigned int dissociate: 1;
-+};
-+#define ADD_DATA_INIT { .depth = -1 }
-+
-+static void show_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir_path)
++static void config_submodule_in_gitmodules(const char *name, const char *var, const char *value)
 +{
-+	struct child_process cp_remote = CHILD_PROCESS_INIT;
-+	struct strbuf sb_remote_out = STRBUF_INIT;
++	char *key;
 +
-+	cp_remote.git_cmd = 1;
-+	strvec_pushf(&cp_remote.env_array,
-+		     "GIT_DIR=%s", git_dir_path);
-+	strvec_push(&cp_remote.env_array, "GIT_WORK_TREE=.");
-+	strvec_pushl(&cp_remote.args, "remote", "-v", NULL);
-+	if (!capture_command(&cp_remote, &sb_remote_out, 0)) {
-+		char *next_line;
-+		char *line = sb_remote_out.buf;
-+		while ((next_line = strchr(line, '\n')) != NULL) {
-+			size_t len = next_line - line;
-+			if (strip_suffix_mem(line, &len, " (fetch)"))
-+				fprintf(output, "  %.*s\n", (int)len, line);
-+			line = next_line + 1;
-+		}
-+	}
++	if (!is_writing_gitmodules_ok())
++		die(_("please make sure that the .gitmodules file is in the working tree"));
 +
-+	strbuf_release(&sb_remote_out);
++	key = xstrfmt("submodule.%s.%s", name, var);
++	config_set_in_gitmodules_file_gently(key, value);
++	free(key);
 +}
 +
-+static int add_submodule(const struct add_data *add_data)
++static void configure_added_submodule(struct add_data *add_data)
 +{
-+	char *submod_gitdir_path;
-+	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
++	char *key, *submod_pathspec = NULL;
++	struct child_process add_submod = CHILD_PROCESS_INIT;
++	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
++	int pathspec_key_exists, activate = 0;
 +
-+	/* perhaps the path already exists and is already a git repo, else clone it */
-+	if (is_directory(add_data->sm_path)) {
-+		struct strbuf sm_path = STRBUF_INIT;
-+		strbuf_addstr(&sm_path, add_data->sm_path);
-+		submod_gitdir_path = xstrfmt("%s/.git", add_data->sm_path);
-+		if (is_nonbare_repository_dir(&sm_path))
-+			printf(_("Adding existing repo at '%s' to the index\n"),
-+			       add_data->sm_path);
-+		else
-+			die(_("'%s' already exists and is not a valid git repo"),
-+			    add_data->sm_path);
-+		strbuf_release(&sm_path);
-+		free(submod_gitdir_path);
-+	} else {
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
++	key = xstrfmt("submodule.%s.url", add_data->sm_name);
++	git_config_set_gently(key, add_data->realrepo);
++	free(key);
 +
-+		if (is_directory(submod_gitdir_path)) {
-+			if (!add_data->force) {
-+				fprintf(stderr, _("A git directory for '%s' is found "
-+						  "locally with remote(s):"),
-+					add_data->sm_name);
-+				show_fetch_remotes(stderr, add_data->sm_name,
-+						   submod_gitdir_path);
-+				free(submod_gitdir_path);
-+				die(_("If you want to reuse this local git "
-+				      "directory instead of cloning again from\n"
-+				      "  %s\n"
-+				      "use the '--force' option. If the local git "
-+				      "directory is not the correct repo\n"
-+				      "or if you are unsure what this means, choose "
-+				      "another name with the '--name' option.\n"),
-+				    add_data->realrepo);
-+			} else {
-+				printf(_("Reactivating local git directory for "
-+					 "submodule '%s'\n"), add_data->sm_name);
-+			}
-+		}
-+		free(submod_gitdir_path);
++	add_submod.git_cmd = 1;
++	strvec_pushl(&add_submod.args, "add",
++		     "--no-warn-embedded-repo", NULL);
++	if (add_data->force)
++		strvec_push(&add_submod.args, "--force");
++	strvec_pushl(&add_submod.args, "--", add_data->sm_path, NULL);
 +
-+		clone_data.prefix = add_data->prefix;
-+		clone_data.path = add_data->sm_path;
-+		clone_data.name = add_data->sm_name;
-+		clone_data.url = add_data->realrepo;
-+		clone_data.quiet = add_data->quiet;
-+		clone_data.progress = add_data->progress;
-+		if (add_data->reference_path)
-+			string_list_append(&clone_data.reference,
-+					   xstrdup(add_data->reference_path));
-+		clone_data.dissociate = add_data->dissociate;
-+		if (add_data->depth >= 0)
-+			clone_data.depth = xstrfmt("%d", add_data->depth);
++	if (run_command(&add_submod))
++		die(_("Failed to add submodule '%s'"), add_data->sm_path);
 +
-+		if (clone_submodule(&clone_data))
-+			return -1;
++	config_submodule_in_gitmodules(add_data->sm_name, "path", add_data->sm_path);
++	config_submodule_in_gitmodules(add_data->sm_name, "url", add_data->repo);
++	if (add_data->branch)
++		config_submodule_in_gitmodules(add_data->sm_name,
++					       "branch", add_data->branch);
 +
-+		prepare_submodule_repo_env(&cp.env_array);
-+		cp.git_cmd = 1;
-+		cp.dir = add_data->sm_path;
-+		strvec_pushl(&cp.args, "checkout", "-f", "-q", NULL);
++	add_gitmodules.git_cmd = 1;
++	strvec_pushl(&add_gitmodules.args,
++		     "add", "--force", "--", ".gitmodules", NULL);
 +
-+		if (add_data->branch) {
-+			strvec_pushl(&cp.args, "-B", add_data->branch, NULL);
-+			strvec_pushf(&cp.args, "origin/%s", add_data->branch);
-+		}
++	if (run_command(&add_gitmodules))
++		die(_("Failed to register submodule '%s'"), add_data->sm_path);
 +
-+		if (run_command(&cp))
-+			die(_("unable to checkout submodule '%s'"), add_data->sm_path);
++	/*
++	 * NEEDSWORK: In a multi-working-tree world this needs to be
++	 * set in the per-worktree config.
++	 */
++	pathspec_key_exists = !git_config_get_string("submodule.active",
++						     &submod_pathspec);
++	if (pathspec_key_exists && !submod_pathspec) {
++		warning(_("The submodule.active configuration exists, but the "
++			  "pathspec was unset. If the submodule is not already "
++			  "active, the value of submodule.%s.active will be "
++			  "be set to 'true'."), add_data->sm_name);
++		activate = 1;
 +	}
-+	return 0;
++
++	/*
++	 * If submodule.active does not exist, or if the pathspec was unset,
++	 * we will activate this module unconditionally.
++	 *
++	 * Otherwise, we ask is_submodule_active(), which iterates
++	 * through all the values of 'submodule.active' to determine
++	 * if this module is already active.
++	 */
++	if (!pathspec_key_exists || activate ||
++	    !is_submodule_active(the_repository, add_data->sm_path)) {
++		key = xstrfmt("submodule.%s.active", add_data->sm_name);
++		git_config_set_gently(key, "true");
++		free(key);
++	}
 +}
 +
-+static int add_clone(int argc, const char **argv, const char *prefix)
++static int add_config(int argc, const char **argv, const char *prefix)
 +{
-+	int force = 0, quiet = 0, dissociate = 0, progress = 0;
++	int force = 0;
 +	struct add_data add_data = ADD_DATA_INIT;
 +
 +	struct option options[] = {
 +		OPT_STRING('b', "branch", &add_data.branch,
 +			   N_("branch"),
-+			   N_("branch of repository to checkout on cloning")),
-+		OPT_STRING(0, "prefix", &prefix,
-+			   N_("path"),
-+			   N_("alternative anchor for relative paths")),
++			   N_("branch of repository to store in "
++			      "the submodule configuration")),
++		OPT_STRING(0, "url", &add_data.repo,
++			   N_("string"),
++			   N_("url to clone submodule from")),
++		OPT_STRING(0, "resolved-url", &add_data.realrepo,
++			   N_("string"),
++			   N_("url to clone the submodule from, after it has "
++			      "been dereferenced relative to parent's url, "
++			      "in the case where <url> is a relative url")),
 +		OPT_STRING(0, "path", &add_data.sm_path,
 +			   N_("path"),
 +			   N_("where the new submodule will be cloned to")),
 +		OPT_STRING(0, "name", &add_data.sm_name,
 +			   N_("string"),
 +			   N_("name of the new submodule")),
-+		OPT_STRING(0, "url", &add_data.realrepo,
-+			   N_("string"),
-+			   N_("url where to clone the submodule from")),
-+		OPT_STRING(0, "reference", &add_data.reference_path,
-+			   N_("repo"),
-+			   N_("reference repository")),
-+		OPT_BOOL(0, "dissociate", &dissociate,
-+			 N_("use --reference only while cloning")),
-+		OPT_INTEGER(0, "depth", &add_data.depth,
-+			    N_("depth for shallow clones")),
-+		OPT_BOOL(0, "progress", &progress,
-+			 N_("force cloning progress")),
 +		OPT__FORCE(&force, N_("allow adding an otherwise ignored submodule path"),
 +			   PARSE_OPT_NOCOMPLETE),
-+		OPT__QUIET(&quiet, "suppress output for cloning a submodule"),
 +		OPT_END()
 +	};
 +
 +	const char *const usage[] = {
-+		N_("git submodule--helper add-clone [<options>...] "
-+		   "--url <url> --path <path> --name <name>"),
++		N_("git submodule--helper add-config "
++		   "[--force|-f] [--branch|-b <branch>] "
++		   "--url <url> --resolved-url <resolved-url> "
++		   "--path <path> --name <name>"),
 +		NULL
 +	};
 +
@@ -276,14 +238,8 @@ index ae246a35f9..6d52a73a57 100644
 +	if (argc != 0)
 +		usage_with_options(usage, options);
 +
-+	add_data.prefix = prefix;
-+	add_data.progress = !!progress;
-+	add_data.dissociate = !!dissociate;
 +	add_data.force = !!force;
-+	add_data.quiet = !!quiet;
-+
-+	if (add_submodule(&add_data))
-+		return 1;
++	configure_added_submodule(&add_data);
 +
 +	return 0;
 +}
@@ -291,63 +247,53 @@ index ae246a35f9..6d52a73a57 100644
  #define SUPPORT_SUPER_PREFIX (1<<0)
  
  struct cmd_struct {
-@@ -2772,6 +2948,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list, 0},
+@@ -2949,6 +3073,7 @@ static struct cmd_struct commands[] = {
  	{"name", module_name, 0},
  	{"clone", module_clone, 0},
-+	{"add-clone", add_clone, 0},
+ 	{"add-clone", add_clone, 0},
++	{"add-config", add_config, 0},
  	{"update-module-mode", module_update_module_mode, 0},
  	{"update-clone", update_clone, 0},
  	{"ensure-core-worktree", ensure_core_worktree, 0},
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 4678378424..f71e1e5495 100755
+index f71e1e5495..9826378fa6 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -241,43 +241,7 @@ cmd_add()
- 		die "$(eval_gettext "'$sm_name' is not a valid submodule name")"
+@@ -242,33 +242,7 @@ cmd_add()
  	fi
  
--	# perhaps the path exists and is already a git repo, else clone it
--	if test -e "$sm_path"
--	then
--		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
--		then
--			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
--		else
--			die "$(eval_gettext "'\$sm_path' already exists and is not a valid git repo")"
--		fi
+ 	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
+-	git config submodule."$sm_name".url "$realrepo"
 -
--	else
--		if test -d ".git/modules/$sm_name"
+-	git add --no-warn-embedded-repo $force "$sm_path" ||
+-	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
+-
+-	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
+-	git submodule--helper config submodule."$sm_name".url "$repo" &&
+-	if test -n "$branch"
+-	then
+-		git submodule--helper config submodule."$sm_name".branch "$branch"
+-	fi &&
+-	git add --force .gitmodules ||
+-	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+-
+-	# NEEDSWORK: In a multi-working-tree world, this needs to be
+-	# set in the per-worktree config.
+-	if git config --get submodule.active >/dev/null
+-	then
+-		# If the submodule being adding isn't already covered by the
+-		# current configured pathspec, set the submodule's active flag
+-		if ! git submodule--helper is-active "$sm_path"
 -		then
--			if test -z "$force"
--			then
--				eval_gettextln >&2 "A git directory for '\$sm_name' is found locally with remote(s):"
--				GIT_DIR=".git/modules/$sm_name" GIT_WORK_TREE=. git remote -v | grep '(fetch)' | sed -e s,^,"  ", -e s,' (fetch)',, >&2
--				die "$(eval_gettextln "\
--If you want to reuse this local git directory instead of cloning again from
--  \$realrepo
--use the '--force' option. If the local git directory is not the correct repo
--or you are unsure what this means choose another name with the '--name' option.")"
--			else
--				eval_gettextln "Reactivating local git directory for submodule '\$sm_name'."
--			fi
+-			git config submodule."$sm_name".active "true"
 -		fi
--		git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"--progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
--		(
--			sanitize_submodule_env
--			cd "$sm_path" &&
--			# ash fails to wordsplit ${branch:+-b "$branch"...}
--			case "$branch" in
--			'') git checkout -f -q ;;
--			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
--			esac
--		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
+-	else
+-		git config submodule."$sm_name".active "true"
 -	fi
-+	git submodule--helper add-clone ${GIT_QUIET:+--quiet} ${force:+"--force"} ${progress:+"--progress"} ${branch:+--branch "$branch"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
- 	git config submodule."$sm_name".url "$realrepo"
++	git submodule--helper add-config ${force:+--force} ${branch:+--branch "$branch"} --url "$repo" --resolved-url "$realrepo" --path "$sm_path" --name "$sm_name"
+ }
  
- 	git add --no-warn-embedded-repo $force "$sm_path" ||
+ #
 -- 
 2.31.1
 
