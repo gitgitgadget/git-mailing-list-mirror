@@ -8,67 +8,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95670C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7997C48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:25:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6DD046109D
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:20:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B15456109D
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 19:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbhFOTWv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 15:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49804 "EHLO
+        id S230146AbhFOT1j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 15:27:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbhFOTWu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 15:22:50 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96021C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:20:45 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id k7so24322393ejv.12
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:20:45 -0700 (PDT)
+        with ESMTP id S229749AbhFOT1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 15:27:36 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A030C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:25:30 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id w21so52546838edv.3
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 12:25:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=VoF7I2jCH97mjit6IQe7890qNIcZt4rTxVhQLWVrCLM=;
-        b=oxxQgmyH//g0DBL+bH13boXnbLH4v2RzhpsmeDNqjnxBdQ9szyWIWZxawDiwLXGzzw
-         ykhpYCKS9DkP2heAOOi9Har+CVMztamjuCB3q1qlmUuKTrwtuypJj8yK4M1Iik5v/Ttn
-         xNXj+3pr4uN1Ed1dJ3jagfH4PBV+sejrF5DCehXs4J9UprIRwAc2Ds8xzftgZKdpTp7y
-         0byc8t71EUpJ5rwPnLITD9JIQWbpp1yDZu8dih+QFI13RncSqG7+xlSJSt8vcl+JJae2
-         TjRHbXWAii80QZwqjLWuWXUtDTIh18RZcCu/zNNk4LDH5vstXyRazXSkv733dRyDwH1l
-         wyeQ==
+        bh=/h5m4bMbAUr4VuIf7zO23Xgi+w2VxBiH9EaZAlu5eAM=;
+        b=W92Pv5EsUcXQj5TD2AN6ibmYxA0d8/f2aJRQFzyTm2Wq4fe2JKlFwzHLPHt82eLzO8
+         mhMQfi2i9hEJDk6WJQn6z8VMHSOQuuPEoLcQ9bBIQPAzUmtefEC97t8Uoj24Vzo2krtg
+         QhYyZYv+ksWMeo01RWt+3IfSVvLBp3wSI1RPO9wz59A9GsSiAMOnqilwdVWTpPBT9N4+
+         RBfk5vzwtmTLt3TLZ4WLLA2iBs83UaSBsblsHwC8V+9XDkPcYNFZiXvryD98Uw16r5K1
+         SksnyU5LKEXSbe8lp2nQbbcSxFuTwUrPEE5cKHx08K8CeMOJWUyKrDQjlM7tYmB6bCyL
+         wYWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=VoF7I2jCH97mjit6IQe7890qNIcZt4rTxVhQLWVrCLM=;
-        b=a91V/zeDtITXhlj9a+XLePNqqllLBxSgrMZQiKH6ZCy2FObDXoxxPfwfxa2fTaM854
-         wdJ5RzdgcfSPK815qhTa1iZS81W5h3lf4ouqJiLq/atC47RjlCvZA3lIGVdJVX9TSgtC
-         d5Fj9S5lyTaOAHdWRHPGLuCkMAx+/C12rQmSslXeVh2lrf81WIfJCaR5CRyOjR5IHaOC
-         58bsZvTVLArPn9LdHVuj4bMOSU1/NH4opeGsYSx/O8oLESQYKkmzmeR/xL7Y1nhNR5Ao
-         /FiBYmefEkEfkx5TF/Drk5dJO6uGMWpuO/fdbaqC5BjJ3ts3aHq25WO1pOGuot7HkYOQ
-         MbgA==
-X-Gm-Message-State: AOAM533WDMn1iMGbgKLH0Zh8nOztlllf/NJI7TsRIxH4aWStpH42SaoP
-        9HC7TEUmTsGVIlBFhA2571aLhoATa8k+jg==
-X-Google-Smtp-Source: ABdhPJx4KaJtuS5QqMzBzCSLuQVILmug110MsQPZ8kh9WGqzus3GJoJgcwPCt8vEPcuLVoDM8KTr1Q==
-X-Received: by 2002:a17:906:2510:: with SMTP id i16mr1238543ejb.218.1623784843919;
-        Tue, 15 Jun 2021 12:20:43 -0700 (PDT)
+        bh=/h5m4bMbAUr4VuIf7zO23Xgi+w2VxBiH9EaZAlu5eAM=;
+        b=QfUV/zJq7XodTQ80P14Or63iLmSaXBf5gTUpQvRLYxjFQghT5OW2dv0ABpnBGiNFfl
+         5wW8ncGTQ5fXaOd5iR8s/eaxAZ+6FZOAalnnrZWFYEDgCg53HquiunSK9VdX0dN1IH4a
+         QZxXdj1IubQV6X1i5cHTyDAj8yt123HB/6Abghm6ILty36ozDAwmXziBjC+G2/nSgsYy
+         gpklvjs9KuLxzaqalfudZp1E4194YCK7LXU7kb8Gz+DxXmj5b19ObGg4nvXLmZZ9hXMm
+         HPTp1ny29GQ1i+zjCUdI4aX2WnHOwTQGI3IT3OAsL5X/My79ErzOo99P9doBJ5ro4EM8
+         rv+w==
+X-Gm-Message-State: AOAM530hRMMt4HEboeP8RyFOx271caatkwQV2yBUDCZQDgUlFGMLYakU
+        qyry5oCQth0wwimgoBRsnDgo+Wazmji6nQ==
+X-Google-Smtp-Source: ABdhPJzAY0DV9HefM13ddH/IpB1GHwPlyGyp1DllXiHMC74YDwu95ZIc/zyRGjQ6Xs14jWumVW8lcw==
+X-Received: by 2002:a05:6402:781:: with SMTP id d1mr1497633edy.32.1623785128970;
+        Tue, 15 Jun 2021 12:25:28 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id m17sm1853669ejg.96.2021.06.15.12.20.43
+        by smtp.gmail.com with ESMTPSA id t17sm7653256edv.75.2021.06.15.12.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 12:20:43 -0700 (PDT)
+        Tue, 15 Jun 2021 12:25:28 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+To:     Todd Zullinger <tmz@pobox.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, John Keeping <john@keeping.me.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] test: fix for TEST_OUTPUT_DIRECTORY
-Date:   Tue, 15 Jun 2021 21:16:34 +0200
-References: <20210615183157.104999-1-felipe.contreras@gmail.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] doc: builtin add -i is enabled by feature.experimental
+Date:   Tue, 15 Jun 2021 21:24:16 +0200
+References: <20210615164522.1079951-1-tmz@pobox.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210615183157.104999-1-felipe.contreras@gmail.com>
-Message-ID: <87y2bbx7cq.fsf@evledraar.gmail.com>
+In-reply-to: <20210615164522.1079951-1-tmz@pobox.com>
+Message-ID: <87v96fx74n.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,107 +73,66 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Jun 15 2021, Felipe Contreras wrote:
+On Tue, Jun 15 2021, Todd Zullinger wrote:
 
-> The test_atexit unit test relies on the specific location of the
-> generated files.
+> Note that add.interactive.useBuiltin is enabled by feature.experimental.
+> It was added in 2df2d81ddd (add -i: use the built-in version when
+> feature.experimental is set, 2020-09-08).
 >
-> When TEST_OUTPUT_DIRECTORY is unset, _run_sub_test_lib_test_common sets
-> it to pwd, which is two levels under the pwd of the parent unit test,
-> and the parent can find the generated files just fine.
->
-> But when TEST_OUTPUT_DIRECTORY is set, it's stored in GIT-BUILD-OPTIONS,
-> and even though _run_sub_test_lib_test_common correctly overrides it,
-> when the child script is run it sources GIT-BUILD-OPTIONS and
-> TEST_OUTPUT_DIRECTORY is overridden.
->
-> Effectively both the parent and child scripts output to the same
-> directory.
->
->   make TEST_OUTPUT_DIRECTORY=/tmp/foobar GIT-BUILD-OPTIONS &&
->   make -C t t0000-basic.sh
->
-> We could try to specify --root, as 6883047071 (t0000: set
-> TEST_OUTPUT_DIRECTORY for sub-tests, 2013-12-28) suggested, but then the
-> results of subtests would leak out because TEST_RESULTS_DIR would not
-> be changed from the parent.
->
-> Instead, let's revert part of 2d14e13c56 (test output: respect
-> $TEST_OUTPUT_DIRECTORY, 2013-04-29) by removing TEST_OUTPUT_DIRECTORY
-> from GIT-BUILD-OPTIONS.
->
-> It's unclear how much value t/valgrind/analyze.sh provides today, but
-> users of that script that use TEST_OUTPUT_DIRECTORY as well can simply
-> call the script with that variable in the environment.
-
-I've only skimmed this & the patch, but this approach sounds good to me.
-
-> It doesn't make much sense to break t0000-basic.sh for users of
-> TEST_OUTPUT_DIRECTORY, just to provide a little convenience for the
-> users of t/valgrind/analyze.sh.
-
-I would also think that if anyone really cares about this
-valgrind/analyze.sh script the thing to do is to make a Makefile target
-for it, similar to the aggregate target(s).
-
-We could then make that target go through some light wrapper in
-test-lib.sh so it would e.g. pick up GIT_TEST_OPTS (which can have
---root=*), and otherwise find things in the same location that
-test-lib.sh put them / thinks the are in.
-
-> Presumably this was broken since 900721e15c (test-lib: introduce
-> 'test_atexit', 2019-03-13).
->
-> Cc: John Keeping <john@keeping.me.uk>
-> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
 > ---
+> I was checking my configuration to see if I still needed to have
+> add.interactive.useBuiltin set and noticed that it wasn't listed in the
+> settings enabled by feature.experimental.
 >
-> Since v1 I completely changed the approach and instead of using --root
-> which leaks test results, I remove TEST_OUTPUT_DIRECTORY from
-> GIT-BUILD-OPTIONS.
+> Unless it's time to take this out of the experimental phase, it seems worth
+> documenting -- if for no other reason than to keep fetch.negotiationAlgorithm
+> from being lonely in the feature.experimental section. ;)
 >
-> Apparently only people who would care are the users of
-> t/valgrind/analyze.sh which now would need to specify that variable
-> themselves.
+> FWIW, I've had this enabled for perhaps a year or so and I don't recall any
+> instances where it hasn't worked well.  It has come in handy on some systems
+> where I can't easily install Perl but don't want to give up `add -[ip]`.
+> Thanks Dscho!
 >
-> Marginal convenience for the users of an obscure script is not a good
-> reason to break t0000-basic.sh.
+>  Documentation/config/add.txt     | 3 ++-
+>  Documentation/config/feature.txt | 6 ++++++
+>  2 files changed, 8 insertions(+), 1 deletion(-)
 >
-> Range-diff against v1:
-> 1:  04047359b9 < -:  ---------- test: fix for TEST_OUTPUT_DIRECTORY
-> -:  ---------- > 1:  d8430aee08 test: fix for TEST_OUTPUT_DIRECTORY
->
->  Makefile              | 3 ---
->  t/valgrind/analyze.sh | 3 ---
->  2 files changed, 6 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index c3565fc0f8..2e25489569 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2790,9 +2790,6 @@ GIT-BUILD-OPTIONS: FORCE
->  	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
->  	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
->  	@echo X=\'$(X)\' >>$@+
-> -ifdef TEST_OUTPUT_DIRECTORY
-> -	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
-> -endif
->  ifdef GIT_TEST_OPTS
->  	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@+
->  endif
-> diff --git a/t/valgrind/analyze.sh b/t/valgrind/analyze.sh
-> index 2ffc80f721..378d0a8daa 100755
-> --- a/t/valgrind/analyze.sh
-> +++ b/t/valgrind/analyze.sh
-> @@ -1,8 +1,5 @@
->  #!/bin/sh
+> diff --git a/Documentation/config/add.txt b/Documentation/config/add.txt
+> index c9f748f81c..7d6d325571 100644
+> --- a/Documentation/config/add.txt
+> +++ b/Documentation/config/add.txt
+> @@ -9,4 +9,5 @@ add.ignore-errors (deprecated)::
+>  add.interactive.useBuiltin::
+>  	[EXPERIMENTAL] Set to `true` to use the experimental built-in
+>  	implementation of the interactive version of linkgit:git-add[1]
+> -	instead of the Perl script version. Is `false` by default.
+> +	instead of the Perl script version.  If `feature.experimental` is
+> +	enabled, this setting is `true`.  By default, it is `false`.
+> diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
+> index cdecd04e5b..caaa97dc61 100644
+> --- a/Documentation/config/feature.txt
+> +++ b/Documentation/config/feature.txt
+> @@ -12,6 +12,10 @@ feature.experimental::
+>  	setting if you are interested in providing feedback on experimental
+>  	features. The new default values are:
+>  +
+> +* `add.interactive.useBuiltin=true` which enables the built-in implementation
+> +of the interactive version of linkgit:git-add[1] instead of the Perl script
+> +version.
+> ++
+>  * `fetch.negotiationAlgorithm=skipping` may improve fetch negotiation times by
+>  skipping more commits at a time, reducing the number of round trips.
 >  
-> -# Get TEST_OUTPUT_DIRECTORY from GIT-BUILD-OPTIONS if it's there...
-> -. "$(dirname "$0")/../../GIT-BUILD-OPTIONS"
-> -# ... otherwise set it to the default value.
->  : ${TEST_OUTPUT_DIRECTORY=$(dirname "$0")/..}
->  
->  output=
+>  feature.manyFiles::
+>  	Enable config options that optimize for repos with many files in the
 
+Unless there's specific bugs in it that I'm unaware of, I would think
+that we'd be better of just removing the setting and switching 100% to
+the built-in. See the history of the other *.useBuiltin settings, where
+we migrated on a fairly fast schedule.
+
+I also see that use of stash.useBuiltin is still warning for a few
+releases now, that could be removed entirely while we're at it. See
+9bcde4d5314 (rebase: remove transitory rebase.useBuiltin setting & env,
+2021-03-23).
