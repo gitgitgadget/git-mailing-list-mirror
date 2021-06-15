@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 290C4C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81B9BC48BE8
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:20:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 146E461420
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:20:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7074261414
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbhFORXA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 13:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51108 "EHLO
+        id S230195AbhFORXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 13:23:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhFORW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 13:22:59 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53CA4C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:20:54 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id l184so12025803pgd.8
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:20:54 -0700 (PDT)
+        with ESMTP id S229494AbhFORXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 13:23:01 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1052BC061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:20:57 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id h12-20020a17090aa88cb029016400fd8ad8so55151pjq.3
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QfnxfAYYnAKKQBsh0dfSDCQwT7npbu2l7lH66xRg40Q=;
-        b=WjWb9/Sii3wJyY8nMVJB5migSiK3fwWZ3FMuM4EdXethlxqjxjXWWZRlblA/DIpuVc
-         qLa+ipmUYL9RySJLFwaecqpo2mH6gh6K9TOxZCn3RufnXfY1Pdrj/l7XZJlAqDJp/Bvh
-         MjZJwl767LOqBLsL++1F7Z9vR0TAwzbyX7+DKBr1LMET5hIxW2Pl5xvpJ/fq51gJ3YCQ
-         1pnWqXV2Hsz4cPDQcLBQw0DOUhcyuTHPcT1v45o/O2f4D52R19VYYzYW0vTEEOVFRY20
-         slSpfudUbSUyiHGIUlDe4NE0m/kY5O3d7//B7xwjXnHKqiplAoIUL8yniQbn9WxKZ3zk
-         x6wQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=P+cD72M1t4pVa1ivEBjBmxtAr704rXXhQQ6m9Gw7UIc=;
+        b=I9nfsmXMM7YwUoxyEY2A21wG6wawMaUV10527XpfIXkIuPMuZokoCRg09J9YjBe0A8
+         17vMOoLZy29I2eQlhQZGCvZFn/0vWQ3YAJ+xeMudTGgbRMfDzerBayS5wTv5uw9l7Fo7
+         4LO7Fi+/Sidg0kb7t0atSPNunp3oU21y1bizO2Sg5LUH80BIK8jG8jxyMQoZmDKYHOiR
+         xoxBMmi2hd/ONsWR24wICKUnJNvwPxgyiM17i/3chef2GGapnBf+NPmUNTimd3YN0K6R
+         wsYZXQuVc7Vdmn5njPeaTIJZt61BgogNhiEnmY/9FJBJg2Xebuxu7Ht5ig1Yo3ONVB0U
+         /KJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QfnxfAYYnAKKQBsh0dfSDCQwT7npbu2l7lH66xRg40Q=;
-        b=n2IIJw0qQes9Xqqn1snZ6CFxktHOVA/3J64HFNpTrQ7zqGs4hxnNJKrkemx+iRV19d
-         pwjJavYX9WEOJE14ygZkvsPDR6+JJcP2rvVvB06/DLHy5N97JVmWS1tKxEED5DLLU0I2
-         2gQWxkx+cF9EtHV2RHkf6TYK2BBT1kcl8QFm5K/CJyop36iKM8j++kIHXsfeNw7kEn2H
-         sFRGmyvkPFiayvhhPmy6jiIyYhko1bslb66N3CFj/zq+VEnin/hthhtarph1QnAq5lfu
-         UBIt3C73+D03wb5tnQQAz7g/M3awE6gVlcru8e2TGSdTF3+XiGUsrXMfDrbPyfu8EruN
-         RKhQ==
-X-Gm-Message-State: AOAM5314104aw4UjG0NGAUz7kdM1ggdFELbrVJCWx0eNnBAPZEs/8p8O
-        k//wS5iDBI5BTbQAmpGbpAwRqwEd1HY=
-X-Google-Smtp-Source: ABdhPJzgsu8Uy2YAIo847ugGVZRf7EBLxBzmOKlVXE/PnEiQUQKICJTMEqFl2uaEurBD62KBQV8bAg==
-X-Received: by 2002:aa7:9581:0:b029:2ea:39e:2224 with SMTP id z1-20020aa795810000b02902ea039e2224mr5521926pfj.32.1623777653510;
-        Tue, 15 Jun 2021 10:20:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=P+cD72M1t4pVa1ivEBjBmxtAr704rXXhQQ6m9Gw7UIc=;
+        b=MWvmdQ4FzxE0Ow3LhClxBSSE5442XchKVifSO1kfN9/X0EdjM5NWRytH5ThlQ9L89Y
+         S49IcNo9dL7AwWx9TVqixofTckSuwQgQUPEd1MpZ1LqDVLrMUqDQDR7TdUxgAwqN2bNt
+         20XjcjXKgToHstkJs/uWzrmrlKMyNMlR7f32UqcvbktnpakA+LVLKyUfKGsfZTy4gQe9
+         HiwBLVFewjVM3cBJbMllUZsCoPDPJ6AvySL9zNL7CEFfiWfP3UBZHqfVUK3WGsZzS7mp
+         r9fyG1xVB/oxSbABfY5F3ogFXh7W5EqMbhARkrPAJKij9avp1s6WjyyM/j7mswv3qRvD
+         gbAg==
+X-Gm-Message-State: AOAM5313wnE/22GQK82jyD5V2CIEEEoul5WljKSIIkrFTbLMb2xy1n5O
+        Ka3GgmLITM5USINwbwrwPuP/nQUzY+o=
+X-Google-Smtp-Source: ABdhPJwnrn6IZfIXXse0ykZslbb9qmlaI1ckhg2oquvRoFFsXHyYXw0XxDx6LCpBJVqGgX756OfFQw==
+X-Received: by 2002:a17:90a:8818:: with SMTP id s24mr6014309pjn.41.1623777656419;
+        Tue, 15 Jun 2021 10:20:56 -0700 (PDT)
 Received: from athena.localdomain ([2402:800:63b8:a3d1:fb64:d06b:ab01:2de4])
-        by smtp.gmail.com with ESMTPSA id z22sm16864162pfa.157.2021.06.15.10.20.50
+        by smtp.gmail.com with ESMTPSA id z22sm16864162pfa.157.2021.06.15.10.20.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 10:20:52 -0700 (PDT)
+        Tue, 15 Jun 2021 10:20:56 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
@@ -65,10 +66,12 @@ Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 0/5] t: new helper test_line_count_cmd
-Date:   Wed, 16 Jun 2021 00:20:33 +0700
-Message-Id: <20210615172038.28917-1-congdanhqx@gmail.com>
+Subject: [PATCH v2 1/5] test-lib-functions: introduce test_line_count_cmd
+Date:   Wed, 16 Jun 2021 00:20:34 +0700
+Message-Id: <20210615172038.28917-2-congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.32.0.278.gd42b80f139
+In-Reply-To: <20210615172038.28917-1-congdanhqx@gmail.com>
+References: <20210615172038.28917-1-congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,266 +79,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a series to clear false positive when applying Junio's suggestion to
-to a series written by Ævar [1].
+In Git project, we have multiple occasions that requires checking number
+of lines of text in stdout and/or stderr of a command. One of such
+example is t6400, which checks number of files in various states.
 
-Change since v1:
-* Documentation for test_line_count_cmd has been written in more detail
-  with examples
-* The outfile and errfile will be created only if --out and/or --err was
-  specified for better "-v"
-* outfile and errfile will be created in $TRASH_DIRECTORY/.git/trash
-  iff $TRASH_DIRECTORY/.git is a directory, otherwise $TRASH_DIRECTORY,
-  avoid "git rev-parse --git-dir" because we may want to test it, too.
-* Use test_when_finished to clean those files instead of manual "rm -f",
-  also for better "-v"
-* Merge multiple instance of "$@" run into one, for better auditing
-* t0041 is also converted to use new helper
-* With the change to location of outfile and errfile,
-  output of "git ls-files -o" has been restored.
-* Fix double space before "&&" in the end of test command.
+Some of those commands are Git command, and we would like to check their
+exit status.  In some of those checks, we pipe the stdout of those
+commands to "wc -l" to check for line count, thus loosing the exit status.
 
-1: https://lore.kernel.org/git/87r1j42ffz.fsf@evledraar.gmail.com/
+Introduce a helper function to check for number of lines in stdout and
+stderr from those commands.
 
-Đoàn Trần Công Danh (5):
-  test-lib-functions: introduce test_line_count_cmd
-  t6402: use find(1) builtin to filter instead of grep
-  t0041: use test_line_count_cmd to check std{out,err}
-  t6400: use test_line_count_cmd to count # of lines in stdout
-  t6402: use test_line_count_cmd to count # of lines in stdout
+This helper will create 2 temporary files in process, thus it may affect
+output of some checks.
 
- t/t0041-usage.sh        |  53 ++++++----------
- t/t6400-merge-df.sh     |  16 ++---
- t/t6402-merge-rename.sh | 132 +++++++++++++++++++---------------------
- t/test-lib-functions.sh | 117 +++++++++++++++++++++++++++++++++++
- 4 files changed, 204 insertions(+), 114 deletions(-)
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ t/test-lib-functions.sh | 117 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 117 insertions(+)
 
-Range-diff against v1:
-1:  bdce5e51ff < -:  ---------- test-lib-functions: introduce test_line_count_cmd
--:  ---------- > 1:  a823312b19 test-lib-functions: introduce test_line_count_cmd
-2:  09a440ed25 = 2:  6e8f2d4289 t6402: use find(1) builtin to filter instead of grep
--:  ---------- > 3:  33daa5ee2f t0041: use test_line_count_cmd to check std{out,err}
-3:  98a335a442 ! 4:  729ebb8f50 t6400: use test_line_count_cmd to count # of lines in stdout
-    @@ t/t6400-merge-df.sh: test_expect_success 'modify/delete + directory/file conflic
-     -	test 5 -eq $(git ls-files -s | wc -l) &&
-     -	test 4 -eq $(git ls-files -u | wc -l) &&
-     +	test_line_count_cmd --out = 5 git ls-files -s &&
-    -+	test_line_count_cmd --out = 4 git ls-files -u  &&
-    ++	test_line_count_cmd --out = 4 git ls-files -u &&
-      	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-      	then
-     -		test 0 -eq $(git ls-files -o | wc -l)
-    -+		test_line_count_cmd --out = 2 git ls-files -o
-    ++		test_line_count_cmd --out = 0 git ls-files -o
-      	else
-     -		test 1 -eq $(git ls-files -o | wc -l)
-    -+		test_line_count_cmd --out = 3 git ls-files -o
-    ++		test_line_count_cmd --out = 1 git ls-files -o
-      	fi &&
-      
-      	test_path_is_file letters/file &&
-    @@ t/t6400-merge-df.sh: test_expect_success 'modify/delete + directory/file conflic
-      
-     -	test 5 -eq $(git ls-files -s | wc -l) &&
-     -	test 4 -eq $(git ls-files -u | wc -l) &&
-    -+	test_line_count_cmd --out = 5 git ls-files -s  &&
-    -+	test_line_count_cmd --out = 4 git ls-files -u  &&
-    ++	test_line_count_cmd --out = 5 git ls-files -s &&
-    ++	test_line_count_cmd --out = 4 git ls-files -u &&
-      	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-      	then
-     -		test 0 -eq $(git ls-files -o | wc -l)
-    -+		test_line_count_cmd --out = 2 git ls-files -o
-    ++		test_line_count_cmd --out = 0 git ls-files -o
-      	else
-     -		test 1 -eq $(git ls-files -o | wc -l)
-    -+		test_line_count_cmd --out = 3 git ls-files -o
-    ++		test_line_count_cmd --out = 1 git ls-files -o
-      	fi &&
-      
-      	test_path_is_file letters/file &&
-4:  69e4a0b6d7 ! 5:  1b450e4148 t6402: use test_line_count_cmd to count # of lines in stdout
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Rename+D/F conflict; renamed file
-      
-     -	test 3 -eq "$(git ls-files -u | wc -l)" &&
-     -	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-    -+	test_line_count_cmd --out = 3 git ls-files -u  &&
-    -+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way  &&
-    ++	test_line_count_cmd --out = 3 git ls-files -u &&
-    ++	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
-      
-      	test_must_fail git diff --quiet &&
-      	test_must_fail git diff --cached --quiet &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Same as previous, but merged other
-      
-     -	test 3 -eq "$(git ls-files -u | wc -l)" &&
-     -	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-    -+	test_line_count_cmd --out = 3 git ls-files -u  &&
-    -+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way  &&
-    ++	test_line_count_cmd --out = 3 git ls-files -u &&
-    ++	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
-      
-      	test_must_fail git diff --quiet &&
-      	test_must_fail git diff --cached --quiet &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Rename+D/F conflict; renamed file
-      
-     -	test 3 -eq "$(git ls-files -u | wc -l)" &&
-     -	test 3 -eq "$(git ls-files -u dir | wc -l)" &&
-    -+	test_line_count_cmd --out = 3 git ls-files -u  &&
-    -+	test_line_count_cmd --out = 3 git ls-files -u dir  &&
-    ++	test_line_count_cmd --out = 3 git ls-files -u &&
-    ++	test_line_count_cmd --out = 3 git ls-files -u dir &&
-      
-      	test_must_fail git diff --quiet &&
-      	test_must_fail git diff --cached --quiet &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Rename+D/F conflict; renamed file
-      	test_must_fail git merge --strategy=recursive dir-in-way &&
-      
-     -	test 5 -eq "$(git ls-files -u | wc -l)" &&
-    -+	test_line_count_cmd --out = 5 git ls-files -u  &&
-    ++	test_line_count_cmd --out = 5 git ls-files -u &&
-      	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-      	then
-     -		test 3 -eq "$(git ls-files -u dir~HEAD | wc -l)"
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Rename+D/F conflict; renamed file
-     +		test_line_count_cmd --out = 3 grep -v file-in-the-way out
-      	fi &&
-     -	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-    -+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way  &&
-    ++	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
-      
-      	test_must_fail git diff --quiet &&
-      	test_must_fail git diff --cached --quiet &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Same as previous, but merged other
-      	test_must_fail git merge --strategy=recursive renamed-file-has-conflicts &&
-      
-     -	test 5 -eq "$(git ls-files -u | wc -l)" &&
-    -+	test_line_count_cmd --out = 5 git ls-files -u  &&
-    ++	test_line_count_cmd --out = 5 git ls-files -u &&
-      	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-      	then
-     -		test 3 -eq "$(git ls-files -u dir~renamed-file-has-conflicts | wc -l)"
-    @@ t/t6402-merge-rename.sh: test_expect_success 'Same as previous, but merged other
-     +		test_line_count_cmd --out = 3 grep -v file-in-the-way out
-      	fi &&
-     -	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-    -+	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way  &&
-    ++	test_line_count_cmd --out = 2 git ls-files -u dir/file-in-the-way &&
-      
-      	test_must_fail git diff --quiet &&
-      	test_must_fail git diff --cached --quiet &&
-    @@ t/t6402-merge-rename.sh: then
-     -		test 4 -eq "$(git ls-files -u | wc -l)" &&
-     -		test 2 -eq "$(git ls-files -u one | wc -l)" &&
-     -		test 2 -eq "$(git ls-files -u two | wc -l)" &&
-    -+		test_line_count_cmd --out = 4 git ls-files -u  &&
-    -+		test_line_count_cmd --out = 2 git ls-files -u one  &&
-    -+		test_line_count_cmd --out = 2 git ls-files -u two  &&
-    ++		test_line_count_cmd --out = 4 git ls-files -u &&
-    ++		test_line_count_cmd --out = 2 git ls-files -u one &&
-    ++		test_line_count_cmd --out = 2 git ls-files -u two &&
-      
-      		test_must_fail git diff --quiet &&
-      
-    @@ t/t6402-merge-rename.sh: else
-     -		test 2 -eq "$(git ls-files -u | wc -l)" &&
-     -		test 1 -eq "$(git ls-files -u one | wc -l)" &&
-     -		test 1 -eq "$(git ls-files -u two | wc -l)" &&
-    -+		test_line_count_cmd --out = 2 git ls-files -u  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u one  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u two  &&
-    ++		test_line_count_cmd --out = 2 git ls-files -u &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u one &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u two &&
-      
-      		test_must_fail git diff --quiet &&
-      
-    @@ t/t6402-merge-rename.sh: test_expect_success 'pair rename to parent of other (D/
-     -		test 4 -eq "$(git ls-files -u | wc -l)" &&
-     -		test 2 -eq "$(git ls-files -u one | wc -l)" &&
-     -		test 2 -eq "$(git ls-files -u two | wc -l)"
-    -+		test_line_count_cmd --out = 4 git ls-files -u  &&
-    -+		test_line_count_cmd --out = 2 git ls-files -u one  &&
-    ++		test_line_count_cmd --out = 4 git ls-files -u &&
-    ++		test_line_count_cmd --out = 2 git ls-files -u one &&
-     +		test_line_count_cmd --out = 2 git ls-files -u two
-      	else
-     -		test 2 -eq "$(git ls-files -u | wc -l)" &&
-     -		test 1 -eq "$(git ls-files -u one | wc -l)" &&
-     -		test 1 -eq "$(git ls-files -u two | wc -l)"
-    -+		test_line_count_cmd --out = 2 git ls-files -u  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u one  &&
-    ++		test_line_count_cmd --out = 2 git ls-files -u &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u one &&
-     +		test_line_count_cmd --out = 1 git ls-files -u two
-      	fi &&
-      
-    @@ t/t6402-merge-rename.sh: test_expect_success 'check handling of differently rena
-     -		test 1 -eq "$(git ls-files -u two~second-rename | wc -l)" &&
-     -		test 1 -eq "$(git ls-files -u original | wc -l)" &&
-     -		test 0 -eq "$(git ls-files -o | wc -l)"
-    -+		test_line_count_cmd --out = 5 git ls-files -s  &&
-    -+		test_line_count_cmd --out = 3 git ls-files -u  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u one~HEAD  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u two~second-rename  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u original  &&
-    -+		test_line_count_cmd --out = 2 git ls-files -o
-    ++		test_line_count_cmd --out = 5 git ls-files -s &&
-    ++		test_line_count_cmd --out = 3 git ls-files -u &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u one~HEAD &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u two~second-rename &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u original &&
-    ++		test_line_count_cmd --out = 0 git ls-files -o
-      	else
-     -		test 5 -eq "$(git ls-files -s | wc -l)" &&
-     -		test 3 -eq "$(git ls-files -u | wc -l)" &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'check handling of differently rena
-     -		test 1 -eq "$(git ls-files -u two | wc -l)" &&
-     -		test 1 -eq "$(git ls-files -u original | wc -l)" &&
-     -		test 2 -eq "$(git ls-files -o | wc -l)"
-    -+		test_line_count_cmd --out = 5 git ls-files -s  &&
-    -+		test_line_count_cmd --out = 3 git ls-files -u  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u one  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u two  &&
-    -+		test_line_count_cmd --out = 1 git ls-files -u original  &&
-    -+		test_line_count_cmd --out = 4 git ls-files -o
-    ++		test_line_count_cmd --out = 5 git ls-files -s &&
-    ++		test_line_count_cmd --out = 3 git ls-files -u &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u one &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u two &&
-    ++		test_line_count_cmd --out = 1 git ls-files -u original &&
-    ++		test_line_count_cmd --out = 2 git ls-files -o
-      	fi &&
-      
-      	test_path_is_file one/file &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'check handling of differently rena
-     -	test 1 -eq "$(git ls-files -u two | wc -l)" &&
-     -	test 1 -eq "$(git ls-files -u original | wc -l)" &&
-     -	test 0 -eq "$(git ls-files -o | wc -l)" &&
-    -+	test_line_count_cmd --out = 3 git ls-files -u  &&
-    -+	test_line_count_cmd --out = 1 git ls-files -u one  &&
-    -+	test_line_count_cmd --out = 1 git ls-files -u two  &&
-    -+	test_line_count_cmd --out = 1 git ls-files -u original  &&
-    -+	test_line_count_cmd --out = 2 git ls-files -o  &&
-    ++	test_line_count_cmd --out = 3 git ls-files -u &&
-    ++	test_line_count_cmd --out = 1 git ls-files -u one &&
-    ++	test_line_count_cmd --out = 1 git ls-files -u two &&
-    ++	test_line_count_cmd --out = 1 git ls-files -u original &&
-    ++	test_line_count_cmd --out = 0 git ls-files -o &&
-      
-      	test_path_is_file one &&
-      	test_path_is_file two &&
-    @@ t/t6402-merge-rename.sh: test_expect_success 'setup merge of rename + small chan
-      
-     -	test 1 -eq $(git ls-files -s | wc -l) &&
-     -	test 0 -eq $(git ls-files -o | wc -l) &&
-    -+	test_line_count_cmd --out = 1 git ls-files -s  &&
-    -+	test_line_count_cmd --out = 2 git ls-files -o  &&
-    ++	test_line_count_cmd --out = 1 git ls-files -s &&
-    ++	test_line_count_cmd --out = 0 git ls-files -o &&
-      	test $(git rev-parse HEAD:renamed_file) = $(git rev-parse HEAD~1:file)
-      '
-      
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index f0448daa74..b3281409de 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -845,6 +845,123 @@ test_line_count () {
+ 	fi
+ }
+ 
++# test_line_count_cmd checks exit status, and the number of lines in
++# captured stdout and/or stderr of a command.
++#
++# Usage:
++#
++# test_line_count_cmd [--[out|err] <binop> <value>]... [--] [!] cmd [args...]
++#
++# Options:
++# --out <binop> <value>:
++# --err <binop> <value>:
++#	Run sh's "test <# of lines> <binop> <value>" on # of lines in stdout
++#	(for --out) or stderr (for --err)
++# !:
++#	Instead of expecting "cmd [args...]" succeed, expect its failure.
++#	Note, if command under testing is "git", test_must_fail should be used
++#	instead of "!".
++#
++# Example:
++#	test_line_count_cmd --out -ge 10 --err = 0 git tag --no-contains v1.0.0
++#	test_line_count_cmd --out -le 10 ! grep some-text a-file
++#	test_line_count_cmd --out = 0 test_must_fail git rev-parse --verify abcd1234
++#
++# NOTE:
++# * if "--out" is specified, a temporary file named test_line_count_cmd_.out
++#   will be created.
++# * if "--err" is specified, a temporary file named test_line_count_cmd_.err
++#   will be created.
++# Those temporary files will be created under $TRASH_DIRECTORY/.git/trash
++# if $TRASH_DIRECTORY/.git directory existed.
++# Otherwise, they will be created in $TRASH_DIRECTORY.
++# Those temporary files will be cleant by test_when_finished
++test_line_count_cmd () {
++	{
++		local outop outval outfile
++		local errop errval errfile
++		local expect_failure actual_failure
++		local trashdir="$TRASH_DIRECTORY"
++
++		if test -d "$TRASH_DIRECTORY/.git"
++		then
++			trashdir="$TRASH_DIRECTORY/.git/trash" &&
++			mkdir -p "$trashdir"
++		fi &&
++		while test $# != 0
++		do
++			case "$1" in
++			--out)
++				outop="$2" &&
++				outval="$3" &&
++				outfile="$trashdir/test_line_count_cmd_.out" &&
++				shift 3
++				;;
++			--err)
++				errop="$2" &&
++				errval="$3" &&
++				errfile="$trashdir/test_line_count_cmd_.err" &&
++				shift 3
++				;;
++			--)
++				shift &&
++				break
++				;;
++			-*)
++				BUG "test_line_count_cmd: unknown options: '$1'"
++				;;
++			*)
++				break
++				;;
++			esac
++		done &&
++		if test "x$1" = "x!"
++		then
++			shift &&
++			expect_failure=yes
++		fi &&
++		if test $# = 0
++		then
++			BUG "test_line_count_cmd: no command to be run"
++		elif test -z "$outop$errop"
++		then
++			BUG "test_line_count_cmd: check which stream?"
++		else
++			if test -n "$outfile"
++			then
++				test_when_finished "rm -f '$outfile'" &&
++				exec 8>"$outfile"
++			fi &&
++			if test -n "$errfile"
++			then
++				test_when_finished "rm -f '$errfile'" &&
++				exec 9>"$errfile"
++			fi &&
++			if ! "$@" >&8 2>&9
++			then
++				actual_failure=yes
++			fi
++		fi 8>&1 &&
++		case "$expect_failure,$actual_failure" in
++		yes,)
++			echo >&4 "error: '$@' succeed!"
++			return 1
++			;;
++		,yes)
++			echo >&4 "error: '$@' run into failure!"
++			return 1
++		esac &&
++		if test -n "$outop"
++		then
++			test_line_count "$outop" "$outval" "$outfile" >&4
++		fi &&
++		if test -n "$errop"
++		then
++			test_line_count "$errop" "$errval" "$errfile" >&4
++		fi
++	} 9>&2 2>&4
++}
++
+ test_file_size () {
+ 	test "$#" -ne 1 && BUG "1 param"
+ 	test-tool path-utils file-size "$1"
 -- 
 2.32.0.278.gd42b80f139
 
