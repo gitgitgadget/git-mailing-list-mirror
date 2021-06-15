@@ -2,107 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_40,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F4E9C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B94C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:38:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F3B261493
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:38:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3B5C61493
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 14:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230380AbhFOOkQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 10:40:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42308 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230187AbhFOOkP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 10:40:15 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C3AC061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:38:09 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id k25so22986152eja.9
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 07:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ez+eYwCa7A000IwbQzHgL66Kyc+3n+e4AMr0DWW+1R0=;
-        b=G/TXwDm9nwLzuVCVGe188TlyYUGng9SU0QqEVikHYKEN6IYCugDYQSbqiw736hC49V
-         IsDupoHkdc4RME23yEcxJYr4z65qA/tQotQyBz8L3O9fFdisa0JSUYHA2pT+CISGG3rJ
-         a+coJPDRjzxJfjjGkcNDTz2aW7cVtsJemOAU0YzxM8pJPDJh5JxQcIy5uvWjrW6xFyvu
-         y2hh650qqmQqwaSltl5GWN091Aw6QZehExcLufoemciVMJULDSVZsyi8YujLDpadooWR
-         Kx3SS+smeSD0WHWJLhijanJYGSMNtl84mtRuzvqzp+HPwS/BJd9kmxFbgz0/4ZVOMFkj
-         QiwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ez+eYwCa7A000IwbQzHgL66Kyc+3n+e4AMr0DWW+1R0=;
-        b=kKbH5nICQ0Ibhx4Sdh943/ACW0FEDhuud1wNFZOmkZA8IBeDnEMjU71QGulcLGLTTP
-         I4Yi7fWvne6p+rY5IBJ6rLw20r0vOyUFWWdY/8Go+ub9xInzJBrh1R1VGyC7Qhd718px
-         3jG5liFAJtcWaV2xaRCFGSSqow74c182OoUcPWtcyTmZ0gQh6zaXILD3XgycmGEbtJgY
-         7TeGdxj557pV++f3fehOY+ivos49jYfzBWAamGGybDn1myFN+kSNiOqUG/7UZRwr1G8h
-         oiSwLltXQP65f+PpE1sa0zlQpi6R7CUWj6xVg9pwa3WW7s62USjrejxMXOp37dK/Aw2R
-         Qrow==
-X-Gm-Message-State: AOAM5309vVfS9tfwcGsZoCcXdUL4ovKpHc/EB8Xxrgi4eee23kFD2zyk
-        Qg1NcUVVMjXNAJ61SHTmqMM=
-X-Google-Smtp-Source: ABdhPJyvSwcg/cK/7R9Bqa4flU7uO7DTgeXeIrgux+xB0bBCwNmksppD4k4FH6SGmJUd7aeqlEaYFw==
-X-Received: by 2002:a17:906:1982:: with SMTP id g2mr21220514ejd.184.1623767888320;
-        Tue, 15 Jun 2021 07:38:08 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c14sm10140825ejm.4.2021.06.15.07.38.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 07:38:07 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
-        szeder.dev@gmail.com
-Subject: Re: Making split commit graphs pick up new options (namely
- --changed-paths)
-Date:   Tue, 15 Jun 2021 16:35:47 +0200
-References: <871r9a2dol.fsf@evledraar.gmail.com>
- <YMJKcHpN/gL5U6KK@nand.local> <87mtrx1cdr.fsf@evledraar.gmail.com>
- <YMKzOgOU9lj9Nt0z@nand.local>
- <e85bb66a-d70d-1861-07ef-82a74bcce4d7@gmail.com>
- <YMOzDGOo/HbqzkPa@nand.local>
- <eb5e2df7-25d8-a878-78ba-cca771265978@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <eb5e2df7-25d8-a878-78ba-cca771265978@gmail.com>
-Message-ID: <87fsxjyz01.fsf@evledraar.gmail.com>
+        id S230391AbhFOOka (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 10:40:30 -0400
+Received: from gateway21.websitewelcome.com ([192.185.45.210]:43071 "EHLO
+        gateway21.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230187AbhFOOka (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Jun 2021 10:40:30 -0400
+X-Greylist: delayed 1307 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jun 2021 10:40:29 EDT
+Received: from cm17.websitewelcome.com (cm17.websitewelcome.com [100.42.49.20])
+        by gateway21.websitewelcome.com (Postfix) with ESMTP id 73327400C9C5E
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:16:37 -0500 (CDT)
+Received: from box5922.bluehost.com ([162.241.30.80])
+        by cmsmtp with SMTP
+        id t9rplm3YEMGeEt9rplWYeY; Tue, 15 Jun 2021 09:16:37 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:MIME-Version:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=mJ2398p6At7lXUpdi5Sn44mtmfXLJPGjsOI18tjIK8Q=; b=Yjpb1vZiAVPpdInNuFrr+YJlaU
+        UZFC01yqPNgWEWYcJipx2TWtQmti5ZW0i0J/XmKiD7NNVUdAta1V5qzEY0alGdWnbL8ICc8MlHgJN
+        YjsHJkoZEtNwfWTVJQx2UYw6g;
+Received: from pool-96-233-64-159.bstnma.fios.verizon.net ([96.233.64.159]:40516 helo=pdslaptop.home.arpa)
+        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1lt9rp-0024hC-3t
+        for git@vger.kernel.org; Tue, 15 Jun 2021 08:16:37 -0600
+Message-ID: <88d70774f702f32b6618c626f44b1f216e03c297.camel@mad-scientist.net>
+Subject: Re: [PATCH 2/2] comments: avoid using the gender of our users
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     git@vger.kernel.org
+Date:   Tue, 15 Jun 2021 10:16:36 -0400
+In-Reply-To: <94ce6d7d-f923-edb3-12f5-4b11149c9f6f@gmail.com>
+References: <20210611202819.47077-1-felipe.contreras@gmail.com>
+         <20210611202819.47077-3-felipe.contreras@gmail.com>
+         <94ce6d7d-f923-edb3-12f5-4b11149c9f6f@gmail.com>
+Organization: Please remain calm--I may be mad but I am a professional!
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 96.233.64.159
+X-Source-L: No
+X-Exim-ID: 1lt9rp-0024hC-3t
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-96-233-64-159.bstnma.fios.verizon.net (pdslaptop.home.arpa) [96.233.64.159]:40516
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 2021-06-15 at 09:31 -0400, Derrick Stolee wrote:
+>   but sometimes a few slip by due to habit.
 
-On Tue, Jun 15 2021, Derrick Stolee wrote:
+Or perhaps just, "but sometimes a few slip by" ?
 
-> On 6/11/2021 3:01 PM, Taylor Blau wrote:
->> On Fri, Jun 11, 2021 at 01:47:28PM -0400, Derrick Stolee wrote:
->> (FWIW, I had to re-read 8d84097f96 (commit-graph: expire commit-graph
->> files, 2019-06-18) which mentions that a configuration variable would be
->> introduced to change the expiration window, but we don't have any such
->> configuration option. It also doesn't make any mention of handling this
->> problem on Windows, which made me think that the unlink() calls weren't
->> checking their return values by accident when in fact it was probably on
->> purpose.)
->
-> That config option never appeared, probably because ignoring the
-> unlink() return was sufficient to get around this problem. Thanks
-> for digging in and making sure I remembered this correctly.
+No need to suggest a reason IMO.
 
-Isn't the whole ignoring the return value of unlink() Windows-specific
-code? There's no issue with unlinking a file someone else has open on
-POSIX systems, indeed unlinking a file you just created (but hold a FD
-to) is a common pattern for getting a temporary file that you don't need
-to unlink on atexit(). It's just not used in e.g. Git's codebase because
-of portability concerns.
-
-So not a big deal at all, but I wonder if there should be a warning
-there on !Windows, if you can't unlink a file on a POSIX system that
-suggests e.g. a persistent permission problem that won't be going away
-if you ignore it.
