@@ -2,195 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51288C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41762C48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:43:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A8D36142E
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:40:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EFDE6142E
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 09:43:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231454AbhFOJmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 05:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56642 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbhFOJmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 05:42:36 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC9E3C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:40:31 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id q10so13356402oij.5
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 02:40:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=wOTS98Z0jOWnQSgp0JECRiV1sjoqZR+PTLbYAjfNNRM=;
-        b=T2vog7ydAOTVjOgjWU/Dq3erD7v+34uaTuLfj+4BkPL2ZXGcraTpkduk60lNUbjU9o
-         n6BLzz7TBHoPYDMMraaLwTy9bhyfIb3CQ8bM8Tk+BFYzH3oqPdkr7SNvz6fCX7pZDNQ5
-         YG3xSbc0/Eqa5Op6oHiILQApffDjKODXdSH8gxyzQXl32N5dokxOfeJCIglHpEhyFEVB
-         CE6mk+25mBc3YjQkDgX81uiQ+q3jCqFs7vfVmxmIdYCH6Uzaj24A2pJFCkU1miKkc4Un
-         YwDzIjRGLenaxBmCluB5gLC0F4JIjkMunATlriikecqXShfFxknKX2KPGYJfcrdNBckN
-         8B3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=wOTS98Z0jOWnQSgp0JECRiV1sjoqZR+PTLbYAjfNNRM=;
-        b=tPtKvNitiQtoK4FtlMw3wA4GfITs0cBeEPWpmGzu7UHwUbp6lA+8PrrpMCga7lyO74
-         SonCRi93GfJoBkeZK8natUuZ0zsfQTIIkCzFIHXoS+QOdTW05STxQTZj67baGoKrdAjY
-         Iin4k9DXXq0X21zaOcL67HJFsuvb4KYQCy0B8zaS8r3SXSxe2ktAgv9Klhf6yfmsCipm
-         OvixGAL+mCaQo4YFl10zApupOD9oYQwzWDdsTbKQlpsj3BiSsqAWow6JujuR5YuxFJWR
-         vI0SntW7gBKEZDV6XkTZZoPRd72NKdrd5Q5aPRLHDES6PKqkZUiCHyl4DSEPfe1ZTt9A
-         BPLg==
-X-Gm-Message-State: AOAM533YHIOf/hyrXPj3iTeDk9clAsKvvOawRmFPDZ1Qhv/VFZEmS+x3
-        ydRWFs8Ig8LcQIEoC27R75Q=
-X-Google-Smtp-Source: ABdhPJwvrfFMmJqXU2Bjp6hiuGRcSXcgZ1LvoGo70KyzClXWrUbWitZMbeKs8MxOdY2oxl8EWlqZZA==
-X-Received: by 2002:a05:6808:140c:: with SMTP id w12mr13581670oiv.112.1623750031126;
-        Tue, 15 Jun 2021 02:40:31 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id t21sm3884861otd.35.2021.06.15.02.40.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 02:40:30 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 04:40:28 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
-Message-ID: <60c8758c80e13_e633208f7@natae.notmuch>
-In-Reply-To: <b7561a67c192d4bdede47fee5b7b1cb30c44b785.1623734171.git.gitgitgadget@gmail.com>
+        id S231265AbhFOJpV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 05:45:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55794 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230519AbhFOJpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 05:45:21 -0400
+Received: (qmail 7230 invoked by uid 109); 15 Jun 2021 09:43:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 15 Jun 2021 09:43:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12272 invoked by uid 111); 15 Jun 2021 09:43:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 15 Jun 2021 05:43:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 15 Jun 2021 05:43:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/2] RFC: implement new zdiff3 conflict style
+Message-ID: <YMh2M8Ek/RUVjKkL@coredump.intra.peff.net>
 References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
- <b7561a67c192d4bdede47fee5b7b1cb30c44b785.1623734171.git.gitgitgadget@gmail.com>
-Subject: RE: [PATCH 1/2] xdiff: implement a zealous diff3, or "zdiff3"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On Tue, Jun 15, 2021 at 05:16:08AM +0000, Elijah Newren via GitGitGadget wrote:
+
+> Implement a zealous diff3, or "zdiff3". This new mode is identical to
+> ordinary diff3 except that it allows compaction of common lines between the
+> two sides of history, if those common lines occur at the beginning or end of
+> a conflict hunk.
 > 
-> "zdiff3" is identical to ordinary diff3 except that it allows compaction
-> of common lines on the two sides of history at the beginning or end of
-> the conflict hunk.
+> This is just RFC, because I need to add tests. Also, while I've remerged
+> every merge, revert, or duly marked cherry-pick from both git.git and
+> linux.git with this patch using the new zdiff3 mode, that only shows it
+> doesn't segfault. (Though I also reran 10% of the linux remerges with zdiff3
+> under valgrind without issues.) I looked through some differences between
+> --remerge-diff with diff3 and --remerge-diff with zdiff3, but those are
+> essentially diffs of a diff of a diff, which I found hard to read. I'd like
+> to look through more examples, and use it for a while before submitting the
+> patches without the RFC tag.
 
-That was not the main reason behind zdiff3.
+I did something similar (but I wasn't smart enough to try your
+remerge-diff, and just re-ran a bunch of merges).
 
-The whole point of zdiff3 was to have something closer to the "merge"
-style, even if not technically correct.
+Skimming over the results, I didn't see anything that looked incorrect.
+Many of them are pretty non-exciting, though. A common case seems to be
+ones like 01a2a03c56 (Merge branch 'jc/diff-filter-negation',
+2013-09-09), where two sides both add functions in the same place, and
+the common lines are just the closing "}" followed by a blank line.
 
-Your proposal is better than diff3 in that respect, but worse than Uwe's
-zdiff3.
+Removing those shared lines actually makes things less readable, IMHO,
+but I don't think it's the wrong thing to do. The usual "merge" zealous
+minimization likewise produces the same unreadability. If we want to
+address that, I think the best way would be by teaching the minimization
+some heuristics about which lines are trivial.
 
-If you have this:
+Here's another interesting one. In 0c52457b7c (Merge branch
+'nd/daemon-informative-errors-typofix', 2014-01-10), the diff3 looks
+like:
 
-  l  b  r
-  =  =  =
-  A  A  A
-
-  B     b
-  C     C
-  D     D
-  E     E
-  F     F
-  I     i
-
-merge will output this:
-
-  A
-
-  <<<<<<< l
-  B
+  <<<<<<< ours
+                  if (starts_with(arg, "--informative-errors")) {
+  ||||||| base
+                  if (!prefixcmp(arg, "--informative-errors")) {
   =======
-  b
-  >>>>>>> r
-  C
-  D
-  E
-  F
-  <<<<<<< l
-  I
+                  if (!strcmp(arg, "--informative-errors")) {
+  >>>>>>> theirs
+                          informative_errors = 1;
+                          continue;
+                  }
+  <<<<<<< ours
+                  if (starts_with(arg, "--no-informative-errors")) {
+  ||||||| base
+                  if (!prefixcmp(arg, "--no-informative-errors")) {
   =======
-  i
-  >>>>>>> r
+                  if (!strcmp(arg, "--no-informative-errors")) {
+  >>>>>>> theirs
 
-This is simple, and useful.
+A little clunky, but it's easy-ish to see what's going on. With zdiff3,
+the context between the two hunks is rolled into a single hunk:
 
-diff3 will output this:
-
-  A
-  <<<<<<< l
-
-  B
-  C
-  D
-  E
-  F
-  I
-  ||||||| b
+  <<<<<<< ours
+                  if (starts_with(arg, "--informative-errors")) {
+                          informative_errors = 1;
+                          continue;
+                  }
+                  if (starts_with(arg, "--no-informative-errors")) {
+  ||||||| base
+                  if (!prefixcmp(arg, "--informative-errors")) {
   =======
+                  if (!strcmp(arg, "--informative-errors")) {
+                          informative_errors = 1;
+                          continue;
+                  }
+                  if (!strcmp(arg, "--no-informative-errors")) {
+  >>>>>>> theirs
 
-  b
-  C
-  D
-  E
-  F
-  i
-  >>>>>>> r
+which seems worse. I haven't dug/thought carefully enough into your
+change yet to know if this is expected, or if there's a bug.
 
-Not very friendly.
-
-Your zdiff3:
-
-  A
-
-  <<<<<<< l
-  B
-  C
-  D
-  E
-  F
-  I
-  ||||||| b
-  =======
-  b
-  C
-  D
-  E
-  F
-  i
-  >>>>>>> r
-
-Just marginally better.
-
-Uwe's zdiff3:
-
-  A
-
-  <<<<<<< l
-  B
-  ||||||| b
-  =======
-  b
-  >>>>>>> r
-  C
-  D
-  E
-  F
-  <<<<<<< l
-  I
-  ||||||| b
-  =======
-  i
-  >>>>>>> r
-
-In my view of all the *diff3's, Uwe's version is the most useful.
-
--- 
-Felipe Contreras
+-Peff
