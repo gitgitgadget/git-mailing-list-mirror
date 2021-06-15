@@ -6,110 +6,80 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24543C2B9F4
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7C70C2B9F4
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:34:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5CE3613F5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:32:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5838613F9
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 02:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229781AbhFOCfC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Jun 2021 22:35:02 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58704 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbhFOCfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jun 2021 22:35:01 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1507613BA30;
-        Mon, 14 Jun 2021 22:32:58 -0400 (EDT)
+        id S230218AbhFOCgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Jun 2021 22:36:07 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60621 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229649AbhFOCgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jun 2021 22:36:06 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EEF4F1250BF;
+        Mon, 14 Jun 2021 22:34:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=xYPQJ68ODgA0
-        uewkSjOa8Jj6vGlAsQJwijLck72jP/A=; b=iJ//95q7E+fxYDy1nScgG8lP0QWo
-        qmkE+ZBPIvc/Fgd0f8bVY9E1IKJwN1/srtyrK3RVRNdSt1aPnUIaJSXdZFca1Idy
-        6k4vdtAZLt8JSOLk+v3fmUTtbJGl6P27QqWJ0puR9zO6TQm2kfsjF0G5r1wkrbRN
-        yKQo6iy567nxBbg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D73E13BA2F;
-        Mon, 14 Jun 2021 22:32:58 -0400 (EDT)
+        :content-type; s=sasl; bh=xHj0tAvACO3lws7l3gIvWIPsSqi8YIKXU8DK4v
+        uSDxU=; b=V+uLl09p+hwSMB2FavdU5DEl8QyLKxIy3UlLhxOnIBwg/Bnu/B+M6M
+        U6oRugoL9uvZF/2ypR0MzUtzpjNiSQYaIVOpoVQNyBLK2FMvVZmrc7WufoGC5C8+
+        VNlwQo6h9SK+2ElVEDQIsWGUTdfrSyq21PZEm3S2mIorKxH7By1A8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E81DC1250BD;
+        Mon, 14 Jun 2021 22:34:02 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5910213BA2E;
-        Mon, 14 Jun 2021 22:32:55 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3AF1E1250BA;
+        Mon, 14 Jun 2021 22:34:00 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] read-cache: fix incorrect count and progress bar
- stalling
-References: <cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com>
-        <patch-2.2-042f598826-20210607T144206Z-avarab@gmail.com>
-        <8f336b1b-6cb7-8277-79d5-0f331159b00c@gmail.com>
-        <87k0n54qb6.fsf@evledraar.gmail.com>
-        <eaf2b6b0-4202-d5ea-87a2-b828fdbc60a1@web.de>
-        <8735tt4fhx.fsf@evledraar.gmail.com> <xmqqczsxtf8g.fsf@gitster.g>
-        <87wnr4394y.fsf@evledraar.gmail.com>
-        <74183ce6-e17f-1b11-1ceb-7a8d873bc1c7@web.de>
-        <87lf7k2bem.fsf@evledraar.gmail.com>
-        <f5e181fc-af94-bccf-051f-a58a04fe1ffc@web.de>
-        <87zgvszo8i.fsf@evledraar.gmail.com>
-        <4f251a35-8b5e-30f0-c742-960cb7c30b57@web.de>
-        <87o8c8z105.fsf@evledraar.gmail.com>
-Date:   Tue, 15 Jun 2021 11:32:53 +0900
-In-Reply-To: <87o8c8z105.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 14 Jun 2021 21:08:11 +0200")
-Message-ID: <xmqqy2bbyi0a.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Luke Shumaker <lukeshu@lukeshu.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>
+Subject: Re: [PATCH 1/2] subtree: fix the GIT_EXEC_PATH sanity check to work
+ on Windows
+References: <pull.978.git.1623316412.gitgitgadget@gmail.com>
+        <a91ac6c18938116c4a74e19466da456b67376fa5.1623316412.git.gitgitgadget@gmail.com>
+        <87bl8d6xoq.wl-lukeshu@lukeshu.com>
+        <nycvar.QRO.7.76.6.2106111213050.57@tvgsbejvaqbjf.bet>
+        <875yyk7c3j.wl-lukeshu@lukeshu.com>
+        <nycvar.QRO.7.76.6.2106141330410.57@tvgsbejvaqbjf.bet>
+Date:   Tue, 15 Jun 2021 11:33:58 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.2106141330410.57@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 14 Jun 2021 13:56:07 +0200 (CEST)")
+Message-ID: <xmqqtulzyhyh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FD94E410-CD81-11EB-B20C-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24403BA0-CD82-11EB-B5C9-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> How does the idea that we show "has been done" make sense when you
-> combine the progress.c API with the display_throughput(). I.e. output
-> like:
-> =09
-> 	+Working hard:  50% (1/2)<CR>
-> 	+Working hard:  50% (1/2), 1.91 MiB | 195.00 KiB/s<CR>
-> 	+Working hard:  50% (1/2), 2.86 MiB | 146.00 KiB/s<CR>
-> 	+Working hard:  50% (1/2), 3.81 MiB | 130.00 KiB/s<CR>
-> 	+Working hard:  50% (1/2), 3.81 MiB | 97.00 KiB/s, done.
-> ...
-> That's another reason I'm maintaining that reporting progress as "is
-> being done" is the only sane way to look at it, because if you think it=
-'s
-> "has been done" you preclude the API from being used for cases where yo=
-u
-> e.g. want to download 2 files, each file takes 1 minute, and you want t=
-o
-> show progress on the item itself.
+>> `test FILE1 -ef FILE2` checks wether the inode is the same.  And it's
+>> POSIX, so I'm assuming that it's sufficiently portable, though I
+>> haven't actually tested whether things other than Bash implement it.
+>
+> It's not POSIX. From
+> https://pubs.opengroup.org/onlinepubs/009695399/utilities/test.html:
+>
+> 	Some additional primaries newly invented or from the KornShell
+> 	appeared in an early proposal as part of the conditional command
+> 	([[]]): s1 > s2, s1 < s2, str = pattern, str != pattern,
+> 	f1 -nt f2, f1 -ot f2, and f1 -ef f2.
+>
+> Having said that, it appears that Bash implements it (what non-standard
+> behavior _doesn't_ it implement ;-))
+>
+> And since Git for Windows ships with Bash, we can actually use it!
 
-Sorry, but I do not understand your argument here at all.
-
-If you show "has been completed", when such a thing starts, I'd see
-for a minute this:
-
- Downloading (0/2) ... X MiB | Y kiB/s
-
-and then it will switch to
-
- Downloading (1/2) ... progress ...
-
-and after staring at it for another minute, I'd see
-
- Downloading (2/2) ... done.
-
-And such an output makes sense to me.  It is obvious, at least to
-me, that the output during the first minute is telling me that it
-hasn't finished but working hard to turn that "0" into "1" at the
-pace the throughput thing is showing.
+So,... is contrib/subtree for Windows only?
