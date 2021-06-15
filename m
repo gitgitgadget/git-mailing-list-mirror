@@ -7,121 +7,196 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC768C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 08:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18DBAC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 08:59:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1F8F61412
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 08:22:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F13226141B
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 08:59:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbhFOIYO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 04:24:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38824 "EHLO
+        id S231209AbhFOJBr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 05:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230482AbhFOIYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 04:24:13 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B70AC061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 01:22:08 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so13510673otl.3
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 01:22:08 -0700 (PDT)
+        with ESMTP id S231199AbhFOJBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 05:01:46 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1F90C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 01:59:42 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id 5so42574286ioe.1
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 01:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=EiRqwyvTD4XCZIPHqpgfm8SL3hzheAhrfTTMGjs/U9E=;
-        b=Z55PaaPrqeKawgSA7QqZi77uK8VWpCoq0Y6Qzc1Sznh+wkwOHd8WmoVaRS2z4TFvOD
-         KVMQnWC6GTS/zUapqX4GbCr49rnpnqwEPl6O4XGW0VPxVbMJ3kTTbLL+MRn7On0374AC
-         muqKWXbFmIZgak8n6VBdInj9D3AT3KNhe/CH0O//h9A8T5jAQVslaFCf5ZaQzoYDjN04
-         tVKvvpvg3LN205ZAXp12JxfvnEWH17mUhbHZD1THI1lEjEyM7uUC3fqQOoWEzhBjd3Fe
-         1omYlMpNX6ZVM+1oFIzsLkrrrM41CULNiWBaQSh/hH1UAt+a1d8buFLfSSQeJi7QUzTq
-         vVOg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4xbvXsd0PMDKJOozTC24w+Tokc6OiKKvOR7qmcAKgtA=;
+        b=PgiD8ygIa57vwrNMok4JvB2Z0PYhvGEHEsjhvG76xAcom3EZ4PoAztuUZR9XpDSe2n
+         NJ1Bv99vyxO9Rb7BfdGqBzS2odDUwC4L+61Y6Bsbxl49tJ8zFtIYBwm8yhrXxZNm0Lih
+         NBciNmHD+0EJ/w1cT6dM8wNOBtpquHWfiGaB25NLY1r7/Dvz+ztjyDt3Z7+GojbF8Nps
+         ms9r739Xy/bXWX4FGzWi8y3JBNFjUTYiVWfaTNdqkxEMHkE6kz+d2jnV50fieZuzV9LW
+         Y9ioltKJ2BTjGtePwPbAea9HSC5Vk2Ihiv8fcGO4eh2dNA07yNqhxGtoC/L7actROxQo
+         w6KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=EiRqwyvTD4XCZIPHqpgfm8SL3hzheAhrfTTMGjs/U9E=;
-        b=BDgbNR7xf16gQaPBXfMkjFi4O6aZxfJIGlDE3d29enMpCOVw7qPtsXlU1ImGpM1Txj
-         wfUFZrH5ZdyjG2rXUKyWibHb8i0L+m6gDePLxKgGVXflligkYjaYNV0PteB1XdqxE0km
-         iDsX4VYQk8kC5wdeKYM+TAUkGEXMy39OgwpDW28kmE3CDqxAPuN0DO2TnpUe1yu8SHHw
-         46X5aqIpIwQVPrFy2p72VUVMUsuJhfj1pnRkrUYX5pWtblvmQOVIP+4IePBFOzowrz2j
-         ixACx8pXn04QsAHAYwzQHlj45pU4UxLPLrMu1FqhMgnUdpN1GRtoG00b9Afdf2kgbEb4
-         wA/g==
-X-Gm-Message-State: AOAM530yDXIde6tHof85HCDqZhVgkhU31Nr8OmVEjNmgSBk6psVfKj7n
-        FSmVfVtmGto+/Xyfve64jkE=
-X-Google-Smtp-Source: ABdhPJyKtpr0NOIaOGWypf6Bt3mtd9cVvio/4M6Qje7YMJeAmAyqqft6MoCUxEggfw4qpKtHl7s9wA==
-X-Received: by 2002:a9d:4f0e:: with SMTP id d14mr16283495otl.70.1623745327294;
-        Tue, 15 Jun 2021 01:22:07 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id o2sm3620364oom.26.2021.06.15.01.22.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 01:22:06 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 03:22:05 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>
-Message-ID: <60c8632d60027_e633208db@natae.notmuch>
-In-Reply-To: <xmqqbl87zyra.fsf@gitster.g>
-References: <20210613063702.269816-1-felipe.contreras@gmail.com>
- <xmqqbl87zyra.fsf@gitster.g>
-Subject: Re: [PATCH 0/2] Trivial cleanups
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4xbvXsd0PMDKJOozTC24w+Tokc6OiKKvOR7qmcAKgtA=;
+        b=MMlCpHTPTqMh7lNx1Gd7cVJhTU+XXoDk+0GxfMugKWksars11yxL6FT3DWK4Kf0bfZ
+         n6PRfUB0zKCPTV29cQ75T9wExlDuvyyQrLYFOPErHjUe/sfqeYT5fHVzFn4XvEfUwi8M
+         SDosbjvi3dwjV6ZI1O3K8l8X4caaYKn+/Dfy15rVVBJvQ+xZJXIYgmHcKF8gXGXvrua7
+         a9P8GyVYeKC9r/bFHdReZB3df8D0DZp/euOgwGVWxwqcCTABkCYycKPMR9NUjXvV8++G
+         ksCHvwhHWbeS7F3plNGv6N0E/fy4FwaJUig4PoheBpMGrioTc2W8Lgn1vCi/UOF4MZaJ
+         X/zQ==
+X-Gm-Message-State: AOAM533JkvefWT1A2FaJzDiOzbvxGrUZmsVYRATgj5GMgqHFh8UtC+X3
+        9NXYXb/g7Mwakjyh91VWJevJ++ucrU+6tDMZa9JfzWUNOjpIo4PW
+X-Google-Smtp-Source: ABdhPJxwxEx+F0jwnxQJhiQZip4RBfrmgKSYdWolakjMtwcECYvuASB+gtevk0PmlCjLM8AwVjfy7zwgn1ca5xE7ktI=
+X-Received: by 2002:a02:9a17:: with SMTP id b23mr20802293jal.10.1623747582357;
+ Tue, 15 Jun 2021 01:59:42 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAOLTT8QHL-6-DxoRKtx5cVp_DePxtWYU4CuBweYfCG1hGZZhaA@mail.gmail.com>
+ <CAP8UFD0jiZuPvO-oYXw9PmVQ56tpYc9nxUxAjPQrc2f1qwEqUQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0jiZuPvO-oYXw9PmVQ56tpYc9nxUxAjPQrc2f1qwEqUQ@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Tue, 15 Jun 2021 16:59:31 +0800
+Message-ID: <CAOLTT8QS7bG5M2Ro+vApUDtOgjxgrpUg5Mgp+tOQgyqwpENN1Q@mail.gmail.com>
+Subject: Re: [GSoC] Git Blog 4
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Hariom verma <hariom18599@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > These perfeclty good patches from 2014 weren't picked with no good
-> > reason.
-> 
-> These are safe no-op changes, but that does not mean they are good
-> patches.
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=
+=8814=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=884:02=E5=86=99=E9=81=93=
+=EF=BC=9A
+>
+> On Sun, Jun 13, 2021 at 4:17 PM ZheNing Hu <adlternative@gmail.com> wrote=
+:
+>
+> > In addition, some scripts like `printf "%b" "a\0b\0c" >blob1` will
+> > be truncated at the first NUL on a 32-bit machine, but it performs
+> > well on 64-bit machines, and NUL is normally stored in the file.
+> > This made me think that Git's file decompression had an error on
+> > a 32-bit machine before I used Ubuntu32's docker container to
+> > clone the git repository and In-depth analysis of bugs... In the end,
+> > I used `printf "a\0b\0c"` to make 32-bit machines not truncated
+> > in NUL. Is there a better way to write binary data onto a file than
+> > `printf` and `echo`?
+>
+> You might want to take a look at t/t4058-diff-duplicates.sh which has
+> the following:
+>
+> # make_tree_entry <mode> <mode> <sha1>
+> #
+> # We have to rely on perl here because not all printfs understand
+> # hex escapes (only octal), and xxd is not portable.
+> make_tree_entry () {
+>        printf '%s %s\0' "$1" "$2" &&
+>        perl -e 'print chr(hex($_)) for ($ARGV[0] =3D~ /../g)' "$3"
+> }
+>
 
-They are not good patches because they are no-op, they are good changes
-because they correct the flow of the code to match the flow in which
-most people think.
+Yes, perl can indeed do this, and perhaps python can do it too.
+However, python may need to consider portability issues.
 
-  18 is younger than Mary
+> > Since I am a newbie to docker, I would like to know if there is any
+> > way to run the Git's Github CI program remotely or locally?
+>
+> There are scripts in the ci/ directory, but yeah it could help if
+> there was a README there.
+>
 
-is not a sentence most people would agree make sense.
+Thanks, I probably know how to use it.
+As you said in another article, GitHub-Travis CI, this is exactly what I ne=
+ed.
 
-> It goes against Documentation/CodingGuidelines to bring it
-> back again now, which is a good enough reason not to look at them.
+> > In the second half of this week, I tried to make `cat-file` reuse the
+> > logic of `ref-filter`. I have to say that this is a very difficult proc=
+ess.
+> > "rebase -i" again and again to repair the content of previous commits.
+> > squeeze commits, split commits, modify commit messages... Finally, I
+> > submitted the patches to the Git mailing list in
+> > [[PATCH 0/8] [GSOC][RFC] cat-file: reuse `ref-filter`
+> > logic](https://lore.kernel.org/git/pull.980.git.1623496458.gitgitgadget=
+@gmail.com/).
+> > Now `cat-file` has learned most of the atoms in `ref-filter`. I am very
+> > happy to be able to make git support richer functions through my own co=
+de.
+> >
+> > Regrettably, `git cat-file --batch --batch-all-objects` seems to take u=
+p
+> > a huge amount of memory on a large repo such as git.git, and it will
+> > be killed by Linux's oom.
+>
+> In the cover letter of your patch series you say:
+>
+> "There is still an unresolved issue: performance overhead is very large, =
+so
+> that when we use:
+>
+> git cat-file --batch --batch-all-objects >/dev/null
+>
+> on git.git, it may fail."
+>
+> Is this the same issue? Is it only a memory issue, or is your patch
+> series also making things slower?
+>
 
-These are not style issues. Refactoring code to make it easier to
-understand goes beyond style.
+Yes, they are talking about the same thing, the memory usage is too large.
+Of course I should check for memory leaks first. However, this is mainly
+caused by changes in the strategy of cat-file printing object data.
 
-Refactoring this:
+The original cat-file needs do fewer (one time) copies in read_object_file(=
+)
+or stream_blob(), now cat-file needs do four time (or more) copy in
+oid_object_info_extended(), grab_sub_body_contents(), append_atom(),
+and pop_stack_element().
 
-	static int is_same_remote(struct remote *remote)
-	{
-		struct remote *fetch_remote = remote_get(NULL);
-		return (!fetch_remote || fetch_remote == remote);
-	}
+> > This is mainly because we will make a large
+> > number of copies of the object's raw data. The original `git cat-file`
+> > uses `read_object_file()` or `stream_blob()` to output the object's
+> > raw data, but in `ref-filter`, we have to use `v->s` to copy the object=
+'s
+> > data, it is difficult to eliminate `v->s` and print the output directly=
+ to the
+> > final output buffer. Because we may have atoms like `%(if)`, `%(else)`
+> > that need to use buffers on the stack to build the final output string
+> > layer by layer,
+>
+> What does layer by layer mean here?
+>
 
-	int same_remote = is_same_remote(remote);
+In the case of using multiple nested %(if) %(else), the data may be
+copied to the
+"previous level" buffer of the stack through pop_stack_element().
 
-To this:
+> > or the `cmp_ref_sorting()` needs to use `v->s` to
+> > compare two refs. In short, it is very difficult for `ref-filter` to re=
+duce
+> > copy overhead. I even thought about using the string pool API
+> > `memintern()` to replace `xmemdupz()`, but it seems that the effect
+> > is not obvious. A large number of objects' data will still reside in me=
+mory,
+> > so this may not be a good method.
+>
+> Would it be possible to keep the data for a limited number of objects,
+> then print everything related to these objects, free their data and
+> start again with another limited number of objects?
+>
 
-	int same_remote = remote == remote_get(NULL);
+"limited number of objects", is this want to reduce the overhead of free()?
+May be a good solution. But I think, can we just only release the memory
+of an object after printing it instead of free() together like ref_array_cl=
+ear()
+does?
 
-Is more than just style.
+> > Anyway, stay confident. I can solve these difficult problems with
+> > the help of mentors and reviewers. `:)`
+>
+> Sure :-)
 
-But suit yourself. Sooner or later somebody is going to fix these
-glaring mistakes. And they are mistakes [1].
-
-  Yoda conditions are widely criticized for compromising readability by
-  increasing the cognitive load of reading the code.
-
-Cheers.
-
-[1] https://en.wikipedia.org/wiki/Yoda_conditions#Criticism
-
--- 
-Felipe Contreras
+Thanks!
+--
+ZheNing Hu
