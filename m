@@ -7,80 +7,77 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D42D9C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07A0FC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:09:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0E8161883
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:03:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF44C6191A
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 17:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229966AbhFORFd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 13:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47180 "EHLO
+        id S231311AbhFORLD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 13:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbhFORFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 13:05:32 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07D5FC061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:03:27 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id j11-20020a9d738b0000b02903ea3c02ded8so14997762otk.5
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:03:27 -0700 (PDT)
+        with ESMTP id S231294AbhFORLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 13:11:02 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6A11C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:08:56 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id w22-20020a0568304116b02904060c6415c7so12668309ott.1
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 10:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=uH5hk8hoPrbh4x4HccJIU/n3+NyvUwcQtxZ3leDU8WI=;
-        b=aGrK5HK0HaRfkdMEbzaSMQGmYnLx5LRC8/2jDuW8O5WNm3jDOWbsZ9WRq1VaL5aAck
-         WMGcoCsxLscScpb4dHLyZFDWctKooYcPldo9H22c/b+l4t/XVyG7mclNuuoXuKvq5oRf
-         OKax3aqWVpXKSFHV/4CGhaFFJZVFaWQyn/jZT88+IT6n0cdW9fIGiPnMI+8Aufqu7MdB
-         xiMnVUhJZvVMf9qCV6o2dSeqjG6VnbHQtGBEDdxCTAOqdTKVBMEAoeh2ClTz6s/TC/J1
-         A5CH+XGtUOO9RubkWDP70o1xjo9dvNgJHXq7lmyzQ3DdI0AenVQdU73zPay/G5tB0qj4
-         opsQ==
+        bh=5MCHcKOOLldTfy+LAhMtZsHK9tqQD2FtNbqEfouq1Oo=;
+        b=gxYVTxUENaa4wGBsRknLI85WY6j1HWdgXGk6n6weSKIIj/2jgORKD9H6YyRZ62YL+7
+         H/fwrgzDdUIOj5ROcXdsG8LpZXXlqacuOVM7acJfA7IYXyMITerqyrjoOUVju6l98p7p
+         kVUOZfatU9ScCmyWPV2V8N3H3b0HP34ZZlTn/fYGMPqNrc8OK70GPt3GiZ2qc7gzafJK
+         Bvv+iOael8G+XQjvFxEy18c+RLPDXgTD0BmmL4uuq7SCUIl0W8YlJO+Zjv5Wt3eX5ZVc
+         wHT4YEmoiCh9oTLCtqGanr/D5ifZQh+cmr1GmXt6bUfFeaKlj0RHXDsVDryiDgPq2sNo
+         D7/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=uH5hk8hoPrbh4x4HccJIU/n3+NyvUwcQtxZ3leDU8WI=;
-        b=HfBfBOUWUuf9pZhI1C6izpLfAm5qcCAP+325JkoeyQhfrqDcQDKdHHmhmEpKCK9Kdj
-         fyyQjqyowLZT30GeebTfl2P9yTCYl5K48Bi7M5de93jFD/UswQUrBERlv8bw10wq/1Lu
-         Dj19qL6h66u01Sjpkl98c9JwYiAjnWwfaqklLb2oCQb7E1keXz9ufXHpW1yjO4bt2fwc
-         LBp1zIWYhIof7rhLs5+DbqH3rIKwyjMVjF6OWZ6+upWcgbSp1uH3htFaCSuKYneRh4Ba
-         Iec4/7nE3D2AFSA26l7Q1iyYhElSgU8xfsWpGdMuUhorS70tKB0m0oCjjD9gwUoC6k9u
-         IG6w==
-X-Gm-Message-State: AOAM530Pu/bKQS5Y8QIRAct9pKQNR9cv4ehnJnRZPS72mm6vsvB/ibFu
-        OrJkD+yB8t1ics6MaEC0Bfs=
-X-Google-Smtp-Source: ABdhPJzW9ucL20deN6B7TUY/9jb8hSlVaROmhz57AoFsW2CE2F8zneygzOfJLgimuJo/U2R+oED5OQ==
-X-Received: by 2002:a9d:628:: with SMTP id 37mr237476otn.120.1623776607235;
-        Tue, 15 Jun 2021 10:03:27 -0700 (PDT)
+        bh=5MCHcKOOLldTfy+LAhMtZsHK9tqQD2FtNbqEfouq1Oo=;
+        b=QLdF9nOlw4zDW6Oe6IK9qEYbC2/hCEUQqzPUPI7BXrIL+99QCdSxcv5B+XxrJ4STUe
+         Xx5l80jIFtsS8x2RCu7V2QHM8gO22nbUW0pKye7p2gr/uw2es1xrX89q4MjciJ0yh1JZ
+         xQz8O5ozy9Dr7M+yNcKobBFNqfTUIXbUJH3W5X87fJYDK6bd6DEaOATaSLH3H326oCrt
+         Nv1nAaN8pihqMdzpzen1xjM+3tGAek8HeyXwY93Py9+RUr+I2UgRPL4pC61r+iSKbs9d
+         tRnig2iSteAoSRjAUswWsTlcetAi2pSxjwrL2mp/OI/Y5FdcGSWxh5iFTazeAp01ZJFy
+         BRJA==
+X-Gm-Message-State: AOAM53302gbv2ym+fG+2TPxJBSeU1xwAPeFrHjqzF61lutm/hscbb9gw
+        ffFIpFEtKtFkNdmpdJk7+lI=
+X-Google-Smtp-Source: ABdhPJyB/iIjfY/UICc2yPmP9Wh2+zBGqccnykxdc54Qi0hXE6c+hP80Fqnb3hJlgzNwuwVq7rW++A==
+X-Received: by 2002:a05:6830:22cc:: with SMTP id q12mr255800otc.202.1623776935764;
+        Tue, 15 Jun 2021 10:08:55 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id f7sm3917809oot.36.2021.06.15.10.03.26
+        by smtp.gmail.com with ESMTPSA id l19sm3937600oou.2.2021.06.15.10.08.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 10:03:26 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 12:03:25 -0500
+        Tue, 15 Jun 2021 10:08:55 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 12:08:53 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, stolee@gmail.com,
+        jrnieder@gmail.com, emilyshaffer@google.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         Robert Karszniewicz <avoidr@posteo.de>,
         Jeff King <peff@peff.net>,
         "Kerry, Richard" <richard.kerry@atos.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Message-ID: <60c8dd5d31686_12c282087d@natae.notmuch>
-In-Reply-To: <ffdd4b33-65b2-de66-165a-84d2ce6f2fce@gmail.com>
-References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
- <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
- <87a6nz2fda.fsf@evledraar.gmail.com>
- <YMKTARn368Qzsqc2@camp.crustytoothpaste.net>
- <87pmwt1dz3.fsf@evledraar.gmail.com>
- <f4488360-bdaf-3e97-69c5-00087f797117@gmail.com>
- <87h7i21a43.fsf@evledraar.gmail.com>
- <xmqqzgvrvf5g.fsf@gitster.g>
- <ffdd4b33-65b2-de66-165a-84d2ce6f2fce@gmail.com>
-Subject: Re: [PATCH v2 0/4] Use singular "they" when appropriate
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60c8dea5ef999_12c2820871@natae.notmuch>
+In-Reply-To: <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+Subject: RE: [PATCH v3 4/4] CodingGuidelines: recommend singular they
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -89,39 +86,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 6/15/2021 2:02 AM, Junio C Hamano wrote:
-
-> > I just retried a "competing" merge that got ugly ;-)
-> > 
-> > Between Derrick's two "singular they" patches (one for comments, the
-> > other for docs) and Felipe's two patches (the same split), they
-> > touch identical base text.  Only the way they neuter the description
-> > is different, and to me the latter feels a bit more ESL friendly.
-> > 
-> > So, the main things that are missing from Felipe's version that we
-> > may want to build on top before the whole discussion can be
-> > concluded are:
-> > 
-> >  - Derrick's "typofix" patch, but if I recall correctly it needed a
-> >    fix-up in one of its hunks?
-> > 
-> >  - Guidelines; you had a more generic readability tips that would
-> >    (incidentally) result in nudging the writers to be more gender
-> >    neutral, which I think is going in the right direction, but I do
-> >    prefer to see an explicit mention of gender-neutrality as one
-> >    bullet item.
+Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> I will send a v3 soon with Felipe's two patches, a fixed typo patch,
-> and a new set of guidelines.
+> Technical writing seeks to convey information with minimal friction. One
+> way that a reader can experience friction is if they encounter a
+> description of "a user" that is later simplified using a gendered
+> pronoun. If the reader does not consider that pronoun to apply to them,
+> then they can experience cognitive dissonance that removes focus from
+> the information.
 
-I don't believe it's necessary to tie the guideline with the fixes. The
-guideline might be desirable without the fixes (depending what the
-guideline says), and the fixes can be applied without the guideline. In
-other words: they are orthogonal.
+The gender of the reader is never specified.
 
-Tying them together only ensures the fixes are going to be unnecessarily
-delayed until we find appropriate guideliens (if we ever do).
+The documentation doesn't mention users in that way, only third-person
+developers, reviewers, etc.
+
+The code mentions third-person users.
+
+Never the reader.
+
+So it's not true the reader can experience cognitive dissonance when the
+gender ofthe reader is specified, because we never do that.
+
+Do you have an actual example?
 
 -- 
 Felipe Contreras
