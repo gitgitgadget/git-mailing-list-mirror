@@ -2,169 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 654C1C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF768C48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:50:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E809610F7
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:32:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D40FC6128B
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbhFOSeM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 14:34:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38934 "EHLO
+        id S231284AbhFOSwW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 14:52:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231260AbhFOSeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 14:34:09 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D841C06175F
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:32:04 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id j11-20020a9d738b0000b02903ea3c02ded8so15275034otk.5
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:32:04 -0700 (PDT)
+        with ESMTP id S230387AbhFOSwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 14:52:20 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81D00C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:50:15 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id p7so28672644lfg.4
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6zRff1ZSORVRPj1LEBPx5q9MAR5ayAZLpLEY9GV55I8=;
-        b=EpwdgxGafT8kmHIf9qfmmxU7A0vB6jXG1aoTekvZKS5vdYgRkL3w5uW4EEqpr+JeyE
-         aJ76Zpb0g9qbyxVKPlihpWC6EuwsuEbNGRrYWtP3n2PcrPYTl966MVGvS2wHmZpk2w7r
-         jMFKR7VOSpvSeQ2vGIaYEFudaxe+noRRPkUzvvdRXn4DmQfvr66kjWLuP73MwfguOvnp
-         NpREJUO6HEWozZChDrD4atVh8eWB4OwbwrMvYCaeNVi/PUZ0Gbz379V6YlbDbgZ2sxOv
-         Q2cqnyiVJE6w7cxhb56dkWn7YLfravIe+3K1F1iIgFTy7xp6Ay77KGgPgoJ939j1SvN/
-         FNpA==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WKPv0RmrQiA14h5BFpznkjlzm9hgMu4mdKOhFX45IIk=;
+        b=nK6BoKCHtoKmzNqWZ/cKNitDyNW1ygdwqZsDfvmH+ZSEOHyW24EJskQUysNWDZsTSz
+         L4USMWnuSq0k6U7iLm8YTcDchP6FaKJ2o7P+zJk/8BonjTe5VyOAj0DoJYMNgUjduwNX
+         f1cF08pKkeaqBY25iFShYrnXIJNjSjGbZjaRmMPGIEdJxRIP3cEHcZeKN0vnTRmbWfyu
+         U9qxS8mGCVYQUmRSgaLBY1L7wZFQdcApivCXNxABZJzttACLtdJ+f9DSTIF/2Q03URos
+         +pZXbdypzGD8DfsXboWR01GDchEWEogociQrrQvaybMJOL4iczou2aoRv91JS6iYIf5M
+         usEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=6zRff1ZSORVRPj1LEBPx5q9MAR5ayAZLpLEY9GV55I8=;
-        b=dwrXEtrPJwAXEUZBQvsrQcEwEgqoFgADH8UHNOrlF4UnDVJq97rkrZQr1upsFVF4Q6
-         6zvpnuU0cIWQUeNmTuDoA4+n7D3efr8hdPUk4cXtrz6BOyVD7jpprFKpuSIgxUGDGiPa
-         6R0RWeTFKlo7mFOUMCCai47aMWR4/1tGnKlVTsW4UWW57PtPV4OHyoav4xDO+YGdvXty
-         UWZ6BR877wF2l59yGjsYWIxQs/c+Jwaqy83NAefaZn8MTzExjhH2bhzE++tZ7R2Nkjz1
-         GGaYzezLXaRhm5jgUEvYXiUNBTjIz5SG5/N6yVprBw8xRe7Kx+TNF1XsZ6rBUyC2y081
-         nrLA==
-X-Gm-Message-State: AOAM53262J8iXqiY72MVbCZ2zKzXEg2qfx3gz+ypk8KCXXAUfvQEq4o0
-        YZco+wZhlXBu7iLCwCHsQhP7LXycx6duUw==
-X-Google-Smtp-Source: ABdhPJzByBU0OxFG5t8pWkcjM1h83M8JIoKplBvXPgxwCS+lDUb8kB7Im4pNKBEVr5JqlJaaD4+0Wg==
-X-Received: by 2002:a9d:3e8:: with SMTP id f95mr488493otf.53.1623781923633;
-        Tue, 15 Jun 2021 11:32:03 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id p6sm2143341oot.28.2021.06.15.11.32.02
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=WKPv0RmrQiA14h5BFpznkjlzm9hgMu4mdKOhFX45IIk=;
+        b=T6TDNqIUw3L4hb4La03GbCoMPBX8Ru5JiI3ZfFJGQ5EcI//DLEyC+9PO9mgpJls0VD
+         EIC0PRO/ejm9EAXgqVV0tmMb0MIu0uiGOeokl57/PEnm6oEnCBXgewFh/a7XK+Qz7qfY
+         bFrK4pvHwcwFVv2QXfxTnDYVINcGBiKBIeWytdyODcAoNIklBvq+U8TW7WAXO/xHPTq7
+         tGUd/lV5XttFJM8WVhND9+0oazdmS31n+p2W3xPLpA2SzkEOZStCcxsiPPUYGmItx9+T
+         9UfpUjaecO5e+kDs/MOsQG4yaUffoS/bgwvDC9jHFO5LCELeQludEoxmr6k9u4aV9+h1
+         kzkA==
+X-Gm-Message-State: AOAM532PqIA6hfS91CUrsmN85dEH3nWDlp31fc4XCnBmQcAsYZ7JSUNu
+        BjOH79R2UyiCx68dXGhCHbGLR5SiAxk=
+X-Google-Smtp-Source: ABdhPJxdgrgHAC0Vw882unvOZCb/CymOOH+hw+r0SrsGs/OBJU0xF9SiOjYGP/aBu8XRuHFbqtrAjA==
+X-Received: by 2002:ac2:50c4:: with SMTP id h4mr586338lfm.13.1623783013494;
+        Tue, 15 Jun 2021 11:50:13 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id t12sm2247558ljk.116.2021.06.15.11.50.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 11:32:03 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v2] test: fix for TEST_OUTPUT_DIRECTORY
-Date:   Tue, 15 Jun 2021 13:31:57 -0500
-Message-Id: <20210615183157.104999-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.32.0
+        Tue, 15 Jun 2021 11:50:12 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] xdiff: implement a zealous diff3, or "zdiff3"
+References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
+        <b7561a67c192d4bdede47fee5b7b1cb30c44b785.1623734171.git.gitgitgadget@gmail.com>
+        <60c8758c80e13_e633208f7@natae.notmuch>
+        <CABPp-BHjXf88MQYX8Fd3WGw2WfbMKAdAD-MEViiB7oTtQbfTyw@mail.gmail.com>
+Date:   Tue, 15 Jun 2021 21:50:12 +0300
+In-Reply-To: <CABPp-BHjXf88MQYX8Fd3WGw2WfbMKAdAD-MEViiB7oTtQbfTyw@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 15 Jun 2021 11:12:35 -0700")
+Message-ID: <8735tj2c9n.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_atexit unit test relies on the specific location of the
-generated files.
+Elijah Newren <newren@gmail.com> writes:
 
-When TEST_OUTPUT_DIRECTORY is unset, _run_sub_test_lib_test_common sets
-it to pwd, which is two levels under the pwd of the parent unit test,
-and the parent can find the generated files just fine.
+> On Tue, Jun 15, 2021 at 2:40 AM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>>
+>> Elijah Newren via GitGitGadget wrote:
+>> > From: Elijah Newren <newren@gmail.com>
+>> >
+>> > "zdiff3" is identical to ordinary diff3 except that it allows compaction
+>> > of common lines on the two sides of history at the beginning or end of
+>> > the conflict hunk.
+>>
+>> That was not the main reason behind zdiff3.
+>>
+>> The whole point of zdiff3 was to have something closer to the "merge"
+>> style, even if not technically correct.
+>>
+>> Your proposal is better than diff3 in that respect, but worse than Uwe's
+>> zdiff3.
+>>
+>> If you have this:
+>>
+>>   l  b  r
+>>   =  =  =
+>>   A  A  A
+>>
+>>   B     b
+>>   C     C
+>>   D     D
+>>   E     E
+>>   F     F
+>>   I     i
+>>
+>> merge will output this:
+>>
+>>   A
+>>
+>>   <<<<<<< l
+>>   B
+>>   =======
+>>   b
+>>   >>>>>>> r
+>>   C
+>>   D
+>>   E
+>>   F
+>>   <<<<<<< l
+>>   I
+>>   =======
+>>   i
+>>   >>>>>>> r
+>>
+>> This is simple, and useful.
+>>
+>> diff3 will output this:
+>>
+>>   A
+>>   <<<<<<< l
+>>
+>>   B
+>>   C
+>>   D
+>>   E
+>>   F
+>>   I
+>>   ||||||| b
+>>   =======
+>>
+>>   b
+>>   C
+>>   D
+>>   E
+>>   F
+>>   i
+>>   >>>>>>> r
+>>
+>> Not very friendly.
 
-But when TEST_OUTPUT_DIRECTORY is set, it's stored in GIT-BUILD-OPTIONS,
-and even though _run_sub_test_lib_test_common correctly overrides it,
-when the child script is run it sources GIT-BUILD-OPTIONS and
-TEST_OUTPUT_DIRECTORY is overridden.
+For me it's friendly enough. One key-press in Emacs and I get:
 
-Effectively both the parent and child scripts output to the same
-directory.
-
-  make TEST_OUTPUT_DIRECTORY=/tmp/foobar GIT-BUILD-OPTIONS &&
-  make -C t t0000-basic.sh
-
-We could try to specify --root, as 6883047071 (t0000: set
-TEST_OUTPUT_DIRECTORY for sub-tests, 2013-12-28) suggested, but then the
-results of subtests would leak out because TEST_RESULTS_DIR would not
-be changed from the parent.
-
-Instead, let's revert part of 2d14e13c56 (test output: respect
-$TEST_OUTPUT_DIRECTORY, 2013-04-29) by removing TEST_OUTPUT_DIRECTORY
-from GIT-BUILD-OPTIONS.
-
-It's unclear how much value t/valgrind/analyze.sh provides today, but
-users of that script that use TEST_OUTPUT_DIRECTORY as well can simply
-call the script with that variable in the environment.
-
-It doesn't make much sense to break t0000-basic.sh for users of
-TEST_OUTPUT_DIRECTORY, just to provide a little convenience for the
-users of t/valgrind/analyze.sh.
-
-Presumably this was broken since 900721e15c (test-lib: introduce
-'test_atexit', 2019-03-13).
-
-Cc: John Keeping <john@keeping.me.uk>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
-
-Since v1 I completely changed the approach and instead of using --root
-which leaks test results, I remove TEST_OUTPUT_DIRECTORY from
-GIT-BUILD-OPTIONS.
-
-Apparently only people who would care are the users of
-t/valgrind/analyze.sh which now would need to specify that variable
-themselves.
-
-Marginal convenience for the users of an obscure script is not a good
-reason to break t0000-basic.sh.
-
-Range-diff against v1:
-1:  04047359b9 < -:  ---------- test: fix for TEST_OUTPUT_DIRECTORY
--:  ---------- > 1:  d8430aee08 test: fix for TEST_OUTPUT_DIRECTORY
-
- Makefile              | 3 ---
- t/valgrind/analyze.sh | 3 ---
- 2 files changed, 6 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index c3565fc0f8..2e25489569 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2790,9 +2790,6 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
- 	@echo X=\'$(X)\' >>$@+
--ifdef TEST_OUTPUT_DIRECTORY
--	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
--endif
- ifdef GIT_TEST_OPTS
- 	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@+
- endif
-diff --git a/t/valgrind/analyze.sh b/t/valgrind/analyze.sh
-index 2ffc80f721..378d0a8daa 100755
---- a/t/valgrind/analyze.sh
-+++ b/t/valgrind/analyze.sh
-@@ -1,8 +1,5 @@
- #!/bin/sh
+--- upper/xx.txt
++++ lower/xx.txt
+@@ -1,7 +1,7 @@
  
--# Get TEST_OUTPUT_DIRECTORY from GIT-BUILD-OPTIONS if it's there...
--. "$(dirname "$0")/../../GIT-BUILD-OPTIONS"
--# ... otherwise set it to the default value.
- : ${TEST_OUTPUT_DIRECTORY=$(dirname "$0")/..}
- 
- output=
--- 
-2.32.0
+-B
++b
+ C
+ D
+ E
+ F
+-I
++i
 
+In a separate window, that is roughly what you've get in the "merge"
+output in the first place, but even more compact.
+
+My point is that once Git provides enough context, a good interactive
+tool will do the rest just fine, beneficial to the end-user.
+
+-- Sergey Organov
