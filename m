@@ -2,303 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E50BCC48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 05:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 961EAC48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 06:02:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 884D06140F
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 05:16:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EFA661410
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 06:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230360AbhFOFSZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 01:18:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53946 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230390AbhFOFSV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 01:18:21 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427F5C061574
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 22:16:16 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id c18-20020a05600c0ad2b02901cee262e45fso293176wmr.4
-        for <git@vger.kernel.org>; Mon, 14 Jun 2021 22:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6QvKThN8hRAHWWPOdsalmFMedj3mFw2/ShAVQwVUW08=;
-        b=emKWN5ex+AGy1VsHgign2i4bWm8/wm5PU4XXPgvVg/igFLWeICnbVy/FAnXFZO+xhe
-         JSusC9aqCVLiRmz51GeHAcMRpGYoMueJZnJh8pZLAgwKzdrDu67RS3VbS3DYjw+YZdIV
-         f5GzfYkFeuYQczpf9rVMhSU8zPQxppQ+CR85sLCRzA6Sp8n4tXGaubwBXY9lnW24MeCt
-         NqAOxGEUthaIaAS/U2z6Pdb078Vs+cE83xq+L/ji3VcRD5Hlm5jLsBY6gjLIukriGPM5
-         1kYqHLkLi04ZABPI740bKoTLI+0Jm76dim7vwvfN5/UtEpr38U/eko8gth8rMwpMGLWG
-         K2Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6QvKThN8hRAHWWPOdsalmFMedj3mFw2/ShAVQwVUW08=;
-        b=FrWI59zEP+LTxcv3ucyINHEmY9cjaegabs8NnfwKy6vqz0Pu/ugA9Hlr8s0XVbGxqc
-         Emgnk2K2wLa0O/sxysMDmYtxAEBsYTxu3ueArYAfo/Ap5KE+K5snyEdAanm+BMOVcp3W
-         iHUFs7kn9e1dhzEprMw53XBufi/K/LBXgFo+Qm1PxEczGR089JEw+l3Lbvxm1erT54nk
-         jK35EuHM+0XUJKzJD6Ko9t/+vpJLalKRown/mrJt81A14LDJt+Oy5H4u9oRmlayxdCjK
-         berijILqTt4RtUE/OsDtjzafdOCfXNctUn0879QTH71YLMZRDss8MTbhZJQDi3ycgmG0
-         thhw==
-X-Gm-Message-State: AOAM533mJPanH93wUDpxY/lxVnzIU71RwXW2FW6Tb2Eqn4WuSOzn1IGX
-        Idk/8qS+Ag6njuzulaplFnY7A1Q3f9M=
-X-Google-Smtp-Source: ABdhPJwirA0LnrAwDexqmQB+BHxABh7X3zUXHFVhVZfQwjFyLZZFzYVMKWiIaw+HB8qsda4lutmVAQ==
-X-Received: by 2002:a7b:c346:: with SMTP id l6mr19971125wmj.109.1623734173613;
-        Mon, 14 Jun 2021 22:16:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j11sm14829455wmq.4.2021.06.14.22.16.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jun 2021 22:16:13 -0700 (PDT)
-Message-Id: <50e82a7a32c1cc5c1d2282f6f5b2b32a8ce7444f.1623734171.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Jun 2021 05:16:10 +0000
-Subject: [PATCH 2/2] update documentation for new zdiff3 conflictStyle
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S229811AbhFOGFA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 02:05:00 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51710 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229493AbhFOGFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 02:05:00 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EA10A13CBAF;
+        Tue, 15 Jun 2021 02:02:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=MO1Yz1JW9iVu
+        uIxxqEPld4CCHMBwvicMxg+eW4ap2qc=; b=PXc2OW/EcUTLMsPDWa7vE114buUS
+        ZICuCwNKKW8qAqXKGjLbf4hPig2tToKqNF9rO9hiE9BVGnF4yYVlHv2k1B7CpH3V
+        cnZFmyZyqon8iJk2Y3OjeOEbuqSsm0jDNL2hXo13fXqtQHLCAXc++WiLVfTGtnIA
+        iUjGFQc3nMxxBxA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E2DD713CBAE;
+        Tue, 15 Jun 2021 02:02:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EEC0413CBAD;
+        Tue, 15 Jun 2021 02:02:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 0/4] Use singular "they" when appropriate
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+        <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+        <87a6nz2fda.fsf@evledraar.gmail.com>
+        <YMKTARn368Qzsqc2@camp.crustytoothpaste.net>
+        <87pmwt1dz3.fsf@evledraar.gmail.com>
+        <f4488360-bdaf-3e97-69c5-00087f797117@gmail.com>
+        <87h7i21a43.fsf@evledraar.gmail.com>
+Date:   Tue, 15 Jun 2021 15:02:51 +0900
+In-Reply-To: <87h7i21a43.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 13 Jun 2021 09:17:21 +0200")
+Message-ID: <xmqqzgvrvf5g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 52584880-CD9F-11EB-ACDB-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/config/merge.txt         |  9 +++++++-
- Documentation/git-checkout.txt         |  3 +--
- Documentation/git-merge-file.txt       |  3 +++
- Documentation/git-merge.txt            | 32 ++++++++++++++++++++++----
- Documentation/git-rebase.txt           |  6 ++---
- Documentation/git-restore.txt          |  3 +--
- Documentation/git-switch.txt           |  3 +--
- Documentation/technical/rerere.txt     | 10 ++++----
- builtin/checkout.c                     |  2 +-
- contrib/completion/git-completion.bash |  4 ++--
- 10 files changed, 52 insertions(+), 23 deletions(-)
+> Or, if we just fix these existing occurrences as a one-off there'll be
+> no existing examples of it in-tree, and as people tend to imitate
+> existing documentation they're unlikely to introduce new
+> occurrences.
 
-diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
-index cb2ed589075b..7ab289f35c7f 100644
---- a/Documentation/config/merge.txt
-+++ b/Documentation/config/merge.txt
-@@ -4,7 +4,14 @@ merge.conflictStyle::
- 	shows a `<<<<<<<` conflict marker, changes made by one side,
- 	a `=======` marker, changes made by the other side, and then
- 	a `>>>>>>>` marker.  An alternate style, "diff3", adds a `|||||||`
--	marker and the original text before the `=======` marker.
-+	marker and the original text before the `=======` marker.  The
-+	"merge" style tends to produce smaller conflict regions than diff3,
-+	both because of the exclusion of the original text, and because
-+	when a subset of lines match on the two sides they are just pulled
-+	out of the conflict region.  Another alternate style, "zdiff3", is
-+	similar to diff3 but removes matching lines on the two sides from
-+	the conflict region when those matching lines appear near the
-+	beginning or ending of a conflict region.
- 
- merge.defaultToUpstream::
- 	If merge is called without any commit argument, merge the upstream
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index b1a6fe449973..85c3d3513f74 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -265,8 +265,7 @@ When switching branches with `--merge`, staged changes may be lost.
- 	The same as `--merge` option above, but changes the way the
- 	conflicting hunks are presented, overriding the
- 	`merge.conflictStyle` configuration variable.  Possible values are
--	"merge" (default) and "diff3" (in addition to what is shown by
--	"merge" style, shows the original contents).
-+	"merge" (default), "diff3", and "zdiff3".
- 
- -p::
- --patch::
-diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
-index f85603261325..7e9093fab60d 100644
---- a/Documentation/git-merge-file.txt
-+++ b/Documentation/git-merge-file.txt
-@@ -70,6 +70,9 @@ OPTIONS
- --diff3::
- 	Show conflicts in "diff3" style.
- 
-+--zdiff3::
-+	Show conflicts in "zdiff3" style.
-+
- --ours::
- --theirs::
- --union::
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 3819fadac1f1..259e1ac2cf0c 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -238,7 +238,8 @@ from the RCS suite to present such a conflicted hunk, like this:
- 
- ------------
- Here are lines that are either unchanged from the common
--ancestor, or cleanly resolved because only one side changed.
-+ancestor, or cleanly resolved because only one side changed,
-+or cleanly resolved because both sides changed the same way.
- <<<<<<< yours:sample.txt
- Conflict resolution is hard;
- let's go shopping.
-@@ -259,16 +260,37 @@ side wants to say it is hard and you'd prefer to go shopping, while the
- other side wants to claim it is easy.
- 
- An alternative style can be used by setting the "merge.conflictStyle"
--configuration variable to "diff3".  In "diff3" style, the above conflict
--may look like this:
-+configuration variable to either "diff3" or "zdiff3".  In "diff3"
-+style, the above conflict may look like this:
- 
- ------------
- Here are lines that are either unchanged from the common
--ancestor, or cleanly resolved because only one side changed.
-+ancestor, or cleanly resolved because only one side changed,
- <<<<<<< yours:sample.txt
-+or cleanly resolved because both sides changed the same way.
- Conflict resolution is hard;
- let's go shopping.
--|||||||
-+||||||| base:sample.txt
-+or cleanly resolved because both sides changed identically.
-+Conflict resolution is hard.
-+=======
-+or cleanly resolved because both sides changed the same way.
-+Git makes conflict resolution easy.
-+>>>>>>> theirs:sample.txt
-+And here is another line that is cleanly resolved or unmodified.
-+------------
-+
-+while in "zdiff3" style, it may look like this:
-+
-+------------
-+Here are lines that are either unchanged from the common
-+ancestor, or cleanly resolved because only one side changed,
-+or cleanly resolved because both sides changed the same way.
-+<<<<<<< yours:sample.txt
-+Conflict resolution is hard;
-+let's go shopping.
-+||||||| base:sample.txt
-+or cleanly resolved because both sides changed identically.
- Conflict resolution is hard.
- =======
- Git makes conflict resolution easy.
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 55af6fd24e27..a61742c8f98f 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -740,9 +740,9 @@ information about the rebased commits and their parents (and instead
- generates new fake commits based off limited information in the
- generated patches), those commits cannot be identified; instead it has
- to fall back to a commit summary.  Also, when merge.conflictStyle is
--set to diff3, the apply backend will use "constructed merge base" to
--label the content from the merge base, and thus provide no information
--about the merge base commit whatsoever.
-+set to diff3 or zdiff3, the apply backend will use "constructed merge
-+base" to label the content from the merge base, and thus provide no
-+information about the merge base commit whatsoever.
- 
- The merge backend works with the full commits on both sides of history
- and thus has no such limitations.
-diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
-index 55bde91ef9e5..5964810caa41 100644
---- a/Documentation/git-restore.txt
-+++ b/Documentation/git-restore.txt
-@@ -92,8 +92,7 @@ in linkgit:git-checkout[1] for details.
- 	The same as `--merge` option above, but changes the way the
- 	conflicting hunks are presented, overriding the
- 	`merge.conflictStyle` configuration variable.  Possible values
--	are "merge" (default) and "diff3" (in addition to what is
--	shown by "merge" style, shows the original contents).
-+	are "merge" (default), "diff3", and "zdiff3".
- 
- --ignore-unmerged::
- 	When restoring files on the working tree from the index, do
-diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
-index 5c438cd50587..5c90f76fbe35 100644
---- a/Documentation/git-switch.txt
-+++ b/Documentation/git-switch.txt
-@@ -137,8 +137,7 @@ should result in deletion of the path).
- 	The same as `--merge` option above, but changes the way the
- 	conflicting hunks are presented, overriding the
- 	`merge.conflictStyle` configuration variable.  Possible values are
--	"merge" (default) and "diff3" (in addition to what is shown by
--	"merge" style, shows the original contents).
-+	"merge" (default), "diff3", and "zdiff3".
- 
- -q::
- --quiet::
-diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
-index af5f9fc24f93..35d454143399 100644
---- a/Documentation/technical/rerere.txt
-+++ b/Documentation/technical/rerere.txt
-@@ -14,9 +14,9 @@ conflicts before writing them to the rerere database.
- 
- Different conflict styles and branch names are normalized by stripping
- the labels from the conflict markers, and removing the common ancestor
--version from the `diff3` conflict style. Branches that are merged
--in different order are normalized by sorting the conflict hunks.  More
--on each of those steps in the following sections.
-+version from the `diff3` or `zdiff3` conflict styles.  Branches that
-+are merged in different order are normalized by sorting the conflict
-+hunks.  More on each of those steps in the following sections.
- 
- Once these two normalization operations are applied, a conflict ID is
- calculated based on the normalized conflict, which is later used by
-@@ -42,8 +42,8 @@ get a conflict like the following:
-     >>>>>>> AC
- 
- Doing the analogous with AC2 (forking a branch ABAC2 off of branch AB
--and then merging branch AC2 into it), using the diff3 conflict style,
--we get a conflict like the following:
-+and then merging branch AC2 into it), using the diff3 or zdiff3
-+conflict style, we get a conflict like the following:
- 
-     <<<<<<< HEAD
-     B
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f4cd7747d35d..45606936c328 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1524,7 +1524,7 @@ static struct option *add_common_options(struct checkout_opts *opts,
- 		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
- 		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
- 		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
--			   N_("conflict style (merge or diff3)")),
-+			   N_("conflict style (merge, diff3, or zdiff3)")),
- 		OPT_END()
- 	};
- 	struct option *newopts = parse_options_concat(prevopts, options);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 859455929814..8489ca394970 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2445,7 +2445,7 @@ _git_switch ()
- 
- 	case "$cur" in
- 	--conflict=*)
--		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
- 		;;
- 	--*)
- 		__gitcomp_builtin switch
-@@ -2886,7 +2886,7 @@ _git_restore ()
- 
- 	case "$cur" in
- 	--conflict=*)
--		__gitcomp "diff3 merge" "" "${cur##--conflict=}"
-+		__gitcomp "diff3 merge zdiff3" "" "${cur##--conflict=}"
- 		;;
- 	--source=*)
- 		__git_complete_refs --cur="${cur##--source=}"
--- 
-gitgitgadget
+I suspect that may be a bit too optimistic.  It is too easy to
+discuss interaction among users and introduce pronouns to refer to
+them, and when it happens, it is far easier to have a document to
+point at and tell them why we want them to rephrase if not how
+exactly.  For that reason, I'd prefer to have some word about the
+desire to make examples and explanations gender-neutral in the
+guidelines.  The mechanics we recommend to achieve the goal does not
+have to be specified if we want brevity---that can be learned by
+imitating existing practices.
+
+> If and when Felipe's <20210611202819.47077-1-felipe.contreras@gmail.com=
+>
+> is applied how small is the diff you'll still have rebased on top of
+> that?
+
+I just retried a "competing" merge that got ugly ;-)
+
+Between Derrick's two "singular they" patches (one for comments, the
+other for docs) and Felipe's two patches (the same split), they
+touch identical base text.  Only the way they neuter the description
+is different, and to me the latter feels a bit more ESL friendly.
+
+So, the main things that are missing from Felipe's version that we
+may want to build on top before the whole discussion can be
+concluded are:
+
+ - Derrick's "typofix" patch, but if I recall correctly it needed a
+   fix-up in one of its hunks?
+
+ - Guidelines; you had a more generic readability tips that would
+   (incidentally) result in nudging the writers to be more gender
+   neutral, which I think is going in the right direction, but I do
+   prefer to see an explicit mention of gender-neutrality as one
+   bullet item.
+
+Thanks.
