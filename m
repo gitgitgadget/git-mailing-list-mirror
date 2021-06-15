@@ -2,140 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85714C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 21:25:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C5D4C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 21:27:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C892610C8
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 21:25:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4635060FEB
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 21:27:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbhFOV13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 17:27:29 -0400
-Received: from outbound-ip2a.ess.barracuda.com ([209.222.82.169]:55406 "EHLO
-        outbound-ip2a.ess.barracuda.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229689AbhFOV12 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Jun 2021 17:27:28 -0400
-X-Greylist: delayed 2034 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jun 2021 17:27:28 EDT
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam08lp2174.outbound.protection.outlook.com [104.47.73.174]) by mx-outbound10-242.us-east-2a.ess.aws.cudaops.com (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO); Tue, 15 Jun 2021 21:25:21 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Q2BlTUS6R/lY/izv1XxQ8PxcTsB8sgMgvedqWge5V02UHcYNzcl1lvPq/FZuDqu1auKAVIXGrgwpoG41DQ8b0Gi6BbgxiYyn64KKWp6ctMum2Mygv5XWSJLXol6e8P96xW26hyKvnXrXRPl7HgfEM9SJcYVfM/SQO6hz2Jhm22MNYBo27PM1dftICGZ5ObOG0wjdtwnXUoD/n0LyCGFFw9pY5msQTQ5qTlCxokPYWDP1KwPzpNQob+uzQl+ziKdxsGFz8qqI77fCZ23Y0QOKMrYRHJedzyGs0XOissmLymwpO2oW/Zcpk2wOQZ6lS6et+I+3VCht2RQDU70wIBpx+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dle2QM8nxOdoKmaoMhMJclAGM8jlmJH8b4VJcPJ/0jQ=;
- b=iE5Nvfia/M06jlVg0ARc1+bTsXxh8F1bIhd+ffLQpsdTdnb4D03FuNiKZpWw8k7VtaxPHTZ4KO16X/5fP8zmlZ02MCcwKf61/RUFLjYfTNZnkktsdYN0TvX4f4hDuCBOVnWkDZ9T7slRtvhAFczTMN0GZOAEU44KRQkNRVJLTps1Bcs5w0Nb/pjooadbU5QnRw81NgAuFuxP7EQbLSBvcy8gPC8pDkcZQgXjQW1lPePhhoOC9bDMYV2wcO+SeedNpyw9E2jHJ9HxXpsBBbJBK5yH9xEy95rkna1LDAAy8d7JueNtQcQKzHTS9jHQrNmUMaBG0Q0VNqjcCV/cqsgq/Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=issaquah.wednet.edu; dmarc=pass action=none
- header.from=issaquah.wednet.edu; dkim=pass header.d=issaquah.wednet.edu;
- arc=none
+        id S230520AbhFOV37 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 17:29:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49836 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229689AbhFOV36 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 17:29:58 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3094CC061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 14:27:53 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id 22-20020a17090a0c16b0290164a5354ad0so2674356pjs.2
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 14:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=issaquahwednet.onmicrosoft.com; s=selector2-issaquahwednet-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dle2QM8nxOdoKmaoMhMJclAGM8jlmJH8b4VJcPJ/0jQ=;
- b=ToTBHw4TnVEh/GY1kJcCoYBN2ky/R9Xsd8qwyZFxKAigO4BEJisNN4bRVVI97bnUmZ1VU64M7Cc2J7s2Qn/v3jnJyivFGdPBle7IA6zXsWxZocw5o/80qFR+r5d5YxVMcnkWaqwacUawpFxrJ4jjgGdcHMpHKuVKKV7c70i4zZI=
-Received: from SJ0PR11MB4830.namprd11.prod.outlook.com (2603:10b6:a03:2d7::8)
- by SJ0PR11MB4911.namprd11.prod.outlook.com (2603:10b6:a03:2ad::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4219.24; Tue, 15 Jun
- 2021 20:51:25 +0000
-Received: from SJ0PR11MB4830.namprd11.prod.outlook.com
- ([fe80::5d8d:63a5:ce61:cc1d]) by SJ0PR11MB4830.namprd11.prod.outlook.com
- ([fe80::5d8d:63a5:ce61:cc1d%7]) with mapi id 15.20.4219.025; Tue, 15 Jun 2021
- 20:51:25 +0000
-From:   "LeMieux, Janel" <LeMieuxJ@issaquah.wednet.edu>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Allowed list
-Thread-Topic: Allowed list
-Thread-Index: AddiJylognFra9dPRnaIC/nOpFJcCg==
-Date:   Tue, 15 Jun 2021 20:51:25 +0000
-Message-ID: <SJ0PR11MB48309669D8DE8A299D607F7A8D309@SJ0PR11MB4830.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=issaquah.wednet.edu;
-x-originating-ip: [69.56.127.241]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 40a7a2f4-417e-42c0-9285-08d9303f5719
-x-ms-traffictypediagnostic: SJ0PR11MB4911:
-x-microsoft-antispam-prvs: <SJ0PR11MB4911D336AC0D7EEAF465EB208D309@SJ0PR11MB4911.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: zG+emq90AVTwHlLGH6y8yTBUrLcQW/Ct+FYl8xhOuHJdMW91U7hbULozseuIkmicauMyuJpoIUH8pWzwGfZXphP7oF6rcg7trk47b+nNbJXJ52RZrzsPDRkcVEO562eo6iyFXQ5dG6K3wZiJPQOrJb+andXY4UIBbqqC8b8PPbWNF6rg2TsfI9ZRZJ3h7DACddrDZjnfLY58XX73sYWk5bb3db8f3zRwFig1WzW3/TIYfN4jECvdWo9O14thIcmGBFiEr+gwYbQIh1xuhqyh61HOL54pvVXAXUyHdGj3psEcU4Gn6rAIgdRx+BfpG/QWgAMkSAlrKr0PIkj74ZbB46alB3CF7Du9gzWi5vp1ZK16TSdcneciI3OG4r9UPthNt89ryrrFBHBHVY6YTC/xumZKsTeaxl062t57tf1tlpp+9MF+UWtJqFEDFG2u0DtMBqlcJg8RunwpStDywc0gGPyb2+E10k+d3bJnPtuwAyQZPvC+kpYdYi/49perdDbmmyMmuZ+o0pLXN3rsBpE9u/RALITm+2HHVHZG0ItNDT+kzU2/j9TRENOuZYcM3uzsg+AB9RrS/0ByqbVgruPhf61T4OVgpX+arcVWc8gPi6f50uva+uYtCL7WUVRtkVUQzcjLT7VcI3nlJpcQUZZhbycZIbO4RMpyTSZXAnHGK6r1ufN6r7GdbciW/H6JboINyoRigf1NyxDFcczFiTt6uB2szX/zyNFQY5lfr5KUHUAqK5MFshi5xny8zbGw4BqI8lm0Gg6FPM/SyrQPkprS1g==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR11MB4830.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(346002)(136003)(396003)(376002)(39850400004)(38100700002)(3480700007)(122000001)(6506007)(86362001)(8936002)(15974865002)(186003)(7116003)(75432002)(4744005)(7696005)(66946007)(76116006)(66476007)(66446008)(6916009)(66556008)(64756008)(2906002)(26005)(9686003)(8676002)(33656002)(83380400001)(55016002)(52536014)(5660300002)(71200400001)(316002)(786003)(478600001)(18886075002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LD1e5Hp6SktTiHbCT8OAYanK1TIDv6j4ZuI/9IZUwjJ+t6++mc0dIjfKRIt1?=
- =?us-ascii?Q?iiGijEHKdhpcuwLfdNakMtzI4r1VCwRrOM26YQlZIYBrgulWR62A3zoyCjxY?=
- =?us-ascii?Q?bAgosmsczh3jDVhyNGrotr0THErKc/I7sJnwDHeH3f37Caqqt2EXYyqsHCVl?=
- =?us-ascii?Q?x3lxV/FMlg+jc1N1lkmo9CMyWKkFtsscFxQlHDR1WGHw9hUyxDXAk0Z6J/FV?=
- =?us-ascii?Q?x/BRyMbesHzzH2TqvbunJemN0yDdTCnwfh6o//baBWhypmyYh9QceSjGpzlZ?=
- =?us-ascii?Q?WrHQMF7JOMltl3qZVs7r0ollMhj2QWELNpnWzCuhFyHk+cuL1yT3Bfw5KTOg?=
- =?us-ascii?Q?BX9vnvHzg3nQpVVYLjQVQvkaTkY9gbdNq+tOgmyfc5bNdrdVa1Q/V+a8D/9e?=
- =?us-ascii?Q?FSQYrNaTQW9amt0JB3vQTmwPjQ79pDM7VyGemAISGKoj6+/SSzeoWY8DfLvX?=
- =?us-ascii?Q?Gnk9Iug3a0g/hONXDP+FNDYrsXTMZfqDbEngBvoFzBhjQbJHQgv+20q4ovY9?=
- =?us-ascii?Q?hLGbi3uH01LmGERV0meLO3zyA/udbZ2O8j490Gi5oq168SFS7071EpYPCdY2?=
- =?us-ascii?Q?e1MBi+BEts4+C93q2MENHs/VyXADUwyXer5fPxYAvd/09OCWqWseCBJfe97g?=
- =?us-ascii?Q?eTxTRYdlQanBLTx3fN4YwM3Iux+aaalyOJKq/S3goaYlQmGvuQxsNpxXefcr?=
- =?us-ascii?Q?xJ6OR2vOFSPOhdL06AvCOh66ukqi3Qr/8FFoKwgEDDY0W8L1bze7jKLVM5Nb?=
- =?us-ascii?Q?atLsXTkdNbfWzUtFmxbN2ZdJWL5AhjzNZXCBD/QL+heebWvRID8Y0pHxaGxl?=
- =?us-ascii?Q?+TA7qI22XBG40sb4y5n9g6lqOxzSKEd0j75TywU1b6TA94YDkpqBP6I0Wo2w?=
- =?us-ascii?Q?fW+uM0S83RKS6q2RsSA49XXMFvQRELtoeFPsDDS+oFE6wD7njtjpTRCiadZC?=
- =?us-ascii?Q?Pxmkvu3mNFWIqlsKPOvNx2T9ZxgJ3dZHYpMtT9D3zPPLQLBAkp6JUIpp1qkj?=
- =?us-ascii?Q?FlBLedj8JvC9XkJj6W2qWDgFy5EYbSGsNcceYMhdnPH7LrYiMUiNLDN/Derl?=
- =?us-ascii?Q?3EbGc8kA4XEmwXx2yQ8zFpcal2mn9MO3jRHPHEeMXwUuEE8M3eeBKzy2ulcI?=
- =?us-ascii?Q?/92oKc6sytg/uN/J97AHunBMwEWc17Yk9pIa9ye+YxBIRgA93svMKnHwYK8s?=
- =?us-ascii?Q?OIGJHEwiJKeNey8dIyQ4xNXifa80Yh514hCBburRQjbwb8mE3S5ESfkRWVJL?=
- =?us-ascii?Q?T2mjzjQMNb65mI281kZdz5czb/GJhO7V4F+Lczh8WFz1mHF72hOb7Dil9v97?=
- =?us-ascii?Q?H5A8L7QUZ20Vquxn7c7Wt6Nj?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Iu3PWOOlg5V1xadYExkv00PtjlQdaxxR1IqEKJTuhCE=;
+        b=m1WuqcMqkLWNvCp/VjXEUyVFCulVZ9t3R1Agdohg8dfLtCXVWgo+x+IVdlcQ9atfbG
+         wDEcBWH67sA+4YK/geL264xLVF1QDLJ2GtQvMxIvH6Nf/HxZr7zvPO2hIFSTlHr9UCOX
+         +WB4QeSIpVTkliUON6vPLAwwKwb2G6B2ERt98O2KyyzzHbJJSEFA0jR0YPsbjIkZJEYn
+         trWAJl2HzLE+DsUKpWDyagqEC1/HTi7cUqjIrH/YZ6/MYGF2wS2sqh4X16VO3RrA5YgB
+         ScDSa1QKZ6I7N9Pjub5oMCbYY2x7q5PHrJBCuCePr72A6p9zqXXthv+sTimI9TM8R8sz
+         Z4Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Iu3PWOOlg5V1xadYExkv00PtjlQdaxxR1IqEKJTuhCE=;
+        b=o28+EqQQH9HgrkLbPV9FBVF6/ejN/OrYUtUYNgjiTsGyJdJ2HjPvw0knjaTDaUNroe
+         lVirkkqdpRtav0mgMJSfjDwOKPAy360t2XaPkMj/1MnHq2rbPJH/QfVRSLhOBLHE5xug
+         lQfEoxuOO8zSrk24Bv0Uho7JZ0GZE+N7pFMtzU1NuCekVagK28uLJB9QS3k+tHsJvan1
+         AD2lZ0JX48R7KgxKEDTyHt4UjItEpcDEzTK9uBHr5TGY9rFMGBQreRXNlv47I+gEY8yu
+         MVYXkQ1N6/efyR9s9CCb+W6nLXMvbdTjX7i/SGUO7DJBcYPRdnVkLwS6+w+aww4ZutWM
+         X5kQ==
+X-Gm-Message-State: AOAM532QC+qIiMd63GdtF4Nvs7OP24muLXTH69MButcIVGtTHI6nV+C7
+        JvREEDgJislToKt//0t82a+FjnQbp5fSDw==
+X-Google-Smtp-Source: ABdhPJyjF1dVUBbST5x3zXmzX+6jnZ4WAXRKsGxDZTUiQBjJgOIbO4jlluSC26r2x7il4qKdajX+lQ==
+X-Received: by 2002:a17:903:2c2:b029:101:9c88:d928 with SMTP id s2-20020a17090302c2b02901019c88d928mr6119686plk.62.1623792472551;
+        Tue, 15 Jun 2021 14:27:52 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:0:d4cc:f4a9:b043:ff6e])
+        by smtp.gmail.com with ESMTPSA id s7sm97579pfh.57.2021.06.15.14.27.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jun 2021 14:27:51 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 14:27:45 -0700
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 4/4] submodule: cache superproject gitdir during
+ 'update'
+Message-ID: <YMkbUYmefgp6erxD@google.com>
+References: <20210611225428.1208973-1-emilyshaffer@google.com>
+ <20210611225428.1208973-5-emilyshaffer@google.com>
+ <xmqqeed5x8wq.fsf@gitster.g>
 MIME-Version: 1.0
-X-OriginatorOrg: issaquah.wednet.edu
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4830.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 40a7a2f4-417e-42c0-9285-08d9303f5719
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jun 2021 20:51:25.0976
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 351870f2-4eec-4c75-805a-4db4f811aea1
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Wyk6KwffHt+abKpHz+ZObpD1wLTJrAW13j2d3HEbvA3CyVfVQ3EpJVFU26Zihe+nBzeR3OBXNu595bmwvmEdfI2DuyTXu9Ryzjh7PL5An9M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4911
-X-BESS-ID: 1623792321-102802-5270-58369-1
-X-BESS-VER: 2019.1_20210614.2251
-X-BESS-Apparent-Source-IP: 104.47.73.174
-X-BESS-Outbound-Spam-Score: 0.00
-X-BESS-Outbound-Spam-Report: Code version 3.2, rules version 3.2.2.232951 [from 
-        cloudscan13-5.us-east-2a.ess.aws.cudaops.com]
-        Rule breakdown below
-         pts rule name              description
-        ---- ---------------------- --------------------------------
-        0.00 BSF_BESS_OUTBOUND      META: BESS Outbound 
-X-BESS-Outbound-Spam-Status: SCORE=0.00 using account:ESS100695 scores of KILL_LEVEL=7.0 tests=BSF_BESS_OUTBOUND
-X-BESS-BRTS-Status: 1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqeed5x8wq.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello -=20
+On Mon, Jun 14, 2021 at 03:22:29PM +0900, Junio C Hamano wrote:
+> 
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > A cached path to the superproject's gitdir might be added during 'git
+> > submodule add', but in some cases - like submodules which were created
+> > before 'git submodule add' learned to cache that info - it might be
+> > useful to update the cache. Let's do it during 'git submodule update',
+> > when we already have a handle to the superproject while calling
+> > operations on the submodules.
+> >
+> > Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> > ---
+> >  git-submodule.sh            |  9 +++++++++
+> >  t/t7406-submodule-update.sh | 10 ++++++++++
+> >  2 files changed, 19 insertions(+)
+> >
+> > diff --git a/git-submodule.sh b/git-submodule.sh
+> > index eb90f18229..ddda751cfa 100755
+> > --- a/git-submodule.sh
+> > +++ b/git-submodule.sh
+> > @@ -648,6 +648,15 @@ cmd_update()
+> >  			fi
+> >  		fi
+> >  
+> > +		# Cache a pointer to the superproject's gitdir. This may have
+> > +		# changed, so rewrite it unconditionally. Writes it to worktree
+> > +		# if applicable, otherwise to local.
+> > +
+> > +		sp_gitdir="$(git rev-parse --absolute-git-dir)"
+> > +		relative_gitdir="$(realpath --relative-to "$sm_path" "$sp_gitdir")"
+> 
+> realpath may not exist on the target system.  Discussions on the
+> patch [*1*] may be of interest.
+> 
+> It might be a good idea to push to your github repository to trigger
+> CI on macOS (I am guessing that you do not test locally on macs from
+> the two issues we saw in this series).
 
-I work for a public school and our students all have school email addresses=
- but they only accept internal emails unless we add senders to our "safe se=
-nder" list. Which service related email accounts should we add to our stude=
-nt email server for students to be able to create and maintain a Git accoun=
-t?
+I typically do, sorry for forgetting to do so this time.
 
-Thank you,
-
-Janel LeMieux
-CTE & STEM Specialist
-(425) 837-7159
-www.ISDSTEMandCTE.com
-
+> 
+> Thanks.
+> 
+> 
+> [Reference]
+> 
+> *1*
+> https://lore.kernel.org/git/20201206225349.3392790-3-sandals@crustytoothpaste.net/
