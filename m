@@ -2,111 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC403C48BE8
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BEACC48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:31:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5C42616E8
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:19:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F1AB6162A
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 16:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230329AbhFOQVV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 12:21:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36988 "EHLO
+        id S230205AbhFOQdI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 12:33:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230306AbhFOQVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 12:21:19 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20716C0617AF
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:19:13 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id y7so18966977wrh.7
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:19:13 -0700 (PDT)
+        with ESMTP id S229757AbhFOQdH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 12:33:07 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02129C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:31:03 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so14873029otu.6
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 09:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=BWdRKor0LCe6A+fJrLCyA0h/u6xzQyjAIHZFUG3e56k=;
-        b=Xh1sHmZmQQJcFvJSl2R/rgoJUNJEXaSIliN5sck12/TSWEdomATu6KDPcJUZOk7VNh
-         9bwREgLgiwwMWZuCcqASv76lI45CNLbF1MU3ARky9Q7R3s3Z3zCmJPRbLl2GnGFQkQ1z
-         HrDFEHO8QlkG9Y0goLHU4xgH2yTlfEco7CzW7jX6/EDG/FvXrRAlyGI73DwnNSm+jHoa
-         e38Qeaygd0F5Cx/WtceEM1Zc9eq9RWVI+CvBPL6eeivs3ykrYrAd78Ywpy4b5bCoNCvD
-         9cwEppJZzbKrZNz897np5TuhMIlRIit2b0rLE17zYtFDo0Wk97actz58+9rqilX93qr9
-         q9Dg==
+        bh=PMDaZ7KSQ/Mt5d59qTASh8jt37hD4FvIH14+irqHyKM=;
+        b=eLfoxG3eqXHLKIcHFrZkwD2L+dxieiuUvIZ4iWwtzj6oF9PaCXfiIUa1CQ5Xsx8w4n
+         g/xzS1g/GzXYhLf84BEOk4Gbyz70iwFYyJmH8emGbLCx/I63UmmyPYpZml0bziwuZjIF
+         2O/1tSIBPdqOsJz8u0YdC7mgbgiwjfAQAgJEWHA3vC1XfTtzchu+6boBvYwVQ7sSww8s
+         iPncQ9ftBKAreo5LG5WUkwEL5qltoBBXOgQai+XDvv0BaaTn0khMNZPYcY4M6EpNxI54
+         MswTM9vSFa1BZFnSjPNIQk7+8G8tBRpZwer35hmGDvE6Wimq7XckQseXXVDmkvQ4HbGc
+         fX0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BWdRKor0LCe6A+fJrLCyA0h/u6xzQyjAIHZFUG3e56k=;
-        b=h6CSh6M2PkgiqxVXTZ/0kGwqbLqw4sABlZHH29T78yA8C+OlCS0GjmkabBXi+XdKBO
-         gMKwiJ4ERaIDIR5LMuTizY/DpYHL0HXLIc+sQBnJ1Gir5ifkO4IWg85H1pTeZ4DztKdn
-         mRsm2qKz1kgfIyoGh7G0Z8vD4g9iZQgeFmpegBX380Cog+EYG1G+vxqOY/xhOoUyIwgJ
-         UoSlkxq6GG0RN4wEOgxFdwF/8JKyZNHGz4dv/bpjNbpznzmY/y7Mc5l7jnT1giYafgBm
-         wg8IkdsyK4ggHw5MCPDA3eXSF5qvniSVKr4+wjBJyKPPrda7SefJYi2qhmCFu93WQKBH
-         wvlQ==
-X-Gm-Message-State: AOAM532wGRXe9jAeWB8XMgkjTOOnfNG2zbCX6kMHLUhqf4bzvQZEoF+X
-        ovFZcAl3naWQJbd5pIe5E5NVPpkWSvJIMg==
-X-Google-Smtp-Source: ABdhPJw55DLN9QSJJt2YvP6DFrMARgI7ZpiKzcqH7xpWIDRFDyXOLvcTWG0Um33P9RbeQCBLAPho+A==
-X-Received: by 2002:a05:6000:10e:: with SMTP id o14mr26421702wrx.76.1623773951530;
-        Tue, 15 Jun 2021 09:19:11 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b8sm2671901wmd.35.2021.06.15.09.19.09
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=PMDaZ7KSQ/Mt5d59qTASh8jt37hD4FvIH14+irqHyKM=;
+        b=mFhf97ONZEZDI1wOxBVsj9f0saN1XarPD//H45ld+utQ4kFZ27Jth0dAyy9Z4GQmTt
+         v/YfcY2fn3zWqT/VKbmNPMTd7iA7abuCqUbY69E+UxCxR6bJXbZnuPKq7zN8xQyT8cbM
+         rLSdwgD1hdSMq2Gx/yrq94MdrTnfM6g3z+KsTd7cfnvyp+yb6WKO5wjfSykK4KIIlEcA
+         3g+zrXbjp2S32iKg0eUbR4uua0ZCWW94OijWHWUutkpccqaFP1J7v+RlCpya2FCv27bc
+         kcRTy3W1AIOgroDBLxfxf3p4yNJWEDd8rXnwmVann9BBVSHj7Ulk9ZQnMI2C0t9o1s/r
+         +dQw==
+X-Gm-Message-State: AOAM531qL9Y1Ix+4OptxsrSlRETmXv54t2//hqs6hQdMq/7mRJg5BPAy
+        6Nn1zilHRLZwCbTO+iKjTj8=
+X-Google-Smtp-Source: ABdhPJzYkZ3eXafd+b96SLKt+IGAzaUawTFUkgzAivDqFPgpE5QbWo5LW5kVgqhAFmvWxqmK39JE4Q==
+X-Received: by 2002:a9d:7414:: with SMTP id n20mr139589otk.194.1623774662413;
+        Tue, 15 Jun 2021 09:31:02 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id w200sm3784141oie.10.2021.06.15.09.31.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 09:19:09 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Tue, 15 Jun 2021 09:31:01 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 11:30:59 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 6/6] pack-protocol doc: use "www-data" in place of "alice"
-Date:   Tue, 15 Jun 2021 18:18:03 +0200
-Message-Id: <patch-6.6-9c4a7545cb7-20210615T161330Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.555.g0268d380f7b
-In-Reply-To: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60c8d5c39ef39_1296f20847@natae.notmuch>
+In-Reply-To: <94848796-1a7f-e1d2-fcf7-5e6f5f361f2a@gmail.com>
+References: <20210611202819.47077-1-felipe.contreras@gmail.com>
+ <20210611202819.47077-2-felipe.contreras@gmail.com>
+ <94848796-1a7f-e1d2-fcf7-5e6f5f361f2a@gmail.com>
+Subject: Re: [PATCH 1/2] doc: avoid using the gender of other people
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the example of "alice" in the pack-protocol.txt documentation
-added in b31222cfb7f (Update packfile transfer protocol documentation,
-2009-11-03) with "www-data". This is now consistent with the recently
-changed examples in the tutorial and git-daemon documentation.
+Derrick Stolee wrote:
+> On 6/11/2021 4:28 PM, Felipe Contreras wrote:
+> > Some people have a problem with using a female reviewer or a female
+> > developer as an example, and since this is an irrelevant detail, let's
+> > say goodbye to our illustrative female colleagues.
+> 
+> I find this message to be snarky and underhanded instead of
+> actually describing the goals at hand.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/technical/pack-protocol.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+But it is accurate.
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index e13a2c064d1..0f43a290e59 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -136,10 +136,10 @@ directory, because the Git client will run:
- The exception is if a '~' is used, in which case
- we execute it without the leading '/'.
- 
--      ssh://user@example.com/~alice/project.git,
-+      ssh://user@example.com/~www-data/project.git,
- 		     |
- 		     v
--   ssh user@example.com "git-upload-pack '~alice/project.git'"
-+   ssh user@example.com "git-upload-pack '~www-data/project.git'"
- 
- Depending on the value of the `protocol.version` configuration variable,
- Git may attempt to send Extra Parameters as a colon-separated string in
+I have no problem when I read a text that uses a female reviwer as an
+illustration. Apparently you do, and presumably others.
+
+> Citing the reason as stated is _not_ the purpose of these
+> gender-neutral recommendations.
+
+I believe the purpose is to tailor the wording to you.
+
+> Instead, a message such as this could apply:
+> 
+>   Using gendered pronouns for an anonymous person applies a
+>   gender where none is known, and further excludes readers
+>   who do not use gendered pronouns.
+
+It doesn't exclude the readers who do not use genedered pronouns.
+
+Anna--a Finnish reader--may not use gendered pronouns herself, that
+doesn't mean she automatically would have a problem when reading "she"
+or "he", nor that she would feel excluded.
+
+
+This patch is not for Anna--who has no problem reading an illustration
+in English which uses a female colleague as illustration--this patch is
+for you.
+
+Cheers.
+
 -- 
-2.32.0.555.g0268d380f7b
-
+Felipe Contreras
