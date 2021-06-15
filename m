@@ -2,105 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A80B1C48BE5
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 11:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85932C48BDF
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 11:10:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 721CA61413
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 11:09:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5DDBF61455
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 11:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230516AbhFOLLf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 07:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbhFOLLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 07:11:11 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF17C06175F
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 04:09:06 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id w22-20020a0568304116b02904060c6415c7so11553655ott.1
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 04:09:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=8cclCzEAw0+2pkpPR6dT/ibBM1Iln/E+BSnz1M5VCOk=;
-        b=VCvsU6fMZfOfiMqr43ucfzQ7WbvJDNQ9D+OklqEuSnJ7a6Np9wVGpyc0Xwk3fBhVn6
-         xDY2/misxJrHW1unPjcS5QXY9ShcADDCZipiEzNdGaS0NORdoFCt8G+Sl49xWWKVH96H
-         g9pDDidDV0YsmrNpVQLejiuMWgFYSocdAwAKn8MkGnY6rTwbONnouCI0251p85t9VbhH
-         j+Mp8fYXmS9qGHRIClb1cL4ZBGIr+WhFXjU2hIhwqZVOHdETJaflpKkZQpXkukKHnZAm
-         zt1wDc3y3dadG69zj2oLgnO2Pxjm7YnuNOEUjrpHu6wRAzSvTilMkMAsSQP/BhEW3Nvz
-         lZ8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=8cclCzEAw0+2pkpPR6dT/ibBM1Iln/E+BSnz1M5VCOk=;
-        b=aUAslhYh7XQRTzTF6EInLX69TtH/FPoKCB2bF2LY0zFwLfhzP6+dbHcrxE3mZzwCc0
-         eyeHHcYIbKQ6ihzmPdw6Cbbj2bC8tYH9bOg3lia/BTU/KdWrsTvUdJ7ewOWVFQ4T7DSo
-         KXWZifSlHZkbzo5Coo4nmwzEPPajVEoC8ZYb7UzImYmFcR1VDUezJtBXfciyGovR/94D
-         5VXnyctRcwQZwYGc2SJ9+jmjMKiP/o+5TANvZHTbNkEKpRt2+/Xn1y9EA71pQ08jkDnT
-         pRn8tkPCJW2mwsqUFYxPUsUGHdsA45QP3p5SLMsSDGTb36hTaglt77PUNgI0Hm2q5H3L
-         qDIA==
-X-Gm-Message-State: AOAM531vq9ALpyiczIrdrc7XS5W2uHZzP6rsZobpKnviLugjEXpbCZV+
-        priNhhQTzxDBnaz/iCKqCno=
-X-Google-Smtp-Source: ABdhPJwFL2JaPeWJaHzSXi+qlVCUVkGcryUQU3ZHIR/S0xYN0seW9OiaROCS76MgqvZtnkApLR+XyA==
-X-Received: by 2002:a05:6830:19c2:: with SMTP id p2mr17641140otp.11.1623755345615;
-        Tue, 15 Jun 2021 04:09:05 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id i26sm3711688oig.13.2021.06.15.04.09.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 04:09:05 -0700 (PDT)
-Date:   Tue, 15 Jun 2021 06:09:04 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Message-ID: <60c88a502d323_e633208fc@natae.notmuch>
-In-Reply-To: <CAPUEspg_MmerWb7h8MyhgcJXbWrJeeSyeJ7z2S6eHgDfRDPKvA@mail.gmail.com>
-References: <20210613045949.255090-1-felipe.contreras@gmail.com>
- <20210613045949.255090-2-felipe.contreras@gmail.com>
- <CAPUEspg_MmerWb7h8MyhgcJXbWrJeeSyeJ7z2S6eHgDfRDPKvA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] pull: cleanup autostash check
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S230012AbhFOLMU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 07:12:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55928 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229943AbhFOLMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 07:12:19 -0400
+Received: (qmail 7522 invoked by uid 109); 15 Jun 2021 11:10:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 15 Jun 2021 11:10:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13674 invoked by uid 111); 15 Jun 2021 11:10:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 15 Jun 2021 07:10:14 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 15 Jun 2021 07:10:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] test: fix for TEST_OUTPUT_DIRECTORY
+Message-ID: <YMiKlmY3B/1cDrr8@coredump.intra.peff.net>
+References: <20210609170520.67014-1-felipe.contreras@gmail.com>
+ <YMWMuDbctae7tF6J@coredump.intra.peff.net>
+ <60c627cac29b3_41f45208a7@natae.notmuch>
+ <YMcIv7q1ctyJ0EZn@coredump.intra.peff.net>
+ <60c715dd9939e_436208f3@natae.notmuch>
+ <8735tk22if.fsf@evledraar.gmail.com>
+ <YMdm5XayUfp4/atY@coredump.intra.peff.net>
+ <87r1h4z8k0.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87r1h4z8k0.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas wrote:
-> On Sat, Jun 12, 2021 at 10:11 PM Felipe Contreras <
-> felipe.contreras@gmail.com> wrote:
-> 
-> > -       autostash = config_autostash;
-> >         if (opt_rebase) {
-> > +               int autostash = config_autostash;
-> >                 if (opt_autostash != -1)
-> >                         autostash = opt_autostash;
+On Mon, Jun 14, 2021 at 06:55:03PM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> > Indeed. With Felipe's original patch, the "test" target (but not
+> > "prove") in t/Makefile will report, whether you set
+> > TEST_OUTPUT_DIRECTORY or not:
 > >
+> >   failed test(s): t1234 t2345
+> >
+> >   fixed   0
+> >   success 23243
+> >   failed  2
+> >   broken  221
+> >   total   23647
+> >
+> > though curiously it doesn't exit non-zero back to make (usually we'd
+> > also see the failures from the individual make targets, and barf there).
 > 
-> since you are reducing the scope of the autostash variable anyway, why
-> not refactor it additionally for clarity with (something like):
+> Odd.
+
+I think it's just that the aggregation script was never meant to signal
+to "make". In a regular "make test" (not using prove), each individual
+test script is a dependency than can fail on its own. That means a
+failure of any of them will signal "make" to fail the overall operation.
+
+Interestingly it means we will not run the "aggregate-results" at all in
+that case, so we would not give the nice output (you can run "make
+aggregate-results" yourself, though; it doesn't depend on the tests
+running itself, but assumes you've already run them).
+
+So arguably we could do something like this:
+
+diff --git a/t/aggregate-results.sh b/t/aggregate-results.sh
+index 7913e206ed..6198b2ef6b 100755
+--- a/t/aggregate-results.sh
++++ b/t/aggregate-results.sh
+@@ -44,3 +44,5 @@ printf "%-8s%d\n" success $success
+ printf "%-8s%d\n" failed $failed
+ printf "%-8s%d\n" broken $broken
+ printf "%-8s%d\n" total $total
++
++test -z "$failed_tests"
+
+but it makes "make aggregate-results" after the fact a little noisier. I
+dunno. I don't really care that much about the output from this form of
+the tests at all, since the "prove" output is _so_ much better, and I'd
+highly recommend anybody use it instead.
+
+The only thing preventing me from suggesting we get rid of the old
+make-driven approach entirely is that there are probably platforms that
+run the tests where "prove" is not available. And as long as it is not
+generating wrong results (e.g., returning 0 when a test has failed), it
+is doing that job OK.
+
+> > I'm OK with this general approach. I do think it would be nice if we let
+> > the environment supersede the on-disk GIT-BUILD-OPTIONS, which IMHO is
+> > the real root of the problem (and possibly others), but that may be more
+> > challenging to get right (I posted a patch earlier, but it does rely on
+> > stuffing all of "set" into a variable, which makes me concerned some
+> > less-able shells may complain).
 > 
->   int autostash = (opt_autostash != -1) ? opt_autostash : config_autostash;
+> Yeah I don't know and haven't dug into who wants all this combination of
+> GIT-BUILD-OPTIONS, passing things in the env, or passing things as
+> paramaters to make (sometimes under the same names).
 
-Because I had like 15 branches on top of this, and wanted 1) to minimize
-modifications, and 2) to minimize the chance of the patch being
-rejected, and this is how the code was before f15e7cf5cc (pull: ff
---rebase --autostash works in dirty repo, 2017-06-01), so in theory
-nobody could object.
+To be clear, I doubt it's all that important. It would occasionally be
+less surprising when trying to override the environment while running a
+test script manually (which is after all, basically the same thing
+that's happening here, just driven by a script). But if it's hard to do,
+I'm OK with an easier solution provided it doesn't regress any other
+cases.
 
-But yeah, that version makes sense, and in fact I probably had such
-cleanup in some branch.
+> > It also means that t0000 can't test the results output (since we don't
+> > write it), but I assume we don't do that now (I didn't actually try
+> > running with your patch).
+> 
+> Yeah, but only in the trivial wrapper function, you can still write the
+> test script and check the output yourself.
 
--- 
-Felipe Contreras
+Sort of. You can avoid its setting of TEST_NO_RESULTS_OUTPUT, but we're
+still left without a way to reliably override TEST_OUTPUT_DIRECTORY.
+Again, I'm OK punting on that for now if there are no such tests.
+
+> > We do look at them elsewhere, though (in --tee as you noted, and I think
+> > for --stress). I'd prefer to notice the "no results" flag explicitly
+> > there and report something sensible, rather than getting:
+> 
+> If we edit every single current callsite instead of setting it to
+> something you can't write to then we're setting ourselves up for subtle
+> bugss when someone uses $TEST_RESULTS_DIR for something else.
+
+I was thinking we'd still set it to /dev/null as a belt-and-suspenders
+(so the worst case is just an ugly error message). But...
+
+> >   mkdir: cannot create directory ‘/dev/null’: Not a directory
+> >
+> > or similar.
+> 
+> Yeah that error sucks, but nobody will see it unless they're hacking on
+> the guts of this $TEST_NO_RESULTS_OUTPUT, and I think it beats being fragile.
+
+I think that's a good point. You're unlikely to stumble into
+accidentally using TEST_NO_RESULTS_OUTPUT, so it might not be worth
+caring about too much.
+
+-Peff
