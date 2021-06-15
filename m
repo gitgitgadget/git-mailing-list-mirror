@@ -2,177 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF768C48BDF
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5291C48BE5
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:57:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D40FC6128B
-	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:50:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B10560FE6
+	for <git@archiver.kernel.org>; Tue, 15 Jun 2021 18:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231284AbhFOSwW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 14:52:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43002 "EHLO
+        id S230391AbhFOS7t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 14:59:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230387AbhFOSwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 14:52:20 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81D00C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:50:15 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id p7so28672644lfg.4
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:50:15 -0700 (PDT)
+        with ESMTP id S230162AbhFOS7r (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 14:59:47 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2424C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:57:41 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id d7so4452988edx.0
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 11:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WKPv0RmrQiA14h5BFpznkjlzm9hgMu4mdKOhFX45IIk=;
-        b=nK6BoKCHtoKmzNqWZ/cKNitDyNW1ygdwqZsDfvmH+ZSEOHyW24EJskQUysNWDZsTSz
-         L4USMWnuSq0k6U7iLm8YTcDchP6FaKJ2o7P+zJk/8BonjTe5VyOAj0DoJYMNgUjduwNX
-         f1cF08pKkeaqBY25iFShYrnXIJNjSjGbZjaRmMPGIEdJxRIP3cEHcZeKN0vnTRmbWfyu
-         U9qxS8mGCVYQUmRSgaLBY1L7wZFQdcApivCXNxABZJzttACLtdJ+f9DSTIF/2Q03URos
-         +pZXbdypzGD8DfsXboWR01GDchEWEogociQrrQvaybMJOL4iczou2aoRv91JS6iYIf5M
-         usEw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=N0MTVqTmDwurLuGeS44APh5yr8hznz5pGuJRkUu5DMY=;
+        b=AwSytCb1GTrmCtshC0JfpQzN0NHcXz+OcnZmBNF8NEVEyokk4JTwy+pnGcX9/bkvzo
+         sEA+05W504lf/CXnIiUHJURVdpjuLrDXBtFpwLXdB7WpYh7P5U2I7mTJ9hr1WoKdavVI
+         QHTcxISmOerPLGb41v9avMVfHV798RN/vIQyuBeUIJNMf3wfTLuDp1bIEoxOkWQ+c/Ld
+         5w9b6ITA8+S5+btJAurXOD8bDYktVdPNf1k8MKKjsST6Y+JcMvB+esQWkizMxyCLiwdw
+         qrGuwfDENgFn+Hr/f2QJN6HV6RptYB5N8uVoquLHmz8xbzkwkh9uS9rC4IH4cPG6Xrqx
+         XtWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=WKPv0RmrQiA14h5BFpznkjlzm9hgMu4mdKOhFX45IIk=;
-        b=T6TDNqIUw3L4hb4La03GbCoMPBX8Ru5JiI3ZfFJGQ5EcI//DLEyC+9PO9mgpJls0VD
-         EIC0PRO/ejm9EAXgqVV0tmMb0MIu0uiGOeokl57/PEnm6oEnCBXgewFh/a7XK+Qz7qfY
-         bFrK4pvHwcwFVv2QXfxTnDYVINcGBiKBIeWytdyODcAoNIklBvq+U8TW7WAXO/xHPTq7
-         tGUd/lV5XttFJM8WVhND9+0oazdmS31n+p2W3xPLpA2SzkEOZStCcxsiPPUYGmItx9+T
-         9UfpUjaecO5e+kDs/MOsQG4yaUffoS/bgwvDC9jHFO5LCELeQludEoxmr6k9u4aV9+h1
-         kzkA==
-X-Gm-Message-State: AOAM532PqIA6hfS91CUrsmN85dEH3nWDlp31fc4XCnBmQcAsYZ7JSUNu
-        BjOH79R2UyiCx68dXGhCHbGLR5SiAxk=
-X-Google-Smtp-Source: ABdhPJxdgrgHAC0Vw882unvOZCb/CymOOH+hw+r0SrsGs/OBJU0xF9SiOjYGP/aBu8XRuHFbqtrAjA==
-X-Received: by 2002:ac2:50c4:: with SMTP id h4mr586338lfm.13.1623783013494;
-        Tue, 15 Jun 2021 11:50:13 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t12sm2247558ljk.116.2021.06.15.11.50.12
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=N0MTVqTmDwurLuGeS44APh5yr8hznz5pGuJRkUu5DMY=;
+        b=d7ya5+Ekxaa0TmfiGgTLTxzBA1tXDwJab8xvNfDqLRgudKI92bVuR/vuPKJYOFwjMw
+         e4bqaKph21/Mzm1Iplg9Z5E4WBIEK9i8XM6yQZ6QIiho8kVJtvKxNB7MuHklj4UN6ij2
+         7G7tUybGFGSoOdNvrsKF2WcuaZnSFthfY9ObSHqjH+hBNrkramxg1hT1u//e7m6L7W6+
+         YVAijzB2VuFExVuLcjc5tSzDWGw5DepD6p8Q74WCfyPD2yGorQIhN9p/AZDZFZWppXea
+         xAbFsZGepOeA2VNiDLpF1DfOZkysLodvis1lM0eCU5fwkN/IYJ6g2vvUJTtsp6aKXkkH
+         HZkw==
+X-Gm-Message-State: AOAM533LK8Xfo0LsseoUbN9XpSwt+jBTqOc9CKmVVg1duk4kkbdiRLlA
+        Gmri/G8Vou+RCPuE2xu4hLM=
+X-Google-Smtp-Source: ABdhPJxzlYUZ69sjQNhAiU2VOdoVszdchV/wB12lNLRaRlURiAKhlQXZNFzwor6xMH+0ytwFnabdzg==
+X-Received: by 2002:aa7:d344:: with SMTP id m4mr1230764edr.281.1623783460219;
+        Tue, 15 Jun 2021 11:57:40 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id f10sm12757434edx.60.2021.06.15.11.57.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jun 2021 11:50:12 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] xdiff: implement a zealous diff3, or "zdiff3"
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
-        <b7561a67c192d4bdede47fee5b7b1cb30c44b785.1623734171.git.gitgitgadget@gmail.com>
-        <60c8758c80e13_e633208f7@natae.notmuch>
-        <CABPp-BHjXf88MQYX8Fd3WGw2WfbMKAdAD-MEViiB7oTtQbfTyw@mail.gmail.com>
-Date:   Tue, 15 Jun 2021 21:50:12 +0300
-In-Reply-To: <CABPp-BHjXf88MQYX8Fd3WGw2WfbMKAdAD-MEViiB7oTtQbfTyw@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 15 Jun 2021 11:12:35 -0700")
-Message-ID: <8735tj2c9n.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Tue, 15 Jun 2021 11:57:39 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH 0/6] doc: replace "alice" and "bob" examples
+Date:   Tue, 15 Jun 2021 20:45:33 +0200
+References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
+ <18b53cae-6da9-c970-b994-caee11c5baf9@crashcourse.ca>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
+In-reply-to: <18b53cae-6da9-c970-b994-caee11c5baf9@crashcourse.ca>
+Message-ID: <874kdzymzh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
-> On Tue, Jun 15, 2021 at 2:40 AM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->>
->> Elijah Newren via GitGitGadget wrote:
->> > From: Elijah Newren <newren@gmail.com>
->> >
->> > "zdiff3" is identical to ordinary diff3 except that it allows compaction
->> > of common lines on the two sides of history at the beginning or end of
->> > the conflict hunk.
->>
->> That was not the main reason behind zdiff3.
->>
->> The whole point of zdiff3 was to have something closer to the "merge"
->> style, even if not technically correct.
->>
->> Your proposal is better than diff3 in that respect, but worse than Uwe's
->> zdiff3.
->>
->> If you have this:
->>
->>   l  b  r
->>   =  =  =
->>   A  A  A
->>
->>   B     b
->>   C     C
->>   D     D
->>   E     E
->>   F     F
->>   I     i
->>
->> merge will output this:
->>
->>   A
->>
->>   <<<<<<< l
->>   B
->>   =======
->>   b
->>   >>>>>>> r
->>   C
->>   D
->>   E
->>   F
->>   <<<<<<< l
->>   I
->>   =======
->>   i
->>   >>>>>>> r
->>
->> This is simple, and useful.
->>
->> diff3 will output this:
->>
->>   A
->>   <<<<<<< l
->>
->>   B
->>   C
->>   D
->>   E
->>   F
->>   I
->>   ||||||| b
->>   =======
->>
->>   b
->>   C
->>   D
->>   E
->>   F
->>   i
->>   >>>>>>> r
->>
->> Not very friendly.
+On Tue, Jun 15 2021, Robert P. J. Day wrote:
 
-For me it's friendly enough. One key-press in Emacs and I get:
+> On Tue, 15 Jun 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> I suggested in [1] that the "alice" and "bob" examples in our
+>> documentation would be better written without a reference to such
+>> fictional characters, for reasons that have nothing to do with trying
+>> to bend over backwards to avoid any reference to people's gender. It
+>> just makes for better documentation.
+>
+>   no, it doesn't ... and wikipedia explains it nicely:
 
---- upper/xx.txt
-+++ lower/xx.txt
-@@ -1,7 +1,7 @@
- 
--B
-+b
- C
- D
- E
- F
--I
-+i
+It doesn't make for better documentation? Maybe not, but can you comment
+on specific parts of the changes in this series that make it worse?
 
-In a separate window, that is roughly what you've get in the "merge"
-output in the first place, but even more compact.
+> https://en.wikipedia.org/wiki/Alice_and_Bob
+>
+> "In cryptography, Alice and Bob are fictional characters commonly used
+> as placeholders in discussions about cryptographic protocols or
+> systems, and in other science and engineering literature where there
+> are several participants in a thought experiment. The Alice and Bob
+> characters were invented by Ron Rivest, Adi Shamir, and Leonard
+> Adleman in their 1978 paper "A Method for Obtaining Digital Signatures
+> and Public-key Cryptosystems".[1] Subsequently, they have become
+> common archetypes in many scientific and engineering fields, such as
+> quantum cryptography, game theory and physics.[2] As the use of Alice
+> and Bob became more widespread, additional characters were added,
+> sometimes each with a particular meaning. These characters do not have
+> to refer to humans; they refer to generic agents which might be
+> different computers or even different programs running on a single
+> computer."
+>
+>   if you want to make the docs better, have at it, but please don't do
+> something as meaningless as replacing "bob" and "alice" because you're
+> feeling politically correct, or woke, or whatever the hell the kids
+> call it these days.
+>
+>   jesus ...
 
-My point is that once Git provides enough context, a good interactive
-tool will do the rest just fine, beneficial to the end-user.
-
--- Sergey Organov
+I believe that the commit message of 1/6 addresses the point you're
+raising here:
+http://lore.kernel.org/git/patch-1.6-abbb5b9ba13-20210615T161330Z-avarab@gm=
+ail.com
