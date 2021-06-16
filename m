@@ -7,68 +7,68 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F2FC48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99EC9C48BE6
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:59:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 981AE6109D
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:56:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83DCF6109D
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:59:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233792AbhFPU6s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 16:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55840 "EHLO
+        id S233839AbhFPVBi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 17:01:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233698AbhFPU6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 16:58:48 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC75C061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:56:40 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so3917483otu.6
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:56:40 -0700 (PDT)
+        with ESMTP id S233836AbhFPVBh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 17:01:37 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E71AC061574
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:59:30 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id x196so3952561oif.10
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=fJ1uKUQF92SuHbglXlixVeHAsiWIdYKh8X0Mlo525ik=;
-        b=GJBJd0GxMeyTRbX8bo9Ma2IRqvDFc2/edS98S9NwWddJIGoMxvXOxDa+TFp/qMvW73
-         /hnYtHTR+SOaEGjd2O2Jln4d4GXYI4EDkhUcXpDUh4I2jkCj3eJdaH1ZtTFPGPZZWl2F
-         03HdR1fienap2KSo9PnK1RdegvypcCw4e3WqNp7FiZLG8/+4IeE4UYEeBsrMV1+HyRMB
-         A2nXq6HsTmkcOWmb2oNlgHLGwCCJ4absQmvxCHCSIMqclyb9QLKzkQXxENOHtTj7XYXK
-         SuP7RkqcfRKmmkoHm6y6tD5FQTlXM7wL3kj5cxulPyJVaHP4ZsDBGSKLWvCbtNdZPfDK
-         ZCkA==
+        bh=h5GY5ktj3e3Hieqb2Y35mWgNVmjw4lr/QAZHrsIA71w=;
+        b=aT7/QSKiphj8DqAECkI/Z3UTMy9VhwFO9zqFIwh5bsXv0t2/Zzg30PcN7BmGVUetfN
+         Z1+Mr/Sj1pAUG+6trOLdA/sHKx3TUVRFD0Y4DwSJmZ0fo/n3d54tBn5fKDZn0txXCLQz
+         1x2wABefUaD1ZRSuvdgmXlOjoCoQW1MlDhQQEUwBFAlj5wkd+RFLCcB2BXAGdAd5B6KF
+         TIHEkYTcWtEdGX2pL3wksULFAAryzmHBiJAqGxXJh+1WO0lT1BIuSk53oE5Ugpjsrjxf
+         2Wc/DEHDaJjjy9T4E2UkHvfbNtLDSHQNawqOCYM1H3Ywed8ib6AH6ccNH55g+jO3O7qq
+         Dcog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=fJ1uKUQF92SuHbglXlixVeHAsiWIdYKh8X0Mlo525ik=;
-        b=OF+1xeBImwmioCJQhkbQPD4Mw2+MOHV3jwfKatbBPBHNv5oLVDIqDRlbi3MvuEYCjD
-         qmExOIJ0Fttv5G/aYLr0FdOz6cefkYfIkOLXgb36nRZoWdnPwpMYiO2jbef3be1TchBq
-         1Pzi+/CvY0TBIdO5E+aMbuTZhCiYtIicp9L6XB6KAhNTGZk1AUPVer4mM7603wwJjJRO
-         FEpOvYWbnozJwYPCGzz0qzWhSQVV/caYHIlONW25gNUQCPVp6otfU7KFpwNlGj/xfvHp
-         hi5i+ND4QeFBEe0Yg43uduj8PkEyb+qp23fzdd3VR4Wk6MzIGMQQ25dki6wZuHzvoYqN
-         STRA==
-X-Gm-Message-State: AOAM533p4RSRbPTqbxHaHITR0tUzuSfvLI8KE9SQxBsvhvJoq9DxyeCg
-        lDwCj5z23U8vI88d/p2nwss=
-X-Google-Smtp-Source: ABdhPJymqc1TIWlEujUe6c1gZ/bh86cELqGMKaPqtUOuH4+iayHRhJZWVkEqWFBw9Fkc0vvHeo/pNw==
-X-Received: by 2002:a9d:2227:: with SMTP id o36mr1529440ota.309.1623877000062;
-        Wed, 16 Jun 2021 13:56:40 -0700 (PDT)
+        bh=h5GY5ktj3e3Hieqb2Y35mWgNVmjw4lr/QAZHrsIA71w=;
+        b=Of8FoXxywxdZPWsxqujbpE+12Hrnfmt/ef0+EKueAEquiVexJzOVtaCHv/OpiZyn7D
+         6OAWnGmYxXTm0v5XNI9pACrFC5c1py6HW69gtgXzFy327HIGQjEUau8c3yj0cQlfCaxt
+         d7tVXmOAWD/KLfHSAfbYTsZIas1sGZWST8mfl0qX5oH17nRztXGXwIrnhz+jZ/FNw7aO
+         8Xp4ZsecrmMKy8SqR25LAyZdMFver5HIPaTM6W1I8TuaP9KFx0jhcHISie+IFGILGQeX
+         /xjA/kX4ZQvfvF+JhF++tGmLKP7aLoMJYDAi/n8O8lDZLHmfxz/Hcfrv7ZgHavkQbUU4
+         +wmw==
+X-Gm-Message-State: AOAM533kyJfA8BvjTMLlvGl3RyW0gRr8XFzaqdqKoaW5NBECbPSITuQb
+        2a/k7kUtknozFIaFJ4FlLz4=
+X-Google-Smtp-Source: ABdhPJyEM9Vl8Zxbwfv1dUWwIg6NsrmKZC8LZ/pC41BOhjto9BAc2DwFh9yVu5uPj0HM6hm+7SwfrA==
+X-Received: by 2002:aca:ac47:: with SMTP id v68mr986548oie.160.1623877169827;
+        Wed, 16 Jun 2021 13:59:29 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id z5sm795399oth.6.2021.06.16.13.56.39
+        by smtp.gmail.com with ESMTPSA id x7sm764763ooc.23.2021.06.16.13.59.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 13:56:39 -0700 (PDT)
-Date:   Wed, 16 Jun 2021 15:56:38 -0500
+        Wed, 16 Jun 2021 13:59:29 -0700 (PDT)
+Date:   Wed, 16 Jun 2021 15:59:28 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Robert Karszniewicz <avoidr@posteo.de>,
         Emily Shaffer <emilyshaffer@google.com>
-Message-ID: <60ca6586607f5_602720852@natae.notmuch>
-In-Reply-To: <871r93ym8q.fsf@evledraar.gmail.com>
+Message-ID: <60ca66304a0a0_6027208c8@natae.notmuch>
+In-Reply-To: <xmqqfsxitw2n.fsf@gitster.g>
 References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
- <60c8db3558fb8_1296f208ac@natae.notmuch>
- <871r93ym8q.fsf@evledraar.gmail.com>
+ <xmqqfsxitw2n.fsf@gitster.g>
 Subject: Re: [PATCH 0/6] doc: replace "alice" and "bob" examples
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -78,69 +78,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 > =
 
-> On Tue, Jun 15 2021, Felipe Contreras wrote:
+> > I suggested in [1] that the "alice" and "bob" examples in our
+> > documentation would be better written without a reference to such
+> > fictional characters, for reasons that have nothing to do with trying=
+
+> > to bend over backwards to avoid any reference to people's gender. It
+> > just makes for better documentation.
 > =
 
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> I suggested in [1] that the "alice" and "bob" examples in our
-> >> documentation would be better written without a reference to such
-> >> fictional characters, for reasons that have nothing to do with tryin=
-g
-> >> to bend over backwards to avoid any reference to people's gender. It=
-
-> >> just makes for better documentation.
-> >
-> > I'm fond of Alice and Bob, and I'm saddened they are the latest casua=
-lty
-> > of the culture war, but if we are avoiding gender of examples, it mak=
-es
-> > sense to let them go.
-> >
-> > However, I want to defend this usage a little.
-> >
-> >   1. Alice and Bob are familiar, so it requires less cogntive load fr=
-om
-> >      the user.
-> >   2. Alice and Bob promote the usage of git as a distributed VCS, whe=
-re
-> >      unlike centralized VCS, you directly use the repositories of you=
-r
-> >      colleagues.
-> >   3. They provide some relief to an otherwise sterile landscape.
-> >
-> > I don't think these changes make for a necessarily better documentati=
-on,
-> > just a more sterile one.
+> I actually do not mind cast of characters with concrete names,
+> especially when there are more than three parties involved and
+> having names for them help clarify the description.  But I agree
+> with you that Alice and Bob should be reserved for situations where
+> appearance of Eve would reasonably be anticipated, or the use of
+> these two names become distracting to those who happen to be aware
+> how these characters are often used in CS literature.
 > =
 
-> Fair enough, for what it's worth I wouldn't recommend against using
-> these names in general, I would think you'd actively seek out those
-> actors in e.g. cryptography documentation.
+> Perhaps s/Alice/Tabby/ and s/Bob/Fido/ or something like that ;-)?
 
-I have not read cryptography documentation, so for me Alice and Bob are
-simply two illustrative colleagues.
+I don't know anybody named Tabby or Fido (or at least any human).
 
-> And as argued in 1/6 for those users who /are/ aware of "Alice and Bob"=
-
-> it's needless distraction. Maybe it's just me, but whenever I read
-> references to them I keep waiting for the cryptography angle to be
-> introduced. None of the uses in our documentation reflect that canonica=
-l
-> usage.
-
-It's probably not just you, but the vast majority of readers are
-likely not aware of any cryptographic reference.
-
-> There's also just weird things in our documentation fixed by this
-> series, such as referring to a random file tracked by git as "bob"
-> instead of the more obvious "file.txt".
-
-OK, _that_ I agree it's unequivocally an improvement.
-
-Cheers.
+Maybe Mary and John, or Linda and James.
 
 -- =
 
