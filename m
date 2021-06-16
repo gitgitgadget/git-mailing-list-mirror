@@ -2,97 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2593EC48BE6
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A60C6C48BE5
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:56:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD8E561350
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:50:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83F2461351
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbhFPEwk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 00:52:40 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63769 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbhFPEwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 00:52:39 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D78AA12FD89;
-        Wed, 16 Jun 2021 00:50:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mT7FFBays8ckCax28xCNOLt4wh+oYrcdpBLsQz
-        ksG+4=; b=I4pvovbDRAdoi4/Rh7pB851xkh373J8I5sUfYsMSt7ct06AXFF7IKB
-        MeyqVTeHN5zQ9DOZTThMLq+m6RVIMyVjlB5gutb137W1XqROJBD2D1eBFt/R0O05
-        6B1G8mCSWEir6T7K8AOKIsiiz48CZ62FsAt3Xm02FaLkqRa12Xy9E=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C367012FD88;
-        Wed, 16 Jun 2021 00:50:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0FB0A12FD87;
-        Wed, 16 Jun 2021 00:50:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH 1/6] gittutorial doc: replace "alice" and "bob" with
- "you" and "www-data"
-References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
-        <patch-1.6-abbb5b9ba13-20210615T161330Z-avarab@gmail.com>
-        <8250d8af-2d52-321c-36a7-d71c29fc1ef1@gmail.com>
-Date:   Wed, 16 Jun 2021 13:50:28 +0900
-In-Reply-To: <8250d8af-2d52-321c-36a7-d71c29fc1ef1@gmail.com> (Bagas Sanjaya's
-        message of "Wed, 16 Jun 2021 10:43:32 +0700")
-Message-ID: <xmqqfsxiqup7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229943AbhFPE6d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 00:58:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36428 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229514AbhFPE6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 00:58:22 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E24CC061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 21:56:16 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id u18so517445plc.0
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 21:56:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=R0+kIsjpqvLOw58Y2+YJDV+dbPMJSWbyJq7cA/zuWP0=;
+        b=BI9PXrgAfBvu5yIfA/a1cUfXh0VLH8IIQ/yXGZPU/ofswsQYUkcmyDIUnLMdoFRZmb
+         03KYEUxQ4eaqGe2+wakANFlilPa9C7eimLHCv772q021vzcoJgFTRTQIIajK4q5Ry9UW
+         HfbB/aMI7pqH8uRzUWzEunPMkmMfyXGDLDICY4lORim+b1LpaPVOWjRbkugUEjRmMhNz
+         9Ul7+6rQCKRfdaMYJTismgcYfNWU9wog8fsW7yZLBSXHqjQZFkY4cw9rRL7vpyJsXNUe
+         x86ocXXXxjKiyBb3pXFJPcdCEW8ivTYUR8TMMIOTl5HCAZERL9hkYlDgYLc0EF/1ftAF
+         zQow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=R0+kIsjpqvLOw58Y2+YJDV+dbPMJSWbyJq7cA/zuWP0=;
+        b=ev9B6tcNloqQZklFA7glxAhEci7p5pjReqC4PVnae/U4iUVcf2eyW7RRMvpxwq4WKx
+         61/kSLXYJuUXUmXqCt65RVKKbRhpG8bHL5dn7JsLm7JtuLd7gh8GBpDuz3nlXt1LTtzO
+         9GT5pBeBu5FlTqbk4pM+2YGi4VJtxI6GGT1Su/QlexDoMN81nQ+B/b2DluICVisxP0pd
+         ZOb/bN4IE3s5/1SEn6f+ejqKAHz+DteUgbU6+7Vy6Q9U8Pjs60VS3pItz7LF6gpaDm1P
+         QQeQuy7m6feGVbaVqsg/1ciVfJgke3qwc1svSGKJO0golWHRwNmD167KXdNROD3zP8/o
+         uasA==
+X-Gm-Message-State: AOAM53287OUTxNGAYlaNLL6vvz4lxVOKmxujS61dv0VQHBOMs+Dw9ph/
+        Yjp0D4KTUSlIGhZySeKEbboc17xZU05H9g==
+X-Google-Smtp-Source: ABdhPJxSAJpg1y4lCHhvp4Cv6GfOFPlp+7pATRs9MCqNMyQR0ao8FZjlYkbb/wG4LZZay6xry0uXpA==
+X-Received: by 2002:a17:90a:9282:: with SMTP id n2mr2314695pjo.204.1623819375509;
+        Tue, 15 Jun 2021 21:56:15 -0700 (PDT)
+Received: from [192.168.43.80] (subs03-180-214-233-70.three.co.id. [180.214.233.70])
+        by smtp.gmail.com with ESMTPSA id p11sm697975pfo.126.2021.06.15.21.56.14
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Jun 2021 21:56:15 -0700 (PDT)
+To:     Git Users <git@vger.kernel.org>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Simulating network throttling
+Message-ID: <65b4040c-2a9c-7d49-43ce-dad7d5a9c62d@gmail.com>
+Date:   Wed, 16 Jun 2021 11:55:49 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 602E5C96-CE5E-11EB-95CC-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Hi,
 
->> +As the `www-data` user do:
->>    >   ------------------------------------------------
->> -bob$ git clone /home/alice/project myrepo
->> +www-data$ git clone /home/you/project /var/www-data/deployment
->>   ------------------------------------------------
->> 
->
-> This assumes that we're on Debian or its derivatives, however many
-> users run Git on other distributions (Fedora, Arch, Gentoo, openSUSE,
-> etc.), so `www-data` user may not be present there. Also, `www-data`
-> is system account, as opposed to normal user account, so you can't log
-> in to it; you need as root `chown -R www-data:www-data /somewhere/`.
->
-> This also assumes that we use Apache HTTPD. The setup for other
-> webservers may be different. For example, if NGINX is used (installed 
-> from upstream packages rather than from Debian package repository),
-> you need to make site root (the path specified in `root` directive)
-> readable by `nginx` user.
+I would like to test my Git repository in case the network is throttled 
+(that is the network speed is reduced from its full speed). For example, 
+I would like to test git clone under maximum download speed of 9.6 KB/s 
+(GPRS speed).
 
-I do not see what is wrong with all of the above.
+I know how to test for throttling in browser, but since Git is 
+command-line application, is there any way to simulate network throttling?
 
-It is perfectly fine to assume that our readers are intelligent
-enough to be able to guess from the above command line example that
-contents for some webserver's htdocs directory is being prepared,
-and the data is coming from /home/you/project repository.  It is not
-a tutorial on "how to configure your webserver and deploy directly
-to its htdocs", so lack of webserver specific configuration details
-is _desirable_.
-
-Having said all that, I still like my s/Alice/Tabby/; s/Bob/Fido/
-mechanical replacement better ;-)
+-- 
+An old man doll... just what I always wanted! - Clara
