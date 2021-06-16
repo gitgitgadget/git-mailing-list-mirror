@@ -2,71 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5582C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F2FC48BE5
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:56:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9401D613BF
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:49:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 981AE6109D
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 20:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233698AbhFPUvH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 16:51:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54150 "EHLO
+        id S233792AbhFPU6s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 16:58:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233632AbhFPUvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 16:51:06 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FFA9C061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:49:00 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id c13so3896745oib.13
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:49:00 -0700 (PDT)
+        with ESMTP id S233698AbhFPU6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 16:58:48 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC75C061574
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:56:40 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so3917483otu.6
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 13:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=yUrLIjlWow99pQ2tNEIO0TrEMqFXPeZf2JxMAujHYiU=;
-        b=CN8TN/oJSz7q/Ts4neguvTJsP+4+hsu/ix6WZVzj/gmaE5rO4eRYjw6dpwJj6ldxUm
-         lGUzMXcWN1HOtL1bOMC+srpMC/KXWK9dXrGiVzTCsfEDSDa2oyb/XZgTDg28NXevP0Gh
-         9rrnq+RCEEFEVPwaCEUTaLGKSUa5DgizZwovcvQzH5S5uHs7IeOcssDLxhzqeZLt0ZoJ
-         GRs2GCndlYj0dhz6C4wavBRDhP/jOuY5kelLd4Qtf/KqKANYozGU5KhzZb21gzCUq4IS
-         3dLKcMimeh6nZWOPpJcAxM1K1v6Tai/ZRL2cvaikdOjRhDqn5t1TQXpgYfL/B+6g3A6J
-         0aEQ==
+        bh=fJ1uKUQF92SuHbglXlixVeHAsiWIdYKh8X0Mlo525ik=;
+        b=GJBJd0GxMeyTRbX8bo9Ma2IRqvDFc2/edS98S9NwWddJIGoMxvXOxDa+TFp/qMvW73
+         /hnYtHTR+SOaEGjd2O2Jln4d4GXYI4EDkhUcXpDUh4I2jkCj3eJdaH1ZtTFPGPZZWl2F
+         03HdR1fienap2KSo9PnK1RdegvypcCw4e3WqNp7FiZLG8/+4IeE4UYEeBsrMV1+HyRMB
+         A2nXq6HsTmkcOWmb2oNlgHLGwCCJ4absQmvxCHCSIMqclyb9QLKzkQXxENOHtTj7XYXK
+         SuP7RkqcfRKmmkoHm6y6tD5FQTlXM7wL3kj5cxulPyJVaHP4ZsDBGSKLWvCbtNdZPfDK
+         ZCkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=yUrLIjlWow99pQ2tNEIO0TrEMqFXPeZf2JxMAujHYiU=;
-        b=DPWZejfN95CAKqsZyUhqOTPmsdOoIxKTkk3XJoLOT5j5kzj3WU2mNivqRsgibI9auA
-         AtWjOKXyQjRVFTyAqCnpv0he9O9abCdcXT1muINuXqbRvgHGKr0B6bq5iNEv1ZiNtJPa
-         mvKhojvxxd+fu62XOV4QLke97dl3FWfO7dBfJ66M+g0WOYcB56Zt1NBcLqFpTZD0Y/G6
-         Sf8mlUJYQNIotdVX7F458gY7PlprpMkHgXkCl04y5E7nQuDIL6wdbe3lPLTpU1lxy+97
-         TA1fAUxo0l6WabkPmqd9SmxkKNhwrXCbBz6FR7Bc756HsS4aVv7Mz9/zccQ1eQ/MDIJF
-         PmSQ==
-X-Gm-Message-State: AOAM5335lsw+CD6eQ4DlKBsoT4P+J6t6X/UwjBMz5X4ogCyGcMwnLII1
-        XxW6YhslMzFIkOg6AED0fyI=
-X-Google-Smtp-Source: ABdhPJxEfJFQ3ufvVU1nKk3wLjbZ4H2KruB91teArVJtFN34r3L/pUxgdBMDOXK6Ax3ohAL8sfAeqQ==
-X-Received: by 2002:a05:6808:1d5:: with SMTP id x21mr8111510oic.159.1623876539815;
-        Wed, 16 Jun 2021 13:48:59 -0700 (PDT)
+        bh=fJ1uKUQF92SuHbglXlixVeHAsiWIdYKh8X0Mlo525ik=;
+        b=OF+1xeBImwmioCJQhkbQPD4Mw2+MOHV3jwfKatbBPBHNv5oLVDIqDRlbi3MvuEYCjD
+         qmExOIJ0Fttv5G/aYLr0FdOz6cefkYfIkOLXgb36nRZoWdnPwpMYiO2jbef3be1TchBq
+         1Pzi+/CvY0TBIdO5E+aMbuTZhCiYtIicp9L6XB6KAhNTGZk1AUPVer4mM7603wwJjJRO
+         FEpOvYWbnozJwYPCGzz0qzWhSQVV/caYHIlONW25gNUQCPVp6otfU7KFpwNlGj/xfvHp
+         hi5i+ND4QeFBEe0Yg43uduj8PkEyb+qp23fzdd3VR4Wk6MzIGMQQ25dki6wZuHzvoYqN
+         STRA==
+X-Gm-Message-State: AOAM533p4RSRbPTqbxHaHITR0tUzuSfvLI8KE9SQxBsvhvJoq9DxyeCg
+        lDwCj5z23U8vI88d/p2nwss=
+X-Google-Smtp-Source: ABdhPJymqc1TIWlEujUe6c1gZ/bh86cELqGMKaPqtUOuH4+iayHRhJZWVkEqWFBw9Fkc0vvHeo/pNw==
+X-Received: by 2002:a9d:2227:: with SMTP id o36mr1529440ota.309.1623877000062;
+        Wed, 16 Jun 2021 13:56:40 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id c11sm709236oot.25.2021.06.16.13.48.58
+        by smtp.gmail.com with ESMTPSA id z5sm795399oth.6.2021.06.16.13.56.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 13:48:59 -0700 (PDT)
-Date:   Wed, 16 Jun 2021 15:48:58 -0500
+        Wed, 16 Jun 2021 13:56:39 -0700 (PDT)
+Date:   Wed, 16 Jun 2021 15:56:38 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Luke Shumaker <lukeshu@lukeshu.com>
-Message-ID: <60ca63ba201b6_602720884@natae.notmuch>
-In-Reply-To: <xmqqim2evdyx.fsf@gitster.g>
-References: <20210614043450.1047571-1-felipe.contreras@gmail.com>
- <87tum0zfub.fsf@evledraar.gmail.com>
- <xmqqim2evdyx.fsf@gitster.g>
-Subject: Re: [PATCH 0/2] extra: new concept of extra components
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Message-ID: <60ca6586607f5_602720852@natae.notmuch>
+In-Reply-To: <871r93ym8q.fsf@evledraar.gmail.com>
+References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
+ <60c8db3558fb8_1296f208ac@natae.notmuch>
+ <871r93ym8q.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 0/6] doc: replace "alice" and "bob" examples
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -75,61 +78,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 > =
 
-> > On Sun, Jun 13 2021, Felipe Contreras wrote:
+> On Tue, Jun 15 2021, Felipe Contreras wrote:
+> =
+
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> I suggested in [1] that the "alice" and "bob" examples in our
+> >> documentation would be better written without a reference to such
+> >> fictional characters, for reasons that have nothing to do with tryin=
+g
+> >> to bend over backwards to avoid any reference to people's gender. It=
+
+> >> just makes for better documentation.
 > >
-> >> This patch series introduces the concept of extra components. These =
-are
-> >> components which are not yet part of the core but are good enough fo=
+> > I'm fond of Alice and Bob, and I'm saddened they are the latest casua=
+lty
+> > of the culture war, but if we are avoiding gender of examples, it mak=
+es
+> > sense to let them go.
+> >
+> > However, I want to defend this usage a little.
+> >
+> >   1. Alice and Bob are familiar, so it requires less cogntive load fr=
+om
+> >      the user.
+> >   2. Alice and Bob promote the usage of git as a distributed VCS, whe=
+re
+> >      unlike centralized VCS, you directly use the repositories of you=
 r
-> >> distributions to ship, and in fact, they already do.
+> >      colleagues.
+> >   3. They provide some relief to an otherwise sterile landscape.
 > >
-> > I like this direction.
+> > I don't think these changes make for a necessarily better documentati=
+on,
+> > just a more sterile one.
 > =
 
-> I do not mind change, but it is fuzzy to me what direction you are
-> in favor of.  Is the gist of the idea to split what is in contrib/
-> into two bins, ones that are closer to "official" and others?  If
-> so, I see sort-of merit in such a distinction, but whom is this
-> trying to help?
+> Fair enough, for what it's worth I wouldn't recommend against using
+> these names in general, I would think you'd actively seek out those
+> actors in e.g. cryptography documentation.
 
-Everyone.
+I have not read cryptography documentation, so for me Alice and Bob are
+simply two illustrative colleagues.
 
-  1. People who download the source code and want to install git in a
-     similar way to how distributions do it
-  2. Developers who have no idea what's good in contrib/
-  3. Distribution packagers who want to know what's good enough to be
-     distributed, and don't want to manually copy files (i.e. all
-     distribution packagers)
+> And as argued in 1/6 for those users who /are/ aware of "Alice and Bob"=
 
-> Distros would rather see what they use unmoved, and would not care
-> where those that they do not use move to, I would imagine.
+> it's needless distraction. Maybe it's just me, but whenever I read
+> references to them I keep waiting for the cryptography angle to be
+> introduced. None of the uses in our documentation reflect that canonica=
+l
+> usage.
 
-That is not true.
+It's probably not just you, but the vast majority of readers are
+likely not aware of any cryptographic reference.
 
-Distributions do not want to decide where to place
-`contrib/completion/git-prompt.sh`, they want the git project to decide.
+> There's also just weird things in our documentation fixed by this
+> series, such as referring to a random file tracked by git as "bob"
+> instead of the more obvious "file.txt".
 
-Obviously it has to be under '/usr/share/', preferably
-'/usr/share/$project' (i.e. not /usr/share/git-core), but other than
-that they do not care.
+OK, _that_ I agree it's unequivocally an improvement.
 
-> So I suspect that it would help them more if we kept the ones that are
-> closer to "official" in contrib/ and moved the rest to a new
-> hierarchy?
-
-Sure, that would help, but they still would want an install-contrib targe=
-t.
-
-
-A distribution packager that is maintaining 20 packages (or more)
-doesn't want to keep track where every single file of her every
-single package goes. She just wants to do `make install` and be done
-with it. Any package that requires to manually copy some files to the
-destination is simply a hassle to maintain.
+Cheers.
 
 -- =
 
