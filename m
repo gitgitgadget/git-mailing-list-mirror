@@ -2,98 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1559C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F50C48BE6
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:12:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D68461369
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:02:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E67B1611BE
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229456AbhFPEEc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 00:04:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52924 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbhFPEEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 00:04:31 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19779C061574
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 21:02:24 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id l184so866072pgd.8
-        for <git@vger.kernel.org>; Tue, 15 Jun 2021 21:02:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6WBczbCSPab8bWZT6QbJQ49L2eRphP4pgqcXz8DKiDs=;
-        b=iVxkHhm9+El37yRDsWyVU1jDpwUX11T/xZ6ZCtqaGJ1JzcUgMkXTnPIqdUcuM94rKZ
-         MfPpPGOoTIvtOqZgtBwn964LCxTKm2Kq3LLaME5aUT7A9jE2upmc/VWgKoOhRpt4yLx2
-         3WARK97QJQNnzbXduv1sFHs3ufuA+zJIggDOAVUmzVEhK1ukbAf0NDJnsnGloTcDDZ2s
-         U4II2NXShF9LQ+1w7qWmn6HaxhCxeuhC1F7gnx0sIGSTirkDJFtGiBApFqgfjyHPh1V6
-         7zHjb6jX7wf2iHzDoy361vJN3TrydlTv/aAl0paGeFqRbHTjMpCQEcHejZSbSGqj1i8d
-         OlEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6WBczbCSPab8bWZT6QbJQ49L2eRphP4pgqcXz8DKiDs=;
-        b=G3iAOm76jUgr7ksx1K51bzZ6ZNQtECooDUGfBNkSfwwdC7zEdY7BD7m8X9khruqCHC
-         w3pd8H3Q+EajKfxphSABJSPbaAHoDscijUC1CoekxOs0cPPFptLxcVcloJtjQzOH2/Bb
-         9cGoJG6Q4oyb8fudA1pqnhelo10RVoR1yj0LB+2Kc4VeFD0z5FJmVsWM0TNFH+0g2RhO
-         OtpR8E5yKx+2OFPA4eUUnEc5ng3rqyPCwZka6LPl6ACdqbGIhF3s1QJNo1qFL9x48+ND
-         9D2bfM+IkiN4FA5ztEvP3twYzHuxIo7ozG4p0TXx1kADsO+RAOVM6L1A7TY7HW8/YWbd
-         1h4A==
-X-Gm-Message-State: AOAM532liyVQXCFuABf5QPZmQZd/ZfQsdNiDH68RiT4zQ/Iz/XwXUjAr
-        1PdxmPOzgReuLOO18Enovs4=
-X-Google-Smtp-Source: ABdhPJxnWXdoqW2/KnGS2/BxGpo5rDMGYGhVKBGOeTxxDT6vYUpFtNvz5POUeO0IpwM8+5XxHAT95A==
-X-Received: by 2002:a63:d218:: with SMTP id a24mr2930106pgg.345.1623816143615;
-        Tue, 15 Jun 2021 21:02:23 -0700 (PDT)
-Received: from [192.168.43.80] (subs03-180-214-233-70.three.co.id. [180.214.233.70])
-        by smtp.gmail.com with ESMTPSA id t19sm3782185pjq.44.2021.06.15.21.02.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Jun 2021 21:02:23 -0700 (PDT)
-Subject: Re: [PATCH 2/6] gitcvs-migration doc: replace "alice" and "bob" with
- "you" and "www-data"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
- <patch-2.6-39e8654507c-20210615T161330Z-avarab@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <c67312d5-cc71-7337-6c14-56ecfbba7737@gmail.com>
-Date:   Wed, 16 Jun 2021 11:02:13 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S229560AbhFPEOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 00:14:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63006 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229456AbhFPEOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 00:14:19 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93079144815;
+        Wed, 16 Jun 2021 00:12:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=8WrwG8OYwmfe
+        wJcpBL9eYFecR4uowWH19xNiElvwrP0=; b=owMekrsvqP83Y6iyPdzxUyhuBDRD
+        jfxs3kNqXyfjZCt9HpDjQWWN+SVOuV+lrf7/A0igF6X4xTe9JA3gIC4Scu/8AOAR
+        BJRD/X/cKhgVhPWWUWCmwTt7GaFqXSDnQ+USTitOtLtFGN7QGYcQlaxO2iXVV43B
+        /pcx/Frw1GC/NNo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B9D5144814;
+        Wed, 16 Jun 2021 00:12:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0A2C9144813;
+        Wed, 16 Jun 2021 00:12:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
+Subject: Re: [BUG] range expressions in GIT_SKIP_TESTS are broken in master
+ (was [BUG] question mark in GIT_SKIP_TESTS is broken in master)
+References: <1d003cac-83fa-0b63-f60e-55513ac45cf9@gmail.com>
+        <6980e906-8076-1436-ecdb-6775eff55d39@gmail.com>
+        <xmqqa6nqsd2i.fsf@gitster.g>
+Date:   Wed, 16 Jun 2021 13:12:09 +0900
+In-Reply-To: <xmqqa6nqsd2i.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        16 Jun 2021 12:28:21 +0900")
+Message-ID: <xmqq4kdysb1i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <patch-2.6-39e8654507c-20210615T161330Z-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 05DAE21E-CE59-11EB-9873-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/06/21 23.17, Ævar Arnfjörð Bjarmason wrote:
->   ------------------------------------------------
-> -$ mkdir /pub/my-repo.git
-> -$ cd /pub/my-repo.git
-> +$ mkdir /var/www-data/deployment.git
-> +$ cd /var/www-data/deployment.git
->   $ git --bare init --shared
-> -$ git --bare fetch /home/alice/myproject master:master
-> +$ git --bare fetch /home/you/project master:master
->   ------------------------------------------------
->   
+Junio C Hamano <gitster@pobox.com> writes:
 
-Normally you need to mkdir there as root.
+> Interestingly enough, edc23840b0 (test-lib: bring $remove_trash out
+> of retirement, 2021-05-10) cleanly reverts without being depended on
+> by anything else in the series.
+>
+> =C3=86var?
 
--- 
-An old man doll... just what I always wanted! - Clara
+With the crude debugging aid patch (attached at the end) applied,
+running
+
+    $ GIT_SKIP_TESTS=3D't?000' sh -x t0000-basic.sh -v
+
+will show something interesting in the trace.
+
+    ++ this_test=3Dt0000
+    ++ _s_k_i_p_=3D't?000'
+    ++ match_pattern_list t0000 t5000
+
+The variable $GIT_SKIP_TESTS on this line:
+
+    if match_pattern_list "$this_test" $GIT_SKIP_TESTS
+
+globs to t5000.  We don't quote the variable because we want them
+separated at $IFS boundaries, but we didn't want the glob specials
+in its value to take any effect.  Sigh.
+
+The reason why edc23840b0 appears to break this is probably because
+we are still in $TEST_DIRECTORY when this match_pattern_list is
+executed; before that change, we've created $TRASH_DIRECTORY and
+chdir'd there already, and when we check "do we want to skip all?",
+there is nothing for the glob to match.
+
+That also explains why GIT_SKIP_TESTS=3D"t000?" appears to work.
+There is no such filesystem entity directly in $TEST_DIRECTORY.
+
+    $ echo t000? t00?0 t0?00 t?000
+    t000? t00?0 t0200 t5000
+
+
+
+diff --git i/t/test-lib.sh w/t/test-lib.sh
+index 54938c6427..8ee0540532 100644
+--- i/t/test-lib.sh
++++ w/t/test-lib.sh
+@@ -1346,13 +1346,17 @@ fi
+ remove_trash=3D
+ this_test=3D${0##*/}
+ this_test=3D${this_test%%-*}
++_s_k_i_p_=3D$GIT_SKIP_TESTS
++
+ if match_pattern_list "$this_test" $GIT_SKIP_TESTS
+ then
+ 	say_color info >&3 "skipping test $this_test altogether"
+ 	skip_all=3D"skip all tests in $this_test"
+ 	test_done
+ fi
+=20
++exit
++
+ # Last-minute variable setup
+ HOME=3D"$TRASH_DIRECTORY"
+ GNUPGHOME=3D"$HOME/gnupg-home-not-used"
