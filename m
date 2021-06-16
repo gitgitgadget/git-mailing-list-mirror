@@ -2,76 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 567C6C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 01:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA6EEC48BDF
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 01:25:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A1CB61369
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 01:22:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8936861356
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 01:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231184AbhFPBYv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 21:24:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57208 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbhFPBYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 21:24:51 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A65D4E6554;
-        Tue, 15 Jun 2021 21:22:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zfdzyBaJjuRwMKIBXi3hTJWe1waLzaE0mjxtSL
-        ie/NM=; b=k6ek5CH6arF8aLk3WowhjigUG3in90YORD7b8zNQbq1B/QJdjxfO8T
-        Jh6u7VwPPnVAmvqyaW7hx7O7aUq2HRX0z2KrUPCh39lNDnx9MPJlu8qQHnJ0lEeM
-        uN+hjatFWd6pMWm/DOfViDEM9P72d224O+aBJlLolQecyZUB4Gx2I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CFDAE6553;
-        Tue, 15 Jun 2021 21:22:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S231356AbhFPB1Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 21:27:25 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49560 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230376AbhFPB1Y (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 15 Jun 2021 21:27:24 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 324C4E6552;
-        Tue, 15 Jun 2021 21:22:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jun 2021, #05; Tue, 15)
-References: <xmqqmtrrv8sd.fsf@gitster.g>
-        <CABPp-BEP2ct7ikBJyvFuzkq+HZ1q-OMW3sKMphbkTZ82F7+dzg@mail.gmail.com>
-Date:   Wed, 16 Jun 2021 10:22:44 +0900
-In-Reply-To: <CABPp-BEP2ct7ikBJyvFuzkq+HZ1q-OMW3sKMphbkTZ82F7+dzg@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 15 Jun 2021 13:16:27 -0700")
-Message-ID: <xmqq1r92vc0r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D211760749;
+        Wed, 16 Jun 2021 01:25:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1623806718;
+        bh=9pA/QC2PE/yQ5YvkOkIPq+A2MICxNKo8nz4MKgcz5N8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=kwpim0RoXBGu6o77gsEFcdja99P9uN28oraZvzEf/FjUT4snZ7xfPeE1JOgEp1y2v
+         4ev5gC2omnSMk0xFndtuU8oEOjpwK9ERSEvsZhpH8axFW6LIWe5sKjXHpoijP2cJIO
+         YdWsoQ6f+LazudEZ0vjHkGKfO3sr/n7v10z7YTtz/mAMagIdaE1k2RQsl7hM5GvJgT
+         f0tSzmGsHlB6LKofg0dk8awkZ3IOhZawQa1Nz9FvWEvBlhhCKMEKhiwOgLLmDHPTQP
+         Y9Bc/yKYy7Espn+tvU9KH8yDLcBg8neceWY+obHs+VRuLEeSHeNQlIUF47VkT94Q7Y
+         sGoTLiqrpAJ0FQ7R+hL34W3jnF3GnHJt8SdvUXxtCPtn8TFrckdw2Zb3ANsHbErO6x
+         4OKWME1UPuV58ZYESslmEUoHL8LHnBsl2vKi60YdVTGN101/A5jdETLdH5zuExP3m7
+         +bsiI3oxu47Qcb4VfTLe+Xv9UN43rT4CnWognX8Vdmp5Zc+6l3G
+Date:   Wed, 16 Jun 2021 01:25:15 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Rose Kunkel <rose@rosekunkel.me>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] `git reset --hard` fails with `update = none` submodules
+Message-ID: <YMlS+1F9IND7vxNI@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Rose Kunkel <rose@rosekunkel.me>, git@vger.kernel.org
+References: <CAKjYmsELpf9r3bAJj_JUHgVegw_7z2KzyuR_6FYYngpC1XmNeg@mail.gmail.com>
+ <YMlLGwScowX8eXeJ@camp.crustytoothpaste.net>
+ <CAKjYmsHD2MuTE+drebKichz_0wquPN8ZTLbiPkUCZJyLsSFh8Q@mail.gmail.com>
+ <CAKjYmsEHWShuKEOFWnCyU1x5rM7kFrcaN78D7KhhUay8kCvA2g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5A8B78FE-CE41-11EB-8AA5-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Sb/IqILZIpqwueM0"
+Content-Disposition: inline
+In-Reply-To: <CAKjYmsEHWShuKEOFWnCyU1x5rM7kFrcaN78D7KhhUay8kCvA2g@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
-> On Tue, Jun 15, 2021 at 1:24 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * ds/status-with-sparse-index (2021-05-22) 14 commits
->> ...
->>  "git status" codepath learned to work with sparsely populated index
->>  without hydrating it fully.
->>
->>  Waiting for reviews.
->
-> I reviewed each of the rounds except v4 (v5 is the latest), and
-> generally like the series but I highlighted a few issues in v5.
-> Stolee reported he's planning to send a re-roll (see e.g.
-> https://lore.kernel.org/git/2784d29b-b22a-2bf6-2450-7b4a0a72df54@gmail.com/),
-> so I think this can be updated to "expecting a reroll"?
+--Sb/IqILZIpqwueM0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, very much appreciated.
+On 2021-06-16 at 01:03:40, Rose Kunkel wrote:
+> Potentially relevant: `git config --global --list` shows
+> ```
+> status.showstash=3Dtrue
+> status.submodulesummary=3Dtrue
+> submodule.recurse=3Dtrue
+
+Thanks for this additional information.  This line is the critical
+piece.  Now I get this:
+
+  $ git reset --hard
+  fatal: not a git repository: ../../.git/modules/repos/agda
+  fatal: could not reset submodule index
+
+Predictably, "git -c submodules.recurse=3Dtrue reset --hard" also results
+in the same thing.
+
+The --recurse-submodules option for git reset says this (emphasis mine):
+
+  When the working tree is updated, using --recurse-submodules will also
+  recursively reset the working tree of all *active* submodules
+  according to the commit recorded in the superproject, also setting the
+  submodules' HEAD to be detached at that commit.
+
+On my system, .git/config has this:
+
+  [submodule]
+          active =3D .
+
+So these submodules are active, but they probably should not be, since
+we haven't checked anything out (or, for that matter, cloned any data)
+and it wouldn't make sense to try to operate on them automatically with
+submodules.recurse or --recurse-submodules.
+
+My gut tells me that we should probably mark submodules with update=3Dnone
+set on a clone as inactive.  Of course, this is a tricky area that I'm
+not super familiar with, so opinions or thoughts are welcome.
+
+If folks think this is a good way forward, I'll look into writing a
+patch, probably tomorrow evening since it's starting to get late here.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--Sb/IqILZIpqwueM0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMlS+gAKCRB8DEliiIei
+gXEkAP9ScTi73dELt5FCPD9BBnNsMyNtFRkGuBfXMa62P/JKHgEAvjio2qwoLd7Q
+tWatHbuXXP3cEpTVVBXBtDjqo4KX1gc=
+=AEKU
+-----END PGP SIGNATURE-----
+
+--Sb/IqILZIpqwueM0--
