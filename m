@@ -2,107 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-31.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C1A4C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 00:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B65C48BDF
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 00:45:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34B7E61107
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 00:40:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0036561153
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 00:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231792AbhFPAmq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 20:42:46 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64888 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231779AbhFPAmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 20:42:46 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3847DCF987;
-        Tue, 15 Jun 2021 20:40:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=LjYtFc1sPyws
-        vlbVEvcbMz9eNe5qmLriVYHrtzaxFpE=; b=qrHFtciDcmpk1+jJlXaanxYuR9dM
-        O0G+WBOW7WEb63pcCUDwJsBZXDulOujdQKi5X5kJFxBixmV9Jd5W/4Hboku6c0pg
-        mucsIgU2xPOHOsLXzlDv95YapjVu67tmnGwB1HDvgzPSl+j/llXF5UOKrl7AbDma
-        zEwrP/1NKe1R4OE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2953ECF983;
-        Tue, 15 Jun 2021 20:40:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A464ECF982;
-        Tue, 15 Jun 2021 20:40:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Luke Shumaker <lukeshu@lukeshu.com>
-Subject: Re: [PATCH 0/2] extra: new concept of extra components
-References: <20210614043450.1047571-1-felipe.contreras@gmail.com>
-        <87tum0zfub.fsf@evledraar.gmail.com>
-Date:   Wed, 16 Jun 2021 09:40:38 +0900
-In-Reply-To: <87tum0zfub.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 14 Jun 2021 16:18:30 +0200")
-Message-ID: <xmqqim2evdyx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7936522A-CE3B-11EB-8A29-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S231743AbhFPArY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 20:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231741AbhFPArX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 20:47:23 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C916C061574
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 17:45:17 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id m205-20020a25d4d60000b029052a8de1fe41so471346ybf.23
+        for <git@vger.kernel.org>; Tue, 15 Jun 2021 17:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=9dNKI8/KGq0kHnZN4jUWXxwIdCWS1i8oTQ7byzTXKqI=;
+        b=Nvj920lRbeYwVXBJqFriejRS648jlxA3FmsrWB6nKLT9fIcKTzvs18peH/A/9CYibg
+         3TlIMYXElgARFiw8/e8aXECijl8jnOUaOi7Vk+wFBP/1/KjkXXc03WjSORsME+0+Jefr
+         2tLYMbIP2S1aWfVUpgR9ICoMpvIGC502SjyKa+NaIr0kI8eJVoR1nS3NrEt5Yl8H1HY/
+         ui5/hTeDG72ZjP1PVxEi59+tGB53YcNdBRqfVz2FLQ2EXL04ZBzgyBgKO6pJfGPJCPVz
+         C99OM8HMTilyh833zriv/R2NkUbYuCH8+k5oJCtiU/XzKnktp66mhGtbQusbJppkI2lY
+         ZMCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=9dNKI8/KGq0kHnZN4jUWXxwIdCWS1i8oTQ7byzTXKqI=;
+        b=WTqUK4CceTjvrvhaudRpztILGs4C7TUkw7fspPWxYZkBFNFH4A1gJqmHv2nBzZ9zfR
+         +Aqq4CC8VgsA0im/ZAgor0/FWdNIhN97Ec480VJ8UPFl86/MzJM6FezWtENVVtJrpdAM
+         2rUPIhaF+oBME18CyEG/YeJu+uW3OilpgX3XHLjh4tRT4+Yg/bt1ziwyp+lmwMhSXJcC
+         YAkePl7VqBjomsT68bwmBbBkTCtY4zAEvafIy1gaD6Q+TuwZhcLGVpDETZInQUQosnY4
+         KSjkLX/P/Z213uBC/Nf9ahBwiNd1K+4pHmWyjVfOWN0q+NtNxe7goqiH1jXekkf6zMNa
+         IW9w==
+X-Gm-Message-State: AOAM533T2/qiiX629/FGsFMj8chbJQ2zaBXXf3N7oChfS0Ga8W2EyoZx
+        5SwSOlWOCbxJ05YwZ9Twk5S4uqjp48EuyZtXZBiVwAnjMr6dO4H+5zfkIM1mb1Byv6hPvYqebAf
+        ILjxX9IHPZ7yZZR8yNEu5ot6iXP1J63LRFQrMOlE56lfGspX4dj/9Yle9P35jzUi/pTJCjaLC8Q
+        ==
+X-Google-Smtp-Source: ABdhPJxgOONptl0W1WHzGsp+tbm0b9J5a6ae8WNd3Ne1BCNLz3a87eJGnSk3Gi+CFeooje1bRYxwlzx8d1c58fRuzUI=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:d4cc:f4a9:b043:ff6e])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:ca0a:: with SMTP id
+ a10mr2601981ybg.5.1623804316081; Tue, 15 Jun 2021 17:45:16 -0700 (PDT)
+Date:   Tue, 15 Jun 2021 17:45:04 -0700
+In-Reply-To: <20210611225428.1208973-1-emilyshaffer@google.com>
+Message-Id: <20210616004508.87186-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
+Subject: [PATCH v2 0/4] cache parent project's gitdir in submodules
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Albert Cui <albertcui@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+The reception for this series seemed pretty good in v1, so I'm dropping
+the RFC.
 
-> On Sun, Jun 13 2021, Felipe Contreras wrote:
->
->> This patch series introduces the concept of extra components. These ar=
-e
->> components which are not yet part of the core but are good enough for
->> distributions to ship, and in fact, they already do.
->
-> I like this direction.
+Tested: https://github.com/nasamuffin/git/actions/runs/941100646
 
-I do not mind change, but it is fuzzy to me what direction you are
-in favor of.  Is the gist of the idea to split what is in contrib/
-into two bins, ones that are closer to "official" and others?  If
-so, I see sort-of merit in such a distinction, but whom is this
-trying to help?
+Sinec v1, mostly platform-friendliness fixes. Also added documentation
+for the new config option - wordsmithing help is always welcome.
 
-Distros would rather see what they use unmoved, and would not care
-where those that they do not use move to, I would imagine.  So I
-suspect that it would help them more if we kept the ones that are
-closer to "official" in contrib/ and moved the rest to a new
-hierarchy?
+ - Emily
 
-> I have a CI failure in one series of mine that seems to be a lack of
-> updating to CMake in contrib/buildsystems, perhaps we should be adding
-> that to extra/ too, i.e. extending this to the "make test" run by CI?
->
-> Not something that should hinder or necessarily be included in this
-> series, just a note about a related component.
+Emily Shaffer (4):
+  t7400-submodule-basic: modernize inspect() helper
+  introduce submodule.superprojectGitDir cache
+  submodule: cache superproject gitdir during absorbgitdirs
+  submodule: cache superproject gitdir during 'update'
 
-I think that is more or less independent.  contrib/buildsystems (or
-anything else that currently do not have test coverage) can be
-taught to CI before or after sifting what is contrib/ into two
-classes.  If the usable and testable ones stay in contrib/ instead
-of getting moved, such a task can go in parallel.  We declare the
-split, interested parties work on adding the part they are interested
-in to the test framework, and the parts that are not updated to be
-tested will be dropped to a "less than contrib" status.
+ Documentation/config/submodule.txt | 12 ++++++++
+ builtin/submodule--helper.c        |  4 +++
+ git-submodule.sh                   | 10 ++++++
+ submodule.c                        | 10 ++++++
+ t/t7400-submodule-basic.sh         | 49 ++++++++++++++----------------
+ t/t7406-submodule-update.sh        | 10 ++++++
+ t/t7412-submodule-absorbgitdirs.sh |  9 +++++-
+ 7 files changed, 77 insertions(+), 27 deletions(-)
 
-So, in short, I like the general idea of sifting the contrib/
-material into two bins, but I may not agree with (1) the execution
-of these patches, or (2) the higher level goal of what such a split
-wants to achieve (i.e. "whom are we helping?" question).
-
-Thanks.
+Range-diff against v1:
+1:  d6284438fb = 1:  a6718eea80 t7400-submodule-basic: modernize inspect() helper
+2:  56470e2eab ! 2:  4cebe7bcb5 introduce submodule.superprojectGitDir cache
+    @@ Commit message
+     
+         Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+     
+    + ## Documentation/config/submodule.txt ##
+    +@@ Documentation/config/submodule.txt: submodule.alternateErrorStrategy::
+    + 	`ignore`, `info`, `die`. Default is `die`. Note that if set to `ignore`
+    + 	or `info`, and if there is an error with the computed alternate, the
+    + 	clone proceeds as if no alternate was specified.
+    ++
+    ++submodule.superprojectGitDir::
+    ++	The relative path from the submodule's worktree  to the superproject's
+    ++	gitdir. This config should only be present in projects which are
+    ++	submodules, but is not guaranteed to be present in every submodule. It
+    ++	is set automatically during submodule creation.
+    +++
+    ++	In situations where more than one superproject references the same
+    ++	submodule worktree, the value of this config and the behavior of
+    ++	operations which use it are undefined. To reference a single project
+    ++	from multiple superprojects, it is better to create a worktree of the
+    ++	submodule for each superproject.
+    +
+      ## builtin/submodule--helper.c ##
+     @@ builtin/submodule--helper.c: static int module_clone(int argc, const char **argv, const char *prefix)
+      		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
+3:  42f954f523 ! 3:  df97a9c2bb submodule: cache superproject gitdir during absorbgitdirs
+    @@ submodule.c: static void relocate_single_git_dir_into_superproject(const char *p
+     
+      ## t/t7412-submodule-absorbgitdirs.sh ##
+     @@ t/t7412-submodule-absorbgitdirs.sh: test_expect_success 'absorb the git dir' '
+    - 	test -d .git/modules/sub1 &&
+      	git status >actual.1 &&
+      	git -C sub1 rev-parse HEAD >actual.2 &&
+    -+	test . -ef "$(git -C sub1 config submodule.superprojectGitDir)" &&
+      	test_cmp expect.1 actual.1 &&
+    - 	test_cmp expect.2 actual.2
+    +-	test_cmp expect.2 actual.2
+    ++	test_cmp expect.2 actual.2 &&
+    ++
+    ++	# make sure the submodule cached the superproject gitdir correctly
+    ++	test-tool path-utils real_path . >expect &&
+    ++	test-tool path-utils real_path \
+    ++		"$(git -C sub1 config submodule.superprojectGitDir)" >actual &&
+    ++
+    ++	test_cmp expect actual
+      '
+    + 
+    + test_expect_success 'absorbing does not fail for deinitialized submodules' '
+4:  4f55ab42c7 ! 4:  a3f3be58ad submodule: cache superproject gitdir during 'update'
+    @@ git-submodule.sh: cmd_update()
+     +		# Cache a pointer to the superproject's gitdir. This may have
+     +		# changed, so rewrite it unconditionally. Writes it to worktree
+     +		# if applicable, otherwise to local.
+    ++		relative_gitdir="$(git rev-parse --path-format=relative \
+    ++						 --prefix "${sm_path}" \
+    ++						 --git-dir)"
+     +
+    -+		sp_gitdir="$(git rev-parse --absolute-git-dir)"
+    -+		relative_gitdir="$(realpath --relative-to "$sm_path" "$sp_gitdir")"
+     +		git -C "$sm_path" config --worktree \
+     +			submodule.superprojectgitdir "$relative_gitdir"
+     +
+    @@ git-submodule.sh: cmd_update()
+      			(
+     
+      ## t/t7406-submodule-update.sh ##
+    -@@ t/t7406-submodule-update.sh: test_expect_success 'submodule update --quiet passes quietness to merge/rebase'
+    +@@ t/t7406-submodule-update.sh: test_expect_success 'submodule update --quiet passes quietness to fetch with a s
+      	)
+      '
+      
+-- 
+2.32.0.272.g935e593368-goog
 
