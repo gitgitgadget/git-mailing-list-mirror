@@ -4,133 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7766CC48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 12:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A83F5C48BE6
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 12:29:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 578F261359
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 12:13:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 922FB613B9
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 12:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232452AbhFPMP5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 08:15:57 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:40597 "EHLO
+        id S233028AbhFPMbV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 08:31:21 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33337 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229456AbhFPMP4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 16 Jun 2021 08:15:56 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id B6DB55C00CE;
-        Wed, 16 Jun 2021 08:13:50 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 16 Jun 2021 08:13:50 -0400
+        by vger.kernel.org with ESMTP id S233034AbhFPMbL (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Jun 2021 08:31:11 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 209215C0175;
+        Wed, 16 Jun 2021 08:29:05 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 16 Jun 2021 08:29:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=kNAmaCGeOrJ8u1EbtVDHZOHmDBX
-        uaCqMb3Hf/MQZULk=; b=qJXnZZ6hPFCUEWfZq300TBuS8Z7sGH2K23EQnkjAKYz
-        Fs6u+Es8WjRwupnORRkPzxgvl9Urc0kVQB7ipKqxQCisnzRSbu40YyZeCNC0Vf/S
-        ffRlI3bp+P6qlR5AB2qbYj+U4+CH3IfAwtzxSf7dinIG72EgwFs/vrTggBryw7Gr
-        UGbOQbJ9yhbUgFUZnCXVEI05YZbkAcOPsOQAHOhX0mW0ioucslDQcABW3TTQbrsc
-        4GSd7Rnyog15YBT7K58/0R21saH5ezi7mKm8bRgYjreZSiSl4binL198iJKahxtY
-        68Dzo9gxl0mx8Hw70ZOGYylsjJ9E0hqhCVfoQFiV3Pg==
+        :content-type:in-reply-to; s=fm1; bh=oMAyxeQTZ6AXr3FaAZCcUj3K4Bq
+        dqegYfAN1X14SK98=; b=AqCXmc0ldvvRkb0HB3lHCtFJg82EgHlZKZOXIbRAxxC
+        tcD8igvEgAIK25+o1rRaM+lErSgCUonMM7McHohFXtwpL+PyRUXo0i3wqEBTSGns
+        j9J7EX6hXTYwMSL7cna3Sq+xer5d6oQuBwZuyRFYTjRgyDrhTGlkE83YV9iZvLQO
+        q1DemFUoW4WbtFtmgu0+eSXkTDujbVXVgtwD31XyidGGAwSRhkLSLvLjwlDBFqsr
+        okdHWZxLQtQgw9/LPRR1n3o3G4FE8H9o3FBR6ISq3G8CO+Xfc/SP7W0lwfMLRUUb
+        6YR0GyJ9j1Zuz1bH9fBFiXrJPiuFNOKL/swuRasBGfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=kNAmaC
-        GeOrJ8u1EbtVDHZOHmDBXuaCqMb3Hf/MQZULk=; b=Wqu1Hqnc7rfza+qJPsCddb
-        Q3C6x9OJHWiR/riFTdijfYBlPjNQUCgXL+QWcGEnCKXAJenEkzvpXFwS9Uzcbebu
-        8pZMnf8lHbJCrrVC/2EhSaDQ2f6usAZh3+yRFclfijPsPGfXpxt17IdT6t7ptNjq
-        CITwbX0QUyG/nf2W8/hjd+KFXOqDqgdcbvbV40n3MU9jxKbJsZy9YFdW2rd1UV1o
-        q4bq835GjGRqqBtc+pwCFm5xN57fnweqsGkxM48sdN73iHFHU1/M82gajvhsOWLT
-        NOxCr+bDEPZzpniTx1v85ePb5NUeQlV3+1Daqy3vr2XpWJCxvhSPypgangQk1Z5g
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=oMAyxe
+        QTZ6AXr3FaAZCcUj3K4BqdqegYfAN1X14SK98=; b=biyKMaxdZUJt5039ArigEp
+        DPbsZxcJhGQ/s9Zo+asYbkz0dayOkVot5Fd85ysZ1+WHROAkQ6ICELkaXBxT0RWc
+        r+F8sxprD0cWJyAMF/pwFWMm8cqWMHaGe4aLA4IXyQ8oTSAI3lNKaLlc67u3ugSc
+        xUaGWQduUf4fYmE6CwmDHTyC5ghwNGnGlzqg5t+KQVCGdZLvI926YXdqD0+VBve1
+        4gI2dTQpvE792t8YFcUbODbzfC8t4OeiwTUYjmFbaPZ7oMFnfg3piy+Im80+E46Y
+        o1MZ3wrXgcg1isNsqnwoT3sz0Xo49CGCgDS6a/zhJ1d0k8BoV1oc3gftfWPz6FUQ
         ==
-X-ME-Sender: <xms:_urJYDehiFtLg-qrXmO1dl8-1oxKSAbF-5qePIWw9gBweANRga2hgA>
-    <xme:_urJYJMqrlLZhoKumS44onKi3DQouWHVJV-TIV9ehHHHRWjr2XC3tmrmLlRhZbq2J
-    HQsTgzU_LID0fxB_w>
-X-ME-Received: <xmr:_urJYMiKTF-5oczb_dfcKRGmT-o_g1ofwjMMkubF949Eu4N_JfbJ20zk0JzWMCIiRATmBvR8rilekXyyZfNaCZAFMGmEOeHFfNqAAEVrAhNuw5HxQbYJc4w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedvledgheduucetufdoteggodetrfdotf
+X-ME-Sender: <xms:kO7JYNp4EIw_tpCWtxzl2zHyrVOtzo97YvMh621mYrt--4N6JTUhow>
+    <xme:kO7JYPpshSza9eB-cvdV5Sr-s_JkUV3EnQ0rHwGTz1uQYci-4wG4zSNHDfLJLlU7I
+    54JDVFgfIOieEGKIg>
+X-ME-Received: <xmr:kO7JYKNakA7rdtJysmfjPLHYA03UV2U93_g1Bh4M8s3uauY18y65gek5beuZNPvKxRaX2hbrX0I993dqxbtu5PLu6vlCt2yc4YRgear3TUa6de5nQl4Se-c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedvledgheefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepkefhheetfedutdfgvdfhheevgeekfffhve
-    dtvdevteevgeetvdfgtdefvdehgeffnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
-    phhusghlihgtqdhinhgsohigrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:_urJYE8ziv1xB1uxkOmWKpMwmFyxnxSjNARFV4NVfse5ZulwbXkUDg>
-    <xmx:_urJYPuWCCmR6yPA3wfNPEozYfQqMZXQ3H_JUnLGiK8t0GmALlTAnQ>
-    <xmx:_urJYDFnmIon_okXOphypuoaiz2xTh-6TmK72OcSD1arvF2RWh3pFQ>
-    <xmx:_urJYN04RULuxYttx0l6mzgiAHqQdj3ysjTTvMTi_1yXTbTgCSQefw>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:kO7JYI51DBL6ZbjvQOjFI2e4u31vLP8CBpjWwHI8rxpPYxRj1CCxhQ>
+    <xmx:kO7JYM5lF6BbArbJIHg4IOhel_GxbFJ9Ib4v6Bkq4z3vHj1uRJiAQQ>
+    <xmx:kO7JYAgJPC4XDm4yLooP_aM_lB51P4neoTsl-QFYfzXp5MwoKjW1TQ>
+    <xmx:ke7JYKRke1t42QI9f7ICwAI310ellc9SEmQuNp7_9CMpS5z-2xlsRg>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Jun 2021 08:13:49 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 910fff56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 16 Jun 2021 12:13:43 +0000 (UTC)
-Date:   Wed, 16 Jun 2021 14:13:42 +0200
+ 16 Jun 2021 08:29:04 -0400 (EDT)
+Received: from localhost (tanuki [10.192.0.23])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8ad90abf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 16 Jun 2021 12:29:01 +0000 (UTC)
+Date:   Wed, 16 Jun 2021 14:31:04 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] perf: fix when running with TEST_OUTPUT_DIRECTORY
-Message-ID: <YMnq9uPnmjotC5w7@ncase>
-References: <005cc9a695f7f9b17190293821369763e9bae662.1623834515.git.ps@pks.im>
- <87mtrqxcq1.fsf@evledraar.gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] bitmaps: don't recurse into trees already in the bitmap
+Message-ID: <YMnvCI/jksyn2flD@tanuki>
+References: <YMcExxF7DI6k+sZ+@coredump.intra.peff.net>
+ <YMdGGL6v8LrbcAJP@coredump.intra.peff.net>
+ <471cb9be-bb72-6a37-ede8-f9421d9d3ebe@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EXJOu2byE+g7e2Pg"
+        protocol="application/pgp-signature"; boundary="0TUjrvidw1nNDBju"
 Content-Disposition: inline
-In-Reply-To: <87mtrqxcq1.fsf@evledraar.gmail.com>
+In-Reply-To: <471cb9be-bb72-6a37-ede8-f9421d9d3ebe@gmail.com>
+X-TUID: TVmLBTzwuNlZ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---EXJOu2byE+g7e2Pg
-Content-Type: text/plain; charset=iso-8859-1
+--0TUjrvidw1nNDBju
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 16, 2021 at 01:33:32PM +0200, =C6var Arnfj=F6r=F0 Bjarmason wro=
-te:
+On Tue, Jun 15, 2021 at 10:17:04AM -0400, Derrick Stolee wrote:
+> On 6/14/2021 8:05 AM, Jeff King wrote:
+[snip]
+> > But here are numbers from some other real-world repositories (that are
+> > not public). This one's tree is comparable in size to linux.git, but has
+> > ~16k refs (and so less complete bitmap coverage):
+> >=20
+> >   Test                         HEAD^               HEAD
+> >   ---------------------------------------------------------------------=
+----
+> >   5310.4: simulated clone      38.34(39.86+0.74)   33.95(35.53+0.76) -1=
+1.5%
+> >   5310.5: simulated fetch      2.29(6.31+0.35)     2.20(5.97+0.41) -3.9%
+> >   5310.7: rev-list (commits)   0.99(0.86+0.13)     0.96(0.85+0.11) -3.0%
+> >   5310.8: rev-list (objects)   11.32(11.04+0.27)   6.59(6.37+0.21) -41.=
+8%
+> >=20
+> > And here's another with a very large tree (~340k entries), and a fairly
+> > large number of refs (~10k):
+> >=20
+> >   Test                         HEAD^               HEAD
+> >   ---------------------------------------------------------------------=
+----
+> >   5310.3: simulated clone      53.83(54.71+1.54)   39.77(40.76+1.50) -2=
+6.1%
+> >   5310.4: simulated fetch      19.91(20.11+0.56)   19.79(19.98+0.67) -0=
+=2E6%
+> >   5310.6: rev-list (commits)   0.54(0.44+0.11)     0.51(0.43+0.07) -5.6%
+> >   5310.7: rev-list (objects)   24.32(23.59+0.73)   9.85(9.49+0.36) -59.=
+5%
+> >=20
+> > This patch provides substantial improvements in these larger cases, and
+> > have any drawbacks for smaller ones (the cost of the bitmap check is
+> > quite small compared to an actual tree traversal).
 >=20
-> On Wed, Jun 16 2021, Patrick Steinhardt wrote:
->=20
-> > When the TEST_OUTPUT_DIRECTORY is defined, then all test data will be
-> > written in that directory instead of the default directory located in
->=20
-> Is the timing of this patch a coincidence, or did you run into this
-> related to the other patches related to this variable now,
-> i.e. https://lore.kernel.org/git/20210609170520.67014-1-felipe.contreras@=
-gmail.com/
-> and related.
+> These many-refs scenarios make sense as something that is difficult to
+> verify using a single fork of an open-source project, but is common in
+> many closed-source projects that do not use forking to reduce the ref
+> count per repo.
 
-Coincidence. In fact, I already sent this patch a few weeks ago as part
-of [1]. But given that this patch set turned out to not be an easy sell
-and that I didn't yet find the time to work on it again, I decided to
-split out this patch and upstream it standalone.
+Agreed. What I typically do to emulate this is to use some version of
+following command to create refs for "$n" commits.
 
-Your remarks all make sense to me, will address them in v2. Thanks!
+    git log --all --format=3D"tformat:create refs/commit/%h %H" |
+        shuf | head -n "$n" | git update-ref --stdin
+
+It's obviously not ideal given that resulting refs are distributed at
+random. But combined with a sufficiently large repo, it's still helped
+me at times to reproduce adverse performance at times.
+
+Anyway, the patch does look good to me and sounds like it may help with
+some of the cases where I have observed adverse performance with bitmaps
+enabled in the past. Thanks!
 
 Patrick
 
-[1]: http://public-inbox.org/git/cover.1621451532.git.ps@pks.im/
-
---EXJOu2byE+g7e2Pg
+--0TUjrvidw1nNDBju
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmDJ6vUACgkQVbJhu7ck
-PpQW7A//SzRShh6pYPb5NnbbaInH/Y66odZu/xp4rdwe8204f9ja1EFkFPw3Mw/0
-2bufK3x7TR9iMSd7NRRKH2IyzaltiUsgBm5OzYwHQ4S+2B2qhP4GCZv+QE5XQhDe
-LsncsYndbU6qLX7jC5dN7NKL986JV/C4IKpHFpWuw+3BzGM2wgAlfb2Zoa7lB9UL
-69PSiMv6aIMvr3IF0PFO74TPKTpW/N86NuicA+eT1j+mfmIpbaXkBaBha5C1lI7D
-MWzEC9u4A3wuD2LM5WBUqwbBzC5RS9qA76lqz2xDswsZWPArly0Sx9trvATT3X6D
-TDooCCZhy4u5yQ7laguC4EQVZYVboTTPdRB6N0eA4ApyKQctjgxcN4B3CBebiH9/
-xfvqijoDL84goEEvUaLbGHzPIwL2VIgaFLnGmnfMiwVYjohZBfDIvAVxmAUUTZ8i
-CRcAjteQEeZooV6RHOoQtUja74PdMcOXvci1xoYRhv2QWaN0NGriQcmJ0U/2a4uN
-9Ra7ti5l+JSBRVeJW2sh6KVnWV1MJ8Q63V1Nq4+92Ek47uKl/zK32fpIxcS1Yty7
-uwZyLdvi3Vo+S4cqj+S+norsqzauxfRYQsatBjqKmyL0zg364QBnXZqukmXuyevI
-zCpDE/l5IehqFMl/k+q6ODan/zqShnO0DD7jwcT8UVrZTsdc1is=
-=F3cR
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmDJ7wcACgkQVbJhu7ck
+PpRtnRAAqrLchAcdZpUBeD5V0WKoMbekZPVdte0IjOfnKKmL02kz9Hzk0LOlx/+0
+gafG1lOm4/2gAQjg9HeyTF6wG8ipYFNDnFRoprWksigFN9ey1kV5dmCUUdNUm7d2
+zcwdYpZeONrAgQxkDAaAH8v3RewK//j2yBsdb0MjF89clU4JxZ0wjKBmjNCImVu2
+IHHMVxx0ELcWj0zy6LiaiyRwgKtegCUmE0lvSV/PiKjZzQ7jQOHDvcgUZRJHdWff
+AvrNpiynBjppH+vzJGJxs6MI2j2AWZdnUTUzdvhuzrQ3B0sEE6FIOYlEPALEQH2m
+rh1TiPcE4NhecffWVfkZog7RkVTCQGLKUBUdabzsF18Z3xIbH/JADivvjJrcaIQ8
+st39BH/FuEOaBrLHIHv2yK6H/CRz0bwSZLeyAKg0hj4JK7ZX+ZJJ4fkzMbdy/Geh
++SIJDgn5e682cYTuiXcvlaPHmJVQqnBQ7Ry0V3h24BxeWbW5LbVTsNPtUwxGjnlw
+wgZI1alUQJSTyc0dW9UeB8I9YAdcx7+uwWk2BdmThGk12hcqUf/kO2Lk1DCM98sX
+E39EgQr9FmxG0uSW2xDgTcHK8MsSYCgqPKS+WRxzl27GzcHfabFToxrVuxvqayji
+c4jN8KWIH2iKaZG2VhyDEp4EeVgATykYw5YrFYyvU+8/OQ/xTD4=
+=N4If
 -----END PGP SIGNATURE-----
 
---EXJOu2byE+g7e2Pg--
+--0TUjrvidw1nNDBju--
