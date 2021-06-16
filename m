@@ -2,63 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9209DC48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 23:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F156C48BE6
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 23:31:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7461361185
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 23:31:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6AB3B6128C
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 23:31:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234620AbhFPXeB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 19:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33442 "EHLO
+        id S234626AbhFPXeE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 19:34:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234508AbhFPXeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 19:34:01 -0400
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800F4C061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 16:31:54 -0700 (PDT)
-Received: by mail-pg1-x54a.google.com with SMTP id v186-20020a632fc30000b029022192d6757dso2473425pgv.22
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 16:31:54 -0700 (PDT)
+        with ESMTP id S234630AbhFPXeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 19:34:03 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61E85C061574
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 16:31:56 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id a193-20020a3766ca0000b02903a9be00d619so723128qkc.12
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 16:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=s5z4wOPN9yV9kB5Pf11Kp4LCwO0YNKzNQtLCdqD3QrE=;
-        b=PpgRBv0U6Tpwnib995IGL0eJIFlNz5bCQYxF7sdUTtjVr4UUKn5e3wu4YhnoL/OWaL
-         x9RgJdHs8f3yqPDwhFZYD+FTGzyC15OY2tIVvqE/g4eX7ZExoZV+p4PwJUX1QiIOqPND
-         qkLgyEeGwESXAbZ6+nI9CQMr7T3uQRmPReLmtVEmE2/4DANvcjJgGh0JzAWhDZVy6tGM
-         fIADpZAiyF6d9kMdsmw/g8tjyBSljnG7T8J6UwxtjhR9B3pPnIbXotyUPrkuwUKdx4Hh
-         SJ0/AVutUhbiLQRe21ygq1IEzpmQCJr7hcpNJqiN76KoC2zcnRuacV3kbIOMJ/gqnECZ
-         802w==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=6Lk6ikWJM0Q7F68ew9FIqRrwgphRtO5a9G9m7OlHA/E=;
+        b=KLUL/5rjOAbXSHwTKiHaY3yMbhs/XUfU7z442IiE0awBrhQXdYIoxWjTLEPCCHX56M
+         4JKGKbCq/cfKUdtN7VxD4Tvlg6O7f4kIdiHVyK1gJvLGWHc/pp94ywoqZh0Cg2vOzKYH
+         XQkPomHrkF+fBretsadb6nnxjZspvMwLoZNy90RGh7bYhfoiGXlAPT9TM7RDrrJB/Nph
+         OQuxmlI+6YVhHuw1BzGT3x3oYwZmfBxdd84c5/EiKt6F61dV41/2R322Cx6UfXTMfZkZ
+         Y6pt/yjx9QaKC/itotiy7c/CjhENirOQZty/Y3Lk9EpCO2mSTlHqqsGq6v8mUY6+jAA+
+         2QPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=s5z4wOPN9yV9kB5Pf11Kp4LCwO0YNKzNQtLCdqD3QrE=;
-        b=tBH8X5GyYRhqfWgWObzvJnJMN+DA9rafafAE1J2aEEEqmHDrmuYVSPkGPyKQ9Em7Du
-         CnJG8GwO/I1qNXXgmrHmkZqcgORnDM2f39u6De7MYoF4UogGlk63KICzTBi0EhjxRiih
-         OyvCljwTLG3e1T+NpXf4w4CT5kKO1mMvQBc9fnr2UTeXZ9P62emOo4hN1gufY8us6vxO
-         6CoQTCa7w1Vdzzy56aPT88e+WOld4+aKOfYxlI9jrJ5DE4VsFw+1myHvYaRmiwvrxKba
-         7kpWw10dPV+5mV07HbSoKhuTMbLIUvOdzAlS7pXgzSFhuPDR22tPqQtY3obXEgyHMH1E
-         qTDw==
-X-Gm-Message-State: AOAM531kXiBRBUVYggGaDD61G/x38C0vVbyNa6lTh23yTnYXU15LH8q1
-        vNzo8ASlt5WeYTWoW0Z3/Pl/40Gp8p4Oy04vexE3ikxjaUU11PHwtr8NbQrwDiQFTAYH6lm+MKi
-        yOBB0Kc7Xy3sqGGrpqDn1b+v+bsCeONaY+TTXVHhYc5KqD6gI+YUS5P2VpZp6T3Uz0KnGUU2wVI
-        /5
-X-Google-Smtp-Source: ABdhPJwjqYruNkpdSsdqYKuv5appiRGWO2YTfmz/ISu52woAQcFQeG4uhZ7BwOtj5x+3hHE2gddKfPO+82q6tSBMvmJG
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=6Lk6ikWJM0Q7F68ew9FIqRrwgphRtO5a9G9m7OlHA/E=;
+        b=WH6jjRsuUG0CPqv8D3EkXEauz4W45mHu32f5wXpclHppuJWCFqW+E6vMDed8ZhL29z
+         qx5OYzHe1L/2PhfiWyUccMyZWihCfYy0qPsl1iWJhJ42ROGl6cFzyRRB+nKlKApy7/R3
+         J9I7q73lKlxYw0Et0GlKNg+oMSWVXvhIujnrUZquj6OVhe5fKM4ClY6r3VnZhXXh+rZs
+         2LuKQsA7IYQA9wsL0mrL8XaOJkH2Uvu1kWmFvmK/ghmvMjpPJU2tT4WBcTXtxxXOYkuX
+         +r0eMDXRVq8xHmb6JPCHHO5oJjvPe3VHEtfhNUzSzVRlvn+SX/n8yPQLl2Nppkxyv8DO
+         mTRw==
+X-Gm-Message-State: AOAM532J7wINMuoegIOza+4TsOhQDM3gXb1qrKYmpD4uS9nCJQevfprN
+        aBmKHhSsjhO7sa9CjbHdN+/MCqF9t3LWy0Stg4Y9KF+UWJCmmTU8nskXQByOvJbnQW/XMpTAfTj
+        yz+fcdkMy/NR7dkKEn712hNxgWj2DvhQqgSerOKYr6R9CWKyHPddWdWi2iroJLDwAXPhChLn9Ff
+        Ek
+X-Google-Smtp-Source: ABdhPJzRbGm3SjZk7vjtaK6GSsJMCVfCMUPzrbx7FH46ehkOTZh8WVRM+c28jWGAc2PKtmsg1F5zTK3tGgJdiwBvdPz0
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:8493:b029:11a:faa6:5bf6 with
- SMTP id c19-20020a1709028493b029011afaa65bf6mr1915388plo.42.1623886313660;
- Wed, 16 Jun 2021 16:31:53 -0700 (PDT)
-Date:   Wed, 16 Jun 2021 16:31:47 -0700
-Message-Id: <cover.1623881977.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:11b4:: with SMTP id
+ u20mr2712459qvv.4.1623886315465; Wed, 16 Jun 2021 16:31:55 -0700 (PDT)
+Date:   Wed, 16 Jun 2021 16:31:48 -0700
+In-Reply-To: <cover.1623881977.git.jonathantanmy@google.com>
+Message-Id: <74ed668e9bbf56bb7898bcdfaaf77db4f3205fe5.1623881977.git.jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <cover.1623881977.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.32.0.272.g935e593368-goog
-Subject: [RFC PATCH 0/2] MVP implementation of remote-suggested hooks
+Subject: [RFC PATCH 1/2] hook: move list of hooks
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -67,103 +70,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a continuation of the work from [1]. That work described the
-reasons, possible features, and possible workflows, but not the
-implementation in detail. This patch set has an MVP implementation, and
-my hope is that having a concrete implementation to look at makes it
-easier to discuss matters of implementation.
+The list of hooks will need to be used outside bugreport, so move it to
+a central location.
 
-This but does not use any features from es/config-based-hooks but is
-implemented on that branch anyway because firstly, I need an existing
-command to attach the "autoupdate" subcommand (and "git hook" works),
-and secondly, when we test this at $DAYJOB, we will be testing it
-together with the aforementioned branch.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ builtin/bugreport.c | 38 +++-----------------------------------
+ hook.c              | 34 ++++++++++++++++++++++++++++++++++
+ hook.h              |  3 +++
+ 3 files changed, 40 insertions(+), 35 deletions(-)
 
-I have had to make several design choices (which I will discuss later),
-but now with this implementation, the following workflow is possible:
-
- 1. The remote repo administrator creates a new branch
-    "refs/heads/suggested-hooks" pointing to a commit that has all the
-    hooks that the administrator wants to suggest. The hooks are
-    directly referenced by the commit tree (i.e. they are in the "/"
-    directory).
-
- 2. When a user clones, Git notices that
-    "refs/remotes/origin/suggested-hooks" is present and prints out a
-    message about a command that can be run.
-
- 3. If the user runs that command, Git will install the hooks pointed to
-    by that ref, and set hook.autoupdate to true. This config variable
-    is checked whenever "git fetch" is run: whenever it notices that
-    "refs/remotes/origin/suggested-hooks" changes, it will reinstall the
-    hooks.
-
- 4. To turn off autoupdate, set hook.autoupdate to false. Existing hooks
-    will remain.
-
-Design choices:
-
- 1. Where should the suggested hooks be in the remote repo? A branch,
-    a non-branch ref, a config? I think that a branch is best - it is
-    relatively well-understood and any hooks there can be
-    version-controlled (and its history is independent of the other
-    branches).
-
- 2. When and how should the local repo update its record of the remote's
-    suggested hooks? If we go with storing the hooks in a branch of a
-    remote side, this would automatically mean (with the default
-    refspec) that it would be in refs/remotes/<remote>/<name>. This
-    incurs network and hard disk cost even if the local repo does not
-    want to use the suggested hooks, but I think that typically they
-    would want to use it if they're going to do any work on the repo
-    (they would either have to trust or inspect Makefiles etc. anyway,
-    so they can do the same for the hooks), and even if they don't want
-    to use the remote's hooks, they probably still want to know what the
-    remote suggests.
-
-    So using a branch provides a well-understood way of storing the
-    hooks on the remote, transmitting it to the local repo, and storing
-    the hooks in the local repo.
-
-    So: what should be the default name of this branch? Presumably, "git
-    clone" would need to be able to override this.
-
- 3. How should the local repo detect when the remote has updated its
-    suggested hooks? I'm thinking when a certain local ref is updated.
-    Right now it's hardcoded, but perhaps "git clone" could detect what
-    "refs/heads/suggested-hooks" would correspond to, and then set it in
-    a config accordingly. Other options include remembering what the
-    remote's "refs/heads/suggested-hooks" used to be and always
-    comparing it upon every "ls-refs" call, but I think that the local
-    ref method is more straightforward.
-
- 4. Should the local repo try to notice if the hooks have been changed
-    locally before overwriting upon autoupdate? This would be nice to
-    have, but I don't know how practical it would be. In particular, I
-    don't know if we can trust that
-    "refs/remotes/origin/suggested-hooks" has not been clobbered.
-
- 5. Should we have a command that manually updates the hooks with what's
-    in "refs/heads/suggested-hooks"? This is not in this patch set, but
-    it sounds like a good idea.
-
-There are perhaps other points that I haven't thought of, of course.
-
-[1] https://lore.kernel.org/git/pull.908.git.1616105016055.gitgitgadget@gmail.com/
-
-Jonathan Tan (2):
-  hook: move list of hooks
-  clone,fetch: remote-suggested auto-updating hooks
-
- builtin/bugreport.c |  38 ++------------
- builtin/clone.c     |  10 ++++
- builtin/fetch.c     |  21 ++++++++
- builtin/hook.c      |  13 +++--
- hook.c              | 118 ++++++++++++++++++++++++++++++++++++++++++++
- hook.h              |   5 ++
- t/t5601-clone.sh    |  36 ++++++++++++++
- 7 files changed, 202 insertions(+), 39 deletions(-)
-
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 190272ba70..4e0806dff3 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -41,38 +41,6 @@ static void get_system_info(struct strbuf *sys_info)
+ 
+ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+ {
+-	/*
+-	 * NEEDSWORK: Doesn't look like there is a list of all possible hooks;
+-	 * so below is a transcription of `git help hooks`. Later, this should
+-	 * be replaced with some programmatically generated list (generated from
+-	 * doc or else taken from some library which tells us about all the
+-	 * hooks)
+-	 */
+-	static const char *hook[] = {
+-		"applypatch-msg",
+-		"pre-applypatch",
+-		"post-applypatch",
+-		"pre-commit",
+-		"pre-merge-commit",
+-		"prepare-commit-msg",
+-		"commit-msg",
+-		"post-commit",
+-		"pre-rebase",
+-		"post-checkout",
+-		"post-merge",
+-		"pre-push",
+-		"pre-receive",
+-		"update",
+-		"post-receive",
+-		"post-update",
+-		"push-to-checkout",
+-		"pre-auto-gc",
+-		"post-rewrite",
+-		"sendemail-validate",
+-		"fsmonitor-watchman",
+-		"p4-pre-submit",
+-		"post-index-change",
+-	};
+ 	int i;
+ 
+ 	if (nongit) {
+@@ -81,9 +49,9 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+ 		return;
+ 	}
+ 
+-	for (i = 0; i < ARRAY_SIZE(hook); i++)
+-		if (hook_exists(hook[i], HOOKDIR_USE_CONFIG))
+-			strbuf_addf(hook_info, "%s\n", hook[i]);
++	for (i = 0; i < hook_name_count; i++)
++		if (hook_exists(hook_name[i], HOOKDIR_USE_CONFIG))
++			strbuf_addf(hook_info, "%s\n", hook_name[i]);
+ }
+ 
+ static const char * const bugreport_usage[] = {
+diff --git a/hook.c b/hook.c
+index ff80e52edd..3ccacb72fa 100644
+--- a/hook.c
++++ b/hook.c
+@@ -5,6 +5,40 @@
+ #include "run-command.h"
+ #include "prompt.h"
+ 
++/*
++ * NEEDSWORK: Doesn't look like there is a list of all possible hooks;
++ * so below is a transcription of `git help hooks`. Later, this should
++ * be replaced with some programmatically generated list (generated from
++ * doc or else taken from some library which tells us about all the
++ * hooks)
++ */
++const char *hook_name[] = {
++	"applypatch-msg",
++	"pre-applypatch",
++	"post-applypatch",
++	"pre-commit",
++	"pre-merge-commit",
++	"prepare-commit-msg",
++	"commit-msg",
++	"post-commit",
++	"pre-rebase",
++	"post-checkout",
++	"post-merge",
++	"pre-push",
++	"pre-receive",
++	"update",
++	"post-receive",
++	"post-update",
++	"push-to-checkout",
++	"pre-auto-gc",
++	"post-rewrite",
++	"sendemail-validate",
++	"fsmonitor-watchman",
++	"p4-pre-submit",
++	"post-index-change",
++};
++int hook_name_count = ARRAY_SIZE(hook_name);
++
+ void free_hook(struct hook *ptr)
+ {
+ 	if (ptr) {
+diff --git a/hook.h b/hook.h
+index f32189380a..d902166408 100644
+--- a/hook.h
++++ b/hook.h
+@@ -4,6 +4,9 @@
+ #include "strvec.h"
+ #include "run-command.h"
+ 
++extern const char *hook_name[];
++extern int hook_name_count;
++
+ struct hook {
+ 	struct list_head list;
+ 	/*
 -- 
 2.32.0.272.g935e593368-goog
 
