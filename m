@@ -2,110 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D018C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 17:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11061C48BE6
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 17:44:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFA1A61356
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 17:40:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6615611BE
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 17:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231298AbhFPRmo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 13:42:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40160 "EHLO
+        id S231374AbhFPRqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 13:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231295AbhFPRmo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 13:42:44 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3975C06175F
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 10:40:36 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id o88-20020a17090a0a61b029016eeb2adf66so4256031pjo.4
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 10:40:36 -0700 (PDT)
+        with ESMTP id S230350AbhFPRqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 13:46:17 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 758A4C061574
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 10:44:10 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id d9so2487118qtp.11
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 10:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aF77ms78jERLFuEgJmQrMpuFBi3Rv8fGRpbRLh+5RSg=;
-        b=mPMLTVnwMus50J43Oba5lcjVtM4oKhUcZVoTsP9UcwRx1Um5rr2MVF6rAQ3cGhoxU0
-         1mVbbzLydY/N1ANcARfCw9MrmwmPdJAUWOaopfmG6h/qjdsrfL2/AgvnjH3NpbOHSxIR
-         7M/Z3rlECFFz5Y2tOcpvg+2h8GenhzY7eO4pMw26SI9eoQEULBGhM3uyUqFhyPVk9fzB
-         HpxU7TcvPXu3AV5XNNFmHiXOZSdNuoPCmmb7u7TpXVpdjdZ337K5ghLcPLxrh6dATxny
-         91R2gwG0Q1T6rSR+S75A9qWfUxC5RY2rA5M7V58zHViKJDunG2S1Cy97Cz5mrdZxjov7
-         daYg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AKhaONcD9Sku7VNnVBktdpoHZTUrMMlaQd7ct7Le/aI=;
+        b=jznesQl8DRpdBBIonZjT/qblBdh42ghZzdbXZNdowAlzF0UO+inmFcAIWwAORD7duw
+         0mpNzHcVWtd7SP2v/f6QLM5ycGcn/1tw8u+7dOwcGeV8tvpPUohouj7J9xHoJY1+QStY
+         +0ei+kYhGi+5TZPEvbnhLVHiaS8zMBJjH4vuP4KfMzywvoOVuYdwxMM4ylVe48XUt7Ph
+         5tF4IdZyQu077n+81olsPF9KYF+bYQ/YGNSk0iMGvPwPQe5ECMrzQsjX0CqXsg5e/v9S
+         EJpTWEDD4zuF6S0W3GBX42bbmQ4twCCjdUqS3khaWyyQ/qeAFT7SzEZNF+uzrjcaynzb
+         DsTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aF77ms78jERLFuEgJmQrMpuFBi3Rv8fGRpbRLh+5RSg=;
-        b=ewQK502MFaEyXz369uV4UcafBjtXu8KWVREt8b+qiBAKAKp47/oPtAwyShDDBizq+5
-         X6N06RfafDI8sBCMt6Jps6MDHNDWwY8fLwNyuqlfhZUqgk+AuaxvShM7Ql8U12GFat7y
-         NYFAxrTMHYFSdRjjihYUZlGyj8J4EeSp6wLP1d5l8JAevxYvle09rBxlZ4caxSKmdJnA
-         6yPdsDR1SxUnbr/fa18WhSC7hgyF/0rsiACAAnNwVeMJaRWNMP/pXdS51A/bYOl0han7
-         GUsVKGS8YBB8zjgRw7xvH1oan71ityIPmyQueBZ6t82vstBoIfNT7M5pgMM29ObAyKgo
-         6+2A==
-X-Gm-Message-State: AOAM530mOAUm2cAtYQMVgOAMvG8YCWDHhlqqDbgi7AcQxpzj0gALAL7k
-        XO09xov8oY7dafV6l2RFMRQ=
-X-Google-Smtp-Source: ABdhPJxRtLaVSSCQLgB7+rkj+dOZhBz7U5wZfxneq3QoEU0nhUsHuF5slR0UVOEKEbtctbgLdkyc8g==
-X-Received: by 2002:a17:90a:ad98:: with SMTP id s24mr12236266pjq.211.1623865236331;
-        Wed, 16 Jun 2021 10:40:36 -0700 (PDT)
-Received: from generichostname ([172.92.1.94])
-        by smtp.gmail.com with ESMTPSA id f18sm5894207pjq.48.2021.06.16.10.40.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 10:40:35 -0700 (PDT)
-Date:   Wed, 16 Jun 2021 10:40:31 -0700
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Harrison McCullough <mccullough.harrison@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Error in bash completion
-Message-ID: <YMo3j6mqiKBTTEbS@generichostname>
-References: <CAHLeu+y3DxLv7M4SM2f5yVxtKXbpAWD7Ad2m+rVKpKfKiA6PVw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AKhaONcD9Sku7VNnVBktdpoHZTUrMMlaQd7ct7Le/aI=;
+        b=p6Gotz+Itgcj6EBp3dUCUu13qwap+VNZGPrMhiWIqachbUlcLVYzVTj8MRGjRXt+gn
+         FgS0BJ2F5tpiZtDksbzdl+1xrUfVfwKupSTir0XP5XY/8Ojvz2/Mjb+tADZbXIldcZOA
+         OKdntdAe66Rqczm4vIIXoE12A523Q1sqc1RmoAhgVAgLLQh7AwDfKE7E1+5CWullQcg/
+         nS1Qp1SUNkp2bOJlo0ojjTIsCXOKsqTl+lIc4/Lt6QJ1sU7/O3uI71xt19O2eu13yi/I
+         BAc8AifA85VZu9lSEldbQo3V01O31xzabIdz2kZUy8P4ldgIj0+uwxW6I8Rcghp+UpPq
+         oQ4g==
+X-Gm-Message-State: AOAM533gU0fnvPU5JoUg/JfdpSj+549bsxbgpcMW2cUE5HGRLkb3uvl3
+        PA4ZjgBATt52SO965BFaiTQ=
+X-Google-Smtp-Source: ABdhPJxsVLI8OIRa5iYqSZzPxJ4K25wVQ4plUvY62iCev4flChK8bNkq2G6llzKfdjdtJDE42r+Aug==
+X-Received: by 2002:aed:306f:: with SMTP id 102mr979831qte.197.1623865449578;
+        Wed, 16 Jun 2021 10:44:09 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:4142:2009:c909:559c? ([2600:1700:e72:80a0:4142:2009:c909:559c])
+        by smtp.gmail.com with ESMTPSA id s81sm2033250qka.82.2021.06.16.10.44.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jun 2021 10:44:09 -0700 (PDT)
+Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, emilyshaffer@google.com,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+ <87a6nryt51.fsf@evledraar.gmail.com> <xmqqsg1iseza.fsf@gitster.g>
+ <xmqqbl86qtyf.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <695e78ed-25cf-69e6-8bc1-dad8e55be697@gmail.com>
+Date:   Wed, 16 Jun 2021 13:44:07 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHLeu+y3DxLv7M4SM2f5yVxtKXbpAWD7Ad2m+rVKpKfKiA6PVw@mail.gmail.com>
+In-Reply-To: <xmqqbl86qtyf.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Harrison,
+On 6/16/2021 1:06 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> FWIW, I am not happy with this version for that reason, either.
+>>
+>> I wonder if replacing the first two bullet points ("Removing" and
+>> "If you need to talk about") above with what was added to the
+>> CodingGuidelines by the "succinct matter-of-factly description" in
+>>
+>> https://lore.kernel.org/git/87a6nz2fda.fsf@evledraar.gmail.com/
+>>
+>> would be sufficient.
+> 
+> So, here is what I plan to queue on top of these four patches to
+> replace my "not even draft" garbage with what you wrote, with a bit
+> of copyediting.
+> 
+> Comments?
+...
+> +  - Prefer succinctness and matter-of-factly describing functionality
+> +    in the abstract.  E.g.
+> +
+> +     --short:: Emit output in the short-format.
+> +
+> +    and avoid something like these overly verbose alternatives:
+> +
+> +     --short:: Use this to emit output in the short-format.
+> +     --short:: You can use this to get output in the short-format.
+> +     --short:: A user who prefers shorter output could....
+> +     --short:: Should a person and/or program want shorter output, he
+> +               she/they/it can...
+> +
+> +    This practice often eliminates the need to involve human actors in
+> +    your description, but it is a good practice regardless of the
+> +    avoidance of gendered pronouns.
 
-On Wed, Jun 16, 2021 at 09:44:38AM -0600, Harrison McCullough wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
-> 1. Create a Bash function, e.g. `ga() { git add "${@:-.}"; }`
-> 2. Use the `__git_complete` function to add Bash tab completion for your custom
->    Bash function, e.g. `__git_complete ga git_add`
-> 3. Attempt to tab complete a file path, e.g. `ga my-incomplete-file-path<TAB>`
-> 
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> Bash tab-completes the file path.
-> 
-> 
-> What happened instead? (Actual behavior)
-> 
-> Bash tab-completes the file path but also displays an error:
-> 
-> $ ga fi-bash: [: -lt: unary operator expected
-> le3.txt
+I wasn't a huge fan of this "example first" approach, but you did
+a good job of tying it to the purpose and the rest of the
+recommendations.
 
-This happened as a result of my changes at e94fb44042
-(git-completion.bash: pass $__git_subcommand_idx from __git_main(),
-2021-03-24) and 87e629756f (git-completion.bash: rename to
-$__git_cmd_idx, 2021-04-22).
+> +  - When it becomes awkward to stick to this style, prefer "you" when
+> +    addressing the the hypothetical user, and possibly "we" when
+> +    discussing how the program might react to the user.  E.g.
+> +
+> +      You can use this option instead of --xyz, but we might remove
+> +      support for it in future versions.
+> +
+> +    while keeping in mind that you can probably be less verbose, e.g.
+> +
+> +      Use this instead of --xyz. This option might be removed in future
+> +      versions.
+> +
+> +  - If you still need to refer to an example person that is
+> +    third-person singular, you may resort to "singular they" to avoid
+> +    "he/she/him/her", e.g.
+> +
+> +      A contributor asks their upstream to pull from them.
+> +
+> +    Note that this sounds ungrammatical and unnatural to those who
+> +    learned English as a second language in some parts of the world.
 
-The tl;dr is that $__git_cmd_idx must be set to the index of the
-git command you're executing (e.g. for `git add`, the index of `add`).
-As a workaround for you, try setting __git_cmd_idx=0 where you define
-ga().
+This version looks good to me. It is probably worth adding Ævar in
+a Co-authored-by line.
 
-Now, a question to the wider list: does git-completion.bash have a
-public interface? I've been working off the assumption that any time a
-user uses the internals, it's at their own risk. Is this a valid
-assumption to make?
-
--Denton
+Thanks,
+-Stolee
