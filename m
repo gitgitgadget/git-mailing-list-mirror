@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADBB6C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 14:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 647F1C49361
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 14:16:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8164061076
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 14:16:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4262060041
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 14:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233970AbhFPOSl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 10:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50550 "EHLO
+        id S233978AbhFPOSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 10:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233880AbhFPOSi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 10:18:38 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B816AC061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 07:16:31 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id c9so2890635wrt.5
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 07:16:31 -0700 (PDT)
+        with ESMTP id S233980AbhFPOSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 10:18:39 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B75C06175F
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 07:16:33 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id d11so517128wrm.0
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 07:16:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8W1wC6kB9+MgUxQnjMREBVFkhtrduzY/fVU4ybz4Lw8=;
-        b=UqGp5zVzA8DtNEb6b4JxrQWy+p1HMxtZ8BgxZzVcAMvaun1FnrA8uo+y2SnhsszgAr
-         x+tf3CruR5gJfrr6/7GsehskKNlsC8nGvgmJJVS2sJsiC2dFjf4+raUldYOUhllBXdZA
-         JTbsGHKqVfBZtv/ny4zxGg7cl0eBfQpQXNC5GnymmDlgstQKeEIxm4Wyy3lzzThIzkQE
-         /xl+B6banMKZG1Org7e/J7hBmP1wqGjS6TUr2TOHXER+BBwn6pRAoJfntJp4qQBPsuAy
-         zbt1aCHdOJZaoYimbJJbVin3rqco9ooxbtAuxRNwQpr8WwcMbHGJeDCVmIHQL1kU6ZfR
-         HJ0w==
+        bh=h6IFiLyByxsJtiq5gDMgU91U7uhwC4pDvs4JARLFUaU=;
+        b=ii5TwkGqEFH5+SVbn55MWQlw+jD4qW1ndgdgEszndB7CwtGbkCB+U73msQ1+XXX7PJ
+         5iUqGCV7Ua2ooooKroLfEmOkQiFhcEzgauwCfbFS91Nxe4LzQeBjkhlgsRvKmHdqAl0T
+         R5MEzHATzcuJOZ1cE9SckD8V5UmVNvy/zrnR3Of6kdZBG3RskEHof5IrpPtOuRE4BFUR
+         zUlgtA1MrsuST3wzZxRukjn7JVXiKNgUqb0rcpURNJKBnSBb8rdMOjCdaCQ6gxmk2DFw
+         BorcfuedX61UcB92QAPNEui+P5vE2gw4gADh9j39GgTqPssrH7ZCEFztaBZ9tL4pRgEN
+         ODQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8W1wC6kB9+MgUxQnjMREBVFkhtrduzY/fVU4ybz4Lw8=;
-        b=GdQHubneQtWVk7x+z5I4KmvbzLFx9rEQhSsQHWYS8SWVdAA0qbVNMTRoCP9PEeHQBn
-         XOFiFyLhUB5yVVbcbD53kX7TLnBDD87oIkQiI6CwHE4WYb+78afFwgUWU4KDhFQ3R+Ib
-         1M45ILXGbqscHzYlK+13hLYrhNxuEmxxYi5RsJQaazYJtOuBVazoXPCqgJkD9HmaQpAw
-         wQKceHzHXyMsKAo2kTWauOCvidSr4m2WKDOVgtpuFU09nY68gFQ3kIUAbqy8tk7tacU6
-         lNOJr8H32iMtLHFj3lQ2MkwkpReNtbVoBujO3wauDRAJlESqdD4G6K4v+Gx75knZy9j+
-         JKBQ==
-X-Gm-Message-State: AOAM533si8uKS9fxX+p03xXCW++Ey8fmkEgqsJtxJuwRTKX35ccmJgUa
-        h4roSpLE6QrRhLMyxLB2YkKYpWEqJtMNSQ==
-X-Google-Smtp-Source: ABdhPJxUWMJqvuMnvp+WoHqCAQEdMgbJ9WaXvxEywK9BSdfBSidQq4uc3ROgLtPSgWSIwDV0B/zSPw==
-X-Received: by 2002:adf:bd88:: with SMTP id l8mr5688771wrh.90.1623852990182;
-        Wed, 16 Jun 2021 07:16:30 -0700 (PDT)
+        bh=h6IFiLyByxsJtiq5gDMgU91U7uhwC4pDvs4JARLFUaU=;
+        b=MTj65y9pOQ1QEFkb8btRpm4ZQoUocezlzjsTw0CCtHCUarI/2aAIVP9g7qjFyqags4
+         8/sIZKyLcZR9SujkTfb09zdQpz+NQ6zKQZ7fEKjDt2OYw2N0TU94puQ9vOKi9Zu+vjJy
+         VS7X70wkfqAPOpGBqBxde8mJsU6cuEOJd3pariGHs6Dp3s37DLYI1ZRnaYopmItXyQT2
+         92UWEKtuAFhOTBHplrxl28S3oNaT59/FX50RqZJ/Vlzw72veHLJX522ef0QVj9jb0jP6
+         6bUn72MN1knFE7o5xFl4BqsEwGOzl0+e2R89T5xI88qf+K/TtMl3VmbbKW4mhbV4o788
+         PV6g==
+X-Gm-Message-State: AOAM531VpVEjPD/ZxTXwiNiDNlqshUrM7hnpBCvccgnbVsQzT48is9i0
+        BlTvmpwoHM7nzylKygrc6u6MY72F2Fc7pA==
+X-Google-Smtp-Source: ABdhPJzkmFZIupQO278tum/KHbe5nhvJ2Wsy8vamjzOtsKpqvmeu5koOGbe0XaSWVD07Z9Cx4x1BxA==
+X-Received: by 2002:a5d:5107:: with SMTP id s7mr5782158wrt.12.1623852991434;
+        Wed, 16 Jun 2021 07:16:31 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a9sm2258555wrv.37.2021.06.16.07.16.29
+        by smtp.gmail.com with ESMTPSA id a9sm2258555wrv.37.2021.06.16.07.16.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jun 2021 07:16:29 -0700 (PDT)
+        Wed, 16 Jun 2021 07:16:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Bruno Albuquerque <bga@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/5] serve: mark has_capability() as static
-Date:   Wed, 16 Jun 2021 16:16:17 +0200
-Message-Id: <patch-1.5-4f74d7d34c4-20210616T141332Z-avarab@gmail.com>
+Subject: [PATCH 2/5] transport: rename "fetch" in transport_vtable to "fetch_refs"
+Date:   Wed, 16 Jun 2021 16:16:18 +0200
+Message-Id: <patch-2.5-c6720d1bf33-20210616T141332Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.576.g59759b6ca7d
 In-Reply-To: <cover-0.5-00000000000-20210616T141332Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210616T141332Z-avarab@gmail.com>
@@ -78,49 +78,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The has_capability() function introduced in ed10cb952d3 (serve:
-introduce git-serve, 2018-03-15) has never been used anywhere except
-serve.c, so let's mark it as static.
-
-It was later changed from "extern" in 554544276a6 (*.[ch]: remove
-extern from function declarations using spatch, 2019-04-29), but we
-could have simply marked it as "static" instead.
+Rename the "fetch" member of the transport_vtable to "fetch_refs" for
+consistency with the existing "push_refs". Neither of them just push
+"refs" but refs and objects, but having the two match makes the code
+more readable than having it be inconsistent, especially since
+"fetch_refs" is a lot easier to grep for than "fetch".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- serve.c | 4 ++--
- serve.h | 3 ---
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ transport-helper.c   | 8 ++++----
+ transport-internal.h | 2 +-
+ transport.c          | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/serve.c b/serve.c
-index aa8209f147e..6748c590b74 100644
---- a/serve.c
-+++ b/serve.c
-@@ -156,8 +156,8 @@ static int is_command(const char *key, struct protocol_capability **command)
- 	return 0;
- }
+diff --git a/transport-helper.c b/transport-helper.c
+index 4be035edb8b..8d445a8f3ee 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -671,8 +671,8 @@ static int connect_helper(struct transport *transport, const char *name,
+ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 					    int for_push);
  
--int has_capability(const struct strvec *keys, const char *capability,
--		   const char **value)
-+static int has_capability(const struct strvec *keys, const char *capability,
-+			  const char **value)
+-static int fetch(struct transport *transport,
+-		 int nr_heads, struct ref **to_fetch)
++static int fetch_refs(struct transport *transport,
++		      int nr_heads, struct ref **to_fetch)
  {
- 	int i;
- 	for (i = 0; i < keys->nr; i++) {
-diff --git a/serve.h b/serve.h
-index fc2683e24d3..b31dd69434b 100644
---- a/serve.h
-+++ b/serve.h
-@@ -2,9 +2,6 @@
- #define SERVE_H
+ 	struct helper_data *data = transport->data;
+ 	int i, count;
+@@ -681,7 +681,7 @@ static int fetch(struct transport *transport,
  
- struct strvec;
--int has_capability(const struct strvec *keys, const char *capability,
--		   const char **value);
--
- struct serve_options {
- 	unsigned advertise_capabilities;
- 	unsigned stateless_rpc;
+ 	if (process_connect(transport, 0)) {
+ 		do_take_over(transport);
+-		return transport->vtable->fetch(transport, nr_heads, to_fetch);
++		return transport->vtable->fetch_refs(transport, nr_heads, to_fetch);
+ 	}
+ 
+ 	/*
+@@ -1263,7 +1263,7 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
+ static struct transport_vtable vtable = {
+ 	set_helper_option,
+ 	get_refs_list,
+-	fetch,
++	fetch_refs,
+ 	push_refs,
+ 	connect_helper,
+ 	release_helper
+diff --git a/transport-internal.h b/transport-internal.h
+index b60f1ba9077..c4ca0b733ac 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -34,7 +34,7 @@ struct transport_vtable {
+ 	 * get_refs_list(), it should set the old_sha1 fields in the
+ 	 * provided refs now.
+ 	 **/
+-	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
++	int (*fetch_refs)(struct transport *transport, int refs_nr, struct ref **refs);
+ 
+ 	/**
+ 	 * Push the objects and refs. Send the necessary objects, and
+diff --git a/transport.c b/transport.c
+index 50f5830eb6b..f60985e2dbd 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1449,7 +1449,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 			heads[nr_heads++] = rm;
+ 	}
+ 
+-	rc = transport->vtable->fetch(transport, nr_heads, heads);
++	rc = transport->vtable->fetch_refs(transport, nr_heads, heads);
+ 
+ 	free(heads);
+ 	return rc;
 -- 
 2.32.0.576.g59759b6ca7d
 
