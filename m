@@ -2,231 +2,259 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83315C48BE6
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 08:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46C3EC48BE8
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 09:10:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5949C610A1
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 08:57:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C1E961055
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 09:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231358AbhFPJAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 05:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34180 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbhFPJAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 05:00:00 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BF2C061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 01:57:53 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id y13-20020a1c4b0d0000b02901c20173e165so1279620wma.0
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 01:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dp2nJcQxOK5gl+3pbENhdLhhpXT5BUImA//vXpUU9x8=;
-        b=rtU7tj6OcdnjKeaCXnoKoz0ENpCCpoahrxNmjcIyDbSMga3AMoBqKUo4OJJ8AeYkCZ
-         oWJY/CdOGLkZ1+WFuafDOdrGR0qMiX+SwuOF2wbYvgjZ5CkkjVkr8RVgzTB7ozNw+QaT
-         Nju8PaOYilmDTrc0WiuIzGL+0dvzHm0m4HhYdtIZZEjtLDZjy/DH1Tv7Y2xiIaAXpOYV
-         N6OgQnKv63EsIC82rgF0CZCcqPBd8yI7//1o0ZQGDJbwpo8SViDNAqGo6heWvUy6WdVX
-         P1fz5yjn8CExIm73pjUqnNt7C2TwLSckwIcjKhzYtZZvXZGctCzYUf4RSDvXhdFMVfsV
-         IEkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=dp2nJcQxOK5gl+3pbENhdLhhpXT5BUImA//vXpUU9x8=;
-        b=e5Hb2TaUbzKSgJPwQJBI5IdevxoZe0wMnIsEKd66dUnxDUMJjAM6qniS5MkN3XQrKn
-         sOgzGh9GOgeaeZiDRAXQRhNsLG4gw6mgBQshRPNLPQQj5qq2/r5CYU00slyXnsV7vssZ
-         acK1zyAWHtKykKa1Vc3ztAZ6P+aGd6wxN2yOSZIqpuOBUI/XcQzOwWhyP64v62K63L1m
-         wjoj22vkjnaccvvefxyzflH5IE14cLQ62wDtnuNb7knBRWrjQurJ8/Kjf/BftenQ/gsY
-         VuprwO9fim8aA1BQoekZDYpAEECf9Jk5GH3l8x88PvmP2/H86pSgS8PpBTkHZMPSCExC
-         7PQw==
-X-Gm-Message-State: AOAM531Imr6refKiYEVX+3U4mdPq+7oJre1y5KjQpnvMuxTv2rRdapvx
-        95CRjVLFh0sZNlx/i9JC99YgPi9eRRc=
-X-Google-Smtp-Source: ABdhPJyKmMLgf4Ni9YdG48Lq71zqFPfpNo+DpggTGzqnqTQZUUda0MUcBzGhyNQBPaXtoG0WGMuEyQ==
-X-Received: by 2002:a05:600c:4f87:: with SMTP id n7mr4101725wmq.9.1623833872136;
-        Wed, 16 Jun 2021 01:57:52 -0700 (PDT)
-Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
-        by smtp.gmail.com with ESMTPSA id t11sm1442400wrz.7.2021.06.16.01.57.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jun 2021 01:57:51 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/2] RFC: implement new zdiff3 conflict style
-To:     Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
- <YMh2M8Ek/RUVjKkL@coredump.intra.peff.net>
- <CABPp-BE7-E03+x38EK-=AE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <255df678-9a31-bba2-f023-c7d98e5ffc15@gmail.com>
-Date:   Wed, 16 Jun 2021 09:57:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232007AbhFPJMK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 05:12:10 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:47849 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231336AbhFPJMJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Jun 2021 05:12:09 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 37F3510ED
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 05:10:03 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Wed, 16 Jun 2021 05:10:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:subject:message-id:mime-version:content-type; s=fm1;
+         bh=biI/dN0BwaxJ7McLo0nJ5SSH/yOrxExkcbp/ZWcfASI=; b=J28AxMBluKuQ
+        HbfxojdM3H/xF5UzkP4b3Y4jCx2++GxjY0YWUIBAv7kltInwmqI+TEfntKuq7T0K
+        R5DhQfPXPoQX5Tcg36DKRMEiDA0yflwI5haTSvZipr+1i+rTZtSs76V83HC3XOwH
+        uhK7pH6srqkh6gUuY5Fg1Hfvny2pXoDKUbU8ZjDYEF7NuvTWB+UsDCJhqqM7hanm
+        XJ8HPQ3okzvN/398jEIerza14VgSJPsU5v4UpgdwTRv4Mljjvgpb1KQJrsGdGbMQ
+        P6g/x25akjTtK9uFuFYeQuDT22zJBwGvOzlSkL53to8WnM8GbJiN8MgZwjskwapl
+        nC2aRrFxDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=biI/dN0BwaxJ7McLo0nJ5SSH/yOrx
+        Exkcbp/ZWcfASI=; b=SHGVu26MCEDaTv4l6mNhV6Xo9/8YQ3bq05+85hXnttGrs
+        QthYNnnddxnGiaYS9w9Rt0IZMkzy3Z7MD1INMQkEYOLUOa6x+bwIIDb+cfxzPWmY
+        SFRLgZ0fDOt4Qnva2H2KFDWKX2vWNRvliNeXV7RJ4gAj8H+vpcw7Hk9/8lLwX6oE
+        ntdCF0KWgt4NjxUWOHYa7DhdFFxJI1tXW1aQS0TeRc1l9mS2kg8QbDuDy/8eoEs5
+        VQ1OWKqQpbhlIhmnYC/kNjFpniX5BfNVs4lSNbvPTE5EtK0taRreaWLRtdCWHLTe
+        O4xog+MXP5ncdxtmQDoey609d9zGJrh5eFbVKpj2Q==
+X-ME-Sender: <xms:6r_JYH0n-ZWDrJ0XzXxypxck0m3KZLmVyu-Jg5DyqezGuzCwSPKXmg>
+    <xme:6r_JYGE6wsk-b6QWsmSKjViN7-bErsQpaZP5881z-DpXGDd8UutAWDnGMWMbAQVxm
+    a4YGY8DAIN8VKbjkg>
+X-ME-Received: <xmr:6r_JYH5Z8k7gw3fDFmofgBdWlp76roQDYa8uD4Lja77-pIAD4DZMbYS6KxFPPCPTzujncEwDXJRpqz0XpsoCTWfN7NDqgifY-St23zd4nxd5PeLfJ5d_D88>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedvledgudefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:6r_JYM26omKu5qMcZX7TAArzBAuHIRJri5JzsbwFO6bxlMLlrmF1wA>
+    <xmx:6r_JYKF7XWqwz8vTPFRKJ9b6paC7AY9oSCkYCdNHDEg2LC9GLyNMjg>
+    <xmx:6r_JYN_lMl5E6UwiY80l2DVSbxUnNz3LBgMsTGTMXNpYTsR7_2uJOQ>
+    <xmx:6r_JYFz4FMMJJaq_Y5C77JQc7FKMHVzRVho94MZHz0BSmL37TWUVBA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 16 Jun 2021 05:10:01 -0400 (EDT)
+Received: from localhost (tanuki [10.192.0.23])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 570d1359 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Wed, 16 Jun 2021 09:09:57 +0000 (UTC)
+Date:   Wed, 16 Jun 2021 11:12:05 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Subject: [PATCH] perf: fix when running with TEST_OUTPUT_DIRECTORY
+Message-ID: <005cc9a695f7f9b17190293821369763e9bae662.1623834515.git.ps@pks.im>
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BE7-E03+x38EK-=AE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0suJC432mWjKjELm"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/06/2021 20:35, Elijah Newren wrote:
-> On Tue, Jun 15, 2021 at 2:43 AM Jeff King <peff@peff.net> wrote:
->>
->> On Tue, Jun 15, 2021 at 05:16:08AM +0000, Elijah Newren via GitGitGadget wrote:
->>
->>> Implement a zealous diff3, or "zdiff3". This new mode is identical to
->>> ordinary diff3 except that it allows compaction of common lines between the
->>> two sides of history, if those common lines occur at the beginning or end of
->>> a conflict hunk.
->>>
->>> This is just RFC, because I need to add tests. Also, while I've remerged
->>> every merge, revert, or duly marked cherry-pick from both git.git and
->>> linux.git with this patch using the new zdiff3 mode, that only shows it
->>> doesn't segfault. (Though I also reran 10% of the linux remerges with zdiff3
->>> under valgrind without issues.) I looked through some differences between
->>> --remerge-diff with diff3 and --remerge-diff with zdiff3, but those are
->>> essentially diffs of a diff of a diff, which I found hard to read. I'd like
->>> to look through more examples, and use it for a while before submitting the
->>> patches without the RFC tag.
->>
->> I did something similar (but I wasn't smart enough to try your
->> remerge-diff, and just re-ran a bunch of merges).
-> 
-> What I did was great for testing if there were funny merges that might
-> cause segfaults or such with zdiff3, but not so clever for viewing the
-> direct output from zdiff3.  Using remerge-diff in this way does not
-> show the [z]diff3 output directly, but a diff of that output against
-> what was ultimately recorded in the merge, forcing me to attempt to
-> recreate the original in my head.
-> 
-> (And, of course, I made it even worse by taking the remerge-diff
-> output with diff3, and the remerge-diff output with zdiff3, and then
-> diffing those, resulting in yet another layer of diffs that I'd have
-> to undo in my head to attempt to construct the original.)
-> 
->> Skimming over the results, I didn't see anything that looked incorrect.
->> Many of them are pretty non-exciting, though. A common case seems to be
->> ones like 01a2a03c56 (Merge branch 'jc/diff-filter-negation',
->> 2013-09-09), where two sides both add functions in the same place, and
->> the common lines are just the closing "}" followed by a blank line.
->>
->> Removing those shared lines actually makes things less readable, IMHO,
->> but I don't think it's the wrong thing to do. The usual "merge" zealous
->> minimization likewise produces the same unreadability. If we want to
->> address that, I think the best way would be by teaching the minimization
->> some heuristics about which lines are trivial.
->>
->> Here's another interesting one. In 0c52457b7c (Merge branch
->> 'nd/daemon-informative-errors-typofix', 2014-01-10), the diff3 looks
->> like:
->>
->>    <<<<<<< ours
->>                    if (starts_with(arg, "--informative-errors")) {
->>    ||||||| base
->>                    if (!prefixcmp(arg, "--informative-errors")) {
->>    =======
->>                    if (!strcmp(arg, "--informative-errors")) {
->>    >>>>>>> theirs
->>                            informative_errors = 1;
->>                            continue;
->>                    }
->>    <<<<<<< ours
->>                    if (starts_with(arg, "--no-informative-errors")) {
->>    ||||||| base
->>                    if (!prefixcmp(arg, "--no-informative-errors")) {
->>    =======
->>                    if (!strcmp(arg, "--no-informative-errors")) {
->>    >>>>>>> theirs
->>
->> A little clunky, but it's easy-ish to see what's going on. With zdiff3,
->> the context between the two hunks is rolled into a single hunk:
->>
->>    <<<<<<< ours
->>                    if (starts_with(arg, "--informative-errors")) {
->>                            informative_errors = 1;
->>                            continue;
->>                    }
->>                    if (starts_with(arg, "--no-informative-errors")) {
->>    ||||||| base
->>                    if (!prefixcmp(arg, "--informative-errors")) {
->>    =======
->>                    if (!strcmp(arg, "--informative-errors")) {
->>                            informative_errors = 1;
->>                            continue;
->>                    }
->>                    if (!strcmp(arg, "--no-informative-errors")) {
->>    >>>>>>> theirs
->>
->> which seems worse. I haven't dug/thought carefully enough into your
->> change yet to know if this is expected, or if there's a bug.
 
-XDL_MERGE_ZEALOUS coalesces adjacent conflicts that are separated by 
-fewer than four lines. Unfortunately the existing code in 
-xdl_merge_two_conflicts() only coalesces 'ours' and 'theirs', not 
-'base'. Applying
+--0suJC432mWjKjELm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index b1dc9df7ea..5f76957169 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -455,6 +455,7 @@ static int lines_contain_alnum(xdfenv_t *xe, int i, 
-int chg)
-  static void xdl_merge_two_conflicts(xdmerge_t *m)
-  {
-         xdmerge_t *next_m = m->next;
-+       m->chg0 = next_m->i0 + next_m->chg0 - m->i0;
-         m->chg1 = next_m->i1 + next_m->chg1 - m->i1;
-         m->chg2 = next_m->i2 + next_m->chg2 - m->i2;
-         m->next = next_m->next;
+When the TEST_OUTPUT_DIRECTORY is defined, then all test data will be
+written in that directory instead of the default directory located in
+"t/". While this works as expected for our normal tests, performance
+tests fail to locate and aggregate performance data because they don't
+know to handle TEST_OUTPUT_DIRECTORY correctly and always look at the
+default location.
 
-and running
-     git checkout 0c52457b7c^ &&
-     bin-wrappers/git -c merge.conflictstyle=zdiff3 merge 0c52457b7c^2
-gives
+Fix the issue by adding a `--results-dir` parameter to "aggregate.perl"
+which identifies the directory where results are and by making the "run"
+script awake of the TEST_OUTPUT_DIRECTORY variable.
 
-<<<<<<< HEAD
-		if (starts_with(arg, "--informative-errors")) {
-			informative_errors = 1;
-			continue;
-		}
-		if (starts_with(arg, "--no-informative-errors")) {
-||||||| 2f93541d88
-		if (!prefixcmp(arg, "--informative-errors")) {
-			informative_errors = 1;
-			continue;
-		}
-		if (!prefixcmp(arg, "--no-informative-errors")) {
-=======
-		if (!strcmp(arg, "--informative-errors")) {
-			informative_errors = 1;
-			continue;
-		}
-		if (!strcmp(arg, "--no-informative-errors")) {
- >>>>>>> 0c52457b7c^2
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/perf/aggregate.perl |  8 ++++++--
+ t/perf/perf-lib.sh    |  4 ++--
+ t/perf/run            | 25 ++++++++++++++++---------
+ 3 files changed, 24 insertions(+), 13 deletions(-)
 
-Which I think is correct. Whether combining single line conflicts in 
-this way is useful is a different question (and is independent of your 
-patch). I can see that with larger conflicts it is worth it but here we 
-end up with conflicts where 60% of the lines are from the base version. 
-One the other hand there are fewer conflicts to resolve - I'm not sure 
-which I prefer.
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index 14e4cda287..5d4964c5c6 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -58,6 +58,7 @@ sub usage {
+   Options:
+     --codespeed          * Format output for Codespeed
+     --reponame    <str>  * Send given reponame to codespeed
++    --results-dir <str>  * Directory where test results are located
+     --sort-by     <str>  * Sort output (only "regression" criteria is supp=
+orted)
+     --subsection  <str>  * Use results from given subsection
+=20
+@@ -90,12 +91,13 @@ sub sane_backticks {
+ }
+=20
+ my (@dirs, %dirnames, %dirabbrevs, %prefixes, @tests,
+-    $codespeed, $sortby, $subsection, $reponame);
++    $codespeed, $sortby, $subsection, $reponame, $resultsdir);
+=20
+ Getopt::Long::Configure qw/ require_order /;
+=20
+ my $rc =3D GetOptions("codespeed"     =3D> \$codespeed,
+ 		    "reponame=3Ds"    =3D> \$reponame,
++		    "results-dir=3Ds" =3D> \$resultsdir,
+ 		    "sort-by=3Ds"     =3D> \$sortby,
+ 		    "subsection=3Ds"  =3D> \$subsection);
+ usage() unless $rc;
+@@ -137,7 +139,9 @@ sub sane_backticks {
+ 	@tests =3D glob "p????-*.sh";
+ }
+=20
+-my $resultsdir =3D "test-results";
++if (not $resultsdir) {
++	$resultsdir =3D "test-results";
++}
+=20
+ if (! $subsection and
+     exists $ENV{GIT_PERF_SUBSECTION} and
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index 601d9f67dd..8ca6dd0297 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -45,7 +45,7 @@ export TEST_DIRECTORY TRASH_DIRECTORY GIT_BUILD_DIR GIT_T=
+EST_CMP
+ MODERN_GIT=3D$GIT_BUILD_DIR/bin-wrappers/git
+ export MODERN_GIT
+=20
+-perf_results_dir=3D$TEST_OUTPUT_DIRECTORY/test-results
++perf_results_dir=3D$TEST_RESULTS_DIR
+ test -n "$GIT_PERF_SUBSECTION" && perf_results_dir=3D"$perf_results_dir/$G=
+IT_PERF_SUBSECTION"
+ mkdir -p "$perf_results_dir"
+ rm -f "$perf_results_dir"/$(basename "$0" .sh).subtests
+@@ -253,7 +253,7 @@ test_size () {
+ # and does it after running everything)
+ test_at_end_hook_ () {
+ 	if test -z "$GIT_PERF_AGGREGATING_LATER"; then
+-		( cd "$TEST_DIRECTORY"/perf && ./aggregate.perl $(basename "$0") )
++		( cd "$TEST_DIRECTORY"/perf && ./aggregate.perl --results-dir=3D"$TEST_R=
+ESULTS_DIR" $(basename "$0") )
+ 	fi
+ }
+=20
+diff --git a/t/perf/run b/t/perf/run
+index c7b86104e1..03128d440a 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -188,10 +188,10 @@ run_subsection () {
+=20
+ 	if test -z "$GIT_PERF_SEND_TO_CODESPEED"
+ 	then
+-		./aggregate.perl $codespeed_opt "$@"
++		./aggregate.perl --results-dir=3D"$TEST_RESULTS_DIR" $codespeed_opt "$@"
+ 	else
+-		json_res_file=3D"test-results/$GIT_PERF_SUBSECTION/aggregate.json"
+-		./aggregate.perl --codespeed "$@" | tee "$json_res_file"
++		json_res_file=3D""$TEST_RESULTS_DIR"/$GIT_PERF_SUBSECTION/aggregate.json"
++		./aggregate.perl --results-dir=3D"$TEST_RESULTS_DIR" --codespeed "$@" | =
+tee "$json_res_file"
+ 		send_data_url=3D"$GIT_PERF_SEND_TO_CODESPEED/result/add/json/"
+ 		curl -v --request POST --data-urlencode "json=3D$(cat "$json_res_file")"=
+ "$send_data_url"
+ 	fi
+@@ -203,10 +203,17 @@ get_var_from_env_or_config "GIT_PERF_SEND_TO_CODESPEE=
+D" "perf" "sendToCodespeed"
+ cd "$(dirname $0)"
+ . ../../GIT-BUILD-OPTIONS
+=20
+-mkdir -p test-results
+-get_subsections "perf" >test-results/run_subsections.names
++if test -n "$TEST_OUTPUT_DIRECTORY"
++then
++    TEST_RESULTS_DIR=3D"$TEST_OUTPUT_DIRECTORY/test-results"
++else
++    TEST_RESULTS_DIR=3Dtest-results
++fi
+=20
+-if test $(wc -l <test-results/run_subsections.names) -eq 0
++mkdir -p "$TEST_RESULTS_DIR"
++get_subsections "perf" >"$TEST_RESULTS_DIR"/run_subsections.names
++
++if test $(wc -l <"$TEST_RESULTS_DIR"/run_subsections.names) -eq 0
+ then
+ 	if test -n "$GIT_PERF_SUBSECTION"
+ 	then
+@@ -222,10 +229,10 @@ then
+ 	)
+ elif test -n "$GIT_PERF_SUBSECTION"
+ then
+-	egrep "^$GIT_PERF_SUBSECTION\$" test-results/run_subsections.names >/dev/=
+null ||
++	egrep "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names=
+ >/dev/null ||
+ 		die "subsection '$GIT_PERF_SUBSECTION' not found in '$GIT_PERF_CONFIG_FI=
+LE'"
+=20
+-	egrep "^$GIT_PERF_SUBSECTION\$" test-results/run_subsections.names | whil=
+e read -r subsec
++	egrep "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names=
+ | while read -r subsec
+ 	do
+ 		(
+ 			GIT_PERF_SUBSECTION=3D"$subsec"
+@@ -243,5 +250,5 @@ else
+ 			echo "=3D=3D=3D=3D=3D=3D=3D=3D Run for subsection '$GIT_PERF_SUBSECTION=
+' =3D=3D=3D=3D=3D=3D=3D=3D"
+ 			run_subsection "$@"
+ 		)
+-	done <test-results/run_subsections.names
++	done <"$TEST_RESULTS_DIR"/run_subsections.names
+ fi
+--=20
+2.32.0
 
-Best Wishes
 
-Phillip
+--0suJC432mWjKjELm
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Yeah, I don't know for sure either but that does look buggy to me.
-> Thanks for digging up these examples.  I'm a bit overdrawn on time for
-> this, so I'll pick it back up in a week or two and investigate this
-> case further.
-> 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmDJwGQACgkQVbJhu7ck
+PpRwjw//UKNKv3sZLg+nRfcnCML9K8XFozgWk09tavdCPacFThlGLsJZbs/xiV62
+dulOm60vSoLxv8fpmgUMgSHETaUJRlJJnjhy5mWzwpFUw6ON3sSiMfT42GYlQvN2
+2aRzGIVyFit1NIaAyepHxD55oPTr5QAN9fV0As1Amud9WBhbF5bmnNoLLFr9NzIC
+hXhiUtFrHwljw3+mEsv5wtkrXVCIzQh9E6gQc1G9e8Zp2KGO57BHIjnvF19+4UBo
+8k/r7eKwVSQwm+bG7gE0ZXk/DhnYyeoPWobWVYS8yH8q61FtdpcPTdD1NNYcYvAi
+HTj0GkwAlghTD88dmv6jBaMhnJsChLrSceIfMGhvw8NVgXepxri+jfWsLnTZ1pJT
+WF+bB4B6MyLqAVRbZIEwlAtkq82bOTRqi+Ol13BMPyKs5fcZXc9VokOm6pMySKFl
+DKQAYc6JBsaeuxRDVbO+Qeq55tDzBJcI8O1eByeuqQcjplYGzXl84ZLkzEHqcC4O
+i0C4fYCxvhrAyQUTBjbw4n7axhrpYoYLzM9trDAo5Taau6RCVfbv9BP+PjORX8Fj
+VEMe8xSWV4xEdbiBqEZ2w7/PEz6zZgNobwxGAO7d3txxtJBuEMZDIoI4nrLX6Hym
+iUJHFmf3glUCSJmpAmpS1N7XgiuLfehXOipT+eFT1rUFSGWYZ/A=
+=sFKp
+-----END PGP SIGNATURE-----
+
+--0suJC432mWjKjELm--
