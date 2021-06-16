@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 493BBC48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 03:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B9DC48BE5
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 03:10:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A07161246
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 03:06:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B9AF61246
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 03:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230146AbhFPDIW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Jun 2021 23:08:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64360 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230130AbhFPDIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jun 2021 23:08:21 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB350D06AF;
-        Tue, 15 Jun 2021 23:06:15 -0400 (EDT)
+        id S230075AbhFPDMj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Jun 2021 23:12:39 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62495 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229943AbhFPDMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jun 2021 23:12:37 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EBBA81442EA;
+        Tue, 15 Jun 2021 23:10:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=l5kUcXLYXkqD
-        rRGrYgRndzKagykPvw/lEixjmUZ4Hsk=; b=d5JhaWEjWyqHtYAjS1uUaI/qSMlr
-        38Qdz6W5VXouTkzjghy/xLt8jhKAz3tiO3VhSm4BiEnUyr+82UOhhg0eD1sEGIyb
-        kVupzhuwpfXbLPtChAXZ6n2ZHPFOwHLdWgsQBt15V1Hi9rf661gwpH+TVunRogeG
-        xurkD1rzwc3Ec1E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B3621D06AE;
-        Tue, 15 Jun 2021 23:06:15 -0400 (EDT)
+        :content-type; s=sasl; bh=YBugDNltnqTUVwaLirXUWx+LESZT8AO6SuklFW
+        Q14EQ=; b=xRges7cKxY35lXMKK8jEA2IpSwRGeckbz4oktV9vHFsI+ICU5TocuB
+        yf82A+0rHMTec9c4K/BCN4gXX59VSAUzWp5nfic1WnWOdjROdNAxgxDJ8ge0zX9P
+        P9KrDvAdJjrEZGrCa0gJ4O6dOUgCfFmU5BvBTKuC0WK+Qx7b0/QjQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D602C1442E9;
+        Tue, 15 Jun 2021 23:10:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 408C4D06AD;
-        Tue, 15 Jun 2021 23:06:15 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4153B1442E8;
+        Tue, 15 Jun 2021 23:10:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 3/5] t0041: use test_line_count_cmd to check
- std{out,err}
-References: <20210615172038.28917-1-congdanhqx@gmail.com>
-        <20210615172038.28917-4-congdanhqx@gmail.com>
-Date:   Wed, 16 Jun 2021 12:06:14 +0900
-In-Reply-To: <20210615172038.28917-4-congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
- =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
-        Danh"'s message of "Wed, 16 Jun 2021 00:20:36 +0700")
-Message-ID: <xmqqlf7ase3d.fsf@gitster.g>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Rose Kunkel <rose@rosekunkel.me>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [BUG] `git reset --hard` fails with `update = none` submodules
+References: <CAKjYmsELpf9r3bAJj_JUHgVegw_7z2KzyuR_6FYYngpC1XmNeg@mail.gmail.com>
+        <YMlLGwScowX8eXeJ@camp.crustytoothpaste.net>
+        <CAKjYmsHD2MuTE+drebKichz_0wquPN8ZTLbiPkUCZJyLsSFh8Q@mail.gmail.com>
+        <CAKjYmsEHWShuKEOFWnCyU1x5rM7kFrcaN78D7KhhUay8kCvA2g@mail.gmail.com>
+        <YMlS+1F9IND7vxNI@camp.crustytoothpaste.net>
+Date:   Wed, 16 Jun 2021 12:10:27 +0900
+In-Reply-To: <YMlS+1F9IND7vxNI@camp.crustytoothpaste.net> (brian m. carlson's
+        message of "Wed, 16 Jun 2021 01:25:15 +0000")
+Message-ID: <xmqqeed2sdwc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D007D740-CE4F-11EB-A938-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 676CDAA4-CE50-11EB-8192-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->  test_expect_success 'tag --contains <existent_tag>' '
-> -	git tag --contains "v1.0" >actual 2>actual.err &&
-> -	grep "v1.0" actual &&
-> -	test_line_count =3D 0 actual.err
-> +	test_line_count_cmd --err =3D 0 git tag --contains v1.0 >actual &&
-> +	grep "v1.0" actual
+> On 2021-06-16 at 01:03:40, Rose Kunkel wrote:
+>> Potentially relevant: `git config --global --list` shows
+>> ```
+>> status.showstash=true
+>> status.submodulesummary=true
+>> submodule.recurse=true
+>
+> Thanks for this additional information.  This line is the critical
+> piece.  Now I get this:
+>
+>   $ git reset --hard
+>   fatal: not a git repository: ../../.git/modules/repos/agda
+>   fatal: could not reset submodule index
+>
+> Predictably, "git -c submodules.recurse=true reset --hard" also results
+> in the same thing.
+>
+> The --recurse-submodules option for git reset says this (emphasis mine):
+>
+>   When the working tree is updated, using --recurse-submodules will also
+>   recursively reset the working tree of all *active* submodules
+>   according to the commit recorded in the superproject, also setting the
+>   submodules' HEAD to be detached at that commit.
+>
+> On my system, .git/config has this:
+>
+>   [submodule]
+>           active = .
+>
+> So these submodules are active, but they probably should not be, since
+> we haven't checked anything out (or, for that matter, cloned any data)
+> and it wouldn't make sense to try to operate on them automatically with
+> submodules.recurse or --recurse-submodules.
+>
+> My gut tells me that we should probably mark submodules with update=none
+> set on a clone as inactive.  Of course, this is a tricky area that I'm
+> not super familiar with, so opinions or thoughts are welcome.
+>
+> If folks think this is a good way forward, I'll look into writing a
+> patch, probably tomorrow evening since it's starting to get late here.
 
-Sorry, but I am not impressed if this is a typical/prime example of
-how the new helper helps in writing our tests.
+Cc'ing some folks who recently mumbled the word "submodule" in their
+recent topics for input.
 
-Notice that so many tests that you touched only care about 0 lines?
-
-Instead of this new helper, I think it would be a more useful
-improvement if we check the emptyness in a more direct way, i.e.
-
->  test_expect_success 'tag --contains <existent_tag>' '
-> 	git tag --contains "v1.0" >actual 2>actual.err &&
-> 	grep "v1.0" actual &&
-> -	test_line_count =3D 0 actual.err
-> +	test_must_be_empty actual.err
-
-I think this helper may be misnamed and test_file_is_empty would sit
-better with test_dir_is_empty and test_file_not_empty that already
-exist, though.
-
-By the way, my opinion would be quite different if example like this
-one ...
-
->  test_expect_success 'tag --no-contains <existent_tag>' '
-> -	git tag --no-contains "v1.0" >actual 2>actual.err  &&
-> -	test_line_count =3D 0 actual &&
-> -	test_line_count =3D 0 actual.err
-> +	test_line_count_cmd --out =3D 0 --err =3D 0 git tag --no-contains v1.=
-0
->  '
-
-... were the majority, but I do not think that is the case.  Most
-tests that employ the new test_line_count_cmd in this patch still
-create either actual or actual.err in the working tree anyway, so I
-do not see much point in adding this new helper---it is hard to
-explain to new test writers when to use it.
+Thanks.
