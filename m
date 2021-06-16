@@ -2,125 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F50C48BE6
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77742C48BE5
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E67B1611BE
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:12:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 445E46128C
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 04:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbhFPEOT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 00:14:19 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63006 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbhFPEOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 00:14:19 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93079144815;
-        Wed, 16 Jun 2021 00:12:13 -0400 (EDT)
+        id S229563AbhFPEZr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 00:25:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50686 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229503AbhFPEZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 00:25:47 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8788BD0DBC;
+        Wed, 16 Jun 2021 00:23:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8WrwG8OYwmfe
-        wJcpBL9eYFecR4uowWH19xNiElvwrP0=; b=owMekrsvqP83Y6iyPdzxUyhuBDRD
-        jfxs3kNqXyfjZCt9HpDjQWWN+SVOuV+lrf7/A0igF6X4xTe9JA3gIC4Scu/8AOAR
-        BJRD/X/cKhgVhPWWUWCmwTt7GaFqXSDnQ+USTitOtLtFGN7QGYcQlaxO2iXVV43B
-        /pcx/Frw1GC/NNo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B9D5144814;
-        Wed, 16 Jun 2021 00:12:13 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=k5E3o4zn6GI4
+        lKGLhBZ/rnbW7iDDNsBCYteNrJSRp7Q=; b=LCHQoHRCzlTQgVXexO2012uF9DVE
+        cUxqYfibAOeU87L+tnWeUyvq8jlqll6tZsFC36KQzLZUzNI3G82bgenNnWSZjtOm
+        KDgcBWBNBN0cCzds5oXa/USIpQtDTBchbz8YrGKNHKG+fVu6+sG/vlgT2fMs56wM
+        TF4V5yAT49sVdbg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FD15D0DBB;
+        Wed, 16 Jun 2021 00:23:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0A2C9144813;
-        Wed, 16 Jun 2021 00:12:10 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 09B2DD0DBA;
+        Wed, 16 Jun 2021 00:23:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
-Subject: Re: [BUG] range expressions in GIT_SKIP_TESTS are broken in master
- (was [BUG] question mark in GIT_SKIP_TESTS is broken in master)
-References: <1d003cac-83fa-0b63-f60e-55513ac45cf9@gmail.com>
-        <6980e906-8076-1436-ecdb-6775eff55d39@gmail.com>
-        <xmqqa6nqsd2i.fsf@gitster.g>
-Date:   Wed, 16 Jun 2021 13:12:09 +0900
-In-Reply-To: <xmqqa6nqsd2i.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        16 Jun 2021 12:28:21 +0900")
-Message-ID: <xmqq4kdysb1i.fsf@gitster.g>
+To:     =?utf-8?Q?Daniel_H=C3=B6pfl_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Daniel =?utf-8?Q?H=C3=B6pfl?= <github@hoepfl.de>,
+        Daniel =?utf-8?Q?H?= =?utf-8?Q?=C3=B6pfl?= <daniel@hoepfl.de>
+Subject: Re: [PATCH] Add config variable besides env variable to squelch
+ "do-not-use" warning.
+References: <pull.912.git.git.1623785914202.gitgitgadget@gmail.com>
+Date:   Wed, 16 Jun 2021 13:23:40 +0900
+In-Reply-To: <pull.912.git.git.1623785914202.gitgitgadget@gmail.com>
+ ("Daniel
+        =?utf-8?Q?H=C3=B6pfl?= via GitGitGadget"'s message of "Tue, 15 Jun 2021
+ 19:38:33
+        +0000")
+Message-ID: <xmqqy2baqvxv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 05DAE21E-CE59-11EB-9873-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: A1213E70-CE5A-11EB-9E7B-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Daniel H=C3=B6pfl via GitGitGadget"  <gitgitgadget@gmail.com> writes:
 
-> Interestingly enough, edc23840b0 (test-lib: bring $remove_trash out
-> of retirement, 2021-05-10) cleanly reverts without being depended on
-> by anything else in the series.
+> From: =3D?UTF-8?q?Daniel=3D20H=3DC3=3DB6pfl?=3D <daniel@hoepfl.de>
 >
-> =C3=86var?
+> In addition to the environment variable FILTER_BRANCH_SQUELCH_WARNING,
+> the git config filter-branch.squelchWarning is checked to see if the
+> usage warning should be squelched.
 
-With the crude debugging aid patch (attached at the end) applied,
-running
+Thanks for trying to improve the system.
 
-    $ GIT_SKIP_TESTS=3D't?000' sh -x t0000-basic.sh -v
+A configuration variable that is used to squelch warning messages
+related to migration and transition typically lives under advice.*
+hierarchy, so something ike "advice.weanOffOfFilterBranch" may be a
+more appropriate name for this new knob.
 
-will show something interesting in the trace.
+Having said that.
 
-    ++ this_test=3Dt0000
-    ++ _s_k_i_p_=3D't?000'
-    ++ match_pattern_list t0000 t5000
+As this message with environment as an escape hatch was added as a
+way to strongly discourage users from keep using the command, I am
+fairly negative to a change that adds yet another way to make it
+easier to keep using it.
 
-The variable $GIT_SKIP_TESTS on this line:
+Elijah, who did 9df53c5d (Recommend git-filter-repo instead of
+git-filter-branch, 2019-09-04), added to CC list for input.
 
-    if match_pattern_list "$this_test" $GIT_SKIP_TESTS
+Thanks.
 
-globs to t5000.  We don't quote the variable because we want them
-separated at $IFS boundaries, but we didn't want the glob specials
-in its value to take any effect.  Sigh.
-
-The reason why edc23840b0 appears to break this is probably because
-we are still in $TEST_DIRECTORY when this match_pattern_list is
-executed; before that change, we've created $TRASH_DIRECTORY and
-chdir'd there already, and when we check "do we want to skip all?",
-there is nothing for the glob to match.
-
-That also explains why GIT_SKIP_TESTS=3D"t000?" appears to work.
-There is no such filesystem entity directly in $TEST_DIRECTORY.
-
-    $ echo t000? t00?0 t0?00 t?000
-    t000? t00?0 t0200 t5000
-
-
-
-diff --git i/t/test-lib.sh w/t/test-lib.sh
-index 54938c6427..8ee0540532 100644
---- i/t/test-lib.sh
-+++ w/t/test-lib.sh
-@@ -1346,13 +1346,17 @@ fi
- remove_trash=3D
- this_test=3D${0##*/}
- this_test=3D${this_test%%-*}
-+_s_k_i_p_=3D$GIT_SKIP_TESTS
-+
- if match_pattern_list "$this_test" $GIT_SKIP_TESTS
- then
- 	say_color info >&3 "skipping test $this_test altogether"
- 	skip_all=3D"skip all tests in $this_test"
- 	test_done
- fi
-=20
-+exit
-+
- # Last-minute variable setup
- HOME=3D"$TRASH_DIRECTORY"
- GNUPGHOME=3D"$HOME/gnupg-home-not-used"
+> Signed-off-by: Daniel H=C3=B6pfl <daniel@hoepfl.de>
+> ---
+>     Add filter-branch.squelchWarning git config alongside
+>     FILTER_BRANCH_SQUELCH_WARNING
+>    =20
+>     In addition to the environment variable FILTER_BRANCH_SQUELCH_WARNI=
+NG,
+>     the git config filter-branch.squelchWarning is checked to see if th=
+e
+>     usage warning should be squelched.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-9=
+12%2Fdhoepfl%2FFILTER_BRANCH_SQUELCH_WARNING-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-912/=
+dhoepfl/FILTER_BRANCH_SQUELCH_WARNING-v1
+> Pull-Request: https://github.com/git/git/pull/912
+>
+>  git-filter-branch.sh | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> index fea796461721..d33db14a2a84 100755
+> --- a/git-filter-branch.sh
+> +++ b/git-filter-branch.sh
+> @@ -83,7 +83,8 @@ set_ident () {
+>  	finish_ident COMMITTER
+>  }
+> =20
+> -if test -z "$FILTER_BRANCH_SQUELCH_WARNING$GIT_TEST_DISALLOW_ABBREVIAT=
+ED_OPTIONS"
+> +if test -z "$FILTER_BRANCH_SQUELCH_WARNING$GIT_TEST_DISALLOW_ABBREVIAT=
+ED_OPTIONS" &&
+> +   test "$(git config --bool filter-branch.squelchWarning)" !=3D true
+>  then
+>  	cat <<EOF
+>  WARNING: git-filter-branch has a glut of gotchas generating mangled hi=
+story
+> @@ -91,7 +92,12 @@ WARNING: git-filter-branch has a glut of gotchas gen=
+erating mangled history
+>  	 alternative filtering tool such as 'git filter-repo'
+>  	 (https://github.com/newren/git-filter-repo/) instead.  See the
+>  	 filter-branch manual page for more details; to squelch this warning,
+> -	 set FILTER_BRANCH_SQUELCH_WARNING=3D1.
+> +	 set FILTER_BRANCH_SQUELCH_WARNING=3D1 or run the following command:
+> +
+> +	    git config filter-branch.squelchWarning true
+> +
+> +	 You can replace "git config" with "git config --global" to disable
+> +	 the warning for all repositories.
+>  EOF
+>  	sleep 10
+>  	printf "Proceeding with filter-branch...\n\n"
+>
+> base-commit: e4d83eee9239207622e2b1cc43967da5051c189c
