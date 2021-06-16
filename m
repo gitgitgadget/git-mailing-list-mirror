@@ -2,122 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBD59C48BE5
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 17:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 652B4C48BE6
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 18:05:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F8C2613C1
-	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 17:54:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F89A613B4
+	for <git@archiver.kernel.org>; Wed, 16 Jun 2021 18:05:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230473AbhFPR4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 13:56:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43246 "EHLO
+        id S231531AbhFPSHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 14:07:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230291AbhFPR4p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 13:56:45 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7F9C061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 10:54:37 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 7-20020a9d0d070000b0290439abcef697so3381262oti.2
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 10:54:37 -0700 (PDT)
+        with ESMTP id S231518AbhFPSHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 14:07:51 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361A9C061574
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 11:05:45 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id c5so3652113wrq.9
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 11:05:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VGQh3XUpHyukqKRYhCzOxYVozDnujGAtNOFHkARlJp8=;
-        b=WPvs9UW/wacLt2NkVycKW+0GLdpAx21xy+roW31sqaMGTAFtiYk/DNNAbL75fhTyWf
-         2QKAjK5ZscEPaQQ6LQnn/CsjHnp1R7kejVpanD9uhEdcUkccKoF0qpVb+LCTE45SZpTy
-         h9ejmP/cXrJMpKP/rQnCtGTtMSIidc9uBopVlB6ns0t+ERllhw8Gh/SloIRnl0qNHqdj
-         DNcFO+WdStaq02AG3HJm07taE/sSI6WH739OC1fgzUd6a+iDeVDJrcLBv+F+VoH7tHb9
-         3+rvydQl+xPZsopGXlGeF5DzU9wm91iBeZepTs5tMvpeerMqP8/hRJKymcOd39pFuuR/
-         aE4Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lO9OumFoQdWKWl11ON/MIyBbs8wdRPKLhmlu1dcV6c4=;
+        b=JpN7YFm9yRMdu/fLYfC9EAMHFctjunW0yjlQeQKk+NE5Ygk++kK1cW4hriOl5w8LlU
+         Ur4LWQicEZ8j8dA45owsEr0beYeHrxjwXiaC5sEFfgafVNNWjshSd9xmIm7JS1atzHSt
+         jDC0fBZenoTf1iW4aAuXlchc0/T9M/pEZeZw/IeAzABPVOg8Z56owzZjFp48HAGgaU3W
+         Jozzrlt5ku8MaslR3rzxEj2sNEYMGoC5uR86H/i0NAC1akijSF6AXo6kD/MyGCK82NFC
+         j1OWW9KPfczgOj12qEzJTPJWL6u0Ag8ccPAtDj5t02k2qVMCWIncvqZM96x55vH+u28i
+         3atg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VGQh3XUpHyukqKRYhCzOxYVozDnujGAtNOFHkARlJp8=;
-        b=OB8qPwd3RRZioUS9U7N3dAzdlPIK2y1gcqvCEmH/PUDvoDTrObRMKSMF94OG01yN64
-         34luR1JJ8irqDBkjIwC3FhxzmpPL19ldUMP2QJkc6MC1l6ff/RYj4sAIgI8rqTAEFt2f
-         ohycRWl5SRj/rUhvNBPHAHKyMe8EAbxhRiueo15lw2pxnZNT2N01EvFNoLXh0YDNL2ql
-         ppUUBsY+5iLGNkb9cZAifgAKCm1poW+V6DFhot6LZwmr3A5S9rnreLtYFZFD1pIzcArF
-         8SOykcrGq4EKUe9X6Dmn9h1fchLjin9S5HLedMH4Sf665iJipiZYJ7Mouz7QF7ftZZO1
-         lW8A==
-X-Gm-Message-State: AOAM530savNPaf6MEJQkH8mfDRGdqao0P/BQB3zkBMjcSYNUXOfLKOkr
-        WDU7lRbeTNMZlls9c9JPPoU=
-X-Google-Smtp-Source: ABdhPJxLneBl+Z1l48YaApMc+aKM1TuQJy4o28K7y2L03BFwc+HOc0uUdMd09pbL2JMuZ8h9dNp8vw==
-X-Received: by 2002:a9d:a74:: with SMTP id 107mr962530otg.4.1623866076437;
-        Wed, 16 Jun 2021 10:54:36 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:4142:2009:c909:559c? ([2600:1700:e72:80a0:4142:2009:c909:559c])
-        by smtp.gmail.com with ESMTPSA id d20sm667466otq.62.2021.06.16.10.54.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jun 2021 10:54:36 -0700 (PDT)
-Subject: Re: [PATCH v2 0/5] Optimization batch 13: partial clone optimizations
- for merge-ort
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <dstolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-References: <pull.969.git.1622856485.gitgitgadget@gmail.com>
- <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ad73c3f7-46a9-1000-e490-e5f55e283ff1@gmail.com>
-Date:   Wed, 16 Jun 2021 13:54:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lO9OumFoQdWKWl11ON/MIyBbs8wdRPKLhmlu1dcV6c4=;
+        b=OZfJXMEZ5r2K4P2nZai/U0V8voiu+R6ktw/HL3NBG3zqxnwRMqqnvc36PvOlq41KRn
+         mlQTmo7snU3ueIeVtIu1TfzVMKtR/fbi2QAFDarYuiL85Cl9E61iIpvbHhOdBALI5MF1
+         e81dPoz0lLgLqRAwLMg8fzL/F9Y3cEkH2np0GqRpLO1HWGF2j927QUD+PhD75N3mVzG+
+         VY3WPSn8zkflfWiIZ9gilnDns2bctA+78s9NwVZTrVzK5eSSK/RaGtYKejBpBZzUxgJ3
+         TAf3mtBMftkH+iKtzcPKxdejskon/lVWPkdDrgBaowVt/QqYeGqFRapLKSEjbKP5MZRt
+         foyA==
+X-Gm-Message-State: AOAM533nRxQQkfjujgUNTIP8yUgOwiYUBNSPpZzb2FcAvhGConNput9W
+        E9Mpbp6I0JJ0AFZ2Qd+1a5o5Aof+CuuqyzkxJYA=
+X-Google-Smtp-Source: ABdhPJxcGYjvrI/+BNUESljHoJm9HDH0Evg5isbEe/5h8yPOjEC+LKyOYpVZik8lePeipMGw+XIGNnkAuAItUNUuqiM=
+X-Received: by 2002:a05:6000:2ce:: with SMTP id o14mr353491wry.145.1623866743791;
+ Wed, 16 Jun 2021 11:05:43 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAHLeu+y3DxLv7M4SM2f5yVxtKXbpAWD7Ad2m+rVKpKfKiA6PVw@mail.gmail.com>
+ <YMo3j6mqiKBTTEbS@generichostname>
+In-Reply-To: <YMo3j6mqiKBTTEbS@generichostname>
+From:   Harrison McCullough <mccullough.harrison@gmail.com>
+Date:   Wed, 16 Jun 2021 12:05:30 -0600
+Message-ID: <CAHLeu+xC+ecEidoofXsOqSdT4fmf=5A1PAnHzbFPqCiPr5D+BA@mail.gmail.com>
+Subject: Re: Error in bash completion
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/15/2021 6:41 PM, Elijah Newren via GitGitGadget wrote:
-> This series optimizes blob downloading in merges for partial clones. It can
-> apply on master. It's independent of ort-perf-batch-12.
-> 
-> Changes since v1:
-> 
->  * Incorporated the suggestions from Stolee on patch 2.
+I don't have any knowledge of the expectations regarding Git internals, but I
+think it would be good to note that lines 32-33 of `git-completion.bash` say
+this:
 
-Thank you for these.
+    If you have a command that is not part of git, but you would still
+    like completion, you can use __git_complete:
 
->      -+		 ..........fetch_count:12
->      -+		 ..........fetch_count:5
->      -+		 ..........fetch_count:3
->      -+		 ......fetch_count:2
->      ++		fetch_count:12
->      ++		fetch_count:5
->      ++		fetch_count:3
->      ++		fetch_count:2
+For me that would imply that the `__git_complete` function is intended to be a
+"public interface", but maybe I'm reading it wrong.
 
-In particular, I think this simplification will pay dividends in the
-future.
+-Harrison McCullough
 
-Also, I am in full support of the goals of this series. With such
-changes, we could potentially re-enable merge.renames in Scalar and
-VFS for Git. Currently, we avoid this so we don't download a huge
-list of missing blobs whenever pulling the latest changes in these
-enormous repos.
-
-I am still late in doing more meaningful testing which would allow me
-to give this a full stamp of approval. Specifically, I want to merge
-this code and the rest of merge-ort into the vfs-2.32.0 branch of
-microsoft/git and run some sample merges on some private monorepos
-and see how it behaves. I'm very eager to include merge-ort as a
-recommended config in Scalar, but I haven't had the time to devote
-to testing like this.
-
-I just created a calendar event for Tuesday, June 22nd to hopefully
-devote the entire day to such an effort. Thank you for your
-patience.
-
-Thanks,
--Stolee
+On Wed, Jun 16, 2021 at 11:40 AM Denton Liu <liu.denton@gmail.com> wrote:
+>
+> Hi Harrison,
+>
+> On Wed, Jun 16, 2021 at 09:44:38AM -0600, Harrison McCullough wrote:
+> > What did you do before the bug happened? (Steps to reproduce your issue)
+> >
+> > 1. Create a Bash function, e.g. `ga() { git add "${@:-.}"; }`
+> > 2. Use the `__git_complete` function to add Bash tab completion for your custom
+> >    Bash function, e.g. `__git_complete ga git_add`
+> > 3. Attempt to tab complete a file path, e.g. `ga my-incomplete-file-path<TAB>`
+> >
+> >
+> > What did you expect to happen? (Expected behavior)
+> >
+> > Bash tab-completes the file path.
+> >
+> >
+> > What happened instead? (Actual behavior)
+> >
+> > Bash tab-completes the file path but also displays an error:
+> >
+> > $ ga fi-bash: [: -lt: unary operator expected
+> > le3.txt
+>
+> This happened as a result of my changes at e94fb44042
+> (git-completion.bash: pass $__git_subcommand_idx from __git_main(),
+> 2021-03-24) and 87e629756f (git-completion.bash: rename to
+> $__git_cmd_idx, 2021-04-22).
+>
+> The tl;dr is that $__git_cmd_idx must be set to the index of the
+> git command you're executing (e.g. for `git add`, the index of `add`).
+> As a workaround for you, try setting __git_cmd_idx=0 where you define
+> ga().
+>
+> Now, a question to the wider list: does git-completion.bash have a
+> public interface? I've been working off the assumption that any time a
+> user uses the internals, it's at their own risk. Is this a valid
+> assumption to make?
+>
+> -Denton
