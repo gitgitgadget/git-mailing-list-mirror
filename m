@@ -7,110 +7,178 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40460C2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 15:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2693BC48BE5
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 15:12:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BC12610A2
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 15:06:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07E1061405
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 15:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233081AbhFQPIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 11:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44716 "EHLO
+        id S233202AbhFQPOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 11:14:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232676AbhFQPIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 11:08:47 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE7CC061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 08:06:40 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so6412767oth.9
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 08:06:40 -0700 (PDT)
+        with ESMTP id S233129AbhFQPO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 11:14:29 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F767C061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 08:12:20 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso6439072otu.10
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 08:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QCIpEjfHHdCZLAaT7TwvwFi5Qf+xCklgX623pTjEiZc=;
-        b=YQE5PJfzhVC3u+BsycSCeIjyfgoj0QkBkXknNJa3nodX3ur70V80OnDaSs81H6J6Yo
-         Uwh6sxkcJBs5vN5dBjP+IqzPCB79+d9NkxEzAJ4FzH9zk1TypMH9l+dtVFCXWS8iHQbP
-         oh132vThyYq/6RJMNfH1lCOZnwq99S1mDBeBDQN1vkYqZ0S8TePXXF8lCoKOSH/OIE32
-         2jnqlocOOIqqXTDInimXVRAJZBWsT7+LvdNBrb8kcPzR/eXtm4cgKiEEAA6XFdzTT0Nk
-         8vQ7tCA8Vxzk+e0oLrlkAonsgDrAxdxasmpFzqSBvL1z2CaJ0bSIW2d0cDTivyhL9/Nh
-         wRnQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=xQ2nT9M4gS3BXXTv22rNh7A9HTsCIxzAC8zMK9CGyHI=;
+        b=mmiOcOw2q2zjONTNQ6a0tZ+np4phB9RyRc9kNxdGT0WhOZDaG7tCrN99gwGqfQmjkr
+         TtlUQGtNLnwcs6FnckAwcKoCzQ9zf9kjv4yEY3QERQ5Z1Vvx3rD7LJpQq81r0lq5wj6J
+         eTIWCwaL8vgmYESflbQsomhBkZA8A7y+SG8kScr2sKMYL+pW3GjidMNzeNUKoVQSsOI1
+         ptA/673W2ePkNcpXN+sTdId6sfGks3uvFyXBsElyJNwoIx3OtrDut+sPYZJlnwQ6t4Gy
+         UC34NEOsLJcvH8doNH9sh20+eHmw61ndodzxpK/ZF80kQMhm5nIIxI2kQngEIavC0vVW
+         Lc2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QCIpEjfHHdCZLAaT7TwvwFi5Qf+xCklgX623pTjEiZc=;
-        b=p2HEKCUEOYrdOkbwuJIAkGaaTUxUaV9IXwz0mQxeHZrwEn6xi2zxQkzIREJFu9xIK0
-         HXsvJhzwFJQeHHPX0DUENpAGz7N1sD+XSs/yEzKwLbXCxUW9DKXkLQWmyPOoVgwgUDRn
-         sh4275ekK8ao12KAmQ0Ej/5KEBLTY5rXjVmWGy0+WvzFe/4kyyYLo45JpqI8LyJ2Gnom
-         ST9gFJ2e9sIdiEUJaN5LmOu60l+edK/JHtibrNN7QpjCSKmCbStL5OIt4cSE8oXWljMi
-         2CqCGqycDOPgnwMexwnuoLtk290pagelxPM7u7qg9TdGqkqqS1f0zEwkIYG69/Trfk4e
-         9lvg==
-X-Gm-Message-State: AOAM530kzjk0BCFHgGvYp02L3BVwXOFwHwfxts9okfGJm3HpfLe84bC3
-        1tqNlrBJ9aPkoxo+vxX2x1QkxA/7cYkBgp9CV5w=
-X-Google-Smtp-Source: ABdhPJwLyV9Zo9f0h7yCMo6jwDuvSPjPjAgmOK4EcZYC4okrb61qeJP01KwDtpB9WdzbAlAFJP7yl6tG6WPgJ23OtQo=
-X-Received: by 2002:a9d:1a8:: with SMTP id e37mr4809117ote.316.1623942399488;
- Thu, 17 Jun 2021 08:06:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqr1h1mc81.fsf@gitster.g> <CABPp-BG53Kd7MhzE3hdq5fjBQVV2Ew3skcUCAuTfM5daP2wmZA@mail.gmail.com>
- <60cb5a02f1b31_1259c2086f@natae.notmuch>
-In-Reply-To: <60cb5a02f1b31_1259c2086f@natae.notmuch>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 17 Jun 2021 08:06:28 -0700
-Message-ID: <CABPp-BE95Y0+d6yVQ0ZqRWnknqc3N1vL04VYoqy-7mvQckfuaQ@mail.gmail.com>
-Subject: Re: Contributions which I feel are dangerous and/or deceptive (Was:
- Re: What's cooking in git.git (Jun 2021, #06; Thu, 17))
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=xQ2nT9M4gS3BXXTv22rNh7A9HTsCIxzAC8zMK9CGyHI=;
+        b=SVjoiFeg2aZTP2iaML0gsP/abPmyzshJ9+oQpWhb7G5cPoMa2QdZq3/VZ5mY7iu2Cu
+         dSdlgepAx5ErQ3yuY1IJ3oN2x9jsQncIifHZHuAK8RMdrhy5ZT5Dvj9etJ+sNwWXXh3F
+         ScnGKoxuou9g2jK8Aijbfr2nxz/njWTpP6JNO/vCsA8GCpHFqEHGxcblH+slybJFx+mZ
+         Pfkzi2PL9S79BfQiy9ASe1OiAklqy2JYWifMoYd23/sXBTFVmRUBsAspKsatPDF3Mta1
+         LGfWKLj0vkls6F3cSFsYwe88Hfn3JCNGgjks6gv6gFU613DUl1uUOGwAY5u+Pz6J+WTg
+         JeDA==
+X-Gm-Message-State: AOAM532Y8f0OMxo0Wx73xFNruCRw200ZI9Z4+VB0xe7VaeFhEqoYuM0C
+        5e2FCHMvPo/CKr3oF/XX+TE=
+X-Google-Smtp-Source: ABdhPJwVSUy7nSq1AxR+uzQ0V8kKID0JqsztqzhLL3KpOwd5owoUe0zQZ7O7DEJMIN7JL3I0AgLWww==
+X-Received: by 2002:a9d:6f93:: with SMTP id h19mr5049620otq.292.1623942739367;
+        Thu, 17 Jun 2021 08:12:19 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id b22sm1192474oov.31.2021.06.17.08.12.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Jun 2021 08:12:18 -0700 (PDT)
+Date:   Thu, 17 Jun 2021 10:12:12 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        stolee@gmail.com, jrnieder@gmail.com, emilyshaffer@google.com,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60cb664c7a493_13057208fd@natae.notmuch>
+In-Reply-To: <xmqqbl86qtyf.fsf@gitster.g>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+ <87a6nryt51.fsf@evledraar.gmail.com>
+ <xmqqsg1iseza.fsf@gitster.g>
+ <xmqqbl86qtyf.fsf@gitster.g>
+Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 7:19 AM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> Elijah Newren wrote:
-> > I hate doing this, but...
-> >
-> > On Wed, Jun 16, 2021 at 7:58 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > > * fc/pull-cleanups (2021-06-15) 3 commits
-> > >  - pull: trivial whitespace style fix
-> > >  - pull: trivial cleanup
-> > >  - pull: cleanup autostash check
-> > >
-> > >  Code cleanup.
-> > >
-> > >  Will merge to 'next'.
-...
-> Do you see anything wrong with these particular patches?
-...
+Junio C Hamano wrote:
 
-Sorry for responding when I said I wouldn't but let me clarify my own email.
+> -  - Removing the example person might make the sentence more
+> -    clear and efficient.  Instead of saying "The programmer
+> -    chooses between X and Y as she sees fit", it is clearer to
+> -    say "Valid choices are X and Y".
+> -
+> -  - If you need to talk about an example person, then try using
+> -    second-person to allow the reader to be that example.  For
+> -    example, "If you want X to happen, you'd pass option Y",
+> -    instead of "If the user wants X to happen, she'd ...").
+> -    Alternatively, replace the single example with more than one
+> -    person and use plural "they", such as "Interested readers
+> -    can read 'git log -p README' to learn the history in their
+> -    ample spare time" instead of "an interested reader" learning
+> -    in "his" spare time).
+> -
+> -  - If you absolutely need to refer to an example person that is
+> -    third-person singluar, you may resort to "singular they" (e.g.
+> -    "A contributor asks their upstream to pull from them").
 
-The *code* changes in fc/pull-cleanups are good, I said as much
-previously.  The commit messages are also fine, except for the
-misleading Reviewed-by claim that you still aren't addressing.  That
-could be overlooked on its own.
+Here is another escape hatch recommended by linguists before attempting
+to use singular "they":
 
-Any other problematic patches or portions thereof of yours could
-easily have been written off as mistakes and been no big deal.
+ - Use a generic alternative and count on the reader's common sense.
+   Instead of saying "she made a mistake", say "a mistake was made".
 
-My concern is primarily in how you *respond* to feedback.  I feel you
-have displayed a callous disregard for what others find critical and
-important, and appear to be unwilling or unable to adapt and work with
-the community.  It was particularly your recent emails with Peff at
-[1], [2], and [3] that have me deeply troubled.  Troubled enough that
-I do not want my name used to endorse your changes, particularly when
-I already pointed out that you have used my name in a false
-endorsement of your patch and you have now responded to but not
-corrected that problem (including again just now in this thread),
-making it appear to me that this was no mistake.  I do not want such
-false endorsements to occur again, and felt I needed to speak up to
-make that happen.
+> -    Note
+> -    that this sounds ungrammatical and unnatural to those who
+> -    learned English as a second language in some parts of the
+> -    world, so should be avoided unless the earlier techniques
+> -    fail to improve the sentence.
 
-[1] https://lore.kernel.org/git/60c647c1d9b5c_41f452089@natae.notmuch/
-[2] https://lore.kernel.org/git/60c82a622ae66_e5292087f@natae.notmuch/
-[3] https://lore.kernel.org/git/60c87fc6a87ba_e6332084f@natae.notmuch/
+For the nth time, it's not just foreign speakers:
+
+https://ahdictionary.tumblr.com/post/147597257733/updated-usage-note-they
+
+> +  - Prefer succinctness and matter-of-factly describing functionality
+> +    in the abstract.  E.g.
+> +
+> +     --short:: Emit output in the short-format.
+> +
+> +    and avoid something like these overly verbose alternatives:
+> +
+> +     --short:: Use this to emit output in the short-format.
+> +     --short:: You can use this to get output in the short-format.
+> +     --short:: A user who prefers shorter output could....
+> +     --short:: Should a person and/or program want shorter output, he
+> +               she/they/it can...
+> +
+> +    This practice often eliminates the need to involve human actors in
+> +    your description, but it is a good practice regardless of the
+> +    avoidance of gendered pronouns.
+> +
+> +  - When it becomes awkward to stick to this style, prefer "you" when
+> +    addressing the the hypothetical user, and possibly "we" when
+> +    discussing how the program might react to the user.  E.g.
+> +
+> +      You can use this option instead of --xyz, but we might remove
+> +      support for it in future versions.
+> +
+> +    while keeping in mind that you can probably be less verbose, e.g.
+> +
+> +      Use this instead of --xyz. This option might be removed in future
+> +      versions.
+> +
+> +  - If you still need to refer to an example person that is
+> +    third-person singular, you may resort to "singular they" to avoid
+> +    "he/she/him/her", e.g.
+> +
+> +      A contributor asks their upstream to pull from them.
+> +
+> +    Note that this sounds ungrammatical and unnatural to those who
+> +    learned English as a second language in some parts of the world.
+
+These look OK to me, but I wonder why we have writing tips in *coding*
+guidelines.
+
+We are not writing a style manual, there's plenty of other tips writers
+of documentation, commit messages and comments could use, why are we
+only giving tips for gender pronouns?
+
+Why don't we have a section on passive vs. active voice? How about
+avoiding zombie nouns? Adjectives and adverbs? That vs. which? Who and
+whom?
+
+I don't think there's much value in trying to codify what is a good
+sense of style while writing just for one particular non-issue.
+
+Cheers.
+
+-- 
+Felipe Contreras
