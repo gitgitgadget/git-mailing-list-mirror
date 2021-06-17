@@ -7,121 +7,102 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72483C2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 20:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD68C2B9F4
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 21:00:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59295613AA
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 20:57:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB254613D5
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 21:00:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232763AbhFQVAA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 17:00:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38196 "EHLO
+        id S232763AbhFQVC4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 17:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231241AbhFQU77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 16:59:59 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1011EC061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 13:57:51 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id b11so5625740edy.4
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 13:57:50 -0700 (PDT)
+        with ESMTP id S231241AbhFQVCz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 17:02:55 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E506C061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 14:00:47 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id he7so12181141ejc.13
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 14:00:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=myVVqudMeC3fi06gInvxqYbBGGOQx1dTWgMxf+c9z/8=;
-        b=lQL65251T/+w8/fEAFteAy3cw+YTeXBg3ueXvYheZZQ7sBKK32BTmdcB+gOehaL3D2
-         yEx15KMMAH+BZ31OIlLF+1pLnzwpe43hfqdCaluoHxrB2zy6uGsERToP5E2omSnxjHML
-         asP/lZ1T8A5Lf8/O8RJCz8UE2DDdPQ+aCEiAiTFaYJ5b35Qpj3H6wvX3vkM51QR1mQh5
-         7P8HzWfsF2hF2CcRZf3GK08boTwlFIM5yTPFR4Zj2bOq280e+/OgKyyAG8XhutEGkIP5
-         35ovvvJc3SXn+Oh7NMqkat3oYnUdQnt/EYwLqVHUJa4qdwt0ifQELzZOoe0SsqOGdOS4
-         r/hA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=2BKDM8EwBtAAQjfv9qOMGpFG7IGihwCLtrj+HgD18pI=;
+        b=BEl4B/UusH931Amp2RRAx1X7R17p1P22L/0akzxqgUJlHFuL0JNdJNl0McUKr7libK
+         EbJlIoYWr1KRYS4iJPCkHFl8r6Wgoivb3xemL355uyGM1ko1BqmBFB2gnFw0qBZv656Y
+         TWuY8BHbY0Hn7kNQ0gJImtV7BvwoRC/iv8Ku7JL0Y+009QraQoZo8XwMg0tIkQnNH8az
+         bRMEimndNLCuRG/1azwXTl9PnVaBFXFGbnbm1HK7Tuo7OZqA6HyeMryBDnma056IeioQ
+         D3BUbSOUtvwCYmVTwK1DQL4s8FpsOsnCbfwA9dR966MkDSf54gPROE5FMfruwYsxoN00
+         znsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=myVVqudMeC3fi06gInvxqYbBGGOQx1dTWgMxf+c9z/8=;
-        b=blHFYz7LGLD9+9W6U5k6ogDWhcozE8M9IZUNt23lQcrUUyqZhYSMhtu1puirmvIMee
-         NnloevbyV+NfdxsOgCJxLEqbLEckMGMkhdkRJyl9iAXaPbjuCaD+qBqoCd7i+Et/6gQf
-         nlii0N18EIcLGwA8cqjPzhVdXTuxcRuWS6tSK49ui6xT4X5eC7EoUGAffpureQ1Z7ghJ
-         nS2ztVVHMCIFRiEOvWU6n/xA1T+2azeWmlY3oJ7vNgs6PBaw8/G7MfGPpxMxystu7FyV
-         WxqZPzkIpPLfSI5UnBVDAe5IGenMU3bCcYTXdsfdcJLi1tdbmV6phs32eGfQMkzizBof
-         VXVw==
-X-Gm-Message-State: AOAM532ok0Zar7ND+3SiO0q1egj2aY+Qs/goFH93WPxgP4XaFeRBI2Th
-        97bmBvNuL1RX3e8bhdE4WtA=
-X-Google-Smtp-Source: ABdhPJx2hOr6OqdzFbvbKZ7b0hOfGsLPYDOxnoPITdrNLH7H3PDffW+2xv0ry9ySD/by1ggrOR0JSg==
-X-Received: by 2002:a05:6402:3513:: with SMTP id b19mr310609edd.148.1623963469648;
-        Thu, 17 Jun 2021 13:57:49 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=2BKDM8EwBtAAQjfv9qOMGpFG7IGihwCLtrj+HgD18pI=;
+        b=Mby5nAb8gWxucQiMtWjhhR8x1CYnx+3rH/hx787WZE0MRbZzzf4oi0B4UsIYYwSt5k
+         aYbGtcTtL765itJP0U52TaxZHtpSL/vM4H6Xvh1mSm8dBCHbnLCLYv8QOG9rcY8WGppK
+         +car3z7yU5NUAyf0H+u7U/4rstejekFUY9KlXpVGnKwipLPDtODqDgIRgRYvIN10Y3hC
+         BoCZ+rWYTvdKJ2oKkXdhiD2xETwfNj6y/Wf0e9H2yiDeokA3Jj8hm4Z0O+DuoXz5pYGI
+         pjioQMika0fXlEw3S7NYyeGY0xyutqCaJ2Ec4lDz7mUUEL7UC0r7QtIHGxp2hLP3Ln5e
+         tvsA==
+X-Gm-Message-State: AOAM530wyxQ7sKmyD8ckOxUbegKVO7MNFeeANJJppgIN6i5/VnUxdzaI
+        9wyh0se4MHR67lAyzQYq+vE=
+X-Google-Smtp-Source: ABdhPJxpevu+A0SgEpeg6V/Wan7EVLmgocgwJOjU1iXTGUrZxML392QygSIklZHvt60V+i9LL99CrQ==
+X-Received: by 2002:a17:907:9854:: with SMTP id jj20mr4307505ejc.365.1623963645538;
+        Thu, 17 Jun 2021 14:00:45 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w8sm4998141edc.39.2021.06.17.13.57.48
+        by smtp.gmail.com with ESMTPSA id n10sm2891354edw.70.2021.06.17.14.00.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 13:57:48 -0700 (PDT)
+        Thu, 17 Jun 2021 14:00:45 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Susi <phill@thesusis.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH 0/6] doc: replace "alice" and "bob" examples
-Date:   Thu, 17 Jun 2021 22:51:19 +0200
-References: <cover-0.6-00000000000-20210615T161330Z-avarab@gmail.com>
- <60c8db3558fb8_1296f208ac@natae.notmuch>
- <871r93ym8q.fsf@evledraar.gmail.com>
- <60ca6586607f5_602720852@natae.notmuch> <87pmwkh4he.fsf@vps.thesusis.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] Makefile: stop hardcoding {command,config}-list.h
+Date:   Thu, 17 Jun 2021 22:58:59 +0200
+References: <cover-0.3-0000000000-20210617T095827Z-avarab@gmail.com>
+ <patch-2.3-6e164edb0b-20210617T095827Z-avarab@gmail.com>
+ <60cbad11b13f5_9bf20896@natae.notmuch>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <87pmwkh4he.fsf@vps.thesusis.net>
-Message-ID: <8735tg5hv7.fsf@evledraar.gmail.com>
+In-reply-to: <60cbad11b13f5_9bf20896@natae.notmuch>
+Message-ID: <87zgvo435v.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jun 17 2021, Phillip Susi wrote:
+On Thu, Jun 17 2021, Felipe Contreras wrote:
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Change various places that hardcode the names of these two files to
+>> refer to either $(GENERATED_H), or to a new generated-hdrs
+>> target.
 >
->> I have not read cryptography documentation, so for me Alice and Bob are
->> simply two illustrative colleagues.
+> Avoiding hard-coded things is generally a good idea, and I can smell
+> there's an advantage nearby, but it's not stated.
 >
-> I have read cryptography documentation and seen Alice and Bob used
-> commonly.  Am I supposed to be confused if I see those names used in
-> documentation for non cryptographic software?  If Alice and Bob work
-> there, why should they not be used here?  Am I missing something?
->
->>> And as argued in 1/6 for those users who /are/ aware of "Alice and Bob"
->>> it's needless distraction. Maybe it's just me, but whenever I read
->>> references to them I keep waiting for the cryptography angle to be
->>> introduced. None of the uses in our documentation reflect that canonical
->>> usage.
->>
->> It's probably not just you, but the vast majority of readers are
->> likely not aware of any cryptographic reference.
->
-> I find it surprising that anyone would be upset that the names Alice and
-> Bob were being used in a non cryptographic context.
+> Can you spell out what you are trying to achieve?
 
-Who's upset? Not the author of this patch series, as noted in 1/6 I just
-think it makes for less confusing reading, since Alice & Bob in
-particular have implicit meanings you might guess at[1], and aside from
-that I think it simplifies the example the guide is getting at [2].
+It's hinted at in the CL, but this is series 1/3 of a re-roll of the
+base topic for config-based hooks, real use of this is made in step 2/3,
+3/3 has a better overview:
+http://lore.kernel.org/git/cover-00.27-0000000000-20210617T101216Z-avarab@g=
+mail.com
 
->>> There's also just weird things in our documentation fixed by this
->>> series, such as referring to a random file tracked by git as "bob"
->>> instead of the more obvious "file.txt".
->>
->> OK, _that_ I agree it's unequivocally an improvement.
+>> Hardcoding command-list.h there seems to have been a case of
+>> copy/paste programming in dce7d29551 (msvc: support building Git using
+>> MS Visual C++, 2019-06-25).
 >
-> Yea, a file probably shouldn't be called bob... I would probably have
-> gone with "foo.txt" ( but file.txt is just fine too ).
+> Actually that's not the commit, it's this one:
+>
+> 976aaedca0 (msvc: add a Makefile target to pre-generate the Visual
+> Studio solution, 2019-07-29)
 
-Git's documentation is read by all sorts of audiences, "foo" and "bar"
-are programmer jargon not obvious to everyone. I wouldn't say don't use
-it at all, but when a self-descriptive alternative such as file.txt or
-whatever works perfectly fine as in the case changed in this series,
-it's better to go with that.
-
-1. http://lore.kernel.org/git/patch-1.6-abbb5b9ba13-20210615T161330Z-avarab@gmail.com
-2. https://lore.kernel.org/git/875yyc5i6x.fsf@evledraar.gmail.com/
+Thanks, I had both in my buffers somewhere and copied over the wrong
+one. Will correct pending further feedback...
