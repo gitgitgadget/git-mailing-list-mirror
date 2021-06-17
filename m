@@ -2,74 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 140AAC2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 21:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADDE7C48BE5
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 22:35:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E055461375
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 21:58:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E99161351
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 22:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231503AbhFQWAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 18:00:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51450 "EHLO
+        id S232573AbhFQWhP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 18:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbhFQWAP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 18:00:15 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55231C061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 14:58:06 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id 5-20020a9d01050000b02903c700c45721so7682072otu.6
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 14:58:06 -0700 (PDT)
+        with ESMTP id S232482AbhFQWhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 18:37:14 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00108C061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 15:35:04 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so7824554otl.0
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 15:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=Gibme+P5KUXr2OPGVeGW9mF03fv2tLlGMZWtbaCah+g=;
-        b=f5MA8i6ksS6wOp5g24aJ+AcXbxrgv5fRzLbvw/D0rDjy6cayaD5a2uUDLfmoe1h3ex
-         DrvovXMpGFv/qIB0dUcib1wYvU6V6gK+mJjgN1rJuqVJvJ04yN1yjvUSTsHRs4criKk2
-         37yrFftQUmtYSvXaYHdJ1Or3iDAkUOJDP0vVD9vsRRqAuyt2+it0DN0j8zMwMTj4vjaY
-         5KSnplZyho5oQaMsNpPg8tYSzZZsNI4MpKgyk1T4Dxg1cdPPq/UcVcm4JCC+61UCnQXW
-         FnS+Siqw85TRxVlFED/OB7TmXk8JkXOgcONLEFlVYVXA4mU1eKG73R1IVr4PN+GTQuCx
-         buFg==
+        bh=HPQaVuKwdlYZElrm6cAbzjOZIsNS+jrE1/JC1lvYJSU=;
+        b=cp31pPGgH35Y86++FkHlPn6LvG3J0v0Ev9QQBlv3fUJDmWgE/FoX1Xz0fHUD2tNIiS
+         1UIj350yzxRAE/8Ag9hBR4RZ27DFafAKQqYpdVrW6WFZkkQV1rVb4GwimMJwjC6Qt1Oa
+         GyCAzWDsChVNlbDi48/wUZ1Sb8lu88xb91GuXbUakWOrbb0PObGJbzirDTybEg9H2NjL
+         XmtPKq5mwmL28suxXTOcBfg4PCH1SS95nAZ0u2SJJTet1BIkbwlhPzTlPGa2/cMnhJj2
+         tLZ+n5+XQ44/oXGqZfvbGNszTJpheSWU3lBFoUoYn0i+oi0pwLOdsX1Olu7mz4xldLRz
+         P1uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=Gibme+P5KUXr2OPGVeGW9mF03fv2tLlGMZWtbaCah+g=;
-        b=sU0wVVRwCK44ZjD78v0x7yNqb5OUIU3h+6SqXZIxId32RfvdXTTcSD0ICC1JB5G9ox
-         cow3sb6d/raHR26i8mHXCg3/M/xTdg71t9/qWnOiSvcFnhmkTTlNuYThdXYrYByqjAe9
-         V6SiZGwrsBcGxG96TVVWZlXAMV3nxXzO2z+rCeLQZe/1qo6KNZc8e69F370/h8cNLFwo
-         mkDfBRq4gVB+tLWGK1blV22mYQAevwsi3K4bLJuZTLYqcWF+yUJ4XsDCCs5P5UrLyqvW
-         y67ExrB9muMwH9oExLta8GFhD7zqVJFebhBoMMjMqYuY/lXoIbtjwQwZvpqEpA3g0q86
-         9ZuQ==
-X-Gm-Message-State: AOAM531arsdryIRtDG8gqTMgWwv7jKRYMjpcMUearqyEOU1V9jATwfcz
-        kbfMVyxZ080IlQzTvUR/2zM=
-X-Google-Smtp-Source: ABdhPJy5c9+qIpBPzHzRGE8imGu/40jjyKJHW12hzjcdZEls3/rJfBXSQVaar20DGnbmcsQnTRtOxQ==
-X-Received: by 2002:a9d:729d:: with SMTP id t29mr6528148otj.256.1623967085665;
-        Thu, 17 Jun 2021 14:58:05 -0700 (PDT)
+        bh=HPQaVuKwdlYZElrm6cAbzjOZIsNS+jrE1/JC1lvYJSU=;
+        b=H6m6Uslu2922ewd2GyjANCnyt5QVGspwx2/nGc45VHRp/zDfbAaPt9k0Y6KEFnYCAg
+         UEwEAjGzo2q0+0UNxYosqo7Uls/vXu091uyrgaxnVOgdyiGbJ/EZ0uKTu2jgfZvKLd/t
+         XmXCIAQA2KyHl1UxflvLf7IEousQaDTKbHuWAL1Z8YEdaqHofNPXtCcoqDfODrBdYCCF
+         PCjANax/JRYgEmp5qClgfjU1XP2QI2lmzZoMIe26eRLBsK8pa0ZV7Rt2wWl3JWM6p+Uq
+         Utnahm4eWKLNGXjdIMB7nE510CbmTV5iYKmAeDSixm2qg2gO0HqBGAgtlSb9kupJLexF
+         lNMw==
+X-Gm-Message-State: AOAM532Jz9LRb4DzPBmSweHvLM+ZKYM7vnsISGzXfOMm761z20pY6bFw
+        Um7jzWCfAlDDkSks/Rul1Cs=
+X-Google-Smtp-Source: ABdhPJwVzfM3JfGdrw1sPxexL9gnUN7MX0SMWm8cinkKsPZ+TQvovJZnwh3hUtpoE0na2QWgWKt4qA==
+X-Received: by 2002:a05:6830:2476:: with SMTP id x54mr2964262otr.312.1623969304355;
+        Thu, 17 Jun 2021 15:35:04 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id u10sm1641865otj.75.2021.06.17.14.58.04
+        by smtp.gmail.com with ESMTPSA id k7sm1427865otf.72.2021.06.17.15.35.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 14:58:05 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 16:58:04 -0500
+        Thu, 17 Jun 2021 15:35:03 -0700 (PDT)
+Date:   Thu, 17 Jun 2021 17:35:02 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Message-ID: <60cbc56c92b4_1299208f6@natae.notmuch>
-In-Reply-To: <87zgvo435v.fsf@evledraar.gmail.com>
-References: <cover-0.3-0000000000-20210617T095827Z-avarab@gmail.com>
- <patch-2.3-6e164edb0b-20210617T095827Z-avarab@gmail.com>
- <60cbad11b13f5_9bf20896@natae.notmuch>
- <87zgvo435v.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH 2/3] Makefile: stop hardcoding {command,config}-list.h
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60cbce16708c1_37b9208b3@natae.notmuch>
+In-Reply-To: <87sg1iyl92.fsf@evledraar.gmail.com>
+References: <20210613225836.1009569-1-felipe.contreras@gmail.com>
+ <20210613225836.1009569-2-felipe.contreras@gmail.com>
+ <87sg1iyl92.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 1/4] merge: simplify initialization
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -81,41 +79,75 @@ X-Mailing-List: git@vger.kernel.org
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 > =
 
-> On Thu, Jun 17 2021, Felipe Contreras wrote:
+> On Sun, Jun 13 2021, Felipe Contreras wrote:
 > =
 
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> Change various places that hardcode the names of these two files to
-> >> refer to either $(GENERATED_H), or to a new generated-hdrs
-> >> target.
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> >  builtin/merge-file.c | 6 +-----
+> >  1 file changed, 1 insertion(+), 5 deletions(-)
 > >
-> > Avoiding hard-coded things is generally a good idea, and I can smell
-> > there's an advantage nearby, but it's not stated.
-> >
-> > Can you spell out what you are trying to achieve?
+> > diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+> > index 06a2f90c48..0186f4156a 100644
+> > --- a/builtin/merge-file.c
+> > +++ b/builtin/merge-file.c
+> > @@ -28,7 +28,7 @@ int cmd_merge_file(int argc, const char **argv, con=
+st char *prefix)
+> >  	const char *names[3] =3D { NULL, NULL, NULL };
+> >  	mmfile_t mmfs[3];
+> >  	mmbuffer_t result =3D {NULL, 0};
+> > -	xmparam_t xmp =3D {{0}};
+> > +	xmparam_t xmp =3D { .level =3D XDL_MERGE_ZEALOUS_ALNUM };
+> >  	int ret =3D 0, i =3D 0, to_stdout =3D 0;
+> >  	int quiet =3D 0;
+> >  	struct option options[] =3D {
+> > @@ -48,10 +48,6 @@ int cmd_merge_file(int argc, const char **argv, co=
+nst char *prefix)
+> >  		OPT_END(),
+> >  	};
+> >  =
+
+> > -	xmp.level =3D XDL_MERGE_ZEALOUS_ALNUM;
+> > -	xmp.style =3D 0;
+> > -	xmp.favor =3D 0;
+> > -
+> >  	if (startup_info->have_repository) {
+> >  		/* Read the configuration file */
+> >  		git_config(git_xmerge_config, NULL);
 > =
 
-> It's hinted at in the CL,
+> Looks good, maybe we can fix the similar code in ll_xdl_merge() while
+> we're at it?
 
-Yes, but the commit message should stand on its own.
+Yeah, but since code cleanups for the sake of cleaning up are frowned
+upon [1] it's not clear how we would get these merged in, since Elijah
+has gunned down the obvious fix in patch 4.
 
-> but this is series 1/3 of a re-roll of the
-> base topic for config-based hooks, real use of this is made in step 2/3=
-,
-> 3/3 has a better overview:
-> http://lore.kernel.org/git/cover-00.27-0000000000-20210617T101216Z-avar=
-ab@gmail.com
+Now the cleanups are orphaned.
 
-Yeah, I read the cover letter afterwards, but I'm just putting my
-reviewer cap; the rationale belongs in the commit message: we will want
-more generated files in GENERATED_H.
+> Also, not a problem in your commit, but we check for that constant in
+> only one place, as:
+> =
 
-Also, I presume you meant this one:
+>     XDL_MERGE_ZEALOUS < level
 
-https://lore.kernel.org/git/cover-0.3-0000000000-20210617T100239Z-avarab@=
-gmail.com/
+My mind can't process that, so...
+
+  level > XDL_MERGE_ZEALOUS
+
+> Urgh, do you know if there's some reason we're not doing level =3D=3D
+> XDL_MERGE_ZEALOUS_ALNUM, or at least level >=3D XDL_MERGE_ZEALOUS_ALNUM=
+
+> there?
+
+Nope. To the best of my knowledge that's what the code actually meant.
+
+In general the code in xdiff/* seems to be following a very different
+style than the rest of git's core.
 
 Cheers.
+
+[1] https://lore.kernel.org/git/xmqqbl87zyra.fsf@gitster.g/
 
 -- =
 
