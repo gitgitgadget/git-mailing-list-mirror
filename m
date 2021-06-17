@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 167D9C2B9F4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF25CC49361
 	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 14:35:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1A5F61405
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 14:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D77A261405
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 14:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232837AbhFQOho (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 10:37:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37510 "EHLO
+        id S232841AbhFQOhp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 10:37:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232415AbhFQOhm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232827AbhFQOhm (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 17 Jun 2021 10:37:42 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C27AC061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 07:35:33 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id s23so6734340oiw.9
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 07:35:33 -0700 (PDT)
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC689C061760
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 07:35:34 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so6306705oth.9
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 07:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Cy3WP75DjFgSdHbIbldKJvfuf4B4avPb0n6FTHa9Cf8=;
-        b=cuCqvM6jJJ+tBEjr6bOl0gctkMXLRG4rzC3L8dGPjxpkR1W6nuPeTUExaosFaFsFph
-         +oFnX0cnNOB6FaPDzgs16tJ0fnG92n73Wt+Sxv+qu3Mx73CDcOwmvNuLv5MOC4X8tF7Y
-         iMAZ2tcsvK399jBfUNC1Uq1iUO38pzK2gc8+IUKMQwcz1IK47IiFLslACugrEKA/9Nzd
-         l0/ohXuDqWAWqDTZBfWIVafrmk4Fx+fUcMOqzLqlEXuWR3zsRmQU/N/ct0oHdsBXH6g3
-         BPC7WYmgMZBxHFqlzCgvWw//y8E0mnTEbannG1vlk4YXnmCIaEIfuiFcimjwmfZ1lhyf
-         Iq9A==
+        bh=t6n/adBdXcMs+fient3frCGWLqZWu05GW2wtPddQtGY=;
+        b=f+einu2dpdnASoLm0yukovu1a73KQ8EFATNDFYQ7Kdu8Oa4b9expYhJjRJmIU1VlHK
+         0a9685LS25xM8tZ/7cjzWmFawJnR06m7of54AxjUrnXsKbzMor3bg6n5mkUFHp07iHoS
+         BMFyOHFL8d9GZgK80yoj50M8ffBEFGBvmISr8ASDApogDPaJ9CUdqX7NX9/ck0lLKLfN
+         Jlynj1HDlRq52GfcCtxEZw7bGYL1fCVAeen1dyxyF0AulA6g3hv2wDHVQw/6MJvflL3d
+         PbRfHli+QE8wlC1w4W5gAsTWVkNQaHD37RtSAEOyHKbN6wo3vZaUrBeoLcN/oe1GPYaI
+         +Ggg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Cy3WP75DjFgSdHbIbldKJvfuf4B4avPb0n6FTHa9Cf8=;
-        b=SsVl3zg75hmofnHWHG4tQmgXqwkBS0l3mfiRGVZxT5SYQHy/lJHpPlHebCLeEGC5KB
-         msEZ9DdiNdE9/3o+BSzO/d2hVjbjMoLe5b7vcXDGY+pBeDn5jL3ggfRsyp6CvYjyk7Px
-         OosbwSvMbxVhtDPW+krY7L6OY+kOIJJ7uFn0LrNFlusO2qzXUvCnLdn9gTwtXTVUQ4Xp
-         AfWOZ2NSHTUfqK8qPXr2Ytc2DV+GO0AZgLCZU5XarjJxGjOB5LAsFLURQiM5ya5QK/Uo
-         DschhvLjqs23hie6uL7TCwbeHf5VweX8UGzgVfYIA1BEo16eSGG97ScR04oDVEzW3QN6
-         TL9Q==
-X-Gm-Message-State: AOAM532zzii/LkJH+Zvir7EK0EqFy2T47l5HxD6d/7dZ385fjUwq1a4+
-        M/Ckic8aXlOWagCvax6wsqRy9WPEDuO+5Q==
-X-Google-Smtp-Source: ABdhPJy253ysvhPqRPnt1CoB7JISNlzLuRZDOjmE1LH4PP/U0y87+t2bSyaj+0II4T0iUTK85H2oMQ==
-X-Received: by 2002:aca:3bc5:: with SMTP id i188mr3619053oia.72.1623940532437;
-        Thu, 17 Jun 2021 07:35:32 -0700 (PDT)
+        bh=t6n/adBdXcMs+fient3frCGWLqZWu05GW2wtPddQtGY=;
+        b=ITMdbUIynuq39HI2GTEYA5novPUj4xcTuEFCQqth0lQ1+eWSrXOlXVU9/ftWhJjGmO
+         DIOfEWItH63g5L1zqoRQQB3XPSUQX+kL7xzBKumwcEal4xrUjRWA6RHc0j2Vq4PdkMes
+         WaR8GsZFUoWolr1/l/+K2OJthmT8N8v+1KeqCgdsfn0fnBxuWdaYr8QdwvJT1jjVj6RI
+         Cga6IjU8jbVcD5az6Rms944lVzf1ri0SRls+o52V3/oo5FgG6KH/GVSvLxy3AdpwBnKW
+         rJk4T8HsRGYSBy0T4AFPsPfaY/uS+8OF1n4r/Y4pg4nxglpaH0J7xK3HjV6eKuSFZf+/
+         +rug==
+X-Gm-Message-State: AOAM532FoTKYqdke2Nh7BPDFwDCithup7+iQWy1QcGIVfzQ2kTUMNiIO
+        VyXzVLa1Xlud8gXjNNVpwT7OQv/dNulKEw==
+X-Google-Smtp-Source: ABdhPJxLyiy/K466i0vkFo4EXZzrCL5MZUbETM3Uwxws7+YbH8+ImM4Ajvz9lEusJLftS5xBd5sIcA==
+X-Received: by 2002:a05:6830:190:: with SMTP id q16mr4791690ota.34.1623940534140;
+        Thu, 17 Jun 2021 07:35:34 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id e29sm1147180oiy.53.2021.06.17.07.35.31
+        by smtp.gmail.com with ESMTPSA id o2sm1135127oom.26.2021.06.17.07.35.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 07:35:31 -0700 (PDT)
+        Thu, 17 Jun 2021 07:35:33 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         David Aguilar <davvid@gmail.com>
-Subject: [PATCH v4 2/4] completion: bash: fix for suboptions with value
-Date:   Thu, 17 Jun 2021 09:35:25 -0500
-Message-Id: <20210617143527.77329-3-felipe.contreras@gmail.com>
+Subject: [PATCH v4 3/4] completion: bash: fix for multiple dash commands
+Date:   Thu, 17 Jun 2021 09:35:26 -0500
+Message-Id: <20210617143527.77329-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210617143527.77329-1-felipe.contreras@gmail.com>
 References: <20210617143527.77329-1-felipe.contreras@gmail.com>
@@ -74,68 +74,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We need to ignore options that don't start with -- as well.
-
-Depending on the value of COMP_WORDBREAKS the last word could be
-duplicated otherwise.
-
-Can be tested with:
-
-  git merge -X diff-algorithm=<tab>
+Otherwise options of commands like 'for-each-ref' are not completed.
 
 Tested-by: David Aguilar <davvid@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash |  2 +-
- t/t9902-completion.sh                  | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 47b48fbab6..05606609f9 100644
+index 05606609f9..1feb2ee108 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -356,7 +356,7 @@ __gitcomp ()
- 	local cur_="${3-$cur}"
+@@ -421,7 +421,7 @@ __gitcomp_builtin ()
+ 	local incl="${2-}"
+ 	local excl="${3-}"
  
- 	case "$cur_" in
--	--*=)
-+	*=)
- 		;;
- 	--no-*)
- 		local c i=0 IFS=$' \t\n'
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index cb057ef161..6b56e54fc3 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -540,6 +540,15 @@ test_expect_success '__gitcomp - expand/narrow all negative options' '
- 	EOF
- '
+-	local var=__gitcomp_builtin_"${cmd/-/_}"
++	local var=__gitcomp_builtin_"${cmd//-/_}"
+ 	local options
+ 	eval "options=\${$var-}"
  
-+test_expect_success '__gitcomp - equal skip' '
-+	test_gitcomp "--option=" "--option=" <<-\EOF &&
-+
-+	EOF
-+	test_gitcomp "option=" "option=" <<-\EOF
-+
-+	EOF
-+'
-+
- test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
- 	__gitcomp "$invalid_variable_name"
- '
-@@ -2380,6 +2389,12 @@ test_expect_success 'git clone --config= - value' '
- 	EOF
- '
- 
-+test_expect_success 'options with value' '
-+	test_completion "git merge -X diff-algorithm=" <<-\EOF
-+
-+	EOF
-+'
-+
- test_expect_success 'sourcing the completion script clears cached commands' '
- 	__git_compute_all_commands &&
- 	verbose test -n "$__git_all_commands" &&
 -- 
 2.32.0
 
