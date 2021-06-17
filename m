@@ -7,106 +7,110 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C051AC2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 14:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40460C2B9F4
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 15:06:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C57561369
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 14:46:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BC12610A2
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 15:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231552AbhFQOso (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 10:48:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40046 "EHLO
+        id S233081AbhFQPIs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 11:08:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231434AbhFQOsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 10:48:43 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859A2C061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 07:46:35 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id h9so6807215oih.4
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 07:46:35 -0700 (PDT)
+        with ESMTP id S232676AbhFQPIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 11:08:47 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE7CC061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 08:06:40 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so6412767oth.9
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 08:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=d7E2dpJysIO9nn1fFW7CTBnoG9UIZ6aKtGz5EBNGY14=;
-        b=tR5GP58I5UTYblAr/AUy84KYljobR/06ihUrT6R5n7JwDTuNa3n2iC0A59Z7x37055
-         30VQC7IhfT7PFY4Rp+5yz0njG7pyXhlWi5vPFVjz8F+Zq92in0r43G1zdf+AZSwGiZum
-         yds464ADKJ1ozfKO2Pp/CzpIpgydAYuICXwlUlP/oQGdMWhsPFvk2crA43NuQVq04+mM
-         q9+sRak8Hbs1xtQc7N9rM9mh025M/6IqPp5MP73sK/x8YNJ8FWC+WhlRzEp46f3yCjlA
-         OUYFeN7ui2oznDTT2ijag81FXgWPGJ5eCsNMMa5loGNg6YmeFNd++8sJdXjG0u6oveth
-         h7vA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QCIpEjfHHdCZLAaT7TwvwFi5Qf+xCklgX623pTjEiZc=;
+        b=YQE5PJfzhVC3u+BsycSCeIjyfgoj0QkBkXknNJa3nodX3ur70V80OnDaSs81H6J6Yo
+         Uwh6sxkcJBs5vN5dBjP+IqzPCB79+d9NkxEzAJ4FzH9zk1TypMH9l+dtVFCXWS8iHQbP
+         oh132vThyYq/6RJMNfH1lCOZnwq99S1mDBeBDQN1vkYqZ0S8TePXXF8lCoKOSH/OIE32
+         2jnqlocOOIqqXTDInimXVRAJZBWsT7+LvdNBrb8kcPzR/eXtm4cgKiEEAA6XFdzTT0Nk
+         8vQ7tCA8Vxzk+e0oLrlkAonsgDrAxdxasmpFzqSBvL1z2CaJ0bSIW2d0cDTivyhL9/Nh
+         wRnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=d7E2dpJysIO9nn1fFW7CTBnoG9UIZ6aKtGz5EBNGY14=;
-        b=Udsk6H45tHxd8vdxh/pyvjWt1w/9W8MlaaR9IOtRcTZJ6JF7iBrcl+8gSmUEg2hRmw
-         12kBl37fvPahm/8/7vJZScfdYoOjFBNNbDFyOzH/uz8+oa/dGZW0V/iDFG7nr4gGJFS3
-         m9VAwBXn7lGKQakZfPP53xXkty/RRv8HqAPL4vVRG+7aHphCEmShc2zV2Dy9bbMwDDhU
-         C1HwLLYHzrMQg/zbrnDW9P7p/TkxAn9c4zmtBp2P358vi7NMwtG8Wd6wadiuyIli+23G
-         kwK0OSy3lEbt14QpNO1ndHhmBT6rGA1pqSHVPr5Wd7M2iVOrkkCnk2Np566XkS9C/SO2
-         rKhw==
-X-Gm-Message-State: AOAM531+4aBg/LFlWn1zEsIKOI+VHYjyIH4Bz+afKoBxjbcbzG899eAb
-        XA4kgxWUy7T6FaMBCnxeSJY=
-X-Google-Smtp-Source: ABdhPJwgQt6A9WRrecqdQm+6QeTqkCwx+sBGHsBWAGUa2DjA5HeKu8pLg5Y7ExpafqD8pUnj6iqrjw==
-X-Received: by 2002:aca:4dc3:: with SMTP id a186mr10941555oib.63.1623941194898;
-        Thu, 17 Jun 2021 07:46:34 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id w11sm1170289oov.19.2021.06.17.07.46.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 07:46:34 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 09:46:23 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
-        stolee@gmail.com, jrnieder@gmail.com, emilyshaffer@google.com,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Phillip Susi <phill@thesusis.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Message-ID: <60cb603f471c2_1259c2084c@natae.notmuch>
-In-Reply-To: <xmqqsg1iseza.fsf@gitster.g>
-References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
- <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
- <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
- <87a6nryt51.fsf@evledraar.gmail.com>
- <xmqqsg1iseza.fsf@gitster.g>
-Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QCIpEjfHHdCZLAaT7TwvwFi5Qf+xCklgX623pTjEiZc=;
+        b=p2HEKCUEOYrdOkbwuJIAkGaaTUxUaV9IXwz0mQxeHZrwEn6xi2zxQkzIREJFu9xIK0
+         HXsvJhzwFJQeHHPX0DUENpAGz7N1sD+XSs/yEzKwLbXCxUW9DKXkLQWmyPOoVgwgUDRn
+         sh4275ekK8ao12KAmQ0Ej/5KEBLTY5rXjVmWGy0+WvzFe/4kyyYLo45JpqI8LyJ2Gnom
+         ST9gFJ2e9sIdiEUJaN5LmOu60l+edK/JHtibrNN7QpjCSKmCbStL5OIt4cSE8oXWljMi
+         2CqCGqycDOPgnwMexwnuoLtk290pagelxPM7u7qg9TdGqkqqS1f0zEwkIYG69/Trfk4e
+         9lvg==
+X-Gm-Message-State: AOAM530kzjk0BCFHgGvYp02L3BVwXOFwHwfxts9okfGJm3HpfLe84bC3
+        1tqNlrBJ9aPkoxo+vxX2x1QkxA/7cYkBgp9CV5w=
+X-Google-Smtp-Source: ABdhPJwLyV9Zo9f0h7yCMo6jwDuvSPjPjAgmOK4EcZYC4okrb61qeJP01KwDtpB9WdzbAlAFJP7yl6tG6WPgJ23OtQo=
+X-Received: by 2002:a9d:1a8:: with SMTP id e37mr4809117ote.316.1623942399488;
+ Thu, 17 Jun 2021 08:06:39 -0700 (PDT)
+MIME-Version: 1.0
+References: <xmqqr1h1mc81.fsf@gitster.g> <CABPp-BG53Kd7MhzE3hdq5fjBQVV2Ew3skcUCAuTfM5daP2wmZA@mail.gmail.com>
+ <60cb5a02f1b31_1259c2086f@natae.notmuch>
+In-Reply-To: <60cb5a02f1b31_1259c2086f@natae.notmuch>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 17 Jun 2021 08:06:28 -0700
+Message-ID: <CABPp-BE95Y0+d6yVQ0ZqRWnknqc3N1vL04VYoqy-7mvQckfuaQ@mail.gmail.com>
+Subject: Re: Contributions which I feel are dangerous and/or deceptive (Was:
+ Re: What's cooking in git.git (Jun 2021, #06; Thu, 17))
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> =
+On Thu, Jun 17, 2021 at 7:19 AM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> Elijah Newren wrote:
+> > I hate doing this, but...
+> >
+> > On Wed, Jun 16, 2021 at 7:58 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > > * fc/pull-cleanups (2021-06-15) 3 commits
+> > >  - pull: trivial whitespace style fix
+> > >  - pull: trivial cleanup
+> > >  - pull: cleanup autostash check
+> > >
+> > >  Code cleanup.
+> > >
+> > >  Will merge to 'next'.
+...
+> Do you see anything wrong with these particular patches?
+...
 
-> > On Tue, Jun 15 2021, Derrick Stolee via GitGitGadget wrote:
+Sorry for responding when I said I wouldn't but let me clarify my own email.
 
-> By the way, I do not mind toning down "if you absolutely need to
-> ... resort to" that discourages "singular they".  I just wanted
-> writers to consider that the language evolves slowly, and if they
-> think "singular they" is the best vehicle to phrase what they want
-> to say even after considering that it may sound distracting to
-> foreigners,
+The *code* changes in fc/pull-cleanups are good, I said as much
+previously.  The commit messages are also fine, except for the
+misleading Reviewed-by claim that you still aren't addressing.  That
+could be overlooked on its own.
 
-Once again, it's not just foreigners. Even native speakers who are
-professional lingusits see a problem with some usages of singular
-"they".
+Any other problematic patches or portions thereof of yours could
+easily have been written off as mistakes and been no big deal.
 
-Like mushrooms: not all uses of singular "they" are good.
+My concern is primarily in how you *respond* to feedback.  I feel you
+have displayed a callous disregard for what others find critical and
+important, and appear to be unwilling or unable to adapt and work with
+the community.  It was particularly your recent emails with Peff at
+[1], [2], and [3] that have me deeply troubled.  Troubled enough that
+I do not want my name used to endorse your changes, particularly when
+I already pointed out that you have used my name in a false
+endorsement of your patch and you have now responded to but not
+corrected that problem (including again just now in this thread),
+making it appear to me that this was no mistake.  I do not want such
+false endorsements to occur again, and felt I needed to speak up to
+make that happen.
 
--- =
-
-Felipe Contreras=
+[1] https://lore.kernel.org/git/60c647c1d9b5c_41f452089@natae.notmuch/
+[2] https://lore.kernel.org/git/60c82a622ae66_e5292087f@natae.notmuch/
+[3] https://lore.kernel.org/git/60c87fc6a87ba_e6332084f@natae.notmuch/
