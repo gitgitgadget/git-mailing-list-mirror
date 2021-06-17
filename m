@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C896EC49361
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B98D8C2B9F4
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF09F61057
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 989FE61263
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232209AbhFQKZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 06:25:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37130 "EHLO
+        id S232216AbhFQKZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 06:25:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231791AbhFQKZb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 06:25:31 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283E9C0617AD
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:17 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id df12so771988edb.2
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:17 -0700 (PDT)
+        with ESMTP id S231808AbhFQKZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 06:25:38 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E72B7C0617AF
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:18 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id b11so3269842edy.4
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G8dO6wJi/v/+/qmdQwVbTmJWMQp/M50ti1LojmYp6C4=;
-        b=ZjvUvmZyXsKl1q38AdfZU2hOLkinFCha4i94p7eAEUo6PMx0vZnGzc1tE4bSG5CC+F
-         EZLS0U1yGcJWb4gmnI4DYkl/H9PaxCzKP27am9W+/EZwA93uZjUvin1LtJyDX/zBdvJZ
-         ToXG9KhsY1WeJ9kki/fb68LrnPfoJJrQ49jcG5IHo442NJXtfS8pva4zFWl37srfLFQ/
-         05Ikzotog/4x1sFHqNhMf2ZaKqdX2NGph+EmxPMiR29bkCdFnzPXxub+bNWlMX5vzhiT
-         rYGRjeZ8s9f+KqAs3uoh9qpT+5HI2LB/N0a9nGUqgCmijmxImiVZ8fBBJh/jyQGKLXZ7
-         MzIw==
+        bh=TGNXQs5KcZYZ57foWIBK6vEeJYRgxZ7UI+ID4j51V8A=;
+        b=NhfDSPKLksq9//YPPM7/hkS4yfAP1e5Wgb58QpwWAA7g1l+yaT7Y5N6FE+Dvo6eru8
+         LyLI+/Q7sSyq6g+6KCJE1T6y5ybqc57ldEN7ezpTHRCb/1DkxvGQPDjWNbCmiTNwFsP1
+         ySOiAdaEIVsV2Wk/h+PNsCEdICTgX6DWiQ6ryw22g2KmZhgA9ruwewOxM+Lt5btoBXQ5
+         bQG0wwbKD73yGBvCZmXSKFfC8o9jYpxy4b9SklLQG+U0crWMRuuVQLFSuV8CYLObQcfl
+         YdhlSxj5N8OyUT5ZCq9VSU11sRLA8+qHVt3B1aOBCEaBcZVaBOZjXFDTV945x9EivZSm
+         oeOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G8dO6wJi/v/+/qmdQwVbTmJWMQp/M50ti1LojmYp6C4=;
-        b=cSuJ+28FXdgX5a1jTCDvpovTZrGmyYuEp5RrTkBs1vDg/Y/Wgns/Xh5UByOW6YDTgU
-         bmi8t2vq3o2ypvhtyG8Kx7OTUw56kXXOwJp9j5uDIlVZVVPKRVCei7v1ugzibqXaQj2a
-         jMkSRkLCWS4FLzaHmE817+g6jc9304UdRc+4bO9/JK6OJ6enEtpAKCzwfy+6dja1SJfF
-         BClALhnxZE+o1HQFPrVZz9gKx8Kmb/vEEt931yXXEtfybCfChLkgbXFGUPyXaOEMlZuI
-         sMrTvQQS/sT1g8KN3qlT+819crXXq238sGv7BKohiJY696jLZSHtBJNmnGGCNiQ0cuqM
-         YbdA==
-X-Gm-Message-State: AOAM5307rfCUUAWh1s1tJk8p3Fwye8DrIG3q7oqKwIbF/Fr74/3xN4ey
-        qIYzPn8NhqzZVeD0bVYICFCwkjI4N7Nf2g==
-X-Google-Smtp-Source: ABdhPJwXBGj2g657wdNog7OIjVsa+VS4o3x9q+Z3bG/UENny/hdP9ZkRYyQ8FbwiijZAfVpqTHacXA==
-X-Received: by 2002:a05:6402:1cad:: with SMTP id cz13mr5439196edb.67.1623925395504;
-        Thu, 17 Jun 2021 03:23:15 -0700 (PDT)
+        bh=TGNXQs5KcZYZ57foWIBK6vEeJYRgxZ7UI+ID4j51V8A=;
+        b=hwHi/aPtnA6vrunuLXAKevMHzzCvsZ379B0KDlmimHKsB8LisBeLySYTPoyLjCu0pB
+         jKZ0IMM65c8LGheCsbmYk6T8ToxdtzL2XKInl0WP+6u5pF6BLfyAklK/29fn2ui1CzDR
+         IniZVXx1GOX+YaP4y0SU4ilzjX3uVysmfl0qpUAuxvAn+TCiwI0uWcJ5aYzq1kMGxq05
+         8FA3AcdvS6BCn7KG5l6R64XRcYShDNFIppbZMafmoP8q4j2EqqqqeeqSDbrmAQwgJ8iU
+         /6gkIgtESCkpxfleuOx04w7dSFDF8JO4plr2HhvOWvw2fMiRoYKKs2wdpCW4ujhugCwm
+         0Ucg==
+X-Gm-Message-State: AOAM533kNwMELvzPJeaoCpV+0CIGeK1LzYBrR7wZqMlnNiXPLIK+n4Lx
+        CMwpY0tzsQeeEX4mqs1lmEEcLsj67obOTw==
+X-Google-Smtp-Source: ABdhPJzyUZCXxkmpwzDfP2VsJPx1sHNBq2BqECtfmIMDdxj3iBRKNUwCGcQmkCjF48eL0GtVYg/CcQ==
+X-Received: by 2002:a05:6402:1644:: with SMTP id s4mr5502864edx.190.1623925397216;
+        Thu, 17 Jun 2021 03:23:17 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.14
+        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 03:23:15 -0700 (PDT)
+        Thu, 17 Jun 2021 03:23:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 08/27] send-email: use 'git hook run' for 'sendemail-validate'
-Date:   Thu, 17 Jun 2021 12:22:42 +0200
-Message-Id: <patch-08.27-71d209b407-20210617T101217Z-avarab@gmail.com>
+Subject: [PATCH 10/27] commit: use hook.h to execute hooks
+Date:   Thu, 17 Jun 2021 12:22:44 +0200
+Message-Id: <patch-10.27-e3f8482d80-20210617T101217Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.576.g59759b6ca7d
 In-Reply-To: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
 References: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com> <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
@@ -85,98 +85,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Change the "sendmail-validate" hook to be run via the "git hook run"
-wrapper instead of via a direct invocation.
+Teach run_commit_hook() to call hook.h instead of run-command.h. This
+covers 'pre-commit', 'commit-msg', and
+'prepare-commit-msg'.
 
-This is the smallest possibly change to get "send-email" using "git
-hook run". We still check the hook itself with "-x", and set a
-"GIT_DIR" variable, both of which are asserted by our tests. We'll
-need to get rid of this special behavior if we start running N hooks,
-but for now let's be as close to bug-for-bug compatible as possible.
+Additionally, ask the hook library - not run-command - whether any
+hooks will be run, as it's possible hooks may exist in the config but
+not the hookdir.
+
+Because all but 'post-commit' hooks are expected to make some state
+change, force all but 'post-commit' hook to run in series. 'post-commit'
+"is meant primarily for notification, and cannot affect the outcome of
+`git commit`," so it is fine to run in parallel.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-send-email.perl   | 20 ++++++++++++--------
- t/t9001-send-email.sh |  4 ++--
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ builtin/commit.c |  2 +-
+ commit.c         | 16 ++++++++++------
+ sequencer.c      |  2 +-
+ 3 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 7ba0b3433d..9e47430403 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -214,13 +214,13 @@ sub format_2822_time {
- my $editor;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index f1aafd67d4..dad4e56544 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1045,7 +1045,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		return 0;
+ 	}
  
- sub system_or_msg {
--	my ($args, $msg) = @_;
-+	my ($args, $msg, $cmd_name) = @_;
- 	system(@$args);
- 	my $signalled = $? & 127;
- 	my $exit_code = $? >> 8;
- 	return unless $signalled or $exit_code;
+-	if (!no_verify && find_hook("pre-commit")) {
++	if (!no_verify && hook_exists("pre-commit")) {
+ 		/*
+ 		 * Re-read the index as pre-commit hook could have updated it,
+ 		 * and write it out as a tree.  We must do this before we invoke
+diff --git a/commit.c b/commit.c
+index 8ea55a447f..e8147a88fc 100644
+--- a/commit.c
++++ b/commit.c
+@@ -21,6 +21,7 @@
+ #include "commit-reach.h"
+ #include "run-command.h"
+ #include "shallow.h"
++#include "hook.h"
  
--	my @sprintf_args = ($args->[0], $exit_code);
-+	my @sprintf_args = ($cmd_name ? $cmd_name : $args->[0], $exit_code);
- 	if (defined $msg) {
- 		# Quiet the 'redundant' warning category, except we
- 		# need to support down to Perl 5.8, so we can't do a
-@@ -1979,9 +1979,9 @@ sub validate_patch {
- 	my ($fn, $xfer_encoding) = @_;
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
  
- 	if ($repo) {
-+		my $hook_name = 'sendemail-validate';
- 		my $hooks_path = $repo->command_oneline('rev-parse', '--git-path', 'hooks');
--		my $validate_hook = catfile($hooks_path,
--					    'sendemail-validate');
-+		my $validate_hook = catfile($hooks_path, $hook_name);
- 		my $hook_error;
- 		if (-x $validate_hook) {
- 			my $target = abs_path($fn);
-@@ -1990,13 +1990,17 @@ sub validate_patch {
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} = $repo->repo_path();
--			$hook_error = system_or_msg([$validate_hook, $target]);
-+			my @validate_hook = ("git", "hook", "run", "--ignore-missing", $hook_name, "--", $target);
-+			$hook_error = system_or_msg(\@validate_hook, undef,
-+						       "git hook run $hook_name -- <patch>");
- 			chdir($cwd_save) or die("chdir: $!");
- 		}
- 		if ($hook_error) {
--			die sprintf(__("fatal: %s: rejected by sendemail-validate hook\n" .
--				       "%s\n" .
--				       "warning: no patches were sent\n"), $fn, $hook_error);
-+			$hook_error = sprintf(__("fatal: %s: rejected by %s hook\n" .
-+						 $hook_error . "\n" .
-+						 "warning: no patches were sent\n"),
-+					      $fn, $hook_name);
-+			die $hook_error;
+@@ -1698,22 +1699,25 @@ size_t ignore_non_trailer(const char *buf, size_t len)
+ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		    const char *name, ...)
+ {
+-	struct strvec hook_env = STRVEC_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	va_list args;
++	const char *arg;
+ 	int ret;
+-
+-	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
++	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
+ 
+ 	/*
+ 	 * Let the hook know that no editor will be launched.
+ 	 */
+ 	if (!editor_is_used)
+-		strvec_push(&hook_env, "GIT_EDITOR=:");
++		strvec_push(&opt.env, "GIT_EDITOR=:");
+ 
+ 	va_start(args, name);
+-	ret = run_hook_ve(hook_env.v, name, args);
++	while ((arg = va_arg(args, const char *)))
++		strvec_push(&opt.args, arg);
+ 	va_end(args);
+-	strvec_clear(&hook_env);
++
++	ret = run_hooks(name, &opt);
++	run_hooks_opt_clear(&opt);
+ 
+ 	return ret;
+ }
+diff --git a/sequencer.c b/sequencer.c
+index 3de479f90e..8f46984ffb 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1446,7 +1446,7 @@ static int try_to_commit(struct repository *r,
  		}
  	}
  
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 30eff725a9..6d4e25df8d 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -539,7 +539,7 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
- 	test_path_is_file my-hooks.ran &&
- 	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
--	fatal: command '"'"'my-hooks/sendemail-validate'"'"' died with exit code 1
-+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
-@@ -558,7 +558,7 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
- 	test_path_is_file my-hooks.ran &&
- 	cat >expect <<-EOF &&
- 	fatal: longline.patch: rejected by sendemail-validate hook
--	fatal: command '"'"'$hooks_path/sendemail-validate'"'"' died with exit code 1
-+	fatal: command '"'"'git hook run sendemail-validate -- <patch>'"'"' died with exit code 1
- 	warning: no patches were sent
- 	EOF
- 	test_cmp expect actual
+-	if (find_hook("prepare-commit-msg")) {
++	if (hook_exists("prepare-commit-msg")) {
+ 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
+ 		if (res)
+ 			goto out;
 -- 
 2.32.0.576.g59759b6ca7d
 
