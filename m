@@ -2,141 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2D25C2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 12:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AE68C2B9F4
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 13:22:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A661D61249
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 12:43:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 577036112D
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 13:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231722AbhFQMpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 08:45:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40576 "EHLO
+        id S231702AbhFQNYf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 09:24:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231691AbhFQMpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 08:45:52 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FDE2C061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 05:43:43 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id u190so1058422pgd.8
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 05:43:43 -0700 (PDT)
+        with ESMTP id S229931AbhFQNYe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 09:24:34 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3240C061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 06:22:25 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id a26so6486297oie.11
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 06:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Svm5WK4+R2Twyi2iXhPRazie4UqxEdTGLl3+BJKcY0s=;
-        b=HPm1fgpAGDFz2BcKOznkG3AEd77LVfS/1q2x5U8bWF4J95KTrob4Y97PUojtDWNXIP
-         +eUXLGytshu3jZWOzm2oDOTm5j7U+if+JQERaTZxqC1vt0n3lAkGCAIqoDs4Ly6eF4vM
-         WC0YIMQ0QwYJkjkYRzuBaxo1s+Ngq+DzB96usDcbs51cPhb+dmaZlck8dC+IkQj4XSs6
-         LZRDc4L6fXnYwOd4RnWKLGfTcMpiEAF5Dvdc234aUDMtgmgRitsKJNKMIv+xiI+hynAE
-         XGq+E+SW79YHeAu4Rtx8GMvA1qIk8xe8HxYnc3jT1PDXiy+LlfLXZDc4FBhjaaPBOaOR
-         a6bQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=C+M24XBlmIFZAczBzgseykeWHF9AXCnp1oBICzeGUZc=;
+        b=qz7BdggwjmEDHwObVPLpXmTf0usgEgwn9t6D0mEV/9FDuGJkZodevgfwZavCKwGvQO
+         jV57PrHcGVxbE0fjl2/OI4Rjd4yiDBlEh9SkPabgJhlmR1TzccdYT8aEt8dJZcioifmk
+         9ZwvTKf2sQpMEPHOGBslN9rdFw8pBBaDarg8VURG9dD15yYMcFxhA9dfo+6jv/Mr564/
+         miJvRIunKvfXVQ/obLCEBO7gwqeAs30yepTzE7D3vX52uPKZHozxnYGlohLVm6IbiHez
+         sN4MebvJ2gM9CyJzQbSkODfMa28i83kUtvJCZqYY00AnfAsTVrDLTTLU5UNnX/bU3qot
+         eyEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Svm5WK4+R2Twyi2iXhPRazie4UqxEdTGLl3+BJKcY0s=;
-        b=T6WIUOd6rPG8sElJyagrw7/dq3hx7P5DsbPSL1XZ8qqmkCTgxZOwAPe5FyfPd2aA7u
-         sYtK8aaSw6n8DbSSFU+xutzi88uhx7mroyYi8lGMNd1wo6JqBbNKoaN5VGlwjHoEf4ls
-         QILz5m6QT4VToA136iWUa5Vh//XA+dwDcTT3blZmeKZ6J5MzdijNCWDJsTbcuPO3t+zy
-         huI0FrGZdVINcu0s3zLkHazE1CExMznCDPqOh2Z61FrOEH+CZ93Ii9AaOkZJ0QnVkFks
-         zu+BJFXnYogpqcm92OFjskrLAXV+/NyKO4387wdUss2jXpGirFaFJYf0YnFDya8VjWEB
-         ym9Q==
-X-Gm-Message-State: AOAM530+nSr1W7SNGsAXnebjNckxXQi/73UO1jI+yprZ8NCeuCL7YYPx
-        ESrZeXWuZkgWyF2zhJqBJc0=
-X-Google-Smtp-Source: ABdhPJzGBRvvxH7blAP3ffWPC8FMeefLUToeh1InDcyzgK4qisEf2AEnK+7Awvj8TIqlBj3gHyiCgw==
-X-Received: by 2002:a65:52cb:: with SMTP id z11mr4844869pgp.201.1623933823236;
-        Thu, 17 Jun 2021 05:43:43 -0700 (PDT)
-Received: from localhost.localdomain ([47.246.98.154])
-        by smtp.gmail.com with ESMTPSA id t143sm6532247pgb.93.2021.06.17.05.43.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jun 2021 05:43:42 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH 2/2] test: create repo using test_create_repo
-Date:   Thu, 17 Jun 2021 20:43:31 +0800
-Message-Id: <20210617124331.17888-2-zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.32.0.rc0.27.g7b1e85181b
-In-Reply-To: <20210617124331.17888-1-zhiyou.jx@alibaba-inc.com>
-References: <20210617124331.17888-1-zhiyou.jx@alibaba-inc.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=C+M24XBlmIFZAczBzgseykeWHF9AXCnp1oBICzeGUZc=;
+        b=pemXg1Kkf3XtRRNNgJQu4t6EaFh0O+ejQLEkZILP0QnuvSfyWWZnjiIgszNuy2rawM
+         m7op7Xc7/3Anz4veskBi2DVwRhKMMV0vX++y0EJ77esA317fDv48Jlfmy9KYYjdg/isv
+         X2EP9pyT+6dMUUhqp0geE1461/U+pPalu4N8Q9/eA/rM98vRIZh/g9uSi4UxKn0D9dJ5
+         Rs3wJafyg6Wflw3Ia6O0zuH5zMSbW3fDYb4Z396SUZGeyICSJZ9atvkIt/lzo3Z2UYVW
+         dWNZUnSnPYSgJrfs3XWVXMo2GEORblnYjAIqWgY8+G+J9c/QDaueKcOih8yCmZehpTxQ
+         mYFA==
+X-Gm-Message-State: AOAM532NCbsm/jNrdQjQK/ncN/oP78Rk1ch9QOa0bPqn6euNRwA7y11A
+        GM5y1p2pGP2ua3CKMnMLMc0=
+X-Google-Smtp-Source: ABdhPJyD9X4QtKul5uOFj7pgnR+Ic9ZiE5lHoV8N02p25lizzhOxKAkpU/kvkUuVFcn3sz6ODkfSuw==
+X-Received: by 2002:a05:6808:128c:: with SMTP id a12mr3347237oiw.136.1623936145068;
+        Thu, 17 Jun 2021 06:22:25 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:11b:618c:fdf2:5be3? ([2600:1700:e72:80a0:11b:618c:fdf2:5be3])
+        by smtp.gmail.com with ESMTPSA id 21sm1305277otd.21.2021.06.17.06.22.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Jun 2021 06:22:24 -0700 (PDT)
+Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sandals@crustytoothpaste.net,
+        jrnieder@gmail.com, emilyshaffer@google.com,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+ <87a6nryt51.fsf@evledraar.gmail.com> <xmqqsg1iseza.fsf@gitster.g>
+ <xmqqbl86qtyf.fsf@gitster.g> <87bl85y15s.fsf@evledraar.gmail.com>
+ <xmqqtulxnyhb.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <5755690e-ef13-e12c-4b10-9cb303ae843a@gmail.com>
+Date:   Thu, 17 Jun 2021 09:22:21 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqtulxnyhb.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When creating new repository, function "test_create_repo" uses env
-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME as default branch.  Replace
-"git-init" with "test_create_repo" in t5411, t5548 and t6020 to create
-repository with specific default branch.
+On 6/16/2021 8:09 PM, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+...
+>> The references to "gendered prounouns" etc. are gone, perhaps there's a
+>> good reason to re-include them, but the point of "isn't that issue
+>> solved by recommending an orthagonal approach?" is one of the many
+>> things Stolee hasn't been addressing in the threads related to this
+>> series.
+>>
+>> To me that whole approach is somewhere between a solution in search of a
+>> problem and a "let's fix it and move on". Not something we need
+>> explicitly carry in our CodingGuidelines forever.
+> 
+> This I think is the crux of the differences between you two.  I'd
+> love to hear Derrick's response and eventually see a middle ground
+> reached.
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- t/t5411-proc-receive-hook.sh | 4 ++--
- t/t5548-push-porcelain.sh    | 7 +++++--
- t/t6020-bundle-misc.sh       | 2 +-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+I disagree that removing gendered pronouns and updating the
+guidelines are orthogonal. At minimum, we shouldn't have
+guidelines that we do not follow, especially when they are
+small in number and we can fix them in a few patches.
 
-diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-index 98b0e81208..7148e5ab7e 100755
---- a/t/t5411-proc-receive-hook.sh
-+++ b/t/t5411-proc-receive-hook.sh
-@@ -18,8 +18,8 @@ setup_upstream_and_workbench () {
- 	test_expect_success "setup upstream and workbench" '
- 		rm -rf upstream.git &&
- 		rm -rf workbench &&
--		git init --bare upstream.git &&
--		git init workbench &&
-+		test_create_repo --bare upstream.git &&
-+		test_create_repo workbench &&
- 		create_commits_in workbench A B &&
- 		(
- 			cd workbench &&
-diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
-index 5a761f3642..8725b00a68 100755
---- a/t/t5548-push-porcelain.sh
-+++ b/t/t5548-push-porcelain.sh
-@@ -4,6 +4,9 @@
- #
- test_description='Test git push porcelain output'
- 
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
- . ./test-lib.sh
- 
- # Create commits in <repo> and assign each commit's oid to shell variables
-@@ -61,8 +64,8 @@ setup_upstream_and_workbench () {
- 	# Workbench after setup : main(A)
- 	test_expect_success "setup upstream repository and workbench" '
- 		rm -rf upstream.git workbench &&
--		git init --bare upstream.git &&
--		git init workbench &&
-+		test_create_repo --bare upstream.git &&
-+		test_create_repo workbench &&
- 		create_commits_in workbench A B &&
- 		(
- 			cd workbench &&
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 881f72fd44..4ad98a3385 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -315,7 +315,7 @@ test_expect_success 'create bundle 2 - has prerequisites' '
- '
- 
- test_expect_success 'fail to verify bundle without prerequisites' '
--	git init --bare test1.git &&
-+	test_create_repo --bare test1.git &&
- 
- 	cat >expect <<-\EOF &&
- 	error: Repository lacks these prerequisite commits:
--- 
-2.32.0.rc0.27.g7b1e85181b
+The entire point of this series was to reach a decision about
+gendered pronouns so we can stop having arguments about them
+when they come up. We should just be able to point to "here is
+the decision we made" and it's not enough to say "If you go
+look at the mailing list archive you can see that we removed
+all gendered pronouns so you shouldn't add them again."
 
+We need ways for contributors to self-discover these things.
+Anything less is doing a disservice to our fellow contributors.
+
+Thanks,
+-Stolee
