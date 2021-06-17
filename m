@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 520BEC48BE5
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC91AC2B9F4
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E0F861245
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF20361263
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232127AbhFQKZt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 06:25:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37132 "EHLO
+        id S232208AbhFQKZu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 06:25:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231929AbhFQKZa (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231926AbhFQKZa (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 17 Jun 2021 06:25:30 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB23C0617AE
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:18 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id b11so3269787edy.4
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:17 -0700 (PDT)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53032C0617A8
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:16 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id d7so3339385edx.0
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DL6XCi/03qNcT3N6dN9SuwpfB6ZZ2iEg6jAUskaW268=;
-        b=abJX1WGMpJHqPtxgt2y7GimiqjqeIcCW2TVelfQcfMr6EIFeiZnxkoWkEEnpE0/8xd
-         MpU8paTVZbhJas8G6To/0hG2mCxNYfDMOvRQQvyNdSW4ERV/zJ45/WZC/L6u0f7hSiWa
-         r1qbynCWcygRzIxaXPI+ZxIVIfhCwxbTg3y9UYaQc9wBnD9hcfTe80SVstEK//RJiu8k
-         IY4fRNwt0jWHxtxEN/6lRdH4VevJyYt5wqvOq0jN3vAIIwVXAlK81//SnPEa6ebDcp8Z
-         wmE0NvLyXWrLdmanAqtiD32Ha1oLmRhN1JWOLOav9FDaDZOMVxbg/KBxmSUuB7V+nDfG
-         NGLw==
+        bh=Es4wf1ATb0YeoWwa+zop/EEDuFJX675pSI+Mdm7uM9A=;
+        b=H5Nv+/x98wVtJ4dKWgoPjZ91Klh4oWr0P3g9KwdoQ8k0CyzNl40Ealh7un62GyvqRR
+         rn8gndRnoypXRfCSC41WHRfJDXuk9x5qjAvL5E9eeBjtMbeNJHwO04qsMjYAfbH8E1KO
+         pUqktpMugZ89UfSl9LKiVqIeO3pK7rcG+vu0ZQ1upbaP7lYX0mswNITyGiFAo6HtpQ4g
+         l278NpHT7MtKrryCk3kH8yKsjDz6EcVptMkPTWz1fMSxJmt3rbelkMkGzi7nkQRmb4nE
+         NX6MME6Y0un7onJHm8DJs6OSbetPxDiY2xZ9U+Q/qjyha3yWQcuR9+gRnyIsxHKFgTsI
+         EXvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DL6XCi/03qNcT3N6dN9SuwpfB6ZZ2iEg6jAUskaW268=;
-        b=dPKmq55UwecNTfxIPuJbKMb9Efe5lv19DejJ0VguZUDYqQIKAVxZyUVKys+3Zm5IFl
-         +f6rt0W7hb0caNnj4di/cKjVVZJYU3NlHtAVlo4mXYrfnDfjel8EkOyPm3QudLWHfLcE
-         NxL4z5hUfn70Cpz9N6PVYMqKOfH1S0eyJAMGXvxqPFY3ZMXoagO6lxGomlUs1RKUI9Ih
-         JXCEVwh2HaS5q7od+XWcE7KtUzMBQCIHx0OqWKP8Z2CkbgkiibAcy+DqzA/TP2fKInyu
-         wj0V1dxnb0gmRgbJS45pBokyNKMw1Psk2G/UGhau0lD0NWUjYepkvZ9IhOnzvf4P4zWg
-         BK6w==
-X-Gm-Message-State: AOAM533LytHffaENy6Yvx1C9cbh0exk++q0WEFTlAm6xF+1QwVpZnfnt
-        2lNtjLjAgwjFz34cVfd6GpuTmq2/KPBc8w==
-X-Google-Smtp-Source: ABdhPJz1Ov28LCUqao69C7X3yhLGQTyXmGWLx2ef6AwlFbnDCDVwaMnjd0h5spDwhnNRMGimMNk0ow==
-X-Received: by 2002:a05:6402:759:: with SMTP id p25mr5579048edy.146.1623925396339;
-        Thu, 17 Jun 2021 03:23:16 -0700 (PDT)
+        bh=Es4wf1ATb0YeoWwa+zop/EEDuFJX675pSI+Mdm7uM9A=;
+        b=HXxnnu/FF2cS56kUibg0weU0/T5WM+3juTNwr+TZmD/4D7sd0waG/Pnt65/WxE+Uqo
+         188gJoxr2jQKCCVilQBwG4kKsfkgVl2TJK7/MGSgvER9zFbcKRttIpnD4Kz5lNU+MrXx
+         R/Yo5xFJaPvhbuOvI0Y980vxZFhY7SqTZmBxlBtTzwMb/4rWKMVWb5eBEbLMhxOuFm7Y
+         9Da8kGpIGnM2rHmSzsauu0glzgPPBn1Nig3MzJJ+FHD7tLFpaSpS+aNvu+To7GJyRt0D
+         J3gWCuvZ+xyCRxIAISa1VNN5QIsDpqvgMeWn/dVhL9IelhaZGkeHL2OmCZMB1g3GU2Wg
+         D37w==
+X-Gm-Message-State: AOAM530albGPp51unax1Ja7wab/ofUthXb5sl1O9gD2XbYeWe6ehLALG
+        6sKp3wTQS1MEbHhj7iP6+hv1T4xMimdDbg==
+X-Google-Smtp-Source: ABdhPJxG9W93xkLY9Sn2KwcR6OpkVreJqpQorP7YylDJke71Rq1LlAnKDJLKUaYYcMpRSkVluB2Ivw==
+X-Received: by 2002:a05:6402:151:: with SMTP id s17mr5405073edu.233.1623925394692;
+        Thu, 17 Jun 2021 03:23:14 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.15
+        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 03:23:15 -0700 (PDT)
+        Thu, 17 Jun 2021 03:23:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 09/27] git-p4: use 'git hook' to run hooks
-Date:   Thu, 17 Jun 2021 12:22:43 +0200
-Message-Id: <patch-09.27-246a82b55b-20210617T101217Z-avarab@gmail.com>
+Subject: [PATCH 07/27] git hook run: add an --ignore-missing flag
+Date:   Thu, 17 Jun 2021 12:22:41 +0200
+Message-Id: <patch-07.27-12347d901b-20210617T101217Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.576.g59759b6ca7d
 In-Reply-To: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
 References: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com> <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
@@ -83,106 +83,97 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Emily Shaffer <emilyshaffer@google.com>
+For certain one-shot hooks we'd like to optimistically run them, and
+not complain if they don't exist. This will be used by send-email in a
+subsequent commit.
 
-Instead of duplicating the behavior of run-command.h:run_hook_le() in
-Python, we can directly call 'git hook run'. We emulate the existence
-check with the --ignore-missing flag.
-
-As this is the last hook execution in git.git to not go through "git
-hook run" or the hook.[ch] library we can now be absolutely sure that
-our assertion in hook.c that only hooks known by the generated (from
-githooks(5)) hook-list.h are permitted.
-
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-p4.py | 72 ++++++-------------------------------------------------
- 1 file changed, 7 insertions(+), 65 deletions(-)
+ Documentation/git-hook.txt | 10 +++++++++-
+ builtin/hook.c             |  8 +++++++-
+ t/t1800-hook.sh            |  7 ++++++-
+ 3 files changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index d34a1946b7..e76d8df313 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -207,71 +207,13 @@ def decode_path(path):
-         return path
+diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+index 660d6a992a..097fb9de63 100644
+--- a/Documentation/git-hook.txt
++++ b/Documentation/git-hook.txt
+@@ -8,7 +8,7 @@ git-hook - run git hooks
+ SYNOPSIS
+ --------
+ [verse]
+-'git hook' run <hook-name> [-- <hook-args>]
++'git hook' run [--ignore-missing] <hook-name> [-- <hook-args>]
  
- def run_git_hook(cmd, param=[]):
--    """Execute a hook if the hook exists."""
--    if verbose:
--        sys.stderr.write("Looking for hook: %s\n" % cmd)
--        sys.stderr.flush()
--
--    hooks_path = gitConfig("core.hooksPath")
--    if len(hooks_path) <= 0:
--        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
--
--    if not isinstance(param, list):
--        param=[param]
--
--    # resolve hook file name, OS depdenent
--    hook_file = os.path.join(hooks_path, cmd)
--    if platform.system() == 'Windows':
--        if not os.path.isfile(hook_file):
--            # look for the file with an extension
--            files = glob.glob(hook_file + ".*")
--            if not files:
--                return True
--            files.sort()
--            hook_file = files.pop()
--            while hook_file.upper().endswith(".SAMPLE"):
--                # The file is a sample hook. We don't want it
--                if len(files) > 0:
--                    hook_file = files.pop()
--                else:
--                    return True
--
--    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
--        return True
--
--    return run_hook_command(hook_file, param) == 0
--
--def run_hook_command(cmd, param):
--    """Executes a git hook command
--       cmd = the command line file to be executed. This can be
--       a file that is run by OS association.
--
--       param = a list of parameters to pass to the cmd command
--
--       On windows, the extension is checked to see if it should
--       be run with the Git for Windows Bash shell.  If there
--       is no file extension, the file is deemed a bash shell
--       and will be handed off to sh.exe. Otherwise, Windows
--       will be called with the shell to handle the file assocation.
--
--       For non Windows operating systems, the file is called
--       as an executable.
--    """
--    cli = [cmd] + param
--    use_shell = False
--    if platform.system() == 'Windows':
--        (root,ext) = os.path.splitext(cmd)
--        if ext == "":
--            exe_path = os.environ.get("EXEPATH")
--            if exe_path is None:
--                exe_path = ""
--            else:
--                exe_path = os.path.join(exe_path, "bin")
--            cli = [os.path.join(exe_path, "SH.EXE")] + cli
--        else:
--            use_shell = True
--    return subprocess.call(cli, shell=use_shell)
--
-+    """args are specified with -a <arg> -a <arg> -a <arg>"""
-+    args = ['git', 'hook', 'run', '--ignore-missing', cmd]
-+    if param:
-+        args.append("--")
-+        for p in param:
-+            args.append(p)
-+    return subprocess.call(args) == 0
+ DESCRIPTION
+ -----------
+@@ -29,6 +29,14 @@ optional `--` (or `--end-of-options`, see linkgit:gitcli[7]). The
+ arguments (if any) differ by hook name, see linkgit:githooks[5] for
+ what those are.
  
- def write_pipe(c, stdin):
-     if verbose:
++OPTIONS
++-------
++
++--ignore-missing::
++	Ignore any missing hook by quietly returning zero. Used for
++	tools that want to do a blind one-shot run of a hook that may
++	or may not be present.
++
+ SEE ALSO
+ --------
+ linkgit:githooks[5]
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 7714d31ef1..47e0de7bbc 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -22,10 +22,13 @@ static int run(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	int rc = 0;
++	int ignore_missing = 0;
+ 	const char *hook_name;
+ 	const char *hook_path;
+ 
+ 	struct option run_options[] = {
++		OPT_BOOL(0, "ignore-missing", &ignore_missing,
++			 N_("exit quietly with a zero exit code if the requested hook cannot be found")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -49,11 +52,14 @@ static int run(int argc, const char **argv, const char *prefix)
+ 	/*
+ 	 * We are not using run_hooks() because we'd like to detect
+ 	 * missing hooks. Let's find it ourselves and call
+-	 * run_found_hooks() instead.
++	 * run_found_hooks() instead...
+ 	 */
+ 	hook_name = argv[0];
+ 	hook_path = find_hook(hook_name);
+ 	if (!hook_path) {
++		/* ... act like run_hooks() under --ignore-missing */
++		if (ignore_missing)
++			return 0;
+ 		error("cannot find a hook named %s", hook_name);
+ 		return 1;
+ 	}
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index ecd517b162..542e551628 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -23,7 +23,12 @@ test_expect_success 'git hook run: nonexistent hook' '
+ 	test_cmp stderr.expect stderr.actual
+ '
+ 
+-test_expect_success 'git hook run: basic' '
++test_expect_success 'git hook run: nonexistent hook with --ignore-missing' '
++	git hook run --ignore-missing does-not-exist 2>stderr.actual &&
++	test_must_be_empty stderr.actual
++'
++
++test_expect_success 'git hook run -- basic' '
+ 	write_script .git/hooks/test-hook <<-EOF &&
+ 	echo Test hook
+ 	EOF
 -- 
 2.32.0.576.g59759b6ca7d
 
