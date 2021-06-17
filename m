@@ -2,136 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FC5CC2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 23:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 103F0C49361
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 23:53:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A75A61185
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 23:44:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D742B6128B
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 23:53:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232651AbhFQXqy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 19:46:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46564 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbhFQXqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 19:46:53 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53796C061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 16:44:44 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id x16so6236842pfa.13
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 16:44:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Do1lfAHtjSR5ppc1bRrGYjONBY1wIzhUPqOR2UMtwQc=;
-        b=SiY37y+DurzAXezEyTssXX+vfyYbTLJhN2qsYROqxMSdvlKmsCMa3pWSDg/tI8iSYc
-         bOUwJaov7gB+Yp/FJBUAG00x65qT1yYc8CZNYhBwoRp8rhpw93z6/y3hwJueGtG923Fh
-         KFAuXsAcJ0RG/k+upxu5Qa9DOQQ/8d/SOC/sLg1hN4B0MIes3+1tDsflI+RVOKrrjN+6
-         7zIdsu7iFEaNKlbUMl+UUidjv0i4Q6NNvS6AUZ+zk2QdDWOjBRQwKhvkrCN261NpS5vg
-         TzHbudwV1uqkJmwCBExvqIPRAL50/yoNNlojjhDMQhh5L3Qgs7UdPBuUi802dXJ8xStE
-         Q2Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Do1lfAHtjSR5ppc1bRrGYjONBY1wIzhUPqOR2UMtwQc=;
-        b=pp/i3OWIzzPonDRLBYJczUueioZZ3yeeWGcIDM0avDlO3AO2nF/hZB67HVCeX8UOdj
-         vWaoz4PWz8c+MX3z8Nwf9hYuQzs10NMQTOtNCR3bxwjqVEB5sVmFycpiJB8EGH6GAVl0
-         OMttzr35LNhPfI/ut8x9ZsHzwYegrI3UoER3bmc/oP+qvXLvlPG+g8u6gG7C7AqPTKuA
-         SnqmzbxYuN6ovW0djw9sYIJxKe8WcZIl8+bkt/azEE6qyhkMcxyVSsZ8XdgqgcUgreLQ
-         HOPTVz6L3qfRIKc3FM/0hyzl0y352WtH5WE0mopVWjErbKFsV9/gsO9FynQy6anTUt4z
-         bxbg==
-X-Gm-Message-State: AOAM5310fsficvym3HIFjL+G1SjTUXOOX8gALCVQSCZKlZmIa9Sl9LcG
-        es5INpX2VmlrVJNLb0QwZ0hoJg==
-X-Google-Smtp-Source: ABdhPJxz/Ase6DQtC51DGsBHsFHDhdMMMXsP4lHakiNJt8JLxnKpPqF7jUOilluFGnwtDMC8XGkjPA==
-X-Received: by 2002:aa7:9983:0:b029:2ea:2408:386d with SMTP id k3-20020aa799830000b02902ea2408386dmr2098505pfh.13.1623973483651;
-        Thu, 17 Jun 2021 16:44:43 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:30e4:83fc:53b6:fa47])
-        by smtp.gmail.com with ESMTPSA id q12sm6916432pgc.25.2021.06.17.16.44.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 16:44:42 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 16:44:37 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2 2/4] revision.h: unify "disable_stdin" and
- "read_from_stdin"
-Message-ID: <YMveZXZRM5vHYRx5@google.com>
-References: <cover-0.4-0000000000-20210608T121008Z-avarab@gmail.com>
- <cover-0.4-0000000000-20210617T105537Z-avarab@gmail.com>
- <patch-2.4-d88b2c0410-20210617T105537Z-avarab@gmail.com>
+        id S232288AbhFQXzW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 19:55:22 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51010 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230484AbhFQXzW (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Jun 2021 19:55:22 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5EA0560459;
+        Thu, 17 Jun 2021 23:52:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1623973963;
+        bh=DfeIu6FFrsAvh0Hw+pQng0O6lOCCbpMEKJqTlDXP1I0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=e6Acf3cf0qtIgFsYMkbxmTP7f5nfqRyiADapgDw4Fk8ep0hOtvg56dyShhc9UPuiA
+         2RooFZQ1QP85ovuWJ911M+VDhPR3C2oBBJYpWxAs5gQmeFHVzYqtFmoo9VSIvIJYY2
+         He8J/Rnm0ZfjafMtQDQX6oOrfT1Qgau/RY473vwqtv+sVBNSn7XecWX9Fe4/nbvVXd
+         XQ0TdJNgF2hIYC6gavaPSDiEJyivgfqAAK4VT1Mmy5KSZFipeY0j8nYrLKdThsHurn
+         sRXH4HWYzRMIGW5FoI6Q1xPv9ECHEZ8wLxEjvAmrKkIznt/XfHvrjJLgj/rEnGbsG4
+         vQWq/O2kk8Q5jcs5w7IvltEX3gHtatVMOHKBMeoo0nl9l2jC/1Qr4jASnQRaZPYjRm
+         qIFFN88GkGXVDLJcXqKy2fT4tcDfUS2iU72ats0t+/bmQ3ovJTRTsVMSvmwPfyjxMv
+         uoUiZedUZQF3+12JdxuSpJm/iftx2a4t6wRUK8l+MOA13DlW8B2
+Date:   Thu, 17 Jun 2021 23:52:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Rose Kunkel <rose@rosekunkel.me>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [BUG] `git reset --hard` fails with `update = none` submodules
+Message-ID: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Rose Kunkel <rose@rosekunkel.me>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <CAKjYmsELpf9r3bAJj_JUHgVegw_7z2KzyuR_6FYYngpC1XmNeg@mail.gmail.com>
+ <YMlLGwScowX8eXeJ@camp.crustytoothpaste.net>
+ <CAKjYmsHD2MuTE+drebKichz_0wquPN8ZTLbiPkUCZJyLsSFh8Q@mail.gmail.com>
+ <CAKjYmsEHWShuKEOFWnCyU1x5rM7kFrcaN78D7KhhUay8kCvA2g@mail.gmail.com>
+ <YMlS+1F9IND7vxNI@camp.crustytoothpaste.net>
+ <xmqqeed2sdwc.fsf@gitster.g>
+ <3b53846d-7611-521a-274c-473e00266529@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="F4P9ZEMq28mjsXfl"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-2.4-d88b2c0410-20210617T105537Z-avarab@gmail.com>
+In-Reply-To: <3b53846d-7611-521a-274c-473e00266529@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 12:57:35PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> In 8b3dce56508 (Teach --stdin option to "log" family, 2009-11-03) we
-> added the "disable_stdin" flag, and then much later in
-> a12cbe23ef7 (rev-list: make empty --stdin not an error, 2018-08-22) we
-> gained a "read_from_stdin" flag.
-> 
-> The interaction between these is more subtle than they might appear at
-> first sight, as noted in a12cbe23ef7. "read_stdin" is not the inverse
-> of "disable_stdin", rather we read stdin if we see the "--stdin"
-> option.
-> 
-> The "read" is intended to understood as "I read it", not "you should
-> read it". Let's avoid this confusion by using "consume" and "consumed"
-> instead, i.e. a word whose present and past tense isn't the same.
 
-Unfortunately, I still find your disambiguation text to be ambiguous...
+--F4P9ZEMq28mjsXfl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> diff --git a/revision.c b/revision.c
-> index 8140561b6c..69b3812093 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2741,11 +2741,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
->  			}
->  
->  			if (!strcmp(arg, "--stdin")) {
-> -				if (revs->disable_stdin) {
-> +				if (revs->stdin_handling == REV_INFO_STDIN_IGNORE) {
->  					argv[left++] = arg;
->  					continue;
->  				}
-> -				if (revs->read_from_stdin++)
-> +				if (revs->consumed_stdin_per_option++)
->  					die("--stdin given twice?");
->  				read_revisions_from_stdin(revs, &prune_data);
->  				continue;
+On 2021-06-16 at 13:20:44, Philippe Blain wrote:
+> Hi all,
+>=20
+> Le 2021-06-15 =C3=A0 23:10, Junio C Hamano a =C3=A9crit=C2=A0:
+> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> >=20
+> > > My gut tells me that we should probably mark submodules with update=
+=3Dnone
+> > > set on a clone as inactive.  Of course, this is a tricky area that I'm
+> > > not super familiar with, so opinions or thoughts are welcome.
+> > >=20
+> > > If folks think this is a good way forward, I'll look into writing a
+> > > patch, probably tomorrow evening since it's starting to get late here.
+>=20
+> This is probably a good fix. 'git clone --recurse-submodules' is really
+> too eager to write the 'submodule.active=3D.' config but it should be mor=
+e careful;
+> the above is an example and [1] is another one.
+>=20
+> I think it is a good way forward that having 'submodule.$name.update=3Dno=
+ne' in
+> '.gitmodules' means that 'git clone' would write 'submodule.$name.active=
+=3Dfalse'
+> to the local config. This way it would still be the case that 'submodule.=
+$name.update'
+> itself only ever applies to 'git submodule update', which is what is docu=
+mented [2].
 
-Eeh. I know this is not logic introduced by your patch, BUT your patch
-does change the semantics of the replacement to ->disable_stdin from a
-bool to an enum. There is an implicit assumption here - "if
-stdin_handling isn't REV_INFO_STDIN_IGNORE, then it must be
-REV_INFO_CONSUME_ON_OPTION." That's true during this patch, but becomes
-false in the next patch in this series, and it didn't look to me like
-this section of code was changed accordingly.
-[snip]
-> +	/*
-> +	 * Did we read from stdin due to stdin_handling ==
-> +	 * REV_INFO_STDIN_CONSUME_ON_OPTION and seeing the --stdin
-> +	 * option?
->  	 */
-> -	int read_from_stdin;
-> +	int consumed_stdin_per_option;
+I have a patch along this line and am looking into some test failures,
+so it's not that I've forgotten about it, but that it is, as usual, not
+as trivial as I'd hoped.  It may take me until the weekend to come up
+with something nice.
 
-And indeed, the comment here confirms the implicit assumption made in
-the code. Based on this comment, I'd expect the implementation to
-explicitly check that stdin_handling == CONSUME_ON_OPTION.
+Our problem seems to be that once we mark it as inactive, we never end
+up initializing the repository even if something like --checkout is
+passed (at least in the tests), so I'm trying to come up with an elegant
+way to deal with that.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
- - Emily
+--F4P9ZEMq28mjsXfl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMvgRQAKCRB8DEliiIei
+gYqcAP9UmBPlR4fzvUUrgfGJw7PPPzXuJSCWys39CI4ocll5uAD7Bdz9OwuhLBeQ
+qC0nSDEdRHvMXa7BoC+aPbL0UZFirwM=
+=bj14
+-----END PGP SIGNATURE-----
+
+--F4P9ZEMq28mjsXfl--
