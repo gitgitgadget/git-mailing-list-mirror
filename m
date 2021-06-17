@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0584BC48BE5
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1569DC49361
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEDC561166
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3BD361263
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231949AbhFQKZa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 06:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37108 "EHLO
+        id S231959AbhFQKZb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 06:25:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231273AbhFQKZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 06:25:27 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B941C061760
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:13 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id z12so3300238edc.1
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:13 -0700 (PDT)
+        with ESMTP id S231791AbhFQKZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 06:25:28 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 766A6C061768
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:15 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id d7so3339328edx.0
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rFIzz+YV9rwqDHJ90Swqsb73lFK2nN/fXrEnUPBnKyg=;
-        b=uqE+cVBkqGxMTCPFbaht4lD7cfdW95lyYFnK05ldiBolyJYpY6P32R2O8NnZZ3MNWU
-         WnBBtVL8AsBJ/75AnO3P48sGEL/3qWIyqyPn052viWWAjEQa172njhZjKN2UUbID4QrA
-         8TyLm0yygiIni8cbqYYroCf65mfyRm8CD93s/aZ74k8XLpnBDX7j1vpRXsG1+biejynQ
-         5rSDoboJ1NBSazz/zNqD1BlU5Nf+fxA0SQGykydfH0G+J/lzVC8/UaO650yfKR5qKelo
-         EAVEjLTVnthiAHYcJeP48VYmvy4Ji63USRaMV7gpvHnrMaksxONkcJwcPiueM33lKt6+
-         c2cA==
+        bh=CEFqbkcyoN1dYwRjQG/l3c7WOwsfBIe/4hyHq1K4CQA=;
+        b=EpIM9utIc3onG4Pxfxtrg2x+aJCR6OUDtldRPcljvN4XNOTUO+OsIpzLOHb9ucNk17
+         kp2o5oDsEGS+y/2D/LbeL1UzkuaTDVFC+HtJsun8fMUfqzDwDxlIPRY/fZT2zEoAAbWW
+         VDSo8dayOTiW0MDBIHAtsLlZa+U4Tn8N2Phk2CEaP6x6DQ+BsrcQimXbClkaWABY/co0
+         o5CQgEHDMH8AXFZH7bnI0Knz401cgUIxOjMJXV/GrRFbv9X6Nex0TcYSsfwK1dj8eCCy
+         VEA1E7ixTseII5kxjVQ0nM+QDuM+jkjqfLVOJYDeVY75Yi49yPPBQwVbis43xjxeRPfU
+         y1YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rFIzz+YV9rwqDHJ90Swqsb73lFK2nN/fXrEnUPBnKyg=;
-        b=ROWNxaTvoCY+LmB0q+CLToFXFVm7CDJ4dprMurmGzS5e3QrilyEgiLOPCtqfxZhF85
-         fT1aFQHW4NeKFbZ1I0enQ97yEvf8QkzzNBZ4lhhHqcmJH5Atl6LUk8mBoBdXs+NRUl99
-         rMNGPtp5iWj0guG+Oxrcs3Uog6e/0Ovfb/AEGQUCnltMxrnZTRbydvVEiUlnzELfxzXX
-         ohHv1NIyJb4EpcgXew+6o9kzwwlJN7u6jfmGzqpqvQPuNwmw19KSARAwiYsQRfleNqlv
-         XGjrwKPKcWYhxsMccrelBwUrbzLhXGCXs7WwdViVjTQGEX8usLuxpRYSN4U+3TwnXngg
-         tQvg==
-X-Gm-Message-State: AOAM532JJwJUwJH0cBIb0kvPyIghb+uwxrE7zqpatNBtrajiIJeeDftO
-        cpeiCCUVyoADF13uyLupsLPzz4S9SBXvyA==
-X-Google-Smtp-Source: ABdhPJzgm3vQbrxEovXpwGXXRUCRk+5dU+Z7nFiyec2dG15K4kxuGsGM8/PZN0eLlT7TaQgbXscOZA==
-X-Received: by 2002:a05:6402:c92:: with SMTP id cm18mr5495223edb.29.1623925392054;
-        Thu, 17 Jun 2021 03:23:12 -0700 (PDT)
+        bh=CEFqbkcyoN1dYwRjQG/l3c7WOwsfBIe/4hyHq1K4CQA=;
+        b=Wje90wXql/JT5GihmwmZJPfXH7BAIIGSOgGFzbePfMdO0sAXDq6HH58mzpLLPWD418
+         f+W6WE1foG917Bqvf5MNNw5JGN2GVoNW/V7Tyeh7fxGIPltm9OWdmvsILMSguaBfY/z6
+         nt+1nODqMBI4J5YfNz5ubYpIVsxGcKMcUyhIfwmOcB1UH4NtNa167Y3mvoD6AaKnSg0V
+         BQD7VhK/pvWxbzjdBghfXn4EbbKOusBdkvXl4I7nS0g4OI5WXQCLzCJ/3xifxwZLJ/GS
+         9PA2rikj9gzkUuiSGlfALgvK8+cIruJAXWIoA5nvVuJ1sdThvIHFL9ieGR0ky2KHmjew
+         4sKA==
+X-Gm-Message-State: AOAM530+0IxwNCIVT1E+687LdQprLZRT+TRnmhycPzXFimi3Ixvemetj
+        zOHVU11NaFt6E10YJ5GgO1q12UinVZUYsw==
+X-Google-Smtp-Source: ABdhPJw1ynPnx7UNw+I5gsvqBxuvt13gqeKbjEjfmvQS6plVwKO+IxA2Em7wGcqYc+O3MxdCrwmzeA==
+X-Received: by 2002:aa7:c845:: with SMTP id g5mr5489761edt.306.1623925393845;
+        Thu, 17 Jun 2021 03:23:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.11
+        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 03:23:11 -0700 (PDT)
+        Thu, 17 Jun 2021 03:23:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/27] am: convert applypatch hooks to use config
-Date:   Thu, 17 Jun 2021 12:22:38 +0200
-Message-Id: <patch-04.27-1d08726930-20210617T101217Z-avarab@gmail.com>
+Subject: [PATCH 06/27] merge: use config-based hooks for post-merge hook
+Date:   Thu, 17 Jun 2021 12:22:40 +0200
+Message-Id: <patch-06.27-e9fa3f6759-20210617T101217Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.576.g59759b6ca7d
 In-Reply-To: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
 References: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com> <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
@@ -85,60 +85,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Teach pre-applypatch, post-applypatch, and applypatch-msg to use the
-hook.h library instead of the run-command.h library.
+Teach post-merge to use the hook.h library instead of the run-command.h
+library to run hooks. This means that post-merge hooks can come from the
+config as well as from the hookdir. post-merge is invoked only from
+builtin/merge.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/am.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ builtin/merge.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 1c8a548903..9e9c1b5e9f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -445,9 +445,12 @@ static void am_destroy(const struct am_state *state)
- static int run_applypatch_msg_hook(struct am_state *state)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index be98d66b0a..6128b60942 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -448,6 +448,7 @@ static void finish(struct commit *head_commit,
+ 		   const struct object_id *new_head, const char *msg)
  {
- 	int ret;
+ 	struct strbuf reflog_message = STRBUF_INIT;
 +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 	const struct object_id *head = &head_commit->object.oid;
  
- 	assert(state->msg);
--	ret = run_hook_le(NULL, "applypatch-msg", am_path(state, "final-commit"), NULL);
-+	strvec_push(&opt.args, am_path(state, "final-commit"));
-+	ret = run_hooks("applypatch-msg", &opt);
-+	run_hooks_opt_clear(&opt);
- 
- 	if (!ret) {
- 		FREE_AND_NULL(state->msg);
-@@ -1607,9 +1610,13 @@ static void do_commit(const struct am_state *state)
- 	struct commit_list *parents = NULL;
- 	const char *reflog_msg, *author, *committer = NULL;
- 	struct strbuf sb = STRBUF_INIT;
-+	struct run_hooks_opt hook_opt_pre = RUN_HOOKS_OPT_INIT;
-+	struct run_hooks_opt hook_opt_post = RUN_HOOKS_OPT_INIT;
- 
--	if (run_hook_le(NULL, "pre-applypatch", NULL))
-+	if (run_hooks("pre-applypatch", &hook_opt_pre)) {
-+		run_hooks_opt_clear(&hook_opt_pre);
- 		exit(1);
-+	}
- 
- 	if (write_cache_as_tree(&tree, 0, NULL))
- 		die(_("git write-tree failed to write a tree"));
-@@ -1660,8 +1667,10 @@ static void do_commit(const struct am_state *state)
- 		fclose(fp);
+ 	if (!msg)
+@@ -489,7 +490,9 @@ static void finish(struct commit *head_commit,
  	}
  
--	run_hook_le(NULL, "post-applypatch", NULL);
-+	run_hooks("post-applypatch", &hook_opt_post);
+ 	/* Run a post-merge hook */
+-	run_hook_le(NULL, "post-merge", squash ? "1" : "0", NULL);
++	strvec_push(&opt.args, squash ? "1" : "0");
++	run_hooks("post-merge", &opt);
++	run_hooks_opt_clear(&opt);
  
-+	run_hooks_opt_clear(&hook_opt_pre);
-+	run_hooks_opt_clear(&hook_opt_post);
- 	strbuf_release(&sb);
- }
- 
+ 	apply_autostash(git_path_merge_autostash(the_repository));
+ 	strbuf_release(&reflog_message);
+@@ -849,7 +852,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	 * and write it out as a tree.  We must do this before we invoke
+ 	 * the editor and after we invoke run_status above.
+ 	 */
+-	if (find_hook("pre-merge-commit"))
++	if (hook_exists("pre-merge-commit"))
+ 		discard_cache();
+ 	read_cache_from(index_file);
+ 	strbuf_addbuf(&msg, &merge_msg);
 -- 
 2.32.0.576.g59759b6ca7d
 
