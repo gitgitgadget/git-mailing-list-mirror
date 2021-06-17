@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2502DC2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 16:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2B94C49361
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 16:18:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D816613A9
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 16:18:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E52C6117A
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 16:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232079AbhFQQUN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 12:20:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60674 "EHLO
+        id S231176AbhFQQUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 12:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233018AbhFQQTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 12:19:24 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6AA8C06175F
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 09:17:16 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id d27-20020a4a3c1b0000b029024983ef66dbso1719019ooa.3
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 09:17:16 -0700 (PDT)
+        with ESMTP id S233033AbhFQQT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 12:19:26 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1167C061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 09:17:18 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id f3-20020a0568301c23b029044ce5da4794so59388ote.11
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 09:17:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dJwpQVDU2xZwafgpxfkEmqLIxA1focJGGFitdRyBInI=;
-        b=Wn+zQfjYKX+gVkYR1m7W9haDU03lI/mcSwv36jbVTCKN96oWOOwDeotkCFwBOYXGA1
-         c4qC5wF8PVcPWQrKj8uEHxw8YlzU/5uHRrbVKvEBDWgNA7msWmEZEAZiFPYLdrwZawmv
-         qQrhLlPUGCPb/euVpkGIIRfaaL1xy5rgG6Oe84kM79dIuiggLNfSIuPE7os0AWOdHxML
-         TiOPvY9fo/NMxAirjEu5ARAoNTfcvYBGaH/GqY81fS46uftgSWCvgKuup1et4FA8xZk5
-         tRdOA4/MxiJXyS4bfN+zeEhfihDjfbD2XLgg63Mb822jtINzQZxbOSmXW2djM90Lwp2D
-         jc6A==
+        bh=vuoDBBZDUEBUj/UnRKf0FOhatbeeX6da52mTvAVLt6Y=;
+        b=P1CM6Dy/tS+yxZW1VsEPCXj16r3YoHELRo6F3feFkQbMGa0DiW95GwsNb9bri660ez
+         XZdBjgW9IAzUIW7LLU70qqiap4+anV3+Lb/x3elsroV5s7Qg6PWeJ4Iae7ImIj1IDGAy
+         F59TlYJASsM5HiR9akqccv3U3Jioc0+u1gxQRzB9YYH5VRBuv/KKlj99XFR9q8oqLROp
+         CoobKRHzZ72+IbtFj6s9Rp8CSuNPhjnMgCuBhOOHU4fyDlGZNG2WHa4RsCNw7zqLvq8t
+         7trNd8W2mSbogAh+v/tGQcas6i3P9FpryDeyCl3k5myNE4/C5KB6R+xLP9Ou1Q0MhkGo
+         mvbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dJwpQVDU2xZwafgpxfkEmqLIxA1focJGGFitdRyBInI=;
-        b=Aey2br2yhoSdCswjPoEOf+pQ6xqyBoby219MEUNSHuvA508mQXrNHvDwLoRsQ8jVtr
-         qh9RXTpP4Fa2+3nI/75WJjVHtfkY+x5Wya7e8tuc+gyoXWgHtD6cUMMJcHW4UtOEIxck
-         ItZZCu4Q7V244tLRcPfC+cs4mP1y5Cl5TBszpfk5LtCmjRTcXhQso8nouwZTMbtpuVLK
-         cgRjhH38SKDgGLswT3hUo3K58ffcKNZj2Q1+e7YGyZvZq6Zx4v0cFqMsIBNzpCtq2vEJ
-         BmvBZ7zP1McfQys+az65QPPcsZrRTp+16VMYKzoIEB3be+uDn5/kLt/nQZrU13BMgCRi
-         xm/A==
-X-Gm-Message-State: AOAM5332cz+TP2rPD1NuRwojzw4NGIbCgyI1BBT3iGt4X81zTtcNrfJz
-        IthlLIObzN8ibWUYdE+sTaKXN8yEPY8BJA==
-X-Google-Smtp-Source: ABdhPJxFdfRe5TrSKUnWFXKffZNnS7gvjhrtmbGB3fPDIJpIMzv4XxLy9ZGl6g2hbrm9bYHcB5WPaA==
-X-Received: by 2002:a4a:e887:: with SMTP id g7mr5217665ooe.64.1623946636078;
-        Thu, 17 Jun 2021 09:17:16 -0700 (PDT)
+        bh=vuoDBBZDUEBUj/UnRKf0FOhatbeeX6da52mTvAVLt6Y=;
+        b=koh8ZTQ9P1UMUUrAX/KTmOcMxf7IdCZyiAHB4m0bl90SpKK/1i2/xLzf1G7g4M66Oc
+         ns6c+LZB2p33vJkDYwh08NZyL/p0eRIvJ0/1cNYk2Fp9ADs6Th65/pZ5czT7uBP1e3+j
+         gExF5N11RF8T4DaNB8LWhugmM52Vybi5dIG/YFdDjh3M6Fuv5ifs7JmulYNeuhRx2dkM
+         sGDmH38YaMA+zTleOBGe64QbFevshME/SkvOMGlW5pAyaY4dHxPDNmCkWk1Shv3gpnq0
+         ZVTMY6KEhXLXXIuTp6TRv9GZZfRuDKxbH94s+HcbodiHQF5x3+JtVwzPhgenEFERudjp
+         5f9g==
+X-Gm-Message-State: AOAM532SNcjJ5C4BmOr+lZnFaK5cbDgjCNpRcj6Vu6YEsVCrdM4R2YA3
+        difrB0pNPY3MTHJJvpc9j4XxD902pBwR8g==
+X-Google-Smtp-Source: ABdhPJxApN6sXFRGWuHz8aqJJ87/c0Z1/EjJU4ILmCkcTEYCIKF2e40XXkr869Bq4E7DCahYA8NWFQ==
+X-Received: by 2002:a9d:2f62:: with SMTP id h89mr5155991otb.225.1623946637724;
+        Thu, 17 Jun 2021 09:17:17 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id e15sm1196282oow.38.2021.06.17.09.17.15
+        by smtp.gmail.com with ESMTPSA id c184sm100079oob.43.2021.06.17.09.17.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 09:17:15 -0700 (PDT)
+        Thu, 17 Jun 2021 09:17:17 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Philip Oakley <philipoakley@iee.email>,
@@ -63,9 +63,9 @@ Cc:     Philip Oakley <philipoakley@iee.email>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/3] pull: trivial cleanup
-Date:   Thu, 17 Jun 2021 11:17:09 -0500
-Message-Id: <20210617161710.81730-3-felipe.contreras@gmail.com>
+Subject: [PATCH v2 3/3] pull: trivial whitespace style fix
+Date:   Thu, 17 Jun 2021 11:17:10 -0500
+Message-Id: <20210617161710.81730-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210617161710.81730-1-felipe.contreras@gmail.com>
 References: <20210613045949.255090-1-felipe.contreras@gmail.com>
@@ -76,39 +76,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's no need to store ran_ff. Now it's obvious from the conditionals.
+Two spaces unaligned to anything is not part of the coding-style. A
+single tab is.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/pull.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/pull.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index a22293b7db..80e2f55cbc 100644
+index 80e2f55cbc..3e13f81084 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -1053,7 +1053,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	if (opt_rebase) {
- 		int ret = 0;
--		int ran_ff = 0;
- 
- 		struct object_id newbase;
- 		struct object_id upstream;
-@@ -1068,11 +1067,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		if (can_ff) {
- 			/* we can fast-forward this without invoking rebase */
- 			opt_ff = "--ff-only";
--			ran_ff = 1;
- 			ret = run_merge();
--		}
--		if (!ran_ff)
-+		} else {
- 			ret = run_rebase(&newbase, &upstream);
-+		}
- 
- 		if (!ret && (recurse_submodules == RECURSE_SUBMODULES_ON ||
- 			     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
+@@ -126,9 +126,9 @@ static struct option pull_options[] = {
+ 	/* Options passed to git-merge or git-rebase */
+ 	OPT_GROUP(N_("Options related to merging")),
+ 	OPT_CALLBACK_F('r', "rebase", &opt_rebase,
+-	  "(false|true|merges|preserve|interactive)",
+-	  N_("incorporate changes by rebasing rather than merging"),
+-	  PARSE_OPT_OPTARG, parse_opt_rebase),
++		"(false|true|merges|preserve|interactive)",
++		N_("incorporate changes by rebasing rather than merging"),
++		PARSE_OPT_OPTARG, parse_opt_rebase),
+ 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
+ 		N_("do not show a diffstat at the end of the merge"),
+ 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
 -- 
 2.32.0
 
