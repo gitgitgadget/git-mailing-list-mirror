@@ -6,99 +6,72 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC840C48BE5
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 00:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D1A1C48BE5
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 00:29:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2ECD613B9
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 00:18:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EAFC613CD
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 00:29:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234947AbhFQAUv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 20:20:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59428 "EHLO
+        id S235000AbhFQAb1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 20:31:27 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51469 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbhFQAUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 20:20:50 -0400
+        with ESMTP id S234994AbhFQAb0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 20:31:26 -0400
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60999B7463;
-        Wed, 16 Jun 2021 20:18:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4917B74E8;
+        Wed, 16 Jun 2021 20:29:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=0YC9OVTHwaW+
-        7FBkygSgdFDfL9RyG8W2WKwHn8S6eek=; b=w6O1KMC/55dcxTeaLS34v+c1VuqB
-        aDgdYjO2E2eqUNWZTLcVX6znB/XgZ4xMvmtKD4R5O1d1j/ZWQOrXBAkqQG54grqc
-        qOAenCUoWcFXvE9F6D5MJCW+YR8t7QtdWp5kQ+/SabR2dHJGe/SfYHlcFnjWueyo
-        FyA23d8T9OmepH0=
+        :content-type; s=sasl; bh=mjo4wY2bUBdYrBrqOsOO+mru93hhUnP84Gafn0
+        ywEkk=; b=ootbNQFZcdMNCpbatIEKTsGvpUFaatlwj7UooQ7bMXHofjbX46KTjV
+        wYCcNZIvOUVwfzQ6QBuH5q8sCy+JXWU9YDAO5n18/XWtqRl6kEHj95BlOrJTGWCr
+        YC7GNx2IJEgIS2areKBy2NrqjM1QB2NDhkf6WBczUF9Gzdr3pEKj4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 579DAB7462;
-        Wed, 16 Jun 2021 20:18:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9F4DB74E7;
+        Wed, 16 Jun 2021 20:29:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9742B7460;
-        Wed, 16 Jun 2021 20:18:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A1B6B74E6;
+        Wed, 16 Jun 2021 20:29:19 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Andrei Rybak <rybak.a.v@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
         <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 3/5] t0041: use test_line_count_cmd to check
- std{out,err}
-References: <20210615172038.28917-1-congdanhqx@gmail.com>
-        <20210615172038.28917-4-congdanhqx@gmail.com>
-        <xmqqlf7ase3d.fsf@gitster.g> <YMoJAnvigwexX5b5@danh.dev>
-Date:   Thu, 17 Jun 2021 09:18:42 +0900
-In-Reply-To: <YMoJAnvigwexX5b5@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
- =?utf-8?B?Q8O0bmc=?= Danh"'s message of
-        "Wed, 16 Jun 2021 21:21:54 +0700")
-Message-ID: <xmqqpmwlny1p.fsf@gitster.g>
+Subject: Re: [PATCH] test-lib: fix "$remove_trash" regression and
+ match_pattern_list() bugs
+References: <xmqqa6nqsd2i.fsf@gitster.g>
+        <patch-1.1-436c723f4f8-20210616T082030Z-avarab@gmail.com>
+        <YMm4F2uKZ4Dv3C4p@coredump.intra.peff.net>
+        <xmqqeed2p3jx.fsf@gitster.g>
+        <YMnRC8v4RLDk2+K9@coredump.intra.peff.net>
+        <87k0muxcd7.fsf@evledraar.gmail.com>
+        <YMnllMXvRJKSdGID@coredump.intra.peff.net>
+Date:   Thu, 17 Jun 2021 09:29:18 +0900
+In-Reply-To: <YMnllMXvRJKSdGID@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 16 Jun 2021 07:50:44 -0400")
+Message-ID: <xmqqlf79nxk1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 92C25DA8-CF01-11EB-8DEC-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0E177C12-CF03-11EB-933B-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Jeff King <peff@peff.net> writes:
 
->> By the way, my opinion would be quite different if example like this
->> one ...
->>=20
->> >  test_expect_success 'tag --no-contains <existent_tag>' '
->> > -	git tag --no-contains "v1.0" >actual 2>actual.err  &&
->> > -	test_line_count =3D 0 actual &&
->> > -	test_line_count =3D 0 actual.err
->> > +	test_line_count_cmd --out =3D 0 --err =3D 0 git tag --no-contains =
-v1.0
->> >  '
->>=20
->> ... were the majority, but I do not think that is the case.  Most
->> tests that employ the new test_line_count_cmd in this patch still
->> create either actual or actual.err in the working tree anyway, so I
->> do not see much point in adding this new helper---it is hard to
->> explain to new test writers when to use it.
->
-> I'm not sure if I get your opinion.  Did you mean you wouldn't take
-> whole helper? Or you meant you still wanted to see a new helper for
-> checking only stdout?  If it's the former, I'll send a different
-> series to only clean "git ls-files ... | wc -l" in t6400 and t6402,
-> if it's the latter, I'll rewrite without --err.
+> My thought was that the subshell takes us back to the original state,
+> regardless of what it was. As opposed to "set +f" which takes us back to
+> a particular state. But it is unlikely that we'd have done a global "set
+> -f" before calling this, so maybe that is being overly conservative.
 
-I did not see much point in adding test_line_count_cmd with --out
-and/or --err options; the upside of having it was dubious after
-looking at the users of it in the patch that we are discussing.
-
-I did not consider test_line_count_cmd that only works on the
-standard output stream.  From the patch under discussion, it is not
-immediately obvious how much such a simplified helper would help
-clean up the existing tests, so I have no opinion without seeing
-at least some sample uses.
+Overly conservative, yes, but if it is not too much overhead, I
+think it is a good practice anyway.
 
