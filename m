@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E645C2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61B2CC49361
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:24:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2957061263
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:24:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4367D61245
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 10:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232164AbhFQK0Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 06:26:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37126 "EHLO
+        id S232283AbhFQK0R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 06:26:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232014AbhFQKZp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 06:25:45 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58416C0611BC
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:30 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id nb6so8907786ejc.10
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:30 -0700 (PDT)
+        with ESMTP id S232195AbhFQKZq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 06:25:46 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3484FC0611BD
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:31 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id i13so3242146edb.9
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 03:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2q84uGasL8ocPuaf06RJk4OoAS9Os898GqdlZKBJydM=;
-        b=drNoiDc1zDV7CfZLbneoIgqX2ZDzXPcTG8eFuPuesJwF/DZKMBl++PpOasB3L8zz3V
-         RqdMUbSRQQCQWf8h3ZK20Gv8OmM1Ddkd2Qsaxt5y1vsbfeDHTJHEHVxmCkm+6P9PcLNS
-         Rf2PA97Mf4L6JiBSo2n+4wHK8xHR2xkZBNqOM5GkYN/E915JNakXFbEJPz/QFkdDngZl
-         jO1NG6e5EG8pSHCJ3a0Mqbv3Ja3QrXnAxH7JMidgErVlFS8kPLaGiGKQhpueg65Wz+PQ
-         g9W2Kt7/IvTuzLxaOO0OaaeiQQtxoErRJKfEj3+Hf5gjhmQhbadMcZ4iINXh+kABUTWE
-         DGTg==
+        bh=6XGkB4nZ+AQpvz3PnGx+LTGeUuRHYf+xnAxUcuc5hFM=;
+        b=IKKPVSSkkG7z6H7o7x7JNIlAcHcvscX/YZ2zKH6jCE7AcAlLibauJj5nHGIqrdbgCf
+         lQ59+MSszXJ7tfHCBOFE82dxeLJaOo2p0QX1ocTVlqg5EjQqPCjqCTsaZmunv2zqI12K
+         OeBCvsYuayZsR9tTCpgkzbIipcS/3GYBKR5dpFxIcoLz0+R3vV1lm9zyvK4pxg7g2UmD
+         Z8LlgSsEcAV7mKzuWgmKdyCmCBJV7z200PTPtU62MBkSffH8bfTymTjRNogL1U66ev93
+         gPHcSGeeLtUerS2EyXd5i4t4dvxboT4NzEZ+kpS/P95FM7u+DKuHi1sISN/df3B24fyK
+         Nsow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2q84uGasL8ocPuaf06RJk4OoAS9Os898GqdlZKBJydM=;
-        b=HJjgcRrvk6uUgj1i3Z+OTEuG3CfW05+8//6XDVBEhJ/NagTqkt66ODZeiQ8Q+kvp01
-         FwsTywpjXfJINes92vpcTgRP+JWukBcgs9N2yZ+7P3+mTgqkVl82L2MAvCWwR3jJvU3S
-         miOw1W9z/EtlROgi1TTDFYTypAuCe0tdQftRGjz8/Vxg6ShglXR2hz65WO3IHUP44AzA
-         Nqo2mVTJA8pjSrTcksxnbgYCN8uMzdPSmcri6wFHbXVWyU+JFR+j1l4qq5Xad5Ijv7iz
-         3REkwqLBlqouIVjDECN++Y1sLKWqe+c8+o9TPuzKl/dYfJWvPsIsEPh4xTrOXJMUmmew
-         1HaQ==
-X-Gm-Message-State: AOAM532Bc2DlMCerpqBkwotSP2PTtebV8GRZFxqKVNZDLDtL8tT6RYjF
-        lvuO2GUkmke0EXjII3xCewDmZ65yoDLZOw==
-X-Google-Smtp-Source: ABdhPJyv/lqxX4VhIBqLA60AMyg1JEpMrWDlX4VDTBWWxn9MlYvikHD8aFOTe8TIhRQ5RjCcQe9Leg==
-X-Received: by 2002:a17:906:744:: with SMTP id z4mr4470904ejb.347.1623925408762;
-        Thu, 17 Jun 2021 03:23:28 -0700 (PDT)
+        bh=6XGkB4nZ+AQpvz3PnGx+LTGeUuRHYf+xnAxUcuc5hFM=;
+        b=AqIY44PTevNrj4HFud0jEnTueURXxNX2m3evEWK7QPR6Tp7D212tX5/I88ueIeI5Ru
+         Cwu6bUHfph8adWmJ6fEfqwekJx6FZgcVq5Zo5X271GotM3zvt3IBicklAwS6ZuSJ+guT
+         OMdVOlD8Bb5MInxBgBmlVf/TrckwmR6TveVPF6DRM6v3q8Tw0xgMOEEN4K5CVyHdRHiT
+         xaVMyGThTolV2RwXNBixDUyqFYJ7S5uYlLz0DLyaDMwE9O24gZyNpl1DdQ0NCzCHnuTJ
+         ylaBSV5WUv4JphvwukyzqHunU/CeHa8dpieNGc6REQiguWfRRlC/2S+BauduM+SkcQhv
+         DR8Q==
+X-Gm-Message-State: AOAM532flShdQaZmrTIss1alVyVESZ/5v2hlEtzy2jNFMNoA1TIy2C/o
+        om+6rUYM4W9EArso3RMtTRN4oM0U1eBt+A==
+X-Google-Smtp-Source: ABdhPJyyMBzeM4I5f+EGCCN0wRMaWslOQ6PCDdag5089OAr6VFpVRL6qmNL3k+WAbTPJLLCyNoKmnw==
+X-Received: by 2002:aa7:d713:: with SMTP id t19mr5382333edq.144.1623925409592;
+        Thu, 17 Jun 2021 03:23:29 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.27
+        by smtp.gmail.com with ESMTPSA id jo13sm3447293ejb.91.2021.06.17.03.23.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 03:23:27 -0700 (PDT)
+        Thu, 17 Jun 2021 03:23:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -70,9 +70,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 23/27] hooks: allow callers to capture output
-Date:   Thu, 17 Jun 2021 12:22:57 +0200
-Message-Id: <patch-23.27-7f7fcc0688-20210617T101217Z-avarab@gmail.com>
+Subject: [PATCH 24/27] receive-pack: convert 'update' hook to hook.h
+Date:   Thu, 17 Jun 2021 12:22:58 +0200
+Message-Id: <patch-24.27-e74d49e559-20210617T101217Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.576.g59759b6ca7d
 In-Reply-To: <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
 References: <cover-00.30-00000000000-20210614T101920Z-avarab@gmail.com> <cover-00.27-0000000000-20210617T101216Z-avarab@gmail.com>
@@ -85,48 +85,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Some server-side hooks will require capturing output to send over
-sideband instead of printing directly to stderr. Expose that capability.
+This makes use of the new sideband API in hook.h added in the
+preceding commit.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- hook.c | 2 +-
- hook.h | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ builtin/receive-pack.c | 65 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 44 insertions(+), 21 deletions(-)
 
-diff --git a/hook.c b/hook.c
-index 2dca969f9e..e7f3b468ea 100644
---- a/hook.c
-+++ b/hook.c
-@@ -192,7 +192,7 @@ int run_found_hooks(const char *hook_name, const char *hook_path,
- 				   pick_next_hook,
- 				   notify_start_failure,
- 				   options->feed_pipe,
--				   NULL,
-+				   options->consume_sideband,
- 				   notify_hook_finished,
- 				   &cb_data,
- 				   "hook",
-diff --git a/hook.h b/hook.h
-index b78a8e4805..1302efa590 100644
---- a/hook.h
-+++ b/hook.h
-@@ -66,6 +66,14 @@ struct run_hooks_opt
- 	 */
- 	feed_pipe_fn feed_pipe;
- 	void *feed_pipe_ctx;
-+
-+	/*
-+	 * Populate this to capture output and prevent it from being printed to
-+	 * stderr. This will be passed directly through to
-+	 * run_command:run_parallel_processes(). See t/helper/test-run-command.c
-+	 * for an example.
-+	 */
-+	consume_sideband_fn consume_sideband;
- };
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 5248228ebf..378f8f6b5d 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -938,33 +938,56 @@ static int run_receive_hook(struct command *commands,
+ 	return status;
+ }
  
- #define RUN_HOOKS_OPT_INIT { \
+-static int run_update_hook(struct command *cmd)
++static void hook_output_to_sideband(struct strbuf *output, void *cb_data)
+ {
+-	const char *argv[5];
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	int code;
++	int keepalive_active = 0;
+ 
+-	argv[0] = find_hook("update");
+-	if (!argv[0])
+-		return 0;
++	if (keepalive_in_sec <= 0)
++		use_keepalive = KEEPALIVE_NEVER;
++	if (use_keepalive == KEEPALIVE_ALWAYS)
++		keepalive_active = 1;
+ 
+-	argv[1] = cmd->ref_name;
+-	argv[2] = oid_to_hex(&cmd->old_oid);
+-	argv[3] = oid_to_hex(&cmd->new_oid);
+-	argv[4] = NULL;
++	/* send a keepalive if there is no data to write */
++	if (keepalive_active && !output->len) {
++		static const char buf[] = "0005\1";
++		write_or_die(1, buf, sizeof(buf) - 1);
++		return;
++	}
+ 
+-	proc.no_stdin = 1;
+-	proc.stdout_to_stderr = 1;
+-	proc.err = use_sideband ? -1 : 0;
+-	proc.argv = argv;
+-	proc.trace2_hook_name = "update";
++	if (use_keepalive == KEEPALIVE_AFTER_NUL && !keepalive_active) {
++		const char *first_null = memchr(output->buf, '\0', output->len);
++		if (first_null) {
++			/* The null bit is excluded. */
++			size_t before_null = first_null - output->buf;
++			size_t after_null = output->len - (before_null + 1);
++			keepalive_active = 1;
++			send_sideband(1, 2, output->buf, before_null, use_sideband);
++			send_sideband(1, 2, first_null + 1, after_null, use_sideband);
++
++			return;
++		}
++	}
++
++	send_sideband(1, 2, output->buf, output->len, use_sideband);
++}
++
++static int run_update_hook(struct command *cmd)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	int code;
++
++	strvec_pushl(&opt.args,
++		     cmd->ref_name,
++		     oid_to_hex(&cmd->old_oid),
++		     oid_to_hex(&cmd->new_oid),
++		     NULL);
+ 
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+ 	if (use_sideband)
+-		copy_to_sideband(proc.err, -1, NULL);
+-	return finish_command(&proc);
++		opt.consume_sideband = hook_output_to_sideband;
++
++	code = run_hooks("update", &opt);
++	run_hooks_opt_clear(&opt);
++	return code;
+ }
+ 
+ static struct command *find_command_by_refname(struct command *list,
 -- 
 2.32.0.576.g59759b6ca7d
 
