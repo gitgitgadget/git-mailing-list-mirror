@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 662E8C2B9F4
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 07:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84AEFC2B9F4
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 07:27:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 507CB6135C
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 07:25:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68AF8613B9
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 07:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbhFQH10 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 03:27:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53380 "EHLO
+        id S229712AbhFQH3Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 03:29:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbhFQH1Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 03:27:25 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C93AC061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 00:25:17 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id gt18so8076727ejc.11
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 00:25:17 -0700 (PDT)
+        with ESMTP id S229666AbhFQH3Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jun 2021 03:29:25 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B526AC061574
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 00:27:17 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id c7so1648491edn.6
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 00:27:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=li3d+b6ScJjFeHdtvUX/KhFf2MnsDzhHXxckvgF0NyI=;
-        b=loytTRXVKvDrMExvxCVFwrPd4DufxaHtQbeYgE/V2aSnzp3tDBtBD8X06QFmVfBtez
-         UuIgh5W5POOFWLNNOcUosbFPoCYeTf6ptuC3OZ1WS/0ys5Eo8Aesv6vPTkX87LvsX1x1
-         lmTp89ZdnU0kMu5YrfMCd72waF26LKK6xGw98N8YWVjdzrWQ0MNHdY/q/RefC5s+YhT3
-         sk14Aoe3RfdX6nXPrN41/S6bh/v+Wor4ssvB3eXvKP1xfdQAogBlfJWtkhkt2Xnt40YS
-         DqfUGOLlcuPiH0QOpHSQIP+qwOjgfteYVd9Qo/2+6eRVP7SP3tYl6Ht0o0SiOMDnpWDD
-         2b5A==
+        bh=heEFOKLA0p9UedoJTBucCX86HTeixzsvQiKnEghYqQY=;
+        b=tp2tBtto3NDxbPsXM2gzp/vSuaDmFBWmjgKl0woWSY1u1D+3a80NKO9V/DHQUT8Eop
+         q2lfqbgO1NnfK8QmRw/oxj0BNK2hmdpCTGnFTYK7LLQYvBbAdxQ7BQnijLNSHwrRjRSL
+         R0IqgqeKG69u/pDaqYF0zYW7j3pTJjDKz+m2xRcL5MPeV42Th+NwJ43gr+c10lm/WhoF
+         +orL1tE1OM+M4SPQTHgB+xfZt41RPxCbrGNzJQ+98gJ97/Wh7bZrBdEe6fsUXk0whdsD
+         7bVlykhqLaCTcGfLmQbVMxIFmiWt4H25EwSlaKDOb80AizYUAbhGnlWs7nfk2j/p3dW0
+         bHnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=li3d+b6ScJjFeHdtvUX/KhFf2MnsDzhHXxckvgF0NyI=;
-        b=ry52rqKpLb0PPQDVSSmJenSZrO7WQNYhU+M50O/hgmKbU08OAreZQP0J1p/Zowj+6o
-         kBTZP4iy+C89N0M7VR24QxbldehUwvTlVQhTfJxfpm5Cpvwrr5iLSdRgAQ5nwZwW2AUE
-         p0N7OfCEqa3gPaDzkQQRG1zOnIydLWsk3pp/fhdm1R/HT0iA7SFWd6KHraW75caI5bmm
-         ROGdKERksly9hTPCMhCKezBTi2J8HLE0yZ2vSKuU4s5rWc4RRe9UMUvyJ9xlgV87CLfM
-         tiD9unXACafrsGwcME0ZeiUxMtbgJfX/vQab7V3pr7b9QvkAQHsQJLCfK0f9ARj90hch
-         6gfQ==
-X-Gm-Message-State: AOAM533em5hz01czGd7neuWHAe3T/+uBUUy4EG443ZQlK65/vj4jWuUw
-        qBZidJLMrv5FqErmP/d/QuKr/kT5UxFVOQ==
-X-Google-Smtp-Source: ABdhPJyQiG3oKs1zEcYwraxXPaFCbuFyyKjYcGhGtRPYV+rmn7Us3jGwM1iD61CbtNFXhdhBZCWmYg==
-X-Received: by 2002:a17:906:149a:: with SMTP id x26mr3821134ejc.41.1623914715846;
-        Thu, 17 Jun 2021 00:25:15 -0700 (PDT)
+        bh=heEFOKLA0p9UedoJTBucCX86HTeixzsvQiKnEghYqQY=;
+        b=mYRovoBszuIE9E/QjWQ8EZKtgfA3RcUAV49oZs197/3T2BPvN55SpTkEmfTCtI+HPA
+         0NaAVBL1i0ixQjI21FmWfaDATKdLR/D1w5xvdCuVFK0AnyVeUhcehlXw1Wuv6NRcD07I
+         y6d/fUlObSMGNrKM0uDcixXFrtQxdxgv1Ekda6AQRQ81qZ8z7PuFe1N55Ou3okZCe6Xn
+         pERhBH11wjxHMd4VwMqMA+0TTRB7k9pCdFDLJgWsVy5Bx78UONGu4NkdmUW36OecCop6
+         EgYm3pDFAqa1zIU8yJQPKjscM6p9xAmwRSygAEYBeOSXjjhBl9D9HVjGLJviJLdRR/Ao
+         EgaA==
+X-Gm-Message-State: AOAM5301BZg7yMX4aHPTpZr0S8GoMf/Y9Kj+GlNarLRL8pU2asvnHpeI
+        NzpqM/ipUwZ8nIVhprHGMtI2GwM/hjvKsw==
+X-Google-Smtp-Source: ABdhPJwij26C6+lhGqGcglMS35jhxwwcZlNZCoh3+2Kup0fesXpJuMunLN1/RGfQTFKO+9soupnk0w==
+X-Received: by 2002:a05:6402:4311:: with SMTP id m17mr4595160edc.372.1623914836122;
+        Thu, 17 Jun 2021 00:27:16 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id gz5sm3121922ejb.113.2021.06.17.00.25.15
+        by smtp.gmail.com with ESMTPSA id z19sm3504667edc.90.2021.06.17.00.27.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 00:25:15 -0700 (PDT)
+        Thu, 17 Jun 2021 00:27:15 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -63,14 +62,13 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Hariom Verma <hariom18599@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 5/8] [GSOC] ref-filter: teach get_object() return useful
- value
-Date:   Thu, 17 Jun 2021 09:22:39 +0200
+Subject: Re: [PATCH v2 0/9] [GSOC][RFC] cat-file: reuse ref-filter logic
+Date:   Thu, 17 Jun 2021 09:26:17 +0200
 References: <pull.980.git.1623496458.gitgitgadget@gmail.com>
- <c208b8a45d66556a3f905063bc7c5026ac4f1e82.1623496458.git.gitgitgadget@gmail.com>
+ <pull.980.v2.git.1623763746.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.5.12
-In-reply-to: <c208b8a45d66556a3f905063bc7c5026ac4f1e82.1623496458.git.gitgitgadget@gmail.com>
-Message-ID: <87wnqtvtph.fsf@evledraar.gmail.com>
+In-reply-to: <pull.980.v2.git.1623763746.gitgitgadget@gmail.com>
+Message-ID: <87tulxvtm4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,74 +76,17 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Jun 12 2021, ZheNing Hu via GitGitGadget wrote:
+On Tue, Jun 15 2021, ZheNing Hu via GitGitGadget wrote:
 
-> From: ZheNing Hu <adlternative@gmail.com>
+> This patch series make cat-file reuse ref-filter logic, which based on
+> 5a5b5f78 ([GSOC] ref-filter: add %(rest) atom)
 >
-> Let `populate_value()`, `get_ref_atom_value()` and
-> `format_ref_array_item()` get the return value of `get_value()`
-> correctly. This can help us later let `cat-file --batch` get the
-> correct error message and return value of `get_value()`.
+> Change from last version:
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Hariom Verma <hariom18599@gmail.com>
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
->  ref-filter.c | 19 +++++++++++--------
->  1 file changed, 11 insertions(+), 8 deletions(-)
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 8868cf98f090..420c0bf9384f 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1808,7 +1808,7 @@ static char *get_worktree_path(const struct used_atom *atom, const struct ref_ar
->  static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->  {
->  	struct object *obj;
-> -	int i;
-> +	int i, ret = 0;
+>  1. Use free_array_item_internal() to solve the memory leak problem.
+>  2. Change commit message of ([GSOC] ref-filter: teach get_object() return
+>     useful value).
 
-The usual style is to not bunch up variables based on type, but only if
-they're related, i.e. we'd do:
-
-    if i, j; /* proceed to use i and j in two for-loops */
-
-But:
-
-    int i; /* for the for-loop */
-    int ret = 0; /* for our return value */
-
-(Without the comments)
-
->  	struct object_info empty = OBJECT_INFO_INIT;
->  
->  	CALLOC_ARRAY(ref->value, used_atom_cnt);
-> @@ -1965,8 +1965,8 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->  
->  
->  	oi.oid = ref->objectname;
-> -	if (get_object(ref, 0, &obj, &oi, err))
-> -		return -1;
-> +	if ((ret = get_object(ref, 0, &obj, &oi, err)))
-> +		return ret;
-
-Maybe more personal style, I'd just write this as:
-
-    ret = x();
-    if (!ret)
-        return ret;
-
-Makes it easier to read and balance parens in your head for the common
-case...
-
-> @@ -2585,10 +2588,10 @@ int format_ref_array_item(struct ref_array_item *info,
->  		if (cp < sp)
->  			append_literal(cp, sp, &state);
->  		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
-> -		if (pos < 0 || get_ref_atom_value(info, pos, &atomv, error_buf) ||
-> +		if (pos < 0 || (ret = get_ref_atom_value(info, pos, &atomv, error_buf)) ||
->  		    atomv->handler(atomv, &state, error_buf)) {
->  			pop_stack_element(&state.stack);
-
-... and use that mental energy on readist stuff like this, which I'd
-just leave as the inline assignment.
+I left some comments, but saw after the fact that I'd replied to the v1
+E-Mails by accident, but anyway, the comments were all on things that
+are also in v2, so it worked out in the end. Sorry about the confusion.
