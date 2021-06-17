@@ -8,157 +8,129 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C18DC48BE8
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 03:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5444C48BE8
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 03:17:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72AFC613D5
-	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 03:14:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7116613DE
+	for <git@archiver.kernel.org>; Thu, 17 Jun 2021 03:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230340AbhFQDQh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Jun 2021 23:16:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54000 "EHLO
+        id S229569AbhFQDTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Jun 2021 23:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230268AbhFQDQg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jun 2021 23:16:36 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B4C0C061574
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 20:14:28 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id g22so3775370pgk.1
-        for <git@vger.kernel.org>; Wed, 16 Jun 2021 20:14:28 -0700 (PDT)
+        with ESMTP id S229502AbhFQDTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jun 2021 23:19:41 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED5EC061574
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 20:17:33 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id v7so3778105pgl.2
+        for <git@vger.kernel.org>; Wed, 16 Jun 2021 20:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FlJcgv9vd+KkuVgjlWGWuUDwKc38k0xgmgcwJvTyQvY=;
-        b=apQ4amoDY4eAJ7alERQnJcg0vafa3BRBNXdETs01pTX77Blxkct7RLRFfvuYeSFxQY
-         zq8wck+KUzaJjBeITsbOfjUQf91Ymx/pjXifm+gxz6baOzkY0eJQPU/X9taOmYLbzKGn
-         FeAIMYfKwbWFFFMDBhmAlIq8siwv6cbDKMQTkRX6kmh4pKJxYI7/5laA/XjpkJDJ0uFp
-         YpMkkXxdg8lSv21iWs8rAkXqmIzIiqMN1//4uJARvvbg0+niQKXGgiZGDrdNMfZG6LOO
-         5hdtSo/Uyl8vGsFo7CzbctVfILcBKzAXpC6Of+0bNk0DmOLL1XnKtd7/mcTF9iDkaxH+
-         nx4g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uGI6Is+Wz7vysiC/Tg8KKBXsSfL7fyWwC9dTfE5WJuM=;
+        b=qwMfkEbTQXHCyJeaT5U5p9Yf6lSQKbJQMdXsITaQpvd4WSZZdM63b0tt7+lD0hl8nh
+         Zka1hLmkTIXnTi2wLaaiV8QuDA67TYA67ZKZWhpMslizzQgq5/QkoeEMv8caIWr5ndd+
+         5O/ZkYwqoYnOcH2dqMeYJHjClPaCZMPazsEQ4CE8RRywFARYmU12tm9LySlHLWMhX4tB
+         /IPFM4wLKcO2Y3lFGfeDFVbadZCt5R0QFzWLaNueT5V52FhWRLvj0G7bqISCGtUqP59j
+         5YgnLw4nKNzREDybpGbyiqiWzQZsN046VRyGkuHDUqqJUMN203sDwQuc95RTlNRxC0dr
+         OJ+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FlJcgv9vd+KkuVgjlWGWuUDwKc38k0xgmgcwJvTyQvY=;
-        b=d2N/pk65gf0GOkDu+3pzUeCkcQdg3vYPSKga0Q+DnKJqmmxIjMXqeKVxbHNUHTygFL
-         R1mnjF+BDhtlOeZiXi/aKSTLcR9YW3wMYFcnx0uWVK9zwdb2DmSc9FTRot4pz+Z9GJzk
-         BnYkMivxLcKxN+6gpT++7v6DXBoEz8Mc5WWSipwV4JG0bxCZIHjdh0rNMbsaNWhDk7kQ
-         NqNN85TLsAHkcW/8o9VvVp+d0634mpVCDvpdqVa95/1OO7XeR1bUW5FHOE17U1eUaQbY
-         FASQcnRq2NzCn6l5IVGAbI0WDRGZhRXKkJ8qHhCbeWLn7teSOY8mEpk4SgKz7NAxF2MA
-         e3vQ==
-X-Gm-Message-State: AOAM533T0AMFHGvTRl4qHRxHaVMUw3dyeGaXE1XmfHkJIhMCrJAnX0yl
-        Rt5DxSZJGVUiLo2Kpmpi01SxVYVKm7tClA==
-X-Google-Smtp-Source: ABdhPJyAU1o3IvE7TUZGOAZdWW/hdinjOJsCPQVNP9PwBGze9rgFyDYkSl91Qa65WxOgcvAqNM+WUA==
-X-Received: by 2002:a62:1942:0:b029:2e9:debd:d8b1 with SMTP id 63-20020a6219420000b02902e9debdd8b1mr3172238pfz.9.1623899668016;
-        Wed, 16 Jun 2021 20:14:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uGI6Is+Wz7vysiC/Tg8KKBXsSfL7fyWwC9dTfE5WJuM=;
+        b=HszpeWc5f8Qs2PZPs0WFm+KxddbFU9n6gSa1dCzkG03xCKObRbiii2ZDPCdk+mpnN5
+         u1Z+UkJju8Z5nLSB9WAQMGjOhNXnqWHCJxeTjnhIkLtPBwh4cD/DJtTJ4tLkE3TDrERG
+         iuymuPOvNEU3aXCEvS8oSkuJNY6lP7mL+tCmEgCZ5/KnjLJUU70zHBlN3hF3/vj9gAa0
+         4D6taQdHZxZ7cbBdgeccm+bBodhRkWz4igeWcaN5L8aoXqwlNf8WbV8KWIF4VHIOY19P
+         EpSHE0NAe6YXDErio8Gz2bW36f08rPsGI+pWKqAkQ1A3DzGVQQL7hWofoG/cBFgpZzTG
+         J73g==
+X-Gm-Message-State: AOAM530vr6SwG3GmspkblpneIhn6y+NN/YQEArckZze+/G7lxIodj2om
+        UJDdY5lXZCLub4BngZdw2pM=
+X-Google-Smtp-Source: ABdhPJw4cvZcUnyNCWs9Ps/f/lzNpQh1sfuuR6gbnCqzy/Hd7memAAoQ5yorE4S8KCDN0eRGCXR2WA==
+X-Received: by 2002:aa7:8c02:0:b029:2e9:c513:1e10 with SMTP id c2-20020aa78c020000b02902e9c5131e10mr3155052pfd.2.1623899853240;
+        Wed, 16 Jun 2021 20:17:33 -0700 (PDT)
 Received: from localhost.localdomain ([47.246.98.151])
-        by smtp.gmail.com with ESMTPSA id g18sm3344513pfi.199.2021.06.16.20.14.25
+        by smtp.gmail.com with ESMTPSA id ei10sm3301726pjb.8.2021.06.16.20.17.31
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Jun 2021 20:14:27 -0700 (PDT)
+        Wed, 16 Jun 2021 20:17:32 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
+        Git List <git@vger.kernel.org>,
+        Nicolas Pitre <nico@fluxnic.net>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3] t6020: fix incompatible parameter expansion
-Date:   Thu, 17 Jun 2021 11:14:11 +0800
-Message-Id: <20210617031411.80684-1-zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 1/4] sideband: don't lose clear-to-eol at packet boundary
+Date:   Thu, 17 Jun 2021 11:17:24 +0800
+Message-Id: <20210617031727.81105-1-zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc0.27.g7b1e85181b
-In-Reply-To: <CANYiYbHA+obZPPNw3Oc0h5BbtdVyqpxOK-u3dxDB-sQbdcY0yQ@mail.gmail.com>
-References: <CANYiYbHA+obZPPNw3Oc0h5BbtdVyqpxOK-u3dxDB-sQbdcY0yQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar reported that the function `make_user_friendly_and_stable_output()`
-failed on a i386 box (gcc45) in the gcc farm boxes with error:
+When "demultiplex_sideband()" sees a nonempty message ending with CR or
+LF on the sideband #2, it adds "suffix" string to clear to the end of
+the current line, which helps when relaying a progress display whose
+records are terminated with CRs.  But if it sees a single LF, no
+clear-to-end suffix should be appended, because this single LF is used
+to end the progress display by moving to the next line, and the final
+progress display above should be preserved.
 
-    sed: couldn't re-allocate memory
+However, the code forgot that depending on the length of the payload
+line, such a CR may fall exactly at the packet boundary and the
+number of bytes before the CR from the beginning of the packet could
+be zero.  In such a case, the message that was terminated by the CR
+were leftover in the "scratch" buffer in the previous call to the
+function and we still need to clear to the end of the current line.
 
-It turns out that older versions of bash (4.3) or dash (0.5.7) cannot
-evaluate expression like `${A%${A#???????}}` used to get the leading 7
-characters of variable A.
-
-Replace the incompatible parameter expansion so that t6020 works on
-older version of bash or dash.
-
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Nicolas Pitre <nico@fluxnic.net>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t6020-bundle-misc.sh | 50 ++++++++++++++++++++++++++----------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
+ sideband.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 881f72fd44..3140ca4fdc 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -80,30 +80,42 @@ test_commit_setvar () {
- 	eval $var=$oid
- }
+diff --git a/sideband.c b/sideband.c
+index 6f9e026732..85bddfdcd4 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -183,8 +183,31 @@ int demultiplex_sideband(const char *me, int status,
+ 		while ((brk = strpbrk(b, "\n\r"))) {
+ 			int linelen = brk - b;
  
-+get_abbrev_oid () {
-+	oid=$1 &&
-+	suffix=${oid#???????} &&
-+	oid=${oid%$suffix} &&
-+	if test -n "$oid"
-+	then
-+		echo "$oid"
-+	else
-+		echo "undefined-oid"
-+	fi
-+}
++			/*
++			 * For message accross packet boundary, there would have
++			 * a nonempty "scratch" buffer from last call of this
++			 * function, and there may have a leading CR/LF in "buf".
++			 * For this case we should add a clear-to-eol suffix to
++			 * clean leftover letters we previously have written on
++			 * the same line.
++			 */
++			if (scratch->len && !linelen)
++				strbuf_addstr(scratch, suffix);
 +
- # Format the output of git commands to make a user-friendly and stable
- # text.  We can easily prepare the expect text without having to worry
- # about future changes of the commit ID and spaces of the output.
- make_user_friendly_and_stable_output () {
- 	sed \
--		-e "s/${A%${A#???????}}[0-9a-f]*/<COMMIT-A>/g" \
--		-e "s/${B%${B#???????}}[0-9a-f]*/<COMMIT-B>/g" \
--		-e "s/${C%${C#???????}}[0-9a-f]*/<COMMIT-C>/g" \
--		-e "s/${D%${D#???????}}[0-9a-f]*/<COMMIT-D>/g" \
--		-e "s/${E%${E#???????}}[0-9a-f]*/<COMMIT-E>/g" \
--		-e "s/${F%${F#???????}}[0-9a-f]*/<COMMIT-F>/g" \
--		-e "s/${G%${G#???????}}[0-9a-f]*/<COMMIT-G>/g" \
--		-e "s/${H%${H#???????}}[0-9a-f]*/<COMMIT-H>/g" \
--		-e "s/${I%${I#???????}}[0-9a-f]*/<COMMIT-I>/g" \
--		-e "s/${J%${J#???????}}[0-9a-f]*/<COMMIT-J>/g" \
--		-e "s/${K%${K#???????}}[0-9a-f]*/<COMMIT-K>/g" \
--		-e "s/${L%${L#???????}}[0-9a-f]*/<COMMIT-L>/g" \
--		-e "s/${M%${M#???????}}[0-9a-f]*/<COMMIT-M>/g" \
--		-e "s/${N%${N#???????}}[0-9a-f]*/<COMMIT-N>/g" \
--		-e "s/${O%${O#???????}}[0-9a-f]*/<COMMIT-O>/g" \
--		-e "s/${P%${P#???????}}[0-9a-f]*/<COMMIT-P>/g" \
--		-e "s/${TAG1%${TAG1#???????}}[0-9a-f]*/<TAG-1>/g" \
--		-e "s/${TAG2%${TAG2#???????}}[0-9a-f]*/<TAG-2>/g" \
--		-e "s/${TAG3%${TAG3#???????}}[0-9a-f]*/<TAG-3>/g" \
-+		-e "s/$(get_abbrev_oid $A)[0-9a-f]*/<COMMIT-A>/g" \
-+		-e "s/$(get_abbrev_oid $B)[0-9a-f]*/<COMMIT-B>/g" \
-+		-e "s/$(get_abbrev_oid $C)[0-9a-f]*/<COMMIT-C>/g" \
-+		-e "s/$(get_abbrev_oid $D)[0-9a-f]*/<COMMIT-D>/g" \
-+		-e "s/$(get_abbrev_oid $E)[0-9a-f]*/<COMMIT-E>/g" \
-+		-e "s/$(get_abbrev_oid $F)[0-9a-f]*/<COMMIT-F>/g" \
-+		-e "s/$(get_abbrev_oid $G)[0-9a-f]*/<COMMIT-G>/g" \
-+		-e "s/$(get_abbrev_oid $H)[0-9a-f]*/<COMMIT-H>/g" \
-+		-e "s/$(get_abbrev_oid $I)[0-9a-f]*/<COMMIT-I>/g" \
-+		-e "s/$(get_abbrev_oid $J)[0-9a-f]*/<COMMIT-J>/g" \
-+		-e "s/$(get_abbrev_oid $K)[0-9a-f]*/<COMMIT-K>/g" \
-+		-e "s/$(get_abbrev_oid $L)[0-9a-f]*/<COMMIT-L>/g" \
-+		-e "s/$(get_abbrev_oid $M)[0-9a-f]*/<COMMIT-M>/g" \
-+		-e "s/$(get_abbrev_oid $N)[0-9a-f]*/<COMMIT-N>/g" \
-+		-e "s/$(get_abbrev_oid $O)[0-9a-f]*/<COMMIT-O>/g" \
-+		-e "s/$(get_abbrev_oid $P)[0-9a-f]*/<COMMIT-P>/g" \
-+		-e "s/$(get_abbrev_oid $TAG1)[0-9a-f]*/<TAG-1>/g" \
-+		-e "s/$(get_abbrev_oid $TAG2)[0-9a-f]*/<TAG-2>/g" \
-+		-e "s/$(get_abbrev_oid $TAG3)[0-9a-f]*/<TAG-3>/g" \
- 		-e "s/ *\$//"
- }
- 
+ 			if (!scratch->len)
+ 				strbuf_addstr(scratch, DISPLAY_PREFIX);
++
++			/*
++			 * A use case that we should not add clear-to-eol suffix
++			 * to empty lines:
++			 *
++			 * For progress reporting we may receive a bunch of
++			 * percentage updates followed by '\r' to remain on the
++			 * same line, and at the end receive a single '\n' to
++			 * move to the next line. We should preserve the final
++			 * status report line by not appending clear-to-eol
++			 * suffix to this single line break.
++			 */
+ 			if (linelen > 0) {
+ 				maybe_colorize_sideband(scratch, b, linelen);
+ 				strbuf_addstr(scratch, suffix);
 -- 
 2.32.0.rc0.27.g7b1e85181b
 
