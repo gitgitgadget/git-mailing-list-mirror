@@ -2,96 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60BE6C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 16:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AC9AC48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 16:40:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4ADA0613E2
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 16:32:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8A74610A7
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 16:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235928AbhFRQet (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 12:34:49 -0400
-Received: from siwi.pair.com ([209.68.5.199]:58332 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235921AbhFRQes (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 12:34:48 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 392613F40F1;
-        Fri, 18 Jun 2021 12:32:38 -0400 (EDT)
-Received: from HCIPROD2.AZHCI.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 227CB3F40DA;
-        Fri, 18 Jun 2021 12:32:38 -0400 (EDT)
-Subject: Re: What's cooking in git.git (Jun 2021, #06; Thu, 17)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqr1h1mc81.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5489d9e9-93f4-d0f3-b4fd-a3d804a68ba5@jeffhostetler.com>
-Date:   Fri, 18 Jun 2021 12:32:37 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqr1h1mc81.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S235701AbhFRQmS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 12:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232433AbhFRQmS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 12:42:18 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B584FC061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 09:40:08 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 7-20020a9d0d070000b0290439abcef697so10281308oti.2
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 09:40:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=FqU0D2b+CcC+qnqv6UMOK7NYUxruYwV2U8i8PdstKNE=;
+        b=GrL+c36MES83jMSBDfRDjQeb3FCJvWZ2nb0r0iX6tcg825UOZr3V2li1Wric4mMB5p
+         xQF6CR7mUSMbhj91Npqx5AYLTliYCzjsPpNvzwhFXcHTt/Mh63XPEi/w1R0Vids6/Ty2
+         hUODTJ//wFx+S5u0F2gEvBW/t+d6NodhTLVxQuuTi5j2fh/gpjEi+ZEqbKInsYOE5ueF
+         s9Bu72ACX70OWa1nvnnzzrbw5GmE4jyPaRQdeKxvDmWgLssGPPukFOpGieh5lex+59Yr
+         gOXHvLgTk/mVmYP5lrNDZlGzEyGIJ1c+BeXfkxyIxwYfCJq9QPMG/hiX6TLHr8E2vBiA
+         eeKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=FqU0D2b+CcC+qnqv6UMOK7NYUxruYwV2U8i8PdstKNE=;
+        b=g/Qny0HWblyljBdVNMOYNeGRzJfNAKv1fOSSzxOxL/OKfr4oAOxyCJWZMgNicpxg50
+         f/rVSrIPKc4+xx2Zw2383TzJYdfD1cpnTDljWDMdVQhyamWNWany0sAQpmpKIorZG2Hv
+         yatfxK5EzHCmHkwY4/UC9PuFHCx9DuAqTWRJzu1y4KWjtCO0sbpiyhXAM7Ak147QnUEv
+         gS9YQp6Kv1NfynWbmqshCj4Hmr1GxI8b9iD1OUbxb/hmNm8apc1ZEwB+51dOM8wAjz9g
+         v/Y19MO4FoRym5rdmABAdKjW7dowKYQdyxGp1nET9yZk5ZfUKqFXEek/tkLZhRQOvar5
+         K8kQ==
+X-Gm-Message-State: AOAM530+h2iDl4AUeeNS5ulARkGBzS2D0jPDI20Ae8b/VGYRZ+kfb9XZ
+        Rgv7Yk8aCqaC5BuU8vKBSEI=
+X-Google-Smtp-Source: ABdhPJx4d1q71ZPZyE7B/09Sl0ChsP0MFdUylvpzLZLu0sLXTAR28GLBZP5ja99+DV8zk3WS8HVBBw==
+X-Received: by 2002:a05:6830:912:: with SMTP id v18mr10376029ott.241.1624034407977;
+        Fri, 18 Jun 2021 09:40:07 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id e24sm1127084otq.32.2021.06.18.09.40.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Jun 2021 09:40:07 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 11:40:06 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, jrnieder@gmail.com,
+        emilyshaffer@google.com, Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Message-ID: <60cccc666c70f_5eaa220820@natae.notmuch>
+In-Reply-To: <87wnqr4n0i.fsf@evledraar.gmail.com>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+ <87a6nryt51.fsf@evledraar.gmail.com>
+ <xmqqsg1iseza.fsf@gitster.g>
+ <xmqqbl86qtyf.fsf@gitster.g>
+ <87bl85y15s.fsf@evledraar.gmail.com>
+ <YMvuprVu1MnokHM5@camp.crustytoothpaste.net>
+ <87wnqr4n0i.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
+> The CodingGuidelines is what we're asking people to read when they've
+> e.g. found some data-eating bug in git and are about to send us a patch=
+,
+> but before that we're asking them to go through a fuzzy checklist of
+> items checklist. It's already 20 pages in my browser if I were to try t=
+o
+> print it.
 
-On 6/16/21 10:55 PM, Junio C Hamano wrote:
-...
-> 
-> * jh/builtin-fsmonitor (2021-05-24) 30 commits
->   - t/perf: avoid copying builtin fsmonitor files into test repo
->   - t7527: test status with untracked-cache and fsmonitor--daemon
->   - p7519: add fsmonitor--daemon
->   - t7527: create test for fsmonitor--daemon
->   - fsmonitor: force update index after large responses
->   - fsmonitor: enhance existing comments
->   - fsmonitor--daemon: use a cookie file to sync with file system
->   - fsmonitor--daemon: periodically truncate list of modified files
->   - fsmonitor--daemon: implement handle_client callback
->   - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
->   - fsmonitor-fs-listen-macos: add macos header files for FSEvent
->   - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
->   - fsmonitor--daemon: create token-based changed path cache
->   - fsmonitor--daemon: define token-ids
->   - fsmonitor--daemon: add pathname classification
->   - fsmonitor--daemon: implement daemon command options
->   - fsmonitor-fs-listen-macos: stub in backend for MacOS
->   - fsmonitor-fs-listen-win32: stub in backend for Windows
->   - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
->   - fsmonitor--daemon: implement client command options
->   - fsmonitor--daemon: add a built-in fsmonitor daemon
->   - fsmonitor: introduce `core.useBuiltinFSMonitor` to call the daemon via IPC
->   - config: FSMonitor is repository-specific
->   - help: include fsmonitor--daemon feature flag in version info
->   - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
->   - fsmonitor--daemon: update fsmonitor documentation
->   - fsmonitor--daemon: man page
->   - simple-ipc: preparations for supporting binary messages.
->   - Merge branch 'jk/perf-in-worktrees' into HEAD
->   - Merge branch 'jh/simple-ipc' into jh/rfc-builtin-fsmonitor
-> 
->   An attempt to write and ship with a watchman equivalent tailored
->   for our use.
-> 
->   What's the status of this one?
-> 
+Exactly.
 
-I went on vacation shortly after I send V2.  I'm back now, but still
-catching up on my various inboxes.
+Moreover, the point a guideline is on the name: guide. After reading it
+developers should feel they are heading in the right direction, but they
+won't know everything there is to know about git.git development, that
+requires many years of practice, and mistakes.
 
-I'll send a V3 after I get caught up.
+More importantly than what it is, is what it's not: by-laws.
 
-Thanks,
-Jeff
+A developer that misses a point in the guidelines should not be
+reprimended and sent to the brig. Instead she should merely be directed
+to it.
 
+Another thing it shouldn't be is a tool to win arguments. If two
+developers argue about sentence spacing (one space vs. two spaces), even
+if the whole community agrees two spaces is preferable--and thus one
+developer "won" the argument--that still doesn't merit writing it down
+to further rub it in.
+
+Not everything belongs in the guideline; only the most salient tips that
+guide newcomers in the right direction.
+
+Cheers.
+
+-- =
+
+Felipe Contreras=
