@@ -2,90 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39935C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4131DC48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:54:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 228AA613C1
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:51:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F3F96124C
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234469AbhFRRxI convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 18 Jun 2021 13:53:08 -0400
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:38536 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233642AbhFRRxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 13:53:07 -0400
-Received: by mail-ed1-f51.google.com with SMTP id t7so9711761edd.5
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 10:50:56 -0700 (PDT)
+        id S234679AbhFRR45 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 13:56:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35368 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232885AbhFRR44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 13:56:56 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3639CC061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 10:54:47 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id f9-20020a056a0022c9b029030058c72fafso1212564pfj.1
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 10:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=38xlouQmrMVXES16a2btL25H/8r0d0nw/zo/BpECXkA=;
+        b=WduzcD1JpfFc8N4O1WBlbmx6Ke+4krCx2rlTEWe+gu0BCA1cblshh0Q1cHE2xVK9Gu
+         NWia6JfpR2cJDseXoUuZlNpSmuUqLgaKyVXyGFmWpUC5w3iJls2oQ0KWrNMS/tGGlm8o
+         M0MgiUXF3hQ4SbVzt1ZADeoWcvyaSd0fo0OwCTnjjqbQQWrVvH9mXTGDr2R2B92DMHON
+         9X5AZL1Bx/8RlvG2ATb+EzDURezXAoW/UCKuIgASjKMHI1MXwIpS7vRZ+tsWl6mASAT/
+         cKDWnTfV5nkIGtwwzSDxmFYAYBmar7C/U5tld0XGEfL+Z+kxmT2dLWYX5Zq9yeC6MUpv
+         QSTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2mqZ44vjb55aiQVHr/RoY6Ulvc5xlX2DR9y2XqGdsio=;
-        b=QahbGidF2Cbc7hxwHRqaq8UYdZo7RkhcdsKiOGq3S6+cqP0pnH+Y6HjcyeZiFlAcm1
-         S2CXKp0OO6Uh6UzHG9RPxpgnqktwTKKisYOGJ48WJGrlhXVaFa0v2HOYCPZZy1RqFdRr
-         VRsuyn+uWzqZJ8byycc7YiK6WGWlPqg4kOH1QnyzBVtNJeEyQQEsvVQKgC5Wu3FXFJIA
-         uvakMK7BQQkrErUzVujAyMzflOKjj7jxIpyzUmsaJIbL5xFCYHvx52KlV7rlWdIx8fPS
-         x/Z6P+qOpNEtYz/1MpOePylCD2TUjzMIHfADzdYHfTBoIHFgRCMTbOpAzYXDaOJMXReX
-         X/tA==
-X-Gm-Message-State: AOAM533zmhSXNDOlGHL6QZxUKNChhNo06+2m9jZ4EJL3/rTcLhN9nBw0
-        KfP1014zFBy1X+iKHdtfysG6ypEGx7Pj6vO3M80=
-X-Google-Smtp-Source: ABdhPJwqH3SMk9oSMbOkoQ26grI0eQSvGNRe5aCwt6F+2Dx/TiV8azZFwMiL9OmTiICs558Ihfr73QK1wQADpezyMoo=
-X-Received: by 2002:a05:6402:11c9:: with SMTP id j9mr6784510edw.89.1624038655649;
- Fri, 18 Jun 2021 10:50:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
- <patch-3.3-f343fc7ae6-20210617T100239Z-avarab@gmail.com> <20210618170550.GE6312@szeder.dev>
-In-Reply-To: <20210618170550.GE6312@szeder.dev>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 18 Jun 2021 13:50:44 -0400
-Message-ID: <CAPig+cQvn+_56iuZmvHVDFSVYto-FMX2vp5aaEGrdr8L8+NY0w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] hook-list.h: add a generated list of hooks, like config-list.h
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=38xlouQmrMVXES16a2btL25H/8r0d0nw/zo/BpECXkA=;
+        b=M4Mq4O4YgBAWs7/XEWijuNNYQ0xvwpE4YxckYxDa8PrRGLK4+R73cIaCTwBDq/GlFu
+         z5h72WxIzDT5FOcJTO8CPIlsEV19NcZBHG/QlN4PEIMZxU6PTyS36bKtcKJRl/XaQ05C
+         9lbxNMCxXpTIO5q/3oubR5a0lArr4I9kMnGmDqcradp8CE5m38Wz+tBKEluVCSoZB5J9
+         MpGk77az2bBYI4w0LrjxNBzAapKduoMuMOchp70HPR5R5rNqReyJQ1rsDx/lhckdABtR
+         YPK1VILAbNd1Y+XS5rJ4kYI2G1fnfJvplm87xjUnJLneDqYI5q2IlEf4Arv8XGKtxouR
+         s1sA==
+X-Gm-Message-State: AOAM5335XKpYCA9TclP3LBt+WRg9IgSOFz7rW6P4zxget6i08cLNszrH
+        ddqNep8W4YPSLxph7znWJ76YdJ3dSrhfRMlW1DIb
+X-Google-Smtp-Source: ABdhPJxk8hOEstAMbaavxmQvFb4uXJLFC96tu/eG+/vMWt7up5n+4R0/QVBFfeImTMC+dK90PYiRsWLzDFi5PrHKAcwS
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:c796:: with SMTP id
+ gn22mr509626pjb.0.1624038886284; Fri, 18 Jun 2021 10:54:46 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 10:54:43 -0700
+In-Reply-To: <patch-2.4-d88b2c0410-20210617T105537Z-avarab@gmail.com>
+Message-Id: <20210618175443.773403-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <patch-2.4-d88b2c0410-20210617T105537Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
+Subject: Re: [PATCH v2 2/4] revision.h: unify "disable_stdin" and "read_from_stdin"
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     avarab@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        zhiyou.jx@alibaba-inc.com, Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 18, 2021 at 1:06 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> On Thu, Jun 17, 2021 at 12:09:36PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > diff --git a/generate-hooklist.sh b/generate-hooklist.sh
-> > @@ -0,0 +1,24 @@
-> > +#!/bin/sh
-> > +
-> > +echo "/* Automatically generated by generate-hooklist.sh */"
-> > +
-> > +print_hook_list () {
-> > +     cat <<EOF
-> > +static const char *hook_name_list[] = {
-> > +EOF
-> > +     perl -ne '
->
-> Why Perl?
->
-> At the moment I can run 'make' and get a functioning git even when
-> Perl is not installed.  With this patch that wouldn't work anymore.
->
-> Both 'generate-cmdlist.sh' and 'generate-configlist.sh' can process
-> the documentation into a header file with a long list in it without
-> resorting to Perl; I'm sure that hooks could be processed without Perl
-> as well.
+About the subject:
 
-That's a good point and not an idle question. It wasn't all that long
-ago that I rewrote `generate-cmdlist` in Perl and got a complaint that
-the Git project was no longer buildable on FreeBSD[1], with the result
-that I ended up re-implementing it (again) in shell[2].
+> revision.h: unify "disable_stdin" and "read_from_stdin"
 
-[1]: https://lore.kernel.org/git/loom.20150814T171757-901@post.gmane.org/
-[2]: https://lore.kernel.org/git/1440365469-9928-1-git-send-email-sunshine@sunshineco.com/
+Hmm...there is no unification, I think? Both of these remain distinct -
+it's just that both were renamed and one was changed into an enum.
+
+> @@ -114,9 +119,22 @@ struct rev_info {
+>  	int rev_input_given;
+>  
+>  	/*
+> -	 * Whether we read from stdin due to the --stdin option.
+> +	 * How should we handle seeing --stdin?
+> +	 *
+> +	 * Defaults to reading if we see it with
+> +	 * REV_INFO_STDIN_CONSUME_ON_OPTION.
+> +	 *
+> +	 * Can be set to REV_INFO_STDIN_IGNORE to ignore any provided
+> +	 * --stdin option.
+> +	 */
+> +	enum rev_info_stdin stdin_handling;
+
+This was changed to an enum, because (looking at the next patches) we
+want to add an entry to it. Maybe mention it here - at the very least,
+this will help reviewers check that the addition of extra entries to the
+enum in future commits will not negatively affect functionality
+introduced in this commit.
+
+> +	/*
+> +	 * Did we read from stdin due to stdin_handling ==
+> +	 * REV_INFO_STDIN_CONSUME_ON_OPTION and seeing the --stdin
+> +	 * option?
+>  	 */
+> -	int read_from_stdin;
+> +	int consumed_stdin_per_option;
+
+The usage of "per" here seems correct to me, but it's not the first
+meaning that springs to mind. Could this just be called
+"consumed_stdin"?
