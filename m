@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DE9FC48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5185EC48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33BDA611CC
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A82E611CC
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236315AbhFRS15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 14:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42588 "EHLO
+        id S235091AbhFRS2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 14:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236300AbhFRS14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 14:27:56 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDE2C061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:45 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so10637284otl.0
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:45 -0700 (PDT)
+        with ESMTP id S236322AbhFRS2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 14:28:01 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DBB5C061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:48 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id j11-20020a9d738b0000b02903ea3c02ded8so10577291otk.5
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+zL1t85DgllGMe13ZGN/bPVSfiUU2yAv1dpqoo3ssjk=;
-        b=bQPsrdkhgP2sT5OTA8XIFXI2u3lMwTT4DifmBynStEikTto2ia63hQCNOM0/cs6zGd
-         8qzSYsV7JUr3rmitG6eX22/i1jvJRsrxmILF6F4ryV1La1Pdw3L2/4Ax4PbFU7Li0rMO
-         NQYulJt0zkbVlsGqiSjIIEq3upEBK/865FDwI+2pa489wQqpioaKV7lL4vqsrH3ruhGU
-         Rmy5jelYk1gSX/9KNSCSGxa1v6Y555eHWbsj7RQIvYpyyYicPoOBVbgoXpmqC28byudT
-         LthzR5h1MdV0xA2/PYBVV7flnwDgchw4DmrDzfT41+wrAPX1MfUlrHQPHq4jVWKypddD
-         jllA==
+        bh=kdJ93B8GfAGhZuLUWGWa4Bvy7t6axrPT6YYr9b1BB6c=;
+        b=Qye7Fx8Gv4l7vyP4cHjYK+AuaM3cXxj5O2dmefbBJc1SfsLdGMIboHaTWRRylO0m0l
+         iSIQXCluUzo7g6mtKbJGNcg1pZoYLhAI3T1jNxpWlrhfNT4Ieta0Y8Ip7GodHoP1XwzT
+         Eyj2OhgKoGKG7bUnTAciWyxZVdmaQSaiW4yGTvuxk1j3vdhIdf6R9mlO/a/I35faEcie
+         OZwPgEmcDZ15UEE4DKyYz3ElTqAd/hMQVD930FZkEcz9UapKl9oJSZ+23tNSIskIUV3h
+         StmZtbqXJXKN/u029c8tcuqiIYzbUCJp4wYPbQ2l+CKktOW80f/3R/eDGF0vgD9TvDTd
+         JW+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+zL1t85DgllGMe13ZGN/bPVSfiUU2yAv1dpqoo3ssjk=;
-        b=LqYLUxqzwGzal2ASt9paTWDLdMauWOX1qXEQZx+U9Jz9K57WeM0nZvyJpVTDA3ibWh
-         rXIVepmbHHCvzLd3UWTUob5omT24k8UFcbcCzWC1eznttkQqee32sHd/2OumAn6CXesg
-         x+JlkW1eLtTDI6c0BlHioZUeFC1dON8vNcmA+mb1LKFrypvTVSn1cwC0/AUPvUCdLwWk
-         sFZASXcMBbjNrGZP7U4UC+ViyLcgn043A/1mqVaoCcTJKPCL3BBfCilJMabHIVbFLbpL
-         Xzqp4k/cDaw0+4vApFk+PZWovry9tFvrYGSBUmPHpuuG/BEF+HKLMMqJE1cmS8NqBd3C
-         mlhw==
-X-Gm-Message-State: AOAM531X0jZCyN63K2OVUHg98pSFoiNnTqHRuDvxA5VEOxBIin6kyQ55
-        UfOpIm139hBd5jc39JSc1gy3dEVdn9e6lQ==
-X-Google-Smtp-Source: ABdhPJxSFZSZioK6F9JQaS4EhRAanAz0PuqjTJlKUP0rgB8yH+UTPIPC5c7UTHGBPUUa514ggidwIA==
-X-Received: by 2002:a9d:62ce:: with SMTP id z14mr10855208otk.255.1624040744841;
-        Fri, 18 Jun 2021 11:25:44 -0700 (PDT)
+        bh=kdJ93B8GfAGhZuLUWGWa4Bvy7t6axrPT6YYr9b1BB6c=;
+        b=fAFwLhU+ltWeE5NYQ4+erojPFvEW9SqXWp44i4m2rqDwjV5CnFGAMc3hZwkWBuxhoa
+         date41sjbfIhMNxUmmjecfDptW6xLl57dU4xyzaWpSqEkZLieGST1enfWVu5MPXWc8RO
+         9VPOuvhZw2TpENszXyOmnOsSXMDmWTi6MWzFNbv+J1wFOQrFXxEw2680nwa8zhEE6Ixb
+         lXMw4O2y948zBkF4pQDkPTj/ar+KcvCVahuygKRx1c0GV+uqPRd1d0imWL50w2GqxHV8
+         4fcgoj9HPhpNYh3X05O7MjMohKzLtsg4r8sknXRXX2ME8tBNxqPRsrM8PuaB1XlafQu3
+         fYxg==
+X-Gm-Message-State: AOAM532umqte/A50tnLcaZJ+hNovhR9p1Nr5vh+bRZaJ4WLXI4p2oOlR
+        84+7SEBle7Dut+6ZpQfMOUzKxOqdwpxj6A==
+X-Google-Smtp-Source: ABdhPJwKp/AqdeG5orAZWHk48fPSqtAeooHRA94iFPPJrFqSRDFwYJLbw7FLvglKLoVHukhy32NHUw==
+X-Received: by 2002:a05:6830:161a:: with SMTP id g26mr10674497otr.62.1624040747388;
+        Fri, 18 Jun 2021 11:25:47 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id k7sm2020090otf.72.2021.06.18.11.25.43
+        by smtp.gmail.com with ESMTPSA id 16sm2151937otm.57.2021.06.18.11.25.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 11:25:44 -0700 (PDT)
+        Fri, 18 Jun 2021 11:25:46 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 13/45] completion: bash: get rid of _append() functions
-Date:   Fri, 18 Jun 2021 13:24:46 -0500
-Message-Id: <20210618182518.697912-14-felipe.contreras@gmail.com>
+Subject: [PATCH v2 14/45] completion: bash: get rid of any non-append code
+Date:   Fri, 18 Jun 2021 13:24:47 -0500
+Message-Id: <20210618182518.697912-15-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210618182518.697912-1-felipe.contreras@gmail.com>
 References: <20210618182518.697912-1-felipe.contreras@gmail.com>
@@ -71,124 +71,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's no need to have duplicated functionality.
-
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 35 ++++++--------------------
- contrib/completion/git-completion.zsh  | 10 --------
- 2 files changed, 7 insertions(+), 38 deletions(-)
+ contrib/completion/git-completion.bash | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8f72e0f66b..c3ea5261fb 100644
+index c3ea5261fb..366f255dfc 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -296,8 +296,7 @@ _get_comp_words_by_ref ()
- }
- fi
- 
--# Fills the COMPREPLY array with prefiltered words without any additional
--# processing.
-+# Appends prefiltered words to COMPREPLY without any additional processing.
- # Callers must take care of providing only words that match the current word
- # to be completed and adding any prefix and/or suffix (trailing space!), if
- # necessary.
-@@ -310,19 +309,6 @@ __gitcomp_direct ()
+@@ -309,7 +309,7 @@ __gitcomp_direct ()
  	COMPREPLY+=($1)
  }
  
--# Similar to __gitcomp_direct, but appends to COMPREPLY instead.
--# Callers must take care of providing only words that match the current word
--# to be completed and adding any prefix and/or suffix (trailing space!), if
--# necessary.
--# 1: List of newline-separated matching completion words, complete with
--#    prefix and suffix.
--__gitcomp_direct_append ()
--{
--	local IFS=$'\n'
--
--	COMPREPLY+=($1)
--}
--
- __gitcompappend ()
+-__gitcompappend ()
++__gitcompadd ()
  {
  	local x i=${#COMPREPLY[@]}
-@@ -440,16 +426,8 @@ __gitcomp_builtin ()
- 	__gitcomp "$options"
+ 	for x in $1; do
+@@ -319,12 +319,6 @@ __gitcompappend ()
+ 	done
  }
  
--# Variation of __gitcomp_nl () that appends to the existing list of
--# completion candidates, COMPREPLY.
--__gitcomp_nl_append ()
+-__gitcompadd ()
 -{
--	local IFS=$'\n'
--	__gitcompappend "$1" "${2-}" "${3-$cur}" "${4- }"
+-	COMPREPLY=()
+-	__gitcompappend "$@"
 -}
 -
- # Generates completion reply from newline-separated possible completion words
--# by appending a space to all of them.
-+# by appending a space to all of them. The result is appended to COMPREPLY.
+ # Generates completion reply, appending a space to possible completion words,
+ # if necessary.
  # It accepts 1 to 4 arguments:
- # 1: List of possible completion words, separated by a single newline.
- # 2: A prefix to be added to each possible completion word (optional).
-@@ -459,7 +437,8 @@ __gitcomp_nl_append ()
- #    appended.
+@@ -438,7 +432,7 @@ __gitcomp_builtin ()
  __gitcomp_nl ()
  {
--	__gitcomp_nl_append "$@"
-+	local IFS=$'\n'
-+	__gitcompappend "$1" "${2-}" "${3-$cur}" "${4- }"
+ 	local IFS=$'\n'
+-	__gitcompappend "$1" "${2-}" "${3-$cur}" "${4- }"
++	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
  }
  
  # Fills the COMPREPLY array with prefiltered paths without any additional
-@@ -846,7 +825,7 @@ __git_complete_refs ()
- 
- 	# Append DWIM remote branch names if requested
- 	if [ "$dwim" = "yes" ]; then
--		__gitcomp_direct_append "$(__git_dwim_remote_heads "$pfx" "$cur_" "$sfx")"
-+		__gitcomp_direct "$(__git_dwim_remote_heads "$pfx" "$cur_" "$sfx")"
- 	fi
- }
- 
-@@ -2646,7 +2625,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
--		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx- }"
-+		__gitcomp_nl $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	guitool.*.*)
-@@ -2696,7 +2675,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
--		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx- }"
-+		__gitcomp_nl "pushDefault" "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	url.*.*)
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 5ddd2d6771..8cbf4f83f5 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -122,16 +122,6 @@ __gitcomp_file ()
- 	compadd -f -p "${2-}" -- ${(f)1} && _ret=0
- }
- 
--__gitcomp_direct_append ()
--{
--	__gitcomp_direct "$@"
--}
--
--__gitcomp_nl_append ()
--{
--	__gitcomp_nl "$@"
--}
--
- __gitcomp_file_direct ()
+@@ -451,7 +445,7 @@ __gitcomp_file_direct ()
  {
- 	__gitcomp_file "$1" ""
+ 	local IFS=$'\n'
+ 
+-	COMPREPLY=($1)
++	COMPREPLY+=($1)
+ 
+ 	# use a hack to enable file mode in bash < 4
+ 	compopt -o filenames +o nospace 2>/dev/null ||
 -- 
 2.32.0
 
