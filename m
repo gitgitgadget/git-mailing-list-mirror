@@ -2,121 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB3B2C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39935C48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:51:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3910613D1
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:05:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 228AA613C1
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 17:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236047AbhFRRIF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 13:08:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236046AbhFRRIE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 13:08:04 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE41C061760
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 10:05:54 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id r7so9512949edv.12
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 10:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=M2IfVjiG2KeaDdkeC1e95IJvR7oJdxqqqTveQA1/FMw=;
-        b=U7PC9YbCHxNQszH+a1TrQlC7Xm9uimprcN7bCCHYvXYTFdh18jBXkav+FJM+jJ5a5W
-         aRmMnhG/Su8veUjnVazcfoM2ndIYH7QdK2JvCv3xqtEZGYXkpUrUD2XWQaQT4Z1vlQT/
-         83OUNuQPY1wIF3XmZDGzKeoGKzIH7Pi+fgUI4DPRgpSFJkdH+yJCvkptDTNB19Zl3L1o
-         5OA6qyoSQhIsNkOyaMupKlAIzBLkL7tZ0Mh1WCzf/i/bvMDVTwHaN7THZz4uNn3z8l7r
-         n3JoWEGfMx/flzGGRxe07x0GhvLCzkwl/fS4Yu8kleIMd5gG/Gi/NnrRfDq8Byduw0K4
-         mjSA==
+        id S234469AbhFRRxI convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 18 Jun 2021 13:53:08 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:38536 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233642AbhFRRxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 13:53:07 -0400
+Received: by mail-ed1-f51.google.com with SMTP id t7so9711761edd.5
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 10:50:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=M2IfVjiG2KeaDdkeC1e95IJvR7oJdxqqqTveQA1/FMw=;
-        b=QhP51XRUIBjq6aRfKCfpDSh/KW5D5iTiTih9D6MyFixeJsl0gAGOn98okPcfNyIBSD
-         jndJbwmIolK88fx288sk8/TVYIymfuFgx0YpmJ1WbPhFwNwxhnGOFVYgOrp1NiIDjPYq
-         9saw5QjNqyLkH2X+mbSDaicRF9gFQPVVTkslINarKBmIJyWoq3PD5+jV4bfb3k0kP8qZ
-         vzweKYQwCwTc80zHLGtTElPejl1ruXPizdConvCWIkIw1OmxcxCMlbX2JdC6mmdZBTRX
-         SRY5dABGVbckuMUATYyWW/x4/LccXzemeG8FxjY9mOEnmmqdBMKnDfBq4q+DvKOhNnSk
-         ONAg==
-X-Gm-Message-State: AOAM530uSweJxdZKvq+50bqX8SzTdJFQcv7MRLqntWdTLohP54IDNDnQ
-        Oec5OMzHfdiM3tFpvV6JDZw=
-X-Google-Smtp-Source: ABdhPJzPHaG2UJa7mgiksxtHeFgSXmZ/oyL7Qgc5cM9BFTl5PezK/qVI9tE4VR0efH455ILv2X51BQ==
-X-Received: by 2002:aa7:d3c2:: with SMTP id o2mr6470965edr.358.1624035953589;
-        Fri, 18 Jun 2021 10:05:53 -0700 (PDT)
-Received: from szeder.dev (94-21-23-215.pool.digikabel.hu. [94.21.23.215])
-        by smtp.gmail.com with ESMTPSA id a22sm1234595ejv.67.2021.06.18.10.05.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 10:05:53 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 19:05:50 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2mqZ44vjb55aiQVHr/RoY6Ulvc5xlX2DR9y2XqGdsio=;
+        b=QahbGidF2Cbc7hxwHRqaq8UYdZo7RkhcdsKiOGq3S6+cqP0pnH+Y6HjcyeZiFlAcm1
+         S2CXKp0OO6Uh6UzHG9RPxpgnqktwTKKisYOGJ48WJGrlhXVaFa0v2HOYCPZZy1RqFdRr
+         VRsuyn+uWzqZJ8byycc7YiK6WGWlPqg4kOH1QnyzBVtNJeEyQQEsvVQKgC5Wu3FXFJIA
+         uvakMK7BQQkrErUzVujAyMzflOKjj7jxIpyzUmsaJIbL5xFCYHvx52KlV7rlWdIx8fPS
+         x/Z6P+qOpNEtYz/1MpOePylCD2TUjzMIHfADzdYHfTBoIHFgRCMTbOpAzYXDaOJMXReX
+         X/tA==
+X-Gm-Message-State: AOAM533zmhSXNDOlGHL6QZxUKNChhNo06+2m9jZ4EJL3/rTcLhN9nBw0
+        KfP1014zFBy1X+iKHdtfysG6ypEGx7Pj6vO3M80=
+X-Google-Smtp-Source: ABdhPJwqH3SMk9oSMbOkoQ26grI0eQSvGNRe5aCwt6F+2Dx/TiV8azZFwMiL9OmTiICs558Ihfr73QK1wQADpezyMoo=
+X-Received: by 2002:a05:6402:11c9:: with SMTP id j9mr6784510edw.89.1624038655649;
+ Fri, 18 Jun 2021 10:50:55 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
+ <patch-3.3-f343fc7ae6-20210617T100239Z-avarab@gmail.com> <20210618170550.GE6312@szeder.dev>
+In-Reply-To: <20210618170550.GE6312@szeder.dev>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 18 Jun 2021 13:50:44 -0400
+Message-ID: <CAPig+cQvn+_56iuZmvHVDFSVYto-FMX2vp5aaEGrdr8L8+NY0w@mail.gmail.com>
+Subject: Re: [PATCH 3/3] hook-list.h: add a generated list of hooks, like config-list.h
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/3] hook-list.h: add a generated list of hooks, like
- config-list.h
-Message-ID: <20210618170550.GE6312@szeder.dev>
-References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
- <patch-3.3-f343fc7ae6-20210617T100239Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-3.3-f343fc7ae6-20210617T100239Z-avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 12:09:36PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> diff --git a/generate-hooklist.sh b/generate-hooklist.sh
-> new file mode 100755
-> index 0000000000..5a3f7f849c
-> --- /dev/null
-> +++ b/generate-hooklist.sh
-> @@ -0,0 +1,24 @@
-> +#!/bin/sh
-> +
-> +echo "/* Automatically generated by generate-hooklist.sh */"
-> +
-> +print_hook_list () {
-> +	cat <<EOF
-> +static const char *hook_name_list[] = {
-> +EOF
-> +	perl -ne '
+On Fri, Jun 18, 2021 at 1:06 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
+> On Thu, Jun 17, 2021 at 12:09:36PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > diff --git a/generate-hooklist.sh b/generate-hooklist.sh
+> > @@ -0,0 +1,24 @@
+> > +#!/bin/sh
+> > +
+> > +echo "/* Automatically generated by generate-hooklist.sh */"
+> > +
+> > +print_hook_list () {
+> > +     cat <<EOF
+> > +static const char *hook_name_list[] = {
+> > +EOF
+> > +     perl -ne '
+>
+> Why Perl?
+>
+> At the moment I can run 'make' and get a functioning git even when
+> Perl is not installed.  With this patch that wouldn't work anymore.
+>
+> Both 'generate-cmdlist.sh' and 'generate-configlist.sh' can process
+> the documentation into a header file with a long list in it without
+> resorting to Perl; I'm sure that hooks could be processed without Perl
+> as well.
 
-Why Perl?
+That's a good point and not an idle question. It wasn't all that long
+ago that I rewrote `generate-cmdlist` in Perl and got a complaint that
+the Git project was no longer buildable on FreeBSD[1], with the result
+that I ended up re-implementing it (again) in shell[2].
 
-At the moment I can run 'make' and get a functioning git even when
-Perl is not installed.  With this patch that wouldn't work anymore.
-
-Both 'generate-cmdlist.sh' and 'generate-configlist.sh' can process
-the documentation into a header file with a long list in it without
-resorting to Perl; I'm sure that hooks could be processed without Perl
-as well.
-
-> +		chomp;
-> +		@l[$.] = $_;
-> +		push @h => $l[$. - 1] if /^~~~+$/s;
-> +		END {
-> +			print qq[\t"$_",\n] for sort @h;
-> +		}
-> +	' <Documentation/githooks.txt
-> +	cat <<EOF
-> +	NULL,
-> +};
-> +EOF
-> +}
-> +
-> +echo
-> +print_hook_list
+[1]: https://lore.kernel.org/git/loom.20150814T171757-901@post.gmane.org/
+[2]: https://lore.kernel.org/git/1440365469-9928-1-git-send-email-sunshine@sunshineco.com/
