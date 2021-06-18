@@ -2,140 +2,210 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38E80C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 601F7C48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:46:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 046D96100B
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:35:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43A1B61248
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234178AbhFRVhJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 17:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57092 "EHLO
+        id S234591AbhFRVtE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 17:49:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231461AbhFRVhJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 17:37:09 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C768EC061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:34:58 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id 7-20020a9d0d070000b0290439abcef697so11101024oti.2
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:34:58 -0700 (PDT)
+        with ESMTP id S230338AbhFRVtE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 17:49:04 -0400
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53528C061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:46:54 -0700 (PDT)
+Received: by mail-qk1-x749.google.com with SMTP id c3-20020a37b3030000b02903ad0001a2e8so6818864qkf.3
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=FG1tdi09lZNHFlv2e+q+ERTryKDll3zT/NDLVhmqEa8=;
-        b=uxnfuVDWLD0dzElGawIpHNJ28N4A8QZiZXwU8oGu4/ifDgBmECpkVsPo4wXEGC1ryK
-         YGv+YQbfXDwcqJQlNXiTaxEy1NWTfS0QAUVGVI2uC6WuX2/f6/msxLSKG+58DvzUcbWO
-         +27wpHuSKh0avVv5h99jUYbaRZfN4LIpx9uw1epUuuJ6jXQcQ+J41tEGTu3U70A8Dpqz
-         p/d+8XZ3maxR+Gf1wXkEYZHcrBPUDSPdY0tyEKkK/wPGgtRkR89PBJfgV0KiH50WW8Nk
-         lENnXnzYRS07VUvMP2nl/E7AIBaDW3jAFQUtp2HGKYiEWwMmbSESAA9XvpTO4S87MtdE
-         TNKA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=UMF7LBxJhkfNlB88nXTGP0fX8JakxL4sjvlNJRv2DbA=;
+        b=pXh4WDlDlK9eNAsQOM5btnsQqATDCipN0CbPFivZYA9dm/ijdtIGcK9BHR/xXoxSjD
+         Go6VX5XTl6Ly6ApARFiD6bomwymIiU3LVts7Ku97lVAxzkoyKX7QL7cH2ScQPRmwptk0
+         xcMu0DBp9xFYYpUBHoyIf9fggOC4hSZbwz6zttQ2nmWQZ2h71SRPnt5aXQHdo+AVYvWF
+         WVisKlSvVUAxMgQKuMjn5r2FzbVYOgYcaCZ62S84OOuhkO7gOSpDrQv+11rC0bHiNgaE
+         P9obrv1IiK5OJL1uLS9Fre2E2wsgAWiRDZTkKCH0nEpSS+3ISGNi0t10RYya8rnwUr2k
+         IEiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=FG1tdi09lZNHFlv2e+q+ERTryKDll3zT/NDLVhmqEa8=;
-        b=mesXmKaLRE9xbVlOri7kkih1koW9pBXUcKJp9IdgyF2QhKEI3o/ppAsi9wKzPfAg25
-         qJYPtGW/I5Q0LpITDdr7oNMg2khUhU17CwdqvJKCv+UVZy3BHgfXeoqgOqDOcKW04aa0
-         VkjOAky0EpdLkLx0sBGnvcmQZ1szZjLMnsBFDXwtLZJmAn2G1ntTkPyzeudHOrnyMmJU
-         dM1keNO9kf5sk1SOA1fqMvv1nZ7gmB9pH4ttGAWr/P4LYiLKd2pD3Hfc3m65NzI6C8Lt
-         0pc1oneMUvcfBPfGRpRapCIXEXU5K99dQ1P0LR3UNrPZzXn+6d7flYpIZaFmFi5jT0ga
-         xOhg==
-X-Gm-Message-State: AOAM531d4uNYoWLpRxIKCTyjgiAgwaeQWsaC1AheC+TFg4qytflwnIEj
-        0rXLrrhAONAiJamNgyRwpbE=
-X-Google-Smtp-Source: ABdhPJw1mStaihNis9o+PBH4lHCXLCgsu/dC3ainT+uHCcjRJOxFIRx4RyXFs+eTYtzOQulRrmrKlg==
-X-Received: by 2002:a9d:2dc2:: with SMTP id g60mr10881280otb.54.1624052098132;
-        Fri, 18 Jun 2021 14:34:58 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id w12sm1693601oor.35.2021.06.18.14.34.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 14:34:57 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 16:34:56 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Message-ID: <60cd118096008_c0ff92085b@natae.notmuch>
-In-Reply-To: <20210618203057.790320-5-felipe.contreras@gmail.com>
-References: <20210618203057.790320-1-felipe.contreras@gmail.com>
- <20210618203057.790320-5-felipe.contreras@gmail.com>
-Subject: RE: [RFC/NOPATCHv3 4/4] doc: remove GNU_ROFF option
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=UMF7LBxJhkfNlB88nXTGP0fX8JakxL4sjvlNJRv2DbA=;
+        b=V2QcOlrwYKpyHv45vzujmEN32pyuia6UyBAClg02xBffZqwO9SyddFmZXwCzGlgKj2
+         weE61aOf/CZm1iXr8MX4TsqmOE9En/uXXz9AZL/Ufzq5dG7SH7otcCpU04u1s8v4iluK
+         FEEI+ZgTz5IY0fp+INVsmObyhPXJDGdTxV6bFoDXToSg09RCoiNMVT5JYKTR5CGSooFK
+         GPJjVKTj9vjKQSgs4FM9l9/Qewb1szozhuTeT3Z9N9HZTCX9k9E046LfCeKMZp402+PW
+         hU4TqnxjMyCkIoqIXGflJojqzDKvrqim46dqVALJLXCY7A3tkYzQ3Tp6D+5mp+iW5d0r
+         M+KQ==
+X-Gm-Message-State: AOAM531ymRmN42p6mdy/Ao8jIhQUAFk5Vo7Oh1eZizlTDy9/8ZetNGYu
+        XJuLH8fCiON7YXYH9bs+GEICsjGn8Hd0v4qhkfVB
+X-Google-Smtp-Source: ABdhPJwPSNmMESLnukhQdu0pD3WxZwskhuhDpCjHAKEgkEwfcf+aGb1PYMPTzUoTWpnmDyeBuz1x0GGgmaE8AtnjUFcO
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6902:1208:: with SMTP id
+ s8mr17244734ybu.71.1624052813437; Fri, 18 Jun 2021 14:46:53 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 14:46:50 -0700
+In-Reply-To: <xmqq35thnuqp.fsf@gitster.g>
+Message-Id: <20210618214650.792661-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+References: <xmqq35thnuqp.fsf@gitster.g>
+X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
+Subject: Re: [RFC PATCH 0/2] MVP implementation of remote-suggested hooks
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras wrote:
-> From: "brian m. carlson" <sandals@crustytoothpaste.net>
+> Jonathan Tan <jonathantanmy@google.com> writes:
 > 
-> By default, groff converts apostrophes in troff source to Unicode
-> apostrophes.
+> >  1. The remote repo administrator creates a new branch
+> >     "refs/heads/suggested-hooks" pointing to a commit that has all the
+> >     hooks that the administrator wants to suggest. The hooks are
+> >     directly referenced by the commit tree (i.e. they are in the "/"
+> >     directory).
+> 
+> wants to suggest?  They simply suggest ;-)
 
-This has nothing to do with the actual problem. As stated in groff(7)
-the apostrophe ' is converted to single closing quote \(cq.
+Ah yes :-)
 
-Our problem was with acute accent \(aa, not \(cq.
+> 
+> >  2. When a user clones, Git notices that
+> >     "refs/remotes/origin/suggested-hooks" is present and prints out a
+> >     message about a command that can be run.
+> 
+> Can be run to install?  Or can be run to first inspect?  Or both?
 
-And it was due to docbook doing \' where it shouldn't, not groff.
+Right now I only have a command that installs, but I can provide the
+appropriate "cat-file" invocations to inspect them as well.
 
-> This is helpful and desirable when being used as a
-> typesetter, since it makes the output much cleaner and more readable,
-> but it is a problem in manual pages, since apostrophes are often used
-> around shell commands and these should remain in their ASCII form for
-> compatibility with the shell.
+> >  3. If the user runs that command, Git will install the hooks pointed to
+> >     by that ref, and set hook.autoupdate to true. This config variable
+> >     is checked whenever "git fetch" is run: whenever it notices that
+> >     "refs/remotes/origin/suggested-hooks" changes, it will reinstall the
+> >     hooks.
+> >
+> >  4. To turn off autoupdate, set hook.autoupdate to false. Existing hooks
+> >     will remain.
+> 
+> OK, so "verify even if you implicitly trust" is actively discouraged.
 
-manpages should use \(aq if they want an apostrophe quote '.
+Yes I was thinking of the model in which we already trust upstream, but
+I agree that verification can be useful. I think we can print the
+"cat-file" commands needed to verify before installing, and add a mode
+in which we tell the user that the hooks have been updated (but not
+automatically install them).
 
-> Fortunately, the DocBook stylesheets contain a workaround for this case:
-> they detect the special .g number register, which is set only when using
-> groff, and they define a special macro for apostrophes based on whether
-> or not it is set and use that macro to write out the proper character.
+> > Design choices:
+> >
+> >  1. Where should the suggested hooks be in the remote repo? A branch,
+> >     a non-branch ref, a config? I think that a branch is best - it is
+> >     relatively well-understood and any hooks there can be
+> >     version-controlled (and its history is independent of the other
+> >     branches).
+> 
+> As people mentioned in the previous discussions, "independent of the
+> other branches" has advantages and disadvantages.  The most recent
+> set of hooks may have some that would not work well with older
+> codebase, so care must be taken to ensure any hook works on across
+> versions of the main codebase.  Which may not be a huge downside,
+> but something users must be aware of.
 
-Once again nothing to do with the issue.
+That's true - and on the flip side, I would presume that the
+hook-introducing admin would usually want those hooks to apply
+retroactively too (say, to someone updating a "maint" branch). I think
+it's more flexible if hooks are in an independent branch, though - (if
+independent branch) a hook can be written to tolerate an old codebase,
+but if embedded in the code branch, such a hook cannot apply
+retroactively to old code.
 
-The only way in troff source to specify an apostrophe quote is using
-\(aq, but that only works in groff. Since there's no better way to
-describe the same for other troff programs ' should be used for
-portability.
+> >  2. When and how should the local repo update its record of the remote's
+> >     suggested hooks? If we go with storing the hooks in a branch of a
+> >     remote side, this would automatically mean (with the default
+> >     refspec) that it would be in refs/remotes/<remote>/<name>. This
+> >     incurs network and hard disk cost even if the local repo does not
+> >     want to use the suggested hooks, but I think that typically they
+> >     would want to use it if they're going to do any work on the repo
+> >     (they would either have to trust or inspect Makefiles etc. anyway,
+> >     so they can do the same for the hooks), and even if they don't want
+> >     to use the remote's hooks, they probably still want to know what the
+> >     remote suggests.
+> 
+> A way to see what changes are made to recommendation would be
+> useful, and a branch that mostly linearly progresses is a good way
+> to give it to the users.
+> 
+> Of course, that can be done with suggested hooks inline with the
+> rest of the main codebase, too.
 
-Doing this:
+That's true.
 
-  .ie \n(.g .ds Aq \(aq
-  .el .ds Aq '
+> >  4. Should the local repo try to notice if the hooks have been changed
+> >     locally before overwriting upon autoupdate? This would be nice to
+> >     have, but I don't know how practical it would be. In particular, I
+> >     don't know if we can trust that
+> >     "refs/remotes/origin/suggested-hooks" has not been clobbered.
+> 
+> Meaning clobbered by malicious parties?  Then the whole thing is a
+> no-go from security point of view.  Presumably you trust the main
+> content enough to work on top of it, so as long as you can trust
+> that refs/remotes/origin/hooks to the same degree that you would
+> trust refs/remotes/origin/master, I do not think it is a problem.
 
-is not a workaround: it's a proper implementation of a generic apostrophee
-quote that works correctly everywhere.
+I meant clobbered by the user - should have made that more clear. To
+elaborate...
 
-> As a result, the DocBook stylesheets handle all cases correctly
-> automatically, whether the user is using groff or not, unlike our
-> GNU_ROFF code.
+> Whatever mechanism you use to materialize an updated version of the
+> hooks can and should record which commit on the suggested-hooks
+> branch the .git/hooks/* file is based on.  Then when the user wants
+> to update to a different version of suggested-hooks (either because
+> you auto-detected, or the user issued a command to update), you have
+> 
+>  - The current version in .git/hooks/*
+> 
+>  - The old pristine version (you recorded the commit when you
+>    updated the .git/hooks/* copy the last time)
+> 
+>  - The new pristine version (you have a remote-tracking branch).
+> 
+> and it is not a brain surgery to perform three-way merge to update
+> the first using the difference between the second and the third.
 
-Yes, but you are not mentioning where it was broken, and when it was
-fixed.
+...I was having a difficult time figuring out where to store such
+information (ref? config? I wouldn't be surprised if a user saw a value
+there and thought that they could change it). Perhaps it could be a
+separate file like .git/shallow.
 
-> Additionally, this functionality was implemented in 2010.  Since nobody
-> is shipping a mainstream Linux distribution with security support that
-> old anymore, we can just safely assume that the user has upgraded their
-> system in the past decade and remove the GNU_ROFF option and its
-> corresponding stylesheet altogether.
+I'm not fully convinced that maintaining the ability to retain local
+hook modifications by supporting three-way merges is important, but if
+it is, it might be brain surgery to figure out the UX when merge
+conflicts occur. Normally these conflicts can be written to the worktree
+and index, but we don't have those in the case of hooks.
 
-Correct, but my version [1] goes into much more detail with less text,
-it's actually acurate, and points exactly where docbook got broken,
-where it was fixed, and how other projects worked around the issue.
+> >  5. Should we have a command that manually updates the hooks with what's
+> >     in "refs/heads/suggested-hooks"? This is not in this patch set, but
+> >     it sounds like a good idea.
+> 
+> I wonder if having it bound as a submodule to a known location in
+> the main contents tree makes it easier to manage and more flexible.
+> Just like you can update the working tree of a submodule to a
+> version that is bound to the superproject tree, or to a more recent
+> version of the "branch" in the submodule, you can support workflows
+> that allow suggested hooks to advance independent of the main
+> contents version and that uses a specific version of suggested hooks
+> tied to the main contents.
 
-Cheers.
-
-[1] https://lore.kernel.org/git/20210608090026.1737348-2-felipe.contreras@gmail.com/
-
--- 
-Felipe Contreras
+This would make the hooks dependent on the commit checked out (with
+perhaps a bit more leeway in that our implementation could be flexible
+and use a commit later than what's in the gitlink), with its own pros
+and cons (as you said earlier).
