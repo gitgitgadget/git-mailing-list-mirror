@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB8E5C49361
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D196C48BE8
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 976F161205
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56243611CC
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235295AbhFRS1d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 14:27:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42448 "EHLO
+        id S235400AbhFRS1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 14:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235291AbhFRS1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 14:27:33 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3ADC061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:22 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id 102-20020a9d0eef0000b02903fccc5b733fso10576106otj.4
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:22 -0700 (PDT)
+        with ESMTP id S235291AbhFRS1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 14:27:34 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40AD4C061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:24 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id m137so11510280oig.6
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LqhGhJ3dwbZy2ZYi1T3oIsD/xWQ5m9t5eU0uf2uOB4w=;
-        b=l0YukYYT259odO+SSssczAEV2JJE14LgTd7J5aAjbKdMTUHjzNWQapN+UbFgYOxSbA
-         vKEPYJyPrOK8nHvFtCRkIRTINsujKiWJBmpTuoykaEr0A75ms2Ix3BSpNOcYjGtfpsdu
-         kgjD3X1ZmINCB/+r+IoXV5LYpXHG6JgsuNEC2RbNW2JjmVMxCL4eESidY2hvTaR5ggg9
-         0zsQBetzf8b6gkc+iILeXBtjCsH1mjzSVQR9E06UduzJ7CQuRHYWmoynl8nrBUrh/CTO
-         WDbqa9b53XA6z6Tzn0Dvh78i0AnkhuMNY7L5Lq0DTIiQtmq+8I+RLZeK/u7+nPRkGAg1
-         DL0A==
+        bh=NXvZEFQ5vNwDyNTJA7wlb/08fcKoPo2L8hb6fPqpoXI=;
+        b=VwNRXYdA5w5d6llxN33CtzOBk7iqtyr+2tjNwLfRRUtIr//D0Kwq7Cei3PppdSI+cz
+         ZT8zL8YH1phpB2uplZktGUMqccLmq481lJTKhegDGbVUcLfNbQ5doSaiidHX65sLeZA9
+         P9RcEpm8pVj25i1gJRSYHLfwHW0cfsQFr7Lk8zqQOaB0JF5sEb0XhLunj2NlZKyXFtjY
+         Df4CwH2hgI3853/Zh6v8myfAtuEBzC1NrcQ65/ypSMDBFjae/gXvgGcFSpD/M+U8sSt5
+         6vxyC8toR58IwboyT6T0P1kEzKMZmrhS2R962YMVeLxyG2ykVPqCdwqJkRCD2WrmBPMv
+         Ifnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LqhGhJ3dwbZy2ZYi1T3oIsD/xWQ5m9t5eU0uf2uOB4w=;
-        b=gjCcNAl3PqVsazNTVZYw/LL8OU14QmX8i1DqOcfo1ZYnjwG1HUvJjMZRB3IYWG3GVJ
-         dj1LYrERlp4zoQNNmKwa6aQM5L5gONXn0Rp3dm5qc4zlD2YXNvFAa5FGgmiqnJ+ZXKv/
-         HuzY70WMkGDzbm+Wh1A52/xocnKHnGbFLMGNExZKIg5w9F1NvWHYULO5x0Ma2oeiCaID
-         DNtcXbgz3H74ZEdBDaPFysNZ2vkAbbhFg47cOXHp2qoe0wAIbbgxvq2qeqwVZuaSBxrf
-         Mho7OphYd479QX5ZddfgblRiI/gkyxXwc0djio8qCOanChbTG/giLGrXUihAV3fU1g46
-         +BQw==
-X-Gm-Message-State: AOAM530m5RXKZlOZrQSSfew34bAI8P8CIIUaDslowRQn3LPIHFc8JP/7
-        tNGOPZtz9y40wFiyFv8aFt8lRHe2QLSgLw==
-X-Google-Smtp-Source: ABdhPJxEGWf1f4+OGed4tamGrrBdtunG60vc63LuVMMxBqZYL/cOLfi2kXphZrhWMD9wpq0vrREb6w==
-X-Received: by 2002:a9d:730a:: with SMTP id e10mr10471102otk.97.1624040721764;
-        Fri, 18 Jun 2021 11:25:21 -0700 (PDT)
+        bh=NXvZEFQ5vNwDyNTJA7wlb/08fcKoPo2L8hb6fPqpoXI=;
+        b=LQKzXVciVFBJY3qXUSfoR/mcuS5boOk+VTr2E0CMw+X6JnLpZDQLw7Y2U/npG+IeLZ
+         lsPLz83eS01ikEuV6unMQNfdHWiY037H2pAu/BBLIQqAOnQ/wFLgvJAYo+JZSi7TJCb7
+         hCjIz9pmvlqOUKaBWxR79vYeUIRG9TkhD6tZOFv00cpXIjctWGE0LW1Z/0PxmR2cM2jT
+         To7Zd41r7Sx0EMhZIYGhOm6yJqi3Luz/MwDLqjoMcQJQ5k3Fj2VknCHBwzkZBRjlsmEh
+         GU0NurcNpov+ywQR6Xgp4O+Pg9X/vpA+/UU4oEc4Mlz15H6W1p0Y9lGR0miTZCFK7Eli
+         CeCw==
+X-Gm-Message-State: AOAM530IhA8Ib9V/kTieTwgJO8gdSpj01CQ2DXWjdXt5INAGOvOGcCIl
+        iWFnGKgmi9TBjNZR80jIFVERyGdvTJ0exQ==
+X-Google-Smtp-Source: ABdhPJyh1jSIagOgNFatlCxTCiB4b7avaDrelTymeSSyEnqRW7pPog9Bu4vRmeF4tfyd1RxJd+ye+Q==
+X-Received: by 2002:a05:6808:2091:: with SMTP id s17mr14655302oiw.168.1624040723443;
+        Fri, 18 Jun 2021 11:25:23 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id u17sm1072705otk.15.2021.06.18.11.25.21
+        by smtp.gmail.com with ESMTPSA id r2sm2164135otd.54.2021.06.18.11.25.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 11:25:21 -0700 (PDT)
+        Fri, 18 Jun 2021 11:25:22 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Harrison McCullough <mccullough.harrison@gmail.com>
-Subject: [PATCH v2 01/45] completion: fix __git_cmd_idx regression
-Date:   Fri, 18 Jun 2021 13:24:34 -0500
-Message-Id: <20210618182518.697912-2-felipe.contreras@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 02/45] completion: bash: fix prefix detection in branch.*
+Date:   Fri, 18 Jun 2021 13:24:35 -0500
+Message-Id: <20210618182518.697912-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210618182518.697912-1-felipe.contreras@gmail.com>
 References: <20210618182518.697912-1-felipe.contreras@gmail.com>
@@ -72,57 +71,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commit 59d85a2a05 (git-completion.bash: use $__git_cmd_idx in more
-places, 2021-04-22) caused a regression when using __git_complete and a
-command relies on __git_cmd_idx.
+Otherwise we are completely ignoring the --cur argument.
 
-We need the function wrapper to define __git_cmd_idx.
+The issue can be tested with:
 
-If the function wrapper defines __git_cmd_idx, then it's not necessary
-for __git_zsh_main to do so.
+  git clone --config=branch.<tab>
 
-Reported-by: Harrison McCullough <mccullough.harrison@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- contrib/completion/git-completion.zsh  | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b50c5d0ea3..52a2d283cd 100644
+index 52a2d283cd..f8a751c4ec 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -3511,7 +3511,7 @@ fi
- 
- __git_func_wrap ()
- {
--	local cur words cword prev
-+	local cur words cword prev __git_cmd_idx=1
- 	_get_comp_words_by_ref -n =: cur words cword prev
- 	$1
- }
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index cac6f61881..02ffeae768 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -251,7 +251,7 @@ __git_zsh_main ()
- 		done
+@@ -2649,8 +2649,8 @@ __git_complete_config_variable_name ()
+ 		return
  		;;
- 	(arg)
--		local command="${words[1]}" __git_dir __git_cmd_idx=1
-+		local command="${words[1]}" __git_dir
- 
- 		if (( $+opt_args[--bare] )); then
- 			__git_dir='.'
-@@ -271,7 +271,7 @@ __git_zsh_main ()
- _git ()
- {
- 	local _ret=1
--	local cur cword prev
-+	local cur cword prev __git_cmd_idx=1
- 
- 	cur=${words[CURRENT]}
- 	prev=${words[CURRENT-1]}
+ 	branch.*)
+-		local pfx="${cur%.*}."
+-		cur_="${cur#*.}"
++		local pfx="${cur_%.*}."
++		cur_="${cur_#*.}"
+ 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
+ 		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "$sfx"
+ 		return
 -- 
 2.32.0
 
