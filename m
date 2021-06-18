@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ECB2C48BE8
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57BB4C48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:26:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E0AF611AC
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:26:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 463D3611ED
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 18:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236319AbhFRS2K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 14:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42662 "EHLO
+        id S236324AbhFRS2L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 14:28:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236322AbhFRS2H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 14:28:07 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF30C061767
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:57 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id h9so11529910oih.4
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:57 -0700 (PDT)
+        with ESMTP id S236312AbhFRS2J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 14:28:09 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FEAC0617A8
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:58 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id u11so11511589oiv.1
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 11:25:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Jp7EkfeiOTWui82VagsHiOaToMZAPQZhYKxFbxXWEA4=;
-        b=OrjFXdRxFGJtfYEqDZkOR+AiegWjZ3vRsMmZahhein4HS3kANrJt9UXQjrhVb/1omx
-         6oq1HEfcXq+lW2tQJPhpOqwWckb2sJc4J3zkFUcoQgsO3Tk1F4pq8GbW8PVg6ZJssfoo
-         pt7HCo1a/vbVxDX4Y2Bv/4lOhOMKFbzfGR10NBkXdlErlSVhzO7kSiKGHdancfjV7aeW
-         d1VNlvo5gposYTDR8WSXtnNIrNeOJdAl54YitzNunkpEu5rOFUoBux4A+U93AQgwZFSd
-         Q/qkKFPe588vGqHjJ4UtNHEKHG5Bk2+hA83+GkrdFbQvv1cKvZ8eawLqB5GuHR51Opwl
-         oJ1w==
+        bh=SJcQ6gFN99CzFplbb3qLyaijbrXnk6PemYxzXnylJrs=;
+        b=KCi3cK3phn+xgeFBJ7L313INyadS7R8v+7T75ZuS8ie/Yg92rXf+YWJsYeSM12R7ZF
+         UVbk9GB+8IDbpFdmrgN+ZJ+CB1hqRvD5E8ktX+pVVDRti0X8JiSsoIy+ppKdEqyM+0zU
+         U/7NuiXP48DUN9bSi/fntw9YLz2eOZZKn6X8yxqsT+RBhX/FDMNa74/MSvU8Fb8yHyE7
+         4OR/RqJBhAQlNCT69KhJqvahRMncGi/N8QxD2bP0npsmnU/QIumpyFctHD/mR+d/Oin4
+         F/J4pV7e3BtMog7KYghwCLJkTvMb8/otC32w+U8uiqE7yI0OHKdOGPX2+KEhTJQIz+Oj
+         uakQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Jp7EkfeiOTWui82VagsHiOaToMZAPQZhYKxFbxXWEA4=;
-        b=AsiCZuvQmEwMDCbZyDwNmNqmhg6efaCCxIrQ8lKp88K3AKb+tbveFvx66L6lO+vvbV
-         meym8BydmZXBB7mCH+vU9LZnmDv0RraZIqljte/qDXIM2jGIa+IcHQpeyB7unN6AeOec
-         ZxStLHd+GyIOlRgYs6h3Jym8mjjL5rZzyaMex2KVJqpelwoIdSABaszoecVP5RitkNZn
-         7qwgDYFdwJpj9k41y1iJbxzAYS5we7snmEhKdLrbxYK/C93lrUtZbsSFPzMUmMQC93wK
-         bfRyiTgvRQfbaxiatg2QjCtx/jn7q/RmITBu/b9s24C5ESQz2IMx+rECMAJuk+cAQOVk
-         pI9A==
-X-Gm-Message-State: AOAM531jvjwRcrYaH6vy1wdbmdiDcEnq9mPe+kKpX99Q7OTj2DqABDIP
-        IdOFH3o/RUdjtRgwy/qryGSpB55J647SzA==
-X-Google-Smtp-Source: ABdhPJwpn86lTit97iLoCr96qxK5fSs/1ap4jDOn8SF2wEeQicWD4+XJrNv4yY6BATcyXKvxOu5HtQ==
-X-Received: by 2002:aca:5dc6:: with SMTP id r189mr16004259oib.164.1624040756321;
-        Fri, 18 Jun 2021 11:25:56 -0700 (PDT)
+        bh=SJcQ6gFN99CzFplbb3qLyaijbrXnk6PemYxzXnylJrs=;
+        b=HgpyaHxkK4DQXBuCOXCrfetu1DhOKH6kKjT+ITSQfkcFqAXERlrDheAZW5sQ6vMwlM
+         sEvx+HzW5xSQ1ywZgOY53/kkTAQP9O5uXPvD8Vj3xOFh0sKboDIs/ELO0+aCR/3V4Zpv
+         Ul4DOBgVpO6D4nPfYTmZYXzALG5GvoXmG2DXk6M+I9x6joqkxlTXYWJb1U1IXbCkuKFn
+         jf9fxozmxrWxlNbX22PpVZRdUrVQSIyG5IlXbOXXnZ6dSXPAhic9Kb+PYnGelius9SFN
+         GBdNVOBkt3WzIniGMh4yv1tOOu0EBYxNA3/H56+estb41y/OhF388vwlyPrUSAo95sdF
+         1jfA==
+X-Gm-Message-State: AOAM533RLciaTI45h98EuQdQEldbS6VO2rEtWWok1xjEs9xyDDiRJRbp
+        oAT8EZpwW4fjr/N047ir8OprxRH2PzyhCw==
+X-Google-Smtp-Source: ABdhPJwz0UmVt2wmO40fP4F95CktZ+z9HQ1iVsxRjlZ+8Nj+ByOuD3MdJl+InZkZkVt8bhhzHpTyYw==
+X-Received: by 2002:aca:4d3:: with SMTP id 202mr8263179oie.9.1624040757911;
+        Fri, 18 Jun 2021 11:25:57 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id v10sm1901690ool.45.2021.06.18.11.25.55
+        by smtp.gmail.com with ESMTPSA id u10sm2280369otj.75.2021.06.18.11.25.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 11:25:55 -0700 (PDT)
+        Fri, 18 Jun 2021 11:25:57 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 17/45] completion: zsh: add support for general -C opts
-Date:   Fri, 18 Jun 2021 13:24:50 -0500
-Message-Id: <20210618182518.697912-18-felipe.contreras@gmail.com>
+Subject: [PATCH v2 18/45] completion: zsh: fix for undefined completions
+Date:   Fri, 18 Jun 2021 13:24:51 -0500
+Message-Id: <20210618182518.697912-19-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210618182518.697912-1-felipe.contreras@gmail.com>
 References: <20210618182518.697912-1-felipe.contreras@gmail.com>
@@ -71,42 +71,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The parseopt helper can generate the completions even if the function is
+unspecified.
+
+  git version --<tab>
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ contrib/completion/git-completion.zsh | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 9768f76af3..f60801741a 100644
+index f60801741a..5cfbcfe7a2 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -211,6 +211,7 @@ __git_zsh_main ()
- {
- 	local curcontext="$curcontext" state state_descr line
- 	typeset -A opt_args
-+	local -a __git_C_args
- 
- 	_arguments -C \
- 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
-@@ -226,6 +227,7 @@ __git_zsh_main ()
- 		'--namespace=[set the git namespace]:' \
- 		'--no-replace-objects[do not use replacement refs to replace git objects]' \
- 		'(- :)--help[prints the synopsis and a list of the most commonly used commands]: :->arg' \
-+		'*-C[run as if git was started in the given path]: :_directories' \
- 		'(-): :->command' \
- 		'(-)*:: :->arg' && return
- 
-@@ -248,6 +250,10 @@ __git_zsh_main ()
- 			__git_dir=${~opt_args[--git-dir]}
- 		fi
- 
-+		for x in ${(s.:.)opt_args[-C]}; do
-+			__git_C_args+=('-C' ${~x})
-+		done
-+
- 		(( $+opt_args[--help] )) && command='help'
- 
- 		words=( git ${words[@]} )
+@@ -141,6 +141,9 @@ __git_complete_command ()
+ 	if (( $+functions[$completion_func] )); then
+ 		emulate ksh -c $completion_func
+ 		return 0
++	elif emulate ksh -c "__git_support_parseopt_helper $command"; then
++		emulate ksh -c "__git_complete_common $command"
++		return 0
+ 	else
+ 		return 1
+ 	fi
 -- 
 2.32.0
 
