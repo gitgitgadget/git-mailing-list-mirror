@@ -2,86 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E34B8C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C836C48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:52:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B92C161279
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:48:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6ECA260FF4
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 21:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234604AbhFRVua (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 17:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60088 "EHLO
+        id S234656AbhFRVyp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 17:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbhFRVu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 17:50:29 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6B3C061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:48:20 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id b17-20020a63a1110000b02902231e33459dso1409990pgf.17
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:48:20 -0700 (PDT)
+        with ESMTP id S230338AbhFRVyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 17:54:44 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A62EC061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:52:34 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id w127so12128262oig.12
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 14:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=n+hiDmU7QvdacyHHSH5WR58p32RYdPV7IWaEVxmb6GI=;
-        b=Sx8vSS7tlX4bp5Ms6a0em48TdazRHbktEGJ4jt70rZ6ld6dGs/vuk6f/D8Eqn8fqgT
-         4TnI73IitqzPtMd4H1zJ9CkWnI2iNwcyJr+YJ3tTXeQEZZLF9ybFBvASdJHSgGXOD5B4
-         q+gfj/QgZ8MllZfhSBo+Q7Q1guCKL+gxSu1lHGRIGJ45g+PdKMLoABb3lurM9QQN7llR
-         9KT6eGvSvviYCGrs24uwsTLvffBWxzDMFwuOunsobtFHLoOT9HWnJc9r+9kVZ8NsneyS
-         8vmCjONUPt8HuzsWX3owABWsg0kDnd76rYGahAee8eEEMT9oKRckdiokeXQlRFOJQoxB
-         Y6qA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VIsKpyLpMwcV0waRRl8hCLVzOTf82aKkn1sUYBQYWTs=;
+        b=SX+NMircqk+0xjls2Wug8M2Zijs/lmkjsbUeVsTbgtCrwZvv/UDws87P9tFHGGAfuG
+         y0oluZlU9IVXbQS3MGUiuveHVnZyd1I1QJo5avxC8cxYirKUDdeg+2qwadOEKG1PlLIX
+         uGq9YPktN3pQPu91ReJxwtrBAlMrOH4ZzK331P+UavhqB3r+ksUHefKX5igIHpxMbUYx
+         ElwzBcQopKnKRC7o17KcoL3PkYKxRiPdfFqDGjJrtSLqp2c7rfHIsMDgB77VNLdQweKy
+         xs0qZUzxrkiwoTheKRPVWX+wIraxD7kCRXOlFN/42YbxaGPYxnvlOs0JdXrrwFxvi+hg
+         4F6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=n+hiDmU7QvdacyHHSH5WR58p32RYdPV7IWaEVxmb6GI=;
-        b=VTRgcJ007Ze7xoHo3y4Q5wX6hCy1TZN3V3vpu4yhSG5+olfuNz3/GCydg1geqeuobk
-         +8vYrMzJe00Y8IS3XBF3+hfMPbg+c5rfIgOLXI5kaml5KWyVZ9Vhm5J0VoaU9gvy8y5e
-         n/zNC8t5OMGA/KBkFLjf75zE52hqx8WxhfAvlRLx0o3w8H1qWMJdmGv0dWjAHsFBc+l2
-         URIqLMU0c7XRnX1thwiLvoWDNn8mOL5LxW4XLctLXzDtL77orTkXLoO9RA6bj796Z2eg
-         Zanm2nFd5bOoGCb8Z+eCyP+De2T+JVU/rZVxo07HkUUN3zHcHtx719b5GiKZNMst1eRz
-         2NgQ==
-X-Gm-Message-State: AOAM530ztp2FehVHdgMjWiE2vP8iuyiOfAWYKXxXgTw1BvYUGfe0KD00
-        dJ5Q9/ee8oSadMJYXwYJCBtiJpWLHqOV9WkHZW0P
-X-Google-Smtp-Source: ABdhPJzWkLgf2TzsTjdLbX8oSTYAAgHu9UnI3sZZpdqt3hnPDBFIQkXkFlZY3n9Or6BupDzmKEM3Q+QE2O9WS+Uapy3Z
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:bcc3:b029:11c:5ffb:61fb with
- SMTP id o3-20020a170902bcc3b029011c5ffb61fbmr6569304pls.18.1624052899500;
- Fri, 18 Jun 2021 14:48:19 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 14:48:16 -0700
-In-Reply-To: <YM0JOyxPGYmzynoc@google.com>
-Message-Id: <20210618214816.793345-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <YM0JOyxPGYmzynoc@google.com>
-X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
-Subject: Re: [RFC PATCH 1/2] hook: move list of hooks
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=VIsKpyLpMwcV0waRRl8hCLVzOTf82aKkn1sUYBQYWTs=;
+        b=DjgKqm6CjJX9JHwjlIpwGwcee8rfDFB8rcuuLrxnpvwtSv2Zk2HGs6J6oU+YrUoCjK
+         /wxTF4PnZJlh9D5A/Uufuswvj1iNBr1zaXhRy4F9IgyRCegt9qMF+Y4Q0DXC7paHV6EX
+         CDG4X0j6boIsnjTE2gCPXIxY5dhQCBjQ9cq0o7Jp8T57mW8kume/Ri5aF5nU2Bc+OUyq
+         3YinQhV2fvQ/wFAicRuxg7cobMNtzQtCuPuxaIYVW+S8ZLD9+t2fcFKrRhopt2fPe5a6
+         mKr/ahTEN8THGKUP7BZhGZF2jlwLy0PpgDsuwROIRHqrCTn1njEdJdzOEaQI/F9gpvLK
+         s+Lw==
+X-Gm-Message-State: AOAM531D9DNxvcp8aTfajOgUdwIgiP5wUibw7ODvguplDKMz/+9Iz8J8
+        /EozEYNB9jI9IW5At+ZAUnzpwFYwdrCJDQ==
+X-Google-Smtp-Source: ABdhPJy+u8NoX/00sRWEOODho8Hh0plbj3Ogn8nN4FQvbEYzoNwk3FrBXMiFmHQ4uswJtgi8yrQ2nQ==
+X-Received: by 2002:aca:ed0f:: with SMTP id l15mr16066366oih.136.1624053153377;
+        Fri, 18 Jun 2021 14:52:33 -0700 (PDT)
+Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
+        by smtp.gmail.com with ESMTPSA id c22sm1859076otp.80.2021.06.18.14.52.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Jun 2021 14:52:32 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v5 0/4] doc: cleanup old cruft
+Date:   Fri, 18 Jun 2021 16:52:27 -0500
+Message-Id: <20210618215231.796592-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Wed, Jun 16, 2021 at 04:31:48PM -0700, Jonathan Tan wrote:
-> > 
-> > The list of hooks will need to be used outside bugreport, so move it to
-> > a central location.
-> 
-> Hm, does this fight with
-> https://lore.kernel.org/git/cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com
-> ?
-> 
-> This patch itself looks pretty straightforward, but I think it is a good
-> idea to take a look at avarab's change first.
-> 
->  - Emily
+This patch series gets rid of old unnecessary workarounds and convoluted
+solutions.
 
-Hmm...you might be right. In any case, this is just an RFC patch set so
-I presume avarab's will be merged first (and then I can use his hook
-list in a subsequent version of my patch set).
+I've dropped all the asciidoctor improvements in order to smooth the
+landing of this series.
+
+This conflicts with bc/doc-asciidoctor-to-man-wo-xmlto which in my
+opinion should be dropped since I have better proposals for pretty much
+all the changes there, and doesn't even apply on top of master anymore.
+
+Felipe Contreras (4):
+  doc: remove GNU troff workaround
+  doc: use --stringparam in xmlto
+  doc: simplify version passing
+  doc: asciidoc: remove unnecessary attribute
+
+ Documentation/.gitignore                |  1 -
+ Documentation/Makefile                  | 19 +++----------------
+ Documentation/asciidoc.conf             | 20 --------------------
+ Documentation/asciidoctor-extensions.rb | 17 -----------------
+ Documentation/manpage-base-url.xsl.in   | 10 ----------
+ Documentation/manpage-quote-apos.xsl    | 16 ----------------
+ Makefile                                |  4 ----
+ 7 files changed, 3 insertions(+), 84 deletions(-)
+ delete mode 100644 Documentation/manpage-base-url.xsl.in
+ delete mode 100644 Documentation/manpage-quote-apos.xsl
+
+Range-diff against v4:
+ 1:  2a93d8774a =  1:  ec9f46892c doc: remove GNU troff workaround
+ 2:  774603b50c =  2:  f496a2ddda doc: use --stringparam in xmlto
+ 3:  8e92e10b10 =  3:  10216673c1 doc: simplify version passing
+ 4:  230b5c8ae0 =  4:  4f2e3456cd doc: asciidoc: remove unnecessary attribute
+ 5:  2d1f79d642 <  -:  ---------- doc: asciidoctor: remove unnecessary require
+ 6:  e0b662986a <  -:  ---------- doc: asciidoctor: remove cruft
+ 7:  1bdf72a856 <  -:  ---------- doc: asciidoctor: reorganize extensions
+ 8:  8612b428ce <  -:  ---------- doc: asciidoctor: use html-prefix only for html
+ 9:  9cd9f3f317 <  -:  ---------- doc: asciidoctor: refactor macro registration
+10:  96bd66784f <  -:  ---------- doc: asciidoctor: improve string handling
+11:  5e293a15fc <  -:  ---------- doc: asciidoctor: split the format from the code
+12:  7fd97fc089 <  -:  ---------- doc: asciidoctor: specify name of our group
+-- 
+2.32.0
+
