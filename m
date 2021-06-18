@@ -2,79 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCB18C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 13:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DFBAC48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 13:05:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC55161205
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 13:00:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF86E613B4
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 13:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231234AbhFRNCK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 09:02:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59922 "EHLO cloud.peff.net"
+        id S230494AbhFRNHv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 09:07:51 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:20659 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230315AbhFRNCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 09:02:09 -0400
-Received: (qmail 26637 invoked by uid 109); 18 Jun 2021 12:59:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Jun 2021 12:59:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15158 invoked by uid 111); 18 Jun 2021 12:59:59 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Jun 2021 08:59:59 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Jun 2021 08:59:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] bitmaps: don't recurse into trees already in the bitmap
-Message-ID: <YMyYz6Tavj5l6S8n@coredump.intra.peff.net>
-References: <YMcExxF7DI6k+sZ+@coredump.intra.peff.net>
- <YMdGGL6v8LrbcAJP@coredump.intra.peff.net>
- <471cb9be-bb72-6a37-ede8-f9421d9d3ebe@gmail.com>
- <YMnvCI/jksyn2flD@tanuki>
+        id S229523AbhFRNHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 09:07:51 -0400
+Received: from host-78-147-180-220.as13285.net ([78.147.180.220] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1luEBo-0009hw-4F; Fri, 18 Jun 2021 14:05:40 +0100
+Subject: Re: [PATCH 0/3] Make CMake work out of the box
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>,
+        Danh Doan <congdanhqx@gmail.com>,
+        Matthew Rogers <mattr94@gmail.com>
+References: <pull.970.git.1622828605.gitgitgadget@gmail.com>
+ <6a9150ca-5c1a-1874-5f8b-35187f197d47@gmail.com>
+ <nycvar.QRO.7.76.6.2106101140590.57@tvgsbejvaqbjf.bet>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <b52d7c45-06dd-a9eb-bc86-e04d2ee16c5e@iee.email>
+Date:   Fri, 18 Jun 2021 14:05:39 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <nycvar.QRO.7.76.6.2106101140590.57@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YMnvCI/jksyn2flD@tanuki>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 02:31:04PM +0200, Patrick Steinhardt wrote:
+On 10/06/2021 10:43, Johannes Schindelin wrote:
+> Hi,
+>
+> On Sat, 5 Jun 2021, Bagas Sanjaya wrote:
+>
+>> On 05/06/21 00.43, Matthew Rogers via GitGitGadget wrote:
+>>> This pull request comes from our discussion here[1], and I think these
+>>> patches provide a good compromise around the concerns discussed there
+>>>
+>>> 1:
+>>> https://lore.kernel.org/git/CAOjrSZusMSvs7AS-ZDsV8aQUgsF2ZA754vSDjgFKMRgi_oZAWw@mail.gmail.com/
+>>>
+>>> CCing the people involved in the original discussion.
+Matt,
+Thanks for picking this up and the approach to working around the
+updated build approach of recent Visual Studio versions.
+ 
+It looks good to me, but the CI should also be tweaked (see below) so
+that it is tested.
+>> This focused on improving CMake support, especially on Visual Studio, right?
+>>
+>> Then so we have three ways to build Git:
+>> 1. plain Makefile
+>> 2. ./configure (really just wrapper on top of Makefile)
+>> 3. generate build file with CMake
+>>
+>> If we want to support all of them, it may makes sense to have CI jobs that
+>> perform build with each options above.
+> We already exercise the plain Makefile plenty, and the CMake-based build
+> using Windows (in the `vs-build` job in `.github/workflows/main.yml`).
 
-> > These many-refs scenarios make sense as something that is difficult to
-> > verify using a single fork of an open-source project, but is common in
-> > many closed-source projects that do not use forking to reduce the ref
-> > count per repo.
-> 
-> Agreed. What I typically do to emulate this is to use some version of
-> following command to create refs for "$n" commits.
-> 
->     git log --all --format="tformat:create refs/commit/%h %H" |
->         shuf | head -n "$n" | git update-ref --stdin
-> 
-> It's obviously not ideal given that resulting refs are distributed at
-> random. But combined with a sufficiently large repo, it's still helped
-> me at times to reproduce adverse performance at times.
+There is one 'gotcha' in the yml (probably historical) in that it
+doesn't actually test the approach/changes that Matt addresses regarding
+my [1].
 
-Yeah, I've done something similar. But I'd caution people into reading
-too much into performance tests from something like that. What I've
-found over the years is that traversal and bitmap performance can be
-somewhat sensitive to tree shape and bitmap placement (which in turn is
-often influenced by ref placement, if you are using delta islands or the
-recently added pack.preferBitmapTips).
+That is, I'm looking at the 'out of the box' view, while the yml test
+_preloads_ the vcpkg artefacts.
 
-More than once I've spent many head-scratching hours trying to determine
-why some real-world repo performs better or worse than expected. :)
+There is also the (on Windows) issue that the ARM support has recently
+been developed which also fudges the CmakeLists.txt file but forgot
+about the assumption in the vcpkg install batch file that the default is
+the x86 setup.
+>
+> I do not see that it is worth spending many electrons exercising the
+> `./configure` way, seeing as the preferred way to build Git is by using
+> the `Makefile` directly.
+>
+> And our CMake configuration only really works on Windows, the attempts to
+> get it to work on Linux were met with less enthusiasm, seeing as the
+> `Makefile` approach is the recommended (and supported) one.
+>
+> tl;dr I don't think we need to augment our CI jobs as suggested.
+I'd agree that there's no need to augment the CI job to expressly check
+the other flags, but the existing test should reflect the intent of the
+patches (i.e. no preloading of the vcpkg artefacts).
 
-> Anyway, the patch does look good to me and sounds like it may help with
-> some of the cases where I have observed adverse performance with bitmaps
-> enabled in the past. Thanks!
-
-Thanks for taking a look!
-
--Peff
+I haven't had much time to catch up on Git, and I'm off-line again from
+Sat night for another week.
