@@ -2,99 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E81AC48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 19:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70DC2C48BDF
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 19:14:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 211996100B
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 19:10:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AF856100B
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 19:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234205AbhFRTMM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 15:12:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232208AbhFRTML (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 15:12:11 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A484DC061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 12:10:00 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id m137so11643078oig.6
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 12:10:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=kJeDDBtbbETkgMla3qLdc1jv5tLSQrcq7xlDNW6vi3U=;
-        b=RcN5d/3penHmng/j/akVb0mnJ/vDDhP00SD5qS7nLBExPBLjhrfVL7r3IC/hdP/ADc
-         k2mlitNeXTfl0SlloaDTJdAQQCl4x113OiPN3xrpH1s0pUTC0dQuK+55EcdbG0BZO5gI
-         oRCvDFWB2Rm2J8lDaSi7lBXWEMgYpcE0iPP1F4mFz+06Vq6ytH1rS3Dk/OiJOgtDWu9M
-         vpfhnFa0B3p0qPOpXGeEm0AZ8ZTfupuOrSf5/xe1btOlMnUiS+jTwNs+SQ/oClNSANyV
-         tPpx0zLHmiXB6Oy8phYY5n7yIfrBkMNHMAykqZL/bS0RsOCVG5DAhgOrNUOXTN3W//5A
-         S8pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=kJeDDBtbbETkgMla3qLdc1jv5tLSQrcq7xlDNW6vi3U=;
-        b=Do8R10woA9wsco4Qi22zKqorKoC4XkEuacySXyMIlR5gxL3MFiS8qDWCLStOG+lCyq
-         CWOHSu20wJo9QzDWAQjOlFF2AfxH20kwxfqpBSqFkBvuNPBw6iW7bAOWqn0jJ9KPdXo9
-         el5HlQcbBAElYlSJ2l69YakTwzYVJgsR6eKFqWzPvpSCmdVOFJ2hsWrig2V37JR2hAH4
-         smphEIV1YsEFqLiRbI01M4Ve/zqfRVKwp1P1OFNFMXIJ+cIIx0a4H6gnyOHtzKTwduq+
-         KFhp5hRGhiLASyQ/5OGuvzwERoZ7cAPIlVZXGXkCZ8kKsWpw+g3oGJaeHmkpIV/i+age
-         NM+A==
-X-Gm-Message-State: AOAM531no6RR6WnhUVh1QtdYeiVC3QYi8Mfa7+gdYBNPpPvQ+Zt4kRmS
-        nUdV99aLDXLi8UE1bfvR0t6cGU8/RAznJw==
-X-Google-Smtp-Source: ABdhPJxSWk5sVQ8dkRa0aq3FJOdpD+DzWuBejIkYEeHFkg96ZkzD/Rh+LBwE7dtjYzIzuAm+oYPifw==
-X-Received: by 2002:a54:4692:: with SMTP id k18mr15651246oic.118.1624043399929;
-        Fri, 18 Jun 2021 12:09:59 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id c34sm2142698otu.42.2021.06.18.12.09.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 12:09:59 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 14:09:58 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Fabian Wermelinger <fabianw@mavt.ethz.ch>, git@vger.kernel.org
-Cc:     Fabian Wermelinger <fabianw@mavt.ethz.ch>
-Message-ID: <60ccef865312e_a69392081a@natae.notmuch>
-In-Reply-To: <20210618140256.256481-1-fabianw@mavt.ethz.ch>
-References: <20210618140256.256481-1-fabianw@mavt.ethz.ch>
-Subject: RE: [PATCH] completion: bash: fix late declaration of __git_cmd_idx
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S234720AbhFRTQR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 15:16:17 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51860 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234205AbhFRTQQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 18 Jun 2021 15:16:16 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 60E8460443;
+        Fri, 18 Jun 2021 19:13:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1624043616;
+        bh=OJ40JIOrKU9KAgHzfVz9HKE+apRufSdHWUNp8uowpVw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=a2XGBpcg4Es3KPUqe260au8r3Y7q01gMkUDUJt3TZGuMbnI/XvjIOVlXPwkiwHqcq
+         Jr4heLee1T1M1/xgUwHcDqnUbdRFfWk8xuB8TLI7ebozIdGOZ/YS8NEXk+mdN5or2b
+         9Tnnz7MJetUo7oSsr8cyDTGM2KLLkv8VeSWTu6MtFilkEGLCynbwrh13bfsKDwjIuk
+         lWGaL+ADDILi4VBH2skfHQlT03Efen0lB0msNw7vZn6EdHV3Wwrvh7ZTGSQzXU9LJR
+         OuL4lC4i1A21ZXoS0QP1QKykbujjMES1r62WRm4pvD3gmbIbOm9ey8bLL73jz9DPxb
+         xUX7qz+UaaWjUrjAJXJuMERmKlZIad2e/dRSeOJCJ/mE2DPSFVVbbQFfDU8A9Gl6Zl
+         9nKCcw6ON7lBCZSZqzss86nWXDL+rERqtahBgTZ3jlW+Q/joq8HXAP0cExwT8HAsMM
+         sf8yhfKD+muPAzhGcyqVRHa73lQyMPgd0e9U7r9rj4J9Qw66XrZ
+Date:   Fri, 18 Jun 2021 19:13:31 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t: use portable wrapper for readlink(1)
+Message-ID: <YMzwWxkQXjDT+mi+@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <YMzKlrmHFZdx2ti9@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="lgEPKC/CPVkgCGvt"
+Content-Disposition: inline
+In-Reply-To: <YMzKlrmHFZdx2ti9@coredump.intra.peff.net>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Wermelinger wrote:
-> A recent update to contrib/completion/git-completion.bash causes bash to fail
-> auto complete custom commands that are wrapped with __git_func_wrap. Declaring
-> __git_cmd_idx=0 inside __git_func_wrap resolves the issue.
 
-I was about to say the idx should be 1, and that fixes the issue, but
-actually 0 is more correct, since when we do __git_complete there's
-actually no real command.
+--lgEPKC/CPVkgCGvt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In the future we might want to improve __git_complete to manufacture a
-real command since some completions do check the command at
-__git_cmd_idx (e.g. __git_complete_remote_or_refspec), and then set
-__git_cmd_idx to 1.
+On 2021-06-18 at 16:32:22, Jeff King wrote:
+> Not all systems have a readlink program available for use by the shell.
+> This causes t3210 to fail on at least AIX. Let's provide a perl
+> one-liner to do the same thing, and use it there.
+>=20
+> I also updated calls in t9802. Nobody reported failure there, but it's
+> the same issue. Presumably nobody actually tests with p4 on AIX in the
+> first place (if it is even available there).
+>=20
+> I left the use of readlink in the "--valgrind" setup in test-lib.sh, as
+> valgrind isn't available on exotic platforms anyway (and I didn't want
+> to increase dependencies between test-lib.sh and test-lib-functions.sh).
+>=20
+> There's one other curious case. Commit d2addc3b96 (t7800: readlink may
+> not be available, 2016-05-31) fixed a similar case. We can't use our
+> wrapper function there, though, as it's inside a sub-script triggered by
+> Git. It uses a slightly different technique ("ls" piped to "sed"). I
+> chose not to use that here as it gives confusing "ls -l" output if the
+> file is unexpectedly not a symlink (which is OK for its limited use, but
+> potentially confusing for general use within the test suite). The perl
+> version emits the empty string.
+>=20
+> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This is a re-post that doesn't seem to have made it into "seen"; the
+> original[1] was buried in a thread, but =C3=86var reported there that it
+> fixes t3210 on his AIX build.
+>
+> [1] https://lore.kernel.org/git/YLk0Zm2J6VOA%2Flks@coredump.intra.peff.ne=
+t/
 
-But for now your patch fixes the issue better than my previous patch
-[1], however, it's still missing the zsh part. I've sent an update patch
-with the best of both [2].
+In case I didn't say it up in the previous post, this looks fine to me.
+Using Perl here seems like a fine solution.  If we needed to in the
+future, we could add this to test-tool and use the real readlink(2), but
+we can hold off until we decide we need to.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Cheers.
+--lgEPKC/CPVkgCGvt
+Content-Type: application/pgp-signature; name="signature.asc"
 
-[1] https://lore.kernel.org/git/20210618182518.697912-2-felipe.contreras@gmail.com/
-[2] https://lore.kernel.org/git/20210618185832.700477-1-felipe.contreras@gmail.com/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-Cheers.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMzwWQAKCRB8DEliiIei
+gftzAP9oyqcDtOunuX7QAsWX5yRn0jWY4OrcBTs7AxrKSPt6dQD/a1WUYFth3vvf
+tiBLOtNVBUIzSlFcUFFieONz8XltRAU=
+=/xqt
+-----END PGP SIGNATURE-----
 
--- 
-Felipe Contreras
+--lgEPKC/CPVkgCGvt--
