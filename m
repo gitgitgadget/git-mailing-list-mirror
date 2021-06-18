@@ -2,109 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_NONE
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10C45C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 04:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6383DC48BE8
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 05:06:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD2F161263
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 04:28:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3966461249
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 05:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231585AbhFREae (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 00:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51894 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230361AbhFREaa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 00:30:30 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E269DC061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 21:28:20 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id b24-20020a4a34180000b029024b199e7d4dso1815124ooa.4
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 21:28:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=JEcaDRbCH7swZtiDbpd8DHxFguho+oBlnnDRuIHzsi8=;
-        b=TF/MElXrz2Qu4SzlKqAavq2bZVtWmiJU0jW+YoUrJbKPcjCAliUxWJW9Gf4G/lVf3L
-         CNS0gzdQOSz+CK92n0U8KWfV6ddttOVbi9URJ3qt3BjyogmgyfFWPnBp/MqTvWT1ja2v
-         7J5BL/vlKieSIXPt8xeFMeyARpbpIlADRGgl8qjnYNVtnZ5ZOrwPRdHds5zo2T3kaslr
-         h0KCFLRFFBCtKJyEipwz3emj20wWI29tkOtpC9UkmjGK7df8EqzRFf65EEbh7DKrukWl
-         4fmlwcCNVhgTd/hnORDxWsabWBvWr561g+29OPu7SITMCcC440vCC5Kjg4sDHV/5hLHv
-         fzeA==
+        id S232387AbhFRFIN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 01:08:13 -0400
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:39609 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231680AbhFRFIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 01:08:12 -0400
+Received: by mail-ed1-f47.google.com with SMTP id c7so5900183edn.6
+        for <git@vger.kernel.org>; Thu, 17 Jun 2021 22:06:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=JEcaDRbCH7swZtiDbpd8DHxFguho+oBlnnDRuIHzsi8=;
-        b=FsY+/QURm12DeMhm97x+kfbIZLX5lYtLHM9qcBZ4O9z5+xVEN6q9CJM0olW+E0TZ7u
-         XH4ix8OQ2Tu/LWCZPEIyNo5yor/mIVkVGHA2a2ymyLdUA6PgCb71ERb56CyHPAcnw1fN
-         +4fWxvTRW7xooARBPS0/lGQ/cee8XBDH1mPgdweRHdBRf3gte2IHFGz8yKBt9GMeCG5P
-         EMjSXkAppN+OjbomjwQUVaHYOg9ztKj0LlsTItMOKOlu/uemEKo77X8x7MR4YPAuJWZG
-         sI0S3p6MmEn2U+E+dsy0cXS6Cs9wYXWbD6DQhWuiEszuSikcxqrOKzo52gt+8KXb2zv9
-         5uLA==
-X-Gm-Message-State: AOAM532hfLrK1vnEcd7vU127vEOSq+7ZzA/znj/tRs1zeG5x3QqwoliL
-        H2p86dqCsfzSkT4h/BxeTj+XhO3luj0AzQ==
-X-Google-Smtp-Source: ABdhPJwDXNxnvxjwicvKoFzC51LkAJXIzuyT9QTA/60zMH4yT2cZH1P+SEdfKYmLjiYg5ymp3Qnu8g==
-X-Received: by 2002:a4a:acc8:: with SMTP id c8mr555967oon.72.1623990499657;
-        Thu, 17 Jun 2021 21:28:19 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id m18sm1784923otr.61.2021.06.17.21.28.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 21:28:19 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 23:28:18 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Message-ID: <60cc20e2361fa_5d7b8208fe@natae.notmuch>
-In-Reply-To: <YMvofq5aSryQzpZQ@coredump.intra.peff.net>
-References: <xmqqr1h1mc81.fsf@gitster.g>
- <YMvhoXVBoO08ziI1@camp.crustytoothpaste.net>
- <YMvofq5aSryQzpZQ@coredump.intra.peff.net>
-Subject: Re: What's cooking in git.git (Jun 2021, #06; Thu, 17)
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p7ze78QK/V/mqj1NclqCyK5ZiZTiCjsaqnwGZBeFrcQ=;
+        b=dBiGoonEmYhkj2nPaRs9+vLKHdBKISaQZZbGET8jfvBVbK/eCHJjQFSPCU1Ku8ggQV
+         yIkglyerP8xKepS4BkcXu7no1L2qMffKlYqmOxNem4ps/TDM3G6SbtAYP5Ek6YNn7X0Q
+         /D3YWlgZ82kgKkjHwvHMojHKcEij9bF2PJkmoA49CpEC1IOqo5pHl/H0Un5pjEyMx5IN
+         qM8hv46aDZdg1N4R95yiiN/bROCw02a0MpIC095L2XXgekZ0cralyg7bvLoPhmImhNnn
+         e8TV4JR9XjXtQoRISK7Ip6fTyVUn/LuBT/d7t6WtzG5iMpVZcWqo7OdG9NUl+QFhbvJi
+         QBKA==
+X-Gm-Message-State: AOAM531UJm5Idc9vAq7dVUCGAWkooVctPclZq4gh4bE2VWkc18N3vJ6s
+        aDxmgKDCyE92p0VU2huHieF0THdxdpNndI1yJ05EUblGfQ8=
+X-Google-Smtp-Source: ABdhPJySpG469y4xBS6+4Dy+hBxiHt91PboMsnyjArAaBcQ4yXaCSUwkknVXfM5FVrqg+yLsm7ujvO1Wpkh8ZeCRDDo=
+X-Received: by 2002:a05:6402:4395:: with SMTP id o21mr2443813edc.163.1623992762261;
+ Thu, 17 Jun 2021 22:06:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <60cc1749b1c4d_5d12520825@natae.notmuch>
+In-Reply-To: <60cc1749b1c4d_5d12520825@natae.notmuch>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 18 Jun 2021 01:05:51 -0400
+Message-ID: <CAPig+cTr2fEYN2y7FyKaspuaCpAq6wNtHgg_8RcrOmvsN5+XaA@mail.gmail.com>
+Subject: Re: Only 27% of reviewed-by tags are explicit, and much more
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Thu, Jun 17, 2021 at 11:58:25PM +0000, brian m. carlson wrote:
-> 
-> > On 2021-06-17 at 02:55:26, Junio C Hamano wrote:
-> > > * bc/doc-asciidoctor-to-man-wo-xmlto (2021-05-14) 2 commits
-> > >  - doc: remove GNU_ROFF option
-> > >  - doc: add an option to have Asciidoctor build man pages directly
-> > > 
-> > >  An option to render the manual pages via AsciiDoctor bypassing
-> > >  xmlto has been introduced.
-> > > 
-> > >  What is the status of this one?
-> > 
-> > Probably best to drop it.  I think Felipe didn't want his sign-off on
-> > it, and I don't think there's a good way to produce an equivalent patch
-> > without incorporating his changes.  We don't seem to see eye to eye on
-> > an appropriate solution to the problem, and I don't feel like arguing
-> > about it further.
-> 
-> Hmm. I'm not sure if that's a good resolution here. I do think many
-> people were positive in moving in that direction.
+On Thu, Jun 17, 2021 at 11:47 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> This prompted me to write a script [6] to programmatically find statistics
+> about these trailers. Obviously it isn't perfect (as all software); it
+> tries to avoid human fuzziness (like people pasting other patches with
+> scissors [-- >8 --], or just straight put pasting the patch [^From: ]), but
+> even so there are instances I manually had to skip [7].
+>
+> Here are the top 20 reviewers over the past 10 years with their
+> corresponding explicit over total Reviewed-by count:
+>    ...
+>   5. Eric Sunshine: 14% (17/116)
 
-I don't know what you mean by "that direction", but I was the one that
-included your patches on top of his series [1], not brian.
+Does your script check cover letters? Based upon a quick glance at it,
+it doesn't seem to.
 
-So, if your patches have anything to do with "that directioon", you are
-on my side.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20210521224452.530852-1-felipe.contreras@gmail.com/
-
--- 
-Felipe Contreras
+Although I've reviewed thousands of patches over the years, I almost
+never give my Reviewed-by:; it is an exceedingly rare occurrence.
+However, when I do give it, it's almost always in response to the
+cover letter (saying "this entire series is reviewed by <me>"), not in
+response to individual patches. I've seen other reviewers do so, as
+well. So, if your script doesn't take cover letters into account, then
+you might want to revise it to do so in order to get a more accurate
+picture. In fact, if my memory is correct, some reviewers give their
+Reviewed-by: to an entire series in response to one of the patches
+rather than to the cover letter, so perhaps you can come up with a
+heuristic to identify those cases too.
