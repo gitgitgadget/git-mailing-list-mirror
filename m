@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9077EC48BE8
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 20:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AACAC49361
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 20:31:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 718FD6124C
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 20:31:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 513CA61284
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 20:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233558AbhFRUdP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 16:33:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42574 "EHLO
+        id S233639AbhFRUdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 16:33:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232851AbhFRUdO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230430AbhFRUdO (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 18 Jun 2021 16:33:14 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CA67C06175F
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653C3C061574
         for <git@vger.kernel.org>; Fri, 18 Jun 2021 13:31:03 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso10912899otu.10
+Received: by mail-oi1-x232.google.com with SMTP id m137so11887239oig.6
         for <git@vger.kernel.org>; Fri, 18 Jun 2021 13:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Na2Pfgw7GEo8towg7xd9U4gTnvSsL575TGx4e6jDyYc=;
-        b=kZD5hF6spXfYfDQjg/Jby79wQD6xOqy/hq+4Hz7o11w8PXFC4csuQYLbNU/ilWluwL
-         v54T2rT3dnh656dAngYZMzowBCDUXh97PW2HaLej93pPyd1ejPC29SLrwk/GT1nAcbri
-         YJkHRArO59HdVIyeN3EspmGdjSZdtpcY4KnmIzYu/qYb+ARWh8qx3Qf5jD+CJseh1YRT
-         s7dYQ4Qalk3q5FMXLAvazlx2qaTswJDGkjVIFDhNbTlliKA0GU31fpFCzyiZsF7Be9Up
-         LciyFSpgRYdQ8HwEGvSrYGC4QhESnaGJx9f0xBGdKWNF4nl1FgdcDw6Cdrl/3OvkizGL
-         lXSg==
+        bh=dhzsJpzf2MVeOFaXgmv0bV0xP862X5eYHOBB1JjtAOg=;
+        b=uVEuDVyi7X10TYxvSV+BtVAAMDjN9ssnjDzRIWvCyFX70/ohbS2CxCe02zCSm/i6O5
+         cUYfmGWgk2oz9j3QItUYGdnoWWyfsq9To7+nUTqTPHbRisivsICXVhK2PzpPNyGXNXdO
+         ewkHWQPDyeyjpoPOv+zSHL7AU8yfnlYXOi+c7K/jSOzG9I6t9ufwnRehpDZLU1zibuQ2
+         o5lPsDji5e6gnqd/cvY/tLdRhYI+rOrYmGiMCsyLGNJPX9cKSMugrA558/lwJLTEe9zw
+         oygkq/ljjnkwt39A/W/HreW/2417I/gIMmRa9Q09zgo9geaF6fLcWs+YBtq9Qrnln++z
+         qsUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Na2Pfgw7GEo8towg7xd9U4gTnvSsL575TGx4e6jDyYc=;
-        b=UenyBIUKW8eEaZLwvqtDQ23luzzxyipOFKTAmmd/txYGDl105Ie/FeDxUE5u9wHNQv
-         PWwNY+oZw2n23YOS9HvqPJnav//dbZVw2u2gseDZJ3Ykgu19FT6lZdDk32NlrNZlmEZ2
-         tFvUqG4iqbMBYSxFrlJEq1O19S+BkCcbGyEvYBjp8drIkQzbJpuPjAqwhdXnhdWFEHg1
-         ObzFe9y2teExV5bfKpl0ePdnVK4g9gFfKpPV5IxMG0a5OftF2Te5J1ctGs88/BquAs1b
-         D77f6GCVm6j1ysoDfiZnaHHgcpRmIdBCv04u4b6RX8BxdpdldB5K9YmAluuql6u0MiIz
-         TvJA==
-X-Gm-Message-State: AOAM5338H71dGHkG3RSIiNynu84Hlsd8ROsticaHkb10ClkF9ssLti6O
-        M99OERlvl0iJbC3FgK+lkonJL42PNzlk5w==
-X-Google-Smtp-Source: ABdhPJyIptcsMOkbQsJWz7W6sXF7SxqQOXa4PsxvQknGMMRkKsbzNWJUWe4W7AkzzlQoEomY9USJeA==
-X-Received: by 2002:a9d:aa5:: with SMTP id 34mr8190756otq.183.1624048262646;
-        Fri, 18 Jun 2021 13:31:02 -0700 (PDT)
+        bh=dhzsJpzf2MVeOFaXgmv0bV0xP862X5eYHOBB1JjtAOg=;
+        b=LBr8mgUMtV2O89DR5O/Zbt4qL2lhL1PaH/oq7Z+38FDIBk884pDqJNhJ9dkiODnfi2
+         de7lOWqeEydErmRQjB5TX4vIznK3cIBo69AvD+phDGvmjFC7d9hM89Ab9E67VGNvYyRf
+         MPGmKavEfdejoFpMLkgHQ7s/ds+nZDkfaVzRAH2Cj92je8fFZs5cdgLQiAwQW8EHaysc
+         4ZGEEBYs0o2h0OvqdR2qluy6e5LlEnl8rjH3behrr4eSo1pB39pPYiUAESo857R/LSIt
+         sQCqZfvH5aZKNLmAkXz5cQaEqZNrfHnWuZLmbGQctjCOcru+nsYGbJFFBSbhbTKO2C8Z
+         uowA==
+X-Gm-Message-State: AOAM530BExAoKMcUhM91UQP7fkymQt6CGshbkiEwPJQ8iEhGQphNlWL3
+        Dt/tQwu+73ZBAGqijHj6qIn2U0wRGcdDpg==
+X-Google-Smtp-Source: ABdhPJzjDgP4RylV84d1Yk8n5qtSQcYtBFAJqFgM/2+E2i+7SDJNsJ0mRtZjq2mDht/rY9dPh3sYLg==
+X-Received: by 2002:aca:dac5:: with SMTP id r188mr16251402oig.100.1624048261116;
+        Fri, 18 Jun 2021 13:31:01 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id h2sm2041688oog.16.2021.06.18.13.31.02
+        by smtp.gmail.com with ESMTPSA id e19sm2021298oiw.24.2021.06.18.13.31.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 13:31:02 -0700 (PDT)
+        Fri, 18 Jun 2021 13:31:00 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [RFC/NOPATCHv3 2/4] doc: add linkgit macros for asciidoctor
-Date:   Fri, 18 Jun 2021 15:30:55 -0500
-Message-Id: <20210618203057.790320-3-felipe.contreras@gmail.com>
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC/NOPATCHv3 1/4] doc: add an option to have Asciidoctor build man pages directly
+Date:   Fri, 18 Jun 2021 15:30:54 -0500
+Message-Id: <20210618203057.790320-2-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210618203057.790320-1-felipe.contreras@gmail.com>
 References: <20210618203057.790320-1-felipe.contreras@gmail.com>
@@ -76,34 +77,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 
-We also need to update the code that tells Asciidoctor how to format our
-linkgit macros so that it can output proper code for man pages.  Be
-careful to reset the font to the previous after the change.  In order to
-do so, we must reset to the previous after each font change so the
-previous state at the end is the state before our inserted text, since
-troff only remembers one previous font.  We insert \e before each
-font-change backslash so Asciidoctor doesn't convert them into \*(rs,
-the reverse solidus character, and instead leaves them as we wanted
-them.
+Asciidoctor contains a converter to generate man pages.  In some
+environments, where building only the manual pages and not the other
+documentation is desired, installing a toolchain for building
+DocBook-based manual pages may be burdensome, and using Asciidoctor
+directly may be easier, so let's add an option to build manual pages
+using Asciidoctor without the DocBook toolchain.
 
+We generally require Asciidoctor 1.5, but versions before 1.5.3 didn't
+contain proper handling of the apostrophe, which is controlled normally
+by the GNU_ROFF option.  This option for the DocBook toolchain, as well
+as newer versions of Asciidoctor, makes groff output an ASCII apostrophe
+instead of a Unicode apostrophe in text, so as to make copy and pasting
+commands easier.  These newer versions of Asciidoctor (1.5.3 and above)
+detect groff and do the right thing in all cases, so the GNU_ROFF option
+is obsolete in this case.
+
+Because Asciidoctor versions before 2.0 had a few problems with man page
+output, let's default this to off for now, since some common distros are
+still on 1.5.  If users are using a more modern toolchain or don't care
+about the rendering issues, they can enable the option.
+
+Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Original-patch-by: Felipe Contreras <felipe.contreras@gmail.com>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/asciidoctor-extensions.rb | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/Makefile | 12 +++++++++++-
+ Makefile               |  4 ++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb
-index d906a00803..620b3d7a88 100644
---- a/Documentation/asciidoctor-extensions.rb
-+++ b/Documentation/asciidoctor-extensions.rb
-@@ -15,6 +15,8 @@ module Git
-           "#{target}(#{attrs[1]})</ulink>"
-         elsif parent.document.basebackend? 'html'
-           %(<a href="#{prefix}#{target}.html">#{target}(#{attrs[1]})</a>)
-+        elsif parent.document.basebackend? 'manpage'
-+          %(\e\\fB#{target}\e\\fP\e\\fR(#{attrs[1]})\e\\fP)
-         elsif parent.document.basebackend? 'docbook'
-           "<citerefentry>\n" \
-             "<refentrytitle>#{target}</refentrytitle>" \
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 81d1bf7a04..d3103c3dde 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -187,6 +187,9 @@ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+ DBLATEX_COMMON =
+ XMLTO_EXTRA += --skip-validation
+ XMLTO_EXTRA += -x manpage.xsl
++ifdef USE_ASCIIDOCTOR_MANPAGE
++TXT_TO_MAN = $(ASCIIDOC_COMMON) -b manpage
++endif
+ endif
+ 
+ SHELL_PATH ?= $(SHELL)
+@@ -325,7 +328,7 @@ mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
+ 		show_tool_names can_merge "* " || :' >mergetools-merge.txt && \
+ 	date >$@
+ 
+-TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK))
++TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK):$(USE_ASCIIDOCTOR_MANPAGE))
+ 
+ GIT-ASCIIDOCFLAGS: FORCE
+ 	@FLAGS='$(TRACK_ASCIIDOCFLAGS)'; \
+@@ -358,9 +361,16 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf asciidoctor-extensions.rb GIT-AS
+ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
+ 
++ifdef TXT_TO_MAN
++%.1 %.5 %.7 : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
++	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
++	$(TXT_TO_MAN) -o $@+ $< && \
++	mv $@+ $@
++else
+ %.1 %.5 %.7 : %.xml manpage-base-url.xsl $(wildcard manpage*.xsl)
+ 	$(QUIET_XMLTO)$(RM) $@ && \
+ 	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
++endif
+ 
+ %.xml : %.txt asciidoc.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+diff --git a/Makefile b/Makefile
+index f3dc217832..48547e2c3b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -285,6 +285,10 @@ all::
+ # Define USE_ASCIIDOCTOR to use Asciidoctor instead of AsciiDoc to build the
+ # documentation.
+ #
++# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
++# instead of building manual pages from DocBook (using xmlto).  Has no effect
++# unless USE_ASCIIDOCTOR is set.
++#
+ # Define ASCIIDOCTOR_EXTENSIONS_LAB to point to the location of the Asciidoctor
+ # Extensions Lab if you have it available.
+ #
 -- 
 2.32.0
 
