@@ -2,107 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D81FC2B9F4
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 00:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D3D5C2B9F4
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 00:27:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EAE6613B4
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 00:03:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E893A610EA
+	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 00:27:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232082AbhFRAFd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Jun 2021 20:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbhFRAFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jun 2021 20:05:32 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77577C061574
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 17:03:24 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id t13so6269039pgu.11
-        for <git@vger.kernel.org>; Thu, 17 Jun 2021 17:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uM/iyl3f6MeOfac4Ro0hSAgYGUNFtxLfbcwcRfB+rqM=;
-        b=fkFVEnyOC874i1i4MRhCk8U7hNs/XqfRajnZhDjz9+PPI3LMVZryn9CqIl7FGRuTBc
-         P7z5kXhJDtXUBt2uv67+d5968Je0tql2tiJJbSyxDAJJd2ZPotCcUfS3Z4N6uREUxHLx
-         T4D9m0+CSwCy3BQDixj3tnoWhxiQV4YcI1yLjudDMz5gVnoCi5IPaSVC32vFxgdtkGKF
-         koeypgxFW6l3R0Q4yc12adIfPja93Zn1bnAdRWCMs3vYK2MoXtqiWOVh8Ouk4uMosEMn
-         qCnhpNioIincFj0XMNZZpNja6d527JpA+G6WzpZhn/7jvHM5Z5/Mql/URSrJbqxJep7l
-         CGFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uM/iyl3f6MeOfac4Ro0hSAgYGUNFtxLfbcwcRfB+rqM=;
-        b=iR/0i7H2/7bOQCaZcUQYwuuOaxKgf2/CnU1OUEM3M/uqyl0zrvZNZuhXkNjk6e04QS
-         /iITMLtJ3Efzni6AzGdvGEazGRU5wOFu/dtnxmWtoq+FheIl+iETLB2VHHzrZt2ieQ2B
-         LaroliXtUqYakza4cazdTyPOE8n/4Aoj8Y1lLXl+DFX1I11kr8lMtRCii0OecVHNfnCu
-         Q/4eWIad8JChITabdVm2itaPneeZ3V9FFr4vz3wcGr4BrfQxEQWmjXFWnbZ2wmljpNdE
-         WCP+CLJ4cI/FotdxHrkjIjMz74/WV4GstHsiuDDDQ6loq/DMOI9gifgT/8XDKP4aMvdR
-         md8Q==
-X-Gm-Message-State: AOAM531YM9i+rPXSYTfUbF4hB5+iIzhzBaxsAtkvXpV3kbAYypl39P3n
-        NkVgrm/RsrCdeqlQ9atLaif2jXwp3HIwiw==
-X-Google-Smtp-Source: ABdhPJyXtw8mdNm6D7uT9sU6xq38n4wnm70cloA8X2d1ycm6s6koavbbsuiYuUF1vMxk0V++HjVaJg==
-X-Received: by 2002:a63:e407:: with SMTP id a7mr7185876pgi.220.1623974603865;
-        Thu, 17 Jun 2021 17:03:23 -0700 (PDT)
-Received: from google.com ([2620:15c:2ce:200:30e4:83fc:53b6:fa47])
-        by smtp.gmail.com with ESMTPSA id q16sm5788859pfk.209.2021.06.17.17.03.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jun 2021 17:03:23 -0700 (PDT)
-Date:   Thu, 17 Jun 2021 17:03:17 -0700
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] introduce submodule.superprojectGitDir cache
-Message-ID: <YMvixSHYdEJB2qTY@google.com>
-References: <20210616004508.87186-1-emilyshaffer@google.com>
- <20210616004508.87186-3-emilyshaffer@google.com>
- <xmqqsg1iqv5n.fsf@gitster.g>
- <xmqqk0muqv0n.fsf@gitster.g>
+        id S233066AbhFRA3N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Jun 2021 20:29:13 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51072 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231431AbhFRA3M (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 17 Jun 2021 20:29:12 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D09C860443;
+        Fri, 18 Jun 2021 00:26:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1623975993;
+        bh=ifJ8vNncIjijsCF2VDBNHbPMBnQD9c6+sS21n2w01uc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=cnTmvFwpwUr49ZxT9dEEJyc3Imq4UOZd1YPMjAXYbn9tFBqAMKVK569om0lFt0gcM
+         +QOU55Bp4a3xfUVdjJV3NqwpFBFAA3pAOk6Tila2ZhtQhoLf3cjl0OQBHeVImOGHq8
+         dT+NjByb07ATP/I5FEIWxfye7w7Gf4X3rpFrfg9a2nvYFoWHeZUGdKXDzk9pBGHu5h
+         Qns5gYMpwNwq7B/RRsPkUu9DbeUrzl5bnI1XPc/EAWXZfci5gI3GDZbgrhKdUCStdW
+         XvI+ui1q0jbgk61SJuWRCKmkMvCRci8tp4uWX2kWbJlSjgb4h3gaBk0gX9Em/EBGoI
+         lwCQRSm5SbVXT6yxWf/pV76q0a8rMF3CPAHoMeCOR9uhAzcT5qVfoqZ0gzYxk34Jfm
+         FD2FNFhMykRXmSYpb8l8Ws0TuMbvmYMAFWKBA2PBW17/OpDGgj8PENnEc/keMFwj9a
+         VwApxMZjfuT88cc+LPOEdSPVMHO+UOIxTJwV6R4kt/n7aVnxFt/
+Date:   Fri, 18 Jun 2021 00:26:29 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>,
+        Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
+Message-ID: <YMvoNcFXnHo0KXH3@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
+        Andrei Rybak <rybak.a.v@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Robert Karszniewicz <avoidr@posteo.de>, Jeff King <peff@peff.net>,
+        "Kerry, Richard" <richard.kerry@atos.net>,
+        Phillip Susi <phill@thesusis.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
+ <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
+ <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
+ <87a6nryt51.fsf@evledraar.gmail.com>
+ <xmqqsg1iseza.fsf@gitster.g>
+ <xmqqbl86qtyf.fsf@gitster.g>
+ <87bl85y15s.fsf@evledraar.gmail.com>
+ <xmqqtulxnyhb.fsf@gitster.g>
+ <5755690e-ef13-e12c-4b10-9cb303ae843a@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wI1cKH6P49jeRAwi"
 Content-Disposition: inline
-In-Reply-To: <xmqqk0muqv0n.fsf@gitster.g>
+In-Reply-To: <5755690e-ef13-e12c-4b10-9cb303ae843a@gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 01:43:36PM +0900, Junio C Hamano wrote:
-> 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > As I said, I think it is OK for now to stop at declaring that you
-> > cannot simply do it without hinting something that may not fully
-> > work.
-> 
-> I'll add the following to the tip of the topic for now.
 
-Just saw this - yes, it looks fine to me. I'll squash that locally in
-case anybody has more comments and wants a reroll.
+--wI1cKH6P49jeRAwi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> 
->  Documentation/config/submodule.txt | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git c/Documentation/config/submodule.txt w/Documentation/config/submodule.txt
-> index 7c459cc19e..58ba63a75e 100644
-> --- c/Documentation/config/submodule.txt
-> +++ w/Documentation/config/submodule.txt
-> @@ -97,8 +97,5 @@ submodule.superprojectGitDir::
->  	submodules, but is not guaranteed to be present in every submodule. It
->  	is set automatically during submodule creation.
->  +
-> -	In situations where more than one superproject references the same
-> -	submodule worktree, the value of this config and the behavior of
-> -	operations which use it are undefined. To reference a single project
-> -	from multiple superprojects, it is better to create a worktree of the
-> -	submodule for each superproject.
-> +Because of this configuration variable, it is forbidden to use the
-> +same submodule worktree shared by multiple superprojects.
+On 2021-06-17 at 13:22:21, Derrick Stolee wrote:
+> On 6/16/2021 8:09 PM, Junio C Hamano wrote:
+> I disagree that removing gendered pronouns and updating the
+> guidelines are orthogonal. At minimum, we shouldn't have
+> guidelines that we do not follow, especially when they are
+> small in number and we can fix them in a few patches.
+>=20
+> The entire point of this series was to reach a decision about
+> gendered pronouns so we can stop having arguments about them
+> when they come up. We should just be able to point to "here is
+> the decision we made" and it's not enough to say "If you go
+> look at the mailing list archive you can see that we removed
+> all gendered pronouns so you shouldn't add them again."
+
+I agree.  Part of the complaint in the previous thread was that we were
+overly debating people's commit messages, which can be demoralizing to
+contributors, especially new ones.  It's much better to decide on an
+approach, document it, and then, if there's an issue, we can just point
+people to the documentation.
+
+And, judging by the amount of discussion around this topic, it would be
+helpful to avoid rehashing the same discussion again and again.  I
+certainly would prefer to not have this discussion multiple times.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--wI1cKH6P49jeRAwi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYMvoNAAKCRB8DEliiIei
+geTjAQC19BD5/9Bojfq1DCBSpGxxqFkh0XDgqIArZ85SEqj4GAEAiu5ihdQcwfUa
+AkSXQguICiMQ+dwRSPcGSChgclHjSAo=
+=OT7w
+-----END PGP SIGNATURE-----
+
+--wI1cKH6P49jeRAwi--
