@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70473C48BE8
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 01:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9451EC48BDF
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 01:31:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 497DE61264
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 01:31:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7375661264
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 01:31:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235334AbhFSBdU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 21:33:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52812 "EHLO
+        id S235342AbhFSBdZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 21:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233675AbhFSBdS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 21:33:18 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F42C061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 18:31:07 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id 69so5587071plc.5
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 18:31:07 -0700 (PDT)
+        with ESMTP id S233675AbhFSBdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 21:33:25 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3DFC061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 18:31:13 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id h12so5581462plf.4
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 18:31:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5vDHfeJP22GuNROdbt/1+yJShEIMmGVQB1yTYPYJRjw=;
-        b=KCuV0dpYiSzxKnFMl4JONRG1Od2WNL9FvNocTAA2gqNxShRoJ7kIMATd0xOaEyaQVn
-         Uz9FnxgYHPIb8NvFhd4wxaWgKOKgRK4DyjAnSkMOrrv5mmZUMKbEjf5NXJ/Zi3JTIgp9
-         ptQpa1ptzDwMYQ8dlTzLKpNmfkRSfg2LCE3H7LkPcH6tTQNYv66W/JZ2iY8bzH66Ma4M
-         DbZauqgGfiquSjzGxP7y7TX58WlFFliZxQRZP7opvp3cskTyaP4BWl9RjVxqB6Uf9ICP
-         vijQB1GzkRGQQkQGH7TWNQFPIhB8z8Crs+uX8T1Edhds4avigYem7MGUCcv9yAHdkFxN
-         mrrA==
+        bh=XDwr1GdawLNTFcUEyzHTFt6+zuezsk+dZghuLX7RIYA=;
+        b=Fr5v7nhaRIOL5uYdNs/yV9Obqo7J/u5QeTSab427KQziqfl7Bi13lby78+S/guZhL9
+         jaIWK9arFm4yFr0rGZL6q6o1k65S/c4sUCQNX3ijqQ0oN1KW+iaxteuLh+0UgyFIXfgd
+         d7/+xfEJ9a6c30raEGz030JKZ1tvwjRsFMYIaH9UdOksPrRpHtaGi+kjbr8VZEI+AYGC
+         RbJCElnXpmwbK/HqZflmnuc5UsuI43vIcmU39K8LUOk3uCMouXS80uCaW8/ZXaQPqodL
+         6yWlpytDiCSW88WuIr120cHTweFwdgijYhTRSvF4Uh0CQ7aygFvB5cU1K2N3XdcNKojh
+         aaUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5vDHfeJP22GuNROdbt/1+yJShEIMmGVQB1yTYPYJRjw=;
-        b=FDdjWi2OX9JEhzphViiF9669U3owWrJuJFnwMO/Cw7ha+re0Wu32QntsGOnh5LyAHp
-         nlaAOK7WWnF4sKKUXZGmta4FHTUUKUAU7eE7ry2zi432Rz6m7OAhpCIFqRWxICNoz0+O
-         SO3cIB5vUDNp27eWKiwoKvg4rTewoiem21XkByLHhoTaQLQgehf1O33Agvr9nzTy9omj
-         Md3TyahjquqkYye3D7wbNBXg33DhMweYwPW7/zdJHEB43o7r8EygI3rqjg/d2h9JDvwR
-         mtnPhDD2ZCbZ0ENgbKJ1j5G+2eROtVshuOoOJQvdnPRbnwEFFukKHYZjzcH5imhapmzP
-         IQeA==
-X-Gm-Message-State: AOAM531yZRLOcBo9NaqJuW5KaYbch59wyT/mLorF87K6DvlDQdyOJ/YJ
-        k44ZneUoEm9QK2/x/6+UFeD/vXib+u0=
-X-Google-Smtp-Source: ABdhPJzdwrelKHBRFWZcWwJB1bEY1xtBptjglbyspH47dhwjugVwcY5BL0xQJCTyu5wcr+SMNvmv0A==
-X-Received: by 2002:a17:902:8c83:b029:11b:3f49:f88c with SMTP id t3-20020a1709028c83b029011b3f49f88cmr7222520plo.63.1624066267078;
-        Fri, 18 Jun 2021 18:31:07 -0700 (PDT)
+        bh=XDwr1GdawLNTFcUEyzHTFt6+zuezsk+dZghuLX7RIYA=;
+        b=T2Ew5/DMYnRTRP/bGJAijth7TTT9v6ZuY1oQWs6yv/TzxeF2kqO8ox+60BuiyRifOD
+         dKdh75lIWxR0xt7F+Jf7hvszYYsyftmxhMtQO+Fk4QR5DD5QSTN2DsqTPs8GwZDwxA11
+         QEKfx/MFYO1vHKYGUX7CZnSAkrhs3mm1OVz6hKtS4dyLu5dMDMphPh+UaCJZFem/01w8
+         5tlqX5Auz7QdSwP+7iRbMYULHxD+eFCrCp9XgqDbXVWemwVEQdmjb0Wl+4bJmn2DLVLl
+         k2kOd7D7qygwm5UerNKTMw/m4iK+GUQIjyTiVAIQt/mg14RQYUTkj/qB/P56aK1keusc
+         hFlg==
+X-Gm-Message-State: AOAM530J7/XNny5n5nqJ2tyG/WLSfQhaNJk4Vt4VISTtj87ebA51ZwHF
+        FYxT5JpZdow6yZ6TJ737tDMPAW8nHKw=
+X-Google-Smtp-Source: ABdhPJw7N2ln2+XVLMPBnXYch2PJYixvivY1FXzSwhzdZqhWV3ciOQ0RCbRDNRcjBqLhlOYzL6o1CQ==
+X-Received: by 2002:a17:902:b218:b029:11a:bf7b:1a80 with SMTP id t24-20020a170902b218b029011abf7b1a80mr7348171plr.82.1624066273353;
+        Fri, 18 Jun 2021 18:31:13 -0700 (PDT)
 Received: from athena.localdomain ([2402:800:63b8:a3d1:fb64:d06b:ab01:2de4])
-        by smtp.gmail.com with ESMTPSA id s123sm8733427pfb.78.2021.06.18.18.31.04
+        by smtp.gmail.com with ESMTPSA id s123sm8733427pfb.78.2021.06.18.18.31.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 18:31:06 -0700 (PDT)
+        Fri, 18 Jun 2021 18:31:13 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 1/4] test-lib-functions: introduce test_line_count_cmd
-Date:   Sat, 19 Jun 2021 08:30:32 +0700
-Message-Id: <20210619013035.26313-2-congdanhqx@gmail.com>
+Subject: [PATCH v3 3/4] t6400: use test_line_count_cmd to count # of lines in stdout
+Date:   Sat, 19 Jun 2021 08:30:34 +0700
+Message-Id: <20210619013035.26313-4-congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.32.0.278.gd42b80f139
 In-Reply-To: <20210615172038.28917-1-congdanhqx@gmail.com>
 References: <20210615172038.28917-1-congdanhqx@gmail.com>
@@ -79,118 +79,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the Git project, we have multiple instances that requires
-checking number of lines of text in the stdout of a command.
-One of such examples is t6400, that checks number of files
-in various states.
-
-Some of those commands are Git command, and we would like to check
-their exit status.  In some of those checks, we pipe the stdout of
-those commands to "wc -l" to count the number lines, thus losing
-the exit status.
-
-Introduce a helper function to check for the number of lines in stdout
-from those commands.
-
-This helper will create a temporary file in the process, thus it may
-affect the output of some checks.
-
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- t/test-lib-functions.sh | 80 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+ t/t6400-merge-df.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index f0448daa74..e055a4f808 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -845,6 +845,86 @@ test_line_count () {
- 	fi
- }
+diff --git a/t/t6400-merge-df.sh b/t/t6400-merge-df.sh
+index 38700d29b5..e5e9e473fe 100755
+--- a/t/t6400-merge-df.sh
++++ b/t/t6400-merge-df.sh
+@@ -82,13 +82,13 @@ test_expect_success 'modify/delete + directory/file conflict' '
+ 	git checkout delete^0 &&
+ 	test_must_fail git merge modify &&
  
-+# test_line_count_cmd checks the exit status, and the number of lines in
-+# the captured stdout of a command.
-+#
-+# SYNOPSIS:
-+#
-+#	test_line_count_cmd <binop> <value> [!] cmd [args...]
-+#
-+# Expect succeed exit status when running
-+#
-+#	cmd [args...]
-+#
-+# then, run sh's "test <# of lines in stdout> <binop> <value>"
-+#
-+# OPTIONS:
-+# !:
-+#	Instead of expecting "cmd [args...]" succeed, expect its failure.
-+#	Note, if the command under testing is "git",
-+#	test_must_fail should be used instead of "!".
-+#
-+# EXAMPLE:
-+#	test_line_count_cmd -ge 10 git tag --no-contains v1.0.0
-+#	test_line_count_cmd -le 10 ! grep some-text a-file
-+#	test_line_count_cmd = 0 test_must_fail git rev-parse --verify abcd1234
-+#
-+# NOTE:
-+# * a temporary file named test_line_count_cmd_.out will be created under
-+# $TRASH_DIRECTORY/.git/trash iff $TRASH_DIRECTORY/.git/ exists.
-+# Otherwise, created in $TRASH_DIRECTORY. This temporary file will be
-+# cleaned by test_when_finished
-+test_line_count_cmd () {
-+	{
-+		local outop outval outfile
-+		local expect_failure actual_failure
-+		local trashdir="$TRASH_DIRECTORY"
-+
-+		if test -d "$TRASH_DIRECTORY/.git"
-+		then
-+			trashdir="$TRASH_DIRECTORY/.git/trash" &&
-+			mkdir -p "$trashdir"
-+		fi &&
-+		if test $# -lt 3
-+		then
-+			BUG "missing <binary-ops> and <value>"
-+		fi &&
-+		outop="$1" &&
-+		outval="$2" &&
-+		shift 2 &&
-+		outfile="$trashdir/test_line_count_cmd_.out" &&
-+		if test "x$1" = "x!"
-+		then
-+			shift &&
-+			expect_failure=yes
-+		fi &&
-+		if test $# = 0
-+		then
-+			BUG "test_line_count_cmd: no command to be run"
-+		else
-+			test_when_finished "rm -f '$outfile'" &&
-+			exec 8>"$outfile"
-+			# We need to redirect stderr to &9,
-+			# and redirect this function's 9>&2
-+			# in order to not messed with -x
-+			if ! "$@" >&8 2>&9
-+			then
-+				actual_failure=yes
-+			fi
-+		fi 8>&1 &&
-+		case "$expect_failure,$actual_failure" in
-+		yes,)
-+			echo >&4 "error: '$@' succeed!" &&
-+			return 1
-+			;;
-+		,yes)
-+			echo >&4 "error: '$@' run into failure!" &&
-+			return 1
-+		esac &&
-+		test_line_count "$outop" "$outval" "$outfile" >&4
-+	} 9>&2 2>&4
-+}
-+
- test_file_size () {
- 	test "$#" -ne 1 && BUG "1 param"
- 	test-tool path-utils file-size "$1"
+-	test 5 -eq $(git ls-files -s | wc -l) &&
+-	test 4 -eq $(git ls-files -u | wc -l) &&
++	test_line_count_cmd = 5 git ls-files -s &&
++	test_line_count_cmd = 4 git ls-files -u &&
+ 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
+ 	then
+-		test 0 -eq $(git ls-files -o | wc -l)
++		test_line_count_cmd = 0 git ls-files -o
+ 	else
+-		test 1 -eq $(git ls-files -o | wc -l)
++		test_line_count_cmd = 1 git ls-files -o
+ 	fi &&
+ 
+ 	test_path_is_file letters/file &&
+@@ -103,13 +103,13 @@ test_expect_success 'modify/delete + directory/file conflict; other way' '
+ 
+ 	test_must_fail git merge delete &&
+ 
+-	test 5 -eq $(git ls-files -s | wc -l) &&
+-	test 4 -eq $(git ls-files -u | wc -l) &&
++	test_line_count_cmd = 5 git ls-files -s &&
++	test_line_count_cmd = 4 git ls-files -u &&
+ 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
+ 	then
+-		test 0 -eq $(git ls-files -o | wc -l)
++		test_line_count_cmd = 0 git ls-files -o
+ 	else
+-		test 1 -eq $(git ls-files -o | wc -l)
++		test_line_count_cmd = 1 git ls-files -o
+ 	fi &&
+ 
+ 	test_path_is_file letters/file &&
 -- 
 2.32.0.278.gd42b80f139
 
