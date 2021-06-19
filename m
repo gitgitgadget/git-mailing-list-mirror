@@ -7,66 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74AD0C49361
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 17:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F8DAC2B9F4
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 17:31:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5228E61206
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 17:27:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F25C6610A1
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 17:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234911AbhFSR3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 13:29:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34588 "EHLO
+        id S234925AbhFSRdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 13:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234900AbhFSR3b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 13:29:31 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C634C061574
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 10:27:19 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id v17-20020a4aa5110000b0290249d63900faso3355488ook.0
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 10:27:19 -0700 (PDT)
+        with ESMTP id S234900AbhFSRdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jun 2021 13:33:19 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A2EC061574
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 10:31:07 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id x196so14718896oif.10
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 10:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=81wysXdHtK/VwpeuyMCIQyoHlhhR7VmyrNkRhhJqmnA=;
-        b=Hdj3TLfKeHOiRx/D091Kw5smS2WiYq7mGcLLI8tHCp9N6KOC9NS4lYXY8GyvhnqeyK
-         3aqPhSFgHV9SRMA4Os7AVRF13hypoT8gsyCIhk51tILJrrB2PfCAaE2nsBrzo18wTS/P
-         RxRukDkIbAg3kwG97s1xzgaDl9c3t8ou/SVwS9h1lSMXQfrZOzcQmU8L7/q6XpPijePB
-         1X2tzWvrKTOo1HeOJgj2rwSaeaIpXpUfyvhgBiNn9iYpiZ7aF3krRrkTbkdRczyL1G3O
-         si+1gCUiCvMGK9s0xx6zJtVN/IignICJoL1kLvWEIwJbcD3kvJrQly80u2hQdo9+9XWo
-         od6g==
+        bh=uYkdHupm8lrwVh5u0S3FjHgMjvGGg8lSWzQx752jX4M=;
+        b=bN6fm6C3exxd+SRxwW3pkTwwvcJ8XbwIlI6B/w8tZ9ivgFli9qKNxMeNoenO8mFoU8
+         31j0aVkitNRr3IyGTtHG27YfuBP7pKaUm6tIyxiFvaVbTGrE9xEt8cQaUOEqwa8TMnpa
+         OvOkY1FHwtDTdlZ1C24Y/RODMq6/nZTsXaiQ0wpn4SS6kMnTJBq9aEzJyBtx9Az/6K4M
+         xGRxwB05fCQhps7TPsUL3RJhyImdCdakiOjBdhNfbv7eucO977TPyGnVxuyP1dvu3oZG
+         vF5OQVmZK10/5cIwMSEN2qlQY3VIZK4EN3pjhZ27h83mTJiTy70Vk+65cCmBvpu/qphz
+         s9Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=81wysXdHtK/VwpeuyMCIQyoHlhhR7VmyrNkRhhJqmnA=;
-        b=l8uJfPtNIALP7Wiro4jVNLXVN6tT2biTx/7Ir0WO6Uccbht3f9d6gwRhf15R6V0eBj
-         WrVeJtMdHtC/7u639d49y8IG1ySuveL58J6xLLv6A9FOXmCV99rq6FCe8S8Z+Qd+JbPM
-         VqZrzWjd9YXvhh5cI0Yjv6S8v5atgJ+SOEh+kFSWbgc+nNWKkEZyOu1NLcD8CX65nPD2
-         FsJcK/7mS4ZnLZaM/st25eE9nX8bQeDo9uBioj9JLqzHP09/Dnw+nY5YVHANdeqTzkZl
-         bwsBDTgNG9skF8wgjrViC8xDwOqnD1PFusNkbKldcZ9rMD2W19Rg8i87OlzvD6yOCaWY
-         TP1A==
-X-Gm-Message-State: AOAM532S6g8mGskOXu4Smn6ypMU11eXXDpeHFVkvTHf3F4QPsBSuwpNJ
-        t8HdprHOwXULG2yq2maewsNqhKhPBy7O1g==
-X-Google-Smtp-Source: ABdhPJxBfYvnt3KN+COT5K+URcfFrjFmA+jRJ5M0snYuiuTKCcIqNzDfulAX3ZGK1TKzhRuVeh6SEQ==
-X-Received: by 2002:a4a:ea43:: with SMTP id j3mr14252538ooe.10.1624123638825;
-        Sat, 19 Jun 2021 10:27:18 -0700 (PDT)
+        bh=uYkdHupm8lrwVh5u0S3FjHgMjvGGg8lSWzQx752jX4M=;
+        b=haHUMcKlooo3aUm89GsNEjTqndSv7ET8GeVkKz7l7Fk934xRgw0yIquPJreTaVcz0T
+         KNpLPEUtfN7fGaL5DaOZQ6IDYSoIGplJQArzEYDAB0e3DEuXnMPHqTtkeWuohiOtJHU/
+         cPFJDAJ2uhfonLM79xjOJgCuV/agUi8QM+7a2JlY04bS6cRtq2Uatbb6xSjoPFGMNQ3f
+         JX2/uIvZMPx/x2uwJYBuaojito9/8ceHW1CwaAeZo8CKqwDo/XNHnknhP2tsYKWFgapl
+         NLkATsm7tCkHm0GAMm6EicD0BtGwrbNAzrZw2XB3y+RD5lC8stfJM6LdF4fVFgnOoXCU
+         E1mw==
+X-Gm-Message-State: AOAM5313T11MTkamTFytTZZMVIjBW63YYehHX6A5A0skTqrvoTzyxauQ
+        OmOfxpIpKJ/93eBe/U/hRNk=
+X-Google-Smtp-Source: ABdhPJxKleNTeL3tOBVryxRTxb9SLTyM2i9tNOYpB4Cbgm6M6q19eyeOoaqxqy3jP8R+7/p59lay2g==
+X-Received: by 2002:aca:aad4:: with SMTP id t203mr11547521oie.149.1624123866739;
+        Sat, 19 Jun 2021 10:31:06 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id s28sm2583532oij.12.2021.06.19.10.27.17
+        by smtp.gmail.com with ESMTPSA id o20sm2693100otl.2.2021.06.19.10.31.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jun 2021 10:27:18 -0700 (PDT)
-Date:   Sat, 19 Jun 2021 12:27:12 -0500
+        Sat, 19 Jun 2021 10:31:06 -0700 (PDT)
+Date:   Sat, 19 Jun 2021 12:31:05 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Message-ID: <60ce28f025b09_cc2b120896@natae.notmuch>
-In-Reply-To: <xmqqmtrmjpa8.fsf@gitster.g>
-References: <xmqqr1h1mc81.fsf@gitster.g>
- <YMvhoXVBoO08ziI1@camp.crustytoothpaste.net>
- <YMvofq5aSryQzpZQ@coredump.intra.peff.net>
- <xmqqmtrmjpa8.fsf@gitster.g>
-Subject: Ignoring valid work
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
+Cc:     Barret Rhoden <brho@google.com>
+Message-ID: <60ce29d9144e9_cc2b1208f8@natae.notmuch>
+In-Reply-To: <8921ac50-e628-9a60-2a8d-1b8cc2a5a056@gmail.com>
+References: <20210618221104.42260-1-rybak.a.v@gmail.com>
+ <8921ac50-e628-9a60-2a8d-1b8cc2a5a056@gmail.com>
+Subject: Re: [PATCH] blame: fix typo in documentation
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -75,43 +73,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+Bagas Sanjaya wrote:
+> That above is not typo fixing; that is correcting configuration variable 
+> name.
 > 
-> > Hmm. I'm not sure if that's a good resolution here. I do think many
-> > people were positive in moving in that direction. If there's a
-> > contributor that people have trouble working with, I'm OK giving up on
-> > possible contributions they could make, even adaptations of their work.
-> >
-> > But if by working in an area they poison it for others (because there's
-> > no desire to work with them, but no desire to step on their toes) that
-> > doesn't seem like a workable long-term strategy.
-> 
-> You may lick a corner of a piece of cake and think that it would
-> repel other people enough to leave only you to consider eating it,
-> but no, in this project, you aren't allowed to lick a Makefile and
-> claim that you own it.
+> PS: I have to download mbox of this thread and reply from it because I 
+> didn't receive the thread on my Thunderbird, regardless of CCing Git ML.
 
-I wonder who might have attempted to do that in your view.
-
-In reality have I have never attempted to do anything remotely close to
-that.
-
-> Also, if some contributors get too annoying to be worth our time
-> interacting with, it is OK to ignore them.
-
-But do you have a valid reason? Or is it just petty personal animus?
-
-Talk is cheap. Code is what speaks.
-
-I'm doing valid, useful, and substantial code.
-
-It is the project that suffers from ignoring it.
-
-Ignore me all you want, but the code doesn't stop being valid.
-
-https://lore.kernel.org/git/20210618203057.790320-1-felipe.contreras@gmail.com
-https://lore.kernel.org/git/20210618215231.796592-1-felipe.contreras@gmail.com
+This is something I've noticed; I can always see mails on the archive,
+however, I don't receive them on my inbox until much later.
 
 -- 
 Felipe Contreras
