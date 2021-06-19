@@ -6,97 +6,75 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C37B2C2B9F4
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3723AC2B9F4
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:18:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ADD506120D
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:04:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07D3D610FB
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:18:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234042AbhFSHGK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 03:06:10 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55309 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234118AbhFSHGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 03:06:09 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E5E8C3479;
-        Sat, 19 Jun 2021 03:03:57 -0400 (EDT)
+        id S232574AbhFSHUf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 03:20:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53828 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231465AbhFSHUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jun 2021 03:20:35 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD950CB695;
+        Sat, 19 Jun 2021 03:18:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1aNoNq6iUfGM
-        ICsNwXWmFJ9utb+4LU2jzBmidPFBdTQ=; b=vYTGNCZQJZxAyVhKhLXlqQZpNB8Q
-        k9owtsZYLXnBa2xxzjyNlrnrvphbKBLvd7mYk4TG5TPmH3rW4EHYl7EJgToIJyRP
-        FXs5wAg3wBY7kCCtKoRgGsCNwKS24/VTSxlyjwx/Be5jDBnvvMCpPKvRkQRC8ltB
-        KYgQJLwB9w+snQM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 65A86C3478;
-        Sat, 19 Jun 2021 03:03:57 -0400 (EDT)
+        :content-type; s=sasl; bh=qiSVTGWDY0XsNGrsDFAlu6lba453RJOte8xCRI
+        CRmrE=; b=OibcKeBb16jKv7Dd+LJu7s6h8SiJqeq5VdwLUNgraP83CIw3ruKVbW
+        Z5Tf6JGvp/kKHAwDM39LG85S8q4UuGsU+4hKc+OFJheG/Lk9jpWmqm3jY/9fya7P
+        IrG0iCTeo4OWLe1aOyUIbhyfHmid3OUP/N4s5yxu88TdsYY1Miri0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A615DCB694;
+        Sat, 19 Jun 2021 03:18:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D22B5C3477;
-        Sat, 19 Jun 2021 03:03:56 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32530CB693;
+        Sat, 19 Jun 2021 03:18:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jrnieder@gmail.com,
-        emilyshaffer@google.com, Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Phillip Susi <phill@thesusis.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
-References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
-        <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
-        <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
-        <87a6nryt51.fsf@evledraar.gmail.com> <xmqqsg1iseza.fsf@gitster.g>
-        <xmqqbl86qtyf.fsf@gitster.g> <87bl85y15s.fsf@evledraar.gmail.com>
-        <YMvuprVu1MnokHM5@camp.crustytoothpaste.net>
-Date:   Sat, 19 Jun 2021 16:03:56 +0900
-In-Reply-To: <YMvuprVu1MnokHM5@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Fri, 18 Jun 2021 00:53:58 +0000")
-Message-ID: <xmqqr1gyjpyb.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2021, #06; Thu, 17)
+References: <xmqqr1h1mc81.fsf@gitster.g>
+        <YMvhoXVBoO08ziI1@camp.crustytoothpaste.net>
+        <YMvofq5aSryQzpZQ@coredump.intra.peff.net>
+Date:   Sat, 19 Jun 2021 16:18:23 +0900
+In-Reply-To: <YMvofq5aSryQzpZQ@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 17 Jun 2021 20:27:42 -0400")
+Message-ID: <xmqqmtrmjpa8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 83D95590-D0CC-11EB-953B-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 88D1AB04-D0CE-11EB-9C43-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> I agree that in many cases we can effectively rephrase to avoid needing
-> to do this, but if we acknowledge that sometimes we will need to write
-> using third-person personal pronouns in some cases, it's worth
-> documenting what those should be.
+> Hmm. I'm not sure if that's a good resolution here. I do think many
+> people were positive in moving in that direction. If there's a
+> contributor that people have trouble working with, I'm OK giving up on
+> possible contributions they could make, even adaptations of their work.
+>
+> But if by working in an area they poison it for others (because there's
+> no desire to work with them, but no desire to step on their toes) that
+> doesn't seem like a workable long-term strategy.
 
-I think we've heard enough from both sides and there probably is not
-misunderstanding among the folks, even though there are differences
-of opinions.
+You may lick a corner of a piece of cake and think that it would
+repel other people enough to leave only you to consider eating it,
+but no, in this project, you aren't allowed to lick a Makefile and
+claim that you own it.  Also, if some contributors get too annoying
+to be worth our time interacting with, it is OK to ignore them.
 
-I would like to consider that the last draft I did [*1*] based on
-earlier suggestions by Derrick and =C3=86var would be a reasonable middle
-ground.
-
-I'll go mostly offline next week---I'd notice if the list came up
-with a vastly different concensus when I come back, but hopefully
-not ;-)
-
-Thanks.
-
-
-[Reference]
-
-*1* https://lore.kernel.org/git/xmqqbl86qtyf.fsf@gitster.g/
-
+> I don't think this topic is particularly urgent, so I'm OK to drop it
+> for now (and as always, it's your choice what you work on). But I'm
+> worried about the general precedent / principle.
