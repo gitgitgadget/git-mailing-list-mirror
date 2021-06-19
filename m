@@ -2,83 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B7AC49361
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 20:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74914C2B9F4
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 21:45:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B44C2611B0
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 20:01:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47F5C601FE
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 21:45:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbhFSUD1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 16:03:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39380 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbhFSUD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 16:03:26 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35BF1C061574
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 13:01:14 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id s17so6263479oij.11
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 13:01:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HN1kj3KOdXsFxU04CgeoHs/9MQXd4AKTSPNSmiSpzW4=;
-        b=kxUMDZ1VxtposULAPfmhYISCuElQgbCthWpD5lbn0MZYABmE4NaTRwDD+wijh3yCrS
-         WSYobhUoA5oLRbAL3poa94qGKfz1hcGTYfUq/fbU23F0Z0Qm/3ochQnjrUjUL++DVjmP
-         S7g5lkcN2WUvo5hpdg2J2DT3PFKQBFCfAkvI6z0EE47fLkL5M/Yb1GDWhfM8SyS+n8Dm
-         MyUeaaM0KFQzo+lYNrvLlbmZ+DdTpadssFqKmgJbnIb6cLRvwh16UF8iO+MrWoe/Auzx
-         omFdAMA6Mvd5yIUcffOM1c3Sl8OSUhH0G6pKRDydvULQHZSwzTUC8o3nIKvUFgb97p6o
-         X7Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HN1kj3KOdXsFxU04CgeoHs/9MQXd4AKTSPNSmiSpzW4=;
-        b=a4+/sJ6Zc+C5nqrIgAAefnVk0r4zdrJgxNzj7p1zHdJeXmYxj6lv+cMWGx945oJ/77
-         pm2HRVTfHaaOLwWAt9wBRKglpRN4c9JCHQhNFHTdDz6TDv97DQt9T71WBGx/RUuKY20k
-         OrSv55t/57IzE/MmVG6aLdQvVYQ7uKE6s+pd++Q2OPak0//Gu+uuFAoNA3Akvua3B0v3
-         +dfm6eDw22z6HDd4M9YnC3XIckidV0YT94THsL/ugbgfPOwc+mvMrfjqCypT+C4Za5wg
-         uNCOLJY+oRDXkE7vphN+fGO3liz5yWeEA5Fq4AyQLq+QqWB05dnsVftb7lrB+MoFiKj9
-         +x+Q==
-X-Gm-Message-State: AOAM530oxen9yOxs7+UVQnIw9CtABVpr6ePcpzW26V0Ny2hkn3bxCmFJ
-        eQaRPftKpfEpQVJrc41XTCAudXXBRUiW7tCD2zw=
-X-Google-Smtp-Source: ABdhPJxj/RYx7W+4dT+Ojy+2ZYO8QGsk9PBS0mLHvC4KOd9zOErkLIAJ1nN5E6CaWUvJWCap51c2wpV2ahKR3eB7JIs=
-X-Received: by 2002:aca:f482:: with SMTP id s124mr18967220oih.167.1624132873447;
- Sat, 19 Jun 2021 13:01:13 -0700 (PDT)
+        id S229591AbhFSVrO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 17:47:14 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52912 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229521AbhFSVrN (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 19 Jun 2021 17:47:13 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9A92060424;
+        Sat, 19 Jun 2021 21:45:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1624139101;
+        bh=NGDEhOKSQLzYo3tuRgCKXFJzWZ8ssAaGsltDw1KMLl8=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=i8wu8phlk8vXnfkgoFK//hYCnY31xViyKH599E7I3hcAYJHv1GHhsR5W2Jc3f9wbl
+         aoMEtsvLKGF2jCdEocQKIpl+GlNFrtzZ7mJL81DHvao5fs6lUQNIZEo3GtN+XceP27
+         xSukW/8Lk5EErprEwmdjgGjMdPaClkKSu0Wr3dnhD/rOdUTg70/RXN3OGM22CJvoIb
+         uv4lJrDJO0MppA7gxqEymrMIBYlMOg4phXnoBa/6gt7VbalvsYGBrwEwwkU0YYlx+/
+         uG/1WgJFolcc1k4562DOmQUC1cpbTrVScYqlNnbV1F69V17zfrp/rKreqFRUca3EQl
+         +4Xc84EH+aJVtHcHIUQZ1p9Xu6F2ITs0LweJFdXOOEWwnb4r9rZD2tiQNMXvvuDDFz
+         Tn5v3ToFoQQcvouNcKm5V9nCMbSBhfOEScgwWLNj/eB7lfMxJGJ8sTl0Ev5/OUM1TV
+         u3IkoFSn9PR9lRGqRAjpFDwe5+DNBndlGpz39sBl+ikTgxXJBvd
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Rose Kunkel <rose@rosekunkel.me>
+Subject: [PATCH] submodule: mark submodules with update=none as inactive
+Date:   Sat, 19 Jun 2021 21:44:49 +0000
+Message-Id: <20210619214449.2827705-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.32.0.272.g935e593368
+In-Reply-To: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
+References: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-References: <cover.1622580781.git.jonathantanmy@google.com> <cover.1623949899.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1623949899.git.jonathantanmy@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 19 Jun 2021 13:01:02 -0700
-Message-ID: <CABPp-BFQhBN-MEGgkyK7gcnuQp01Xfj17TrTcH04yuadXuRu3Q@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] First steps towards partial clone submodules
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 17, 2021 at 10:13 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> Quoting from [1]:
->
-> > I'm happy with Jonathan and Peff's responses on patch 3; as I
-> > mentioned above I just didn't understand the original code before
-> > Jonathan's changes.  (Perhaps some comments could be added to clarify
-> > that code area, but again that's clarifying the code that existed
-> > before Jonathan's patch so it doesn't need to be part of his series.)
-> > So that only leaves my nitpicks on patches 1 & 4; otherwise the series
-> > looks good to me.
->
-> I've addressed Elijah's comments on patches 1 and 4.
+When the user recursively clones a repository with submodules and one or
+more of those submodules is marked with the submodule.<name>.update=none
+configuration, the submodule will end up being active.  This is a
+problem because we will have skipped cloning or checking out the
+submodule, and as a result, other commands, such as git reset or git
+checkout, will fail if they are invoked with --recurse-submodules (or
+when submodule.recurse is true).
 
-Yep, patches 1, 2, 4, and 5 are Reviewed-by me.  While I looked over
-Patch 3, I made Peff explain it to me, so he's the one who reviewed
-that one.  ;-)
+This is obviously not the behavior the user wanted, so let's fix this by
+specifically setting the submodule as inactive in this case when we're
+cloning the repository.  That will make us properly ignore the submodule
+when performing recursive operations.
+
+Note that we only do this when the --require-init option is passed,
+which is only passed during clone.  That's because the update-clone
+submodule helper is also invoked during a user-invoked git submodule
+update, where we explicitly indicate that we override the configuration
+setting, so we don't want to set such a configuration option then.
+
+Reported-by: Rose Kunkel <rose@rosekunkel.me>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/submodule--helper.c |  5 +++++
+ t/t5601-clone.sh            | 24 ++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index ae6174ab05..2e14cc7a26 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2102,6 +2102,11 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	if (suc->update.type == SM_UPDATE_NONE
+ 	    || (suc->update.type == SM_UPDATE_UNSPECIFIED
+ 		&& update_type == SM_UPDATE_NONE)) {
++		if (suc->require_init) {
++			key = xstrfmt("submodule.%s.active", sub->name);
++			git_config_set(key, "false");
++			free(key);
++		}
+ 		strbuf_addf(out, _("Skipping submodule '%s'"), displaypath);
+ 		strbuf_addch(out, '\n');
+ 		goto cleanup;
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index c0688467e7..efe6b13be0 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -752,6 +752,30 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
+ 	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
+ '
+ 
++test_expect_success 'clone with submodule with update=none is not active' '
++	rm -rf server client &&
++
++	test_create_repo server &&
++	echo a >server/a &&
++	echo b >server/b &&
++	git -C server add a b &&
++	git -C server commit -m x &&
++
++	echo aa >server/a &&
++	echo bb >server/b &&
++	git -C server submodule add --name c "$(pwd)/repo_for_submodule" c &&
++	git -C server config -f .gitmodules submodule.c.update none &&
++	git -C server add a b c .gitmodules &&
++	git -C server commit -m x &&
++
++	git clone --recurse-submodules server client &&
++	git -C client config submodule.c.active >actual &&
++	echo false >expected &&
++	test_cmp actual expected &&
++	# This would fail if the submodule were active, since it is not checked out.
++	git -C client reset --recurse-submodules --hard
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
