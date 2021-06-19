@@ -7,81 +7,78 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F8DAC2B9F4
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 17:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B7AC49361
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 20:01:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F25C6610A1
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 17:31:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B44C2611B0
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 20:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234925AbhFSRdU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 13:33:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
+        id S230013AbhFSUD1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 16:03:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234900AbhFSRdT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 13:33:19 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A2EC061574
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 10:31:07 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id x196so14718896oif.10
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 10:31:07 -0700 (PDT)
+        with ESMTP id S229522AbhFSUD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jun 2021 16:03:26 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35BF1C061574
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 13:01:14 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id s17so6263479oij.11
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 13:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=uYkdHupm8lrwVh5u0S3FjHgMjvGGg8lSWzQx752jX4M=;
-        b=bN6fm6C3exxd+SRxwW3pkTwwvcJ8XbwIlI6B/w8tZ9ivgFli9qKNxMeNoenO8mFoU8
-         31j0aVkitNRr3IyGTtHG27YfuBP7pKaUm6tIyxiFvaVbTGrE9xEt8cQaUOEqwa8TMnpa
-         OvOkY1FHwtDTdlZ1C24Y/RODMq6/nZTsXaiQ0wpn4SS6kMnTJBq9aEzJyBtx9Az/6K4M
-         xGRxwB05fCQhps7TPsUL3RJhyImdCdakiOjBdhNfbv7eucO977TPyGnVxuyP1dvu3oZG
-         vF5OQVmZK10/5cIwMSEN2qlQY3VIZK4EN3pjhZ27h83mTJiTy70Vk+65cCmBvpu/qphz
-         s9Tw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HN1kj3KOdXsFxU04CgeoHs/9MQXd4AKTSPNSmiSpzW4=;
+        b=kxUMDZ1VxtposULAPfmhYISCuElQgbCthWpD5lbn0MZYABmE4NaTRwDD+wijh3yCrS
+         WSYobhUoA5oLRbAL3poa94qGKfz1hcGTYfUq/fbU23F0Z0Qm/3ochQnjrUjUL++DVjmP
+         S7g5lkcN2WUvo5hpdg2J2DT3PFKQBFCfAkvI6z0EE47fLkL5M/Yb1GDWhfM8SyS+n8Dm
+         MyUeaaM0KFQzo+lYNrvLlbmZ+DdTpadssFqKmgJbnIb6cLRvwh16UF8iO+MrWoe/Auzx
+         omFdAMA6Mvd5yIUcffOM1c3Sl8OSUhH0G6pKRDydvULQHZSwzTUC8o3nIKvUFgb97p6o
+         X7Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=uYkdHupm8lrwVh5u0S3FjHgMjvGGg8lSWzQx752jX4M=;
-        b=haHUMcKlooo3aUm89GsNEjTqndSv7ET8GeVkKz7l7Fk934xRgw0yIquPJreTaVcz0T
-         KNpLPEUtfN7fGaL5DaOZQ6IDYSoIGplJQArzEYDAB0e3DEuXnMPHqTtkeWuohiOtJHU/
-         cPFJDAJ2uhfonLM79xjOJgCuV/agUi8QM+7a2JlY04bS6cRtq2Uatbb6xSjoPFGMNQ3f
-         JX2/uIvZMPx/x2uwJYBuaojito9/8ceHW1CwaAeZo8CKqwDo/XNHnknhP2tsYKWFgapl
-         NLkATsm7tCkHm0GAMm6EicD0BtGwrbNAzrZw2XB3y+RD5lC8stfJM6LdF4fVFgnOoXCU
-         E1mw==
-X-Gm-Message-State: AOAM5313T11MTkamTFytTZZMVIjBW63YYehHX6A5A0skTqrvoTzyxauQ
-        OmOfxpIpKJ/93eBe/U/hRNk=
-X-Google-Smtp-Source: ABdhPJxKleNTeL3tOBVryxRTxb9SLTyM2i9tNOYpB4Cbgm6M6q19eyeOoaqxqy3jP8R+7/p59lay2g==
-X-Received: by 2002:aca:aad4:: with SMTP id t203mr11547521oie.149.1624123866739;
-        Sat, 19 Jun 2021 10:31:06 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id o20sm2693100otl.2.2021.06.19.10.31.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jun 2021 10:31:06 -0700 (PDT)
-Date:   Sat, 19 Jun 2021 12:31:05 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
-Cc:     Barret Rhoden <brho@google.com>
-Message-ID: <60ce29d9144e9_cc2b1208f8@natae.notmuch>
-In-Reply-To: <8921ac50-e628-9a60-2a8d-1b8cc2a5a056@gmail.com>
-References: <20210618221104.42260-1-rybak.a.v@gmail.com>
- <8921ac50-e628-9a60-2a8d-1b8cc2a5a056@gmail.com>
-Subject: Re: [PATCH] blame: fix typo in documentation
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HN1kj3KOdXsFxU04CgeoHs/9MQXd4AKTSPNSmiSpzW4=;
+        b=a4+/sJ6Zc+C5nqrIgAAefnVk0r4zdrJgxNzj7p1zHdJeXmYxj6lv+cMWGx945oJ/77
+         pm2HRVTfHaaOLwWAt9wBRKglpRN4c9JCHQhNFHTdDz6TDv97DQt9T71WBGx/RUuKY20k
+         OrSv55t/57IzE/MmVG6aLdQvVYQ7uKE6s+pd++Q2OPak0//Gu+uuFAoNA3Akvua3B0v3
+         +dfm6eDw22z6HDd4M9YnC3XIckidV0YT94THsL/ugbgfPOwc+mvMrfjqCypT+C4Za5wg
+         uNCOLJY+oRDXkE7vphN+fGO3liz5yWeEA5Fq4AyQLq+QqWB05dnsVftb7lrB+MoFiKj9
+         +x+Q==
+X-Gm-Message-State: AOAM530oxen9yOxs7+UVQnIw9CtABVpr6ePcpzW26V0Ny2hkn3bxCmFJ
+        eQaRPftKpfEpQVJrc41XTCAudXXBRUiW7tCD2zw=
+X-Google-Smtp-Source: ABdhPJxj/RYx7W+4dT+Ojy+2ZYO8QGsk9PBS0mLHvC4KOd9zOErkLIAJ1nN5E6CaWUvJWCap51c2wpV2ahKR3eB7JIs=
+X-Received: by 2002:aca:f482:: with SMTP id s124mr18967220oih.167.1624132873447;
+ Sat, 19 Jun 2021 13:01:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1622580781.git.jonathantanmy@google.com> <cover.1623949899.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1623949899.git.jonathantanmy@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 19 Jun 2021 13:01:02 -0700
+Message-ID: <CABPp-BFQhBN-MEGgkyK7gcnuQp01Xfj17TrTcH04yuadXuRu3Q@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] First steps towards partial clone submodules
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya wrote:
-> That above is not typo fixing; that is correcting configuration variable 
-> name.
-> 
-> PS: I have to download mbox of this thread and reply from it because I 
-> didn't receive the thread on my Thunderbird, regardless of CCing Git ML.
+On Thu, Jun 17, 2021 at 10:13 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> Quoting from [1]:
+>
+> > I'm happy with Jonathan and Peff's responses on patch 3; as I
+> > mentioned above I just didn't understand the original code before
+> > Jonathan's changes.  (Perhaps some comments could be added to clarify
+> > that code area, but again that's clarifying the code that existed
+> > before Jonathan's patch so it doesn't need to be part of his series.)
+> > So that only leaves my nitpicks on patches 1 & 4; otherwise the series
+> > looks good to me.
+>
+> I've addressed Elijah's comments on patches 1 and 4.
 
-This is something I've noticed; I can always see mails on the archive,
-however, I don't receive them on my inbox until much later.
-
--- 
-Felipe Contreras
+Yep, patches 1, 2, 4, and 5 are Reviewed-by me.  While I looked over
+Patch 3, I made Peff explain it to me, so he's the one who reviewed
+that one.  ;-)
