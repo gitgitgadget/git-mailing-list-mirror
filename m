@@ -2,118 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63FE9C2B9F4
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97521C2B9F4
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 11:12:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 351EC6120A
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:59:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A9F961264
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 11:12:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232990AbhFSIBU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 04:01:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52442 "EHLO
+        id S233577AbhFSLO4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 07:14:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229466AbhFSIBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 04:01:20 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4FD9C061574
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 00:59:09 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id g6so9567109pfq.1
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 00:59:09 -0700 (PDT)
+        with ESMTP id S232892AbhFSLOz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jun 2021 07:14:55 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E45AC061574
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 04:12:44 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id ho18so20182780ejc.8
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 04:12:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IKAwLhIfuaIYJDyvc10Od/7qd1zI7rqPnBhjPXbkE7M=;
-        b=rVFjZn32yzr6YcbgVCqzvFf6HoGikHBMb5m5SO0bFXTZU+jDbrmKKSZWkOfMJCueMI
-         37rNwjg3oPDBLJYeBUJeTaHKcuA8sv6K8WCw2YnXWWFpONYwRATLqR1xtgTAC4vl3ZQL
-         hnwcqC1dVvrDvAD40dzeDjMQYHnIMwdWqr4Zx4tH57z8Klh+ZXg+lKaotocP3+e48pa6
-         4dMN+201kw049RRPq7y/+jog2jXeybSlAAQdCn9HzDdug1Z/+oiWPL8STF+sBJsntRK+
-         7C7kllgoJPCUstAsdxgZHBdlm/jXG9YIDhSHB9QX0XgocmdJm7OlBjR5eele+tpMetHZ
-         BsgA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ef8pdN7QZLLJ2cjc0sXbPqB3CFwbYKTlfy3S1RX5C+w=;
+        b=f0Smi8dFOm7Ovi9owVRdBQQXY6PQ5RCrQsZBz1/eqWKd9qkkKcO6Wj08VnM/uY2/79
+         wzA5oqwuPed6ADiIiD7QHxeLqfCslJE/TF3965QK6vWVohtc3Nvm2IGsNT8z1wwkdY/t
+         3m1T/ZWeQQzjtCzv98+VOx6enHOMwc4iI82Vsoq9M3z2spJK0vN9mGNtHaYftvSOqI2F
+         MnvGXYnsL3u/PEjigy228mr48xpss4EgXSAjnv0aTPMKNLCz7qTVJw+O81EDHysasonW
+         fBHzooCncLBy5uIO+rQHs/N9aJuedHDK12A31dOUxrNdLtO+VOjdLZYbKgSuDMqbwwM/
+         D/RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IKAwLhIfuaIYJDyvc10Od/7qd1zI7rqPnBhjPXbkE7M=;
-        b=B6s1KlIJzPXF5RX0TB6fz6sP/wM2QLVCFFW3P9Ore+jpHjj942PQ+ntAerK5YfzcQr
-         S7mtTP/henJI31uA9SoH9hM6Ju58Arjnw6DTd/8HeIsjHIcu4MT5RTVhcW8dAKVR8HnD
-         7pf+no5GXcc+tMqg7Y8fNtVIa4UO1Qc9tTs3qEv0H6pjjgBCtaZUKbJ/spREXWsy/fWY
-         w+HWE8Wg/FQsVdFcyw+eiNktRm9OFFJd+hih3tTQRAcevK6QUCRHhLXLZe9Sw2lptIzl
-         EwF/RZtfs9JbIt/GlltLiidxkDOKXmXXLEiNHLPlOBjzBo3admE1CeAqT/FdrHH64p3C
-         eR9A==
-X-Gm-Message-State: AOAM530GoZRNhD36GZoTidY6AZu/m1/YJSKtHi9YOqFerZViZ/DcqwZb
-        gCGJylPTzxYmPx8M4Zqp4IvXlB2Wtw6BWl97PNPktEKTtuI=
-X-Google-Smtp-Source: ABdhPJzCGM6cwOgD8N0W/POpOkWVRM943veMFmWyIvkncwMDaQyY7H+I35bJ7kwvwkux4+JHNhjEG/+6c3Y14C+04yY=
-X-Received: by 2002:aa7:9613:0:b029:2ec:9eea:cc4c with SMTP id
- q19-20020aa796130000b02902ec9eeacc4cmr8961238pfg.12.1624089548994; Sat, 19
- Jun 2021 00:59:08 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ef8pdN7QZLLJ2cjc0sXbPqB3CFwbYKTlfy3S1RX5C+w=;
+        b=O0sBPAiFMuxTLf0LFiNDoVhgVhN+19SV5MdHStj5Pqb0FZ3Gy7AKeGukmAfG1w8Ybm
+         GFzUgqA9uUn/OEjl5DHRfBNJVMV0FX+TdPfVb3DgcmElUObbj3Xg/s8EZXM2KGBEeF3+
+         3d00rePpBSrFLqwoSZfZ7eK3wrW6G1+15mHTHU7kRJAnvm/CWo+qHrrMAI8bjsQ9VY53
+         OWoEK2BlrfSfGrQCFFoe7ANvoFOh5t3ry3oBvfalu3+cODv2xhVlqzX4ZAAKMVYETy3I
+         yge6jPwfitruRJMMflWVanPldQkCIWSPPCfZThVpzgrnSGVIwrZse6ln0uP7Dpw89G3l
+         q0Yw==
+X-Gm-Message-State: AOAM530/RtqToulQjwCAWPDKzkzN30d+eVMpPhp81/syxAC0C1l74H3a
+        IhSbDzSlaNJBskyVpru+zfcP6+C0LorhmjOYf8dVhg==
+X-Google-Smtp-Source: ABdhPJwBtw3uYPbbMc29G2VRTjV52dVvZprdM87NpR/5pYByRQeo6BaxpPjUqlmYjyAgcLXmyrA5IA==
+X-Received: by 2002:a17:907:9d1:: with SMTP id bx17mr5959400ejc.322.1624101162909;
+        Sat, 19 Jun 2021 04:12:42 -0700 (PDT)
+Received: from ?IPv6:2001:a61:34c8:7e01:39e2:683d:7a5c:2a16? ([2001:a61:34c8:7e01:39e2:683d:7a5c:2a16])
+        by smtp.gmail.com with ESMTPSA id s2sm7786180edt.53.2021.06.19.04.12.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 19 Jun 2021 04:12:42 -0700 (PDT)
+Subject: Re: [PATCH] blame: fix typo in documentation
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Barret Rhoden <brho@google.com>, git@vger.kernel.org
+References: <20210618221104.42260-1-rybak.a.v@gmail.com>
+ <8921ac50-e628-9a60-2a8d-1b8cc2a5a056@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <7cbbd59b-d5e3-4b96-a1ee-a242a7839028@gmail.com>
+Date:   Sat, 19 Jun 2021 13:12:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-References: <YM0IpOFH4Sy9wWaE@google.com> <20210618215848.794617-1-jonathantanmy@google.com>
- <020d01d76491$dcfe7c60$96fb7520$@nexbridge.com>
-In-Reply-To: <020d01d76491$dcfe7c60$96fb7520$@nexbridge.com>
-From:   Matt Rogers <mattr94@gmail.com>
-Date:   Sat, 19 Jun 2021 03:58:57 -0400
-Message-ID: <CAOjrSZtKxEbMEbNZ+KEDfoJSOBSyKPY+PQRaP9sb7xgXiEFJZg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] MVP implementation of remote-suggested hooks
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <8921ac50-e628-9a60-2a8d-1b8cc2a5a056@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 19, 2021 at 3:32 AM Randall S. Becker
-<rsbecker@nexbridge.com> wrote:
->
-> On June 18, 2021 5:59 PM, Jonathan Tan wrote:
-> This brings up a very awkward question: How are enterprise git servers go=
-ing to deal with this? I do not see the standard Pull Request mechanism ava=
-ilable in GitHub handing placing hooks in different places during a merge o=
-peration. Or will this entire concept be omitted from PR?
->
+On 19/06/2021 07:27, Bagas Sanjaya wrote:
+> On 19/06/21 05.11, Andrei Rybak wrote:
+>> As can be seen in files "Documentation/blame-options.txt" and
+>> "builtin/blame.c", the name of this configuration variable is
+>> "blame.markUnblamableLines".
+>>
+>> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+>> ---
+>>   Documentation/config/blame.txt | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/config/blame.txt 
+>> b/Documentation/config/blame.txt
+>> index 9468e8599c..4d047c1790 100644
+>> --- a/Documentation/config/blame.txt
+>> +++ b/Documentation/config/blame.txt
+>> @@ -27,7 +27,7 @@ blame.ignoreRevsFile::
+>>       file names will reset the list of ignored revisions.  This 
+>> option will
+>>       be handled before the command line option `--ignore-revs-file`.
+>> -blame.markUnblamables::
+>> +blame.markUnblamableLines::
+>>       Mark lines that were changed by an ignored revision that we 
+>> could not
+>>       attribute to another commit with a '*' in the output of
+>>       linkgit:git-blame[1].
+>>
+> 
+> That above is not typo fixing; that is correcting configuration variable 
+> name.
 
-Related question, if a project had a collection of suggested hooks,
-and a contributor wanted
-to update them in relation to a new feature or code change, would they
-then have to create two
-separate patches/PRs?  That feels like it would decentralize discussions/re=
-view?
+This issue in documentation of git-blame was introduced when the config 
+option
+was added in commit 8934ac8c92 (blame: add config options for the output of
+ignored or unblamable lines, 2019-05-15).  It first appeared in v6 of that
+series [1] where it was called blame.maskIgnoredUnblamables.  In v7 [2] 
+it got
+renamed to blame.markUnblamableLines.  v7 of that series is the first 
+time when
+incorrect blame.markUnblamables appears in Documentation/config/blame.txt.
 
-For example, if I maintained a project on GitHub and a contributor
-wanted to add a clang-tidy
-invocation as a suggested hook, as well as a config file for it.  What
-would the suggested workflow be?
+As far as I can tell, it's most probable that Barret Rhoden just missed one
+place when renaming this config option between v6 and v7.
 
-"Open 2 Pull Requests one that updates both branches and do reviews
-independently"?
+If we shouldn't refer to this patch as typofix, how about
 
-If it was a mailing list would I have to send two separate patches?
+	blame: fix name of blame.markUnblamableLines in docs
 
-I'm not familiar with any workflows or tools that allow you to review
-and accept changes to
-two branches as part of the same series of changes.
+or
 
-I also think that the history wouldn't be very clear in this case,
-since there won't be any obvious
-connection between updates to the suggested-hooks and updates to the
-rest of the history in
-this case (other than timestamps I guess, but I think that's a
-relatively weak form of association)
+	blame: correct name of config option in docs
 
-> It seems like changes to hooks have to be managed in a similar way to sta=
-ndard managed files rather than as exceptions.
->
-> -Randall
->
+or
 
+	config/blame.txt: correct name of blame.markUnblamableLines
 
-Thanks,
-Matthew Rogers
+?
+
+[1] https://lore.kernel.org/git/20190410162409.117264-5-brho@google.com/
+[2] https://lore.kernel.org/git/20190515214503.77162-6-brho@google.com/
