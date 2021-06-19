@@ -2,120 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 155A1C2B9F4
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 11:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 910E2C2B9F4
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 13:32:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D73B560FEE
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 11:29:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 719C56135A
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 13:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233756AbhFSLba (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 07:31:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41674 "EHLO
+        id S234291AbhFSNem (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 09:34:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233146AbhFSLb3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 07:31:29 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77BFEC061574
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 04:29:16 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id d7so12250113edx.0
-        for <git@vger.kernel.org>; Sat, 19 Jun 2021 04:29:16 -0700 (PDT)
+        with ESMTP id S234262AbhFSNel (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jun 2021 09:34:41 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CEB5C061574
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 06:32:29 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id p4-20020a17090a9304b029016f3020d867so5452642pjo.3
+        for <git@vger.kernel.org>; Sat, 19 Jun 2021 06:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dQ4qXRvL708xN+TIHW3sVcMMyq4ks4eBICXJrbDPhZ0=;
-        b=nu5of01W5FZrOCbW8yG2AJk+GHSYN5T4t0GPvHpUY14U1qBoD6PkfU2DZUkRncn3GA
-         /mPGDDxMDqbx8FacgSVhovqyLJwzxlPBGlJoO5BeC97xtGcLx4zaX+uvPoAT8zF9DNY7
-         qQ/OIp+co829E3loMTIYXpRFP6jRRFcHT+xdTjBuGackmeaQsXugFbIixh31uq8HTPG+
-         KPazLF0DXLsCOgm3h07ownpUduROgG7fsqQvp/saXnqQHG6TT5BJbeZeN4MfAPgtZz69
-         0DVHWOXTmwzIYhxvqfnK/xqcICdudKTV2nWyLyu4JD5jjs3vZraJ3/Lz5w6dBrNI9Kbx
-         NP7Q==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :cc:to;
+        bh=fSOnboNy2OLFxOTDPvrE0rLMM+kgYRieWOMwRwdWHb0=;
+        b=kUx1cEvq2ypaGcx74YQOE6rNB0/8oUbNwQsMIeFw2kNzLWPwXJTC9h71qtdj3UHHLD
+         8amFQvaZKTDTxftkIgXZVTnkqWisxtO2FLF462rxDvGROZl5dJxZpRbxtDAkzDXzmg/A
+         WEGRrmhsJdolgg1mvr5IsTPx9L7JP75bL5EBI96AQUP2O9eRs1daH+2clNmUO3Ep+0kn
+         mnv/Q9iXDogzQ3CzsUzEHqrztYE7I059RJrAVR9M2rZJ1vaUz1Fi8SpQIKK+84abTrSf
+         jP6KlzqQ7FPn8WOqq917v9JsZtC9NgApqE9l9TB2ldOawkbJcWPxNbB04WlZs8YA3AOy
+         9BPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=dQ4qXRvL708xN+TIHW3sVcMMyq4ks4eBICXJrbDPhZ0=;
-        b=HsNrPMEOCbE8++3aJsFkim5O72GGbPdCvDG8PnpwEvQrbANYL92TVp0hPaZ+K8kR82
-         KCGDwfEq4Z1GlLMNhsepP1zRRhevUaC4CWEUZDb2LXVrZ33SL75LfUQTsNyLu3itgSZx
-         2CuNo2rJMEwFne+RM40oIypX/itKo/KRD7kLXx41WD5yDIKLzPjL+CBQLxXqx+WUCkKQ
-         aHEX8dQL/eQkihqoOSAEySMAF1anF7GZqBkf9G/IA1BNs2st0yHyqRtS4HqLRVWj/nnD
-         +qDSCmE/N3aUtzvwQjwngWgPOm9XO4y8vJx2r2KSbvLk5VS8rhYTWe2+LMQjnCwLtJuJ
-         jvTg==
-X-Gm-Message-State: AOAM531Jhy8fQzdctVneiL074QVomYm3myEC/o+7VBnIiLrjne5q2naB
-        mDzDfLtaiyFsU2RHJFb5fmpszINJ/AXwQqueA9Dntg==
-X-Google-Smtp-Source: ABdhPJzEa8CDJgocy86OaTKoXjdamX6+q5iwxMqC+ZCDTAcKEAuapHyEz2d1rJYttkfZwvNgpsCPkQ==
-X-Received: by 2002:aa7:da8a:: with SMTP id q10mr4151391eds.81.1624102154069;
-        Sat, 19 Jun 2021 04:29:14 -0700 (PDT)
-Received: from titov.fritz.box ([2001:a61:34c8:7e01:39e2:683d:7a5c:2a16])
-        by smtp.gmail.com with ESMTPSA id q9sm7690098edv.31.2021.06.19.04.29.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jun 2021 04:29:13 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Barret Rhoden <brho@google.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v2] blame: correct name of config option in docs
-Date:   Sat, 19 Jun 2021 13:29:12 +0200
-Message-Id: <20210619112912.76136-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210618221104.42260-1-rybak.a.v@gmail.com>
-References: <20210618221104.42260-1-rybak.a.v@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:cc:to;
+        bh=fSOnboNy2OLFxOTDPvrE0rLMM+kgYRieWOMwRwdWHb0=;
+        b=m4W++6cl1HAKDQE0WWNA64fHV2FKgiyZm0SRPO7boAIaM8BId8KhEQ9cRpBV2EBw8n
+         HF+lcOR8c6r7tyXtjcRiad6HCHVd18HS+RuSM5TpPXZ4SJPasmga6y72AipFSMKoN3Uc
+         ojQ0aNm83Dxe5kYlSsYY/Xy90YDmAraprVIGZYG+OzQdXsVTn9KmLwJCPxLycHGj3w3A
+         N6EVRzjTiAi+N34dJ0DtcslSakMzTRyukPvm04n7PDRDz7nn5U1Ws+yZ2zyg8nueNtGk
+         CeXaamAkz+TnpQ4MuOT6tass6LAoeXCtR7ot1SxFGmGfJHvkPQ6c8UOK+chISV77No5A
+         eJDA==
+X-Gm-Message-State: AOAM531aRA/HMRPJylikY7eSg2ifyOlQ51tiN99Hl6pkeze2VQdcRIyz
+        VmCiWoJ/XD31ia5JH+UQfJmsdoHVwqV+ZuUC
+X-Google-Smtp-Source: ABdhPJyYkkz8GytNZKmNFgKf0a9FxOu0tu9f2ePVd0y7axPznOBrUigw5adq3tzJRHXzTGxlChjYiw==
+X-Received: by 2002:a17:902:8e88:b029:11e:b703:83f1 with SMTP id bg8-20020a1709028e88b029011eb70383f1mr9218952plb.79.1624109548774;
+        Sat, 19 Jun 2021 06:32:28 -0700 (PDT)
+Received: from smtpclient.apple ([119.82.107.60])
+        by smtp.gmail.com with ESMTPSA id g18sm10613573pfi.199.2021.06.19.06.32.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 19 Jun 2021 06:32:28 -0700 (PDT)
+From:   Atharva Raykar <raykar.ath@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: [GSoC] My Git Dev Blog - Week 5
+Message-Id: <D32894F5-FC76-4DD2-A2F6-E69AAE88C645@gmail.com>
+Date:   Sat, 19 Jun 2021 19:02:24 +0530
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Git List <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As can be seen in files "Documentation/blame-options.txt" and
-"builtin/blame.c", the name of this configuration option is
-"blame.markUnblamableLines".
+Here's the latest instalment of my weekly Git blog:
+http://atharvaraykar.me/gitnotes/week5
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+A peek at what's inside:
+
+ * The blog starts with a summary of all the relevant things
+   that have happened so far in my time with Git, including
+   the status of my submodule-related work.
+
+ * A question I had about reading the index into memory
+   (any kind of help would be appreciated!):
+   =
+http://atharvaraykar.me/gitnotes/week5#some-challenges-with-the-changes-th=
+at-are-cooking
+
+ * Reflections, mostly as a note to myself and to people who
+   might be in a similar position as me in the future.
+
+Have a great weekend :)
+
 ---
-
-Thanks to Bagas Sanjaya for review.  Changes since v1:
-
-  - tweaked commit message
-
-Range-diff:
-
-1:  e32c298ee8 ! 1:  6ea64765e7 blame: fix typo in documentation
-    @@ Metadata
-     Author: Andrei Rybak <rybak.a.v@gmail.com>
-     
-      ## Commit message ##
-    -    blame: fix typo in documentation
-    +    blame: correct name of config option in docs
-     
-         As can be seen in files "Documentation/blame-options.txt" and
-    -    "builtin/blame.c", the name of this configuration variable is
-    +    "builtin/blame.c", the name of this configuration option is
-         "blame.markUnblamableLines".
-     
-         Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
-
- Documentation/config/blame.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/config/blame.txt b/Documentation/config/blame.txt
-index 9468e8599c..4d047c1790 100644
---- a/Documentation/config/blame.txt
-+++ b/Documentation/config/blame.txt
-@@ -27,7 +27,7 @@ blame.ignoreRevsFile::
- 	file names will reset the list of ignored revisions.  This option will
- 	be handled before the command line option `--ignore-revs-file`.
- 
--blame.markUnblamables::
-+blame.markUnblamableLines::
- 	Mark lines that were changed by an ignored revision that we could not
- 	attribute to another commit with a '*' in the output of
- 	linkgit:git-blame[1].
--- 
-2.32.0
+Atharva Raykar
+=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
+=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
+=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
+=A4=95=E0=A4=B0
 
