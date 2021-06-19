@@ -2,341 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73914C48BE8
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 01:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73131C48BDF
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 02:12:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FB41611CC
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 01:31:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4839E6100A
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 02:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235345AbhFSBd2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 21:33:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52848 "EHLO
+        id S234001AbhFSCPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 22:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233675AbhFSBd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 21:33:27 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9DF6C061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 18:31:16 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id o21so5575139pll.6
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 18:31:16 -0700 (PDT)
+        with ESMTP id S229475AbhFSCPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 22:15:03 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1CDEC061574
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 19:12:53 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id ji1so12610739ejc.4
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 19:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tY5GDYo8JvJx1OH+v02buekfncdqWoLcooxycWXMx1A=;
-        b=mG+bcj5F+kiZivs3qAIr4lOWctdumk/16j3ls2ryNuf3KW8PoIBh5hmjEeUQjG8DFL
-         Rv13/rzeN5Pd+jmJJIjp4Dq8KG948VTfnqzrJR/SAOv2xMP0fDZautvncRPFwxJIkauh
-         oxKL/26swXa8xWPy/BCtLSb+LD5OMrTl3PkpCh+jIz324nHQZ2cyQ6GtNxAdEWZceJM4
-         MPiK5m7JBrs9lp3pCTxjRi9+/jQjxbiDgUdcIjDJUUjYg602KLPWMZjIfE7ljCALDmbS
-         bII/ZxveKC2I7+5QK30Op5hgYQCJk2MSFy5ls3qZOSV4/8B5jDBOyAGgZAp+M0UOtSst
-         dRiw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=eL+ivea0VzrnUWcPtI6LmjHUzskXlvuOzPdBpcnuxO0=;
+        b=JVvHZUHhsmxjrzUZTkFpxj82aESytpa09p6RhX7ImBb9DvNS1qWcZpsHl+8nzF8Ef5
+         oi2cZFNyipGnT8vgU5XYweAw5D2BXjlkBkEUWJoSVc6xgtVYgZeTepUxqvHQJJEOLmH8
+         JT84AfjIDAHGfckiuzEkAqyyrTsJMiNk4wjPLx1tisfrVfihKdivRvoveI4m8zwISZ76
+         pBNVHgscZz/OqpccyHvBW4WbCwhj2qDqF5r3mpaMasQ6ScAv8eWQSFMGqq2c49Z8BlqF
+         8dgRY2c8VopuF3ywWjWT8rYeFOKy2TT49msBqjEK+HZUvXT0pkMFMtYlI2Rj/oTXS1ov
+         iPnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tY5GDYo8JvJx1OH+v02buekfncdqWoLcooxycWXMx1A=;
-        b=LQO6XL8EHdBJSQPxsmyPu02JR4SGBTarr6T+kxihSHkJ8DD4N38SG8rtqk9r/iIDW/
-         7wOK9R/eATAjdKLxmvrejVl/Wj7O0NR2k8h1ZiEHuV5fhwLortkik0uUC/vI7AxommeI
-         WBfxR20xKp8axk7PXIODErldNI7NxUoQ9NSAMxJu0JcY/3NFObfLMDsoYKUaVbDeA3Pu
-         il66MmjHwSYINogiuxz1jZrpiKtpgZjVeFkLdAjV68PPz2ERDSgiJ6XUykyBnHwGj49U
-         N/gtQN7MtjjJGoZ8+kGTgfYKyjxfvRx6NcKY8WIUHAg8VoJtrvdY20kHAWMUdVmW2kNc
-         t43A==
-X-Gm-Message-State: AOAM531V6efUHYto7+OJqu+4RhZXDS4y9/WO4ZEtzQbDWiE8BQ9aovYH
-        Sx22a9E5Kh+ZFYO+5F5gmW/SlKc0kTA=
-X-Google-Smtp-Source: ABdhPJzNgRhYiaKrgRU3JhDjgwxi/MLBo0FpwTrQIt1hhlarYhRe1+Y0/ofa0QutFqTehhdJk9RN0g==
-X-Received: by 2002:a17:902:904a:b029:101:af84:4f55 with SMTP id w10-20020a170902904ab0290101af844f55mr7339494plz.80.1624066276292;
-        Fri, 18 Jun 2021 18:31:16 -0700 (PDT)
-Received: from athena.localdomain ([2402:800:63b8:a3d1:fb64:d06b:ab01:2de4])
-        by smtp.gmail.com with ESMTPSA id s123sm8733427pfb.78.2021.06.18.18.31.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 18:31:15 -0700 (PDT)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 4/4] t6402: use test_line_count_cmd to count # of lines in stdout
-Date:   Sat, 19 Jun 2021 08:30:35 +0700
-Message-Id: <20210619013035.26313-5-congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.32.0.278.gd42b80f139
-In-Reply-To: <20210615172038.28917-1-congdanhqx@gmail.com>
-References: <20210615172038.28917-1-congdanhqx@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=eL+ivea0VzrnUWcPtI6LmjHUzskXlvuOzPdBpcnuxO0=;
+        b=XkqTavy5dmK2uPQLlSVYUVzrNY71Rf+W5s+nhOnOmsx78xcnfGh7d/7hZByle2MvHv
+         NqHH5QMChcdTjQRWJlWhDBufkaCFIg7r5+Dcn330w4T1EGvCDJ2S9B1pY9Nx3FUBODei
+         SYFtYhBxL7rsYekU8ocs+4ifjVLf1Iw3/xwMCKCu6RyTaTTeXU27MpYSCYaRfMhbXXmX
+         mmlL4nilx2KNeRq4oaC642bVgS8o8ndwWj/4C9KurJikM2UpJ9WT0XJwWeUVQn9XKbvy
+         DPe9AraRl1RAAWqZD7keOvGNOry7A4FVuK1tYyuX3S1nhiOtfHkiDGQfVXCD0xfPZX1J
+         6Tfw==
+X-Gm-Message-State: AOAM531enI2dNy+4NAtWkj/+oifEEkiECTYwtb+UM3g5nCRq3jjL/foB
+        1o1z6Hm/4OF7JYbE5MFAwv8=
+X-Google-Smtp-Source: ABdhPJzc+8K1/MclqLNrAQE2YazLAXVAax9WDwqzpfnX+/0iPo8gGfixY3lA4PDlVZNURH+xKXDCPQ==
+X-Received: by 2002:a17:906:244d:: with SMTP id a13mr904907ejb.551.1624068771279;
+        Fri, 18 Jun 2021 19:12:51 -0700 (PDT)
+Received: from [10.28.18.12] ([212.102.57.166])
+        by smtp.gmail.com with ESMTPSA id q5sm1722879ejc.117.2021.06.18.19.12.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Jun 2021 19:12:50 -0700 (PDT)
+Subject: Re: [PATCH 3/3] bundle: remove "ref_list" in favor of string-list.c
+ API
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover-0.3-0000000000-20210617T111934Z-avarab@gmail.com>
+ <patch-3.3-887313d3b0-20210617T111934Z-avarab@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <23c4ce5f-7769-1d2c-3a97-ac9733f73a25@gmail.com>
+Date:   Sat, 19 Jun 2021 04:12:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <patch-3.3-887313d3b0-20210617T111934Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
- t/t6402-merge-rename.sh | 126 +++++++++++++++++++---------------------
- 1 file changed, 59 insertions(+), 67 deletions(-)
+On 17/06/2021 13:21, Ævar Arnfjörð Bjarmason wrote:
+> ---
+>   builtin/bundle.c | 12 ++++-----
+>   bundle.c         | 64 ++++++++++++++++++++++++------------------------
+>   bundle.h         | 20 +++++++--------
+>   transport.c      | 10 +++++---
+>   4 files changed, 55 insertions(+), 51 deletions(-)
+> 
 
-diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
-index 5d76cd6414..52bd35899e 100755
---- a/t/t6402-merge-rename.sh
-+++ b/t/t6402-merge-rename.sh
-@@ -105,10 +105,8 @@ test_expect_success 'pull renaming branch into unrenaming one' \
- 	git show-branch &&
- 	test_expect_code 1 git pull . white &&
- 	git ls-files -s &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 3 b.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd = 3 git ls-files -u B &&
-+	test_line_count_cmd = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -122,10 +120,8 @@ test_expect_success 'pull renaming branch into another renaming one' \
- 	git reset --hard &&
- 	git checkout red &&
- 	test_expect_code 1 git pull . white &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 3 b.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd = 3 git ls-files -u B &&
-+	test_line_count_cmd = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -138,10 +134,8 @@ test_expect_success 'pull unrenaming branch into renaming one' \
- 	git reset --hard &&
- 	git show-branch &&
- 	test_expect_code 1 git pull . main &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 3 b.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd = 3 git ls-files -u B &&
-+	test_line_count_cmd = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -154,14 +148,10 @@ test_expect_success 'pull conflicting renames' \
- 	git reset --hard &&
- 	git show-branch &&
- 	test_expect_code 1 git pull . blue &&
--	git ls-files -u A >a.stages &&
--	test_line_count = 1 a.stages &&
--	git ls-files -u B >b.stages &&
--	test_line_count = 1 b.stages &&
--	git ls-files -u C >c.stages &&
--	test_line_count = 1 c.stages &&
--	git ls-files -s N >n.stages &&
--	test_line_count = 1 n.stages &&
-+	test_line_count_cmd = 1 git ls-files -u A &&
-+	test_line_count_cmd = 1 git ls-files -u B &&
-+	test_line_count_cmd = 1 git ls-files -u C &&
-+	test_line_count_cmd = 1 git ls-files -s N &&
- 	sed -ne "/^g/{
- 	p
- 	q
-@@ -330,8 +320,8 @@ test_expect_success 'Rename+D/F conflict; renamed file merges but dir in way' '
- 		test_i18ngrep "Adding as dir~HEAD instead" output
- 	fi &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd = 3 git ls-files -u &&
-+	test_line_count_cmd = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -357,8 +347,8 @@ test_expect_success 'Same as previous, but merged other way' '
- 		test_i18ngrep "Adding as dir~renamed-file-has-no-conflicts instead" output
- 	fi &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd = 3 git ls-files -u &&
-+	test_line_count_cmd = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -374,8 +364,8 @@ test_expect_success 'Rename+D/F conflict; renamed file cannot merge, dir not in
- 	git checkout -q renamed-file-has-conflicts^0 &&
- 	test_must_fail git merge --strategy=recursive dir-not-in-way &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 3 -eq "$(git ls-files -u dir | wc -l)" &&
-+	test_line_count_cmd = 3 git ls-files -u &&
-+	test_line_count_cmd = 3 git ls-files -u dir &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -409,14 +399,15 @@ test_expect_success 'Rename+D/F conflict; renamed file cannot merge and dir in t
- 	git checkout -q renamed-file-has-conflicts^0 &&
- 	test_must_fail git merge --strategy=recursive dir-in-way &&
- 
--	test 5 -eq "$(git ls-files -u | wc -l)" &&
-+	test_line_count_cmd = 5 git ls-files -u &&
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 3 -eq "$(git ls-files -u dir~HEAD | wc -l)"
-+		test_line_count_cmd = 3 git ls-files -u dir~HEAD
- 	else
--		test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)"
-+		git ls-files -u dir >out &&
-+		test_line_count_cmd = 3 grep -v file-in-the-way out
- 	fi &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -432,14 +423,15 @@ test_expect_success 'Same as previous, but merged other way' '
- 	git checkout -q dir-in-way^0 &&
- 	test_must_fail git merge --strategy=recursive renamed-file-has-conflicts &&
- 
--	test 5 -eq "$(git ls-files -u | wc -l)" &&
-+	test_line_count_cmd = 5 git ls-files -u &&
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 3 -eq "$(git ls-files -u dir~renamed-file-has-conflicts | wc -l)"
-+		test_line_count_cmd = 3 git ls-files -u dir~renamed-file-has-conflicts
- 	else
--		test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)"
-+		git ls-files -u dir >out &&
-+		test_line_count_cmd = 3 grep -v file-in-the-way out
- 	fi &&
--	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
-+	test_line_count_cmd = 2 git ls-files -u dir/file-in-the-way &&
- 
- 	test_must_fail git diff --quiet &&
- 	test_must_fail git diff --cached --quiet &&
-@@ -496,9 +488,9 @@ test_expect_success 'both rename source and destination involved in D/F conflict
- 
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 2 -eq "$(git ls-files -u | wc -l)"
-+		test_line_count_cmd = 2 git ls-files -u
- 	else
--		test 1 -eq "$(git ls-files -u | wc -l)"
-+		test_line_count_cmd = 1 git ls-files -u
- 	fi &&
- 
- 	test_must_fail git diff --quiet &&
-@@ -540,9 +532,9 @@ then
- 		mkdir one &&
- 		test_must_fail git merge --strategy=recursive rename-two &&
- 
--		test 4 -eq "$(git ls-files -u | wc -l)" &&
--		test 2 -eq "$(git ls-files -u one | wc -l)" &&
--		test 2 -eq "$(git ls-files -u two | wc -l)" &&
-+		test_line_count_cmd = 4 git ls-files -u &&
-+		test_line_count_cmd = 2 git ls-files -u one &&
-+		test_line_count_cmd = 2 git ls-files -u two &&
- 
- 		test_must_fail git diff --quiet &&
- 
-@@ -559,9 +551,9 @@ else
- 		mkdir one &&
- 		test_must_fail git merge --strategy=recursive rename-two &&
- 
--		test 2 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two | wc -l)" &&
-+		test_line_count_cmd = 2 git ls-files -u &&
-+		test_line_count_cmd = 1 git ls-files -u one &&
-+		test_line_count_cmd = 1 git ls-files -u two &&
- 
- 		test_must_fail git diff --quiet &&
- 
-@@ -582,13 +574,13 @@ test_expect_success 'pair rename to parent of other (D/F conflicts) w/ clean sta
- 
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 4 -eq "$(git ls-files -u | wc -l)" &&
--		test 2 -eq "$(git ls-files -u one | wc -l)" &&
--		test 2 -eq "$(git ls-files -u two | wc -l)"
-+		test_line_count_cmd = 4 git ls-files -u &&
-+		test_line_count_cmd = 2 git ls-files -u one &&
-+		test_line_count_cmd = 2 git ls-files -u two
- 	else
--		test 2 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two | wc -l)"
-+		test_line_count_cmd = 2 git ls-files -u &&
-+		test_line_count_cmd = 1 git ls-files -u one &&
-+		test_line_count_cmd = 1 git ls-files -u two
- 	fi &&
- 
- 	test_must_fail git diff --quiet &&
-@@ -631,19 +623,19 @@ test_expect_success 'check handling of differently renamed file with D/F conflic
- 
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		test 5 -eq "$(git ls-files -s | wc -l)" &&
--		test 3 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one~HEAD | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two~second-rename | wc -l)" &&
--		test 1 -eq "$(git ls-files -u original | wc -l)" &&
--		test 0 -eq "$(git ls-files -o | wc -l)"
-+		test_line_count_cmd = 5 git ls-files -s &&
-+		test_line_count_cmd = 3 git ls-files -u &&
-+		test_line_count_cmd = 1 git ls-files -u one~HEAD &&
-+		test_line_count_cmd = 1 git ls-files -u two~second-rename &&
-+		test_line_count_cmd = 1 git ls-files -u original &&
-+		test_line_count_cmd = 0 git ls-files -o
- 	else
--		test 5 -eq "$(git ls-files -s | wc -l)" &&
--		test 3 -eq "$(git ls-files -u | wc -l)" &&
--		test 1 -eq "$(git ls-files -u one | wc -l)" &&
--		test 1 -eq "$(git ls-files -u two | wc -l)" &&
--		test 1 -eq "$(git ls-files -u original | wc -l)" &&
--		test 2 -eq "$(git ls-files -o | wc -l)"
-+		test_line_count_cmd = 5 git ls-files -s &&
-+		test_line_count_cmd = 3 git ls-files -u &&
-+		test_line_count_cmd = 1 git ls-files -u one &&
-+		test_line_count_cmd = 1 git ls-files -u two &&
-+		test_line_count_cmd = 1 git ls-files -u original &&
-+		test_line_count_cmd = 2 git ls-files -o
- 	fi &&
- 
- 	test_path_is_file one/file &&
-@@ -679,11 +671,11 @@ test_expect_success 'check handling of differently renamed file with D/F conflic
- 	git checkout -q first-rename-redo^0 &&
- 	test_must_fail git merge --strategy=recursive second-rename-redo &&
- 
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 1 -eq "$(git ls-files -u one | wc -l)" &&
--	test 1 -eq "$(git ls-files -u two | wc -l)" &&
--	test 1 -eq "$(git ls-files -u original | wc -l)" &&
--	test 0 -eq "$(git ls-files -o | wc -l)" &&
-+	test_line_count_cmd = 3 git ls-files -u &&
-+	test_line_count_cmd = 1 git ls-files -u one &&
-+	test_line_count_cmd = 1 git ls-files -u two &&
-+	test_line_count_cmd = 1 git ls-files -u original &&
-+	test_line_count_cmd = 0 git ls-files -o &&
- 
- 	test_path_is_file one &&
- 	test_path_is_file two &&
-@@ -861,8 +853,8 @@ test_expect_success 'setup merge of rename + small change' '
- test_expect_success 'merge rename + small change' '
- 	git merge rename_branch &&
- 
--	test 1 -eq $(git ls-files -s | wc -l) &&
--	test 0 -eq $(git ls-files -o | wc -l) &&
-+	test_line_count_cmd = 1 git ls-files -s &&
-+	test_line_count_cmd = 0 git ls-files -o &&
- 	test $(git rev-parse HEAD:renamed_file) = $(git rev-parse HEAD~1:file)
- '
- 
--- 
-2.32.0.278.gd42b80f139
+[snip]
+
+> diff --git a/bundle.c b/bundle.c
+> index 621708f40e..d36eeee1a5 100644
+> --- a/bundle.c
+> +++ b/bundle.c
+> @@ -162,14 +156,14 @@ static int list_refs(struct ref_list *r, int argc, const char **argv)
+>   		if (argc > 1) {
+>   			int j;
+>   			for (j = 1; j < argc; j++)
+> -				if (!strcmp(r->list[i].name, argv[j]))
+> +				if (!strcmp(r->items[i].string, argv[j]))
+>   					break;
+>   			if (j == argc)
+>   				continue;
+>   		}
+>   
+> -		oid = &r->list[i].oid;
+> -		name = r->list[i].name;
+> +		oid = r->items[i].util;
+> +		name = r->items[i].string;
+>   		printf("%s %s\n", oid_to_hex(oid), name);
+
+In function `list_refs` variable `name` that is used in a call to printf
+has been extracted by the previous patch.
+
+>   	}
+>   	return 0;
+> @@ -186,7 +180,7 @@ int verify_bundle(struct repository *r,
+>   	 * Do fast check, then if any prereqs are missing then go line by line
+>   	 * to be verbose about the errors
+>   	 */
+> -	struct ref_list *p = &header->prerequisites;
+> +	struct string_list *p = &header->prerequisites;
+>   	struct rev_info revs;
+>   	const char *argv[] = {NULL, "--all", NULL};
+>   	struct commit *commit;
+> @@ -198,17 +192,17 @@ int verify_bundle(struct repository *r,
+>   
+>   	repo_init_revisions(r, &revs, NULL);
+>   	for (i = 0; i < p->nr; i++) {
+> -		struct ref_list_entry *e = p->list + i;
+> -		struct object_id *oid = &e->oid;
+> +		struct string_list_item *e = p->items + i;
+> +		struct object_id *oid = e->util;
+>   		struct object *o = parse_object(r, oid);
+>   		if (o) {
+>   			o->flags |= PREREQ_MARK;
+> -			add_pending_object(&revs, o, e->name);
+> +			add_pending_object(&revs, o, e->string);
+>   			continue;
+>   		}
+>   		if (++ret == 1)
+>   			error("%s", message);
+> -		error("%s %s", oid_to_hex(oid), e->name);
+> +		error("%s %s", oid_to_hex(oid), e->string);
+>   	}
+>   	if (revs.pending.nr != p->nr)
+>   		return ret;
+> @@ -224,28 +218,28 @@ int verify_bundle(struct repository *r,
+>   			i--;
+>   
+>   	for (i = 0; i < p->nr; i++) {
+> -		struct ref_list_entry *e = p->list + i;
+> -		struct object_id *oid = &e->oid;
+> +		struct string_list_item *e = p->items + i;
+> +		const struct object_id *oid = e->util;
+>   		struct object *o = parse_object(r, oid);
+>   		assert(o); /* otherwise we'd have returned early */
+>   		if (o->flags & SHOWN)
+>   			continue;
+>   		if (++ret == 1)
+>   			error("%s", message);
+> -		error("%s %s", oid_to_hex(oid), e->name);
+> +		error("%s %s", oid_to_hex(oid), e->string);
+
+However, `e->name` in three places in function `verify_bundle` for two
+different instances of `struct ref_list_entry *` wasn't extracted into
+a variable by the previous patch. Could you please clarify this
+discrepancy?
+
+[snip]
+
+> diff --git a/transport.c b/transport.c
+> index 9d601c8c95..667c4e0cc6 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -147,13 +147,14 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
+>   	transport->hash_algo = data->header.hash_algo;
+>   
+>   	for (i = 0; i < data->header.references.nr; i++) {
+> -		struct ref_list_entry *e = data->header.references.list + i;
+> -		struct ref *ref = alloc_ref(e->name);
+> -		struct object_id *oid = &e->oid;
+> +		struct string_list_item *e = data->header.references.items + i;
+> +		struct ref *ref = alloc_ref(e->string);
+
+Similar question for `e->name` here.
+
+> +		const struct object_id *oid = e->util;
+>   		oidcpy(&ref->old_oid, oid);
+>   		ref->next = result;
+>   		result = ref;
+>   	}
+> +	string_list_clear(&data->header.references, 1);
+>   	return result;
+>   }
+>   
+> @@ -176,6 +177,7 @@ static int close_bundle(struct transport *transport)
+>   	struct bundle_transport_data *data = transport->data;
+>   	if (data->fd > 0)
+>   		close(data->fd);
+> +	bundle_header_release(&data->header);
+>   	free(data);
+>   	return 0;
+>   }
+> @@ -1082,6 +1084,8 @@ struct transport *transport_get(struct remote *remote, const char *url)
+>   		die(_("git-over-rsync is no longer supported"));
+>   	} else if (url_is_local_not_ssh(url) && is_file(url) && is_bundle(url, 1)) {
+>   		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+> +		string_list_init(&data->header.prerequisites, 1);
+> +		string_list_init(&data->header.references, 1);
+>   		transport_check_allowed("file");
+>   		ret->data = data;
+>   		ret->vtable = &bundle_vtable;
+> 
 
