@@ -2,107 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EED84C48BDF
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 23:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 286E2C49EA3
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 00:32:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF73F61264
-	for <git@archiver.kernel.org>; Fri, 18 Jun 2021 23:48:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FC0F613BD
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 00:32:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235145AbhFRXuh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Jun 2021 19:50:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58686 "EHLO
+        id S234186AbhFSAdh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Jun 2021 20:33:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234772AbhFRXud (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jun 2021 19:50:33 -0400
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20A79C061574
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 16:48:23 -0700 (PDT)
-Received: by mail-oo1-xc30.google.com with SMTP id n20-20020a4abd140000b029024b43f59314so1063071oop.9
-        for <git@vger.kernel.org>; Fri, 18 Jun 2021 16:48:23 -0700 (PDT)
+        with ESMTP id S232558AbhFSAdg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jun 2021 20:33:36 -0400
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E34DC06175F
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 17:31:24 -0700 (PDT)
+Received: by mail-qt1-x849.google.com with SMTP id r1-20020ac85c810000b02901fa9798cdb5so8856439qta.8
+        for <git@vger.kernel.org>; Fri, 18 Jun 2021 17:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=NP9HeiXtdcGalAtifGvzvRWlTv5MOSdqwdkltKcpipc=;
-        b=bhLWOYMycE8o+2vZZR89zIuMrHAl9Kg2vwe/P9AypMKFsnWM1DwKAwduixIn1s71O4
-         fFFmvQudR4ToMaZMIKKkMcosDov19g/A/tsLs6C/0uqBA0gTSPH2q2If2xxEd5/oYV/V
-         cpz+WZSxaopxupBKFgzqFZeiCB2q9t3XW2agAJJXxfDBUehqf4f1Evyk5nG//VMQFf/c
-         TWBF4oBSrHadgIA0hbW5O3GQYvikp42z2myyWi3AUKQ3LCN2mRsXMX9pRHzWuSlWw1G3
-         WI6nyzuFGlxUBP0kC+X2y4Jv1a5msoNBls2Qd6cXGQFB+3+dL0ApUW0ISHWX/04c2/+O
-         jisA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=FD5hcH6TGsKG1jGfaoqsS6DaiS/WNMR5Nj45sxbaHSE=;
+        b=tH2nP0bdTSRdMQc2278lvbAp/ayo5cYjoHCjGJFggcrVdJaeFM161PnQviDM/HfePT
+         Vidn1deJyY7o/3RZvWbeo30/9vY4wu5GyqpP2PMf0EheOv9mcp3LWT7SXXcUcfLPsKwh
+         w29eVjpm/4/tVdMr4X+E5nea2W4lheJKQKoOpaGxXiORUbBTQJb8oF0GPG4Z9+jN9AVk
+         nPY1yMiHtq6wNGiD9hEZ2DhR3hH8UMRTr8LVYKnRXiyhP6z4EYfH8AAr5BrAzuUBEpcq
+         LMU9ob4QdpAIYGzVDWbYXAK+eeP0cdyp/LAYQKP8IsnRuHgNpHEEAkjwXIOnvmlqsb7o
+         +IIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=NP9HeiXtdcGalAtifGvzvRWlTv5MOSdqwdkltKcpipc=;
-        b=Mhqf0mXmjw2B5iB6aqL24n6Es5TEdLD7Jn7VJ7/ogFGiyOA23OA9F8W78q5rs+2HOC
-         BSxrqFekSt/YYgPsFRXKBKzbyNT5lw6H/WTRUbKs6j9GKf628oagVS1GsDSyh6fWChof
-         mHTujODqFo62mITfkiQyRXBntWewjl66Htvtuh2FhbPmekreMEywv9Cn95ht6tDpLAa5
-         mPzg/q474abBXvchASYtgVWnkP16g3DJQqLn0hMjXrKUD5T5pncl5d7h7PyJji9XG6LE
-         2f6l3AuPDx+O1VEDcp1+ojS+onjIs1R0eAz/V62/7SolbDBLeT6bjqerJsQ7EzGz6jzn
-         Wwgg==
-X-Gm-Message-State: AOAM532QEodB09Kl2kpny+ZhWwVd+hRq8uZhE/vMjBBNb4gCJOIMWW9+
-        8G9MHFVM0nDkzRqcDbhkPtk=
-X-Google-Smtp-Source: ABdhPJyOunj7ypJqdl1VL3DuEMx4vmnpTlVvfKpc2cEZdwALMtzJThPSepfmveo3Mqm5I/YSJfocSg==
-X-Received: by 2002:a4a:3904:: with SMTP id m4mr11182043ooa.61.1624060102360;
-        Fri, 18 Jun 2021 16:48:22 -0700 (PDT)
-Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id b198sm2129044oii.19.2021.06.18.16.48.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Jun 2021 16:48:21 -0700 (PDT)
-Date:   Fri, 18 Jun 2021 18:48:20 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Dave Huseby <dwh@linuxprogrammer.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-        stefanmoch@mail.de, philipoak@iee.email, bagasdotme@gmail.com,
-        sunshine@sunshineco.com, avarab@gmail.com
-Message-ID: <60cd30c487a12_ca73a2084f@natae.notmuch>
-In-Reply-To: <20210618204348.GA3763@localhost>
-References: <20210512031821.6498-2-dwh@linuxprogrammer.org>
- <20210512233412.10737-1-dwh@linuxprogrammer.org>
- <60c0fc311144f_1096b2081f@natae.notmuch>
- <20210618204348.GA3763@localhost>
-Subject: Re: [PATCH v3] doc: writing down Git mailing list etiquette
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=FD5hcH6TGsKG1jGfaoqsS6DaiS/WNMR5Nj45sxbaHSE=;
+        b=DjI+CeMSEDnvd+Z8itUdcuzPGnImssl3LnWYyPS3DdSKQYGSQccLSDBPfUoKZ404TO
+         TtHlCAOL7rJp1DPNlY9BwRhEzncjUnZWPNBkEItKdXx2YyOTmeTGcniu7MW3/kdGAC8l
+         Is3FN2YOLSYZ9A57ANOA/q2h6Ed6Pr5vW7XSbdptio8GCqAQ4GeRHJ9Guu1HykG8o/Vu
+         qhtoPtrbHP2QhynZbe+a4R/fxNkh865n5HQl6ptw+No6tWSx6/iAInpv52Pj3RHL2e9p
+         rzH1VCVRHBmC9GWlDFhu+NnGhxgrocda3eYbPSJQKoGA8mmvyaU79jdgfI1kGWJsqdKW
+         H/lA==
+X-Gm-Message-State: AOAM532alafFnx6P9jdjTJy+izW2DimdGHhDAmwDlYDzE/XffoH9wDym
+        7iLGi0bzsCg9aLr12mmbfiXL96Hi9YeXJleHN53e+qXio6QcEhOS5ISAQeS2nosFK6dzxSkzYDH
+        Y2N8MjXq/lYQp8mIJ6TUet+n1JUB2UErNodEEm1N4ZFzCxhXUqmEQwBea+i6NaL27wFFRx2mpUg
+        ==
+X-Google-Smtp-Source: ABdhPJwo86avQyP29adO9ZSfehxyzWauVDO3kyxumP9vBanEBJTTAScCwxiHuAaq0x6MZKDU3Punr4xRjCVJUNoliGc=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:551d:e7ea:4a2f:6667])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:888e:: with SMTP id
+ d14mr16019401ybl.443.1624062683386; Fri, 18 Jun 2021 17:31:23 -0700 (PDT)
+Date:   Fri, 18 Jun 2021 17:31:16 -0700
+In-Reply-To: <20210619003118.1352300-1-emilyshaffer@google.com>
+Message-Id: <20210619003118.1352300-2-emilyshaffer@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20210619003118.1352300-1-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
+Subject: [PATCH v3 1/2] config: rename "submodule" scope to "gitmodules"
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dave Huseby wrote:
-> On 09.06.2021 12:36, Felipe Contreras wrote:
-> >What happened to this? I see value in having this document, so I would=
+To prepare for the addition of a new config scope which only applies to
+submodule projects, disambiguate "CONFIG_SCOPE_SUBMODULES". This scope
+refers to configs gathered from the .gitmodules file in the
+superproject, so just call it "gitmodules."
 
-> >be glad to pick it up if you've lost interest.
-> =
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+ config.c           | 4 ++--
+ config.h           | 2 +-
+ submodule-config.c | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-> I fell off of the face of the earth. My life turned upside down but it'=
-s
-> slowly righting itself. A number of things took me offline but the last=
+diff --git a/config.c b/config.c
+index f9c400ad30..a5fc4cacd5 100644
+--- a/config.c
++++ b/config.c
+@@ -3516,8 +3516,8 @@ const char *config_scope_name(enum config_scope scope)
+ 		return "worktree";
+ 	case CONFIG_SCOPE_COMMAND:
+ 		return "command";
+-	case CONFIG_SCOPE_SUBMODULE:
+-		return "submodule";
++	case CONFIG_SCOPE_GITMODULES:
++		return "gitmodules";
+ 	default:
+ 		return "unknown";
+ 	}
+diff --git a/config.h b/config.h
+index 9038538ffd..5faa72f3f5 100644
+--- a/config.h
++++ b/config.h
+@@ -42,7 +42,7 @@ enum config_scope {
+ 	CONFIG_SCOPE_LOCAL,
+ 	CONFIG_SCOPE_WORKTREE,
+ 	CONFIG_SCOPE_COMMAND,
+-	CONFIG_SCOPE_SUBMODULE,
++	CONFIG_SCOPE_GITMODULES,
+ };
+ const char *config_scope_name(enum config_scope scope);
+ 
+diff --git a/submodule-config.c b/submodule-config.c
+index 2026120fb3..ed8e671d17 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -637,7 +637,7 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
+ {
+ 	if (repo->worktree) {
+ 		struct git_config_source config_source = {
+-			0, .scope = CONFIG_SCOPE_SUBMODULE
++			0, .scope = CONFIG_SCOPE_GITMODULES
+ 		};
+ 		const struct config_options opts = { 0 };
+ 		struct object_id oid;
+-- 
+2.32.0.288.g62a8d224e6-goog
 
-> of which is my father nearing the end of his life. Things are stable fo=
-r
-> the moment so I am getting back in the saddle. Like I said in my last
-> update, I'm going to try to combine all of the contributions and
-> feedback into a patchset that includes =C3=86var's patches and cleaned =
-up
-> versions of mine on top.
-> =
-
-> Right now I'm trying to get my head back where it was.
-
-Sorry to hear that. Hopefully soon you'll find some familiar ground.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
