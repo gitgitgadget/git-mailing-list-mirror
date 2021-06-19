@@ -8,65 +8,66 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3824BC48BE5
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 734A2C2B9F4
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:03:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1CE56610A2
-	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:03:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E86C6120A
+	for <git@archiver.kernel.org>; Sat, 19 Jun 2021 07:03:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233840AbhFSHF1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Jun 2021 03:05:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40212 "EHLO
+        id S234075AbhFSHF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Jun 2021 03:05:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234049AbhFSHFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jun 2021 03:05:19 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0BBC061574
+        with ESMTP id S234036AbhFSHFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jun 2021 03:05:18 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1EABC06175F
         for <git@vger.kernel.org>; Sat, 19 Jun 2021 00:03:07 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id f2so13207411wri.11
+Received: by mail-wr1-x42c.google.com with SMTP id o3so13252977wri.8
         for <git@vger.kernel.org>; Sat, 19 Jun 2021 00:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=uGhjCe/GwTvTjve2UWlYUTZxnhGrkJJcbTkqB/X/7Pk=;
-        b=FZvSiy/UHEoQDIqu34xLzvUKhK0SzqJEXMYJQv2DEGxOxsEPVPxfpSXWL3Kf+9pwVj
-         KvWBJkiLde8y7FDhiQiHvoypoHRH6kEpbu3fMczvC9Thqf2SUbf6MxTJoSR5G+pmuutC
-         1JbLoL1HXKBzfz6nUT3l2gQFfvQMK8fggj3GJiUIT6576w+h5N6RDytCafQdGICe4cIi
-         ElubbCB28APW74qJa9yi/32MspjuZadRlye7IkIUMkGiF3lowt8SdQSrnivpWeAyt23Q
-         coXaU7xXYiB8QKernd3r3Demda763UqOSi+VVw5YsGiWBAP7VKdNqAcmv9mi2IpzxjFI
-         48Qg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=QrPsR+/+Y0fx01ZuHjFa/T8LVqomMCEjfnnX4uUqrmU=;
+        b=TSBEMfHR2J5EFh4JwLtngSeQOkH0I6IMIqnRK/LCCFqXyguIAXwKWHB9LpxbHhLvjn
+         FyDwEEAzepHKJmECerBH5e4fvgkB4M12vRjpXHYZLCuG3T8r/LC4CPRpye95rwZUe0Nr
+         WV+etqnCLfYmj9LcDRCHvJa81+j6Rj8vENaK1Bgh0AlCTUScvsHQg38ouYP8knf8NP2V
+         LSPbIc7ZZt3GAqmcqSnC72ulgf8eFv1Tqi+WDS4y/mvGvn+1y0txNtzwCpFQjvMsR1t/
+         2V4GdNC0YBJXMlUebJf2lYxYprlG64gFHb3XwHTiqXoqxMQ5VrQ4Chxj+CYKJNET5DhP
+         1CKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uGhjCe/GwTvTjve2UWlYUTZxnhGrkJJcbTkqB/X/7Pk=;
-        b=W4hH866gBpiHwe03jo1j+qyUj75yxJmiHGCRsT56P2WvUMklF3MEn6ITalS9h+Mw3n
-         z2rP4+Cz0mAgvhnBADM2j9yYBT8V1WRmtTfEzcmm5S4uxfZtNCr0DUbeIKkwQZEw4tDT
-         yjDteC4Li+se1QUBY1wbCABg83DT4mg0xNpPPjMOZ4EfIqACd7yM3N+dfAsLNkao04e6
-         zQ5HoZ7dUS+aAa06lcArj1s1btqRdkUy6f1WpH7eXraYCXArk85ax14Xg9gxdqeXaCZr
-         POaeAwe6cDPHCqv/IhG/h3sunK/X7ZUzeeMjs7LbIcnlYrBP625NXHY6khY57m8Zzj4M
-         tsjg==
-X-Gm-Message-State: AOAM532lzuuSMKAyUXDgvNA2KDRaiADL8yG999n+aVVfOerIdHR4fPvA
-        rsYPY/6QtrCSWrRvuy43FgLIR/cUWrU=
-X-Google-Smtp-Source: ABdhPJw2+cm5aGnsYEZ34IlAnYfoYdP/t9lGqi1us1Clo265TrI9wRmYrL1/6/peoXe/cIMkFh7pnA==
-X-Received: by 2002:adf:eace:: with SMTP id o14mr13341889wrn.159.1624086186032;
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=QrPsR+/+Y0fx01ZuHjFa/T8LVqomMCEjfnnX4uUqrmU=;
+        b=IjrwSOexe4Yu1hz/mNhQaPG0uaZrlEPtlUv8EP9du9CB58ETnkUTqg6EPCOXhnjeLO
+         PvAlpMd/mP8ElVBExNKHTkXAvzynjRcvRwoUtEjNA0kI/z+PhIoPfDHs5BA6pqv4web9
+         UM104tslAwclSRNRmZsSFMCLPjrvVahfWWZtL0dSSA0jl5Ed5ZRi2kmwV/7zXxD7THmT
+         I7kb2i10v5DWHxde1xXVRadSuRXzhZmLk19IVMERqHWf9U+Fhs8TNmyOeaWKQVRVDF22
+         YpAFTph7IKxFMKTG6QgDKQ217jTDLhTzABH37adzuzYRC/5mJHfAysOIK6UPsQv1o0HR
+         q7BA==
+X-Gm-Message-State: AOAM531nXRfM0x8LfMsrd+HD0f1durg2aR6hc0h055HbgQaySzOAkaR0
+        AaIga1nCzLVsGxFXXtUkB3PfQobW2L0=
+X-Google-Smtp-Source: ABdhPJxtfOHLQk5fKus9NLVXEeNpvdxcpnCd4QdssNdubAE12Ben6ceFwkk8wV7TJptWvcIPImHBRw==
+X-Received: by 2002:adf:fd90:: with SMTP id d16mr16302508wrr.35.1624086186516;
         Sat, 19 Jun 2021 00:03:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g17sm14080336wrh.72.2021.06.19.00.03.05
+        by smtp.gmail.com with ESMTPSA id p5sm11784215wrd.25.2021.06.19.00.03.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jun 2021 00:03:05 -0700 (PDT)
-Message-Id: <39a0d93c7bc1d30cc76c2fabef6ff66a9ae3e738.1624086181.git.gitgitgadget@gmail.com>
+        Sat, 19 Jun 2021 00:03:06 -0700 (PDT)
+Message-Id: <35a376db1fc144c68f72273363882ded42501cfd.1624086181.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.980.v3.git.1624086181.gitgitgadget@gmail.com>
 References: <pull.980.v2.git.1623763746.gitgitgadget@gmail.com>
         <pull.980.v3.git.1624086181.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 19 Jun 2021 07:02:55 +0000
-Subject: [PATCH v3 05/10] [GSOC] ref-filter: add %(rest) atom
-Fcc:    Sent
+Date:   Sat, 19 Jun 2021 07:02:56 +0000
+Subject: [PATCH v3 06/10] [GSOC] ref-filter: pass get_object() return value to
+ their callers
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
@@ -82,180 +83,80 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-In order to let "cat-file --batch=%(rest)" use the ref-filter
-interface, add %(rest) atom for ref-filter. "git for-each-ref",
-"git branch", "git tag" and "git verify-tag" will reject %(rest)
-by default.
+Since in the refactor of `git cat-file --batch` later,
+oid_object_info_extended() in get_object() will be used to obtain
+the info of an object with it's oid. When the object cannot be
+obtained in the git repository, `cat-file --batch` expects to output
+"<oid> missing" and continue the next oid query instead of letting
+Git exit. In other error conditions, Git should exit normally. So we
+can achieve this function by passing the return value of get_object().
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c             | 21 +++++++++++++++++++++
- ref-filter.h             |  5 ++++-
- t/t3203-branch-output.sh |  4 ++++
- t/t6300-for-each-ref.sh  |  4 ++++
- t/t7004-tag.sh           |  4 ++++
- t/t7030-verify-tag.sh    |  4 ++++
- 6 files changed, 41 insertions(+), 1 deletion(-)
+ ref-filter.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index d01a0266fb89..10c78de9cfa4 100644
+index 10c78de9cfa4..58def6ccd33a 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -157,6 +157,7 @@ enum atom_type {
- 	ATOM_IF,
- 	ATOM_THEN,
- 	ATOM_ELSE,
-+	ATOM_REST,
- };
- 
- /*
-@@ -559,6 +560,15 @@ static int if_atom_parser(struct ref_format *format, struct used_atom *atom,
- 	return 0;
- }
- 
-+static int rest_atom_parser(struct ref_format *format, struct used_atom *atom,
-+			    const char *arg, struct strbuf *err)
-+{
-+	if (arg)
-+		return strbuf_addf_ret(err, -1, _("%%(rest) does not take arguments"));
-+	format->use_rest = 1;
-+	return 0;
-+}
-+
- static int head_atom_parser(struct ref_format *format, struct used_atom *atom,
- 			    const char *arg, struct strbuf *unused_err)
+@@ -1816,6 +1816,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
  {
-@@ -615,6 +625,7 @@ static struct {
- 	[ATOM_IF] = { "if", SOURCE_NONE, FIELD_STR, if_atom_parser },
- 	[ATOM_THEN] = { "then", SOURCE_NONE },
- 	[ATOM_ELSE] = { "else", SOURCE_NONE },
-+	[ATOM_REST] = { "rest", SOURCE_NONE, FIELD_STR, rest_atom_parser },
+ 	struct object *obj;
+ 	int i;
++	int ret = 0;
+ 	struct object_info empty = OBJECT_INFO_INIT;
+ 
+ 	CALLOC_ARRAY(ref->value, used_atom_cnt);
+@@ -1972,8 +1973,9 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 
+ 
+ 	oi.oid = ref->objectname;
+-	if (get_object(ref, 0, &obj, &oi, err))
+-		return -1;
++	ret = get_object(ref, 0, &obj, &oi, err);
++	if (ret)
++		return ret;
+ 
  	/*
- 	 * Please update $__git_ref_fieldlist in git-completion.bash
- 	 * when you add new atoms
-@@ -1010,6 +1021,9 @@ int verify_ref_format(struct ref_format *format)
- 		if (at < 0)
- 			die("%s", err.buf);
- 
-+		if (used_atom[at].atom_type == ATOM_REST)
-+			die("this command reject atom %%(%.*s)", (int)(ep - sp - 2), sp + 2);
+ 	 * If there is no atom that wants to know about tagged
+@@ -2005,8 +2007,10 @@ static int get_ref_atom_value(struct ref_array_item *ref, int atom,
+ 			      struct atom_value **v, struct strbuf *err)
+ {
+ 	if (!ref->value) {
+-		if (populate_value(ref, err))
+-			return -1;
++		int ret = populate_value(ref, err);
 +
- 		if ((format->quote_style == QUOTE_PYTHON ||
- 		     format->quote_style == QUOTE_SHELL ||
- 		     format->quote_style == QUOTE_TCL) &&
-@@ -1927,6 +1941,12 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
- 			v->handler = else_atom_handler;
- 			v->s = xstrdup("");
- 			continue;
-+		} else if (atom_type == ATOM_REST) {
-+			if (ref->rest)
-+				v->s = xstrdup(ref->rest);
-+			else
-+				v->s = xstrdup("");
-+			continue;
- 		} else
- 			continue;
++		if (ret)
++			return ret;
+ 		fill_missing_values(ref->value);
+ 	}
+ 	*v = &ref->value[atom];
+@@ -2580,6 +2584,7 @@ int format_ref_array_item(struct ref_array_item *info,
+ {
+ 	const char *cp, *sp, *ep;
+ 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
++	int ret = 0;
  
-@@ -2144,6 +2164,7 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 
- 	FLEX_ALLOC_STR(ref, refname, refname);
- 	oidcpy(&ref->objectname, oid);
-+	ref->rest = NULL;
- 
- 	return ref;
- }
-diff --git a/ref-filter.h b/ref-filter.h
-index 74fb423fc89f..9dc07476a584 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -38,6 +38,7 @@ struct ref_sorting {
- 
- struct ref_array_item {
- 	struct object_id objectname;
-+	const char *rest;
- 	int flag;
- 	unsigned int kind;
- 	const char *symref;
-@@ -76,14 +77,16 @@ struct ref_format {
- 	 * verify_ref_format() afterwards to finalize.
- 	 */
- 	const char *format;
-+	const char *rest;
- 	int quote_style;
-+	int use_rest;
- 	int use_color;
- 
- 	/* Internal state to ref-filter */
- 	int need_color_reset_at_eol;
- };
- 
--#define REF_FORMAT_INIT { NULL, 0, -1 }
-+#define REF_FORMAT_INIT { NULL, NULL, 0, 0, -1 }
- 
- /*  Macros for checking --merged and --no-merged options */
- #define _OPT_MERGED_NO_MERGED(option, filter, h) \
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 5325b9f67a00..6e94c6db7b5a 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -340,6 +340,10 @@ test_expect_success 'git branch --format option' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git branch with --format=%(rest) must fail' '
-+	test_must_fail git branch --format="%(rest)" >actual
-+'
-+
- test_expect_success 'worktree colors correct' '
- 	cat >expect <<-EOF &&
- 	* <GREEN>(HEAD detached from fromtag)<RESET>
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 5556063c347d..82c0ad2cb115 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -1211,6 +1211,10 @@ test_expect_success 'basic atom: head contents:trailers' '
- 	test_cmp expect actual.clean
- '
- 
-+test_expect_success 'basic atom: rest must fail' '
-+	test_must_fail git for-each-ref --format="%(rest)" refs/heads/main
-+'
-+
- test_expect_success 'trailer parsing not fooled by --- line' '
- 	git commit --allow-empty -F - <<-\EOF &&
- 	this is the subject
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 2f72c5c6883e..082be85dffc7 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1998,6 +1998,10 @@ test_expect_success '--format should list tags as per format given' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'git tag -l with --format="%(rest)" must fail' '
-+	test_must_fail git tag -l --format="%(rest)" "v1*"
-+'
-+
- test_expect_success "set up color tests" '
- 	echo "<RED>v1.0<RESET>" >expect.color &&
- 	echo "v1.0" >expect.bare &&
-diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
-index 3cefde9602bf..10faa645157e 100755
---- a/t/t7030-verify-tag.sh
-+++ b/t/t7030-verify-tag.sh
-@@ -194,6 +194,10 @@ test_expect_success GPG 'verifying tag with --format' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success GPG 'verifying tag with --format="%(rest)" must fail' '
-+	test_must_fail git verify-tag --format="%(rest)" "fourth-signed"
-+'
-+
- test_expect_success GPG 'verifying a forged tag with --format should fail silently' '
- 	test_must_fail git verify-tag --format="tagname : %(tag)" $(cat forged1.tag) >actual-forged &&
- 	test_must_be_empty actual-forged
+ 	state.quote_style = format->quote_style;
+ 	push_stack_element(&state.stack);
+@@ -2592,10 +2597,10 @@ int format_ref_array_item(struct ref_array_item *info,
+ 		if (cp < sp)
+ 			append_literal(cp, sp, &state);
+ 		pos = parse_ref_filter_atom(format, sp + 2, ep, error_buf);
+-		if (pos < 0 || get_ref_atom_value(info, pos, &atomv, error_buf) ||
++		if (pos < 0 || (ret = get_ref_atom_value(info, pos, &atomv, error_buf)) ||
+ 		    atomv->handler(atomv, &state, error_buf)) {
+ 			pop_stack_element(&state.stack);
+-			return -1;
++			return ret ? ret : -1;
+ 		}
+ 	}
+ 	if (*cp) {
 -- 
 gitgitgadget
 
