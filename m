@@ -2,119 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76A2CC48BDF
-	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 19:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8E8BC48BDF
+	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 19:45:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C8276101D
-	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 19:16:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FBB960C3D
+	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 19:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbhFTTSv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Jun 2021 15:18:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57410 "EHLO
+        id S230146AbhFTTsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Jun 2021 15:48:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229875AbhFTTSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Jun 2021 15:18:49 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EBAAC061574
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 12:16:36 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id p4-20020a17090a9304b029016f3020d867so6866427pjo.3
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 12:16:36 -0700 (PDT)
+        with ESMTP id S229872AbhFTTsA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Jun 2021 15:48:00 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A5BC061574
+        for <git@vger.kernel.org>; Sun, 20 Jun 2021 12:45:47 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id k42so7158756wms.0
+        for <git@vger.kernel.org>; Sun, 20 Jun 2021 12:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JrARx9bw0OmK/qndHC7ANB4NepiQ346WYe3GGEYTDvU=;
-        b=nXZiCpaBGkaQ9sJEW6Uho1vIG64U89E0gtPyocjenlkwaoFAeFLn5PDwZHwEFwh3rB
-         idXj5A551Wn5C1iZyOlhtCkd8uXT8P6NdcOtTff1nqFounh9l/+nuUDRZPiIWgszq9Fe
-         O3hLhWJuqmxjmE1qMpEVWN6G7F6AmhKgfskttsLMdhRTTA0TYW8zdLf5HcmuCxcxiLx+
-         Y6Em7KuEpgKSjwVh+KBsaZkPTBx/zmDc+dXsUB40PfvQtx8TGYXyLxlf3IuNCXGbSduX
-         Muj17gyjMOXl2LoYu4aNlXaP/ZdvcT8LRQQHSvioaqgAismNlfXPbWOWZzkeVxUWEHk6
-         Lftw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=zuePTB05fG5G0U9QcDypY55d1NxH1jVG0F8RPfHMj/A=;
+        b=NB7Iey1X6kLGyhslMHAJyelbZYaTOsofKoPGmS30yyAuLgDzAPNxKwR9QDdBHaMTJv
+         54L/F1/sACkzql23LX+T/q39BMZ/ylZwrnwZV4kv4CTTO+3+bWii1pAVWkoT1DjzpwwX
+         HJnu0FjLU2CK9bCjMgpvFtnbQrfEY9RUJ66sSmFCod/+jwPedwUx93k4TntJjW7tgZ2i
+         n7qEl9O3LZ34cjKVhPr4quu7fBx2nxjMVsjprQry8xgOmXuMLNRLWBN++ogk9HF9f+4H
+         g/T27Lnwttjkp7bLvtci+WpQg8vLxjNV1sS8Swii7IqJd1/uSrVhk0QfP5JqXsgAofM2
+         ZS7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JrARx9bw0OmK/qndHC7ANB4NepiQ346WYe3GGEYTDvU=;
-        b=iyZEzmJfPlespHmom+JBlhra6Mq7IUXLW/FZ62Yb3Unp1KoZwZ+3QIM4QAKnTqb6tC
-         GPN9MySGuOmUyV45NXHli+5dYGYm/3cQNpoSOXoTxiPilWIw1iaMWA97E2qIWJ+ZILel
-         scJoXTsu8eyRlzz1iNaoJ4kkrrB+s41OXo/OChZhRYrT0N+HlhxwGzS+lVSTZCLFKjwG
-         AiVhl0GQV/i9amNCpfTrFr4rEjDv6byWzsMf0SythGyDoerl/d5FoOaBUdo6EVEZhtAy
-         JTc/1lDmnoeYQ3fA+jkhzBNammF+WUxL6UhA10ZZkjyIkYkqkb65kJ+4U43KW3tiVJFS
-         qhYg==
-X-Gm-Message-State: AOAM5310wUS38P79rsT9qzzdBULtDYg5CZc7hpCsNnKq9ght/fkoTBmQ
-        CDVeLwckQ+hS1LuaOsN2Lru9EodVNS8=
-X-Google-Smtp-Source: ABdhPJwPKlU8uce3f4d8wHwoTntNbzR8lisD3AfZnNh89Cww5100I8/CUbbQeUn0nSRohWejpSLlJw==
-X-Received: by 2002:a17:90a:890a:: with SMTP id u10mr20599324pjn.205.1624216595847;
-        Sun, 20 Jun 2021 12:16:35 -0700 (PDT)
-Received: from [192.168.208.38] ([183.82.190.107])
-        by smtp.gmail.com with ESMTPSA id fr20sm13035336pjb.29.2021.06.20.12.16.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Jun 2021 12:16:35 -0700 (PDT)
-Subject: Re: [GSoC] My Git Dev Blog - Week 5
-To:     Atharva Raykar <raykar.ath@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <D32894F5-FC76-4DD2-A2F6-E69AAE88C645@gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <ac381db1-fb14-2a23-cfee-863840b89493@gmail.com>
-Date:   Mon, 21 Jun 2021 00:46:32 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zuePTB05fG5G0U9QcDypY55d1NxH1jVG0F8RPfHMj/A=;
+        b=oBZ+StglIoKHj+iaO8nfc5Pw5IcoiOZn4d3aLdtjhAwSb9QFvzhBSpE5ZzlzxRCjq/
+         MCj6Gd0jV6m16zvi804xO0I7stijx45OCvIEaYzHuH9WxWK/MMiOp5I6qa6GcnaDTteI
+         1tlerpLA++RAFDnC7IDUfpWyO1JIpi35zBOKeJX2VABUAyFg26v+G5gnii6nBWU6iArp
+         cvw8FCyKZuMQDEgGVIti+zcUjvQxuzPslcCpl430KKtV5MyRhA6GtbbTVGoWbPrZ304t
+         utVOF7i/yqqbHjrD74gQaBNA0Ol+BcyItUI01Y8QPx/GYP5mtskDpwWG+NsE/OU7PjUJ
+         tppA==
+X-Gm-Message-State: AOAM5303QPfrjp2Cg5APK/F/T/WPbI/YMHFE1m17pFoJvyK0RJEAQ4DE
+        DfdpHBLlmS6BXbvPNieaz0ALA3iCm+fVPySdJa3F8+43O1hyuQ==
+X-Google-Smtp-Source: ABdhPJy53z1le5SD++CQdsdRuA6523sGzt7ZO3oXDoR3Vi4m12aAEdr8b2cFV0uM3RAs+yOGr6ScL0XQ/4nSU68VaL0=
+X-Received: by 2002:a05:600c:a07:: with SMTP id z7mr23031028wmp.83.1624218345953;
+ Sun, 20 Jun 2021 12:45:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <D32894F5-FC76-4DD2-A2F6-E69AAE88C645@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From:   Tim Hutt <tdhutt@gmail.com>
+Date:   Sun, 20 Jun 2021 20:45:35 +0100
+Message-ID: <CAKuVd4DfvEhXDUvxaU_jjNk8JSZANM8jpSEOxi1cbSAp23ohjg@mail.gmail.com>
+Subject: Bug: branch checkout is detached if the case doesn't match
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19/06/21 7:02 pm, Atharva Raykar wrote:
-> Here's the latest instalment of my weekly Git blog:
-> http://atharvaraykar.me/gitnotes/week5
->
+If you try to switch to a branch (e.g. `master`), but get the case wrong, e.g:
 
-Nice blog.
-  
-> A peek at what's inside:
-> 
->   * The blog starts with a summary of all the relevant things
->     that have happened so far in my time with Git, including
->     the status of my submodule-related work.
-> 
->   * A question I had about reading the index into memory
->     (any kind of help would be appreciated!):
->     http://atharvaraykar.me/gitnotes/week5#some-challenges-with-the-changes-that-are-cooking
-> 
+    git switch MASTER
+    git checkout MASTER
+    git switch Master
+    git checkout Master
 
-I've tried to clarify this to an extent in a comment [1] on your branch.
+etc. then it autocorrects the case (bad idea but ok), but it also
+enables the `--detach` flag! In other words
 
-A few other things:
+    git switch Master
 
-> After Rafael and Eric commented on my patch, I forgot to CC them when
-> I rerolled. New contributors: please check your CC’s before hitting send!
+acts like
 
-To add to that, Cc-ing people in the e-mail of all the patches in the series
-and not just in the cover letter would be nice too. :) Of course, if you have
-a specific reason to not do that, then it's fine.
+    git switch -d master
 
-> And my other blooper was to forget signing off one of my patches. Oops.
+Very unexpected!
 
-Are you aware of `format.signOff` [2] which could save you from issues
-like these?
+Cheers,
 
+Tim
 
-[1]: https://github.com/tfidfwastaken/git/commit/3c46c108a195c42edaab939ab6dd6731e52aefc3#r52396546
+[System Info]
+git version:
+git version 2.32.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Darwin 20.4.0 Darwin Kernel Version 20.4.0: Fri Mar  5 01:14:14
+PST 2021; root:xnu-7195.101.1~3/RELEASE_X86_64 x86_64
+compiler info: clang: 12.0.5 (clang-1205.0.22.9)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
 
-[2]: https://git-scm.com/docs/git-config#Documentation/git-config.txt-formatsignOff
-
--- 
-Sivaraam
+[Enabled Hooks]
