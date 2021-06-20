@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55BCFC48BDF
-	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E127C48BDF
+	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:12:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4138F6109F
-	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:12:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6769C6108E
+	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:12:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbhFTPOw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Jun 2021 11:14:52 -0400
-Received: from mx.kolabnow.com ([95.128.36.41]:15368 "EHLO mx.kolabnow.com"
+        id S230064AbhFTPPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Jun 2021 11:15:04 -0400
+Received: from mx.kolabnow.com ([95.128.36.40]:21566 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230082AbhFTPOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Jun 2021 11:14:37 -0400
+        id S230107AbhFTPOj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Jun 2021 11:14:39 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id 15E4F12FC
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:23 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 8821D411D8
+        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:25 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:mime-version:references:in-reply-to
         :message-id:date:date:subject:subject:from:from:received
-        :received:received; s=dkim20160331; t=1624201942; x=1626016343;
-         bh=7xJGAO3HmotPtfpYR5xOy+rsQdBXInpdymVSWPWfFvg=; b=Hre5Fsq7OoVt
-        EDmpkXUrXyysd97My+ewUXX6hiliDJFkp392+vCHrlep2JRZZJOMNz881ySb9+8y
-        qDYs0vTf8yt/FcrnPypoWEr1cBjt0L4J7g5QcMh/3jVMsFLs2kY/D0Fe+ay8Mowu
-        qzFprnuDvxP9xpkbOXi0VcXFI/uXsF1vWCMSZoYFlwWLABZgApPLu6V9NaDteiHE
-        nRpLglsDY6wvk1DJoPZxt/20qJfZJ3DwuFhOHTmY1DTMcoBdyMZztyq3cc1zXNMj
-        Ii+oByjHNePGKkcfD/2xmaC4uPa6QDX96O/NJt/kO8GHsWGzuTaJikoiz6xjWcth
-        UNth6GyIc2/N+TayhoxoqoUJXF5tZWF9PuzZASUl5HdjWCfEmrc/CX+0QA7eRQL4
-        7MtaltdsNay76p6l/iB9E9eMpCeRYxAa+P2O7ivZSqbaV6PzOjX3uACxxmfFhYzF
-        ifjzKn5K+GXOYmKgjhfDgiTWCD4O0Z9JIV0KKLNEeLyRF42A8ydkGCnjQGmdbnYF
-        37P1SlUh3npxlUn2PSk63PYl1pYNYvoIM9ygBMy+LUmH9Rh+XDcg+/jW4qoaZ5Ek
-        g0CmHPEQuNmS0CDvGx0QW0XkCK781t/wLEZddDjzjGt0by+bGSqsHlikBR7QTwvb
-        Pv+mYaBNjOl+YA4VoK26763e08ABJrw=
+        :received:received; s=dkim20160331; t=1624201945; x=1626016346;
+         bh=YIY1dn33X2wJyIvL14v+OSYsLWLu5lOxPVe3xu+1evo=; b=q3dNV2ElRnWd
+        egbAGqiBqD1eRnWONNcGu7Eo8K5a5swAZdHFTJGgysDWGt1UkFmop51gspX89lre
+        7FGmBsU6eiwTmYjmJ1ZNwrUI4H9193s94K+2MMOVFFn4rBD1JCXUpNVRnv3hKYcr
+        6sRPTsrnckWWdQWqNA4bxXYLHUR/OYMqbvUR2iYCR6LX0CyYZzknmSd0N7+e3mO6
+        qNYBWIFiJDt8WgJLEaYdbTb1mAn67ucOIN8Sg2QsHQriP0+e38myItve+JXOIwTk
+        n7UbfvAKrdwwOosb7Oc/BjvxI79t48NKbyPL/FkSY4gZ4xF5PMUUNvieN2dLSUkG
+        d3eDNbX6MycOhMYhs9BSKH6MGpqh+yw1xXfV6hw+2bsua5kah9CwajlTqu3Z5LBu
+        VCkQXwbglY2R8pliMwTV6eHmhPYkApOgrduJIa/ppGjEZziyaar4Zekxu6mDop2S
+        ATfio2PcX1gSVaqKzVqhkW/lAq4Ppn9symNEUVKoieOP2QrU6rCUsyk+yzR6b4jP
+        PnY3ScPL9mP+jua/uvJTTRLznQv29D8MgWMp9HPVxeoBCta3j7KmzrLcW/BVisg2
+        vALlHd7Ubh7Q/LF6sPCqqB27XenCEx/tOk/ziaog68/uvjRtafpGpimKbXnRJQDT
+        WC+4cJ5jfEpPMKySc/Mvd0pgDuxwLrs=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id DHOwdht5GxSc for <git@vger.kernel.org>;
-        Sun, 20 Jun 2021 17:12:22 +0200 (CEST)
+        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id o1J6KvNisrol for <git@vger.kernel.org>;
+        Sun, 20 Jun 2021 17:12:25 +0200 (CEST)
 Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id 8F7D25C1
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:22 +0200 (CEST)
+        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id DE593407B7
+        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:24 +0200 (CEST)
 Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id ABB4934B;
-        Sun, 20 Jun 2021 17:12:21 +0200 (CEST)
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id F2A8A80F;
+        Sun, 20 Jun 2021 17:12:23 +0200 (CEST)
 From:   andrzej@ahunt.org
 To:     git@vger.kernel.org
 Cc:     andrzej@ahunt.org
-Subject: [PATCH 07/12] read-cache: call diff_setup_done to avoid leak
-Date:   Sun, 20 Jun 2021 17:11:59 +0200
-Message-Id: <20210620151204.19260-8-andrzej@ahunt.org>
+Subject: [PATCH 08/12] convert: release strbuf to avoid leak
+Date:   Sun, 20 Jun 2021 17:12:00 +0200
+Message-Id: <20210620151204.19260-9-andrzej@ahunt.org>
 In-Reply-To: <20210620151204.19260-1-andrzej@ahunt.org>
 References: <20210620151204.19260-1-andrzej@ahunt.org>
 MIME-Version: 1.0
@@ -65,81 +65,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-repo_diff_setup() calls through to diff.c's static prep_parse_options(),
-which in  turn allocates a new array into diff_opts.parseopts.
-diff_setup_done() is responsible for freeing that array, and has the
-benefit of verifying diff_opts too - hence we add a call to
-diff_setup_done() to avoid leaking parseopts.
+apply_multi_file_filter and async_query_available_blobs both query
+subprocess output using subprocess_read_status, which writes data into
+the identically named filter_status strbuf. We add a strbuf_release to
+avoid leaking their contents.
 
-Output from the leak as found while running t0090 with LSAN:
+Leak output seen when running t0021 with LSAN:
 
-Direct leak of 7120 byte(s) in 1 object(s) allocated from:
-    #0 0x49a82d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
-    #1 0xa8bf89 in do_xmalloc wrapper.c:41:8
-    #2 0x7a7bae in prep_parse_options diff.c:5636:2
-    #3 0x7a7bae in repo_diff_setup diff.c:4611:2
-    #4 0x93716c in repo_index_has_changes read-cache.c:2518:3
-    #5 0x872233 in unclean merge-ort-wrappers.c:12:14
-    #6 0x872233 in merge_ort_recursive merge-ort-wrappers.c:53:6
-    #7 0x5d5b11 in try_merge_strategy builtin/merge.c:752:12
-    #8 0x5d0b6b in cmd_merge builtin/merge.c:1666:9
-    #9 0x4ce83e in run_builtin git.c:475:11
-    #10 0x4ccafe in handle_builtin git.c:729:3
-    #11 0x4cb01c in run_argv git.c:818:4
-    #12 0x4cb01c in cmd_main git.c:949:19
-    #13 0x6bdc2d in main common-main.c:52:11
-    #14 0x7f551eb51349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+Direct leak of 24 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0xa8c2b5 in xrealloc wrapper.c:126:8
+    #2 0x9ff99d in strbuf_grow strbuf.c:98:2
+    #3 0x9ff99d in strbuf_addbuf strbuf.c:304:2
+    #4 0xa101d6 in subprocess_read_status sub-process.c:45:5
+    #5 0x77793c in apply_multi_file_filter convert.c:886:8
+    #6 0x77793c in apply_filter convert.c:1042:10
+    #7 0x77a0b5 in convert_to_git_filter_fd convert.c:1492:7
+    #8 0x8b48cd in index_stream_convert_blob object-file.c:2156:2
+    #9 0x8b48cd in index_fd object-file.c:2248:9
+    #10 0x597411 in hash_fd builtin/hash-object.c:43:9
+    #11 0x596be1 in hash_object builtin/hash-object.c:59:2
+    #12 0x596be1 in cmd_hash_object builtin/hash-object.c:153:3
+    #13 0x4ce83e in run_builtin git.c:475:11
+    #14 0x4ccafe in handle_builtin git.c:729:3
+    #15 0x4cb01c in run_argv git.c:818:4
+    #16 0x4cb01c in cmd_main git.c:949:19
+    #17 0x6bdc2d in main common-main.c:52:11
+    #18 0x7f42acf79349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-SUMMARY: AddressSanitizer: 7120 byte(s) leaked in 1 allocation(s)
+SUMMARY: AddressSanitizer: 24 byte(s) leaked in 1 allocation(s).
+
+Direct leak of 120 byte(s) in 5 object(s) allocated from:
+    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0xa8c295 in xrealloc wrapper.c:126:8
+    #2 0x9ff97d in strbuf_grow strbuf.c:98:2
+    #3 0x9ff97d in strbuf_addbuf strbuf.c:304:2
+    #4 0xa101b6 in subprocess_read_status sub-process.c:45:5
+    #5 0x775c73 in async_query_available_blobs convert.c:960:8
+    #6 0x80029d in finish_delayed_checkout entry.c:183:9
+    #7 0xa65d1e in check_updates unpack-trees.c:493:10
+    #8 0xa5f469 in unpack_trees unpack-trees.c:1747:8
+    #9 0x525971 in checkout builtin/clone.c:815:6
+    #10 0x525971 in cmd_clone builtin/clone.c:1409:8
+    #11 0x4ce83e in run_builtin git.c:475:11
+    #12 0x4ccafe in handle_builtin git.c:729:3
+    #13 0x4cb01c in run_argv git.c:818:4
+    #14 0x4cb01c in cmd_main git.c:949:19
+    #15 0x6bdc2d in main common-main.c:52:11
+    #16 0x7fa253fce349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+SUMMARY: AddressSanitizer: 120 byte(s) leaked in 5 allocation(s).
 
 Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
 ---
- read-cache.c | 1 +
- 1 file changed, 1 insertion(+)
+ convert.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/read-cache.c b/read-cache.c
-index 77961a3885..212d604dd3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2487,37 +2487,38 @@ int unmerged_index(const struct index_state *istate)
- int repo_index_has_changes(struct repository *repo,
- 			   struct tree *tree,
- 			   struct strbuf *sb)
- {
- 	struct index_state *istate = repo->index;
- 	struct object_id cmp;
- 	int i;
- 
- 	if (tree)
- 		cmp = tree->object.oid;
- 	if (tree || !get_oid_tree("HEAD", &cmp)) {
- 		struct diff_options opt;
- 
- 		repo_diff_setup(repo, &opt);
- 		opt.flags.exit_with_status = 1;
- 		if (!sb)
- 			opt.flags.quick = 1;
-+		diff_setup_done(&opt);
- 		do_diff_cache(&cmp, &opt);
- 		diffcore_std(&opt);
- 		for (i = 0; sb && i < diff_queued_diff.nr; i++) {
- 			if (i)
- 				strbuf_addch(sb, ' ');
- 			strbuf_addstr(sb, diff_queued_diff.queue[i]->two->path);
- 		}
- 		diff_flush(&opt);
- 		return opt.flags.has_changes != 0;
- 	} else {
- 		/* TODO: audit for interaction with sparse-index. */
- 		ensure_full_index(istate);
- 		for (i = 0; sb && i < istate->cache_nr; i++) {
- 			if (i)
- 				strbuf_addch(sb, ' ');
- 			strbuf_addstr(sb, istate->cache[i]->name);
- 		}
- 		return !!istate->cache_nr;
- 	}
+diff --git a/convert.c b/convert.c
+index fd9c84b025..0d6fb3410a 100644
+--- a/convert.c
++++ b/convert.c
+@@ -916,6 +916,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	else
+ 		strbuf_swap(dst, &nbuf);
+ 	strbuf_release(&nbuf);
++	strbuf_release(&filter_status);
+ 	return !err;
  }
+ 
+@@ -966,6 +967,7 @@ int async_query_available_blobs(const char *cmd, struct string_list *available_p
+ 
+ 	if (err)
+ 		handle_filter_error(&filter_status, entry, 0);
++	strbuf_release(&filter_status);
+ 	return !err;
+ }
+ 
 -- 
 2.26.2
 
