@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 382BDC48BDF
-	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18261C48BDF
+	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:13:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DE0E6109F
-	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:12:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F127E6109F
+	for <git@archiver.kernel.org>; Sun, 20 Jun 2021 15:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230165AbhFTPPK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Jun 2021 11:15:10 -0400
-Received: from mx.kolabnow.com ([95.128.36.40]:21580 "EHLO mx.kolabnow.com"
+        id S230189AbhFTPPQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Jun 2021 11:15:16 -0400
+Received: from mx.kolabnow.com ([95.128.36.41]:15388 "EHLO mx.kolabnow.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230059AbhFTPOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Jun 2021 11:14:47 -0400
+        id S230170AbhFTPOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Jun 2021 11:14:51 -0400
 Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id 7E42A4112C
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:32 +0200 (CEST)
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id 2E013130B
+        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:34 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
         content-transfer-encoding:mime-version:references:in-reply-to
         :message-id:date:date:subject:subject:from:from:received
-        :received:received; s=dkim20160331; t=1624201952; x=1626016353;
-         bh=JUXrODa0ozC/XEAws5fQquQbZpv+rVpvh6VHkm9OWtc=; b=RGMRcHgE75tM
-        2jrmwirfto7o7kkVQnfThwCYn5gECnrm743NgGBgAZh0XhyS/jvBizH7i3awX52x
-        b7Y/2CbsSLkwLEXTuGFWVuvJqgRYeVSpP9MFClegY1xQAdsFEzz/q6jNwSSpG6Z8
-        p21iqp7t/rKY6r1tyHOraoNayyE3FPav7V/QHO6Way5bZVF+du9OcQtD8fTvTDbr
-        wgrPFoWyPZU+RJ02xcuvOigN1TnZ3RwwW/o5uGlx6Uemqft1bz8p4PTpb7914h4l
-        6l8YiMeDIvDDtZ9PQUcSenS65iktbUbEbHWPTTV3BPPo6lfR8rmqPsTGjCKTbQaE
-        N15BQZSwenj+QwNUAAbS73ZyFHTODTadhUvXY4ABD9+zTVQ5MuVv3KQrkvWDs3xD
-        x/v1/PNhEQXpMSmJSVbC3J85Jmixz1PWJzgBtG6Gmxk/46AcLlIJKGXzt38Gcyum
-        qqhkdNjxISK+RatWmCGurBWfP1XrBlLaUdTIWNIDqBQyC+bz/4arSECXSZ6LaI9z
-        lppAOm9lLNJaTF/qFl/0D2dofLrOantR6pzfXe8g4b0P/Q26qHjt+TPl1qxH+2y0
-        5c0425LPm+RyfeBjo5k+iVI0CREdgQ8vV54z33tXk8izmRqLHUyyc3dZzLrkx2t1
-        Ev0b7tNPsydLbr3lVoKqlMAmVi7t0e8=
+        :received:received; s=dkim20160331; t=1624201953; x=1626016354;
+         bh=fxqQkGUklOckyJHTrIVeDmxxwt1yQ8DicutANrUIb9k=; b=ZjGd1Rzq4ZUy
+        BF7tu/5rl3Ekq1jbHbKydIXh7Zp/SlbioJAhO33zEGE6/z0ghnopZFDUwxWJRl3O
+        8bEPBt7tsYO/A2KtOkWEQBBKcJMh2lYf4pQfK0QpE02OWIa8nDeeoB/TytDUsJ9w
+        FuWGGgcnjUs4kSx+ss728gsTm8vwbS3Jxqk8QH9MPXr163yCV+TErr5ZaU6iGFY/
+        NSUyIamnPVFI1vHY8d2uDMgWIYuyqSaJlUHz+p8nuc2vdcGyfGZpPQoy3JRk4OOA
+        q2txM4zFtVl0ziNBBneeAFVy/zgEGV5cERSQNh595nen/rg37AahVDyTByqlNC2r
+        rizSCQTdikxQ/xOZ61U2Q5ErPclZyuCxNOcUp18Tx3x34bFD8/HSwW6qYTRXmxKY
+        QfGg/mDMHk0/1K00XwHH9ptoByrfbclNYHQRUcrB0dTVZswTLJ/v8/e2X76uoPZt
+        jgUZGd6TTcWV7HP0vWlajg2+u6IS/fzGSgXtU1sWpM25gfLwIUGiDtyYe7IkAyg1
+        dzckKfPNQPDjK7zVp+w4Xe0SyufhYU+lvn/7V9vNfQ8nuL+JzBL4wJ1Y01kQUDYJ
+        iPqNYy2QjjgVOmskLHE8DR8C1rs2esbXHHlyf8EH0yBvNFm2vSuRJTBVxcuDYm11
+        vgvKMQgEyrK3hVKrgUupyQhVskH/NL0=
 X-Virus-Scanned: amavisd-new at mykolab.com
 Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id CrazIsYKBBht for <git@vger.kernel.org>;
-        Sun, 20 Jun 2021 17:12:32 +0200 (CEST)
+        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id a-cxwJkjfWRS for <git@vger.kernel.org>;
+        Sun, 20 Jun 2021 17:12:33 +0200 (CEST)
 Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id D3D9B407B7
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:31 +0200 (CEST)
+        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id 8BBB85C1
+        for <git@vger.kernel.org>; Sun, 20 Jun 2021 17:12:33 +0200 (CEST)
 Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id 4396F34B;
-        Sun, 20 Jun 2021 17:12:30 +0200 (CEST)
+        by int-mx001.mykolab.com (Postfix) with ESMTPS id 23D4F34B;
+        Sun, 20 Jun 2021 17:12:32 +0200 (CEST)
 From:   andrzej@ahunt.org
 To:     git@vger.kernel.org
 Cc:     andrzej@ahunt.org
-Subject: [PATCH 11/12] builtin/rebase: fix options.strategy memory lifecycle
-Date:   Sun, 20 Jun 2021 17:12:03 +0200
-Message-Id: <20210620151204.19260-12-andrzej@ahunt.org>
+Subject: [PATCH 12/12] reset: clear_unpack_trees_porcelain to plug leak
+Date:   Sun, 20 Jun 2021 17:12:04 +0200
+Message-Id: <20210620151204.19260-13-andrzej@ahunt.org>
 In-Reply-To: <20210620151204.19260-1-andrzej@ahunt.org>
 References: <20210620151204.19260-1-andrzej@ahunt.org>
 MIME-Version: 1.0
@@ -65,84 +65,123 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-This change:
-- xstrdup()'s all string being used for replace_opts.strategy, to
-  guarantee that replace_opts owns these strings. This is needed because
-  sequencer_remove_state() will free replace_opts.strategy, and it's
-  usually called as part of the usage of replace_opts.
-- Removes xstrdup()'s being used to populate options.strategy in
-  cmd_rebase(), which avoids leaking options.strategy, even in the
-  case where strategy is never moved/copied into replace_opts.
+setup_unpack_trees_porcelain() populates various fields on
+unpack_tree_opts, we need to call clear_unpack_trees_porcelain() to
+avoid leaking them. Specifically, we used to leak
+unpack_tree_opts.msgs_to_free.
 
-These changes are needed because:
-- We would always create a new string for options.strategy if we either
-  get a strategy via options (OPT_STRING(...strategy...), or via
-  GIT_TEST_MERGE_ALGORITHM.
-- But only sometimes is this string copied into replace_opts - in which
-  case it did get free()'d in sequencer_remove_state().
-- The rest of the time, the newly allocated string would remain unused,
-  causing a leak. But we can't just add a free because that can result
-  in a double-free in those cases where replace_opts was populated.
-
-An alternative approach would be to set options.strategy to NULL when
-moving the pointer to replace_opts.strategy, combined with always
-free()'ing options.strategy, but that seems like a more
-complicated and wasteful approach.
-
-This was first seen when running t0021 with LSAN, but t2012 helped catch
-the fact that we can't just free(options.strategy) at the end of
-cmd_rebase (as that can cause a double-free). LSAN output from t0021:
+We have to do this in leave_reset_head because there are multiple
+scenarios where unpack_tree_opts has already been configured, followed
+by a 'goto leave_reset_head'. But we can also 'goto leave_reset_head'
+prior to having initialised unpack_tree_opts via memset(..., 0, ...).
+Therefore we also move unpack_tree_opts initialisation to the start of
+reset_head(), and convert it to use brace initialisation - which
+guarantees that we can never clear an unitialised unpack_tree_opts.
+clear_unpack_tree_opts() is always safe to call as long as
+unpack_tree_opts is at least zero-initialised, i.e. it does not depend
+on a previous call to setup_unpack_trees_porcelain().
 
 LSAN output from t0021:
 
-Direct leak of 4 byte(s) in 1 object(s) allocated from:
-    #0 0x486804 in strdup ../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
-    #1 0xa71eb8 in xstrdup wrapper.c:29:14
-    #2 0x61b1cc in cmd_rebase builtin/rebase.c:1779:22
-    #3 0x4ce83e in run_builtin git.c:475:11
-    #4 0x4ccafe in handle_builtin git.c:729:3
-    #5 0x4cb01c in run_argv git.c:818:4
-    #6 0x4cb01c in cmd_main git.c:949:19
-    #7 0x6b3fad in main common-main.c:52:11
-    #8 0x7f267b512349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+Direct leak of 192 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0xa721e5 in xrealloc wrapper.c:126:8
+    #2 0x9f7861 in strvec_push_nodup strvec.c:19:2
+    #3 0x9f7861 in strvec_pushf strvec.c:39:2
+    #4 0xa43e14 in setup_unpack_trees_porcelain unpack-trees.c:129:3
+    #5 0x97e011 in reset_head reset.c:53:2
+    #6 0x61dfa5 in cmd_rebase builtin/rebase.c:1991:9
+    #7 0x4ce83e in run_builtin git.c:475:11
+    #8 0x4ccafe in handle_builtin git.c:729:3
+    #9 0x4cb01c in run_argv git.c:818:4
+    #10 0x4cb01c in cmd_main git.c:949:19
+    #11 0x6b3f3d in main common-main.c:52:11
+    #12 0x7fa8addf3349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
-SUMMARY: AddressSanitizer: 4 byte(s) leaked in 1 allocation(s).
+Indirect leak of 147 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0xa721e5 in xrealloc wrapper.c:126:8
+    #2 0x9e8d54 in strbuf_grow strbuf.c:98:2
+    #3 0x9e8d54 in strbuf_vaddf strbuf.c:401:3
+    #4 0x9f7774 in strvec_pushf strvec.c:36:2
+    #5 0xa43e14 in setup_unpack_trees_porcelain unpack-trees.c:129:3
+    #6 0x97e011 in reset_head reset.c:53:2
+    #7 0x61dfa5 in cmd_rebase builtin/rebase.c:1991:9
+    #8 0x4ce83e in run_builtin git.c:475:11
+    #9 0x4ccafe in handle_builtin git.c:729:3
+    #10 0x4cb01c in run_argv git.c:818:4
+    #11 0x4cb01c in cmd_main git.c:949:19
+    #12 0x6b3f3d in main common-main.c:52:11
+    #13 0x7fa8addf3349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Indirect leak of 134 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0xa721e5 in xrealloc wrapper.c:126:8
+    #2 0x9e8d54 in strbuf_grow strbuf.c:98:2
+    #3 0x9e8d54 in strbuf_vaddf strbuf.c:401:3
+    #4 0x9f7774 in strvec_pushf strvec.c:36:2
+    #5 0xa43fe4 in setup_unpack_trees_porcelain unpack-trees.c:168:3
+    #6 0x97e011 in reset_head reset.c:53:2
+    #7 0x61dfa5 in cmd_rebase builtin/rebase.c:1991:9
+    #8 0x4ce83e in run_builtin git.c:475:11
+    #9 0x4ccafe in handle_builtin git.c:729:3
+    #10 0x4cb01c in run_argv git.c:818:4
+    #11 0x4cb01c in cmd_main git.c:949:19
+    #12 0x6b3f3d in main common-main.c:52:11
+    #13 0x7fa8addf3349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+Indirect leak of 130 byte(s) in 1 object(s) allocated from:
+    #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+    #1 0xa721e5 in xrealloc wrapper.c:126:8
+    #2 0x9e8d54 in strbuf_grow strbuf.c:98:2
+    #3 0x9e8d54 in strbuf_vaddf strbuf.c:401:3
+    #4 0x9f7774 in strvec_pushf strvec.c:36:2
+    #5 0xa43f20 in setup_unpack_trees_porcelain unpack-trees.c:150:3
+    #6 0x97e011 in reset_head reset.c:53:2
+    #7 0x61dfa5 in cmd_rebase builtin/rebase.c:1991:9
+    #8 0x4ce83e in run_builtin git.c:475:11
+    #9 0x4ccafe in handle_builtin git.c:729:3
+    #10 0x4cb01c in run_argv git.c:818:4
+    #11 0x4cb01c in cmd_main git.c:949:19
+    #12 0x6b3f3d in main common-main.c:52:11
+    #13 0x7fa8addf3349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+
+SUMMARY: AddressSanitizer: 603 byte(s) leaked in 4 allocation(s).
 
 Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
 ---
- builtin/rebase.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ reset.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 12f093121d..9d81db0f3a 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -139,7 +139,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 	replay.ignore_date = opts->ignore_date;
- 	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
- 	if (opts->strategy)
--		replay.strategy = opts->strategy;
-+		replay.strategy = xstrdup_or_null(opts->strategy);
- 	else if (!replay.strategy && replay.default_strategy) {
- 		replay.strategy = replay.default_strategy;
- 		replay.default_strategy = NULL;
-@@ -1723,7 +1723,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	}
+diff --git a/reset.c b/reset.c
+index 4bea758053..79310ae071 100644
+--- a/reset.c
++++ b/reset.c
+@@ -21,7 +21,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	struct object_id head_oid;
+ 	struct tree_desc desc[2] = { { NULL }, { NULL } };
+ 	struct lock_file lock = LOCK_INIT;
+-	struct unpack_trees_options unpack_tree_opts;
++	struct unpack_trees_options unpack_tree_opts = { 0 };
+ 	struct tree *tree;
+ 	const char *reflog_action;
+ 	struct strbuf msg = STRBUF_INIT;
+@@ -49,7 +49,6 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	if (refs_only)
+ 		goto reset_head_refs;
  
- 	if (options.strategy) {
--		options.strategy = xstrdup(options.strategy);
- 		switch (options.type) {
- 		case REBASE_APPLY:
- 			die(_("--strategy requires --merge or --interactive"));
-@@ -1776,7 +1775,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (options.type == REBASE_MERGE &&
- 	    !options.strategy &&
- 	    getenv("GIT_TEST_MERGE_ALGORITHM"))
--		options.strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
-+		options.strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
- 
- 	switch (options.type) {
- 	case REBASE_MERGE:
+-	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
+ 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
+ 	unpack_tree_opts.head_idx = 1;
+ 	unpack_tree_opts.src_index = r->index;
+@@ -134,6 +133,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ leave_reset_head:
+ 	strbuf_release(&msg);
+ 	rollback_lock_file(&lock);
++	clear_unpack_trees_porcelain(&unpack_tree_opts);
+ 	while (nr)
+ 		free((void *)desc[--nr].buffer);
+ 	return ret;
 -- 
 2.26.2
 
