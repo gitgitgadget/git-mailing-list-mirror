@@ -2,103 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27023C48BDF
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 01:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B93C49361
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 02:00:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED03060E0B
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 01:30:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5034C611C0
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 02:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbhFUBc5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Jun 2021 21:32:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53658 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbhFUBc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Jun 2021 21:32:56 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D69EFC061574
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 18:30:41 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id g20so25968091ejt.0
-        for <git@vger.kernel.org>; Sun, 20 Jun 2021 18:30:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=IfuSqbJ/U3U2haxusL6m+ItF8hIQsRpy8Mbgieu5NKY=;
-        b=AvINI5kiUpgYyYbwhfCLWLfozCsLXCPOBIAKcnlQp4XpnSj3mGUW6KNGGL5qpdxRXY
-         NpX2v2qeEJt0Clb1D86lFWn2B3P9YmYeY11glh+VAncjzYhSWuGNbkwDvsVvPUTByXLA
-         fP/aWV08vIbvrlVcR0SUKli15tmk6PJilPEjDOlEatHpekb0e0kdR08Vs9+797v1i+W+
-         p/v+ab/XP5dByymSWcWsk+pAtYUTP0iX8k9HPFkCH9ZnYV9UEq0W0FcFm48fBcvXMI+N
-         JivhceOafpZo+fW80gvxSFfyLK/bRiSfbZTvshe4pTXe129Z60xx/PigC4xDiH+3+nqz
-         6shA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=IfuSqbJ/U3U2haxusL6m+ItF8hIQsRpy8Mbgieu5NKY=;
-        b=YGznLNqLtPXCnwKAXge9CX2cwuu1ZgSF6LPxCAYBgiPey0lm22XlEevBEpJUsIoiyl
-         dkZxGSJjgi4Q/NMZ5aG5Sc+4743dRC21UFdmPwy99S7U29G1XuFZ3j7e/LlcOE/t6yKH
-         z21QlFRqqvg5zBO0qQvxeMz0bqeYARGH4URvdT2ptxEHgCIOCpBtPjAL50Lwf1NcfI2j
-         qAgqk1Y/fAREWfXPTJNlCBRWg+VKeeowJ+T0pxyygiu4EjYDSQDGVgNwLK81fHqM1O7A
-         JuOmo4pFp73phbTLyYgvhEOi1n63oigWZSIc0XetaS+o23j90kwEeq2XHvrPEKpcwcDW
-         99vQ==
-X-Gm-Message-State: AOAM530gdMkLIODFDQi1T4ZMX9DHGpSV5jCu600Hq02A9OLGkZAb9ndj
-        7+P7pIii+b1O1Fy2tpiamhc9Ukn/i9U=
-X-Google-Smtp-Source: ABdhPJwhmt2DcXUJCAaZFUK/XvSkdeqpJeC+0sfLnEQt+LytBaJCm79wOjJX5MfGHbtqg/JSZ0inDw==
-X-Received: by 2002:a17:907:379:: with SMTP id rs25mr14750650ejb.426.1624239038923;
-        Sun, 20 Jun 2021 18:30:38 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id v12sm4094896eja.63.2021.06.20.18.30.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Jun 2021 18:30:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH] trace2: log progress time and throughput
-Date:   Mon, 21 Jun 2021 03:24:47 +0200
-References: <20200512214420.36329-1-emilyshaffer@google.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20200512214420.36329-1-emilyshaffer@google.com>
-Message-ID: <871r8w3sxu.fsf@evledraar.gmail.com>
+        id S230076AbhFUCC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Jun 2021 22:02:58 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:53662 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230061AbhFUCC6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 20 Jun 2021 22:02:58 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7846460424;
+        Mon, 21 Jun 2021 02:00:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1624240814;
+        bh=KnHeir3/W9QXzJpZSxp/8mTE9yrur/xgsCowhMV9nyQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=pAbQRxNCcoCqzALeXUSimg9/VUGcRecc0HvtQqNuPHuPHRn7uUDbxuuq1Apqi7KxT
+         1fXMf6aazlIhgYkYnjcj6b4kkt99h8BMqOilwmWiUVx/nEQun/6AlghIxvT0Wvryb5
+         Yi5YB+I333uCvZVAYDf/IS7/AHOGsDvX9tXYHa5B5x3MpWBYEjPGNaPiuxyzDmDIEY
+         iO6qKS0GwCI9nx7jBiEF20FcEDT1qzuaFgXvmccCfsdjrLcaEP9NN+m2frxstv4t/C
+         kcIjwuC2xfq7Y8+vjNAPy1rfamAyLF3RtQpMdTXL668keeJVQr5VQZNdfOS7Bxe+Oy
+         gcsN576FNFO8XQ2Rf7bGEtCJkLPth5hxKqBVLs5mqfxLf2psrIAaDVTGKOQluPdkYA
+         atn6IrfTZyM7BSLqOpM5iaK+43R/OvEahsAcuXH+zuFnwZGDjEyb8CpkQ+kFskJJB/
+         uY7jDIJlPBZKm2XNQgVImqoMuiVpCOE2ZpEw5hVkgxcYSzK48KQ
+Date:   Mon, 21 Jun 2021 02:00:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Roland Hieber <rhi@pengutronix.de>, git@vger.kernel.org,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bisect: allow to run from subdirectories
+Message-ID: <YM/yqPsRutV2mUbb@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Roland Hieber <rhi@pengutronix.de>, git@vger.kernel.org,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210620213836.10771-1-rhi@pengutronix.de>
+ <877dio3vg5.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Fj5VZIciGB7eNKDT"
+Content-Disposition: inline
+In-Reply-To: <877dio3vg5.fsf@evledraar.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, May 12 2020, Emily Shaffer wrote:
+--Fj5VZIciGB7eNKDT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[Replying to a change long-since merged into git.git's "master"]
+On 2021-06-21 at 00:35:49, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Sun, Jun 20 2021, Roland Hieber wrote:
+>=20
+> > Currently, calling 'git bisect' from a directory other than the top
+> > level of a repository only comes up with an error message:
+> >
+> >     You need to run this command from the toplevel of the working tree.
+> >
+> > After a glance through the bisect code, there seems to be nothing that
+> > relies on the current working directory, and a few hours of bisect usage
+> > also didn't turn up any problems. Set the appropriate flag for
+> > git-sh-setup to remove the error message.
+> >
+> > Signed-off-by: Roland Hieber <rhi@pengutronix.de>
+> > ---
+> >  git-bisect.sh | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/git-bisect.sh b/git-bisect.sh
+> > index 6a7afaea8da0..20ba0ee7c18a 100755
+> > --- a/git-bisect.sh
+> > +++ b/git-bisect.sh
+> > @@ -32,6 +32,7 @@ git bisect run <cmd>...
+> >  Please use "git help bisect" to get the full man page.'
+> > =20
+> >  OPTIONS_SPEC=3D
+> > +SUBDIRECTORY_OK=3D1
+> >  . git-sh-setup
+> > =20
+> >  _x40=3D'[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+>=20
+> How does this affect out-of-tree scripts that will be run with "git
+> bisect run", is the cwd set to the root as they now might expect git to
+> check, or whatever subdirectory you ran the "run" from?
 
-> Rather than teaching only one operation, like 'git fetch', how to write
-> down throughput to traces, we can learn about a wide range of user
-> operations that may seem slow by adding tooling to the progress library
-> itself. Operations which display progress are likely to be slow-running
-> and the kind of thing we want to monitor for performance anyways. By
-> showing object counts and data transfer size, we should be able to
-> make some derived measurements to ensure operations are scaling the way
-> we expect.
+I'm also interested in this, specifically as a patch to the
+documentation and a corresponding test (and a commit message
+justification), since folks will rely on whatever behavior we implement
+and we won't want to break it.
 
-Did you end up using this data for anything?
+We'd probably also want to add a test at least that the user can invoke
+git bisect outside of the root of the repository, and maybe that it
+performs correct results for at least one or two known cases when
+invoked outside of the root.  And I'm also wondering if maybe there are
+other cases that deserve a test along with this change.
 
-> [...]
-> @@ -320,6 +321,22 @@ void stop_progress(struct progress **p_progress)
->  {
->  	finish_if_sparse(*p_progress);
->  
-> +	if (p_progress && *p_progress) {
-> +		trace2_data_intmax("progress", the_repository, "total_objects",
-> +				   (*p_progress)->total);
+As for the idea itself, I think it's a good one assuming everything
+continues to work.  It will certainly be more convenient for a lot of
+people.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-We start progress bars for various things in git, yet the trace2 data
-calls every such progress bar with a total "total_objects", even though
-we may not be counting anything to do with objects.
+--Fj5VZIciGB7eNKDT
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Wouldn't simply s/total_objects/total/ make more sense here, do you rely
-on the name of the current key?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYM/ypwAKCRB8DEliiIei
+gVEdAP92rHoiVWMWWdVmVXCkO/uo4J1OGfzHA2zFGGl7xQgyBwEAh6lkpFtez+VM
+7PUEQL0G4tvQhubnKarJTUzu7JT18Qc=
+=5bET
+-----END PGP SIGNATURE-----
+
+--Fj5VZIciGB7eNKDT--
