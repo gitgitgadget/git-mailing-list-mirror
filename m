@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3735C4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F47C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE49D6124B
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 528646124B
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232290AbhFUW2K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 18:28:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53836 "EHLO
+        id S232296AbhFUW2L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 18:28:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232318AbhFUW2H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 18:28:07 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6109C061768
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:52 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id q18so16721717ile.10
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:52 -0700 (PDT)
+        with ESMTP id S232303AbhFUW2K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 18:28:10 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6188FC061760
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:55 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id b14so17664751iow.13
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=urkpKRCVUcnkeA5xm5AkC500A1RReChHW2zksdFNMEU=;
-        b=tLtiapBP4Ey4ScnpcHyWu5rod+ArZR8voHCLYNsaVukPYDVzBcs/LbXZeIdBefrjKU
-         uArbiSilApwqwUOt4ctZjWiBQv+9yKJ7JxlogjgSkmExBCsPRfGCz1dj/o0nz+3EuJxJ
-         YF5rTiXJUDCUJoa6Gk9PiOD4k+H0xHECV6jeosLxylWS7kBZGJTI2htWWID5JbP+bz+p
-         PW1ChEyQkI7ARVZfLiSEtlNMhUIZwT1DB3skL0+oUNdLhDOV3FkSIjnFowR5/GN9kbQB
-         Q0mUpnemly3CyVnrTgvmHdL8fBK+hgVq8NI/6/OkHY7LWeyVCfGqHYn7MyxQo5xegZNt
-         cepg==
+        bh=P9XhA576oXjIKXlNHfQ5aXRwRaVis24OihjlRxxBAZs=;
+        b=cKxZU7CbG0f7L0G7KM+nx9II/+dZ7S/RI6FYaGvCdeDUxDT6gEH3R3m+G44RTR21mV
+         xm0Kjeu4R/sGKGE0ACTiDBSFYOxJhzVh+GdQxrVRHSJKvYwuqTdI2S9fbQ6clitY4pYJ
+         5O6jibnCyWg+WoWhlyWQfolockCyE+IKT0mASOzOrePEV3yH+Kd/8wyZXDlItV+/Zu2n
+         sB9mX6P2DNpaR8UPVOPZ3LSOmrFMUjecI/bw49mlqd/8TpwsfoL2b5aNXNxKCIXWLpz4
+         Gjn4tggPnTYYjG5mvsaH04agjwrUmguKXQmuVMKSE8NTfIq+jJalG6Z9Qr3wW3+D0eGr
+         aK3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=urkpKRCVUcnkeA5xm5AkC500A1RReChHW2zksdFNMEU=;
-        b=UWORKOvFX22OhLtKCDo2Oyn8rsVZo6psd44rij2o+Ed6HjUw1v8X9Ipv3BhRzXmIkw
-         5Trqm6rL5iw5IKsYA785A7n8Mwt+ZiJJHIDf3XPqPCMMRBN9xZtkSqjqI5lEYnSMfxg6
-         ORge1LyJoBedqaIusgi9oahdrOtgsbafCimQxjLX4p7I/9EW9zj3YzY+1RxrYqMHt0Bf
-         mDHzBdPa6S9xgKsYE8sPZKRhQ2/JH+FE8BF7WKg9mCJrxDPMBxdbc+fUsSk3BusaIjbW
-         clEcJaPxwsyoLCs4A4v0BBBIQVqu02k4ooaBcX38LVhe8tFlMfetpKVgkRmL9YxO5JLf
-         JpDg==
-X-Gm-Message-State: AOAM5339VvqSNtFRKumv3wBoxQT+ic2UiFqG3j2N/5Z1mb/Jqqxw4zDE
-        bwotRFb4ZRjm3O/PBM9N8KYebzgayRGlHK3o
-X-Google-Smtp-Source: ABdhPJwKTjAuKnlLgWucTczKibgdUwO6r+fleqwScxpHp5FB32BDBp6jXIu1PqHBf0NTkXOAHuFNew==
-X-Received: by 2002:a05:6e02:10c3:: with SMTP id s3mr342730ilj.37.1624314351989;
-        Mon, 21 Jun 2021 15:25:51 -0700 (PDT)
+        bh=P9XhA576oXjIKXlNHfQ5aXRwRaVis24OihjlRxxBAZs=;
+        b=EaI/CmCLyw9dd0DH9xnrLKqRC3+D3gEiUN9a5zXYbefuk5+icxV5efH/WGl0Vqr4xC
+         HEEJy3UTgxJVBCDDD0LszXppssZ6G1Yw2+cMlHniMV3ZKqRjdAw3T60vEmtHcZ1e93rM
+         UGwal1pkXGwgy/1uc+tXQLf2XjCb+EbmzBBSil2ASJW3/fyIG7kY1l4ckMZna5V22T9m
+         yBXX6FSoW5QajBEbmxhDdmq3SNgb8IFxR4PqqLVWL6oOng8AL3tGYirUNOwAUYFHOyoZ
+         RQprL0mAJjkuKE6EH7oCp0TWgJ2lHP7fAH+yvqTsEtKHAOOhUOocRCUsVYS0uCGxX4o3
+         4PJw==
+X-Gm-Message-State: AOAM533v1U11ksdsov+6BKcLgsv5PCVMdjdBu3bTqj4VTuIRECgcX/+z
+        r+P9/1opNclqpEZdKUT39ym2qiiBceLpYWL6
+X-Google-Smtp-Source: ABdhPJyhs6Ag7MPYwQARXfE4J7u3T+raYnL2/jhGdHHBwyNcxb2ju00+YW1aytqL44FpADpjQaemgw==
+X-Received: by 2002:a6b:7009:: with SMTP id l9mr251987ioc.82.1624314354588;
+        Mon, 21 Jun 2021 15:25:54 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
-        by smtp.gmail.com with ESMTPSA id r4sm1058708ilq.27.2021.06.21.15.25.51
+        by smtp.gmail.com with ESMTPSA id j18sm10636340ioo.3.2021.06.21.15.25.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 15:25:51 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 18:25:50 -0400
+        Mon, 21 Jun 2021 15:25:54 -0700 (PDT)
+Date:   Mon, 21 Jun 2021 18:25:53 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v2 20/24] t5319: don't write MIDX bitmaps in t5319
-Message-ID: <4cbfaa0e978fd68bd5acd6ce5f96b34e9cd43656.1624314293.git.me@ttaylorr.com>
+Subject: [PATCH v2 21/24] t7700: update to work with MIDX bitmap test knob
+Message-ID: <839a7a79eb1fedd25948213a5d64c97e34d38a31.1624314293.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1624314293.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,30 +72,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test is specifically about generating a midx still respecting a
-pack-based bitmap file. Generating a MIDX bitmap would confuse the test.
-Let's override the 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP' variable to
-make sure we don't do so.
+A number of these tests are focused only on pack-based bitmaps and need
+to be updated to disable 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP' where
+necessary.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5319-multi-pack-index.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t7700-repack.sh | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 5641d158df..69f1c815aa 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -474,7 +474,8 @@ test_expect_success 'repack preserves multi-pack-index when creating packs' '
- compare_results_with_midx "after repack"
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 25b235c063..98eda3bfeb 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -63,13 +63,14 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
  
- test_expect_success 'multi-pack-index and pack-bitmap' '
--	git -c repack.writeBitmaps=true repack -ad &&
-+	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
-+		git -c repack.writeBitmaps=true repack -ad &&
- 	git multi-pack-index write &&
- 	git rev-list --test-bitmap HEAD
+ test_expect_success 'writing bitmaps via command-line can duplicate .keep objects' '
+ 	# build on $oid, $packid, and .keep state from previous
+-	git repack -Adbl &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 git repack -Adbl &&
+ 	test_has_duplicate_object true
  '
+ 
+ test_expect_success 'writing bitmaps via config can duplicate .keep objects' '
+ 	# build on $oid, $packid, and .keep state from previous
+-	git -c repack.writebitmaps=true repack -Adl &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
++		git -c repack.writebitmaps=true repack -Adl &&
+ 	test_has_duplicate_object true
+ '
+ 
+@@ -189,7 +190,9 @@ test_expect_success 'repack --keep-pack' '
+ 
+ test_expect_success 'bitmaps are created by default in bare repos' '
+ 	git clone --bare .git bare.git &&
+-	git -C bare.git repack -ad &&
++	rm -f bare.git/objects/pack/*.bitmap &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
++		git -C bare.git repack -ad &&
+ 	bitmap=$(ls bare.git/objects/pack/*.bitmap) &&
+ 	test_path_is_file "$bitmap"
+ '
+@@ -200,7 +203,8 @@ test_expect_success 'incremental repack does not complain' '
+ '
+ 
+ test_expect_success 'bitmaps can be disabled on bare repos' '
+-	git -c repack.writeBitmaps=false -C bare.git repack -ad &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
++		git -c repack.writeBitmaps=false -C bare.git repack -ad &&
+ 	bitmap=$(ls bare.git/objects/pack/*.bitmap || :) &&
+ 	test -z "$bitmap"
+ '
+@@ -211,7 +215,8 @@ test_expect_success 'no bitmaps created if .keep files present' '
+ 	keep=${pack%.pack}.keep &&
+ 	test_when_finished "rm -f \"\$keep\"" &&
+ 	>"$keep" &&
+-	git -C bare.git repack -ad 2>stderr &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
++		git -C bare.git repack -ad 2>stderr &&
+ 	test_must_be_empty stderr &&
+ 	find bare.git/objects/pack/ -type f -name "*.bitmap" >actual &&
+ 	test_must_be_empty actual
+@@ -222,7 +227,8 @@ test_expect_success 'auto-bitmaps do not complain if unavailable' '
+ 	blob=$(test-tool genrandom big $((1024*1024)) |
+ 	       git -C bare.git hash-object -w --stdin) &&
+ 	git -C bare.git update-ref refs/tags/big $blob &&
+-	git -C bare.git repack -ad 2>stderr &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
++		git -C bare.git repack -ad 2>stderr &&
+ 	test_must_be_empty stderr &&
+ 	find bare.git/objects/pack -type f -name "*.bitmap" >actual &&
+ 	test_must_be_empty actual
 -- 
 2.31.1.163.ga65ce7f831
 
