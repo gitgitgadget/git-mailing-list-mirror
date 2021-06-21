@@ -7,144 +7,126 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 065DBC4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 12:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFCDCC4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 12:50:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2A6561002
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 12:07:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 936C260698
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 12:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbhFUMJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 08:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54476 "EHLO
+        id S229887AbhFUMwR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 08:52:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhFUMJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 08:09:58 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CF6C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 05:07:44 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id h2so5078659edt.3
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 05:07:44 -0700 (PDT)
+        with ESMTP id S229640AbhFUMwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 08:52:17 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 073CFC061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 05:50:01 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id m14so2068035edp.9
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 05:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=llElNIFbm9fT/dUsRz65BthMIeyX/kVUz1nqOa93D0o=;
-        b=WzXzSTlY4iXjhRoSAUOrJroBXIy2O4P0064fBhQYm0q9j62hz+q87TcsGe+2pBOXC9
-         6CPETKspnsVpG3VEyI15MA0k4KCyScSHmmNknBumXfJR+3th4oyajqOcGV4aWlEr2mw9
-         l8LpaJNJD/orQCVn14IGewMdKlFRzVoliPjRLfOvs8/DG8eZFPNu0ijPR0C80ynJwisP
-         sgxJuyp/VHVp2hzSX8XFGUYSrLOOr+6oeWGYPefWd6jnnHMmfQTIeyOJ404jpav3hrF3
-         uoZFL29R0aE3RuFuJ7IVZpUyd+mI+Z8vqOGZHFCts3XOxkhIYvDSxYvwlLYbGi/t35+V
-         OYsA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7qOxMsur1Y9IR3+rVs5OD7ie6BcPv4lIkDGk+dh2Fyo=;
+        b=l3+1Njgv+sXitlgVLWLaxv6qNNUihn5DisikrppmG3z2QZWaKTAEOgG5XsG8+WpCem
+         iTT6r79vs+4EBolb/ydSVZINEwVch21fSpfx2fhI9T+3a8Fk96zMU/XGnJMdKlj/XOo1
+         JBKNq53sP9F8kw0wOCZqsD0r4wIZMJI5qvgfHh106AftaISbaKMG8IsK0OzQsYADwrL6
+         aZB8zp0xSNk5VlisvDKxVxLjp7qzqO2oeOoS2APeDefN+jc3g1LN5CMHzExR5ZRYvdbR
+         u+Ognd2QkvfqXrpmfU6TL73Ws/EjQRUY/Zb8o/mOVhd3sUj1MJYeOgLh5Kjsu0gMA2Cg
+         JLpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=llElNIFbm9fT/dUsRz65BthMIeyX/kVUz1nqOa93D0o=;
-        b=NZAdU7R8IefbKXf+lKFZqbsw11BmGzGuEszCwln/dBLfvogCeqCVFu+BrMvbZ6GtPw
-         T9IhS6NP9H2ML5O2gw3O7QD3l57lt3kLxxIVTtmJy1BUW2QUq6u2j9t8uxggRakMnckH
-         sAQfZCJ5/Bz/AslZvmyrBpzdHs37meI4YPR1vjOhg+FQFf25in7r8X8OnE7W0ScAiYR/
-         HFg+6BmxUMHqAG9eQxrB+vIkvAr5VRLuPG/ZApwtWwHz2b74PMtyAFvRgK7qW5Q+/593
-         PTf5XMsniwGqe2PYHxl6+H9Oa1Ulm/vhOmcmSK/+cwDKL23XnCkYKlmQXW0xcEP6qP/Q
-         pTnA==
-X-Gm-Message-State: AOAM5318DB1ObM4sUXDUErpH/pJyeCN0VlsPF+bpN+kXvu5z/Jld8TM8
-        2HVcXAWmCGCtn24JjaTQyEZHEi4A2r4n3dZEsNA=
-X-Google-Smtp-Source: ABdhPJwfums9w2NUZ3GWs/ypLeceMO+Q2cdNRAmPUFmHJQRzfP4YpCOYPLTmTO4wIgQVIGJxqZCTtE31K+3xLtaWeZo=
-X-Received: by 2002:aa7:dc42:: with SMTP id g2mr20940445edu.362.1624277263086;
- Mon, 21 Jun 2021 05:07:43 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=7qOxMsur1Y9IR3+rVs5OD7ie6BcPv4lIkDGk+dh2Fyo=;
+        b=Dg23EjE+z8snCOsJyN6EB7igSSws1423xDUPKN1YcezyhmLgmyE7uP9Wd+gbm72JVk
+         n39laZ7Qh1tQpTsUeCEzpM+87Qa12ga3A+ZguFkA+TMYrXIMEZy5StKGNbO1pfVAU4Qb
+         24tx7pwuMGA402OlbJ7lmhq/Gn5PVvd7ZbgHsoIMOZTQX1J7qt5vwiaCsRBmgfVFPitu
+         kkVv5nZ+x3Why4oqYfSqI8Qd6sQivm2jINhW2SjJgcyovdRosiBKb+CssymQqvyHyr95
+         xHHkXF+NmvIZ8vW105WhMUS2YPs4ebPq+hvYjWPMYIHSg9Qq+6tko9px198UjPt4Jr4W
+         8NfA==
+X-Gm-Message-State: AOAM533YsNXuDYPbanjnMuc0gqHStzwgiOOiyM61mM22EXro897mWTC2
+        xo0p2CJxg5wGJTGGTprQ/RM=
+X-Google-Smtp-Source: ABdhPJzEBSPvQAD6xfQ4iZQtFqet2cGR8KgOBNH4JjEJfZNRhNv/cDRqvUOH6NYjnZsPqmj8nf5Trg==
+X-Received: by 2002:a05:6402:2813:: with SMTP id h19mr709391ede.39.1624279800312;
+        Mon, 21 Jun 2021 05:50:00 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n11sm4867910ejg.43.2021.06.21.05.49.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jun 2021 05:49:59 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Roland Hieber <rhi@pengutronix.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bisect: allow to run from subdirectories
+Date:   Mon, 21 Jun 2021 14:45:49 +0200
+References: <20210620213836.10771-1-rhi@pengutronix.de>
+ <877dio3vg5.fsf@evledraar.gmail.com>
+ <YM/yqPsRutV2mUbb@camp.crustytoothpaste.net>
+ <CAPig+cQa3JC-YkGeB-NDy-iP=Mv8BRL6jyXTGXzaqpTLcxj8+w@mail.gmail.com>
+ <20210621093310.eqt3ajic64pgag44@pengutronix.de>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210621093310.eqt3ajic64pgag44@pengutronix.de>
+Message-ID: <87sg1b2xhl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAOLTT8TZqKQ1vkRX7apvzAJ04Cv9aHJ9kF1+wJcEvyi-pibOOw@mail.gmail.com>
-In-Reply-To: <CAOLTT8TZqKQ1vkRX7apvzAJ04Cv9aHJ9kF1+wJcEvyi-pibOOw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 21 Jun 2021 14:07:32 +0200
-Message-ID: <CAP8UFD0sHevUHB-ryUZm9Sxm=daKMwbqe6_Q7kc-pZAZN-eHWA@mail.gmail.com>
-Subject: Re: [GSoC] Git Blog 5
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 20, 2021 at 6:53 PM ZheNing Hu <adlternative@gmail.com> wrote:
+
+On Mon, Jun 21 2021, Roland Hieber wrote:
+
+> On Sun, Jun 20, 2021 at 10:10:10PM -0400, Eric Sunshine wrote:
+>> On Sun, Jun 20, 2021 at 10:00 PM brian m. carlson
+>> <sandals@crustytoothpaste.net> wrote:
+>> > On 2021-06-21 at 00:35:49, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrot=
+e:
+>> > > On Sun, Jun 20 2021, Roland Hieber wrote:
+>> > > > Currently, calling 'git bisect' from a directory other than the top
+>> > > > level of a repository only comes up with an error message:
+>> > > >
+>> > > >     You need to run this command from the toplevel of the working =
+tree.
+>> > >
+>> > > How does this affect out-of-tree scripts that will be run with "git
+>> > > bisect run", is the cwd set to the root as they now might expect git=
+ to
+>> > > check, or whatever subdirectory you ran the "run" from?
+>> >
+>> > As for the idea itself, I think it's a good one assuming everything
+>> > continues to work.  It will certainly be more convenient for a lot of
+>> > people.
+>>=20
+>> There have been multiple patches sent to the project over the years
+>> with the same purpose. One problem, I believe, which has never been
+>> fully addressed is what happens when the subdirectory from which
+>> git-bisect is run gets deleted as part of the bisection.
+>>=20
+>> Here are a couple recent threads triggered by previous such patches
+>> (but there are probably several more):
+>>=20
+>> https://lore.kernel.org/git/pull.765.git.1603271344522.gitgitgadget@gmai=
+l.com/
+>> https://lore.kernel.org/git/pull.736.git.git.1584868547682.gitgitgadget@=
+gmail.com/
 >
-> My fifth week blog finished:
-> The web version is here:
-> https://adlternative.github.io/GSOC-Git-Blog-5/
+> Ah, thanks for explaining the problem. Would a patch that adds a short
+> explanatory comment in git-bisect.sh on the matter help to prevent
+> people sending such patches?
 
-Great, thanks!
+Having skimmed the linked discussions I don't think the consensus is
+that this shouldn't exist, but that someone who wants it should do some
+research on the relevant edge cases, come up with test cases for them,
+discuss the trade-offs in a commit message etc.
 
-> ## Week5: Tempting apple
->
-> This week, I spent a lot of time working on the digital circuit
-> course design of the school. So this week's patches for git
-> was completed in a hurry. This week `=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on`
-
-s/was/were/
-
-> gave a lot of useful suggestions for the patch I wrote earlier.
-
-Maybe a link could help.
-
-> Some are related to code style improvements, and some are
-> better design ideas.
-
-[...]
-
-> But something like `fill_remote_ref_details()`, things gradually
-> become complicated and difficult. `fill_remote_ref_details()`.
-
-I think you can remove the above `fill_remote_ref_details()` as you
-are talking about it later.
-
-> Just consider the `show_ref()` called in `fill_remote_ref_details()`,
-> `show_ref()` may call `shorten_unambiguous_ref()` internally, and
-> then another function is called internally in `shorten_unambiguous_ref()`=
-...
-
-> Well, this is one of the reasons why I cannot move on.
->
-> On the other hand, look at the following piece of code, it appears
-> in `populate_value()`.
->
-> ```c
-> for (i =3D 0; i < used_atom_cnt; i++) {
-> struct atom_value *v =3D &ref->value[i];
-> if (v->s =3D=3D NULL && used_atom[i].source =3D=3D SOURCE_NONE)
-> return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
-> oid_to_hex(&ref->objectname), ref->refname);
-> }
-> ```
->
-> We need to determine whether `v->s` equals to `NULL`. We can use
-
-s/equals to/equals/
-
-> c-style strings to easily distinguish between empty strings(`xstrdup("")`=
-)
-> and `NULL`, but if we use strbuf, it is not easy to distinguish, because
-> an empty strbuf has the following characteristics: `s.buf =3D=3D strbuf_s=
-lopbuf`
-> or `sb->buf[0] =3D=3D '\0'`. It can be said that we shouldn=E2=80=99t eve=
-n use `NULL`
-> to assign to `s.buf`.
->
-> So in the end, I rejected this seemingly very attractive solution, and us=
-e the
-> previous strategy: `<s, s_size>`, unless someone can think of a better
-> solution later `;-)`.
->
-> * FootNote:
-> 1. Why is there no `strbuf_empty()` in `strbuf` API? I think this may be
-> a very important thing.
-
-There is a 'size_t len' field in 'struct strbuf', so doing `buf->len
-=3D=3D 0` works.
-
-> 2. Another thing worth mentioning is: I will have the school final exam
-> between July 7th and July 14th, I may be busy during this period.
-
-Ok, thanks for telling us in advance.
+I for one would welcome such a feature, it's often annoyed me, it should
+just work like "rebase exec" in that a "run" script should cd to the
+root, but (as discussed in the linked threads) I don't see why we'd
+prevent it any more than several other commands that already have this
+edge case, but don't explicitly prevent this.
