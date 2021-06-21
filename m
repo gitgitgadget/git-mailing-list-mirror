@@ -2,135 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B0C0C4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 23:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C6EC4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 23:52:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39AA061164
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 23:34:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CCE961153
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 23:52:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbhFUXg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 19:36:29 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54252 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229940AbhFUXg2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 21 Jun 2021 19:36:28 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 59FEF60443;
-        Mon, 21 Jun 2021 23:33:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1624318423;
-        bh=kNq9U23Ty4sOtyzHN6JbNZ5Uh2bdE+sy+sTxroAAA6Q=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=TXqsnnH+9FGVA7Ecs1WhtbOLAlR4QszmOC2xcRQRQeNy+yb8OyamrzLhhYBtZKDYE
-         VXd4Xin9yJk79Ffv0r8nUcoKKmeKCw4QyCUaHyS8verFDN78O978hR5pVUdcQNz9Hu
-         H5NgXts79O2zMjs2+wVdpbSj3ncsCevLrHLwZEnPBAsV3UKq+xJcnbPZ0dW/imts8A
-         q72kLtu2LFnx8jYFF2P5hgSxrMPANxXwazws9eGYG0QIWQYo5BxdOhpeyHfm+IwAlg
-         dMmGOQHy5NWMv3gx/DpG4H3LnJ+SGanJvPwp5E53nK2Ms/dOxCXFOAl8u5Q3JGR6Nw
-         CNbCYZC9zbjEG8WfL0GbSYWjZHD3ySjQoLC1YBEKZqGhR/1wz9kdLPCiwvN/Uj6nHz
-         vME/a/gAxEP3OA4a2HKjheSjHxjt+4eRknv4GAWrLXzs/V2YJR/sK3BYhLqGA8RcgJ
-         JoNqZ86StM+SCoWVwd3j/HkMQ0fUHIXF1t0HGQYwIuQ/lZkwzdD
-Date:   Mon, 21 Jun 2021 23:33:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Hongyi Zhao <hongyi.zhao@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: About the usage of core.gitproxy.
-Message-ID: <YNEh06GSuoix+75h@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Hongyi Zhao <hongyi.zhao@gmail.com>, Git List <git@vger.kernel.org>
-References: <CAGP6POJErqxTf1=u=N0Fg28Fz+8t3Y8o1peiGP1nqEuttKgN2w@mail.gmail.com>
+        id S231937AbhFUXyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 19:54:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45138 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231705AbhFUXyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 19:54:43 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31150C061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 16:52:27 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id u2so720963plf.3
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 16:52:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KJ8jzfL3xiq3rV8WHeUhFm+QFfFGhyAomxmKtW7WPIU=;
+        b=fiqwiAniucXSoIeC2e8Me2T/cNIIY29MOgfajvZwwwKE42zetW9Dz3v/jc+azeGQHy
+         P36iHKfc0awuJ3z03b/zv2oubBUBkT4UiglkicEuhsReGTiJvDyiClkIa+h4laiCM6pJ
+         P12/Kt6iwvvCANSbjtkkCq4/ngQQjTwq50wsO9m+LY00uxNzma/e7WmoZufhbJyG0g+3
+         Lr65se9PjkiMtyj2iaSWHdqn2vikTSNFt4IEp2N7yQ8eQtGlaKNGnOBlSMiXILtsCZjX
+         6x9gLg/UWrJ0CB98aVlX41NkOMxQOPQ0pJqKJl0ourEfkVNNCYuwMRwD6di8v7pLLGLj
+         6Yzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KJ8jzfL3xiq3rV8WHeUhFm+QFfFGhyAomxmKtW7WPIU=;
+        b=EDoXdfG7DW/6rNR+LIUXsenH+5FsUeqqMvP+XqdiVsrLOD2mvQLZ7+2Q1uvrz6yIED
+         cmUTg8QHWV8OrGCcg7LEMjnZ6u7LaEp1sdgfIUhObW+aN0yd1RxpvGKPOGrXv0b2n0Mv
+         kwxPQ+tcTJFzGgeUKNaJKMnsHt/iBNJVVLSh8N6RlYl5IQF/OD4McFLHU3XSgUjEfxik
+         Kl5lQFQa1tw2482Al82y9EUvhlgRvgJwVgEuiZBNLXNGPZ0fX7U0+FlvriumglEG3JId
+         gotWEqtSUb+/HGeuglxlZImuR2ohjVXKfT3u8Xm8GG7o7JYR0RX9wBkGcJ8jfYvFSYfr
+         BqGg==
+X-Gm-Message-State: AOAM531+dO0v4ATy73s+sUZzXHWlo1ltozSEGBTeHiGeofdFLZA9kY01
+        kN+JYgn5w/ZJe7N1ykBYaMw=
+X-Google-Smtp-Source: ABdhPJyHgv8itG3kZRIbvnrqmhrKHsADd7vsBWqjaBgKY7XxcoG3vHdNYzg8S0XpoVQ2kLX8tjBMTw==
+X-Received: by 2002:a17:902:8f94:b029:103:62e4:686d with SMTP id z20-20020a1709028f94b029010362e4686dmr20300605plo.42.1624319546553;
+        Mon, 21 Jun 2021 16:52:26 -0700 (PDT)
+Received: from localhost ([2402:800:63b8:d894:c20c:47df:f687:87d4])
+        by smtp.gmail.com with ESMTPSA id p6sm289636pjh.24.2021.06.21.16.52.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jun 2021 16:52:26 -0700 (PDT)
+Date:   Tue, 22 Jun 2021 06:52:23 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 0/4] t: new helper test_line_count_cmd
+Message-ID: <YNEmN0HmQbiCMuaU@danh.dev>
+References: <20210615172038.28917-1-congdanhqx@gmail.com>
+ <20210619013035.26313-1-congdanhqx@gmail.com>
+ <CAPig+cR7tUXB4=j3fGHN07=tPJ-skGb_6M7SExTq5eAH7FSwOQ@mail.gmail.com>
+ <xmqqfsxel6oo.fsf@gitster.g>
+ <CAPig+cQdDibt2K6jFKehaWyGdtb72pj7FQ9nGLJYEmqna3vf5w@mail.gmail.com>
+ <xmqqy2b6jql2.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="J8CMOarkHwgL6giX"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGP6POJErqxTf1=u=N0Fg28Fz+8t3Y8o1peiGP1nqEuttKgN2w@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <xmqqy2b6jql2.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2021-06-19 15:50:17+0900, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> > Indeed, I have no problem seeing this as a new mode of
+> > test_line_count() triggered by an option. In fact, I suggested exactly
+> > that[1] when this idea first arose (except I named the option `-c`
+> > rather than `-e`, but the latter is fine). However, my suggestion was
+> > pretty much shot down[2] (and I don't entirely disagree with [2],
+> > which is why I didn't pursue the idea in [1]).
+> 
+> ;-)  
+> 
+> Yeah, I still am skeptical that we'd gain much by hiding the
+> redirection to >actual behind the helper, so as I said in response
+> to the v2 series, I am fine without this new helper or an enhanced
+> test_line_count, but go with more use of test_must_be_empty etc.
 
---J8CMOarkHwgL6giX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I guess the overall feedback for this new helper is negative.
+I think the consensus here is a local helper in t640{0,2} for counting
+ls-files?
 
-On 2021-06-21 at 21:58:29, Hongyi Zhao wrote:
-> On Ubuntu 20.04, I noticed the following document for `core.gitProxy':
->=20
-> $ man git-config |egrep -A13 -i '^[ ]*core.gitproxy'
->        core.gitProxy
->            A "proxy command" to execute (as command host port) instead
-> of establishing direct connection to
->            the remote server when using the Git protocol for fetching.
-> If the variable value is in the
->            "COMMAND for DOMAIN" format, the command is applied only on
-> hostnames ending with the specified
->            domain string. This variable may be set multiple times and
-> is matched in the given order; the
->            first match wins.
->=20
->            Can be overridden by the GIT_PROXY_COMMAND environment
-> variable (which always applies
->            universally, without the special "for" handling).
->=20
->            The special string none can be used as the proxy command to
-> specify that no proxy be used for a
->            given domain pattern. This is useful for excluding servers
-> inside a firewall from proxy use,
->            while defaulting to a common proxy for external domains.
-
-This configuration option is for the plain, unencrypted Git protocol
-usually served on port 9418.  Almost nobody uses that these days,
-though, since it is unencrypted.  This configuration option doesn't have
-any effect on HTTPS or SSH operations.
-
-> For my case, I've a local socks5 proxy running on "127.0.0.1:18888",
-> how should I set the above option so that the following command can
-> pick up this proxy:
->=20
-> $ git clone git@github.com:torvalds/linux.git
-
-In this case, you need SSH to tunnel through a SOCKS proxy.  According
-to [0], you can do this with the following data in your ~/.ssh/config:
-
-  Host github.com
-    ProxyCommand /usr/bin/nc -X 5 -x 127.0.0.1:7777 %h %p
-
-If you want to do this as a one-off, you can also do this:
-
-  GIT_SSH_COMMAND=3D'ssh -oProxyCommand=3D"/usr/bin/nc -X 5 -x 127.0.0.1:77=
-77 %h %p"' \
-    git clone git@github.com:torvalds/linux.git
-
-Note that that requires a POSIX shell; I don't think it will work under
-CMD or PowerShell.
-
-[0] https://superuser.com/questions/454210/how-can-i-use-ssh-with-a-socks-5=
--proxy
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---J8CMOarkHwgL6giX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYNEh0gAKCRB8DEliiIei
-gScjAP4yQoGQV+iQe1u4c1Q2aLQAsaap4TCcGmTivp5blGDI+AD+JlQ70ZNFUJ96
-VhfrDD2lvhX3bJi+4F3/t4bLOPLgCgA=
-=y/a/
------END PGP SIGNATURE-----
-
---J8CMOarkHwgL6giX--
+-- 
+Danh
