@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C132C4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBA52C48BE5
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F6FA60FE9
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4BEE6124B
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232144AbhFUW1e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 18:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53594 "EHLO
+        id S232172AbhFUW1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 18:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232145AbhFUW13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 18:27:29 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D422C061756
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:14 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id k5so3125512ilv.8
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:14 -0700 (PDT)
+        with ESMTP id S232197AbhFUW1d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 18:27:33 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42087C061768
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:17 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id s19so11153833ioc.3
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=gNhnSuz11aYXJPqYSvE9SZD82rVbAXajnXodd8BEeRQ=;
-        b=ugbULfUHKI/69QTFH3cPClCV8MjxVA1FgyfIANbA5OU6Wh6DKWptVYmdao3UMqEgBv
-         ZRRB91pO5zq/GB7lV4kUKth0FnMvL5d3A7RGa2iwD8m0Qm3QAHYxJBVXaesXgi/RDdzG
-         IcRYpwtI4zS2KqEh6ee4V7BfAWy2raTjqUesc3L47BnTZh9rZ53ta9MzWBEobTwfpbmp
-         W2f9UxoPLDA3w5/T+U10oEstc4fmYJ2H5gK8iZJ1M/TSYUDhsO9rqVqol9/7S4xrTswX
-         EP3GxTkKkqOjOFt4NBBFohk6/PCAlTbL07wKxJD1Bz3RUFMNFrzV2xTb88foe/WbKRm6
-         SkUg==
+        bh=7xGIEvzSdDRc4IQvzEVwXEoIEHv61yRPVPsvgvyowXQ=;
+        b=Smpi3LBdAb+obLYctuvDe5LbMFAgQfcLL3xcLDGdXKnbMsHp7TnFg4K98shYkl6FtW
+         DvBLVEz7wYs+RJvXQvL0JqjeqNaDe/rzCkH9Yf0zPpLtGCq5tNTT5m8pDCFt8dIh4eac
+         kKA6Hg73M2O0D3/2tGy4Agc0bIbda2jYonAwE51Zw/fojYFHEYiLYirtcacfbBGHfzK5
+         xRbOHYtLlQFpfUEU1IH2vxM2eD+I3cJR34qbC/DTCbmqDwJ/4hHIEciPi0CbkGOgTXZ9
+         5blrcg6ldNZY78sEgyCvBnw+TWgw+ba3vWADht+V/MM25wolFA1wlhsGPSy7Rcd4A8lz
+         fwuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=gNhnSuz11aYXJPqYSvE9SZD82rVbAXajnXodd8BEeRQ=;
-        b=tU3WjYGV9bgqFRsoekKcHCb3RknPc21B0icKkTGlQmCDuH/fyDb888Q5f6UTZCQJD2
-         o+uJyq2QkTHYcUVMz9iCmo3c1n3SOSLPHeyaMgcxmF6R714+PlNSmLek5TmTGXFmSIIi
-         RTfN6XrLynzdHI4SLOiaAMR1dR9MW2WNfjzzTi2v7ly7Ri8y6uhJOu27MOAVv4WdMg2T
-         Y4uqXtn3ix2NpdwxqPEsS3pCTuo0yxjKmGCFCSI9aIVouDiG0cv0eojwzWGH91T9DuL1
-         MHqv3l9AOvHe29mIiZRegXaXwA9w+s5OCYNYahKNALogMpFjtVnHK3wnhf1njXXoG5ri
-         jjsQ==
-X-Gm-Message-State: AOAM532H/kCbthGvkQot97gfWKIXVFSMMfWLOeCYOsfMNCBD5B5f/KjW
-        DUoyzL/WqwIx3QKd3VpaHB05oeL7C1NfTMMq
-X-Google-Smtp-Source: ABdhPJykJooXAeOYXSxC1h6wRPbFRnsd8tqujBOoalpDoXBjqceuTNfVyxE8JpoKLapt05zxwAmoUg==
-X-Received: by 2002:a05:6e02:5a3:: with SMTP id k3mr357568ils.302.1624314313824;
-        Mon, 21 Jun 2021 15:25:13 -0700 (PDT)
+        bh=7xGIEvzSdDRc4IQvzEVwXEoIEHv61yRPVPsvgvyowXQ=;
+        b=WYF1JuQE06dTIEm1vi8VsW5K/+hguLR0qP0la/5w4gc7YGS+og4p2toonVXhJQB/kx
+         IySQ/Vb1FYRI2ju3TXy32Qxw5UDtH+u0I9V6Slx27KevW7S/nzLnXAhRY6iBPnLjy/pA
+         VsEK3VthDOv3/obWAjbkBYLsDVRUivf4k4mvYD+Bav4zt+tQVp0UVf3Jy0/clLoSY5cN
+         4Hg7ew7cJKKE77fjYB1oR6n03N/BWZMDNGq9E3K9qbHUs6Aabj8exCV6UQal2AbwyFrH
+         wwkl0eRvMc/G+9ZFL0lk5AxW1Fp7Vm5ZH0K7EzBzS6dIYeqU09TCqNDCnTq5x6fELWWp
+         saZw==
+X-Gm-Message-State: AOAM530S53LN5+mXS23VVYzHoshQUdVpeIfbSvt0PDCAliIc0r6X4ngH
+        mnAZ/+t5A96F06QerA/Y3VSwQMaZyU8qlhF6
+X-Google-Smtp-Source: ABdhPJwsQrwVvUBxOvEyJB7YOjPhPXC54KszqG7tUU8Vmh/DXBkXKmd4FQX2UDihz310qvK435Ybiw==
+X-Received: by 2002:a6b:f81a:: with SMTP id o26mr250755ioh.56.1624314316554;
+        Mon, 21 Jun 2021 15:25:16 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
-        by smtp.gmail.com with ESMTPSA id h18sm3196159ilr.86.2021.06.21.15.25.13
+        by smtp.gmail.com with ESMTPSA id e14sm6659660ilc.47.2021.06.21.15.25.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 15:25:13 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 18:25:12 -0400
+        Mon, 21 Jun 2021 15:25:16 -0700 (PDT)
+Date:   Mon, 21 Jun 2021 18:25:15 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v2 06/24] midx: make a number of functions non-static
-Message-ID: <b3a12424d78e80553741f5c7a0672490a59b6f7d.1624314293.git.me@ttaylorr.com>
+Subject: [PATCH v2 07/24] midx: clear auxiliary .rev after replacing the MIDX
+Message-ID: <1448ca0d2ba265db2dce414a7f7d6b1f4bcb5a08.1624314293.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1624314293.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,47 +72,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These functions will be called from outside of midx.c in a subsequent
-patch.
+When writing a new multi-pack index, write_midx_internal() attempts to
+clean up any auxiliary files (currently just the MIDX's `.rev` file, but
+soon to include a `.bitmap`, too) corresponding to the MIDX it's
+replacing.
+
+This step should happen after the new MIDX is written into place, since
+doing so beforehand means that the old MIDX could be read without its
+corresponding .rev file.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 4 ++--
- midx.h | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ midx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index 21d6a05e88..fa23d57a24 100644
+index fa23d57a24..40eb7974ba 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -48,12 +48,12 @@ static uint8_t oid_version(void)
- 	}
- }
+@@ -1076,10 +1076,11 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
  
--static const unsigned char *get_midx_checksum(struct multi_pack_index *m)
-+const unsigned char *get_midx_checksum(struct multi_pack_index *m)
- {
- 	return m->data + m->data_len - the_hash_algo->rawsz;
- }
+ 	if (flags & MIDX_WRITE_REV_INDEX)
+ 		write_midx_reverse_index(midx_name, midx_hash, &ctx);
+-	clear_midx_files_ext(the_repository, ".rev", midx_hash);
  
--static char *get_midx_filename(const char *object_dir)
-+char *get_midx_filename(const char *object_dir)
- {
- 	return xstrfmt("%s/pack/multi-pack-index", object_dir);
- }
-diff --git a/midx.h b/midx.h
-index 8684cf0fef..1172df1a71 100644
---- a/midx.h
-+++ b/midx.h
-@@ -42,6 +42,8 @@ struct multi_pack_index {
- #define MIDX_PROGRESS     (1 << 0)
- #define MIDX_WRITE_REV_INDEX (1 << 1)
+ 	commit_lock_file(&lk);
  
-+const unsigned char *get_midx_checksum(struct multi_pack_index *m);
-+char *get_midx_filename(const char *object_dir);
- char *get_midx_rev_filename(struct multi_pack_index *m);
- 
- struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local);
++	clear_midx_files_ext(the_repository, ".rev", midx_hash);
++
+ cleanup:
+ 	for (i = 0; i < ctx.nr; i++) {
+ 		if (ctx.info[i].p) {
 -- 
 2.31.1.163.ga65ce7f831
 
