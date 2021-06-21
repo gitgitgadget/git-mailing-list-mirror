@@ -2,153 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCA93C4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A561C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:33:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD3D7611C1
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:31:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0510C60FE6
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbhFUUd4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 16:33:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56210 "EHLO
+        id S230291AbhFUUfa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 16:35:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFUUd4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 16:33:56 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD8AC061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:31:40 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so19076239otl.3
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:31:40 -0700 (PDT)
+        with ESMTP id S229890AbhFUUf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 16:35:28 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794CCC061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:33:13 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id z1so6571599ils.0
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jJqAItPOCsVXkUxRlBRkYszcUQumON76Hj/QyuX2N3o=;
-        b=Ho4ZoHoV6pEI8Y27uBaKu8cLpCJGrsc7pTpMPKh9V8JpbArK7X3ryL+7X8FHWtn4WO
-         RHT0BwBqocHyLcD6p+tMWozjmqz3CUqTrp2AsppYzMNcL9M8wlsHGWWKpXFv+xMuJVfO
-         vhZMj1fqZNNwhHFsKh9y6eykzhYl9CvszYqIRHQbyPjs7OkbcaqdB2GrYArLMmBz8Zc7
-         +xXVKXc/7GMQrQCsVoUzE/z4C8MHWHSfxCdBGl0Yg9UCI721Av9AT0H+y161kikjx+9v
-         24Se8mMZmhDNTcal1ear8nyk32ZMTFfFkbquDFHJNGfPsee2ZRtP8Y55S5S3F4fQ40Jy
-         t5vw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=vpCbuuT+XHSDysLOb5eTTICkPIII2yKCcvWZbFDnsM0=;
+        b=OGs0vx/qtOcICVbgviI6XuoXC54MHSoyfdmf4o12VRUUyDY+lcF76m2nVSTG32CPx2
+         CV51y6E6e5436j2NQ8PbiAWxx+iwt1BKEtYUkptznhS1MpYW5tuZAWieiDdzXYFyPCwv
+         /Acpmu/+ZKlgCPFDgU8PxNdDVe53QYtVcXZuhNR1OrrGPn2byhCEtKON+2Jk5TBt1MGg
+         ElfyLglYi0CF4Txxq+umXoHcg7z6UFiE1WlKcHJA37muXnXqauJUIAl10L06xK3WR1iY
+         w/Ihml6i0b8C5BUf2v3CefENu8G4BzdNejld8pxd/dpCxF/RJMyDxTyAAl6eyJa8BoeN
+         30/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jJqAItPOCsVXkUxRlBRkYszcUQumON76Hj/QyuX2N3o=;
-        b=T4AY7f1DK9se3GFwOwWmdFFSVt9AUY4kaRweVooFwZq2skRIEOCfw6k1B8ZdGSCKma
-         ks8lQZI+Tm8bnfYiRXwnGcdRD/dwx8E7psU8PvnEz9kuC6bafrp2MY6VNlB7orOQcr7H
-         omq8S74+8w5uXk0iwoyJ0kyuAH7ojMjBY9ZsbiZYa2GPjqx/a2+GrOsC55Z0Kzq/4yIr
-         3E3q0fGnP50/Z/iBa2R6TJB7b7IWwsCTdJXO9hp7cUWSV8IjURmQ43dbJjkj++HyVOnv
-         0BwqeqS5/ZYKe2TFZEDDRx8trTlIW74ARL4+5hXttBMQPxxYAAzE+tELUwR+AsWV/STx
-         SURw==
-X-Gm-Message-State: AOAM5336D5TcYPOuo0ELf1Tz7evrZFXJ70yWgxftCsfMkarM44VaCVwf
-        FPCtwmurZSRFMhA24JJf/tOyWj/1WUys/GMG3En6sOajkb4=
-X-Google-Smtp-Source: ABdhPJyTZyx2PbOkIz9W5DxlWExS9SbU6qDSk70oYnM6/m+1paRKW5GMFBDXZRPkL+vGQgu/ouHiypE2GriNDzo/wZ4=
-X-Received: by 2002:a05:6830:18fc:: with SMTP id d28mr265846otf.162.1624307499888;
- Mon, 21 Jun 2021 13:31:39 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=vpCbuuT+XHSDysLOb5eTTICkPIII2yKCcvWZbFDnsM0=;
+        b=BvNIUT9twlGrs47usNU3Wd3KkqDMBm9tq39QRewhuTBLTz2eQ+m/sRMJ+XpkEUai5G
+         8N/8siI/KkbQ1dYwigYQRQkGNtFQDrU6QXtyW3eFEnGIdNmnljlrjZmbImh94B5+qxSe
+         9C2kGsITlpbEAMk8zCGNHPTr4/slpKF+OZD92IHkyLT5S68WbO1txXmpYxTd+ZuCk+hR
+         juDG6f00JCZAQUpsR25tH4C9qJmp6fSuFwjcqT/+825RVC75dZdJl5rFWdwr4rcK0yY6
+         VA3PT0ww0Uh7UtPN9PV7/ORX1NOG3tQJ8IcwR9bmOqDYqmhLr6mPwoBME+Tdc5LvDqRH
+         YPhw==
+X-Gm-Message-State: AOAM530Q8qsE2/G8OWc71uTeDaR8xv6c5bfwJTCnuadUcTy7KiqKTE3c
+        zLxyrf3sTMvNoqwITwunYuvhOQ==
+X-Google-Smtp-Source: ABdhPJzi5t3U4gTba2x0++gIL9tEtEnKf0C10Z4OJlJs/eqdRWLYKg3E3aLIuvxxwWznRy1s/k5BTw==
+X-Received: by 2002:a05:6e02:dc7:: with SMTP id l7mr68762ilj.40.1624307592905;
+        Mon, 21 Jun 2021 13:33:12 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
+        by smtp.gmail.com with ESMTPSA id w11sm6626902iow.15.2021.06.21.13.33.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jun 2021 13:33:12 -0700 (PDT)
+Date:   Mon, 21 Jun 2021 16:33:11 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/2] pack-objects: fix segfault in --stdin-packs option
+Message-ID: <YND3h2l10PlnSNGJ@nand.local>
+References: <cover-0.2-00000000000-20210621T145819Z-avarab@gmail.com>
+ <patch-2.2-a9702132385-20210621T145819Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20210620151204.19260-1-andrzej@ahunt.org> <20210620151204.19260-9-andrzej@ahunt.org>
-In-Reply-To: <20210620151204.19260-9-andrzej@ahunt.org>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 21 Jun 2021 13:31:28 -0700
-Message-ID: <CABPp-BE=1bNxm9eVUBaCwDqXrFCXccWJ2yHftvCUQ+4Rr8seYw@mail.gmail.com>
-Subject: Re: [PATCH 08/12] convert: release strbuf to avoid leak
-To:     Andrzej Hunt <andrzej@ahunt.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.2-a9702132385-20210621T145819Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 20, 2021 at 8:15 AM <andrzej@ahunt.org> wrote:
->
-> From: Andrzej Hunt <ajrhunt@google.com>
->
-> apply_multi_file_filter and async_query_available_blobs both query
-> subprocess output using subprocess_read_status, which writes data into
-> the identically named filter_status strbuf. We add a strbuf_release to
-> avoid leaking their contents.
->
-> Leak output seen when running t0021 with LSAN:
->
-> Direct leak of 24 byte(s) in 1 object(s) allocated from:
->     #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
->     #1 0xa8c2b5 in xrealloc wrapper.c:126:8
->     #2 0x9ff99d in strbuf_grow strbuf.c:98:2
->     #3 0x9ff99d in strbuf_addbuf strbuf.c:304:2
->     #4 0xa101d6 in subprocess_read_status sub-process.c:45:5
->     #5 0x77793c in apply_multi_file_filter convert.c:886:8
->     #6 0x77793c in apply_filter convert.c:1042:10
->     #7 0x77a0b5 in convert_to_git_filter_fd convert.c:1492:7
->     #8 0x8b48cd in index_stream_convert_blob object-file.c:2156:2
->     #9 0x8b48cd in index_fd object-file.c:2248:9
->     #10 0x597411 in hash_fd builtin/hash-object.c:43:9
->     #11 0x596be1 in hash_object builtin/hash-object.c:59:2
->     #12 0x596be1 in cmd_hash_object builtin/hash-object.c:153:3
->     #13 0x4ce83e in run_builtin git.c:475:11
->     #14 0x4ccafe in handle_builtin git.c:729:3
->     #15 0x4cb01c in run_argv git.c:818:4
->     #16 0x4cb01c in cmd_main git.c:949:19
->     #17 0x6bdc2d in main common-main.c:52:11
->     #18 0x7f42acf79349 in __libc_start_main (/lib64/libc.so.6+0x24349)
->
-> SUMMARY: AddressSanitizer: 24 byte(s) leaked in 1 allocation(s).
->
-> Direct leak of 120 byte(s) in 5 object(s) allocated from:
->     #0 0x49ab49 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
->     #1 0xa8c295 in xrealloc wrapper.c:126:8
->     #2 0x9ff97d in strbuf_grow strbuf.c:98:2
->     #3 0x9ff97d in strbuf_addbuf strbuf.c:304:2
->     #4 0xa101b6 in subprocess_read_status sub-process.c:45:5
->     #5 0x775c73 in async_query_available_blobs convert.c:960:8
->     #6 0x80029d in finish_delayed_checkout entry.c:183:9
->     #7 0xa65d1e in check_updates unpack-trees.c:493:10
->     #8 0xa5f469 in unpack_trees unpack-trees.c:1747:8
->     #9 0x525971 in checkout builtin/clone.c:815:6
->     #10 0x525971 in cmd_clone builtin/clone.c:1409:8
->     #11 0x4ce83e in run_builtin git.c:475:11
->     #12 0x4ccafe in handle_builtin git.c:729:3
->     #13 0x4cb01c in run_argv git.c:818:4
->     #14 0x4cb01c in cmd_main git.c:949:19
->     #15 0x6bdc2d in main common-main.c:52:11
->     #16 0x7fa253fce349 in __libc_start_main (/lib64/libc.so.6+0x24349)
->
-> SUMMARY: AddressSanitizer: 120 byte(s) leaked in 5 allocation(s).
->
-> Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
-> ---
->  convert.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/convert.c b/convert.c
-> index fd9c84b025..0d6fb3410a 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -916,6 +916,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
->         else
->                 strbuf_swap(dst, &nbuf);
->         strbuf_release(&nbuf);
-> +       strbuf_release(&filter_status);
->         return !err;
->  }
->
-> @@ -966,6 +967,7 @@ int async_query_available_blobs(const char *cmd, struct string_list *available_p
->
->         if (err)
->                 handle_filter_error(&filter_status, entry, 0);
-> +       strbuf_release(&filter_status);
->         return !err;
->  }
->
-> --
-> 2.26.2
+On Mon, Jun 21, 2021 at 05:03:38PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Fix a segfault in the --stdin-packs option added in
+> 339bce27f4f (builtin/pack-objects.c: add '--stdin-packs' option,
+> 2021-02-22). The read_packs_list_from_stdin() function didn't check
+> that the lines it was reading were valid packs, and thus when doing
+> the QSORT() with pack_mtime_cmp() we'd have a NULL "util" field.
 
-Makes sense; a `git grep -e STRBUF_INIT -e strbuf_release -e
-strbuf_init convert.c` does a fairly good job of highlighting that
-these appear to be the only two strbuf leaks in this file.
+It may be worth mentioning that the util pointer is used to associate
+the names of included/excluded packs with the packed_git structs they
+correspond to. I see it's mentioned in the very next paragraph, but it
+may be helpful for other readers to see this information earlier.
+
+> The logic error was in assuming that we could iterate all packs and
+> annotate the excluded and included packs we got, as opposed to
+> checking the lines we got on stdin. There was a check for excluded
+> packs, but included packs were simply assumed to be valid.
+>
+> As noted in the test we'll not report the first bad line, but whatever
+> line sorted first according to the string-list.c API. In this case I
+> think that's fine.
+
+Yeah. There isn't really a better way to do that since we don't have a
+convenient function to look up packs by their name. Much more convenient
+is to loop through all packs and assign them to entries in the
+string_list one by one. That's O(n*log(n)), but it doesn't really matter
+here since we expect n to be small-ish, and this is by far not the most
+expensive part of writing a pack.
+
+You could imagine doing something O(n^2) by looping through all packs
+each time you receive a line of input. That performs worse, but arguably
+provides a better experience when using this mode interactively. But
+that is probably a relatively rare occurrence, so it likely doesn't
+matter.
+
+Equally, you could build a mapping from pack name to packed_git struct
+ahead of time, and then do the lookups in constant time. That's linear,
+of course, but you pay for it in memory. Honestly, the memory cost is
+probably quite reasonable, but it may not be worth the effort, since I
+suspect the vast majority of usage here is from 'git repack
+--geometric'.
+
+
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/pack-objects.c | 10 ++++++++++
+>  t/t5300-pack-object.sh | 18 ++++++++++++++++++
+>  2 files changed, 28 insertions(+)
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index de00adbb9e0..65579e09fe0 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -3310,6 +3310,16 @@ static void read_packs_list_from_stdin(void)
+>  			item->util = p;
+>  	}
+>
+> +	/*
+> +	 * Arguments we got on stdin may not even be packs. Check that
+> +	 * to avoid segfaulting later on in e.g. pack_mtime_cmp().
+> +	 */
+
+Could be worth adding "excluded packs are handled below".
+
+> +	for_each_string_list_item(item, &include_packs) {
+> +		struct packed_git *p = item->util;
+> +		if (!p)
+> +			die(_("could not find pack '%s'"), item->string);
+> +	}
+> +
+>  	/*
+>  	 * First handle all of the excluded packs, marking them as kept in-core
+
+...and it may be worth updating this comment with s/First/Then.
+
+> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+> index 65e991e3706..330deec656b 100755
+> --- a/t/t5300-pack-object.sh
+> +++ b/t/t5300-pack-object.sh
+> @@ -119,6 +119,24 @@ test_expect_success 'pack-object <stdin parsing: [|--revs] with --stdin' '
+>  	test_cmp err.expect err.actual
+>  '
+>
+> +test_expect_success 'pack-object <stdin parsing: --stdin-packs handles garbage' '
+> +	cat >in <<-EOF &&
+> +	$(git -C pack-object-stdin rev-parse one)
+> +	$(git -C pack-object-stdin rev-parse two)
+> +	EOF
+
+It's not a big deal, but here-doc directly into `git pack-objects` is
+much more common in t5300 than first redirecting it to a separate file.
+I probably would have written (in a sub-shell to avoid -C
+pack-object-stdin everywhere):
+
+
+  cd pack-object-stdin &&
+  test_must_fail git pack-objects --stdout --stdin-packs >/dev/null 2>actual <<-EOF
+  $(git rev-parse one)
+  $(git rev-parse two)
+  EOF
+
+Although the line is kind of long anyway (and it'd be even longer since
+the subshell will get its own level of indentation). So I could entirely
+buy that you did this for readability, which is fine by me.
+
+> +
+> +	# We actually just report the first bad line in strcmp()
+> +	# order, it just so happens that we get the same result under
+> +	# SHA-1 and SHA-256 here. It does not really matter that we
+> +	# report the first bad item in this obscure case, so this
+> +	# oddity of the test is OK.
+> +	cat >err.expect <<-EOF &&
+> +	fatal: could not find pack '"'"'$(git -C pack-object-stdin rev-parse two)'"'"'
+> +	EOF
+> +	test_must_fail git -C pack-object-stdin pack-objects stdin-with-stdin-option --stdin-packs <in 2>err.actual &&
+> +	test_cmp err.expect err.actual
+
+If we don't care which is reported (and it just so happens that we'll
+get the first one in lexical order), I would be fine with
+
+    test_i18ngrep "could not find pack" err.actual
+
+too. It would be good to get rid of this comment and put it in the patch
+message in more detail (instead of just referring to it as "[a]s noted
+in the test".
+
+Thanks,
+Taylor
