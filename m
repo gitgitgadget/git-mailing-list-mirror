@@ -2,165 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE20BC4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 19:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DCD4C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 19:23:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D48D06128A
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 19:09:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 066366134F
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 19:23:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231187AbhFUTLQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 15:11:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37854 "EHLO
+        id S230500AbhFUTZO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 15:25:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231137AbhFUTLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 15:11:14 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB89C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 12:08:59 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 13-20020a17090a08cdb029016eed209ca4so627748pjn.1
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 12:08:59 -0700 (PDT)
+        with ESMTP id S230052AbhFUTZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 15:25:10 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF66C061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 12:22:55 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id he7so30563616ejc.13
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 12:22:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eSifAKwtOJd+nhbHSqSbRWiFUlwMoPlC7uRbfvQqhD8=;
-        b=tzax9iuXbSEl2f2li8enoNqIAnn6jlRAFSff4JRA559MsQygJcnrvELuCD42co75gH
-         d5mEC/gqdF4pjROqkFCFdOtdcj45O6heSJkCTqIhdBKc57krBmeVlPIiPJjS0/Xj93Lu
-         4YfWedW6uHfhFrzm+h4cXk9Xmc9GL1kqmfciT6GoYLgVO/dWtIc/BLhwpxuF4MkrQgAF
-         IDZhJ2nLTsxRez65Pi1NZ/l60qAhCYoeMptwR9xdTBNtEW5DGXqX7DaofxwkqBf9ee3C
-         bMZRPG1acJS8SBPoCG8i36Z5CtBgWkzJUFf6ZW3JJlda+IuuN1in4NPuy4C8WAzyoLDF
-         nt5g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FTvC0sBL5lBQpGFojKNdN/IOJCMSV5KurwMenvzS1AY=;
+        b=MZwJNdNx+7hZEJVLqNRBTZZuPS2t8K4WVo5+H8ooYYKGjwAwdRXVLvbUleQsIXFU/x
+         8s46zC49EiKlIYjRgbGq5772CDemgYDwxAFIxHT+gBxcaqdywRv3b4Vwzm0evABwX3lx
+         aOIcpkQiy3Z4V8m0RTxUJxl+qbXOmGVCxZDCOCzOjWMt2W2QzZ81d1hz9AnCAHlFvJLg
+         7dcazPYSbbapQSjty8EYnTf7m0/hf3tokL9aRIVTUEi3wUc6fw1YbljRLx4vCHHj7Wje
+         461eM2knJzIjCaT4iXcLvEfUzvdLDPbDOaVPPRlL/d+TFXuH1w45k+rpaN3qhjm1nD+9
+         qf1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eSifAKwtOJd+nhbHSqSbRWiFUlwMoPlC7uRbfvQqhD8=;
-        b=guynekwTHuJ4icbgvKe4Q8ESUyhyvcMM43puuq1YUSr5KYcV0yjn1jq7lzxRMBw9ZQ
-         SONjnUy+UIUVcfAUHtcXFoDfk8KVqt/n0lfxKoklhqS4GaSnLwKplR1C+ZT/sdYoIbw/
-         BUTLZxFhD/YTD53dGaSo4JkHIrgA+SXVy5TOSK6/eZKi3kwiychIVMEKO5w/l8Cx7a7U
-         KJ838OJ8ImzDECIa5IkogiiFGxmoxbUmKeRY1czNLLqr2azq1s8EuY6s0hP5JDKWs+yo
-         AUFpudQGaIPkGlUyulc7xjfgfVu4rT5X7wgwNNpU0p23IM/dQP4UD/MgawVCDOYA5b5y
-         R19g==
-X-Gm-Message-State: AOAM532O3y+MNt3TqI/owrqeC4zh+WF8La5mu02oxSpP5hk/1MAwgiWs
-        NrAC0cS45G+W5+YR5krTCd2TD1VOphEUnQ==
-X-Google-Smtp-Source: ABdhPJzzs5GQVrUw18UVdbGJN0gE3AhUbgGaMZ3lyXsWF68AMLBuTm2iWCFLOO2viHsYljQvA1nVLg==
-X-Received: by 2002:a17:902:d50b:b029:121:b5c8:b246 with SMTP id b11-20020a170902d50bb0290121b5c8b246mr16683108plg.51.1624302538614;
-        Mon, 21 Jun 2021 12:08:58 -0700 (PDT)
-Received: from localhost.localdomain ([49.205.82.114])
-        by smtp.gmail.com with ESMTPSA id i125sm16256991pfc.7.2021.06.21.12.08.57
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=FTvC0sBL5lBQpGFojKNdN/IOJCMSV5KurwMenvzS1AY=;
+        b=CGLXjBXPuW1j1z4O3blqZ6QrHHod5w2L2v42KulIGwvJ5eP80WR+M3jHSzvVH/Kha7
+         M5KxVRAfzB8G99PGBH12UnV/q4AUvM2oQzYF3XTCIa6WFD7D4ZuI5WcNYtQZT4r6JcV4
+         cvQrk2YSQWTZyRRkFuoEYD/oW2RVBc12zbsUC7YS6Kz//2Fa5HdJ2XpTYpDMCCjJSq8B
+         VJ46+EDPQITyMblAFGX6XxqOdty3hSjcGRzuJKJif+HJ/4aE/y2+rjDoWuEJi6v8GzSJ
+         0WcHvNt4d9wXgPtDh6Of3DUb/vhQR9eAvh9Oz08+NgXlASrizrWogOZulloXOn0L0zTY
+         F7JA==
+X-Gm-Message-State: AOAM530JQ4hyNpAuqwNuRlnZz1508aUIlo+nPJ64meTyutTpI3qroj4R
+        hP/YMx+R4+mk9uWuuWiNhws=
+X-Google-Smtp-Source: ABdhPJyZ03UMBuTSZFN98oaxVzp0EuR0opqVz+vA2PDlXhqF1xNnEDCSF3zhs3oqKzTD8L0Oepj34Q==
+X-Received: by 2002:a17:907:2651:: with SMTP id ar17mr4022988ejc.135.1624303374360;
+        Mon, 21 Jun 2021 12:22:54 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id h26sm5145126ejx.25.2021.06.21.12.22.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 12:08:58 -0700 (PDT)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Atharva Raykar <raykar.ath@gmail.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: [PATCH 2/2] submodule: remove unnecessary `prefix` based option logic
-Date:   Tue, 22 Jun 2021 00:38:37 +0530
-Message-Id: <20210621190837.9487-3-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.32.0.9.g81a5432dce.dirty
-In-Reply-To: <20210621190837.9487-1-kaartic.sivaraam@gmail.com>
-References: <20210621190837.9487-1-kaartic.sivaraam@gmail.com>
+        Mon, 21 Jun 2021 12:22:53 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v7] help: colorize man pages if man.color=true under
+ less(1)
+Date:   Mon, 21 Jun 2021 21:08:20 +0200
+References: <xmqq4ke8pig9.fsf@gitster.g>
+ <patch-1.1-a950ef49e28-20210621T083254Z-avarab@gmail.com>
+ <xmqqfsxbika3.fsf@gitster.g>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
+In-reply-to: <xmqqfsxbika3.fsf@gitster.g>
+Message-ID: <87mtrj2faq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Over time when parts of submodule have been ported from shell to
-builtin, many instances of the submodule helper have been added.
-Also added with them are some unnecessary option passing
-logic that are based on the `prefix` shell variable which never
-gets set in their code flows.
 
-On analysis, the only shell functions which have a valid usage
-for the `prefix` shell variable are:
+On Mon, Jun 21 2021, Junio C Hamano wrote:
 
-    - cmd_update: which is the only function which sets the variable
-      and thus uses it properly
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> So, in order for this change to have any effect:
+>>
+>>  1. color.man=3Dtrue must be set in the config
+>>  2. The user must use less
+>>  3. Not have the same LESS_TERMCAP variables set (we call setenv(3) with=
+ overwrite=3D0)
+>>  4. Have color.ui enabled
+>>  5. Not have color.pager disabled
+>>  6. Not have git with stdout directed to a file
+>>
+>> 1. https://lore.kernel.org/git/87tun1qp91.fsf@evledraar.gmail.com/
+>> 2. https://unix.stackexchange.com/questions/119/colors-in-man-pages/147
+>>
+>> Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>
+>> On Tue, Jun 08 2021, Junio C Hamano wrote:
+>>
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>>
+>>>> I've been running with this on my personal git build since May 26th. I
+>>>> haven't had any issues with it, and I like the new coloring.
+>>>> ...
+>>>> I think this is a good example of a change that we're better off just
+>>>> merging down and then reverting if the wider audience of git users hat=
+es
+>>>> it, rather than trying to come to some perfect consensus here
+>>>> on-list.
+>>>
+>>> My impression was tht we already had a rough consensus here on-list
+>>> that it may be good to educate users who like this "new coloring"
+>>> like you do to configure their "less", so that they consistently get
+>>> the "new coloring" they like whether they are doing "git help git",
+>>> "man git", or even "man ls", and the approach the posted patch takes
+>>> will not help (it only affects "git help git" among these).
+>>>
+>>> I'd rather not to take it.
+>>
+>> Fair enough, here's a version I think you and others will find
+>> acceptable then. It allows users like me who like this to explicitly
+>> opt-in via color.man=3Dtrue.
+>
+> Not really.
+>
+> [snip] I think it would be easier to understand to end-users
+> if this were exposed as a new "mode", like "git help --web" and "git
+> help --info" are different modes from the "git help --man",
+> something like "git help --fancy-man" (or whatever is easy to type
+> and explain, and also add it to the variants help.format knows about
+> to make it easy to set the default).
+>
+> One advantage of doing so is that we do not have to worry about "ah,
+> user has LESS_BLAH environment variable so we should disable this
+> new mode here" etc.  As long as the new mode is requested either via
+> the command line option or help.format configuration, it can
+> completely take it over.  That simplifies the necessary explanation
+> given to the users quite a lot, no?
 
-    - cmd_init: which uses the variable via a call from cmd_update
+The interaction between "git help" and "man"/"less" doesn't really have
+an equivalent in the rest of git as far as color output goes. Usually we
+emit colors via our own programs.
 
-So, remove the unnecessary option parsing logic based on the `prefix`
-shell variable.
+But no, I think it makes the most sense to consider this orthagonal to
+help.format=3Dman or man.viewer=3D<cmd>.
 
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
- git-submodule.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+We're not invoking a different man viewer or command, we're just
+expecting that mode to invoke the pager, and if that pager is less to
+have these variables tweak our color preferences.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 4678378424..cb06aa02c8 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -335,7 +335,7 @@ cmd_foreach()
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
- }
- 
- #
-@@ -402,7 +402,7 @@ cmd_deinit()
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${prefix:+--prefix "$prefix"} ${force:+--force} ${deinit_all:+--all} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
- }
- 
- is_tip_reachable () (
-@@ -726,7 +726,7 @@ cmd_set_branch() {
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${GIT_QUIET:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
- }
- 
- #
-@@ -755,7 +755,7 @@ cmd_set_url() {
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${GIT_QUIET:+--quiet} -- "$@"
- }
- 
- #
-@@ -807,7 +807,7 @@ cmd_summary() {
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary ${prefix:+--prefix "$prefix"} ${files:+--files} ${cached:+--cached} ${for_status:+--for-status} ${summary_limit:+-n $summary_limit} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary ${files:+--files} ${cached:+--cached} ${for_status:+--for-status} ${summary_limit:+-n $summary_limit} -- "$@"
- }
- #
- # List all submodules, prefixed with:
-@@ -848,7 +848,7 @@ cmd_status()
- 		shift
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
- }
- #
- # Sync remote urls for submodules
-@@ -881,7 +881,7 @@ cmd_sync()
- 		esac
- 	done
- 
--	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} -- "$@"
- }
- 
- cmd_absorbgitdirs()
--- 
-2.32.0.9.g81a5432dce.dirty
+> [unsnip] Since the implementation of the posted patch, as I understand it,
+> does not aim to affect both "git help -m foo" and "man git-foo"
+> identically,=20
 
+Aside from this patch I don't think it makes sense to view git's UI and
+interaction with the pager like that.
+
+To probably >95% of our users the "we invoke the pager" is just a
+technical implementation details they're not aware of. Git just has
+pretty colors by default, so I don't think it's jarring that "git help
+xyz" and "man git-xyz" look different.
+
+We also don't try to maintain the UI that:
+
+    git cmd >file &&
+    pager file
+
+Gives you the same UX as:
+
+    # Invokes pager(1) for you
+    git cmd
+
+Since we set e.g. PAGER_ENV already, I believe this was brought up in
+past discussions. So we're already past the point of git adding its own
+magic custom options to feed to the pager.
+
+So I don't see the problem with having "a bit more like PAGER_ENV"
+hidden behind a color.man=3Dtrue config option in this case.
+
+>> 	----
+>> 	git-config - Get and set [...]
+>>
+>> 	SYNOPSIS
+>> 	--------
+>> 	[...]
+>> 	'git config' [<file-option>] [...]
+>> 	[...]
+>> 	The `--type=3D<type>` option instructs 'git config' to ensure [...]
+>>
+>> Will have "NAME" and "SECTION" shown as BOLD RED instead of BOLD, "git
+>> config" and other '-quoted parts in BLUE UNDERLINE instead of
+>> UNDERLINE, and `--type=3D<type>` and other `-quoted parts in RED BOLD
+>> instead of BOLD. The "Standout" setting is then used for the user's
+>> own search bar (invoked with "/") and prompt. See [2] for more
+>> examples
+>
+> There are BOLD RED and READ BOLD; are they differently rendered?
+
+Yes, that's just an omission/mistake. It should be the "RED BOLD",
+i.e. "<COLOR> <ATTR>".
