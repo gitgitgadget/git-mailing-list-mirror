@@ -2,95 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_NONE,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB92C48BE5
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB75EC49EA3
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:33:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09D2A61002
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:31:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC38C611BD
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:33:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230121AbhFUJdJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 05:33:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47040 "EHLO
+        id S229641AbhFUJfh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 05:35:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbhFUJdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 05:33:08 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3CDC061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:30:53 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id h2so4461632edt.3
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:30:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=WdhYd61vlNMYbdp/5uYl20ijVqyZ8GjLjOMk5Sbl/Bo=;
-        b=GyMBmK+8ZeXWTOlHEiPgtl3KGJRJfVvf6V6ZACON4h5LfpThWZs4EWvMhGB/ubPXiH
-         r5L6d+XZbYG+pElBgAxoUngCX99jOORpTUGCuJjWQt8qtzERhfBo6ZHghYB3ItHY08Hm
-         SOFYcvUBnW+jErhOx3bkQG13lHL1YcVuxHQYEZ8Nqq95QJrVHihWIgu1Jovd/aeD1Y6M
-         GG9cnwh53Qa4B234c9cbh9MNBVwMCaVRF2EaWmpyGmN60Vr4qtg7slfs4LKr1kwM4THu
-         vmq30KURalmXOg+fV6yHjHWEZdvLAMRItC00aL4KOJkO2+C4UF7fHz7FI6lvAXBN+sbo
-         tphw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=WdhYd61vlNMYbdp/5uYl20ijVqyZ8GjLjOMk5Sbl/Bo=;
-        b=robNVluTwzYTRuRAG+PNtbCSzp5IuktlcWKOvYjioVM//slfai9clqCUoyGYuXqdfS
-         1XKmKh8VBk+i1h1h5k9xrwAHizEHAnjY6OX8a6FryFrpOrZJ//+lvJ8IIXtQKOrtPhk7
-         h67iVGLf0OZoWfJaAV5w1DhY8vfos863esV17MBGzVXYYrqqrNsj8FRNxYF2MdsLsCRU
-         lyVeVUCyGEm2s8UMNa/LdFYOqLnIe1J3C53epmTgBzife8PtCKOyqGqDqU3XwBoL/HSV
-         qGM8P3AcJUGApCk6F3OIe3WtrxBMkEO69w6DepEYcs6i5PYcC+/DbJNk88sIOWCykTDJ
-         uxNg==
-X-Gm-Message-State: AOAM530jhNLTeolLFtfZgGGJpKp+l+DczEIaG/uZT8KhQYwCKTTMF2Ll
-        a4ufntcv0+az7n5lS5SYzzg=
-X-Google-Smtp-Source: ABdhPJy5XrJOzhJigG9FcUmID5gb63n7+cpmHU6HRXwMGiMho4BFvAhLyOT3PHH96zub68We/csHAQ==
-X-Received: by 2002:a05:6402:1345:: with SMTP id y5mr1557067edw.206.1624267851848;
-        Mon, 21 Jun 2021 02:30:51 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id l26sm10601377edt.40.2021.06.21.02.30.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 02:30:51 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v3] t6020: fix incompatible parameter expansion
-Date:   Mon, 21 Jun 2021 10:41:36 +0200
-References: <CANYiYbHA+obZPPNw3Oc0h5BbtdVyqpxOK-u3dxDB-sQbdcY0yQ@mail.gmail.com>
- <20210617031411.80684-1-zhiyou.jx@alibaba-inc.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210617031411.80684-1-zhiyou.jx@alibaba-inc.com>
-Message-ID: <87v96736ph.fsf@evledraar.gmail.com>
+        with ESMTP id S229597AbhFUJfg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 05:35:36 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9C5C061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:33:22 -0700 (PDT)
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <rhi@pengutronix.de>)
+        id 1lvGIr-0000Zy-NP; Mon, 21 Jun 2021 11:33:13 +0200
+Received: from rhi by ptx.hi.pengutronix.de with local (Exim 4.92)
+        (envelope-from <rhi@pengutronix.de>)
+        id 1lvGIo-0001H9-S3; Mon, 21 Jun 2021 11:33:10 +0200
+Date:   Mon, 21 Jun 2021 11:33:10 +0200
+From:   Roland Hieber <rhi@pengutronix.de>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bisect: allow to run from subdirectories
+Message-ID: <20210621093310.eqt3ajic64pgag44@pengutronix.de>
+References: <20210620213836.10771-1-rhi@pengutronix.de>
+ <877dio3vg5.fsf@evledraar.gmail.com>
+ <YM/yqPsRutV2mUbb@camp.crustytoothpaste.net>
+ <CAPig+cQa3JC-YkGeB-NDy-iP=Mv8BRL6jyXTGXzaqpTLcxj8+w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQa3JC-YkGeB-NDy-iP=Mv8BRL6jyXTGXzaqpTLcxj8+w@mail.gmail.com>
+User-Agent: NeoMutt/20180716
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: rhi@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jun 20, 2021 at 10:10:10PM -0400, Eric Sunshine wrote:
+> On Sun, Jun 20, 2021 at 10:00 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > On 2021-06-21 at 00:35:49, Ævar Arnfjörð Bjarmason wrote:
+> > > On Sun, Jun 20 2021, Roland Hieber wrote:
+> > > > Currently, calling 'git bisect' from a directory other than the top
+> > > > level of a repository only comes up with an error message:
+> > > >
+> > > >     You need to run this command from the toplevel of the working tree.
+> > >
+> > > How does this affect out-of-tree scripts that will be run with "git
+> > > bisect run", is the cwd set to the root as they now might expect git to
+> > > check, or whatever subdirectory you ran the "run" from?
+> >
+> > As for the idea itself, I think it's a good one assuming everything
+> > continues to work.  It will certainly be more convenient for a lot of
+> > people.
+> 
+> There have been multiple patches sent to the project over the years
+> with the same purpose. One problem, I believe, which has never been
+> fully addressed is what happens when the subdirectory from which
+> git-bisect is run gets deleted as part of the bisection.
+> 
+> Here are a couple recent threads triggered by previous such patches
+> (but there are probably several more):
+> 
+> https://lore.kernel.org/git/pull.765.git.1603271344522.gitgitgadget@gmail.com/
+> https://lore.kernel.org/git/pull.736.git.git.1584868547682.gitgitgadget@gmail.com/
 
-On Thu, Jun 17 2021, Jiang Xin wrote:
+Ah, thanks for explaining the problem. Would a patch that adds a short
+explanatory comment in git-bisect.sh on the matter help to prevent
+people sending such patches?
 
-> =C3=86var reported that the function `make_user_friendly_and_stable_outpu=
-t()`
-> failed on a i386 box (gcc45) in the gcc farm boxes with error:
->
->     sed: couldn't re-allocate memory
->
-> It turns out that older versions of bash (4.3) or dash (0.5.7) cannot
-> evaluate expression like `${A%${A#???????}}` used to get the leading 7
-> characters of variable A.
->
-> Replace the incompatible parameter expansion so that t6020 works on
-> older version of bash or dash.
->
-> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> ---
+ - Roland
 
-For what it's worth I've also tested this v3 on gcc45, it works too.
+-- 
+Roland Hieber, Pengutronix e.K.          | r.hieber@pengutronix.de     |
+Steuerwalder Str. 21                     | https://www.pengutronix.de/ |
+31137 Hildesheim, Germany                | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686         | Fax:   +49-5121-206917-5555 |
