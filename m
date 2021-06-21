@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 478A5C48BC2
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF366C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D0D760FE9
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 962F460FE9
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbhFUW15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 18:27:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53762 "EHLO
+        id S232268AbhFUW2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 18:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232181AbhFUW14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 18:27:56 -0400
+        with ESMTP id S231744AbhFUW2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 18:28:02 -0400
 Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7499C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:41 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id k5so3126277ilv.8
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:41 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 578A6C061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:47 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id s19so10010506ilj.1
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ZPrEzB0xIK/wOTqk4WBQW79bWc96glFVTSqPVLHOsMY=;
-        b=rMBDFyWftTGzHaFzsr5c1NMiZ2lja67Spp2qGm9DGOZX9p2wLHc9vkhnDBTpmgi1bF
-         vG7UCcmU/sWmQQbi9a+emoZqFaY7QT0Nv+FDqAmr6d3xzgVrU58t7qxjd0f1AsRYx5gG
-         WeND9a3PV0lLbOypJmj44nKbEZU9wrCPRjLC63kES/ntqT9epZgb32q1fWlVNxZqL1Ls
-         mWR1Fx8FvUzJhgqNthXE+arpoc/hRc/uczf9vKHPPgJtZp5QEX04Tt/RpB80zuX7eG7H
-         dJTSg1ugbUOuIhtKRFFgDGsnDacbHHrX3F7RPaI9sZRDAINXXkQHIhoIcG5AhRfUgrSU
-         RpXQ==
+        bh=E7g7KePDkycaatnR6SQPYLn26QnL2jc3tVnJa5mP2eQ=;
+        b=IkzVP9pLxczsa3HG6jKZmhijdT98keokJaEiwBInLtIbsMisWHXutYgeXibdNCFv5f
+         d9ljwcyH4A163gOjkg1VqKHKFS41PEPJHSz8kY+Ljn4/cbvOry9AexDnryratsSPgg4Y
+         jwJ7hMdS7e5z2wQ4w3IW5pebYGPyonuiAVBEAgTDzXuas5ddqBAFkKjkFfsweDeac4Uv
+         WMq9NTFZwE6mQu2ZAz/xCXtKs17JcxWfaDgv+4hk6Y6Q0NalJiI2DnsyHseFFY9GadrQ
+         z2KM8KoCrzbCmZ8FJokxVZcLD7tJMi4Fh1uDdsNfr4dHucZg/ctRirsC7PNmC6S9sx6f
+         aLIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ZPrEzB0xIK/wOTqk4WBQW79bWc96glFVTSqPVLHOsMY=;
-        b=EQZbg2sFLPFn/t/6F+eZ4dCssW9h04mCyNTfzpKMoV3QiBvmfEUvEYZJdzC9d06gfV
-         ScKYVus8eCZEynbS5jH1l/8cZF/Q4ExhyAQsrKHt5rWm3P5ZaiHpfQCqUxoGql08VmOh
-         86UmJqkyDxoq3kByRUeLdxQdFAJ15ATy+wSgeM0dpDdbDre0Vlxa92r6dSmOEsn4VzVq
-         5GEBrImEICemZt3+TtguUBt8JUutLvjweM1CCfdfn1Nr4JlufT4ulL658imEO+/SVLCE
-         0GaNijU8XgZi8ETra5HbA6+dlxRFdB93ZtSb7KYROnp3icnNjLm1XoAz57cwvMSG/wRI
-         Wp0Q==
-X-Gm-Message-State: AOAM532JrtDvqjvhMm7+fcckDOJCfPABOAeJZ5/LDzFghcAADgOQCQKy
-        gwbFataPc1mtKoROvtOPuJQpDGV6jpQHue+7
-X-Google-Smtp-Source: ABdhPJzs0QFxJpArIRjyRCqikWuSsxEoq5oITs6cNqHt8BPS23E6kk4XmWrebfPsKR3kEgUFvtidng==
-X-Received: by 2002:a05:6e02:10c2:: with SMTP id s2mr364698ilj.24.1624314341144;
-        Mon, 21 Jun 2021 15:25:41 -0700 (PDT)
+        bh=E7g7KePDkycaatnR6SQPYLn26QnL2jc3tVnJa5mP2eQ=;
+        b=INnwq7wR+NVURh4BaUDEOsJbgeUm3NLKq8byy2M2UW4TMaFj3ChZullpFb5lLmQv20
+         oTDrafhSkrUDnA5qYjdAjZkKVHfOhH+ELSbThxtKE3hI0kOnobvbWlSdCgawy/tjWFR3
+         9XsO2Ds1yMfnvoA3jEGgD4DMK3wBfH+IiFpGWeP2yaoz7U0DhSH6J+LW2m9hE6Kf1TyJ
+         QxdG1+ViXBdrQ6y7FzgWumDgnY+yIHzkVwImWc9ar53lh+qlF6Cz/WAauucAHDHG1uoD
+         ryjY76dwWgNMV51MClqSpfzSLwY5kJuS9mwgF8xY6nAOUuNE4YJriElboBzFEJRVN5hx
+         9KcA==
+X-Gm-Message-State: AOAM533zUVWM/4OKPImh9hkWaqkqaESittGxLVc3caKhBTf/68sgVmLJ
+        iVRWDzw/SbRJpAFH+RAAl9UUWKou/NK3xdxi
+X-Google-Smtp-Source: ABdhPJzTHLJZkyM3jjklc48dOXMYW2qin2BihBqlfwGcU/mK2yPev7b0SfaxVH5fw7Sh2EIl8g7o3Q==
+X-Received: by 2002:a92:7b07:: with SMTP id w7mr345380ilc.308.1624314346649;
+        Mon, 21 Jun 2021 15:25:46 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
-        by smtp.gmail.com with ESMTPSA id y205sm11119697iof.1.2021.06.21.15.25.40
+        by smtp.gmail.com with ESMTPSA id g3sm11297966iob.13.2021.06.21.15.25.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 15:25:40 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 18:25:40 -0400
+        Mon, 21 Jun 2021 15:25:46 -0700 (PDT)
+Date:   Mon, 21 Jun 2021 18:25:45 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v2 16/24] t/helper/test-read-midx.c: add --checksum mode
-Message-ID: <bedb7afb37664385ca286527afa55c09cec61895.1624314293.git.me@ttaylorr.com>
+Subject: [PATCH v2 18/24] t0410: disable
+ GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
+Message-ID: <2a5df1832a340bfedba80bbb1b223b82d14ce3f9.1624314293.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1624314293.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,67 +73,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Subsequent tests will want to check for the existence of a multi-pack
-bitmap which matches the multi-pack-index stored in the pack directory.
+From: Jeff King <peff@peff.net>
 
-The multi-pack bitmap includes the hex checksum of the MIDX it
-corresponds to in its filename (for example,
-'$packdir/multi-pack-index-<checksum>.bitmap'). As a result, some tests
-want a way to learn what '<checksum>' is.
-
-This helper addresses that need by printing the checksum of the
-repository's multi-pack-index.
+Generating a MIDX bitmap causes tests which repack in a partial clone to
+fail because they are missing objects. Missing objects is an expected
+component of tests in t0410, so disable this knob altogether. Graceful
+degradation when writing a bitmap with missing objects is tested in
+t5326.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/helper/test-read-midx.c | 16 +++++++++++++++-
- t/lib-bitmap.sh           |  4 ++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ t/t0410-partial-clone.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-index 7c2eb11a8e..cb0d27049a 100644
---- a/t/helper/test-read-midx.c
-+++ b/t/helper/test-read-midx.c
-@@ -60,12 +60,26 @@ static int read_midx_file(const char *object_dir, int show_objects)
- 	return 0;
- }
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 1667450917..4fd8e83da1 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -4,6 +4,9 @@ test_description='partial clone'
  
-+static int read_midx_checksum(const char *object_dir)
-+{
-+	struct multi_pack_index *m;
-+
-+	setup_git_directory();
-+	m = load_multi_pack_index(object_dir, 1);
-+	if (!m)
-+		return 1;
-+	printf("%s\n", hash_to_hex(get_midx_checksum(m)));
-+	return 0;
-+}
-+
- int cmd__read_midx(int argc, const char **argv)
- {
- 	if (!(argc == 2 || argc == 3))
--		usage("read-midx [--show-objects] <object-dir>");
-+		usage("read-midx [--show-objects|--checksum] <object-dir>");
+ . ./test-lib.sh
  
- 	if (!strcmp(argv[1], "--show-objects"))
- 		return read_midx_file(argv[2], 1);
-+	else if (!strcmp(argv[1], "--checksum"))
-+		return read_midx_checksum(argv[2]);
- 	return read_midx_file(argv[1], 0);
- }
-diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
-index ecb5d0e05d..09cd036f4d 100644
---- a/t/lib-bitmap.sh
-+++ b/t/lib-bitmap.sh
-@@ -260,3 +260,7 @@ have_delta () {
- 	echo $1 | git cat-file --batch-check="%(deltabase)" >actual &&
- 	test_cmp expect actual
- }
++# missing promisor objects cause repacks which write bitmaps to fail
++GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
 +
-+midx_checksum () {
-+	test-tool read-midx --checksum "${1:-.git/objects}"
-+}
+ delete_object () {
+ 	rm $1/.git/objects/$(echo $2 | sed -e 's|^..|&/|')
+ }
 -- 
 2.31.1.163.ga65ce7f831
 
