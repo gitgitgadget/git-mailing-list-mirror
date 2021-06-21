@@ -2,107 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C953CC48BE5
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 18:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B46EC4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 18:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC197611BD
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 18:31:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69F2E6120D
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 18:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231856AbhFUSd3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 14:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57392 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231176AbhFUSd2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 14:33:28 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6508EC061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 11:31:14 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id n15-20020a65488f0000b02902221a44f1d1so5620141pgs.7
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 11:31:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=zwgGKepO05GnTuSo9LMb6Xl1QtneHpqPsMw6CK7c39Y=;
-        b=DKCWmBAaF791uU0T0y5gViDKI1MdoPi36c6+9MxdPCHVqSWF4HPp0w450yipr5q5cg
-         W6azfwD24VbnVP657md3avoqcrElIbi1Aok2A31900G6NqBknchQ47nnb2/u9Le4ygD2
-         GXQfovnTsNUARfBVTm6EJWM4peNntjdQ9Xw/5SUNiSnYeU6n9h3iBpT8srwLGl5a81oD
-         0+AKkEm87EV3tj3BW4mrILyFfdNPyYsPWZQEpcoQOH3DJ5GhimyZialBhV/cT4qURmBl
-         ozStHNoCFp2lAk9nVXvPIHd5KAdfLnpN1KRRsYtJ5N6ly50OB88sVid9Gh+/TURI/bBH
-         EiVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=zwgGKepO05GnTuSo9LMb6Xl1QtneHpqPsMw6CK7c39Y=;
-        b=ZXRSWvXxCnBpiid0F7H1J9xtTWumB0ibzzwOmeZMaMt1oejhPB9tlKc6ovzcFKDDEH
-         PX2eBOICSeCTr/M3aCanSY9AIOs8kSoO2Mbq2ezJxDRWIoi7eNDtFvp8kArOg8hfdscx
-         LlhFg0ucm0u5ofZYE4DXuJuupd4KDjBAcMtXih1qhoz2v5nyFL+I2Ru0BIWmqPRMd21q
-         zlHYGi3t0AsdfWle+idN722Tz1tBVTtBR2R/kplfWmerPL9TVPC2piHonzcGCoa4r59K
-         //STmtKWkWuay4MR9yqGM/phcH5N/716TA4+O+ZVttgJ69HTWNW8jSs/WTkU0ZUlQjx8
-         13iQ==
-X-Gm-Message-State: AOAM531U3zMW4r6JGF0vKrGp58rQSruI6YdYBtGgz01NWbIfs5Atmozc
-        QLzg6PccyxOaq2CPCaX8dTb5twd/0dYA51kqxEex
-X-Google-Smtp-Source: ABdhPJxput7mXI5cmAi+2taSw9GBq4WjKiIBWGZg8UhxR2JK4c7ne3m/Hbi+0o6BjsBrix9gqq0gSl5Zz1XpKD8mJQbK
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:8601:b029:11c:4b4:e967 with
- SMTP id f1-20020a1709028601b029011c04b4e967mr19325708plo.75.1624300273886;
- Mon, 21 Jun 2021 11:31:13 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 11:31:09 -0700
-In-Reply-To: <020d01d764916fb7520nexbridge.com>
-Message-Id: <20210621183109.1165775-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <020d01d764916fb7520nexbridge.com>
-X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
-Subject: Re: RE: [RFC PATCH 0/2] MVP implementation of remote-suggested hooks
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     rsbecker@nexbridge.com
-Cc:     jonathantanmy@google.com, emilyshaffer@google.com,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S232144AbhFUSfL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 14:35:11 -0400
+Received: from mout.web.de ([217.72.192.78]:43435 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231757AbhFUSfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 14:35:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1624300374;
+        bh=0B1Ui8Hw0bntTdaAa+6VwTscxI+NxK0o3McD06oFqKg=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=VfJ6GB9zGK64g/my2uBCPobUxfnqd4wwd/XbByv6Etp3KCgiYitSviyeRXkr5Yyaz
+         jrg6vdq71FG48vW49Ni0FlC24PC3+NvNzvg/djmI9BtKDDjLx9Dt9H7IFhY1OT7e8z
+         rHG3wq3N1SX9VUYHr5rCcNORhCLcGse0maHEE+KY=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
+ (mrweb102 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0MWj6V-1ll9yf0PP9-00XwGh; Mon, 21 Jun 2021 20:32:54 +0200
+Subject: Re: [PATCH 4/7] commit-graph: fix bogus counter in "Scanning merged
+ commits" progress line
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+References: <20210620200303.2328957-1-szeder.dev@gmail.com>
+ <20210620200303.2328957-5-szeder.dev@gmail.com>
+ <87a6nk41wy.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f580c5c6-304c-24f4-535c-35025b6b4a80@web.de>
+Date:   Mon, 21 Jun 2021 20:32:53 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <87a6nk41wy.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:VByVPAkNAINYKeycwp4BlDGih4Tyirm2AWrLK+zgpOrSFgN4DxH
+ L7cZt7rsQXKaB+afDYPUMDCQaQbcJf8nEZjXQyMFBKAOtJodxqEV2rKNQg3CzYCS1a2iBT5
+ IH2c6wtJeDAFiN7hR2EGvLoqGwZQmykHZFjk1WxuqMFxKYq/69c4m+0y8ncfAUk3VcFPGDL
+ H1lpL9agR3WaUhO3xVusw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LS1mas1bMGY=:s3m+RZISINEDYTSdAT+r8Z
+ oVFlIAxzEdz5+vZLj4hKsgoHmqre5r+6ga7hX5eD5MevEYk/+4ICfRs04V742+tgvlri3Ycz9
+ +eyZRIyEJwMqzfn+7uJeq6aFt0p66qO8anj4HL5DD//n4bbv7M9qD/F1RXsCtxa1DryoPIDqQ
+ ++4YOuWvB6uFQF7p/us7JCJY+jvkw0xrMw6hNcyd135tziKWZEgD9ItWqGg0klETVE5jFOb+X
+ d97tGfOalTPIHTwA8O+Lt9ziZvWITKdz81A14vMAeVoy/rsAz1WdrHIO7nKILQO6xCxl8iGC4
+ jD0Fnp8Gk3XwdHDe9y5BA6QpVom12girhAt6OBb01DMl3KnUQwDHvi1ounJuGQ9bVKo3U7Tog
+ WoCr5bIzPno+hwx2BS6Z3lX5/EKa1o9+7XxljfAXCR3AfmxFKKyQSkJ44NcPyycNqqj+YILVz
+ epNtw5D9sQmjUpzidTBEvWJ3dcWk4GtpmufWrtCctsngr7877ETGD66P4Mp5F0nrFMbEvcx8L
+ +tff0aMv8j+3auR8j5hZ6uWosJFpjMB/HeNGgnSSKWPRL54iGTSxGydgrwSIdYDIpjJR614Ua
+ FmwEQJuLGeeWLBOVu8u4GU8brqQZ05VtjxzTK+fQV+yFCb9b9dzg1GfzSUCD/6JbObuShcBCt
+ ILN1TlxbIUU8iErQRLxrka4YMnR5G74bRhIcUF6KCLIHrFNH7mvhGL5Px4u4JfPze6B+NRVUx
+ wbhGNeT/Xw16gtEbTo4lNJ+5g3fmlT0EJaRMU7ozaDx+3P25VBxn3WElsnL3pdd7dha6znt22
+ 1SVZCTKYkG5fcfwsG3SfVmE37C/JPwuLPEkLGjjN3j/vYHTf/8UUybWQQgGQH/vz8tkhfWEF3
+ LSGp7beQouBUuBnHQB+ksgpB121Adu15rvC/XvdVSs2NCvPEtnu6+MrgXYZ2TqnuqS5fF+Fwr
+ Il68en8CnkId0bMPyY9ogUyOJiX9/vP9myzWADPBAWMyUKM502w05tXo0/Gi8EVDcXPZZ8slR
+ LDawPpyRV/OcM3tTvB7u7jP5kg4DLT6EB9cfBblHMgwVfjyHPPjAbCx+ZS7qVN52AaMKTk4Mv
+ B5GRMx7ro9hFh6OfWQSzntGxcjAqUH1KvoC
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On June 18, 2021 5:59 PM, Jonathan Tan wrote:
-> >> On Wed, Jun 16, 2021 at 04:31:47PM -0700, Jonathan Tan wrote:
-> >> >
-> >> > I have had to make several design choices (which I will discuss
-> >> > later), but now with this implementation, the following workflow is possible:
-> >> >
-> >> >  1. The remote repo administrator creates a new branch
-> >> >     "refs/heads/suggested-hooks" pointing to a commit that has all the
-> >> >     hooks that the administrator wants to suggest. The hooks are
-> >> >     directly referenced by the commit tree (i.e. they are in the "/"
-> >> >     directory).
-> >>
-> >> I don't really like that this is in the same namespace as branches
-> >> users could create themselves. Hm, I think for 'git maintenance'
-> >> prefetching we put those refs in some special namespace, right? Can we
-> >> do something similar in this case? Would that prevent us from treating
-> >> that ref like a normal branch?
-> >
-> >Do you mean that the server should put it in a different place, the client should put it in a different place, or both?
-> 
-> This brings up a very awkward question: How are enterprise git servers going
-> to deal with this?
+Am 21.06.21 um 00:13 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> On Sun, Jun 20 2021, SZEDER G=C3=A1bor wrote:
+>
+>> The final value of the counter of the "Scanning merged commits"
+>> progress line is always one less than its expected total, e.g.:
+>>
+>>   Scanning merged commits:  83% (5/6), done.
+>>
+>> This happens because while iterating over an array the loop variable
+>> is passed to display_progress() as-is, but while C arrays (and thus
+>> the loop variable) start at 0 and end at N-1, the progress counter
+>> must end at N.  This causes the failures of the tests
+>> 'fetch.writeCommitGraph' and 'fetch.writeCommitGraph with submodules'
+>> in 't5510-fetch.sh' when run with GIT_TEST_CHECK_PROGRESS=3D1.
+>>
+>> Fix this by passing 'i + 1' to display_progress(), like most other
+>> callsites do.
+>>
+>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>> ---
+>>  commit-graph.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/commit-graph.c b/commit-graph.c
+>> index 2bcb4e0f89..3181906368 100644
+>> --- a/commit-graph.c
+>> +++ b/commit-graph.c
+>> @@ -2096,7 +2096,7 @@ static void sort_and_scan_merged_commits(struct w=
+rite_commit_graph_context *ctx)
+>>
+>>  	ctx->num_extra_edges =3D 0;
+>>  	for (i =3D 0; i < ctx->commits.nr; i++) {
+>> -		display_progress(ctx->progress, i);
+>> +		display_progress(ctx->progress, i + 1);
+>>
+>>  		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
+>>  			  &ctx->commits.list[i]->object.oid)) {
+>
+> I think this fix makes sense, but FWIW there's a large thread starting
+> at [1] where Ren=C3=A9 disagrees with me, and thinks the fix for this so=
+rt of
+> thing would be to display_progress(..., i + 1) at the end of that
+> for-loop, or just before the stop_progress().
+>
+> I don't agree, but just noting the disagreement, and that if that
+> argument wins then a patch like this would involve changing the other
+> 20-some calls to display_progress() in commit-graph.c to work
+> differently (and to be more complex, we'd need to deal with loop
+> break/continue etc.).
+>
+> 1. https://lore.kernel.org/git/patch-2.2-042f598826-20210607T144206Z-ava=
+rab@gmail.com/
 
-What do you mean by "this"?
+*sigh*  (And sorry, =C3=86var.)
 
-> I do not see the standard Pull Request mechanism available in GitHub handing
-> placing hooks in different places during a merge operation. Or will this
-> entire concept be omitted from PR?
-> 
-> It seems like changes to hooks have to be managed in a similar way to
-> standard managed files rather than as exceptions.
-> 
-> -Randall
+Before an item is done, it should be reported as not done.  After an
+item is done, it should be reported as done.  One loop iteration
+finishes one item.  Thus the number of items to report at the bottom of
+the loop is one higher than at the top.  i is the correct number to
+report at the top of a zero-based loop, i+1 at the bottom.
 
-The plan in this RFC is to manage the changes in hooks just like any
-other branch - to update a hook, you can make a PR against
-refs/heads/suggested-hooks.
+There is another place: In the loop header.  It's a weird place for a
+function call, but it gets triggered before, between and after all
+items, just as we need it:
+
+	for (i =3D 0; display_progress(ctx->progress), i < ctx->commits.nr; i++) =
+{
+
+We could hide this unseemly sight in a macro:
+
+  #define progress_foreach(index, count, progress) \
+  for (index =3D 0; display_progress(progress, index), index < count; inde=
+x++)
+
+Hmm?
+
+Ren=C3=A9
