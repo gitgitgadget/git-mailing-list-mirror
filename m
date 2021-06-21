@@ -2,223 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E284C48BE5
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB92C48BE5
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:31:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3077861003
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:08:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 09D2A61002
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 09:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230430AbhFUJK1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 05:10:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41808 "EHLO
+        id S230121AbhFUJdJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 05:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbhFUJK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 05:10:26 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B5CC061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:08:12 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id w13so3331491wmc.3
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:08:12 -0700 (PDT)
+        with ESMTP id S229621AbhFUJdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 05:33:08 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3CDC061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:30:53 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id h2so4461632edt.3
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 02:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=L5etHSBGoGFNSEQnJy3zk7MRVSuj6BOD2TtZj/fLcAk=;
-        b=nSInhzWMFtn8SKIuYFgoeL9lT+fu7EddxyBCiId49QnGbxkpnthX9ayzOZ8BLRwmKQ
-         mUW+o/i8INWMlUKqD1NNVZ2GtoEUuBbyTx0hcNNxLLNzdwTXcRnYwpwkJpE6pyrm4i8K
-         AY6jZuDHf7z/vmvqDpCNQdBKyBKMn0MKjV7YNTSlUv+v5oTms/fwuoZyDCh70OXDTKRl
-         UJaUyxaISOFGAThDAI+66tOpNXz2d7ZuK40eOnwHpYpv9lcOgwX5oJ7C9mgzaYU/Zzz0
-         pdQvS/Oxa0JgYMoSUd/VsljYKYpqTnIf/n4BEtN2nnKsJO73nkGjzzoQOmE5TNIlD3jq
-         WlsA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WdhYd61vlNMYbdp/5uYl20ijVqyZ8GjLjOMk5Sbl/Bo=;
+        b=GyMBmK+8ZeXWTOlHEiPgtl3KGJRJfVvf6V6ZACON4h5LfpThWZs4EWvMhGB/ubPXiH
+         r5L6d+XZbYG+pElBgAxoUngCX99jOORpTUGCuJjWQt8qtzERhfBo6ZHghYB3ItHY08Hm
+         SOFYcvUBnW+jErhOx3bkQG13lHL1YcVuxHQYEZ8Nqq95QJrVHihWIgu1Jovd/aeD1Y6M
+         GG9cnwh53Qa4B234c9cbh9MNBVwMCaVRF2EaWmpyGmN60Vr4qtg7slfs4LKr1kwM4THu
+         vmq30KURalmXOg+fV6yHjHWEZdvLAMRItC00aL4KOJkO2+C4UF7fHz7FI6lvAXBN+sbo
+         tphw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=L5etHSBGoGFNSEQnJy3zk7MRVSuj6BOD2TtZj/fLcAk=;
-        b=LkIoIcp0ExOtg5nLNrYsNPRGiWC9xT47jKiRW1wrF5Auk6i5cvf9uxNkHZeAxz1B/o
-         zLnVdB1OsVDojFHuK8Lhtwz2IV982lzs3gjf1WG7nteNyiv6Vs1sOjcW8ZpbkFg9hZtD
-         WEgjdNy0zxm3Ola6788qwFrWDmZKB/ivav9o5sCX3UYJZx5gBnO0i94tprCPOjgOsyeV
-         naidT6fg0Tst57W7VHr2UZ7o88RiPiOSVi8vT3Vv8sCwI/vDTb/vLSUfVBExLXdEBlHm
-         vAOtq3kEhVbcACGUuyNnHCj/mgyF93Wf/YrgolCQoSIWudL0K5SfXbkJoVsalJflGiD/
-         KMYA==
-X-Gm-Message-State: AOAM531+iXr4I7O785P8eu7kmIP2L58YrVYpC1suJAvarshxAcXCq9ik
-        aKwC/Af0MSeJig1m7OAWZJg=
-X-Google-Smtp-Source: ABdhPJxKdYTFTR9R3rshHGC9SKBbAqvxIXiD0WkyL/hy0MstVqzKwjbyMcAK5refQ17tOYvStQ805Q==
-X-Received: by 2002:a7b:c253:: with SMTP id b19mr127913wmj.172.1624266491164;
-        Mon, 21 Jun 2021 02:08:11 -0700 (PDT)
-Received: from [10.36.18.2] ([46.246.3.216])
-        by smtp.gmail.com with ESMTPSA id o203sm1422577wmo.36.2021.06.21.02.08.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Jun 2021 02:08:09 -0700 (PDT)
-Subject: Re: [PATCH v3 1/4] test-lib-functions: introduce test_line_count_cmd
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-References: <20210615172038.28917-1-congdanhqx@gmail.com>
- <20210619013035.26313-2-congdanhqx@gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <54bf7756-5578-4fe4-dbe5-f63b368c4d63@gmail.com>
-Date:   Mon, 21 Jun 2021 11:08:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=WdhYd61vlNMYbdp/5uYl20ijVqyZ8GjLjOMk5Sbl/Bo=;
+        b=robNVluTwzYTRuRAG+PNtbCSzp5IuktlcWKOvYjioVM//slfai9clqCUoyGYuXqdfS
+         1XKmKh8VBk+i1h1h5k9xrwAHizEHAnjY6OX8a6FryFrpOrZJ//+lvJ8IIXtQKOrtPhk7
+         h67iVGLf0OZoWfJaAV5w1DhY8vfos863esV17MBGzVXYYrqqrNsj8FRNxYF2MdsLsCRU
+         lyVeVUCyGEm2s8UMNa/LdFYOqLnIe1J3C53epmTgBzife8PtCKOyqGqDqU3XwBoL/HSV
+         qGM8P3AcJUGApCk6F3OIe3WtrxBMkEO69w6DepEYcs6i5PYcC+/DbJNk88sIOWCykTDJ
+         uxNg==
+X-Gm-Message-State: AOAM530jhNLTeolLFtfZgGGJpKp+l+DczEIaG/uZT8KhQYwCKTTMF2Ll
+        a4ufntcv0+az7n5lS5SYzzg=
+X-Google-Smtp-Source: ABdhPJy5XrJOzhJigG9FcUmID5gb63n7+cpmHU6HRXwMGiMho4BFvAhLyOT3PHH96zub68We/csHAQ==
+X-Received: by 2002:a05:6402:1345:: with SMTP id y5mr1557067edw.206.1624267851848;
+        Mon, 21 Jun 2021 02:30:51 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id l26sm10601377edt.40.2021.06.21.02.30.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Jun 2021 02:30:51 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v3] t6020: fix incompatible parameter expansion
+Date:   Mon, 21 Jun 2021 10:41:36 +0200
+References: <CANYiYbHA+obZPPNw3Oc0h5BbtdVyqpxOK-u3dxDB-sQbdcY0yQ@mail.gmail.com>
+ <20210617031411.80684-1-zhiyou.jx@alibaba-inc.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
+In-reply-to: <20210617031411.80684-1-zhiyou.jx@alibaba-inc.com>
+Message-ID: <87v96736ph.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210619013035.26313-2-congdanhqx@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19/06/2021 03:30, Đoàn Trần Công Danh wrote:
-> In the Git project, we have multiple instances that requires
 
-s/requires/require/
+On Thu, Jun 17 2021, Jiang Xin wrote:
 
-> checking number of lines of text in the stdout of a command.
-> One of such examples is t6400, that checks number of files
-> in various states.
-> 
-> Some of those commands are Git command, and we would like to check
-> their exit status.  In some of those checks, we pipe the stdout of
-> those commands to "wc -l" to count the number lines, thus losing
-> the exit status.
-> 
-> Introduce a helper function to check for the number of lines in stdout
-> from those commands.
-> 
-> This helper will create a temporary file in the process, thus it may
-> affect the output of some checks.
-> 
-> Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+> =C3=86var reported that the function `make_user_friendly_and_stable_outpu=
+t()`
+> failed on a i386 box (gcc45) in the gcc farm boxes with error:
+>
+>     sed: couldn't re-allocate memory
+>
+> It turns out that older versions of bash (4.3) or dash (0.5.7) cannot
+> evaluate expression like `${A%${A#???????}}` used to get the leading 7
+> characters of variable A.
+>
+> Replace the incompatible parameter expansion so that t6020 works on
+> older version of bash or dash.
+>
+> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 > ---
->   t/test-lib-functions.sh | 80 +++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 80 insertions(+)
-> 
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index f0448daa74..e055a4f808 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -845,6 +845,86 @@ test_line_count () {
->   	fi
->   }
->   
-> +# test_line_count_cmd checks the exit status, and the number of lines in
-> +# the captured stdout of a command.
-> +#
-> +# SYNOPSIS:
-> +#
-> +#	test_line_count_cmd <binop> <value> [!] cmd [args...]
-> +#
-> +# Expect succeed exit status when running
-> +#
-> +#	cmd [args...]
-> +#
-> +# then, run sh's "test <# of lines in stdout> <binop> <value>"
-> +#
-> +# OPTIONS:
-> +# !:
-> +#	Instead of expecting "cmd [args...]" succeed, expect its failure.
-> +#	Note, if the command under testing is "git",
-> +#	test_must_fail should be used instead of "!".
-> +#
-> +# EXAMPLE:
-> +#	test_line_count_cmd -ge 10 git tag --no-contains v1.0.0
-> +#	test_line_count_cmd -le 10 ! grep some-text a-file
-> +#	test_line_count_cmd = 0 test_must_fail git rev-parse --verify abcd1234
-> +#
-> +# NOTE:
-> +# * a temporary file named test_line_count_cmd_.out will be created under
-> +# $TRASH_DIRECTORY/.git/trash iff $TRASH_DIRECTORY/.git/ exists.
-> +# Otherwise, created in $TRASH_DIRECTORY. This temporary file will be
-> +# cleaned by test_when_finished
-> +test_line_count_cmd () {
-> +	{
-> +		local outop outval outfile
-> +		local expect_failure actual_failure
-> +		local trashdir="$TRASH_DIRECTORY"
-> +
-> +		if test -d "$TRASH_DIRECTORY/.git"
-> +		then
-> +			trashdir="$TRASH_DIRECTORY/.git/trash" &&
-> +			mkdir -p "$trashdir"
-> +		fi &&
-> +		if test $# -lt 3
-> +		then
-> +			BUG "missing <binary-ops> and <value>"
 
-Nit: s/binary-ops/binop/ for consistency with documentation comment
-above.  Also, technically the invocation of test_line_count_cmd could be
-missing any of its required three parameters, including "cmd".  How
-about something similar to the call to BUG in test_i18ngrep:
-
-	BUG "too few parameters to test_line_count_cmd"
-
-?
-
-> +		fi &&
-> +		outop="$1" &&
-> +		outval="$2" &&
-> +		shift 2 &&
-> +		outfile="$trashdir/test_line_count_cmd_.out" &&
-> +		if test "x$1" = "x!"
-> +		then
-> +			shift &&
-> +			expect_failure=yes
-> +		fi &&
-> +		if test $# = 0
-> +		then
-> +			BUG "test_line_count_cmd: no command to be run"
-> +		else
-> +			test_when_finished "rm -f '$outfile'" &&
-> +			exec 8>"$outfile"
-> +			# We need to redirect stderr to &9,
-> +			# and redirect this function's 9>&2
-> +			# in order to not messed with -x
-> +			if ! "$@" >&8 2>&9
-> +			then
-> +				actual_failure=yes
-> +			fi
-> +		fi 8>&1 &&
-> +		case "$expect_failure,$actual_failure" in
-> +		yes,)
-> +			echo >&4 "error: '$@' succeed!" &&
-
-It seems that function error() could be used here and below instead of
-"echo >&4".
-
-s/succeed/succeeded/ --- it might be worth borrowing wording from
-test_must_fail().  Something like:
-
-	error "test_line_count_cmd: command succeeded: '$@'"
-
-> +			return 1
-> +			;;
-> +		,yes)
-> +			echo >&4 "error: '$@' run into failure!" &&
-> +			return 1
-> +		esac &&
-
-Missing ";;" in the last branch of `case`.
-
-> +		test_line_count "$outop" "$outval" "$outfile" >&4
-> +	} 9>&2 2>&4
-> +}
-> +
->   test_file_size () {
->   	test "$#" -ne 1 && BUG "1 param"
->   	test-tool path-utils file-size "$1"
-> 
-
+For what it's worth I've also tested this v3 on gcc45, it works too.
