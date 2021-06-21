@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6886DC48BE5
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 16:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76CF8C48BE5
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 16:58:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FF7560FE3
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 16:58:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61E4E60FE3
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 16:58:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232697AbhFURBD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 13:01:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35838 "EHLO
+        id S232799AbhFURBF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 13:01:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232168AbhFURAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 13:00:45 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC523C0219A7
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 09:31:18 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id s23so20511207oiw.9
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 09:31:18 -0700 (PDT)
+        with ESMTP id S232296AbhFURAx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 13:00:53 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C83C0219B7
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 09:31:28 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id t40so20515350oiw.8
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 09:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Pu4LeKPFxDDyT7B+zsmhVK3ww/DH8xjZsIBcVFBiWnY=;
-        b=V+8g9JjqMvcBdnNe6Lr0JIrVB+cpCLGG4Ky1O1vCPBnGLIGfFx8fMH3ALsIS3W96Qo
-         rzpYtWgCNSdRD1Fd77CJNUpLWqipInBDkBLHLbmnBsVoAtjo4UduMjBKL6v0MLP9ukqX
-         r7EZR0lzFVa7gf+WK4mlwhAJ4fj+QsYxx2yl6OMUvlP7IQGEsJuxiBamEHWVOP757aaS
-         vlzla8nD/imDWnihx4HZWCNyM/zW6UwhukX36Z+nGLosRoRWJ0yBIuQcDCJtR+i21V5x
-         sEwvQmofQmZDbtSKHJDf4JnQ+ppg7503Q+ktxZq5eyc8vfiJQ6zCStAq/aI0dnqow9K3
-         0Agg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0SUxZ4NqQz+xS27wgan7HdR+ZmVT7uoo7sfzHIMnMOI=;
+        b=oFIbVYwMV0jyeJ9jT8j+wO8e16BzROu9brNojMRyzdAL5gBgJv4Vs9uuugFIvH++Re
+         kzn8sZ1iMcO+WYy8ZU/x9FOKyR9/q/O4/GEaCZbSxR8x2NHcRJwYk2rEtJVNMBiagasD
+         Bv1nkyIMm+oO2YGZJYUNIsRzEvKEjAUw9i2AZVD0KVowQbdjjShPgFptyOdoKGlc9VxR
+         5J/o+fV7prSr2Q//JpoMODAu9ItjuHxvCJ8nAxTRLF2ODirMrfGfuCJZc2KkFRvhHHnd
+         VlG4gASlpFcxXj+Kj3WMMVY5BiTbn/oc97KVDgotaxiE/7VLCUGF3GAwhumrPFFysZ7f
+         INbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Pu4LeKPFxDDyT7B+zsmhVK3ww/DH8xjZsIBcVFBiWnY=;
-        b=hlQr7n51aEIc1OU7pEx8PRKRhOtOByeJyZadtjjvpjbpcHrRsZfGE0gJMNOo9GILsK
-         hu+Z+b8HqoIv7s5h3Mj2BsNiSEqw7K3CNnwZH3RZqcyO1xsiLP7yjA0MyH4KL446y/4+
-         8Dq2tjMBk2QfyCi0LjoLyzHaNsnKZYM4YX9kjZ7mJNBYrxN6l7eywfZNiy8Dmhd3OwxQ
-         xzKp8HFy2GfHfwH9zrDjrdGy+jgJqAbzguhgbo8S1GIDSQfP4CDmGV2IETKj2vyKZeD8
-         b7yBhuQGReTKFozbyvbaKFxc1RcjlN2mtYDD3t8uVC24WrW8wjKPFj4pVG6wYotXLrLr
-         u2LA==
-X-Gm-Message-State: AOAM530a7T2Gis2qTkefOLRt6da4+Sp/GRZth4/Vj2MhTfHsRjBFudII
-        T5QTkS1Dq3OPlhwTJJg6J4ZDtQCHKYyfuA==
-X-Google-Smtp-Source: ABdhPJwAq/o6MzuyKTqMEme/VJpwB4ASSBb1+x1Gi4L4n/jGMjxS601g+LH+xJy3KmR9qwC4h07TRA==
-X-Received: by 2002:aca:4795:: with SMTP id u143mr24928061oia.165.1624293077770;
-        Mon, 21 Jun 2021 09:31:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0SUxZ4NqQz+xS27wgan7HdR+ZmVT7uoo7sfzHIMnMOI=;
+        b=dsRaqQS4W1lM4m4RDRTSIsP40p3QgPQfd7ahIQGl+1vI4XpZhhpX3LwoNFt/KnAWg6
+         OCrm6utObtiyft8WMU9kH2brMAET4TepCEJtec0iyqbYj38HMaK/F485I3xeIMiQU3oY
+         AJo2bjyKGMysRMslmhapzKl2mv3psdJtZYMIfv4ei6Lfvj4snP9u6Dec1BXLTN5KSJ5t
+         4mAQErNzsEPiTBNYrkAb+Q6sufaL+tBFDrJX8OgvE9cKK0SF5VrbKhyrgC7QKdPHZsBF
+         FJvNQBDQzxdTJ6Ng+yBSGT70KTrMw3qYt0wJ4AA2ygofey7ybxKkJrqiPqvavfBEjFLu
+         abfw==
+X-Gm-Message-State: AOAM532Vz9T41WDjWg3AssahPG5GdnflHYvCLyqZOngOs3s1PJDGcPmH
+        Wxi4l6ozgRm8WzC5Ba9bm3iM/uA7C5EMxQ==
+X-Google-Smtp-Source: ABdhPJw6r8bdHH9iQ3HLdl0nNm9C53ayVaC2bKqXI0pXncKZCVWdvKek2MyBzwsSgPBliNPFb8Xrow==
+X-Received: by 2002:aca:ed0f:: with SMTP id l15mr24826907oih.136.1624293087268;
+        Mon, 21 Jun 2021 09:31:27 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id w12sm3357573oor.35.2021.06.21.09.31.16
+        by smtp.gmail.com with ESMTPSA id l28sm3995150otd.66.2021.06.21.09.31.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 09:31:17 -0700 (PDT)
+        Mon, 21 Jun 2021 09:31:26 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
@@ -63,86 +64,37 @@ Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 00/23] doc: cleanups and asciidoctor direct man pages
-Date:   Mon, 21 Jun 2021 11:30:47 -0500
-Message-Id: <20210621163110.1074145-1-felipe.contreras@gmail.com>
+Subject: [PATCH 04/23] doc: asciidoc: remove unnecessary attribute
+Date:   Mon, 21 Jun 2021 11:30:51 -0500
+Message-Id: <20210621163110.1074145-5-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210621163110.1074145-1-felipe.contreras@gmail.com>
+References: <20210621163110.1074145-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I already sent the first part of this series separately multiple times,
-the last one is 4 simple obviously correct patches [1], but since the
-maintainer has admitted he has no problem ignoring valid work
-entirely due to personal animus [2], I'm sending the whole chain.
+It's part of asciidoc global configuration since 2012.
 
-There's no point in carefully selecting multiple series of patches to be
-merged one by one when all of them are going to be ignored. So I'm
-sending all 3 series at once.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/asciidoc.conf | 1 -
+ 1 file changed, 1 deletion(-)
 
-Hopefully by sending it all at once some people will be able to realize
-that:
-
- 1. They are valid
- 2. They are helpful
- 3. They make the code more maintainable
- 4. They enable new features
- 5. They enable the new features to be easily tested
- 6. They reduce the doc-diff of the new feature, as well as others
- 7. They are superior to the competing series currently in seen
- 8. They include work of multiple contributors
-
-Any fair and impartial maintainer would attempt to pick them up.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20210618215231.796592-1-felipe.contreras@gmail.com/
-[2] https://lore.kernel.org/git/xmqqmtrmjpa8.fsf@gitster.g/
-
-Felipe Contreras (21):
-  doc: remove GNU troff workaround
-  doc: use --stringparam in xmlto
-  doc: simplify version passing
-  doc: asciidoc: remove unnecessary attribute
-  doc: asciidoctor: remove unnecessary require
-  doc: asciidoctor: remove cruft
-  doc: asciidoctor: reorganize extensions
-  doc: asciidoctor: use html-prefix only for html
-  doc: asciidoctor: refactor macro registration
-  doc: asciidoctor: improve string handling
-  doc: asciidoctor: split the format from the code
-  doc: asciidoctor: specify name of our group
-  doc: doc-diff: set docdate manually
-  doc: use asciidoctor to build man pages directly
-  doc: asciidoctor: add linkgit macros in man pages
-  doc: add man pages workaround for asciidoctor
-  doc: asciidoctor: add hack for xrefs
-  doc: asciidoctor: add hack to improve links
-  doc: asciidoctor: add support for baseurl
-  doc: asciidoctor: cleanup man page hack
-  doc: asciidoctor: add hack for old versions
-
-Jeff King (1):
-  doc-diff: support asciidoctor man pages
-
-Martin Ågren (1):
-  doc-diff: drop --cut-footer switch
-
- Documentation/.gitignore                |   1 -
- Documentation/Makefile                  |  32 ++++----
- Documentation/asciidoc.conf             |  20 -----
- Documentation/asciidoctor-extensions.rb | 103 +++++++++++++++---------
- Documentation/doc-diff                  |  38 ++++-----
- Documentation/manpage-base-url.xsl.in   |  10 ---
- Documentation/manpage-quote-apos.xsl    |  16 ----
- Makefile                                |   8 +-
- 8 files changed, 104 insertions(+), 124 deletions(-)
- delete mode 100644 Documentation/manpage-base-url.xsl.in
- delete mode 100644 Documentation/manpage-quote-apos.xsl
-
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index 60f76f43ed..f7908f9dea 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -12,7 +12,6 @@
+ 
+ [attributes]
+ asterisk=&#42;
+-plus=&#43;
+ caret=&#94;
+ startsb=&#91;
+ endsb=&#93;
 -- 
 2.32.0
 
