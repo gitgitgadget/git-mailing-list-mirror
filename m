@@ -2,104 +2,210 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02FB0C4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD51EC4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:34:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF0B060230
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:34:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD71A60230
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230186AbhFUUgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 16:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56848 "EHLO
+        id S230291AbhFUUg5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 16:36:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFUUgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 16:36:51 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD09BC061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:34:35 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id b7so984684ioq.12
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:34:35 -0700 (PDT)
+        with ESMTP id S229890AbhFUUg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 16:36:57 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF023C061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:34:41 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id d19so21306141oic.7
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:34:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=BDjgb82WAnWDGHb+gf6tfA5GSywf91Qc+/Lsj94UHOw=;
-        b=i5lRZRWaKpYLBgPU/yGXwnjnIuamstoougrVwEEl5bC+ThXsiXZCuIuoAzs9gI3gEh
-         UlbPK75qu1hlfMuQrclEqVgWX8howxd/SDJjLib5ou/EVsotY1DpiGFazCnY9gRaDd13
-         tffd88Pt0r2CSgvABGLZK9GvhqyVWIy0BVTDNuie1Jpe9poLz6HBV3UtlgvDzP5FqUzj
-         LWWuZ+nGVV8KQxw8kuSVrUdiF+GIh7RGTkuaU46+g/06r7Oqwgh2wV/dfrPJGMHXqmEp
-         lzIFUgP3VFOdkm6xdzWvmmzdzkHKzZXQUnM08fH5D/p2UBTExfDaHVFPiIa6JJT0ICLa
-         3XcQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HKRYa42lWh6D2HY6qJdPrU5s5Xsb++lsk5yrPiaWLgo=;
+        b=Yev0gCPjjgJfD06JFEIDFin9lWoKOiQgs7n1cU9z7RzlrHgCWUThEUE17ZiOKcrVDG
+         4Kw96qzYuvTRafBWr0SnoisyfE+6vCiFJAMPLCPBsRmC8EmXFPYpmuB1UuGU8OwWHSJM
+         MZ7l/KJetAgtnBEuSberEYKtoMwK/50IszTAOrD1/z6VK4GkWdNz4dzZzF5egPix01qE
+         hSA9mi90suRt7zRmv5KXxAmLjXc+4ZyayXEC8Khi3vCUxfzLBbN5iKEk5AxzmhGH5MOi
+         swbN/iRsoxTYR4dbDHGIvd7LKyNfk9Jdp4NPAVKflHjSt6uD5CUMRuBZsioqHQjP7tWY
+         Ruwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=BDjgb82WAnWDGHb+gf6tfA5GSywf91Qc+/Lsj94UHOw=;
-        b=NMoici0dq4sNzxSJElJODPrb2ak/omJ6xAy4z5hI0SI0V40xMvXtbAnFCAiu2i6Nq8
-         uv4ZTEuUGPQRWvXQAYbPhsM5oBsfM4zBBJ/DLXmqY+4j+0lXlWA6bMRT6fCspPkvo29u
-         LWrHoxAgFL7a4+iCeATNAzNy/YwVDKFFnkkrGI3a72jxfZ6aEExyHDBFqR7TXFtAOc+6
-         ldwU8sqaJRB1Oov4k9TV8wKVjW/34yez/4bAUFSy6zL7WQasJvJOj4LjJr3xBdBWQDBT
-         Yhm1LyBTrRdMJ+LpbV2+yNOH+VDpM5WuQ9auyc34HLT/rr/j8P+fydy8+iBswMkfknEz
-         1iGQ==
-X-Gm-Message-State: AOAM531c9noj2IB908yRX8OqhhJlpgQm3nrKrqCa7TtUw1KMhN7TfuLw
-        P7FLSeK8ZbIdDtEDmGtb4YKU0Q==
-X-Google-Smtp-Source: ABdhPJzwFNa7oNX1xTceUak8VlG3T6MiIJRTMFhuyPz9u6mq2uXQDusnxa2qSFIaTYe/5L6dCnPc2w==
-X-Received: by 2002:a02:4b46:: with SMTP id q67mr282000jaa.84.1624307675257;
-        Mon, 21 Jun 2021 13:34:35 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
-        by smtp.gmail.com with ESMTPSA id z2sm8716033iol.45.2021.06.21.13.34.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 13:34:34 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 16:34:34 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/2] pack-objects: missing tests & --stdin-packs segfault
- fix
-Message-ID: <YND32s96yDkM51qZ@nand.local>
-References: <cover-0.2-00000000000-20210621T145819Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HKRYa42lWh6D2HY6qJdPrU5s5Xsb++lsk5yrPiaWLgo=;
+        b=OfyfxHv4xInh/RkQPyHc+uty+S1/ujkCSdVulO9w5bjvxr5tZNOhxp3A20M0w7k1EA
+         brtfw0mY+ws10fdV1VibzSXpBeS1rJsGHHG77Xabs/Z6JK7ZSGdryat+1rTsUAxijUfk
+         X0NteL/Ria50HUanXyKSupQgV+DJZIFfWBj0xMqSu62Xpl2M7EIRcgHjPa/a8H8nBYl0
+         Ys21gQURoXo43ClowmygaWohpfN8A/wCxIiysGllTp++UgVKi9CUZLf594k3USjc8WLF
+         ZajGwnH/hs0LIOqKAEYaFVjyjZbBBE0KIwv4SVfl8qyXy1UmewyFobjFspvacBwtxqxl
+         uVxw==
+X-Gm-Message-State: AOAM531LuM+yJLoWsbQy70buov/lejvNoo6ZRLgEF5BtUhncsQ3Qeerr
+        jcxPnOWmd3eIOC0adZmaMiCJgns4/dONBLYrQ2oZyAX4deg=
+X-Google-Smtp-Source: ABdhPJxJ9sAdmE+JmwrgQ3MgwKMnvGC0WoDLgRtk64d5fIpae/cZEMTDU7EWriRt2n4SgdTvQ09A02EXHDSBZ5C1b50=
+X-Received: by 2002:aca:f482:: with SMTP id s124mr182864oih.167.1624307681263;
+ Mon, 21 Jun 2021 13:34:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-0.2-00000000000-20210621T145819Z-avarab@gmail.com>
+References: <20210620151204.19260-1-andrzej@ahunt.org> <20210620151204.19260-2-andrzej@ahunt.org>
+In-Reply-To: <20210620151204.19260-2-andrzej@ahunt.org>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 21 Jun 2021 13:34:30 -0700
+Message-ID: <CABPp-BH_35UkaXhaBeo_SVPcyRk=OuENpGr+L3Jkycz6RNh1LQ@mail.gmail.com>
+Subject: Re: [PATCH 01/12] fmt-merge-msg: free newly allocated temporary
+ strings when done
+To:     Andrzej Hunt <andrzej@ahunt.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 05:03:36PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> When re-rolling an unrelated series[1] dealing with pack-objects.c and
-> revision.c I discovered that we have some test blindspots, and that
-> the newly added --stdin-packs option in v2.32.0 will segfault if fed
-> garbage data.
+On Sun, Jun 20, 2021 at 8:14 AM <andrzej@ahunt.org> wrote:
 >
-> This fixes the test blindspots, and 2/2 fixes the segfault.
-
-Thanks. I took a close look at the second patch, and it looks good to me
-with a few minor comments. The first patch looks good as well, although
-I didn't look as closely.
-
-> As discussed in its commit message I'm being lazy about emitting the
-> error message. If you supply N bogus lines on stdin we'll error on the
-> first one, since the input is first sorted by the string-list.c
-> API. The test case for the error message relies on which of two SHA
-> lines sorts first, and I picked input that happens to sort the same
-> way under both SHA-1 and SHA-256.
+> From: Andrzej Hunt <ajrhunt@google.com>
 >
-> Lazy, but I figured for this use-case it wasn't worth keeping track of
-> what line we saw when, or to refactor the parsing check on pack names
-> as we get input lines.
+> origin starts off pointing to somewhere within line, which is owned by
+> the caller. Later we might allocate a new string using xmemdupz() or
+> xstrfmt(). To avoid leaking these new strings, we introduce a to_free
+> pointer - which allows us to safely free the newly allocated string when
+> we're done (we cannot just free origin directly as it might still be
+> pointing to line).
+>
+> LSAN output from t0090:
+>
+> Direct leak of 8 byte(s) in 1 object(s) allocated from:
+>     #0 0x49a82d in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:145:3
+>     #1 0xa71f49 in do_xmalloc wrapper.c:41:8
+>     #2 0xa720b0 in do_xmallocz wrapper.c:75:8
+>     #3 0xa720b0 in xmallocz wrapper.c:83:9
+>     #4 0xa720b0 in xmemdupz wrapper.c:99:16
+>     #5 0x8092ba in handle_line fmt-merge-msg.c:187:23
+>     #6 0x8092ba in fmt_merge_msg fmt-merge-msg.c:666:7
+>     #7 0x5ce2e6 in prepare_merge_message builtin/merge.c:1119:2
+>     #8 0x5ce2e6 in collect_parents builtin/merge.c:1215:3
+>     #9 0x5c9c1e in cmd_merge builtin/merge.c:1454:16
+>     #10 0x4ce83e in run_builtin git.c:475:11
+>     #11 0x4ccafe in handle_builtin git.c:729:3
+>     #12 0x4cb01c in run_argv git.c:818:4
+>     #13 0x4cb01c in cmd_main git.c:949:19
+>     #14 0x6b3fad in main common-main.c:52:11
+>     #15 0x7fb929620349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+>
+> SUMMARY: AddressSanitizer: 8 byte(s) leaked in 1 allocation(s).
+>
+> Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
+> ---
+>  fmt-merge-msg.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+> index 0f66818e0f..b969dc6ebb 100644
+> --- a/fmt-merge-msg.c
+> +++ b/fmt-merge-msg.c
+> @@ -105,90 +105,92 @@ static void add_merge_parent(struct merge_parents *table,
+>  static int handle_line(char *line, struct merge_parents *merge_parents)
+>  {
+>         int i, len = strlen(line);
+>         struct origin_data *origin_data;
+>         char *src;
+>         const char *origin, *tag_name;
+> +       char *to_free = NULL;
+>         struct src_data *src_data;
+>         struct string_list_item *item;
+>         int pulling_head = 0;
+>         struct object_id oid;
+>         const unsigned hexsz = the_hash_algo->hexsz;
+>
+>         if (len < hexsz + 3 || line[hexsz] != '\t')
+>                 return 1;
+>
+>         if (starts_with(line + hexsz + 1, "not-for-merge"))
+>                 return 0;
+>
+>         if (line[hexsz + 1] != '\t')
+>                 return 2;
+>
+>         i = get_oid_hex(line, &oid);
+>         if (i)
+>                 return 3;
+>
+>         if (!find_merge_parent(merge_parents, &oid, NULL))
+>                 return 0; /* subsumed by other parents */
+>
+>         CALLOC_ARRAY(origin_data, 1);
+>         oidcpy(&origin_data->oid, &oid);
+>
+>         if (line[len - 1] == '\n')
+>                 line[len - 1] = 0;
+>         line += hexsz + 2;
+>
+>         /*
+>          * At this point, line points at the beginning of comment e.g.
+>          * "branch 'frotz' of git://that/repository.git".
+>          * Find the repository name and point it with src.
+>          */
+>         src = strstr(line, " of ");
+>         if (src) {
+>                 *src = 0;
+>                 src += 4;
+>                 pulling_head = 0;
+>         } else {
+>                 src = line;
+>                 pulling_head = 1;
+>         }
+>
+>         item = unsorted_string_list_lookup(&srcs, src);
+>         if (!item) {
+>                 item = string_list_append(&srcs, src);
+>                 item->util = xcalloc(1, sizeof(struct src_data));
+>                 init_src_data(item->util);
+>         }
+>         src_data = item->util;
+>
+>         if (pulling_head) {
+>                 origin = src;
+>                 src_data->head_status |= 1;
+>         } else if (skip_prefix(line, "branch ", &origin)) {
+>                 origin_data->is_local_branch = 1;
+>                 string_list_append(&src_data->branch, origin);
+>                 src_data->head_status |= 2;
+>         } else if (skip_prefix(line, "tag ", &tag_name)) {
+>                 origin = line;
+>                 string_list_append(&src_data->tag, tag_name);
+>                 src_data->head_status |= 2;
+>         } else if (skip_prefix(line, "remote-tracking branch ", &origin)) {
+>                 string_list_append(&src_data->r_branch, origin);
+>                 src_data->head_status |= 2;
+>         } else {
+>                 origin = src;
+>                 string_list_append(&src_data->generic, line);
+>                 src_data->head_status |= 2;
+>         }
+>
+>         if (!strcmp(".", src) || !strcmp(src, origin)) {
+>                 int len = strlen(origin);
+>                 if (origin[0] == '\'' && origin[len - 1] == '\'')
+> -                       origin = xmemdupz(origin + 1, len - 2);
+> +                       origin = to_free = xmemdupz(origin + 1, len - 2);
+>         } else
+> -               origin = xstrfmt("%s of %s", origin, src);
+> +               origin = to_free = xstrfmt("%s of %s", origin, src);
+>         if (strcmp(".", src))
+>                 origin_data->is_local_branch = 0;
+>         string_list_append(&origins, origin)->util = origin_data;
+> +       free(to_free);
+>         return 0;
+>  }
+>
+> --
+> 2.26.2
 
-Yeah. I think what you wrote is entirely reasonable, too. I suggested
-some alternatives if you are feeling motivated to make the error
-reporting nicer, but as you say, I think the vast majority of use-cases
-don't care about the output.
-
-Thanks,
-Taylor
+Makes sense.  The extended diff context makes this patch easier to
+read and verify too; thanks.
