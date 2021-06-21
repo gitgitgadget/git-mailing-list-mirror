@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EB0AC4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3735C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83B9F6124B
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE49D6124B
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 22:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232272AbhFUW2I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 18:28:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53810 "EHLO
+        id S232290AbhFUW2K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 18:28:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232258AbhFUW2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 18:28:04 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17706C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:50 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id h2so5931373iob.11
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:50 -0700 (PDT)
+        with ESMTP id S232318AbhFUW2H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 18:28:07 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6109C061768
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:52 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id q18so16721717ile.10
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 15:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=C5Yl6mIwi9zLmDdBydnpT2kQELkZPYxenRWJSBxoMY8=;
-        b=RrdGSL6UJPy1QayCFJwMh2eEYSAAMgR99Wi+zpZxR/wlEU2dizuTY+/1+2uoLlQLXn
-         JWOxCwK7FzmdlAPH0myd7QwnN0abM6fFukva9nrFZZ46NedH1QzRL8RP31m/WRZuvJje
-         oexk3jRLNHy1mGtg1fxOQuuwIv+G7rjWQSxMHBNyJ0DE8MUlGHQXSbqpq1OJ9DFeo++X
-         RCNeQBsmJ0g7Rt4PCvXaCbe2iEWXTUD7TNbvTMKOL3/wg1yB8b/mHTyuhpG0aFcOWxHj
-         XJjdQo1hDz3/TPQsjul2387fxlUohyY/6wYWssyp5pZn1Qh3F4He4RSXOj2jIE9Tfhjz
-         7OHw==
+        bh=urkpKRCVUcnkeA5xm5AkC500A1RReChHW2zksdFNMEU=;
+        b=tLtiapBP4Ey4ScnpcHyWu5rod+ArZR8voHCLYNsaVukPYDVzBcs/LbXZeIdBefrjKU
+         uArbiSilApwqwUOt4ctZjWiBQv+9yKJ7JxlogjgSkmExBCsPRfGCz1dj/o0nz+3EuJxJ
+         YF5rTiXJUDCUJoa6Gk9PiOD4k+H0xHECV6jeosLxylWS7kBZGJTI2htWWID5JbP+bz+p
+         PW1ChEyQkI7ARVZfLiSEtlNMhUIZwT1DB3skL0+oUNdLhDOV3FkSIjnFowR5/GN9kbQB
+         Q0mUpnemly3CyVnrTgvmHdL8fBK+hgVq8NI/6/OkHY7LWeyVCfGqHYn7MyxQo5xegZNt
+         cepg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=C5Yl6mIwi9zLmDdBydnpT2kQELkZPYxenRWJSBxoMY8=;
-        b=Uh60+PjcZEeQLmdoY+B5lcoOdUypiP4JEVBnEUsoaesvMZmifxwgLxac74dA3G6uw1
-         A9QHR5oP12jHucmzWHK9C0Z7oT01goy9lkbg1bbdeQ6N+WssWt75BOVmEaezljfv/QK4
-         1nYWQuetkcPXEBIYY1KCXyNWOZmmkVzPQvP85KksW+EApaE9pWKMETU4xMqRnxaO51Hu
-         NnrLjyqELeksUi0WtHTO0qGGrMdNf6JeP10V1csg9/bAQpe1NIsnT6tQmiTjMeimFjEa
-         1AOZn34+PXYvaqLfF1Xd06PZNQRIF06eC+X/3utNIL7jtM0FErgGYWa2eK0c9Qw44BHv
-         82Ig==
-X-Gm-Message-State: AOAM532k0spsRkeo1T/sXZbBsJJ+Nsn5GpuAo3tfb8f2PGFCkfa0jRK+
-        l03CvYvlfg0kFEs8skF0WvZOlJH4RKNAzWdd
-X-Google-Smtp-Source: ABdhPJwceOsun8EpY6cD5VjABUveic4B/g/dJwLzxLTvnJWq07yz1BHrs2kuMLINGkDJCC5K8CMG6A==
-X-Received: by 2002:a02:8241:: with SMTP id q1mr660572jag.134.1624314349346;
-        Mon, 21 Jun 2021 15:25:49 -0700 (PDT)
+        bh=urkpKRCVUcnkeA5xm5AkC500A1RReChHW2zksdFNMEU=;
+        b=UWORKOvFX22OhLtKCDo2Oyn8rsVZo6psd44rij2o+Ed6HjUw1v8X9Ipv3BhRzXmIkw
+         5Trqm6rL5iw5IKsYA785A7n8Mwt+ZiJJHIDf3XPqPCMMRBN9xZtkSqjqI5lEYnSMfxg6
+         ORge1LyJoBedqaIusgi9oahdrOtgsbafCimQxjLX4p7I/9EW9zj3YzY+1RxrYqMHt0Bf
+         mDHzBdPa6S9xgKsYE8sPZKRhQ2/JH+FE8BF7WKg9mCJrxDPMBxdbc+fUsSk3BusaIjbW
+         clEcJaPxwsyoLCs4A4v0BBBIQVqu02k4ooaBcX38LVhe8tFlMfetpKVgkRmL9YxO5JLf
+         JpDg==
+X-Gm-Message-State: AOAM5339VvqSNtFRKumv3wBoxQT+ic2UiFqG3j2N/5Z1mb/Jqqxw4zDE
+        bwotRFb4ZRjm3O/PBM9N8KYebzgayRGlHK3o
+X-Google-Smtp-Source: ABdhPJwKTjAuKnlLgWucTczKibgdUwO6r+fleqwScxpHp5FB32BDBp6jXIu1PqHBf0NTkXOAHuFNew==
+X-Received: by 2002:a05:6e02:10c3:: with SMTP id s3mr342730ilj.37.1624314351989;
+        Mon, 21 Jun 2021 15:25:51 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
-        by smtp.gmail.com with ESMTPSA id b23sm10682044ior.4.2021.06.21.15.25.48
+        by smtp.gmail.com with ESMTPSA id r4sm1058708ilq.27.2021.06.21.15.25.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 15:25:49 -0700 (PDT)
-Date:   Mon, 21 Jun 2021 18:25:48 -0400
+        Mon, 21 Jun 2021 15:25:51 -0700 (PDT)
+Date:   Mon, 21 Jun 2021 18:25:50 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com,
         jonathantanmy@google.com
-Subject: [PATCH v2 19/24] t5310: disable
- GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP
-Message-ID: <2d24c5b7ad0835f433428c16dfd137449688d93b.1624314293.git.me@ttaylorr.com>
+Subject: [PATCH v2 20/24] t5319: don't write MIDX bitmaps in t5319
+Message-ID: <4cbfaa0e978fd68bd5acd6ce5f96b34e9cd43656.1624314293.git.me@ttaylorr.com>
 References: <cover.1617991824.git.me@ttaylorr.com>
  <cover.1624314293.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,34 +72,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+This test is specifically about generating a midx still respecting a
+pack-based bitmap file. Generating a MIDX bitmap would confuse the test.
+Let's override the 'GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP' variable to
+make sure we don't do so.
 
-Generating a MIDX bitmap confuses many of the tests in t5310, which
-expect to control whether and how bitmaps are written. Since the
-relevant MIDX-bitmap tests here are covered already in t5326, let's just
-disable the flag for the whole t5310 script.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5310-pack-bitmaps.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t5319-multi-pack-index.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 4318f84d53..673baa5c3c 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -8,6 +8,10 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . "$TEST_DIRECTORY"/lib-bundle.sh
- . "$TEST_DIRECTORY"/lib-bitmap.sh
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 5641d158df..69f1c815aa 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -474,7 +474,8 @@ test_expect_success 'repack preserves multi-pack-index when creating packs' '
+ compare_results_with_midx "after repack"
  
-+# t5310 deals only with single-pack bitmaps, so don't write MIDX bitmaps in
-+# their place.
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
-+
- objpath () {
- 	echo ".git/objects/$(echo "$1" | sed -e 's|\(..\)|\1/|')"
- }
+ test_expect_success 'multi-pack-index and pack-bitmap' '
+-	git -c repack.writeBitmaps=true repack -ad &&
++	GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
++		git -c repack.writeBitmaps=true repack -ad &&
+ 	git multi-pack-index write &&
+ 	git rev-list --test-bitmap HEAD
+ '
 -- 
 2.31.1.163.ga65ce7f831
 
