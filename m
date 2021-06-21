@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A641C49EAF
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 17:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25358C48BE5
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 17:54:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF9F2611CE
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 17:54:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12BFF613E8
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 17:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232864AbhFUR4K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 13:56:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48734 "EHLO
+        id S232052AbhFUR4k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 13:56:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231877AbhFURzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 13:55:09 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C22FC0611C3
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 10:52:38 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id s23so20783703oiw.9
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 10:52:38 -0700 (PDT)
+        with ESMTP id S232283AbhFURzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 13:55:10 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661C4C0611DD
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 10:52:40 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id d19so20792810oic.7
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 10:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/ntO3xV4Jej1nnbMr5CU7BnvPHVQs5mctUyuwYN6R+8=;
-        b=rfhCyZgFaeFnfdLr5zMOAXwMUr75RxxKH4zrRrIYqVerXzuXNFhpR1s6RjP3yjrTDf
-         vs0E/Pyd87z7epwTLy0qoWudRaaWMqhVtiF9V2j2cxgv+ckuKa2B0wBsvMZ7GUTKckMv
-         bMDlwAXbsZ5d7vDxnTo4nuVPbUbcAJ9Yu9rAgfXXxHVUJhwlOCjmRc/Q0qYvvoAc2PGN
-         unf6xtvrlwpZSKu28hyWELJfojF8EId/S+xdK11b/B4nP2sLWS5VYOq6GVxOtlOdyW+p
-         CftOAx7600gkju7oPtHjFDTcg8l4S12Tmf1Tc17L6tecG3EyrcI4u0KWg65XUJOOwQHU
-         RaCQ==
+        bh=Lclz4iAH94Mv4J1ozZVX7OsOWpxPPAPrA45f2ONaKGg=;
+        b=SwbSSBia8O6fFuX5FdyupozrHykPmULOnC3o5pBLBudxxAocneOIWyJ2kc+RsF7Egx
+         xs4T6S+R7x845z2mOaamP/lWLBFot6IEcdu3eLLzZB+D8/loQtebF8BeJsgkcrU2i+1A
+         qECKnLpDRCOI9AqwIbxAywAY3ekIZ7pGWJ4NqU/xXb59YvDml/vo+fGCSbplFHCv5lte
+         DPySyO4gorh7RJKfo0+WZzT3wFjQVkofhiQI+XoiWsIf8kWUMC1VmX8YL/vDPH6hV4hf
+         FMh8xpJX4+JfhvUw+ay+HlqYUaJatC972DFPl87RQRmt6pF88wX6DwhO1ubXsdDx/YZZ
+         XWPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/ntO3xV4Jej1nnbMr5CU7BnvPHVQs5mctUyuwYN6R+8=;
-        b=gUz6Y5ONzQQiUGCjBXOy//LHd7htep1G6getxhphtSbEERSTQ8+xjcgvJQArfVJe3V
-         tQ+kVHb0C+P20Ax5WXqZFFaFQEZnj44NjF2XWMjev/zYZAJSQch75hZ2r0D173oVjGhJ
-         yRbTTU+K8kT1ditPbosTlMqWmo9fgcLiIE6eFiOy4UDhPoDpi2zwp5twOIBhUQLS3v0a
-         NTnXvfxuXWdVQcFgYEvUuVeFnCPp6CcM9YQLpwzlSCc2OR8D+SiXy/UiNstAwZKxEAom
-         ewOcapxXblYczL+91r02Mwy2+y9cs8pUH1VGcO6s5q2VKHZIsJI5QCmGOEwvJmTI1KuA
-         QMKA==
-X-Gm-Message-State: AOAM533L8sAuinZ9eTiA2NbAhPBLUOT74eKrbj/skq+33oGK0a/EbvCc
-        47H2gVGSkwTlz3xuIwebRhSISm9fF0uQHw==
-X-Google-Smtp-Source: ABdhPJxV79T2rWVY9zSrespw1sjyXfW7lZ3kCLmJ7O68XtKGbKP8+dsGOnex7lXBGIoMG6dgoWCxcw==
-X-Received: by 2002:a05:6808:15a0:: with SMTP id t32mr26739979oiw.90.1624297957811;
-        Mon, 21 Jun 2021 10:52:37 -0700 (PDT)
+        bh=Lclz4iAH94Mv4J1ozZVX7OsOWpxPPAPrA45f2ONaKGg=;
+        b=YYskqhzVJNdwNHzovqvjXh1YeGarHUnIEJ5megUDIbh472wlw2YzUczLK8NThAlXnk
+         4ZltjE1kacRIbw5se2D3TvGE/7wRLdKXZ4i7vroQkIB39h9Lr46RzNEjGsqBvIp/GDGd
+         /VxkOc1B70ylGMgGO09N917cqQsilDUo6tc+BbHb9P2bKevEa3VhpwMvm/DmERZwN9ZY
+         gBTKiyKY4a+vi9UiwePQuvIBkpWWTBo9lqe90YDtLhtM3D0pRH78+ZupLOWochUIRDvZ
+         kBNbq607EjqF1L5pAdj/tdDTnMfWjzQ0l1m7Lyj8/wvcOfq5YWklu36Zqu5DyGHp97Mw
+         mwBw==
+X-Gm-Message-State: AOAM532stX0NdldViosvhF6IZC1RnGHlgJ1PYNpekFC9MTFcyg/DWcLA
+        ++sh+3RdEPR/EAJK7GYl4SZF2r+zeiZVbA==
+X-Google-Smtp-Source: ABdhPJxLQKZ4UpVqsVlVr7vwJ+U4s7RfvTOXUXMBa9qCi1jeic6+/LKxwADkI/M2QahlzB9iVb42Sg==
+X-Received: by 2002:a05:6808:1388:: with SMTP id c8mr23420913oiw.68.1624297959607;
+        Mon, 21 Jun 2021 10:52:39 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id s3sm3605378oiw.29.2021.06.21.10.52.36
+        by smtp.gmail.com with ESMTPSA id g38sm4148233otg.28.2021.06.21.10.52.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 10:52:37 -0700 (PDT)
+        Mon, 21 Jun 2021 10:52:39 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>,
@@ -64,9 +64,9 @@ Cc:     =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 1/2] doc: pull: explain what is a fast-forward
-Date:   Mon, 21 Jun 2021 12:52:33 -0500
-Message-Id: <20210621175234.1079004-2-felipe.contreras@gmail.com>
+Subject: [PATCH 2/2] pull: improve default warning
+Date:   Mon, 21 Jun 2021 12:52:34 -0500
+Message-Id: <20210621175234.1079004-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210621175234.1079004-1-felipe.contreras@gmail.com>
 References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
@@ -76,90 +76,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We want users to know what is a fast-forward in order to understand the
-default warning.
+According to feedback from GitHub trainers [1], most newcomers don't
+understand what a rebase is. So in the default warning we want to
+provide our users with a command that does the most sensible thing,
+fixes the divergence, gets rid of the warning, with the minimum mental
+effort, and happens to be the default:
 
-Let's expand the explanation in order to cover both the simple, and the
-complex cases with as much detail as possible.
+  git pull --no-rebase (later --merge)
+
+In addition, we don't want to start by recommending a permanent
+configuration, but a temporary solution so they start training their
+fingers and maybe learn how to do a rebase. So we start with the commands.
+
+Also, we need to be clear about what we mean by "specifying"; merge, or
+rebase.
+
+Moreover, thanks to the previous patch now "git pull --help" explains
+what a fast-forward is, let's mention that reference.
+
+And finally, use --global in the configuration commands like we did with
+push.default.
+
+[1] https://lore.kernel.org/git/20130909201751.GA14437@sigill.intra.peff.net/
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-pull.txt | 41 ++++++++++++++++++++++++++++++++------
- 1 file changed, 35 insertions(+), 6 deletions(-)
+ builtin/pull.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 5c3fb67c01..142df1c4a1 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -41,16 +41,41 @@ Assume the following history exists and the current branch is
- ------------
- 	  A---B---C master on origin
- 	 /
--    D---E---F---G master
-+    D---E master
- 	^
- 	origin/master in your repository
- ------------
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 3e13f81084..48e25a5061 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -927,18 +927,20 @@ static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_
  
- Then "`git pull`" will fetch and replay the changes from the remote
- `master` branch since it diverged from the local `master` (i.e., `E`)
--until its current commit (`C`) on top of `master` and record the
--result in a new commit along with the names of the two parent commits
--and a log message from the user describing the changes.
-+until its current commit (`C`) on top of `master`.
-+
-+After the remote changes have been synchronized, the local `master` will
-+be fast-forwarded to the same commit as the remote one, therefore
-+creating a linear history.
-+
-+------------
-+    D---E---A---B---C master, origin/master
-+------------
-+
-+However, a non-fast-forward case looks very different:
-+
-+------------
-+	  A---B---C origin/master
-+	 /
-+    D---E---F---G master
-+------------
-+
-+If there are additional changes in the local `master`, it's
-+not possible to fast-forward, so a decision must be made how to
-+synchronize the local, and remote brances.
-+
-+In these situations `git pull` will warn you about your possible
-+options, which are either merge (`--no-rebase`), or rebase (`--rebase`).
-+However, by default it will continue doing a merge.
-+
-+A merge will create a new commit with two parent commits (`G` and `C`)
-+and a log message describing the changes, which you can edit.
+ static void show_advice_pull_non_ff(void)
+ {
+-	advise(_("Pulling without specifying how to reconcile divergent branches is\n"
+-		 "discouraged. You can squelch this message by running one of the following\n"
+-		 "commands sometime before your next pull:\n"
++	advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
++		 "you need to specify if you want a merge, or a rebase.\n"
+ 		 "\n"
+-		 "  git config pull.rebase false  # merge (the default strategy)\n"
+-		 "  git config pull.rebase true   # rebase\n"
+-		 "  git config pull.ff only       # fast-forward only\n"
++		 "  git pull --no-rebase # the default (merge)\n"
++		 "  git pull --rebase\n"
+ 		 "\n"
+-		 "You can replace \"git config\" with \"git config --global\" to set a default\n"
+-		 "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
+-		 "or --ff-only on the command line to override the configured default per\n"
+-		 "invocation.\n"));
++		 "You can squelch this message by running one of the following commands:\n"
++		 "\n"
++		 "  git config --global pull.rebase false  # merge\n"
++		 "  git config --global pull.rebase true   # rebase\n"
++		 "  git config --global pull.ff only       # fast-forward only\n"
++		 "\n"
++		 "If unsure, run \"git pull --no-rebase\".\n"
++		 "Read \"git pull --help\" for more information."));
+ }
  
- ------------
- 	  A---B---C origin/master
-@@ -58,8 +83,11 @@ and a log message from the user describing the changes.
-     D---E---F---G---H master
- ------------
- 
-+Once the merge commit is created (`H`), your local `master` branch has
-+incorporated the changes of the remote `master` branch.
-+
- See linkgit:git-merge[1] for details, including how conflicts
--are presented and handled.
-+are presented and handled, and also linkgit:git-rebase[1].
- 
- In Git 1.7.0 or later, to cancel a conflicting merge, use
- `git reset --merge`.  *Warning*: In older versions of Git, running 'git pull'
-@@ -248,7 +276,8 @@ version.
- 
- SEE ALSO
- --------
--linkgit:git-fetch[1], linkgit:git-merge[1], linkgit:git-config[1]
-+linkgit:git-fetch[1], linkgit:git-merge[1], linkgit:git-rebase[1],
-+linkgit:git-config[1]
- 
- GIT
- ---
+ int cmd_pull(int argc, const char **argv, const char *prefix)
 -- 
 2.32.0
 
