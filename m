@@ -2,124 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5491FC4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED997C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:49:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 372BC6124B
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:49:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2A9661289
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:49:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230325AbhFUUvS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 16:51:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60066 "EHLO
+        id S231127AbhFUUvd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 16:51:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbhFUUvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 16:51:17 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EAA5C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:49:02 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id nb6so30840277ejc.10
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:49:02 -0700 (PDT)
+        with ESMTP id S230290AbhFUUvb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 16:51:31 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F85C061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:49:16 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id v22-20020a0568301416b029044e2d8e855eso9900516otp.8
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=bKk7jx0F5wr9KEY4FPz9WGb+kQduPBJcV6MlYqbZDUM=;
-        b=uP8ZTQ9wJpX5pfydd/lgucG1HgvnNIyls8S5NzNPU0yvXRbDfcDJudo9na7+jurEZB
-         0rElIEYA/4bLDFRCwsKaK7WTlEXNxfkog9AjLiBu1BzvJJZ3ONzqOdHgG0vx8c2JFgd7
-         yVbPY+JL4rHA46OzdHRfOwAtW+FnW23plPBc35fd57pqurHZ8iceGvp22AUExuRv1usM
-         gisVUIGW0oiim5D72B38ZqUq1pPKoJXVGL2ot4qZ2fvrSbEsOpP0C2OZZ9l1ct+eYNfc
-         OgwCYMNw5/xDBux1q/tHe+AzbOez3rxd3RBUksUlr5l5IZd4uoZVBxjg9Jw+LXFIHgCB
-         O25Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ykEuhw0Z/Y7MqO4BhnyLQGnmykEwZ4BMcY4S4rn/xkw=;
+        b=CG4s16Hd9pMOqBvTsJ/V4HopbqGW1bd+b4O63uKJio34dtYVTa3WAxBxpGnrHtYFDj
+         n2euGFNXAZyz9iO8GMKl2nb4KUk+Iho93L62iZ3PktGY1qIbszLbzb2raXxTE4Q2+8u6
+         bKmE8bVwNALriXX2gNHKfENAneWQUKH3ijjy6V06YqxjoSuF8/zqZRMfrOdVrBAOsB2k
+         apMyq8tHtTII5PwbaWXF8lGuqbuFYGAfauNadZ3146Wx1xW2kEgcCf2iMB1fX7YWcI+G
+         0CTnAtkvlPcsVQSGtec+j4SyA8IBVBEHcqsFaiXyG9AINRmAgcq77wGmtPYlxmBuVUCd
+         J2QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=bKk7jx0F5wr9KEY4FPz9WGb+kQduPBJcV6MlYqbZDUM=;
-        b=alpQ/sOXRHBWwul1wtjGGGmAQEdq/qGuEep7B3eor7n01m89jomhOpVvKzYXsUWNH2
-         JTxe1O7DVrrXh/CXSUqMa1SWykkMzghDvRg1FvYU3a2SEhJSqB2puzAP15TFnJkc9UH7
-         8dAqfIaf5fSWQz1bSAvZHvbJKyO3A3Q7PhNzJFHPBLN77nw7hs1kGBt2RGXaA6iXMI72
-         /p9bfCQHjDRbq0nhl8lJ6b/9TEP1A7ViuZfLnOJ/HxRLaVhh0dOLALCP1YUV7VI0eNee
-         CTnS4eYea0zTzLJpsakMn/4eUNV2GWXuU8AGQjS8jBGWcwRkn44bPIQMttbuZM9XqQ/8
-         Hw1w==
-X-Gm-Message-State: AOAM531g/Q75Wo2YC00fXUNSRzde2rwD55hqx427g5YUG8YCyj4pnEiP
-        pIoc2bv30VkRmUpkx2IOEfI=
-X-Google-Smtp-Source: ABdhPJyZaut8TyG7tTusY/RwBXhbWOmuf4xo4bLyCTKBS14MEXv5MlVSXeakZ2PZEFbjrHJUntYncA==
-X-Received: by 2002:a17:907:9719:: with SMTP id jg25mr73723ejc.82.1624308540678;
-        Mon, 21 Jun 2021 13:49:00 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c23sm11185660eds.57.2021.06.21.13.49.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 13:49:00 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     albertqcui@gmail.com, gitgitgadget@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] hooks: propose repository owner configured hooks
-Date:   Mon, 21 Jun 2021 22:35:04 +0200
-References: <874kghk906.fsf@evledraar.gmail.com>
- <20210621193646.1173220-1-jonathantanmy@google.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210621193646.1173220-1-jonathantanmy@google.com>
-Message-ID: <87eecv2bb8.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ykEuhw0Z/Y7MqO4BhnyLQGnmykEwZ4BMcY4S4rn/xkw=;
+        b=rkXjsXriupkpP1igEdK9Y68Y0Ohw3h1AS9+I4PR9zfN70/whDyZENV2vsUhF1K4Aqh
+         aHo8+49QjX3B+bbQRpOUURdFutbprCuFBqtKirdab3D0SBSeuX9tlQg1mQZM9Kq4uasB
+         JGd2I8f3UryH3ppX4pCmXGfhdCldx0kcBdQRd4yp/r7PP9Ok/4ho9Nu8WHzHR3/ujT7v
+         XuE8u2XbfZOtxsFLFXVO10ridcmyyRORibGn+NRTVJT6zigE1LJcAexaV3P3cPAxyRev
+         yxDDzU4GZH4kW8RYiIFOG+kv2tFnFjDsOfVKFMXJWWCzYFHmoqOLdUo5johRk+xMkRdG
+         rYiA==
+X-Gm-Message-State: AOAM531KjtslDOK3rNuWfpp3AM0DZAZdSsPDR0a+9RlEpZ+poAbsP2oc
+        aiykuzIURyUo8vSe0/35Rzcf6Aw1+K7iKZEEgFU=
+X-Google-Smtp-Source: ABdhPJx+d2wgmGUNxm46YDTe8IWHfAC32dI/q2CS0Y5jT14dl5GzRy9Y4XuInJii9Se9WqSd81sPHYVSEuckJHLFKak=
+X-Received: by 2002:a9d:7c92:: with SMTP id q18mr289072otn.345.1624308555490;
+ Mon, 21 Jun 2021 13:49:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210620151204.19260-1-andrzej@ahunt.org> <20210620151204.19260-3-andrzej@ahunt.org>
+In-Reply-To: <20210620151204.19260-3-andrzej@ahunt.org>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 21 Jun 2021 13:49:04 -0700
+Message-ID: <CABPp-BGFH787gsw-yd3BpLt_rDe2zDoSFP6mMx6PSQfy1Ct4vw@mail.gmail.com>
+Subject: Re: [PATCH 02/12] environment: move strbuf into block to plug leak
+To:     Andrzej Hunt <andrzej@ahunt.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jun 21 2021, Jonathan Tan wrote:
-
-[Most of this I've replied to in
-https://lore.kernel.org/git/87k0mn2dd3.fsf@evledraar.gmail.com/; or
-that's a better jump-off point to discuss, just replying to leftover
-bits here]
-
->> It's also just un-git-y in *requiring* a remote. A .mailmap,
->> .gitattributes etc. all work with a repo you find on-disk, why does
->> config & hooks need to be different?
+On Sun, Jun 20, 2021 at 8:14 AM <andrzej@ahunt.org> wrote:
 >
-> Why is a remote required? The purpose of this proposal is for remotes to
-> suggest hooks, but that doesn't mean that the existing hooks mechanism
-> will no longer work.
-
-As a general matter because Git is a distributed VCS, so we should think
-about how new proposed features can integrate properly with distributed
-models of development.
-
-If we make distributed development a second-class feature set we're
-responsible from e.g. guiding open source projects away from distributed
-repos and patch application etc. to centralized hosting.
-
-We are also talking about exposing users to some manner of "do you trust
-this thingy?" UI from day 1.
-
-Given the points about training users to accept insecure patterns from
-others on this topic in past discussions I don't we can just say we'll
-worry about the distributed aspect later, as that means e.g. someone who
-interacts with N forks of a repo in GitHub being encouraged to add N
-trusted remotes if they want their linting of PRs to work properly.
-
->> > This seems like an OK alternative to allow-listing based on remote,
->> > but are you expecting users to add a GPG key to their .gitconfig?
->> 
->> That instead of saying you trust https://github.com/git/git your primary
->> means of interaction with this feature would be saying you, as an
->> example, trust Junio's GPG key.
+> From: Andrzej Hunt <ajrhunt@google.com>
 >
-> I think this feature can be extended to trusting GPG keys later. Do you
-> think that we should move to a model of trusting a key *instead of* (not
-> "in addition to") a URL?
+> realpath is only populated if we execute the git_work_tree_initialized
+> block. However that block also causes us to return early, meaning we
+> never actually release the strbuf in the case where we populated it.
+> Therefore we move all strbuf related code into the block to guarantee
+> that we can't leak it.
 >
-> [snip until summary paragraph]
+> LSAN output from t0095:
+>
+> Direct leak of 129 byte(s) in 1 object(s) allocated from:
+>     #0 0x49a9b9 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
+>     #1 0x78f585 in xrealloc wrapper.c:126:8
+>     #2 0x713ff4 in strbuf_grow strbuf.c:98:2
+>     #3 0x713ff4 in strbuf_getcwd strbuf.c:597:3
+>     #4 0x4f0c18 in strbuf_realpath_1 abspath.c:99:7
+>     #5 0x5ae4a4 in set_git_work_tree environment.c:259:3
+>     #6 0x6fdd8a in setup_discovered_git_dir setup.c:931:2
+>     #7 0x6fdd8a in setup_git_directory_gently setup.c:1235:12
+>     #8 0x4cb50d in get_bloom_filter_for_commit t/helper/test-bloom.c:41:2
+>     #9 0x4cb50d in cmd__bloom t/helper/test-bloom.c:95:3
+>     #10 0x4caa1f in cmd_main t/helper/test-tool.c:124:11
+>     #11 0x4caded in main common-main.c:52:11
+>     #12 0x7f0869f02349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+>
+> SUMMARY: AddressSanitizer: 129 byte(s) leaked in 1 allocation(s).
+>
+> It looks like this leak has existed since realpath was first added to
+> set_git_work_tree() in:
+>   3d7747e318 (real_path: remove unsafe API, 2020-03-10)
 
-I think we should trust content, GPG keys are one way of getting
-there. But even a magic URL implementation can be based on trusting
-advertised content with what I'd think are fairly small
-changes. E.g. you'd clone a branch, it has hooks, you'd diff the
-relevant thing against your trusted remote's version, it's the same it
-passes.
+Looking at that commit, it appears to have introduced other problems.
+For example, the documentation for read_gitfile_gently() claims it
+returns a value from a shared buffer, but that commit got rid of the
+shared buffer so the documentation is no longer accurate.  The thing
+that is returned is either the path that was passed in, or some newly
+allocated path that differs, in which case the caller would be
+responsible to free() it, but it looks like the callers aren't doing
+so.  There may be others; as I didn't read the whole old patch, but it
+looks like even this example could get messy.
+
+I don't think you need to address the whole mess, fixing one of the
+issues from it is fine and...
+
+>
+> Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
+> ---
+>  environment.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/environment.c b/environment.c
+> index 2f27008424..d6b22ede7e 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -249,25 +249,24 @@ static int git_work_tree_initialized;
+>  /*
+>   * Note.  This works only before you used a work tree.  This was added
+>   * primarily to support git-clone to work in a new repository it just
+>   * created, and is not meant to flip between different work trees.
+>   */
+>  void set_git_work_tree(const char *new_work_tree)
+>  {
+> -       struct strbuf realpath = STRBUF_INIT;
+> -
+>         if (git_work_tree_initialized) {
+> +               struct strbuf realpath = STRBUF_INIT;
+> +
+>                 strbuf_realpath(&realpath, new_work_tree, 1);
+>                 new_work_tree = realpath.buf;
+>                 if (strcmp(new_work_tree, the_repository->worktree))
+>                         die("internal error: work tree has already been set\n"
+>                             "Current worktree: %s\nNew worktree: %s",
+>                             the_repository->worktree, new_work_tree);
+> +               strbuf_release(&realpath);
+>                 return;
+>         }
+>         git_work_tree_initialized = 1;
+>         repo_set_worktree(the_repository, new_work_tree);
+> -
+> -       strbuf_release(&realpath);
+>  }
+>
+>  const char *get_git_work_tree(void)
+> --
+> 2.26.2
+
+This patch looks simple and correct.
