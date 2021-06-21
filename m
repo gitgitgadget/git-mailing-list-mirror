@@ -2,156 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED997C4743C
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34077C4743C
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:52:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2A9661289
-	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:49:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F92761245
+	for <git@archiver.kernel.org>; Mon, 21 Jun 2021 20:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231127AbhFUUvd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 16:51:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60126 "EHLO
+        id S230329AbhFUUyb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 16:54:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbhFUUvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 16:51:31 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F85C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:49:16 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id v22-20020a0568301416b029044e2d8e855eso9900516otp.8
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:49:16 -0700 (PDT)
+        with ESMTP id S229890AbhFUUya (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 16:54:30 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8472CC061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:52:14 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id d7so20876649edx.0
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 13:52:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=klerks-biz.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ykEuhw0Z/Y7MqO4BhnyLQGnmykEwZ4BMcY4S4rn/xkw=;
-        b=CG4s16Hd9pMOqBvTsJ/V4HopbqGW1bd+b4O63uKJio34dtYVTa3WAxBxpGnrHtYFDj
-         n2euGFNXAZyz9iO8GMKl2nb4KUk+Iho93L62iZ3PktGY1qIbszLbzb2raXxTE4Q2+8u6
-         bKmE8bVwNALriXX2gNHKfENAneWQUKH3ijjy6V06YqxjoSuF8/zqZRMfrOdVrBAOsB2k
-         apMyq8tHtTII5PwbaWXF8lGuqbuFYGAfauNadZ3146Wx1xW2kEgcCf2iMB1fX7YWcI+G
-         0CTnAtkvlPcsVQSGtec+j4SyA8IBVBEHcqsFaiXyG9AINRmAgcq77wGmtPYlxmBuVUCd
-         J2QA==
+        bh=ddksvuUAiy4GLY4fRqy9nrknJ6sgiwQQaOOihtxt7Ys=;
+        b=t0DMV7uaQuirZkCv9VhxTksTf7RWZnj9qH2Tw9UMo4K+3hNBHvUfZcfG3+O/MeMRQc
+         0YpUltvfqNnD32cst0dQqvLGYbLBdqXxm6cTpT48hyWbw3VjreoJwj6cdJaIhmwnQkOR
+         SVzJlSqCJVI38ecaNrI93k2OZW5XuBcewajt7r385acaR1/kJFRghCr0cquJetCbX3Qu
+         FScfuF1hWN0QeyEbsrWO22qq164fTtlQ3OcRTAGRcLKXZ8kfue2hNQnVaMe9ugYptthv
+         eaMC4K73nv92+6ps3rW1zZlgGTYSWjS6HevnncpKiGUTIVHn+lptZtccQZCli/Q59w3x
+         ZnPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ykEuhw0Z/Y7MqO4BhnyLQGnmykEwZ4BMcY4S4rn/xkw=;
-        b=rkXjsXriupkpP1igEdK9Y68Y0Ohw3h1AS9+I4PR9zfN70/whDyZENV2vsUhF1K4Aqh
-         aHo8+49QjX3B+bbQRpOUURdFutbprCuFBqtKirdab3D0SBSeuX9tlQg1mQZM9Kq4uasB
-         JGd2I8f3UryH3ppX4pCmXGfhdCldx0kcBdQRd4yp/r7PP9Ok/4ho9Nu8WHzHR3/ujT7v
-         XuE8u2XbfZOtxsFLFXVO10ridcmyyRORibGn+NRTVJT6zigE1LJcAexaV3P3cPAxyRev
-         yxDDzU4GZH4kW8RYiIFOG+kv2tFnFjDsOfVKFMXJWWCzYFHmoqOLdUo5johRk+xMkRdG
-         rYiA==
-X-Gm-Message-State: AOAM531KjtslDOK3rNuWfpp3AM0DZAZdSsPDR0a+9RlEpZ+poAbsP2oc
-        aiykuzIURyUo8vSe0/35Rzcf6Aw1+K7iKZEEgFU=
-X-Google-Smtp-Source: ABdhPJx+d2wgmGUNxm46YDTe8IWHfAC32dI/q2CS0Y5jT14dl5GzRy9Y4XuInJii9Se9WqSd81sPHYVSEuckJHLFKak=
-X-Received: by 2002:a9d:7c92:: with SMTP id q18mr289072otn.345.1624308555490;
- Mon, 21 Jun 2021 13:49:15 -0700 (PDT)
+        bh=ddksvuUAiy4GLY4fRqy9nrknJ6sgiwQQaOOihtxt7Ys=;
+        b=asxC1W5AYfCrgVUB5in9RgUQhSU3Dq/pi0OgY799CKr11PZL7WDvbORNwEA5kvxjaS
+         qWR5D/PNdXXj+j3GN+wlpB/VBRK+7gIub3Mi2H2FwiQq/JfnfvXu/q+py2tiuwSxAksc
+         SkgsOewIqb5FJP2H2ozMT0zoC7nQJMc7opzK+Mpu0uGNhzyPS+Ck3/q6Jy/N+P0psesO
+         gTRt8kRlcapJ3jVNCxs2H6KDSbzdy2KilqrB0U+/t+NQwVbmK6gaRKvkxdW/zz/BcS3l
+         RC+VEBzNItsgWUbA09WHil37SPBIamds1vtGJIDyvSNVRIFbugTOKRUpMR6XGTIhGWd9
+         PBjg==
+X-Gm-Message-State: AOAM532AVMBJedshAL63BCLfELishpCWcLIrDUzKVOVonVs1lWQUvl6u
+        ZkP0z/rxQPcXQWk2wzdvXSGarr0ov2PcEncRIKX3sQ==
+X-Google-Smtp-Source: ABdhPJzHi1wjc7hS1R4KKXPLTT3rrxincC0Iim3lIjusRP4vsB8/9O7Fx7FeoRppO2BIOezUFlC5KZDAz5I5AjwtSmE=
+X-Received: by 2002:a05:6402:4cf:: with SMTP id n15mr391323edw.162.1624308733133;
+ Mon, 21 Jun 2021 13:52:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210620151204.19260-1-andrzej@ahunt.org> <20210620151204.19260-3-andrzej@ahunt.org>
-In-Reply-To: <20210620151204.19260-3-andrzej@ahunt.org>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 21 Jun 2021 13:49:04 -0700
-Message-ID: <CABPp-BGFH787gsw-yd3BpLt_rDe2zDoSFP6mMx6PSQfy1Ct4vw@mail.gmail.com>
-Subject: Re: [PATCH 02/12] environment: move strbuf into block to plug leak
-To:     Andrzej Hunt <andrzej@ahunt.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CAPMMpog7bNNPm3suZKu6OppHA+KDYgCfmaxW4HqTAr7_tTVAPQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2106111122010.57@tvgsbejvaqbjf.bet> <CAPMMpogeWeQujG0UL80REOsaBJipxhQyOpBTuWD9U9_jg=FMMA@mail.gmail.com>
+ <81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com>
+In-Reply-To: <81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Mon, 21 Jun 2021 22:52:02 +0200
+Message-ID: <CAPMMpogjr43111HfPzk23c98JBaiEF2YA_OTkQVG1a63zyeiOw@mail.gmail.com>
+Subject: Re: Windows: core.useBuiltinFSMonitor without core.untrackedcache -
+ performance hazard?
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 20, 2021 at 8:14 AM <andrzej@ahunt.org> wrote:
->
-> From: Andrzej Hunt <ajrhunt@google.com>
->
-> realpath is only populated if we execute the git_work_tree_initialized
-> block. However that block also causes us to return early, meaning we
-> never actually release the strbuf in the case where we populated it.
-> Therefore we move all strbuf related code into the block to guarantee
-> that we can't leak it.
->
-> LSAN output from t0095:
->
-> Direct leak of 129 byte(s) in 1 object(s) allocated from:
->     #0 0x49a9b9 in realloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
->     #1 0x78f585 in xrealloc wrapper.c:126:8
->     #2 0x713ff4 in strbuf_grow strbuf.c:98:2
->     #3 0x713ff4 in strbuf_getcwd strbuf.c:597:3
->     #4 0x4f0c18 in strbuf_realpath_1 abspath.c:99:7
->     #5 0x5ae4a4 in set_git_work_tree environment.c:259:3
->     #6 0x6fdd8a in setup_discovered_git_dir setup.c:931:2
->     #7 0x6fdd8a in setup_git_directory_gently setup.c:1235:12
->     #8 0x4cb50d in get_bloom_filter_for_commit t/helper/test-bloom.c:41:2
->     #9 0x4cb50d in cmd__bloom t/helper/test-bloom.c:95:3
->     #10 0x4caa1f in cmd_main t/helper/test-tool.c:124:11
->     #11 0x4caded in main common-main.c:52:11
->     #12 0x7f0869f02349 in __libc_start_main (/lib64/libc.so.6+0x24349)
->
-> SUMMARY: AddressSanitizer: 129 byte(s) leaked in 1 allocation(s).
->
-> It looks like this leak has existed since realpath was first added to
-> set_git_work_tree() in:
->   3d7747e318 (real_path: remove unsafe API, 2020-03-10)
+Hi Jeff, thanks for the update!
 
-Looking at that commit, it appears to have introduced other problems.
-For example, the documentation for read_gitfile_gently() claims it
-returns a value from a shared buffer, but that commit got rid of the
-shared buffer so the documentation is no longer accurate.  The thing
-that is returned is either the path that was passed in, or some newly
-allocated path that differs, in which case the caller would be
-responsible to free() it, but it looks like the callers aren't doing
-so.  There may be others; as I didn't read the whole old patch, but it
-looks like even this example could get messy.
+On Mon, Jun 21, 2021 at 8:41 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
+> We're currently looking at a problem that we believe is in the
+> untracked-cache code.  This is causing some of our Scalar tests
+> to fail on Windows when the untracked-cache is turned on.
 
-I don't think you need to address the whole mess, fixing one of the
-issues from it is fine and...
+For what it's worth, I just discovered an untracked cache bug this
+evening, although I doubt it's related to the one you mention - it's
+not very exciting:
 
->
-> Signed-off-by: Andrzej Hunt <andrzej@ahunt.org>
-> ---
->  environment.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git a/environment.c b/environment.c
-> index 2f27008424..d6b22ede7e 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -249,25 +249,24 @@ static int git_work_tree_initialized;
->  /*
->   * Note.  This works only before you used a work tree.  This was added
->   * primarily to support git-clone to work in a new repository it just
->   * created, and is not meant to flip between different work trees.
->   */
->  void set_git_work_tree(const char *new_work_tree)
->  {
-> -       struct strbuf realpath = STRBUF_INIT;
-> -
->         if (git_work_tree_initialized) {
-> +               struct strbuf realpath = STRBUF_INIT;
-> +
->                 strbuf_realpath(&realpath, new_work_tree, 1);
->                 new_work_tree = realpath.buf;
->                 if (strcmp(new_work_tree, the_repository->worktree))
->                         die("internal error: work tree has already been set\n"
->                             "Current worktree: %s\nNew worktree: %s",
->                             the_repository->worktree, new_work_tree);
-> +               strbuf_release(&realpath);
->                 return;
->         }
->         git_work_tree_initialized = 1;
->         repo_set_worktree(the_repository, new_work_tree);
-> -
-> -       strbuf_release(&realpath);
->  }
->
->  const char *get_git_work_tree(void)
-> --
-> 2.26.2
+If you disable untracked cache (and write an index file), and then
+enable untracked cache and run status with "-uall" (writing a new
+index file), the untracked cache data written in the new index file is
+empty/invalid, and subsequent "git status" calls perform just the same
+as if untracked cache were disabled:
+----
+# write an index without untracked cache
+git -c core.untrackedcache=false status
 
-This patch looks simple and correct.
+# write another index with invalid/empty/bad untracked cache because
+"-uall" skipped its population/maintenance
+git -c core.untrackedcache=true status -uall # expected to be slow
+
+# run regular "git status" (with untracked cache) any number of times,
+but don't get the benefit (and you don't write a new index because
+nothing appears to have changed)
+git -c core.untrackedcache=true status # unexpectedly slow
+git -c core.untrackedcache=true status # unexpectedly slow
+git -c core.untrackedcache=true status # unexpectedly slow
+---
+# TO FIX:
+# write a new index file without untracked cache
+git -c core.untrackedcache=false status
+
+# run regular "git status" (with untracked cache), does work and
+writes a new index file
+git -c core.untrackedcache=true status # slow as expected
+
+# run regular "git status" (with untracked cache) any number of times,
+is fast as expected
+git -c core.untrackedcache=true status # fast as expected
+git -c core.untrackedcache=true status # fast as expected
+git -c core.untrackedcache=true status # fast as expected
+----
+
+I suspect this issue has bit me in the past when attempting to
+understand untracked cache behavior; it can be *very* confusing, if
+you're using tooling like "git extensions" that can, in the above
+flow, "poison" your untracked cache if it just happens to run a "git
+status -uall" in the background as you are testing.
+
+(I discovered this issue while trying to understand the weird &
+wonderful relationship between the repo-level untracked cache
+reference, the dir-level untracked cache reference, and the mechanisms
+that initialize a new one at dir.c#new_untracked_cache() and write the
+repo-level one (even if the dir-level reference was voided due to flag
+mismatch) at dir.c#write_untracked_extension())
+
+Should I be reporting this in some more "official" form somewhere? Is
+there a bug DB?
+
+Thanks,
+Tao
