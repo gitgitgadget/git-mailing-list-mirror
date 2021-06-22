@@ -2,208 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF368C2B9F4
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6A3FC2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 09:03:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 939996128C
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:05:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF36861351
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 09:03:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230380AbhFVIHT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 04:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
+        id S229837AbhFVJFW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 05:05:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230436AbhFVIHG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 04:07:06 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5D8C0617A8
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:47 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id y7so22403563wrh.7
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:47 -0700 (PDT)
+        with ESMTP id S229826AbhFVJFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 05:05:21 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4CCC061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 02:03:05 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id j21-20020a05600c1c15b02901dde2accccbso1726223wms.4
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 02:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=cPouRtX0ywbuQRmrWfNTHyz7mMmKhchMKzvO6gSIOns=;
-        b=UiYq37/sEafzLwTa1qfGpa9Amad05KrKUe1iK86lcxoi1bMWeLmJkJjVCaMl3s1gkl
-         2JrtKiEnDxhS7yuDgiFhDbrPgoPq/mf+49xFHCIwfn7BTVyRYcm7YJ/vOk8GqBf8zASd
-         qYhHz/m8/n8n0CNZyHyESMQoIUOra70qwQ3L6iT2FsnWV0swied5vYgZnWMlY/0RdZyx
-         QkTjxYa8o9gO+Va2CzRiyw0NvguIztyviVykUNUj6M9fsUcglR513xIeBnJZB7NlMc2N
-         v5G8sEHOCHOr7sbveWeGdyzqaym5B/GG/zzz++BGlA4gmQXJK8I6yRFtxGN7O8nC7qN1
-         emkA==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2bKZb+NoPYUN7rapNePpH6lUQ59Fbymtv4u44OnpRDk=;
+        b=M3KiflDbTLPbyxa1o+U8iwGH36HOGJTiXFrbvo2ziVoMCkwjCW4aSZIfANicypBVZh
+         4EQdt68Sm+R0CZjVVyefNXGVA+nv0fy9MEh0TZd/LQ7jLPoEkKWXAA9etfG2Z7CWAfaI
+         7Qc7mDmehDttzRhaHY+e6z2GfpK601lCW03NtanATGtmhxDYrJtbzVrQzUVHVsxjYUvO
+         hjpg5u7E85GjAFz2cQSGcodk3b0j7L9tZKacGV59saQFIkiq6X9z4XPE+W6o3S5rjM5N
+         rVtxErIsx/6tcctLyWFR18ssBHkfYGOv+zabeBiITIQO5T5yetlLYBvRUki/eMB5sWRx
+         ZowA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cPouRtX0ywbuQRmrWfNTHyz7mMmKhchMKzvO6gSIOns=;
-        b=aasuEdgfwSGzIVUVjbgXXyrda6lsBtoQpPz+xmyS+2B6I8RWwP1yJAZ4MKwAV+KIZg
-         y/Nkrs1FogLpsxqmoFBugDWkice36SJBwTwteYFD//WqXO+S+lk5gzLtLGFJPo4jJkn5
-         czJOnhWoYgJRwAtntk+s5OXqmEuam6oWNvmRs4Job27c9a6yK/nHkcNnbp1q82UOOepn
-         73JwO5akn3/FrxGzKomP4dMziwrI4Z+fD1h3acwmaJ0BO4cXkygm42n+e1w8gKPR6V3C
-         8Y9FmH4ejUkc1JVI+KOzIXK2Xwr3yfRDRKGCT6i24ZEc0ye8GmeV6cV4sQoddzPX+CZK
-         UqhQ==
-X-Gm-Message-State: AOAM531Xlst1Obpkz0G03Z19BIUONpycQyitjhq7wQF8EhdwPGXV3Ra1
-        xtNdlVuWNP1ffyo4beF2F/AOYAIrZdY=
-X-Google-Smtp-Source: ABdhPJz5f9I5rlXU3IU9R5NjFF1Q1VIWveBHfM8aokNe+w45X9Hi+heXiJXhQY1IoGURI6qGJFzXKg==
-X-Received: by 2002:a5d:538f:: with SMTP id d15mr3150405wrv.408.1624349086102;
-        Tue, 22 Jun 2021 01:04:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v22sm1427214wmh.40.2021.06.22.01.04.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 01:04:45 -0700 (PDT)
-Message-Id: <69011cfe9fae1410213aae7a5599a3cd3c4207ce.1624349082.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.969.v3.git.1624349082.gitgitgadget@gmail.com>
-References: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
-        <pull.969.v3.git.1624349082.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Jun 2021 08:04:41 +0000
-Subject: [PATCH v3 5/5] merge-ort: add prefetching for content merges
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=2bKZb+NoPYUN7rapNePpH6lUQ59Fbymtv4u44OnpRDk=;
+        b=I/1Q9ErtQdzFObIkC51xNsZaKtfMglDaYyuhslnCXhmQHMAA7HAVsOnD9oOK0ec+Hg
+         EhdtwbtqKmE/qzSF+wmTd5SqTuMz2vj+x5wrifzvz+Oy8jTZqIYsb5mVwDpr4yJ5fCTs
+         ZS4vmWmpY+8G5pTwqdkvJKRnxfyIDuMI9uRwZPyUyb0trFIKde7Aw3g6kZK/6ERvAFDW
+         KJTFLvtIIQt/xDys80owUUu4xVd5BANCpJCRKEZbHQlHakLkw+A9tIH0hsf43DX6/WuB
+         h2gYHl5scxwDaQUl3Kao7vU0qhhrefrsQ4WsKoCUQNrgW6OFvtmoXA+5fjicrnqAfRi3
+         sfkQ==
+X-Gm-Message-State: AOAM533zaWy7nG9KDM2+NxrPNpp6xbfEU3JBVxLBMsp24qklDJWU7kbX
+        m1gyCEn8WbJxlQD58DzGnyqCtIVx1Yk=
+X-Google-Smtp-Source: ABdhPJzUOsJQwHZWHkbzz+tARexnKZXleQpH9Ko2jKRmfAPmMb7mVJKSXZVnYszXuS6dTgAVCJbvIw==
+X-Received: by 2002:a1c:f60f:: with SMTP id w15mr3046676wmc.71.1624352583770;
+        Tue, 22 Jun 2021 02:03:03 -0700 (PDT)
+Received: from [192.168.1.240] (11.22.198.146.dyn.plus.net. [146.198.22.11])
+        by smtp.gmail.com with ESMTPSA id d15sm21542041wrb.42.2021.06.22.02.03.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jun 2021 02:03:02 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 11/12] builtin/rebase: fix options.strategy memory
+ lifecycle
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Andrzej Hunt <andrzej@ahunt.org>,
+        Git Mailing List <git@vger.kernel.org>
+References: <20210620151204.19260-1-andrzej@ahunt.org>
+ <20210620151204.19260-12-andrzej@ahunt.org>
+ <6e02fc85-42a4-8b19-1fe7-3527c2308a24@gmail.com>
+ <CABPp-BEQkUQLt-ZbwdO+ecd2rumttBUKUmh3=7LaKRxwXCkB+g@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <d1ef45c1-067e-abde-62a2-1df2c12ba3a3@gmail.com>
+Date:   Tue, 22 Jun 2021 10:02:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <dstolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+In-Reply-To: <CABPp-BEQkUQLt-ZbwdO+ecd2rumttBUKUmh3=7LaKRxwXCkB+g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi Elijah
 
-Commit 7fbbcb21b1 ("diff: batch fetching of missing blobs", 2019-04-05)
-introduced batching of fetching missing blobs, so that the diff
-machinery would have one fetch subprocess grab N blobs instead of N
-processes each grabbing 1.
+On 21/06/2021 22:39, Elijah Newren wrote:
+> On Sun, Jun 20, 2021 at 11:29 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Hi Andrzej
+>>
+>> Thanks for working on removing memory leaks from git.
+>>
+>> On 20/06/2021 16:12, andrzej@ahunt.org wrote:
+>>> From: Andrzej Hunt <ajrhunt@google.com>
+>>>
+>>> This change:
+>>> - xstrdup()'s all string being used for replace_opts.strategy, to
+>>
+>> I think you mean replay_opts rather than replace_opts.
+>>
+>>>     guarantee that replace_opts owns these strings. This is needed because
+>>>     sequencer_remove_state() will free replace_opts.strategy, and it's
+>>>     usually called as part of the usage of replace_opts.
+>>> - Removes xstrdup()'s being used to populate options.strategy in
+>>>     cmd_rebase(), which avoids leaking options.strategy, even in the
+>>>     case where strategy is never moved/copied into replace_opts.
+>>
+>>
+>>> These changes are needed because:
+>>> - We would always create a new string for options.strategy if we either
+>>>     get a strategy via options (OPT_STRING(...strategy...), or via
+>>>     GIT_TEST_MERGE_ALGORITHM.
+>>> - But only sometimes is this string copied into replace_opts - in which
+>>>     case it did get free()'d in sequencer_remove_state().
+>>> - The rest of the time, the newly allocated string would remain unused,
+>>>     causing a leak. But we can't just add a free because that can result
+>>>     in a double-free in those cases where replace_opts was populated.
+>>>
+>>> An alternative approach would be to set options.strategy to NULL when
+>>> moving the pointer to replace_opts.strategy, combined with always
+>>> free()'ing options.strategy, but that seems like a more
+>>> complicated and wasteful approach.
+>>
+>> read_basic_state() contains
+>>          if (file_exists(state_dir_path("strategy", opts))) {
+>>                  strbuf_reset(&buf);
+>>                  if (!read_oneliner(&buf, state_dir_path("strategy", opts),
+>>                                     READ_ONELINER_WARN_MISSING))
+>>                          return -1;
+>>                  free(opts->strategy);
+>>                  opts->strategy = xstrdup(buf.buf);
+>>          }
+>>
+>> So we do try to free opts->strategy when reading the state from disc and
+>> we allocate a new string. I suspect that opts->strategy is actually NULL
+>> in when this function is called but I haven't checked. Given that we are
+>> allocating a copy above I think maybe your alternative approach of
+>> always freeing opts->strategy would be better.
+> 
+> Good catches.  sequencer_remove_state() in sequencer.c also has a
+> free(opts->strategy) call.
+> 
+> To make things even more muddy, we have code like
+>      replay.strategy = replay.default_strategy;
+> or
+>      opts->strategy = opts->default_strategy;
+> which both will probably work really poorly with the calls to
+>      free(opts->default_strategy);
+>      free(opts->strategy);
+> from sequencer_remove_state().  I suspect we've got a few bugs here...
 
-However, the diff machinery is not the only thing in a merge that needs
-to work on blobs.  The 3-way content merges need them as well.  Rather
-than download all the blobs 1 at a time, prefetch all the blobs needed
-for regular content merges.
+It's not immediately obvious but I think those are actually safe. 
+opts->default_strategy is allocated by sequencer_init_config() so it is 
+correct to free it and when we assign it in rebase.c we do
 
-This does not cover all possible paths in merge-ort that might need to
-download blobs.  Others include:
-  - The blob_unchanged() calls to avoid modify/delete conflicts (when
-    blob renormalization results in an "unchanged" file)
-  - Preliminary content merges needed for rename/add and
-    rename/rename(2to1) style conflicts.  (Both of these types of
-    conflicts can result in nested conflict markers from the need to do
-    two levels of content merging; the first happens before our new
-    prefetch_for_content_merges() function.)
+	else if (!replay.strategy && replay.default_strategy) {
+		replay.strategy = replay.default_strategy;
+		replay.default_strategy = NULL;
+	}
 
-The first of these wouldn't be an extreme amount of work to support, and
-even the second could be theoretically supported in batching, but all of
-these cases seem unusual to me, and this is a minor performance
-optimization anyway; in the worst case we only get some of the fetches
-batched and have a few additional one-off fetches.  So for now, just
-handle the regular 3-way content merges in our prefetching.
+so there is no double free. There is similar code in builtin/revert.c 
+which I think is where your other example came from. I think there is a 
+leak in builtin/revert.c though
 
-For the testcase from the previous commit, the number of downloaded
-objects remains at 63, but this drops the number of fetches needed from
-32 down to 20, a sizeable reduction.
+	if (!opts->strategy && opts->default_strategy) {
+		opts->strategy = opts->default_strategy;
+		opts->default_strategy = NULL;
+	}
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c                    | 50 ++++++++++++++++++++++++++++++++++
- t/t6421-merge-partial-clone.sh |  2 +-
- 2 files changed, 51 insertions(+), 1 deletion(-)
+	/* do some other stuff */
 
-diff --git a/merge-ort.c b/merge-ort.c
-index cfa751053b01..e3a5dfc7b312 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -29,6 +29,7 @@
- #include "entry.h"
- #include "ll-merge.h"
- #include "object-store.h"
-+#include "promisor-remote.h"
- #include "revision.h"
- #include "strmap.h"
- #include "submodule.h"
-@@ -3485,6 +3486,54 @@ static void process_entry(struct merge_options *opt,
- 	record_entry_for_tree(dir_metadata, path, &ci->merged);
- }
- 
-+static void prefetch_for_content_merges(struct merge_options *opt,
-+					struct string_list *plist)
-+{
-+	struct string_list_item *e;
-+	struct oid_array to_fetch = OID_ARRAY_INIT;
-+
-+	if (opt->repo != the_repository || !has_promisor_remote())
-+		return;
-+
-+	for (e = &plist->items[plist->nr-1]; e >= plist->items; --e) {
-+		/* char *path = e->string; */
-+		struct conflict_info *ci = e->util;
-+		int i;
-+
-+		/* Ignore clean entries */
-+		if (ci->merged.clean)
-+			continue;
-+
-+		/* Ignore entries that don't need a content merge */
-+		if (ci->match_mask || ci->filemask < 6 ||
-+		    !S_ISREG(ci->stages[1].mode) ||
-+		    !S_ISREG(ci->stages[2].mode) ||
-+		    oideq(&ci->stages[1].oid, &ci->stages[2].oid))
-+			continue;
-+
-+		/* Also don't need content merge if base matches either side */
-+		if (ci->filemask == 7 &&
-+		    S_ISREG(ci->stages[0].mode) &&
-+		    (oideq(&ci->stages[0].oid, &ci->stages[1].oid) ||
-+		     oideq(&ci->stages[0].oid, &ci->stages[2].oid)))
-+			continue;
-+
-+		for (i = 0; i < 3; i++) {
-+			unsigned side_mask = (1 << i);
-+			struct version_info *vi = &ci->stages[i];
-+
-+			if ((ci->filemask & side_mask) &&
-+			    S_ISREG(vi->mode) &&
-+			    oid_object_info_extended(opt->repo, &vi->oid, NULL,
-+						     OBJECT_INFO_FOR_PREFETCH))
-+				oid_array_append(&to_fetch, &vi->oid);
-+		}
-+	}
-+
-+	promisor_remote_get_direct(opt->repo, to_fetch.oid, to_fetch.nr);
-+	oid_array_clear(&to_fetch);
-+}
-+
- static void process_entries(struct merge_options *opt,
- 			    struct object_id *result_oid)
- {
-@@ -3531,6 +3580,7 @@ static void process_entries(struct merge_options *opt,
- 	 * the way when it is time to process the file at the same path).
- 	 */
- 	trace2_region_enter("merge", "processing", opt->repo);
-+	prefetch_for_content_merges(opt, &plist);
- 	for (entry = &plist.items[plist.nr-1]; entry >= plist.items; --entry) {
- 		char *path = entry->string;
- 		/*
-diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
-index aad975d24ddb..36bcd7c32801 100755
---- a/t/t6421-merge-partial-clone.sh
-+++ b/t/t6421-merge-partial-clone.sh
-@@ -397,7 +397,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded when a directory
- #
- #   Summary: 4 fetches (1 for 6 objects, 1 for 8, 1 for 3, 1 for 2)
- #
--test_expect_merge_algorithm failure failure 'Objects downloaded with lots of renames and modifications' '
-+test_expect_merge_algorithm failure success 'Objects downloaded with lots of renames and modifications' '
- 	test_setup_repo &&
- 	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-many &&
- 	(
--- 
-gitgitgadget
+	/* These option values will be free()d */
+	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
+	opts->strategy = xstrdup_or_null(opts->strategy);
+
+So we copy the default strategy, leaking the original copy from 
+sequencer_init_options() if --strategy isn't given on the command line. 
+I think it would be simple to fix this by making the copy earlier.
+
+	if (!opts->strategy && opts->default_strategy) {
+		opts->strategy = opts->default_strategy;
+		opts->default_strategy = NULL;
+	} else if (opts->strategy) {
+	/* This option will be free()d in sequencer_remove_state() */
+		opts->strategy = xstrdup(opts->strategy);
+	}
+
+I'm going offline for a week or so in a couple of days but I'll have 
+look at making a proper patch when I get back.
+
+Best Wishes
+
+Phillip
