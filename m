@@ -5,65 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14EDCC2B9F4
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 03:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C62C2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 03:21:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F23E56120D
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 03:21:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2D3F61164
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 03:21:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231370AbhFVDX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 23:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34672 "EHLO
+        id S231579AbhFVDX3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 23:23:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231294AbhFVDXS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231293AbhFVDXS (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Jun 2021 23:23:18 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E585C061574
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 20:21:02 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n23so11790897wms.2
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 20:21:02 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30649C061756
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 20:21:03 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id t11-20020a1cc30b0000b02901cec841b6a0so770972wmf.0
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 20:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QxfA76uPNJURqsKam/o3DOPrqTUDnF2+h0uTrqKQQHU=;
-        b=pDWIavwAG7vPCnxe0KomFGJJelIeeRocpkh41ZeCw9Lhn4TG0iXAC8kwFm79TWRrAC
-         vUYZkSFIO+PeLk57byKgSLJDFM4UmX9K0UfEpwsx8kHrZLrB6KuXMjtog3CbxodB0qcj
-         tdq4igiAlMdjYNbzpJoUKKmg8qYhjh769UmJEayMMbj01yO/VgYjc4YLl11ymRCpl1q2
-         c9c20Ovpv/7QteOrMZ07K6gcUg0EYR20ebMORjPkdnRhijJqEHr8KWg/nAOJR2zkJFfg
-         TZgO7yi+MVtqbcebt7jat7cfCdbeDqHX0t33jnIZWbxgyHK3XvH36p5IOf5DEiFhGGdW
-         S8UA==
+        bh=C+KUgIropPxlggylkgRFVoMA0FHpUH9vFWrim/BC6U8=;
+        b=vbT7aKwqk3ohDGw1yTPJ3vw4g9h+P20AY2lQJXd2xG7C3uGHRB/1eMnp8v2LrOdiQy
+         GSjkr37QQntDqQPcY6c4mCQ8BkgXcKR+ZK0zWdx9nuY35X1xwCW8KSjUncA/PGH2SeAp
+         z9dMRw2OUu3Qudx1fdzSLp6KrxzZIA+TMdcMFFbApgeTjXoELFN4ysqKgZauI4n41IDN
+         b8owhfatXE6SsfCBqpqnxWlMuLia8wb8KnSrjV2aExUUUUZUOy8DDHubap7eaSygcCWr
+         v4rPeTJZ4Wdr2i2XK45M4v1V1o+B+FsiiMZqt4+xFEt3YwvWG4cQeqPXwgiK9Xetk8o/
+         QVig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QxfA76uPNJURqsKam/o3DOPrqTUDnF2+h0uTrqKQQHU=;
-        b=FygALw6wuqwsAhJ1CKQkTatQYGTs/n10GB4tYkCusTeMNjzMLjbkk+ZVytTkCXt/uH
-         dgAYfAbpflw6KP9iV0Mi0Y6OOD0QcLAuYH9hr9s49jwj4ZN+vsYraB4nQX6xEeluVjGW
-         85H1w+zh+WxI1QiGN9tS3xHx25rzYBIb6VNuhUydzt7XG/wdjQn3rSz+idbhbHHW9SwY
-         SMw1HdLG9XfJDoJEZEOjLBorO6DxYKuFC59BExksDm74dXej3ZxrotKLbNwgCKvme6OE
-         FXrLBzP1DHH+RwBtN09bkvEt/NXuFgr1edlV5vQA6TaUbG3WITvBpZKt7jNfmzMf+px3
-         FwAw==
-X-Gm-Message-State: AOAM533d4RUgKQpE5qbS9Yuis1UWmCba6/89nn1r/kX/Ls57GVdYwYs0
-        89lgPZDV5QpBiiXi3BGtxgidqIJ9jLQ=
-X-Google-Smtp-Source: ABdhPJzjm0g/dGl+DCef+I0aKYFQZu8KeUXWsMpNeIdrRaB8P8e7bDb4TrzOKHZdoA1L77KMmOW3yA==
-X-Received: by 2002:a05:600c:28d:: with SMTP id 13mr1886129wmk.79.1624332061280;
+        bh=C+KUgIropPxlggylkgRFVoMA0FHpUH9vFWrim/BC6U8=;
+        b=QW7FVnTSwR/FP+ZNAsQEstkZIbi7RtVDHraupST6OEoFSQY650qxzjAxwsp/oJurwK
+         ypucuf4qLioxtQFAzIZJbEKRksAplbtTIhlaghZbsn8fOtkt2jwuZodj6CUXkMUi3drL
+         jM4jtggm/WBKjGDJlffzvPe6e2EMcgT80swDhiCebdce8cb8JW9bLaHMbStV0fovuZCr
+         eKd5p0TQ0QQ8sW2LF5bTsXEU/OBEI6T4sKe7VNQp4dyQcAXmITM0xkPCKHlRNCyZ5g19
+         vdMZqyLiH3rLKf6eL3S3VwwxTZ5ievq3dIrYG2YviYOw2RCnq2l0Sq+qRWLrnJRkJ/Cf
+         bhhg==
+X-Gm-Message-State: AOAM5312snM/X8jNGMufFC/A+9ufiIOOFAYT3KHAe1gJmB14gH+lW5Jv
+        lpilMH5QoqpcFp/OYfqVJCBQ/sE8VVs=
+X-Google-Smtp-Source: ABdhPJzjHO6fQLj1srtUnDDFqSKxlwNGLrivnltsnoSTGepzIp4L7brqv8t9H9SRtLlAPrrEH9hCTQ==
+X-Received: by 2002:a7b:c002:: with SMTP id c2mr1698288wmb.118.1624332061843;
         Mon, 21 Jun 2021 20:21:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y16sm15910403wrp.51.2021.06.21.20.21.00
+        by smtp.gmail.com with ESMTPSA id x81sm991196wmg.36.2021.06.21.20.21.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 21 Jun 2021 20:21:01 -0700 (PDT)
-Message-Id: <db7dd8b042c281afdccb650f9679e88a4e378b65.1624332055.git.gitgitgadget@gmail.com>
+Message-Id: <6b577969734e9d69dbfbc6f0d523f64454dacab8.1624332055.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.980.v4.git.1624332054.gitgitgadget@gmail.com>
 References: <pull.980.v3.git.1624086181.gitgitgadget@gmail.com>
         <pull.980.v4.git.1624332054.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Jun 2021 03:20:49 +0000
-Subject: [PATCH v4 09/14] [GSOC] ref-filter: modify the error message and
- value in get_object
+Date:   Tue, 22 Jun 2021 03:20:50 +0000
+Subject: [PATCH v4 10/14] [GSOC] cat-file: add has_object_file() check
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,49 +82,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Let get_object() return 1 and print "<oid> missing" instead
-of returning -1 and printing "missing object <oid> for <refname>"
-if oid_object_info_extended() unable to find the data corresponding
-to oid. When `cat-file --batch` use ref-filter logic later it can
-help `format_ref_array_item()` just report that the object is missing
-without letting Git exit.
+Use `has_object_file()` in `batch_one_object()` to check
+whether the input object exists. This can help us reject
+the missing oid when we let `cat-file --batch` use ref-filter
+logic later.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c                   | 4 ++--
- t/t6301-for-each-ref-errors.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ builtin/cat-file.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index f21f41df0d88..181d99c92735 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1749,8 +1749,8 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 5ebf13359e83..9fd3c04ff20b 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -428,6 +428,13 @@ static void batch_one_object(const char *obj_name,
+ 		return;
  	}
- 	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
- 				     OBJECT_INFO_LOOKUP_REPLACE))
--		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
--				       oid_to_hex(&oi->oid), ref->refname);
-+		return strbuf_addf_ret(err, 1, _("%s missing"),
-+				       oid_to_hex(&oi->oid));
- 	if (oi->info.disk_sizep && oi->disk_size < 0)
- 		BUG("Object size is less than zero.");
  
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index 40edf9dab534..3553f84a00c1 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -41,7 +41,7 @@ test_expect_success 'Missing objects are reported correctly' '
- 	r=refs/heads/missing &&
- 	echo $MISSING >.git/$r &&
- 	test_when_finished "rm -f .git/$r" &&
--	echo "fatal: missing object $MISSING for $r" >missing-err &&
-+	echo "fatal: $MISSING missing" >missing-err &&
- 	test_must_fail git for-each-ref 2>err &&
- 	test_cmp missing-err err &&
- 	(
++	if (!has_object_file(&data->oid)) {
++		printf("%s missing\n",
++		       obj_name ? obj_name : oid_to_hex(&data->oid));
++		fflush(stdout);
++		return;
++	}
++
+ 	batch_object_write(obj_name, scratch, opt, data);
+ }
+ 
 -- 
 gitgitgadget
 
