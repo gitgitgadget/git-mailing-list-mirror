@@ -2,136 +2,315 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7544C2B9F4
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B27C2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:04:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE4DF6128A
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:02:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA8D561108
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbhFVIFH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 04:05:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
+        id S230425AbhFVIHF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 04:07:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230267AbhFVIFG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 04:05:06 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB156C061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:02:50 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id x22-20020a4a62160000b0290245cf6b7feeso5157882ooc.13
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:02:50 -0700 (PDT)
+        with ESMTP id S230377AbhFVIHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 04:07:00 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5B2C061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:44 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id m18so22508349wrv.2
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tpGQE54qHTpO8NweTV/AbbymuZ4cb9qHa8SXBCm8yM8=;
-        b=eAvYNXtD69FPO0FSE5bxXXfHMD5Yl02q1WlR5RIUajLX5Oa1MONPXDvoB97mbCve5Z
-         resMUSXgstLUERE+dOF2xkvUSwZEuzWwy6dkGRPlMfPogLIch8I53C0ReCv2dGJbw1kC
-         PRJcuttexzsxbiwpUUYi+HMZMHGuZqrlUSGIVCAMPzxT/9Tm4QB21jAev0tINK96pC+N
-         1uX2ZoTY8kqLG/wJhK4HV9ZOZP4z7M7d7Qs4CNyOhLEgWCGhyVGkuvi5sSCklIrlPxE0
-         stqcXjSdR6H3pwNxl+uzcXnYEuef7s4sJPIj9ZuF71tT7dLsKJP/VdXoYI6oJdlEKR1q
-         l0Kw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FG4i05dMYNP26ttLGuULYQ8SguCK3R9X0p6/mLWQm4U=;
+        b=iqKd2ya9AS8HS0vRPEAj8LLU9Tz8Qz/ocNx8VCDHfH6gf4g8zASo9hRpKkv4dgaM1R
+         KhJGN2N6Fqs6Ml1bnMyAJZaPuoV0CVSt8cJPApgJuBvy4N7iNInuc0vEjVVg/IjCzVKy
+         2VMwLm651sBiUujfYcyAKdGvVe3DIzMomNlmLnkWJwCX7ZnPuDu49p4RstF3AooXgDt2
+         9h2j9ngJvBQi5o6RjRC/yVRexHbUc2B5/2Y/apRzJp8PZbV5Eqe2ZsQl5laFlqTGKRoJ
+         UlIE7VvlbW/iGB6FExWuXHT2iI+N5IjRi1VJTF8olFN/8scyfHK9Nc3cOIXoNTNZpnO8
+         k4TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tpGQE54qHTpO8NweTV/AbbymuZ4cb9qHa8SXBCm8yM8=;
-        b=jLgn5NCWps7SyUb6KoI7kn+f/tcNtYV/ir8oFDbubP1G/1g3v007kfzjLi3P0fAy2k
-         N/bdDRxm/bdobkh1OhnIy2KRpLoiT0cE6HKaA0u7EZBgEbxn+5tSnzg+g0ZmAomWgb8y
-         82uMFxAh9MT90NTVX10fCskdFVNlhKWDCMFyNCbT5UFxfq7YgKApRtUSuPDgegiQpAJX
-         KERxbyivxbNHQM6BDYG7Yt8Fg9u42AKe+6byabxwC5mrnorkkXHPqChbPRbTzTvkUX5K
-         buxbb+1PCj+HxEQF0C9ct/CzA+YQKBHkzDwxZZlg5yHCBTnpPrRja+fHd1bMhwqj2R+p
-         OhWA==
-X-Gm-Message-State: AOAM532cL+i13H4Zw/27SLOvFcxfC6dtTRtkC4prw4i6bNgKrv/vsuxR
-        6eFnaeLHdxfOWVUcr9sAIgS5QwvEQI0qGDH2xoQ=
-X-Google-Smtp-Source: ABdhPJxQVeoKt9jpVRTZvvFUQzLGNwN+fLPJgpb9HSHnDMxL/FMilmXbt6FZjYLxNXBu52Rkm8rjqf/vYkaBMwHH4+4=
-X-Received: by 2002:a4a:d312:: with SMTP id g18mr2150336oos.7.1624348970185;
- Tue, 22 Jun 2021 01:02:50 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=FG4i05dMYNP26ttLGuULYQ8SguCK3R9X0p6/mLWQm4U=;
+        b=IBWG7FDelskHUcv3RmGXL/8wAtwcfLfkpxrRFhn0b1qCLl68IBp/SXahnu/C/tQyGF
+         lQi4bY2urAjNafVvVk8BTp1QUvzqly2Kac+8ydZgoM6zmDTd8qHRHhukIFN4gV+TvWVW
+         JzO8yGg1QS184jCUJacBZSw4BHiMALS6cXoYYL2FHSzTY6rsMn1c0rj/4eiBE4Zr0LXG
+         QFx4HLhOsEKRZ7rJbWnwMT1aeorDFqqPhI2RdtfcjkExozsXypN0AT59zp2VTXsnC5ZG
+         9OO4sTBjlM4efqsOtDNtc8FhnKCsfWyHAbD8xq0CFsPPRz9YvpPnmAK1fj+D08+WoU/i
+         VK4A==
+X-Gm-Message-State: AOAM531+mQ8SC44Z78els5wwaYSpb5iukW/RfW30TISjMQUU4PP57kgo
+        fVcu4sn3FeN4PldEzpo8nrKupKgbAhM=
+X-Google-Smtp-Source: ABdhPJxMU1F0ZX9SH9KRE3DrrgU0Ap2n41zgOljfg2ECcz1Vvy0IJjbtELjLWMAG7C42Tl8sov7hJw==
+X-Received: by 2002:a5d:5984:: with SMTP id n4mr3189367wri.294.1624349083208;
+        Tue, 22 Jun 2021 01:04:43 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c133sm1997855wmf.0.2021.06.22.01.04.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 01:04:42 -0700 (PDT)
+Message-Id: <pull.969.v3.git.1624349082.gitgitgadget@gmail.com>
+In-Reply-To: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
+References: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Jun 2021 08:04:36 +0000
+Subject: [PATCH v3 0/5] Optimization batch 13: partial clone optimizations for merge-ort
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.969.git.1622856485.gitgitgadget@gmail.com>
- <pull.969.v2.git.1623796907.gitgitgadget@gmail.com> <317bcc7f56cb718a8be625838576f33ce788c3ef.1623796907.git.gitgitgadget@gmail.com>
- <xmqqfsxhm69b.fsf@gitster.g>
-In-Reply-To: <xmqqfsxhm69b.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Jun 2021 01:02:38 -0700
-Message-ID: <CABPp-BEEUD6UUuL4RmFfgukE=bm4CQjZ2Jy0ZmMaQVaA-Es+zQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] merge-ort: add prefetching for content merges
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
         Derrick Stolee <dstolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 10:04 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +             /* Ignore clean entries */
-> > +             if (ci->merged.clean)
-> > +                     continue;
-> > +
-> > +             /* Ignore entries that don't need a content merge */
-> > +             if (ci->match_mask || ci->filemask < 6 ||
-> > +                 !S_ISREG(ci->stages[1].mode) ||
-> > +                 !S_ISREG(ci->stages[2].mode) ||
-> > +                 oideq(&ci->stages[1].oid, &ci->stages[2].oid))
-> > +                     continue;
-> > +
-> > +             /* Also don't need content merge if base matches either side */
-> > +             if (ci->filemask == 7 &&
-> > +                 S_ISREG(ci->stages[0].mode) &&
-> > +                 (oideq(&ci->stages[0].oid, &ci->stages[1].oid) ||
-> > +                  oideq(&ci->stages[0].oid, &ci->stages[2].oid)))
-> > +                     continue;
->
-> Even though this is unlikely to change, it is unsatisfactory that we
-> reproduce the knowledge on the situations when a merge will
-> trivially resolve and when it will need to go content level.
+This series optimizes blob downloading in merges for partial clones. It can
+apply on master. It's independent of ort-perf-batch-12.
 
-I agree, it's not the nicest.
+Changes since v2:
 
-> One obvious way to solve it would be to fold this logic into the
-> main code that actually merges a list of "ci"s by making it a two
-> pass process (the first pass does essentially the same as this new
-> function, the second pass does the tree-level merge where the above
-> says "continue", fills mmfiles with the loop below, and calls into
-> ll_merge() after the loop to merge), but the logic duplication is
-> not too big and it may not be worth such a code churn.
+ * Incorporated the suggestions from Junio on patch 2.
 
-I'm worried even more about the resulting complexity than the code
-churn.  The two-pass model, which I considered, would require special
-casing so many of the branches of process_entry() that it feels like
-it'd be increasing code complexity more than introducing a function
-with a few duplicated checks.  process_entry() was already a function
-that Stolee reported as coming across as pretty complex to him in
-earlier rounds of review, but that seems to just be intrinsic based on
-the number of special cases: handling anything from entries with D/F
-conflicts, to different file types, to match_mask being precomputed,
-to recursive vs. normal cases, to modify/delete, to normalization, to
-added on one side, to deleted on both side, to three-way content
-merges.  The three-way content merges are just one of 9-ish different
-branches, and are the only one that we're prefetching for.  It just
-seems easier and cleaner overall to add these three checks to pick off
-the cases that will end up going through the three-way content merges.
-I've looked at it again a couple times over the past few days based on
-your comment, but I still can't see a way to restructure it that feels
-cleaner than what I've currently got.
+Changes since v1:
 
-Also, it may be worth noting here that if these checks fell out of
-date with process_entry() in some manner, it still would not affect
-the correctness of the code.  At worst, it'd only affect whether
-enough or too many objects are prefetched.  If too many, then some
-extra objects would be downloaded, and if too few, then we'd end up
-later fetching additional objects 1-by-1 on demand later.
+ * Incorporated the suggestions from Stolee on patch 2.
 
-So I'm going to agree with the not-worth-it portion of your final
-sentence and leave this out of the next roll.
+=== High level summary ===
+
+ 1. diffcore-rename.c has had a prefetch() to get data needed for inexact
+    renames for a while.
+ 2. find_basename_matches() only requires a small subset of what prefetch()
+    provides.
+ 3. I added a basename_prefetch() for find_basename_matches()
+
+In the worst case, the above means:
+
+ * We download the same number of objects, in 2 steps instead of 1.
+
+However, in practice, since rename detection can usually quit after
+find_basename_matches() (usually due to the irrelevant check that cannot be
+performed until after find_basename_matches()):
+
+ * We download far fewer objects, and use barely more download steps than
+   before.
+
+Adding some prefetching to merge-ort.c allows us to also drop the number of
+downloads overall.
+
+=== Modified performance measurement method ===
+
+The testcases I've been using so far to measure performance were not run in
+a partial clone, so they aren't directly usable for comparison. Further,
+partial clone performance depends on network speed which can be highly
+variable. So I want to modify one of the existing testcases slightly and
+focus on two different but more stable metrics:
+
+ 1. Number of git fetch operations during rebase
+ 2. Number of objects fetched during rebase
+
+The first of these should already be decent due to Jonathan Tan's work to
+batch fetching of missing blobs during rename detection (see commit
+7fbbcb21b1 ("diff: batch fetching of missing blobs", 2019-04-05)), so we are
+mostly looking to optimize the second but would like to also decrease the
+first if possible.
+
+The testcase we will look at will be a modification of the mega-renames
+testcase from commit 557ac0350d ("merge-ort: begin performance work;
+instrument with trace2_region_* calls", 2020-10-28). In particular, we
+change
+
+$ git clone \
+    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+
+
+to
+
+$ git clone --sparse --filter=blob:none \
+    https://github.com/github/linux
+
+
+(The change in clone URL is just to get a server that supports the filter
+predicate.)
+
+We otherwise keep the test the same (in particular, we do not add any calls
+to "git-sparse checkout {set,add}" which means that the resulting repository
+will only have 7 total blobs from files in the toplevel directory before
+starting the rebase).
+
+=== Results ===
+
+For the mega-renames testcase noted above (which rebases 35 commits across
+an upstream with ~26K renames in a partial clone), I found the following
+results for our metrics of interest:
+
+     Number of `git fetch` ops during rebase
+
+                     Before Series   After Series
+merge-recursive:          62              63
+merge-ort:                30              20
+
+
+     Number of objects fetched during rebase
+
+                     Before Series   After Series
+merge-recursive:         11423          11423
+merge-ort:               11391             63
+
+
+So, we have a significant reduction (factor of ~3 relative to
+merge-recursive) in the number of git fetch operations that have to be
+performed in a partial clone to complete the rebase, and a dramatic
+reduction (factor of ~180) in the number of objects that need to be fetched.
+
+=== Summary ===
+
+It's worth pointing out that merge-ort after the series needs only ~1.8
+blobs per commit being transplanted to complete this particular rebase.
+Essentially, this reinforces the fact the optimization work so far has taken
+rename detection from often being an overwhelmingly costly portion of a
+merge (leading many to just capitulate on it), to what I have observed in my
+experience so far as being just a minor cost for merges.
+
+Elijah Newren (5):
+  promisor-remote: output trace2 statistics for number of objects
+    fetched
+  t6421: add tests checking for excessive object downloads during merge
+  diffcore-rename: allow different missing_object_cb functions
+  diffcore-rename: use a different prefetch for basename comparisons
+  merge-ort: add prefetching for content merges
+
+ diffcore-rename.c              | 149 ++++++++---
+ merge-ort.c                    |  50 ++++
+ promisor-remote.c              |   7 +-
+ t/t6421-merge-partial-clone.sh | 440 +++++++++++++++++++++++++++++++++
+ 4 files changed, 612 insertions(+), 34 deletions(-)
+ create mode 100755 t/t6421-merge-partial-clone.sh
+
+
+base-commit: 6de569e6ac492213e81321ca35f1f1b365ba31e3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-969%2Fnewren%2Fort-perf-batch-13-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-969/newren/ort-perf-batch-13-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/969
+
+Range-diff vs v2:
+
+ 1:  04f5ebdabe14 = 1:  04f5ebdabe14 promisor-remote: output trace2 statistics for number of objects fetched
+ 2:  0f786cfb4c95 ! 2:  4796e096fdb4 t6421: add tests checking for excessive object downloads during merge
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		echo g >dir/subdir/tweaked/g &&
+      +		echo h >dir/subdir/tweaked/h &&
+      +		echo subdirectory makefile >dir/subdir/tweaked/Makefile &&
+     -+		for i in `test_seq 1 88`; do
+     ++		for i in $(test_seq 1 88)
+     ++		do
+      +			echo content $i >dir/unchanged/file_$i
+      +		done &&
+      +		git add . &&
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		cd objects-single &&
+      +
+      +		git rev-list --objects --all --missing=print |
+     -+			grep '\?' >missing-objects-before &&
+     ++			grep "^?" | sort >missing-objects-before &&
+      +
+      +		git checkout -q origin/A &&
+      +
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		test_line_count = 2 fetches &&
+      +
+      +		git rev-list --objects --all --missing=print |
+     -+			grep ^? >missing-objects-after &&
+     -+		test_cmp missing-objects-before missing-objects-after |
+     -+			grep "^[-+]?" >found-and-new-objects &&
+     -+		# We should not have any NEW missing objects
+     -+		! grep ^+ found-and-new-objects &&
+     -+		# Fetched 2+1=3 objects, so should have 3 fewer missing objects
+     -+		test_line_count = 3 found-and-new-objects
+     ++			grep "^?" | sort >missing-objects-after &&
+     ++		comm -2 -3 missing-objects-before missing-objects-after >old &&
+     ++		comm -1 -3 missing-objects-before missing-objects-after >new &&
+     ++		# No new missing objects
+     ++		test_must_be_empty new &&
+     ++		# Fetched 2 + 1 = 3 objects
+     ++		test_line_count = 3 old
+      +	)
+      +'
+      +
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		cd objects-dir &&
+      +
+      +		git rev-list --objects --all --missing=print |
+     -+			grep '\?' >missing-objects-before &&
+     ++			grep "^?" | sort >missing-objects-before &&
+      +
+      +		git checkout -q origin/A &&
+      +
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		test_line_count = 1 fetches &&
+      +
+      +		git rev-list --objects --all --missing=print |
+     -+			grep ^? >missing-objects-after &&
+     -+		test_cmp missing-objects-before missing-objects-after |
+     -+			grep "^[-+]?" >found-and-new-objects &&
+     -+		# We should not have any NEW missing objects
+     -+		! grep ^+ found-and-new-objects &&
+     -+		# Fetched 6 objects, so should have 6 fewer missing objects
+     -+		test_line_count = 6 found-and-new-objects
+     ++			grep "^?" | sort >missing-objects-after &&
+     ++		comm -2 -3 missing-objects-before missing-objects-after >old &&
+     ++		comm -1 -3 missing-objects-before missing-objects-after >new &&
+     ++		# No new missing objects
+     ++		test_must_be_empty new &&
+     ++		# Fetched 6 objects
+     ++		test_line_count = 6 old
+      +	)
+      +'
+      +
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		cd objects-many &&
+      +
+      +		git rev-list --objects --all --missing=print |
+     -+			grep '\?' >missing-objects-before &&
+     ++			grep "^?" | sort >missing-objects-before &&
+      +
+      +		git checkout -q origin/A &&
+      +
+     @@ t/t6421-merge-partial-clone.sh (new)
+      +		test_line_count = 4 fetches &&
+      +
+      +		git rev-list --objects --all --missing=print |
+     -+			grep ^? >missing-objects-after &&
+     -+		test_cmp missing-objects-before missing-objects-after |
+     -+			grep "^[-+]?" >found-and-new-objects &&
+     -+		# We should not have any NEW missing objects
+     -+		! grep ^+ found-and-new-objects &&
+     -+		# Fetched 12 + 5 + 3 + 2 == 22 objects
+     -+		test_line_count = 22 found-and-new-objects
+     ++			grep "^?" | sort >missing-objects-after &&
+     ++		comm -2 -3 missing-objects-before missing-objects-after >old &&
+     ++		comm -1 -3 missing-objects-before missing-objects-after >new &&
+     ++		# No new missing objects
+     ++		test_must_be_empty new &&
+     ++		# Fetched 12 + 5 + 3 + 2 = 22 objects
+     ++		test_line_count = 22 old
+      +	)
+      +'
+      +
+ 3:  9f2a8ed8d61f = 3:  7ed0162cdb4e diffcore-rename: allow different missing_object_cb functions
+ 4:  f753f8035564 = 4:  c9b55241d831 diffcore-rename: use a different prefetch for basename comparisons
+ 5:  317bcc7f56cb = 5:  69011cfe9fae merge-ort: add prefetching for content merges
+
+-- 
+gitgitgadget
