@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 915A7C2B9F4
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 16:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59335C2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 16:08:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72890610C7
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 16:06:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40BFA610C7
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 16:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230076AbhFVQI7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 12:08:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36038 "EHLO cloud.peff.net"
+        id S229826AbhFVQK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 12:10:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36056 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230064AbhFVQI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 12:08:58 -0400
-Received: (qmail 5838 invoked by uid 109); 22 Jun 2021 16:06:42 -0000
+        id S229674AbhFVQK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 12:10:57 -0400
+Received: (qmail 5870 invoked by uid 109); 22 Jun 2021 16:08:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Jun 2021 16:06:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Jun 2021 16:08:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28334 invoked by uid 111); 22 Jun 2021 16:06:42 -0000
+Received: (qmail 28403 invoked by uid 111); 22 Jun 2021 16:08:41 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Jun 2021 12:06:42 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Jun 2021 12:08:40 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 22 Jun 2021 12:06:41 -0400
+Date:   Tue, 22 Jun 2021 12:08:40 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 4/5] object.h: add lookup_object_by_type() function
-Message-ID: <YNIKkY9dBo+6pSwi@coredump.intra.peff.net>
+Subject: [PATCH 5/5] load_ref_decorations(): avoid parsing non-tag objects
+Message-ID: <YNILCDz3LpHX7OX0@coredump.intra.peff.net>
 References: <YNIJw/8p0F3cPfzd@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,112 +42,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some cases it's useful for efficiency reasons to get the type of an
-object before deciding whether to parse it, but we still want an object
-struct. E.g., in reachable.c, bitmaps give us the type, but we just want
-to mark flags on each object. Likewise, we may loop over every object
-and only parse tags in order to peel them; checking the type first lets
-us avoid parsing the non-tags.
+When we load the ref decorations, we parse the object pointed to by each
+ref in order to get a "struct object". This is unnecessarily expensive;
+we really only need the object struct, and don't even look at the parsed
+contents. The exception is tags, which we do need to peel.
 
-But our lookup_blob(), etc, functions make getting an object struct
-annoying: we have to call the right function for every type. And we
-cannot just use the generic lookup_object(), because it only returns an
-already-seen object; it won't allocate a new object struct.
+We can improve this by looking up the object type first (which is much
+cheaper), and skipping the parse entirely for non-tags. This increases
+the work slightly for annotated tags (which now do a type lookup _and_ a
+parse), but decreases it a lot for other types. On balance, this seems
+to be a good tradeoff.
 
-Let's provide a function that dispatches to the correct lookup_*
-function based on a run-time type. In fact, reachable.c already has such
-a helper, so we'll just make that public.
+In my git.git clone, with ~2k refs, most of which are branches, the time
+to run "git log -1 --decorate" drops from 34ms to 11ms. Even on my
+linux.git clone, which contains mostly tags and only a handful of
+branches, the time drops from 30ms to 19ms. And on a more extreme
+real-world case with ~220k refs, mostly non-tags, the time drops from
+2.6s to 650ms.
 
-I did change the return type from "void *" to "struct object *". While
-the former is a clever way to avoid casting inside the function, it's
-less safe and less informative to people reading the function
-declaration.
+That command is a lop-sided example, of course, because it does as
+little non-loading work as possible. But it does show the absolute time
+improvement. Even in something like a full "git log --decorate" on that
+extreme repo, we'd still be saving 2s of CPU time.
 
-The next commit will add a new caller.
+Ideally we could push this even further, and avoid parsing even tags, by
+relying on the packed-refs "peel" optimization (which we could do by
+calling peel_iterated_oid() instead of peeling manually). But we can't
+do that here. The packed-refs file only stores the bottom-layer of the
+peel (so in a "tag->tag->commit" chain, it stores only the commit as the
+peel result).  But the decoration code wants to peel the layers
+individually, annotating the middle layers of the chain.
+
+If the packed-refs file ever learns to store all of the peeled layers,
+then we could switch to it. Or even if it stored a flag to indicate the
+peel was not multi-layer (because most of them aren't), then we could
+use it most of the time and fall back to a manual peel for the rare
+cases.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- object.c    | 18 ++++++++++++++++++
- object.h    |  7 +++++++
- reachable.c | 18 ------------------
- 3 files changed, 25 insertions(+), 18 deletions(-)
+ log-tree.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/object.c b/object.c
-index 14188453c5..07fcf23d7b 100644
---- a/object.c
-+++ b/object.c
-@@ -185,6 +185,24 @@ struct object *lookup_unknown_object(struct repository *r, const struct object_i
- 	return obj;
- }
- 
-+struct object *lookup_object_by_type(struct repository *r,
-+			    const struct object_id *oid,
-+			    enum object_type type)
-+{
-+	switch (type) {
-+	case OBJ_COMMIT:
-+		return (struct object *)lookup_commit(r, oid);
-+	case OBJ_TREE:
-+		return (struct object *)lookup_tree(r, oid);
-+	case OBJ_TAG:
-+		return (struct object *)lookup_tag(r, oid);
-+	case OBJ_BLOB:
-+		return (struct object *)lookup_blob(r, oid);
-+	default:
-+		die("BUG: unknown object type %d", type);
-+	}
-+}
-+
- struct object *parse_object_buffer(struct repository *r, const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p)
+diff --git a/log-tree.c b/log-tree.c
+index 7b823786c2..8b700e9c14 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -134,6 +134,7 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 			      int flags, void *cb_data)
  {
  	struct object *obj;
-diff --git a/object.h b/object.h
-index eb7e481c39..3b38c9cc98 100644
---- a/object.h
-+++ b/object.h
-@@ -158,6 +158,13 @@ struct object *parse_object_buffer(struct repository *r, const struct object_id
-  */
- struct object *lookup_unknown_object(struct repository *r, const struct object_id *oid);
++	enum object_type objtype;
+ 	enum decoration_type type = DECORATION_NONE;
+ 	struct decoration_filter *filter = (struct decoration_filter *)cb_data;
  
-+/*
-+ * Dispatch to the appropriate lookup_blob(), lookup_commit(), etc, based on
-+ * "type".
-+ */
-+struct object *lookup_object_by_type(struct repository *r, const struct object_id *oid,
-+				     enum object_type type);
-+
- struct object_list *object_list_insert(struct object *item,
- 				       struct object_list **list_p);
+@@ -155,9 +156,10 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 		return 0;
+ 	}
  
-diff --git a/reachable.c b/reachable.c
-index c59847257a..84e3d0d75e 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -159,24 +159,6 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
- 				      FOR_EACH_OBJECT_LOCAL_ONLY);
- }
+-	obj = parse_object(the_repository, oid);
+-	if (!obj)
++	objtype = oid_object_info(the_repository, oid, NULL);
++	if (type < 0)
+ 		return 0;
++	obj = lookup_object_by_type(the_repository, oid, objtype);
  
--static void *lookup_object_by_type(struct repository *r,
--				   const struct object_id *oid,
--				   enum object_type type)
--{
--	switch (type) {
--	case OBJ_COMMIT:
--		return lookup_commit(r, oid);
--	case OBJ_TREE:
--		return lookup_tree(r, oid);
--	case OBJ_TAG:
--		return lookup_tag(r, oid);
--	case OBJ_BLOB:
--		return lookup_blob(r, oid);
--	default:
--		die("BUG: unknown object type %d", type);
--	}
--}
--
- static int mark_object_seen(const struct object_id *oid,
- 			     enum object_type type,
- 			     int exclude,
+ 	if (starts_with(refname, "refs/heads/"))
+ 		type = DECORATION_REF_LOCAL;
 -- 
 2.32.0.352.gff02c21e72
-
