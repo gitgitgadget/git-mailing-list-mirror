@@ -2,171 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E22DEC49EA2
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 10:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9666C2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 14:13:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2A86610C7
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 10:48:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEAEC61042
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 14:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbhFVKuV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 06:50:21 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:59311 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229995AbhFVKuU (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 22 Jun 2021 06:50:20 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 28A975C012C;
-        Tue, 22 Jun 2021 06:48:04 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Tue, 22 Jun 2021 06:48:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=OSrCdh/67RFh0luUFt712H12hQS
-        5Jl7BXeLMgGkVZdc=; b=NILa571PqK+dZ0XuVGOpDhwoZicMIkkcg6hEew+I0sE
-        IbEiNMQcy0XLYgugr/oMNPJ/WNQTpgHhajsNx99dE8GyRzlNtpSagoWzjG+z3L14
-        ctjlxkIOskcLIF0GGspP9IOlDlkmsnbsJ+fs3673Gi+QkzBBQZukbIH+/oyPKvbZ
-        3vKVV/YKeOQ3pAzFSw1dV8glmcVkqPsHGi32Zn5UPa+TyhvDRwTlugRejR/2KZ8L
-        Bv+nrofVuck837QgF6PZLnb8twZu0jN/cuUjQsGMGRfBjwN9kqKRjgrFjpcPyHzp
-        h9602+8382SsIWkm3k/0mIs1sa9FpCpb9uBYlYf3tmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=OSrCdh
-        /67RFh0luUFt712H12hQS5Jl7BXeLMgGkVZdc=; b=OySgzw2FB+4ZlpM3REn8g4
-        MjEZTTzDPpg4aTvusqFrItiVrWSZzqsCOxYqo3UcEw9p4ehOJt0GJB1oAiZKqAoo
-        Fc0B1vndsUTW59j1ioO0yHDmaL+BylJlCdN4j00RAJOVECUQDlYiRi3Th+Q5RrFQ
-        IvGB6R8LUgmEO8xgm/bEdHU8Rr9jln9q+LPPCNuTaee+ZQXXxGpBhq/9zWoNSwL+
-        RYSZXYAlPWKLPNW5eIacUrTZvjHyriwj7oNcYBnlMxyabAfrqlNtyS8WFa+Y9JXM
-        gwJHk92R4qnLhlRq5p4JRbL2Bnyv/c3YBcZQe1COXqPp3sKmd7x03PS488353nbg
-        ==
-X-ME-Sender: <xms:47_RYFRXTmZa8g_AAuDiedMXLXenDpZni1Q49_Ux0WC-3gwSI4Y8Tw>
-    <xme:47_RYOzCNpMbdgB9Su6hs8Jx7Th1-Ej6yBBPoCSNNogCqBEr_nbnXCyeYSkieMRa_
-    j8C8AuzP4ydKUEL6w>
-X-ME-Received: <xmr:47_RYK1eYTLJQPRZ3qr658z1SOpmRLCzuMFrQaNRliHpy_KnM6JzcVeOoFT6EA-YlWqyXogX4SUHlxomoyGPss92F5DMeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeeguddgfedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:47_RYNAp5IAIM2kDSTDnwmdNnHM1P5kkFW9nyD7HjaUfBy1r6TGv0g>
-    <xmx:47_RYOhxugZZ-3P9GF54q4tKCH6YZUWPw15_FqVcWsXIpBMw2oq6fQ>
-    <xmx:47_RYBqMfxItSIQsY73PWTxrnEjBbyaaUsG1LdhV69sdhFk0ahy-uA>
-    <xmx:5L_RYCafyKlldt1NBExoVk3YPxGKiQpSDJ3HB-qfMHUG3t9Y30uhPw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jun 2021 06:48:03 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 9dc496aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 22 Jun 2021 10:47:58 +0000 (UTC)
-Date:   Tue, 22 Jun 2021 12:47:57 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] bitmaps: don't recurse into trees already in the bitmap
-Message-ID: <YNG/05+fmA0YPKj7@ncase>
-References: <YMcExxF7DI6k+sZ+@coredump.intra.peff.net>
- <YMdGGL6v8LrbcAJP@coredump.intra.peff.net>
- <471cb9be-bb72-6a37-ede8-f9421d9d3ebe@gmail.com>
- <YMnvCI/jksyn2flD@tanuki>
- <YMyYz6Tavj5l6S8n@coredump.intra.peff.net>
- <YMyhCTaHmm6oNFpB@xps>
+        id S231599AbhFVOPd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 10:15:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41860 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231478AbhFVOPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 10:15:32 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 868B2C061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 07:13:16 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id w13so6297995wmc.3
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 07:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+hNmUW+lZXWst6w84tttJNSU4pn2ZaRYphemXShyAdk=;
+        b=k3LaNi/TTk5Gcee9Fkk0j4NrfZPqEYRzKmgOHiDYP9mfQajhkzbDJjFrW0Cz0S96dg
+         vs4E5L0tb6fF2nNnHgRGRr4OSLmNzryp3iPzqWBIlY/ht19bbuUHsDLKztvOe6ElSLm9
+         g7LGFwJel8lIUUplALHSW2mRPQfgxrESNQFXqLIWUljpSyRtUZ0PSlskjulyTqK/XjXk
+         +/TJrnMpTf8c5dN0SHmuC6X2u4bPfUtSzbWrx7MFngs8caXsMQImxA8mU+AlTCBr99BO
+         N/lP1Fl/smcvT4pD6KigfhqujuL2trcebLwCXEAPTiylljiO45gcPXiUDVZ07nBXnvpI
+         QL3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+hNmUW+lZXWst6w84tttJNSU4pn2ZaRYphemXShyAdk=;
+        b=Y9E3ibXlRtD4nImMeyVvY3hb/RkV6ViKGu5S1q/Ddr8Xt4KInMh4RG2mz4opJYorsv
+         Xcq3GF7ysa1hAdkIoU2hf/U4mLybSZKEu1JTepPoqqvQQ7WmBf4/tAf7ppsE5dhk58DY
+         XaQnY0hIYy0/EfjjGKmtJTE6w0ezVcd+FoEw01iP8ctfLpevC91CsxPoCI+jbGnct7/X
+         Kq5D9DdERjhMF3CVTwmTKYSJdTg1zwq0wm+jfiCZ5SvHRTzQAnX9DSx4uH/5CvhFl8HN
+         bWkBV5LtQZDcqqBlxs77blblHnSd2eRI1tgcSGrFyncFdIs/U4kok+UcrDesP42vH4H+
+         SKjg==
+X-Gm-Message-State: AOAM531jLB7upvhfnMf1tLVKZPdYKhSG4jtpUf+t2d64Xw3IkiBElNbZ
+        lYBTm1yjwSVddq6QWbqP4WwIxV4yTkpeaQ==
+X-Google-Smtp-Source: ABdhPJwvFJs+/Norvf8imlhlHpywQ7ciMVWcHaPD/zsF6/aq4X14BUxAvdeyRUpWAwyoKGe5MapruQ==
+X-Received: by 2002:a7b:c30f:: with SMTP id k15mr4823352wmj.128.1624371194877;
+        Tue, 22 Jun 2021 07:13:14 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id g15sm3148453wri.75.2021.06.22.07.13.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 07:13:14 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
+Date:   Tue, 22 Jun 2021 16:13:13 +0200
+Message-Id: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="qfxAaLTyxNQ1pRWz"
-Content-Disposition: inline
-In-Reply-To: <YMyhCTaHmm6oNFpB@xps>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Use the GNU make ".DELETE_ON_ERROR" flag in our main Makefile, as we
+already do in the Documentation/Makefile since db10fc6c09f (doc:
+simplify Makefile using .DELETE_ON_ERROR, 2021-05-21).
 
---qfxAaLTyxNQ1pRWz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Now if a command to make X fails X will be removed, the default
+behavior of GNU make is to only do so if "make" itself is interrupted
+with a signal.
 
-On Fri, Jun 18, 2021 at 03:35:05PM +0200, Patrick Steinhardt wrote:
-> On Fri, Jun 18, 2021 at 08:59:59AM -0400, Jeff King wrote:
-> > On Wed, Jun 16, 2021 at 02:31:04PM +0200, Patrick Steinhardt wrote:
-> >=20
-> > > > These many-refs scenarios make sense as something that is difficult=
- to
-> > > > verify using a single fork of an open-source project, but is common=
- in
-> > > > many closed-source projects that do not use forking to reduce the r=
-ef
-> > > > count per repo.
-> > >=20
-> > > Agreed. What I typically do to emulate this is to use some version of
-> > > following command to create refs for "$n" commits.
-> > >=20
-> > >     git log --all --format=3D"tformat:create refs/commit/%h %H" |
-> > >         shuf | head -n "$n" | git update-ref --stdin
-> > >=20
-> > > It's obviously not ideal given that resulting refs are distributed at
-> > > random. But combined with a sufficiently large repo, it's still helped
-> > > me at times to reproduce adverse performance at times.
-> >=20
-> > Yeah, I've done something similar. But I'd caution people into reading
-> > too much into performance tests from something like that. What I've
-> > found over the years is that traversal and bitmap performance can be
-> > somewhat sensitive to tree shape and bitmap placement (which in turn is
-> > often influenced by ref placement, if you are using delta islands or the
-> > recently added pack.preferBitmapTips).
-> >=20
-> > More than once I've spent many head-scratching hours trying to determine
-> > why some real-world repo performs better or worse than expected. :)
->=20
-> I couldn't agree more. I've also had my fair share of weird performance
-> characteristics in completely unexpected ways. Unfortunately, it has
-> made me become quite cautious about bitmaps given that they've already
-> caused their fair share of perfomance regressions.
->=20
-> But your work here actually encourages me to give it another try soonish
-> and see what kind of repo shapes make them explode this time.
->=20
-> Patrick
+E.g. if we now intentionally break one of the rules with:
 
-Today I've been experimenting with the connectivity check of
-git-receive-pack(1) once again to see whether I'm able to get a
-performance improvement if the git-rev-list(1) command spawned as part
-of the connectivity check uses `--use-bitmap-index`.
+    -       mv $@+ $@
+    +       mv $@+ $@ && \
+    +       false
 
-Turns out the answer is "no": it has exactly the same performance
-characteristics when pushing into a bitmapped repository (linux.git)
-compared to the version not using a bitmap index, except for once case
-where it performs 70x worse: force-pushing "master~10:master" into a
-bitmapped repo takes 11s instead of 0.15s with bitmaps enabled.
+We'll get output like:
 
-Just leaving this here as a note for anybody (or myself) to pick up at a
-later point.
+    $ make git
+        CC git.o
+        LINK git
+    make: *** [Makefile:2179: git] Error 1
+    make: *** Deleting file 'git'
+    $ file git
+    git: cannot open `git' (No such file or directory)
 
-Patrick
+Before this change we'd leave the file in place in under this
+scenario.
 
---qfxAaLTyxNQ1pRWz
-Content-Type: application/pgp-signature; name="signature.asc"
+As in db10fc6c09f this allows us to remove patterns of removing
+leftover $@ files at the start of rules, since previous failing runs
+of the Makefile won't have left those littered around anymore.
 
------BEGIN PGP SIGNATURE-----
+I'm not as confident that we should be replacing the "mv $@+ $@"
+pattern entirely, since that means that external programs or one of
+our other Makefiles might race and get partial content.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmDRv9wACgkQVbJhu7ck
-PpQAXRAAoyMWslu8J//KsBAyaSDTVvcnsEx0O+v4UBH/ui5XkKmXbGfxoK2b5uCN
-C5GHupjxo6cDm9H0MKCmzBANpAy3Z01zAcqWnL4cXwk/HfCezvZP1uq3P8Vd4Uea
-rC6vibgSRQ2IruSsMqY3c5+Vc3CqcH5q6Osj1yFikt4u68dnr8UkWts6/ZoUZVtP
-VouOGvcsX6uEKhlfaZaUO6DHtv+YJjimG2/r/SBHF5CBO9BqjeLz5VyVKjsAhW9Z
-zbgsWBT+2lASSSpdI4Ym5/eSeRUAmoFLJaU3pVCPs7dnnV9aTZx1MJBn1zbJaN/O
-uZlqLSy4UMwpPThT8OEFKVxr6UiOPA2EsmOlhDcicFjk5+V0sXMJaZpoUElvFff+
-HG5F5vFu2qTriwX6wpMq5Htaguhijh9XJMIePMqcDzJdSmsIkEG7udEALNC/TSlM
-qHt1amgpnyflUGxctMgD7vGBz6GiISdVOxupQquqGBVneLtkFJFv9gZU3Jg0qDw3
-UDFErhW7gU6uLYFEa1bYfGjXpSXGOvLEBSZ5uzi3Vkof4v9MMUoA5M8zR6DpuLvO
-3DQSu7wytxJBLoigkgoS82aXt7jZuAOWWdtphFYFuVhucec9f9VuiR/UDGO2dCVg
-CJfcm2cIS/la1l2lURYZzKVk/YrVyTdeGeGc6jicOnwsEY8qT7Y=
-=cpNu
------END PGP SIGNATURE-----
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
---qfxAaLTyxNQ1pRWz--
+Extracted from an earlier series of mine[1] which was tangled up with
+wider use of the "stuff >$@+ && mv $@+ $@" pattern, which caused that
+series not to go forward.
+
+1. https://lore.kernel.org/git/cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com/
+
+ Makefile | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index c3565fc0f8f..20a0fe6e88e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2160,6 +2160,16 @@ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ strip: $(PROGRAMS) git$X
+ 	$(STRIP) $(STRIP_OPTS) $^
+ 
++### Flags affecting all rules
++
++# A GNU make extension since gmake 3.72 (released in late 1994) to
++# remove the target of rules if commands in those rules fail. The
++# default is to only do that if make itself receives a signal. Affects
++# all targets, see:
++#
++#    info make --index-search=.DELETE_ON_ERROR
++.DELETE_ON_ERROR:
++
+ ### Target-specific flags and dependencies
+ 
+ # The generic compilation pattern rule and automatically
+@@ -2243,7 +2253,6 @@ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+ 	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV):\
+ 	$(perllibdir_SQ)
+ define cmd_munge_script
+-$(RM) $@ $@+ && \
+ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
+     -e 's|@@DIFF@@|$(DIFF_SQ)|' \
+@@ -2313,7 +2322,7 @@ endif
+ PERL_DEFINES += $(gitexecdir) $(perllibdir) $(localedir)
+ 
+ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+-	$(QUIET_GEN)$(RM) $@ $@+ && \
++	$(QUIET_GEN) \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e '	r GIT-PERL-HEADER' \
+@@ -2333,7 +2342,7 @@ GIT-PERL-DEFINES: FORCE
+ 	    fi
+ 
+ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
+-	$(QUIET_GEN)$(RM) $@ && \
++	$(QUIET_GEN) \
+ 	INSTLIBDIR='$(perllibdir_SQ)' && \
+ 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
+ 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
+@@ -2359,7 +2368,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
+ 	mv $@+ $@
+ else # NO_PERL
+ $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
+-	$(QUIET_GEN)$(RM) $@ $@+ && \
++	$(QUIET_GEN) \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
+ 	    unimplemented.sh >$@+ && \
+@@ -2373,14 +2382,14 @@ $(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
+ ifndef NO_PYTHON
+ $(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
+ $(SCRIPT_PYTHON_GEN): % : %.py
+-	$(QUIET_GEN)$(RM) $@ $@+ && \
++	$(QUIET_GEN) \
+ 	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
+ 	    $< >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ else # NO_PYTHON
+ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+-	$(QUIET_GEN)$(RM) $@ $@+ && \
++	$(QUIET_GEN) \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	    -e 's|@@REASON@@|NO_PYTHON=$(NO_PYTHON)|g' \
+ 	    unimplemented.sh >$@+ && \
+@@ -2388,8 +2397,7 @@ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+ 	mv $@+ $@
+ endif # NO_PYTHON
+ 
+-CONFIGURE_RECIPE = $(RM) configure configure.ac+ && \
+-		   sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 			configure.ac >configure.ac+ && \
+ 		   autoconf -o configure configure.ac+ && \
+ 		   $(RM) configure.ac+
+@@ -2514,7 +2522,6 @@ endif
+ ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+ all:: compile_commands.json
+ compile_commands.json:
+-	@$(RM) $@
+ 	$(QUIET_GEN)sed -e '1s/^/[/' -e '$$s/,$$/]/' $(compdb_dir)/*.o.json > $@+
+ 	@if test -s $@+; then mv $@+ $@; else $(RM) $@+; fi
+ endif
+-- 
+2.32.0.599.g3967b4fa4ac
+
