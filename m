@@ -4,100 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEFDFC2B9F4
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 10:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A91DBC48BDF
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 10:47:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D92B0613AB
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 10:46:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8925C60FF1
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 10:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbhFVKtM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 06:49:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50150 "EHLO
+        id S229928AbhFVKtP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 06:49:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbhFVKtH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 06:49:07 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91078C061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 03:46:51 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e22so19515596wrc.1
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 03:46:51 -0700 (PDT)
+        with ESMTP id S229936AbhFVKtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 06:49:08 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EEC9C061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 03:46:53 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id a13so1281305wrf.10
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 03:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=gwZZtTJ8LF9hNByKxTZvcSS6nLM7hW9gDCmH8F0tUIo=;
-        b=jMSpBgIWK1TcwhBOa0sd5sHC6xAl+g9vm/ymxCOW5xkSkLJdDmeBK19WRWcS66JrkI
-         3/KCUMdaezzrsyMCI0PH3SCufbNcToLz/CFQ/bMmjemO9n2/h9rc1dp/RSHtz6+tJ3ht
-         aweqHCHrydAXni7mZmIoEDvJcOb13YzHaz1/y0popYoX/q+lzSmfdzj5l/XukUdUGn0h
-         KIC3ydP7gdZnNuAcftt7dhLqNbqMJoleJgZzGT+ywlnh2A1ZKqecnRIDG0mRVmOaam2r
-         Xu8LoShu+IpawF5hd9I0hkZhT6CV7jeJ/tI+O7GWzdRw27WPw6pFbwyjP/ZZja1Gi8/q
-         n5Fg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=vIeIF0qHxLNDgPxorIEshxmN1AEe+RnTQl5xNdj1ASs=;
+        b=fF4NkPvuhHUdRcj6GjeRa4F3Z1n9DpDXA0jRIuh7LNG4nElkiowp58RyBrMGgi5sGf
+         KVaCaM+HDsH5VL9KS1kWXAY/UuUvxqJ6tcVCkxekiYLtSa1u6jDUQd1xw6o4/6blcp6a
+         KSXHQ4wDHrVeZcuiCQ6nOte1qaOP57Adg2Tl2jLFvfvgW3a4Dh2JqKlQpjXTSJ2l0ACW
+         DnQzIyoXiWtLcqcRJBmDDyjZg4fax3S5PcJoRhThxIm0WBb02yVYbKHp9+0HO2MudhtU
+         +ge40RO5lxGv+xV6i2/zs0Aa48mrm5jsI9KXDLI4MiuwzlljOvjj/7uG3dRGe9ve8sQ2
+         7MCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gwZZtTJ8LF9hNByKxTZvcSS6nLM7hW9gDCmH8F0tUIo=;
-        b=gXSQluIib5GsmViGT3d3CcUen7QwdaeJDBJ9hq5zVUGcArPYnL3fBCvWJu89M9vkin
-         HgheMNPzdeNPcdegMgAsQ+HGyVdLKq/YS4rZl48P1N/XxqPV0czkj8tb2QOI0vOm+U0F
-         xlpjQumvw2fua9WLagRbihhh6TiCQcb4+B5nzdPofGaeO4RxIkjjJK7yTKl9n6xmGPHf
-         xJEYJrSqE9RWipl0I3Grov21sqb7NzZ23pqaoWRGr8HuZBmdT+cwYpW6L0krL3gkByh+
-         zknfK5D4lKHckA+SMwv6ysiTUIjPj5lwISLwlpX2Mr+VllUMgp6BLWJ+NxL/RYpt/ntv
-         CQhw==
-X-Gm-Message-State: AOAM533DY+eboZrlad+PG8/00ambW434AfNaCHble5A0N/tyeDVL/ryC
-        p/dhwSQqYy5CUlSGjD8UeI5Jxuu7OaU=
-X-Google-Smtp-Source: ABdhPJyjdZ06XIeaZiS1ViiEMnRBmMj0gHo0UFtaYdYucup4NOAc7z1uOMvfmlnZVe0pKqqmVOWR8g==
-X-Received: by 2002:a5d:6208:: with SMTP id y8mr3842878wru.386.1624358810170;
-        Tue, 22 Jun 2021 03:46:50 -0700 (PDT)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=vIeIF0qHxLNDgPxorIEshxmN1AEe+RnTQl5xNdj1ASs=;
+        b=W9O2S0oegky9RO2uhf2iWdb3veLOfdGtvS+2jAKwipqfmClTTvMrmoBGYZk//C1VnA
+         0Fq+JSZoxgXBvWHsL7bQSMuAJEyjzHT5fQScs+X9/5VvCjTmLabZ0xyFKFQTDMj3Xyxw
+         k2U+BSgg5dOrO82sqT/rCcSco6JYzHTMotLmsMkrsgf3HuvQCJyQyDSuFkWUrfzwvg2S
+         pvIzgDwcvR80VJs5+jYvI9faRXOUQi7TeMQnJ+yCoZ0GCMPUsXCDohdB/pKUQS55lRCs
+         TR+UWF5tnD84NnLP/5tvgXNctznQHP3hDpxJqX/zGQ9Mc7yYzYqMSJbUY0sF7nNgBG7G
+         JA0w==
+X-Gm-Message-State: AOAM532ctrfBlbxSMXX3vEiMlE8twU8OoVCzWQFiXv5+H0WkAOHrKvmT
+        +4kUr6zN0UdYAbQA+HviMlJL0+iCEjQ=
+X-Google-Smtp-Source: ABdhPJzRCRw2VlZtbMaiUxScG38wBvuL3kSqGohre/vHykwPsQuI1c7QsKE+QhTMc/WoHy5VfJUueQ==
+X-Received: by 2002:adf:d0c4:: with SMTP id z4mr3910539wrh.309.1624358811760;
+        Tue, 22 Jun 2021 03:46:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm20360706wrv.37.2021.06.22.03.46.49
+        by smtp.gmail.com with ESMTPSA id c12sm2304796wmr.27.2021.06.22.03.46.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 03:46:49 -0700 (PDT)
-Message-Id: <pull.984.git.1624358809.gitgitgadget@gmail.com>
+        Tue, 22 Jun 2021 03:46:51 -0700 (PDT)
+Message-Id: <01aa77d9acbbdbaf90937e14f276e981e77568c3.1624358809.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.984.git.1624358809.gitgitgadget@gmail.com>
+References: <pull.984.git.1624358809.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Jun 2021 10:46:45 +0000
-Subject: [PATCH 0/3] Move Git for Windows' system config to its top-level directory's etc/
+Date:   Tue, 22 Jun 2021 10:46:48 +0000
+Subject: [PATCH 3/3] config: normalize the path of the system gitconfig
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Implementation details let Git for Windows' git.exe live in /mingw64/bin
-(that is the pseudo-Unix path, of course, the real Windows path will be
-prefixed by the actual installation location). This resulted in the awkward
-location of the system config in C:\Program Files\Git\mingw64\etc\gitconfig,
-and that is what Git for Windows v2.x used for a few years.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-A much more natural location, however, is the same path without that mingw64
-infix. Therefore, the Git for Windows project switched (back) to that
-location for a while now.
+Git for Windows is compiled with a runtime prefix, and that runtime
+prefix is typically `C:/Program Files/Git/mingw64`. As we want the
+system gitconfig to live in the sibling directory `etc`, we define the
+relative path as `../etc/gitconfig`.
 
-It is time to bring that change into core Git.
+However, as reported by Philip Oakley, the output of `git config
+--show-origin --system -l` looks rather ugly, as it shows the path as
+`file:C:/Program Files/Git/mingw64/../etc/gitconfig`, i.e. with the
+`mingw64/../` part.
 
-Dennis Ameling (1):
-  cmake(windows): set correct path to the system Git config
+By normalizing the path, we get a prettier path.
 
-Johannes Schindelin (2):
-  mingw: move Git for Windows' system config where users expect it
-  config: normalize the path of the system gitconfig
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ config.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
- config.c                            |  7 ++++---
- config.mak.uname                    | 10 ++++++++++
- contrib/buildsystems/CMakeLists.txt | 11 +++++++----
- 3 files changed, 21 insertions(+), 7 deletions(-)
-
-
-base-commit: 670b81a890388c60b7032a4f5b879f2ece8c4558
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-984%2Fdscho%2Fmove-gfw-system-config-to-top-level-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-984/dscho/move-gfw-system-config-to-top-level-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/984
+diff --git a/config.c b/config.c
+index f9c400ad3062..3cd10aeb9028 100644
+--- a/config.c
++++ b/config.c
+@@ -1833,9 +1833,10 @@ static int git_config_from_blob_ref(config_fn_t fn,
+ char *git_system_config(void)
+ {
+ 	char *system_config = xstrdup_or_null(getenv("GIT_CONFIG_SYSTEM"));
+-	if (system_config)
+-		return system_config;
+-	return system_path(ETC_GITCONFIG);
++	if (!system_config)
++		system_config = system_path(ETC_GITCONFIG);
++	normalize_path_copy(system_config, system_config);
++	return system_config;
+ }
+ 
+ void git_global_config(char **user_out, char **xdg_out)
 -- 
 gitgitgadget
