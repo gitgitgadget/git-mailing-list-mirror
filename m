@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE365C48BDF
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF368C2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:05:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C639461351
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:04:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 939996128C
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 08:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230384AbhFVIHL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 04:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41474 "EHLO
+        id S230380AbhFVIHT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 04:07:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230377AbhFVIHG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230436AbhFVIHG (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 22 Jun 2021 04:07:06 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E65BEC0617A6
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:46 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id j2so11950232wrs.12
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:46 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5D8C0617A8
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:47 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id y7so22403563wrh.7
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 01:04:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XINKupP9EZI+poFCqnlKAsUbuPBBJzJF9ke1oIyiHBk=;
-        b=DUpYHHMWy4Nwzic71EXxxCkdOcvJflgpeNfqLRkvDkH4JJcw6ITFApyok3lflATXPe
-         4kA+yd9mNGUXsUKHS+GpgXt+7pY2ViYDLSpay/62PlNSwHvTrbCsXpGJjLpaA2l//xuu
-         iHb4xaY97AdFOgpUnJA85V9LI1Mx4UdDR6ppBQF18Dt4bQiu7rR0cjW2zR2NgKOWlmpq
-         +knJtrBALaYmv/9tnWr9T4qU1KZyY8Ps9ZMGqMyyQYZJU0kSHDmDGdzBaz0Hqiyxscj6
-         uvhFj0mjYfrQdgnwfMXMgJrFB1JboqRgkR0kVwtYR0VPiSfpH+wAijIOCeyDu2eA/FCE
-         4L/A==
+        bh=cPouRtX0ywbuQRmrWfNTHyz7mMmKhchMKzvO6gSIOns=;
+        b=UiYq37/sEafzLwTa1qfGpa9Amad05KrKUe1iK86lcxoi1bMWeLmJkJjVCaMl3s1gkl
+         2JrtKiEnDxhS7yuDgiFhDbrPgoPq/mf+49xFHCIwfn7BTVyRYcm7YJ/vOk8GqBf8zASd
+         qYhHz/m8/n8n0CNZyHyESMQoIUOra70qwQ3L6iT2FsnWV0swied5vYgZnWMlY/0RdZyx
+         QkTjxYa8o9gO+Va2CzRiyw0NvguIztyviVykUNUj6M9fsUcglR513xIeBnJZB7NlMc2N
+         v5G8sEHOCHOr7sbveWeGdyzqaym5B/GG/zzz++BGlA4gmQXJK8I6yRFtxGN7O8nC7qN1
+         emkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XINKupP9EZI+poFCqnlKAsUbuPBBJzJF9ke1oIyiHBk=;
-        b=o7b9dZ+CzvT03bXwpRZ6hHJ2p9akW8lvmEsbgTduyJDHJ7LXT5ClzycD3tjCqKfjSV
-         pH2gy8ZzzgzaGWb7UMuJVDX4lArdCCyRU5RMZO2GHGuU+WGMIHA+h/wCHbJaZuUCH5MG
-         pdb8oyxjTR23GmYj7MlkNmflaa5zWCvADgo6e9hhnADZQMWbHjq3ldWWvB7p5PNSlZg1
-         ZfdsrDmVfTY9ty4qDev6NDKsSW8mRw3edAybwqu5L9+lYPryU4zUvHYOISlghg32ynsU
-         0lg2tEpGoX2jNfly+6Ywbu9UG+YYFz2h7H+rZW0IrXLwblZ+/gEgjzT6RkifHd/KJb4x
-         LUsA==
-X-Gm-Message-State: AOAM533WkCKVmYTwX72+nDTXqhqRlq+O7Bg2OwvD3YVyI51ysUZQVx0z
-        TfowcElPExB1VItOIH+aRwo0vr5mm/s=
-X-Google-Smtp-Source: ABdhPJxsXPaSXMaRHI46izaVMQfBM4QVkhV1gSEgz4Z1YdyUi0xMNV5XfI0Tdi9WpBcnFHscFUWLQQ==
-X-Received: by 2002:a05:6000:1207:: with SMTP id e7mr3158601wrx.77.1624349085524;
-        Tue, 22 Jun 2021 01:04:45 -0700 (PDT)
+        bh=cPouRtX0ywbuQRmrWfNTHyz7mMmKhchMKzvO6gSIOns=;
+        b=aasuEdgfwSGzIVUVjbgXXyrda6lsBtoQpPz+xmyS+2B6I8RWwP1yJAZ4MKwAV+KIZg
+         y/Nkrs1FogLpsxqmoFBugDWkice36SJBwTwteYFD//WqXO+S+lk5gzLtLGFJPo4jJkn5
+         czJOnhWoYgJRwAtntk+s5OXqmEuam6oWNvmRs4Job27c9a6yK/nHkcNnbp1q82UOOepn
+         73JwO5akn3/FrxGzKomP4dMziwrI4Z+fD1h3acwmaJ0BO4cXkygm42n+e1w8gKPR6V3C
+         8Y9FmH4ejUkc1JVI+KOzIXK2Xwr3yfRDRKGCT6i24ZEc0ye8GmeV6cV4sQoddzPX+CZK
+         UqhQ==
+X-Gm-Message-State: AOAM531Xlst1Obpkz0G03Z19BIUONpycQyitjhq7wQF8EhdwPGXV3Ra1
+        xtNdlVuWNP1ffyo4beF2F/AOYAIrZdY=
+X-Google-Smtp-Source: ABdhPJz5f9I5rlXU3IU9R5NjFF1Q1VIWveBHfM8aokNe+w45X9Hi+heXiJXhQY1IoGURI6qGJFzXKg==
+X-Received: by 2002:a5d:538f:: with SMTP id d15mr3150405wrv.408.1624349086102;
+        Tue, 22 Jun 2021 01:04:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9sm14632303wru.3.2021.06.22.01.04.45
+        by smtp.gmail.com with ESMTPSA id v22sm1427214wmh.40.2021.06.22.01.04.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 22 Jun 2021 01:04:45 -0700 (PDT)
-Message-Id: <c9b55241d83144df0ddc479f67fbf3aabca43bd8.1624349082.git.gitgitgadget@gmail.com>
+Message-Id: <69011cfe9fae1410213aae7a5599a3cd3c4207ce.1624349082.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.969.v3.git.1624349082.gitgitgadget@gmail.com>
 References: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
         <pull.969.v3.git.1624349082.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Jun 2021 08:04:40 +0000
-Subject: [PATCH v3 4/5] diffcore-rename: use a different prefetch for basename
- comparisons
+Date:   Tue, 22 Jun 2021 08:04:41 +0000
+Subject: [PATCH v3 5/5] merge-ort: add prefetching for content merges
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,236 +80,130 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-merge-ort was designed to minimize the amount of data needed and used,
-and several changes were made to diffcore-rename to take advantage of
-extra metadata to enable this data minimization (particularly the
-relevant_sources variable for skipping "irrelevant" renames).  This
-effort obviously succeeded in drastically reducing computation times,
-but should also theoretically allow partial clones to download much less
-information.  Previously, though, the "prefetch" command used in
-diffcore-rename had never been modified and downloaded many blobs that
-were unnecessary for merge-ort.  This commit corrects that.
+Commit 7fbbcb21b1 ("diff: batch fetching of missing blobs", 2019-04-05)
+introduced batching of fetching missing blobs, so that the diff
+machinery would have one fetch subprocess grab N blobs instead of N
+processes each grabbing 1.
 
-When doing basename comparisons, we want to fetch only the objects that
-will be used for basename comparisons.  If after basename fetching this
-leaves us with no more relevant sources (or no more destinations), then
-we won't need to do the full inexact rename detection and can skip
-downloading additional source and destination files.  Even if we have to
-do that later full inexact rename detection, irrelevant sources are
-culled after basename matching and before the full inexact rename
-detection, so we can still avoid downloading the blobs for irrelevant
-sources.  Rename prefetch() to inexact_prefetch(), and introduce a
-new basename_prefetch() to take advantage of this.
+However, the diff machinery is not the only thing in a merge that needs
+to work on blobs.  The 3-way content merges need them as well.  Rather
+than download all the blobs 1 at a time, prefetch all the blobs needed
+for regular content merges.
 
-If we modify the testcase from commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2021-01-23)
-to pass
-    --sparse --filter=blob:none
-to the clone command, and use the new trace2 "fetch_count" output from
-a few commits ago to track both the number of fetch subcommands invoked
-and the number of objects fetched across all those fetches, then for
-the mega-renames testcase we observe the following:
+This does not cover all possible paths in merge-ort that might need to
+download blobs.  Others include:
+  - The blob_unchanged() calls to avoid modify/delete conflicts (when
+    blob renormalization results in an "unchanged" file)
+  - Preliminary content merges needed for rename/add and
+    rename/rename(2to1) style conflicts.  (Both of these types of
+    conflicts can result in nested conflict markers from the need to do
+    two levels of content merging; the first happens before our new
+    prefetch_for_content_merges() function.)
 
-BEFORE this commit, rebasing 35 patches:
-    strategy     # of fetches    total # of objects fetched
-    ---------    ------------    --------------------------
-    recursive    62              11423
-    ort          30              11391
+The first of these wouldn't be an extreme amount of work to support, and
+even the second could be theoretically supported in batching, but all of
+these cases seem unusual to me, and this is a minor performance
+optimization anyway; in the worst case we only get some of the fetches
+batched and have a few additional one-off fetches.  So for now, just
+handle the regular 3-way content merges in our prefetching.
 
-AFTER this commit, rebasing the same 35 patches:
-    ort          32                 63
-
-This means that the new code only needs to download less than 2 blobs
-per patch being rebased.  That is especially interesting given that the
-repository at the start only had approximately half a dozen TOTAL blobs
-downloaded to start with (because the default sparse-checkout of just
-the toplevel directory was in use).
-
-So, for this particular linux kernel testcase that involved ~26,000
-renames on the upstream side (drivers/ -> pilots/) across which 35
-patches were being rebased, this change reduces the number of blobs that
-need to be downloaded by a factor of ~180.
+For the testcase from the previous commit, the number of downloaded
+objects remains at 63, but this drops the number of fetches needed from
+32 down to 20, a sizeable reduction.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c              | 101 +++++++++++++++++++++++++++------
- t/t6421-merge-partial-clone.sh |   4 +-
- 2 files changed, 85 insertions(+), 20 deletions(-)
+ merge-ort.c                    | 50 ++++++++++++++++++++++++++++++++++
+ t/t6421-merge-partial-clone.sh |  2 +-
+ 2 files changed, 51 insertions(+), 1 deletion(-)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index e13e52046026..4ef0459cfb50 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -87,13 +87,13 @@ struct diff_score {
- 	short name_score;
- };
- 
--struct prefetch_options {
-+struct inexact_prefetch_options {
- 	struct repository *repo;
- 	int skip_unmodified;
- };
--static void prefetch(void *prefetch_options)
-+static void inexact_prefetch(void *prefetch_options)
- {
--	struct prefetch_options *options = prefetch_options;
-+	struct inexact_prefetch_options *options = prefetch_options;
- 	int i;
- 	struct oid_array to_fetch = OID_ARRAY_INIT;
- 
-@@ -816,6 +816,78 @@ static int idx_possible_rename(char *filename, struct dir_rename_info *info)
- 	return idx;
+diff --git a/merge-ort.c b/merge-ort.c
+index cfa751053b01..e3a5dfc7b312 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -29,6 +29,7 @@
+ #include "entry.h"
+ #include "ll-merge.h"
+ #include "object-store.h"
++#include "promisor-remote.h"
+ #include "revision.h"
+ #include "strmap.h"
+ #include "submodule.h"
+@@ -3485,6 +3486,54 @@ static void process_entry(struct merge_options *opt,
+ 	record_entry_for_tree(dir_metadata, path, &ci->merged);
  }
  
-+struct basename_prefetch_options {
-+	struct repository *repo;
-+	struct strintmap *relevant_sources;
-+	struct strintmap *sources;
-+	struct strintmap *dests;
-+	struct dir_rename_info *info;
-+};
-+static void basename_prefetch(void *prefetch_options)
++static void prefetch_for_content_merges(struct merge_options *opt,
++					struct string_list *plist)
 +{
-+	struct basename_prefetch_options *options = prefetch_options;
-+	struct strintmap *relevant_sources = options->relevant_sources;
-+	struct strintmap *sources = options->sources;
-+	struct strintmap *dests = options->dests;
-+	struct dir_rename_info *info = options->info;
-+	int i;
++	struct string_list_item *e;
 +	struct oid_array to_fetch = OID_ARRAY_INIT;
 +
-+	/*
-+	 * TODO: The following loops mirror the code/logic from
-+	 * find_basename_matches(), though not quite exactly.  Maybe
-+	 * abstract the iteration logic out somehow?
-+	 */
-+	for (i = 0; i < rename_src_nr; ++i) {
-+		char *filename = rename_src[i].p->one->path;
-+		const char *base = NULL;
-+		intptr_t src_index;
-+		intptr_t dst_index;
++	if (opt->repo != the_repository || !has_promisor_remote())
++		return;
 +
-+		/* Skip irrelevant sources */
-+		if (relevant_sources &&
-+		    !strintmap_contains(relevant_sources, filename))
++	for (e = &plist->items[plist->nr-1]; e >= plist->items; --e) {
++		/* char *path = e->string; */
++		struct conflict_info *ci = e->util;
++		int i;
++
++		/* Ignore clean entries */
++		if (ci->merged.clean)
 +			continue;
 +
-+		/*
-+		 * If the basename is unique among remaining sources, then
-+		 * src_index will equal 'i' and we can attempt to match it
-+		 * to a unique basename in the destinations.  Otherwise,
-+		 * use directory rename heuristics, if possible.
-+		 */
-+		base = get_basename(filename);
-+		src_index = strintmap_get(sources, base);
-+		assert(src_index == -1 || src_index == i);
++		/* Ignore entries that don't need a content merge */
++		if (ci->match_mask || ci->filemask < 6 ||
++		    !S_ISREG(ci->stages[1].mode) ||
++		    !S_ISREG(ci->stages[2].mode) ||
++		    oideq(&ci->stages[1].oid, &ci->stages[2].oid))
++			continue;
 +
-+		if (strintmap_contains(dests, base)) {
-+			struct diff_filespec *one, *two;
++		/* Also don't need content merge if base matches either side */
++		if (ci->filemask == 7 &&
++		    S_ISREG(ci->stages[0].mode) &&
++		    (oideq(&ci->stages[0].oid, &ci->stages[1].oid) ||
++		     oideq(&ci->stages[0].oid, &ci->stages[2].oid)))
++			continue;
 +
-+			/* Find a matching destination, if possible */
-+			dst_index = strintmap_get(dests, base);
-+			if (src_index == -1 || dst_index == -1) {
-+				src_index = i;
-+				dst_index = idx_possible_rename(filename, info);
-+			}
-+			if (dst_index == -1)
-+				continue;
++		for (i = 0; i < 3; i++) {
++			unsigned side_mask = (1 << i);
++			struct version_info *vi = &ci->stages[i];
 +
-+			/* Ignore this dest if already used in a rename */
-+			if (rename_dst[dst_index].is_rename)
-+				continue; /* already used previously */
-+
-+			one = rename_src[src_index].p->one;
-+			two = rename_dst[dst_index].p->two;
-+
-+			/* Add the pairs */
-+			diff_add_if_missing(options->repo, &to_fetch, two);
-+			diff_add_if_missing(options->repo, &to_fetch, one);
++			if ((ci->filemask & side_mask) &&
++			    S_ISREG(vi->mode) &&
++			    oid_object_info_extended(opt->repo, &vi->oid, NULL,
++						     OBJECT_INFO_FOR_PREFETCH))
++				oid_array_append(&to_fetch, &vi->oid);
 +		}
 +	}
 +
-+	promisor_remote_get_direct(options->repo, to_fetch.oid, to_fetch.nr);
++	promisor_remote_get_direct(opt->repo, to_fetch.oid, to_fetch.nr);
 +	oid_array_clear(&to_fetch);
 +}
 +
- static int find_basename_matches(struct diff_options *options,
- 				 int minimum_score,
- 				 struct dir_rename_info *info,
-@@ -860,19 +932,12 @@ static int find_basename_matches(struct diff_options *options,
- 		.missing_object_cb = NULL,
- 		.missing_object_data = NULL
- 	};
--	/*
--	 * The prefeteching stuff wants to know if it can skip prefetching
--	 * blobs that are unmodified...and will then do a little extra work
--	 * to verify that the oids are indeed different before prefetching.
--	 * Unmodified blobs are only relevant when doing copy detection;
--	 * when limiting to rename detection, diffcore_rename[_extended]()
--	 * will never be called with unmodified source paths fed to us, so
--	 * the extra work necessary to check if rename_src entries are
--	 * unmodified would be a small waste.
--	 */
--	struct prefetch_options prefetch_options = {
-+	struct basename_prefetch_options prefetch_options = {
- 		.repo = options->repo,
--		.skip_unmodified = 0
-+		.relevant_sources = relevant_sources,
-+		.sources = &sources,
-+		.dests = &dests,
-+		.info = info
- 	};
- 
- 	/*
-@@ -911,7 +976,7 @@ static int find_basename_matches(struct diff_options *options,
- 	}
- 
- 	if (options->repo == the_repository && has_promisor_remote()) {
--		dpf_options.missing_object_cb = prefetch;
-+		dpf_options.missing_object_cb = basename_prefetch;
- 		dpf_options.missing_object_data = &prefetch_options;
- 	}
- 
-@@ -1282,7 +1347,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 		.missing_object_cb = NULL,
- 		.missing_object_data = NULL
- 	};
--	struct prefetch_options prefetch_options = {
-+	struct inexact_prefetch_options prefetch_options = {
- 		.repo = options->repo
- 	};
- 
-@@ -1449,7 +1514,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 	/* Finish setting up dpf_options */
- 	prefetch_options.skip_unmodified = skip_unmodified;
- 	if (options->repo == the_repository && has_promisor_remote()) {
--		dpf_options.missing_object_cb = prefetch;
-+		dpf_options.missing_object_cb = inexact_prefetch;
- 		dpf_options.missing_object_data = &prefetch_options;
- 	}
- 
+ static void process_entries(struct merge_options *opt,
+ 			    struct object_id *result_oid)
+ {
+@@ -3531,6 +3580,7 @@ static void process_entries(struct merge_options *opt,
+ 	 * the way when it is time to process the file at the same path).
+ 	 */
+ 	trace2_region_enter("merge", "processing", opt->repo);
++	prefetch_for_content_merges(opt, &plist);
+ 	for (entry = &plist.items[plist.nr-1]; entry >= plist.items; --entry) {
+ 		char *path = entry->string;
+ 		/*
 diff --git a/t/t6421-merge-partial-clone.sh b/t/t6421-merge-partial-clone.sh
-index 3dcffc15f801..aad975d24ddb 100755
+index aad975d24ddb..36bcd7c32801 100755
 --- a/t/t6421-merge-partial-clone.sh
 +++ b/t/t6421-merge-partial-clone.sh
-@@ -207,7 +207,7 @@ test_setup_repo () {
+@@ -397,7 +397,7 @@ test_expect_merge_algorithm failure success 'Objects downloaded when a directory
  #
- #   Summary: 2 fetches (1 for 2 objects, 1 for 1 object)
+ #   Summary: 4 fetches (1 for 6 objects, 1 for 8, 1 for 3, 1 for 2)
  #
--test_expect_merge_algorithm failure failure 'Objects downloaded for single relevant rename' '
-+test_expect_merge_algorithm failure success 'Objects downloaded for single relevant rename' '
+-test_expect_merge_algorithm failure failure 'Objects downloaded with lots of renames and modifications' '
++test_expect_merge_algorithm failure success 'Objects downloaded with lots of renames and modifications' '
  	test_setup_repo &&
- 	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-single &&
- 	(
-@@ -296,7 +296,7 @@ test_expect_merge_algorithm failure failure 'Objects downloaded for single relev
- #      this are not all that common.)
- #   Summary: 1 fetches for 6 objects
- #
--test_expect_merge_algorithm failure failure 'Objects downloaded when a directory rename triggered' '
-+test_expect_merge_algorithm failure success 'Objects downloaded when a directory rename triggered' '
- 	test_setup_repo &&
- 	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-dir &&
+ 	git clone --sparse --filter=blob:none "file://$(pwd)/server" objects-many &&
  	(
 -- 
 gitgitgadget
-
