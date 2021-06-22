@@ -6,137 +6,121 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F19C2B9F4
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 15:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4319BC2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 16:00:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F75760241
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 15:55:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26BC561075
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 16:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232145AbhFVP5k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 11:57:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37600 "EHLO
+        id S232116AbhFVQC3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 12:02:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231997AbhFVP5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 11:57:40 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AD6C061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 08:55:23 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id x12so18881165ill.4
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 08:55:23 -0700 (PDT)
+        with ESMTP id S231936AbhFVQCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 12:02:25 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F69EC061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 09:00:09 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id b14so20630027iow.13
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 09:00:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=7dYBha2S068tZB5Wq2LyLe4BBdB0UaVDydcFtk3I//g=;
-        b=oYo3AmJRD0+otMbz2QFABXtb13NyQTEiICpEiXeA6JMkHm3CsdbljKHdUdDTmv74FX
-         DTMddmlCs+tLbIaAXzxprFJX4F+OLPHNfKM0Gg/iBu52kfufxVO3/8Pji2v4xYPqNMBT
-         u797lzwAWvbN3uY0M3v70K0jc+axsY74vy2T997r3J9jdpRPDdJ8Q0ugdGFMxf+QGkc2
-         /FXYLUjmdu/cR03Kza6MdajCYYZkct5GifMwB7YyMo3e4ZfhLrm3OD+uPvHvOVHgAlZU
-         dLOKgHVPVgZ8Cuxc9Fis7XeBdp91r3GYJfCyZpJVH6S13CHSyBEY+Ze7xYcnUahJZ+AH
-         ILqQ==
+        bh=uxs0KsPfDjzGzxhiUDM+/VRt1wbhg4PXdv7C19ZNbWY=;
+        b=oARQcPwGEcwPKH/j3wi9weJyo73SGUj02wsg+J3EO0cyjf3eMk24suW2EaGIO70fBU
+         LYvw+DXYkocex/NXZia2E9r/ie0TP9aZAf6ffF23Qvi02bBLzwFbjmLBTxIZTSR8q3gg
+         AezlW+XTxXSU7NR04QdqPywgC+nAsB1jX/sfQJcHh9F2Q0Ko81IuN+nHNYf+Rtfa3U1h
+         zHbqnY9bDBJXNxtt0dvsYInGzo3qvmvYEUE7sQr0ZNjYAeyYmtl19wxqID0vOVWfW0n+
+         98+hWymIofXm/cNhMAueSIUuA9uz0c3wwabXrO4CArUpxDGCX/93uNrdwOM8RdkxqoTB
+         MIKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=7dYBha2S068tZB5Wq2LyLe4BBdB0UaVDydcFtk3I//g=;
-        b=oGd8ZI89cP2WLkggDMhZwzfScwZSTp3qi1/trC6aGDfz3jG/y6TpsTTmMzpj87nNeo
-         T9hgueexDx49vURgfxlB+L5r7MvhyCVsNrkEqDuiZDjppAiOx5mQgcBapectgJrD61Iz
-         y35qapDlwDkEiDoDaT08AA1yrxL4Ca/hIiV3LDqaH8jeIPGLO9kNpE2t/1M7w3dwnD2G
-         rdgchxT14EtWsKQPFoPm97MDGZvw4joH/ddw9M7+sZshzHGOCG87IyTQoYAIz/gpZ+dd
-         xcyIJLJ6Vxm3bmsa4URg3KCOepvjBmR4FUl0SQcQAGTkulOnR6pKA5YtPisgkxQIJ8jq
-         ORIQ==
-X-Gm-Message-State: AOAM533E4qYIbTNg9svvMZbXVHmSNCFLjpBXYXy4IV/+ho8DI2iQ9lNj
-        3O6fYMGPd1+QSuBaqwhM/wvOmw==
-X-Google-Smtp-Source: ABdhPJy930y4hBxk78ZRZ41nCf/yYDS3CYfXpVOY0cqgTYR6F3dLQe2gAj4FV2kEb4CKLHmbX8e2nw==
-X-Received: by 2002:a05:6e02:1ca8:: with SMTP id x8mr3117183ill.163.1624377322857;
-        Tue, 22 Jun 2021 08:55:22 -0700 (PDT)
+        bh=uxs0KsPfDjzGzxhiUDM+/VRt1wbhg4PXdv7C19ZNbWY=;
+        b=ZrW7p0r9ZEVr3r9SEsHDsa1N/9UliUF3OjxJzzU293IHF1ufK20RCe7wN3JB0UHufP
+         ytt/Ao0hZi81czU2uIMur2Noy6KUG2IjQkFHlAA15bOYBbJf1p8s+vRN1GL32eWzfn0W
+         dJfZt452nxlb0DSsYPLjagNZ39CBQG/j/r1hP8tgVnAQ8XUCufFjUtuk3NVhn/krgqfa
+         uBbbDjlZupvzKOTseegg5x7VykGeMY8pFnoiZzj0znpoi4s04pnEh2B/JIKNyn2Ic9Xc
+         no6wq4SbcKMp4HxzA2aXKzCyDQ4XU5Df9/RPvBGt7LaqpSeJAbquDMtcMcLSszjTUCHZ
+         jY+w==
+X-Gm-Message-State: AOAM5305QO0XeQuyxIwoyW2DmICxLwYg+UDaISyE/LwhHXIUGVmbZH3T
+        XhQXVOA2/GSmSjg9Pd4/P2FYTg==
+X-Google-Smtp-Source: ABdhPJytq/ocDtQdD3zlNfGO6HnMNSc/ZZAeSyt1ji/IPZD8epqtX4yIolsywVz05KeMXFYhjoAVgA==
+X-Received: by 2002:a5e:8349:: with SMTP id y9mr3347929iom.105.1624377608530;
+        Tue, 22 Jun 2021 09:00:08 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:f6bb:34fc:22a7:6a3])
-        by smtp.gmail.com with ESMTPSA id h200sm11785137iof.6.2021.06.22.08.55.21
+        by smtp.gmail.com with ESMTPSA id n17sm3180256ilt.16.2021.06.22.09.00.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 08:55:22 -0700 (PDT)
-Date:   Tue, 22 Jun 2021 11:55:20 -0400
+        Tue, 22 Jun 2021 09:00:08 -0700 (PDT)
+Date:   Tue, 22 Jun 2021 12:00:07 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 Cc:     git@vger.kernel.org,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 1/7] progress: introduce GIT_TEST_CHECK_PROGRESS to
- verify progress counters
-Message-ID: <YNIH6FD9NKLc9zYl@nand.local>
+Subject: Re: [PATCH 2/7] progress: catch nested/overlapping progresses with
+ GIT_TEST_CHECK_PROGRESS
+Message-ID: <YNIJB8uYp7gzLC6v@nand.local>
 References: <20210620200303.2328957-1-szeder.dev@gmail.com>
- <20210620200303.2328957-2-szeder.dev@gmail.com>
+ <20210620200303.2328957-3-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210620200303.2328957-2-szeder.dev@gmail.com>
+In-Reply-To: <20210620200303.2328957-3-szeder.dev@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 20, 2021 at 10:02:57PM +0200, SZEDER Gábor wrote:
-> +	progress->last_value = n;
-> +
->  	if (progress->delay && (!progress_update || --progress->delay))
->  		return;
+On Sun, Jun 20, 2021 at 10:02:58PM +0200, SZEDER Gábor wrote:
+> Note that this will trigger even in cases where the output is not
+> visibly wrong, e.g. consider this simplified sequence of calls:
 >
-> -	progress->last_value = n;
+>   progress1 = start_delayed_progress();
+>   progress2 = start_delayed_progress();
+>   for (i = 0; ...)
+>       display_progress(progress2, i + 1);
+>   stop_progres(&progress2);
+>   for (j = 0; ...)
+>       display_progress(progress1, j + 1);
+>   stop_progres(&progress1);
 
-Makes sense, and thanks for explaining it explicitly in the patch
-message.
+s/stop_progres/&s, but no big deal. Everything else here looks good.
 
->  	tp = (progress->throughput) ? progress->throughput->display.buf : "";
->  	if (progress->total) {
->  		unsigned percent = n * 100 / progress->total;
-> @@ -252,7 +255,11 @@ void display_progress(struct progress *progress, uint64_t n)
->  static struct progress *start_progress_delay(const char *title, uint64_t total,
->  					     unsigned delay, unsigned sparse)
->  {
-> -	struct progress *progress = xmalloc(sizeof(*progress));
-> +	struct progress *progress;
-> +
-> +	test_check_progress = git_env_bool("GIT_TEST_CHECK_PROGRESS", 0);
-> +
-> +	progress = xmalloc(sizeof(*progress));
+> diff --git a/progress.c b/progress.c
+> index 255995406f..549e8d1fe7 100644
+> --- a/progress.c
+> +++ b/progress.c
+> @@ -48,6 +48,8 @@ struct progress {
+>  static volatile sig_atomic_t progress_update;
+>
+>  static int test_check_progress;
+> +/* Used to catch nested/overlapping progresses with GIT_TEST_CHECK_PROGRESS. */
+> +static struct progress *current_progress = NULL;
+>
+>  /*
+>   * These are only intended for testing the progress output, i.e. exclusively
+> @@ -258,8 +260,12 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+>  	struct progress *progress;
+>
+>  	test_check_progress = git_env_bool("GIT_TEST_CHECK_PROGRESS", 0);
+> +	if (test_check_progress && current_progress)
+> +		BUG("progress \"%s\" is still active when starting new progress \"%s\"",
+> +		    current_progress->title, title);
+>
+>  	progress = xmalloc(sizeof(*progress));
 
-Ævar noted below, I think, but this cleanup to move the xmalloc() call
-to after reading $GIT_TEST_CHECK_PROGRESS is unnecessary.
+Ah. This is why you moved the allocation down further, since we don't
+have to free anything up when calling BUG() if it wasn't allocated in
+the first place (and we had no such conditional that would cause us to
+abort early before).
 
-> +test_expect_success 'GIT_TEST_CHECK_PROGRESS catches non-matching total' '
-> +	cat >in <<-\EOF &&
-> +	progress 1
-> +	progress 2
-> +	progress 4
-> +	EOF
-> +
-> +	test_must_fail env GIT_TEST_CHECK_PROGRESS=1 \
-> +		test-tool progress --total=3 "Not enough" <in 2>stderr &&
-> +	grep "BUG:.*total progress does not match" stderr &&
-> +
-> +	test_must_fail env GIT_TEST_CHECK_PROGRESS=1 \
-> +		test-tool progress --total=5 "Too much" <in 2>stderr &&
-> +	grep "BUG:.*total progress does not match" stderr
-> +'
-
-This and the below test are both good to see. I wondered briefly whether
-or not it would be worth adding a test to check that the "progress does
-not match" triggers even when we have a non-zero delay, like:
-
-    test_must_fail env GIT_PROGRESS_DELAY=100 GIT_TEST_CHECK_PROGRESS=1 \
-      test-tool progress --total=5 "Too much" <in 2>stderr &&
-    grep "BUG:.*total progress does not match" stderr
-
-But it's not helpful, because GIT_PROGRESS_DELAY is already 2 by
-default, and we unset GIT_* environment variables (including
-GIT_PROGRESS_DELAY) except a few which are left alone.
-
-So we are already testing this case implicitly. It may be worth making
-it explicit, and/or testing the case where GIT_PROGRESS_DELAY=0, but I
-do not feel strongly about it. Besides, I would much rather err on the
-side of testing cases we feel are legitimately interesting, rather than
-filling in a grid of all possible combinations, including uninteresting
-ones.
+For what it's worth, I probably would have preferred to see that change
+from the previous patch included in this one rather than in the first of
+the series, since it's much clearer here than it is in the first patch.
 
 Thanks,
 Taylor
