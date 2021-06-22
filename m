@@ -2,126 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD699C2B9F4
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 12:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B72CC2B9F4
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 22:40:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D87461C69
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 12:17:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EB516134F
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 22:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232995AbhF1MUT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 08:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232802AbhF1MUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 08:20:18 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C983C061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 05:17:52 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id g198so3355533wme.5
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 05:17:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=v55LN7IBGP5NAWg0YLaNZsAulXiJ7GYMZwJ8+I3Sc2s=;
-        b=lWv6CuBLHTkhRWPjU8eLpUAvX1wcr2dYWVXbz4Kq6ZTCeBKHi7XnRxK3GEQO6Get67
-         Z5I7UPKmWqr7BFNFp9k2HST6AKeRFMraHC1Cij5VirJrTZgO12xMDeUXogEXY4o9PjzX
-         aGk9RB3eQPUPJhG++BUcab/ITphizU03LEhzH9sFbvZfgiBkmKsIxc3oL9R67URnCEPj
-         A7wGzI8RibGHuZS5BBX7tWl0RrnGp20jfLCekRjxt/IXEuDJKZ3ILFyjEGrNJWMt/T0w
-         mN4gNsVsCkk5Gs/qVd7i14TfheWdzPDMDl3EPDJ88C/MExp9GfCqOEKnd6VQTRixh5kA
-         ns5Q==
+        id S230351AbhFVWmf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 18:42:35 -0400
+Received: from mail-qv1-f51.google.com ([209.85.219.51]:36774 "EHLO
+        mail-qv1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230143AbhFVWme (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 18:42:34 -0400
+Received: by mail-qv1-f51.google.com with SMTP id im10so443066qvb.3
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 15:40:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=v55LN7IBGP5NAWg0YLaNZsAulXiJ7GYMZwJ8+I3Sc2s=;
-        b=n3+ff666D588x6Ms4B6tpeTpgPaAMcuyMZvlTMLfoJIxUuWw+R++1+czpguBcYcF+y
-         wM0KcCLHQ1Ynv0iq6h3MMA1O8ygIMo58ZtxPsxzxabZ3qU4AU9QkePNElPPT2PuNR+U3
-         Ks4Obt8H1tv7xrYFbSO1aaloiT1Y5YcE6raYpVTK/34P2LytYA0DPupwE/uh+heacVWe
-         QkbcNZjALNOrKF/itg+w1WltDkGHVDCq68mYDyR+xTF3scH2CYajK0/5yeW6D0bjdvcv
-         Kj33/w6d1J4T78O9NNiBKKqM6ao7rYs3By1CH78DGwFfpeAcHogMPi7Ysbq0LIaQOAkc
-         NcXQ==
-X-Gm-Message-State: AOAM532MlcnTN5AYq9EpQQt1mOGb27nttuiEriaZpvTz7ep/NDYnMcPC
-        ZKKd9V7P1LDxfIV69nwRGabX6+mWshvE3A==
-X-Google-Smtp-Source: ABdhPJxSiBXBNwoyJC1zIe5BLfRT7W+Zx0ZFmBcqsyOuKGarh2rcna12lZyDHAprDJhI5FjzoNf/WQ==
-X-Received: by 2002:a05:600c:198c:: with SMTP id t12mr25564879wmq.140.1624882670514;
-        Mon, 28 Jun 2021 05:17:50 -0700 (PDT)
-Received: from debianXPS.lan ([193.32.126.215])
-        by smtp.gmail.com with ESMTPSA id h46sm16049065wrh.44.2021.06.28.05.17.48
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Klj/ssVtrigw92bBrIQ1CfsEH9ceTg1zCX5RzYFsJwo=;
+        b=iNqGnaY5/dDi8bAsGL6TPbSRZGHeWa3zH0PlxPnbbHH2yphBS35I00vs0sU3hC2VlT
+         xrm2EX7M0+OM+/eXdCxYhGIr4FFf3fHHfqa+hFL/AIILKJwH4nuAird8Z5bSmcLPR6Ym
+         Xd3XFUT9y7Du/4pg3P2YR/JSCbrTEXqaL2EbusMUZA6VG4oyTXSq1ddfQDu1DvtdlDnN
+         bNN2isyRqx5vPrpY9wznu6jLV7EmxH22cXq9fgCwDs8kbnU6KvS9oiZ2NhD/IzkBPGHM
+         fugbYvJRdtcXhrt057NNCmEyjba7l8Xw1CLcfu4D/f+MvTx4HIJYhIwTNPU0uGHNQhse
+         R4+g==
+X-Gm-Message-State: AOAM530FsHSJO0WubD36p0Ksfx0EJG1MNsi2DDxGSmB+Q4nRQbX+ibtJ
+        Bn0McJY6njhlJExyDbioRGG54QGzimemqw==
+X-Google-Smtp-Source: ABdhPJwUGj3zYq2XjveWAkPYpamXwnakizcpjP65yr63CndZSADdgoFQGLfnFCR2pM4stzCumNTtvw==
+X-Received: by 2002:ad4:4d09:: with SMTP id l9mr1257924qvl.25.1624401617333;
+        Tue, 22 Jun 2021 15:40:17 -0700 (PDT)
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com. [209.85.160.182])
+        by smtp.gmail.com with ESMTPSA id a18sm1142904qkn.37.2021.06.22.15.40.16
         for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 05:17:49 -0700 (PDT)
-Date:   Mon, 28 Jun 2021 13:17:48 +0100
-From:   Matthew Hughes <matthewhughes934@gmail.com>
-To:     git@vger.kernel.org
-Subject: segfault on invalid 'git grep' invocation
-Message-ID: <20210628121748.f3yrc72v4mynknl3@debianXPS.lan>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jun 2021 15:40:17 -0700 (PDT)
+Received: by mail-qt1-f182.google.com with SMTP id r7so666482qta.12
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 15:40:16 -0700 (PDT)
+X-Received: by 2002:ac8:5755:: with SMTP id 21mr1016030qtx.267.1624401616745;
+ Tue, 22 Jun 2021 15:40:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+From:   Avishay Matayev <me@avishay.dev>
+Date:   Wed, 23 Jun 2021 01:40:06 +0300
+X-Gmail-Original-Message-ID: <CAJ-0OswsrnAuCwU6U=S2i1qKkg=66U-8RHSGqD2kh9T_30Yw9w@mail.gmail.com>
+Message-ID: <CAJ-0OswsrnAuCwU6U=S2i1qKkg=66U-8RHSGqD2kh9T_30Yw9w@mail.gmail.com>
+Subject: 
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Hi there!
 
-It's my first time writing to this mailing list, so apologies in advance
-for any mistakes/faux pas.
+Fugitive[1] is a vim plugin that wraps git and many of its commands
+into the editor in a really awesome way, I won't meddle into it too
+much as you can read about it in its README, but as you understand, it
+uses git, a lot.
 
-Summary
-=======
+Some git commands use a pager, which is usually a program that needs a
+pty to function properly (`less`, for example). Fugitive can't really
+use a pty for the pager as vim runs its subprocesses without a pty.
+Therefore Fugitive just creates its own pager (which is a simple
+window in vim) and pastes the git command output there.
 
-Segfault seen when running:
+The only problem left is that Fugitive can't reliably know when git
+decides to use the pager, for example `git reflog show` does raise the
+pager while `git reflog expire` does not. Fugitive currently maintains
+an (very possibly) incomplete list of commands that need a pager but
+maintaining it manually isn't ideal.
 
-    $ ./git grep --and -e 'pattern' -- not_a_path
+I started discussing this on an issue in Fugitive's github page[2] and
+Tim Pope (the creator and maintainer of Fugitive, thank you!)
+explained that `git` doesn't use a pager if there is no pty so it's
+impossible to override its behavior.
 
-Expected Behaviour
-==================
+We had some ideas how to make this feasible (as you can read on the
+thread) but for brevity's sake I'll present the best (IMO) idea:
+Essentially, at `pager.c`, don't short-circuit in `git_pager` (or
+`setup_pager`?) due to pty absence if a new environment variable is
+present, perhaps something like `GIT_PAGER_FORCE` which will override
+the `PAGER` and `GIT_PAGER` variables. This will allow Fugitive to
+apply custom logic through to pager to know if one exists and present
+the window in vim.
 
-The above invocation doesn't appear particularly valid to me, I
-accidentally ran it while editing a command. Not sure if this needs
-addressing, but perhaps the expected behaviour would be an error message
-about it not being valid?
+I will appreciate any written thoughts on the matter, thank you :)
 
-Compare with, running without '--':
-
-    $ ./git grep --and -e 'pattern' not_a_path
-    fatal: ambiguous argument 'not_a_path': unknown revision or path not in the working tree.
-    Use '--' to separate paths from revisions, like this:
-    'git <command> [<revision>...] -- [<file>...]'
-
-Running with a valid path:
-
-    $ ./git grep --and -e 'pattern' -- common-main.c
-    fatal: Not a valid grep expression
-
-    $ ./git grep --and -e 'pattern' common-main.c
-    fatal: Not a valid grep expression
+P.S. I am a complete newbie in regards to mailing lists etiquette,
+pardon me if I've done anything incorrect
+P.P.S. I CC'd Junio C Hamano because he signed off on (almost?) all
+changes to `pager.c`, sorry if that was wrong of me (You probably got
+this mail twice because of a misconfiguration, oops)
 
 
-Background
-==========
-
-git version:
-git version 2.32.0.93.g670b81a890
-cpu: x86_64
-built from commit: 670b81a890388c60b7032a4f5b879f2ece8c4558
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64
-compiler info: gnuc: 8.3
-libc info: glibc: 2.28
-$SHELL (typically, interactive shell): /bin/bash
-
-Also reproduced on git 2.20.1 (packaged version on Debian 10)
-
-The segfault is raised at free_pattern_expr (x=0x0) at grep.c:825 (on
-commit 670b81a890388c60b7032a4f5b879f2ece8c4558)
-
-Regards,
-Matt
+1. https://github.com/tpope/vim-fugitive
+2. https://github.com/tpope/vim-fugitive/issues/1772
