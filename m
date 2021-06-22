@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D73C4743C
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 00:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A69B0C48BC2
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 00:27:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B126B611C1
-	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 00:27:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 833E6611C1
+	for <git@archiver.kernel.org>; Tue, 22 Jun 2021 00:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230463AbhFVA3g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Jun 2021 20:29:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52912 "EHLO
+        id S230526AbhFVA3h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Jun 2021 20:29:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230481AbhFVA3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jun 2021 20:29:34 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4FCC061756
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 17:27:18 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id b24-20020a4a34180000b029024b199e7d4dso4621312ooa.4
-        for <git@vger.kernel.org>; Mon, 21 Jun 2021 17:27:18 -0700 (PDT)
+        with ESMTP id S230515AbhFVA3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jun 2021 20:29:35 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94E9AC061574
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 17:27:19 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so19642661otl.0
+        for <git@vger.kernel.org>; Mon, 21 Jun 2021 17:27:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Q9Un+r4ZONvlb6vx62E8HtR42WCg4M/UJUYRRNng1jc=;
-        b=S9Hbg/hUtRv9yjNo6CXlkikKISJrGZPVGXIXvqcyCep91Icyok9J7VX5abLDcJa2yD
-         YqshGrrwmzRCtcZak3C8J8Fpzi2aC1e1HVB+dKZzLNkY+HfYs0aPl992DxO7TbqFztkS
-         pFlHIO3yyYCgEj1O2bgNrxRJ7uNkEMUjqZEfpxCcnAyLdqtG4ItVKrDGoBa1ugvk/9a7
-         /27QdrOxeMjCzYub2tIQJf9vjzackFY1OcdirdymVRUMXWUNkl/OgQrKpYxSwoiJfIsp
-         17T1BB0wyX3bafU9KsRueIKfRculBln95hg/tmyPkywBstVb7PTcJEaPVkxkV+I1qvON
-         /vIQ==
+        bh=NDqEm2E2qA0ujhZbG6OpuXTvXRUI80SKfLBuDzOX4KE=;
+        b=m/qVmnb+OAG70WosHch3WP6U65jbAzpCllY3h6nyzWxmVeiq7VxWAFhICJ5K62s3Mp
+         YLiuTvh6y7kTeuHxd+UawksE7v2K2qBl4DCp4CzseE0FAYjXDGaySUkRs5GMBDKXyXFn
+         idsAnAlFcO0VnVb+tgrtESlR25cHBzdSx/UdU7MztJUrwInOuIFeXbwrEbMDcumduAYk
+         NIjye/4pqaA0PQEz68D+ZIk1cXe48uCXKhc4j87aFHncFOJ1f7HhPTKLgf0BrAkhClNR
+         +J1bKy/KTAJxWeGYMn/r6cRURbFKxCIOgCMzdNaToMUwZC1MlY++3+INQYA233CRZb5B
+         XsAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Q9Un+r4ZONvlb6vx62E8HtR42WCg4M/UJUYRRNng1jc=;
-        b=ksWpjBl44uf/lHi3nIpP0hnaSwSXT/NPTsZa7C98lu86BnU9NRg2gBx0aDDiTXdl2k
-         8w6hUgPqOC4NWbCU5BR60ebTTTtFOCH+gGNMgloJXRqarACAPXrsXjsz/FF8e49OmJ+p
-         PvgscajbbqKdHC4QgNQIhwP0IrueHevKwHBvQiL0LWxaj96v34xB9/BRNhH3lJDyKHzQ
-         iq0ZJrR7gKpwPkwJqDjQL99R2ckoExIbjtAq42i4rxvjacUCdmZa+6jHMKbh/6RdO3vp
-         7KOfdoeRH9aYiao+kPjeYz/SfsS/EgSAmQ0mRH8Fj6NadiSAjweYJiP+GGAay1Ydm01b
-         cldw==
-X-Gm-Message-State: AOAM531Q73V0QICgxwnBggGrCSIpZ4dp7oIPXwAfk+U3E4gnWVWPjDlg
-        1exVuWQJCBF3IePoBz570WCsnZS67yoTwQ==
-X-Google-Smtp-Source: ABdhPJxQRNtFMM+ApzS0w3dsWAxJhzdXFUPom4aRBB+A9O1oceFBI8/8X9mLdtg5xOAw1kYyP0ZKVA==
-X-Received: by 2002:a4a:c190:: with SMTP id w16mr742984oop.92.1624321637498;
-        Mon, 21 Jun 2021 17:27:17 -0700 (PDT)
+        bh=NDqEm2E2qA0ujhZbG6OpuXTvXRUI80SKfLBuDzOX4KE=;
+        b=Voh/PBW0gBPE86ddPKIpn4N40MIHnlHBcrG9V9ctyrbnXRMfTaz3UgCQjno6y1wXNB
+         ggA06ZEzu0P2D/dmb90IZKKOSOKnkJWjVvopHW5aU4Ts1V7ti6d5kaN3Hj9b8A/m9sCi
+         +sWNpfpbVfzVRgUorfNr8bUPPI0LUMdr8yHjMp4Dinm53Z2OWe/eVdMY07lbmEtf8Bxt
+         DL31ScZF4MN+joE9tHYcGMzACnBE9dW0kEKR0nQPyqybEv89oDtyXQesTYUHZODY/iLF
+         g4/CDcvOObvCsKs1Cw+hU14d/PeHHMa1YypcwmGQEyPRYUsciAPUlkbjsX0OcxL1X5jL
+         WU6g==
+X-Gm-Message-State: AOAM533ehqPEdFeVZIIivcTVWcsC3K8wL4rjUn/MsoEgDYhDO7tvY6Fw
+        zVlW/2Y5g7ShUBHsyytCjD74VK/NdsK6Bw==
+X-Google-Smtp-Source: ABdhPJwUCK7B5qzlcMfysmoxqs7vPKPobc62ihY7Cclf/CA81DhF+WKApm0hs30+f6AejY6ET/tjXw==
+X-Received: by 2002:a9d:6244:: with SMTP id i4mr648835otk.136.1624321638805;
+        Mon, 21 Jun 2021 17:27:18 -0700 (PDT)
 Received: from localhost (fixed-187-188-155-231.totalplay.net. [187.188.155.231])
-        by smtp.gmail.com with ESMTPSA id r7sm344137otn.29.2021.06.21.17.27.16
+        by smtp.gmail.com with ESMTPSA id g1sm161187ooi.34.2021.06.21.17.27.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jun 2021 17:27:17 -0700 (PDT)
+        Mon, 21 Jun 2021 17:27:18 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Phillip Wood <phillip.wood123@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 1/4] test: add merge style config test
-Date:   Mon, 21 Jun 2021 19:27:11 -0500
-Message-Id: <20210622002714.1720891-2-felipe.contreras@gmail.com>
+Subject: [PATCH v2 2/4] merge-tree: fix merge.conflictstyle handling
+Date:   Mon, 21 Jun 2021 19:27:12 -0500
+Message-Id: <20210622002714.1720891-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210622002714.1720891-1-felipe.contreras@gmail.com>
 References: <20210622002714.1720891-1-felipe.contreras@gmail.com>
@@ -73,58 +73,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We want to test different combinations of merge.conflictstyle, and a new
-file is the best place to do that.
+Currently it's completely ignored.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t6440-config-conflict-markers.sh | 37 ++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
- create mode 100755 t/t6440-config-conflict-markers.sh
+ builtin/merge-tree.c               |  4 ++++
+ t/t6440-config-conflict-markers.sh | 21 +++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index de8520778d..7d677bd75c 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -7,6 +7,8 @@
+ #include "blob.h"
+ #include "exec-cmd.h"
+ #include "merge-blobs.h"
++#include "config.h"
++#include "xdiff-interface.h"
+ 
+ static const char merge_tree_usage[] = "git merge-tree <base-tree> <branch1> <branch2>";
+ 
+@@ -378,6 +380,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 	if (argc != 4)
+ 		usage(merge_tree_usage);
+ 
++	git_config(git_xmerge_config, NULL);
++
+ 	buf1 = get_tree_descriptor(r, t+0, argv[1]);
+ 	buf2 = get_tree_descriptor(r, t+1, argv[2]);
+ 	buf3 = get_tree_descriptor(r, t+2, argv[3]);
 diff --git a/t/t6440-config-conflict-markers.sh b/t/t6440-config-conflict-markers.sh
-new file mode 100755
-index 0000000000..813d7dda9a
---- /dev/null
+index 813d7dda9a..cb2ee3ad0a 100755
+--- a/t/t6440-config-conflict-markers.sh
 +++ b/t/t6440-config-conflict-markers.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+
-+test_description='merge style conflict markers configurations'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'merge' '
-+	test_create_repo merge &&
+@@ -34,4 +34,25 @@ test_expect_success 'merge' '
+ 	)
+ '
+ 
++test_expect_success 'merge-tree' '
++	test_create_repo merge-tree &&
 +	(
-+		cd merge &&
++		cd merge-tree &&
 +
-+		test_write_lines 1 2 3 >content &&
-+		git add content &&
-+		git commit -m base &&
++		test_commit initial initial-file initial &&
++		test_commit r content r &&
++		git reset --hard initial &&
++		test_commit l content l &&
 +
-+		git checkout -b r &&
-+		echo six >>content &&
-+		git commit -a -m right &&
++		git merge-tree initial r l >actual &&
++		! grep "^+|||||||" content &&
 +
-+		git checkout master &&
-+		echo 7 >>content &&
-+		git commit -a -m left &&
++		git -c merge.conflictstyle=diff3 merge-tree initial r l >actual &&
++		grep "^+|||||||" actual &&
 +
-+		test_must_fail git merge r &&
-+		! grep "^|||||||" content &&
-+
-+		git reset --hard &&
-+		test_must_fail git -c merge.conflictstyle=diff3 merge r &&
-+		grep "^|||||||" content &&
-+
-+		git reset --hard &&
-+		test_must_fail git -c merge.conflictstyle=merge merge r &&
-+		! grep "^|||||||" content
++		git -c merge.conflictstyle=merge merge-tree initial r l >actual &&
++		! grep "^+|||||||" content
 +	)
 +'
 +
-+test_done
+ test_done
 -- 
 2.32.0
 
