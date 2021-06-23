@@ -8,95 +8,157 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0310C49EA4
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 15:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC3BEC49EA5
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 15:24:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D036D6023E
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 15:24:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AFE1E6112D
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 15:24:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231357AbhFWP0p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 11:26:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44022 "EHLO
+        id S231389AbhFWP0q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 11:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231336AbhFWP0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 11:26:40 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9896C061760
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 08:24:22 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id n23so1923561wms.2
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 08:24:22 -0700 (PDT)
+        with ESMTP id S231350AbhFWP0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 11:26:41 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD233C06175F
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 08:24:21 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m3so1902132wms.4
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 08:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eCYRoFHN1s610lMicf90LmLzggLEe+t0r6vMfIYNzFA=;
-        b=Xln+yn8m3AA8WxaGIwX25MFjEteQ5wcDFOdUKdPstFMOJn1H+fXIFPTymXLQWrBcyq
-         PmAmS6XcmR2WfnX4ML7qVmZRyGTgsJYZ2HuTECXduGzMr4l3LEpWtI+J5SO5e0iOGL5J
-         EChp6A1TXXxYZFLACTx2E5uUEMtvaWIVvcDSvSAR2SHajhAPpedMJhquujC5r1KHyv4r
-         Jnf12UNmWhX1orYjjqct4g2mRq4QFZ399npLdp2S52u+hI+ljAUJDF1EbySdybl3nKMP
-         oHxV1e/B1r8WUhBKD8CE1zvYjCk8bC3ormwA1vxtZBCIhhc+a0Bl2jrkVFqMiws+uyfA
-         SpCg==
+        bh=L3klJRPQBsUOGiYLOmapQxnaCe2Vx29JCOhSY9CvEtE=;
+        b=gyojfb7ABghch1/cAFlh69Q003A1rvJAPP3MHwdpj0IJtR3wEFDcXVlivnj+AHsHWf
+         SL3faDvJ7ZEPxfFo8Of780X05TkDyD2NJbEEo9y0twYqXOsku9EwjXzvXyd8acUDeNgV
+         As9t2siZJ69WoYAGZUU5Xb5MJnAu5/C092cRDs9b1I4KQRNope639Dk0jr0R2AFMSUZy
+         fCSGTMEODZKfkU/BQYDkdzkp0NneJQt3wwk7GvexvBkqCuIqRKJPoeQngAyywkf3kEn7
+         UzJsBQ9bEPuVdhAXDdJ9RwslZq1wW7g2KgJjRnxRTdSS9740+6/SFgr8P8Hio0hje69x
+         zmww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eCYRoFHN1s610lMicf90LmLzggLEe+t0r6vMfIYNzFA=;
-        b=GnGbtkDr3dIW0kD/22kpd2EJyb9y6GehxpT0jMqN3OQAG6+M5FOjgPMWNDsys2uKs3
-         fY8EUJrBT5kUAG60yC5yNA891FcIE4rzue6r9pnVl1O29GREq5IhbpR+7Jn1htu+fO+C
-         yLxV6gQQRHRxDDYQtUiTsdlsjkf0rP3KSMalJLRBM4VwrDVK2SGQUoEIwIvxpCMKQkxQ
-         Tclx4HJ1eKwBfjhdI9zfQDV+ysQO6X549choB2GLEo7Q4nzwrXnch4Elxja5u/mKCacx
-         b7UAjunVf/K30Wp7tbbLpGMGZKcBEODU3ubJ0PFpKQ9DWiDKSno4PRYMTlKtCL/25cVU
-         2TIA==
-X-Gm-Message-State: AOAM532PoOL4ZA+ZwDz5OzuEVHqwV4DD4JevQt9tKAN3EwlgAamEJ7ux
-        Z7Y16QWWxBN1NsCodmF4DzYhpCzCiAM=
-X-Google-Smtp-Source: ABdhPJxioRq6+FoHXke4owQVXX8IXmnURpzwXh2rFb0Od1BvRJumm2pLLVk0vkX1bnStYbVOgpbVKw==
-X-Received: by 2002:a05:600c:4f09:: with SMTP id l9mr11838290wmq.114.1624461861483;
-        Wed, 23 Jun 2021 08:24:21 -0700 (PDT)
+        bh=L3klJRPQBsUOGiYLOmapQxnaCe2Vx29JCOhSY9CvEtE=;
+        b=pocNNzZwFeNJphnqA0SlDhj2XIfLHw+NBeL8dFou2TLKKleBn/dDoMU93aYLtXqV3K
+         8X83eI+zOGS5CLKGdfj/mDZsmnsUzFJhAWtgiAGhEzMiPrcOJZIJhssQMh9Gjh8UWver
+         DVstxnI+nQKShI9bc7N16p/ex/8m5ZFv+3hETNIesh/SpehWVrCuXXyiotrrA8eTMqJ+
+         JRS7Z3dnCCwy0T8cihwXWV9YTr+UB0dRW47Xot22XyZ/BKh0ZqgWa+eFRTpunFel4BH1
+         hK7G1jUFmPwuG1D75z7jSfIt4sKI1VWpbCVOah0xT55+X7CCgpThJ9NIV6ZvkJRirWlF
+         5veQ==
+X-Gm-Message-State: AOAM530Xp3NgjUKlQAGKFxslsu6ebGGb2DmvcJsfScp9FvB2KCS2cn+x
+        EyIR5gBF6QiM/DtyGYnCqj+NWuQkrG8=
+X-Google-Smtp-Source: ABdhPJx7ICNWPVJ1B4y8vQnPLYpO0nZM6qgNCZvvl/aDg29vX59gK+cFmNUUMg6lHO2XKf8fqDCnWA==
+X-Received: by 2002:a05:600c:321a:: with SMTP id r26mr11350449wmp.90.1624461860401;
+        Wed, 23 Jun 2021 08:24:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x3sm5766867wmi.42.2021.06.23.08.24.21
+        by smtp.gmail.com with ESMTPSA id p187sm268267wmp.28.2021.06.23.08.24.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 08:24:21 -0700 (PDT)
-Message-Id: <a5084795ab039f6e7b9ab97cced3d7567e709327.1624461857.git.gitgitgadget@gmail.com>
+        Wed, 23 Jun 2021 08:24:20 -0700 (PDT)
+Message-Id: <7930465e80971eeef79aff012008cd43199cfb50.1624461857.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.878.git.1624461857.gitgitgadget@gmail.com>
 References: <pull.878.git.1624461857.gitgitgadget@gmail.com>
-From:   "Dennis Ameling via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Jun 2021 15:24:15 +0000
-Subject: [PATCH 5/6] ci(vs-build): build with NO_GETTEXT
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 23 Jun 2021 15:24:13 +0000
+Subject: [PATCH 3/6] ci: upgrade to using actions/{up,down}load-artifacts v2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Dennis Ameling <dennis@dennisameling.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Dennis Ameling <dennis@dennisameling.com>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We already build Git for Windows with `NO_GETTEXT` when compiling with
-GCC. Let's do the same with Visual C, too.
+The GitHub Actions to upload/download workflow artifacts saw a major
+upgrade since Git's GitHub workflow was established. Let's use it.
 
-Signed-off-by: Dennis Ameling <dennis@dennisameling.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/main.yml | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 0f7516c9ef..3b40c677ab 100644
+index d430c4e0d2..a399114c0f 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -159,7 +159,7 @@ jobs:
-       shell: bash
-       run: |
-         cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows \
--        -DMSGFMT_EXE=C:/git-sdk-64-minimal/mingw64/bin/msgfmt.exe -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
-+        -DNO_GETTEXT=YesPlease -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
-     - name: MSBuild
-       run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
-     - name: bundle artifact tar
+@@ -90,7 +90,7 @@ jobs:
+         NO_PERL: 1
+       run: ci/make-test-artifacts.sh artifacts
+     - name: upload build artifacts
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v2
+       with:
+         name: windows-artifacts
+         path: artifacts
+@@ -104,7 +104,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v1
+     - name: download build artifacts
+-      uses: actions/download-artifact@v1
++      uses: actions/download-artifact@v2
+       with:
+         name: windows-artifacts
+         path: ${{github.workspace}}
+@@ -121,7 +121,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v2
+       with:
+         name: failed-tests-windows
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -170,7 +170,7 @@ jobs:
+         mkdir -p artifacts &&
+         eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)"
+     - name: upload build artifacts
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v2
+       with:
+         name: vs-artifacts
+         path: artifacts
+@@ -185,7 +185,7 @@ jobs:
+     - uses: actions/checkout@v1
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: download build artifacts
+-      uses: actions/download-artifact@v1
++      uses: actions/download-artifact@v2
+       with:
+         name: vs-artifacts
+         path: ${{github.workspace}}
+@@ -204,7 +204,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v2
+       with:
+         name: failed-tests-windows
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -242,7 +242,7 @@ jobs:
+       if: failure()
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v2
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -269,7 +269,7 @@ jobs:
+       if: failure()
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v2
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
 -- 
 gitgitgadget
 
