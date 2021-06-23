@@ -7,126 +7,154 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A357C2B9F4
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAE88C2B9F4
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:56:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49CCD60E0B
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:46:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE5F96112D
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230290AbhFWCtB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 22:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
+        id S229995AbhFWC6S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 22:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230004AbhFWCtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 22:49:00 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C47C061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:46:43 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id k16so1507587ios.10
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:46:43 -0700 (PDT)
+        with ESMTP id S229786AbhFWC6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 22:58:18 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3EEC061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:56:01 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id k16so1524654ios.10
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nBtfYxJmiXYWctbc0tzhvEMyN8gBD9ONyQz9mPuu+yg=;
-        b=J/QONHY1qHGGMbd7jm9z6MFj0T4Nu+WwjSPbO9nOr5/TeFXLSfF19KqpCxn/lCFMBl
-         4mZj78JAwPm5f50TxOXyy2WANm3EvcEv6Y8SkCjZFlYOwXZtWYNnLD8K5XUUgY7Yc5Fl
-         uBwFAoJKea56yUuKcsvtr8839WvWH7p5SCuXGR3D5tQWk8/DtqcWY0TdpyLIK6UUM3WM
-         kqXwhwJ62tYUQUpsbWTX6SvmGZ6SW8Yc6bXCzfMZBaVWq51IzQ0u5dX7wlzHr3GIovh5
-         mG7Rbpnsxk/OC8K6WDTqDBiqZebOtveaqxCyMwDpzDLix46tcgS6a0oOjeQ6JkEvOGAJ
-         wL/Q==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Ul9oCuY9gGFBAu8ZBpa61xX2OPQ9+9F0lE5xbFDuiDw=;
+        b=rhChM9HDm0m/V91fj4ufxuoD2Zdkkt48CyweBq3hf6sD07ErN4tiyNtEDmWYpxMB9y
+         Q/ZdZ4aHn8/RzejVtO0zJQrZJY05yq/fNmmgIsqjHNpZNBwI8q6KorPy1gcYum/x7t9c
+         KQByqjEZuleyCvKI8QkAOQnPPsNEZVjWsuRyZJZ3ByxwBD3hl0ZV8JAlX8lFw1uSIZhV
+         yJVigrtTXOj5yFdZAtrT6jRmMHD2L6RSetNg/5ESBrqZGplloHF8b1k0e10KRSjj0Iv6
+         VZepZcBOGJkFG+5n0ezdDSOB5TOz85vJYC4hk+6WObVmOXkkK/U7g5F55poHVoB/B/Hm
+         rxaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nBtfYxJmiXYWctbc0tzhvEMyN8gBD9ONyQz9mPuu+yg=;
-        b=k9diB3glk967eGceLbL5FI3fcqgVa8vOqGq5iEfm7hZNzQAPHogf+Go94+uKWTrfBW
-         tFbdOSAmZ2z5RbyZNHf+C1IZo3dnDyaQN1xbx9E1Ro94BVN6xpaUoCb9hk7PRpvJ+SZN
-         WNNbP55ubjk699Tnc8Br9lchGSgBaXvI8iltb6L2GiJOR0v/roy1zDbLuI4CMWRHy1K+
-         AdsEGkcZ6YbGDEJTo2qxQirn+8nUfwk7A4bCwLJ9uAfBPdQxN+KsL3j1LVQoo+T63q6q
-         7sX9D4caQE7U3ITHDWuyGDQCUmNgUUjUj+GRQIlbpHunKPlmRW8AZQ+fxfxdloyIO2H+
-         aJYw==
-X-Gm-Message-State: AOAM530DeI2W2eeUQ8W7vsCUX0l1uJ4m/ziYEeTJEwXA4N+QCkmMD3xW
-        O0YTC2D3IOkSyr5nIdAEJ2t7ULR0AgT92lyV
-X-Google-Smtp-Source: ABdhPJyipv8/riVScTJZ0ofV9V8+dG67KQKrvrEGoyNdXxxbbRvbRBLlh33ZDZ7JRNR5o2MP8WBiRg==
-X-Received: by 2002:a6b:e018:: with SMTP id z24mr5350492iog.206.1624416402482;
-        Tue, 22 Jun 2021 19:46:42 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Ul9oCuY9gGFBAu8ZBpa61xX2OPQ9+9F0lE5xbFDuiDw=;
+        b=koJ2tN8vM95tnMSD4Zb6lAvK/vnNe4ZER//bPQptnLn/ZQSVJldlXA3BtFMMb+9A/Q
+         JB32eOis3v4f+GMtSmMguXif269dzDHAGfIDwt27OAZzM8TUkoe5Q6YCioT+BH90Q2Qn
+         c+ZZiQtji2zWt2mU5Nln/+tCXqq8thn4a1ogWcB55YCEAPrLRFhZ658TvgyBd0EDGkAN
+         w3h2HrKKYWoBZ0BQJeJupyVq41jjPKMFW/CYMCksaDoXXs5k582imB5voFLC8J4CEret
+         bn7GwqTUWCMk3QarVIXH1aL31gydHXJGouUomKlcF8gS0m/e52Yijv68tpXRhSpzSH2W
+         ucPg==
+X-Gm-Message-State: AOAM530wGHutv3Nfz3buZyh02F2RCRR36hqG21nvJJHmdIQoEKfv5ur1
+        m/Z/RG2/CZPoVeyNvZLfdkJdgQ==
+X-Google-Smtp-Source: ABdhPJyIRFK1TXj7GgmbsJYseR1phvoeBqnV8emaW+tqNy0FJv2dqyTo3ImLR//oPztdDTo4Ci9ViA==
+X-Received: by 2002:a05:6602:219a:: with SMTP id b26mr344200iob.69.1624416960489;
+        Tue, 22 Jun 2021 19:56:00 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
-        by smtp.gmail.com with ESMTPSA id 7sm9287931ily.63.2021.06.22.19.46.41
+        by smtp.gmail.com with ESMTPSA id e14sm8557497ilq.32.2021.06.22.19.55.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 19:46:41 -0700 (PDT)
-Date:   Tue, 22 Jun 2021 22:46:40 -0400
+        Tue, 22 Jun 2021 19:56:00 -0700 (PDT)
+Date:   Tue, 22 Jun 2021 22:55:59 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/5] load_ref_decorations(): avoid parsing non-tag objects
-Message-ID: <YNKgkGkPiMgNubNE@nand.local>
-References: <YNIJw/8p0F3cPfzd@coredump.intra.peff.net>
- <YNILCDz3LpHX7OX0@coredump.intra.peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Josh Steadmon <steadmon@google.com>, szeder.dev@gmail.com
+Subject: Re: [PATCH] trace2: log progress time and throughput
+Message-ID: <YNKiv2Ar77xAxixz@nand.local>
+References: <20200512214420.36329-1-emilyshaffer@google.com>
+ <871r8w3sxu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YNILCDz3LpHX7OX0@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <871r8w3sxu.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 22, 2021 at 12:08:40PM -0400, Jeff King wrote:
-> If the packed-refs file ever learns to store all of the peeled layers,
-> then we could switch to it. Or even if it stored a flag to indicate the
-> peel was not multi-layer (because most of them aren't), then we could
-> use it most of the time and fall back to a manual peel for the rare
-> cases.
-
-Yeah, I would be in favor of either of these. Of the two, the latter
-seems like the simplest thing, but the former provides you all of the
-information you could hope for.
-
-I suppose that if you are already changing the format of packed-refs,
-then we might as well do the thing which provides the most information
-and allows us to optimize *all* cases, not just the vast majority of
-them.
-
-Of course, that's all way outside of the scope of this patch, which
-shouldn't have to deal with either of those.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  log-tree.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+On Mon, Jun 21, 2021 at 03:24:47AM +0200, Ævar Arnfjörð Bjarmason wrote:
+> > [...]
+> > @@ -320,6 +321,22 @@ void stop_progress(struct progress **p_progress)
+> >  {
+> >  	finish_if_sparse(*p_progress);
+> >
+> > +	if (p_progress && *p_progress) {
+> > +		trace2_data_intmax("progress", the_repository, "total_objects",
+> > +				   (*p_progress)->total);
 >
-> diff --git a/log-tree.c b/log-tree.c
-> index 7b823786c2..8b700e9c14 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -134,6 +134,7 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
->  			      int flags, void *cb_data)
->  {
->  	struct object *obj;
-> +	enum object_type objtype;
->  	enum decoration_type type = DECORATION_NONE;
->  	struct decoration_filter *filter = (struct decoration_filter *)cb_data;
+> We start progress bars for various things in git, yet the trace2 data
+> calls every such progress bar with a total "total_objects", even though
+> we may not be counting anything to do with objects.
 >
-> @@ -155,9 +156,10 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
->  		return 0;
->  	}
->
-> -	obj = parse_object(the_repository, oid);
-> -	if (!obj)
-> +	objtype = oid_object_info(the_repository, oid, NULL);
-> +	if (type < 0)
->  		return 0;
-> +	obj = lookup_object_by_type(the_repository, oid, objtype);
+> Wouldn't simply s/total_objects/total/ make more sense here, do you rely
+> on the name of the current key?
 
-The comments about s/type/obj&/ aside, this looks good to me (and the
-amended version below looks ready to be picked up, at least in my eyes).
+Yeah, I think that the latter of just "total" makes more sense here. I
+was going to comment on the fact that "(*p_progress)->total" could be
+written simply as "*p_progress->total", but I'm (a) not sure that I
+actually prefer the latter to the former, and (b) I find that kind of
+style comment generally useless.
 
-One thing I did want to note which is elided by the limited context is
-that we *do* parse tags like you say, it's just hidden in the "while
-(obj->type == OBJ_TAG)" loop below.
+But it may make sense to sidestep the whole thing and have a "struct
+progress *progress = *p_progress" (that is assigned after we check
+p_progress to make sure it's non-NULL) like in stop_progress_msg, which
+would clean up a lot of this.
 
-So that's doing the right thing, but it wasn't clear from the limited
-context here that this patch was immediately correct.
+--- 8< ---
 
-Thanks,
-Taylor
+Subject: [PATCH] progress.c: avoid repeatedly dereferencing p_progress
+
+stop_progress() takes a double-pointer to a "progress" struct, and
+dereferences it twice in each use except one (checking whether
+*p_progress is NULL or not).
+
+Mirror the implementation of stop_progress_msg() below by having a local
+single-pointer to a progress struct (which is the dereference of
+p_progress) to avoid repeatedly dereferencing it.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ progress.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/progress.c b/progress.c
+index 680c6a8bf9..390c76b22a 100644
+--- a/progress.c
++++ b/progress.c
+@@ -319,21 +319,25 @@ static void finish_if_sparse(struct progress *progress)
+
+ void stop_progress(struct progress **p_progress)
+ {
++	struct progress *progress;
++
+ 	if (!p_progress)
+ 		BUG("don't provide NULL to stop_progress");
+
+-	finish_if_sparse(*p_progress);
++	progress = *p_progress;
+
+-	if (*p_progress) {
++	finish_if_sparse(progress);
++
++	if (progress) {
+ 		trace2_data_intmax("progress", the_repository, "total_objects",
+-				   (*p_progress)->total);
++				   progress->total);
+
+-		if ((*p_progress)->throughput)
++		if (progress->throughput)
+ 			trace2_data_intmax("progress", the_repository,
+ 					   "total_bytes",
+-					   (*p_progress)->throughput->curr_total);
++					   progress->throughput->curr_total);
+
+-		trace2_region_leave("progress", (*p_progress)->title, the_repository);
++		trace2_region_leave("progress", progress->title, the_repository);
+ 	}
+
+ 	stop_progress_msg(p_progress, _("done"));
+--
+2.31.1.163.ga65ce7f831
+
