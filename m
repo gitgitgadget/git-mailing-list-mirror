@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D699C49EA6
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 21:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 817D0C48BC2
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 21:57:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FA966100A
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 21:57:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BD3B6100A
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 21:57:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbhFWWAI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 18:00:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47806 "EHLO
+        id S229886AbhFWWAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 18:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbhFWWAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 18:00:07 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E91A4C061756
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 14:57:48 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id f15so4267412wro.8
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 14:57:48 -0700 (PDT)
+        with ESMTP id S229873AbhFWWAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 18:00:09 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D8FBC061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 14:57:50 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id w13so2593505wmc.3
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 14:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=C3D8BMjegV2qbTaQtZk4OAWOaU+VkgmsYqsmzrsKsNA=;
-        b=mWd5nMVuAhzb3PJ62B4BG10I5rdFIigG+lemDVrTnuMgKovLBxuBo8qhZm/5MqMoJQ
-         sBSail8gAFhZqF6NGA5vv9FTZkQWaycR5jjs9VFWZcG7YkdgZqSBhC0prMJd9okDv+Ic
-         7XWk8dSVZMfumGX3ciJwZEzvRodk7X+drwkOSK57z/9vBCWGpysDgqq9B+ioVZCghJvZ
-         M70Rltmub6+Lr7sHvDJP2yZdn0hmN4C/FR90A/SG+3CihGI80guMfpoHo8TiWGYGY9C9
-         Lhp9J3zFXzbPxsyogHGn00iTbxzvOez2JRUmQ7YfVB1WSHmm0yLnT6jlEJw8cjKR3yQG
-         XBBA==
+        bh=7BmoOqJThW4TtHUSoWWHnrsVWuPxM0Jf1kqefXwxhFo=;
+        b=rfhQdG9iSlvdFF5FzyxKDlLehBqn/fhRa7viyWWYiJXD5GQQFjO1qpQ/eNoLnjpvoP
+         ryRF9q0muhypmplUz774/4vTVFCsIvMPmIwXx3qWdeG/XfgYQZT8dBIZkQhVNKPiV3aA
+         L2lRt6c9mRf550u9gZ3/EyHpNGy3hu92DCnxf1HPicBQ4/Te5mBXAhvRsjNR/Jf1Q/ps
+         2M05Mgb5fQ/r1IPUO/t8c7Ll9/61jXGzOyXmOgQA2B6aj508wLyUprfGVaSXIi4t3H8n
+         NSfVwdnkpezDmB1RnDxgmc7kCskGBzXGsQf5E/MCB7BRFw5jxgdgvaLFH6Aob1IYFab1
+         x1cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=C3D8BMjegV2qbTaQtZk4OAWOaU+VkgmsYqsmzrsKsNA=;
-        b=CeMnY0wYTfF7VvdPeWjEauHvJG8RSM/91labLn3b0V3o3NXWW+3atXyCF+6OJ9BFX8
-         Y2lfZ49Ywql5GbKtE0Eolwq8AaVHbtm/HdEu7KYTpivMpJcS0RkHetL4uaJoIT2RXCST
-         eBMZFaDnV7caFydEJtJx8WLOZohiwZ4GynkKKGB80wSz9PkWw8zXq5i2febMW4E+V627
-         xEQD2074FJxM7goSUJvEQJo6Xp8Zjrp9Bq3fKxmcviqrgPM3q26xHTXzaOwn3WrXlxop
-         e49lmjF4K0Yp2OJbCsRi8JUC62ELgfaP0bRSYYhHqtXY4gQ0UvxlZTqaZ80t5U2VRhNV
-         670Q==
-X-Gm-Message-State: AOAM530qWbhq8TA5ybnFA2p2It0sogDIEohXwGofohoZC/1PCqDqSkvd
-        url4D6gIyxp0HZmpOszZKYRYqowfYec=
-X-Google-Smtp-Source: ABdhPJwGCVG/p9bLlILJfVn9WFKnYNbc6fB6glM1zgCWT2rT3rFfCP84uNWAJsux9Im4JoregoqrsA==
-X-Received: by 2002:a5d:480e:: with SMTP id l14mr319482wrq.33.1624485467666;
-        Wed, 23 Jun 2021 14:57:47 -0700 (PDT)
+        bh=7BmoOqJThW4TtHUSoWWHnrsVWuPxM0Jf1kqefXwxhFo=;
+        b=SMxAPutwfzUp9nC+7kfCFntPeE+eCeeKF2HM+qLX8uy11FlhtYuGjjNgSqf8RUJHgB
+         bzQTaymJ/qUbX+NtqHIhDScSJ6nawqK/MqzMVnhQvNBo3UmFql6t7Qc/Om5c8AahqscS
+         D6JZoWiQQD2YskYBI82DA7EuNnTH4xzHx/gGc4Cc3lcLtHntMGyYClRo/9sMVp/DkJ8M
+         4aXPWWUmB21oKUM5WTwO/8v176cY0TdlwP9cGbyIntdFLtA1wft0WAbO9SSL5zDN49vz
+         llwAU8ad1d73CWvUbMa8hlY8w4swNrSqTuZSwqQYbdyd0S/LtcaP6MvY+U8g+YgKn3Ca
+         UrKA==
+X-Gm-Message-State: AOAM530I7K+Iwzjp1pijrgcQ+pAjst6PEk6xJlKfSWTTB2ndfZff2VOO
+        hnGHr1X56XnQUHeaDtlT9GaXAeTnvRY=
+X-Google-Smtp-Source: ABdhPJzhD3jd6f1TWmdMFIA5l6V8FHZTfnKCHO0a0caVqVbw5DZ6M1p6myKHrr1xn5wCFLcme8KFIQ==
+X-Received: by 2002:a7b:c187:: with SMTP id y7mr276261wmi.13.1624485469291;
+        Wed, 23 Jun 2021 14:57:49 -0700 (PDT)
 Received: from localhost.localdomain (94-21-146-91.pool.digikabel.hu. [94.21.146.91])
-        by smtp.gmail.com with ESMTPSA id q11sm1192348wrx.80.2021.06.23.14.57.47
+        by smtp.gmail.com with ESMTPSA id q11sm1192348wrx.80.2021.06.23.14.57.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 14:57:47 -0700 (PDT)
+        Wed, 23 Jun 2021 14:57:49 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/4] read-cache: avoid overlapping progress lines
-Date:   Wed, 23 Jun 2021 23:57:35 +0200
-Message-Id: <20210623215736.8279-4-szeder.dev@gmail.com>
+Subject: [PATCH 4/4] preload-index: fix "Refreshing index" progress line
+Date:   Wed, 23 Jun 2021 23:57:36 +0200
+Message-Id: <20210623215736.8279-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.32.0.289.g44fbea0957
 In-Reply-To: <20210623215736.8279-1-szeder.dev@gmail.com>
 References: <20210620200303.2328957-1-szeder.dev@gmail.com>
@@ -74,39 +74,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Refresh index" in refresh_index() in 'read-cache.c' vs. "Refreshing
-index" in preload_index() in 'preload-index.c'.
 ---
- read-cache.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ preload-index.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index c3fc797639..692a69f2db 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1567,10 +1567,6 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	int t2_sum_lstat = 0;
- 	int t2_sum_scan = 0;
+diff --git a/preload-index.c b/preload-index.c
+index aae6e4a042..757dbeced6 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -86,7 +86,8 @@ static void *preload_thread(void *_data)
+ 		struct progress_data *pd = p->progress;
  
--	progress = start_delayed_progress_if_tty(_("Refresh index"),
--						 istate->cache_nr,
--						 flags & REFRESH_PROGRESS ? -1 : 0);
--
- 	trace_performance_enter();
- 	modified_fmt   = in_porcelain ? "M\t%s\n" : "%s: needs update\n";
- 	deleted_fmt    = in_porcelain ? "D\t%s\n" : "%s: needs update\n";
-@@ -1583,6 +1579,11 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	 * we only have to do the special cases that are left.
- 	 */
- 	preload_index(istate, pathspec, 0);
-+
-+	progress = start_delayed_progress_if_tty(_("Refresh index"),
-+						 istate->cache_nr,
-+						 flags & REFRESH_PROGRESS ? -1 : 0);
-+
- 	trace2_region_enter("index", "refresh", NULL);
- 	/* TODO: audit for interaction with sparse-index. */
- 	ensure_full_index(istate);
+ 		pthread_mutex_lock(&pd->mutex);
+-		display_progress(pd->progress, pd->n + last_nr);
++		pd->n += last_nr;
++		display_progress(pd->progress, pd->n);
+ 		pthread_mutex_unlock(&pd->mutex);
+ 	}
+ 	cache_def_clear(&cache);
 -- 
 2.32.0.289.g44fbea0957
 
