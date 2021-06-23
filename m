@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB75AC48BE5
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C3EC4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5C59611CB
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F13C611CB
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230046AbhFWRvL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 13:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48346 "EHLO
+        id S230049AbhFWRvM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 13:51:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbhFWRvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:51:01 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91042C0617A6
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:39 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id u8-20020a7bcb080000b02901e44e9caa2aso1802363wmj.4
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:39 -0700 (PDT)
+        with ESMTP id S229950AbhFWRvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:51:02 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D601EC0617AE
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:40 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id u11so3548856wrw.11
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8N+R6M07JfkZE0+gAEOa8HpCZWJSS0NmBIr647albSE=;
-        b=mDgU0bsofDu5Xm8Qpac0Vc77KdpsURYsbEa8M0cJAx1TMiMHxNWc4s1Iw5qjJ5lZQY
-         1PVQeCZFT8BU3E3y3qL8AfF03KxSPh1LeXv9/TImZ2JEDrw0GpzBROSx0Y4UjrOSXV+8
-         ae2hC92UnokFn42mQUvtpWVG+9t2gljs0aL30eIXoec9Gr8kuPWTQ2Tme1l3BC2KatF7
-         UFKv5M82Sv22f1FKyd6lNByciVioihMHhbZ/jmqut5eoq+zI1IquvNi5KLOz1TKE/Mzu
-         0iYQgcsLmHnI6yBUzwEWbPSxbFU3XtsoEeuc1sYwV/xiYnn7MlNY0/QSCyIcF7yCmPOP
-         Es3w==
+        bh=nas0R6uX9+LqJxi/c4zKrj/09+ZQQsXmwa5KSv0WXMk=;
+        b=FdeTMtio0qa3UU/MZ5aYuhMehZNoe7bMNHwSqLo3CscvxHfs/mfENlaIhG40pumG5s
+         +8EKmVM5pg2TKqxkrt1a4kILL8nWqnkvJY+stj2aO6kUgIFfcvy8i+cAA41bQzSAZ9rp
+         A2DOH6CB9gK9xeivYJ9j2HxYrHj1uxyYC0iGOE0XucTlyCdHz5V8FKFyc+bWW0aDFnkn
+         XnPdyWkvf9Z2N2QVLISBIJ5+b+/1/RphRlmL+hmfLmtTy3yi0iFRX+U0dayB44ZAQkkI
+         9WFi4LMwcbuQvyWCa2CD+OXcC3tWvl8HLByTY9fzgaywbWP9PkZiX7rAo7rrG8315sqP
+         ITJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8N+R6M07JfkZE0+gAEOa8HpCZWJSS0NmBIr647albSE=;
-        b=CTice6oGcsz5C1n+jAZGLMWUoJMM2n6EE79aARiO15MeDjKO2Rgp2/fZLxF0ZYUeGQ
-         hNMOq+vyMlmrslPQqJty5Z5fsM9eHQtEzpwuwQl2bNhWFystNse/k6+rJbyuzDrA2ZQ0
-         5cO0Uw65MBfiE7KBN2ipi3RVXU3j9kmbiouR+lbOurqBuVRMtFPDNcS1+MNGlOI4qyzi
-         RUET/HQ9l+U3rCGnoPz/6R61LtKP4KYbU7bgk0q3cdKcvH5eUpl72bE3YyAoBS2t1YlM
-         agHmZ56ebjZTd8VErlyfYAr92cJTwLWx7nafnYFQ7dNGbINaxPrLfhS79/duAldRRPvn
-         fqdA==
-X-Gm-Message-State: AOAM532wDbSSXNc6PSGlCyCF8gQoW1XeX7oW3vbUeTjV9XtY2ongG3Dm
-        ivcWa3R/pUUawfAaTNLJhMWSUtTeoSijhA==
-X-Google-Smtp-Source: ABdhPJwEIcTI0QqefWLGfXqF60rw8S1MDeAgA57eJSVhzJjjFzJTw4PoD1cIs2b6IDGw8WQ3Iy7n1g==
-X-Received: by 2002:a1c:f215:: with SMTP id s21mr12363521wmc.179.1624470518015;
-        Wed, 23 Jun 2021 10:48:38 -0700 (PDT)
+        bh=nas0R6uX9+LqJxi/c4zKrj/09+ZQQsXmwa5KSv0WXMk=;
+        b=lDLneQegzrHJyvfIIT+kt1QFnp4UencNxgJaR4NCQdzkvXaEw4sMXe2NIXAiKGeiAW
+         aR/iFvOAfkSBRKKOx3BPyoVK6o/Jookd6y2tXSPnNIXo6c42MN2LwnQYqFejn4P6wHXt
+         ylC6C5QDa7IYvADVoDjvh8gK/UDVgdKHSfmlGUiumMN1xqpdXRT6JqnlZ8ieCM7R5B0w
+         PvZjJB1P154FwrVQolmNmc+5WqT5lwJsSk6iKJ5re1eEklO/d4fT5T6Pspne+uPY0pTd
+         wkriaA1GppHuUzB2gGKidCePgzIwwO2IZ/KgkWThe+gJJ+mhfF2bc8NfZOCNZ4mJsocN
+         u2EA==
+X-Gm-Message-State: AOAM533aim+gJ797VFLOOZQ2dXUc30Wa4QrJaTEU7p5KPuminRHN5Vab
+        W3SXdLPvKaj9uMHQEmjk+TIZL1YVlSKvcw==
+X-Google-Smtp-Source: ABdhPJwubB8ijljO6HODkpajt476EQj+JOWfZxz3WR7QDTuuydGXL7LoDjmkzhtOIJgVGWkxSrG2Rw==
+X-Received: by 2002:adf:f743:: with SMTP id z3mr1389781wrp.329.1624470519279;
+        Wed, 23 Jun 2021 10:48:39 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.37
+        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 10:48:37 -0700 (PDT)
+        Wed, 23 Jun 2021 10:48:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 12/25] progress.c: add & assert a "global_progress" variable
-Date:   Wed, 23 Jun 2021 19:48:12 +0200
-Message-Id: <patch-12.25-c4e7179e957-20210623T155626Z-avarab@gmail.com>
+Subject: [PATCH 14/25] progress.[ch]: move test-only code away from "extern" variables
+Date:   Wed, 23 Jun 2021 19:48:14 +0200
+Message-Id: <patch-14.25-88d864c373a-20210623T155626Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
 In-Reply-To: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
 References: <YNKWsTsQgB2Ijxu7@nand.local> <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
@@ -78,124 +78,218 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The progress.c code makes a hard assumption that only one progress bar
-be active at a time (see [1] for a bug where this wasn't the case),
-but nothing has asserted that that's the case. Let's add a BUG()
-that'll trigger if two progress bars are active at the same time.
+Since the test-only support code was added in 2bb74b53a49 (Test the
+progress display, 2019-09-16) we've had to define
+GIT_TEST_PROGRESS_ONLY more widely as part of the bugfix in
+3cacb9aaf46 (progress.c: silence cgcc suggestion about internal
+linkage, 2020-04-27).
 
-There's an alternate test-only approach to doing the same thing[2],
-but by doing this for all progress bars we'll have a canary to check
-if we have any unexpected interaction between the "sig_atomic_t
-progress_update" variable and this global struct.
+So the only thing we were getting out of this indirection was keeping
+GIT_TEST_PROGRESS_ONLY from being defined in progress.h itself,
+i.e. so the likes of csum-file.h wouldn't have access to them, we'd
+still compile them in progress.o.
 
-I am then planning on using this scaffolding in the future to fix a
-limitation in the progress output, namely the current limitation of
-the progress.c bar code that any update must pro-actively go through
-the likes of display_progress().
+Let's just always define and compile them without this needless slight
+of hand, the linking and strip step will take care of removing these
+unused symbols, if needed.
 
-If we e.g. hang forever before the first display_progress(), or in the
-middle of a loop that would call display_progress() the user will only
-see either no output, or output frozen at the last display_progress()
-that would have done an update (e.g. in cases where progress_update
-was "1" due to an earlier signal).
-
-This change does not fix that, but sets up the structure for solving
-that and other related problems by juggling this "global_progress"
-struct. Later changes will make more use of the "global_progress" than
-only using it for these assertions.
-
-1. 6f9d5f2fda1 (commit-graph: fix progress of reachable commits, 2020-07-09)
-2. https://lore.kernel.org/git/20210620200303.2328957-3-szeder.dev@gmail.com
+We now expose a start_progress_testing() function instead, which'll
+set a "test_mode" member, which the test of the code can check.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- progress.c                  | 17 +++++++++++++----
- t/t0500-progress-display.sh | 11 +++++++++++
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ progress.c               | 34 ++++++++++++++--------------------
+ progress.h               | 21 ++++++++++++++-------
+ t/helper/test-progress.c | 11 +++++------
+ 3 files changed, 33 insertions(+), 33 deletions(-)
 
 diff --git a/progress.c b/progress.c
-index 912edd4c818..e1b50ef7882 100644
+index aff9af9ee8b..39d7f6bd86b 100644
 --- a/progress.c
 +++ b/progress.c
-@@ -45,6 +45,7 @@ struct progress {
- };
+@@ -8,7 +8,6 @@
+  * published by the Free Software Foundation.
+  */
  
+-#define GIT_TEST_PROGRESS_ONLY
+ #include "cache.h"
+ #include "gettext.h"
+ #include "progress.h"
+@@ -20,13 +19,6 @@
  static volatile sig_atomic_t progress_update;
-+static struct progress *global_progress;
+ static struct progress *global_progress;
  
- /*
-  * These are only intended for testing the progress output, i.e. exclusively
-@@ -220,11 +221,15 @@ void progress_test_force_update(void)
+-/*
+- * These are only intended for testing the progress output, i.e. exclusively
+- * for 'test-tool progress'.
+- */
+-int progress_testing;
+-uint64_t progress_test_ns = 0;
+-
+ static int is_foreground_fd(int fd)
+ {
+ 	int tpgrp = tcgetpgrp(fd);
+@@ -108,8 +100,8 @@ static void throughput_string(struct strbuf *buf, uint64_t total,
+ 
+ static uint64_t progress_getnanotime(struct progress *progress)
+ {
+-	if (progress_testing)
+-		return progress->start_ns + progress_test_ns;
++	if (progress->test_getnanotime)
++		return progress->start_ns + progress->test_getnanotime;
+ 	else
+ 		return getnanotime();
+ }
+@@ -185,11 +177,7 @@ static void progress_interval(int signum)
+ 	progress_update = 1;
+ }
+ 
+-/*
+- * The progress_test_force_update() function is intended for testing
+- * the progress output, i.e. exclusively for 'test-tool progress'.
+- */
+-void progress_test_force_update(void)
++void test_progress_force_update(void)
+ {
  	progress_interval(SIGALRM);
  }
+@@ -203,7 +191,7 @@ static void set_progress_signal(struct progress *progress)
+ 		BUG("should have no global_progress in set_progress_signal()");
+ 	global_progress = progress;
  
--static void set_progress_signal(void)
-+static void set_progress_signal(struct progress *progress)
- {
- 	struct sigaction sa;
- 	struct itimerval v;
- 
-+	if (global_progress)
-+		BUG("should have no global_progress in set_progress_signal()");
-+	global_progress = progress;
-+
- 	if (progress_testing)
+-	if (progress_testing)
++	if (progress->test_mode)
  		return;
  
-@@ -242,10 +247,14 @@ static void set_progress_signal(void)
+ 	progress_update = 0;
+@@ -228,7 +216,7 @@ static void clear_progress_signal(struct progress *progress)
+ 		BUG("should have a global_progress in clear_progress_signal()");
+ 	global_progress = NULL;
+ 
+-	if (progress_testing)
++	if (progress->test_mode)
+ 		return;
+ 
  	setitimer(ITIMER_REAL, &v, NULL);
+@@ -237,7 +225,7 @@ static void clear_progress_signal(struct progress *progress)
  }
  
--static void clear_progress_signal(void)
-+static void clear_progress_signal(struct progress *progress)
+ static struct progress *start_progress_delay(const char *title, uint64_t total,
+-					     unsigned delay)
++					     unsigned delay, int testing)
  {
- 	struct itimerval v = {{0,},};
- 
-+	if (!global_progress)
-+		BUG("should have a global_progress in clear_progress_signal()");
-+	global_progress = NULL;
-+
- 	if (progress_testing)
- 		return;
- 
-@@ -268,7 +277,7 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+ 	struct progress *progress = xmalloc(sizeof(*progress));
+ 	progress->title = title;
+@@ -250,11 +238,17 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
  	strbuf_init(&progress->counters_sb, 0);
  	progress->title_len = utf8_strwidth(title);
  	progress->split = 0;
--	set_progress_signal();
-+	set_progress_signal(progress);
++	progress->test_mode = testing;
+ 	set_progress_signal(progress);
  	trace2_region_enter("progress", title, the_repository);
  	return progress;
  }
-@@ -342,7 +351,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 		display(progress, progress->last_value, buf);
- 		free(buf);
- 	}
--	clear_progress_signal();
-+	clear_progress_signal(progress);
- 	strbuf_release(&progress->counters_sb);
- 	if (progress->throughput)
- 		strbuf_release(&progress->throughput->display);
-diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
-index 66c1989b176..476a31222a3 100755
---- a/t/t0500-progress-display.sh
-+++ b/t/t0500-progress-display.sh
-@@ -361,4 +361,15 @@ test_expect_success 'progress generates traces: stop without start' '
- 	! grep region_leave.*progress trace-stop.event
- '
  
-+test_expect_success 'BUG: start two concurrent progress bars' '
-+	cat >in <<-\EOF &&
-+	start 0 one
-+	start 0 two
-+	EOF
++struct progress *start_progress_testing(const char *title, uint64_t total)
++{
++	return start_progress_delay(title, total, 0, 1);
++}
 +
-+	test_must_fail test-tool progress \
-+		<in 2>stderr &&
-+	grep -E "^BUG: .*: should have no global_progress in set_progress_signal\(\)$" stderr
-+'
-+
- test_done
+ static int get_default_delay(void)
+ {
+ 	static int delay_in_secs = -1;
+@@ -267,12 +261,12 @@ static int get_default_delay(void)
+ 
+ struct progress *start_delayed_progress(const char *title, uint64_t total)
+ {
+-	return start_progress_delay(title, total, get_default_delay());
++	return start_progress_delay(title, total, get_default_delay(), 0);
+ }
+ 
+ struct progress *start_progress(const char *title, uint64_t total)
+ {
+-	return start_progress_delay(title, total, 0);
++	return start_progress_delay(title, total, 0, 0);
+ }
+ 
+ void stop_progress(struct progress **p_progress)
+diff --git a/progress.h b/progress.h
+index 4fb2b483d36..4693dddb6c5 100644
+--- a/progress.h
++++ b/progress.h
+@@ -27,15 +27,22 @@ struct progress {
+ 	struct strbuf counters_sb;
+ 	int title_len;
+ 	int split;
+-};
+-
+-#ifdef GIT_TEST_PROGRESS_ONLY
+ 
+-extern int progress_testing;
+-extern uint64_t progress_test_ns;
+-void progress_test_force_update(void);
++	/*
++	 * The test_* members are are only intended for testing the
++	 * progress output, i.e. exclusively for 'test-tool progress'.
++	 */
++	int test_mode;
++	uint64_t test_getnanotime;
++};
+ 
+-#endif
++/*
++ * *_testing() functions are only for use in
++ * t/helper/test-progress.c. Do not use them elsewhere!
++ */
++void test_progress_force_update(void);
++struct progress *start_progress_testing(const char *title, uint64_t total);
++void test_progress_setnanotime(struct progress *progress, uint64_t time);
+ 
+ void display_throughput(struct progress *progress, uint64_t total);
+ void display_progress(struct progress *progress, uint64_t n);
+diff --git a/t/helper/test-progress.c b/t/helper/test-progress.c
+index 7ca58a3ee78..40dbacb0557 100644
+--- a/t/helper/test-progress.c
++++ b/t/helper/test-progress.c
+@@ -46,21 +46,20 @@ int cmd__progress(int argc, const char **argv)
+ 	if (argc)
+ 		usage_with_options(usage, options);
+ 
+-	progress_testing = 1;
+ 	while (strbuf_getline(&line, stdin) != EOF) {
+ 		char *end;
+ 
+ 		if (!strcmp(line.buf, "start")) {
+-			progress = start_progress(default_title, 0);
++			progress = start_progress_testing(default_title, 0);
+ 		} else if (skip_prefix(line.buf, "start ", (const char **) &end)) {
+ 			uint64_t total = strtoull(end, &end, 10);
+ 			if (*end == '\0') {
+-				progress = start_progress(default_title, total);
++				progress = start_progress_testing(default_title, total);
+ 			} else if (*end == ' ') {
+ 				if (detached_title)
+ 					free(detached_title);
+ 				detached_title = strbuf_detach(&line, NULL);
+-				progress = start_progress(end + 1, total);
++				progress = start_progress_testing(end + 1, total);
+ 			} else {
+ 				die("invalid input: '%s'\n", line.buf);
+ 			}
+@@ -79,11 +78,11 @@ int cmd__progress(int argc, const char **argv)
+ 			test_ms = strtoull(end + 1, &end, 10);
+ 			if (*end != '\0')
+ 				die("invalid input: '%s'\n", line.buf);
+-			progress_test_ns = test_ms * 1000 * 1000;
++			progress->test_getnanotime = test_ms * 1000 * 1000;
+ 			display_throughput(progress, byte_count);
+ 		} else if (!strcmp(line.buf, "update") ||
+ 			   !strcmp(line.buf, "signal")) {
+-			progress_test_force_update();
++			test_progress_force_update();
+ 		} else if (!strcmp(line.buf, "stop")) {
+ 			stop_progress(&progress);
+ 		} else {
 -- 
 2.32.0.599.g3967b4fa4ac
 
