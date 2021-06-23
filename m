@@ -2,214 +2,289 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 961EFC4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94B09C4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 694CD611C9
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:31:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76B81611AC
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbhFWRdr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 13:33:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44388 "EHLO
+        id S229818AbhFWRuu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 13:50:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbhFWRdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:33:46 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA47C061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:31:28 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id v5-20020a0568301bc5b029045c06b14f83so2688407ota.13
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:31:28 -0700 (PDT)
+        with ESMTP id S229660AbhFWRus (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:50:48 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18372C061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:31 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id l12so2857281wrt.3
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KJyvTOIE1252uSWuW9yGnOBa0QAKJ3s7e2bdS2xuFv8=;
-        b=sD4zA9JJIMzZmrh/1DXUoO8JYlJ+hxtO6RhrFqJTKYsR0LxyJEfRMSwWT5mClaV28z
-         1ersfJMPIwaBQ2vYY5J8rcia1E6mIwND2dkNUYjlwfTEMlB355BKWeFZ/fdkT/DuX0pV
-         6AIJcssog+cQmVNPvunHwBJx1Rzl/rIIxlFEClwUD5nsV3VhSpFPei/ffHQD1ZuFpdTo
-         VUIdRBCiQIT+Dzc2f8krtlT0hbESt9k/OGGAwNRAdHNoDyfRyg/DGh7/8UBQdL+21+fo
-         gcMxm6nFyAiwMWCfFcTY7wgZXi5U5uqwgc4rxacAkNXlLiPM8egyoiz90Si/jdS2ahcV
-         /ewg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=uSaKQHPADdOVWrUp2fYPpkIbvrD8cxf0TckAe4fAubI=;
+        b=vVn7TYwVJVC+HUZKbMaBOD8gH9k5nVcCOjCBhIGzXcm3vRbK3G5ajpIs88KhiJVxg0
+         HmvVfjp8dY9wDcz02wORv+0w0Cnmz3rNaWqp/abSvgdqNpgkvn9+tmRkG/OkbaY/IbOr
+         3a2GbilcZ3ZdagLfJ0zkqzp3okB1Zdm1MXD1PGeV6fMKRyLR++4ZcPY+gW1rVGBKnF5e
+         6y1h97RVeZUBWHYKIQ74/l7bCZVzqHnHwpfezAqZYfMsQPSP+2IJbzFZ/wjgMImK4g43
+         i5pvqeD/Qi7xH6MHWZz0AErZZ8DbKf/zuStpm4+8bdExQqU8fn71Biej6glqS8ZPeohv
+         jtEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KJyvTOIE1252uSWuW9yGnOBa0QAKJ3s7e2bdS2xuFv8=;
-        b=ZWaD2J6/YetV/9sqPy7Q0kVZCl9TyyEQkzUq5zSNOv8r/t+ul6LxVfvwxl9yjGD0WM
-         vbO6V0U0MiEGgNAWWjR2RFnuk8H4sF8/ELkRozyP6m01QqQQXPJx0xEHUX1wRCThbK6x
-         V4RniXRqblBNTblrb353QVhJsl6zgSGZyA+2JbkE76JDOUtp1a9WWAjo/LHwrrD9Ap/V
-         ZsJa3qY/JM7t9RMwLCspQq7cuopRcoJdkj8wqk4nC/lCp64SQloEjZPJVVU/JKgx6v3y
-         4VDUDqWXx8dhe5+muX+OxvxtATCW+muHjHdw9rtkg9G92+YMXRKSZKI5T5xNuM6gxXpC
-         dl0g==
-X-Gm-Message-State: AOAM531Vnk59/mXCi0AcNZt52rBPgYsGGcpJfbW6GLbpL256Ul22duNv
-        zL6xYCu/THfsE/MgdbhT00Sz7zSQVi8OncxHjS0=
-X-Google-Smtp-Source: ABdhPJxZDG31s5x7pjZXRCKR0qdiYTmlUgepsi2Lrub7ZXQO3xzU2OCGdxaKbGPB3ioXFjLeo8arwzasReejBncIUdg=
-X-Received: by 2002:a05:6830:18fc:: with SMTP id d28mr936878otf.162.1624469487436;
- Wed, 23 Jun 2021 10:31:27 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=uSaKQHPADdOVWrUp2fYPpkIbvrD8cxf0TckAe4fAubI=;
+        b=M+KAs8R+c9SZOtIXnRzArbsMkhu8z9zNGAeuvXizzDd2ZPALlq8UrIKaqdhosloSt1
+         azX4Lut7UCxWAj6v7GP4kgV7HrCtFg9VFVkIl/M0Y/Uzs7pFmcLyrwLgszL9Jjv+uqi0
+         MjFOqqpIz2PG99jZpC/PS8UlM4NvJLW0/x48ZRIsyA5y7cSxxWbVtGLdO1lI9YIT1qHQ
+         TnWt1OPpeaaqDsQrntIH/741xRFWZe6cKv37k0i7R8BEqazqpRxWrrKZxwPkuwe7AyES
+         PWok0lw0F67qtFcP6NRumN4p/F1Obix0pVsrXDpXuwYpanKkRB3EMISHIrc5gP+WwRuL
+         c/1w==
+X-Gm-Message-State: AOAM530zzz3Ia5Cz6ivvfi3E7ny4JjF9w0ItztYSJnu8b4LZmxDe/9Hs
+        zFXgpW+ysYzE1hDaE1NDd7eurSOoe3M=
+X-Google-Smtp-Source: ABdhPJxmtaMqoJipC9ICTJ7ANTYB920qMP4WfLOTwIHEhJCUTfZIpf33URSscThgvMv5rX8d/OIW6g==
+X-Received: by 2002:adf:e38c:: with SMTP id e12mr1499521wrm.404.1624470509228;
+        Wed, 23 Jun 2021 10:48:29 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Jun 2021 10:48:28 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/25] progress.c: various fixes + SZEDER's RFC code
+Date:   Wed, 23 Jun 2021 19:48:00 +0200
+Message-Id: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
+In-Reply-To: <YNKWsTsQgB2Ijxu7@nand.local>
+References: <YNKWsTsQgB2Ijxu7@nand.local>
 MIME-Version: 1.0
-References: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
- <pull.969.v3.git.1624349082.gitgitgadget@gmail.com> <3a397e04-88a1-1205-a465-75dc2fd7e93d@gmail.com>
- <CABPp-BH9vy3otHvAxR2T6JmVKtH2+EKj-A7NxGsuoqnZA_Bykg@mail.gmail.com>
- <8f1edc60-f754-541b-1d66-7f5ec49eff55@gmail.com> <CABPp-BEuHbFbTWXKhW0MYkcW9ScJfUungwL6y9g=W=bZ=cmCbg@mail.gmail.com>
-In-Reply-To: <CABPp-BEuHbFbTWXKhW0MYkcW9ScJfUungwL6y9g=W=bZ=cmCbg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 23 Jun 2021 10:31:15 -0700
-Message-ID: <CABPp-BE3W0yfM3aB0hM+EG15zV=krSMv3kGRTjfVNV2rQtiDrA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Optimization batch 13: partial clone optimizations
- for merge-ort
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <dstolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 1:11 AM Elijah Newren <newren@gmail.com> wrote:
+> On Mon, Jun 21, 2021 at 02:59:53AM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> On Sun, Jun 20 2021, SZEDER Gábor wrote:
+>>
+>> > Splitting off from:
+>> >
+>> >   https://public-inbox.org/git/cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com/T/#me5d3176914d4268fd9f2a96fc63f4e41beb26bd6
+>> >
+>> > On Tue, Jun 08, 2021 at 06:14:42PM +0200, René Scharfe wrote:
+>> >> I wonder (only in a semi-curious way, though) if we can detect
+>> >> off-by-one errors by adding an assertion to display_progress() that
+>> >> requires the first update to have the value 0, and in stop_progress()
+>> >> one that requires the previous display_progress() call to have a value
+>> >> equal to the total number of work items.  Not sure it'd be worth the
+>> >> hassle..
+>> >
+>> > I fixed and reported a number of bogus progress lines in the past, the
+>> > last one during v2.31.0-rc phase, so I've looked into whether progress
+>> > counters could be automatically validated in our tests, and came up
+>> > with these patches a few months ago.  It turned out that progress
+>> > counters can be checked easily and transparently in case of progress
+>> > lines that are shown in the tests, i.e. that are shown even when
+>> > stderr is not a terminal or are forced with '--progress'.  (In other
+>> > cases it's still fairly easy but not quite transparent, as I think we
+>> > need changes to the progress API; more on that later in a separate
+>> > series.)
+>>
+>> I've also been working on some progress.[ch] patches that are mostly
+>> finished, and I'm some 20 patches in at the moment. I wasn't sure about
+>> whether to send an alternate 20-patch "let's do this (mostly) instead?"
+>> series, hence this message.
+>>
+>> Much of what you're doing here becomes easier after that series,
+>> e.g. your global process struct in 2/7 is something I ended up
+>> implementing as part of a general feature to allow progress to be driven
+>> by either display_progress() *or* the signal handler itself.
 >
-> On Tue, Jun 22, 2021 at 7:14 PM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > On 6/22/2021 2:45 PM, Elijah Newren wrote:
-> > > On Tue, Jun 22, 2021 at 9:10 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > I want to focus on this item:
-> >
-> > >> 2. I watched for the partial clone logic to kick in and download blobs.
-> > >>    Some of these were inevitable: we need the blobs to resolve edit/edit
-> > >>    conflicts. Most cases none were downloaded at all, so this series is
-> > >>    working as advertised. There _was_ a case where the inexact rename
-> > >>    detection requested a large list of files (~2900 in three batches) but
-> > >>    _then_ said "inexact rename detection was skipped due to too many
-> > >>    files". This is a case that would be nice to resolve in this series. I
-> > >>    will try to find exactly where in the code this is being triggered and
-> > >>    report back.
-> > >
-> > > This suggests perhaps that EITHER there was a real modify/delete
-> > > conflict (because you have to do full rename detection to rule out
-> > > that the modify/delete was part of some rename), OR that there was a
-> > > renamed file modified on both sides that did not keep its original
-> > > basename (because that combination is needed to bypass the various
-> > > optimizations and make it fall back to full inexact rename detection).
-> > > Further, in either case, there were enough adds/deletes that full
-> > > inexact detection is still a bit expensive.  It'd be interesting to
-> > > know which case it was.  What happens if you set merge.renameLimit to
-> > > something higher (the default is surprisingly small)?
-> >
-> > The behavior I'd like to see is that the partial clone logic is not
-> > run if we are going to download more than merge.renameLimit files.
-> > Whatever is getting these missing blobs is earlier than the limit
-> > check, but it should be after instead.
-> >
-> > It's particularly problematic that Git does all the work to get the
-> > blobs, but then gives up and doesn't even use them for rename
-> > detection.
->
-> I agree with what should happen, but I'm surprised it's not already
-> happening.  The give up check comes from too_many_rename_candidates(),
-> which is called before dpf_options.missing_object_cb is even set to
-> inexact_prefetch.  So I'm not sure how the fetching comes first.  Is
-> there a microsoft specific patch that changes the order somehow?  Is
-> there something I'm mis-reading in the code?
+> It's difficult to know who should rebase onto who without seeing one
+> half of the patches.
 
-After thinking about it more, I wonder if the following is what is happening:
+I was sort of hoping he'd take me word for it, but here it is. Don't
+say I didn't warn you :)
 
-* Some directory was renamed (and likely not a leaf), resulting in a
-large pile of renames (or some other change that gives lots of renames
-without changing basename)
-* basename_prefetch() kicks in to download files whose basenames have
-changed (even for "irrelevant" renames)
-* Basename matching is performed (which is linear in the number of
-renames, and not subject to the merge.renameLimit)
-* After basename matching, there are still unmatched destinations and
-relevant sources; which would need to be handled by the quadratic
-inexact matching algorithm.
-* Since there are enough renames left to trigger the renameLimit, you
-get the "inexact rename detection was skipped due to too many files"
-warning.
+> I couldn't find a link to them anywhere (even if
+> they are only available in your fork in a pre-polished state) despite
+> looking, but my apologies if they are available and I'm just missing
+> them.
 
-and then you assumed the prefetching was for the quadratic inexact
-rename detection when in reality it was just for the linear basename
-matching.
+FWIW it's avar-szeder/progress-bar-assertions in
+https://github.com/avar/git.git, that repo contains various
+functioning and not-so-functioning code.
 
-If so, there's a couple things we could do here:
+https://github.com/avar/git/tree/meta/ is my version of the crappy
+scripts we probably all have some version of for building my own git,
+things that are uncommented in series.conf is what I build my own git
+from.
 
-* The easy change: modify the warning, perhaps to something like
-"quadratic inexact rename detection was skipped...", to make it better
-reflect its meaning (basename matching is also an inexact match)
-* The more complicated change: be more aggressive about not detecting
-renames via basename match for "irrelevant" sources...perhaps avoiding
-it when it involves prefetching, or maybe just when we can somehow
-determine that we'd bail on the quadratic inexact rename detection
-anyway.
+> In general, I think that these patches are clear and are helpful in
+> pinning down issues with the progress API (which I have made a hadnful
+> of times in the past), so I would be happy to see them picked up.
 
-The second point perhaps deserves a bit more explanation.  Basename
-matching has an advantage of removing both sources and destinations
-from the later quadratic (O(N*M)) inexact rename detection, so it was
-generally beneficial to just always do the basename matching even if
-the path wasn't relevant for either content or location reasons.  But
-that was presuming later quadratic inexact rename detection was going
-to run and not be skipped.  It was one of those tradeoffs in
-optimization.  But if the file hasn't been prefetched and we're likely
-to skip the quadratic inexact rename detection, then trying to do
-basename matching for an irrelevant rename is wasted work, as is
-prefetching the blobs in order to be able to detect that irrelevant
-rename.  But how do we know if we'll skip the quadratic rename
-detection if we don't match the basenames that we can, since every
-matched basename removes both a source and a destination from the
-unmatched pairs?
+Here's all 25 patches (well, around 20 before) that I had queued up
+locally and fixed up a bit.
 
-Maybe we should reorder the basename matching as a two-pass algorithm,
-where we first detect basename-matching renames for all relevant
-sources, and then repeat for non-relevant sources.
+The 01/25 is something I submitted already as
+https://lore.kernel.org/git/patch-1.1-cba5d88ca35-20210621T070114Z-avarab@gmail.com;
+hoping to get this in incrementally.
 
-That would also allow us to insert a check before the second pass,
-where if the first pass removed all relevant sources (meaning both
-that no relevant sources were left out of basename matching and we
-found a match for every relevant source included in basename
-matching), then we can exit without doing the second pass.  That might
-even improve the performance in cases without prefetching.  But it
-would mean adding another prefetch step.
+The 12/25 is my own version of that "global progress struct, 11/25 is
+the first of many bugs SZEDER missed in his :)
 
-After doing the above splitting, then we could add extra conditions
-before the second step, such as bailing on it if we think we'd bail on
-quadratic inexact rename detection (which may still be hard to guess).
-Or maybe even just bailing on the second step if prefetching would be
-involved, because we'd rather lump those all into the quadratic
-inexact rename detection anyway.
+18/25 is the first step of the UI I was going for, the signal handler
+can now drive the progress bar, so e.g. during "git gc" we show (at
+least for me, on git.git), a "stalled" message just before we start
+the actual count of "Enumerating Objects".
 
-> But I'm still curious what the particular shape is for the data in
-> question.  What does the error say merge.renameLimit would be need to
-> set to?  If it's set higher, do some of the files resolve nicely (i.e.
-> they really were renames modified on both sides with a different
-> basename), or are they modify/delete conflicts and we're paying the
-> cost of rename detection to verify they were deleted and we really do
-> have a conflict?  I'm curious if there's more to learn and more
-> optimization potential, basically.  Your repository is bigger, so
-> there may be more to learn from it than from the testcases I've tried
-> so far.  :-)
+After that was in I was planning on adding config-driven support to
+show a "spinner" when we stalled in that way, config-driven because
+you could just scrape
+e.g. https://github.com/sindresorhus/cli-spinners/blob/main/spinners.json
+into your own config. See
+https://jsfiddle.net/sindresorhus/2eLtsbey/embedded/result/ :)
 
-We might have just identified multiple additional optimization
-opportunities above, neither of which is included in my pending
-optimization series.  It would be helpful to get more details about
-how frequently these kind of cases occur, the particular renameLimit
-in use, the number of paths involved (number of unmatched source and
-destinations), how many of the sources are relevant (perhaps even
-broken down into content relevant and location relevant), etc., as
-these all may help inform the implementation and whatever tests we
-want to add to the testsuite.
+19-23/25 is my grabbing of SZEDER's patches that I'm comfortable
+labeling as "PATCH", I think they work, but no BUG() assertions yet. I
+left out the GIT_TEST_CHECK_PROGRESS parts, since my earlier works set
+things up to do any BUG() we trust by default.
 
-However, some of that info is currently hard to gather.  I could
-probably start by adding some trace2 statistics to diffcore-rename to
-print out the original number of sources and destinations, the number
-matched via exact matching, the number matched via basename matching,
-the number of sources removed due to being irrelevant, and anything
-else I might be overlooking at the moment to help gather relevant
-data.
+22/25 is what I think we should do instead of SZEDER's 6/7
+(http://lore.kernel.org/git/20210620200303.2328957-7-szeder.dev@gmail.com)
+I don't think this "our total doesn't match at the end" is something
+we should always BUG() on, for reasons explained there.
+
+I am sympathetic to doing it by default though, hence the
+stop_progress_early() API, that's there to allow select callers to
+bypass his BUG(...) assertion.
+
+24/25 and 25/25 are "RFC" and a rebased+modified version of SZEDER's
+BUG(...) assertions.
+
+His series passes the test suite, but actually severely break things
+things. It'll make e.g. "git commit-graph write" BUG(...) out. The
+reason the tests don't catch it is because we have a blind spot in the
+tests.
+
+Namely, that most things that use the progress bar API use isatty() to
+check if they should start_progress(). If you run the tests as
+e.g. (better ways to do this, especially in parallel, most welcome):
+
+    for t in t[0-9]*.sh; do if ! ./$t -vixd; then echo $t bad; break; fi; done
+
+You can discover various things that his series BUG()'s on, I fixed a
+couple of those myself, it's an early part of this series.
+
+But we'll still have various untested for BUG()'s even then, this is
+because you *also* have to have the test actually emit a "naked"
+progress bar on stderr, if the test itself e.g. pipes fd 2 to a file
+it won't work.
+
+I created a shitty-and-mostly-broken throwaway change to
+search-replace all the guards of "start_progress(...)" to run
+unconditionally, and convert all the "delayed" to the non-delayed
+version. That'll find even more BUG()'s where SZEDER's series still
+needs to be fixed (and also some unrelated segfaults, I gave up on it
+soon after).
+
+Even if we fix that I wouldn't trust it, because a lot of the progress
+bars we have depend on the size and shape of the data we're
+processing, e.g. the bug I fixed in 11/25. If people find this BUG()
+approach worth pursuing I think it would be better to make it an
+opt-in flag we convert one caller at a time to.
+
+For some it's really clear that we could assert it, for others such as
+the commit-graph it's much more subtle, we're in some callback after
+setting a "total", that callback does a "break", "continue" etc. in
+various places, all depending on repository data.
+
+It's not easy to reason about that and be certain that we can hold to
+the estimate. If we get it wrong someone's repo in the wild won't
+fully GC because of the overly eager BUG().
+
+If SZEDER wants to pursue it I think it'll be easier on top of this
+series, but personally I really don't see the point of spending effort
+on it.
+
+We should really be going in the other direction, of having more fuzzy
+ETAs, not less.
+
+E.g. we often have enough data at the start of "Enumerating Objects"
+to give a good-enough target value, that it's 5-10% off isn't really
+the point, but that the user looking at it sees something better than
+a dumb count-up, and can instead see that they'll probably be looking
+at it for about a minute. Now our API is to give no ETA/target if
+we're not 100% sure, it's not good UX.
+
+So trying to get the current exact count/exact percentage right seems
+like a distraction to me in the longer term. If anything we should
+just be rounding those numbers, showing fuzzy ETAs instead of
+percentages if we can etc.
+
+SZEDER Gábor (4):
+  commit-graph: fix bogus counter in "Scanning merged commits" progress
+    line
+  entry: show finer-grained counter in "Filtering content" progress line
+  progress: assert last update in stop_progress()
+  progress: assert counting upwards in display()
+
+Ævar Arnfjörð Bjarmason (21):
+  progress.c tests: fix breakage with COLUMNS != 80
+  progress.c tests: make start/stop verbs on stdin
+  progress.c tests: test some invalid usage
+  progress.c tests: add a "signal" verb
+  progress.c: move signal handler functions lower
+  progress.c: call progress_interval() from progress_test_force_update()
+  progress.c: stop eagerly fflush(stderr) when not a terminal
+  progress.c: add temporary variable from progress struct
+  midx perf: add a perf test for multi-pack-index
+  progress.c: remove the "sparse" mode nano-optimization
+  pack-bitmap-write.c: add a missing stop_progress()
+  progress.c: add & assert a "global_progress" variable
+  progress.[ch]: move the "struct progress" to the header
+  progress.[ch]: move test-only code away from "extern" variables
+  progress.c: pass "is done?" (again) to display()
+  progress.[ch]: convert "title" to "struct strbuf"
+  progress.c: refactor display() for less confusion, and fix bug
+  progress.c: emit progress on first signal, show "stalled"
+  midx: don't provide a total for QSORT() progress
+  progress.c: add a stop_progress_early() function
+  entry: deal with unexpected "Filtering content" total
+
+ cache.h                          |   1 -
+ commit-graph.c                   |   2 +-
+ csum-file.h                      |   2 -
+ entry.c                          |  12 +-
+ midx.c                           |  25 +-
+ pack-bitmap-write.c              |   1 +
+ pack.h                           |   1 -
+ parallel-checkout.h              |   1 -
+ progress.c                       | 391 ++++++++++++++++++-------------
+ progress.h                       |  50 +++-
+ reachable.h                      |   1 -
+ t/helper/test-progress.c         |  54 +++--
+ t/perf/p5319-multi-pack-index.sh |  21 ++
+ t/t0500-progress-display.sh      | 247 ++++++++++++++-----
+ 14 files changed, 537 insertions(+), 272 deletions(-)
+ create mode 100755 t/perf/p5319-multi-pack-index.sh
+
+-- 
+2.32.0.599.g3967b4fa4ac
+
