@@ -2,166 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B771C2B9F4
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63FDCC2B9F4
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:14:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F41A560BD3
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AEAC60FF1
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbhFWCGx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 22:06:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33324 "EHLO
+        id S230004AbhFWCQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 22:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFWCGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 22:06:53 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2B6C061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:04:35 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id z1so1161991ils.0
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:04:35 -0700 (PDT)
+        with ESMTP id S229934AbhFWCQW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 22:16:22 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B4E2C061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:14:06 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id j12so960639qtv.11
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=J9htVX8HZkq1cdFh+7q0kqAciu47he9EnzCX0YRs8hY=;
-        b=qy7Ij1CPffR0ko62TAlf6nB8ZBUegNE/+X2+vo+PZYU2I3s2PBUtm9N6hf4F0qKJ7w
-         k3LPXFBZ8ieipCwX07esoQpgV+NZxUtDcjxUjnRN1HELLbi9dhqHbVc7KJ4gNvQZYITo
-         IN0ZrNl1s26pyQERY7/H3gOZh6kw/zo0JUY/trKUD7cP2tzCdANGH4jgFclPCvHIh2Rp
-         tiVCL6KXcenDjoz75pYq7IF4U8n94kBKJlAQSCDIgbi4KrHhSQYsmTGqDRs7JH1dPcyL
-         rEx/RiFHDH7+Ua1TiCMrpRizfVh1NG0BX3QtRqyYw0O18kyDDYPYgO2ioqwxfZtceb6S
-         C9SQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xBeRTVhKb9WRQjvJbrS23vZt00mGlEqjZhKxzXOG9bI=;
+        b=U9fxGtl5B1UCgoeg0TKuGiH5sYoGMVc3GeVUGGuc6TtdyTGqnzrWfkJaDULyOy/L1E
+         ORYRZh428ECpe3YELF3PKguKYrCrtqqbxzMhlCAlnY/6g7SDFJKtFQbrXRx3s5rkQUCY
+         laOTNlhF2yi3H0p9pgcw528CJw3HxC6DBLSV+FtFBwbHAknrM+JDYNDo0IfQVNdcrMjk
+         k1LCZAdEv/XR1VIKbmSXVNOJ2KUo7kNo0UyCmKGEO2u2yErTvkzr2uXC3fb0QCGkbWsh
+         nnB8R4g3Es7y/erVZ4XJyCWKP/iffcj/Ukp13P2DCUAL8qSuBAoNes4sOkmMhK9PeuYM
+         +xvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=J9htVX8HZkq1cdFh+7q0kqAciu47he9EnzCX0YRs8hY=;
-        b=K3jTzYF5BsGg4kYUMM0FW6qEJT36jmXZSfFFRbhNISb2Wz5Oo1oJJhYbPILT+MM5Ip
-         MohX9qPGZolU7j+jjZ2y1k8howc5+OdWbyjr8mQcXp4ec20qpKSl8Xje1qnaNkBLgwn/
-         8Tc+nKbTXH+iJpZLQNxCYeiKHq9TzrI1YgZTBuOPiYPUMEKTemMwM9/WS3nsFRD5i3oS
-         YYxEncH2msvc5CreeViiY8YJ/zZ0w+nuyZhCPE/W2Y9Pa1paAZEDpa8CwhN7YqnJrduz
-         iX/zfG6HXPxCJKXP6B4qzHdCcmWG5yCqtam7TWDGf7/LkCAg0hg/U+9ToPx6FfebIxQS
-         2E8w==
-X-Gm-Message-State: AOAM531dgR/1uo1Wx6ky/a4B2nR/NtxmAe7GW7Knq2ujrDAPp++TvEGV
-        YVF00/AgqZ/s354/Nx+PV9HGyg==
-X-Google-Smtp-Source: ABdhPJxfghAo76tiRSuyLPsjcEypbhFSAoHQ0C73q8r46caANnX891ChdgTRsYq5a0H7oeP9/xuqnw==
-X-Received: by 2002:a05:6e02:c74:: with SMTP id f20mr1169524ilj.85.1624413875177;
-        Tue, 22 Jun 2021 19:04:35 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
-        by smtp.gmail.com with ESMTPSA id l6sm8175010ilv.58.2021.06.22.19.04.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 19:04:34 -0700 (PDT)
-Date:   Tue, 22 Jun 2021 22:04:33 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 0/7] progress: verify progress counters in the test suite
-Message-ID: <YNKWsTsQgB2Ijxu7@nand.local>
-References: <20210620200303.2328957-1-szeder.dev@gmail.com>
- <874kds3tdn.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xBeRTVhKb9WRQjvJbrS23vZt00mGlEqjZhKxzXOG9bI=;
+        b=mssszMIlXmuqxi/j+b2L0uhcYcPaA3s9w1/XiAv9BskL+j6Wxtzg3kdnoKu9oqgp6Z
+         r64l9vB3t15r6QXwF0mcKfVXGA2kdNaj+faG9QCoBFks1xl+NWr/7b0iAY3H2ID6307j
+         EupEN+rxPCoulqozFrynWQuVqvmBcm9Zf084ti7fWJymAmiyJeCPig97wKS2bIVQENWh
+         g3r2yhTHSN6fmFqVbnS1uhQikEq26rYqAHX9bCbaKgXYQpAkOxTeossYEEaNqn6+FB6x
+         kIx5rXSQFdlKE7aXqB6J5NYayyP5sr6HX1PbgyqR+p/uu8ndAoX6pTeGnT+pNoFD9Har
+         ey4g==
+X-Gm-Message-State: AOAM5339KBX00QccJvGg+2LCtWltBF7yF+Nh28lbXDmAzp8ZDhnZa+sw
+        bThSkzoquAMo58qS8M+7M2M=
+X-Google-Smtp-Source: ABdhPJyUDhSilkiO4FaArAAv+31fqDT0emCjzH2HRZSbJUMFpwOoBaIbH5HvpT8GCdqlEBJr2jQX0g==
+X-Received: by 2002:ac8:4e29:: with SMTP id d9mr1808540qtw.136.1624414445369;
+        Tue, 22 Jun 2021 19:14:05 -0700 (PDT)
+Received: from ?IPv6:2600:1700:e72:80a0:4074:43e7:25da:a93b? ([2600:1700:e72:80a0:4074:43e7:25da:a93b])
+        by smtp.gmail.com with ESMTPSA id v19sm14395774qkf.42.2021.06.22.19.14.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Jun 2021 19:14:04 -0700 (PDT)
+Subject: Re: [PATCH v3 0/5] Optimization batch 13: partial clone optimizations
+ for merge-ort
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <dstolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.969.v2.git.1623796907.gitgitgadget@gmail.com>
+ <pull.969.v3.git.1624349082.gitgitgadget@gmail.com>
+ <3a397e04-88a1-1205-a465-75dc2fd7e93d@gmail.com>
+ <CABPp-BH9vy3otHvAxR2T6JmVKtH2+EKj-A7NxGsuoqnZA_Bykg@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8f1edc60-f754-541b-1d66-7f5ec49eff55@gmail.com>
+Date:   Tue, 22 Jun 2021 22:14:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <CABPp-BH9vy3otHvAxR2T6JmVKtH2+EKj-A7NxGsuoqnZA_Bykg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874kds3tdn.fsf@evledraar.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 21, 2021 at 02:59:53AM +0200, Ævar Arnfjörð Bjarmason wrote:
->
-> On Sun, Jun 20 2021, SZEDER Gábor wrote:
->
-> > Splitting off from:
-> >
-> >   https://public-inbox.org/git/cover-0.2-0000000000-20210607T144206Z-avarab@gmail.com/T/#me5d3176914d4268fd9f2a96fc63f4e41beb26bd6
-> >
-> > On Tue, Jun 08, 2021 at 06:14:42PM +0200, René Scharfe wrote:
-> >> I wonder (only in a semi-curious way, though) if we can detect
-> >> off-by-one errors by adding an assertion to display_progress() that
-> >> requires the first update to have the value 0, and in stop_progress()
-> >> one that requires the previous display_progress() call to have a value
-> >> equal to the total number of work items.  Not sure it'd be worth the
-> >> hassle..
-> >
-> > I fixed and reported a number of bogus progress lines in the past, the
-> > last one during v2.31.0-rc phase, so I've looked into whether progress
-> > counters could be automatically validated in our tests, and came up
-> > with these patches a few months ago.  It turned out that progress
-> > counters can be checked easily and transparently in case of progress
-> > lines that are shown in the tests, i.e. that are shown even when
-> > stderr is not a terminal or are forced with '--progress'.  (In other
-> > cases it's still fairly easy but not quite transparent, as I think we
-> > need changes to the progress API; more on that later in a separate
-> > series.)
->
-> I've also been working on some progress.[ch] patches that are mostly
-> finished, and I'm some 20 patches in at the moment. I wasn't sure about
-> whether to send an alternate 20-patch "let's do this (mostly) instead?"
-> series, hence this message.
->
-> Much of what you're doing here becomes easier after that series,
-> e.g. your global process struct in 2/7 is something I ended up
-> implementing as part of a general feature to allow progress to be driven
-> by either display_progress() *or* the signal handler itself.
+On 6/22/2021 2:45 PM, Elijah Newren wrote:
+> On Tue, Jun 22, 2021 at 9:10 AM Derrick Stolee <stolee@gmail.com> wrote:
 
-It's difficult to know who should rebase onto who without seeing one
-half of the patches. I couldn't find a link to them anywhere (even if
-they are only available in your fork in a pre-polished state) despite
-looking, but my apologies if they are available and I'm just missing
-them.
+I want to focus on this item:
 
-In general, I think that these patches are clear and are helpful in
-pinning down issues with the progress API (which I have made a hadnful
-of times in the past), so I would be happy to see them picked up.
+>> 2. I watched for the partial clone logic to kick in and download blobs.
+>>    Some of these were inevitable: we need the blobs to resolve edit/edit
+>>    conflicts. Most cases none were downloaded at all, so this series is
+>>    working as advertised. There _was_ a case where the inexact rename
+>>    detection requested a large list of files (~2900 in three batches) but
+>>    _then_ said "inexact rename detection was skipped due to too many
+>>    files". This is a case that would be nice to resolve in this series. I
+>>    will try to find exactly where in the code this is being triggered and
+>>    report back.
+> 
+> This suggests perhaps that EITHER there was a real modify/delete
+> conflict (because you have to do full rename detection to rule out
+> that the modify/delete was part of some rename), OR that there was a
+> renamed file modified on both sides that did not keep its original
+> basename (because that combination is needed to bypass the various
+> optimizations and make it fall back to full inexact rename detection).
+> Further, in either case, there were enough adds/deletes that full
+> inexact detection is still a bit expensive.  It'd be interesting to
+> know which case it was.  What happens if you set merge.renameLimit to
+> something higher (the default is surprisingly small)?
 
-> I could also rebase on yours, but much of it would be rewriting the
-> test-only code to be more generalized, perhaps it's easier if we start
-> going for the more generalized solution first.
+The behavior I'd like to see is that the partial clone logic is not
+run if we are going to download more than merge.renameLimit files.
+Whatever is getting these missing blobs is earlier than the limit
+check, but it should be after instead.
 
-Again, without knowing the substance of your patches it's hard to
-comment for sure, but I don't have a problem with a simple and direct
-approach here.
+It's particularly problematic that Git does all the work to get the
+blobs, but then gives up and doesn't even use them for rename
+detection.
 
-> Perhaps we can just have it BUG() for now as you're doing and cross that
-> bridge when we come to it. I just wonder if we can't catch potential
-> bugs in a more gentle way somehow.
+I'm happy that we download necessary blobs when there are a few
+dozen files that need inexact renames. When it gets into the
+thousands, then we jump into a different category of user experience.
 
-I think there are compelling reasons to feel that the new mode should
-only be enabled during tests, as well as compelling reasons to feel that
-it should be enabled all of the time.
-
-One way to think about it is that we do not want users to have a BUG()
-abort their program just because a progress meter went rogue. So in that
-sense, it makes sense that we would only see that happen during tests,
-so that those tests could tell us where the bug is, and we could fix it.
-
-On the other hand, since we make sure that our tests pass at each patch,
-there's no point in having a separate mode (and instead, remove the
-conditionals on GIT_TEST_PROGRESS_CHECK), since successfully running the
-tests tells us that there are no rogue progress meters that we exercise
-in our (hopefully) complete set of tests.
-
-I could go either way, I think both lines of reasoning are quite
-reasonable. But, I think we are generally more lax about having the
-whole ci/run-build-and-tests.sh script pass at every commit, and that it
-seems we care more about having the tip of each series pass CI when
-integrated into 'seen'.
-
-So I don't think that hiding this new mode behind an environment
-variable is giving us as much confidence as we'd like, because it
-doesn't add anything in "make test".
-
-To me, I think a reasonable direction to take would be to *always*
-export GIT_TEST_PROGRESS_CHECK when running tests, not just in
-ci/run-build-and-tests.sh. That means we'll catch incorrect uses of the
-progress API during tests, without worrying that incomplete coverage
-will cause user-visible breakage.
+Having a stop-gap of rename detection limits is an important way to
+avoid huge amounts of file downloads in these huge repo cases. Users
+can always opt into a larger limit if they really do want that rename
+detection to work at such a large scale, but we still need protections
+for the vast majority of cases where a user isn't willing to pay the
+cost of downloading these blobs.
 
 Thanks,
-Taylor
+-Stolee
