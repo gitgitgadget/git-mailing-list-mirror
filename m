@@ -2,109 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 291A1C48BC2
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 23:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FB5BC48BC2
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 23:58:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEAC960D07
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 23:55:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EBBC611CB
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 23:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbhFWX6J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 19:58:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45820 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbhFWX6H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 19:58:07 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37316C061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 16:55:49 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id j184so9847096qkd.6
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 16:55:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=pthF5qHj9SvsHQl2sqzqv6NYRtvFMRMNmvN5khLqiM0=;
-        b=WcgnH4L/fQvw2ab1i2D5EmF5W5cclo3FwVSr6Uf9+cZPjBbB8cGxYPJfKY02uBFnJL
-         Qp8uYDqFzRaA5PHloFEJuRjGTs+4gEptzPOZjUAAFaXuq+xbnx6Mk9XImGwULLKLrR1u
-         eW2Rrz2PgUEnqZhNjCT4IoBZnhNgzOLOlxn8WpuoeiUzAgkLZvifpTFiBw+kSJVh48Fz
-         uNWgWTzVVXybL7u7ZrgKSt+LlGFbnSK7hz1TfDONeuwxI83Z3+dLT02C5w367WjLBP24
-         sJVRFvaSJFZZwnSFCPzDhwXcdlMl01txQ6aouXng1mGxUxY9rBhnC/vC5PauCC2vJhA1
-         ncpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=pthF5qHj9SvsHQl2sqzqv6NYRtvFMRMNmvN5khLqiM0=;
-        b=UsYPChBhcxOtg6objZ61BrVfevfK6pjzoJsmfzOqnzP0Wef2Pnu7oTUxxvFYEsO55n
-         lUllmJQfx6WBzBsJfPHiZkjqQ/WsHQLTM7cWFnEuohAnKHWCPam/YVElqXYsmj43bHrp
-         aB3Ii0uKmTYXd3NDeVeRVAUbA6/j4rfyq8K0NdgaYt6j9trjTusLBomxOU4NzVhVQRLZ
-         BDij5qV2Grp374B+R0xgk+T+SLDBWPzjXMVWUtqQG98cJmcf2rpPdZC+0Ru5uRfN2Vsy
-         6Zjqy7PYgbRmaEzRQRLQ9aJPKrjuHnwBT3my020PckplCLhdyUa4UZBBAFe3jxdFYWvJ
-         KC7w==
-X-Gm-Message-State: AOAM533oDAtg6UPCL79dWIUER2F6sLMtEECFz3CALe12yb2s6ZOogv1j
-        /dja9gi3HMZ6sDuSZsrivU1rz6ddLSoo0LMsJCXSfWiUxl4=
-X-Google-Smtp-Source: ABdhPJxXuR3z2VsblhWpaAzFdbAcmDYXlzdPewtz/1ABmgYsV9xWH03cjwjFvHrU5ByleI5j0QicN2MC58nmJwtPSmY=
-X-Received: by 2002:a05:6902:572:: with SMTP id a18mr1039527ybt.220.1624492548093;
- Wed, 23 Jun 2021 16:55:48 -0700 (PDT)
+        id S229822AbhFXABP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 20:01:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58940 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229726AbhFXABP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 20:01:15 -0400
+Received: (qmail 8541 invoked by uid 109); 23 Jun 2021 23:57:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Jun 2021 23:57:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8242 invoked by uid 111); 23 Jun 2021 23:58:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Jun 2021 19:58:57 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 23 Jun 2021 19:58:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v7] help: colorize man pages if man.color=true under
+ less(1)
+Message-ID: <YNPKwIuZvpyWSNXH@coredump.intra.peff.net>
+References: <xmqq4ke8pig9.fsf@gitster.g>
+ <patch-1.1-a950ef49e28-20210621T083254Z-avarab@gmail.com>
+ <xmqqfsxbika3.fsf@gitster.g>
+ <87mtrj2faq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CADdMKP8y3TjeCyJaxazYFY9zN2QpnMVZyRWnpoTLMcZ0ZPNMzg@mail.gmail.com>
-In-Reply-To: <CADdMKP8y3TjeCyJaxazYFY9zN2QpnMVZyRWnpoTLMcZ0ZPNMzg@mail.gmail.com>
-From:   Douglas Leonard <dleonard.dev@gmail.com>
-Date:   Thu, 24 Jun 2021 08:55:33 +0900
-Message-ID: <CADdMKP_J7BSBeEpc6oQTh=BMf4geZJ6PwNM5yqzRQmDyT=1oXw@mail.gmail.com>
-Subject: Re: git-alltrees: root trees and subtrees without duplicate commits.
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87mtrj2faq.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For what it's worth, a demonstration script is included which makes
-parallel changes on various local and remote repos and does origin and
-subtree push/pull..
-In future plans... it's possible to fully reintegrate the subtree
-commits into the full branch point file tree locally so that they are
-cherry-pickable too, as if all changes were made on complete local
-branches.
+On Mon, Jun 21, 2021 at 09:08:20PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Regards,
-Doug
+> > [snip] I think it would be easier to understand to end-users
+> > if this were exposed as a new "mode", like "git help --web" and "git
+> > help --info" are different modes from the "git help --man",
+> > something like "git help --fancy-man" (or whatever is easy to type
+> > and explain, and also add it to the variants help.format knows about
+> > to make it easy to set the default).
+> >
+> > One advantage of doing so is that we do not have to worry about "ah,
+> > user has LESS_BLAH environment variable so we should disable this
+> > new mode here" etc.  As long as the new mode is requested either via
+> > the command line option or help.format configuration, it can
+> > completely take it over.  That simplifies the necessary explanation
+> > given to the users quite a lot, no?
+> 
+> The interaction between "git help" and "man"/"less" doesn't really have
+> an equivalent in the rest of git as far as color output goes. Usually we
+> emit colors via our own programs.
+> 
+> But no, I think it makes the most sense to consider this orthagonal to
+> help.format=man or man.viewer=<cmd>.
+> 
+> We're not invoking a different man viewer or command, we're just
+> expecting that mode to invoke the pager, and if that pager is less to
+> have these variables tweak our color preferences.
 
-On Wed, Jun 23, 2021 at 10:27 AM Douglas Leonard <dleonard.dev@gmail.com> w=
-rote:
->
->
-> Hi all,
->
-> For a very quick introduction, I'm a career physicist. I just thought I'd=
- share a detailed method and implementation I developed to improve on short=
-comings of subtrees.
->
-> This says it all
-> https://gitlab.com/douglas.s.leonard/alltrees/-/wikis/home
->
-> But to repeat a little...
->
-> First, it allows a container "sub" tree, ie syncing only the non "sub" pa=
-rts of the tree to a repo.  But maybe more importantly, when it pulls from =
-the trees it's able to "remap" or reconstruct old commits back to their ori=
-ginals to avoid the duplicate commit issue of subtrees.  This is round-trip=
- reproducible so consistency is kept both ways. It avoids the need for squa=
-sh with subtrees. Compare the two images in the wiki to see the difference =
-between subtree without squash and alltrees. Non-FF changes made in a tree =
-repo show as branched and merged. Traditional advantages of subtrees are ke=
-pt, primarily that users/developers of any one repo don't need any awarenes=
-s of how to use the subtrees or the other repos.
->
-> I have used this some, but not extensively yet.  In my use it has worked.=
-  I think it's pretty quick, but I haven't tested on large projects.
->
-> Cheers,
-> Doug Leonard
->
+FWIW, if we are going to do this, then just having it as "color.man"
+makes the most sense to me. It is easily explained as "when we invoke
+man, set up some environment variables that may enable colors in the
+output".
+
+I'm still entirely unconvinced that this should be in Git at all;
+pointing GIT_MAN_VIEWER or man.*.cmd at a color-man wrapper seems like
+it would be sufficient. But it feels like that conversation was not
+going anywhere productive; I mention it here only to indicate that my
+response above is not an endorsement of the concept.
+
+-Peff
