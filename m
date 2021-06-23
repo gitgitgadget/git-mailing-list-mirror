@@ -2,121 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8EC0C4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 16:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE20C4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:24:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8DF8F61166
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 16:56:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8ED9B611AD
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbhFWQ6z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 12:58:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36562 "EHLO
+        id S229812AbhFWR0y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 13:26:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbhFWQ6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 12:58:55 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85FBAC061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 09:56:37 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id r12so4324094ioa.7
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 09:56:37 -0700 (PDT)
+        with ESMTP id S229523AbhFWR0y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:26:54 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE3A6C061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:24:36 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id n99-20020a9d206c0000b029045d4f996e62so2712174ota.4
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=w3W3q/MPC18YL9uhlGjGT718ibrPrYdv/vMVMqF+3tE=;
-        b=pkT7LQDHM0XNsqk4bUm7oqDFgOez/ZZFElXhSpZOmW6gJlyUBxVu/0RF8bEmnixV3h
-         QJWiXaS+BnoCPJ+hiTlFrcv2axuDithm6xOLUOf2RM3HuxL4aWl+5SDAXP/wEl+AfYoq
-         kbkuGTw6Dr0ChnkMz6t2QZtxwOsMUe5d7GfE/4/bonpozEdHaQEyLEtqDjSVNj6Kgwh5
-         EgDbcjAG7feklGuVApYbcVwQKusndZPJ3MQjezB5zcqDoofoA3NLhSB4blv88skqCmu2
-         kgonRO5SBnlI7DHpssw2yT2bEcWMfP2V/ekdlYDzBOr3DCqC5UbooKNd60cAA7AG0kOa
-         5mbw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=9VceHjcnT51PMdC9idFzb2Y44oNT5sAdFEdRxjuVPoM=;
+        b=ahxCfL+M03hTgnBR3Vvudtw5C64eIqhxd+QS6mUOBL/YsoHkikuwfDc3blFWKTXGLp
+         Fcz+k5nS9EPyrOETqVL5DtLld15jSK3uMRFRxwvjEROpKEwJ194V+QCEMlwmXwYZjLEf
+         Tak4HbhxdnZXcPaEtmjyrGFHDMlxVtaBb+ZFr+zDW3D/Q0tb4a4NvYHYvZOJgqJSkyL2
+         03sO3EYSEWoE24uthX+inUoqqq64pPgg86VweB0MtxRothWVAWoXbO++wQiGjae/B66k
+         GDOtDYU6Cx1OeKASYJZCUGYoaofZCDtbAImHt+DuDSB3j//aa7StMFgpej8MZbREGgs9
+         NhIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=w3W3q/MPC18YL9uhlGjGT718ibrPrYdv/vMVMqF+3tE=;
-        b=eN0sFFxmaKH/eOBSyepVMrAviHB8xEhH+YjpJbJt6uro5pyhLQNk4txHYs6p5qQnT2
-         PtVFG/PP/nLmWpFXi37edjOtw4FSBwGFVwcPJ8rzhwQ17GnbbGsypDzdwPpPzAgybQ95
-         dJWmIZholrCMZZoqw0COHvzoY9E+0WUD3codNhudtM0VAV8tukI9t4KSB5NUkGXhr3MC
-         9ESrRDJZpAw3YH36nfOXWJpNo9PSKaJCkZgKiFm4KV4IgtNdtXBWHMTRX+shSETSarKl
-         UNSXNkaZ6gO+tpE+/H3Pl6UR2RvZux6Dd8+AIRhj4uWRjy6ZbxGHNN2edIyvtBXqAwTP
-         YdZA==
-X-Gm-Message-State: AOAM533T/6FDAPARVIo+Wk2lPemH/A3PHO27auXSmIeYtxTntgmL9K2S
-        ZXsxlJUOktKJBkG/DsF1XIckHfyruRHl5HmJ
-X-Google-Smtp-Source: ABdhPJxvd85BP60bch80cJIY4DCwh7hPpcVw+kyi8GxKpn9SGBhDCrO9k7aiLZIHJP8TGsI7t5aDLw==
-X-Received: by 2002:a5e:940a:: with SMTP id q10mr412394ioj.19.1624467396053;
-        Wed, 23 Jun 2021 09:56:36 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
-        by smtp.gmail.com with ESMTPSA id a9sm267150ilp.42.2021.06.23.09.56.35
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=9VceHjcnT51PMdC9idFzb2Y44oNT5sAdFEdRxjuVPoM=;
+        b=UUKZQ4N7R3JkLxdtYlpsAY9fjp5fkalTmxlYPBljQ3lOiiOyEu17ItvgR5JrNoxKsD
+         J9Im19C8qsnzb4x7CGMI+6JqvZIjW1U9Ldb9Xc5qR+D+iDwgruXzS3s+lKXYGv75Gmve
+         EjsrfG2kVHdS0oui9fWcJ2/WvwaGc67GlXmswBe2YKWiS00Oni6+Rt148ap6LWJoeEPA
+         HYi36ioOJtP28eiu4PSwK+58ZRJMwrFhRzc6ouTQnAjanCm12PGJ5VbFjsIPUsXzR2kR
+         HQcku6Txqp+qBHihPNWTvtP2eYUXsfyCkO5KjPhF9/rXtQ81t9DhcAiIqvMrGKbcXJFu
+         cIuw==
+X-Gm-Message-State: AOAM530GYrMls8WvMMueuM6VZaKoAEN5Kap+m/OQ13ETvoLMqI7Utu8e
+        1yI08fI8ZzXvffvoYSGbq/M=
+X-Google-Smtp-Source: ABdhPJxmkE651yKA38Y57Ui7dPKYphkjOa9JGH0ZEPl/vNBxE6CvCGKNMmbe8pjHk8yqi77JYzLQVA==
+X-Received: by 2002:a9d:7558:: with SMTP id b24mr917587otl.60.1624469076279;
+        Wed, 23 Jun 2021 10:24:36 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id a78sm72644oii.42.2021.06.23.10.24.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 09:56:35 -0700 (PDT)
-Date:   Wed, 23 Jun 2021 12:56:34 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Mike Moreton <mmoreton@lifesize.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Bug: git-fetch man page does not document --filter
-Message-ID: <YNNnwm3xxstHMn1M@nand.local>
-References: <DM6PR15MB359467B7277CDA31029A6630BB089@DM6PR15MB3594.namprd15.prod.outlook.com>
- <DM6PR15MB35943E5232F67765D4FAFFD1BB089@DM6PR15MB3594.namprd15.prod.outlook.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DM6PR15MB35943E5232F67765D4FAFFD1BB089@DM6PR15MB3594.namprd15.prod.outlook.com>
+        Wed, 23 Jun 2021 10:24:35 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 12:24:34 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Message-ID: <60d36e5268fce_3787208fa@natae.notmuch>
+In-Reply-To: <CABPp-BEPgUAe-efyk-Y5AVXRe64uUtz0XUJ-fPzKi8eSfnEquA@mail.gmail.com>
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-3-felipe.contreras@gmail.com>
+ <CAMMLpeR2Y_EGwqGJzghSQ1DzpYQyWr6ENmGCvPRdhhYFkTW4yw@mail.gmail.com>
+ <60d0df99d91e1_108e902085e@natae.notmuch>
+ <CAMMLpeRnUC+nOek=Kz6bj0_R6EUaDr=7ObKF01V641_ByOmk6A@mail.gmail.com>
+ <60d10ebd99d86_113139208cd@natae.notmuch>
+ <CAMMLpeRa3atkZxEtV--YD6-JSf0Bp9xRw9kS5wSWerxpsGrvrw@mail.gmail.com>
+ <CABPp-BF1noWhiJadHzjJmnGo8hdZj6Fk7XnZ=u6BVVSGfHE7og@mail.gmail.com>
+ <CAMMLpeTmYcJHf1t7VpOBakMZ_vtk+9bmLRTMA9ueghG6WwCRtA@mail.gmail.com>
+ <CABPp-BEnPrg_tsqLtmj7Ag6JnR6ku_K3Uv65rdRu-j9_qMYhmA@mail.gmail.com>
+ <60d2b5ffc23af_1b53208aa@natae.notmuch>
+ <CABPp-BEPgUAe-efyk-Y5AVXRe64uUtz0XUJ-fPzKi8eSfnEquA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pull: improve default warning
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 09:36:53AM +0000, Mike Moreton wrote:
-> See subject.  Looking at https://git-scm.com/docs/git-fetch
+Elijah Newren wrote:
+> On Tue, Jun 22, 2021 at 9:18 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> >
+> > Elijah Newren wrote:
+> > > On Tue, Jun 22, 2021 at 2:22 PM Alex Henrie <alexhenrie24@gmail.com> wrote:
+> > > >
+> ....
+> > > > Thanks for the link, and sorry for not having followed this
+> > > > conversation closely enough to have seen your previous replies. While
+> > >
+> > > No worries, you were trying to be a good citizen by reviewing patches,
+> > > and the patches didn't come with links to the old threads
+> >
+> > That's not true. This patch series [1] came with a link to the previous
+> > patch series [2].
+> >
+> > I didn't, cannot, and shouldn't contain hundreds of links to the hundres
+> > of responses to this topic over the past 10 years.
+> 
+> Sorry for being unclear; by links I meant either direct or indirect
+> ones.  Your series came with a link to the previous series.  The
+> previous series, however, only contained a link to a series you were
+> basing upon rather than to a series which contained the changes you
+> were resubmitting.  Thus, following the links in each submission would
+> not get you back to the old discussions (I double checked).
 
-Thanks for noticing. It seems like an oversight to me, so I added a
-little bit of text in the patch below.
+That's true, but there's no combination of links that would get you all
+the discussions.
 
---- >8 ---
+There were 4 different approaches attempted, each one with their own
+thread. Also, since other people didn't follow the threads correctly I
+had to send different versions of those threads.
 
-Subject: [PATCH] Documentation/git-fetch.txt: add documentation on '--filter'
+> Also, this particular point was not meant as a critique of your
+> current submission.  I don't even think it's all that big a deal for
+> the previous submission either (it's an easy oversight to make given
+> that Junio submitted a portion of one of your old series).  My point
+> was simply that Alex didn't need to feel bad for not having been aware
+> of all the old discussions; even if he had tried to dive deep by
+> recursively following all the links, he wouldn't find it.
 
-`git fetch` accepts a `--filter=<spec>` option, but does not document
-it. Make sure that git-fetch(1) mentions that --filter is accepted.
+He was aware of the old discussions, as he was part of them, but he
+chose to disengage from them [1].
 
-The documentation itself is just the first and last sentence of what is
-mentioned in git-clone(1), with an additional detail about interacting
-with non-promisor remotes.
+Either way I don't see why would anyone should feel bad about not being
+aware of all the hundreds of responses over dozens of threads over
+several years.
 
-Reported-by: Mike Moreton <mmoreton@lifesize.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/fetch-options.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+All we can ask from contributors giving their feedback for free is their
+attempt to do their best, nothing more.
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 9e7b4e189c..52755572a9 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -11,6 +11,16 @@
- 	Use an atomic transaction to update local refs. Either all refs are
- 	updated, or on error, no refs are updated.
+Cheers.
 
-+ifndef::git-pull[]
-+--filter=<filter-spec>::
-+	Use the partial clone feature and request that the server sends
-+	a subset of reachable objects according to a given object
-+	filter. When using a `--filter` while fetching from a
-+	non-promisor remote, that remote is registered as a promisor.
-+	For more details on filter specifications, see the `--filter`
-+	option in linkgit:git-rev-list[1].
-+endif::git-pull[]
-+
- --depth=<depth>::
- 	Limit fetching to the specified number of commits from the tip of
- 	each remote branch history. If fetching to a 'shallow' repository
---
-2.31.1.163.ga65ce7f831
+[1] http://lore.kernel.org/git/CAMMLpeQA7VW_C4yw_8n6j_SCoGr8k4VUOUaEp98UxUAMR6-MVw@mail.gmail.com
 
+-- 
+Felipe Contreras
