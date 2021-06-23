@@ -2,114 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0125C2B9F4
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A357C2B9F4
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:46:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFA776128C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:39:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49CCD60E0B
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 02:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbhFWCl1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 22:41:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55046 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229774AbhFWCl1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 22 Jun 2021 22:41:27 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5057660459;
-        Wed, 23 Jun 2021 02:38:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1624415920;
-        bh=ag8dBzJdMGit7Or/HWK83mTaB3N1mA4zYFMFyw5eXTU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=i9ErC4eaiz4QBNlQHboTRkzHhtUmFgokwy7bGAih96hR1hzgC8Xj/hrrOhWhBNmcr
-         VvWdV4R7RvA3Qk0B6Ah538mp+sQgavimjQu/80zdQNdKjVXVFHi7aDVYhOxbmj80n1
-         lk3UMpEj36kD3ZgcQ+RkVH+Ptb6AGhahVcom66+r4gjlTDwdfJ/DfP+QHOB17LJJAO
-         ci5rBl64lDe3PtS5fYI/jSfHSZvdJpI6PXt0vExLuCp27bS/sXeoZiAhAoBVkxTNcv
-         tTER1mJj+hG9OzRImqxEISTgI2PCQgpwJgEhN5xTjHyLR3hI/fW6M0QrgihbX0j3XX
-         tek5V/o6kD9rVne8GEbGcan+6w7YdoEO6HXnuf0eHCo0TuolBnE32kjS4COdKke6i/
-         F3FjTw4fha/wiL6Ae3iB8bhqI8UIo/z48Xfi4E5L+UZoa6J9Ea6udLYq++XmQJI2Yd
-         oiYYDaYawSdJi/O6aIY0Hfi+5LPbZG92deQ3UIF9E6L++Q91DhT
-Date:   Wed, 23 Jun 2021 02:38:35 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Tim Hutt <tdhutt@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Bug: branch checkout is detached if the case doesn't match
-Message-ID: <YNKeq5mSu3f0A/5I@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Tim Hutt <tdhutt@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <CAKuVd4DfvEhXDUvxaU_jjNk8JSZANM8jpSEOxi1cbSAp23ohjg@mail.gmail.com>
- <87czsg429h.fsf@evledraar.gmail.com>
- <CAKuVd4Bfykm0xe0P5FMy3W8HuECJHqP-RGo+T_VK4hn43sgEpg@mail.gmail.com>
+        id S230290AbhFWCtB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 22:49:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230004AbhFWCtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 22:49:00 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C47C061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:46:43 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id k16so1507587ios.10
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 19:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nBtfYxJmiXYWctbc0tzhvEMyN8gBD9ONyQz9mPuu+yg=;
+        b=J/QONHY1qHGGMbd7jm9z6MFj0T4Nu+WwjSPbO9nOr5/TeFXLSfF19KqpCxn/lCFMBl
+         4mZj78JAwPm5f50TxOXyy2WANm3EvcEv6Y8SkCjZFlYOwXZtWYNnLD8K5XUUgY7Yc5Fl
+         uBwFAoJKea56yUuKcsvtr8839WvWH7p5SCuXGR3D5tQWk8/DtqcWY0TdpyLIK6UUM3WM
+         kqXwhwJ62tYUQUpsbWTX6SvmGZ6SW8Yc6bXCzfMZBaVWq51IzQ0u5dX7wlzHr3GIovh5
+         mG7Rbpnsxk/OC8K6WDTqDBiqZebOtveaqxCyMwDpzDLix46tcgS6a0oOjeQ6JkEvOGAJ
+         wL/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nBtfYxJmiXYWctbc0tzhvEMyN8gBD9ONyQz9mPuu+yg=;
+        b=k9diB3glk967eGceLbL5FI3fcqgVa8vOqGq5iEfm7hZNzQAPHogf+Go94+uKWTrfBW
+         tFbdOSAmZ2z5RbyZNHf+C1IZo3dnDyaQN1xbx9E1Ro94BVN6xpaUoCb9hk7PRpvJ+SZN
+         WNNbP55ubjk699Tnc8Br9lchGSgBaXvI8iltb6L2GiJOR0v/roy1zDbLuI4CMWRHy1K+
+         AdsEGkcZ6YbGDEJTo2qxQirn+8nUfwk7A4bCwLJ9uAfBPdQxN+KsL3j1LVQoo+T63q6q
+         7sX9D4caQE7U3ITHDWuyGDQCUmNgUUjUj+GRQIlbpHunKPlmRW8AZQ+fxfxdloyIO2H+
+         aJYw==
+X-Gm-Message-State: AOAM530DeI2W2eeUQ8W7vsCUX0l1uJ4m/ziYEeTJEwXA4N+QCkmMD3xW
+        O0YTC2D3IOkSyr5nIdAEJ2t7ULR0AgT92lyV
+X-Google-Smtp-Source: ABdhPJyipv8/riVScTJZ0ofV9V8+dG67KQKrvrEGoyNdXxxbbRvbRBLlh33ZDZ7JRNR5o2MP8WBiRg==
+X-Received: by 2002:a6b:e018:: with SMTP id z24mr5350492iog.206.1624416402482;
+        Tue, 22 Jun 2021 19:46:42 -0700 (PDT)
+Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
+        by smtp.gmail.com with ESMTPSA id 7sm9287931ily.63.2021.06.22.19.46.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jun 2021 19:46:41 -0700 (PDT)
+Date:   Tue, 22 Jun 2021 22:46:40 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] load_ref_decorations(): avoid parsing non-tag objects
+Message-ID: <YNKgkGkPiMgNubNE@nand.local>
+References: <YNIJw/8p0F3cPfzd@coredump.intra.peff.net>
+ <YNILCDz3LpHX7OX0@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Q+WxFom0kN4hwlrW"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAKuVd4Bfykm0xe0P5FMy3W8HuECJHqP-RGo+T_VK4hn43sgEpg@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <YNILCDz3LpHX7OX0@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jun 22, 2021 at 12:08:40PM -0400, Jeff King wrote:
+> If the packed-refs file ever learns to store all of the peeled layers,
+> then we could switch to it. Or even if it stored a flag to indicate the
+> peel was not multi-layer (because most of them aren't), then we could
+> use it most of the time and fall back to a manual peel for the rare
+> cases.
 
---Q+WxFom0kN4hwlrW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah, I would be in favor of either of these. Of the two, the latter
+seems like the simplest thing, but the former provides you all of the
+information you could hope for.
 
-On 2021-06-21 at 17:20:28, Tim Hutt wrote:
-> Ah of course!
->=20
-> > git pack-refs --all
->=20
-> Yeah that "fixes" things so you get `fatal: invalid reference: MASTER`.
->=20
-> I guess `git checkout` checks whether `MASTER` exists (yes, according
-> to MacOS), but git log checks whether the current branch (`MASTER`)
-> matches `master` (it doesn't).
->=20
-> Very unfortunate, but I guess it's not worth fixing.
+I suppose that if you are already changing the format of packed-refs,
+then we might as well do the thing which provides the most information
+and allows us to optimize *all* cases, not just the vast majority of
+them.
 
-I should point out that there is work underway to add a ref backend
-called reftable that doesn't store things in the file system and hence
-doesn't suffer from this problem.  It's just a big project and it
-involves touching a lot of code, so it's slow going, but when it's
-completed, people who are using that won't have this problem ("MASTER"
-will be rejected if the branch is "master").
+Of course, that's all way outside of the scope of this patch, which
+shouldn't have to deal with either of those.
 
-You aren't the first person to report this problem in some variation (it
-comes up quite frequently); we've known about it a long time, but fixing
-it just isn't trivial.  In the mean time, you may prefer to adopt a
-naming convention for your project branches; for example, even though I
-use Linux and don't have this problem, I always use lowercase, which
-makes things easier for colleagues on other systems (and is also easier
-to type).
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  log-tree.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/log-tree.c b/log-tree.c
+> index 7b823786c2..8b700e9c14 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -134,6 +134,7 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+>  			      int flags, void *cb_data)
+>  {
+>  	struct object *obj;
+> +	enum object_type objtype;
+>  	enum decoration_type type = DECORATION_NONE;
+>  	struct decoration_filter *filter = (struct decoration_filter *)cb_data;
+>
+> @@ -155,9 +156,10 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+>  		return 0;
+>  	}
+>
+> -	obj = parse_object(the_repository, oid);
+> -	if (!obj)
+> +	objtype = oid_object_info(the_repository, oid, NULL);
+> +	if (type < 0)
+>  		return 0;
+> +	obj = lookup_object_by_type(the_repository, oid, objtype);
 
---Q+WxFom0kN4hwlrW
-Content-Type: application/pgp-signature; name="signature.asc"
+The comments about s/type/obj&/ aside, this looks good to me (and the
+amended version below looks ready to be picked up, at least in my eyes).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+One thing I did want to note which is elided by the limited context is
+that we *do* parse tags like you say, it's just hidden in the "while
+(obj->type == OBJ_TAG)" loop below.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYNKeqgAKCRB8DEliiIei
-gV3kAQCzcgMPvq3/067R4wg1DqBB8Beg7vMFIS5vStRWfDmASwD+Nd94nvydkFmF
-lo+ay/kZNDDCwplpzquPI0Ql0uciBA4=
-=wnl5
------END PGP SIGNATURE-----
+So that's doing the right thing, but it wasn't clear from the limited
+context here that this patch was immediately correct.
 
---Q+WxFom0kN4hwlrW--
+Thanks,
+Taylor
