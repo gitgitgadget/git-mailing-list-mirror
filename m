@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88664C4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0720C48BC2
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73C3E611C1
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88D7061003
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbhFWRvT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 13:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48370 "EHLO
+        id S230122AbhFWRvV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 13:51:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbhFWRvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:51:07 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EE9EC0613A4
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:41 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id d11so3638989wrm.0
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:41 -0700 (PDT)
+        with ESMTP id S229774AbhFWRvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:51:08 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C70BDC06175F
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:43 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id e22so3605668wrc.1
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=o0xQ7vsbZI8wWiuX12McJfMF/3x1ijyNCAkdjzFUG0A=;
-        b=WIb1E0KFC8WDqD2Zb4w/zOrLjAI92YA3Qgq0Rs2z0q2J1QuQ76im2QkDYhRrWFMzRU
-         lGnB5XeSxWStBtYnbuxPWet0eb8iMH66QWEg/jPkWr7qxCwXBmQsYtQKBPWvsAAnjzvp
-         LSZwnQoYAgenktLdkW9w9fCYmVo/BIW9RB4JhuSl5jfHluTtFIA0uA7vYIWL3QATF5kz
-         /71faN4dipPdvGQN+4yOzLHIUkyR2eDSlZR6bVw1j6gEHBqcspkBwMwTKtp+yuFAoZfN
-         XjsZPJHDqXf1Pw0kcZ173XZAZdL607hYvz1lMef2h66kkmOJSChL4bPxRu04vrfwBt+y
-         a9cQ==
+        bh=BF1i2aC1pfSsCFopjiez7u/PukvYhKu1GTcsAAyxkQs=;
+        b=nBOKhLkRu+A+chp8MZ6EDDF6l1Y0oflRno5XgWsBDovJUvwOMWWJE4iyjiFRT6JUgF
+         DOg9FKY3UfZVvPZUBoHEXBn/8Gx+LvpIWA9o8uUipKbrJJhn4vwt29OPjx3JhMM6KVtS
+         u8SCjHXE+rdoN+khsT63fvnwgA3x5MZzIADSqJSztmSvFwCa7h6o9mYgC60D+HdTCAog
+         Z0x/m4/Bv76D/RSRJThDldxwqI+YVTIrq5KY8tnDhB3Zji+cuj1R0G5K1hISoALTQazq
+         iZhLPZ0/0xmDcc5Wt9Xog1eBooV6yA6lSaBOWbsbF1+oSwQUqI64wc8MbFd6Z+3pNE8/
+         ZE/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=o0xQ7vsbZI8wWiuX12McJfMF/3x1ijyNCAkdjzFUG0A=;
-        b=N2Lp+UrStVGUqiJ2qs8UxxC9VVKIRM9iULPbWqo7NWOY9tLXyW0saPA3XfCSakeAjC
-         1CiYXDCNk9+QRVBg/w0Pxj1oQKvzPBWngchxxk4qRJkiMzw4EnGfQAfEjadwnuEPPxeX
-         +dCckHwogi5uEh4rRST0wYniE06fklkOFAdALbVzD5jwwHZOxeweCQxEpkYEwpEECBuU
-         Ffh7hG5WjxEZa3aMPIkF0su8xOGfHBmtnvdcuVdCZzGaX40Pwr8HuXJVSknZsZbRJFfg
-         5/6bf26oDoxM1omi2/2P0RKIpCcO/+dldxjvcIgVPsdxeyEeaGvcMP0nGMeu9A6zm7hF
-         24BQ==
-X-Gm-Message-State: AOAM533QytMqOc7662g8txl0w0aeGlqmnL/jwtZZOR06rgwIMfXYXHhm
-        FJEvrJakuuTUbF1Bmlr4kb6qPEjVDqRrOw==
-X-Google-Smtp-Source: ABdhPJxC+u+C+p7ivNvJDeGztEM5cpXlMJgCbSq5cOQ0AXhxOElkJ9IWLKjaiD1ngIS6AIrwgCr4og==
-X-Received: by 2002:adf:eec8:: with SMTP id a8mr1414096wrp.407.1624470519974;
-        Wed, 23 Jun 2021 10:48:39 -0700 (PDT)
+        bh=BF1i2aC1pfSsCFopjiez7u/PukvYhKu1GTcsAAyxkQs=;
+        b=U2hZ+F+EcnKzQgapuqTWWNyzqeavGJ8uFv6Zyf11eNW2DfjNJQPH04+9UjuLafsoIx
+         72Uvj4B/JO3kesKTlprkNAOqqIuoasnUgFkk4I7jmskaO7j4hRUJYfXOCCloO0G4W+jK
+         IM2EhmD+hBjVMCc1duvLIFStF8tfeiPB9Mb4otKcELQoIF8uz7djci2z15hVMIkbV1Iu
+         0E2D510K2AWMdKTg6bJ4Gz4I9exunyhoz22DWsT4MMzSEhbyQ8u2IYIOexz0JxcJwReo
+         nmZMiv1ED7yH2BRYO8Q+oNz1m8bSJ3S2dr2oicjpBNqIgZJIVLHQtUj507SVsfqav3eQ
+         1dRw==
+X-Gm-Message-State: AOAM531MrfL65P9UcYadhLrkspYw+1tqmKFLGvNm+o0dXZfLJmY4uobo
+        GCyC+V578EXCNv11BzGRa94USgh//vVQJw==
+X-Google-Smtp-Source: ABdhPJzyasq5+GxsaW6gkPOqmsNb3T8mOheJdhD/RMblUnfiCzJom7Xl6iPCR8qwWipRSHLWkULvkw==
+X-Received: by 2002:a05:6000:114a:: with SMTP id d10mr1439930wrx.7.1624470522252;
+        Wed, 23 Jun 2021 10:48:42 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.39
+        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 10:48:39 -0700 (PDT)
+        Wed, 23 Jun 2021 10:48:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 15/25] progress.c: pass "is done?" (again) to display()
-Date:   Wed, 23 Jun 2021 19:48:15 +0200
-Message-Id: <patch-15.25-160c5fe04c3-20210623T155626Z-avarab@gmail.com>
+Subject: [PATCH 18/25] progress.c: emit progress on first signal, show "stalled"
+Date:   Wed, 23 Jun 2021 19:48:18 +0200
+Message-Id: <patch-18.25-e21fc66623f-20210623T155626Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
 In-Reply-To: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
 References: <YNKWsTsQgB2Ijxu7@nand.local> <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
@@ -78,121 +78,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Go back to passing a "are we done?" state variable to the display()
-function, instead of passing a string that happens to end in a newline
-for the ", done\n" special-case in stop_progress().
+Ever since the progress.c code was added in 96a02f8f6d2 (common
+progress display support, 2007-04-18) we have been driven purely by
+calls to the display() function (via the public display_progress()),
+or via stop_progress(). Even though we got a signal and invoked
+progress_interval() that function would not actually emit progress
+output for us.
 
-This doesn't matter now, but is needed to display an arbitrary message
-earlier in the progress display, not just at the very end.
+Thus in cases like "git gc" we don't emit any "Enumerating Objects"
+output until we get past the setup code, and start enumerating
+objects, we'll now (at least on my laptop) show output earlier, and
+emit a "stalled" message before we start the count.
 
-In a984a06a07c (nicer display of thin pack completion, 2007-11-08)
-this code worked like this, but later on in 42e18fbf5f9 (more compact
-progress display, 2007-10-16) we ended up with the "const
-char *done". Then in d53ba841d4f (progress: assemble percentage and
-counters in a strbuf before printing, 2019-04-05) we ended up with the
-current code structure around the "counters_sb" strbuf.
-
-The "counters_sb" is needed because when we emit a line like:
-
-    Title (1/10)<CR>
-
-We need to know how many characters the " (1/10)" variable part is, so
-that we'll emit the appropriate number of spaces to "clear" the line.
-
-If we want to emit output like:
-
-    Title (1/10), some message<CR>
-
-We'll need to stick the whole " (1/10), some message" part into the
-strbuf, so that if we want to clear the message we'll know to emit:
-
-    Title (1/10), some message<CR>
-    Title (2/10)              <CR>
-
-This didn't matter for the ", done\n" case because we were ending the
-process anyway, but in preparation for the above let's star treating
-it like any other line, and pass an "int last_update" to decide
-whether the line ends with a "\r" or a "\n".
+But more generally, this is a first step towards never showing a
+hanging progress bar from the user's perspective. If we're truly
+taking a very long time with one item we can show some spinner that we
+update every time we get a signal. We don't right now, and only
+special-case the most common case of hanging before we get to the
+first item.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- progress.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ progress.c                  |  7 +++++
+ t/t0500-progress-display.sh | 63 ++++++++++++++++++++++++++++++++++---
+ 2 files changed, 66 insertions(+), 4 deletions(-)
 
 diff --git a/progress.c b/progress.c
-index 39d7f6bd86b..44479f65921 100644
+index 6c4038df791..35847d3a7f2 100644
 --- a/progress.c
 +++ b/progress.c
-@@ -25,7 +25,8 @@ static int is_foreground_fd(int fd)
- 	return tpgrp < 0 || tpgrp == getpgid(0);
- }
- 
--static void display(struct progress *progress, uint64_t n, const char *done)
-+static void display(struct progress *progress, uint64_t n,
-+		    const char *update_msg, int last_update)
- {
- 	const char *tp;
- 	struct strbuf *counters_sb = &progress->counters_sb;
-@@ -55,10 +56,13 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 		show_update = 1;
- 	}
- 
-+	if (show_update && update_msg)
-+		strbuf_addf(counters_sb, ", %s.", update_msg);
-+
- 	if (show_update) {
- 		int stderr_is_foreground_fd = is_foreground_fd(fileno(stderr));
--		if (stderr_is_foreground_fd || done) {
--			const char *eol = done ? done : "\r";
-+		if (stderr_is_foreground_fd || update_msg) {
-+			const char *eol = last_update ? "\n" : "\r";
- 			size_t clear_len = counters_sb->len < last_count_len ?
- 					last_count_len - counters_sb->len + 1 :
- 					0;
-@@ -70,7 +74,7 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 			if (progress->split) {
- 				fprintf(stderr, "  %s%*s", counters_sb->buf,
- 					(int) clear_len, eol);
--			} else if (!done && cols < progress_line_len) {
-+			} else if (!update_msg && cols < progress_line_len) {
- 				clear_len = progress->title_len + 1 < cols ?
- 					    cols - progress->title_len - 1 : 0;
- 				fprintf(stderr, "%s:%*s\n  %s%s",
-@@ -163,13 +167,13 @@ void display_throughput(struct progress *progress, uint64_t total)
- 
- 	throughput_string(&tp->display, total, rate);
- 	if (progress->last_value != -1 && progress_update)
--		display(progress, progress->last_value, NULL);
-+		display(progress, progress->last_value, NULL, 0);
- }
- 
- void display_progress(struct progress *progress, uint64_t n)
- {
- 	if (progress)
--		display(progress, n, NULL);
-+		display(progress, n, NULL, 0);
- }
- 
+@@ -255,6 +255,13 @@ void display_progress(struct progress *progress, uint64_t n)
  static void progress_interval(int signum)
-@@ -303,7 +307,6 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 	*p_progress = NULL;
- 	if (progress->last_value != -1) {
- 		/* Force the last update */
--		char *buf;
- 		struct throughput *tp = progress->throughput;
+ {
+ 	progress_update = 1;
++
++	if (global_progress->last_value != -1)
++		return;
++
++	display(global_progress, 0, _(", stalled."), 0);
++	progress_update = 1;
++	return;
+ }
  
- 		if (tp) {
-@@ -314,9 +317,7 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
- 			throughput_string(&tp->display, tp->curr_total, rate);
- 		}
- 		progress_update = 1;
--		buf = xstrfmt(", %s.\n", msg);
--		display(progress, progress->last_value, buf);
--		free(buf);
-+		display(progress, progress->last_value, msg, 1);
- 	}
- 	clear_progress_signal(progress);
- 	strbuf_release(&progress->counters_sb);
+ void test_progress_force_update(void)
+diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
+index 883e044fe64..bc458cfc28b 100755
+--- a/t/t0500-progress-display.sh
++++ b/t/t0500-progress-display.sh
+@@ -15,7 +15,8 @@ test_expect_success 'setup COLUMNS' '
+ 
+ test_expect_success 'simple progress display' '
+ 	cat >expect <<-\EOF &&
+-	Working hard: 1<CR>
++	Working hard: 0, stalled.<CR>
++	Working hard: 1          <CR>
+ 	Working hard: 2<CR>
+ 	Working hard: 5<CR>
+ 	Working hard: 5, done.
+@@ -60,6 +61,57 @@ test_expect_success 'progress display with total' '
+ 	test_cmp expect out
+ '
+ 
++test_expect_success 'stalled progress display' '
++	cat >expect <<-\EOF &&
++	Working hard:   0% (0/3), stalled.<CR>
++	Working hard:  33% (1/3)          <CR>
++	Working hard:  66% (2/3)<CR>
++	Working hard: 100% (3/3)<CR>
++	Working hard: 100% (3/3), done.
++	EOF
++
++	cat >in <<-\EOF &&
++	start 3
++	signal
++	signal
++	signal
++	progress 1
++	signal
++	update
++	signal
++	progress 2
++	update
++	progress 3
++	stop
++	EOF
++	STALLED=1 test-tool progress <in 2>stderr &&
++
++	show_cr <stderr >out &&
++	test_cmp expect out
++'
++
++test_expect_success 'progress display breaks long lines #0, stalled' '
++	sed -e "s/Z$//" >expect <<\EOF &&
++Working hard.......2.........3.........4.........5.........6.........7:
++    0% (0/100), stalled.<CR>
++    1% (1/100)          <CR>
++   50% (50/100)<CR>
++   50% (50/100), done.
++EOF
++
++	cat >in <<-\EOF &&
++	start 100 Working hard.......2.........3.........4.........5.........6.........7
++	signal
++	progress 1
++	progress 50
++	stop
++	EOF
++	test-tool progress <in 2>stderr &&
++
++	show_cr <stderr >out &&
++	test_cmp expect out
++'
++
+ test_expect_success 'progress display breaks long lines #1' '
+ 	sed -e "s/Z$//" >expect <<\EOF &&
+ Working hard.......2.........3.........4.........5.........6:   0% (100/100000)<CR>
+@@ -183,7 +235,8 @@ test_expect_success 'progress shortens - crazy caller' '
+ 
+ test_expect_success 'progress display with throughput' '
+ 	cat >expect <<-\EOF &&
+-	Working hard: 10<CR>
++	Working hard: 0, stalled.<CR>
++	Working hard: 10         <CR>
+ 	Working hard: 20, 200.00 KiB | 100.00 KiB/s<CR>
+ 	Working hard: 30, 300.00 KiB | 100.00 KiB/s<CR>
+ 	Working hard: 40, 400.00 KiB | 100.00 KiB/s<CR>
+@@ -241,7 +294,8 @@ test_expect_success 'progress display with throughput and total' '
+ 
+ test_expect_success 'cover up after throughput shortens' '
+ 	cat >expect <<-\EOF &&
+-	Working hard: 1<CR>
++	Working hard: 0, stalled.<CR>
++	Working hard: 1          <CR>
+ 	Working hard: 2, 800.00 KiB | 400.00 KiB/s<CR>
+ 	Working hard: 3, 1.17 MiB | 400.00 KiB/s  <CR>
+ 	Working hard: 4, 1.56 MiB | 400.00 KiB/s<CR>
+@@ -272,7 +326,8 @@ test_expect_success 'cover up after throughput shortens' '
+ 
+ test_expect_success 'cover up after throughput shortens a lot' '
+ 	cat >expect <<-\EOF &&
+-	Working hard: 1<CR>
++	Working hard: 0, stalled.<CR>
++	Working hard: 1          <CR>
+ 	Working hard: 2, 1000.00 KiB | 1000.00 KiB/s<CR>
+ 	Working hard: 3, 3.00 MiB | 1.50 MiB/s      <CR>
+ 	Working hard: 3, 3.00 MiB | 1024.00 KiB/s, done.
 -- 
 2.32.0.599.g3967b4fa4ac
 
