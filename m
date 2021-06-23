@@ -2,89 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7910C48BC2
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 265A7C48BC2
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:31:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B3F961263
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:28:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F362660FEB
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbhFWWbO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 18:31:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58814 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229688AbhFWWbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 18:31:13 -0400
-Received: (qmail 7891 invoked by uid 109); 23 Jun 2021 22:27:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Jun 2021 22:27:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7294 invoked by uid 111); 23 Jun 2021 22:28:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Jun 2021 18:28:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 23 Jun 2021 18:28:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] RFC: implement new zdiff3 conflict style
-Message-ID: <YNO1p93gHN4RPZaV@coredump.intra.peff.net>
-References: <pull.1036.git.git.1623734171.gitgitgadget@gmail.com>
- <YMh2M8Ek/RUVjKkL@coredump.intra.peff.net>
- <CABPp-BE7-E03+x38EK-=AE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.com>
- <255df678-9a31-bba2-f023-c7d98e5ffc15@gmail.com>
- <YMnS+2DFYiswc75z@coredump.intra.peff.net>
- <f76c79d6-f280-3011-d88d-6de146977626@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f76c79d6-f280-3011-d88d-6de146977626@gmail.com>
+        id S229924AbhFWWdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 18:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55208 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229688AbhFWWdR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 18:33:17 -0400
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2520EC061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 15:30:58 -0700 (PDT)
+Received: by mail-qv1-xf4a.google.com with SMTP id z6-20020a0cfec60000b0290263740e5b2aso4595718qvs.6
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 15:30:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=OHDmDA512c1khYtblZYHCVftv4gerf2zkiWwfabCBDo=;
+        b=uRrVsyGuJzcQpUm4SjQc6g5OXeiGR8WSnOUQlZJgyC0ftNgB3KXuZLWRidtOtiLdrc
+         Rq5a0YS0InMzKBcbs2N2Sx+3OrI4ITqJGVUPchoFs9kqATQ6CuqDsy2lZMd7FIdYhYUG
+         G+/BfOOU7w6ZxQCmiJc/3dss7mqaxErDeh2XWJEi+Yh6xFybcRhqe76ykAneX8pFwnpA
+         0Y+T2WaiVn/ATXqr/F41UCSejbJqPs81yc89Q5bR6p/WUhT3LwDKBP98a9uJDum2zQyR
+         r9T8NiSQagyrt46cSv9kY/e6iJYiDg+XTtdRbvB/o8KP5XYO6jxdXWkqOW154XlfdxG5
+         8zQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=OHDmDA512c1khYtblZYHCVftv4gerf2zkiWwfabCBDo=;
+        b=V3js7mMSUm6l1LOYzqQeOBBibPvpYzEbTuCapXuByQ3bC8q8NQrwthexsbNjlcwPf3
+         N1woitzJRRioZy8oeKQ2HPMR0CyyyBXZUDvc7JgIR/+Mkudzd9GDDsBUj9xXYGQI+u4e
+         SY6N7thCyYONCq7t+o55YPashUSSEOGEKWlqUyx+NB//oGoD94rH58KvZe0jyPEoqDau
+         y0MZdCQnp1m76BnYva11vQQuk0+qb6kFAbmTWFaPfp3AkjKdzAYqqHf+/wKQVyjoZgJU
+         /g/KF1souWgMkZIx+hxUHCQFNnLQhor75atV2Bk9usHBVX86sc08J7tlJ6fYsAKMWxHn
+         g7Yg==
+X-Gm-Message-State: AOAM530UeqZMpBTA3C3whVBMv+UrGXD4HjDeAQUgWEQepX2LkFEM203I
+        QBgD+POV6mSS0poXpypoBks4hKCKCXITSn9kkAsfWtD2TZGU33k0W53vHhp7IXko46D7W5PSCS1
+        yE7Y+xTw3pVMQOfIigiL5W3VFuz69uUz1bLQoSrcT8qdSaOc/jWgr9+8f/oHvsyaEqxrqZTgRd/
+        V4
+X-Google-Smtp-Source: ABdhPJxEps/enfyxwQIxaO7K8b5S0AGjylflWcHNWJobY5PuIpd5VDxY6+mq+F/ru6PO/eIMMbct5jWugIMHMYWdjgCJ
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:ad4:49cf:: with SMTP id
+ j15mr2138392qvy.34.1624487457233; Wed, 23 Jun 2021 15:30:57 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 15:30:50 -0700
+Message-Id: <cover.1624486920.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
+Subject: [PATCH 0/3] Push negotiation fixes
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 10:53:25AM +0100, Phillip Wood wrote:
+Testing at $DAYJOB revealed some bugs in some fundamental scenarios, and
+here are their fixes.
 
-> > Thanks for figuring that out. I agree that the output after the patch
-> > you showed is correct, in the sense that the common lines show up in the
-> > base now. It does feel like it's working against the point of zdiff3,
-> > though, which is to reduce the number of common lines shown in the
-> > "ours" and "theirs" hunks.
-> 
-> I agree - the output is longer rather than shorter. As we only want to trim
-> the common prefix and suffix from the conflicts I wonder if it would be
-> better to special case zdiff3 rather than piggy backing on the existing
-> XDL_MERGE_ZEALOUS implementation. We can trim the common lines by looping
-> over the begging and end of the hunk comparing the lines with xdl_recmatch()
-> without going to the trouble of diffing them as XDL_MERGE_ZEALOUS does. I
-> don't think we need to worry about coalescing adjacent conflicts for zdiff3.
-> It makes sense to coalesce in the XDL_MERGE_ZEALOUS case as it can
-> potentially split a  N line conflict hunk into N/2 single line conflict
-> hunks but zdiff3 does not split conflict hunks.
+Jonathan Tan (3):
+  send-pack: fix push.negotiate with remote helper
+  send-pack: fix push nego. when remote has refs
+  fetch: die on invalid --negotiation-tip hash
 
-That matches my intuition of a reasonable path forward (but I confess to
-not being too well-versed in the details of the XDL_MERGE internals).
+ builtin/fetch.c       |  4 +++-
+ builtin/send-pack.c   |  1 +
+ send-pack.c           |  6 +++--
+ t/t5510-fetch.sh      |  9 ++++++++
+ t/t5516-fetch-push.sh | 54 +++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 71 insertions(+), 3 deletions(-)
 
-> Yes, I think the heuristic for coalescing conflict hunks could be improved.
-> It would be fairly simple to only join two hunks if the conflicts are longer
-> that the context between them and the existing XDL_MERGE_ZEALOUS_ALNUM logic
-> allows conflicts with more context between them to be coalesced if the
-> context lines are uninteresting. I think XDL_MERGE_ZEALOUS_ALNUM is only
-> used by `git merge-file` at the moment, with everything else going through
-> ll_merge() which uses XDL_MERGE_ZEALOUS
+-- 
+2.32.0.288.g62a8d224e6-goog
 
-I don't recall much discussion around using ALNUM versus not, nor could
-I find much in the archive. It looks like merge-file was converted to
-show off ALNUM when it was added in ee95ec5d58 (xdl_merge(): introduce
-XDL_MERGE_ZEALOUS_ALNUM, 2008-02-17), and it never really progressed
-from there.
-
-It might be an interesting exercise to re-run a bunch of merges and see
-if ALNUM produces better (or worse) results on the whole.
-
--Peff
