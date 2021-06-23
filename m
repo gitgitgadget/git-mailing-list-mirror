@@ -2,226 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3A4CC4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E172C4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:19:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8988E60E0C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:59:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C749610F7
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229726AbhFWSCG convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 23 Jun 2021 14:02:06 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:24489 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbhFWSCF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 14:02:05 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 15NHxeBJ000589
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 23 Jun 2021 13:59:41 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, <git@vger.kernel.org>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>,
-        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        "'Taylor Blau'" <me@ttaylorr.com>
-References: <YNKWsTsQgB2Ijxu7@nand.local> <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
-In-Reply-To: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
-Subject: RE: [PATCH 00/25] progress.c: various fixes + SZEDER's RFC code
-Date:   Wed, 23 Jun 2021 13:59:35 -0400
-Message-ID: <00fb01d76859$8a6ebc50$9f4c34f0$@nexbridge.com>
-MIME-Version: 1.0
+        id S229759AbhFWSWA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 14:22:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55202 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229523AbhFWSV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 14:21:59 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 212D7C061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:19:42 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id d19so4323688oic.7
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:19:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=m+mKiHvQuZKxi+W/FPOXfD0o2Ee/QBTFH/IwNPuKTQk=;
+        b=E9B+CmaeYwTAPifMrvJ+2kWpbR9GIuPcUqO5z6Z3MJ/9U5k5D9jvT8nwh+btjUqdrj
+         Gm/Y8Tm7+VZcmlrJTb6sbTgGdS+6DoEDOC4S0Iy7ytEdJes/QbmRt9hRAMJaJiOhmlQZ
+         YVUelMiRs3YaE7xNu5NGKhyzg57Eyhf+DlqQDSEP9RDw9c2MHR5j4rK7TmNG4ZYfizEP
+         PI9MOp+zZdkHlziYHgW3Zt0dsMvnKaRT0ZuS/FXyOpvffzTzCTY6RIB0FgO6o6e4kUjT
+         pCabF1QL/JleFJWtB++DYucZPdYYpGiLy+dy8BD1/W9MA4jjaSTOH8GGDmb7m8LD5nAC
+         VU+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=m+mKiHvQuZKxi+W/FPOXfD0o2Ee/QBTFH/IwNPuKTQk=;
+        b=tsOtI2IYyOXCzX83uZ94elwz9Wrgx0QD9WIyF9fvBGPGLwGJretjaIdqFSEC9bhLNh
+         XhB1thBMk3jeVBUBE1gzp79sLusTOhjy9UH6Fh1n2VkjrdTobkep6Wyny9tMx6vrNsmt
+         xD0WYzFy/ljadXmQvFdyKGsq85WWLUXETi8hl34YOOYQhP3zcwjZ4P6Z5wI7cvkz25L7
+         hykq1hQTas2yuf1ixHynzh6sdAN+c56wNrLkbgQch0aZ9OUE1A7i7fpsCUw9acQDhgx9
+         BdpiTkf/3vrxUlTP+wZ6y9SyCp3gQKRGnK3lgApTgjDYDll4hfSk1mVEH98KEFXarqp/
+         +KZg==
+X-Gm-Message-State: AOAM532XVmX5nmrSFacR8Rtt7o5doZEPAzVaWFUuQvVN4RnfkTeaLFPq
+        VhOOC7UpLz/R1LH/0K1xYMY=
+X-Google-Smtp-Source: ABdhPJxENO2+LXUUTx9UcF0iSyAgY/Z55/URt4RZ5Y7IOi116WFJUzvdcDneYLKFFom+Vf9gDURRFA==
+X-Received: by 2002:aca:5cc1:: with SMTP id q184mr4243702oib.135.1624472381406;
+        Wed, 23 Jun 2021 11:19:41 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id y7sm129363oti.80.2021.06.23.11.19.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Jun 2021 11:19:40 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 13:19:39 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Message-ID: <60d37b3b77aeb_378720834@natae.notmuch>
+In-Reply-To: <CABPp-BHSxNT0rG3LMrDVH64mBwTgeF197oZFnbHvvKk=SB--WA@mail.gmail.com>
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-3-felipe.contreras@gmail.com>
+ <CAMMLpeR2Y_EGwqGJzghSQ1DzpYQyWr6ENmGCvPRdhhYFkTW4yw@mail.gmail.com>
+ <60d0df99d91e1_108e902085e@natae.notmuch>
+ <CAMMLpeRnUC+nOek=Kz6bj0_R6EUaDr=7ObKF01V641_ByOmk6A@mail.gmail.com>
+ <60d10ebd99d86_113139208cd@natae.notmuch>
+ <CAMMLpeRa3atkZxEtV--YD6-JSf0Bp9xRw9kS5wSWerxpsGrvrw@mail.gmail.com>
+ <CABPp-BF1noWhiJadHzjJmnGo8hdZj6Fk7XnZ=u6BVVSGfHE7og@mail.gmail.com>
+ <60d289c84fadf_312208dc@natae.notmuch>
+ <CABPp-BHSxNT0rG3LMrDVH64mBwTgeF197oZFnbHvvKk=SB--WA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pull: improve default warning
+Mime-Version: 1.0
 Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJjQXcuvjkKWyoZZU6MbDFkLtaI2wE/M928qgA142A=
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On June 23, 2021 1:48 PM, Ævar Arnfjörð Bjarmason wrote:
->> On Mon, Jun 21, 2021 at 02:59:53AM +0200, Ævar Arnfjörð Bjarmason wrote:
->>>
->>> On Sun, Jun 20 2021, SZEDER Gábor wrote:
->>>
->>> > Splitting off from:
->>> >
->>> >
->>> > https://public-inbox.org/git/cover-0.2-0000000000-20210607T144206Z-
->>> > avarab@gmail.com/T/#me5d3176914d4268fd9f2a96fc63f4e41beb26bd6
->>> >
->>> > On Tue, Jun 08, 2021 at 06:14:42PM +0200, René Scharfe wrote:
->>> >> I wonder (only in a semi-curious way, though) if we can detect
->>> >> off-by-one errors by adding an assertion to display_progress()
->>> >> that requires the first update to have the value 0, and in
->>> >> stop_progress() one that requires the previous display_progress()
->>> >> call to have a value equal to the total number of work items.  Not
->>> >> sure it'd be worth the hassle..
->>> >
->>> > I fixed and reported a number of bogus progress lines in the past,
->>> > the last one during v2.31.0-rc phase, so I've looked into whether
->>> > progress counters could be automatically validated in our tests,
->>> > and came up with these patches a few months ago.  It turned out
->>> > that progress counters can be checked easily and transparently in
->>> > case of progress lines that are shown in the tests, i.e. that are
->>> > shown even when stderr is not a terminal or are forced with
->>> > '--progress'.  (In other cases it's still fairly easy but not quite
->>> > transparent, as I think we need changes to the progress API; more
->>> > on that later in a separate
->>> > series.)
->>>
->>> I've also been working on some progress.[ch] patches that are mostly
->>> finished, and I'm some 20 patches in at the moment. I wasn't sure
->>> about whether to send an alternate 20-patch "let's do this (mostly) instead?"
->>> series, hence this message.
->>>
->>> Much of what you're doing here becomes easier after that series, e.g.
->>> your global process struct in 2/7 is something I ended up
->>> implementing as part of a general feature to allow progress to be
->>> driven by either display_progress() *or* the signal handler itself.
->>
->> It's difficult to know who should rebase onto who without seeing one
->> half of the patches.
->
->I was sort of hoping he'd take me word for it, but here it is. Don't say I didn't warn you :)
->
->> I couldn't find a link to them anywhere (even if they are only
->> available in your fork in a pre-polished state) despite looking, but
->> my apologies if they are available and I'm just missing them.
->
->FWIW it's avar-szeder/progress-bar-assertions in https://github.com/avar/git.git, that repo contains various functioning and not-so-
->functioning code.
->
->https://github.com/avar/git/tree/meta/ is my version of the crappy scripts we probably all have some version of for building my own git,
->things that are uncommented in series.conf is what I build my own git from.
->
->> In general, I think that these patches are clear and are helpful in
->> pinning down issues with the progress API (which I have made a hadnful
->> of times in the past), so I would be happy to see them picked up.
->
->Here's all 25 patches (well, around 20 before) that I had queued up locally and fixed up a bit.
->
->The 01/25 is something I submitted already as https://lore.kernel.org/git/patch-1.1-cba5d88ca35-20210621T070114Z-avarab@gmail.com;
->hoping to get this in incrementally.
->
->The 12/25 is my own version of that "global progress struct, 11/25 is the first of many bugs SZEDER missed in his :)
->
->18/25 is the first step of the UI I was going for, the signal handler can now drive the progress bar, so e.g. during "git gc" we show (at least
->for me, on git.git), a "stalled" message just before we start the actual count of "Enumerating Objects".
->
->After that was in I was planning on adding config-driven support to show a "spinner" when we stalled in that way, config-driven because
->you could just scrape e.g. https://github.com/sindresorhus/cli-spinners/blob/main/spinners.json
->into your own config. See
->https://jsfiddle.net/sindresorhus/2eLtsbey/embedded/result/ :)
->
->19-23/25 is my grabbing of SZEDER's patches that I'm comfortable labeling as "PATCH", I think they work, but no BUG() assertions yet. I
->left out the GIT_TEST_CHECK_PROGRESS parts, since my earlier works set things up to do any BUG() we trust by default.
->
->22/25 is what I think we should do instead of SZEDER's 6/7
->(http://lore.kernel.org/git/20210620200303.2328957-7-szeder.dev@gmail.com)
->I don't think this "our total doesn't match at the end" is something we should always BUG() on, for reasons explained there.
->
->I am sympathetic to doing it by default though, hence the
->stop_progress_early() API, that's there to allow select callers to bypass his BUG(...) assertion.
->
->24/25 and 25/25 are "RFC" and a rebased+modified version of SZEDER's
->BUG(...) assertions.
->
->His series passes the test suite, but actually severely break things things. It'll make e.g. "git commit-graph write" BUG(...) out. The reason
->the tests don't catch it is because we have a blind spot in the tests.
->
->Namely, that most things that use the progress bar API use isatty() to check if they should start_progress(). If you run the tests as e.g.
->(better ways to do this, especially in parallel, most welcome):
->
->    for t in t[0-9]*.sh; do if ! ./$t -vixd; then echo $t bad; break; fi; done
->
->You can discover various things that his series BUG()'s on, I fixed a couple of those myself, it's an early part of this series.
->
->But we'll still have various untested for BUG()'s even then, this is because you *also* have to have the test actually emit a "naked"
->progress bar on stderr, if the test itself e.g. pipes fd 2 to a file it won't work.
->
->I created a shitty-and-mostly-broken throwaway change to search-replace all the guards of "start_progress(...)" to run unconditionally, and
->convert all the "delayed" to the non-delayed version. That'll find even more BUG()'s where SZEDER's series still needs to be fixed (and also
->some unrelated segfaults, I gave up on it soon after).
->
->Even if we fix that I wouldn't trust it, because a lot of the progress bars we have depend on the size and shape of the data we're
->processing, e.g. the bug I fixed in 11/25. If people find this BUG() approach worth pursuing I think it would be better to make it an opt-in
->flag we convert one caller at a time to.
->
->For some it's really clear that we could assert it, for others such as the commit-graph it's much more subtle, we're in some callback after
->setting a "total", that callback does a "break", "continue" etc. in various places, all depending on repository data.
->
->It's not easy to reason about that and be certain that we can hold to the estimate. If we get it wrong someone's repo in the wild won't fully
->GC because of the overly eager BUG().
->
->If SZEDER wants to pursue it I think it'll be easier on top of this series, but personally I really don't see the point of spending effort on it.
->
->We should really be going in the other direction, of having more fuzzy ETAs, not less.
->
->E.g. we often have enough data at the start of "Enumerating Objects"
->to give a good-enough target value, that it's 5-10% off isn't really the point, but that the user looking at it sees something better than a
->dumb count-up, and can instead see that they'll probably be looking at it for about a minute. Now our API is to give no ETA/target if we're
->not 100% sure, it's not good UX.
->
->So trying to get the current exact count/exact percentage right seems like a distraction to me in the longer term. If anything we should
->just be rounding those numbers, showing fuzzy ETAs instead of percentages if we can etc.
->
->SZEDER Gábor (4):
->  commit-graph: fix bogus counter in "Scanning merged commits" progress
->    line
->  entry: show finer-grained counter in "Filtering content" progress line
->  progress: assert last update in stop_progress()
->  progress: assert counting upwards in display()
->
->Ævar Arnfjörð Bjarmason (21):
->  progress.c tests: fix breakage with COLUMNS != 80
->  progress.c tests: make start/stop verbs on stdin
->  progress.c tests: test some invalid usage
->  progress.c tests: add a "signal" verb
->  progress.c: move signal handler functions lower
->  progress.c: call progress_interval() from progress_test_force_update()
->  progress.c: stop eagerly fflush(stderr) when not a terminal
->  progress.c: add temporary variable from progress struct
->  midx perf: add a perf test for multi-pack-index
->  progress.c: remove the "sparse" mode nano-optimization
->  pack-bitmap-write.c: add a missing stop_progress()
->  progress.c: add & assert a "global_progress" variable
->  progress.[ch]: move the "struct progress" to the header
->  progress.[ch]: move test-only code away from "extern" variables
->  progress.c: pass "is done?" (again) to display()
->  progress.[ch]: convert "title" to "struct strbuf"
->  progress.c: refactor display() for less confusion, and fix bug
->  progress.c: emit progress on first signal, show "stalled"
->  midx: don't provide a total for QSORT() progress
->  progress.c: add a stop_progress_early() function
->  entry: deal with unexpected "Filtering content" total
->
-> cache.h                          |   1 -
-> commit-graph.c                   |   2 +-
-> csum-file.h                      |   2 -
-> entry.c                          |  12 +-
-> midx.c                           |  25 +-
-> pack-bitmap-write.c              |   1 +
-> pack.h                           |   1 -
-> parallel-checkout.h              |   1 -
-> progress.c                       | 391 ++++++++++++++++++-------------
-> progress.h                       |  50 +++-
-> reachable.h                      |   1 -
-> t/helper/test-progress.c         |  54 +++--
-> t/perf/p5319-multi-pack-index.sh |  21 ++
-> t/t0500-progress-display.sh      | 247 ++++++++++++++-----
-> 14 files changed, 537 insertions(+), 272 deletions(-)  create mode 100755 t/perf/p5319-multi-pack-index.sh
+Elijah Newren wrote:
+> On Tue, Jun 22, 2021 at 6:09 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> >
+> > Elijah Newren wrote:
+> ...
+> > > You're not alone, Alex; I objected to that part as well.  (See e.g.
+> > > https://lore.kernel.org/git/CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com/
+> > > and various other emails in that thread, ending with "agree to
+> > > disagree" later).  I still object to it as I did then.
+> >
+> > You made your disagreement known in [1], I responded to it with a
+> > devastating argument in [2], and you immediately withtdrew from the
+> > discussion in [3] without engaging my argument at all.
+> 
+> I didn't find anything new or persuasive in your rehashing of your
+> arguments.
 
-Is there provision for disabling progress on a per-command basis? My use case is specifically in a CI/CD script, being able to suppress progress handling. The current Jenkins plugin does not appear to have provision for hooking into a mechanism, which makes things get a bit wonky when a job runs with a pseudo-tty (as provided by Jenkins through SSH/RMI).
--Randall
+The fact that you don't find something persuasive doesn't mean there
+wasn't anything persuasive.
 
+Moreover, the argument was completely new.
+
+> I had stated my disagreement twice already, and having us both repeat
+> our arguments does no one any good, so I just stated we can agree to
+> disagree.
+
+I did not repeat my argument, I made a completely new argument.
+
+> > > I'm curious whether it'll just be resubmitted again multiple times,
+> > > eventually with a cover letter that repeats something along the lines
+> > > of "these are the non-controversial changes from last-year series
+> > > which...don't have any reason not to be merged."
+> >
+> > The fact that **one** person was not 100% on board with a change doesn't
+> > make it controversial.
+> 
+> This is a disconcerting response.
+
+Why? That's the definition of the word "controversial". In order for X
+to be controversial a substantive amount of people need to have opposing
+views.
+
+The fact that a few people deny the roundness of the Earth doesn't make
+that idea "controversial".
+
+Similarly, the fact that one person disagrees with X doesn't make X
+controversial.
+
+> I also find your characterization of the old thread disappointing; I
+> clearly cared enough to state my objection in three separate emails,
+> so it's more than just "not 100% on board".
+
+I said "change", not "thread".
+
+And, you were on board with 23 out of 24 lines of the patch. So you were
+96% on board. That's just a mathematical fact.
+
+> And Junio referred to the analogy in your "devastating argument" as
+> "irrelevant", so it's not clear you convinced others either.
+
+Junio is not infallible. The fact that Junio said X was irrelevant
+doesn't mean X was irrelevant.
+
+And in this particular case he was wrong, as I explained in [1], because
+he equated apples (regulations) to oranges (policy).
+
+To be specific: this is a false equivalence fallacy.
+
+When I pointed out that fallacy he didn't bother to reply [2].
+
+> > You made the conscious choice to withdraw from the discussion
+> > immediately, so just like a person who abandons an election cycle and
+> > decides not to vote, you are leving the future of the matter in the
+> > hands of others.
+> 
+> This is quite a disappointing argument.  If this position were to be
+> accepted broadly within the project, it would suggest scorched-earth
+> last-man standing tactics -- just arguing until the other side runs
+> out of energy.  If that was used to determine our forward strategy,
+> it'd result in a massive waste of energy, people feeling drained and
+> losing motivation to contribute, some people just deciding to leave
+> the project, and a myriad of other negative outcomes.
+
+This is how progress is achieved in all areas of society, from public
+debates, to trials, to elections.
+
+You can't just stand up and leave when the debate is only 25% complete,
+and then expect to win it.
+
+Either you care enough see it through, or you don't.
+
+Even in sports, and in video games, completing the match is the bare
+minimum to win.
+
+Unlike in a video game, the fact that you left the debate doesn't
+necessarily mean you lost, but you definitely did not win it.
+
+> In fact, occurrences of such behavior has already had such outcomes.
+
+That's your opinion, my opinion is the exact opposite.
+
+The reason people have left the project is because even though they
+care, and they stay for 100% of the race, if some bigwig who only said
+"I disagree" and left having only participated in 10% of the debate, the
+debate is over, always in favor of the incumbents.
+
+This is not a fair marketplace of ideas where the best ideas win, it's
+not a meritocracy, and discourages anyone who is not already part of the
+big club.
+
+> Rehashing the same arguments repeatedly damages the discourse within
+> the project as well as the project itself.  There's no point in doing
+> so.
+
+All philosophers would disagree with you.
+
+There are some debates that have lasted for millennia and still continue
+today. Many arguments for free will are repeated exactly the same, but
+some are slightly different, and merit a new look. As long as we don't
+solve this debate, it will continue, and everyone that cares sees value
+in it.
+
+Similarly, until "git pull" does something sensible by default (which
+isn't the case now), these debates will continue, and there's value in
+them.
+
+Perhaps if other people didn't stand up and left in the middle of the
+debate in 2013 we would have solved the issue back then and we wouldn't
+be here.
+
+But here we are yet again, and if people continue ignoring arguments and
+leaving the debate before it's even 10% done, we will be here again in
+2022, 2024, and probably more.
+
+Especially if they straight-up reject patches that according to
+themselves are 96% perfectly fine.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com/
+[2] https://lore.kernel.org/git/xmqqpn3lbhxn.fsf@gitster.c.googlers.com/
+
+-- 
+Felipe Contreras
