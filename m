@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CD76C4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38890C48BC2
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30A7D611C1
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13C35611AC
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbhFWRvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229958AbhFWRvD (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 23 Jun 2021 13:51:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbhFWRux (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:50:53 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 912E9C06175F
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:33 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id o22so1255648wms.0
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:33 -0700 (PDT)
+        with ESMTP id S229873AbhFWRuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:50:54 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA671C061756
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:35 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id f15so3571015wro.8
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wPuASEtP7/3IoCe0Lx7MLQXePN4LXUHTxF5zNbTuszk=;
-        b=ttKEcvjFYB1LdRHXTa7dMYkRa10e4mt2cUdZcVB1MfkCN5QuA7aLSgY8qgf/kZlqv5
-         oaAtcWf7u6aMaderT83cYyCsqGnKJCEBZ5HowVRDrkxEhcsK1zmwuJ9GyDuSjVnR+Qj9
-         5sxXZy0zyoAyoYt/eDEerKsCItFO8RPKsOi2/zMgTXU4PFKyzRqvFKe1QIDSVFCv246d
-         Qizv+lHazJKr1Q5gW0HdiC4UXEwdXZj2kWdvg0n869fqNO4hpYQDtvAjZYc3CBf6P6v6
-         P7puxzcfRhBlPPPM42v4vtriws22NOn0ET0ELtU+qJFMugUAyyrzB+cFIFwjLJYzdWwq
-         EsZw==
+        bh=Z+Tb91shET96jRFlTsk35ACQzF64xjpFyo71+i8iXzE=;
+        b=mJkcZ4EuXwH4oq7iBd7QsaMrXXOeY1YCBrNAsA2gbU68qO9ahYRXn7UEPb9yvVzoAY
+         la9dj2OU+FQPmnLUh5PvrQjzrnCCwLeXorUWdzEjgcGxaErqh3MeJunkNpvL2f3Yka8Y
+         oVmeHW8G2T6hJNeoetjN37l9nzxO/L9c38Fy7/uB/7POCZELFEzsylWUueZtdc1csdFv
+         tibu4YxiV0sEuRdRtpC/XYgl6f3rIcU8A6ihmnVtqv581eC4PX+KZfBUGGp24UCKploY
+         wFs63xtsdj+TFs8aMFFPnEhh1l535jGbDV6/XF7zoUKfriq4fYJVsai3j5+6qnhCaZVu
+         c6ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wPuASEtP7/3IoCe0Lx7MLQXePN4LXUHTxF5zNbTuszk=;
-        b=krgcCv2GfhCGILBd50s1I+71lmY0fHy49+fkiozi43iNh/g8Hu4uQ7HVnC/+63NWCm
-         kAYHizmTDfy8a2ZR/dkxiq/U5temeE608XulGK/04IZ3ME7BEsaS+Om88zvmpgeCc1og
-         2W7IbPgeZSJimXytzYttgJ1cIKvJhggQTBatixoDT52v3/+Pwv4aIzY/pwwk3JgKt2Px
-         cU+O4+26Vf3job7lJ9tblBaTTkN4eFxk3MBnmmGoIK5DvJavzCTCrR80zSUHek2jduqY
-         q0sK4RDzFG8ENOw9OMEJb6f34pAjL4dMr8M1iUgQ8gSB0zEDoEC/tghFZsOrd92b76ED
-         uaug==
-X-Gm-Message-State: AOAM533MImdRZJNuPacWRdC76b99d57UpBpYZr/WWmCoJ/oCHpIv7Z7q
-        FWS+3gK3/CUk676vb9MCTUVY9Xx8ZFcgbA==
-X-Google-Smtp-Source: ABdhPJz3c2qMlJu1lIEacSk5bBChHnx2E+twaFcu1wQ6bsZtokGCGSOfY+4LRQCvT9tZBBa6ZlVpDg==
-X-Received: by 2002:a05:600c:1988:: with SMTP id t8mr1064754wmq.23.1624470511963;
-        Wed, 23 Jun 2021 10:48:31 -0700 (PDT)
+        bh=Z+Tb91shET96jRFlTsk35ACQzF64xjpFyo71+i8iXzE=;
+        b=mAH9z1Oq7+y9QhlaQ30k8v68i/42X3NzdnXUXgCbJPAFyXElNXAPpn+DXgWmqu7MZJ
+         7E3FjItLNFv5kRvqGHkaFibkt03jqz5vOf5hR+QLFNnhesk4pi89mwqyG+4CsickMqJm
+         6rpfIKoBTC59KQBmzsHsnByhXQYuJvvV4KBMu6l4knuXsbo/QU39pkMtDFRSuVIyVY1p
+         UDceVRu1BnMlGrlFtURyKCijT7uYxEmrmn2gDq6R+jigh3ao8U8uH1Ft5FnZCCWSbYai
+         ghVXDcVmg0mzNwO5mpbkpgpnlFl7ig8KJGSbVeAfjN+krxefGCmnQt8953FI/uPoTMGx
+         DlqA==
+X-Gm-Message-State: AOAM5310A7o5vaom2i88NUjQW7PFiKi2haT24G8TrwENUySz3zWgAUSa
+        nVPZbyfmx7KMYreYMN1rqqtS1MwaYQWbjA==
+X-Google-Smtp-Source: ABdhPJwkYDZCNhLnVZ/w9/F+AUp2idsnss0OhBHTJjT6C2HxasPvuWxhUPqcQXTFpVtw/B0kDRgj2w==
+X-Received: by 2002:a5d:6dae:: with SMTP id u14mr1493086wrs.148.1624470514196;
+        Wed, 23 Jun 2021 10:48:34 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.31
+        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 10:48:31 -0700 (PDT)
+        Wed, 23 Jun 2021 10:48:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/25] progress.c tests: add a "signal" verb
-Date:   Wed, 23 Jun 2021 19:48:04 +0200
-Message-Id: <patch-04.25-900eeb0b115-20210623T155626Z-avarab@gmail.com>
+Subject: [PATCH 07/25] progress.c: stop eagerly fflush(stderr) when not a terminal
+Date:   Wed, 23 Jun 2021 19:48:07 +0200
+Message-Id: <patch-07.25-02e6edd4b7a-20210623T155626Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
 In-Reply-To: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
 References: <YNKWsTsQgB2Ijxu7@nand.local> <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
@@ -78,96 +78,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a "signal" synonym for "update". It is not typical of the
-progress.c API to encounter a scenario where we do an update before
-the first display_progress(), let's indicate this explicitly by
-calling such instances "signal".
-
-It's just a synonym for "update", but we can imagine than the
-following "update" calls could elide many "progress" calls, and the
-progress bar output will generally be of the same type, whereas the
-output where we're asked to emit an update before we've received any
-data is a special case.
+It's the clear intention of the combination of 137a0d0ef56 (Flush
+progress message buffer in display()., 2007-11-19) and
+85cb8906f0e (progress: no progress in background, 2015-04-13) to call
+fflush(stderr) when we have a stderr in the foreground, but we ended
+up always calling fflush(stderr) seemingly by omission. Let's not.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/helper/test-progress.c    |  6 +++++-
- t/t0500-progress-display.sh | 10 +++++-----
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ progress.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/helper/test-progress.c b/t/helper/test-progress.c
-index eb925d591e1..7ca58a3ee78 100644
---- a/t/helper/test-progress.c
-+++ b/t/helper/test-progress.c
-@@ -13,6 +13,9 @@
-  *                                  specify the time elapsed since the
-  *                                  start_progress() call.
-  *   "update" - Set the 'progress_update' flag.
-+ *   "signal" - Synonym for "update", used for self-documenting tests,
-+ *              i.e. "expect signal here due to hanging ("signal")
-+ *              v.s. it was time to update ("update").
-  *   "stop" - Call stop_progress().
-  *
-  * See 't0500-progress-display.sh' for examples.
-@@ -78,7 +81,8 @@ int cmd__progress(int argc, const char **argv)
- 				die("invalid input: '%s'\n", line.buf);
- 			progress_test_ns = test_ms * 1000 * 1000;
- 			display_throughput(progress, byte_count);
--		} else if (!strcmp(line.buf, "update")) {
-+		} else if (!strcmp(line.buf, "update") ||
-+			   !strcmp(line.buf, "signal")) {
- 			progress_test_force_update();
- 		} else if (!strcmp(line.buf, "stop")) {
- 			stop_progress(&progress);
-diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
-index 50eced31f03..66c1989b176 100755
---- a/t/t0500-progress-display.sh
-+++ b/t/t0500-progress-display.sh
-@@ -23,7 +23,7 @@ test_expect_success 'simple progress display' '
+diff --git a/progress.c b/progress.c
+index 7fcc513717a..1fade5808de 100644
+--- a/progress.c
++++ b/progress.c
+@@ -91,7 +91,8 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 	}
  
- 	cat >in <<-\EOF &&
- 	start 0
--	update
-+	signal
- 	progress 1
- 	update
- 	progress 2
-@@ -197,7 +197,7 @@ test_expect_success 'progress display with throughput' '
- 	cat >in <<-\EOF &&
- 	start
- 	throughput 102400 1000
--	update
-+	signal
- 	progress 10
- 	throughput 204800 2000
- 	update
-@@ -255,7 +255,7 @@ test_expect_success 'cover up after throughput shortens' '
- 	cat >in <<-\EOF &&
- 	start
- 	throughput 409600 1000
--	update
-+	signal
- 	progress 1
- 	throughput 819200 2000
- 	update
-@@ -285,7 +285,7 @@ test_expect_success 'cover up after throughput shortens a lot' '
- 	cat >in <<-\EOF &&
- 	start
- 	throughput 1 1000
--	update
-+	signal
- 	progress 1
- 	throughput 1024000 2000
- 	update
-@@ -305,7 +305,7 @@ test_expect_success 'progress generates traces' '
- 	cat >in <<-\EOF &&
- 	start 40
- 	throughput 102400 1000
--	update
-+	signal
- 	progress 10
- 	throughput 204800 2000
- 	update
+ 	if (show_update) {
+-		if (is_foreground_fd(fileno(stderr)) || done) {
++		int stderr_is_foreground_fd = is_foreground_fd(fileno(stderr));
++		if (stderr_is_foreground_fd || done) {
+ 			const char *eol = done ? done : "\r";
+ 			size_t clear_len = counters_sb->len < last_count_len ?
+ 					last_count_len - counters_sb->len + 1 :
+@@ -115,7 +116,8 @@ static void display(struct progress *progress, uint64_t n, const char *done)
+ 				fprintf(stderr, "%s: %s%*s", progress->title,
+ 					counters_sb->buf, (int) clear_len, eol);
+ 			}
+-			fflush(stderr);
++			if (stderr_is_foreground_fd)
++				fflush(stderr);
+ 		}
+ 		progress_update = 0;
+ 	}
 -- 
 2.32.0.599.g3967b4fa4ac
 
