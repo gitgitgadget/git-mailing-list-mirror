@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9878C2B9F4
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 01:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61CD3C2B9F4
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 01:37:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82EF3610A0
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 01:35:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37616610A0
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 01:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230180AbhFWBiD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 21:38:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
+        id S230182AbhFWBjY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Jun 2021 21:39:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbhFWBiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 21:38:02 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BABDCC061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 18:35:44 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id w23-20020a9d5a970000b02903d0ef989477so363509oth.9
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 18:35:44 -0700 (PDT)
+        with ESMTP id S229774AbhFWBjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jun 2021 21:39:23 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 910CDC061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 18:37:06 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id s23so1527421oiw.9
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 18:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=7CdxuB24JgFO3pXERDoKIech7RfDAiiFEVAGk9Xv7RI=;
-        b=ogko43ln93XvqhSYJ3+ApUZmod9WqeD3gcq1OHUEiDo2D/UD5Bo2idKZR+AAKoBePP
-         Yae62HAqLWZ6cT46OuYEGMx3GG7o0GkI6c+UO/wVkwWqBGOSTkbloo66BhfNynaN4oDB
-         cyS+frZO71jVmBNhyKVJ68OJ/hNhGTHdArdCcN4xnbCQW4KETNLYjvB6WVFS7/O+Gs2k
-         irrJesXhLPNjg5MwqTzM8U99YPeEFYr7zJPontCfJ1JXwkKTv5vlyr+zMM0JiTc23a5s
-         X1eSNdYqEmC4wbIfFF3nJZqfnBxwRXVcz5bT2q+B9Osks2SIPPotxK2OgPHAQxHJS85s
-         w6cw==
+        bh=u3ALSnvLeFKuCJf917xCWekYHE6O8GmLvlexvCs53no=;
+        b=QZR0XbUvozngCafRCJeDKL2mKTD3tt/AgZE9mjHty81912uRaiG1GMCdB6BLm200QI
+         ace4j0U7DmbOldRSA/OhPAUwss05FENqHtP6A9OpO6hpxypCaZiRUxTavZgcDDnr6xIZ
+         oQNq9v2vKGiD0rgVXW+rojVml4DWsb+9wLMkhMz+VF1n/J/qmPDKcyPjQGu/9mLDo1+M
+         1SguNvcn2bjFIpDCFjP2PKLzvLGasHnb2cALTU3HvnZZ0zL7NIbZJsEZt7nTEEwbQXN7
+         YWliFS0/V7uZFaJeJt9CM/YJZFVnzS1ENEVdff6ocmnlXZ+u8LYpvR0HnZJw4Xr3JYVC
+         9kbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=7CdxuB24JgFO3pXERDoKIech7RfDAiiFEVAGk9Xv7RI=;
-        b=qoS1ZBKa35FW4obbumAun/fTnRH6xt0uwqRnOpTvSqNmVZPJ7Fes/4M+SfpcDIqiTv
-         /ztK4cquK839C9yUrd6HY8ZdgHQCW8YXjlCd0Z432rlAATefxu8HqxsTyO+vLUSZzXlc
-         A1TRAUNh8HN58V8I0QcIoZZ5Q02Wjs5ss9vPVxgNU3ipdx6yjTtQzpkVIW/oxkGgaS1C
-         kaISeA6E4bltLQn/S+sFaRiacmCqZHSXzh96XxVwg7HOJQehnwdDKTmft9ysKdZ5Dk4+
-         +l45vkroBEcgu9QuPBzxjs9HjIiKE0OH1wRtPqc26anovGHngiKKQ9As5R+Zc4hkmJVH
-         YdSQ==
-X-Gm-Message-State: AOAM532LqTw5TfBaBnVxFTs2oMyS1k6UgVgWh3t2mbCCcm7B6hq2I6Q0
-        jT0uEM1CMA3vtYgOozEYMao=
-X-Google-Smtp-Source: ABdhPJynG4OVoEGEPFG6QBphln9lYE48tIcyAA7PBlbRYfmuVkSLEfy2AYBGwa9htHO1mdpxetDptQ==
-X-Received: by 2002:a05:6830:214c:: with SMTP id r12mr5412922otd.71.1624412144166;
-        Tue, 22 Jun 2021 18:35:44 -0700 (PDT)
+        bh=u3ALSnvLeFKuCJf917xCWekYHE6O8GmLvlexvCs53no=;
+        b=OC7coAHYErUV2fqb/MCTh16ybOva/5dnM/bHd3IhH+ATr+gSRvJUSqzz5C21Jqc00R
+         x4LXe/6xnmEu1mrdVNFfHyxA7DgQWCLEkCIF/vQmqbClSdUb2yJiF/LJqxqJdYAhmmo+
+         yyl30Y9W/39+60fdMiZ2UjbjLOHS06NUVkoNAA3IYTJB2vtvjFBi+mQMBKJ6yqwId9TO
+         6JGlRQtSD3s3Bz+fZnQULPJLv4CfQD+i0sAXFMfsNwyTNI15UH5KBfYb9i47WRSVb+1z
+         k7df8O0uR4PMARq107QMq43n5xkppO3KAjKUWCocfDDlFlX3XOG1eTVhLvOnBr/uyv5I
+         US5w==
+X-Gm-Message-State: AOAM531ix6F+gXVFi/Z+OTSu2emNIXTDE+X3WFNqJqIAyvALn61MIxK0
+        Mhv9TMtmo6CpS/t58iyhJzs=
+X-Google-Smtp-Source: ABdhPJzBEkug5ia3JlfrH6gj/Nlh8/baZUGzoHESiDyAP0yVTRY11GvTfBSCpVegHwMJN4htibsaRQ==
+X-Received: by 2002:aca:c3cc:: with SMTP id t195mr1287606oif.119.1624412226003;
+        Tue, 22 Jun 2021 18:37:06 -0700 (PDT)
 Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id p17sm241278otp.73.2021.06.22.18.35.43
+        by smtp.gmail.com with ESMTPSA id c7sm266726otn.7.2021.06.22.18.37.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 18:35:43 -0700 (PDT)
-Date:   Tue, 22 Jun 2021 20:35:42 -0500
+        Tue, 22 Jun 2021 18:37:05 -0700 (PDT)
+Date:   Tue, 22 Jun 2021 20:37:03 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Bagas Sanjaya <bagasdotme@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
@@ -64,12 +64,11 @@ Cc:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Message-ID: <60d28fee6e914_3122083f@natae.notmuch>
-In-Reply-To: <cfa20758-ac40-1fbf-a8f9-411e795c77b7@gmail.com>
+Message-ID: <60d2903f59f39_3122087c@natae.notmuch>
+In-Reply-To: <f660c96f-cc30-6a18-00ba-82a2673aa3bd@gmail.com>
 References: <20210621163110.1074145-1-felipe.contreras@gmail.com>
- <20210621163110.1074145-16-felipe.contreras@gmail.com>
- <cfa20758-ac40-1fbf-a8f9-411e795c77b7@gmail.com>
-Subject: Re: [PATCH 15/23] doc: use asciidoctor to build man pages directly
+ <f660c96f-cc30-6a18-00ba-82a2673aa3bd@gmail.com>
+Subject: Re: [PATCH 00/23] doc: cleanups and asciidoctor direct man pages
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -79,29 +78,40 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Bagas Sanjaya wrote:
-> On 21/06/21 23.31, Felipe Contreras wrote:
-> > +# Define USE_ASCIIDOCTOR_MANPAGE to use Asciidoctor's manual page backend
-> > +# instead of building manual pages from DocBook (using xmlto). Has no effect
-> > +# unless USE_ASCIIDOCTOR is set.
-> > +#
+> On 21/06/21 23.30, Felipe Contreras wrote:
+> > I already sent the first part of this series separately multiple times,
+> > the last one is 4 simple obviously correct patches [1], but since the
+> > maintainer has admitted he has no problem ignoring valid work
+> > entirely due to personal animus [2], I'm sending the whole chain.
+> > 
+> > There's no point in carefully selecting multiple series of patches to be
+> > merged one by one when all of them are going to be ignored. So I'm
+> > sending all 3 series at once.
+> > 
+> > Hopefully by sending it all at once some people will be able to realize
+> > that:
+> > 
+> >   1. They are valid
+> >   2. They are helpful
+> >   3. They make the code more maintainable
+> >   4. They enable new features
+> >   5. They enable the new features to be easily tested
+> >   6. They reduce the doc-diff of the new feature, as well as others
+> >   7. They are superior to the competing series currently in seen
+> >   8. They include work of multiple contributors
+> > 
+> > Any fair and impartial maintainer would attempt to pick them up.
+> > 
+> > Cheers.
+> > 
 > 
-> Why not just USE_ASCIIDOCTOR_MANPAGE implies USE_ASCIIDOCTOR?
+> I think the next step after this patch series is to add asciidoctor 
+> direct man pages generation option to ./configure script (maybe 
+> --enable-asciidoctor-manpage?). But before that, we need to add 
+> --enable-asciidoctor option, which sets USE_ASCIIDOCTOR=YesPlease.
 
-Personally I don't see the point of USE_ASCIIDOCTOR_MANPAGE at all. The
-only reason I added it was because Martin requested it [1].
-
-It would be nice of you and Martin could make a decision about this, and
-I would just implement what you decide (or other people willing to
-collaborate on this).
-
-I don't have an opinion on this.
-
-If no decision is reached, I'll make USE_ASCIIDOCTOR_MANPAGE imply
-USE_ASCIIDOCTOR as you suggest.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/CAN0heSpX53tK8Z4XSx4sp79b+XWKZg5+ABW8pmzBSHPZ+qy+oQ@mail.gmail.com/
+Maybe. I don't use ./configure, so perhaps somebody that does should
+take charge of this.
 
 -- 
 Felipe Contreras
