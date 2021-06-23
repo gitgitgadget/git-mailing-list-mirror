@@ -2,159 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E013C48BC2
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06FBAC4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7E184611C1
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D30B960E0B
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbhFWSl1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 14:41:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59552 "EHLO
+        id S229774AbhFWSlZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 14:41:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbhFWSl0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 14:41:26 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C41EC061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:09 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id i12so3533252ila.13
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:09 -0700 (PDT)
+        with ESMTP id S229523AbhFWSlZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 14:41:25 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D806DC061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:06 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id b5so3533831ilc.12
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IfAo+rT3P5nq/oinR4C7ueRvMZ2QOd4p5/w5J2qPgxU=;
-        b=JWdFhlx6PHXe1mVBR1TN29XPZTOLQTXYKQU4l9aljiZvUm9VCazQa6wpWcuyNRm4Wj
-         YlhHnkhR3lLNK4V+p9cs/XqCTpI9EmMf9TRrN1GImC/oArkF41bMMo4Z5dTxJK2PUg0r
-         fmO0E8b63dvI6n7wfIQcLhSaWqMliX6eq+tzXjwx+xj9ckxAmR3pWMnwpP3ebxQZ7dks
-         jZIy05/xniCFT2fYhmeWwL5ZEdFoXkIUygDxTrDGN4il3boQ+wWnxjvjxePXwXpDrYgn
-         nJ8gBuw4YUrkyH8ctZx/fiMK5iAgdPtxX5SSJPr/p8tSfPXl98vBg/kIQIrkE7Piojbu
-         koPA==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=7eahv9PuanPnfmcpIzmfFuvrh7v9YuEO26/3FK+Nmew=;
+        b=jwJ3yuT3DgJs9cedj6AHGzg7D0qcThKtKQ9o32g41Lnrk8t+oEhOhv4e1ZIw3jJYm8
+         LbV8bAbniGyiyUXy0qeVAlCQSui8v6pSj6dfIFa5lUTTdEDzx6bdd50v4kuRU1riWFd9
+         fRYPFg2odHbsQ2mmSAcGrCkv/9s8ooE1fgLLNp4lzntVViUZlHz5pwTG8pwaj8+kZ+Hg
+         qx1p4HyzmWRpvzMtdoz+eUvskOc+NLVfHYgQH38DBIEuLGTX5ySQqSogU9xrzS/m9WdC
+         S02I/VEXB0PPmWcJ4F7jhsQp+p6nR7Pm3/JRWEfiIqqJIuLNiuGOfYzX2tLIJZmt6Q5W
+         zxFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IfAo+rT3P5nq/oinR4C7ueRvMZ2QOd4p5/w5J2qPgxU=;
-        b=nsXEi/hVCx0eh+2z/SYK3iADQMWYRHJcWtFayhrUv454Xl5GL9/v6qfuZOb+bNa00a
-         rafNXDf6W8uwQxQF/G2t5ts1DFLtDvkbFXpJyqrG9J+WmqKRaVCsWG4FiKXuom4tLXWX
-         mhWX6kciVJ11ksuYiovtnWpwqlwTKEs56phReFHSVxbHn/0eLV2w3MiqFOW/9Iza7gxR
-         ld2z+yrvl+6Xg3xwnW3jwPmENBdKlvrc7nMgEbbCyp1twIK0Ek230ErOzyGGpXD64qkV
-         9eptVZ4VANHrhKSR44sNSg7Y9vWafVkJgs0AXNi5tpSiCI2kEpxH1mjwBqXsXWa3gXFy
-         2eAA==
-X-Gm-Message-State: AOAM531zAsWMQuplkiEUz510C/kSze/XRcpw4iFe2bN8U9QioUBc9/jk
-        qqJIZqAzqSfgr1eK21vr8CKnnFZcwhGoaLXm
-X-Google-Smtp-Source: ABdhPJynByj/3LycrvFCIgL9jgGJwegyrXtNW1uwg9DGcziQwp5b9vU8qNzyZcNW4eGr117aPQ4Y5w==
-X-Received: by 2002:a92:d9d2:: with SMTP id n18mr611676ilq.118.1624473548281;
-        Wed, 23 Jun 2021 11:39:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=7eahv9PuanPnfmcpIzmfFuvrh7v9YuEO26/3FK+Nmew=;
+        b=lAlGaJn4sYst70kKH9wkwD5NJxjeeYBtr5fNMpv8ekSY0sc8xzwYYfFMF0GHS980kj
+         VHYqTSIeyD5vZ6V6vU5QEW6iVMo6LO0spKP2RN4yLn6jOPLPwlmsqGSiuGiAoECpXT/c
+         JWgJV1LAlDNoAVVq1Z079PmPLGIU6/nVYs5B92pURWgahgam9YrxlsFHLVxuk1dXZRs6
+         aeAa+iETgxMZD3cJvxzR0tfI8UnnujqsJmXRZffRhl02VSSm/Xk8CwFN06Rity3yrGAY
+         9mtq+JcKxoM8DBnD3bY9Hjmg6PsFmUUL0LCkkdtNLRscmGKmpIX2JiglMkSNWiNJMKFP
+         SMww==
+X-Gm-Message-State: AOAM5328FSw4UnZdoJKfTOHW2tkATr5Gd2Pr179XNaz6y/+TsTbwYcxs
+        zksaC3HtyoFu+iVvNBspj4o0kq4ltfQSDCnl
+X-Google-Smtp-Source: ABdhPJzbfTzDA8ufwzgfduw9Me2qI3/nRf0EA0TOpRB5DvffewLy2+5Nw1IWqnQTWXumKkZdxn7Klg==
+X-Received: by 2002:a05:6e02:10c2:: with SMTP id s2mr618522ilj.24.1624473545579;
+        Wed, 23 Jun 2021 11:39:05 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
-        by smtp.gmail.com with ESMTPSA id s5sm383418ilh.19.2021.06.23.11.39.07
+        by smtp.gmail.com with ESMTPSA id s9sm409211ilt.44.2021.06.23.11.39.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 11:39:07 -0700 (PDT)
-Date:   Wed, 23 Jun 2021 14:39:07 -0400
+        Wed, 23 Jun 2021 11:39:05 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 14:39:04 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 1/4] csum-file: introduce checksum_valid()
-Message-ID: <3f1fcf348473d7320d46e3df6fe97c482b9888f2.1624473543.git.me@ttaylorr.com>
-References: <cover.1624473543.git.me@ttaylorr.com>
+Subject: [PATCH 0/4] midx: verify MIDX checksum before reusing
+Message-ID: <cover.1624473543.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1624473543.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a new function which checks the validity of a file's trailing
-checksum. This is similar to hashfd_check(), but different since it is
-intended to be used by callers who aren't writing the same data (like
-`git index-pack --verify`), but who instead want to validate the
-integrity of data that they are reading.
+Here is a small series that came out of a corruption we noticed at GitHub. The
+corruption is described in the third patch, but the gist is this:
 
-Rewrite the first of two callers which could benefit from this new
-function in pack-check.c. Subsequent callers will be added in the
-following patches.
+  - After writing a MIDX, we experience a disk failure that corrupts the
+    contents of the repository's MIDX.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- csum-file.c  | 16 ++++++++++++++++
- csum-file.h  |  3 +++
- pack-check.c | 11 +----------
- 3 files changed, 20 insertions(+), 10 deletions(-)
+  - We later go to write another MIDX, notice that one is already there, and
+    then blindly reuse its data without checking its validity, resulting in a
+    MIDX that contains corrupt data, but whose trailing checksum matches the
+    preceding contents.
 
-diff --git a/csum-file.c b/csum-file.c
-index 3487d28ed7..c951cf8277 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -217,3 +217,19 @@ uint32_t crc32_end(struct hashfile *f)
- 	f->do_crc = 0;
- 	return f->crc32;
- }
-+
-+int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
-+{
-+	unsigned char got[GIT_MAX_RAWSZ];
-+	git_hash_ctx ctx;
-+	size_t data_len = total_len - the_hash_algo->rawsz;
-+
-+	if (total_len < the_hash_algo->rawsz)
-+		return 0; /* say "too short"? */
-+
-+	the_hash_algo->init_fn(&ctx);
-+	the_hash_algo->update_fn(&ctx, data, data_len);
-+	the_hash_algo->final_fn(got, &ctx);
-+
-+	return hasheq(got, data + data_len);
-+}
-diff --git a/csum-file.h b/csum-file.h
-index 3044bd19ab..291215b34e 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -44,6 +44,9 @@ void hashflush(struct hashfile *f);
- void crc32_begin(struct hashfile *);
- uint32_t crc32_end(struct hashfile *);
- 
-+/* Verify checksum validity while reading. Returns non-zero on success. */
-+int hashfile_checksum_valid(const unsigned char *data, size_t len);
-+
- /*
-  * Returns the total number of bytes fed to the hashfile so far (including ones
-  * that have not been written out to the descriptor yet).
-diff --git a/pack-check.c b/pack-check.c
-index 4b089fe8ec..c8e560d71a 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -164,22 +164,13 @@ static int verify_packfile(struct repository *r,
- 
- int verify_pack_index(struct packed_git *p)
- {
--	size_t len;
--	const unsigned char *index_base;
--	git_hash_ctx ctx;
--	unsigned char hash[GIT_MAX_RAWSZ];
- 	int err = 0;
- 
- 	if (open_pack_index(p))
- 		return error("packfile %s index not opened", p->pack_name);
--	index_base = p->index_data;
--	len = p->index_size - the_hash_algo->rawsz;
- 
- 	/* Verify SHA1 sum of the index file */
--	the_hash_algo->init_fn(&ctx);
--	the_hash_algo->update_fn(&ctx, index_base, len);
--	the_hash_algo->final_fn(hash, &ctx);
--	if (!hasheq(hash, index_base + len))
-+	if (!hashfile_checksum_valid(p->index_data, p->index_size))
- 		err = error("Packfile index for %s hash mismatch",
- 			    p->pack_name);
- 	return err;
+This series checks the validity of the trailing checksum when reusing a MIDX
+while writing a new one, as well as a few other related fix-ups. That should be
+sufficient to avoid propagating corrupt data forward while writing a MIDX.
+
+We could go further here and run 'git multi-pack-index verify' on the existing
+MIDX while writing a new one, but the point of this reuse is to avoid having to
+re-compute/verify the contents of an existing MIDX. So a more lightweight option
+is pursued here, but alternatives are discussed in 3/4.
+
+Thanks in advance for your review.
+
+Taylor Blau (4):
+  csum-file: introduce checksum_valid()
+  commit-graph: rewrite to use checksum_valid()
+  midx: don't reuse corrupt MIDXs when writing
+  midx: report checksum mismatches during 'verify'
+
+ commit-graph.c              | 14 ++++++--------
+ csum-file.c                 | 16 ++++++++++++++++
+ csum-file.h                 |  3 +++
+ midx.c                      | 13 +++++++++++++
+ pack-check.c                | 11 +----------
+ t/t5319-multi-pack-index.sh | 13 +++++++++++++
+ 6 files changed, 52 insertions(+), 18 deletions(-)
+
 -- 
 2.31.1.163.ga65ce7f831
-
