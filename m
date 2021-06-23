@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49BACC48BE5
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2830C49EA4
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F2C0611AC
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8599560E0B
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 18:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229882AbhFWSla (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 14:41:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59564 "EHLO
+        id S229900AbhFWSlc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 14:41:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbhFWSl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 14:41:29 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2CBCC061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:11 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id a11so3588068ilf.2
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:11 -0700 (PDT)
+        with ESMTP id S229864AbhFWSlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 14:41:32 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56BB6C061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:14 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id r12so4711881ioa.7
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 11:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=TkXlk18dSLdUigBF6cVz0aclQQAWBEznZgJwSZZd55Y=;
-        b=GiHrezrJ3sPGamuhscqdm0Tg6k323owK0fE/xBKsR5X8VGC9tmkqUaXxIuwL5Sfce+
-         l3PCtiEKNSCLRQOQN+CQcu/G2B6LMCEYDuYwtJZ/S38pGM6xcS367H0PxMku1IO+URsV
-         yVHmF6um4DHGWbgjbC48BIa4gKeanDkR4+ty5mmq7jpCAxLpqI2r0pKHVgG5rNz/TDbs
-         Eav9kJKhcvRaDfOVfGTgkDNaeP5Tu2Pe65uEVgPxLqKbnfVhUoBLHiS//dpap2iCyNRJ
-         GaU0Nm2u7PTgz+tD45vd3XIKAPuPds24hr6NCemVgWfHEwb/O2d5nA3sadwWAp16n3rL
-         OaHQ==
+        bh=cTZ/xz7y1UHi0uzNhytrogASWWnAkr+j/GBlnneuVa0=;
+        b=i+M9vh4h3LuxMXwh6pQIHhgtZEjdLyHFjaAvxzisgzG7IxlaWB48dWrgGy6dYUROfZ
+         Wc4j0ZKq5JRJphDaclbtsueKZSb5eA2YcKo9AgsxrO0UxWuwRrolpbLopUFN8ZZnWRfz
+         cZldUkIdAadA8qsG9bc2XJtuhRb4cjy7QQy+UHGPtP4tMLaFjfk+eekQAobP/adR2ChB
+         /lDlvZ4xXR5ot5fVge53YhTn/hWLpfJKwkeLOwcWgizoDdgYNBvaDi4Ru5IU59S3pacf
+         a9epZCE1ZKk6CTtmZxEceFbCnHKYSawnHn6fptbAAzmTkSLlIRb9tmOiCM1+xZwx7PUo
+         qOEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=TkXlk18dSLdUigBF6cVz0aclQQAWBEznZgJwSZZd55Y=;
-        b=H38dmTa9RuodnNRs0yMlKFwARmMFcbHSUz0MTZu/jBYhIFY0RcFlmbe8ec2FnzgNMy
-         FbFBdeBAUJhFCEuhhScOmsZ17/G0M+wZXUcegjdm3vU5+2F0tUOlbU11UpH+MTlo6rVK
-         a9QusFba/p9eHpxbBFRAB3yvO/fYWG27jO8HaBjcqf3RXAt5VntEdLX0XBYrTO7VyeEu
-         vwGZZHUDdrND1+QsmMbfTWtULZkrglyp1fA+QlAN1+BRgp0ITlVnOCcTBM4XL3P6zvG3
-         KyXpwOAeHM04fbRP/yRb+G8rbNQCj3c24JGOBqvPP8s2tApNnQk2ME6m/+QyJJmiGUPb
-         RNug==
-X-Gm-Message-State: AOAM531o460RwQooqeibo0442hYO0COyvP3aYUHXp0NitVhHkDnjhC1C
-        LSsQjwQgO5c5ZBM9tQFCgTTJW7mbVmvENBQm
-X-Google-Smtp-Source: ABdhPJxwpYUwb/cc+sfs09kCR/emFxtWGBqMBTDyNwlQ5AqdQ2txGzlCyumVhPj9AhxXtkcE1KF+9A==
-X-Received: by 2002:a05:6e02:1c0d:: with SMTP id l13mr543580ilh.271.1624473550852;
-        Wed, 23 Jun 2021 11:39:10 -0700 (PDT)
+        bh=cTZ/xz7y1UHi0uzNhytrogASWWnAkr+j/GBlnneuVa0=;
+        b=GX2RrKNnH6cJwUBZmlMa02YzNP1gjwOgitQwIla9fq5ikXEVt4I8lMEsU/wxSQT5TK
+         fNXn6WpzQVcwRJ1kXgGPLwGq/CcnI2k1dMCLx0U6UUGAjUH6Ndq9iog+omuw9eZj2N0S
+         sydwaVx4U9nIMr1V33LBy//7z8LJyQLZkH8RHpXUtAPMigFFYFY/2m/sVTrQEhySpha3
+         0RpG7MRmLvt8DhcnJLO1yvaF1JQpkruZRZnjJ4czRWeoZIe++m+7s/fjCr3jdAio6AlD
+         JqyUaZkTwrlbrE3StfYeaPVdCe73dqPY3o/CT9zcn08m5hFfUsLdFxgnldrn2Lhm/YH0
+         wuLg==
+X-Gm-Message-State: AOAM531+qgtla1/8oTidIpsruA/L5vtynTl6oGWdGn1TynlpPsHGR5/a
+        CbS/xdWMXj3e6FqCRS3NxoMqfad+npiEyXVe
+X-Google-Smtp-Source: ABdhPJzx4YFw7pyA//GmzWi42Tje5aKHozNvrpq9XkG4gd/TCW444gngrCmlKRNv7Y7vA4QWaqcpMQ==
+X-Received: by 2002:a02:9665:: with SMTP id c92mr947428jai.56.1624473553531;
+        Wed, 23 Jun 2021 11:39:13 -0700 (PDT)
 Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
-        by smtp.gmail.com with ESMTPSA id t6sm379626ils.72.2021.06.23.11.39.10
+        by smtp.gmail.com with ESMTPSA id k4sm315696ior.55.2021.06.23.11.39.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 11:39:10 -0700 (PDT)
-Date:   Wed, 23 Jun 2021 14:39:09 -0400
+        Wed, 23 Jun 2021 11:39:13 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 14:39:12 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 2/4] commit-graph: rewrite to use checksum_valid()
-Message-ID: <64aa0aecbd977a6915c271b9c3c1da3c5043e01d.1624473543.git.me@ttaylorr.com>
+Subject: [PATCH 3/4] midx: don't reuse corrupt MIDXs when writing
+Message-ID: <a216c0c5a3ed5060ffc4d768fc10a663ac0af96d.1624473543.git.me@ttaylorr.com>
 References: <cover.1624473543.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,55 +70,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rewrite an existing caller in `git commit-graph verify` to take
-advantage of checksum_valid().
+When writing a new multi-pack index, Git tries to reuse as much of the
+data from an existing MIDX as possible, like object offsets. This is
+done to avoid re-opening a bunch of *.idx files unnecessarily, but can
+lead to problems if the data we are reusing is corrupt.
 
-Note that the replacement isn't a verbatim cut-and-paste, since the new
-function avoids using hashfile at all and instead talks to the_hash_algo
-directly, but it is functionally equivalent.
+That's because we'll blindly reuse data from an existing MIDX without
+checking its trailing checksum for validity. So if there is memory
+corruption while writing a MIDX, or disk corruption in the intervening
+period between writing and reuse, we'll blindly propagate those bad
+values forward.
 
+Suppose we experience a memory corruption while writing a MIDX such that
+we write an incorrect object offset (or alternatively, the disk corrupts
+the data after being written, but before being reused). Then when we go
+to write a new MIDX, we'll reuse the bad object offset without checking
+its validity. This means that the MIDX we just wrote is broken, but its
+trailing checksum is in-tact, since we never bothered to look at the
+values before writing.
+
+In the above, a "git multi-pack-index verify" would have caught the
+problem before writing, but writing a new MIDX wouldn't have noticed
+anything wrong, blindly carrying forward the corrupt offset.
+
+Individual pack indexes check their validity by verifying the crc32
+attached to each entry when carrying data forward during a repack.
+We could solve this problem for MIDXs in the same way, but individual
+crc32's don't make much sense, since their entries are so small.
+Likewise, checking the whole file on every read may be prohibitively
+expensive if a repository has a lot of objects, packs, or both.
+
+But we can check the trailing checksum when reusing an existing MIDX
+when writing a new one. And a corrupt MIDX need not stop us from writing
+a new one, since we can just avoid reusing the existing one at all and
+pretend as if we are writing a new MIDX from scratch.
+
+Suggested-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ midx.c                      | 10 ++++++++++
+ t/t5319-multi-pack-index.sh |  8 ++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 2bcb4e0f89..1a2602da61 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2422,14 +2422,16 @@ static void graph_report(const char *fmt, ...)
- #define GENERATION_ZERO_EXISTS 1
- #define GENERATION_NUMBER_EXISTS 2
+diff --git a/midx.c b/midx.c
+index 21d6a05e88..a12cbbf928 100644
+--- a/midx.c
++++ b/midx.c
+@@ -885,6 +885,11 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
+ static void clear_midx_files_ext(struct repository *r, const char *ext,
+ 				 unsigned char *keep_hash);
  
-+static int commit_graph_checksum_valid(struct commit_graph *g)
++static int midx_checksum_valid(struct multi_pack_index *m)
 +{
-+	return hashfile_checksum_valid(g->data, g->data_len);
++	return hashfile_checksum_valid(m->data, m->data_len);
 +}
 +
- int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- {
- 	uint32_t i, cur_fanout_pos = 0;
- 	struct object_id prev_oid, cur_oid;
--	unsigned char checksum[GIT_MAX_HEXSZ];
- 	int generation_zero = 0;
--	struct hashfile *f;
--	int devnull;
- 	struct progress *progress = NULL;
- 	int local_error = 0;
+ static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
+ 			       struct string_list *packs_to_drop,
+ 			       const char *preferred_pack_name,
+@@ -911,6 +916,11 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	else
+ 		ctx.m = load_multi_pack_index(object_dir, 1);
  
-@@ -2442,11 +2444,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 	if (verify_commit_graph_error)
- 		return verify_commit_graph_error;
++	if (ctx.m && !midx_checksum_valid(ctx.m)) {
++		warning(_("ignoring existing multi-pack-index; checksum mismatch"));
++		ctx.m = NULL;
++	}
++
+ 	ctx.nr = 0;
+ 	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
+ 	ctx.info = NULL;
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 5641d158df..d582f370c4 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -410,6 +410,14 @@ test_expect_success 'git-fsck incorrect offset' '
+ 		"git -c core.multipackindex=true fsck"
+ '
  
--	devnull = open("/dev/null", O_WRONLY);
--	f = hashfd(devnull, NULL);
--	hashwrite(f, g->data, g->data_len - g->hash_len);
--	finalize_hashfile(f, checksum, CSUM_CLOSE);
--	if (!hasheq(checksum, g->data + g->data_len - g->hash_len)) {
-+	if (!commit_graph_checksum_valid(g)) {
- 		graph_report(_("the commit-graph file has incorrect checksum and is likely corrupt"));
- 		verify_commit_graph_error = VERIFY_COMMIT_GRAPH_ERROR_HASH;
- 	}
++test_expect_success 'corrupt MIDX is not reused' '
++	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\377" $objdir \
++		"incorrect object offset" &&
++	git multi-pack-index write 2>err &&
++	test_i18ngrep checksum.mismatch err &&
++	git multi-pack-index verify
++'
++
+ test_expect_success 'repack progress off for redirected stderr' '
+ 	GIT_PROGRESS_DELAY=0 git multi-pack-index --object-dir=$objdir repack 2>err &&
+ 	test_line_count = 0 err
 -- 
 2.31.1.163.ga65ce7f831
 
