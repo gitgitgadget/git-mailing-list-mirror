@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE448C4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E723C48BC2
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6D99611C1
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26CEF61003
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbhFWRv2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 13:51:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48384 "EHLO
+        id S230160AbhFWRvb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 13:51:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbhFWRvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:51:11 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 716B3C061226
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:44 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id a11so3545026wrt.13
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:44 -0700 (PDT)
+        with ESMTP id S229873AbhFWRvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:51:12 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96851C0611C6
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:46 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id n23so2212263wms.2
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kU0wfntVDLR1fLy4xzeXX68ih9tj8uqq0ttXSxcZJCw=;
-        b=ke2IrUNE9tKR5wTO3ZmJLfVSQZr9aus80+2GMxB+9ff5QLCXoQ1ISa7vwup0EWairK
-         8Y1hgtFIxYO/kDVRBRBQrEMux016p4Uc4HAsv+Gf7Os7DgigTtDFYfMhaeMHrx4EAURw
-         WpJEoOl3UFnB/hVLlfYMeMyanugcqQgWMNUafMjGldOE5/nRPm6ps6eYCwLdtD7v0++u
-         fvLn21T5jmsc78Kk0Uy+/T4/GnFrrVHBNPM6oNt0a3KuhvkQMnsJk8qP7ZfeDU5ulrsD
-         JLuGqXKeaVSe/elKSTrIb4oqlT8gHMtKdVoXns/P4SaUoTzB/h38HDn/XX4PqUN7ZVQ9
-         VV+w==
+        bh=koojd2KDRGVk6oc9qwVRPJ2qgo48BnXYozwIv0A9zq8=;
+        b=e57A0ID98yPsz2LTl/pBCGddXnLNXPJwE1D6WNaYqkSUpP3BqjOFEbdoas+R8S44GU
+         6TAQ372uorlAPey02JpQJkiMiYzm0uX7hB/iUcPlIrcpgXoLnmFlzaljRxg66s3mRDqZ
+         OD8GaezoIacnNJTohod+MMby3osKZEi936FFMJTQ52eJW8z15rAJ07XjV++adjQHeTVz
+         5pfGxVN4jTXE/JHP+K+GvsA1MycY5BhJwsV/lx347W//6JLy38b2n6I9u/jXvhphcDuS
+         GsRnBY0foXGIutLhyLKj0Y8bzh+/InPwC1PFvNzz/ybUQXRnxpAWGby31DGT5qaLhec1
+         mOYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kU0wfntVDLR1fLy4xzeXX68ih9tj8uqq0ttXSxcZJCw=;
-        b=OT/jlHY77QWj3+tT9SPO1Ik2pSElYy5XEAnROShF9ml7tnJtPI6FbPB5umH8fDJ32I
-         3yq0JipZLgfAT1AY7toI8G9ufW+yP9VoKrFDUNy5qsgiMevd7MUPxvYt8cFovEsEvK55
-         w/HolADQ6QBgThuN9J1HN98PBtqNAj1Ky748r7LpyV2ykMzvJFWerd4NHXtXqWoBS0d+
-         iCqXFMvv1DUkW0g6Y6Y2vrOTldRkYFPtRIKPD80HJjjM3DyIcdLnjNcCPpR0ZmJ8WH5K
-         ypvH0m4+OKC7YWCwXrqlt0XmRkNS6N8ACBG1sCVbwnq4+lRsaQoQr1SNiTFRLno0rgDh
-         zzUw==
-X-Gm-Message-State: AOAM531iMLM6ExPJlfrGq94HrGdg5erfCmFsolwCusuV4YZkKCc7hhY7
-        7n3mwX4EwNogXwFUkAuoIAOLaeK/lXIGyQ==
-X-Google-Smtp-Source: ABdhPJzpKYGOs/bTQcPRCrypRJD0R1z4WnNaHtJBfxqRr1kjg8S2munuMJfnhbzLPETjQD23JveBkg==
-X-Received: by 2002:a05:6000:18ca:: with SMTP id w10mr1428796wrq.55.1624470522915;
-        Wed, 23 Jun 2021 10:48:42 -0700 (PDT)
+        bh=koojd2KDRGVk6oc9qwVRPJ2qgo48BnXYozwIv0A9zq8=;
+        b=tpxG/1plIjQ9F5fQFC3gOv0BHGH5BJN15QNf6j9inHj605H9/9bBluSU1hlft+Do7U
+         4KpYWX6ZkyKtTPscvvHlfhv7d/S/EwJ0/KEksK5v+OGTaerxYWHl4xL1ZQx5AG1cfnat
+         Xw4tor20OyCpy2KpCK7MSH82JKmP1agvOxbwCtZKm8/pVbcqq/oNaaQ5ZNEuu7Da3M82
+         fFKi4kCd0T+R9BtFKHtscYSE6GgXxc53fl5eqaVsM28FWsf9btIoT8DUxFkx1fqhzfcG
+         DOSvbVxexjIpE9ZP/tmm6s9FmQEqSxqBnbeho4W4U/urhXxBLTKoIWkopfwBMJh/Jo/2
+         heVw==
+X-Gm-Message-State: AOAM533ddyCdvJaThMnSrWywqCWzL9pGeg+r/oL+GW5bQLGj/6PdEMPO
+        84UYy1ELBREx82pmVvKjLfgkoEKX49f9/Q==
+X-Google-Smtp-Source: ABdhPJwTR3T2mBrb+dd4QRGDDrLwhKDU8V2BEDjSNooMEMeSbosm54862CvPBGsU+Gw5HrvpNBODVg==
+X-Received: by 2002:a7b:c2a2:: with SMTP id c2mr1028873wmk.89.1624470525029;
+        Wed, 23 Jun 2021 10:48:45 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.42
+        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 10:48:42 -0700 (PDT)
+        Wed, 23 Jun 2021 10:48:44 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 19/25] commit-graph: fix bogus counter in "Scanning merged commits" progress line
-Date:   Wed, 23 Jun 2021 19:48:19 +0200
-Message-Id: <patch-19.25-26a6e93717e-20210623T155626Z-avarab@gmail.com>
+Subject: [PATCH 22/25] progress.c: add a stop_progress_early() function
+Date:   Wed, 23 Jun 2021 19:48:22 +0200
+Message-Id: <patch-22.25-e7f8314867d-20210623T155626Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
 In-Reply-To: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
 References: <YNKWsTsQgB2Ijxu7@nand.local> <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
@@ -78,42 +78,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: SZEDER Gábor <szeder.dev@gmail.com>
+In cases where we error out during processing or otherwise miss
+initial "total" estimate we'll still want to show a "done" message and
+end our trace2 region, but it won't be true that our total ==
+last_update at the end.
 
-The final value of the counter of the "Scanning merged commits"
-progress line is always one less than its expected total, e.g.:
+So let's add a "last_update" and this stop_progress_early() function
+to handle that edge case, this will be used in a subsequent commit.
 
-  Scanning merged commits:  83% (5/6), done.
+We could also use a total=0 in such cases, but that would make the
+progress output worse for the common non-erroring case. Let's instead
+note that we didn't reach the total count, and snap the progress bar
+to "100%, done" at the end.
 
-This happens because while iterating over an array the loop variable
-is passed to display_progress() as-is, but while C arrays (and thus
-the loop variable) start at 0 and end at N-1, the progress counter
-must end at N.  This causes the failures of the tests
-'fetch.writeCommitGraph' and 'fetch.writeCommitGraph with submodules'
-in 't5510-fetch.sh' when run with GIT_TEST_CHECK_PROGRESS=1.
-
-Fix this by passing 'i + 1' to display_progress(), like most other
-callsites do.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- commit-graph.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ progress.c | 20 ++++++++++++++++++++
+ progress.h |  2 ++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 2bcb4e0f89e..3181906368d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2096,7 +2096,7 @@ static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
+diff --git a/progress.c b/progress.c
+index 35847d3a7f2..c1cb01ba975 100644
+--- a/progress.c
++++ b/progress.c
+@@ -40,6 +40,8 @@ static void display(struct progress *progress, uint64_t n,
+ 	const char *tp;
+ 	int show_update = 0;
  
- 	ctx->num_extra_edges = 0;
- 	for (i = 0; i < ctx->commits.nr; i++) {
--		display_progress(ctx->progress, i);
-+		display_progress(ctx->progress, i + 1);
++	progress->last_update = n;
++
+ 	if (progress->delay && (!progress_update || --progress->delay))
+ 		return;
  
- 		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
- 			  &ctx->commits.list[i]->object.oid)) {
+@@ -413,3 +415,21 @@ void stop_progress_msg(struct progress **p_progress, const char *msg)
+ 	free(progress->throughput);
+ 	free(progress);
+ }
++
++void stop_progress_early(struct progress **p_progress)
++{
++	struct progress *progress;
++	struct strbuf sb = STRBUF_INIT;
++
++	if (!p_progress)
++		BUG("don't provide NULL to stop_progress_early");
++	progress = *p_progress;
++	if (!progress)
++		return;
++
++	strbuf_addf(&sb, _(", done at %"PRIuMAX" items, expected %"PRIuMAX"."),
++		    progress->total, progress->last_update);
++	progress->total = progress->last_update;
++	stop_progress_msg(p_progress, sb.buf);
++	strbuf_release(&sb);
++}
+diff --git a/progress.h b/progress.h
+index ba38447d104..5c5d027d1a0 100644
+--- a/progress.h
++++ b/progress.h
+@@ -23,6 +23,7 @@ struct progress {
+ 	struct strbuf status;
+ 	size_t status_len_utf8;
+ 
++	uint64_t last_update;
+ 	uint64_t last_value;
+ 	uint64_t total;
+ 	unsigned last_percent;
+@@ -56,5 +57,6 @@ struct progress *start_delayed_sparse_progress(const char *title,
+ 					       uint64_t total);
+ void stop_progress(struct progress **progress);
+ void stop_progress_msg(struct progress **progress, const char *msg);
++void stop_progress_early(struct progress **p_progress);
+ 
+ #endif
 -- 
 2.32.0.599.g3967b4fa4ac
 
