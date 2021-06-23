@@ -2,61 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 265A7C48BC2
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47962C49EA5
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:31:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F362660FEB
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:31:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A8A061360
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 22:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229924AbhFWWdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229890AbhFWWdU (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 23 Jun 2021 18:33:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55208 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbhFWWdR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 18:33:17 -0400
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2520EC061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 15:30:58 -0700 (PDT)
-Received: by mail-qv1-xf4a.google.com with SMTP id z6-20020a0cfec60000b0290263740e5b2aso4595718qvs.6
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 15:30:58 -0700 (PDT)
+        with ESMTP id S229922AbhFWWdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 18:33:20 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1549C061756
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 15:31:00 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id g4-20020aa787440000b02903020544da0fso2548536pfo.20
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 15:31:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=OHDmDA512c1khYtblZYHCVftv4gerf2zkiWwfabCBDo=;
-        b=uRrVsyGuJzcQpUm4SjQc6g5OXeiGR8WSnOUQlZJgyC0ftNgB3KXuZLWRidtOtiLdrc
-         Rq5a0YS0InMzKBcbs2N2Sx+3OrI4ITqJGVUPchoFs9kqATQ6CuqDsy2lZMd7FIdYhYUG
-         G+/BfOOU7w6ZxQCmiJc/3dss7mqaxErDeh2XWJEi+Yh6xFybcRhqe76ykAneX8pFwnpA
-         0Y+T2WaiVn/ATXqr/F41UCSejbJqPs81yc89Q5bR6p/WUhT3LwDKBP98a9uJDum2zQyR
-         r9T8NiSQagyrt46cSv9kY/e6iJYiDg+XTtdRbvB/o8KP5XYO6jxdXWkqOW154XlfdxG5
-         8zQA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=7sMy48GbDfMuXJRbRhMnevYp8Q/DwW33JPUdlInv78k=;
+        b=YWamyhQtfFFh2RFL83cTucB3YK/3KrCrxFps/5+Po7rANXIjESrnIlWNZOPb6xhYNp
+         pTkSYIwdj4iXqJQiZw2kqstlzi2jIcFXpH5aURCgMgiIMCZ1U4uvqbWbJ1DUPiY98qHf
+         5hsPcQVEymyVW8hcLCwrBdvbfnTL2/QctXqirSc0p5ZFkTxPyWLSW3Is1I2uP5Nqr4J0
+         e6kQvD8Li+WAXXFQdHvQvUGofhq27byPFTHFXPcDNOCyPzJ7W3KSTuRRGlLC+ViKCdKr
+         k3k3LC6Xz1eZ3PjxH8TEUK3YmvfzcKqzMGA0FA8zGPI5MfY/qDlUSfTwJ0v/Pk6SFZS6
+         7hBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=OHDmDA512c1khYtblZYHCVftv4gerf2zkiWwfabCBDo=;
-        b=V3js7mMSUm6l1LOYzqQeOBBibPvpYzEbTuCapXuByQ3bC8q8NQrwthexsbNjlcwPf3
-         N1woitzJRRioZy8oeKQ2HPMR0CyyyBXZUDvc7JgIR/+Mkudzd9GDDsBUj9xXYGQI+u4e
-         SY6N7thCyYONCq7t+o55YPashUSSEOGEKWlqUyx+NB//oGoD94rH58KvZe0jyPEoqDau
-         y0MZdCQnp1m76BnYva11vQQuk0+qb6kFAbmTWFaPfp3AkjKdzAYqqHf+/wKQVyjoZgJU
-         /g/KF1souWgMkZIx+hxUHCQFNnLQhor75atV2Bk9usHBVX86sc08J7tlJ6fYsAKMWxHn
-         g7Yg==
-X-Gm-Message-State: AOAM530UeqZMpBTA3C3whVBMv+UrGXD4HjDeAQUgWEQepX2LkFEM203I
-        QBgD+POV6mSS0poXpypoBks4hKCKCXITSn9kkAsfWtD2TZGU33k0W53vHhp7IXko46D7W5PSCS1
-        yE7Y+xTw3pVMQOfIigiL5W3VFuz69uUz1bLQoSrcT8qdSaOc/jWgr9+8f/oHvsyaEqxrqZTgRd/
-        V4
-X-Google-Smtp-Source: ABdhPJxEps/enfyxwQIxaO7K8b5S0AGjylflWcHNWJobY5PuIpd5VDxY6+mq+F/ru6PO/eIMMbct5jWugIMHMYWdjgCJ
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=7sMy48GbDfMuXJRbRhMnevYp8Q/DwW33JPUdlInv78k=;
+        b=B++RsazT0em7a1BT5fHWPNsoYMxCM4IoxnWl2AUlzqZb9EQRD3RlO535fPB9+eZkcI
+         GpKL8KnL3mVGj92eXiEXLrsyPuV/gAo5/zplTG5KpAc95OlSN5Sx7weg6ksYfFPyjmmE
+         Glt2WxQJR91ASZmTpYw41BaJYmGxjs6kWmKPVi96XRtzwv28sR6efQiSW2wCzTyNITz+
+         BZDN/2/bxwMDByZxnx1QGEmYl+fkV6D61zRKJLA+NGbtEPrwamRGrCCgtJWIlLF/5jf7
+         CQOogGZX3y57AJD9hDkV4StlCpUf2pBhkJIMly5uw9sx2AyG3KofyYKY2WWYolc1imJ/
+         EAzA==
+X-Gm-Message-State: AOAM530dbYWGaalUqQHyxKegaTWo2E8INiTZC8Es7rSa9xsytljmzzAa
+        3nggys8JroIuj2qhgEZQA59AjQOgycWbnxZ0+EzoajVvqLDacLTmT43n9qoIdoHTokti4dCd9SU
+        2Oa9uBBYFNjHCm/vPNEGLKpyVOxZfPminrzS9TnucI1feyn+cpMIuPMa9dOed5k9VsjtF+UPJc4
+        SY
+X-Google-Smtp-Source: ABdhPJxG/0jEtW13I6m694TJDMLZhbybeY+R5kHPHfgwugFPEhS1p3Iabtz/tsSoeTZKYtF2Z0MzOw5Tl3wCXZEgbbaD
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:ad4:49cf:: with SMTP id
- j15mr2138392qvy.34.1624487457233; Wed, 23 Jun 2021 15:30:57 -0700 (PDT)
-Date:   Wed, 23 Jun 2021 15:30:50 -0700
-Message-Id: <cover.1624486920.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:8645:b029:fd:25ef:3df7 with
+ SMTP id y5-20020a1709028645b02900fd25ef3df7mr1429530plt.48.1624487460163;
+ Wed, 23 Jun 2021 15:31:00 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 15:30:52 -0700
+In-Reply-To: <cover.1624486920.git.jonathantanmy@google.com>
+Message-Id: <175da5f02b319bb637700e4f6665ee346674e1b0.1624486920.git.jonathantanmy@google.com>
 Mime-Version: 1.0
+References: <cover.1624486920.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.32.0.288.g62a8d224e6-goog
-Subject: [PATCH 0/3] Push negotiation fixes
+Subject: [PATCH 2/3] send-pack: fix push nego. when remote has refs
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -65,21 +71,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Testing at $DAYJOB revealed some bugs in some fundamental scenarios, and
-here are their fixes.
+Commit 477673d6f3 ("send-pack: support push negotiation", 2021-05-05)
+did not test the case in which a remote advertises at least one ref. In
+such a case, "remote_refs" in get_commons_through_negotiation() in
+send-pack.c would also contain those refs with a zero ref->new_oid (in
+addition to the refs being pushed with a nonzero ref->new_oid). Passing
+them as negotiation tips to "git fetch" causes an error, so filter them
+out.
 
-Jonathan Tan (3):
-  send-pack: fix push.negotiate with remote helper
-  send-pack: fix push nego. when remote has refs
-  fetch: die on invalid --negotiation-tip hash
+(The exact error that would happen in "git fetch" in this case is a
+segmentation fault, which is unwanted. This will be fixed in the
+subsequent commit.)
 
- builtin/fetch.c       |  4 +++-
- builtin/send-pack.c   |  1 +
- send-pack.c           |  6 +++--
- t/t5510-fetch.sh      |  9 ++++++++
- t/t5516-fetch-push.sh | 54 +++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 71 insertions(+), 3 deletions(-)
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ send-pack.c           | 6 ++++--
+ t/t5516-fetch-push.sh | 5 +++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
+diff --git a/send-pack.c b/send-pack.c
+index 9cb9f71650..85945becf0 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -425,8 +425,10 @@ static void get_commons_through_negotiation(const char *url,
+ 	child.no_stdin = 1;
+ 	child.out = -1;
+ 	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
+-	for (ref = remote_refs; ref; ref = ref->next)
+-		strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
++	for (ref = remote_refs; ref; ref = ref->next) {
++		if (!is_null_oid(&ref->new_oid))
++			strvec_pushf(&child.args, "--negotiation-tip=%s", oid_to_hex(&ref->new_oid));
++	}
+ 	strvec_push(&child.args, url);
+ 
+ 	if (start_command(&child))
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 5ce32e531a..e383ba662f 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -201,6 +201,7 @@ test_expect_success 'push with negotiation' '
+ 	# Without negotiation
+ 	mk_empty testrepo &&
+ 	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
++	test_commit -C testrepo unrelated_commit &&
+ 	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+ 	echo now pushing without negotiation &&
+ 	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 push testrepo refs/heads/main:refs/remotes/origin/main &&
+@@ -210,6 +211,7 @@ test_expect_success 'push with negotiation' '
+ 	rm event &&
+ 	mk_empty testrepo &&
+ 	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
++	test_commit -C testrepo unrelated_commit &&
+ 	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+ 	GIT_TRACE2_EVENT="$(pwd)/event" git -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main &&
+ 	grep_wrote 2 event # 1 commit, 1 tree
+@@ -219,6 +221,7 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+ 	rm event &&
+ 	mk_empty testrepo &&
+ 	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
++	test_commit -C testrepo unrelated_commit &&
+ 	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+ 	GIT_TEST_PROTOCOL_VERSION=0 GIT_TRACE2_EVENT="$(pwd)/event" \
+ 		git -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
+@@ -1783,6 +1786,7 @@ test_expect_success 'http push with negotiation' '
+ 	# Without negotiation
+ 	test_create_repo "$SERVER" &&
+ 	test_config -C "$SERVER" http.receivepack true &&
++	test_commit -C "$SERVER" unrelated_commit &&
+ 	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+ 	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+ 	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 \
+@@ -1794,6 +1798,7 @@ test_expect_success 'http push with negotiation' '
+ 	rm -rf "$SERVER" &&
+ 	test_create_repo "$SERVER" &&
+ 	test_config -C "$SERVER" http.receivepack true &&
++	test_commit -C "$SERVER" unrelated_commit &&
+ 	git -C client push "$URI" first_commit:refs/remotes/origin/first_commit &&
+ 	git -C "$SERVER" config receive.hideRefs refs/remotes/origin/first_commit &&
+ 	GIT_TRACE2_EVENT="$(pwd)/event" git -C client -c protocol.version=2 -c push.negotiate=1 \
 -- 
 2.32.0.288.g62a8d224e6-goog
 
