@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FCAEC48BE5
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D3FBC4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 032CE611C1
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18C05611C1
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 17:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbhFWRuy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 13:50:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48280 "EHLO
+        id S229924AbhFWRu4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 13:50:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbhFWRut (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 13:50:49 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701CCC061756
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:31 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id o22so1255596wms.0
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:31 -0700 (PDT)
+        with ESMTP id S229844AbhFWRuw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 13:50:52 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61748C061760
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:34 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id d11so3638674wrm.0
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 10:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KGz5Vtx/XB3gd8CrUge3ne227L+ET6i5mI1HGXPkF58=;
-        b=ioxfOfgnKZsJpdpR8swSNXrhQ196mnEUKIpEfu6LIK2aUWiE8auiXNTbu1T3wFrL6f
-         ZoN6sjyw/I61SVqxKLLlaKdW24wdWeKUC/615w290JUCOnfbMnxYRF9a/96/k7uoJGRu
-         z2Lxl7W/z3sBCPUaK4KLa6Vxy93o5EvZzuY/3QByWVv9HIdV30LHCbGCkkXI5SHhxL+F
-         gh0wi3kMP3/5HXxwnGgARE40zUr2zW/XekmYGmv41beBnaxYYcZ4GlAO34KL+pP7H+UE
-         CwARNcUKIgisrDVf/Rz8+VcVXJtV71QDO+R4DBM0w7QMaYEITfZl0Ge3C49owlytakGZ
-         3zpg==
+        bh=DkvS1LeVH/TbQQs9SC63giIb22OtgUaW5qc43Njz9ZE=;
+        b=KppSc5pRZ0lY1Xqdr5BGNxaE7pc6VofNvKoM9D/oXln4HNScTYLyLZty5aBZaW2S2K
+         UGwbbFYuyrrrf6g1iDgJvrEEkZUhJBZqnEiXxfTZe5WB/IcwDj22UgSljWGj/1yrH5a+
+         1ftm4I9BOlroiO9/go9ZPQ3XGY3jr/sqgpI3KINUaSv1WsiUig5hIsvN+j07svtGzU2t
+         M2iQXL+v9mOzlAjMUwE76V8U9NBuWHUkBONAYGtPVPLVCkMdiV6uPxvglIqfKFYn6uRv
+         JkEXgFfXFLt29eFMniB+UwrEXIW0SuiAB4Q2L5fRxmr57AuvLgfzQ6KinZcl3m64Iz9v
+         9DFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KGz5Vtx/XB3gd8CrUge3ne227L+ET6i5mI1HGXPkF58=;
-        b=dUn++0PHQdZ0AS0UkMPSncIQNsB/AHHkBJYLUD45o9Dy0NZ9gu3bXlPkTvXipnNa/S
-         dJHFf5agLJkA9MVxRNCn05q5rEysSuTPTJMGqW2DtCkuefnvM4+aktbj1CYifN78etGE
-         OgOnMYVqAWJIs23riexsWrRp9B0bwRgQcJ3byKhryl8DL/WKfFq62/vmzz+l9XerYF8P
-         XhYZoA2Q0a7m2AH5lffc6ePQupYh1gJMMqNHTGtHXCWzPE+pmBMDfFIJOZLPhLhlNqtU
-         NTwlU9Xn94HI85lS/xxZOdyIVghpTVt/nUvrmaz5hy7TjlDEP3mzljhRdfHrZrH8yjC0
-         wHHg==
-X-Gm-Message-State: AOAM531+a113jCMY2K/JdA04gGNBUBNFTU3R5RiUoE0Lxclt/F+MdIVJ
-        tJai/ZNCJ2yXlgrmVrZfM17+Cel35RY=
-X-Google-Smtp-Source: ABdhPJz/4VQbMBSBPQnuW0sjCTXSaxU7bl+tZdDsN1Ojlksa68GybXaoj1LPbObrxKn5dh3Kml+upA==
-X-Received: by 2002:a05:600c:198f:: with SMTP id t15mr12297040wmq.27.1624470509771;
-        Wed, 23 Jun 2021 10:48:29 -0700 (PDT)
+        bh=DkvS1LeVH/TbQQs9SC63giIb22OtgUaW5qc43Njz9ZE=;
+        b=emsjCYY3/NJDZHSL9LP2C8+KHM3qKCbu5eaweBNEOQEF/DJnvyOuuN/I7N/Lp+Rz33
+         KAiUR0JO9Kotbbv8hZzZOQ+mTS17HfM3p7gqGmguHHZmqX3CUGpuc2OwqZZV7Ax+hi/x
+         tZSYObIrMheQ6HP9q+ll/3QBpl/zu1WD+VOpm1R9Gs3ltI9KBQFHxjAnvKPlJaQ+H1Sz
+         jsSJmWeB+9COVyzqehl6TyAGdJ1/JTY300zXVPuY2p4KcKSCPpvpVuzT3/L2Guq9SCHg
+         kmQWJ/KqNmE8JtJ4z6RjFmesOtXbdVk6pSoQq3ME9dE9D6rvurPSPF2aQi1sc/PC0hS6
+         RPLA==
+X-Gm-Message-State: AOAM532Tyg7y7fQ58EzuRY2Y44e0OG1mSGi6Br28xfUdhMUpbL9Qnl/K
+        dvkWTrUxUQ13U5Ecm3G5Sbi29k4OW1OrjA==
+X-Google-Smtp-Source: ABdhPJwoWe8/Rw0QYYEypqoJ7L+lW2Z1IgpFVk4ZBN/FL6OEKuBjmZMs+gXNgUyrCdZkOPqCMUKi7Q==
+X-Received: by 2002:adf:e4c8:: with SMTP id v8mr1438998wrm.143.1624470512715;
+        Wed, 23 Jun 2021 10:48:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.29
+        by smtp.gmail.com with ESMTPSA id x25sm6678281wmj.23.2021.06.23.10.48.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 10:48:29 -0700 (PDT)
+        Wed, 23 Jun 2021 10:48:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 01/25] progress.c tests: fix breakage with COLUMNS != 80
-Date:   Wed, 23 Jun 2021 19:48:01 +0200
-Message-Id: <patch-01.25-cba5d88ca35-20210623T155626Z-avarab@gmail.com>
+Subject: [PATCH 05/25] progress.c: move signal handler functions lower
+Date:   Wed, 23 Jun 2021 19:48:05 +0200
+Message-Id: <patch-05.25-fa6359da171-20210623T155626Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.599.g3967b4fa4ac
 In-Reply-To: <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
 References: <YNKWsTsQgB2Ijxu7@nand.local> <cover-00.25-00000000000-20210623T155626Z-avarab@gmail.com>
@@ -78,36 +78,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tests added in 2bb74b53a49 (Test the progress display, 2019-09-16)
-broke under anything except COLUMNS=80, i.e. when running them under
-the "-v" mode under a differently sized terminal.
-
-Let's set the expected number of COLUMNS at the start of the test to
-fix that bug. It's handy not do do this in test-progress.c itself, in
-case we'd like to test for a different number of COLUMNS, either
-manually or in a future test.
+Move the signal handler functions to just before the
+start_progress_delay() where they'll be referenced, instead of having
+them at the top of the file.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0500-progress-display.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ progress.c | 92 ++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 48 insertions(+), 44 deletions(-)
 
-diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
-index 22058b503ac..66c092a0fe3 100755
---- a/t/t0500-progress-display.sh
-+++ b/t/t0500-progress-display.sh
-@@ -8,6 +8,11 @@ show_cr () {
- 	tr '\015' Q | sed -e "s/Q/<CR>\\$LF/g"
+diff --git a/progress.c b/progress.c
+index 680c6a8bf93..893cb0fe56f 100644
+--- a/progress.c
++++ b/progress.c
+@@ -53,50 +53,6 @@ static volatile sig_atomic_t progress_update;
+  */
+ int progress_testing;
+ uint64_t progress_test_ns = 0;
+-void progress_test_force_update(void)
+-{
+-	progress_update = 1;
+-}
+-
+-
+-static void progress_interval(int signum)
+-{
+-	progress_update = 1;
+-}
+-
+-static void set_progress_signal(void)
+-{
+-	struct sigaction sa;
+-	struct itimerval v;
+-
+-	if (progress_testing)
+-		return;
+-
+-	progress_update = 0;
+-
+-	memset(&sa, 0, sizeof(sa));
+-	sa.sa_handler = progress_interval;
+-	sigemptyset(&sa.sa_mask);
+-	sa.sa_flags = SA_RESTART;
+-	sigaction(SIGALRM, &sa, NULL);
+-
+-	v.it_interval.tv_sec = 1;
+-	v.it_interval.tv_usec = 0;
+-	v.it_value = v.it_interval;
+-	setitimer(ITIMER_REAL, &v, NULL);
+-}
+-
+-static void clear_progress_signal(void)
+-{
+-	struct itimerval v = {{0,},};
+-
+-	if (progress_testing)
+-		return;
+-
+-	setitimer(ITIMER_REAL, &v, NULL);
+-	signal(SIGALRM, SIG_IGN);
+-	progress_update = 0;
+-}
+ 
+ static int is_foreground_fd(int fd)
+ {
+@@ -249,6 +205,54 @@ void display_progress(struct progress *progress, uint64_t n)
+ 		display(progress, n, NULL);
  }
  
-+test_expect_success 'setup COLUMNS' '
-+	COLUMNS=80 &&
-+	export COLUMNS
-+'
++static void progress_interval(int signum)
++{
++	progress_update = 1;
++}
 +
- test_expect_success 'simple progress display' '
- 	cat >expect <<-\EOF &&
- 	Working hard: 1<CR>
++/*
++ * The progress_test_force_update() function is intended for testing
++ * the progress output, i.e. exclusively for 'test-tool progress'.
++ */
++void progress_test_force_update(void)
++{
++	progress_update = 1;
++}
++
++static void set_progress_signal(void)
++{
++	struct sigaction sa;
++	struct itimerval v;
++
++	if (progress_testing)
++		return;
++
++	progress_update = 0;
++
++	memset(&sa, 0, sizeof(sa));
++	sa.sa_handler = progress_interval;
++	sigemptyset(&sa.sa_mask);
++	sa.sa_flags = SA_RESTART;
++	sigaction(SIGALRM, &sa, NULL);
++
++	v.it_interval.tv_sec = 1;
++	v.it_interval.tv_usec = 0;
++	v.it_value = v.it_interval;
++	setitimer(ITIMER_REAL, &v, NULL);
++}
++
++static void clear_progress_signal(void)
++{
++	struct itimerval v = {{0,},};
++
++	if (progress_testing)
++		return;
++
++	setitimer(ITIMER_REAL, &v, NULL);
++	signal(SIGALRM, SIG_IGN);
++	progress_update = 0;
++}
++
+ static struct progress *start_progress_delay(const char *title, uint64_t total,
+ 					     unsigned delay, unsigned sparse)
+ {
 -- 
 2.32.0.599.g3967b4fa4ac
 
