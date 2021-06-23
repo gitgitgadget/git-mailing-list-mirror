@@ -2,98 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6447BC4743C
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 03:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC757C4743C
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 04:17:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 454A0611CE
-	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 03:43:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A53F261380
+	for <git@archiver.kernel.org>; Wed, 23 Jun 2021 04:17:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230160AbhFWDpU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Jun 2021 23:45:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55068 "EHLO
+        id S229907AbhFWETw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 00:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbhFWDpT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jun 2021 23:45:19 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A82C061574
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 20:43:02 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id f10so1643853iok.6
-        for <git@vger.kernel.org>; Tue, 22 Jun 2021 20:43:02 -0700 (PDT)
+        with ESMTP id S229688AbhFWETw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 00:19:52 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F4ACC061574
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 21:17:34 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id bm25so2008090qkb.0
+        for <git@vger.kernel.org>; Tue, 22 Jun 2021 21:17:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=t3FC4o25SN6L+tAzKoFAT9yPUaa3GlYr3MrkRQuw0Gg=;
-        b=h39CjiARFJqJErZYmJEXU2Wv1LNRmrRrfJsfHdM6es8qjvICPYb5dowDj7Y2aRcdtn
-         bZK7gR4DaCmrhg1+Qeb3Vgg2kqd60ieCIbEgn9c67rzdAs7pSWMwS7A/OkAfqLgYrjQl
-         0B9GIUnjNO/OeQQyhnhmB7d/Bc/Zyva7h6+87xbXSG2mkFpoCiPfF0uk47vmsBitzn98
-         fJhipIjYovm2SNqMlHohrw9jt12vq0k7Cm/vdgJlEz8vP0Dcevzb2YHA4SSfEoyNawMM
-         PYfWkPfpZhTBt2wDyz2RBT8DKGpeJ5Oo+qqAlmJg/RzMDOmvaVPDsYdecXW8l5GIgVXt
-         iNLg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=VQoI5ubC7sphnKpV1ifQZOKdQ0LnQQtBr7y2GY1Juyc=;
+        b=i8N8tf5W3eAdPZLb+I6onSGXN3HLCUqt3YExWqQwlwNOvvtiIxPGvLQ6KA23vtDw22
+         PiqZFq5tyLucYkI/XlCUusaGktq69PCzRKJcqnpZnSDyQPvZ3UXw1iq9gMpa1A3KbXW+
+         byL6DL9hD2UZnOvIqZ3Ubv60aHyngDgJZmHL1et2Ru7562D87Mn8sIDSAcUS1Ej76KSz
+         IiB75ld4/uHwHgDQL8sDu9T+ySnI882v9sey/lIYMHxT82JO1XsSAZPXlOe+fkZJt8NP
+         TrzkKvBc8bisqPi9cDYL9CCzNvzEAUTyvj/VHrotWH+BRIGhSuyLeAA7ju927la02Vq9
+         ATAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t3FC4o25SN6L+tAzKoFAT9yPUaa3GlYr3MrkRQuw0Gg=;
-        b=orhXycN+QCbhlo19vEmQoQkFHcCwH172oQk5Kfuz2XY26h0N9L8Ai2KFxsd2CyiEZ7
-         DclkZqgMoIMa6uJp1jyv8qdQkBlps+byCw7+pCGRiKGtNOGD3rTz8kHNx9/W/SpO6JVB
-         viCMxJfQqgeY1k88gsFoyAvGTD4E+jVHp2CwFU2QQIHHjVJwK5kq/3e9RYaQoa4wbPZl
-         pjLqReomd8tZ9T/J0XFZ6uI0w//wvAiRQy05kmpXqOnEvBOZKO03PJuwV80qpmVDsJ8p
-         xUsXWzOZUNzvBxfsIoprNcNdG2BM8/07tGVg9bv1bm3zetJGMMq/j+hbBZ9KeTgNIYKt
-         iYuA==
-X-Gm-Message-State: AOAM533DctKEHnYGQkRMGBfZ9kXwSYTMuZB+dUmUKl1w4k2aB66ZwCY6
-        NIg8KGM9qsxItfiYudQTLJdZBg==
-X-Google-Smtp-Source: ABdhPJyGyB0OlofRXR3FU4nqHotiUqK4PUJGGoeVM6P/HqUEzLZsVS5aNTuaoHDLv7IT+TBhH0au4Q==
-X-Received: by 2002:a5d:83ce:: with SMTP id u14mr5454204ior.45.1624419781585;
-        Tue, 22 Jun 2021 20:43:01 -0700 (PDT)
-Received: from localhost ([2600:1700:d843:8f:827b:778a:e73b:3ade])
-        by smtp.gmail.com with ESMTPSA id b15sm9080181iln.17.2021.06.22.20.43.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jun 2021 20:43:01 -0700 (PDT)
-Date:   Tue, 22 Jun 2021 23:42:54 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Git List <git@vger.kernel.org>,
-        Josh Steadmon <steadmon@google.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH] trace2: log progress time and throughput
-Message-ID: <YNKtvj4z2dwSUvOS@nand.local>
-References: <20200512214420.36329-1-emilyshaffer@google.com>
- <871r8w3sxu.fsf@evledraar.gmail.com>
- <YNKiv2Ar77xAxixz@nand.local>
- <CAPx1Gve_KqzQHanDDTSJ_2QywzNybq-J3wkG8xBC_DUhwVB5Fg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=VQoI5ubC7sphnKpV1ifQZOKdQ0LnQQtBr7y2GY1Juyc=;
+        b=Tw7sKOsku2i0fz7ezkVQAdv8aaxU/S/FnCQDv3zmyCH/a/Fch0hAHClUSd/Cf4nSVG
+         a5ylMT64Uzs6bZBcN+ndsjUlk3Tq1Hel7pFi9daK9+DD0ssSxOcEGzVcBATD1xg5hER4
+         aX91ueHMsqFXDL3FQQQ2GfE/uPpU5XwmJ4Kb7sZ0qZNljMPlpc0FPUkeGjrCLWCtAgtB
+         pGNS7xx4m4IdUOP1nl8aZ+1CgebTM1WQW3K5kicrPGg36Nam/Pq6eXQAw054qL5Jq0BE
+         WrPgGN3KA9vyYmjRA5tDEftvj4jqmYH7JNqEg0vLPNpOyyZtzpArEf58SGTiMvTzAMIm
+         8OEg==
+X-Gm-Message-State: AOAM5333xXqsKtlDCYEp2JLxiDgCuSuUPn1XeG4v5zRr9h2ES/xiN2gS
+        xSa4J6et54Jgfq86t5RGoGQ74YmjfjK6+1OQspp3fclb
+X-Google-Smtp-Source: ABdhPJzjD9pPJ/cm+GlOTi7khI4uZLyjCbl99e8jSfEAzv6dqQzjjgIG0+R9gtk2E3HNwjDieOcmpvSSRkcvt9l7KMg=
+X-Received: by 2002:a05:6902:114c:: with SMTP id p12mr10022071ybu.282.1624421853577;
+ Tue, 22 Jun 2021 21:17:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPx1Gve_KqzQHanDDTSJ_2QywzNybq-J3wkG8xBC_DUhwVB5Fg@mail.gmail.com>
+References: <CADdMKP8y3TjeCyJaxazYFY9zN2QpnMVZyRWnpoTLMcZ0ZPNMzg@mail.gmail.com>
+In-Reply-To: <CADdMKP8y3TjeCyJaxazYFY9zN2QpnMVZyRWnpoTLMcZ0ZPNMzg@mail.gmail.com>
+From:   Douglas Leonard <dleonard.dev@gmail.com>
+Date:   Wed, 23 Jun 2021 13:17:20 +0900
+Message-ID: <CADdMKP9gPqE6Eg6Z1=SKK3PAmWhX=OaK7epZe=iEPAh9SYkizA@mail.gmail.com>
+Subject: git-alltrees: root trees and subtrees without duplicate commits.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 22, 2021 at 08:29:35PM -0700, Chris Torek wrote:
-> On Tue, Jun 22, 2021 at 7:56 PM Taylor Blau <me@ttaylorr.com> wrote:
-> >... I was going to comment on the fact that "(*p_progress)->total" could
-> > be written simply as "*p_progress->total", but I'm (a) not sure that I
-> > actually prefer the latter to the former, and (b) I find that kind of
-> > style comment generally useless.
->
-> Also, it can't. :-) The binding order is wrong; *p_progress->total binds as
-> *(p_progress->total), and `p_progress` has to be followed first, so this
-> just doesn't work.
+Hi all,
 
-Ack, serves me right for starting a discussion based on operator
-precedence. Yes, you're right, I was mistaken and forgot that -> binds
-with highest precedence in C (above *, which is why this doesn't work).
+For a very quick introduction, I'm a career physicist. I just thought
+I'd share a detailed method and implementation I developed to improve
+on shortcomings of subtrees.
 
-In any case, my confusion is probably a good reason to avoid this
-entirely by manipulating a variable which stores *p_progress.
+This says it all
+https://gitlab.com/douglas.s.leonard/alltrees/-/wikis/home
 
-Thanks,
-Taylor
+But to repeat a little...
+
+First, it allows a container "sub" tree, ie syncing only the non "sub"
+parts of the tree to a repo.  But maybe more importantly, when it
+pulls from the trees it's able to "remap" or reconstruct old commits
+back to their originals to avoid the duplicate commit issue of
+subtrees.  This is round-trip reproducible so consistency is kept both
+ways. It avoids the need for squash with subtrees. Compare the two
+images in the wiki to see the difference between subtree without
+squash and alltrees. Non-FF changes made in a tree repo show as
+branched and merged. Traditional advantages of subtrees are kept,
+primarily that users/developers of any one repo don't need any
+awareness of how to use the subtrees or the other repos.
+
+I have used this some, but not extensively yet.  In my use it has
+worked.  I think it's pretty quick, but I haven't tested on large
+projects.
+
+Cheers,
+Doug Leonard
