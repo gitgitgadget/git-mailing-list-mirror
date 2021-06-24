@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C08C49EAB
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB13AC49EA6
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:40:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A7B36120D
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:40:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2A89613EC
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:40:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232838AbhFXTm7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 15:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59392 "EHLO
+        id S232847AbhFXTnB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 15:43:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232797AbhFXTmx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 15:42:53 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C550C06175F
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:40:33 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id n23so4768696wms.2
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:40:33 -0700 (PDT)
+        with ESMTP id S232825AbhFXTmz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 15:42:55 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FF0BC061760
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:40:34 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id a13so7919447wrf.10
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=j3BHz3R6ao2lRXBxIoaaC6tGq4r+WR/zyqTWR5GVT18=;
-        b=J5OeYfd+XrML5qT43nCYOo/hTyDX9xPep0MZdkSnXJcwKyZurfm6HzPMeOFCranuNC
-         33bBBwvfcifGaMhiXEKjG6e/j/B7vHGpuwFZFYfMUmH1ZTPA3nOkZXbR3SU4sW2/nspP
-         a1C/328NNYmUm2wrCCWpwHRzJFbd0q/VTp0E2ThmDksedBcabi032NvjIsyy1MaITIDe
-         lx26xVsM7z1VYQDfq+dklepC3gtRzMVR+I/t29bqPL7aML7cGfJIW/8rxLDcUbrb32fr
-         fRolzwXakMXb2IdeSAAlhXnTKUSgZXKa+S99sDHHjosvd68i6GjVVMzLLUzhRnAe4g2e
-         6COw==
+        bh=1qh1rvSpNTAGWtdVlA45nwWwTA5iQ5jldTBdt6gytmE=;
+        b=Ld4p75CRfCgwuz/VMjZh8URaX+JF67O/7aebh7ge+Q5rxxgPrFUtpdeP4ml12SXTOM
+         SD89/Fq/A+/q3VeX+Z/7sXahedbSUaDsLfn3d23kdVcfWPqNk8ViDyPGwx9t0HsHysv7
+         rJzPJ4ffa60MnpFNR4kAHI0iFOeECC9o45XkE/CVRpCLqkulktW64J1qKJBhQ3Ve8sBL
+         BafFNNo5koHiD2nEdnIsRmMdHnpx+3lo65gT46GgZa6tI600sqbkhgfbFcsZKSCq5Xyz
+         yJG0VRkkDvGK4Qrm2zKZ3NhfJbuJzwZId7DeAJ0dThJGvVvbLYEHvcUTgPbgFDkqUvWS
+         SbuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=j3BHz3R6ao2lRXBxIoaaC6tGq4r+WR/zyqTWR5GVT18=;
-        b=kTLNgkPFeddoeRSWUuRshS9Gbw+brZQl5svF3pqpZBSQ8e2RsxqjMfzvT2TxMucx9B
-         3ZMGxAOQM78C4XDLXuEWAcaUrSQlxg7uwF/VlYpZ//9knGzR3bIPzT4T05MnrYNYOm1y
-         VVOQCUt8bR32N2+5bwn7PqYWSdVo/LEJTqbTLy1IHchGdztZ9Qjbs4IaFRyjZ0Yu8AOp
-         Z9AWqxG+gC7l6quoTHVVRXkMN6IXwGW6Q9lRE8eUT+dNSVfFJfTB3LVr9t7yrHe7UzK/
-         iVH0dvbSf0UWCzsVKwZWwO6yl5v5s2tameD7Id3veAHsvW2IMH7eV9qntZCW/DHEXnMc
-         l0MQ==
-X-Gm-Message-State: AOAM530YL3nPl/snzIiA6xdzh3nQyVJRO2C8RiWIsBGe/XXNBqc1aJ3Y
-        2Kiu5GCdUOXEmdTWHj/3N8j8HSnPm9XPfg==
-X-Google-Smtp-Source: ABdhPJx7ZcLsDLlMpTDKudrxPp4+I2U5a1Luav5LNtabja1GS515Jx9fYoffEoy3oxfAvs2pucik4g==
-X-Received: by 2002:a1c:35c2:: with SMTP id c185mr6206173wma.126.1624563631960;
-        Thu, 24 Jun 2021 12:40:31 -0700 (PDT)
+        bh=1qh1rvSpNTAGWtdVlA45nwWwTA5iQ5jldTBdt6gytmE=;
+        b=LfxCZBiSlFlN9sWIipWpqsJIRI/nYLawY6lOM4ujT9ImPDvg+Q+aqjCFPMGbU80pIL
+         IQiBmkM02phxXFJ8EHwKaO0bGc1dP+1a6bH84VH7ujAn+1KJSU/zUqmBFOV97Jg2OBHZ
+         q6l5lsoB9ereZZ9nM5FV+Lu6xL/rvLpEvwfpigj4VEdB74HBjOn11E9ZlvLXOoSRA+65
+         IYBeO+c89iTIiPIRY/d6gKs5fufBQFlHjvscNN4GH9Oq/IYWuIxRWwBjmVITTrowznDE
+         0xnAaoBfy0OexEl+JyAUHbd6lYOR9jTPikh2hM8VZcFKdCnMwSVB7u3+IyWst7uAwf7d
+         QzxA==
+X-Gm-Message-State: AOAM533BzjICnVokbNyUGp6ERWA4RBS1d/B6J51persHoU6uFKciiaE1
+        PDbcVTWDb4tmr8Wk/KzjDzWGMym/VIvipA==
+X-Google-Smtp-Source: ABdhPJy4cFv5eUm3s4WgKXOMrW+LLfon6FaHUSvMi3+Snwp7QaK1dNNh1EKU7Y7H0haf+9Un/K60ug==
+X-Received: by 2002:a5d:508d:: with SMTP id a13mr6401607wrt.267.1624563632764;
+        Thu, 24 Jun 2021 12:40:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y20sm9286057wmi.31.2021.06.24.12.40.31
+        by smtp.gmail.com with ESMTPSA id y20sm9286057wmi.31.2021.06.24.12.40.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 12:40:31 -0700 (PDT)
+        Thu, 24 Jun 2021 12:40:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 2/3] bundle doc: split out thin v.s. not discussion from <rev-arg>
-Date:   Thu, 24 Jun 2021 21:40:27 +0200
-Message-Id: <patch-2.3-63f871a0c72-20210624T193730Z-avarab@gmail.com>
+Subject: [PATCH v3 3/3] bundle doc: elaborate on rev<->ref restriction
+Date:   Thu, 24 Jun 2021 21:40:28 +0200
+Message-Id: <patch-3.3-14e4a724fb2-20210624T193730Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.610.gd639e370050
 In-Reply-To: <cover-0.3-00000000000-20210624T193730Z-avarab@gmail.com>
 References: <patch-1.1-bc6a6d8922-20210607T165507Z-avarab@gmail.com> <cover-0.3-00000000000-20210624T193730Z-avarab@gmail.com>
@@ -76,67 +76,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split out the discussion of why you should or should not create "thin
-bundles" into a new section, away from the discussion of our handling
-of the rev-args syntax.
-
-See 2e0afafebd (Add git-bundle: move objects and references by
-archive, 2007-02-22) for the introduction of the documentation being
-changed here.
+Elaborate on the restriction that you cannot provide a revision that
+doesn't resolve to a reference in the "SPECIFYING REFERENCES" section
+with examples.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-bundle.txt | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ Documentation/git-bundle.txt | 47 ++++++++++++++++++++++++++++++------
+ 1 file changed, 39 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 1b02f8b7468..f231f42b12f 100644
+index f231f42b12f..5674e18155a 100644
 --- a/Documentation/git-bundle.txt
 +++ b/Documentation/git-bundle.txt
-@@ -42,7 +42,8 @@ header indicating what references are contained within the bundle. The
- header is (mostly) in the format emitted by linkgit:git-show-ref[1].
+@@ -131,14 +131,45 @@ unbundle <file>::
+ SPECIFYING REFERENCES
+ ---------------------
  
- Like the the packed archive format itself bundles can either be
--self-contained or thin (see "--thin" in linkgit:git-pack-objects[1]).
-+self-contained or thin, see the "OPEN (THIN) AND CLOSED BUNDLES"
-+section below.
- 
- See link:technical/bundle-format.html[the `bundle-format`
- documentation] for more details.
-@@ -139,7 +140,20 @@ contained in the union of the given bases.  Each basis can be
- specified explicitly (e.g. `^master~10`), or implicitly (e.g.
- `master~10..master`, `--since=10.days.ago master`).
- 
--It is very important that the basis used be held by the destination.
-+OPEN (THIN) AND CLOSED BUNDLES
-+------------------------------
+-'git bundle' will only package references that are shown by
+-'git show-ref': this includes heads, tags, and remote heads.  References
+-such as `master~1` cannot be packaged, but are perfectly suitable for
+-defining the basis.  More than one reference may be packaged, and more
+-than one basis can be specified.  The objects packaged are those not
+-contained in the union of the given bases.  Each basis can be
+-specified explicitly (e.g. `^master~10`), or implicitly (e.g.
+-`master~10..master`, `--since=10.days.ago master`).
++Revisions must accompanied by reference names to be packaged in a
++bundle, since the header of the bundle is in a format similar to 'git
++show-ref'.
 +
-+When creating bundles it is possible to create bundle tips that are
-+either closed or open under reachability, i.e. those that contain all
-+the history needed to get to a given point (closed), and those that do
-+not (open). A revision such as "master" will produce a closed tip, a
-+range such as "master~2..master" will not (unless the full history is
-+contained within that range).
++More than one reference may be packaged, and more than one basis can
++be specified.  The objects packaged are those not contained in the
++union of the given bases.
 +
-+Another name for "open" bundles might be "thin bundles", as in the
-+`--thin` option to linkgit:git-pack-objects[1]. Under the hood that's
-+what `git bundle create` uses to write bundles. When thin bundles
-+it is very important that the basis used be held by the destination.
- It is okay to err on the side of caution, causing the bundle file
- to contain objects already in the destination, as these are ignored
- when unpacking at the destination.
-@@ -152,6 +166,11 @@ If you want to provide the same set of refs that a clone directly
- from the source repository would get, use `--branches --tags` for
- the `<git-rev-list-args>`.
- 
-+See the the `--thin` option to linkgit:git-pack-objects[1] noted
-+above, and the discussion of "thin pack" in
-+link:technical/pack-format.html[the pack format documentation] for
-+further details.
++The 'git bundle create' command resolves the reference names for you
++using the same rules as `git rev-parse --abbrev-ref=loose`. Each
++basis can be specified explicitly (e.g. `^master~10`), or implicitly
++(e.g. `master~10..master`, `--since=10.days.ago master`).
 +
- EXAMPLES
- --------
++All of these simple cases are OK (assuming we have a "master" and
++"next" branch):
++
++----------------
++$ git bundle create master.bundle master
++$ echo master | git bundle create master.bundle --stdin
++$ git bundle create master-and-next.bundle master next
++$ (echo master; echo next) | git bundle create master-and-next.bundle --stdin
++----------------
++
++And so are these (and the same but omitted `--stdin` examples):
++
++----------------
++$ git bundle create recent-master.bundle master~10..master
++$ git bundle create recent-updates.bundle master~10..master next~5..next
++----------------
++
++A revision name or a range whose right-hand-side cannot be resolved to
++a reference is not accepted:
++
++----------------
++$ git bundle create HEAD.bundle $(git rev-parse HEAD)
++fatal: Refusing to create empty bundle.
++$ git bundle create master-yesterday.bundle master~10..master~5
++fatal: Refusing to create empty bundle.
++----------------
  
+ OPEN (THIN) AND CLOSED BUNDLES
+ ------------------------------
 -- 
 2.32.0.610.gd639e370050
 
