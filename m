@@ -2,103 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78001C49EA6
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1528C49EA5
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:52:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E14C613EB
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:41:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCFDB61249
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:52:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231708AbhFXPnb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 11:43:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59488 "EHLO cloud.peff.net"
+        id S232274AbhFXPzL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 11:55:11 -0400
+Received: from lsp.net ([78.46.242.34]:53254 "EHLO lsp.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230008AbhFXPna (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 11:43:30 -0400
-Received: (qmail 12232 invoked by uid 109); 24 Jun 2021 15:41:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Jun 2021 15:41:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13536 invoked by uid 111); 24 Jun 2021 15:41:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Jun 2021 11:41:11 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 24 Jun 2021 11:41:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: git add --interactive patch improvement for split hunks
-Message-ID: <YNSnlhbE30xDfVMY@coredump.intra.peff.net>
-References: <60D45FE4020000A100041FCE@gwsmtp.uni-regensburg.de>
+        id S231294AbhFXPzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 11:55:10 -0400
+X-Greylist: delayed 610 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jun 2021 11:55:10 EDT
+dkim-signature: v=1; a=rsa-sha256; d=lsp.net; s=lsp191015;
+        c=relaxed/relaxed; q=dns/txt; h=From:Subject:Date:Message-ID:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=Bb0cdTvqyEkFiYp4Kyhgv4qDpP6QDrX6uJ9+tTvQbvo=;
+        b=bNtjagNmLqkwDww6WjvMMrAp9P8I/1+K5pJI3VfxdykG/OT+mtKwl6D2BIN5SWKxsf8jUnYwBEZqhcvcFtJ/umMpP5bRefB4RmzAlMp/SVBghDMGoOEyOx8xyCz55CqsnjMWunmUngdg8OYUufKQEbpIvqvzr4+poq8ElWY28u/qR5yVqUUIFmlrC+iAxgYiKoFhWyQa9PSryIkHNI5Z8lfAjpOLorSAEms+6bTKI0wkuJhbH7BoVJZu+S
+        +ertIqLdlHSmuNQS24TLDplsdcJaBQVAPWrcZtw6uRitugRZ9JZrlmWrWSzB0zkviufAmCGgagsYjC/goMKif2MSE5Jg==
+Received: from [192.168.178.21] (zpt30-1_migr-78-197-22-30.fbx.proxad.net
+ [78.197.22.30]) by lsp.net with ESMTPSA (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256
+ bits=128) ; Thu, 24 Jun 2021 17:42:40 +0200
+To:     git@vger.kernel.org
+From:   Claas Augner <claas.augner@lsp.net>
+Subject: Bug: git-stash fails for new file not staged for commit
+Message-ID: <f139a5e1-242a-e23b-6eda-b8b49423d70b@lsp.net>
+Date:   Thu, 24 Jun 2021 17:42:39 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <60D45FE4020000A100041FCE@gwsmtp.uni-regensburg.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 12:35:16PM +0200, Ulrich Windl wrote:
+ > What did you do before the bug happened?
 
-> I noticed that git add -interactive's patch displays the function
-> context for the diffs, but that function context is lost when the
-> hunks are split.
->
-> It would help the user (especially for hunks covering multiple
-> functioins) if function context were still provided for split hunks.
+I tried to stash a new file that I added with `git add --intent-to-add`:
 
-This was discussed a while ago (and there is even a patch) in this
-thread:
+```
+$ touch foo
+$ git add --intent-to-add foo
+$ git stash
+```
 
-  https://lore.kernel.org/git/20201117020522.GD19433@coredump.intra.peff.net/
 
-The short of it is that the upcoming builtin-in-C version of the code
-will preserve the function header when splitting. The patch in that
-message adds it to the existing perl version, but I didn't really bother
-moving it forward, since that code is all supposed to eventually go
-away[0].
+ > What did you expect to happen?
 
-One thing you may not like, though: both the builtin version and that
-patch only put the funcname context in the _first_ hunk of the split.
-Doing it for subsequent hunks is much trickier, since there can be a
-funcname in the split context itself. E.g.:
+The file should have been stashed.
 
-  @@ ... @@ void foo()
-           int x;
-  -        int y = 1;
-  +        int y = 2;
-   
-  -        x = 3;
-  +        x = 4;
-   }
 
-could split into two hunks, both annotated with "void foo()". But:
+ > What happened instead?
 
-  @@ ... @@ void foo()
-           int x;
-  -        x = 3;
-  +        x = 4;
-   }
-   void bar()
-   {
-  -        int y = 1;
-  +        int y = 2;
-   }
+The stash failed with the following error message:
 
-would be wrong to say "void foo()" for the second hunk. We'd have to
-re-scan the interior context lines for a funcname to find it. That's
-all-but-impossible in the perl version, but might be do-able in the C
-version (since it has easy access to the funcname-matching patterns and
-machinery).
+```
+error: Entry 'foo' not uptodate. Cannot merge.
+Cannot save the current worktree state
+```
 
--Peff
 
-[0] I'm not sure what the timetable is for switching to the C version of
-    add--interactive. If it's going to be a while, I don't mind moving
-    forward the other patch I showed. But maybe the time is here to
-    think about switching the default of add.interactive.useBuiltin, and
-    ironing out any final bugs?
+ > What's different between what you expected and what actually happened?
+
+Instead of stashing the file, the stash fails with an error message.
+
+
+ > Anything else you want to add:
+
+Background: https://github.com/okonet/lint-staged/issues/990
+
+
+[System Info]
+git version:
+git version 2.32.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28 23:40:43=20
+UTC 2020 x86_64
+compiler info: gnuc: 9.3
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /usr/bin/zsh
+
+
+[Enabled Hooks]
+applypatch-msg
+pre-applypatch
+post-applypatch
+pre-commit
+prepare-commit-msg
+commit-msg
+post-commit
+pre-rebase
+post-checkout
+post-merge
+pre-push
+pre-receive
+update
+post-receive
+post-update
+push-to-checkout
+pre-auto-gc
+post-rewrite
+sendemail-validate
+
+-------------------------------------------
+LSP.net GmbH
+Prinzregentenstr. 40
+10715 Berlin / Germany
+T +49 30 20896331
+Web: https://www.LSP.net
+Blog: https://blog.LSP.net
