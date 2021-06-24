@@ -2,123 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1528C49EA5
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1FEC49EA5
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:53:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCFDB61249
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:52:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2ED76613DC
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 15:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232274AbhFXPzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 11:55:11 -0400
-Received: from lsp.net ([78.46.242.34]:53254 "EHLO lsp.net"
+        id S232383AbhFXPzU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 11:55:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59528 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231294AbhFXPzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 11:55:10 -0400
-X-Greylist: delayed 610 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jun 2021 11:55:10 EDT
-dkim-signature: v=1; a=rsa-sha256; d=lsp.net; s=lsp191015;
-        c=relaxed/relaxed; q=dns/txt; h=From:Subject:Date:Message-ID:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=Bb0cdTvqyEkFiYp4Kyhgv4qDpP6QDrX6uJ9+tTvQbvo=;
-        b=bNtjagNmLqkwDww6WjvMMrAp9P8I/1+K5pJI3VfxdykG/OT+mtKwl6D2BIN5SWKxsf8jUnYwBEZqhcvcFtJ/umMpP5bRefB4RmzAlMp/SVBghDMGoOEyOx8xyCz55CqsnjMWunmUngdg8OYUufKQEbpIvqvzr4+poq8ElWY28u/qR5yVqUUIFmlrC+iAxgYiKoFhWyQa9PSryIkHNI5Z8lfAjpOLorSAEms+6bTKI0wkuJhbH7BoVJZu+S
-        +ertIqLdlHSmuNQS24TLDplsdcJaBQVAPWrcZtw6uRitugRZ9JZrlmWrWSzB0zkviufAmCGgagsYjC/goMKif2MSE5Jg==
-Received: from [192.168.178.21] (zpt30-1_migr-78-197-22-30.fbx.proxad.net
- [78.197.22.30]) by lsp.net with ESMTPSA (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256
- bits=128) ; Thu, 24 Jun 2021 17:42:40 +0200
-To:     git@vger.kernel.org
-From:   Claas Augner <claas.augner@lsp.net>
-Subject: Bug: git-stash fails for new file not staged for commit
-Message-ID: <f139a5e1-242a-e23b-6eda-b8b49423d70b@lsp.net>
-Date:   Thu, 24 Jun 2021 17:42:39 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232390AbhFXPzU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 11:55:20 -0400
+Received: (qmail 12285 invoked by uid 109); 24 Jun 2021 15:53:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Jun 2021 15:53:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13632 invoked by uid 111); 24 Jun 2021 15:53:00 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Jun 2021 11:53:00 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 24 Jun 2021 11:52:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        szeder.dev@gmail.com, dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: t5324-split-commit-graph.sh flaky due to assumptions about
+ ulimit behavior
+Message-ID: <YNSqW3G5Sc/gBWAs@coredump.intra.peff.net>
+References: <cover.1587677671.git.me@ttaylorr.com>
+ <2b8ee726690861405f41adede5582b96749e98c5.1587677671.git.me@ttaylorr.com>
+ <87im231sj6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87im231sj6.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- > What did you do before the bug happened?
+On Thu, Jun 24, 2021 at 11:51:09AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-I tried to stash a new file that I added with `git add --intent-to-add`:
+> I.e. here we do an "ulimit -n 32" and then run a command, which makes a
+> lot of assumptions about how git is compiled, starts up etc, a lot of
+> which are outside of our control and up to the OS. It's not 32 files we
+> open, but 32 everything. When I could reproduce this it was failing on
+> opening some libpcre file or other, so maybe I linked to one too many
+> libraries.
+> 
+> The one other test that uses this pattern seems like it could be
+> similarly affected, but I haven't had that fail: d415ad022d8
+> (update-ref: test handling large transactions properly, 2015-04-14)
+> 
+> Since I can't reproduce this anymore maybe I'm reporting a
+> nothingburger. I just wonder if this can really work reliably in the
+> general case, and whether a reliably version of this pattern doesn't
+> need to be one/some of:
+> 
+>  1. Some GIT_TEST_* mode that sets the (unportable) ulimit itself in the
+>     code, after we reach some point. This is how e.g. web-based REPLs
+>     often work, load all your known libraries, forbid any file openings
+>     (or just N number) after that.
+> 
+>  2. Ditto, but have the GIT_TEST_* print to stderr if we reach some
+>     "checkpoint", have the test only run under limit N if we can reach
+>     that point (i.e. binary search or brute force to find the exact N
+>     limit).
+> 
+>  3. Maybe we can assume this would work reliably in cases of a really
+>     high limit of N, i.e. the d415ad022d8 test doesn't do this, but my
+>     understanding of it is that we're trying to guard against having all
+>     loose refs opened at once. So if we create e.g. 2k refs and operate
+>     on them we can set the limit to "1999".
+> 
+>     That's still assuming the same things about ulimit that make/made
+>     this test flaky, but we can probably safely assume that just getting
+>     to "git <something>" being invoked won't open >1k files, but maybe
+>     not >32.
 
-```
-$ touch foo
-$ git add --intent-to-add foo
-$ git stash
-```
+Yes, we could probably just set the "32" a bit higher. Something like
+"128" may be more conservative. I'd be hesitant to go as high as
+something like 1999; system defaults are often much lower than that
+anyway and may get rejected. We may have to adjust the tests to match
+the idea of what's "a lot of descriptors". (Likewise, the "ulimit -s"
+stuff has to make the same guess).
 
+The prereq also tries running with the lower ulimit, but it only runs
+"true". Perhaps running something like "git version" would give us a
+more realistic idea of the baseline for running a git command (in which
+case the test would be auto-skipped if somehow 32 descriptors isn't
+enough on some system). That's not foolproof, though (it might take 31
+to run "git version", but 33 to run "update-ref" or something).
 
- > What did you expect to happen?
+I'm willing to let it lie unless you have a current problem. This is all
+known to be guesswork/heuristics, and the hope was that it simply
+wouldn't come up. If it's causing even occasional pain we might need to
+deal with it. But if it's an ephemeral thing that maybe went away, I'm
+content to stick my fingers back in my ears. :)
 
-The file should have been stashed.
-
-
- > What happened instead?
-
-The stash failed with the following error message:
-
-```
-error: Entry 'foo' not uptodate. Cannot merge.
-Cannot save the current worktree state
-```
-
-
- > What's different between what you expected and what actually happened?
-
-Instead of stashing the file, the stash fails with an error message.
-
-
- > Anything else you want to add:
-
-Background: https://github.com/okonet/lint-staged/issues/990
-
-
-[System Info]
-git version:
-git version 2.32.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28 23:40:43=20
-UTC 2020 x86_64
-compiler info: gnuc: 9.3
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /usr/bin/zsh
-
-
-[Enabled Hooks]
-applypatch-msg
-pre-applypatch
-post-applypatch
-pre-commit
-prepare-commit-msg
-commit-msg
-post-commit
-pre-rebase
-post-checkout
-post-merge
-pre-push
-pre-receive
-update
-post-receive
-post-update
-push-to-checkout
-pre-auto-gc
-post-rewrite
-sendemail-validate
-
--------------------------------------------
-LSP.net GmbH
-Prinzregentenstr. 40
-10715 Berlin / Germany
-T +49 30 20896331
-Web: https://www.LSP.net
-Blog: https://blog.LSP.net
+-Peff
