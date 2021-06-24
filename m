@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80B6BC49EA6
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 18:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71321C49EA6
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 18:30:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C929613C2
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 18:30:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 518FD61057
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 18:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232704AbhFXScb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 14:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43108 "EHLO
+        id S232720AbhFXScg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 14:32:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232674AbhFXScZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 14:32:25 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55E27C061756
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 11:30:05 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id n23so4648357wms.2
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 11:30:05 -0700 (PDT)
+        with ESMTP id S232684AbhFXSc0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 14:32:26 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146ACC06175F
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 11:30:06 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso5271710wmc.1
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 11:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TJmKJKAJOqDW8RW+/aGJobLyFXCoqVHaR+iGuEjWbuI=;
-        b=GMzn+vTfb++K8S1okywRd9E2rLrcY37JNEj0QaAatXHGL3cSJ3zqh15/tdcRCyfbNx
-         2IpJhC/brK5IcS+sySlkG3srszs94aPWmsAG0TTsZ0+6m11PGXIrzkWULrH1N5JP/xP6
-         M6Fm2TPAS2CWbnz74+Df8LHXLE87pQ2O8wKqBJstwRijd6baEzUwrgUOScW+d09LxCYM
-         bHyqmUHWz6wYWEGQXNPghTdyvacb5gLnDA6Nzf6fZaEwcu+kLrPUvJRNqVd4yZaNdKYS
-         lD4DxSRLjZcyKCaToq9eUcNw92SHShLUjkgQQiLS5WL4nhcjga5pFhqM8rDfk2mWJ4X2
-         LqGA==
+        bh=vIVVzv70zjngXywdsD2YTNY+SoqVPvIjSyVb4sXFJzA=;
+        b=bd+BCbt2g5TJ4Nlly0Q8LPz2L5IgZwnTrBWTNhQLXCTaIHHJ/U01UU4QYissiUV4T4
+         sA2jEP5IMIVO9TF5BlFtLb2pa/I79oYDqv3opr/LN8W6uznhaX+Csmx6D/reQyk+H/qB
+         ZUXuKr1ebychjrnioC6MqCOw99Is3nOKekAeye0fpMST7eKKyikndztxkPUkITP8SrSA
+         OhQVAvFooFMknPkKhGUSem16eL6P2pBvZN3OfYdrWedkpGaVV8SHfN/tANiDa+L/YKAn
+         PMg+UNh29e4A5sDguDkPzH6b2LdTRbqZGbq+VrXDKtNep7tnSBBSDD/z+/Zq26lroDP3
+         HjFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TJmKJKAJOqDW8RW+/aGJobLyFXCoqVHaR+iGuEjWbuI=;
-        b=YNGyW2LXp1aHuv/0J1z/UEtoPQ2mcDbRmGxwOqLsVb9LHEodmzyNRLofRBiWRDkTdR
-         4Mw0rJeWtAsRFFyAT/gD2vMSQIbHg/PkOV0tKHyQBdo/HnmmMHlPFOpD1U6oD/L+oE0a
-         fmA0JtcSHlZd2kHm89t2+AHwOwzK7+YLm8t1HgPHQtCsyA6kmR30DN7tvyaYZ63Gc6bu
-         3QjPBdFtg/M2+WI63cye2WV45sUNoRGC8YhHEnTUDjBINW8D60Azp3cuRr/FzcD3EU9z
-         4GzaCmSE0+/YOobw8Lwt5tl9fyNkbOa2H0/SdB+taygZfBiaT9IgggYianRqOZn0xfSh
-         Ze5A==
-X-Gm-Message-State: AOAM5314E9rJ0ebYvCLWcFqpIEKUmT8XLzWpa5dLzrCQCUel3PZQ8BLg
-        Mnx75GM2C18Pk6aat8MLwIseCxCWym8=
-X-Google-Smtp-Source: ABdhPJw+PX1tCMLnGoUyBAmeTue4CsPAaaYpbL/jJAxxaiwWPTt0iTLPcc+d/+ClyqQs7ra95DDFNQ==
-X-Received: by 2002:a1c:e91a:: with SMTP id q26mr5932972wmc.170.1624559404027;
+        bh=vIVVzv70zjngXywdsD2YTNY+SoqVPvIjSyVb4sXFJzA=;
+        b=fjQpYz0KfeIzo2uvhso8BpFPTg9msHXDn9bc0EifJi+YqyUhR1m5ykglUyxSKW4dIz
+         kr+2dHsPgxtAwWK+0SYNQyViaUk9cEnLXwlGNFtKUo6NNEjbhjUfPQWwNqjzn6ruJhXK
+         DFHHZh/iM9moi0JiPGT68lLJbiGwDNjf46xK/MtYQ1PB6HrUaW3ET+qkQ04x2BfwwkD3
+         QMP/6reGcuS8SLCvpqOMo6NpDebpDYolTWwaSVgUjN6KBzg/G/oxn7WYG+2ryagtuRQe
+         DjeUEkN8GFsP4hO0AwvDqI9fYkjkljVJe51p5FXUkvtJBq1cFKzFQkAzydkJthCoH3G2
+         8MGw==
+X-Gm-Message-State: AOAM5330YUPkMVpQHNTkYsidg0MCCqtujtI0pO/uRPKKje1ANmkIsfKq
+        FvqnKkbWwZg+zKAUu07/Xz2nvIvWt4Q=
+X-Google-Smtp-Source: ABdhPJy0480RFAtVZCyqHz4jIvBVcHb+EGAHy1bfEau+aTWTcdlJ4bNJK2eLBFK8u6kmqRvJFkohTA==
+X-Received: by 2002:a05:600c:1d23:: with SMTP id l35mr4059712wms.134.1624559404767;
         Thu, 24 Jun 2021 11:30:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 22sm3535999wmi.4.2021.06.24.11.30.03
+        by smtp.gmail.com with ESMTPSA id g22sm8879531wmh.1.2021.06.24.11.30.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 11:30:03 -0700 (PDT)
-Message-Id: <c4d2a3cab4bd5243a776002e4f04fead7b1f34c5.1624559402.git.gitgitgadget@gmail.com>
+        Thu, 24 Jun 2021 11:30:04 -0700 (PDT)
+Message-Id: <d63faad03a4bc41ea778bc4dd61c320e09424cd9.1624559402.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.986.git.1624559401.gitgitgadget@gmail.com>
 References: <pull.986.git.1624559401.gitgitgadget@gmail.com>
 From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Jun 2021 18:29:59 +0000
-Subject: [PATCH 1/3] Add a second's delay to t7519 for untracked cache
+Date:   Thu, 24 Jun 2021 18:30:00 +0000
+Subject: [PATCH 2/3] In t7519, populate untracked cache before test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,47 +74,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Tao Klerks <tao@klerks.biz>
 
-In t7519 there is a test that writes files to disk, and immediately
-writes the untracked index. Because of mtime-comparison logic
-that uses a 1-second resolution, this means the cached entries
-are not trusted/used under some circumstances (see
-read-cache.c#is_racy_stat()).
+In its current state, the t7519 test dealing with untracked
+cache assumes that
+"git update-index --untracked-cache" will *populate*
+the untracked cache. This is not correct - it will only add
+an empty untracked cache structure to the index.
 
-Untracked cache tests in t7063 use a 1-second delay to avoid
-this issue. We should do the same here.
+If we're going to compare two git status runs with
+something interesting happening in-between, we
+need to ensure that the index is in a stable/steady
+state *before* that first run.
 
-This change doesn't actually affect the outcome of the test,
-but does enhance its validity, and becomes relevant after
-later changes
+We achieve this by adding another prior "git status"
+run.
+
+At this stage this change does nothing, because there
+is a bug, addressed in the next patch. whereby once
+the empty untracked cache structure is added by the
+update-index invocation, the untracked cache gets
+updated in every subsequent "git status" call, but the
+index with these updates does not get written down.
+
+That bug actually invalidates this entire test case -
+but we're fixing that next.
 
 Signed-off-by: Tao Klerks <tao@klerks.biz>
 ---
- t/t7519-status-fsmonitor.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ t/t7519-status-fsmonitor.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 637391c6ce4..1209fa93499 100755
+index 1209fa93499..ef75c548d90 100755
 --- a/t/t7519-status-fsmonitor.sh
 +++ b/t/t7519-status-fsmonitor.sh
-@@ -13,6 +13,10 @@ clean_repo () {
- 	git clean -fd
- }
- 
-+avoid_racy() {
-+	sleep 1
-+}
-+
- dirty_repo () {
- 	: >untracked &&
- 	: >dir1/untracked &&
-@@ -332,6 +336,7 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
- 		: >dir2/modified &&
- 		write_integration_script &&
- 		git config core.fsmonitor .git/hooks/fsmonitor-test &&
-+		avoid_racy &&
+@@ -339,6 +339,7 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
+ 		avoid_racy &&
  		git update-index --untracked-cache &&
  		git update-index --fsmonitor &&
++		git status &&
  		GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace-before" \
+ 		git status &&
+ 		test-tool dump-untracked-cache >../before
 -- 
 gitgitgadget
 
