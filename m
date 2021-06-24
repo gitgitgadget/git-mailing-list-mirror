@@ -2,90 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64591C48BC2
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 01:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C94C48BC2
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 03:38:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40A1E6138C
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 01:47:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADBC0613A9
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 03:38:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbhFXBrV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 21:47:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41436 "EHLO
+        id S229900AbhFXDki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 23:40:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbhFXBrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 21:47:19 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C3C2C061574
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 18:45:00 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id m6-20020a9d1d060000b029044e2d8e855eso1989815otm.8
-        for <git@vger.kernel.org>; Wed, 23 Jun 2021 18:45:00 -0700 (PDT)
+        with ESMTP id S229774AbhFXDkh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 23:40:37 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13FBC061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 20:38:17 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id r5so7800859lfr.5
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 20:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=C9cfidRs8xQbjkHsKYMAFZIgrxxPWMXNvnmua2YyyaQ=;
-        b=BRkyR8Z3dqAcAvHEqgGuA5peR1jfRYF5tTFLnosGk/2Hd72FsDwSF42Yuh4vIeuIpn
-         LJIAJYxBH94NKEPG/U+5r8GzgxypLvUJP+AZFLlpuAaM6/RKDRL59mV30vp5sJEp9A/+
-         bmVGNXgRysi4zNPLsYQhW2yKfOyTHvFBW3WGh3TZaiwITUmQMVnrNzUpocV1bOks2Ms/
-         1fzRbR0t4THuKGDdZwtCVwDSMLVuO4S5ZBZJ+Vd8ulMdd84NOowi92ezrUafIKFSwA7b
-         OemnaHM5tRH7+zYP9nRIghPMLzh21SfeTB193DCNU6mW8rzOWJWbxtsmjp08j5uvm+qh
-         iqmg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aDuEBSKvX4dzh5O1UaN+O4jRKNtp9T5yxcAHrFhZ2qc=;
+        b=kjngEdZwazL/ImGEl0X0XaJPXxhneLkehiYTKQLgqZIvbuPPLPL7fxTzxG2Olcfl61
+         hYtURVoSk6oeMou2L1bYd6nqgqY9f3gf+HsQO7dRYYOpl8dMMMAafIVIS8GbtYWpoLSm
+         O5PopIVH9m+9JF2uVuRFiaZopLpev9d6U+RPSWmwZxNYXliR7R9SZPu62sCZ2aoI3qqv
+         aE+k+BzCKFP8rLjsN7voenvdTU2cGugyASKLLsuQkTKGUKTvYt+K/d8FDJRC8Zx/qLVa
+         q/kTwpStUrZ4FHZXiK7ANANAjnVUy2XSxQAPxlyJMluO7oou3qJxvTO1LaHbZ5dcUeK2
+         1cQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=C9cfidRs8xQbjkHsKYMAFZIgrxxPWMXNvnmua2YyyaQ=;
-        b=Sqy0pU/W5TW1Ew6NCAry4r5KW6CLqpdMmY/XVf4JX32RDfALebJmML/EZKW7BBnCpa
-         wBj5UtfxO9SueJYGzHusFsZQuw5NCyDObC8gpNaoCwlBNlMG6qw5fUNjm+lqzbK3T1gF
-         OL2g/cW6EAfBFLTkkZt5cxVb3BQGkC6vmh1YGqxT0/dtcc1R3+TBlpighrLJCuKmCKFE
-         YGbwxgJzz5OW09npancIQtQFV9qzulVgVNj2J13Kox22rvqV9pNriqMIFmxOnBHK9NXE
-         kWqhkk0tWWA1QZ7DbFH8jb39lJtKXimrsGhrXCDblblKy8gsyQkqlRkgHL+hJEQaQaLL
-         Ctmw==
-X-Gm-Message-State: AOAM532elkZt4IrL9jvHdiTqkCMPLrhVeRO3x37GJKxiQZw43X9kmThK
-        VkdzTcxuwjGZAugLV9Rvi2A=
-X-Google-Smtp-Source: ABdhPJz81SP+H8oURR3IvWb/6l52qp+/jTiPYSU+6jB6Wvzlo9uZvsfutVT7HihnY+Skwg65YoO3gA==
-X-Received: by 2002:a05:6830:1309:: with SMTP id p9mr2433366otq.209.1624499099359;
-        Wed, 23 Jun 2021 18:44:59 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id s15sm370004oih.15.2021.06.23.18.44.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jun 2021 18:44:58 -0700 (PDT)
-Date:   Wed, 23 Jun 2021 20:44:57 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <60d3e399945d_2cc520855@natae.notmuch>
-In-Reply-To: <20210523054454.1188757-1-felipe.contreras@gmail.com>
-References: <20210523054454.1188757-1-felipe.contreras@gmail.com>
-Subject: RE: [PATCH v6] help: colorize man pages
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aDuEBSKvX4dzh5O1UaN+O4jRKNtp9T5yxcAHrFhZ2qc=;
+        b=T42i6GTNWIynnmt1SllaZ8lpkXjAWIxACOeCMI5K/aJoCwc19bUf5bhquI40aN8qIy
+         AHXbvb3pxj0DBG2jTU7hE3evcKb47WsfCJa+c9PaAnegtbWH6Q3uNSwVIRqGzRu3OLfD
+         OqgMzrqjpOm38AmpGByxZSKzfEnsW6AwDMCEVTCyo1B5bfRjdaZeGnrpjjzBYn37tBsn
+         0+bG/zXN/LS3Mr4J3uLPEjyRv3Ojq9tT0AINQaWKMGZtMHz4A7Y+IcB+JZcP9iwx8h7I
+         ajxITs5/5aCpesAFcZ20sML/dINiJe2yNtPAWfj8Vlq4ViBiqyvlbcY5Y9dZk9doatQ4
+         GDHg==
+X-Gm-Message-State: AOAM530IGzJ1HnCq4Xqs8/ALvSQWUWAz0lP5JWDp8v/eHlaIeNAFzwwU
+        AMqkA92bI3D3LNL1MaSg9NXjiFdnR3yk9Lyq9vY=
+X-Google-Smtp-Source: ABdhPJxo24fpZkPCtuaNtabIirjah4pU8At4lH5F8HLqjsjB9BDdRlSL+v25L/BS8VSzUtE+/0t6QAEiJHCrwiNcnFY=
+X-Received: by 2002:a05:6512:1381:: with SMTP id p1mr2160352lfa.367.1624505895147;
+ Wed, 23 Jun 2021 20:38:15 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-3-felipe.contreras@gmail.com> <CAMMLpeR2Y_EGwqGJzghSQ1DzpYQyWr6ENmGCvPRdhhYFkTW4yw@mail.gmail.com>
+ <60d0df99d91e1_108e902085e@natae.notmuch> <CAMMLpeRnUC+nOek=Kz6bj0_R6EUaDr=7ObKF01V641_ByOmk6A@mail.gmail.com>
+ <60d10ebd99d86_113139208cd@natae.notmuch> <CAMMLpeRa3atkZxEtV--YD6-JSf0Bp9xRw9kS5wSWerxpsGrvrw@mail.gmail.com>
+ <CABPp-BF1noWhiJadHzjJmnGo8hdZj6Fk7XnZ=u6BVVSGfHE7og@mail.gmail.com>
+ <60d289c84fadf_312208dc@natae.notmuch> <CABPp-BHSxNT0rG3LMrDVH64mBwTgeF197oZFnbHvvKk=SB--WA@mail.gmail.com>
+ <60d37b3b77aeb_378720834@natae.notmuch>
+In-Reply-To: <60d37b3b77aeb_378720834@natae.notmuch>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 23 Jun 2021 21:38:05 -0600
+Message-ID: <CAMMLpeTQjw0W8ZTegPru_9muRBGj7RDfk3WgEEN34vm-PG9Jfg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pull: improve default warning
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
+On Tue, Jun 22, 2021 at 8:20 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Tue, Jun 22, 2021 at 2:22 PM Alex Henrie <alexhenrie24@gmail.com> wrote:
+> >
+> > While
+> > we're on the subject, do you have any thoughts on what (if anything)
+> > more should be done before making the switch to aborting instead of
+> > merging with a warning in `git pull`?
+>
+> I think Junio already answered that over here:
+> https://lore.kernel.org/git/xmqq360h8286.fsf@gitster.c.googlers.com/
+> (he discussed it multiple times in that thread, but hopefully that's a
+> good enough example).
 
-> @@ -264,6 +289,7 @@ static void exec_man_man(const char *path, const char *page)
->  static void exec_man_cmd(const char *cmd, const char *page)
->  {
->  	struct strbuf shell_cmd = STRBUF_INIT;
-> +	colorize_man();
+Wow, if I understand correctly from that message, Junio wouldn't mind
+making the switch right away. That's very encouraging.
 
-On further reflection I don't think this colorize belongs here.
-exec_man_cmd() is meant to execute any custom command, not necessarily
-man.
+On Wed, Jun 23, 2021 at 12:19 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> Similarly, until "git pull" does something sensible by default (which
+> isn't the case now), these debates will continue, and there's value in
+> them.
 
--- 
-Felipe Contreras
+At this point, I'm inclined to push for s/advise/die/ in pull.c in the
+next release, without a transitional period, just to end the argument
+over how to best explain the current awkward situation. (I'm sure
+there will be more arguments after that, but hopefully they won't be
+as tiresome.)
+
+-Alex
