@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCD72C49EA6
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F75C49EA6
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A915760FF2
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE42F613CE
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232974AbhFXT0i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 15:26:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55658 "EHLO
+        id S233007AbhFXT0s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 15:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232731AbhFXT0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 15:26:34 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68767C061787
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:13 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id h11so7885098wrx.5
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:13 -0700 (PDT)
+        with ESMTP id S232977AbhFXT0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 15:26:35 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46748C061760
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:15 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id c84so4720140wme.5
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=k9hj94EH6QgCwWKEPb6C7fqdkR2njbMaCg6A4qGDygU=;
-        b=LKZxh3OftAthQ8OaGtLsHJ7PCHtf+gl+WaLc/EacbfEChBLXinK+pmU9rqGCBqQ9bf
-         ysBj78K/zwPGhHNX0QGMqmgicafDrYBOS8+IWG/6jnnfx7HoUuM0pPAVlVXFb/MXHm3A
-         CIzeU4H6F4qYSlaSt6a0C6bQvv8lUOS+MTg16v51xMy6awxEv/TmT+djHt2RzCkUNv1L
-         jAZ6IXCfdmpgMbZ5K0W5y0T1vWFpUMyyQG6QbLzRn4bSP6fR4oaAiXmYJVNr7ANfmx55
-         FMCzdP3AB8GEF9OtRfr0Ojgi0K91umtF4gUd3UZWE1ggVMkdDTUVGmIy54H/E6xzpTeS
-         1pSQ==
+        bh=MJXPQXau0J9Rss6rqwihiAOlqZBIRK4wpjx6rAeSfhI=;
+        b=AAjroJQzL/vGra6SyDUR+FeGhJhn+C1eKxko4V1xiIr+QQKrnU4fVwXUBeVIA6ClV0
+         DwHBny0Z/M2sPrfSXLZthntZgsgDqJ8kFavJQ+lmLifAFy7IeT4lNBlK5kOsDxBYTZU8
+         cUY7/uXSRn7HzxwZGwe4JmvHd0d1MoAGvhYaizjIizsW7HgZcpNyR4OmeBcNtIQdefJM
+         e0db5BTFghmCXgYSgyCVcA2bDSftUcjzfVQMdTPPhEPO2RosvISZ24/b/Sn7X4XojvJm
+         3giAg/IG64Y8+Qli+Waz4iCP+LNu4HskSOjRh9kCyJ9UdBvsYlobGkcjB7nuy3OCbkoH
+         +WAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=k9hj94EH6QgCwWKEPb6C7fqdkR2njbMaCg6A4qGDygU=;
-        b=CZDL9MZAwuHiEJO97mT/9OVVbA+2XGOtIZHRr+NNEIT7VCh9Vu+8FCcndZm4RaJsFw
-         NCQyRyUieLmWocGqZNy6HlUHZrT8HE6UwSQNWsnSLpXOEe4Nl3KoxWL9CfyeVncG2hvR
-         csyKWl6wEhkNhkNNdruytVxvegQ0/6VnbtAMqVRzqasoBF+/s5+f2L5I/KNMOPB/bLBc
-         HmgdGcTyHN7F6+gmRXA55w2qQ1orX34qb72+nUMGzlvcFmMr0vSkZ9JHcqa3CvK1azcq
-         Tinzi6RGbDTvkc82VdMArxZlF4BTxQ8Q23zH4mwbu8k7gkZ7YC8z8WdtlpWLL0vreFlH
-         MNjA==
-X-Gm-Message-State: AOAM532uoOrZb5hrZvGsrXCl9RaA5nEfwBTp1PmEjQUssotDT1c9tNu+
-        bl/Y6xRBil8cj1X9e8phZv4CRKEsRD0H5Q==
-X-Google-Smtp-Source: ABdhPJyrk/OIbAXLVVfwapK67sclWPTWHNypM3pxuxLxXBhC9kUQPa4nuVQn4SuRSnG+4voVppGASA==
-X-Received: by 2002:adf:9031:: with SMTP id h46mr6386137wrh.125.1624562651845;
-        Thu, 24 Jun 2021 12:24:11 -0700 (PDT)
+        bh=MJXPQXau0J9Rss6rqwihiAOlqZBIRK4wpjx6rAeSfhI=;
+        b=XzkeUkrgMKZGEjQ7834nhR3xPLPa8nk89meuZ8K7gONpa4CAZ4DlEpqkHkFEbWtc5+
+         AXqDRqdzJz8yy1bHN3G2nUExHSuPxp6yQ5HH7uOPKZ/vAXv3qct2NpAev8zEFsTiVT+l
+         HRAGLr/RlAMA6oN2CCDkiJynQn4UKBrSx4d+5N1fy9vrGmnOf/aocrMWPyVTDx+JufHS
+         TTpcJZbGbn+/se+pQO4H/diIaakLwFhhNYC4u9meYr4d8RnMaAWNShtHgsHVEO27uJyu
+         KWyjBXnw7rK0uS/wpxNQsb91n0g3I3DwXoN7HBzxzThmq2TMn/qBtsDiJoj7mV2Ya+7u
+         C/aw==
+X-Gm-Message-State: AOAM532B9RM/SZ56SLjREBrOIKP0faL0Kzu6f164N1/2TbTY4IsCb4vR
+        IK4oyv/Tu7jEI/UtUbzFad2HCWP1mnyT8g==
+X-Google-Smtp-Source: ABdhPJyrbjbb8WnmqKQWGmjYbjxIWpA4Fx4oCJPo8xpdmbL7Wp3nMRUWSM1T1qw8fDMTnYEIHrLi5Q==
+X-Received: by 2002:a1c:9d89:: with SMTP id g131mr6249129wme.45.1624562653654;
+        Thu, 24 Jun 2021 12:24:13 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e11sm3898495wrs.64.2021.06.24.12.24.11
+        by smtp.gmail.com with ESMTPSA id e11sm3898495wrs.64.2021.06.24.12.24.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 12:24:11 -0700 (PDT)
+        Thu, 24 Jun 2021 12:24:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 09/21] object-file.c: don't set "typep" when returning non-zero
-Date:   Thu, 24 Jun 2021 21:23:47 +0200
-Message-Id: <patch-09.21-54fb9189408-20210624T191755Z-avarab@gmail.com>
+Subject: [PATCH v4 11/21] object-file.c: add missing braces to loose_object_info()
+Date:   Thu, 24 Jun 2021 21:23:49 +0200
+Message-Id: <patch-11.21-74c308adc19-20210624T191755Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.606.g2e440ee2c94
 In-Reply-To: <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com>
 References: <cover-00.17-0000000000-20210520T111610Z-avarab@gmail.com> <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com>
@@ -78,58 +78,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the loose_object_info() function returns an error stop faking up
-the "oi->typep" to OBJ_BAD. Let the return value of the function
-itself suffice. This code cleanup simplifies subsequent changes.
+Change the formatting in loose_object_info() to conform with our usual
+coding style:
 
-That we set this at all is a relic from the past. Before
-052fe5eaca9 (sha1_loose_object_info: make type lookup optional,
-2013-07-12) we would always return the type_from_string(type) via the
-parse_sha1_header() function, or -1 (i.e. OBJ_BAD) if we couldn't
-parse it.
+    When there are multiple arms to a conditional and some of them
+    require braces, enclose even a single line block in braces for
+    consistency -- Documentation/CodingGuidelines
 
-Then in a combination of 46f034483eb (sha1_file: support reading from
-a loose object of unknown type, 2015-05-03) and
-b3ea7dd32d6 (sha1_loose_object_info: handle errors from
-unpack_sha1_rest, 2017-10-05) our API drifted even further towards
-conflating the two again.
-
-Having read the code paths involved carefully I think this is OK. We
-are just about to return -1, and we have only one caller:
-do_oid_object_info_extended(). That function will in turn go on to
-return -1 when we return -1 here.
-
-This might be introducing a subtle bug where a caller of
-oid_object_info_extended() would inspect its "typep" and expect a
-meaningful value if the function returned -1.
-
-Such a problem would not occur for its simpler oid_object_info()
-sister function. That one always returns the "enum object_type", which
-in the case of -1 would be the OBJ_BAD.
-
-Having read the code for all the callers of these functions I don't
-believe any such bug is being introduced here, and in any case we'd
-likely already have such a bug for the "sizep" member (although
-blindly checking "typep" first would be a more common case).
+This formatting-only change makes a subsequent commit easier to read.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- object-file.c | 2 --
- 1 file changed, 2 deletions(-)
+ object-file.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index f233b440b22..9210e2e6fe4 100644
+index e0ba1842272..646ca7f85d6 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1480,8 +1480,6 @@ static int loose_object_info(struct repository *r,
+@@ -1450,17 +1450,20 @@ static int loose_object_info(struct repository *r,
+ 		if (unpack_loose_header_to_strbuf(&stream, map, mapsize, hdr, sizeof(hdr), &hdrbuf) < 0)
+ 			status = error(_("unable to unpack %s header with --allow-unknown-type"),
+ 				       oid_to_hex(oid));
+-	} else if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
++	} else if (unpack_loose_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0) {
+ 		status = error(_("unable to unpack %s header"),
+ 			       oid_to_hex(oid));
+-	if (status < 0)
+-		; /* Do nothing */
+-	else if (hdrbuf.len) {
++	}
++
++	if (status < 0) {
++		/* Do nothing */
++	} else if (hdrbuf.len) {
+ 		if ((status = parse_loose_header(hdrbuf.buf, oi, flags)) < 0)
+ 			status = error(_("unable to parse %s header with --allow-unknown-type"),
+ 				       oid_to_hex(oid));
+-	} else if ((status = parse_loose_header(hdr, oi, flags)) < 0)
++	} else if ((status = parse_loose_header(hdr, oi, flags)) < 0) {
+ 		status = error(_("unable to parse %s header"), oid_to_hex(oid));
++	}
+ 
+ 	if (status >= 0 && oi->contentp) {
+ 		*oi->contentp = unpack_loose_rest(&stream, hdr,
+@@ -1469,8 +1472,9 @@ static int loose_object_info(struct repository *r,
+ 			git_inflate_end(&stream);
+ 			status = -1;
+ 		}
+-	} else
++	} else {
  		git_inflate_end(&stream);
++	}
  
  	munmap(map, mapsize);
--	if (status && oi->typep)
--		*oi->typep = status;
  	if (oi->sizep == &size_scratch)
- 		oi->sizep = NULL;
- 	strbuf_release(&hdrbuf);
 -- 
 2.32.0.606.g2e440ee2c94
 
