@@ -2,115 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF51C49EA6
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 14:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84602C49EA5
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 14:21:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4B5F613C7
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 14:01:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61C1D613D3
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 14:21:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231873AbhFXODa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 10:03:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbhFXOD2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 10:03:28 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57376C061574
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 07:01:08 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id he7so9651987ejc.13
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 07:01:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=BRl2gyuiI9dYVMoaEhX7gOYot9FVmvwpO3WypxowhQg=;
-        b=XGIrnPqrwYf8nzpbGPUSaaaL+7UaEKBvzMJ//CvCFohjNL4FpRVcjk/IwHfMfOQOSY
-         wEqnThe1CgqMC/u+3OtR8OJ8CJvfp6s2MgypuzsAst0O5Agnqrigw5d/ndnJ1id4QMfV
-         YIFWlGhD0D5sA+kBYBtkpDIx6Ac8ElRH5G8HhT05ABoEw+G+0QAQZMkT9rSdBGKDV1R3
-         XNiT3HSiQJTGLrrjg+g4oaJjaXnps5Ud9yvRSGEY05YjkN1QE1IaCMUrljBM43o2VgYI
-         n4/JIqYZNTK2iJJB6uzXj5ldzymWhSCssupBftXQCEorex2R/zEbdZ8+Ie1D7bXW3+NC
-         UDCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=BRl2gyuiI9dYVMoaEhX7gOYot9FVmvwpO3WypxowhQg=;
-        b=CtXmDUig7ERo8VjAz1Pq5yRjZWYOFnLrLdRjmGfdj1ITQ2U0Ppw2xZGumKNaOM/84n
-         hAXoHkm7soltHKWzINtazSud8UhZW5lGlOe8jTPRFgCu+gBQDjxT2eP6E6MPx35Tw47w
-         Zhlof+YYg5a4aPceoBg5XR1CqGq99vHEO0n9h2G9e7aewhOjbb1JB+yo/8jDeRSA5e8Q
-         D4ALdCAoDEsLm1odGnpQlcPcQnxWVw0J+M1EYNz+K3VKY1I2durDDVRfR+YjU2eOIXWc
-         C4w8KMs+dEfrxL650p+79IV6H/n8CiGprMdGgcN8NrBNKmTTfUnKnHChxH59lHilvQuM
-         WmxA==
-X-Gm-Message-State: AOAM532Wb3er953GfWlXi2Ct5TBsCC8cUkFtc15b7pj7YF4oM5P8jZlW
-        AdrwoLeSp2iH99NOk2ik4xI=
-X-Google-Smtp-Source: ABdhPJwz3A0R+7Xn/fV57Rk37U97h71nfCYtn3uGWav9tBWNs2r6e0qoe2xdcDOL0dVEOPGZ9jVXMQ==
-X-Received: by 2002:a17:906:6d16:: with SMTP id m22mr5552759ejr.333.1624543266925;
-        Thu, 24 Jun 2021 07:01:06 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id j22sm1334003ejt.11.2021.06.24.07.01.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 07:01:06 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        id S231678AbhFXOYR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 10:24:17 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:64386 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229878AbhFXOYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 10:24:16 -0400
+Received: from host-78-147-180-220.as13285.net ([78.147.180.220] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1lwQEs-0000Df-6K; Thu, 24 Jun 2021 15:21:55 +0100
+Subject: Re: [PATCH 1/2] doc: pull: explain what is a fast-forward
+To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Cc:     =?UTF-8?Q?V=c3=adt_Ondruch?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
-Date:   Thu, 24 Jun 2021 15:53:51 +0200
-References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
- <YNIBRboFiCRAq3aA@nand.local> <8735t93h0u.fsf@evledraar.gmail.com>
- <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
- <87r1gs1hfx.fsf@evledraar.gmail.com>
- <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
-Message-ID: <871r8r1hwe.fsf@evledraar.gmail.com>
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-2-felipe.contreras@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <b4e612ba-21c7-3bef-d113-0f070449cd87@iee.email>
+Date:   Thu, 24 Jun 2021 15:21:53 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <20210621175234.1079004-2-felipe.contreras@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jun 23 2021, Jeff King wrote:
-
-> On Wed, Jun 23, 2021 at 09:54:06PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+On 21/06/2021 18:52, Felipe Contreras wrote:
+> We want users to know what is a fast-forward in order to understand the
+> default warning.
 >
->>=20
->> > Just to be clear, I would be happy to drop the "oops, the tests barf if
->> > you recompile halfway through" feature away if it made things more
->> > robust overall (i.e., if we always did an atomic rename-into-place). I
->> > just consider it the fact that we do clobber to be an accidental featu=
-re
->> > that is not really worth "fixing". But if we care about "oops, make was
->> > interrupted and now you have a stale build artifact with a bogus
->> > timestamp" type of robustness, and "the tests barf" goes away as a side
->> > effect, I won't complain.
->>=20
->> ..and "this behavior is really annoying on one platform we target, and
->> the fix is rather trivial".
+> Let's expand the explanation in order to cover both the simple, and the
+> complex cases with as much detail as possible.
 >
-> Yeah, that's a fine reason, too. I'm not entirely clear on what the
-> problem is, though, or why this is the best solution (I expect you
-> probably explained it in an earlier thread/series, but if so it went in
-> one ear and out the other on my end).
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  Documentation/git-pull.txt | 41 ++++++++++++++++++++++++++++++++------
+>  1 file changed, 35 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index 5c3fb67c01..142df1c4a1 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+> @@ -41,16 +41,41 @@ Assume the following history exists and the current branch is
+>  ------------
+>  	  A---B---C master on origin
+>  	 /
+> -    D---E---F---G master
+> +    D---E master
+>  	^
+>  	origin/master in your repository
+>  ------------
+>  
+>  Then "`git pull`" will fetch and replay the changes from the remote
+>  `master` branch since it diverged from the local `master` (i.e., `E`)
+> -until its current commit (`C`) on top of `master` and record the
+> -result in a new commit along with the names of the two parent commits
+> -and a log message from the user describing the changes.
+> +until its current commit (`C`) on top of `master`.
+> +
+> +After the remote changes have been synchronized, the local `master` will
+> +be fast-forwarded to the same commit as the remote one, therefore
 
-On *nix systems you can open a file, and unlink() it in another process,
-on Windows this is an error.
+Perhaps s/be fast-forwarded/have been 'fast-forward'ed/ ?
+I.E. we highlight the term "fast-forward" (the purpose of the patch) and
+we hint at the underlying mechanism of simply moving the branch pointer.
 
-AIX has its own variant of this annoying behavior, you can't clobber (or
-open for writing) binaries that are currently being run, you can unlink
-and rename them though.
+> +creating a linear history.
+> +
+> +------------
+> +    D---E---A---B---C master, origin/master
+> +------------
+> +
+> +However, a non-fast-forward case looks very different:
+> +
+> +------------
+> +	  A---B---C origin/master
+> +	 /
+> +    D---E---F---G master
+> +------------
+> +
+> +If there are additional changes in the local `master`, it's
+> +not possible to fast-forward, so a decision must be made how to
+> +synchronize the local, and remote brances.
+> +
+> +In these situations `git pull` will warn you about your possible
+> +options, which are either merge (`--no-rebase`), or rebase (`--rebase`).
+> +However, by default it will continue doing a merge.
+> +
+> +A merge will create a new commit with two parent commits (`G` and `C`)
+> +and a log message describing the changes, which you can edit.
+>  
+>  ------------
+>  	  A---B---C origin/master
+> @@ -58,8 +83,11 @@ and a log message from the user describing the changes.
+>      D---E---F---G---H master
+>  ------------
+>  
+> +Once the merge commit is created (`H`), your local `master` branch has
+> +incorporated the changes of the remote `master` branch.
+> +
+>  See linkgit:git-merge[1] for details, including how conflicts
+> -are presented and handled.
+> +are presented and handled, and also linkgit:git-rebase[1].
+>  
+>  In Git 1.7.0 or later, to cancel a conflicting merge, use
+>  `git reset --merge`.  *Warning*: In older versions of Git, running 'git pull'
+> @@ -248,7 +276,8 @@ version.
+>  
+>  SEE ALSO
+>  --------
+> -linkgit:git-fetch[1], linkgit:git-merge[1], linkgit:git-config[1]
+> +linkgit:git-fetch[1], linkgit:git-merge[1], linkgit:git-rebase[1],
+> +linkgit:git-config[1]
+>  
+>  GIT
+>  ---
 
-So without that "mv $@ $@+" trick you can't recompile if you have a
-concurrent test (that you don't care about failing) running, and we have
-bugs in our tests where e.g. "git-daemon" gets lost and won't get killed
-on that platform, so you can't recompile and test without tracking it
-down and killing it.
