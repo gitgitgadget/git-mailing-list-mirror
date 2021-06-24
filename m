@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B89FC49EA5
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C406C49EA6
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58A2F613EE
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F672613EE
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 19:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232759AbhFXT01 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S232792AbhFXT01 (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 24 Jun 2021 15:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55632 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232370AbhFXT00 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232549AbhFXT00 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Jun 2021 15:26:26 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36ABEC061756
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:06 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id m41-20020a05600c3b29b02901dcd3733f24so6968202wms.1
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A199C06175F
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:07 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id j11-20020a05600c1c0bb02901e23d4c0977so6339998wms.0
         for <git@vger.kernel.org>; Thu, 24 Jun 2021 12:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=83v8P9S8ZAMFnZkZgplc5y6vm4QJ0B1liFiEYZoArR0=;
-        b=Km+foLKfiJ2paNxPxte+VJRlKC4IXNca+wCEmNQoC4Hvp2aY/JV9YuR1xy1ZHm3pko
-         jEXlGtHrYaZpmaDzyPNiRqWw7ZUqJPvNfgTVHLfTHfW/y7HKezFwAsmwhKrq56UIxLFl
-         q3nRBJ/c44jU7+XP2DP2k7S4CF+mVL4nl7Sp9IT4N8u99aUEP7xu7fXBO9ibyDciXBL7
-         +TaKxAFYG//6fJ2QmyW+crcJw4A9qEKFyQL4b80BMX2MzeKwRdx7CL9lJjYWKi6BJrjl
-         emHTu/IY3lV2lYsKXm5zDp0zaHJEPHONXVyX80uvcibJ6dsTtnuf17i6ISjkR6xnQshR
-         9ekw==
+        bh=r74sy+MCQGW6eg8JXuVZq+Mwu1KQa/1FjO7RH2tQbSQ=;
+        b=QeFq8owbdLGePnoU40FzBpokITR+JBIBp9RRuvZv9rqIKo5NT05uqyORFmM0XG4JdY
+         ReiTJsOy/eroWt9z1ZOgxLGBmCNIN8hDPn/7R3rtUNECBpSs6onk1gpjvDz1n4VXn50i
+         xuy08Daw6Xuh+hLTSiWPGGD12iNyXbslWDLozCWDKhGKvBkQATdOD/7WzrNfGRV441PU
+         DmTesQjffoUQYjf/DXnZnriUSSDR3+Cp31csjCeLsS17sqr2FKDzUoFUPTI0tDi7BWlJ
+         soztrwU02AVqiHTfpH4PCd1bxrUuEtLcs8UevnnpdwXS3Pb2xCQz+qrBPzqRfswenPdr
+         /CLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=83v8P9S8ZAMFnZkZgplc5y6vm4QJ0B1liFiEYZoArR0=;
-        b=rUXmcwQrSNNpc+5nmZSGV8CslaWuAULjAyeX6lVPTRiqEzcgGuqWlSXkUKn9JcM2pU
-         Xq/XTM097GZMghY3NIM+QiuQgUkBl8wG4eaCZga4ADiS5yOAajjrClOPhr7cHfM+dwbU
-         cBPWUtoVKDaKhVxMRJGbXeOvhsjy6UJ6VTLHvRZ5VHycvv3E2dd2raMFZLZ48ABB/MU/
-         BSXpvqI+tG2drP3ghl2TyeEP4qFvDgQgGoTUtBnqlU9zJvpnfdmgLTcQgIiwoT4Ib8MU
-         OqTgVUhvWMNKbgtY3ENX7odhXVJEsH+qbDFdf+K698eY096YY40Lhv707+H3i3DfH7QC
-         uf3A==
-X-Gm-Message-State: AOAM532oYj/8Rf6j455a+bIfEy3Rp7PlyaRYdOxpK7utQE2aHVt1mcU6
-        Ad+zsjeNXzRJZV9Q6GcRSWb0Ue25Jh3NOA==
-X-Google-Smtp-Source: ABdhPJx2gRhG94ZEXYJifvL/LsCH0ByfnsJ2yorMwL0mvd7NDWl7IfbuQC5lbsZzO6gJrLGjyfg/Ow==
-X-Received: by 2002:a7b:c8d6:: with SMTP id f22mr6192923wml.87.1624562644576;
-        Thu, 24 Jun 2021 12:24:04 -0700 (PDT)
+        bh=r74sy+MCQGW6eg8JXuVZq+Mwu1KQa/1FjO7RH2tQbSQ=;
+        b=t2KvaKPvzhBHpL0wDmPikqSP/6IYsAVMNhYMr60yK/ldmX4H0kVdQ9EMjZUjDFgEZa
+         U/TriPlc/qDg884v008IUWGGyeNHKBMpTc4Yr/dlXo0xYybQp0p/7GOpzHG9jhV0k8MR
+         tTAMB9lm4KjfWDn3iNP6Yw9Wmqb5i4YeNRQoHnlI1jWWDfQQ7/+YAesfnGy7c2vi7KSS
+         17FLEYUg/SpuGjnknG+477SHcACX2BTvAVfGlnHTMSxGsOhrjMB4qxIPfbxkiqKSkuOR
+         Qa3UJBhxUkRo3e72LxLvjsvbg70pJ5UqGrBqldar0oa5bvG2d4QI89bP2YxdSFhm52xd
+         kmmQ==
+X-Gm-Message-State: AOAM5334M28hfigjSoPnWfEWkiLQwnXAIbpx2Q43eQlAQc7SAmLUxAgt
+        5XRmZ+i18J3i3hoX0BKqHnzj6DNUUmyDPA==
+X-Google-Smtp-Source: ABdhPJzMc7ZpWonVsATC2CdSAm8fOiMauoXLhUPSIBqygXEUWR9bZjw1anJBd77wmho4tswOL889Rg==
+X-Received: by 2002:a1c:6408:: with SMTP id y8mr6223884wmb.30.1624562645441;
+        Thu, 24 Jun 2021 12:24:05 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e11sm3898495wrs.64.2021.06.24.12.24.03
+        by smtp.gmail.com with ESMTPSA id e11sm3898495wrs.64.2021.06.24.12.24.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 24 Jun 2021 12:24:04 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 01/21] fsck tests: refactor one test to use a sub-repo
-Date:   Thu, 24 Jun 2021 21:23:39 +0200
-Message-Id: <patch-01.21-2e37971c016-20210624T191755Z-avarab@gmail.com>
+Subject: [PATCH v4 02/21] fsck tests: add test for fsck-ing an unknown type
+Date:   Thu, 24 Jun 2021 21:23:40 +0200
+Message-Id: <patch-02.21-79630a99433-20210624T191755Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.606.g2e440ee2c94
 In-Reply-To: <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com>
 References: <cover-00.17-0000000000-20210520T111610Z-avarab@gmail.com> <cover-00.21-00000000000-20210624T191754Z-avarab@gmail.com>
@@ -78,69 +78,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor one of the fsck tests to use a throwaway repository. It's a
-pervasive pattern in t1450-fsck.sh to spend a lot of effort on the
-teardown of a tests so we're not leaving corrupt content for the next
-test.
+Fix a blindspot in the fsck tests by checking what we do when we
+encounter an unknown "garbage" type produced with hash-object's
+--literally option.
 
-We should instead simply use something like this test_create_repo
-pattern. It's both less verbose, and makes things easier to debug as a
-failing test can have their state left behind under -d without
-damaging the state for other tests.
-
-But let's punt on that general refactoring and just change this one
-test, I'm going to change it further in subsequent commits.
+This behavior needs to be improved, which'll be done in subsequent
+patches, but for now let's test for the current behavior.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1450-fsck.sh | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ t/t1450-fsck.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 5071ac63a5b..1563b35f88c 100755
+index 1563b35f88c..f36ec1e2f4a 100755
 --- a/t/t1450-fsck.sh
 +++ b/t/t1450-fsck.sh
-@@ -48,24 +48,22 @@ remove_object () {
- 	rm "$(sha1_file "$1")"
- }
- 
--test_expect_success 'object with bad sha1' '
--	sha=$(echo blob | git hash-object -w --stdin) &&
--	old=$(test_oid_to_path "$sha") &&
--	new=$(dirname $old)/$(test_oid ff_2) &&
--	sha="$(dirname $new)$(basename $new)" &&
--	mv .git/objects/$old .git/objects/$new &&
--	test_when_finished "remove_object $sha" &&
--	git update-index --add --cacheinfo 100644 $sha foo &&
--	test_when_finished "git read-tree -u --reset HEAD" &&
--	tree=$(git write-tree) &&
--	test_when_finished "remove_object $tree" &&
--	cmt=$(echo bogus | git commit-tree $tree) &&
--	test_when_finished "remove_object $cmt" &&
--	git update-ref refs/heads/bogus $cmt &&
--	test_when_finished "git update-ref -d refs/heads/bogus" &&
--
--	test_must_fail git fsck 2>out &&
--	test_i18ngrep "$sha.*corrupt" out
-+test_expect_success 'object with hash mismatch' '
-+	test_create_repo hash-mismatch &&
-+	(
-+		cd hash-mismatch &&
-+		oid=$(echo blob | git hash-object -w --stdin) &&
-+		old=$(test_oid_to_path "$oid") &&
-+		new=$(dirname $old)/$(test_oid ff_2) &&
-+		oid="$(dirname $new)$(basename $new)" &&
-+		mv .git/objects/$old .git/objects/$new &&
-+		git update-index --add --cacheinfo 100644 $oid foo &&
-+		tree=$(git write-tree) &&
-+		cmt=$(echo bogus | git commit-tree $tree) &&
-+		git update-ref refs/heads/bogus $cmt &&
-+		test_must_fail git fsck 2>out &&
-+		test_i18ngrep "$oid.*corrupt" out
-+	)
+@@ -863,4 +863,16 @@ test_expect_success 'detect corrupt index file in fsck' '
+ 	test_i18ngrep "bad index file" errors
  '
  
- test_expect_success 'branch pointing to non-commit' '
++test_expect_success 'fsck hard errors on an invalid object type' '
++	test_create_repo garbage-type &&
++	empty_blob=$(git -C garbage-type hash-object --stdin -w -t blob </dev/null) &&
++	garbage_blob=$(git -C garbage-type hash-object --stdin -w -t garbage --literally </dev/null) &&
++	cat >err.expect <<-\EOF &&
++	fatal: invalid object type
++	EOF
++	test_must_fail git -C garbage-type fsck >out.actual 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out.actual
++'
++
+ test_done
 -- 
 2.32.0.606.g2e440ee2c94
 
