@@ -2,111 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2F95C49EA6
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 13:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 929D0C49EA6
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 13:33:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 958A4613C3
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 13:10:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C3B7613DC
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 13:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231181AbhFXNM4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 09:12:56 -0400
-Received: from siwi.pair.com ([209.68.5.199]:41290 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229940AbhFXNMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 09:12:55 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 2A8163F40E4;
-        Thu, 24 Jun 2021 09:10:36 -0400 (EDT)
-Received: from azhci-node1.azhci.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id F1C773F40D9;
-        Thu, 24 Jun 2021 09:10:35 -0400 (EDT)
-Subject: Re: Windows: core.useBuiltinFSMonitor without core.untrackedcache -
- performance hazard?
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <CAPMMpog7bNNPm3suZKu6OppHA+KDYgCfmaxW4HqTAr7_tTVAPQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2106111122010.57@tvgsbejvaqbjf.bet>
- <CAPMMpogeWeQujG0UL80REOsaBJipxhQyOpBTuWD9U9_jg=FMMA@mail.gmail.com>
- <81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com>
- <CAPMMpojKMZmorKPgMASkHsvKcQTaaGyWURsgDS+KTGVeuBh1ww@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <596386e9-f9bf-c465-ec5e-dcf4356b6194@jeffhostetler.com>
-Date:   Thu, 24 Jun 2021 09:10:35 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S231162AbhFXNfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 09:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59790 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229881AbhFXNfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 09:35:48 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B76C061574
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 06:33:28 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id he7so9507585ejc.13
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 06:33:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:user-agent:message-id:mime-version;
+        bh=uW3pfhRRjS2AouN/VKXVYhE1cxEuYm6bJ5bPLeBCQHo=;
+        b=Ec7JePAC+aCx8gErzVD7pfQrN6Ph4cGhE4fkFKdbxdVotXLZWFpDBXTDtBjaU+prlS
+         ZJGU3DY9yBv8bYfswQqsy1dOg5z5/fHg4+nEuZvrmHRGeZATMNTNfaFGxq95Ah1Wi5eH
+         Qkd+LsFcdv+RLRQ55sDBj6DjUd1AC9hfTcElcbd4dI1ozwrtjKsagZdH5Ih4aAQtKcFA
+         ri5ZB17PaBSCcaRbMziL69Vhv11FI4VYFUdlJYdyygSOKSoT4apnkHie6LvUV7caP8SF
+         /d9lnBqZ020Q/Hv0ee22PoIRS9ek80hrZc13YsTxZ63qRtDes4pOkAcYQRndoGDgVFjY
+         Kv+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:user-agent:message-id
+         :mime-version;
+        bh=uW3pfhRRjS2AouN/VKXVYhE1cxEuYm6bJ5bPLeBCQHo=;
+        b=gEEjvT8BtIM+yubEheniYcRJF5/i8wzM6b4/SOzxwDaPDc8iK43wPJRnlEV+YRoC4+
+         O2gy8xfnS1nLfMyNKCKwDOLB2NHJJxdTC9IzVTSoCZWfaLKZF1IL3ouBsHMhNhZg/TVc
+         AdiL7SFT7yi2z3PuJQwzBIpSnlJF+1FQOE4puRD2unwqc/OAYNz9dFXxhx8KPFOfHJ8H
+         dZ8g685wu5wqGeQEPTM80aVLtzZ0LCC724Jm61VqQ9Rxz4nm7AH9RCB9t/kqifIaIE23
+         AxBLlTBPFsVEw3avdAF/chNFLSS1+ZKYsU6k9vmZry1TeTZYZ+kRekv2V0w4uzCtSXQF
+         8BrQ==
+X-Gm-Message-State: AOAM530HRTJ9OYELkNexk+By0MfekwQoc1Mpzzi7fqtb+eBTMJSbTBWG
+        HfeyCHEgONR/dF8q9NkLpdGC7KHMZSNIHg==
+X-Google-Smtp-Source: ABdhPJzrqHWKG7gxyBd/F2/WpaL4Fc/xVfGIMq8oBqE066gkWo8v8Omot/DBu1Fp9GWSKf9a7tdOEA==
+X-Received: by 2002:a17:906:7142:: with SMTP id z2mr5224433ejj.427.1624541606416;
+        Thu, 24 Jun 2021 06:33:26 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id e12sm1217411ejk.99.2021.06.24.06.33.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jun 2021 06:33:26 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Why the Makefile is so eager to re-build & re-link
+Date:   Thu, 24 Jun 2021 15:16:48 +0200
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
+Message-ID: <874kdn1j6i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAPMMpojKMZmorKPgMASkHsvKcQTaaGyWURsgDS+KTGVeuBh1ww@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is probably all stuff that's been on list-before / known by
+some/all people in the CC list, but in case not: I looked a bit into why
+we'e so frequently re-linking and re compiling things these days,
+slowing down e.g. "git rebase --exec='make ...'".
 
+These are all fixable issues, I haven't worked on them, just some notes
+in case anyone has better ideas:
 
-On 6/24/21 1:25 AM, Tao Klerks wrote:
-> Hi Jeff,
-> 
-> On Mon, Jun 21, 2021 at 8:41 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
->> We're currently looking at a problem that we believe is in the
->> untracked-cache code.  This is causing some of our Scalar tests
->> to fail on Windows when the untracked-cache is turned on.  This
->> is independent of whether FSMonitor or FSCache is turned on.
->> We're still tracking this down.
->>
->> And yes, the best possible solution is to turn on FSMonitor *and*
->> the untracked-cache, so that the "untracked" status code doesn't
->> have to do anything.  So I want to look at tracking down the above
->> problem before doing anything else.
-> 
-> I got a bit excited about a possible clean path forward to getting
-> -uall to work well with untracked cache, and submitted a patch along
-> those lines, but rereading the above I should probably have been a
-> little more patient.
-> 
-> Is there anything "we" can do to see/understand the
-> scalar-test-suite-error you describe above, or is this
-> microsoft-internal?
-> 
-> Thanks
-> Tao
-> 
+ * version.c: The biggest offender, every time you move to a new commit
+   we have a FORCE on GIT-VERSION-FILE, if it changes (which it will, if
+   you're in a git checkout), we in turn re-compile version.o, link
+   libgit to contain it, and then need to re-link everything that uses
+   libgit.
 
-Thanks for looking into this.  The untracked-cache code is pretty
-dense and having another set of eyes is good.  I apologize that I'm
-still working thru the backlog from my vacation and haven't gotten
-to spend any "quality" time with the untracked-cache code yet, so
-I need to do some homework and study the questions/issues that you've
-found so far. (Thanks again)
+   Some of this can be micro-optimized by moving that out of libgit,
+   e.g. we re-link git-shell, which doesn't ever report the version, we
+   do the same for all the perl scripts, just because obscure codepaths
+   of them that could shell out to "git version" want to report it, and
+   we embed it in the generated code.
 
-All of our work is done in the open, so yes you should be able to
-see what we're doing and the errors that we're getting.
+   But I think the best approach here is to piggy-back on
+   SKIP_DASHED_BUILT_INS, if you have that enabled then only "git" (and
+   git-upload-pack etc.) need to be aware of the version, which they can
+   then set in the environment for the others.
 
-The source for our Scalar functional tests is in:
-https://github.com/microsoft/scalar
+   This also applies to e.g. the git-http* stuff, which has a user agent
+   derived from the version.
 
-My test branch 'test-no-fscache' is in my personal development fork:
-https://github.com/jeffhostetler/git
+ * {command,config}-list.h (and in-flight, my hook-list.h): Every time
+   you touch a Documentation/git-*.txt we need to re-generate these, and
+   since their mtime changes we re-compile and re-link all the way up to
+   libgit and our other tools.
 
-I have a PR against microsoft/git (a fork of git-for-windows
-which is a fork of core git) which turns off a bunch of things
-to try to isolate the failures:
-https://github.com/microsoft/git/pull/383
+   I think the best solution here is to make the generate-*.sh
+   shellscripts faster (just one takes ~300ms of nested shellscripting,
+   just to grep out the first few lines of every git-*.txt, in e.g. Perl
+   or a smarter awk script this would be <5ms).
 
-Output for a recent run can be seen here:
-https://github.com/microsoft/git/pull/383/checks?check_run_id=2884524819
+   Then we make those FORCE, but most of the time the config or command
+   summary (or list of hooks) doesn't change, so we don't need to
+   replace the file.
 
-Let us know if you have questions.
-Jeff
+Perhaps even better would be to piggy-back on the RUNTIME_PREFIX
+support, and simply drop in generated plain-text files, so in your build
+checkout the list of hooks, commands etc. would be parsed instead of
+compiled in. Then we wouldn't need to re-build or re-link anything for
+the version or this other data.
+
+We could/should still have some facility to compile those in for
+"install", see also [1] for some concerns / ideas for other similar
+things that could use that.
+
+1. https://lore.kernel.org/git/87czvoowg2.fsf@evledraar.gmail.com/
+
