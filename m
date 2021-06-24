@@ -2,200 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0961EC49EA5
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 00:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77FC5C48BC2
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 01:03:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9A2A61358
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 00:58:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C8616135C
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 01:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229850AbhFXBAZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Jun 2021 21:00:25 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:60624 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229801AbhFXBAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jun 2021 21:00:24 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 8929C1F8C6
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 00:58:06 +0000 (UTC)
-From:   Eric Wong <e@80x24.org>
-To:     git@vger.kernel.org
-Subject: [PATCH] speed up alt_odb_usable() with many alternates
-Date:   Thu, 24 Jun 2021 00:58:06 +0000
-Message-Id: <20210624005806.12079-1-e@80x24.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S229822AbhFXBFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Jun 2021 21:05:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60494 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229796AbhFXBFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jun 2021 21:05:32 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4876CC061574
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 18:03:14 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id u11so5493154oiv.1
+        for <git@vger.kernel.org>; Wed, 23 Jun 2021 18:03:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=gj/PcyYdiv/RkUzZtWgLxQ7rpiifNw73m/6hfNx3w1I=;
+        b=VuEyzTQBYdQVtp2Os2TLzs2jNPOOsqVUNZpOJ1rOAzohBMK2jDRfYyEONjyaQbxpg0
+         XPcbRb45v1CDPsRvRJ+27gxHWNbyufYh3HU+vtRUy3KHgs0E5GMxYVorwXCUzguWCehV
+         GSMB15CRFxsDjX2V5gpcq7T+DTF8XU2BRvLaej+LWZwuNMPBzP41zgoq5YLfWec8LJj6
+         1UzctJsjmnm8pgsSXFNtVKXBj/uxAB+EzG4jXHCa39Sy6+RtNtm5Hpiv5uN8caCo489L
+         v3X0p6fzyZIwpgn9h3zjT9yF6Ys8Z9zEDxJq63ROM6p2iz7Pq3rabUAT3wPhqYAQjsZp
+         4Amw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=gj/PcyYdiv/RkUzZtWgLxQ7rpiifNw73m/6hfNx3w1I=;
+        b=E8J9I0gWYXPOJsZeh+3zMdNn+7YWcm47GYoRQyuNfH1QDT2AmMdwWBQI/OvIk+UaOV
+         XUtsRM/n9EB7e0CX0F9BRl5dUQGj5cDVj3wZO/HaHdfV1ZL9+mU7ofEuTUZb38313Blm
+         V/ZBrzRuYP6fxaSIyR0kE1vIeH5BZzRb2tEtkxMNADxiwvSo8JqlF7mmq/531T/6e8FK
+         09rnk0m3VGoEp+arhFE+o9D4xSiQzkrFRhQKcgYRO05DK+jxoXvYT3MxkbNqNqHWmpD4
+         DCkoVMW/LW1jk7plm0TCSdXvDQQcZawG7nDOef7+Xiy0uecc4lWq5CS0TQ65t0z2C2Ui
+         Paig==
+X-Gm-Message-State: AOAM531yzKFwJyNaKw4PN2TF8AY5oqbFrhmRJ2qMmmRoIRjQUXVl2797
+        V0ixCaKLp5egBXoHvHXu0HU=
+X-Google-Smtp-Source: ABdhPJzigt+KCTscCTvWfoJCp97dIrbhq/DkKeTymNIeuYgx/4KM7d9KLU85oyntEpP85CnCKpudPQ==
+X-Received: by 2002:aca:d805:: with SMTP id p5mr2063585oig.60.1624496593503;
+        Wed, 23 Jun 2021 18:03:13 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id w11sm309870oov.19.2021.06.23.18.03.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Jun 2021 18:03:12 -0700 (PDT)
+Date:   Wed, 23 Jun 2021 20:03:11 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <60d3d9cf77ddb_b4120889@natae.notmuch>
+In-Reply-To: <YNPKwIuZvpyWSNXH@coredump.intra.peff.net>
+References: <xmqq4ke8pig9.fsf@gitster.g>
+ <patch-1.1-a950ef49e28-20210621T083254Z-avarab@gmail.com>
+ <xmqqfsxbika3.fsf@gitster.g>
+ <87mtrj2faq.fsf@evledraar.gmail.com>
+ <YNPKwIuZvpyWSNXH@coredump.intra.peff.net>
+Subject: Re: [PATCH v7] help: colorize man pages if man.color=true under
+ less(1)
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With many alternates, the duplicate check in alt_odb_usable()
-wastes many cycles doing repeated fspathcmp() on every existing
-alternate.  Use a khash to speed up lookups by odb->path.
+Jeff King wrote:
+> On Mon, Jun 21, 2021 at 09:08:20PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
+> =
 
-Since the kh_put_* API uses the supplied key without
-duplicating it, we also take advantage of it to replace both
-xstrdup() and strbuf_release() in link_alt_odb_entry() with
-strbuf_detach() to avoid the allocation and copy.
+> > > [snip] I think it would be easier to understand to end-users
+> > > if this were exposed as a new "mode", like "git help --web" and "gi=
+t
+> > > help --info" are different modes from the "git help --man",
+> > > something like "git help --fancy-man" (or whatever is easy to type
+> > > and explain, and also add it to the variants help.format knows abou=
+t
+> > > to make it easy to set the default).
+> > >
+> > > One advantage of doing so is that we do not have to worry about "ah=
+,
+> > > user has LESS_BLAH environment variable so we should disable this
+> > > new mode here" etc.  As long as the new mode is requested either vi=
+a
+> > > the command line option or help.format configuration, it can
+> > > completely take it over.  That simplifies the necessary explanation=
 
-In a test repository with 50K alternates and each of those 50K
-alternates having one alternate each (for a total of 100K total
-alternates); this speeds up lookup of a non-existent blob from
-over 16 minutes to roughly 8 seconds on my busy workstation.
+> > > given to the users quite a lot, no?
+> > =
 
-Note: all underlying git object directories were small and
-unpacked with only loose objects and no packs.  Having to load
-packs increases times significantly.
+> > The interaction between "git help" and "man"/"less" doesn't really ha=
+ve
+> > an equivalent in the rest of git as far as color output goes. Usually=
+ we
+> > emit colors via our own programs.
+> > =
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
- Note: this project I'm doing this for probably won't have 100K
- alternates yet, but ~60K is a possibility.  I hope to find
- more speedups along these lines.
+> > But no, I think it makes the most sense to consider this orthagonal t=
+o
+> > help.format=3Dman or man.viewer=3D<cmd>.
+> > =
 
- object-file.c  | 33 ++++++++++++++++++++++-----------
- object-store.h | 17 +++++++++++++++++
- object.c       |  2 ++
- 3 files changed, 41 insertions(+), 11 deletions(-)
+> > We're not invoking a different man viewer or command, we're just
+> > expecting that mode to invoke the pager, and if that pager is less to=
 
-diff --git a/object-file.c b/object-file.c
-index f233b440b2..304af3a172 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -517,9 +517,9 @@ const char *loose_object_path(struct repository *r, struct strbuf *buf,
-  */
- static int alt_odb_usable(struct raw_object_store *o,
- 			  struct strbuf *path,
--			  const char *normalized_objdir)
-+			  const char *normalized_objdir, khiter_t *pos)
- {
--	struct object_directory *odb;
-+	int r;
- 
- 	/* Detect cases where alternate disappeared */
- 	if (!is_directory(path->buf)) {
-@@ -533,14 +533,22 @@ static int alt_odb_usable(struct raw_object_store *o,
- 	 * Prevent the common mistake of listing the same
- 	 * thing twice, or object directory itself.
- 	 */
--	for (odb = o->odb; odb; odb = odb->next) {
--		if (!fspathcmp(path->buf, odb->path))
--			return 0;
-+	if (!o->odb_by_path) {
-+		khiter_t p;
-+
-+		o->odb_by_path = kh_init_odb_path_map();
-+		assert(!o->odb->next);
-+		p = kh_put_odb_path_map(o->odb_by_path, o->odb->path, &r);
-+		if (r < 0) die_errno(_("kh_put_odb_path_map"));
-+		assert(r == 1); /* never used */
-+		kh_value(o->odb_by_path, p) = o->odb;
- 	}
- 	if (!fspathcmp(path->buf, normalized_objdir))
- 		return 0;
--
--	return 1;
-+	*pos = kh_put_odb_path_map(o->odb_by_path, path->buf, &r);
-+	if (r < 0) die_errno(_("kh_put_odb_path_map"));
-+	/* r: 0 = exists, 1 = never used, 2 = deleted */
-+	return r == 0 ? 0 : 1;
- }
- 
- /*
-@@ -566,6 +574,7 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
- {
- 	struct object_directory *ent;
- 	struct strbuf pathbuf = STRBUF_INIT;
-+	khiter_t pos;
- 
- 	if (!is_absolute_path(entry) && relative_base) {
- 		strbuf_realpath(&pathbuf, relative_base, 1);
-@@ -587,23 +596,25 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
- 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
- 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
- 
--	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir)) {
-+	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos)) {
- 		strbuf_release(&pathbuf);
- 		return -1;
- 	}
- 
- 	CALLOC_ARRAY(ent, 1);
--	ent->path = xstrdup(pathbuf.buf);
-+	/* pathbuf.buf is already in r->objects->odb_by_path */
-+	ent->path = strbuf_detach(&pathbuf, NULL);
- 
- 	/* add the alternate entry */
- 	*r->objects->odb_tail = ent;
- 	r->objects->odb_tail = &(ent->next);
- 	ent->next = NULL;
-+	assert(r->objects->odb_by_path);
-+	kh_value(r->objects->odb_by_path, pos) = ent;
- 
- 	/* recursively add alternates */
--	read_info_alternates(r, pathbuf.buf, depth + 1);
-+	read_info_alternates(r, ent->path, depth + 1);
- 
--	strbuf_release(&pathbuf);
- 	return 0;
- }
- 
-diff --git a/object-store.h b/object-store.h
-index ec32c23dcb..20c1cedb75 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -7,6 +7,8 @@
- #include "oid-array.h"
- #include "strbuf.h"
- #include "thread-utils.h"
-+#include "khash.h"
-+#include "dir.h"
- 
- struct object_directory {
- 	struct object_directory *next;
-@@ -30,6 +32,19 @@ struct object_directory {
- 	char *path;
- };
- 
-+static inline int odb_path_eq(const char *a, const char *b)
-+{
-+	return !fspathcmp(a, b);
-+}
-+
-+static inline int odb_path_hash(const char *str)
-+{
-+	return ignore_case ? strihash(str) : __ac_X31_hash_string(str);
-+}
-+
-+KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
-+	struct object_directory *, 1, odb_path_hash, odb_path_eq);
-+
- void prepare_alt_odb(struct repository *r);
- char *compute_alternate_path(const char *path, struct strbuf *err);
- typedef int alt_odb_fn(struct object_directory *, void *);
-@@ -116,6 +131,8 @@ struct raw_object_store {
- 	 */
- 	struct object_directory *odb;
- 	struct object_directory **odb_tail;
-+	kh_odb_path_map_t *odb_by_path;
-+
- 	int loaded_alternates;
- 
- 	/*
-diff --git a/object.c b/object.c
-index 14188453c5..2b3c075a15 100644
---- a/object.c
-+++ b/object.c
-@@ -511,6 +511,8 @@ static void free_object_directories(struct raw_object_store *o)
- 		free_object_directory(o->odb);
- 		o->odb = next;
- 	}
-+	kh_destroy_odb_path_map(o->odb_by_path);
-+	o->odb_by_path = NULL;
- }
- 
- void raw_object_store_clear(struct raw_object_store *o)
+> > have these variables tweak our color preferences.
+> =
+
+> FWIW, if we are going to do this, then just having it as "color.man"
+> makes the most sense to me. It is easily explained as "when we invoke
+> man, set up some environment variables that may enable colors in the
+> output".
+> =
+
+> I'm still entirely unconvinced that this should be in Git at all;
+
+That's OK, you don't need to be convinced for this change to be a
+positive one.
+
+> pointing GIT_MAN_VIEWER or man.*.cmd at a color-man wrapper seems like
+> it would be sufficient.
+
+What color-man wrapper?
+
+> But it feels like that conversation was not going anywhere productive;
+
+Feelings are not facts.
+
+Bailing from a discussion doesn't resolve the discussion, and the
+question "how is a user supposed to configure this properly?" remains
+unanswered by you, or anyone [1].
+
+This patch is the closest to a convenient solution anybody has come up
+with.
+
+If anybody has any other proposal it would be good to hear them.
+
+[1] https://lore.kernel.org/git/60bfadc0aca09_1abb8f208fd@natae.notmuch/
+
+-- =
+
+Felipe Contreras=
