@@ -2,137 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF08C49EA6
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 23:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CABBC49EA6
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 23:42:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED3A9613AD
-	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 23:41:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 726B9613AD
+	for <git@archiver.kernel.org>; Thu, 24 Jun 2021 23:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbhFXXoL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Jun 2021 19:44:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56608 "EHLO
+        id S232876AbhFXXpH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Jun 2021 19:45:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbhFXXoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jun 2021 19:44:09 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B8EC061574
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 16:41:49 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso7457954otu.10
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 16:41:49 -0700 (PDT)
+        with ESMTP id S229521AbhFXXpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jun 2021 19:45:06 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2313C061756
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 16:42:45 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id s15so10921616edt.13
+        for <git@vger.kernel.org>; Thu, 24 Jun 2021 16:42:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=fdQWgh8u4qt9EEq+HbDy9lxiUHUOMGppjq5fdHoLu1M=;
-        b=PE6+brn9AXABXCj40h/YYSVrx03RnREunuweowMojIQ9553TEHsG4Fr3HDQ3wYCXzV
-         rhOzbGhE156VIrUTXJEwGp2SE5Kx45VoJF48N+eYBy5UG2DMnlJA5aymJ6ULj/5H3mDV
-         5lKrXFCcTDkMRHPNSQ4lWtL8vht1e44z5T7Uy2bNUDOJj/VeR3rCEUpUlQta0955BH8T
-         d9+1z49NDrAL/2gLvRuyySqW5sOr1LlR7diNkOwzQzP6wG4Gtz6H7ZNR4yAl43kawiPV
-         XKa26ZEoB2dqQHrqIyfgbyLyFpnjp9k2NUvUut6eknnS1BOLlHLIHsdAThmCNeNnsWu+
-         eWuA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ACd6SSVF3/VXiW/wueWgelcMR3a2bzP+T+ZlVuHmNAc=;
+        b=d1jopbKEJLH4c+F//n2d75VTIcB1jRd6QtwYR/sTtKrdAqfCT1DboKbNTa4vkRTw/X
+         kKsirV6I6YXculzFqhCKIov5jXaYVcMpiDY/PJ6YUU2fti6ha7tIKrt9pfAqjwXXfjVC
+         P3G5mC1VeLkCaHx85+sO6KG1yfl7D54tjyq51nKATcYIyWpBDaNndE5bsAh95ZOkezmL
+         ij/ozV8YARbo2d/QQ2HLoxGWINE5olzu5k2a2eH+aUmz3ZNZCIyAJThCVo5I/Hn+ddIm
+         niIw/97NbcRrnUvaWIf5g4Xt2PesB4b+ik0rge260HFh5ALv4bRvw0zuRpXm4864AfCK
+         Q45Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=fdQWgh8u4qt9EEq+HbDy9lxiUHUOMGppjq5fdHoLu1M=;
-        b=U78/HSAByj8Kkc+Q37FLdaT2UGEI6ZhBqPhkNTINUxUm0SMNUVE4T4+Q/OoihKPkH9
-         5z6YOcd1+Qx7mb6zJXM9kLPCQGcQMcadRLZdZynVvuhCrPBoebAAYc8SGAB1jp2g2UXC
-         PGQLZOHakETbHW/fR8WgxfdjGranCxOF6dJXUJBbhg2Fi8S2DUDHXotbMUeI0oewMpKd
-         Qw7WHgG89g/PZoGQRqroIKW6BEVJ0Jrd9luA4Aw4yS/mZZIhAf6kLsudAUYK5wxy30GO
-         H7BZeIhP0VeNh7uWwbsivq7K+JoBDTU1m4F5GoWIoXNAFtWbYZjkrfKk+AwpeMdy4gnk
-         1XQQ==
-X-Gm-Message-State: AOAM531tHaM0SFqCjuti6r6cUcOs+rwLlRVjLImqHdVyEyRWSa79wWRi
-        rVEAMGSGNH0kSlz2zY4maKg=
-X-Google-Smtp-Source: ABdhPJyz3M30tndrua+GEH5IPs2f8BNBSyaJbwGSrbDpw5lgtIEe0seiPgqXxa17lQ43QMbBp82EkQ==
-X-Received: by 2002:a05:6830:245c:: with SMTP id x28mr7082297otr.169.1624578108621;
-        Thu, 24 Jun 2021 16:41:48 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id j13sm941608oie.27.2021.06.24.16.41.47
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ACd6SSVF3/VXiW/wueWgelcMR3a2bzP+T+ZlVuHmNAc=;
+        b=IRSU5noeSxbSn5V08eSBePQjLSSy9KensNxoy83BwnBcBvfWlNx1JKx9A5ja5jyPKh
+         6j3kFKhi+/t5Edcl9GjvEGoV8dN2U4BBufLVLk5+3JKMiw50UhyG9Oi2NyGVVMnvjlvQ
+         G6ncRGvteoTWDj2v1Kq2NJ+mQTRHwzPHBwHgiFOZVh35sv4SPAvMBAVMTCE1KuVE/7Yt
+         8NZmfCjA9YS8F6OlRxFCyjbdDU8ojoq4keEfpLcmItQxM0pkuiERhipu9tM+pilcbb8J
+         VjOvFk9KvV0HoRSbV5wXp55SpqMmghzv8axWONzgF7pGUMp6fP70Q/8o3gYPfX+R+Nc8
+         fHdw==
+X-Gm-Message-State: AOAM530x/g+kJG6vM/PfcVhDV/S+s5N3xThf9anfmIOzXLcCtwHt8gFR
+        fZNNDIUXF0CMr2PwnoqW8aM=
+X-Google-Smtp-Source: ABdhPJyNNNQPeod38J4BAzViIZe3Mpj8spGRu/3cCr3mP3iNM6LlkS4RG3u+edlQHPvKbCgt4GkWNA==
+X-Received: by 2002:aa7:c997:: with SMTP id c23mr10736668edt.42.1624578163135;
+        Thu, 24 Jun 2021 16:42:43 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id aq12sm1802902ejc.77.2021.06.24.16.42.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 16:41:48 -0700 (PDT)
-Date:   Thu, 24 Jun 2021 18:41:46 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Message-ID: <60d5183a9e34d_3a20208b@natae.notmuch>
-In-Reply-To: <93084036-804d-4c52-2836-42efd5deba1c@iee.email>
-References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
- <20210621175234.1079004-2-felipe.contreras@gmail.com>
- <b4e612ba-21c7-3bef-d113-0f070449cd87@iee.email>
- <60d49748b8538_2fb2082c@natae.notmuch>
- <c2170f74-b93b-599b-1fb4-45b013c7bff1@iee.email>
- <60d4d75e7622c_242620854@natae.notmuch>
- <93084036-804d-4c52-2836-42efd5deba1c@iee.email>
-Subject: Re: [PATCH 1/2] doc: pull: explain what is a fast-forward
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Thu, 24 Jun 2021 16:42:42 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        gitster@pobox.com, jonathantanmy@google.com
+Subject: Re: [PATCH v2 06/24] midx: make a number of functions non-static
+Date:   Fri, 25 Jun 2021 01:42:06 +0200
+References: <cover.1617991824.git.me@ttaylorr.com>
+ <cover.1624314293.git.me@ttaylorr.com>
+ <b3a12424d78e80553741f5c7a0672490a59b6f7d.1624314293.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
+In-reply-to: <b3a12424d78e80553741f5c7a0672490a59b6f7d.1624314293.git.me@ttaylorr.com>
+Message-ID: <878s2yzv65.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley wrote:
-> On 24/06/2021 20:05, Felipe Contreras wrote:
-> > Philip Oakley wrote:
-> >> Hi Felipe,
-> >> On 24/06/2021 15:31, Felipe Contreras wrote:
-> >>> Philip Oakley wrote:
-> >>>> On 21/06/2021 18:52, Felipe Contreras wrote:
-> >>>>> --- a/Documentation/git-pull.txt
-> >>>>> +++ b/Documentation/git-pull.txt
-> >>>>> @@ -41,16 +41,41 @@ Assume the following history exists and the current branch is
-> >>>>>  ------------
-> >>>>>  	  A---B---C master on origin
-> >>>>>  	 /
-> >>>>> -    D---E---F---G master
-> >>>>> +    D---E master
-> >>>>>  	^
-> >>>>>  	origin/master in your repository
-> >>>>>  ------------
-> >>>>>  
-> >>>>>  Then "`git pull`" will fetch and replay the changes from the remote
-> >>>>>  `master` branch since it diverged from the local `master` (i.e., `E`)
-> >>>>> -until its current commit (`C`) on top of `master` and record the
-> >>>>> -result in a new commit along with the names of the two parent commits
-> >>>>> -and a log message from the user describing the changes.
-> >>>>> +until its current commit (`C`) on top of `master`.
-> >>>>> +
-> >>>>> +After the remote changes have been synchronized, the local `master` will
-> >>>>> +be fast-forwarded to the same commit as the remote one, therefore
-> >>>> Perhaps s/be fast-forwarded/have been 'fast-forward'ed/ ?
-> >>> No, there's multiple steps:
-> >> My key point was to 'quote' the fast-forward term.
-> > fast-forward is an English word [1], there's no need to quote it as if
-> > it weren't.
-> 
-> You appear to be arguing that your "explain what is a fast-forward"
-> (subject line of the patch) doesn't need, within the patch, to explain
-> that it is about the term "fast-forward", being used in a Git specific
-> way...
 
-When you are trying to explain the meaning of a word it's generally
-better to not use that word in the explanation. For example if you are
-trying to explain "recursion", but you use "recursion" in the
-explanation, that kinds of defeats the purpose.
+On Mon, Jun 21 2021, Taylor Blau wrote:
 
-So yes, in the sentence "the local `master` will be fast-forwarded to
-the same commit as the remote one", the verb "fast-forwarded" can easily
-be replaced with "advanced" and no meaning would be lost.
+> These functions will be called from outside of midx.c in a subsequent
+> patch.
 
-The meaning of this "fast-forward" verb is the same as when you
-fast-forward a tape, and is not git-specific.
-
--- 
-Felipe Contreras
+So "a number" is "two" and "a subsequent patch" appears to be 13/24. I
+think this would be clearer just squashed into whatever needs it, or at
+least if it comes right before the new use in the series.
