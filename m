@@ -2,173 +2,241 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D917C49EB9
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 10:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4855C2B9F4
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 10:47:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07F5461434
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 10:22:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD6D561445
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 10:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231518AbhFYKYW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Jun 2021 06:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58116 "EHLO
+        id S231209AbhFYKtg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Jun 2021 06:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbhFYKYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jun 2021 06:24:21 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71916C061574
-        for <git@vger.kernel.org>; Fri, 25 Jun 2021 03:21:59 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id df12so12725731edb.2
-        for <git@vger.kernel.org>; Fri, 25 Jun 2021 03:21:59 -0700 (PDT)
+        with ESMTP id S230526AbhFYKtf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jun 2021 06:49:35 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AD3C061574
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 03:47:15 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id d21-20020a9d72d50000b02904604cda7e66so7045503otk.7
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 03:47:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=j5KtqhmUcrw14/eTH2UnPhB/B9DcYn7UraUK5BnLDVM=;
-        b=lse3lJHxs9v6Nc9ny8CqvcvX95yaEjR0hSg0Q7tEPlRMKIwL2CawRNhChDlum6Pfcc
-         Kn0eL84RyjysEeU7wWZLxlKkfG79m4pj2YPhrVLwLDZMwwtFHeZUXu2SZTn+oLq3oDyH
-         1mAXialvXmr04khUJ9aySx+oN6d3iskGljdkt3fdH4sLqYigV4JqTHi85xKWAaDuyhko
-         H9hUu6N0DSSet8pfgBcxlOY3K/7hlpowPkrF/4uWkyFzJshHeeDfgAlQ5TIrRFzTsiHM
-         dykNLKOWXl9WASfUoWUJTf7e+opPNb8AKup5cK8y8m3ICXY0Ndha4D98awlf4wz53qPF
-         U7Rw==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=mix4LW5bEI1Z04/+7gsn4Lb8w23SdlxGZ2ojJKRXN4c=;
+        b=jfqu8BlklMkZD8+RemsWPqoA80WvtCkL3TOw+Y8FOUXsPd/EtVY13/hf0/Aqd72nIM
+         QTxqWZTJRlJUt1WTpUEyC/NcDYQMQXBZjhE/7bYWF880T5a/fSrMNkAbqal442Pe23ff
+         DmAfYv1Om9jRVhNLpdAN6D9zDQUOFmcNiux7S2diglyiOQVEe9ZDs9ASCcmNQsl62Jhm
+         9SST7jvSSp9/nwm4gWQ22I51MBe4PK96F3kgndCfe8XD8YuyNCDHkAtiaK+v9NlHGue7
+         /Edi31zx330zLp3jttDaH5Dq2Q560MKq7Wq10Q2AtQ9OaY/UYD4bcoxpZPoimTTM9f/V
+         YlIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=j5KtqhmUcrw14/eTH2UnPhB/B9DcYn7UraUK5BnLDVM=;
-        b=SKjz4qYTIiQiWA8E/PaeNHOqR7PlBY2nhifKv6pcQRZkUfIRpaCJ9GmreTX91pZ6FS
-         JWZUnvRVGSfNVmBgjbl4navsvnKuLepSuhmnksWFam7G8uwTp0Y3lf4XRp3mOLOTZa4O
-         2amefP+MiquAoFVuysUSUD1Gmnj8DQqmUYDJaxzxiCJOLSxXEDxJTAS4LIEtKWBDRcmO
-         n8uEsKGvS5GcMlTstOdk29FxZu+ZVIeeWulwthch2rQThzTFdz2Yn5jQAJqyfXDFgDXS
-         wa5llBXULNZDw3oVDcZILs2sZBzHjXKco6MzuwT9awZHwqipVpGr3pt6lS9j7IbcQdFC
-         3q3g==
-X-Gm-Message-State: AOAM530xLw6N55oYZU5Pr8cNkJtZOThAAaKvLq9uQeE5cCMG7lWC27VT
-        fPldL3+oUIT+8uF/uUz42QU=
-X-Google-Smtp-Source: ABdhPJzCUwOLq2ILvEmcj9z5URe39buz5zELbdhmnbT2huH3r8Ijps0NfIQiTj0HMQ94UpPWohCILA==
-X-Received: by 2002:a05:6402:ca2:: with SMTP id cn2mr13619080edb.62.1624616517895;
-        Fri, 25 Jun 2021 03:21:57 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id k21sm610683edr.90.2021.06.25.03.21.57
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=mix4LW5bEI1Z04/+7gsn4Lb8w23SdlxGZ2ojJKRXN4c=;
+        b=ixF1QosE00rXN2fqbYjt2obRcrXq/rTUsOYHKv9UgBdAONzot3ojP8q7aNflTyRdmL
+         2/p0dDIy72fwY3L9/ac0MJ+z+egkp7Sdvj1hkxCFs8c28yQeLnRLXpweGa5y/ef4JvjN
+         +Sc1wm6AeSPloKj4QsaBBvtCuwg/Svm8KUb540Jw7brhBtq4u1HxT/T47RaLrLqwzRVM
+         tV2tsbIrBc/YauXAAYTZJD0S842DCjb/uu7tbGMIZO3ytRsywr/D2anhSUID5yD5voI1
+         1JXTmnev+CazyLr4K4Fv9+KJFFfe3JgLeVaNAvYQWZTUTh7d5WZ+oz3p5qiLOdpZ9vwB
+         C+Uw==
+X-Gm-Message-State: AOAM531vb26OwDBrH9/n1XIoB2CkSUhR/2/AdFkwyAQpstLz8ND7TmmQ
+        OoUAnKJeqN8cwIh9G9ZVqDU=
+X-Google-Smtp-Source: ABdhPJyLPyp3SHzshMLXxRwE4HdsnMKwVk5Emp4+V9VzSDoL72aobt9GiBVP8v4Z1BdWI50NiuYJPQ==
+X-Received: by 2002:a9d:1905:: with SMTP id j5mr9005714ota.321.1624618034903;
+        Fri, 25 Jun 2021 03:47:14 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id l7sm1245093otu.76.2021.06.25.03.47.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Jun 2021 03:21:57 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
+        Fri, 25 Jun 2021 03:47:14 -0700 (PDT)
+Date:   Fri, 25 Jun 2021 05:47:12 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
-Date:   Fri, 25 Jun 2021 11:49:14 +0200
-References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
-        <YNIBRboFiCRAq3aA@nand.local> <8735t93h0u.fsf@evledraar.gmail.com>
-        <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
-        <87r1gs1hfx.fsf@evledraar.gmail.com>
-        <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
-        <871r8r1hwe.fsf@evledraar.gmail.com>
-        <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
-Message-ID: <87fsx6xn0b.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Cc:     Philip Oakley <philipoakley@iee.email>, git@vger.kernel.org,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Message-ID: <60d5b430f2f13_ba7520890@natae.notmuch>
+In-Reply-To: <87im22xpp4.fsf@evledraar.gmail.com>
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-2-felipe.contreras@gmail.com>
+ <b4e612ba-21c7-3bef-d113-0f070449cd87@iee.email>
+ <60d49748b8538_2fb2082c@natae.notmuch>
+ <c2170f74-b93b-599b-1fb4-45b013c7bff1@iee.email>
+ <60d4d75e7622c_242620854@natae.notmuch>
+ <93084036-804d-4c52-2836-42efd5deba1c@iee.email>
+ <60d5183a9e34d_3a20208b@natae.notmuch>
+ <87im22xpp4.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 1/2] doc: pull: explain what is a fast-forward
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
 
-On Thu, Jun 24 2021, Jeff King wrote:
+> On Thu, Jun 24 2021, Felipe Contreras wrote:
+> =
 
-> On Thu, Jun 24, 2021 at 03:53:51PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> >> ..and "this behavior is really annoying on one platform we target, and
->> >> the fix is rather trivial".
->> >
->> > Yeah, that's a fine reason, too. I'm not entirely clear on what the
->> > problem is, though, or why this is the best solution (I expect you
->> > probably explained it in an earlier thread/series, but if so it went in
->> > one ear and out the other on my end).
->>=20
->> On *nix systems you can open a file, and unlink() it in another process,
->> on Windows this is an error.
->>=20
->> AIX has its own variant of this annoying behavior, you can't clobber (or
->> open for writing) binaries that are currently being run, you can unlink
->> and rename them though.
->
-> Ah, right. Thanks for refreshing me.
->
-> TBH, I don't find this that serious a problem. Your compile will fail.
-> But is rebuilding in the middle of a test run something it's important
-> to support seamlessly? It seems like a bad practice in the first place.
+> > Philip Oakley wrote:
+> >> On 24/06/2021 20:05, Felipe Contreras wrote:
+> >> > Philip Oakley wrote:
+> >> >> Hi Felipe,
+> >> >> On 24/06/2021 15:31, Felipe Contreras wrote:
+> >> >>> Philip Oakley wrote:
+> >> >>>> On 21/06/2021 18:52, Felipe Contreras wrote:
+> >> >>>>> --- a/Documentation/git-pull.txt
+> >> >>>>> +++ b/Documentation/git-pull.txt
+> >> >>>>> @@ -41,16 +41,41 @@ Assume the following history exists and th=
+e current branch is
+> >> >>>>>  ------------
+> >> >>>>>  	  A---B---C master on origin
+> >> >>>>>  	 /
+> >> >>>>> -    D---E---F---G master
+> >> >>>>> +    D---E master
+> >> >>>>>  	^
+> >> >>>>>  	origin/master in your repository
+> >> >>>>>  ------------
+> >> >>>>>  =
 
-Yeah I think so, and I think it's good practice, it enabled development
-workflows that you and Junio clearly don't use (which is fine), but
-which are useful to others. For me it would result in more total
-testing, and earlier catching of bugs, not less.
+> >> >>>>>  Then "`git pull`" will fetch and replay the changes from the =
+remote
+> >> >>>>>  `master` branch since it diverged from the local `master` (i.=
+e., `E`)
+> >> >>>>> -until its current commit (`C`) on top of `master` and record =
+the
+> >> >>>>> -result in a new commit along with the names of the two parent=
+ commits
+> >> >>>>> -and a log message from the user describing the changes.
+> >> >>>>> +until its current commit (`C`) on top of `master`.
+> >> >>>>> +
+> >> >>>>> +After the remote changes have been synchronized, the local `m=
+aster` will
+> >> >>>>> +be fast-forwarded to the same commit as the remote one, there=
+fore
+> >> >>>> Perhaps s/be fast-forwarded/have been 'fast-forward'ed/ ?
+> >> >>> No, there's multiple steps:
+> >> >> My key point was to 'quote' the fast-forward term.
+> >> > fast-forward is an English word [1], there's no need to quote it a=
+s if
+> >> > it weren't.
+> >> =
 
-Quoting an earlier mail of yours[1]:
+> >> You appear to be arguing that your "explain what is a fast-forward"
+> >> (subject line of the patch) doesn't need, within the patch, to expla=
+in
+> >> that it is about the term "fast-forward", being used in a Git specif=
+ic
+> >> way...
+> >
+> > When you are trying to explain the meaning of a word it's generally
+> > better to not use that word in the explanation. For example if you ar=
+e
+> > trying to explain "recursion", but you use "recursion" in the
+> > explanation, that kinds of defeats the purpose.
+> >
+> > So yes, in the sentence "the local `master` will be fast-forwarded to=
 
-    I think having the test suite loudly complain is a good way to
-    remind you that you have not in fact run the whole suite on a given
-    build.
+> > the same commit as the remote one", the verb "fast-forwarded" can eas=
+ily
+> > be replaced with "advanced" and no meaning would be lost.
+> >
+> > The meaning of this "fast-forward" verb is the same as when you
+> > fast-forward a tape, and is not git-specific.
+> =
 
-It's useful as you're programming you save/compile, and have the tests
-run in a loop in the background, and are alerted if they start
-failing.
+> Using quotes for a term like 'fast-forward' or some made up word like
+> 'qibbix' doesn't just serve the purpose of clarifying which ones are in=
 
-That's not really possible with git currently without having that loop
-continually push to another workdir, making it work in one checkout
-helps for some workflows.
+> the dictionary, but also to establish that the quoted word is jargon
+> within the context of the documentation.
+> =
 
-Yes it could allow you to run format-patch and send-email while you're
-50% through a full loop, or not just run the full tests then, but at
-some point I think we've got to assume some basic competency from
-people. We also have CI running the full tests, and I could have just
-run tests 0000-5000, compiled, and then run 5001-9999.
+> If I invent a new and exciting way to cut grass I might say my new
+> machine 'shaves' the grass. The word "shave" is something I assume
+> everyone knows, but I'm making it clear that I'm referring to the
+> exciting mode of operation of my new death machine.
+> =
 
-As a mechanism to prevent this it's not even reliable, it won't always
-prevent this due to races, you'd need to e.g. issue a "git version" at
-the start of a run, then "Bail Out!" if you detect it being different at
-the end.
+> So I think it Philip's suggestion makes sense. We're not talking about
+> how to fast-forward a tape, but what happens in git when we use that
+> term.
 
-> It would likewise be a problem if you were running regular git commands
-> straight out of your build directory. And we do support that, but IMHO
-> it is not that important a use case.
->
-> So again, I'm not all that opposed to atomic rename-into-place
-> generation. But the use case doesn't seem important to me.
+No. In this particular sentence we are using fast-forward *precisely* in
+the same way as a tape. We haven't even talked about what constitutes a
+"fast-forward" in git jargon.
 
-I guess because we use computers differently. I often have say a full
-test run in one window, see a failure scroll by, re-make in another
-window, test in a third, it's annoying to have to go back & forth and
-stop/start things. I typically run the "main" one as a while-loop.
+Substitute the word "fast-forward", and the meaning remains intact:
 
->> So without that "mv $@ $@+" trick you can't recompile if you have a
->> concurrent test (that you don't care about failing) running, and we have
->> bugs in our tests where e.g. "git-daemon" gets lost and won't get killed
->> on that platform, so you can't recompile and test without tracking it
->> down and killing it.
->
-> The "git-daemon" thing sounds like a separate bug that is maybe
-> exacerbating things. But we'd want to fix it anyway, since even without
-> blocking compilation, it will cause a re-run of the tests to use the
-> wrong version (and either fail, or hit the auto-skip behavior). I've run
-> into this with apache hanging around after tests were killed (we do try
-> to clean up, but depending how the script is killed, that may or may not
-> succeed).
+  After the remote changes have been synchronized, the local `master`
+  will be advanced to the same commit as the remote one, therefore
+  creating a linear history.
 
-Yes, it's a bug that should be fixed. Right now if I try to login and
-fix it (and numerous other bugs) my second full test run is guaranteed
-to be impeded by having to track down and kill things.
+As I already explained.
 
-The in-place-move works around that perfectly, so as a chicken-and-egg
-problem of getting to a point where it's not so annoying to fix things
-that I give up I suggested this rather trivial "&& mv $@+ $@" change was
-something worth carrying.
+> As an aside after however many years of using git this is the first tim=
+e
+> I made the connection to that usage of the term, I thought it was jargo=
+n
+> git invented. That's also something to consider,
 
-1. https://lore.kernel.org/git/YEZsON5OxUiDkqPG@coredump.intra.peff.net/
+I was in your camp, but after thinking deeply about what would be a
+better term than "fast-forward" (advance, forward, boost), I realized
+that in fact "fast-forward" is perfectly fine because it already exists
+in English and conveys precisely the meaning we want: quickly advance to
+a desired position.
+
+> I've also actually seen an interacted with a tape record and VHS tape i=
+n
+> my lifetime, but I suspect many readers of this documentation have not.=
+
+
+But they have pressed fast-forward on their Roku control, or whatever.
+
+Not only is it part of modern technology, but it's even used inside
+films, TV shows, and video games. See TV Tropes for dozens of examples
+where inside the film they fast-forward [1].
+
+> This isn't something for your patch, but I wonder more generally if we
+> shouldn't consider moving away from the term entirely, and just say a
+> branch was one of:
+> =
+
+>     * advanced (or some other such term, forwarded?)
+>     * rebased
+>     * merged
+> =
+
+> The existence (and it being the default) of "merge --ff" makes that
+> somewhat difficult, but in those cases we could and probably should jus=
+t
+> also say "advanced" (or whatever), since that's what happened, ditto a
+> noop rebase.
+
+I already thought about it and I don't think so. The word "advanced"
+doesn't hint where, how much, or how quickly, could very well be just
+one commit forward.
+
+This is one of those rare occasions where I think the git project chose
+the perfect word.
+
+Cheers.
+
+[1] https://tvtropes.org/pmwiki/pmwiki.php/Main/FastForwardGag
+
+-- =
+
+Felipe Contreras=
