@@ -2,115 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A42E3C2B9F4
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 06:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C3DCC2B9F4
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 07:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 746DF613B9
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 06:07:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 196E96141E
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 07:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230404AbhFYGJj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Jun 2021 02:09:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56756 "EHLO
+        id S229474AbhFYHPM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Jun 2021 03:15:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230192AbhFYGJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jun 2021 02:09:39 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF86BC061574
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 23:07:17 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id s15so11814179edt.13
-        for <git@vger.kernel.org>; Thu, 24 Jun 2021 23:07:17 -0700 (PDT)
+        with ESMTP id S229437AbhFYHPL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jun 2021 03:15:11 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8C0C061574
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 00:12:51 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id f15so9422256wro.8
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 00:12:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=ml0FDZYP/5f4jpUHHJZ1vPsXPoDVXlMHJvil7jnstA8=;
-        b=T+ahUBQCXFU5R152bb+yJ3XSuzeFWvDtzuHqLSAvsMQoPztcvymBHU08POJmY44Mhq
-         X7YkhV1hUtzB0wOAzAC+FmAuS2UmEW3dqNCNuBTNgW6huy6BSHqW7AaN9H1QjJAnu52c
-         +n5trt5KhSkfS0TNJgtUX+DfyPwoOD8dBsNIHuM8FIXCQVITGlSLezdl1xkkZaNhQbeR
-         glF3C749ZbINZb6McLAD2SQ9tLO0TGusQtMcX0F2vNu45UMKBcpdmfOgh3NZoaoo7OUZ
-         OEn1q+hoZskhlS3SPD18hTic9ERx/uHp6xqwvd39GhozzdCznmbMY9laU54yfzuuDvDl
-         pBcA==
+        d=tesisquare-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Pg73xCzjm6TtWcgIZqz+faFjEfLR0Ky0u6xknk45Ln4=;
+        b=Iot2VX3fFZHlO0DPH4iYY5P1aSSsFkIMP0TnVzJ2h1WvMRmAHejcLuVk/mYIf/Nqhd
+         qIvdz3ErA+hEZPxXCMrDp2RqioPqYZ6Zz/UL5SjO8pOgNfBGe0je7iCHyP+nsJ073Ygx
+         a2MOLMY3GL01eZWAe08O1adlgUA0Qg+bWjEIULEKi8/w4ud/ECh77zcazIM6xlvcFY56
+         FFkI+3BV7FHkmlGbmlgZuz0R4nac8SpNRiq/BEgoWr4GebKFyLl0w79FgdDaanl5ajow
+         oTyac94z3sSijUJ7S1owwLcWtRRmcK2xjzZ5vT93sb7vx0fzv3b+qxYp2oJR24rQUFBK
+         dUEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=ml0FDZYP/5f4jpUHHJZ1vPsXPoDVXlMHJvil7jnstA8=;
-        b=OYMgFIo7HbSIZYtRhRHGMVX1XUvo33ET+cNj4UnfSo7rR9iQ0vMPEwxhg9PlicQiyL
-         7nD2PDY27AwY5sEfXJAB3ODxbXOUeW0vnGssB1yfB+ZXoeeisPIL2QHs7qMEAyh0a4bz
-         HzL7mrq8PX8smNA+npIqezvr69dz4jFdrQ6KaNjbL9NV84mlfRoo3IuqOanphGFyCILk
-         1NaCg2HOJ3ru57RBBTVxyQZysDyy3EFkytARBZ30c26YWGwH3yTv8IoACBjwasDt5sSO
-         1i4xb4XEtkLV9SE2C6ekiz1LstgXiG1NkycF61RxcQWtTQ65DivTvjsOa6UB7SdVA+t5
-         zRvw==
-X-Gm-Message-State: AOAM532aKiYspcV+sprbJjpjbxD/V8Uw/kjSpdhbSAjlyz4zsZRGCqz6
-        Vu26XuMDA1Us+3ilsRaD44w=
-X-Google-Smtp-Source: ABdhPJwgaVoWNE17BsT3hNXLKlIDCKPYAGGueHlasNYkRjeunf3bFiwgH1BZODbdG2GfgbiN2453/g==
-X-Received: by 2002:a05:6402:c8:: with SMTP id i8mr12291335edu.380.1624601236325;
-        Thu, 24 Jun 2021 23:07:16 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id d25sm3293214edu.83.2021.06.24.23.07.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jun 2021 23:07:15 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Kevin Buckley <Kevin.Buckley@pawsey.org.au>
-Cc:     git@vger.kernel.org
-Subject: Re: Definition of "the Git repository"
-Date:   Fri, 25 Jun 2021 07:56:49 +0200
-References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
-Message-ID: <87tulmxyss.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Pg73xCzjm6TtWcgIZqz+faFjEfLR0Ky0u6xknk45Ln4=;
+        b=YMlz/aiPeYiaJS1Q3DLGjbJ2d3h132tJZdEkd/5r+8zIS4Eyw+iJTh2rGb5kTuodH4
+         r6PqjjhlfXb9CxSlEmAauutYGUJqYc0mJk2scq3M0e3FlSLXCbTLDSW7eZfGaqESQJKv
+         QQphT9lLqXiW5hX4qn7Hxs1VakTS24qkWJiIeWUvUbzxkrsPdhjwS+ADe1VgaPsOvG//
+         EPKnehec0T7GrhbzxweognFsPnXkBwwoWRhhOV08+0ZW6UjMnIxwIKpHYMhhNBRZM2ly
+         g+Pa931ggGuxYnV6zT/fjugcyQvgC+p8CJfvEv+A/n43oc/q1xkOrNrp/4PVzhFKOAb0
+         Z3vg==
+X-Gm-Message-State: AOAM531FSTE8ONTvcKXuqd9svxLuAUH0/IgOeR4N98wD3GQduaXz7rh/
+        8pLCIWX1mRiERkvHWXec+0x4VwyBRNJFoB/xzzN6iflPChfgu9zd
+X-Google-Smtp-Source: ABdhPJyzUCSFpxS/XP1k30mjOt6QcvzvmoxyDlWPxQHlcmMcGbWvZV66MCq4dl0GaZD3XSOiFfbmi4Qaran41KaqprM=
+X-Received: by 2002:adf:a404:: with SMTP id d4mr3569248wra.156.1624605169671;
+ Fri, 25 Jun 2021 00:12:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CANLwWg4hG=iv9qjOmGHSJ7z7Y+vvvP+x0o3DfR5bH5A-C6_7aQ@mail.gmail.com>
+ <9a83ef22-2291-1364-b0a8-1eb8257972a2@gmail.com> <CANLwWg5Lcf7PYtZ49U-KZ_3UYVb9FJ-g1B+eFYoO2D1t5UArmw@mail.gmail.com>
+ <6b604658-8f7e-ae5d-7161-c48aed7ccbd0@gmail.com>
+In-Reply-To: <6b604658-8f7e-ae5d-7161-c48aed7ccbd0@gmail.com>
+From:   Marco Giuliano <marco.giuliano@tesisquare.com>
+Date:   Fri, 25 Jun 2021 09:12:24 +0200
+Message-ID: <CANLwWg7YFC2VrRYz1PR1U9SVG5yiyRVnyMspGc8PqKktouz8dQ@mail.gmail.com>
+Subject: Re: Nonexistent changes appear rebasing but only with rebase.backend=apply
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Philip,
+oh, so I guessed correctly...
+Could you be more specific about the copy/rename issue of the apply backend ?
+Is there any bug report I can refer to ?
 
-On Fri, Jun 25 2021, Kevin Buckley wrote:
+Thank you very much for your support
 
-> Hi there,
->
-> raising this on the back of a discussion over at the Software
-> Carpentry lesson about Git,
->
->    https://github.com/swcarpentry/git-novice/issues/810
->
-> I used the book to justify my claim that it is the .git directory
-> that is the repository, but I do have to concede that the way that
-> the text in section 2.1 of the book reads, does suggest that one
-> can refer to the working directory PLUS the .git directory as a
-> "repository" as well as being able to refer to the .git directory
-> alone as the "repository".
->
-> In the way I think of it
->
-> git init
->
-> initialises a Git repository, however, the only thing that changes
-> as a result is that a .git directory has been created, ergo, the
-> .git directory is the repository.
->
-> Furthermore, the fact that one can take the .git directory, move it
-> to a new directory and start using it there (very much a nice feature)
-> also suggests to me that it is the .git directory that is the repository,
-> as distict from a working directory, under Git control because of the
-> existence of a repository within it.
->
-> Interested to hear any thoughts around the semantics here,
-> Kevin Buckley
+Marco
 
-I think the right answer to this is that there is no right answer, if
-you read gitglossary(7) you'll find it mostly backs your argument, but
-you'll also find mentions in git's own documentation that say things
-like "a subdirectory of your repository" when referring to the
-repository's working tree.
-
-More importantly it seems like this is documentation for novices, I
-think it's generally more important to get important notions like their
-historical data being stored in that .git thingy than it is to nail down
-every concept involved in that with 100% accuracy.
+On Thu, Jun 24, 2021 at 8:39 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> Hi Marco
+>
+> On 24/06/2021 17:23, Marco Giuliano wrote:
+> > Thanks Felipe and Philip for your answers.
+> >
+> > Let's proceed in order:
+> > @Felipe: I tried rebasing with --no-fork-point but the problem remains the same
+> >
+> > @Philip:
+> > I'm a basic git user, so bear with me if I say silly things...
+> > I tried to search for rebased-patches in .git folder when rebase
+> > stopped waiting for
+> > conflict resolution, but I didn't find any file named like that.
+> > There's a folder named rebase-apply though did you mean that ?
+>
+> Looking at the source I thought they ended up just in .git but I haven't
+> checked again, as you seem to have found the source of the problem below
+> lets not worry about that.
+>
+> > Anyway, looking at the conflict file of "fileA" directly (not behind a
+> > visual diff tool) I noticed that the marker line >>>>>>>> COMMIT
+> > DESCR: FILENAME indicates a different file name then the current
+> > conflicted file.
+> > That reminded me that those two files A & B, were actually copies
+> > (real copy, not symlink) of other two files inside the same repo.
+> > Is it somehow possible that auto-detected-renaming is involved in this
+> > (since the files are identical but in two different locations) ?
+> > Trying to give you some hints, maybe it is totally unrelated...
+>
+> I meant to ask if anything had been copied or renamed but forgot. The
+> merge backend detects copies and renames and handles them correctly but
+> the apply backend does not so I think this is the source of the discrepancy.
+>
+> Best Wishes
+>
+> Phillip
+>
+> > About the blob check you suggested, please be patient but I didn't
+> > understand exactly how to proceed.
+> >
+> > Thanks again for your support,
+> > Marco
+> >
+> >
+> >
+> > On Sun, Jun 20, 2021 at 8:02 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> >>
+> >> Hi Marco
+> >>
+> >> On 18/06/2021 16:21, Marco Giuliano wrote:
+> >>> Hi All
+> >>>
+> >>> I'm facing a strange anomaly during rebase.
+> >>> I'll try to explain what happens because unfortunately I cannot share
+> >>> more information since it's confidential and unfortunately an
+> >>> anonymized export does not reproduce the issue.
+> >>>
+> >>> I have the following repository status:
+> >>>
+> >>>      * commit 2 (BRANCH X)
+> >>>      |
+> >>>      |  * commit 4 (BRANCH Y) (HEAD)
+> >>>      |  |
+> >>>      |  * commit 3
+> >>>      | /
+> >>>      |/
+> >>>      * commit 1
+> >>>      |
+> >>>      |
+> >>>    (...)
+> >>>
+> >>> What I'm trying to do is rebasing branch Y on branch X, with the command:
+> >>> git rebase X
+> >>>
+> >>> The anomaly is that, among other expected conflicts, also two files
+> >>> (fileA, fileB) appear modified in both branches, but those two files
+> >>> have not been modified in any of the 4 commits you see in the graph
+> >>> above!
+> >>> The anomaly appears only with the config setting rebase.backend=apply,
+> >>> while not with rebase.backend=merge (*).
+> >>>
+> >>> This might not be caused by rebase command itself, but rather by some
+> >>> previous operations which might have accidentally "broken" something
+> >>> and that the rebase simply makes them appear.
+> >>> You need to know that commit 4 is the result of several squash and
+> >>> reordering of multiple commits; is it possible that some of those
+> >>> operations have created some "leftovers" ?
+> >>>
+> >>> I know this is difficult without seeing the actual repository, but
+> >>> could you just give me some advice or point me to the place where I
+> >>> can investigate ?
+> >>
+> >> That certainly sounds quite strange. I think the patches used by the
+> >> apply backend are stored in .git/rebased-patches, it might be worth
+> >> looking at that file when the rebase stops for you to resolve the
+> >> conflict resolution to see if that sheds any light on which commits the
+> >> conflicts are coming from. Failing that does the content of the
+> >> conflicts provide any clues as to which commits they are coming from?
+> >> You could also try matching the blob id's from the index line of `diff
+> >> --cc` to the index lines in `git log -p` to try and find where they are
+> >> coming from.
+> >>
+> >> Rebase ought to just replay the commits so in theory it shouldn't matter
+> >> that you've been squashing and rearranging commits. What does `git log
+> >> -p branch-x...branch-y fileA fileB` show? (it shouldn't show anything if
+> >> those files are not touched by any of the commits)
+> >>
+> >> Best Wishes
+> >>
+> >> Phillip
+> >>
+> >>> (*)
+> >>> When the anomaly first appeared, I was using git for windows, version
+> >>> < 2.26.0 (unfortunately I cannot recover the exact number); I decided
+> >>> to upgrade git to 2.31.1 and the anomaly disappeared. Investigating
+> >>> the release notes, I noticed that rebase.backend default value changed
+> >>> from apply to rebase from version 2.26.0.
+> >>> I also copied the repository on linux (with git 2.31.0), and the
+> >>> behavior is the same.
+> >>>
+> >>> Thanks in advance for any help,
+> >>> Best Regards,
+> >>> Marco
+> >>>
+> >>
