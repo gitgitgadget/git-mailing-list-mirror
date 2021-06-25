@@ -2,251 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FEF2C2B9F4
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 11:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CC27C2B9F4
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 14:31:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8CEA461459
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 11:10:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A3F161953
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 14:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbhFYLMU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Jun 2021 07:12:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40876 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230172AbhFYLMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jun 2021 07:12:19 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B9DC061574
-        for <git@vger.kernel.org>; Fri, 25 Jun 2021 04:09:58 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id hc16so14365682ejc.12
-        for <git@vger.kernel.org>; Fri, 25 Jun 2021 04:09:58 -0700 (PDT)
+        id S229653AbhFYOdZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Jun 2021 10:33:25 -0400
+Received: from smtppost.atos.net ([193.56.114.176]:10219 "EHLO
+        smarthost3.atos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S229573AbhFYOdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jun 2021 10:33:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=1ADfCrmJyzZ9E8kVW5H/4fLmysPjcocpX0Vv8ESVobA=;
-        b=fQJna0fwIu7V2kQqguaCAmG+oUeOPTnJx50nmrxELcbWC56389xai/IRRN3q06UXVx
-         0trMCVnPnkFVukY12QdGpa0N60xy9Wigm/Iq7UhM1FDAsRa99JT7Sk1Jw4drjlp5wbYt
-         rVeyvdelH/td1tSEnKg9b7rLkiiTPkDgifLSNZEejX+rORL5m7+lZRgCdMTbbPlz2Ojt
-         8i0nl5z2Isw301TmuCOnE1lUWeuqaE/wFSXkDl7TxmFuiNimhEQPFytLmrb3lGZHlT27
-         CXJiK+zxDKW181BtE5bKjgM0++5txqTHjPB3ySs1w+kUyoVxcXdewOR+DocDdIuWNXC0
-         OpJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=1ADfCrmJyzZ9E8kVW5H/4fLmysPjcocpX0Vv8ESVobA=;
-        b=Ix72A2wP/XqfqTcj+xcK+tXR50lhyduQquuAD+mIPKmJdJGOhoxuPx2e0oYTqrrkCk
-         owhekY1NRaELofhBJvuoIn22yQ+We/VuiCptZd629j9eCT5rtAYM9oVbQYxk/E5sVJqo
-         IIaAEBRJApMple6thFIy4yH2GmwmgiRBUz0Otg+Q/kiwCW6vthfHTCH5Y8SRjwrO2Yms
-         3fj2UKPAuQE414Zbwx3e3XoWmBfBTW/226yQUHS8iI1WVColJfuc2SDa4IHg5akxl+U7
-         p5jHiMoEXxVDq8wbKvtvAt/FOV0CX4v8DbXO76JT2wGdnQHsiPBxKitnlRGY8LqNqrPl
-         yg6g==
-X-Gm-Message-State: AOAM531f3PbFb/xhyoAFZrCYw2fJnkgHHovMNNe0WnGasxteaqpPbNzU
-        knSUQ5HYFCnDB8dTlYe51Nw=
-X-Google-Smtp-Source: ABdhPJxas9O/UjkD8d9URFKV8SwScO0ilBefzuj7mxtXViYDjS3spPge/hCy76AQc1cWLcIwhIfG7Q==
-X-Received: by 2002:a17:906:2d51:: with SMTP id e17mr10229125eji.500.1624619396717;
-        Fri, 25 Jun 2021 04:09:56 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id y5sm3711791eds.12.2021.06.25.04.09.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Jun 2021 04:09:56 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>, git@vger.kernel.org,
-        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/2] doc: pull: explain what is a fast-forward
-Date:   Fri, 25 Jun 2021 12:59:11 +0200
-References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
- <20210621175234.1079004-2-felipe.contreras@gmail.com>
- <b4e612ba-21c7-3bef-d113-0f070449cd87@iee.email>
- <60d49748b8538_2fb2082c@natae.notmuch>
- <c2170f74-b93b-599b-1fb4-45b013c7bff1@iee.email>
- <60d4d75e7622c_242620854@natae.notmuch>
- <93084036-804d-4c52-2836-42efd5deba1c@iee.email>
- <60d5183a9e34d_3a20208b@natae.notmuch>
- <87im22xpp4.fsf@evledraar.gmail.com>
- <60d5b430f2f13_ba7520890@natae.notmuch>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <60d5b430f2f13_ba7520890@natae.notmuch>
-Message-ID: <87czsaxksc.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+  d=atos.net; i=@atos.net; q=dns/txt; s=mail;
+  t=1624631463; x=1656167463;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=VmlcqSqqsAXDqfwhiLDxdKzQe2RvyafLnumm56vaRk0=;
+  b=qOybeOHHlHRkaBv7Gih1+sjB6E9x9OVkp7iZgpRAhV5hiIKZvSP/bIAB
+   vc/yNwSaElYH13bqzjSTD+yw8WlAyx6F6knOuxvXlTyA9r8bnGGnEErC5
+   M7dRI8u0Bvp4n7tmetVOlLUJA/Iq0RMnKvD8UnPFM/aqkBrHiSCtXINYS
+   U=;
+X-IronPort-AV: E=Sophos;i="5.83,299,1616454000"; 
+   d="scan'208";a="219179734"
+X-MGA-submission: =?us-ascii?q?MDGQ2GD9YXtAcyIIf3fZZu8feP/X0jW3QdxEcp?=
+ =?us-ascii?q?rC+2U0+7jt/EEZQueHl+W8t4aFXW0p4wO417LNDQHov/HRaqFAABXQ1j?=
+ =?us-ascii?q?0repZSv8XBJzfyK8ZXXkzrFzNFFaF+a6uZFILBG2Q66uXFjrMAMRgYuC?=
+ =?us-ascii?q?YX?=
+Received: from mail.sis.atos.net (HELO GITEXCPRDMB13.ww931.my-it-solutions.net) ([10.89.28.143])
+  by smarthost3.atos.net with ESMTP/TLS/AES256-GCM-SHA384; 25 Jun 2021 16:30:56 +0200
+Received: from GITEXCPRDMB11.ww931.my-it-solutions.net (10.89.28.141) by
+ GITEXCPRDMB13.ww931.my-it-solutions.net (10.89.28.143) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.14; Fri, 25 Jun 2021 16:30:54 +0200
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (172.16.214.168)
+ by GITEXCPRDMB11.ww931.my-it-solutions.net (10.89.28.141) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.14 via Frontend Transport; Fri, 25 Jun 2021 16:30:54 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gQv0PpQC1Dc1ZILX9tyaLlVFigaJlc25d7muuvdgAhR9soGri43Z8TsM/44eTseS72ARuQVoH0w8KNpLcg7NBAOmwZQNAB0pOUwt5jHTx5tLXH9/GS92oIVW1jrjyR2CjjRwwraFIoi/WWtF1Xm1LFnwdW6m6UD/4acGTRCJjelmypyxkhBKbjxb1rW4gIWlWUwlmijeiJSpSssFM/iPXeZmapZXBpeW+FEMxztX2J2zdTpw/5heC+1zvPmG9Wbr1fFy1i/NDK/ka5qrDaEkeLKOhEJCPRSIeVXHBbiCLMPvQtvoEn9PFEr7fpG9yAPTrr9iKZtIM4jwOdY6CKl2wQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VmlcqSqqsAXDqfwhiLDxdKzQe2RvyafLnumm56vaRk0=;
+ b=ngcL+mhlf6dAtsjWA8TB9v1BQUWHYbvoPSzkEiMjuP73N5+kpnG0S2E6IWg7+67IEe7wFqultayZcuXuRgYmBQLvcITU9+r570fUelL6vBVhwt5pn9Nk6h9vptOzVq9AjUcKkbU1f4JmVzXlSIYZW9Po9O23/IPVYzQyVZCckVWig0wPaly4Qf8PYf6w5dW6z257XLCgogYFzCU0JydbJM3S1YjJ5scCW4/jrbWbE1AoVH8+JjFuIbD9ndK0savuq8jm5sW29B03euLn0uKhCCes4esFq0Q4h3OJRTgMiCiAMg/UxDt3VumeAmzPEX9gNijmHGoeoAiJ/PfIJ36/sg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
+ dkim=pass header.d=atos.net; arc=none
+Received: from AS8PR02MB7302.eurprd02.prod.outlook.com (2603:10a6:20b:3f8::19)
+ by AM5PR0202MB2514.eurprd02.prod.outlook.com (2603:10a6:203:6d::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4264.18; Fri, 25 Jun
+ 2021 14:30:53 +0000
+Received: from AS8PR02MB7302.eurprd02.prod.outlook.com
+ ([fe80::ed80:b8f7:efc7:e147]) by AS8PR02MB7302.eurprd02.prod.outlook.com
+ ([fe80::ed80:b8f7:efc7:e147%5]) with mapi id 15.20.4264.023; Fri, 25 Jun 2021
+ 14:30:53 +0000
+From:   "Kerry, Richard" <richard.kerry@atos.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,
+        "stolee@gmail.com" <stolee@gmail.com>,
+        "jrnieder@gmail.com" <jrnieder@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: RE: [PATCH 1/4] Documentation: use singular they when appropriate
+Thread-Topic: [PATCH 1/4] Documentation: use singular they when appropriate
+Thread-Index: AQHXW75YcIiaTHB6CUqdN7DKAcvQUasKYV8AgAAIYQCAAUfasIAARScAgBjiMAA=
+Date:   Fri, 25 Jun 2021 14:30:53 +0000
+Message-ID: <AS8PR02MB730242836E3DA3E3F3B1D9DC9C069@AS8PR02MB7302.eurprd02.prod.outlook.com>
+References: <pull.975.git.1623085069.gitgitgadget@gmail.com>
+ <afc51c5e6edec7935a6d0d0a05d396e11311ca6c.1623085069.git.gitgitgadget@gmail.com>
+ <YL+p+MlgJ754YoqB@google.com> <60bfb1003c46b_1ac15c20894@natae.notmuch>
+ <AS8PR02MB730269FA1BF5C3B0CE20DD8B9C369@AS8PR02MB7302.eurprd02.prod.outlook.com>
+ <60c0fe08659fc_10887208d8@natae.notmuch>
+In-Reply-To: <60c0fe08659fc_10887208d8@natae.notmuch>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=true;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2021-06-25T13:44:27Z;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Method=Standard;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=All Employees_2;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=7c955f44-339c-453f-ac7c-2bed22a1c2fd;
+ MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ContentBits=0
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=atos.net;
+x-originating-ip: [165.225.199.71]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e15a452a-ca1b-457d-120a-08d937e5d695
+x-ms-traffictypediagnostic: AM5PR0202MB2514:
+x-microsoft-antispam-prvs: <AM5PR0202MB2514AA468C136038484B353B9C069@AM5PR0202MB2514.eurprd02.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: xz7g29gwmWIUtr23aNXRYZ9wF3unFKmGpoCLrG2u5CQByPPE5nfkA5XftAUyBPCEdpw5FTKMpSAyJGvyWV46RRnxyBLqsiymz2/TqyjBVRGNzTrxud/mWXDCwI9l32r2+gzIr7D6UqvZUQTAScj7wnFA8lF9uvAnVdUQR8iV2k2WzKRNbnsL1+lZOidnTsgkL1UweJcq01oYOEI6fqFQfNGdOOo4jZzzDK0ik7D/BTEKGpubCzVFhbqTCtoYCUb7GKgXpG9WsGUFrSKsaFD+LtRsuFA8gC7ZNlm632+A9WR0jFneadXZJmgHUcqkKzMFRDOns1jo42dzBjNGoxXl58Pm7sPOSQMmNge/ucgOsSfvsREWc5n+VzDzvj1VGm277neIxPdafgFQC1jS1TAVw8jL/4zORAdCggYiPZbsaFV7/B0V/LbwxhlhisF3HMRNsypD7Nib/bLSGMkVHu2hOUhYxnkXVF1BudKSBk+okSfhcDMWrAkwf725K5jvRavnywDxPegu5WphR9GPqM6pB6lR6fX78VFN4Y5tRGyav9YrXpkGJ+KMLID7pJQhmQmgD48YLkuLWQIbfms/YODw/eSGzAIvK/3zvASMPAKDL44=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR02MB7302.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(136003)(366004)(346002)(396003)(376002)(26005)(53546011)(186003)(55016002)(9686003)(6506007)(71200400001)(55236004)(7416002)(122000001)(316002)(76116006)(66476007)(110136005)(54906003)(38100700002)(66556008)(66946007)(66446008)(5660300002)(64756008)(45080400002)(8936002)(8676002)(478600001)(52536014)(33656002)(2906002)(7696005)(4326008)(4744005)(86362001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?1oCsQSXuwXEurJeTrVhBUiVn8cGVFTZrTeXKJqoD3STD7SkV/GxgbSu++MH5?=
+ =?us-ascii?Q?AeOgnEN4jSBXXSwDE5FSoVGPUdpQf7umJ+pIy+IvtBex4ek/D5EqcqxBvWZH?=
+ =?us-ascii?Q?+BJlQEIyEFc8N7P8qipzNqw5cBwQwomxvTZhXye72U6RcFwm5xjhO8xaeSq6?=
+ =?us-ascii?Q?Mw5ffgpzKsz4WH7ypH88en61kOn52TUporChqnTes+Z/hP12NYBDW11s/7nX?=
+ =?us-ascii?Q?ky5B3br1QLyfzlL0BlBdqOKWRR9A96jfT9HliGL9wBkI9thh2INd9mVRXnDL?=
+ =?us-ascii?Q?rfJo8rPNnIA18Br4LjWd2eq36bOoFaPTlQ/wwjsv6IxfGt86zFSUwnQ9yMHw?=
+ =?us-ascii?Q?X1K6kRJK08Yl+K4OKjpZ7QY2EV4NnazhaFojQmPDcNwHSFlUZNxrqsyNLvE/?=
+ =?us-ascii?Q?D/6wyK7MLoNj+o54G782e14cLif1x92FLPdvh0EFxZL3WnGik0WC4XtPV827?=
+ =?us-ascii?Q?VYSVReRju/UqdKcxjF/xto/JbKgAZ9skgvVnZNikdrObf8tnUgQ4CTa0Rjmi?=
+ =?us-ascii?Q?NMTOc5kbdNZWUPazhu2kuXLsp46iMAxZlBx+7dmpFLEjaMoeAs73wssmrCEw?=
+ =?us-ascii?Q?o2MLksMNmAYPowV9i9CIuT7pX8xjD3RKWYAZBuR02MFCFJEP12czt8tY68MB?=
+ =?us-ascii?Q?PqsromVcAEOEvpkZkAHLpm0d03GEHwfLGlA+2xo8+tpAXmKlHuhHTlE9HhZf?=
+ =?us-ascii?Q?hRO2PR/Qy29UqgE/WBcDS4/QOdpuILKNiQs45fTLahKw3C2qllwChZkbIy6a?=
+ =?us-ascii?Q?INtYTmJSX2r2xzxWO0r/KuMixa+BM4lCGOX1OMEi9CH3qvIAIHpHVhR+EJ0V?=
+ =?us-ascii?Q?UsV7HRedVgeiJLKBorpwMCNaI0vsLbxAtwdWzAFnxVoUhE63Wy67GGYUt3hY?=
+ =?us-ascii?Q?LvwDlVJdBEbnlSMpYYlpx22zQRQdImaPqjxkokMkDyT+IIJaBZxFcnZrTPl/?=
+ =?us-ascii?Q?fMRQWzM8QOsLTSA/7UTgQNk//rDSsfigmPrhA8Mw2J6yV+3dpw8fCXuPj1xL?=
+ =?us-ascii?Q?JwVwEcViiFRdkUpl7g3SOZH8tgN6p9yfjgm6jkw2idr2Rm6ioyKaKarqGUFr?=
+ =?us-ascii?Q?eXPyiWwEzCmyDqfFbwD9EkNv0RTXGVuo9E41p44juVXNISApD0dom/cBy0BT?=
+ =?us-ascii?Q?OQi1VUOfWtov1vCXRHu0yuU7tH0AjkDtbpcaYNhB6Q4tjj2F4xY5wJln+EUr?=
+ =?us-ascii?Q?cQ0cWuNaFUay50mt4HSdsetIOhBpMtyitPe0IX/HgPVDRSiYsYKg6unoUjao?=
+ =?us-ascii?Q?jsrYcqiec5D84O9xqfSF7p07dJYTAWC8h9lnXlfE9+wwbjFdR9cQjHN4fri6?=
+ =?us-ascii?Q?G77L4TbU4TQF/XVvnIwYQ0/t?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR02MB7302.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e15a452a-ca1b-457d-120a-08d937e5d695
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jun 2021 14:30:53.5802
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: oyMU3sauP4OU59ErjHnRvJMJzsq33SUFnbDA6dASAqpDaGIOWc/GQf7FajLKg6+N1Vs0YvA6j1k4XvH5cM5LiA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM5PR0202MB2514
+X-OriginatorOrg: atos.net
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Jun 25 2021, Felipe Contreras wrote:
+> From: Felipe Contreras <felipe.contreras@gmail.com>
+> Sent: 09 June 2021 18:45
+> Subject: RE: [PATCH 1/4] Documentation: use singular they when appropriat=
+e
+>=20
+> > [RK]  Or rephrase to sidestep the issue=20
+>=20
+> Would it be possible for you to use quoted line prefix [1] as is common o=
+n
+> this mailing list? We only have the beginnings of a mailing list etiquett=
+e [2],
+> but this is something that reads very different from everyone else.
+=20
+Sorry.  Yes.  Will do.
+When I first looked for reply options In Outlook I couldn't find "indent wi=
+th prefix".
+I've just looked again and found it.
+Though it is still giving me "[RK}" on new lines, so I need another look to=
+ get that turned off.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Thu, Jun 24 2021, Felipe Contreras wrote:
->>=20
->> > Philip Oakley wrote:
->> >> On 24/06/2021 20:05, Felipe Contreras wrote:
->> >> > Philip Oakley wrote:
->> >> >> Hi Felipe,
->> >> >> On 24/06/2021 15:31, Felipe Contreras wrote:
->> >> >>> Philip Oakley wrote:
->> >> >>>> On 21/06/2021 18:52, Felipe Contreras wrote:
->> >> >>>>> --- a/Documentation/git-pull.txt
->> >> >>>>> +++ b/Documentation/git-pull.txt
->> >> >>>>> @@ -41,16 +41,41 @@ Assume the following history exists and the=
- current branch is
->> >> >>>>>  ------------
->> >> >>>>>  	  A---B---C master on origin
->> >> >>>>>  	 /
->> >> >>>>> -    D---E---F---G master
->> >> >>>>> +    D---E master
->> >> >>>>>  	^
->> >> >>>>>  	origin/master in your repository
->> >> >>>>>  ------------
->> >> >>>>>=20=20
->> >> >>>>>  Then "`git pull`" will fetch and replay the changes from the r=
-emote
->> >> >>>>>  `master` branch since it diverged from the local `master` (i.e=
-., `E`)
->> >> >>>>> -until its current commit (`C`) on top of `master` and record t=
-he
->> >> >>>>> -result in a new commit along with the names of the two parent =
-commits
->> >> >>>>> -and a log message from the user describing the changes.
->> >> >>>>> +until its current commit (`C`) on top of `master`.
->> >> >>>>> +
->> >> >>>>> +After the remote changes have been synchronized, the local `ma=
-ster` will
->> >> >>>>> +be fast-forwarded to the same commit as the remote one, theref=
-ore
->> >> >>>> Perhaps s/be fast-forwarded/have been 'fast-forward'ed/ ?
->> >> >>> No, there's multiple steps:
->> >> >> My key point was to 'quote' the fast-forward term.
->> >> > fast-forward is an English word [1], there's no need to quote it as=
- if
->> >> > it weren't.
->> >>=20
->> >> You appear to be arguing that your "explain what is a fast-forward"
->> >> (subject line of the patch) doesn't need, within the patch, to explain
->> >> that it is about the term "fast-forward", being used in a Git specific
->> >> way...
->> >
->> > When you are trying to explain the meaning of a word it's generally
->> > better to not use that word in the explanation. For example if you are
->> > trying to explain "recursion", but you use "recursion" in the
->> > explanation, that kinds of defeats the purpose.
->> >
->> > So yes, in the sentence "the local `master` will be fast-forwarded to
->> > the same commit as the remote one", the verb "fast-forwarded" can easi=
-ly
->> > be replaced with "advanced" and no meaning would be lost.
->> >
->> > The meaning of this "fast-forward" verb is the same as when you
->> > fast-forward a tape, and is not git-specific.
->>=20
->> Using quotes for a term like 'fast-forward' or some made up word like
->> 'qibbix' doesn't just serve the purpose of clarifying which ones are in
->> the dictionary, but also to establish that the quoted word is jargon
->> within the context of the documentation.
->>=20
->> If I invent a new and exciting way to cut grass I might say my new
->> machine 'shaves' the grass. The word "shave" is something I assume
->> everyone knows, but I'm making it clear that I'm referring to the
->> exciting mode of operation of my new death machine.
->>=20
->> So I think it Philip's suggestion makes sense. We're not talking about
->> how to fast-forward a tape, but what happens in git when we use that
->> term.
->
-> No. In this particular sentence we are using fast-forward *precisely* in
-> the same way as a tape. We haven't even talked about what constitutes a
-> "fast-forward" in git jargon.
->
-> Substitute the word "fast-forward", and the meaning remains intact:
->
->   After the remote changes have been synchronized, the local `master`
->   will be advanced to the same commit as the remote one, therefore
->   creating a linear history.
->
-> As I already explained.
+Regards,
+Richard.
 
-I think even if you can accurately substitute the jargon it's worth
-quoting the jargon, to call out that it's jargon we're using quoted that
-place and others.
 
-Anyway, that doesn't have much to do with your isolated change, just a
-general comment on quoting v.s. not quoting invented
-v.s. borrowed/reused words.
-
->> As an aside after however many years of using git this is the first time
->> I made the connection to that usage of the term, I thought it was jargon
->> git invented. That's also something to consider,
->
-> I was in your camp, but after thinking deeply about what would be a
-> better term than "fast-forward" (advance, forward, boost), I realized
-> that in fact "fast-forward" is perfectly fine because it already exists
-> in English and conveys precisely the meaning we want: quickly advance to
-> a desired position.
-
-I think whatever term we're introducing will need git-specific
-explanation. E.g. because a "tree" is an everyday object our use of it
-needs explaining.
-
->> I've also actually seen an interacted with a tape record and VHS tape in
->> my lifetime, but I suspect many readers of this documentation have not.
->
-> But they have pressed fast-forward on their Roku control, or whatever.
->
-> Not only is it part of modern technology, but it's even used inside
-> films, TV shows, and video games. See TV Tropes for dozens of examples
-> where inside the film they fast-forward [1].
-
-Unfortunately I haven't been able to non-fast-forward say the Game of
-Thrones TV show in such a way that the latest seasons makes any sense,
-since no amount of button mashing will merge their version with mine :)
-
-So I think in the context of us using this jargon to describe
-git-specific concepts the connection to reality is tenuous at best
-
->> This isn't something for your patch, but I wonder more generally if we
->> shouldn't consider moving away from the term entirely, and just say a
->> branch was one of:
->>=20
->>     * advanced (or some other such term, forwarded?)
->>     * rebased
->>     * merged
->>=20
->> The existence (and it being the default) of "merge --ff" makes that
->> somewhat difficult, but in those cases we could and probably should just
->> also say "advanced" (or whatever), since that's what happened, ditto a
->> noop rebase.
->
-> I already thought about it and I don't think so. The word "advanced"
-> doesn't hint where, how much, or how quickly, could very well be just
-> one commit forward.
-
-Hrm, we use fast-forward for N commits advanced, including N=3D1, or
-perhaps I'm misunderstanding you.
-
-> This is one of those rare occasions where I think the git project chose
-> the perfect word.
-
-Perhaps, it's not like I've got much in the way of a holistic world view
-with which to replace it.
-
-I do think "perfect" would do a few things it doesn't though, imagine
-reading about it for the first time and not making the connection to
-tapes. Is it an optimization? Is there a slow-forward? What if upstream
-rewound there branch and I merge, is that a merge-backwards?
-
-It's not immediately obvious how rebase/merge/fast-forward relate or
-if/when (e.g. merge sometimes being a merge-ff) they're incompatible
-concepts.
