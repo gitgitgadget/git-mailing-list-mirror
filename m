@@ -2,231 +2,358 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 991BEC49ED6
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 15:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F288CC2B9F4
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 15:49:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA9806198B
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 15:03:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7ED861952
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 15:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbhFYPGS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Jun 2021 11:06:18 -0400
-Received: from smtppost.atos.net ([193.56.114.177]:14850 "EHLO
-        smarthost2.atos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S231781AbhFYPGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jun 2021 11:06:18 -0400
+        id S229978AbhFYPwU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Jun 2021 11:52:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47556 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229630AbhFYPwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jun 2021 11:52:19 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5494CC061574
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 08:49:58 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id h24-20020a9d64180000b029036edcf8f9a6so9711188otl.3
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 08:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=atos.net; i=@atos.net; q=dns/txt; s=mail;
-  t=1624633438; x=1656169438;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=/XilL5cIqZ6R9q7g4JYnT8AhHMtjq24ZA52M0lXcFr8=;
-  b=3wg4zMdJ+xVmZSNyaGHuElK6zpFZVJdbRZNgwBu2vayWfv+1QhR3nH8h
-   9mbLVbYwxXF8eQe7HM8YFau7921ENh7IznH3UoV2nr4Tx2xtXxXLPd8xl
-   gMvY7uQsdYnVIWF1Sr4OEJIXX/pSdl5f07WGUcdNtrhJ2754D0cRdPVZW
-   M=;
-X-IronPort-AV: E=Sophos;i="5.83,299,1616454000"; 
-   d="scan'208";a="223735563"
-X-MGA-submission: =?us-ascii?q?MDEVUOfkwDaDx3ndkI0SnHpPVnE0nuopYKP45J?=
- =?us-ascii?q?+zlAA5VoaFxqljez8L15Mk3Zusc3oDdi3cS33MgECVR9KnpIIMd6j+28?=
- =?us-ascii?q?fd9gzsMqNa1hMdIiTGXYLIyXHAgf0UbuMJN0mekSTNBz3p567+Hmz2lA?=
- =?us-ascii?q?g9?=
-Received: from mail.sis.atos.net (HELO GITEXCPRDMB23.ww931.my-it-solutions.net) ([10.89.29.133])
-  by smarthost2.atos.net with ESMTP/TLS/AES256-GCM-SHA384; 25 Jun 2021 17:03:55 +0200
-Received: from GITEXCPRDMB22.ww931.my-it-solutions.net (10.89.29.132) by
- GITEXCPRDMB23.ww931.my-it-solutions.net (10.89.29.133) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.14; Fri, 25 Jun 2021 17:03:52 +0200
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (172.16.214.169)
- by GITEXCPRDMB22.ww931.my-it-solutions.net (10.89.29.132) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.14 via Frontend Transport; Fri, 25 Jun 2021 17:03:52 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=i5RrriQ84TEsTh6xhMblDiQYzGaNECvXjN28S40kD0ZCmSljUKoGyzkbslCa2jW6d1b52fjOWBCq2E0q/yBAjY0HC1VTxa9Cn5MGDHP77iHDti//W/kXIiu5M6pjnGPT968GgO9HsYBx7so5KPdk2mtEtB4UFjWjYUP1ynni0FX51slsl5ujgWyW8Hznrx28+9e6q+Js/nW/qLVDpaC1zhu0tOIe5s2I/FFI7LkTvkrKwD3At3NzWiFVS/vJ/44tlXJ2H5LnY7K4ndQYeW4OOHL17RlQUZe7vHLt+klQX63osw2eW9lt48Rd9p6MtOwFaeAulaXwDOu+dCgFdsItAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/XilL5cIqZ6R9q7g4JYnT8AhHMtjq24ZA52M0lXcFr8=;
- b=grQTl0dZoMryHej6b0Wx6ODm7sWc4em97dLhEWd7KyJzU8lgx8+5s64XchzIeYWSh2jtcfW72WEDuhvpUXV/iJUH2BQ1g2vPVeSFpYVJm75a4Y1rLUOkC+UTZhIU5J25weD/CFfDiT9mEFEdaTc/LtDZs7Ay/afB2aSj8RK+UR1rQDiSFMjuu/itlgoFc6LTM+TxtExs/YOkXnGjnDpQ0cV9FFrO+lmBMnZIb6XIT37LSBs/WK1BFHuxelvGg1+LWnvV9EP5/Lx0tV1jzTBTNpmwhScPsCV+6HCC3gJC4McIjVFfon9QedP1WOakkYhUXwsLv37wWZfvoGUXaT2ANw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
- dkim=pass header.d=atos.net; arc=none
-Received: from AS8PR02MB7302.eurprd02.prod.outlook.com (2603:10a6:20b:3f8::19)
- by AS8PR02MB7031.eurprd02.prod.outlook.com (2603:10a6:20b:2e0::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4264.19; Fri, 25 Jun
- 2021 15:03:52 +0000
-Received: from AS8PR02MB7302.eurprd02.prod.outlook.com
- ([fe80::ed80:b8f7:efc7:e147]) by AS8PR02MB7302.eurprd02.prod.outlook.com
- ([fe80::ed80:b8f7:efc7:e147%5]) with mapi id 15.20.4264.023; Fri, 25 Jun 2021
- 15:03:52 +0000
-From:   "Kerry, Richard" <richard.kerry@atos.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Jeff King <peff@peff.net>
-CC:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: RE: [PATCH] branch: make -v useful
-Thread-Topic: [PATCH] branch: make -v useful
-Thread-Index: AQHXWag/WYe07QB2/0W9Ak5Qtje+gasF3IIAgAAmXoCAArWBAIAA7xwAgAAR8YCAAB1uAIAABZAAgAAhDMCAAp/tgIAYPBNw
-Date:   Fri, 25 Jun 2021 15:03:51 +0000
-Message-ID: <AS8PR02MB7302119463FF6E69A58E82799C069@AS8PR02MB7302.eurprd02.prod.outlook.com>
-References: <20210605011339.2202-1-felipe.contreras@gmail.com>
- <87czt059sn.fsf@evledraar.gmail.com>
- <YLv8NWL7WfBRkiGe@coredump.intra.peff.net>
- <60be41f6473e2_39c0a208f6@natae.notmuch>
- <YL8KiiGXF8LdGmQ2@coredump.intra.peff.net>
- <60bf1997b1a72_1a2ac520865@natae.notmuch>
- <AS8PR02MB7302DF058D13CAE11A1086FD9C379@AS8PR02MB7302.eurprd02.prod.outlook.com>
- <60bf36f24d2e2_1a848720836@natae.notmuch>
- <AS8PR02MB7302955796AAEF8B9063505E9C379@AS8PR02MB7302.eurprd02.prod.outlook.com>
- <60c18651e2e78_af4cf2086a@natae.notmuch>
-In-Reply-To: <60c18651e2e78_af4cf2086a@natae.notmuch>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=true;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2021-06-25T13:31:24Z;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Method=Standard;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=All Employees_2;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=f4a16082-bb69-4c7b-9e5b-774433b407b4;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ContentBits=0
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=atos.net;
-x-originating-ip: [165.225.199.71]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 79d47092-a3a2-4208-caf8-08d937ea71ce
-x-ms-traffictypediagnostic: AS8PR02MB7031:
-x-microsoft-antispam-prvs: <AS8PR02MB703121856EE399F79A94678A9C069@AS8PR02MB7031.eurprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Of8F2OhV2S1eg3TDQqQU0c/YauQld07Hy9OdV/PYIHOymnMuMN/fXasp7Wz7gsS8Rnd+kp2N/hF3KLUdjYkif36AamaCsdyrtl/F+3vtrrUy6UI99EutzTF+ZXb65Y15XwSHjemAjrr8Qz4tck30udQPOteZQ6FoW5zfZAHknCZ9Q60ynaOdVC/pQeBhWojBOXBQo5UfETulQhckJIUh5qOdB9aYTMfhO+wNVTFSfh9QoY6JSVzEugFbOUdUWXyh+nJ2UjqBJ6fd/nn1NpBLy1plj8NSxRymTGloumsSbVOZwj+ba9+kWNyZYRak6+k1u4hsvzqB7MTvMHMWR+PhLYPA6/27I9DxkDfwOl4L+RHrzVATeNyOOSEdugK4FQAIlAuSU4mlaIFQdr2bvuxOuGbJVtVUgMss8urwLauIjFVuqdVweciO5FtRLxfCkrICSc2aP29uo095ocmboXo14FPTPPB3PlGyh6hnjvFtTOLFwYn7mxj3lrSVUuS3rbkD0dhBYCxIztHSnT5Xtt+yYAWM4w0DvH0zrksEhpQlqocxecV4n/F0qmbFY0jLMQImPAPCbJx1hNCT58VbPT/mxnkTOIL6FvcWMwG+s0rFBTw=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR02MB7302.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(396003)(346002)(376002)(136003)(366004)(66946007)(4326008)(55016002)(76116006)(83380400001)(52536014)(64756008)(66476007)(66556008)(2906002)(9686003)(5660300002)(66446008)(122000001)(186003)(316002)(54906003)(110136005)(6506007)(478600001)(55236004)(8936002)(86362001)(26005)(38100700002)(71200400001)(8676002)(7696005)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Qkt4bFE5eTVrSGNpSXE5VTFCZVI2ZnowQVFMcFFCQTlNc2pwYllvbTQ2N1lC?=
- =?utf-8?B?MnZqcm81UzZYaWRocFRwSHgzdFJ2Ky9xU2Z6RWo2Y2JmSkZOMllRdkVhY0NG?=
- =?utf-8?B?WkpaMTFWNTA2TnNBVGZ2V3J4SjZXZWUrT0NWbmRWTlhrSThhNUI2alpHYUZu?=
- =?utf-8?B?UGMrbzlQNjdPNWladEJRQ3VyQ1pzelI4dVRoNTN3bFd0UGxPUVhlTEUwZllp?=
- =?utf-8?B?bFdlcnNsYW1aVTNaeGttZmc0TVRCZjN6bnBsRFBhdEV2WTRCeFBDTmxLOGZm?=
- =?utf-8?B?UFJDSVdxYWxXZUJlOU5mM0NHaDJTbUx3UXhPWkZMM1dKNFBrUkN4RnJMTkR5?=
- =?utf-8?B?NmhFRTZnejRjZTkvZ29jdng2WjdDRGh2dy8xWThKbm9YRGROZURsUU1OaVZz?=
- =?utf-8?B?dk04dnZManpxQXpuRTJOZm54ZVR4bmw5QzQrSnpBLzNxYXVIQWlFa2phM1RU?=
- =?utf-8?B?Qk5mNXJpZ3RmcCt1MSsrc3ZMQTRIZnBzbjJ2d3pWNmZCM1Y1cE5YbVErQk1I?=
- =?utf-8?B?c3JrTDEwQXNFN3VMQ3JZMkw5dHNyOHcvbTM1cGJwS1M3Y00zVTRiVkdTV1VC?=
- =?utf-8?B?d1M0K1FGOWlVR3FkR0hNNms0ZHp5ZU9ZT2RvbzEyTTZIbEdyeXY0N0VYUkxw?=
- =?utf-8?B?Rk5keGFHMFh3UW5vSjFYUDhub0NVRG5QTWtpZk5ydFVHMGZ2eS9NOGlraEx0?=
- =?utf-8?B?RU42SEtkZ1VvNHFLKzZqTmdxZGY0N0RkSmJLazFraytRVUxBQ3ZkSHFHR1ds?=
- =?utf-8?B?SHlkcDNKY04xZm1IWldmMURrYVpYL25Cek93LzY3elQxbFlKMjE5Sk82Wkg4?=
- =?utf-8?B?NCtUZUMzaXAvc01HUFZOZElWSGdtRWxObTJaQnJJa1kwYkZJUm1BUW9ScDVI?=
- =?utf-8?B?eUVCQSsvUDJrTkFLNkEwM0d0cDJzYW1BWENaQ3NmQlJpSzU5c010U0txYWdB?=
- =?utf-8?B?ZU9VdVlTY3pvZDJWOUJPdEdRSE1oMWxleWZFeHZHSG9HZTFzeDBBT2Rod3B5?=
- =?utf-8?B?TXBwNitLSnRJNDcwZW1rQ1FrSFV0dTdHejNlVTI3MEJienhjRjJoYklCZUVT?=
- =?utf-8?B?NUhzSjJ0MVpTcDI5WFFQbDl1bnE5YStBbTFKMjNyUnBJZkg4QkNvbDllOWpl?=
- =?utf-8?B?S3ZzVlkrUUtNaFB6Tnl0WTUyczd2KzNta1lpYjN6ZXFYU2x2b0lMRWhqcHd4?=
- =?utf-8?B?SnJvaGhseU9oNnNDU0RJQnVpOGo3UXNHdEMwSmxPSUhpOC9KWUhyL1RQZW9Y?=
- =?utf-8?B?UVVoSm9ha1ovWk1OV29oUDJGODNVVFc0STJHZVdWQXhERWFxQUEyWkdOcUF5?=
- =?utf-8?B?MDVvN1RsNUd4ekd1YllWTWFBOCsvc2dmbEJvQUFvWGhGbFZqdnJ3N3R1d2dr?=
- =?utf-8?B?MlI0OHF4N3VIei9NMGVLVlZ3L2pubU1zY0R2YWZLMFdYeW5KeFZxMFpodW94?=
- =?utf-8?B?WUkzSDl1eDBNZzFUNCt3cTZPQ2xtOEFpaStpVHVQa3FiTlQrelI1dDQ4NW1N?=
- =?utf-8?B?c1pKMkxPVktJVXQ5ZUtLbjNLN0REbE9WYndGYjVPQ3Jod0RDaTMwY1R2Wkcw?=
- =?utf-8?B?NkdsaURlWlNtbnQzNGI4aW9GMTJKNVh2VlNEK0gvaGhMZkFWbCt0SG9uWllQ?=
- =?utf-8?B?WWJTZWVXOHFubGFnYytDWGswdWhuSERXV1lHZE5BTkFWNTVhaHNXTDBueit4?=
- =?utf-8?B?Um1KZzJxV0hLRmFtZVYwVUpsSStnU0xsYTRhZFc0dis3Ti9acTY5YWNuc1Vr?=
- =?utf-8?Q?wlqGQHTdknIAUv9Op0QP8gy23i35OICYbEsDgFW?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS8PR02MB7302.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79d47092-a3a2-4208-caf8-08d937ea71ce
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jun 2021 15:03:51.9783
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: oi4RwYpFA9R1NH7bgNOSndFI+vLhYna+yljC8i32/cVLqVe4LzNsMvcDF0tHuL1MqQV5EDzfr/QEhiewjoGc8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR02MB7031
-X-OriginatorOrg: atos.net
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=lnwed4sq8Np/yWgERDionSUu8tCfA6c50R5Kpq3K+V8=;
+        b=k2/fmYEpiX42vtiupp1b0gns86/YhK176XGTeQ4qA1TeZpMsLOmNVTdYa1hqORS+Vn
+         184lKBbQRerIm7OGcyWffcXiMBqSVW87r2bvXTdHGMBPtmnZ9UxgKqMTZFF7jLEe+F19
+         pUSkRh9rY/3pl8RNOmFtc2XsaFDiQ6GR1UnzdZZVoQqYivrzfDn0YyeLDCjsG6R3Ij9K
+         WN94Hb63Sb+EHoaX45+/p3A3PLXNLg6FEeiCzCdQx7z2/7ZyOc0rcCRxHKbcXTSwBenw
+         aALZOS5R2lIPfL7N9oWhRsQZZbxibGj9bBlKDP5gWtHUQt++jSJmPmpxEVlCWppM58cR
+         PomA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=lnwed4sq8Np/yWgERDionSUu8tCfA6c50R5Kpq3K+V8=;
+        b=Zw0rj/i4Yn4/HTeMA8S8jsORaBbrqbRq6YQQ5Uw4fwsJJXfYJzRQK0ZBWQa1MwLEA0
+         4J7qlgboAHsSVd9c3EeBRwaYJtpHaWhhFRsJK6jfogG1j+P0+TCvnpG8hyQsc21hYICl
+         s9vbxlKQ30/vRk9XmUJJdtqo3H3l/wQXNh2OUAVtNQmKBV02HNYHt/Y5OOOovVcgdtd7
+         3tntKQ1LVdD9d0mjGoncDKcFWQ3V7Jo4S5jqHhiQka4VH2iMC1ElzE0smg5/8+iWuafS
+         PIBOYF39Xiu7xixkdawAPbGMu50mRvovotgQw55DKBLa3vf3C2nn0vufilO8Tdy4Y3b8
+         j03w==
+X-Gm-Message-State: AOAM530Eu5l57lfnJCzMNvxPUxzS6HeRILud/wXtwCNyR00rmGh80pq/
+        aT9HS/QP9B2cdpb0f6hHVOM=
+X-Google-Smtp-Source: ABdhPJxTSp2xte9BZ702ll3EzSern2VDdX6QRUYE2jlLZ/vZipNsQOpAiTWEwlW+dUO0cRbDfi4OJA==
+X-Received: by 2002:a05:6830:1098:: with SMTP id y24mr9875309oto.144.1624636197607;
+        Fri, 25 Jun 2021 08:49:57 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id y84sm1376841oie.56.2021.06.25.08.49.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Jun 2021 08:49:56 -0700 (PDT)
+Date:   Fri, 25 Jun 2021 10:49:55 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>, git@vger.kernel.org,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+Message-ID: <60d5fb23c06a6_c2372086f@natae.notmuch>
+In-Reply-To: <87czsaxksc.fsf@evledraar.gmail.com>
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-2-felipe.contreras@gmail.com>
+ <b4e612ba-21c7-3bef-d113-0f070449cd87@iee.email>
+ <60d49748b8538_2fb2082c@natae.notmuch>
+ <c2170f74-b93b-599b-1fb4-45b013c7bff1@iee.email>
+ <60d4d75e7622c_242620854@natae.notmuch>
+ <93084036-804d-4c52-2836-42efd5deba1c@iee.email>
+ <60d5183a9e34d_3a20208b@natae.notmuch>
+ <87im22xpp4.fsf@evledraar.gmail.com>
+ <60d5b430f2f13_ba7520890@natae.notmuch>
+ <87czsaxksc.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 1/2] doc: pull: explain what is a fast-forward
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQo+IEZyb206IEZlbGlwZSBDb250cmVyYXMgPGZlbGlwZS5jb250cmVyYXNAZ21haWwuY29tPg0K
-PiBTZW50OiAxMCBKdW5lIDIwMjEgMDQ6MjYNCj4gDQo+IEtlcnJ5LCBSaWNoYXJkIHdyb3RlOg0K
-PiA+ID4gRG8geW91IGFsd2F5cyBwdXNoIHRvIHRoZSBzYW1lIHJlbW90ZSBicmFuY2ggeW91IHB1
-bGwgZnJvbT8NCj4gDQo+ID4gW1JLXSBZZXMuICBUaGVyZSBhcmUgdHdvIHBlb3BsZSBkb2luZyBt
-b3N0IG9mIHRoZSB3b3JrICwgbWUgYW5kIG9uZQ0KPiBvdGhlci4gIFdlIGVhY2ggbW9zdGx5Og0K
-PiA+IFtSS10gIDEuICBBcmUgbm90IHdvcmtpbmcgb24gdGhlIHNhbWUgdGhpbmdzLiAgSWUgd2Ug
-ZG9uJ3QgZ2VuZXJhdGUNCj4gPiBtYW55IGNvbmZsaWN0cyBbUktdICAyLiAgUHVsbCBhbmQgcHVz
-aCB0byB0aGUgc2FtZSBicmFuY2guICBJZSBlYWNoIG9mDQo+ID4gdXMgaGFzIGEgYnJhbmNoIHRo
-YXQgd2Ugd29yayBvbi4gIEhlIHVzZXMgIm1hc3RlciIsIEkgaGF2ZSBteSBvd24gKEl0DQo+ID4g
-aXMgYSBzaW5nbGUgdmVyeSBsb25nLWxpdmVkIGJyYW5jaCAtIEkga25vdyB0aGF0IGlzbid0IGEg
-cmVjb21tZW5kZWQNCj4gPiB3b3JrZmxvdyBidXQgdGhhdCdzIHdoZXJlIHdlIGFyZSBmb3IgdGhl
-IG1vbWVudCkNCj4gDQo+IEkgY2FsbCB0aGlzIGEgdHdvLXdheSB3b3JrZmxvdy4NCiANCk9rLCBJ
-J20gIG5vdCBzdXJlIEkndmUgaGVhcmQgb2YgdGhhdC4NCkJ1dCB0aGVuIEkndmUgbm90IGxvb2tl
-ZCBpbnRvIG9wdGlvbnMgZm9yIHdvcmtmbG93LiAgSSd2ZSBqdXN0IGFkYXB0ZWQgYW4gZXhpc3Rp
-bmcgb25lIGZvciBHaXQuDQoNCj4gSWYgSSB1bmRlcnN0YW5kIGNvcnJlY3RseSBlYWNoIG9mIHlv
-dSBoYXZlIHlvdXIgb3duIGJyYW5jaCwgYnV0IHlvdSBib3RoIHB1bGwNCj4gYW5kIHB1c2ggdG8g
-eW91ciBjb3JyZXNwb25kaW5nIGJyYW5jaCAoaGUgdG8gaGlzIGJyYW5jaCwgeW91IHRvIHlvdXIN
-Cj4gYnJhbmNoKS4NCg0KWWVzLg0KDQo+ID4gPiBIb3cgYWJvdXQgcmViYXNpbmcgb3IgbWVyZ2lu
-Zz8gRG8geW91IHVzZSB0aGUgc2FtZSByZW1vdGUgYnJhbmNoPw0KDQpTZWUgYmVsb3cuLi4uDQoN
-Cj4gPiBbUktdIE1lcmdlcyBhcmUgaW5mcmVxdWVudCwgYnV0IGJlY2F1c2Ugd2UgYXJlIHdvcmtp
-bmcgaW4gZGlmZmVyZW50IGFyZWFzLA0KPiB3ZSBtZXJnZSB0byAib3VyIG93biIgYnJhbmNoIChm
-ZXcgY29uZmxpY3RzLCB1c3VhbGx5KSBhbmQgcHVzaCB0byBpdHMNCj4gcmVtb3RlLg0KPiANCj4g
-VGhpcyBpcyBjcnVjaWFsLiANCg0KSXMgaXQgPw0KDQo+IElzIHRoZSBsb2NhbCBhbmQgcmVtb3Rl
-IGJyYW5jaCBhbHdheXMgdGhlIHNhbWU/DQoNClllcy4NCg0KPiBJbiBvdGhlciB3b3JkczogZG8g
-eW91IGFsd2F5cyBwdWxsIGZyb20gIm9yaWdpbi90b3BpYyIsIGFuZCBwdXNoIHRvICJ0b3BpYyI/
-DQoNClllcy4NCg0KPiBPciBkbyB5b3Ugc29tZXRpbWVzIHB1bGwgZnJvbSBhbm90aGVyIGJyYW5j
-aD8NCg0KTm8uICBKdXN0IHRoZSBzYW1lIG9uZSBlYWNoIHRpbWUuDQpUaGVuIG9jY2FzaW9uYWxs
-eSBtZXJnaW5nIHRvIHJlY29uY2lsZSBhbnkgYXJlYXMgd2hlcmUgd2UgaGF2ZSB0b3VjaGVkIHRo
-ZSBzYW1lIGZpbGVzLg0KDQo+ID4gW1JLXSBJIGhhdmUgbmV2ZXIgeWV0IGRvbmUgYSByZWJhc2Us
-IGJ1dCBuZWVkIHRvIGRvIHNvIHNvb24gYXMgdGhlcmUgaXMNCj4gd29yayBpbiBhbiBhcmVhIHRo
-YXQgd2UgaGF2ZSBib3RoIHdvcmtlZCBvbi4gIFRoZW4gaXQgd2lsbCBiZSBwdXNoZWQgdG8gdGhl
-DQo+IHVzdWFsIHBsYWNlIC0gaWUgdGhlIHR3byBicmFuY2hlcyBtZW50aW9uZWQgYWJvdmUuDQo+
-IA0KPiBXaGVuIHlvdSBpbnZvbHZlIGFub3RoZXIgYnJhbmNoIGlzIHNvdW5kcyBsaWtlIHlvdSB3
-aWxsIGJlIGluIGEgdHJpYW5ndWxhcg0KPiB3b3JrZmxvdy4NCj4gDQo+IFlvdSB3b3VsZCBiZSBm
-ZXRjaGluZyBmcm9tIHJlbW90ZSBicmFuY2ggQiwgbWVyZ2luZyB0byBsb2NhbCBicmFuY2ggQSwg
-YW5kDQo+IHB1c2hpbmcgdG8gYSByZW1vdGUgYnJhbmNoIEEuDQo+IA0KPiA+IFtSS10gU28gYmFz
-aWNhbGx5LCBubywgbm90IHRyaWFuZ3VsYXIgYXQgYWxsLCBpZiBJIHVuZGVyc3RhbmQgdGhlIG1l
-YW5pbmcgb2YNCj4gdHJpYW5ndWxhciAocHVsbCBhbmQgcHVzaCB0byBkaWZmZXJlbnQgcmVtb3Rl
-cykuDQo+IA0KPiBObywgb25jZSBhZ2FpbjogdHJpYW5ndWxhciB3b3JrZmxvdyBkb2Vzbid0IG5l
-Y2Vzc2FyaWx5IGludm9sdmUgYSBkaWZmZXJlbnQNCj4gcmVtb3RlIChhbHRob3VnaCBpdCB1c3Vh
-bGx5IGRvZXMpLg0KPiANCj4gWW91IGNhbiBwdWxsIGZyb20gYnJhbmNoIEIgZnJvbSBhIGNlbnRy
-YWwgcmVwb3NpdG9yeSwgYW5kIHB1c2ggdG8gYnJhbmNoIEENCj4gZnJvbSB0aGUgc2FtZSByZXBv
-c2l0b3J5LCBhbmQgdGhhdCB3b3VsZCBiZSB0cmlhbmd1bGFyLCBub3QgdHdvLXdheS4NCj4gDQo+
-IA0KPiBJdCdzIHVuZGVyc3RhbmRhYmxlIHRoYXQgdXNlcnMgYXJlIGNvbmZ1c2VkIGFib3V0IHRo
-aXMtLXNpbmNlIGluIGZhY3QgbWFueQ0KPiBkZXZlbG9wZXJzIGFyZSBjb25mdXNlZCB0b28uIEl0
-IHdvdWxkIGJlIG5pY2UgaWYgZ2l0IGhhZCBzb21lIGRvY3VtZW50YXRpb24NCj4gYWJvdXQgdGhl
-IGRpZmZlcmVudCB3b3JrZmxvd3MsIGFsYXMgaXQgZG9lc24ndCBhdCB0aGUgbW9tZW50Lg0KPiAN
-Cj4gQmFzaWNhbGx5IGluIG15IHZpZXcgdGhlcmUgYXJlIGZvdXIgd29ya2Zsb3dzOg0KPiANCj4g
-ICAxLiBDZW50cmFsIC0gdHdvLXdheTogcHVzaCBhbmQgcHVsbCB0aGUgc2FtZSBicmFuY2hlcyBm
-cm9tIHRoZSBzYW1lDQo+ICAgICAgcmVwby4NCj4gICAyLiBEaXN0cmlidXRlZCAtIHR3by13YXk6
-IHB1c2ggYW5kIHB1bGwgdGhlIHNhbWUgYnJhbmNoZXMsIGJ1dCBmcm9tDQo+ICAgICAgZGlmZmVy
-ZW50IHJlcG9zaXRvcmllcyAobWFzdGVyIDwtPiBvcmlnaW4vbWFzdGVyLA0KPiAgICAgIHRvcGlj
-IDwtPiBnaXRodWIvdG9waWMpDQo+ICAgMy4gQ2VudHJhbCAtIHRyaWFuZ3VsYXI6IHB1c2ggYW5k
-IHB1bGwgZGlmZmVyZW50IGJyYW5jaGVzIGZyb20gdGhlDQo+ICAgICAgc2FtZSByZXBvLg0KPiAg
-IDQuIERpc3RyaWJ1dGVkIC0gdHJpYW5ndWxhcjogcHVzaCBhbmQgcHVsbCBkaWZmZXJlbnQgYnJh
-bmNoZXMgZnJvbQ0KPiAgICAgIGRpZmZlcmVudCByZXBvc2l0b3JpZXMuDQo+IA0KPiBJdCBzb3Vu
-ZHMgdG8gbWUgeW91IGFyZSBtb3N0bHkgaW4gIzEsIGJ1dCBzb29uIGRhYmJsaW5nIGludG8gIzMu
-DQogDQpJIHRoaW5rIHdlIGFyZSBqdXN0IGRvaW5nICMxLg0KV2UgbW92ZWQgYSBmZXcgeWVhcnMg
-YWdvIGZyb20gU3VidmVyc2lvbiB0byBHaXQuICBCZWZvcmUgdGhhdCB3ZSB3ZXJlIG9uIENWUyAo
-YWN0dWFsbHkgQ1ZTTlQpLiAgVGhvc2UgYXJlIGNlbnRyYWxpemVkLCB3aXRoIG1lcmdpbmcgYW5k
-IGJyYW5jaGVzIGFsbG93ZWQsIGJ1dCBub3QgZGlmZmVyZW50IHJlcG9zLg0KT3JpZ2luYWxseSBh
-bGwgdGhlIHdvcmsgcHJvZHVjZWQgYSBzaW5nbGUgZmluYWwgcHJvZHVjdCBpbnN0YWxsZXIuICBT
-aW5jZSBteSB3b3JrIGFuZCBoaXMgdHVybmVkIG91dCB0byBiZSBvbiBkaWZmZXJlbnQgcmVsZWFz
-ZSBjeWNsZXMgaXQgd2FzIGNoYW5nZWQgc28gbm93IHRoZXJlIGFyZSB0d28gc2VwYXJhdGUgcHJv
-ZHVjdHMuDQpNeSBwYXJ0IGhhcyBzb21lIGRlcGVuZGVuY2llcyBvbiBoaXMsIHNvIEkgbmVlZCBv
-Y2Nhc2lvbmFsbHkgdG8gaW5jb3Jwb3JhdGUgaGlzIGNoYW5nZXMgaW50byBteSBicmFuY2guDQpJ
-IG9jY2FzaW9uYWxseSBjaGFuZ2VzIGZpbGVzIHRoYXQgd2lsbCBnbyBpbnRvIGhpcyBmaW5hbCBw
-cm9kdWN0LCBzbyB0aGVyZSBpcyB0aGVuIHRoZSBvY2Nhc2lvbmFsIG1lcmdlIGZyb20gbXkgYnJh
-bmNoIHRvIGhpcy4NCg0KQWN0dWFsbHkgbWF5YmUgdGhlcmUgaXMgc29tZSAjMy4NCkFmdGVyIG1l
-cmdpbmcgaGlzIHRvIG1pbmUsIHRoZW4gbWluZSBiYWNrIHRvIGhpcywgSSB3aWxsIHB1c2ggYm90
-aC4gIERvZXMgdGhhdCBtYWtlIGl0ICMzPw0KDQo+IENoZWVycy4NCj4gDQo+IEZlbGlwZSBDb250
-cmVyYXMNCg0KUmVnYXJkcywNClJpY2hhcmQuDQoNCg==
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
+
+> On Fri, Jun 25 2021, Felipe Contreras wrote:
+> =
+
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> =
+
+> >> On Thu, Jun 24 2021, Felipe Contreras wrote:
+> >> =
+
+> >> > Philip Oakley wrote:
+> >> >> On 24/06/2021 20:05, Felipe Contreras wrote:
+> >> >> > Philip Oakley wrote:
+> >> >> >> Hi Felipe,
+> >> >> >> On 24/06/2021 15:31, Felipe Contreras wrote:
+> >> >> >>> Philip Oakley wrote:
+> >> >> >>>> On 21/06/2021 18:52, Felipe Contreras wrote:
+> >> >> >>>>> --- a/Documentation/git-pull.txt
+> >> >> >>>>> +++ b/Documentation/git-pull.txt
+> >> >> >>>>> @@ -41,16 +41,41 @@ Assume the following history exists and=
+ the current branch is
+> >> >> >>>>>  ------------
+> >> >> >>>>>  	  A---B---C master on origin
+> >> >> >>>>>  	 /
+> >> >> >>>>> -    D---E---F---G master
+> >> >> >>>>> +    D---E master
+> >> >> >>>>>  	^
+> >> >> >>>>>  	origin/master in your repository
+> >> >> >>>>>  ------------
+> >> >> >>>>>  =
+
+> >> >> >>>>>  Then "`git pull`" will fetch and replay the changes from t=
+he remote
+> >> >> >>>>>  `master` branch since it diverged from the local `master` =
+(i.e., `E`)
+> >> >> >>>>> -until its current commit (`C`) on top of `master` and reco=
+rd the
+> >> >> >>>>> -result in a new commit along with the names of the two par=
+ent commits
+> >> >> >>>>> -and a log message from the user describing the changes.
+> >> >> >>>>> +until its current commit (`C`) on top of `master`.
+> >> >> >>>>> +
+> >> >> >>>>> +After the remote changes have been synchronized, the local=
+ `master` will
+> >> >> >>>>> +be fast-forwarded to the same commit as the remote one, th=
+erefore
+> >> >> >>>> Perhaps s/be fast-forwarded/have been 'fast-forward'ed/ ?
+> >> >> >>> No, there's multiple steps:
+> >> >> >> My key point was to 'quote' the fast-forward term.
+> >> >> > fast-forward is an English word [1], there's no need to quote i=
+t as if
+> >> >> > it weren't.
+> >> >> =
+
+> >> >> You appear to be arguing that your "explain what is a fast-forwar=
+d"
+> >> >> (subject line of the patch) doesn't need, within the patch, to ex=
+plain
+> >> >> that it is about the term "fast-forward", being used in a Git spe=
+cific
+> >> >> way...
+> >> >
+> >> > When you are trying to explain the meaning of a word it's generall=
+y
+> >> > better to not use that word in the explanation. For example if you=
+ are
+> >> > trying to explain "recursion", but you use "recursion" in the
+> >> > explanation, that kinds of defeats the purpose.
+> >> >
+> >> > So yes, in the sentence "the local `master` will be fast-forwarded=
+ to
+> >> > the same commit as the remote one", the verb "fast-forwarded" can =
+easily
+> >> > be replaced with "advanced" and no meaning would be lost.
+> >> >
+> >> > The meaning of this "fast-forward" verb is the same as when you
+> >> > fast-forward a tape, and is not git-specific.
+> >> =
+
+> >> Using quotes for a term like 'fast-forward' or some made up word lik=
+e
+> >> 'qibbix' doesn't just serve the purpose of clarifying which ones are=
+ in
+> >> the dictionary, but also to establish that the quoted word is jargon=
+
+> >> within the context of the documentation.
+> >> =
+
+> >> If I invent a new and exciting way to cut grass I might say my new
+> >> machine 'shaves' the grass. The word "shave" is something I assume
+> >> everyone knows, but I'm making it clear that I'm referring to the
+> >> exciting mode of operation of my new death machine.
+> >> =
+
+> >> So I think it Philip's suggestion makes sense. We're not talking abo=
+ut
+> >> how to fast-forward a tape, but what happens in git when we use that=
+
+> >> term.
+> >
+> > No. In this particular sentence we are using fast-forward *precisely*=
+ in
+> > the same way as a tape. We haven't even talked about what constitutes=
+ a
+> > "fast-forward" in git jargon.
+> >
+> > Substitute the word "fast-forward", and the meaning remains intact:
+> >
+> >   After the remote changes have been synchronized, the local `master`=
+
+> >   will be advanced to the same commit as the remote one, therefore
+> >   creating a linear history.
+> >
+> > As I already explained.
+> =
+
+> I think even if you can accurately substitute the jargon it's worth
+> quoting the jargon, to call out that it's jargon we're using quoted tha=
+t
+> place and others.
+
+But in this sentence it is not jargon. Do you want me to send another
+patch using "advance" instead of "fast-forward"?
+
+> >> As an aside after however many years of using git this is the first =
+time
+> >> I made the connection to that usage of the term, I thought it was ja=
+rgon
+> >> git invented. That's also something to consider,
+> >
+> > I was in your camp, but after thinking deeply about what would be a
+> > better term than "fast-forward" (advance, forward, boost), I realized=
+
+> > that in fact "fast-forward" is perfectly fine because it already exis=
+ts
+> > in English and conveys precisely the meaning we want: quickly advance=
+ to
+> > a desired position.
+> =
+
+> I think whatever term we're introducing will need git-specific
+> explanation. E.g. because a "tree" is an everyday object our use of it
+> needs explaining.
+
+But in this specific sentence it's not a git-specific explanation. It's
+using as few git-specific concepts, and as many non-git-specific
+concepts, to explain a git-specific concept.
+
+> >> I've also actually seen an interacted with a tape record and VHS tap=
+e in
+> >> my lifetime, but I suspect many readers of this documentation have n=
+ot.
+> >
+> > But they have pressed fast-forward on their Roku control, or whatever=
+.
+> >
+> > Not only is it part of modern technology, but it's even used inside
+> > films, TV shows, and video games. See TV Tropes for dozens of example=
+s
+> > where inside the film they fast-forward [1].
+> =
+
+> Unfortunately I haven't been able to non-fast-forward say the Game of
+> Thrones TV show in such a way that the latest seasons makes any sense,
+> since no amount of button mashing will merge their version with mine :)=
+
+
+But they used the fast-forward gag in Deadpool. Why? Because Hollywood
+writers know their audience, and they know virtually everyone is aware
+of what fast-forwarding is.
+
+Even the simplest remote controllers have a fast-forward button.
+
+> So I think in the context of us using this jargon to describe
+> git-specific concepts the connection to reality is tenuous at best
+
+Why do you think it was named "fast-forward" in the first place? And not
+say "look-announce"?
+
+I still haven't seen an argument as to why Deadpool writers (and many
+others) would have used this concept if it weren't mainstream.
+
+> >> This isn't something for your patch, but I wonder more generally if =
+we
+> >> shouldn't consider moving away from the term entirely, and just say =
+a
+> >> branch was one of:
+> >> =
+
+> >>     * advanced (or some other such term, forwarded?)
+> >>     * rebased
+> >>     * merged
+> >> =
+
+> >> The existence (and it being the default) of "merge --ff" makes that
+> >> somewhat difficult, but in those cases we could and probably should =
+just
+> >> also say "advanced" (or whatever), since that's what happened, ditto=
+ a
+> >> noop rebase.
+> >
+> > I already thought about it and I don't think so. The word "advanced"
+> > doesn't hint where, how much, or how quickly, could very well be just=
+
+> > one commit forward.
+> =
+
+> Hrm, we use fast-forward for N commits advanced, including N=3D1, or
+> perhaps I'm misunderstanding you.
+
+For example in the context of a film, "advance" could easily mean move
+one second ahead, or even unpause.
+
+Fast-forward on the other hand can't be used that way, it implies moving
+quickly many seconds.
+
+> > This is one of those rare occasions where I think the git project cho=
+se
+> > the perfect word.
+> =
+
+> Perhaps, it's not like I've got much in the way of a holistic world vie=
+w
+> with which to replace it.
+> =
+
+> I do think "perfect" would do a few things it doesn't though, imagine
+> reading about it for the first time and not making the connection to
+> tapes. Is it an optimization? Is there a slow-forward? What if upstream=
+
+> rewound there branch and I merge, is that a merge-backwards?
+> =
+
+> It's not immediately obvious how rebase/merge/fast-forward relate or
+> if/when (e.g. merge sometimes being a merge-ff) they're incompatible
+> concepts.
+
+I don't think there's any word in the English language that would
+magically place the fully-formed concept of the git's fast-forward in
+the reader's mind.
+
+That applies for all concepts though. A git "branch" needs to be
+explained, just knowing what a branch is in English isn't enough, and if
+nobody has used a SCM, the same for a "commit".
+
+
+In psychology of learning there's a concept called chunking [1]. In
+order to understand what the word "economy" means, you need to learn
+many other concepts before, including the concept of "market", and for
+that you need many others, including "money", and so on. Very complex
+concepts are constituted by multiple big sub-chunks.
+
+To explain the git-specific concept of a fast-forward, it's in our best
+interest to reuse chunks that are already in the zeitgeist of the
+culture, including the non-git-specific concept of fast-forwarding.
+
+This patch is not simply saying a "fast-forward" is a fast-forward. It's
+explaining the git-specific fast-forward by capitalizing from the
+general knowledge fast-forward, which is so mainstream it's even used in
+Hollywood.
+
+Cheers.
+
+[1] https://en.wikipedia.org/wiki/Chunking_(psychology)
+
+-- =
+
+Felipe Contreras=
