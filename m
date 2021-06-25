@@ -2,184 +2,341 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E923AC2B9F4
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 08:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D97EC2B9F4
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 08:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C953C6141F
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 08:56:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F5586141F
+	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 08:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbhFYI7G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Jun 2021 04:59:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38692 "EHLO
+        id S230318AbhFYI7e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Jun 2021 04:59:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbhFYI7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Jun 2021 04:59:05 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7FFC061574
-        for <git@vger.kernel.org>; Fri, 25 Jun 2021 01:56:43 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso7954918wmh.4
-        for <git@vger.kernel.org>; Fri, 25 Jun 2021 01:56:43 -0700 (PDT)
+        with ESMTP id S229839AbhFYI7d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jun 2021 04:59:33 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69808C061574
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 01:57:11 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id s15so12353868edt.13
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 01:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=kLIgOXevfOq85Zml0LJI1XnW+p/Zl8OIBeo64tnP5SI=;
-        b=JBuXV/utLWRaL68cprRtZ7u+0KviqYVG6iKu34umxYTWk1yCawfkO3QQSuYF5kIYev
-         qP8UKM83ZFYjDMJ1Ftfl97BJXSHfQJMvjvgusqaElX+JHdTQjAWemg9xfQmlMI7Aw5T4
-         tXg9oWx+TBdJQD16aKPluOiME0J91qKkNIPI0NL1Pjh3gYIH5iSJhWoRQGTS1zVc4gJS
-         r9srocRRIpEdZCrRJ4KwZIuVic3baP9O7NDLYJ6GtUcMf/a8FgiAmOkyfk6HrugTvr/B
-         ipLa4ElgGjxlaeM1qT+KeQYTykGf5nhY5b28+i6Rex3tpR0SRyXl+tBel0b1UG6qp9OL
-         w4zA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=71AR0adomIkYjD/W7ufPKpgyVonSBAJLsEXHf+l6eow=;
+        b=LCQyp13xMv82ZLpluAaCydtGqjbO6JKPUP6V9KDCsQt5dDM/DwPSEDD1HKT7OKTnXO
+         geqiTUvCf2d2/BwiGxnwk68CkYzvb21YzmkQ16Sj5mqXM9gHDAVC7kpp8mVrCvPSphD6
+         mTIXmFpyoVMMNp04rosn75w2e0TTCRgFv+NvvdPP0ymy/WAKm1r8bKO9XaZTs6Eb586G
+         0Ogm9S/TRiYqsdXEdK7bzngKtRSP1wGfi2AWJP48WRjwVpFb8IF/GwjHWsaU0isdkosa
+         LMPMD0kUidAD9ErwBOY4AsBaSB82WPdvyjN7qvHTPG3NFPKCzT6K5S+dqEP3qNcG3FFV
+         Fcvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kLIgOXevfOq85Zml0LJI1XnW+p/Zl8OIBeo64tnP5SI=;
-        b=F4zpa4fgwIr+jFZIMbTtEtfNCzw+jCv1rNSHhin+cxq5oWa/4xv5X08uV0dFfXBgc2
-         ArWvt79YDsxsLBfRvx9ygFRGvPkiR9WQGUGoFgmwDws/08Lw98QOP+JBz8eHcN6DeD8V
-         c5Zaj9iVu0RF34MKPaaKwk7tJszz07TIwk/Pj2bgJ8tj0Qi1+55Xuu+uKKzdGT37H2xg
-         NPSPphfS3ijezOh348iUv44JVeBPPB6JytknSVdTWkC19uSKImvd68BkBzrvpKaXcFXx
-         zD7a8wMK7ZbIbLG5mWIMVaG9Zo5hhrTuTNIRXrn93mLh71s9YoJPDeR1NGOeTst+Jlv3
-         vp2A==
-X-Gm-Message-State: AOAM532jXuxzl5MfpDVYVK8Hx5WCaNEqTKHN+I9RWog6RdCfRQbK1xAU
-        AMT8houXb/EBj90LDtYE0VQ68kw6k4M=
-X-Google-Smtp-Source: ABdhPJyF9L6EEKLU9O/ErIwR2K1lyvcrngU/guk/w+arWvi9jz6tDCEKkjOZ3ukPDJaeylBWunV/vA==
-X-Received: by 2002:a05:600c:1c2a:: with SMTP id j42mr9031720wms.173.1624611401891;
-        Fri, 25 Jun 2021 01:56:41 -0700 (PDT)
-Received: from [192.168.5.102] ([87.116.176.212])
-        by smtp.gmail.com with ESMTPSA id g10sm5095820wmh.33.2021.06.25.01.56.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Jun 2021 01:56:41 -0700 (PDT)
-Subject: Re: Definition of "the Git repository"
-To:     Kevin Buckley <Kevin.Buckley@pawsey.org.au>, git@vger.kernel.org
-References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <9099ab09-f6d0-f1e2-1b8e-a55d22a903c5@gmail.com>
-Date:   Fri, 25 Jun 2021 10:56:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=71AR0adomIkYjD/W7ufPKpgyVonSBAJLsEXHf+l6eow=;
+        b=PW9itwjhPT8MIPTNEFThrfAGDUIGTVEw+Q78EW15lBCAW/etbhf70y8cEV9DBh3om9
+         pGwbsnxmFRePjaIUqUcku0Pc6I+o+2J3CDAKsn5FbAo9Co2Qt1i6je2A2SbZpPsZXyeb
+         bTTpt2UYPbA6DCt/GTU0qVhJgjd+CEEWYdAGS2+CkrHEgKCD9JJjrp0WcpWN+UpXn6I3
+         57W4hBorLewTGaEiPY3ps9O/6ErNrXD6sD2fJ/C6O9eMOELzPr86wcFUoX1RZt1V/E+l
+         eFbOEaup+sMZiY6ouMiyLWwG1w6U3vzS/wXSerYMX/AKoGfPziAFNOgoNOOSWmuUBbem
+         VL9A==
+X-Gm-Message-State: AOAM530+/tHJpWKKjqbeOIsJh0LfsJJ7axw1MvZRi6RHZOHkkQ60Eben
+        ++lJPNOv9NKU2QXUdGb+KmU=
+X-Google-Smtp-Source: ABdhPJyuexELqM6fV5v9sL+Vv33cafI2m1Qo8hVSXgX2JPHKEU+aNrc8gwpj+1QLyc8hTkgG427lLg==
+X-Received: by 2002:a05:6402:845:: with SMTP id b5mr12908520edz.266.1624611429712;
+        Fri, 25 Jun 2021 01:57:09 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id v8sm3414422edc.59.2021.06.25.01.57.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Jun 2021 01:57:09 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Why the Makefile is so eager to re-build & re-link
+Date:   Fri, 25 Jun 2021 10:34:20 +0200
+References: <874kdn1j6i.fsf@evledraar.gmail.com>
+ <YNSh0CskelTwuZq0@coredump.intra.peff.net>
+ <fb23a23e-13be-14a8-4fbe-5ca2b4bcdb52@kdbg.org>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
+In-reply-to: <fb23a23e-13be-14a8-4fbe-5ca2b4bcdb52@kdbg.org>
+Message-ID: <87r1gqxqxn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Thu, Jun 24 2021, Johannes Sixt wrote:
 
-On 25/06/2021 03:44, Kevin Buckley wrote:
-> 
-> raising this on the back of a discussion over at the Software
-> Carpentry lesson about Git,
-> 
->    https://github.com/swcarpentry/git-novice/issues/810
-> 
-> I used the book to justify my claim that it is the .git directory
-> that is the repository, but I do have to concede that the way that
-> the text in section 2.1 of the book reads, does suggest that one
-> can refer to the working directory PLUS the .git directory as a
-> "repository" as well as being able to refer to the .git directory
-> alone as the "repository".
-> 
-> In the way I think of it
-> 
-> git init
-> 
-> initialises a Git repository, however, the only thing that changes
-> as a result is that a .git directory has been created, ergo, the
-> .git directory is the repository.
-> 
-> Furthermore, the fact that one can take the .git directory, move it
-> to a new directory and start using it there (very much a nice feature)
-> also suggests to me that it is the .git directory that is the repository,
-> as distict from a working directory, under Git control because of the
-> existence of a repository within it.
-> 
-> Interested to hear any thoughts around the semantics here,
+> Am 24.06.21 um 17:16 schrieb Jeff King:
+>> On Thu, Jun 24, 2021 at 03:16:48PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>>>  * {command,config}-list.h (and in-flight, my hook-list.h): Every time
+>>>    you touch a Documentation/git-*.txt we need to re-generate these, and
+>>>    since their mtime changes we re-compile and re-link all the way up to
+>>>    libgit and our other tools.
+>>>
+>>>    I think the best solution here is to make the generate-*.sh
+>>>    shellscripts faster (just one takes ~300ms of nested shellscripting,
+>>>    just to grep out the first few lines of every git-*.txt, in e.g. Perl
+>>>    or a smarter awk script this would be <5ms).
+>>=20
+>> Yeah, I think Eric mentioned he had looked into doing this in perl, but
+>> we weren't entirely happy with the dependency. Here's another really odd
+>> thing I noticed:
+>>=20
+>>   $ time sh ./generate-cmdlist.sh command-list.txt >one
+>>   real	0m1.323s
+>>   user	0m1.531s
+>>   sys	0m0.834s
+>>=20
+>>   $ time sh -x ./generate-cmdlist.sh command-list.txt >two
+>>   [a bunch of trace output]
+>>   real	0m0.513s
+>>   user	0m0.754s
+>>   sys	0m0.168s
+>>=20
+>>   $ cmp one two
+>>   [no output]
+>>=20
+>> Er, what? Running with "-x" makes it almost 3 times faster to generate
+>> the same output? I'd have said this is an anomaly, but it's repeatable
+>> (and swapping the order produces the same output, so it's not some weird
+>> priming thing). And then to top it all off, redirecting the trace is
+>> slow again:
+>>=20
+>>   $ time sh -x ./generate-cmdlist.sh command-list.txt >two 2>/dev/null
+>>   real	0m1.363s
+>>   user	0m1.538s
+>>   sys	0m0.902s
+>>=20
+>> A little mini-mystery that I think I may leave unsolved for now.
+>
+> Strange, really. Reminds me of the case that the `read` built-in must
+> read input byte by byte if stdin is not connected to a (searchable) file.
+>
+> I have two patches that speed up generate-cmdlist.sh a bit:
+>
+> generate-cmdlist.sh: replace for loop by printf's auto-repeat feature
+> (https://github.com/j6t/git/commit/b6d05f653bede727bc001f299b57969f62d3bc=
+03)
+> generate-cmdlist.sh: spawn fewer processes
+> (https://github.com/j6t/git/commit/fd8721ee8fae06d7b584fa5166f32bf5521ca3=
+04)
+>
+> that I can submit (give me some time, though) or interested parties
+> could pick up.
 
-Thinking out loud, and without discussing various places where "Git 
-repository" might be described one way or the other, a "repository" 
-is a place where *something* is *stored*.
+Interesting, but I think rather than micro-optimizing the O(n) loop it
+makes more sense to turn it into a series of O(1) in -j parallel,
+i.e. actually use the make dependency graph for this as I suggested in:
+https://lore.kernel.org/git/87wnqiyejg.fsf@evledraar.gmail.com/
 
-"Source code repository" would thus be a place where source code is 
-stored, possibly with some metadata (current version, last change, 
-etc.), but not necessarily the whole (versioned) history. For storage 
-purpose alone, Git's own working tree could be then considered a 
-repository in its own right (source code repository, if it contains 
-source code, but it could contain other stuff as well, in addition or 
-standalone). But as soon as you start working in it it's not really 
-(only) a storage anymore (so not a repository), but a working area. 
-It's more of a conceptual thing.
+Something like the hacky throwaway patch that follows. Now when you
+touch a file in Documentation/git-*.txt you re-make just that file
+chain, which gets assembled into the command-list.h:
+=09
+	$ touch Documentation/git-add.txt; time make -k -j $(nproc) git 2>&1
+	GIT_VERSION =3D 2.32.0.94.g87ef2a6b7ed.dirty
+	    GEN build/Documentation/git-add.txt.cmdlist.in
+	    CC version.o
+	    GEN build/Documentation/git-add.txt.cmdlist
+	    GEN command-list.h
+	    CC help.o
+	    AR libgit.a
+	    LINK git
 
-So if we strictly speak of "Git repository", I think it should be a 
-place where Git keeps (stores) your (committed) work, alongside its 
-own (meta)data - and that is the ".git" directory, indeed. Seems 
-simple enough :)
+Those build/* files are, respectively, the relevant line corresponding
+to the *.txt file from command-list.txt:
 
-One place where the confusion might be extended is the notion of 
-"bare repository" for ".git" directory alone (without the working 
-tree), which should then imply ".git" + working tree is in fact 
-"a repository"... which it is, but bare with me - pun intended :)
+    $ cat build/Documentation/git-add.txt.cmdlist.in
+    git-add                                 mainporcelain           worktree
 
-As Git is mainly used to version artifacts being more or less actively 
-worked on (changing, that is), one needs a working area in order to 
-do the actual work, thus we have a working tree happily and conveniently 
-provided by Git by default, as part of *working with* a Git repository.
+And then the line we want in command-list.h at the end:
 
-As you said, having ".git" directory alone is enough to recreate the 
-contents of the working tree, where if you would have the working tree 
-alone, even if that could be considered to be "a repository" (for 
-storage, not work), you would definitely not have "a Git repository" 
-(no ".git" directory).
+    $ cat build/Documentation/git-add.txt.cmdlist
+        { "git-add", N_("Add file contents to the index"), 0 | CAT_mainporc=
+elain | CAT_worktree },
 
-Also, when you work with a remote Git repository, it's only the 
-committed stuff you can work with - what's inside ".git". You have no 
-idea of contents of a working tree (and ideally not knowing if one 
-even exists, though that's not always the case, like if you try to 
-push to a checked out branch).
+The build process in then just a matter of keeping those files
+up-to-date, and having "make" create the command-list.h is just a matter
+of:
 
-For some additional understanding, I guess we can compare "repository" 
-with "archive", possibly being a more familiar concept - you can 
-store source code somewhere, and that's your archive. You don't work 
-on it in there, as then it would not be an archive anymore, but you 
-keep it as a backup which you can always retrieve if needed.
+    cat build/Documentation/*.cmdlist
 
-If you use ZIP to compress your archive, it's then a "ZIP archive". 
-And for the most of the time these two would in fact be interchangeable 
-- you can have one or the other, being able to recreate one from the 
-other (unlike with ".git" and working tree).
+Well, with the categories still being an O(n) affair, but the cost of
+generating those is trivial.
 
-BUT, if you add some additional (meta)data to your ZIP archive - like 
-password, description, etc. - then the two are not interchangeable 
-anymore, "ZIP archive" not being the same as "archive", not being able 
-to be recreated from it.
+I think that aside from optimizing for speed it just makes things
+clearer, if you modify e.g. git-add.txt you see a clear chain of output
+from make about how we generate output from that, and then make the
+command-list.h.
 
-To conclude - Git's concept of a "working tree" alone could be "a 
-repository" (used for storage, not working), but it's not "a Git 
-repository" without the ".git" directory in it. On the other hand, 
-while "Git repository" must have a ".git" directory, it can have a 
-"working tree", too - but it doesn't need to (called "bare [Git] 
-repository" in such a case), as it can be completely recreated from 
-".git" directory alone, being a mere convenience in order to be able 
-to do the actual (development) work (and not required for "Git 
-repository" to be a "repository").
+Now we'd just show a mysterious command-list.h entry. Whenever you have
+"make" create one file from many it becomes hard to see at a glance
+what's going on.
 
-Finally, as "Git repository" could be referred to as only a 
-"repository" for brevity (which it is, in general), it's important to 
-notice the latter might be ambiguous (as it does not imply "Git 
-repository" in particular), thus using "Git repository" when being in 
-the clear is paramount, indicating that you're interested in ".git" 
-directory precisely (and possibly, but not necessarily the working 
-tree as well). If interested in ".git" directory alone, "bare Git 
-repository" is the most precise term.
+I'd be curious to see what how that performs e.g. on Windows, on Linux I
+get e.g. (warm cache):
+=09
+	$ touch Documentation/git-a*.txt; time make -k -j $(nproc) command-list.h =
+2>&1
+	    GEN build/Documentation/git-apply.txt.cmdlist.in
+	    GEN build/Documentation/git-annotate.txt.cmdlist.in
+	    GEN build/Documentation/git-am.txt.cmdlist.in
+	    GEN build/Documentation/git-add.txt.cmdlist.in
+	    GEN build/Documentation/git-archimport.txt.cmdlist.in
+	    GEN build/Documentation/git-archive.txt.cmdlist.in
+	    GEN build/Documentation/git-apply.txt.cmdlist
+	    GEN build/Documentation/git-annotate.txt.cmdlist
+	    GEN build/Documentation/git-am.txt.cmdlist
+	    GEN build/Documentation/git-add.txt.cmdlist
+	    GEN build/Documentation/git-archimport.txt.cmdlist
+	    GEN build/Documentation/git-archive.txt.cmdlist
+	    GEN command-list.h
+=09
+	real    0m0.214s
+	user    0m0.196s
+	sys     0m0.071s
+=09
+Doing the same on master takes around 600ms for me at best:
+=09
+	$ touch Documentation/git-a*.txt; time make -k -j $(nproc) command-list.h =
+2>&1
+	    GEN command-list.h
+=09
+	real    0m0.611s
+	user    0m0.756s
+	sys     0m0.112s
 
-Regards, Buga
+It's even faster when I have to make all of them (my -j is =3D 8), or
+around 450ms after a "touch Documentation/git-*.txt".
+
+We have ~170 lines we process in command-list.txt, I'd think on Windows
+you'd get much better results, instead of optimizing those number of
+"sort | uniq" to the same number of "sort -u" the common case is just
+running 1-5 of those, as that's all the *.txt files you changed, then
+just "cat-ing" the full set.
+
+diff --git a/.gitignore b/.gitignore
+index 311841f9bed..9b365395496 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -13,6 +13,7 @@
+ /GIT-USER-AGENT
+ /GIT-VERSION-FILE
+ /bin-wrappers/
++/build/
+ /git
+ /git-add
+ /git-add--interactive
+diff --git a/Makefile b/Makefile
+index c3565fc0f8f..5e845bd0f69 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2231,12 +2231,30 @@ config-list.h: Documentation/*config.txt Documentat=
+ion/config/*.txt
+ 	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
+ 		>$@+ && mv $@+ $@
+=20
+-command-list.h: generate-cmdlist.sh command-list.txt
++build/Documentation:
++	$(QUIET_GEN)mkdir -p build/Documentation
++.PRECIOUS: build/Documentation/git%.txt.cmdlist.in
++build/Documentation/git%.txt.cmdlist.in: Documentation/git%.txt
++	$(QUIET_GEN)if ! grep -w $(patsubst build/Documentation/%.txt.cmdlist.in,=
+%,$@) command-list.txt >$@; \
++	then \
++		# For e.g. git-init-db, which has a *.txt file, but no \
++		# command-list.h entry \
++		>$@; \
++	fi
++build/Documentation/git%.txt.cmdlist: build/Documentation/git%.txt.cmdlist=
+.in
++	$(QUIET_GEN)./generate-cmdlist.sh --tail $< >$@
+=20
+-command-list.h: $(wildcard Documentation/git*.txt)
+-	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
++COMMAND_LIST_H_FILES =3D $(filter-out Documentation/git.txt,$(wildcard Doc=
+umentation/git*.txt))
++
++COMMAND_LIST_GEN =3D $(patsubst Documentation/%.txt,build/Documentation/%.=
+txt.cmdlist,$(COMMAND_LIST_H_FILES))
++command-list.h: build/Documentation generate-cmdlist.sh command-list.txt $=
+(COMMAND_LIST_GEN)
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh --header \
+ 		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
+-		command-list.txt >$@+ && mv $@+ $@
++		command-list.txt >$@+ && \
++	echo "static struct cmdname_help command_list[] =3D {" >>$@+ && \
++	cat build/Documentation/*.txt.cmdlist >>$@+ && \
++	echo "};" >>$@+ && \
++	mv $@+ $@
+=20
+ SCRIPT_DEFINES =3D $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
+ 	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 9dbbb08e70a..f80266d5138 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -1,5 +1,8 @@
+ #!/bin/sh
+=20
++mode=3D$1
++shift
++
+ die () {
+ 	echo "$@" >&2
+ 	exit 1
+@@ -61,8 +64,6 @@ define_category_names () {
+ }
+=20
+ print_command_list () {
+-	echo "static struct cmdname_help command_list[] =3D {"
+-
+ 	command_list "$1" |
+ 	while read cmd rest
+ 	do
+@@ -73,6 +74,9 @@ print_command_list () {
+ 		done
+ 		echo " },"
+ 	done
++}
++
++end_print_command_list () {
+ 	echo "};"
+ }
+=20
+@@ -84,6 +88,12 @@ do
+ 	shift
+ done
+=20
++if test "$mode" =3D "--tail"
++then
++	print_command_list "$1"
++	exit 0
++fi
++
+ echo "/* Automatically generated by generate-cmdlist.sh */
+ struct cmdname_help {
+ 	const char *name;
+@@ -94,5 +104,3 @@ struct cmdname_help {
+ define_categories "$1"
+ echo
+ define_category_names "$1"
+-echo
+-print_command_list "$1"
