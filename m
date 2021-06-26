@@ -2,118 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA93C49EA5
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 14:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41C86C49EA6
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 15:12:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 035A261C35
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 14:53:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B43661C4D
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 15:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbhFZOz1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Jun 2021 10:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38412 "EHLO
+        id S230292AbhFZPOe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Jun 2021 11:14:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbhFZOz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jun 2021 10:55:26 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7B6BC061574
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 07:53:03 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id yy20so12365685ejb.6
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 07:53:03 -0700 (PDT)
+        with ESMTP id S230296AbhFZPOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jun 2021 11:14:32 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BA12C061574
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 08:12:10 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id y4so6812338qvs.10
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 08:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=HKQHTSgyGOpC6HpG2nqBhycSYu/KvRkv6+eGcT8vEco=;
-        b=JyezNMTDthiN+6ATZJWr8RvpKqhe6FlmOXfwnyT37BP90JhqZoHSBc+SOTSaEdcHQv
-         TmUd00rzjvNAIuM30270Zn74QwfE6lhzQjabhKTLa3/Bz5uN1DkhJQtu58MWDnSLZfe3
-         QD/g7d6voenWmtjtHrGuI5losndP4ig3wTsxAeMidDtCdOs5L3ZvBKgJ3BOI18YlC3/R
-         LOnpQnfDxZN659p8VrM6cqo9YteEwOvGYIAUcGQLkb8N5Sh+5livcLt6KRb1TuX13F9W
-         k/qpUZPDKfJwTxJx+ayIpXlvyPBGMN/gLP4D+QLkOKPv6ydIqR2oayUviM/1WRQGfInx
-         9cGw==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=lDuXyT0z4h7iSIkc2Lzf15FJaG8D7Be89DzUoLrDWKQ=;
+        b=KJ6Ddi+lliwire04GzELScDL4wyRPXPBXD1sNMqw1tf0uDVrkDIrfZQkFBiGsCdK3c
+         MJAgCu3inRNpZHa+NiA/8Nkgz6VWtXqjbTg3WpyhfjotRynI1ktwGvvtasK/1O3d8wV7
+         pKckCGw+J2ShgPY+EbX/iTMZpxanomCDv/cOe/ATp539GfebosgKgjjeTO7KuTLHBpkg
+         qupwF4LQgMBExNQQTm47m88KPU2NXWlTqKU/am83nb/OE/Ko5Msh9BTpG/HS98mtke39
+         gI2Gji3mshAq9rAIBSKvtHneYvjiFvPiF/WPjPEV/IiARkGDikKs2trxRNTIwT8twbJL
+         Jgsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=HKQHTSgyGOpC6HpG2nqBhycSYu/KvRkv6+eGcT8vEco=;
-        b=NM/n1tFnJlNB2s6oBjrLalQ+VvluuvkaBFj34DtE6LRc9qKwhqgxux/2d5JTZxHXMV
-         WQxOh0ryQrRnpNgS7B4GftEHGTXBip9IV8ZnPpggl31d831NwzT78+MU19Mx67GFJc0V
-         AZTD/I1L8uw0uBWMK9AB4AYYqakjGt6lZAvaIY96evcP2xNjwCeQP6S32VhihJymKWb1
-         aTnv4J0dm6EoICRbNk6U2YKHq9kmkIfcWwUw1SBFnb8A65zPHuwUx3crmIWIU2jrcZAD
-         VGf9LaTz3oypwmZc1nmsxK+4nDnitzWkbpt8AGKNrQ6YlM2FOMI+TTPIsiK6O8hTGaC9
-         Mb2Q==
-X-Gm-Message-State: AOAM531u3R6f9wYAfBq9FTAv11xIvf2lA8lCo/MtTnVHDj9TbqouQPYJ
-        HDRRY29PStnvKm45obaHhWk=
-X-Google-Smtp-Source: ABdhPJz6jDODK2JCGdCV5tW9y8tnYg4M12ITN0OdfJmw1a4VmDbUBN6SQL0VjBp7YblgHR07TPK2Bw==
-X-Received: by 2002:a17:906:a28b:: with SMTP id i11mr16882874ejz.143.1624719182197;
-        Sat, 26 Jun 2021 07:53:02 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id ia20sm4346437ejc.96.2021.06.26.07.53.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Jun 2021 07:53:01 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8] help: add option to colorize man pages under less
-Date:   Sat, 26 Jun 2021 16:49:46 +0200
-References: <20210523054454.1188757-1-felipe.contreras@gmail.com>
- <20210626025040.104428-1-felipe.contreras@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.12
-In-reply-to: <20210626025040.104428-1-felipe.contreras@gmail.com>
-Message-ID: <877digy8xe.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=lDuXyT0z4h7iSIkc2Lzf15FJaG8D7Be89DzUoLrDWKQ=;
+        b=k989Afo+UpnnIcJNzte3DbVKoqFzR6oihtFdKypoqUJEMrzrZ67yZrrVIhEjeY5x7J
+         7oF304RDuVWLhkeIT7WaGpPv3F3Tu9GPbo00xeTbK6r72pW+Yx5CCkTtbTxSJ/oMo/64
+         g0jU6BHBGp1xvon5xux1z/f48/BPsx2xcKf15uCNbweS25eAj98HUsdlVpFyLQahpuRL
+         rN2Mt5CT+8KBtXvHpNFTlZVx5Oab1azgDvGNueW/xneETuSnbB/VoUCd6j8Pfz8rWrD0
+         qEj7CAOzxirWfJiSZPoBkMuNvAHcKVIevyaFXAfDgfXay/9aWkcLNRaUFK7eYaK7R4Rr
+         dCbw==
+X-Gm-Message-State: AOAM530NWM69nKUUXRcIPPHDpGXQX2EbOE+tpHPWyn7X5G79VUyUi3s4
+        /gUZiFROTgQ8qALrZYo8+mA=
+X-Google-Smtp-Source: ABdhPJz4Dj001MczotL7cgO8vv/qFcVb9uI2jaq3NPB0i5LZf+OesCcpuCqgq92ZzpE+TGrQb4rMmA==
+X-Received: by 2002:a0c:ef8b:: with SMTP id w11mr16740372qvr.37.1624720329694;
+        Sat, 26 Jun 2021 08:12:09 -0700 (PDT)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id l23sm5700905qtp.28.2021.06.26.08.12.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Jun 2021 08:12:08 -0700 (PDT)
+Subject: Re: [PATCH] submodule: mark submodules with update=none as inactive
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Rose Kunkel <rose@rosekunkel.me>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
+ <20210619214449.2827705-1-sandals@crustytoothpaste.net>
+ <56b5c722-8baf-9f9c-cc9f-5b5ed49d7fc3@gmail.com>
+ <YNZgoS9R1qam+62C@camp.crustytoothpaste.net>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <67a6e80e-6eb6-10c2-2dcd-0610343884cd@gmail.com>
+Date:   Sat, 26 Jun 2021 11:12:07 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YNZgoS9R1qam+62C@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi brian,
 
-On Fri, Jun 25 2021, Felipe Contreras wrote:
+Le 2021-06-25 à 19:02, brian m. carlson a écrit :
+> On 2021-06-22 at 03:45:45, Philippe Blain wrote:
+>>> That will make us properly ignore the submodule
+>>> when performing recursive operations.
+>>>
+>>> Note that we only do this when the --require-init option is passed,
+>>> which is only passed during clone.  That's because the update-clone
+>>> submodule helper is also invoked during a user-invoked git submodule
+>>> update, where we explicitly indicate that we override the configuration
+>>> setting, so we don't want to set such a configuration option then.
+>>
+>> I'm not sure what you mean here by 'where we explicitely indicate that we
+>> override the configuration setting'. For me, as I wrote above,
+>> 'git clone --recurse-submodules' and 'git clone' followed by
+>> 'git submodule update --init' should lead to mostly [*] the same end result.
+>>
+>> If you mean 'git submodule update --checkout', that indeed seems to sometimes override the 'update=none'
+>> configuration (a fact which is absent from the documentation), 
 
-> This a reroll of =C3=86var's v7 with comments from Jeff King so that
-> color.ui=3Dnever doesn't disable color.man, and the documentation was
-> updated accordingly.
->
-> Additinally I removed one call to colorize_man() in exec_man_cmd() which
-> is not meant for the man command (although it could be used for that).
->
-> Plus a bunch of style changes to the commit message.
+Note that I'm taking back that statemnt about the doc; the description of 'git submodule update'
+states:
 
-This version looks good to me, thanks for the style & grammar fixes on
-my commit message additions.
+"The "updating" can be done in several ways depending on command line options
+and the value of submodule.<name>.update configuration variable. The command line
+option takes precedence over the configuration variable."
 
->           1. color.man=3Dtrue must be set in the config
->           2. The user must use less
->           3. Not have the same LESS_TERMCAP variables set (we call setenv=
-(3) with overwrite=3D0)
->     -     4. Have color.ui enabled
->     -     5. Not have color.pager disabled
->     -     6. Not have git with stdout directed to a file
->     +     4. Not have color.pager disabled
->     +     5. Not have git with stdout directed to a file
+I was somehow under the impression that 'none' was a special case, but it's not.
 
-Even better.
+then it's true that we
+>> would not want to write 'active=false' at that invocation. As an aside, in my limited testing
+>> I could not always get 'git submodule update --checkout' to clone and checkout 'update=none' submdules;
+>> it would fail with "fatal: could not get a repository handle for submodule 'sub1'" because
+>> 'git checkout/reset --recurse-submodules' leaves a bad .git/modules/sub1/config file
+>> with the core.worktree setting when the command fails (this should not happen)...
+> 
+> Yes, that's what I meant.
+> 
+>> In any case, that leads me to think that maybe the right place to write the 'active' setting
+>> would be during 'git submodule init', thus builtin/submodule--helper.c::init_submodule ?
+>> This way it would lead to the same behaviour if the clone was recursive or not,
+>> and it would not interfere with 'git submodule update --checkout'.
+> 
+> Let me take a look at some other approaches and see if I can come up
+> with something a little bit better.
 
->  static struct cmdnames main_cmds, other_cmds;
-> diff --git a/color.h b/color.h
-> index 98894d6a17..d012add4e8 100644
-> --- a/color.h
-> +++ b/color.h
-> @@ -51,6 +51,7 @@ struct strbuf;
->  #define GIT_COLOR_FAINT		"\033[2m"
->  #define GIT_COLOR_FAINT_ITALIC	"\033[2;3m"
->  #define GIT_COLOR_REVERSE	"\033[7m"
-> +#define GIT_COLOR_UNDERLINE	"\033[4m"
->=20=20
->  /* A special value meaning "no color selected" */
->  #define GIT_COLOR_NIL "NIL"
+I tested the following and it fixes the bug (for both recursive clone and
+normal clone followed by 'git submodule update --init') and
+t7406-submodule-update.sh still passes:
 
-Not really needing, but I note that this adds something that we don't
-have in test_decode_color(), not that we're testing this output
-directly, so it doesn't matter for now.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index d55f6262e9..a4cd86c72f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -686,6 +686,13 @@ static void init_submodule(const char *path, const char *prefix,
+  
+  		if (git_config_set_gently(sb.buf, upd))
+  			die(_("Failed to register update mode for submodule path '%s'"), displaypath);
++
++		/* Mark update=none submodules as inactive */
++		if (sub->update_strategy.type == SM_UPDATE_NONE) {
++			strbuf_reset(&sb);
++			strbuf_addf(&sb, "submodule.%s.active", sub->name);
++			git_config_set_gently(sb.buf, "false");
++		}
+  	}
+  	strbuf_release(&sb);
+  	free(displaypath);
+
+> 
+> My apologies for the delay in response; I'm in the process of moving at
+> the moment and my attention has been directed elsewhere than the list.
+> 
+
+No problem of course!
+
+Philippe.
+
+
+[1] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-update--init--remote-N--no-fetch--no-recommend-shallow-f--force--checkout--rebase--merge--referenceltrepositorygt--depthltdepthgt--recursive--jobsltngt--no-single-branch--ltpathgt82308203
