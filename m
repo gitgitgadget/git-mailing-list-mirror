@@ -2,162 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41C86C49EA6
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 15:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B15C49EA5
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 16:32:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B43661C4D
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 15:12:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 159CE619C4
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 16:32:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbhFZPOe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Jun 2021 11:14:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
+        id S229952AbhFZQes (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Jun 2021 12:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230296AbhFZPOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jun 2021 11:14:32 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BA12C061574
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 08:12:10 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id y4so6812338qvs.10
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 08:12:10 -0700 (PDT)
+        with ESMTP id S229890AbhFZQes (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jun 2021 12:34:48 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C4FC061574
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 09:32:25 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id b3so14311311wrm.6
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 09:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=lDuXyT0z4h7iSIkc2Lzf15FJaG8D7Be89DzUoLrDWKQ=;
-        b=KJ6Ddi+lliwire04GzELScDL4wyRPXPBXD1sNMqw1tf0uDVrkDIrfZQkFBiGsCdK3c
-         MJAgCu3inRNpZHa+NiA/8Nkgz6VWtXqjbTg3WpyhfjotRynI1ktwGvvtasK/1O3d8wV7
-         pKckCGw+J2ShgPY+EbX/iTMZpxanomCDv/cOe/ATp539GfebosgKgjjeTO7KuTLHBpkg
-         qupwF4LQgMBExNQQTm47m88KPU2NXWlTqKU/am83nb/OE/Ko5Msh9BTpG/HS98mtke39
-         gI2Gji3mshAq9rAIBSKvtHneYvjiFvPiF/WPjPEV/IiARkGDikKs2trxRNTIwT8twbJL
-         Jgsg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SBKgEfWkhRzK3JSxR69psk85qt07oqQqC2u4cXwusww=;
+        b=mk+5HsxqChcs0ozR+SNp16sNKKu4rd+q4S2vxHQQ09IA8i/Mjc2BD9ms7CYd51gVvH
+         eIqnZiQO3mIVX2/EtPGKS2BuLJdu44sc4pVkapFxplCgsL0SySZaFkRVhqF9GdecDsGh
+         TiYTD3xtO11OF1VySsTdNcGIzeuc8pJ9UMSSKr99RpdUfHWwjvfbEhFUVLGt4OVXjsPt
+         dn1J10eoWzFRR787DUh8dfeiiYXG99Lubda9Xh4AjuXxCvJAkWXxSTSPyQVTkiOp7gA3
+         +1WB1z77zhcys6NEiaQyJFq1RY8/ZY3LGUWWbjTYIWRpuLGsM1e4o2hKzCv4cXX24MTG
+         c12Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=lDuXyT0z4h7iSIkc2Lzf15FJaG8D7Be89DzUoLrDWKQ=;
-        b=k989Afo+UpnnIcJNzte3DbVKoqFzR6oihtFdKypoqUJEMrzrZ67yZrrVIhEjeY5x7J
-         7oF304RDuVWLhkeIT7WaGpPv3F3Tu9GPbo00xeTbK6r72pW+Yx5CCkTtbTxSJ/oMo/64
-         g0jU6BHBGp1xvon5xux1z/f48/BPsx2xcKf15uCNbweS25eAj98HUsdlVpFyLQahpuRL
-         rN2Mt5CT+8KBtXvHpNFTlZVx5Oab1azgDvGNueW/xneETuSnbB/VoUCd6j8Pfz8rWrD0
-         qEj7CAOzxirWfJiSZPoBkMuNvAHcKVIevyaFXAfDgfXay/9aWkcLNRaUFK7eYaK7R4Rr
-         dCbw==
-X-Gm-Message-State: AOAM530NWM69nKUUXRcIPPHDpGXQX2EbOE+tpHPWyn7X5G79VUyUi3s4
-        /gUZiFROTgQ8qALrZYo8+mA=
-X-Google-Smtp-Source: ABdhPJz4Dj001MczotL7cgO8vv/qFcVb9uI2jaq3NPB0i5LZf+OesCcpuCqgq92ZzpE+TGrQb4rMmA==
-X-Received: by 2002:a0c:ef8b:: with SMTP id w11mr16740372qvr.37.1624720329694;
-        Sat, 26 Jun 2021 08:12:09 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id l23sm5700905qtp.28.2021.06.26.08.12.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Jun 2021 08:12:08 -0700 (PDT)
-Subject: Re: [PATCH] submodule: mark submodules with update=none as inactive
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Rose Kunkel <rose@rosekunkel.me>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
- <20210619214449.2827705-1-sandals@crustytoothpaste.net>
- <56b5c722-8baf-9f9c-cc9f-5b5ed49d7fc3@gmail.com>
- <YNZgoS9R1qam+62C@camp.crustytoothpaste.net>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <67a6e80e-6eb6-10c2-2dcd-0610343884cd@gmail.com>
-Date:   Sat, 26 Jun 2021 11:12:07 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        bh=SBKgEfWkhRzK3JSxR69psk85qt07oqQqC2u4cXwusww=;
+        b=Yggo/L2i7TZem3IB9P6OpRiY2iJmr7BsSuXDNQe5FNZHO8fsJ2bvBLdwP/RWvWy4Ol
+         3Ys4mAJ+36YUfGh97UK3m1BDDVyyrHfVnBKjVOybISWYSLQucQQhHUphmZ/R6uYrwL/p
+         yF8xNOQRCDbw+BwUQYTOL7vkttFYxw2t2lv5SOBXfW59GXY7OZ2YuGaCJ3Hegq/Dda9n
+         nGB9ZUKORu+L75l8W+slaOWnWKIC4/tReNNjWzpRaPpdSpq+XL2f0Lc8T8mYHtjDSpHF
+         8dUdVARijE73ANR2Pvb1BW7oAwStzOEs6wulT8HNvDJZrJhxYt6zX0SYxTiWmu3bpg30
+         fxhA==
+X-Gm-Message-State: AOAM533EILI51i6PCpe+nG/yvD1cDBG+lJoxujdBpDtK9m2fqGLCuNv1
+        mVSO12RiNktNPcehgCnXoG5cJk2HV9QHAOphoCo=
+X-Google-Smtp-Source: ABdhPJzUtH7ID+5/JUecapGqz1T43rh4tQrMeuBiFSGBJQBnIWMmw303gIq14o1i+/G097kBgpjmjA==
+X-Received: by 2002:a5d:4904:: with SMTP id x4mr17632313wrq.202.1624725142967;
+        Sat, 26 Jun 2021 09:32:22 -0700 (PDT)
+Received: from localhost.localdomain ([195.246.120.98])
+        by smtp.gmail.com with ESMTPSA id u15sm11286178wmq.1.2021.06.26.09.32.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Jun 2021 09:32:22 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] help: convert git_cmd to page in one place
+Date:   Sat, 26 Jun 2021 18:32:19 +0200
+Message-Id: <20210626163219.4137317-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <YNZgoS9R1qam+62C@camp.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+Depending on the chosen format of help pages, git-help uses function
+show_man_page, show_info_page, or show_html_page.  The first thing all
+three functions do is to convert given `git_cmd` to a `page` using
+function cmd_to_page.
 
-Le 2021-06-25 à 19:02, brian m. carlson a écrit :
-> On 2021-06-22 at 03:45:45, Philippe Blain wrote:
->>> That will make us properly ignore the submodule
->>> when performing recursive operations.
->>>
->>> Note that we only do this when the --require-init option is passed,
->>> which is only passed during clone.  That's because the update-clone
->>> submodule helper is also invoked during a user-invoked git submodule
->>> update, where we explicitly indicate that we override the configuration
->>> setting, so we don't want to set such a configuration option then.
->>
->> I'm not sure what you mean here by 'where we explicitely indicate that we
->> override the configuration setting'. For me, as I wrote above,
->> 'git clone --recurse-submodules' and 'git clone' followed by
->> 'git submodule update --init' should lead to mostly [*] the same end result.
->>
->> If you mean 'git submodule update --checkout', that indeed seems to sometimes override the 'update=none'
->> configuration (a fact which is absent from the documentation), 
+Move the common part of these three functions to function cmd_help to
+avoid code duplication.
 
-Note that I'm taking back that statemnt about the doc; the description of 'git submodule update'
-states:
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ builtin/help.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-"The "updating" can be done in several ways depending on command line options
-and the value of submodule.<name>.update configuration variable. The command line
-option takes precedence over the configuration variable."
+diff --git a/builtin/help.c b/builtin/help.c
+index bb339f0fc8..b7eec06c3d 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -436,10 +436,9 @@ static void exec_viewer(const char *name, const char *page)
+ 		warning(_("'%s': unknown man viewer."), name);
+ }
+ 
+-static void show_man_page(const char *git_cmd)
++static void show_man_page(const char *page)
+ {
+ 	struct man_viewer_list *viewer;
+-	const char *page = cmd_to_page(git_cmd);
+ 	const char *fallback = getenv("GIT_MAN_VIEWER");
+ 
+ 	setup_man_path();
+@@ -453,9 +452,8 @@ static void show_man_page(const char *git_cmd)
+ 	die(_("no man viewer handled the request"));
+ }
+ 
+-static void show_info_page(const char *git_cmd)
++static void show_info_page(const char *page)
+ {
+-	const char *page = cmd_to_page(git_cmd);
+ 	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
+ 	execlp("info", "info", "gitman", page, (char *)NULL);
+ 	die(_("no info viewer handled the request"));
+@@ -486,9 +484,8 @@ static void open_html(const char *path)
+ 	execl_git_cmd("web--browse", "-c", "help.browser", path, (char *)NULL);
+ }
+ 
+-static void show_html_page(const char *git_cmd)
++static void show_html_page(const char *page)
+ {
+-	const char *page = cmd_to_page(git_cmd);
+ 	struct strbuf page_path; /* it leaks but we exec bellow */
+ 
+ 	get_html_page_path(&page_path, page);
+@@ -548,6 +545,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ {
+ 	int nongit;
+ 	enum help_format parsed_help_format;
++	const char *page;
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+ 			builtin_help_usage, 0);
+@@ -606,16 +604,17 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	argv[0] = check_git_cmd(argv[0]);
+ 
++	page = cmd_to_page(argv[0]);
+ 	switch (help_format) {
+ 	case HELP_FORMAT_NONE:
+ 	case HELP_FORMAT_MAN:
+-		show_man_page(argv[0]);
++		show_man_page(page);
+ 		break;
+ 	case HELP_FORMAT_INFO:
+-		show_info_page(argv[0]);
++		show_info_page(page);
+ 		break;
+ 	case HELP_FORMAT_WEB:
+-		show_html_page(argv[0]);
++		show_html_page(page);
+ 		break;
+ 	}
+ 
+-- 
+2.32.0
 
-I was somehow under the impression that 'none' was a special case, but it's not.
-
-then it's true that we
->> would not want to write 'active=false' at that invocation. As an aside, in my limited testing
->> I could not always get 'git submodule update --checkout' to clone and checkout 'update=none' submdules;
->> it would fail with "fatal: could not get a repository handle for submodule 'sub1'" because
->> 'git checkout/reset --recurse-submodules' leaves a bad .git/modules/sub1/config file
->> with the core.worktree setting when the command fails (this should not happen)...
-> 
-> Yes, that's what I meant.
-> 
->> In any case, that leads me to think that maybe the right place to write the 'active' setting
->> would be during 'git submodule init', thus builtin/submodule--helper.c::init_submodule ?
->> This way it would lead to the same behaviour if the clone was recursive or not,
->> and it would not interfere with 'git submodule update --checkout'.
-> 
-> Let me take a look at some other approaches and see if I can come up
-> with something a little bit better.
-
-I tested the following and it fixes the bug (for both recursive clone and
-normal clone followed by 'git submodule update --init') and
-t7406-submodule-update.sh still passes:
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d55f6262e9..a4cd86c72f 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -686,6 +686,13 @@ static void init_submodule(const char *path, const char *prefix,
-  
-  		if (git_config_set_gently(sb.buf, upd))
-  			die(_("Failed to register update mode for submodule path '%s'"), displaypath);
-+
-+		/* Mark update=none submodules as inactive */
-+		if (sub->update_strategy.type == SM_UPDATE_NONE) {
-+			strbuf_reset(&sb);
-+			strbuf_addf(&sb, "submodule.%s.active", sub->name);
-+			git_config_set_gently(sb.buf, "false");
-+		}
-  	}
-  	strbuf_release(&sb);
-  	free(displaypath);
-
-> 
-> My apologies for the delay in response; I'm in the process of moving at
-> the moment and my attention has been directed elsewhere than the list.
-> 
-
-No problem of course!
-
-Philippe.
-
-
-[1] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-update--init--remote-N--no-fetch--no-recommend-shallow-f--force--checkout--rebase--merge--referenceltrepositorygt--depthltdepthgt--recursive--jobsltngt--no-single-branch--ltpathgt82308203
