@@ -2,153 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B15C49EA5
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 16:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F06C7C49EA5
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 17:05:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 159CE619C4
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 16:32:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEE5961C2F
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 17:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbhFZQes (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Jun 2021 12:34:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59844 "EHLO
+        id S230104AbhFZRHs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Jun 2021 13:07:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbhFZQes (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jun 2021 12:34:48 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C4FC061574
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 09:32:25 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id b3so14311311wrm.6
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 09:32:25 -0700 (PDT)
+        with ESMTP id S229916AbhFZRHr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jun 2021 13:07:47 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 357F1C061766
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 10:05:25 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a13so14377839wrf.10
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 10:05:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SBKgEfWkhRzK3JSxR69psk85qt07oqQqC2u4cXwusww=;
-        b=mk+5HsxqChcs0ozR+SNp16sNKKu4rd+q4S2vxHQQ09IA8i/Mjc2BD9ms7CYd51gVvH
-         eIqnZiQO3mIVX2/EtPGKS2BuLJdu44sc4pVkapFxplCgsL0SySZaFkRVhqF9GdecDsGh
-         TiYTD3xtO11OF1VySsTdNcGIzeuc8pJ9UMSSKr99RpdUfHWwjvfbEhFUVLGt4OVXjsPt
-         dn1J10eoWzFRR787DUh8dfeiiYXG99Lubda9Xh4AjuXxCvJAkWXxSTSPyQVTkiOp7gA3
-         +1WB1z77zhcys6NEiaQyJFq1RY8/ZY3LGUWWbjTYIWRpuLGsM1e4o2hKzCv4cXX24MTG
-         c12Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=x2RmhhlrifJJogdSHWJkjQBMbdntxcLjvbsGph67WvQ=;
+        b=JKT6QZklQHmFgIGSjwbwEYglS9VQ5nAiJuygSHBQBVn5i10KptwaKEcathpH+HXNJ5
+         NEfInQq41y25yQreB7/3tBGHEPhKxYGwfVk/vx2ryQrKx+EOL0QoQnt+WHTZDWoHiyVa
+         bTsVh3eDWtMsdOKseaHzgm4nEJ4OjtVmMNwjfElAQ8edEGLfvPqOG6lPBlpcfbrTdSbh
+         f/hhVsGW7b+l3fIInZfrLfKdcADe4Ga/T58f2yt9RUlalPXj2F78/rOMHUNbl1hvTQjA
+         yS9LZkotuhq2UAK6awqzubuqBKkoHbXiACkzCmCAFYfIQ/1gAiHrjCGz0hhe5hsAjujf
+         f4uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SBKgEfWkhRzK3JSxR69psk85qt07oqQqC2u4cXwusww=;
-        b=Yggo/L2i7TZem3IB9P6OpRiY2iJmr7BsSuXDNQe5FNZHO8fsJ2bvBLdwP/RWvWy4Ol
-         3Ys4mAJ+36YUfGh97UK3m1BDDVyyrHfVnBKjVOybISWYSLQucQQhHUphmZ/R6uYrwL/p
-         yF8xNOQRCDbw+BwUQYTOL7vkttFYxw2t2lv5SOBXfW59GXY7OZ2YuGaCJ3Hegq/Dda9n
-         nGB9ZUKORu+L75l8W+slaOWnWKIC4/tReNNjWzpRaPpdSpq+XL2f0Lc8T8mYHtjDSpHF
-         8dUdVARijE73ANR2Pvb1BW7oAwStzOEs6wulT8HNvDJZrJhxYt6zX0SYxTiWmu3bpg30
-         fxhA==
-X-Gm-Message-State: AOAM533EILI51i6PCpe+nG/yvD1cDBG+lJoxujdBpDtK9m2fqGLCuNv1
-        mVSO12RiNktNPcehgCnXoG5cJk2HV9QHAOphoCo=
-X-Google-Smtp-Source: ABdhPJzUtH7ID+5/JUecapGqz1T43rh4tQrMeuBiFSGBJQBnIWMmw303gIq14o1i+/G097kBgpjmjA==
-X-Received: by 2002:a5d:4904:: with SMTP id x4mr17632313wrq.202.1624725142967;
-        Sat, 26 Jun 2021 09:32:22 -0700 (PDT)
-Received: from localhost.localdomain ([195.246.120.98])
-        by smtp.gmail.com with ESMTPSA id u15sm11286178wmq.1.2021.06.26.09.32.21
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=x2RmhhlrifJJogdSHWJkjQBMbdntxcLjvbsGph67WvQ=;
+        b=bs/r4OtN8/fNWppozJyJrerqJ/0OfwGTFXGz9qe2RnrqMGlQWacA7WrO97Hq52mA/1
+         DauDZ0z9i/iP1P3ByF0GJgz4haowDO3fRMvXPiqWJoCUN6smLyGxaRZczC4LWKvIJ42X
+         0VvP37ejuQ7ZTtXKhpAYpWrRcumrPige40xTI4sL6JVHDYH57BcTMHKXk43AEuUNVQPW
+         NHyC9mFdFS+Zm5jrySv658+RaTPilm1D6XuImpN5s6Knu7IiSGoBmFzH+e5Vzv+V4irU
+         YnoTLP6PW0a5vljYJsd+6MVN6udTVE9o/LFU68hKTchIPKP825xO5fxoXOXWkKhDBlck
+         PD3A==
+X-Gm-Message-State: AOAM531fSglUB7HQPaJCcTIN/N5MYjCdiqxZuSwyaFLAhm1+gkbgNqrC
+        rNClOckZ1tgRVU/G33VwkqqP/Fu4ltI=
+X-Google-Smtp-Source: ABdhPJzJmMXdaNgYYJsmz25RU4QdSAHgQY1YBGFx1w/meS6uuK69vQm7fqmTVAoz1gzDHwkRFSYuvQ==
+X-Received: by 2002:a5d:65cc:: with SMTP id e12mr17726441wrw.354.1624727123783;
+        Sat, 26 Jun 2021 10:05:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g15sm8984138wri.75.2021.06.26.10.05.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Jun 2021 09:32:22 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] help: convert git_cmd to page in one place
-Date:   Sat, 26 Jun 2021 18:32:19 +0200
-Message-Id: <20210626163219.4137317-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.32.0
-MIME-Version: 1.0
+        Sat, 26 Jun 2021 10:05:23 -0700 (PDT)
+Message-Id: <d3572e8bc85e4c7a33094f5da71957c2e59fd7f4.1624727121.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1039.git.git.1624727121.gitgitgadget@gmail.com>
+References: <pull.1039.git.git.1624727121.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 26 Jun 2021 17:05:19 +0000
+Subject: [PATCH 1/3] t6423: test directory renames causing rename-to-self
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Depending on the chosen format of help pages, git-help uses function
-show_man_page, show_info_page, or show_html_page.  The first thing all
-three functions do is to convert given `git_cmd` to a `page` using
-function cmd_to_page.
+From: Elijah Newren <newren@gmail.com>
 
-Move the common part of these three functions to function cmd_help to
-avoid code duplication.
+Directory rename detection can cause transitive renames, e.g. if the two
+different sides of history each do one half of:
+    A/file -> B/file
+    B/     -> C/
+then directory rename detection transitively renames to give us C/file.
+Since the default for merge.directoryRenames is conflict, this results
+in an error message saying it is unclear whether the file should be
+placed at B/file or C/file.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+What if C/ is A/, though?  In such a case, the transitive rename would
+give us A/file, the original name we started with.  Logically, having
+an error message with B/file vs. A/file should be fine, as should
+leaving the file where it started.  But the logic in both
+merge-recursive and merge-ort did not handle a case of a filename being
+renamed to itself correctly; merge-recursive had two bugs, and merge-ort
+had one.  Add some testcases covering such a scenario.
+
+Based-on-testcase-by: Anders Kaseorg <andersk@mit.edu>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/help.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ t/t6423-merge-rename-directories.sh | 117 ++++++++++++++++++++++++++++
+ 1 file changed, 117 insertions(+)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index bb339f0fc8..b7eec06c3d 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -436,10 +436,9 @@ static void exec_viewer(const char *name, const char *page)
- 		warning(_("'%s': unknown man viewer."), name);
- }
+diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+index be84d22419d..2a2ab907338 100755
+--- a/t/t6423-merge-rename-directories.sh
++++ b/t/t6423-merge-rename-directories.sh
+@@ -5024,6 +5024,123 @@ test_expect_failure '12h: renaming a file within a renamed directory' '
+ 	)
+ '
  
--static void show_man_page(const char *git_cmd)
-+static void show_man_page(const char *page)
- {
- 	struct man_viewer_list *viewer;
--	const char *page = cmd_to_page(git_cmd);
- 	const char *fallback = getenv("GIT_MAN_VIEWER");
- 
- 	setup_man_path();
-@@ -453,9 +452,8 @@ static void show_man_page(const char *git_cmd)
- 	die(_("no man viewer handled the request"));
- }
- 
--static void show_info_page(const char *git_cmd)
-+static void show_info_page(const char *page)
- {
--	const char *page = cmd_to_page(git_cmd);
- 	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
- 	execlp("info", "info", "gitman", page, (char *)NULL);
- 	die(_("no info viewer handled the request"));
-@@ -486,9 +484,8 @@ static void open_html(const char *path)
- 	execl_git_cmd("web--browse", "-c", "help.browser", path, (char *)NULL);
- }
- 
--static void show_html_page(const char *git_cmd)
-+static void show_html_page(const char *page)
- {
--	const char *page = cmd_to_page(git_cmd);
- 	struct strbuf page_path; /* it leaks but we exec bellow */
- 
- 	get_html_page_path(&page_path, page);
-@@ -548,6 +545,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- {
- 	int nongit;
- 	enum help_format parsed_help_format;
-+	const char *page;
- 
- 	argc = parse_options(argc, argv, prefix, builtin_help_options,
- 			builtin_help_usage, 0);
-@@ -606,16 +604,17 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 
- 	argv[0] = check_git_cmd(argv[0]);
- 
-+	page = cmd_to_page(argv[0]);
- 	switch (help_format) {
- 	case HELP_FORMAT_NONE:
- 	case HELP_FORMAT_MAN:
--		show_man_page(argv[0]);
-+		show_man_page(page);
- 		break;
- 	case HELP_FORMAT_INFO:
--		show_info_page(argv[0]);
-+		show_info_page(page);
- 		break;
- 	case HELP_FORMAT_WEB:
--		show_html_page(argv[0]);
-+		show_html_page(page);
- 		break;
- 	}
- 
++# Testcase 12i, Directory rename causes rename-to-self
++#   Commit O: source/{subdir/foo, bar, baz_1}
++#   Commit A: source/{foo, bar, baz_1}
++#   Commit B: source/{subdir/{foo, bar}, baz_2}
++#   Expected: source/{foo, bar, baz_2}, with conflicts on
++#                source/bar vs. source/subdir/bar
++
++test_setup_12i () {
++	test_create_repo 12i &&
++	(
++		cd 12i &&
++
++		mkdir -p source/subdir &&
++		echo foo >source/subdir/foo &&
++		echo bar >source/bar &&
++		echo baz >source/baz &&
++		git add source &&
++		git commit -m orig &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git switch A &&
++		git mv source/subdir/foo source/foo &&
++		git commit -m A &&
++
++		git switch B &&
++		git mv source/bar source/subdir/bar &&
++		echo more baz >>source/baz &&
++		git commit -m B
++	)
++}
++
++test_expect_merge_algorithm failure failure '12i: Directory rename causes rename-to-self' '
++	test_setup_12i &&
++	(
++		cd 12i &&
++
++		git checkout A^0 &&
++
++		test_must_fail git -c merge.directoryRenames=conflict merge -s recursive B^0 &&
++
++		test_path_is_missing source/subdir &&
++		test_path_is_file source/bar &&
++		test_path_is_file source/baz &&
++
++		git ls-files | uniq >tracked &&
++		test_line_count = 3 tracked &&
++
++		git status --porcelain -uno >actual &&
++		cat >expect <<-\EOF &&
++		UU source/bar
++		 M source/baz
++		EOF
++		test_cmp expect actual
++	)
++'
++
++# Testcase 12j, Directory rename to root causes rename-to-self
++#   Commit O: {subdir/foo, bar, baz_1}
++#   Commit A: {foo, bar, baz_1}
++#   Commit B: {subdir/{foo, bar}, baz_2}
++#   Expected: {foo, bar, baz_2}, with conflicts on bar vs. subdir/bar
++
++test_setup_12j () {
++	test_create_repo 12j &&
++	(
++		cd 12j &&
++
++		mkdir -p subdir &&
++		echo foo >subdir/foo &&
++		echo bar >bar &&
++		echo baz >baz &&
++		git add . &&
++		git commit -m orig &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git switch A &&
++		git mv subdir/foo foo &&
++		git commit -m A &&
++
++		git switch B &&
++		git mv bar subdir/bar &&
++		echo more baz >>baz &&
++		git commit -m B
++	)
++}
++
++test_expect_merge_algorithm failure failure '12j: Directory rename to root causes rename-to-self' '
++	test_setup_12j &&
++	(
++		cd 12j &&
++
++		git checkout A^0 &&
++
++		test_must_fail git -c merge.directoryRenames=conflict merge -s recursive B^0 &&
++
++		test_path_is_missing subdir &&
++		test_path_is_file bar &&
++		test_path_is_file baz &&
++
++		git ls-files | uniq >tracked &&
++		test_line_count = 3 tracked &&
++
++		git status --porcelain -uno >actual &&
++		cat >expect <<-\EOF &&
++		UU bar
++		 M baz
++		EOF
++		test_cmp expect actual
++	)
++'
++
+ ###########################################################################
+ # SECTION 13: Checking informational and conflict messages
+ #
 -- 
-2.32.0
+gitgitgadget
 
