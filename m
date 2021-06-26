@@ -2,135 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58020C2B9F4
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 23:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD717C2B9F4
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 00:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24C24613F2
-	for <git@archiver.kernel.org>; Fri, 25 Jun 2021 23:06:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A63FE6194B
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 00:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229831AbhFYXFx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Jun 2021 19:05:53 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57032 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229776AbhFYXFw (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 25 Jun 2021 19:05:52 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1501560749;
-        Fri, 25 Jun 2021 23:03:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1624662181;
-        bh=fjdUK8eoQvhcBlSJ2w8PfCDMUmIOax2Vj+bH3Y55Tvk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=WIlQ2UE1eOcPK1apAKimRQJk3edSyNIrKrzsqlvN00s8NUK7EBUXem9/Gd0ESrsjJ
-         +WmDu2tNDi58dWM8HUSaXUkoUCwjcXwmzsGVQF0hTdWeEtIXxwmiYz7xb/0ckCcFwR
-         AB/LIa1FTWF/RohcZdAF9sG3dbrssvNsem3IXe+PfbYnLDrBGIaNVJ3OR+I+4jfFKP
-         YAWEtAFdR8ZYb2jYg/mISuKTAWoS4mnkNRcUdkIjia92dqMF0sMXLLHjnrigdnZlrd
-         o+KmBYeb+98CinVN62SBaKRtMHr/y0U8m9didNLaWX3FX0AUrcVhXXc7RscnTWblmR
-         dZC6PW4Y1Q/PAtRSQ4XdgOALp3wA8woga6VTRE7lDZnE1bmgvLrmg4IFLCbocZHtl+
-         XNaJuUFcXqlERCD06DTRZP/gURynMNSoJAjhwqiKxRU5YIseSoalYJcYl8jWJu6W1P
-         z7CL06V1rBoh/51nnF0T58WsDGd6RkpEolXRXQmPAbMtIGGpMz3
-Date:   Fri, 25 Jun 2021 23:02:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org, Rose Kunkel <rose@rosekunkel.me>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] submodule: mark submodules with update=none as inactive
-Message-ID: <YNZgoS9R1qam+62C@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org,
-        Rose Kunkel <rose@rosekunkel.me>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-References: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
- <20210619214449.2827705-1-sandals@crustytoothpaste.net>
- <56b5c722-8baf-9f9c-cc9f-5b5ed49d7fc3@gmail.com>
+        id S229889AbhFZAoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Jun 2021 20:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229831AbhFZAoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Jun 2021 20:44:34 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B08B8C061574
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 17:42:12 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id m15-20020a17090a5a4fb029016f385ffad0so6542356pji.0
+        for <git@vger.kernel.org>; Fri, 25 Jun 2021 17:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=KRw/j+1AYbecrM728masS+HftmN+gyfvQctshoDsnx8=;
+        b=JS3Xn9R/MZ7sg/hguKveZIp9RV27cs8Wv6yopa+/q3OlTUD0suUA1rc/3l4enGllfZ
+         okbyuTzmlk8uqgsbRFb6QmSAi2glCYR5pgP7EccqnR1IA9LojFN7+qHY71TR7N0spvWm
+         SQh4LbVsYsVF0pLckyTAMfcJI9e3rZOZw7PKB+T43Jl67owSvtSRAlJ09wzmL0qOQllo
+         Lbf3HOej/lXOeT47MaG/Kf3Nbim00Kr7VUcfVGjnV2MTjXQjdqsnKkVxfinz40Z32ntQ
+         QYjQlhHT2mpgAg3mTiXqW1s4dHnhSGOhm2rLxDlqjBs9Jw9gQlEFTvMydME08CNecV2b
+         cPTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=KRw/j+1AYbecrM728masS+HftmN+gyfvQctshoDsnx8=;
+        b=Ztb1LJ+G0GdznUgQgUBxEXDmOeXOsEIh3aSNY/aBLX2HNyFEdU+BAT4+CxSQqJ9V0J
+         eisdvgDdEipCzv5fhsTXQTp9Pzr8aGlNWoPuNRzYoiOerJwT2XE6ROq9+fvNE4jnCHMA
+         dhxgT7p2Rl2YpvDw5mUO1Z/VO8U4ffQZ2Y4SecmITgi6WJJVRnE058NKH8GGsz8r7hO+
+         RyBBopNuvXK40v8B2EVVTF51damtO/Js9Fym5098/jbE8hMD/orHWIu7eqn9r8OLGW1S
+         GGB6/qfV8UMWNpO8il+toUOeIOIwv7utycB4w1Pm5o9BKWPEUveiLxZLGHJ9al7gVKtu
+         RxSA==
+X-Gm-Message-State: AOAM530yziIy+WZrxTvMymjd9iNZ5b6MPrcspDKe6SiyP+Nk9/zrzMwd
+        A9nUxZZQ2mc31DFXb4jQa5M=
+X-Google-Smtp-Source: ABdhPJzrEa0/nWhJ26TzWTaV/iloB4894Y/iYACAmWaWmBPHVqoSuISwNYMTOCl3VjTGRhA4YOiwow==
+X-Received: by 2002:a17:902:bd03:b029:11c:d504:c1ce with SMTP id p3-20020a170902bd03b029011cd504c1cemr11459896pls.7.1624668132237;
+        Fri, 25 Jun 2021 17:42:12 -0700 (PDT)
+Received: from [192.168.43.80] (subs09a-223-255-225-78.three.co.id. [223.255.225.78])
+        by smtp.gmail.com with ESMTPSA id t18sm6554817pgv.51.2021.06.25.17.42.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Jun 2021 17:42:11 -0700 (PDT)
+Subject: Re: [PATCH v5 02/15] [GSOC] ref-filter: add %(raw) atom
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <pull.980.v4.git.1624332054.gitgitgadget@gmail.com>
+ <pull.980.v5.git.1624636945.gitgitgadget@gmail.com>
+ <4e473838b9d2651a8e4be27332697c2ba354db5a.1624636945.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <946c95bc-d57a-5b55-0dcf-5c4d6f980396@gmail.com>
+Date:   Sat, 26 Jun 2021 07:42:07 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="f6mjklmptBN1TfcG"
-Content-Disposition: inline
-In-Reply-To: <56b5c722-8baf-9f9c-cc9f-5b5ed49d7fc3@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <4e473838b9d2651a8e4be27332697c2ba354db5a.1624636945.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 25/06/21 23.02, ZheNing Hu via GitGitGadget wrote:
+> Note that `--format=%(raw)` cannot be used with `--python`, `--shell`,
+> `--tcl`, and `--perl` because if the binary raw data is passed to a
+> variable in such languages, these may not support arbitrary binary data
+> in their string variable type.
+> 
 
---f6mjklmptBN1TfcG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Commit message looks OK, but...
 
-On 2021-06-22 at 03:45:45, Philippe Blain wrote:
-> > That will make us properly ignore the submodule
-> > when performing recursive operations.
-> >=20
-> > Note that we only do this when the --require-init option is passed,
-> > which is only passed during clone.  That's because the update-clone
-> > submodule helper is also invoked during a user-invoked git submodule
-> > update, where we explicitly indicate that we override the configuration
-> > setting, so we don't want to set such a configuration option then.
->=20
-> I'm not sure what you mean here by 'where we explicitely indicate that we
-> override the configuration setting'. For me, as I wrote above,
-> 'git clone --recurse-submodules' and 'git clone' followed by
-> 'git submodule update --init' should lead to mostly [*] the same end resu=
-lt.
->=20
-> If you mean 'git submodule update --checkout', that indeed seems to somet=
-imes override the 'update=3Dnone'
-> configuration (a fact which is absent from the documentation), then it's =
-true that we
-> would not want to write 'active=3Dfalse' at that invocation. As an aside,=
- in my limited testing
-> I could not always get 'git submodule update --checkout' to clone and che=
-ckout 'update=3Dnone' submdules;
-> it would fail with "fatal: could not get a repository handle for submodul=
-e 'sub1'" because
-> 'git checkout/reset --recurse-submodules' leaves a bad .git/modules/sub1/=
-config file
-> with the core.worktree setting when the command fails (this should not ha=
-ppen)...
+> +Note that `--format=%(raw)` can not be used with `--python`, `--shell`, `--tcl`,
+> +`--perl` because the host language may not support arbitrary binary data in the
+> +variables of its string type.
+> +
 
-Yes, that's what I meant.
+Seems like out of sync between commit message and the docs change above. 
+Did you mean the (unsupported) host languages are Python, BASH script, 
+TCL/TK, and Perl respectively? If so, the docs should say:
 
-> In any case, that leads me to think that maybe the right place to write t=
-he 'active' setting
-> would be during 'git submodule init', thus builtin/submodule--helper.c::i=
-nit_submodule ?
-> This way it would lead to the same behaviour if the clone was recursive o=
-r not,
-> and it would not interfere with 'git submodule update --checkout'.
+"Note that `--format=%(raw) can not be used with `--python`, `--shell`, 
+`-tcl`, and `--perl` because such languages may not support arbitrary 
+binary data in their string variable type."
 
-Let me take a look at some other approaches and see if I can come up
-with something a little bit better.
+Thanks.
 
-My apologies for the delay in response; I'm in the process of moving at
-the moment and my attention has been directed elsewhere than the list.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---f6mjklmptBN1TfcG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYNZgoAAKCRB8DEliiIei
-gRHIAP9jb6C3Q1Ro319OrxesdxDQAdjW9WdzS6t74hv3NWfV/QEAvvRNvLqyHK0K
-gkhhlF0Ss9x3Wvin5jisrojEMAAQSgM=
-=3Jnx
------END PGP SIGNATURE-----
-
---f6mjklmptBN1TfcG--
+-- 
+An old man doll... just what I always wanted! - Clara
