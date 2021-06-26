@@ -2,152 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5355C49EA7
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 07:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F7D4C49EA5
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 08:27:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 985866191E
-	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 07:55:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D934D61926
+	for <git@archiver.kernel.org>; Sat, 26 Jun 2021 08:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbhFZH4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Jun 2021 03:56:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60824 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbhFZHz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Jun 2021 03:55:58 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B0EC061574
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 00:53:34 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id v5-20020a0568301bc5b029045c06b14f83so11973339ota.13
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 00:53:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5+gPvhftIzZBsGkQCJzrmWMtdNcHbTO283CmwJR6Nas=;
-        b=INtKQyZ3dnNOD1BbdML3cYhw7LDDa8GOpcqUgt2DlN+SxAJI1DfX8uWxJw+XM7AY8h
-         uB2RgBeGB9AmWcz6R6VZoxbS0nkc3iyt7RWwMNzsx3iqGoZk3CNMNGHljdwjdOS7hSAj
-         IbxR9rGgukcx8OWSTYPNks6OK5dhS5fmkZbImqxY2gAktPv8D/4dByuMQDsUNQ96YCj2
-         ErFfsDiLhyC8G0KFtmsBOqzmpL7zTtOzSxiY4dN61ZSFBUVKrwbnY6P0Pxq/fnnYUPTU
-         E3+ovkfTEst8nkp/Jk7PYu+BGkq9mXfiXrzFiQ15Xhnx+iW70QGUDLFuTsEMcucakqc0
-         Buyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5+gPvhftIzZBsGkQCJzrmWMtdNcHbTO283CmwJR6Nas=;
-        b=eruazmzpVowz0a9QzPXjkuplJRhOEBZIrQFEaYWE5DhAw2Z1pqFAoyPSJ36ntOLPLH
-         jLLlxyYcUbhc66pUt0tpNtrt9Mfm0kQK7x9XtsXj5vjiMgi7UWmQN/+yAiNGeLE7Jd2K
-         xHBTJK48BXS4ji7tiHAenK8SrkbguugdJaq1cVvuv0WEdZYeJVK7Tjl27PZDM5kgCdlB
-         xorDFP9D4Inr/uRmbBv9BmQB1sNgwd5XySMZ4fN+6sOJMXAKGN+Dpq2XLHhJTC3UGH5Y
-         h6/ICmsWBO3CD0SLD0HGAYV72HD/up5vpH8SJ2nBxhrK+q2itBX0j5lEpEsJjaZVgeYc
-         eSHQ==
-X-Gm-Message-State: AOAM530LCUi0GsuvG2wAnl/6MvxOu91lSU70JPCRr0JvLnHon4FZiLjT
-        v4pw5OEjfssDCLmoCBqrEE73gKs+ag+KyO6iG2dmGIMbhL0=
-X-Google-Smtp-Source: ABdhPJyMCWwOCszeBQRSBwlqmSqjWEo8Av+OdivEg6OzNDVtlprwAM2r3qi7a77hnolrebQIG7QHtvoABpwOE0Uqryo=
-X-Received: by 2002:a9d:7c92:: with SMTP id q18mr13336374otn.345.1624694014044;
- Sat, 26 Jun 2021 00:53:34 -0700 (PDT)
+        id S229657AbhFZI3r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Jun 2021 04:29:47 -0400
+Received: from mout.web.de ([212.227.17.12]:34695 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229518AbhFZI3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Jun 2021 04:29:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1624696043;
+        bh=Rr45RqrHuFWqx3foZRPhsVKDx+SqcKCdx+4fQUBxNo8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=J50SQYcJ4pA2SS1o3yY8Eh2gfVB7Lg02vxscb/8NOO3ZPFGdzKoaGrO/jl14Kn9TK
+         8NHso41/Qdqhgw1+m2mIhJ9x23gPUxXkle4HnEGqUhIXyZSTmNA2sx0PVqVI3S9ykD
+         CzB25cd1ZQoTK497g+Ni2DHimT5IQh/r2HXS6EPs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
+ (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0Ltnmz-1lDzVm273V-0116lY; Sat, 26 Jun 2021 10:27:23 +0200
+Subject: Re: [PATCH 4/7] commit-graph: fix bogus counter in "Scanning merged
+ commits" progress line
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+References: <20210620200303.2328957-1-szeder.dev@gmail.com>
+ <20210620200303.2328957-5-szeder.dev@gmail.com>
+ <87a6nk41wy.fsf@evledraar.gmail.com>
+ <f580c5c6-304c-24f4-535c-35025b6b4a80@web.de>
+ <87h7hr2cx0.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c1c5316a-6a43-a377-69d5-531d226463c8@web.de>
+Date:   Sat, 26 Jun 2021 10:27:23 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <CANLwWg4hG=iv9qjOmGHSJ7z7Y+vvvP+x0o3DfR5bH5A-C6_7aQ@mail.gmail.com>
- <9a83ef22-2291-1364-b0a8-1eb8257972a2@gmail.com> <CANLwWg5Lcf7PYtZ49U-KZ_3UYVb9FJ-g1B+eFYoO2D1t5UArmw@mail.gmail.com>
- <6b604658-8f7e-ae5d-7161-c48aed7ccbd0@gmail.com> <CANLwWg7YFC2VrRYz1PR1U9SVG5yiyRVnyMspGc8PqKktouz8dQ@mail.gmail.com>
-In-Reply-To: <CANLwWg7YFC2VrRYz1PR1U9SVG5yiyRVnyMspGc8PqKktouz8dQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 26 Jun 2021 00:53:23 -0700
-Message-ID: <CABPp-BH1COE8worEAuu3M_LNJfVhW3Y6+1r8zfUcVaTrVgjG5w@mail.gmail.com>
-Subject: Re: Nonexistent changes appear rebasing but only with rebase.backend=apply
-To:     Marco Giuliano <marco.giuliano@tesisquare.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87h7hr2cx0.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:29YvVcDiyC1jbtBzboahvK1aTEVXRKsDY5id+pBg1ZVJhR7dFn9
+ N4uDPnQN6oRGTGs5gGkoGr6s8CBgRgf1myOWvd24xzfuJWK3xWyu+v9HRnz0wQwB27sfpUA
+ 1mZdB5twk5gvB+RP2QMUqWye4thpcPOMMW3RVFzr3VZ92kkP0Ooa8hrRaykFspGhS5nT7UL
+ hg5BwTO5dvbqL1jbil3jg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:a2fcLr67Dk4=:XR6MvgkDaGLhQXLta0wiKL
+ t4MbzFYb2SBV51JEqAmrJnJ+kfK6CmXgoX6uHt6xfFRo9nu4MLqU9DnisLtWEqz42bloLdZHe
+ aM6Hjts4v50kZ10jSMy427D4iBGxLn9VzIMEjtbLu2xB49Flng7L1KEkS+aVu23DD/K2JxjMI
+ aU9zTXYd5aU5gzC3TMGp6fx7vEo80nOE+yDxe5Gsol2vZeS6rXp3FUx0aY6anH+66WmCh2FO/
+ 1ZwqcTiwJk9ElSLijE8bsYdLa9UdlBYEN6KmInnhYxPz/2X3/6crmVwpuc2dwvloOT0+lI7+P
+ /qbka/tiezQlvsyYM1IUqqmwvmJUXrsZ19TlORFKN1LeOwtPiWxAZ/8DdRDgS/56GdbSKC0I5
+ S6RBoLdDY+2F/O2FZ/py5YtaiIOsWAdCQDS2TdwK2LSxT+a/n0SQm4mcYNVgGEog3Bg10GNGP
+ e5XhDkmzV4j7fK/we4qqnsOFUnOEoX9osylyI/KpsEpRBmJUvt+2cOz7tvn3aGJ1qc8tnoxWR
+ O0mxOJ8PC/aeve71tlnT6fak9ZkGAw3JyO4Dnuk6nmYeRIgaBOquUw5/2yqLqN8fJ0e1kl0nT
+ RZpf0hqNIVTla8GvJelxmEu0Ig9tDzJPFv8e0pr7MHYcYVwdghcH8JB9whnQ1OmeTfr5lAASw
+ 5nfppJfoYcbTwVzlaL0CRiFXKVQFey7PV/YLYbllT21QXm/RFUu1ad0ZW2bq993cQjG7sR1bT
+ dSF014Zlm3XpSDvMU81YjlHczUNZZHLpvdexL444ojLAmfPZbHnqCxcbjm07udV8qXs9xzIbi
+ tvkpfewnL6uIMcQTWDDq+ISgPUXoos8bu2oU8IaYD+mXe/DaojOll6XcLZwu/J+L0h5hIiZZ0
+ l85nZtXLUSc8Cl7iiNToqOcAs8sk5q9qY/V6PNltdPwN/rnO6eUF6Fq3Rq/GdkbDOjAjwftkS
+ 35c1nfWQIX5PbzYNwU72wkctxUmI91BnQRaI8lQRBUMEw8oWhFZa2i0OGs3dfgY1O2hLbC53p
+ 0PoQrNriOETP3Tk7Gn5uTwQ7rTG8XufVzlGoMAZOJHqgKRJjfHbcRTzH0TEQ4m9GbeOsySicq
+ sr80QKAVKVV9Zo4hxWFWvYIftKyxi2ViEdc
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Marco,
-
-On Fri, Jun 25, 2021 at 12:15 AM Marco Giuliano
-<marco.giuliano@tesisquare.com> wrote:
+Am 21.06.21 um 22:08 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
-> Hi Philip,
-> oh, so I guessed correctly...
-> Could you be more specific about the copy/rename issue of the apply backend ?
-> Is there any bug report I can refer to ?
+> On Mon, Jun 21 2021, Ren=C3=A9 Scharfe wrote:
 >
-> Thank you very much for your support
+>> Am 21.06.21 um 00:13 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>>
+>>> On Sun, Jun 20 2021, SZEDER G=C3=A1bor wrote:
+>>>
+>>>> The final value of the counter of the "Scanning merged commits"
+>>>> progress line is always one less than its expected total, e.g.:
+>>>>
+>>>>   Scanning merged commits:  83% (5/6), done.
+>>>>
+>>>> This happens because while iterating over an array the loop variable
+>>>> is passed to display_progress() as-is, but while C arrays (and thus
+>>>> the loop variable) start at 0 and end at N-1, the progress counter
+>>>> must end at N.  This causes the failures of the tests
+>>>> 'fetch.writeCommitGraph' and 'fetch.writeCommitGraph with submodules'
+>>>> in 't5510-fetch.sh' when run with GIT_TEST_CHECK_PROGRESS=3D1.
+>>>>
+>>>> Fix this by passing 'i + 1' to display_progress(), like most other
+>>>> callsites do.
+>>>>
+>>>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>>>> ---
+>>>>  commit-graph.c | 2 +-
+>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/commit-graph.c b/commit-graph.c
+>>>> index 2bcb4e0f89..3181906368 100644
+>>>> --- a/commit-graph.c
+>>>> +++ b/commit-graph.c
+>>>> @@ -2096,7 +2096,7 @@ static void sort_and_scan_merged_commits(struct=
+ write_commit_graph_context *ctx)
+>>>>
+>>>>  	ctx->num_extra_edges =3D 0;
+>>>>  	for (i =3D 0; i < ctx->commits.nr; i++) {
+>>>> -		display_progress(ctx->progress, i);
+>>>> +		display_progress(ctx->progress, i + 1);
+>>>>
+>>>>  		if (i && oideq(&ctx->commits.list[i - 1]->object.oid,
+>>>>  			  &ctx->commits.list[i]->object.oid)) {
+>>>
+>>> I think this fix makes sense, but FWIW there's a large thread starting
+>>> at [1] where Ren=C3=A9 disagrees with me, and thinks the fix for this =
+sort of
+>>> thing would be to display_progress(..., i + 1) at the end of that
+>>> for-loop, or just before the stop_progress().
+>>>
+>>> I don't agree, but just noting the disagreement, and that if that
+>>> argument wins then a patch like this would involve changing the other
+>>> 20-some calls to display_progress() in commit-graph.c to work
+>>> differently (and to be more complex, we'd need to deal with loop
+>>> break/continue etc.).
+>>>
+>>> 1. https://lore.kernel.org/git/patch-2.2-042f598826-20210607T144206Z-a=
+varab@gmail.com/
+>>
+>> *sigh*  (And sorry, =C3=86var.)
+>>
+>> Before an item is done, it should be reported as not done.  After an
+>> item is done, it should be reported as done.  One loop iteration
+>> finishes one item.  Thus the number of items to report at the bottom of
+>> the loop is one higher than at the top.  i is the correct number to
+>> report at the top of a zero-based loop, i+1 at the bottom.
 
-Could you do us a favor?  Please avoid top-posting and instead answer
-after the quoted original text, much like I'll do here...
+> Anyone with more time than sense can go and read over our linked back &
+> forth thread where we're disagreeing on that point :). I think the patte=
+rn
+> in commit-graph.c makes sense, you don't.
 
-> On Thu, Jun 24, 2021 at 8:39 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >
-> > Hi Marco
-> >
-> > On 24/06/2021 17:23, Marco Giuliano wrote:
-> > > Thanks Felipe and Philip for your answers.
-> > >
-> > > Let's proceed in order:
-> > > @Felipe: I tried rebasing with --no-fork-point but the problem remains the same
-> > >
-> > > @Philip:
-> > > I'm a basic git user, so bear with me if I say silly things...
-> > > I tried to search for rebased-patches in .git folder when rebase
-> > > stopped waiting for
-> > > conflict resolution, but I didn't find any file named like that.
-> > > There's a folder named rebase-apply though did you mean that ?
-> >
-> > Looking at the source I thought they ended up just in .git but I haven't
-> > checked again, as you seem to have found the source of the problem below
-> > lets not worry about that.
-> >
-> > > Anyway, looking at the conflict file of "fileA" directly (not behind a
-> > > visual diff tool) I noticed that the marker line >>>>>>>> COMMIT
-> > > DESCR: FILENAME indicates a different file name then the current
-> > > conflicted file.
-> > > That reminded me that those two files A & B, were actually copies
-> > > (real copy, not symlink) of other two files inside the same repo.
-> > > Is it somehow possible that auto-detected-renaming is involved in this
-> > > (since the files are identical but in two different locations) ?
-> > > Trying to give you some hints, maybe it is totally unrelated...
-> >
-> > I meant to ask if anything had been copied or renamed but forgot. The
-> > merge backend detects copies and renames and handles them correctly but
-> > the apply backend does not so I think this is the source of the discrepancy.
-> >
+Thanks for this comment, I think I got it now: Work doesn't count in the
+commit-graph.c model of measuring progress, literally.  I.e. progress is
+the same before and after one item of work.  Instead it counts the
+number of loop iterations.  The model I describe above counts finished
+work items instead.  The results of the two models differ by at most one
+despite their inverted axiom regarding the value of work.
 
-So I've got a hunch here.  First, Marco, from your example, can you run
+Phew, that took me a while.
 
-git diff --name-status -C Y...X
+> Anyway, aside from that. I think, and I really would be advocating this
+> too, even if our respective positions were reversed, that *in this case*
+> it makes sense to just take something like SZEDER's patch here
+> as-is. Because in that file there's some dozen occurrences of that exact
+> pattern.
 
-and report whether the files involved were either renamed or copied on
-the upstream side of history.  (Also, please note that there are three
-dots between Y and X)  Also, can you report whether a message of the
-form "inexact rename detection was skipped due to too many files" when
-using the merge backend and that files you copied from end up in
-modify/delete conflicts when using the merge backend?
+The code without the patch either forgets to report the last work item
+in the count-work-items model or is one short in the count-iterations
+model, so a fix is needed either way.
 
+The number of the other occurrences wouldn't matter if they were
+buggy, but in this case they indicate that Stolee consistently used
+the count-iterations model.  Thus using it in the patch as well makes
+sense.
 
-My suspicion is:
-* You both renamed some files and copied them on the upstream side of history
-* You made further changes to the renamed files, more so than to the "copies"
-* You have enough added/removed/renamed files that with the merge
-backend you are triggering merge.renameLimit and not getting rename
-detection, causing various reports of modify/delete conflicts
-* The apply backend's use of fake trees can be viewed as a poor-man's
-version of the irrelevant rename detection optimization I added to
-merge-ort, but it works well enough to get you under merge.renameLimit
-so that renames are detected for the apply backend
-* The fact that you modified what you view as renames more than what
-you viewed as copies has the perverse effect of causing git's rename
-detection to pair up files with the copy rather than the rename, and
-apply changes to it
+> Let's just bring this one case in line with the rest, if we then want to
+> argue that one or the other use of the progress.c API is wrong as a
+> general thing, I think it makes more sense to discuss that as some
+> follow-up series that changes these various API uses en-masse than
+> holding back isolated fixes that leave the state of the progress bar it
+> !=3D 100%.
 
-The net result is that the 'merge' backend isn't apply your changes
-from various files to their renamed counterpart, while the 'apply'
-backend is almost doing that but applying them to what you think of as
-the copy rather than the intended renamed file.  The questions I asked
-above may be able to help us either confirm or rule out this theory.
+Agreed.
+
+Ren=C3=A9
