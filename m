@@ -2,68 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 982DEC48BC2
-	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 04:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68856C48BC2
+	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 04:21:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64AF0613C2
-	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 04:17:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DB54613F3
+	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 04:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229526AbhF0EO7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Jun 2021 00:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40634 "EHLO
+        id S230214AbhF0EXk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Jun 2021 00:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbhF0EO7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jun 2021 00:14:59 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEE8C061574
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 21:12:34 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id c19-20020a9d6c930000b0290464c2cdfe2bso3212861otr.9
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 21:12:34 -0700 (PDT)
+        with ESMTP id S229472AbhF0EXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jun 2021 00:23:37 -0400
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4977FC061574
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 21:21:14 -0700 (PDT)
+Received: by mail-oo1-xc2c.google.com with SMTP id s10-20020a4aeaca0000b029024c2acf6eecso2514238ooh.9
+        for <git@vger.kernel.org>; Sat, 26 Jun 2021 21:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=mq4cjyGxJYX4CaGnn9lsCxr1FJgh8iiYB2e5XkNEwhg=;
-        b=Vjl1TW7dVDD+yXGSzoNS9WRumkxBpxicg0tGT7Yqd0pK4xkucmpi3I/SqgBdSvR7Uw
-         d8G70FRMKgh3pnY19r7vyC0o4RmK1yfBC+oNiUt8mXIV8NDAwPrpGEPV8lXaa35hWkSN
-         HVKu/rFFR2IMAx7J7CpK+xjrIl/eb9f/Cf8uZtOsyqsO96QB21+/ahNjPuH7Hj9sRyhR
-         YDO+9LQKi7Kat20ls/yXOIIGmdQXSbTWJ4sqbNr5xWthhhLOofoQcQoZlq1ZPxCvmHIv
-         ZnYyDl5T+9tloiPDWoieCXG+Y5MGQ49r3EQdd7hsm/YbonjBPlc7h3tJw1TUbXpEOX8F
-         mA/g==
+        bh=ouLDFmJEkz9jnDYY6cDEyJUeGGXZrGtpGMe4+bc2fzw=;
+        b=ZgmoUnOMRMT0xF6sgSwje3YkLBq6wh0J4W49mlhBd8ZVuX9c8y4DXU56l6B02ei1fW
+         TUjzmV4hb39bcQ2Wm+B1MreVzMrstKCTyd1iIvVEuS8u55J17VbKFdmBiPNzMu4Fjnji
+         aRas8aMfzIDMgk5V0g5SA7bxNrnfCrVwX7oarg4xrTAQy2ndfV1c1P0xL6gANVp5ErrB
+         4D1L3bbI0sSh/t3oVu853TdkfK8e2iyTlWr55HGU40YTx48CIWZbV9g6POJO2Oz5Xr3D
+         AJ454l/SbgCFndOwlsravSKM8XM6VvEmZsi8VbOgWSAfiUlnsh1x5J/i/VxX9bWu70KY
+         +cDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=mq4cjyGxJYX4CaGnn9lsCxr1FJgh8iiYB2e5XkNEwhg=;
-        b=Jt+cdYM4jjG0ZhpNV1UY1Y1GgYCB7nOo87+hlgq3/liEJl37spQVmgMt6RgUeKbOx+
-         DMtdpUtunw60LDAMCSZ4p8wSmLB4R5yKT9Bo9KDTqa9T/Qn1t00lEXHkr1h/I6014psC
-         BoZSxhRHezHTUITnlofFrYBXtkjqG3SbGysvMYeg94UJzt1ojsQ47XD2qI+Wxw6IS+ti
-         1tPiB5O8jSJb1joDgCczB9HUvJxmn/a+s09UGFr2BLKQxvR0BNJcFHUFAlyFrhh741oI
-         EpacpMz6uFA0q5d1exNGkdWso9sZT02fvT+NHEZaFrLEMu6jazQtXVBdvRQYk3YJ8b+5
-         ArVQ==
-X-Gm-Message-State: AOAM531zJb5/EP3G9UgsioE02j3iYqZd0ikpcPS23vw9X5rcltcgrsm9
-        jEmPu5OwStvBEJHCyyRe7yI=
-X-Google-Smtp-Source: ABdhPJxh58vepc7IgnM0nvxPY2EIelcpi0IeaWfCn8i0y1BNpTZuHr+TL2q0QzeCh5zbcC+OUuB4Vg==
-X-Received: by 2002:a05:6830:3155:: with SMTP id c21mr15821141ots.153.1624767153476;
-        Sat, 26 Jun 2021 21:12:33 -0700 (PDT)
+        bh=ouLDFmJEkz9jnDYY6cDEyJUeGGXZrGtpGMe4+bc2fzw=;
+        b=aDGXPYL9vGKuOOzedobU7jZatt6rkKCyW+WMFUHNFVbYdWNLqIyhe7SsxFHZOGRstM
+         6ejRd4Kxd3+4puI/pYadTzNV5oZ+Ej6hmbygEdN12tutmJpPr3TmUN2OyO7uauNd2wbR
+         rBRveZrF8tziRP5EQTZe5DBA4ra2tO62+hIohI1Fmh99rRw8q/p01CJMGNfUCUO7lNmD
+         i7pNA4B/a4UG2cC9f+GW9SP2ApIaE+L/8hqsAkVvACe9fKJCZ3lwQX3/KJQGjrt+THQL
+         4CdotKN1NV4uUnQoDFkqKvFTN/S9ju0Hym3M6N2Y2N3P+s3fJNh79KoiSZvlv+d9/+oG
+         Fqlg==
+X-Gm-Message-State: AOAM532IyNYN2RyZaExT3EOexBH9LkcotHE0Xp9EdJ+WjZY/p/xWEadH
+        nYiw1p+86uEZ35GN/nF4Neg=
+X-Google-Smtp-Source: ABdhPJzB7mi+X9uUzFp66zBbCxp/+iJGgh2eo6pJn3CmRFMuLcZhJj42QaNNvhHVsmhmQcaqjEkibQ==
+X-Received: by 2002:a4a:b5c4:: with SMTP id u4mr14894312ooo.18.1624767673546;
+        Sat, 26 Jun 2021 21:21:13 -0700 (PDT)
 Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id v3sm2191830oon.11.2021.06.26.21.12.32
+        by smtp.gmail.com with ESMTPSA id w5sm2276621oiv.7.2021.06.26.21.21.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Jun 2021 21:12:32 -0700 (PDT)
-Date:   Sat, 26 Jun 2021 23:12:31 -0500
+        Sat, 26 Jun 2021 21:21:12 -0700 (PDT)
+Date:   Sat, 26 Jun 2021 23:21:11 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, felipe.contreras@gmail.com, newren@gmail.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Message-ID: <60d7faaf5311a_b8dfe208bd@natae.notmuch>
-In-Reply-To: <20210627000855.530985-1-alexhenrie24@gmail.com>
-References: <20210627000855.530985-1-alexhenrie24@gmail.com>
-Subject: RE: [PATCH] pull: abort by default if fast-forwarding is impossible
+To:     Alex Henrie <alexhenrie24@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Message-ID: <60d7fcb7d229e_b8dfe2089f@natae.notmuch>
+In-Reply-To: <CAMMLpeSa=Shw3Y5=D9VZhRFJb922ZJD5L=X=eqGZFRkrDJG7dw@mail.gmail.com>
+References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
+ <20210621175234.1079004-3-felipe.contreras@gmail.com>
+ <CAMMLpeR2Y_EGwqGJzghSQ1DzpYQyWr6ENmGCvPRdhhYFkTW4yw@mail.gmail.com>
+ <60d0df99d91e1_108e902085e@natae.notmuch>
+ <CAMMLpeRnUC+nOek=Kz6bj0_R6EUaDr=7ObKF01V641_ByOmk6A@mail.gmail.com>
+ <60d10ebd99d86_113139208cd@natae.notmuch>
+ <CAMMLpeRa3atkZxEtV--YD6-JSf0Bp9xRw9kS5wSWerxpsGrvrw@mail.gmail.com>
+ <CABPp-BF1noWhiJadHzjJmnGo8hdZj6Fk7XnZ=u6BVVSGfHE7og@mail.gmail.com>
+ <60d289c84fadf_312208dc@natae.notmuch>
+ <CABPp-BHSxNT0rG3LMrDVH64mBwTgeF197oZFnbHvvKk=SB--WA@mail.gmail.com>
+ <60d37b3b77aeb_378720834@natae.notmuch>
+ <CAMMLpeTQjw0W8ZTegPru_9muRBGj7RDfk3WgEEN34vm-PG9Jfg@mail.gmail.com>
+ <60d41e6464a6c_3d32208a7@natae.notmuch>
+ <CAMMLpeSa=Shw3Y5=D9VZhRFJb922ZJD5L=X=eqGZFRkrDJG7dw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pull: improve default warning
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -73,134 +90,41 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Alex Henrie wrote:
-> The behavior of warning but merging anyway is difficult to explain to
-> users because it sends mixed signals. End the confusion by firmly
-> requiring the user to specify whether they want a merge or a rebase.
+> On Wed, Jun 23, 2021 at 11:55 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> >
+> > Alex Henrie wrote:
+> > > On Wed, Jun 23, 2021 at 12:19 PM Felipe Contreras
+> > > <felipe.contreras@gmail.com> wrote:
+> > > >
+> > > > Similarly, until "git pull" does something sensible by default (which
+> > > > isn't the case now), these debates will continue, and there's value in
+> > > > them.
+> > >
+> > > At this point, I'm inclined to push for s/advise/die/ in pull.c in the
+> > > next release, without a transitional period, just to end the argument
+> > > over how to best explain the current awkward situation. (I'm sure
+> > > there will be more arguments after that, but hopefully they won't be
+> > > as tiresome.)
+> >
+> > Give it a try. You will inevitably stumble upon all the problems I
+> > already fixed.
+> 
+> Patch sent.
 
-When were users warned about this change? Generally before making such
-big UI changes to core commands there needs to be a deprecation period
-before pulling the trigger.
+I sent a bunch of comments to the approach you sent. I think that's not
+all the issues, but it's been a while since the last time I took a good
+look at this, I feel I'm still missing one issue.
 
-Second, supposing this was a proposal to add such warning, we would need
-a configuration so the user can decide to retain the old behavior, or
-move to the new one. What is that configuration?
+> > In the meantime what's the problem with v2?
+> 
+> I think that setting pull.rebase on a per-repository basis (instead of
+> globally or per-invocation) makes for the easiest workflow in the
+> majority of cases, so I would prefer to continue to recommend that to
+> users primarily, but I don't have a strong opinion.
 
-How can a user choose to enable the new behavior in v2.32 (or any other
-version)?
-
-Also, a bunch of tests are broken after this change:
-
-  t4013-diff-various.sh
-  t5521-pull-options.sh
-  t5524-pull-msg.sh
-  t5520-pull.sh
-  t5553-set-upstream.sh
-  t5604-clone-reference.sh
-  t6409-merge-subtree.sh
-  t6402-merge-rename.sh
-  t6417-merge-ours-theirs.sh
-  t7601-merge-pull-config.sh
-  t7603-merge-reduce-heads.sh
-
-If you didn't mean this patch to be applied then perhaps add the RFC
-prefix.
-
-> --- a/Documentation/git-pull.txt
-> +++ b/Documentation/git-pull.txt
-> @@ -16,13 +16,17 @@ DESCRIPTION
->  -----------
->  
->  Incorporates changes from a remote repository into the current
-> -branch.  In its default mode, `git pull` is shorthand for
-> -`git fetch` followed by `git merge FETCH_HEAD`.
-> +branch.  `git pull` is shorthand for `git fetch` followed by
-> +`git merge FETCH_HEAD` or `git rebase FETCH_HEAD`.
-
-Is it?
-
-If I have a pull.rebase=merges is `git pull` the same as doing `git
-rebase FETCH_HEAD`?
-
->  More precisely, 'git pull' runs 'git fetch' with the given
-> -parameters and calls 'git merge' to merge the retrieved branch
-> -heads into the current branch.
-> -With `--rebase`, it runs 'git rebase' instead of 'git merge'.
-> +parameters and then, by default, attempts to fast-forward the
-> +current branch to the remote branch head.
-
-OK.
-
-> +If fast-forwarding
-> +is not possible because the local and remote branches have
-> +diverged, the `--rebase` option causes 'git rebase' to be
-> +called to rebase the local branch upon the remote branch,
-
-Does --rebase only work when a fast-forward isn't possible.
-
-> +and
-> +the `--no-rebase` option causes 'git merge' to be called to
-> +merge the retrieved branch heads into the current branch.
-
-Isn't merge called when a fast-forward is possible?
-
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -925,20 +925,20 @@ static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_
->  	return ret;
->  }
->  
-> -static void show_advice_pull_non_ff(void)
-> +static void die_pull_non_ff(void)
->  {
-> -	advise(_("Pulling without specifying how to reconcile divergent branches is\n"
-> -		 "discouraged. You can squelch this message by running one of the following\n"
-> -		 "commands sometime before your next pull:\n"
-> -		 "\n"
-> -		 "  git config pull.rebase false  # merge (the default strategy)\n"
-> -		 "  git config pull.rebase true   # rebase\n"
-> -		 "  git config pull.ff only       # fast-forward only\n"
-> -		 "\n"
-> -		 "You can replace \"git config\" with \"git config --global\" to set a default\n"
-> -		 "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
-> -		 "or --ff-only on the command line to override the configured default per\n"
-> -		 "invocation.\n"));
-> +	die(_("Pulling without specifying how to reconcile divergent branches is not\n"
-> +	      "possible. You can squelch this message by running one of the following\n"
-> +	      "commands sometime before your next pull:\n"
-
-Is squelching this message really what we are aming for?
-
-> +	      "  git config pull.rebase false  # merge\n"
-> +	      "  git config pull.rebase true   # rebase\n"
-> +	      "  git config pull.ff only       # fast-forward only\n"
-
-`git config pull.ff only` will get rid of this messge, but the pull
-would still fail, only that it will be a different message:
-
-  fatal: Not possible to fast-forward, aborting.
-
-Doesn't seem very user-friendly.
-
-> +	      "You can replace \"git config\" with \"git config --global\" to set a default\n"
-> +	      "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
-> +	      "or --ff-only on the command line to override the configured default per\n"
-> +	      "invocation.\n"));
-
-Can I?
-
-  git -c pull.rebase=true pull --ff-only
-
-`--ff-only` doesn't seem to be overriding the configuration.
-
-
-In addition to all the issues I've already pointed out, the message
-seems rather big for a die().
-
-I think this is close to the end-goal we should be aiming for, but
-there's a lot that is missing before we should even consider flipping
-the switch.
-
-Cheers.
+OK. What happens if you don't have the configuration in the particular
+repository you are using?
 
 -- 
 Felipe Contreras
