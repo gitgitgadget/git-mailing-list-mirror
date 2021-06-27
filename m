@@ -2,129 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68856C48BC2
-	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 04:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8743C48BC2
+	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 07:44:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DB54613F3
-	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 04:21:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D74F613BC
+	for <git@archiver.kernel.org>; Sun, 27 Jun 2021 07:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbhF0EXk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Jun 2021 00:23:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42490 "EHLO
+        id S229535AbhF0Hqu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Jun 2021 03:46:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbhF0EXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jun 2021 00:23:37 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4977FC061574
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 21:21:14 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id s10-20020a4aeaca0000b029024c2acf6eecso2514238ooh.9
-        for <git@vger.kernel.org>; Sat, 26 Jun 2021 21:21:14 -0700 (PDT)
+        with ESMTP id S229507AbhF0Hqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jun 2021 03:46:48 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E7CC061574
+        for <git@vger.kernel.org>; Sun, 27 Jun 2021 00:44:24 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id ot9so22353178ejb.8
+        for <git@vger.kernel.org>; Sun, 27 Jun 2021 00:44:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=ouLDFmJEkz9jnDYY6cDEyJUeGGXZrGtpGMe4+bc2fzw=;
-        b=ZgmoUnOMRMT0xF6sgSwje3YkLBq6wh0J4W49mlhBd8ZVuX9c8y4DXU56l6B02ei1fW
-         TUjzmV4hb39bcQ2Wm+B1MreVzMrstKCTyd1iIvVEuS8u55J17VbKFdmBiPNzMu4Fjnji
-         aRas8aMfzIDMgk5V0g5SA7bxNrnfCrVwX7oarg4xrTAQy2ndfV1c1P0xL6gANVp5ErrB
-         4D1L3bbI0sSh/t3oVu853TdkfK8e2iyTlWr55HGU40YTx48CIWZbV9g6POJO2Oz5Xr3D
-         AJ454l/SbgCFndOwlsravSKM8XM6VvEmZsi8VbOgWSAfiUlnsh1x5J/i/VxX9bWu70KY
-         +cDQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=hpHtS5x6Ko1AQgZvVwRYhFd5Eb9FXDDWW1CUSX0aWGo=;
+        b=aJaHe3Afea9o9UNMPdw6rYXrXM2uXFIdMJxhhyxdC7yY/zghC93oElUUYlszsalXoD
+         8WrBS+kOdsfeFp/boEqYy2zTENR70yzqkVPcX2eaPSpO5KcaODV5k//lycYr1WXRHN8W
+         WVq/4GNnU9sejeqXop9IA0D4ffc60GT9KAYyXXNhCwIRoDJkIgjU2G7SLXTS+qkgEwdS
+         mX3IsB0e/vMyddQsa4hDbFVLWNnkKgJGsCfVhHtqBLHfOhDZ2b1NGIRhv4JZJbN+B6Oh
+         YEAiMBb3FCg1ulHhpBnqR09M1EYR6l/K0pNao3Gj0oVIQHcTittfbSlfXrIi7TmC4vUC
+         L3RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=ouLDFmJEkz9jnDYY6cDEyJUeGGXZrGtpGMe4+bc2fzw=;
-        b=aDGXPYL9vGKuOOzedobU7jZatt6rkKCyW+WMFUHNFVbYdWNLqIyhe7SsxFHZOGRstM
-         6ejRd4Kxd3+4puI/pYadTzNV5oZ+Ej6hmbygEdN12tutmJpPr3TmUN2OyO7uauNd2wbR
-         rBRveZrF8tziRP5EQTZe5DBA4ra2tO62+hIohI1Fmh99rRw8q/p01CJMGNfUCUO7lNmD
-         i7pNA4B/a4UG2cC9f+GW9SP2ApIaE+L/8hqsAkVvACe9fKJCZ3lwQX3/KJQGjrt+THQL
-         4CdotKN1NV4uUnQoDFkqKvFTN/S9ju0Hym3M6N2Y2N3P+s3fJNh79KoiSZvlv+d9/+oG
-         Fqlg==
-X-Gm-Message-State: AOAM532IyNYN2RyZaExT3EOexBH9LkcotHE0Xp9EdJ+WjZY/p/xWEadH
-        nYiw1p+86uEZ35GN/nF4Neg=
-X-Google-Smtp-Source: ABdhPJzB7mi+X9uUzFp66zBbCxp/+iJGgh2eo6pJn3CmRFMuLcZhJj42QaNNvhHVsmhmQcaqjEkibQ==
-X-Received: by 2002:a4a:b5c4:: with SMTP id u4mr14894312ooo.18.1624767673546;
-        Sat, 26 Jun 2021 21:21:13 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id w5sm2276621oiv.7.2021.06.26.21.21.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=hpHtS5x6Ko1AQgZvVwRYhFd5Eb9FXDDWW1CUSX0aWGo=;
+        b=IO2spQYrGgdGjdLpBW1EVyihbDtsCpfHkN05fVS+GuCuRgja2BeldRyPptLuI4qMSI
+         K7FZfhy7PlsV7+H5BtkB70CH1BKAYIquuAwBxuXyiK/+pUb8UF8kdSRTTFS6aqpAJWx5
+         mJbay0hs+oxzGZCSsVB4AuHI6vkuhxtJG3ie4tAlBV7k+A0i9kp4FmjsjcBduQddGF3w
+         F7aGGdmBmvMb/GWNA5xtiGxMgEVoG+J65NXiktnoi9QQchwMhOyEKf4xF9lVl8eeTR9A
+         ZE7pHLvT4F/ZdnsZqZKSSAQzVrP5oUwLtNmc5yRHDoXZnf5BOYSch59tkxiQjaPHSUuT
+         QDYQ==
+X-Gm-Message-State: AOAM531ymrxpPSJbKQwzxf8ITSInlIowvyDxgmu3j7X7VadhUt9nyHHd
+        qStzB8X+aEPgFHbxjMhuZns=
+X-Google-Smtp-Source: ABdhPJyXklxVp7fYyVT2+qSWmOUWGEoMWegCIXOCLaf2uCwNrBqLZBtkqG0Qxg63lB7oAXp0oNvS8w==
+X-Received: by 2002:a17:907:2d8b:: with SMTP id gt11mr19669561ejc.80.1624779862074;
+        Sun, 27 Jun 2021 00:44:22 -0700 (PDT)
+Received: from szeder.dev (94-21-146-91.pool.digikabel.hu. [94.21.146.91])
+        by smtp.gmail.com with ESMTPSA id ee47sm7399324edb.51.2021.06.27.00.44.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Jun 2021 21:21:12 -0700 (PDT)
-Date:   Sat, 26 Jun 2021 23:21:11 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Message-ID: <60d7fcb7d229e_b8dfe2089f@natae.notmuch>
-In-Reply-To: <CAMMLpeSa=Shw3Y5=D9VZhRFJb922ZJD5L=X=eqGZFRkrDJG7dw@mail.gmail.com>
-References: <20210621175234.1079004-1-felipe.contreras@gmail.com>
- <20210621175234.1079004-3-felipe.contreras@gmail.com>
- <CAMMLpeR2Y_EGwqGJzghSQ1DzpYQyWr6ENmGCvPRdhhYFkTW4yw@mail.gmail.com>
- <60d0df99d91e1_108e902085e@natae.notmuch>
- <CAMMLpeRnUC+nOek=Kz6bj0_R6EUaDr=7ObKF01V641_ByOmk6A@mail.gmail.com>
- <60d10ebd99d86_113139208cd@natae.notmuch>
- <CAMMLpeRa3atkZxEtV--YD6-JSf0Bp9xRw9kS5wSWerxpsGrvrw@mail.gmail.com>
- <CABPp-BF1noWhiJadHzjJmnGo8hdZj6Fk7XnZ=u6BVVSGfHE7og@mail.gmail.com>
- <60d289c84fadf_312208dc@natae.notmuch>
- <CABPp-BHSxNT0rG3LMrDVH64mBwTgeF197oZFnbHvvKk=SB--WA@mail.gmail.com>
- <60d37b3b77aeb_378720834@natae.notmuch>
- <CAMMLpeTQjw0W8ZTegPru_9muRBGj7RDfk3WgEEN34vm-PG9Jfg@mail.gmail.com>
- <60d41e6464a6c_3d32208a7@natae.notmuch>
- <CAMMLpeSa=Shw3Y5=D9VZhRFJb922ZJD5L=X=eqGZFRkrDJG7dw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pull: improve default warning
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Sun, 27 Jun 2021 00:44:21 -0700 (PDT)
+Date:   Sun, 27 Jun 2021 09:44:19 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] test-lib.sh: set COLUMNS=80 for --verbose repeatability
+Message-ID: <20210627074419.GH6312@szeder.dev>
+References: <patch-1.1-cba5d88ca35-20210621T070114Z-avarab@gmail.com>
+ <patch-1.1-765c2793122-20210624T101839Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-765c2793122-20210624T101839Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie wrote:
-> On Wed, Jun 23, 2021 at 11:55 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> >
-> > Alex Henrie wrote:
-> > > On Wed, Jun 23, 2021 at 12:19 PM Felipe Contreras
-> > > <felipe.contreras@gmail.com> wrote:
-> > > >
-> > > > Similarly, until "git pull" does something sensible by default (which
-> > > > isn't the case now), these debates will continue, and there's value in
-> > > > them.
-> > >
-> > > At this point, I'm inclined to push for s/advise/die/ in pull.c in the
-> > > next release, without a transitional period, just to end the argument
-> > > over how to best explain the current awkward situation. (I'm sure
-> > > there will be more arguments after that, but hopefully they won't be
-> > > as tiresome.)
-> >
-> > Give it a try. You will inevitably stumble upon all the problems I
-> > already fixed.
+On Thu, Jun 24, 2021 at 12:19:31PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Some tests will fail under --verbose because while we've unset COLUMNS
+> since b1d645b58ac (tests: unset COLUMNS inherited from environment,
+> 2012-03-27), we also look for the columns with an ioctl(..,
+> TIOCGWINSZ, ...) on some platforms. By setting COLUMNS again we
+> preempt the TIOCGWINSZ lookup in pager.c's term_columns(), it'll take
+> COLUMNS over TIOCGWINSZ,
 > 
-> Patch sent.
-
-I sent a bunch of comments to the approach you sent. I think that's not
-all the issues, but it's been a while since the last time I took a good
-look at this, I feel I'm still missing one issue.
-
-> > In the meantime what's the problem with v2?
+> This fixes the t0500-progress-display.sh test when run as:
 > 
-> I think that setting pull.rebase on a per-repository basis (instead of
-> globally or per-invocation) makes for the easiest workflow in the
-> majority of cases, so I would prefer to continue to recommend that to
-> users primarily, but I don't have a strong opinion.
+>     ./t0500-progress-display.sh --verbose
+> 
+> It broke because of a combination of the this issue and the progress
+> output reacting to the column width since 545dc345ebd (progress: break
+> too long progress bar lines, 2019-04-12). The
+> t5324-split-commit-graph.sh fails in a similar manner due to progress
+> output, see [1] for details.
 
-OK. What happens if you don't have the configuration in the particular
-repository you are using?
+This issue is not progress-specific.
 
--- 
-Felipe Contreras
+I run the test suite with 'export COLUMNS=10' in 'test-lib.sh' and
+got:
+
+  t0500-progress-display.sh                (Wstat: 256 Tests: 12 Failed: 10)
+    Failed tests:  1-5, 7-11
+  t4012-diff-binary.sh                     (Wstat: 256 Tests: 13 Failed: 1)
+    Failed test:  13
+  t4052-stat-output.sh                     (Wstat: 256 Tests: 78 Failed: 14)
+    Failed tests:  3-5, 13, 17, 21, 38-41, 49, 52, 55, 57
+  t5510-fetch.sh                           (Wstat: 256 Tests: 181 Failed: 1)
+    Failed test:  175
+  t5324-split-commit-graph.sh              (Wstat: 256 Tests: 36 Failed: 1)
+    Failed test:  22
+  t5150-request-pull.sh                    (Wstat: 256 Tests: 10 Failed: 1)
+    Failed test:  6
+  t4016-diff-quote.sh                      (Wstat: 256 Tests: 5 Failed: 1)
+    Failed test:  5
+
+Then with COLUMNS=238:
+
+  t0500-progress-display.sh                (Wstat: 256 Tests: 12 Failed: 4)
+    Failed tests:  3-6
+  t4012-diff-binary.sh                     (Wstat: 256 Tests: 13 Failed: 1)
+    Failed test:  13
+  t4052-stat-output.sh                     (Wstat: 256 Tests: 78 Failed: 3)
+    Failed tests:  3-5
+
+From these only the failures in t0500 and t5324 are caused by the
+progress display, the rest fail with things like:
+
+  --- expect      2021-06-26 17:07:58.489958439 +0000
+  +++ actual      2021-06-26 17:07:58.957964694 +0000
+  @@ -1,2 +1,2 @@
+    binfile  |   Bin 0 -> 1026 bytes
+  - textfile | 10000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  + textfile | 10000 ++++++++
+  
+  --- expect80    2021-06-26 17:07:58.321956193 +0000
+  +++ actual      2021-06-26 17:07:58.333956354 +0000
+  @@ -1 +1 @@
+  - ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+  + ...aaaaaaaaaaaa | 1 +
+  
+  --- expect      2021-06-26 17:09:05.198849586 +0000
+  +++ actual      2021-06-26 17:09:05.194849532 +0000
+  @@ -1,2 +1,2 @@
+  -main                 -> origin/main
+  +main       -> origin/main
+   looooooooooooong-tag -> looooooooooooong-tag
+  
+  --- expect      2021-06-26 17:14:31.819199273 +0000
+  +++ request.fuzzy       2021-06-26 17:14:31.951201026 +0000
+  @@ -16,4 +16,5 @@
+   ----------------------------------------------------------------
+   SHORTLOG
+  
+  -DIFFSTAT
+  + ...nic.txt | 5 +++++
+  + 1 file changed, 5 insertions(+)
+  
+  
+  --- expect      2021-06-26 16:55:41.632510754 +0000
+  +++ actual      2021-06-26 16:55:42.052516149 +0000
+  @@ -1,2 +1,2 @@
+    binfile  |   Bin 0 -> 1026 bytes
+  - textfile | 10000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  + textfile | 10000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  --- expect80    2021-06-26 16:55:41.416507979 +0000
+  +++ actual      2021-06-26 16:55:41.436508236 +0000
+  @@ -1 +1 @@
+  - ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+  + aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+
+So there are more diffstat-related failures than progress-related.
+
+> A more narrow fix here would be to only do this in the --verbose mode,
+> but there's no harm in setting this for everything. If we're not
+> connected to a TTY the COLUMNS setting won't matter.
+
+This is wrong, we check the terminal width even when not connected to
+a TTY, therefore COLUMNS definitely matters; all the failures reported
+above were with '--verbose-log'.
+
+> See ea77e675e56 (Make "git help" react to window size correctly,
+> 2005-12-18) and ad6c3739a33 (pager: find out the terminal width before
+> spawning the pager, 2012-02-12) for how the TIOCGWINSZ code ended up
+> in pager.c
+> 
+> 1. http://lore.kernel.org/git/20210624051253.GG6312@szeder.dev
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> 
+> This replaces a more narrow fix in
+> https://lore.kernel.org/git/patch-1.1-cba5d88ca35-20210621T070114Z-avarab@gmail.com/,
+> which as SZEDER points out was also needed by another test using the
+> progress.c code.
+> 
+>  t/test-lib.sh | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 54938c64279..1a6ca772d6c 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -406,14 +406,15 @@ LANG=C
+>  LC_ALL=C
+>  PAGER=cat
+>  TZ=UTC
+> -export LANG LC_ALL PAGER TZ
+> +COLUMNS=80
+> +export LANG LC_ALL PAGER TZ COLUMNS
+>  EDITOR=:
+>  
+>  # A call to "unset" with no arguments causes at least Solaris 10
+>  # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
+>  # deriving from the command substitution clustered with the other
+>  # ones.
+> -unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e '
+> +unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
+>  	my @env = keys %ENV;
+>  	my $ok = join("|", qw(
+>  		TRACE
+> -- 
+> 2.32.0.605.g06ef811e153
+> 
