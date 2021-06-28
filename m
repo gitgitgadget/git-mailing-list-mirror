@@ -2,125 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 282F4C48BC2
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 02:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D50DAC48BC2
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 03:16:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A5DA619B2
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 02:24:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A48B9613EF
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 03:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231851AbhF1C1U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Jun 2021 22:27:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44880 "EHLO
+        id S231935AbhF1DTQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Jun 2021 23:19:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231678AbhF1C1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Jun 2021 22:27:20 -0400
-Received: from act-MTAout5.csiro.au (act-mtaout5.csiro.au [IPv6:2405:b000:e00:257::7:42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D41B1C061574
-        for <git@vger.kernel.org>; Sun, 27 Jun 2021 19:24:54 -0700 (PDT)
-IronPort-SDR: K9BPmIY9cmQkOnAj2wQIqf5sgAUTiXXB6KpRXx8XWAgjXsmj6EclfZz7xI45Xe51qu08izMFm2
- mPhwpvQdHWCA==
-X-SBRS: 4.0
-IronPort-HdrOrdr: =?us-ascii?q?A9a23=3AtenD1KN/jK+A9MBcTyb155DYdb4zR+YMi2?=
- =?us-ascii?q?TDiHofdfUFSKClfp6V8cjzjSWE8Ar5K0tQ4uxoWZPwC080kKQa3WB/B8bFYO?=
- =?us-ascii?q?CLghrKEGgA1/qu/9SDIVyGygc1784JGMIeaOEYZWIKyvoSizPIdurIteP3l5?=
- =?us-ascii?q?xA8t2uq0uFIzsaCZ1I3kNcMEK2A0d2TA5JCd4SD5yH/PdKoDKmZDA+ctm7Lm?=
- =?us-ascii?q?NtZZmOm/T70LbdJTIWDR8u7weDyRmy7qThLhSe1hACFxtS3LYZ93TfmQCR3N?=
- =?us-ascii?q?Ttjxj78G6T64bg1eUXpDLT8KoBOCVKsLlWFtzYsHfoWG2mYczGgNl6mpDq1L?=
- =?us-ascii?q?9gqqi3n/5pBbUP15qWRBDynfKl4Xid7B8+r3Dl0lOWmn3lvIjwQy87EdNIgc?=
- =?us-ascii?q?ZDfgLe8FdIhqAL7Etn5RPsi3NsN2K2oM093am6azh60k6v5XYym+8aiHJSFY?=
- =?us-ascii?q?MYdb9KtIQauEdYCo0JEi724J0uVLAGNrCV2N9GNVeBK3zJtGhmx9KhGnw1Ax?=
- =?us-ascii?q?edW0AH/siYySJfknx1x1YRgMYfgnAD/pQgTIQs3ZWMDk2prsA6ciYyV9M3OA?=
- =?us-ascii?q?4se7rHNoX9e2O/DIvJGyWYKEguAQO8l3fY2sRL2N2X?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2G+AQCzMdlgjA9OdpJagQmBV4MNbIU?=
- =?us-ascii?q?ziQSIOi0Dm06BfAsBAQEPQQQBAYRSAoJyJjQJDgIEAQEBEgEBBgEBAQEBBgQ?=
- =?us-ascii?q?CAhABAQEBKUOFOwEHMoZPAQIDIxUbNgsYAgImAgJXEwgBAYJtgwcBqxuBMoE?=
- =?us-ascii?q?BhGaDWIFjgRAqjWo3gVVEgTwPgm0+hRGCSoJkBIMVgRaBCG8RaC+eUVqcQiw?=
- =?us-ascii?q?HgyOBLgucRgYOBRYQlRqQbrUZhVOBVIIVMxofgz5PGQ6DPYgKgnGOQjRqAgY?=
- =?us-ascii?q?KAQEDCYwsAQE?=
-X-IPAS-Result: =?us-ascii?q?A2G+AQCzMdlgjA9OdpJagQmBV4MNbIUziQSIOi0Dm06Bf?=
- =?us-ascii?q?AsBAQEPQQQBAYRSAoJyJjQJDgIEAQEBEgEBBgEBAQEBBgQCAhABAQEBKUOFO?=
- =?us-ascii?q?wEHMoZPAQIDIxUbNgsYAgImAgJXEwgBAYJtgwcBqxuBMoEBhGaDWIFjgRAqj?=
- =?us-ascii?q?Wo3gVVEgTwPgm0+hRGCSoJkBIMVgRaBCG8RaC+eUVqcQiwHgyOBLgucRgYOB?=
- =?us-ascii?q?RYQlRqQbrUZhVOBVIIVMxofgz5PGQ6DPYgKgnGOQjRqAgYKAQEDCYwsAQE?=
-Received: from mail-server.pawsey.org.au (HELO prod-mail.pawsey.org.au) ([146.118.78.15])
-  by act-ironport-int.csiro.au with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 28 Jun 2021 12:24:51 +1000
-Received: from [192.168.42.112] (unknown [1.126.195.180])
-        by prod-mail.pawsey.org.au (Postfix) with ESMTPSA id D555531AFEBC
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 10:24:50 +0800 (AWST)
-Subject: Re: Definition of "the Git repository"
+        with ESMTP id S231678AbhF1DTP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Jun 2021 23:19:15 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15098C061574
+        for <git@vger.kernel.org>; Sun, 27 Jun 2021 20:16:50 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id g19-20020a9d12930000b0290457fde18ad0so17237860otg.1
+        for <git@vger.kernel.org>; Sun, 27 Jun 2021 20:16:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hJZXaGICX9GwkPC64uv/owCKKkrZek6qm8SP3+tnlqY=;
+        b=m2i8x/x/8gxo2KM/5gMhGIXeVRS3yEQSB8/wcbFErHn/MjXGemsb4w0qZGQ3K3Ir6S
+         2rjMEElyB8BHpLEJLs5bxK9zhcNjCryjvHXuT9Bwy90giWjI5maVVojAN5wkVO3eH9MD
+         g7TsZ7Zhr2z9GFDaDX3M51QGnHpTUr5GjNb4XkXU8H1jgXAXpaEAc+RSkPbWkcJwrgJi
+         snY5NJi42WmhcjtMTmHOOKP+Ul0FXcP0cvBYuek4Aj3i59i/a5e94l3lXWtPu0W+jKRc
+         kHiftkQl3srATViTCdP5MHilgDi0P4jdAgV5VRx9a69+3LfUFK1Wp56d0AWivgsMvSHf
+         2FyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hJZXaGICX9GwkPC64uv/owCKKkrZek6qm8SP3+tnlqY=;
+        b=O7UTv/bSkyRrGI038mgx/ewcnMOBj/V7wHpNXd3siAU3lYGo15uiAfCNqUO/1h28qo
+         2kz5kyh+kTvAJeRBeN0FckHLq1qfxbqotNJ52GeoEll7RIXtY6h5vgQ0olcN0+GP7Pet
+         WOoTumT14tvaVGchC3U7hIWnQgMgOlVV/9PHQUjm//ndX66BfQfcO14RQIhwSOjcVOJe
+         t1qpxV2TE7e+Ohi1dM8SANq2Gwe+OZjhkpdq6fwd0LlL4DVRNkC6q8bxBW0f3izWTLKz
+         tkhakujx4nohrMZumug+aswR8Vd7yauALTZ724s/amHYv59qOEv4FUZim4rMSoce0Skm
+         SOqA==
+X-Gm-Message-State: AOAM530ceN0E14ue5O63KFRtqOFztE5JktoD1CQf415aTYrwF9zRi4og
+        U0ctUnasd+Q0OoZjo2SeWg+JUe1NaUSiTQ==
+X-Google-Smtp-Source: ABdhPJzmgWa5pYjFXlyYUg+9lPXq9Bn4UqoJRnKsATTQ/oD+aFMuM9bsx1UVkNXcNE+XK+oKUXQI8g==
+X-Received: by 2002:a9d:6087:: with SMTP id m7mr19094240otj.318.1624850209010;
+        Sun, 27 Jun 2021 20:16:49 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id l201sm1697729oih.22.2021.06.27.20.16.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Jun 2021 20:16:48 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
- <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
-From:   Kevin Buckley <Kevin.Buckley@pawsey.org.au>
-Message-ID: <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
-Date:   Mon, 28 Jun 2021 10:24:44 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] pull: introduce --merge option
+Date:   Sun, 27 Jun 2021 22:16:42 -0500
+Message-Id: <20210628031642.699156-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021/06/26 04:48, Philip Oakley wrote:
->
-> ... One can also include in the generic 'repository' the
-> various special .git* files that are [user] added to the main source
-> directory.
-> 
-> But it gets worse. In the .git directory there is the 'objects' ...
+Previously --no-rebase (which still works for backwards compatibility).
 
-I don't believe it does get worse, indeed, I am not convinced that it
-is as bad as your observation on the semantics might suggest.
+Now we can update the default warning, and the git-pull(1) man page to
+use --merge instead of the non-intuitive --no-rebase.
 
-Everything within the .git directory "belongs", in my way of thinking,
-to the "repository", that is, the directory that gets created when git
-is (init)ialised.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-For me, the 'objects", the 'ref/heads', the "staging area' and the like,
-also lie within the repository.
+I've sent many versions of this patch over the years (since 2013) in
+many different series and nobody has objected to it (to the best of my
+recollection).
 
-As for any anciliary files, that control how the git commands actually
-process any data in the "working directory" beyond the defaults, some
-of them, eg the global commands, will typically exist outside of the
-working directory: below one's home directory, and, of course, there
-are the system-wide files, typically below /etc.
+The idea came after a comment from Linus Torvalds regarding what should
+be the default mode of "git pull" and why [1].
 
-Given then, that we can have Git-related files, for any given working
-directory, below /etc, below the user's home directory, and within the
-working directory itself, perhaps it is the whole "computer" which
-should be referred to as "the repository"?
+It conflicts with some of my previous patch series, but they aren't even
+in "seen" yet, and the ones that are resolve easily.
 
-Furthermore, even in the case of anciliary files typically found within
-the working directory, and I'm thinking of .gitignore as the obvious
-example, even the directives in that can be overriden on the command
-line, as well as complemented by files outside of the working directory.
+[1] https://lore.kernel.org/git/CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com/
 
+ Documentation/git-pull.txt   | 7 +++++--
+ builtin/pull.c               | 4 +++-
+ t/t7601-merge-pull-config.sh | 8 ++++----
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
-I am tempted to say that even if the definition of a "repository" can't
-be agreed on, or rather, easily determined by inspection, then at least
-the corresponding working directory can be, however, the fact that one
-has  access to EnvVars and corresponding command line arguments such as
---git-dir=<path>, --work-tree=<path>, would suggest that it could be
-harder for the novice to get their head around things, however, as it is
-typicaly clear what the working directory is (the top level directory
-containing the files you are working on, under the control of Git),
-calling that same directory the "repository" seems, to me anyway, to add
-to any confusion, that a Git novice may have.
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 5c3fb67c01..d23128fa72 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -131,8 +131,11 @@ It rewrites history, which does not bode well when you
+ published that history already.  Do *not* use this option
+ unless you have read linkgit:git-rebase[1] carefully.
+ 
+---no-rebase::
+-	Override earlier --rebase.
++-m::
++--merge::
++	Force a merge.
+++
++Previously this was --no-rebase, but that usage has been deprecated.
+ 
+ Options related to fetching
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/builtin/pull.c b/builtin/pull.c
+index e8927fc2ff..186adbff71 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -129,6 +129,8 @@ static struct option pull_options[] = {
+ 	  "(false|true|merges|preserve|interactive)",
+ 	  N_("incorporate changes by rebasing rather than merging"),
+ 	  PARSE_OPT_OPTARG, parse_opt_rebase),
++	OPT_SET_INT('m', "merge", &opt_rebase,
++		N_("incorporate changes by merging"), REBASE_FALSE),
+ 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
+ 		N_("do not show a diffstat at the end of the merge"),
+ 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
+@@ -936,7 +938,7 @@ static void show_advice_pull_non_ff(void)
+ 		 "  git config pull.ff only       # fast-forward only\n"
+ 		 "\n"
+ 		 "You can replace \"git config\" with \"git config --global\" to set a default\n"
+-		 "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
++		 "preference for all repositories. You can also pass --rebase, --merge,\n"
+ 		 "or --ff-only on the command line to override the configured default per\n"
+ 		 "invocation.\n"));
+ }
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+index 52e8ccc933..6d03e0b9fe 100755
+--- a/t/t7601-merge-pull-config.sh
++++ b/t/t7601-merge-pull-config.sh
+@@ -60,9 +60,9 @@ test_expect_success 'pull.rebase not set and --rebase given' '
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+-test_expect_success 'pull.rebase not set and --no-rebase given' '
++test_expect_success 'pull.rebase not set and --merge given' '
+ 	git reset --hard c0 &&
+-	git pull --no-rebase . c1 2>err &&
++	git pull --merge . c1 2>err &&
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+@@ -119,9 +119,9 @@ test_expect_success 'pull.rebase not set and --rebase given (not-fast-forward)'
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+-test_expect_success 'pull.rebase not set and --no-rebase given (not-fast-forward)' '
++test_expect_success 'pull.rebase not set and --merge given (not-fast-forward)' '
+ 	git reset --hard c2 &&
+-	git pull --no-rebase . c1 2>err &&
++	git pull --merge . c1 2>err &&
+ 	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+ '
+ 
+-- 
+2.32.0
 
-Given the can of worms that this question has opened up, although I'm
-getting the feeling that it has long since been opened, I still maintain
-that it would be less confusing, at least for a novice, for the working
-directory to be identified and for a previously non-existent directory,
-that gets created by the 'git init', to be referred to as the repository,
-so as to make a distinction.
-
-Kevin
