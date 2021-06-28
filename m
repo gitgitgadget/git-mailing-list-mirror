@@ -2,176 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F0B8C11F64
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 21:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67C38C11F64
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 22:27:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 428E861CF6
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 21:09:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 403C761CF7
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 22:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236090AbhF1VLe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 17:11:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41262 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235523AbhF1VLb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 17:11:31 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 812FEC061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 14:09:04 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id h9so23639282oih.4
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 14:09:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=azUFZYhsrmhRlnZzcXQm2wDY8SqrPcad3PhOdYJE7zE=;
-        b=dkIV3dEx8lCDue/Y7k7uK0uGEwCMQBEePqQ5nn0p3GunpnJQWOnRj3vcrLopNws7Av
-         BobvEiadsivUro9gFL4oh92nu2GVDRee9nCn8Gg6NLsk3/vnE73pNTA3k/V8FqFo6RF9
-         4BaTzDcTW8TtJ5ArOLz9X9v3+9ORctSxewVXc1OvF5m9XFQbQdOEN7Saigong4pejtDU
-         pi3rLYOsurrwvcg34mzi0wWpDwf/0WwcJCVrAyBnxkEDzJmy+uJlj3O0r4Z2vnMPbheB
-         Jc4VDm/W7KPI19eTo3a7FZIDBs7MWU2t8Ex+mK+gKz7Nn7YGuM8BMXTq25xOQ5+trB+N
-         5iUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=azUFZYhsrmhRlnZzcXQm2wDY8SqrPcad3PhOdYJE7zE=;
-        b=MTV9q1J+oODOB6Sg2J9uzGOSr5+b2ygoPupxFypz7m1nET9gBmlWozBzDw8qXjjtEQ
-         vZ0qkLxQ5DQUbQmnkxsSPe08gC1U0o2YG5hGteSC1ryFqFk0h8CNxvq8WJL4/fO0VQSb
-         yTZnCOQc7O9nKN437UvWn+siDvusHC2YTc0QCdwfqRJG3Ut93HY0yiO2NQfLcIIK5VUu
-         xeK43/xbeS4yUyP0EHnp6iIBOgu0BjwJEwDZB/JuIh6F01ZZqgZXywCTaV8qx/sLb0eG
-         qgQlv0Dji6nPZRdc4IXSN2huIZKWJXuUpf0GJxltikoyjCYB97er3DkDMVaCSgVtnvLX
-         zK9A==
-X-Gm-Message-State: AOAM531FEHK9PisSGOMH421iHxw1vmlY5T4JbKE9o7bCCmzSk/dDj+ok
-        HO+aHai1MoyrymfE3F2TnV4=
-X-Google-Smtp-Source: ABdhPJwXEOgTyeqQ7fz5uiknbSj0ISLOqZ2pPAZQXrNYRX2pDqgTZWDtCBYW5K4gWVqPJosY4/kUBQ==
-X-Received: by 2002:a05:6808:610:: with SMTP id y16mr19288940oih.96.1624914543899;
-        Mon, 28 Jun 2021 14:09:03 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id 94sm3634404otj.33.2021.06.28.14.09.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 14:09:03 -0700 (PDT)
-Date:   Mon, 28 Jun 2021 16:09:02 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Felipe Contreras' <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>, 'Jeff King' <peff@peff.net>
-Message-ID: <60da3a6e157de_1de4220874@natae.notmuch>
-In-Reply-To: <029a01d76c60$24ad0ce0$6e0726a0$@nexbridge.com>
-References: <60bfadc0aca09_1abb8f208fd@natae.notmuch>
- <60da10df509f0_1b95d2089c@natae.notmuch>
- <029001d76c4d$f3277550$d9765ff0$@nexbridge.com>
- <60da1c8de0ca7_1cdb420832@natae.notmuch>
- <029101d76c54$9f713c50$de53b4f0$@nexbridge.com>
- <60da2692e8029_1d6fc20855@natae.notmuch>
- <029701d76c57$f4d42f60$de7c8e20$@nexbridge.com>
- <60da2e775c3fb_1da1f2086c@natae.notmuch>
- <029901d76c5d$6137bc80$23a73580$@nexbridge.com>
- <60da363b3c532_1dcf420821@natae.notmuch>
- <029a01d76c60$24ad0ce0$6e0726a0$@nexbridge.com>
-Subject: RE: How dow we educate our users to configure less?
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S232124AbhF1WaO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 18:30:14 -0400
+Received: from us-smtp-delivery-104.mimecast.com ([216.205.24.104]:43424 "EHLO
+        us-smtp-delivery-104.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235371AbhF1WaI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 18:30:08 -0400
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jun 2021 18:30:08 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=globalfinishing.com;
+        s=mimecast20180829; t=1624919260;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=peORLFdhuWQ2MWCc0jH1LqStp1/rE8cV4abHDVeEcUk=;
+        b=Ab4or8TvW4WPk3cjK1YHhMaw+3MvPF2pCK1n1lBBbl5tDruZX2WZ7imeYyA+AMMU2xnP9H
+        hxUI2TbQFPAB5JFcNocaZbkTX8ZZ+uXsgK3TvHFMUEztsfIAUrvkHw0TulReGSO3oWbb2W
+        TAb4yggoOkTki+7JqzAMmDZhr4OffCs=
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10lp2109.outbound.protection.outlook.com [104.47.70.109])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-23-sX645KM2N-WVaxHWnF9ryQ-1; Mon, 28 Jun 2021 18:21:28 -0400
+X-MC-Unique: sX645KM2N-WVaxHWnF9ryQ-1
+Received: from CY4PR16MB1655.namprd16.prod.outlook.com (2603:10b6:910:6d::10)
+ by CY4PR16MB1718.namprd16.prod.outlook.com (2603:10b6:910:69::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4264.18; Mon, 28 Jun
+ 2021 22:21:26 +0000
+Received: from CY4PR16MB1655.namprd16.prod.outlook.com
+ ([fe80::6998:4869:a283:d3b]) by CY4PR16MB1655.namprd16.prod.outlook.com
+ ([fe80::6998:4869:a283:d3b%12]) with mapi id 15.20.4264.026; Mon, 28 Jun 2021
+ 22:21:26 +0000
+From:   Jason Hatton <jhatton@globalfinishing.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Documentation Typo
+Thread-Topic: Documentation Typo
+Thread-Index: Addsa1xUHnxDfzdDSau23n5TT7fI8g==
+Date:   Mon, 28 Jun 2021 22:21:26 +0000
+Message-ID: <CY4PR16MB1655C5F8225B32A2029EADE2AF039@CY4PR16MB1655.namprd16.prod.outlook.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [69.147.212.194]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: d3eaa13d-2f8a-4a86-703b-08d93a831210
+x-ms-traffictypediagnostic: CY4PR16MB1718:
+x-microsoft-antispam-prvs: <CY4PR16MB17185FBE61D8239227FD8A60AF039@CY4PR16MB1718.namprd16.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0
+x-microsoft-antispam-message-info: umMePXik2abpa48BeR9N5vhmjw71Oe0IuLwCf5MnrZNvqlHDfhRgvHcJg1LDGcb/kE0Ic5Q3n7dsZq20VkwVyZ57wobhfMopIsh8vgUA8veHIiV2A7bJTLNQ/91CZx+a/Oy5IVz1jIhSPn5J6pPJ4c45NrCy6cdXIRlwDRGGxpt9FdA+mPfT1dxhlfVkDNlL8Jr4BaSta1dJlGMBYEK1rnVCZBKTfbXjMgdqHpFelYThFnK/VyLY80Fx4eiNLvHQf3baw6Ss8N+/AO+DttRJSZi8ABB3QzvIE1ArOZcQE8XHZsIcBB7XYMSAQfpygnTCUFeg0SpCwKPpEfvh/WjtPOBk5lP8GRaozfPyJb/KFwgzpJP0INfAUy2IhtUYZvrJ+J92YTL9BIPDOlja97/SWN5VcU6OTXflplmsReGYaLaHdxphughkJYZ7kImhk7JlEhdgWeuda9vH4OM94voQHM3nezy7RdF6efA0Uu2Tw6LkIonvXsV1PisiAF189XDiDDNQv7rysOIzAUa2mOLRfsT6iYK0PAG1vIT7dN2MTcTLe3EB6+oylFZCREyfzAiKuSSZBrKkDePSkIlAvjMypww2GrrpylFIjvN7eS9P79dTTJqACD75lQnfFCLSz/nMKd0/tLhSq0jaxmzuUgp8sQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY4PR16MB1655.namprd16.prod.outlook.com;PTR:;CAT:NONE;SFS:(39850400004)(396003)(366004)(136003)(346002)(376002)(5660300002)(33656002)(66476007)(9686003)(7116003)(76116006)(66446008)(4744005)(8676002)(55016002)(66556008)(64756008)(52536014)(83380400001)(71200400001)(66946007)(8936002)(6916009)(186003)(6506007)(26005)(38100700002)(122000001)(86362001)(316002)(3480700007)(7696005)(478600001)(2906002);DIR:OUT;SFP:1101
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dDZPV21hbHZ0Vzgrek8vVDhCcmJLMGcvVkRMbTlLN3BTNTMwY2dPNGpTUnNa?=
+ =?utf-8?B?VjVITWVZYzNFREVyK0ptMTB5bjZtZ2cwdWptSWJsSm5XYytLQVp3ZmVPbnN4?=
+ =?utf-8?B?ZGhaNEMybUM5UGVaSXlnK0Q4S0dSOEQ0cms1QkhmZ0I5QU5sTHNBZGtTNEtv?=
+ =?utf-8?B?a0pCejNKeURESWtMdkorcjhXWDU4QmZiSnNqRE9MQWtqYXpJUlh1K1J0ZVBD?=
+ =?utf-8?B?cmdXQ05Cd05jQmZ4c3hFNGl0TzVuWmxOOVNtOWFJdEpva3N1TG8ydVdsL2M2?=
+ =?utf-8?B?Y3VtaDhtOWtnMmpSQkEyTFI0UHVtQXF2dnJ3Q2dxM2xvS0RoeVlENnFBOFB3?=
+ =?utf-8?B?dkt1bGxkR1JVQkJObjh4aXRRSjlmS1drcTlDc1ljWnZzYlNKLzhjRXRRQ0hP?=
+ =?utf-8?B?WHdDWHpTQ1lxYWo5NUZiTDQ1bElzRlNTSnQ5aWFxaUlwRllyNU12TDFMNGpt?=
+ =?utf-8?B?SEs4R1puUC9DaUMzNnh3VHBTak9aQmYzL0Vyd3hUcmpWU0NuVWVYVnoyN2J1?=
+ =?utf-8?B?T25TdW41Ukp5SEhaTXRGWnB4ZzJqK1JLaU00S1RvZm93aW5iMUFWSC83cGRT?=
+ =?utf-8?B?eldVNS9sOTFHcUNLdXRaY2srN1drOHNrM0V5NkhIQWlEL2MzVzdWekhtNklZ?=
+ =?utf-8?B?RWJtR2RQVDVkcDJsUjBaeEtXY0JMUkdZYURGcEh4RXRNV1Z0VXcwYTJiQWJD?=
+ =?utf-8?B?TWtCU0YvS1EzTVBoMDhKdWdqUzJYNk1HdTdjajNTaHlzR2RWdmVzeHRFYUox?=
+ =?utf-8?B?SDIyRk9aT1RMLzVFR1RoNjdOTmkyTWJIalBXNis1NjNTdnljVXJCbDhDVlNG?=
+ =?utf-8?B?cVRDZGJ0QlBNeHJ6blpDSVdjYjFOd0tUT3pvMzFBYTg3M0lXSm1ZcFlmR1RR?=
+ =?utf-8?B?RWdBUTdoOHJHNXlVRk5VTXBLTUp0dVQrcSszT1pCdUl6TDBvVm5NTUJnSC9v?=
+ =?utf-8?B?ZVJnaDNLbGFSUnJUNldtUFpmU2tkREFBWkFQa1BoTE85eFdWMTMzV255ZGpq?=
+ =?utf-8?B?d3FBcGY3WmtrclBJT3B4Mi9CWWhGNlh4c0p3VG5zOXhxdmlwTFNHTE51cXF4?=
+ =?utf-8?B?WUN0ai96ZytVUFhRWEVsanJRS05xSTFtaGxBV1BOeDk2Kzc3U0lyUWRpRXhL?=
+ =?utf-8?B?ZUtIVktqb2FHb25xSGdna2IrOFdTdGNFQmw3N1JTQjJpY0ZJR3JTNkk4bUI5?=
+ =?utf-8?B?ZE51cEx4dCtuRkNpZVdCQ2tDeU1sNEZFMjl2K3lwdnJYTEgzVVhGcHl1azZj?=
+ =?utf-8?B?UEpVQmtiQXhNUzFUY1lwMkpwekxpU2Z4YXRFeGd5T3Ywc3NZek4xOUdFaVg4?=
+ =?utf-8?B?VUlHYytxZ1dBbGxFOEZtR3cyaXNNNVdrUjc3Q3d2djAxR3ZoalZKRlU1VDlO?=
+ =?utf-8?B?N1FaVHVZQ0IyT0RISzB1cTVyWUdvS01TVERHZDBUeUM5SnlCazE5dW8xUlQ3?=
+ =?utf-8?B?NUJIeXRxN2plNEFmRjY3MGJIN1RscWFvTVFzNTV6VHpjTU1Ic0xzZWNGMjk3?=
+ =?utf-8?B?Wk04Z2M3TU5uY25oSzRac0dSUThvSkNWbUpKMFVzSTlWZm5aRFhRcDQ5TTdN?=
+ =?utf-8?B?alpIWm95czRGWkVMZW1EL1pZUVZaV3V6SFZmb3l0YmJieTNpa0plVVM3dm4v?=
+ =?utf-8?B?TUlPNTlDK1B4aEIvR0ZIUnU2S2lCMkhiaEFyekJxZkRJa08zemU0RlhLUmJE?=
+ =?utf-8?B?UXlPTjA1RVNwYlk0V1U5VFE2bmVwZ3dCMUVCNWdTK2Y4b0VQbi9kTVoxUDNj?=
+ =?utf-8?Q?e47APVtEDfNekBvIjuZ1p1UHHjEtUq6z58X1/Dm?=
+x-ms-exchange-transport-forked: True
+MIME-Version: 1.0
+X-OriginatorOrg: globalfinishing.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY4PR16MB1655.namprd16.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d3eaa13d-2f8a-4a86-703b-08d93a831210
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jun 2021 22:21:26.7000
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 41026ff0-b4fb-4e53-ada8-a2e2e3e9ec4d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: n8e5IvtMnJxvkUdYjnGmfkfJEB/zHtKtHFYMOpEO6zYmGhu/j69tTnQ8g65vCnlM3gJU4scSxuCznRlIX8xerF3vC3bjmsmNnkdELj74oHs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR16MB1718
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=CUSA104A295 smtp.mailfrom=jhatton@globalfinishing.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: globalfinishing.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Randall S. Becker wrote:
-> On June 28, 2021 4:51 PM, Felipe Contreras wrote:
-> >To: Randall S. Becker <rsbecker@nexbridge.com>; 'Felipe Contreras' <fe=
-lipe.contreras@gmail.com>; git@vger.kernel.org
-> >Cc: 'Junio C Hamano' <gitster@pobox.com>; git@vger.kernel.org; '=C3=86=
-var Arnfj=C3=B6r=C3=B0 Bjarmason' <avarab@gmail.com>; 'Jeff King'
-> ><peff@peff.net>
-> >Subject: RE: How dow we educate our users to configure less?
-> >
-> >Randall S. Becker wrote:
-> >> On June 28, 2021 4:18 PM, Felipe Contreras wrote:
-> >> >Randall S. Becker wrote:
-> >
-> >> >I'm saying the **opposite**. I'm saying this should be done in buil=
-tin/help.c *not* .profile.
-> >> >
-> >> >> Admittedly, I am in a highly complex situation, but it is a real
-> >> >> one (ok, two because of a diverged path between NonStop and MVS)
-> >> >> and there are hundreds in a similar situation.
-> >> >
-> >> >My patch [1] should work in all your environments.
-> >>
-> >> Your patch will work in the environments but not in the use case I
-> >> tried to explain. I do not want a single configuration of less colou=
-rs
-> >> in .git/config or ~/.gitconfig. That is not going to work in my
-> >> situation. I have multiple less colour values that would apply withi=
-n
-> >> a given arbitrary timeframe. The configuration depends on the specif=
-ic
-> >> terminal type set in the environment, either dumb, vt220, t653x,
-> >> xterm, cygwin, all of which may happy in short succession. I do not
-> >> expect it to be practical to change my git settings to conform to th=
-is
-> >> patch, so I am trying to point out that I do not see how it can solv=
-e
-> >> my issue.
-> >
-> >Are you talking about color settings? If so, what are the values of
-> >LESS_TERMCAP_* that you have configured?
-> >
-> >> The current support, using the TERM environment variable, which is
-> >> passed to git in all situations either by the system itself on throu=
-gh
-> >> scripts as is the case with Jenkins, is mostly sufficient for less a=
-nd
-> >> git to find its appropriate termcap on all platforms that I use on a=
-n
-> >> ongoing basis (Windows Cygwin, NonStop OSS, NonStop GUARDIAN, Ubuntu=
-,
-> >> MacOS, MVS, USS, Jenkins). The NonStop GUARDIAN environment does
-> >> present some paging issues that do not work correctly in some cases
-> >> with some terminal emulators, but that's the emulator's problem, not=
+SSBiZWxpZXZlIEkgZm91bmQgYSBkb2N1bWVudGF0aW9uIHR5cG8uDQoNCkRvY3VtZW50YXRpb24v
+cmV2LWxpc3Qtb3B0aW9ucy50eHQNCg0KODk4OiBUaGUgZm9ybSAnLS1maWx0ZXI9c3BhcnNlOm9p
+ZD08YmxvYi1pc2g+JyB1c2VzIGEgc3BhcnNlLWNoZWNrb3V0DQo4OTk6IHNwZWNpZmljYXRpb24g
+Y29udGFpbmVkIGluIHRoZSBibG9iIChvciBibG9iLWV4cHJlc3Npb24pICc8YmxvYi1pc2g+Jw0K
+OTAwOiB0byBvbWl0IGJsb2JzIHRoYXQgd291bGQgKipub3QgYmUgbm90KiogcmVxdWlyZWQgZm9y
+IGEgc3BhcnNlIGNoZWNrb3V0IG9uDQo5MDE6IHRoZSByZXF1ZXN0ZWQgcmVmcy4NCg0KSSBlbXBo
+YXNpemVkIHRoZSAibm90IGJlIG5vdCIgb24gbGluZSA5MDAuIEkgaG9wZSB0aGlzIGlzIHRoZSBj
+b3JyZWN0IHBsYWNlDQp0byByZXBvcnQgdGhpcy4NCg0KVGhhbmtzDQotLS0NCkphc29uIEhhdHRv
+bg0KDQo=
 
-> >> the termcap specifically.
-> >>
-> >> So what am I missing?
-> >
-> >You still have not explained why this would not work on any of your
-> >environments:
-> >
-> >  setenv("LESS_TERMCAP_md", GIT_COLOR_BOLD_RED, 0);
-> >  setenv("LESS_TERMCAP_me", GIT_COLOR_RESET, 0);
-> =
-
-> I am not saying it will not work technically. Suppose I have a
-> terminal session using t653x, which is not vt220 compatible - meaning
-> it does not use GIT_COLOR_BOLD_RED or even have the concept of bold
-> red) and do a git log or git help. I have another session using vt220,
-> which works as configured. I have a third session running in Jenkins
-> that keeps things up to date and is a terminal type dumb.
-
-Does `git grep` show colors?
-
-> Your patch appears to imply that I need to run git config to change
-> the values associated with colours to make things work, correct?
-
-No, you just need to enable color.man
-
-  git -c color.man=3Dtrue help git
-
-> So how do the three sessions all work simultaneously or do I only get
-> to use one of them at a time and reconfigure when I want to use a
-> different terminal?
-
-Do you need to reconfigure anything for `git grep` to show color?
-
--- =
-
-Felipe Contreras=
