@@ -2,145 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61A6FC11F64
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9E20C11F64
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:14:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DD6A61C8E
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:01:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1AFC6191B
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:14:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235801AbhF1TED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 15:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233101AbhF1TEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 15:04:02 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341B7C061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 12:01:36 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id 110-20020a9d0a770000b0290466fa79d098so3246710otg.9
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 12:01:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=ur5pIc9UMYYMjs8y/xSsh86AJSGnfAqbDxb7hbLuc0M=;
-        b=J5CeSs3hBGuCcuzFpe6rdZ1M+TT8cfkSt3EWOFusgmJC7voiZ09IfvJsZBjTq6dmb2
-         VJlFD1ibSaA4Ya7AcNkEOQlWzh/OAkgsZ9+TuB2w91tDp9AN7JBIbHSyhjKuiwYjQ080
-         RRRs7yf3/7XP9Z/D8tNFgdBLexc7rZfTpOZV0S4npUqSu+SUUpneUS8V4daj1GwUH4sV
-         wXS/xEgEf8g2vtVtAVaK81huIElXbHDOo4/nopO60RwCoJggUPhUD67PBeDqmwaCSQvY
-         0GDYCDHzEG60Ozt3/ziLUAwu8AYRpq2PbsPHscTWZycKzy8bbqiwWB58d7Z/cwo/LYjK
-         qoGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=ur5pIc9UMYYMjs8y/xSsh86AJSGnfAqbDxb7hbLuc0M=;
-        b=YYxkegTJTreMmy26JV7a8jirhtjK5RJwo0/KA5NKDyQAy6KFqD4L3fNuiDo4/SqM36
-         QgWzV6T9mKG0fLAktRTL+BagRfP2ykLhA3raR5BAvLK79Nr/+0hG66lZUAvGHT5sPHPS
-         +tM1+ajQaZO35dkmtzZtnVrk+e+xuSC8WsFvqf6RJnUzcOniVVIflGZIp/uQ2nJH/1Pa
-         9fUanVT7AxPfNJKmVK+5Wk59Vgg0D6PqEjMkqxHOQ7ECTEwbs/qqgshf1Fowr2wXltXF
-         dLQ6rro0yx5nEDsrR6lNGYfM/hxsop5QRlSZjVzcvrwBdd/O5iAXMdJWSwyDYXCevOEo
-         MH9A==
-X-Gm-Message-State: AOAM532VvSaJbMGnInmMZHNy99KhqYk4v/nsLl3/PbxuHrPvJ0f9CAIx
-        AHhpgsP/cSIg/ixL7+MnP6Q=
-X-Google-Smtp-Source: ABdhPJzDVry69EiUtoI5qAqJXl/w7ucimutNeb0uZWB+O7RqFd8KYkzQHFXtDngXSgRPJmOn41jR3w==
-X-Received: by 2002:a05:6830:33e3:: with SMTP id i3mr934140otu.47.1624906895566;
-        Mon, 28 Jun 2021 12:01:35 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id q13sm3100580oov.6.2021.06.28.12.01.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 12:01:35 -0700 (PDT)
-Date:   Mon, 28 Jun 2021 14:01:33 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Felipe Contreras' <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>, 'Jeff King' <peff@peff.net>
-Message-ID: <60da1c8de0ca7_1cdb420832@natae.notmuch>
-In-Reply-To: <029001d76c4d$f3277550$d9765ff0$@nexbridge.com>
-References: <60bfadc0aca09_1abb8f208fd@natae.notmuch>
- <60da10df509f0_1b95d2089c@natae.notmuch>
- <029001d76c4d$f3277550$d9765ff0$@nexbridge.com>
-Subject: RE: How dow we educate our users to configure less?
+        id S236177AbhF1TRK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 15:17:10 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:40751 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236223AbhF1TRI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 15:17:08 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 2287D5C0150;
+        Mon, 28 Jun 2021 15:14:41 -0400 (EDT)
+Received: from imap41 ([10.202.2.91])
+  by compute2.internal (MEProxy); Mon, 28 Jun 2021 15:14:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beshr.com; h=
+        mime-version:message-id:in-reply-to:references:date:from:to
+        :subject:content-type; s=fm1; bh=OvOQTk2OGspSBddB4GfiRB1QxYx1pyP
+        NqdMMsp2cvB4=; b=hbA6gSCVbdWgl5abOJdj0pSz7rGs817MPkal7kCXsi487CE
+        KcJEoev/wTIfd3o8OWbpKEXdmjh6ydxtjZfPLG9elTTb338wZhry3Y7BTE5HTcS4
+        k3ce652IX79TEnQRMxWHjFQVTTbPuG+PvD7thj4t0Uj7lo9Zc3CTy6F3Z6SSRrCZ
+        9JiE2aLUKefkHxkybh8c7VKpubAjY+RZOv+M0kQQKqb9DawC6gaqq9NwK1OnyfIe
+        I3lVtcTPrhUXNmieco0XQoguIc7rERGhHCxkz0dJbwhXpX+uwKbqlvtyN3EU1ozq
+        FOKo3CzKRVoLWaayVLeJnzMf5gnyYpB1nsFkHwQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=OvOQTk
+        2OGspSBddB4GfiRB1QxYx1pyPNqdMMsp2cvB4=; b=GdHb6DN5fLcQYGDoMxmRHT
+        8dG7yNAJ6AAl7Lqo4wnxvSHfFzFZcvCTcyFHwlLeBeVM5PHd3i+xKKZnGw7Aq9oQ
+        thxQHDByLp6HtljBoSmKFeoy9+uSn8wUZbCSzQjs/O8Uk2QshXvLdFHeEQs43lCU
+        bh3fnifL+pOjImvlf7W0iISLE6kvYjdBWpqwdNmq7I6F0sCYtRcKqNhRIiaFz22u
+        G0W0UnBXMDky0qviepo55atR6xA/7Od2XSrUDwYRI1fr4qNCk+OVBl9OMtq9pVKz
+        xMZLIWkXLAFmHlXurm2Y3FIFnnEr6yf1VT+qSFYcKX8d4UH5bbANkmFFmKejeZfQ
+        ==
+X-ME-Sender: <xms:oB_aYESkkUppn7jaWRTn6STlhDV6OEJbBbdnS6l6wAXntvzc6wXTbA>
+    <xme:oB_aYBwlPkgFFtmsMCdlVf8YxOAW25hndManS1FIYtIASgalnjAGRoxRXj1kN0AlJ
+    ovKzhY-8HPQFrjVNmM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehgedgudeffecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesth
+    dtredtreertdenucfhrhhomhepfdeuvghshhhrucfmrgihrghlihdfuceomhgvsegsvghs
+    hhhrrdgtohhmqeenucggtffrrghtthgvrhhnpedvieehkeeileeiheetvedvkedthfelgf
+    eiieekteetleffudffhfdvtdejvddtleenucffohhmrghinhepsggvshhhrhdrtghomhen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmvgessg
+    gvshhhrhdrtghomh
+X-ME-Proxy: <xmx:oR_aYB1N_QzUTzTwyHi9SZueV2qPSXsWRbNwc133CyDb9AuReU4VNQ>
+    <xmx:oR_aYIBPwZwgW0g5u-XircBMkv2R7ilY64_ZCut6QPhhcy4ZjLoU1A>
+    <xmx:oR_aYNid__Htgo4L_c_kBHD3WHd12r15XanbYW7mnK24OPIcgw9tFA>
+    <xmx:oR_aYHdf3xl1XJPtbvEI2IJzUZWRIqhhk3wMSdGbo7rxH4OXInWPeQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id ED6783C0060; Mon, 28 Jun 2021 15:14:40 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-530-gd0c265785f-fm-20210616.002-gd0c26578
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Message-Id: <4432c402-084c-4759-8c31-954ce5c054f8@www.fastmail.com>
+In-Reply-To: <afef1ee8-dd6e-2954-2c97-57ae14b27668@gmail.com>
+References: <20210628052631.345601-1-me@beshr.com>
+ <20210628052631.345601-2-me@beshr.com>
+ <afef1ee8-dd6e-2954-2c97-57ae14b27668@gmail.com>
+Date:   Mon, 28 Jun 2021 21:12:25 +0200
+From:   "Beshr Kayali" <me@beshr.com>
+To:     "Bagas Sanjaya" <bagasdotme@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Documentation: commit patch typo
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Randall S. Becker wrote:
-> On June 28, 2021 2:12 PM, Felipe Contreras wrote:
-> >Felipe Contreras wrote:
-> >> It has been suggested that we "educate our users" to configure less =
-in
-> >> the right way, instead of colorizing man pages ourselves [1].
-> >>
-> >> The question is *how*? Nobody has answered that.
-> >>
-> >> This is a continuation of the thread below.
-> >
-> >> I am still waiting for an explanation.
-> >>
-> >> How does the user properly colorize man pages for both man and git i=
-n
-> >> a way that works in all distributions?
-> >
-> >No response.
-> =
+On Mon, Jun 28, 2021, at 8:05 AM, Bagas Sanjaya wrote:
+> Hi Beshr, welcome to Git mailing list!
 
-> I think you're looking for something does not exist because it is
-> platform and environment dependent.
+Hi Bagas! Thank you!
 
-Yes, but there's always some common denominator.
+> On 28/06/21 12.26, Beshr Kayali wrote:
+> > ---
+> >   Documentation/git-commit.txt | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> Why isn't there commit message? But from cover letter of this 
+> single-patch series:
+> 
+> > Simple typo fix (chose -> choose) in the documentation of the patch option under the commit command.
+> 
+> Don't forget to write the commit message in next series.
 
-> There are two ways to configure git to work with 'less' on NonStop and
-> neither is identical to Ubuntu or Windows.
+Sorry about that. I'll fix!
 
-But I'm not talking about configuring git to work with less.
+Thanks!
 
-Once you have less configured, how do you add colors? For example how do
-you turn bold into red bold?
+> > diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> > index 340c5fbb48..95fec5f069 100644
+> > --- a/Documentation/git-commit.txt
+> > +++ b/Documentation/git-commit.txt
+> > @@ -72,7 +72,7 @@ OPTIONS
+> >   
+> >   -p::
+> >   --patch::
+> > - Use the interactive patch selection interface to chose
+> > + Use the interactive patch selection interface to choose
+> >   which changes to commit. See linkgit:git-add[1] for
+> >   details.
+> 
+> Fix looks OK.
+> 
+> Thanks.
+> 
+> -- 
+> An old man doll... just what I always wanted! - Clara
+> 
 
-> Don't even get me started on what less does in a TSO/ISPF environment
-> where everything is some single colour on black unless your emulator
-> supports 3279 emulation.
-
-Is it even possible to add color there? I'm talking about platforms
-where color is possible in the first place.
-
-> >It's safe to say at this point that nobody knows what that configurati=
-on would look like.
-> =
-
-> Nobody, perhaps, knows how to do this on every platform in the known
-> universe =F0=9F=98=8A. There is no "one way" to do this consistently ev=
-erywhere.
-
-In the platforms where color is supported, and you have less, what does
-this do?
-
-  LESS_TERMCAP_md=3D$'\e[1;31m' LESS_TERMCAP_me=3D$'\e[m' git help git
-
-(I'm using a bashism, so you probably need bash for the example)
-
-> In addition, there are many different terminal emulators that end up
-> interacting with git and many do not support vt220 colours. So again,
-> I'm not really sure what can be done.
-
-Obviously I meant in the platforms where it can be done.
-
-How does the user properly colorize man pages for both man and git when
-using less in a way that works in all distributions that support colors?
-
--- =
-
-Felipe Contreras=
+http://beshr.com
