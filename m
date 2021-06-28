@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE710C11F66
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA84BC11F64
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:19:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4BF961997
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:19:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8DE061992
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 19:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236371AbhF1TWH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 15:22:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45026 "EHLO
+        id S236389AbhF1TWI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 15:22:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234314AbhF1TWD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234572AbhF1TWD (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Jun 2021 15:22:03 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013BAC061767
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 12:19:36 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id l18-20020a1ced120000b029014c1adff1edso152936wmh.4
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321C4C061766
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 12:19:35 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id a13so22575013wrf.10
         for <git@vger.kernel.org>; Mon, 28 Jun 2021 12:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=j2uro04gEiRKvFmfFcUKQpqQa9AQXX3y0z6jJPc+XBY=;
-        b=nfVr2UxI8IFaFXsVFq9cz58eQlfEjFocaRBngDBrsxTDEhlzHLNTOJ43DeGS5fbvQX
-         nb3J9xD1Ivo2s8ouIY1ZrIcCamnoeyJh49fjS4mzSyR01sJkQQKp+YIL3lBfzZeRA5eU
-         BlS4+3a/atUJATyqXtwajAgFbLQjwV+hG0J+rhPUB/mC3Qtj0ia8zqk9XQMF93TkO5aN
-         D0qP/g7/4ymou31YQbPOMBKlMFXxcVYlgOTIL9e8xNVjq6v6HxuFr0ydlUCfnQYHHP0d
-         4E7BMxr4hTVmRb/tdogyt3gOsv/QDMXYL8D6F6NlmglGp/Ri3cZ5O05y6Vu8okQc1CiQ
-         aCWA==
+        bh=R4mnmf+zQquQk2VS0VCraZZaOLEW0g3riRf7ZlJoXOk=;
+        b=WT5Jgdy3KT2aeLJYYO/EZQnbd4zlipx97SLPNGfglwgsN7bKaCHuclVDocxk7+zYkB
+         WSLBrKJMbh1a+LN7FrqvzZFGsfdQpZih3Uz0f8ztiQATcwoNsS0Gs4/b38EINifReEYJ
+         zxi6THIelvb/oeLjeFqj9ggAwA3KJcv97xC8UOKv0TTKdKRA85d9wf5mcnAbFntt5EbG
+         UGfAnzN4mvylvZdNesGe1bHgCm6WXGykEpGKFiuZ/tuuxcTNXM3bbCQMCMH0b+gZfV2G
+         ZM4zJzlzsaY+x3KSl41JuYg1ouQWBCk9n3AKm522Wy00FKe/hxCSVd1VkaTQjvAM3kQq
+         +KMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=j2uro04gEiRKvFmfFcUKQpqQa9AQXX3y0z6jJPc+XBY=;
-        b=WqZh7oI4NrfmGOkbHa9QyTsdAg6iOJxmHVqnxM79c9hyXXuwv6IkWUM5nvPKRvEXhf
-         lu3N4zzc4smg+P+R0xf+hxSQ3Ja4w9OKRvIGfzL9trw/6TWbBVhokRulKPjNfG2rVa4b
-         I28QJ5tnKysx+/RGQKYnPHAvPXhPcnEC4WKPfvn65JQbEqKlpT/c+Lo33qHSPWMT/htP
-         WaHScCe8ptaHaEJttOpScXMqxjHTtfOXrV22vJk8Bf7WrijirnwcVCFepb8I9WBubKRh
-         jxsVvVgXvFfGcVCaD0dKARaD8LINDmQgsv8ygOT+WwdbVmtpOn/lx8jg95vBBOtCUB24
-         piow==
-X-Gm-Message-State: AOAM531g/yOAS6VjCFEGWG3euE+UkSYcGuKThi3bDw/QWwzNCIMrE/gX
-        WCKvi9Aow7bsSLl9j6y5rtW+n7/o9gN6Hw==
-X-Google-Smtp-Source: ABdhPJzb6OMTs+OnfACSUwg/Glnl1JA3KBxSHSIKeDSlRb90TwoGVF6M2AW5Mf4fil8S8j5fssZ7+w==
-X-Received: by 2002:a1c:9a51:: with SMTP id c78mr587936wme.103.1624907974437;
-        Mon, 28 Jun 2021 12:19:34 -0700 (PDT)
+        bh=R4mnmf+zQquQk2VS0VCraZZaOLEW0g3riRf7ZlJoXOk=;
+        b=JWR/fsqnjf6pmXpwqmV2uVsrviq429/AavpRH/PmXM3BohmGMqOInRLf57BL4ENeMS
+         K19zH4Izlmn8QVAsrQLraG9QnGqK7Faz6wCvnhwJKzR1TmPDXavT6raD1MBwTyPlcv+I
+         O0qkchR4i8JhPkMisaTA+iOTFn01CEMo/ovR1ur00jFpGQAHhpVrmnebSWPo9EPOFatG
+         z8Bo2GeX82rQ7dHn7i4Z45EQUHZPZTK4sy2Ip83/rg7VTqVmUfLOQg+DiZ3idAeWB1mx
+         rhmOYWbuDhaYclTCIALCoCwWPQTp8H4I1+5fk7gVLI4Y/E9aUu3EC5npKf/LNYk4IaqS
+         RxHQ==
+X-Gm-Message-State: AOAM530vrOwM5uEiiznZBGYZw3YqHjrnaGNVnJN3R2wASByvva0qoAju
+        RTP0B4kt8FSlLXgeZanu2470I0FLaeX7oQ==
+X-Google-Smtp-Source: ABdhPJzC7u9qw8XCQxXfUSQ3dtSUaK8WDXZIoUiNsYT2OicHGl9uJsAvQ+mtSpa3NVOdm1RB3zMhTA==
+X-Received: by 2002:a5d:60ce:: with SMTP id x14mr28757423wrt.385.1624907973645;
+        Mon, 28 Jun 2021 12:19:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s5sm350531wmh.46.2021.06.28.12.19.33
+        by smtp.gmail.com with ESMTPSA id s5sm350531wmh.46.2021.06.28.12.19.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 12:19:34 -0700 (PDT)
+        Mon, 28 Jun 2021 12:19:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/8] transport: use designated initializers
-Date:   Mon, 28 Jun 2021 21:19:20 +0200
-Message-Id: <patch-3.8-766045e5f1d-20210628T191634Z-avarab@gmail.com>
+Subject: [PATCH v2 2/8] transport: rename "fetch" in transport_vtable to "fetch_refs"
+Date:   Mon, 28 Jun 2021 21:19:19 +0200
+Message-Id: <patch-2.8-7b8101dca71-20210628T191634Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.611.gd4a17395dfa
 In-Reply-To: <cover-0.8-00000000000-20210628T191634Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20210616T141332Z-avarab@gmail.com> <cover-0.8-00000000000-20210628T191634Z-avarab@gmail.com>
@@ -80,90 +80,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the assignments to the various transport_vtables to use
-designated initializers, this makes the code easier to read and
-maintain.
+Rename the "fetch" member of the transport_vtable to "fetch_refs" for
+consistency with the existing "push_refs". Neither of them just push
+"refs" but refs and objects, but having the two match makes the code
+more readable than having it be inconsistent, especially since
+"fetch_refs" is a lot easier to grep for than "fetch".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- transport-helper.c | 12 ++++++------
- transport.c        | 30 ++++++++++++------------------
- 2 files changed, 18 insertions(+), 24 deletions(-)
+ transport-helper.c   | 8 ++++----
+ transport-internal.h | 2 +-
+ transport.c          | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/transport-helper.c b/transport-helper.c
-index 8d445a8f3ee..e8dbdd11530 100644
+index 4be035edb8b..8d445a8f3ee 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -1261,12 +1261,12 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
- }
+@@ -671,8 +671,8 @@ static int connect_helper(struct transport *transport, const char *name,
+ static struct ref *get_refs_list_using_list(struct transport *transport,
+ 					    int for_push);
  
+-static int fetch(struct transport *transport,
+-		 int nr_heads, struct ref **to_fetch)
++static int fetch_refs(struct transport *transport,
++		      int nr_heads, struct ref **to_fetch)
+ {
+ 	struct helper_data *data = transport->data;
+ 	int i, count;
+@@ -681,7 +681,7 @@ static int fetch(struct transport *transport,
+ 
+ 	if (process_connect(transport, 0)) {
+ 		do_take_over(transport);
+-		return transport->vtable->fetch(transport, nr_heads, to_fetch);
++		return transport->vtable->fetch_refs(transport, nr_heads, to_fetch);
+ 	}
+ 
+ 	/*
+@@ -1263,7 +1263,7 @@ static struct ref *get_refs_list_using_list(struct transport *transport,
  static struct transport_vtable vtable = {
--	set_helper_option,
--	get_refs_list,
--	fetch_refs,
--	push_refs,
--	connect_helper,
--	release_helper
-+	.set_option	= set_helper_option,
-+	.get_refs_list	= get_refs_list,
-+	.fetch_refs	= fetch_refs,
-+	.push_refs	= push_refs,
-+	.connect	= connect_helper,
-+	.disconnect	= release_helper
- };
+ 	set_helper_option,
+ 	get_refs_list,
+-	fetch,
++	fetch_refs,
+ 	push_refs,
+ 	connect_helper,
+ 	release_helper
+diff --git a/transport-internal.h b/transport-internal.h
+index b60f1ba9077..c4ca0b733ac 100644
+--- a/transport-internal.h
++++ b/transport-internal.h
+@@ -34,7 +34,7 @@ struct transport_vtable {
+ 	 * get_refs_list(), it should set the old_sha1 fields in the
+ 	 * provided refs now.
+ 	 **/
+-	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
++	int (*fetch_refs)(struct transport *transport, int refs_nr, struct ref **refs);
  
- int transport_helper_init(struct transport *transport, const char *name)
+ 	/**
+ 	 * Push the objects and refs. Send the necessary objects, and
 diff --git a/transport.c b/transport.c
-index f60985e2dbd..bdd9b5a93cf 100644
+index 50f5830eb6b..f60985e2dbd 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -880,12 +880,10 @@ static int disconnect_git(struct transport *transport)
- }
+@@ -1449,7 +1449,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 			heads[nr_heads++] = rm;
+ 	}
  
- static struct transport_vtable taken_over_vtable = {
--	NULL,
--	get_refs_via_connect,
--	fetch_refs_via_pack,
--	git_transport_push,
--	NULL,
--	disconnect_git
-+	.get_refs_list	= get_refs_via_connect,
-+	.fetch_refs	= fetch_refs_via_pack,
-+	.push_refs	= git_transport_push,
-+	.disconnect	= disconnect_git
- };
+-	rc = transport->vtable->fetch(transport, nr_heads, heads);
++	rc = transport->vtable->fetch_refs(transport, nr_heads, heads);
  
- void transport_take_over(struct transport *transport,
-@@ -1029,21 +1027,17 @@ void transport_check_allowed(const char *type)
- }
- 
- static struct transport_vtable bundle_vtable = {
--	NULL,
--	get_refs_from_bundle,
--	fetch_refs_from_bundle,
--	NULL,
--	NULL,
--	close_bundle
-+	.get_refs_list	= get_refs_from_bundle,
-+	.fetch_refs	= fetch_refs_from_bundle,
-+	.disconnect	= close_bundle
- };
- 
- static struct transport_vtable builtin_smart_vtable = {
--	NULL,
--	get_refs_via_connect,
--	fetch_refs_via_pack,
--	git_transport_push,
--	connect_git,
--	disconnect_git
-+	.get_refs_list	= get_refs_via_connect,
-+	.fetch_refs	= fetch_refs_via_pack,
-+	.push_refs	= git_transport_push,
-+	.connect	= connect_git,
-+	.disconnect	= disconnect_git
- };
- 
- struct transport *transport_get(struct remote *remote, const char *url)
+ 	free(heads);
+ 	return rc;
 -- 
 2.32.0.611.gd4a17395dfa
 
