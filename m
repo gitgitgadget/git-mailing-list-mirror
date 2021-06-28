@@ -2,72 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C34C11F64
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 17:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F3BC11F64
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 17:39:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC79A61220
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 17:37:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B21F961C65
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 17:39:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232266AbhF1RkW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 13:40:22 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64578 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbhF1RkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 13:40:22 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D97CBC1DC7;
-        Mon, 28 Jun 2021 13:37:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aZCQUQzLdxPGKZZnbwTQjiyiRWh1mPV1tKQCLb
-        LfDss=; b=HOubF/NN32X+xnk7rZTqTdz0USkSFbI5n+eAguw5sBm1T1AyoUAMuV
-        FZOubzPn1vFseNEUIjWJIav0/2Sb8RkbtWLRtP/rEuScYqNGC7pG9HKdMMg9tBpi
-        GekIwWXmP8hROP4g7EYsSIdQlCidlOwOzRNos3K4hLe9bK0I1al1w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D0F74C1DC6;
-        Mon, 28 Jun 2021 13:37:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64DC8C1DC5;
-        Mon, 28 Jun 2021 13:37:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v7] help: colorize man pages if man.color=true under
- less(1)
-References: <xmqq4ke8pig9.fsf@gitster.g>
-        <patch-1.1-a950ef49e28-20210621T083254Z-avarab@gmail.com>
-        <xmqqfsxbika3.fsf@gitster.g> <87mtrj2faq.fsf@evledraar.gmail.com>
-        <YNPKwIuZvpyWSNXH@coredump.intra.peff.net>
-Date:   Mon, 28 Jun 2021 10:37:54 -0700
-In-Reply-To: <YNPKwIuZvpyWSNXH@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 23 Jun 2021 19:58:56 -0400")
-Message-ID: <xmqqlf6t7uvh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 924D8318-D837-11EB-A9A7-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+        id S233859AbhF1RmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 13:42:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232719AbhF1RmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 13:42:12 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7615EC061574
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 10:39:45 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id u11so22940870oiv.1
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 10:39:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=qSZEi7G4UqqopNvPFCC5GNRtEFYG3E5lEfhC3UMZTWc=;
+        b=M/NGVaR6a+PbFpyB1ke/KbF7E8rDL+zqdz0ixALL726JFODyDokzVILi57Y2SrqmHT
+         94U7BS1dI41Pqv8TP+wHqsG3htVjhFecVJdUIV1RPAxQ+ku5kbx5Qx2GdKia2o9+k8SP
+         K03b6/j62pw7lQD7DJTVzz0EzaHGccx9YRtaFWTgPN/fYSz+adLINDfewSOtonLYbunU
+         eX8xl3mx5P45Qo+6oaf3qUDnJhHXESOEYZLnv9YZonTxNjh5uS9t/luK3S14n/D9ttD2
+         uAFLj6NW9CRiwJlNbtyO4K+DyG/UCoD4RcvARe+4Ycx1x0Qqvo/1ppiHWUccn1vPRkby
+         x1mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=qSZEi7G4UqqopNvPFCC5GNRtEFYG3E5lEfhC3UMZTWc=;
+        b=cX2phvrjinkNpys4Nuf8I9BLQEfpZLbTaBczCA13N/KTwvQQxZ4DPnRlSwKWmuVLAt
+         YCS8NjHG99D+ArWzqopZesA8Oj/pM2VErMK4j+8UH9t6BKIjsek2VYoN4IbhLHQ05k4B
+         iVyszHyTFZ2HST1aFraoOjIqgWxGNJy8VCqA2lgAnSfCLwMYfJK1hjdqCEZkbQT7GU2s
+         w9BtRM0DhBDWTfq42bYp3woweg5K/wuXxlOdUwObH6QMF595dHme7Tia1GMP6IWUzPdr
+         0+4zbtT8jluaRwAJFBR/rEFr11CLpMwf+tTMu46IdelFxO+8d1icQkthU/TOs223BgYM
+         FcNQ==
+X-Gm-Message-State: AOAM530fUQvxgv1sbVuc+aDC2Dcbe6Njp8eiz2Wnc08+FBzk4lx63TI2
+        f1kXfYTxLVcTA/QiiqpyK0Q=
+X-Google-Smtp-Source: ABdhPJwXyeC0FM1PHKPGNPIDYFxXg9DwrB0nho1wX1Bv0Q/oMOy/AESwqkwOPWHrjFKGvAWYkVAPLg==
+X-Received: by 2002:aca:b5c3:: with SMTP id e186mr17831724oif.43.1624901984794;
+        Mon, 28 Jun 2021 10:39:44 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id q82sm2602105ooq.37.2021.06.28.10.39.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jun 2021 10:39:44 -0700 (PDT)
+Date:   Mon, 28 Jun 2021 12:39:38 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60da095a5ce4_1a78f20847@natae.notmuch>
+In-Reply-To: <87k0megtlo.fsf@evledraar.gmail.com>
+References: <20210627000855.530985-1-alexhenrie24@gmail.com>
+ <CABPp-BGko7BP6ZMyRKwKrv0xz7FM9ehe67HSAtzgHF9eV2TD3A@mail.gmail.com>
+ <60d7fbb770397_b8dfe2087d@natae.notmuch>
+ <CABPp-BGXQ4vbFf6Gx21X-Ms+1VQsZfod1waNJZQxVmB7b-gD7Q@mail.gmail.com>
+ <60d8ab7fe0761_ba5a2208b@natae.notmuch>
+ <CAMMLpeQaY0z_baVQspJhAX0wanaJwneFoM5rG=xwFUmLEE-QaQ@mail.gmail.com>
+ <60d8edbb3803f_70e20886@natae.notmuch>
+ <87k0megtlo.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH] pull: abort by default if fast-forwarding is impossible
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
 
-> I'm still entirely unconvinced that this should be in Git at all;
-> pointing GIT_MAN_VIEWER or man.*.cmd at a color-man wrapper seems like
-> it would be sufficient. But it feels like that conversation was not
-> going anywhere productive; I mention it here only to indicate that my
-> response above is not an endorsement of the concept.
+> On Sun, Jun 27 2021, Felipe Contreras wrote:
 
-I have the same reaction to the patch.
+> > Personally I prefer to run prove instead, because the output is less
+> > verbose, and there's a nice summary at the end:
+> >
+> >   prove t[0-9][0-9][0-9][0-9]-*.sh
+> =
+
+> I also like "prove" better (well, I added the support for it, so
+> ...). It's generally better to use e.g.:
+> =
+
+>     make test DEFAULT_TEST_TARGET=3Dprove GIT_PROVE_OPTS=3D"--jobs $(np=
+roc)"
+
+Or just add "-j$(nproc)" to ~/.proverc so you don't need to specify
+GIT_PROVE_OPTS every time.
+
+> Since we do some basic checking via the Makefile that effectively form =
+a
+> part of our tests.
+> =
+
+> FWIW for your one-liner it can be just:
+> =
+
+>     prove t[0-9]*.sh
+> =
+
+> Alex: You might also find that if you specify --root as the path to a
+> ramdisk the tests are much faster, e.g. on my Linux boxes I set
+> --root=3D/run/user/`id -u`/git.
+
+Or TEST_OUTPUT_DIRECTORY=3D/tmp/git.
+
+-- =
+
+Felipe Contreras=
