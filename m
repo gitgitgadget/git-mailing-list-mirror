@@ -2,113 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D57E1C11F64
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 22:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EA8CC11F64
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 23:09:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7AEB61CF8
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 22:32:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4443061CFC
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 23:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234395AbhF1WfP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 18:35:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64973 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236462AbhF1WfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 18:35:08 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D9A7D29FD;
-        Mon, 28 Jun 2021 18:32:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=wgX5Oez32IIoIb4DEPbBxrgk/
-        u83cB66pQDB7af6xRI=; b=i+Smcj8qVg84+DHuyFPmi9jHRTmDWTHTaHtx2tckc
-        k364oHcIw+kDM+sPMmPOVosG7ZniWuDrCD+bbKNgPI46S84TFQbYVGOkD9Fpk69h
-        ngwI0efzuG1HbaF3PdWoIoQR4Lakwztb6A5QErEtZW0YG55uzlc9jkQ5F1ZZ27H9
-        yQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01BD6D29FC;
-        Mon, 28 Jun 2021 18:32:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63234D29FB;
-        Mon, 28 Jun 2021 18:32:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, jrnieder@gmail.com,
-        emilyshaffer@google.com, Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Phillip Susi <phill@thesusis.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
-References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
-        <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
-        <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
-        <87a6nryt51.fsf@evledraar.gmail.com> <xmqqsg1iseza.fsf@gitster.g>
-        <xmqqbl86qtyf.fsf@gitster.g> <87bl85y15s.fsf@evledraar.gmail.com>
-        <YMvuprVu1MnokHM5@camp.crustytoothpaste.net>
-        <xmqqr1gyjpyb.fsf@gitster.g>
-Date:   Mon, 28 Jun 2021 15:32:37 -0700
-Message-ID: <xmqqfsx162nu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236585AbhF1XMV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 19:12:21 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:41144 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233868AbhF1XMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 19:12:19 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 7ECD51F8C6;
+        Mon, 28 Jun 2021 23:09:53 +0000 (UTC)
+Date:   Mon, 28 Jun 2021 23:09:53 +0000
+From:   Eric Wong <e@80x24.org>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/5] make object_directory.loose_objects_subdir_seen a
+ bitmap
+Message-ID: <20210628230953.GA9830@dcvr>
+References: <20210627024718.25383-1-e@80x24.org>
+ <20210627024718.25383-4-e@80x24.org>
+ <496545dc-e372-401c-13f4-daa7ee765d39@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BE31097C-D860-11EB-ACCF-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <496545dc-e372-401c-13f4-daa7ee765d39@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+René Scharfe <l.s.r@web.de> wrote:
+> Am 27.06.21 um 04:47 schrieb Eric Wong:
+> Anyway, it would look something like this:
+> 
+> 	size_t word_bits = bitsizeof(odb->loose_objects_subdir_seen[0]);
+> 	size_t word_index = subdir_nr / word_bits;
+> 	size_t mask = 1 << (subdir_nr % word_bits);
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> I agree that in many cases we can effectively rephrase to avoid needin=
-g
->> to do this, but if we acknowledge that sometimes we will need to write
->> using third-person personal pronouns in some cases, it's worth
->> documenting what those should be.
->
-> I think we've heard enough from both sides and there probably is not
-> misunderstanding among the folks, even though there are differences
-> of opinions.
->
-> I would like to consider that the last draft I did [*1*] based on
-> earlier suggestions by Derrick and =C3=86var would be a reasonable midd=
-le
-> ground.
->
-> I'll go mostly offline next week---I'd notice if the list came up
-> with a vastly different concensus when I come back, but hopefully
-> not ;-)
+<snip> yeah, I missed bitsizeof :x
 
-Well, I misspoke.  If the list reached a consensus while I was away,
-then that would have been a happy outcome, whether it was close to,
-or vastly different from, the one I suggested.
+> > --- a/object-store.h
+> > +++ b/object-store.h
+> > @@ -22,7 +22,7 @@ struct object_directory {
+> >  	 *
+> >  	 * Be sure to call odb_load_loose_cache() before using.
+> >  	 */
+> > -	char loose_objects_subdir_seen[256];
+> > +	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
+> 
+> Perhaps	DIV_ROUND_UP(256, bitsizeof(uint32_t))?  The comment explains
+> it nicely already, though.
 
-In any case, I haven't even started to try catching up with the list
-traffic last week, so hopefully I'll see soon enough what you folks
-decided (or not).
+I think I'll keep my original there...  IMHO the macros
+obfuscate the meaning for those less familiar with our codebase
+(myself included :x)
 
+> >  	struct oid_array loose_objects_cache[256];
+> >
+> >  	/*
+> >
+> 
+> Summary: Good idea, the implementation looks correct, I stumbled
+> over some of the names, bitsizeof() could be used.
 
-> Thanks.
->
->
-> [Reference]
->
-> *1* https://lore.kernel.org/git/xmqqbl86qtyf.fsf@gitster.g/
+Thanks for the review.
+
+I'll squash up the following for v2 while awaiting feedback
+for the rest of the series:
+
+diff --git a/object-file.c b/object-file.c
+index d33b84c4a4..6c397fb4f1 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2463,16 +2463,17 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
+ {
+ 	int subdir_nr = oid->hash[0];
+ 	struct strbuf buf = STRBUF_INIT;
+-	size_t BM_SIZE = sizeof(odb->loose_objects_subdir_seen[0]) * CHAR_BIT;
++	size_t word_bits = bitsizeof(odb->loose_objects_subdir_seen[0]);
++	size_t word_index = subdir_nr / word_bits;
++	size_t mask = 1 << (subdir_nr % word_bits);
+ 	uint32_t *bitmap;
+-	uint32_t bit = 1 << (subdir_nr % BM_SIZE);
+ 
+ 	if (subdir_nr < 0 ||
+-	    subdir_nr >= ARRAY_SIZE(odb->loose_objects_subdir_seen) * BM_SIZE)
++	    subdir_nr >= bitsizeof(odb->loose_objects_subdir_seen))
+ 		BUG("subdir_nr out of range");
+ 
+-	bitmap = &odb->loose_objects_subdir_seen[subdir_nr / BM_SIZE];
+-	if (*bitmap & bit)
++	bitmap = &odb->loose_objects_subdir_seen[word_index];
++	if (*bitmap & mask)
+ 		return &odb->loose_objects_cache;
+ 
+ 	strbuf_addstr(&buf, odb->path);
+@@ -2480,7 +2481,7 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
+ 				    append_loose_object,
+ 				    NULL, NULL,
+ 				    &odb->loose_objects_cache);
+-	*bitmap |= bit;
++	*bitmap |= mask;
+ 	strbuf_release(&buf);
+ 	return &odb->loose_objects_cache;
+ }
