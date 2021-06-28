@@ -2,97 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 599EFC2B9F4
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 14:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 653D2C49EA3
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 15:20:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E18A61C76
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 14:08:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5998461990
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 15:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232307AbhF1OKw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 10:10:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58798 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230033AbhF1OKu (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 10:10:50 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 197BB6073C;
-        Mon, 28 Jun 2021 14:07:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1624889274;
-        bh=RIo4sPYej2FTt7rW9kPddCjw1s2psWLPcM9mv5s6Ix0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=z3l/c5g5F5uuKDeg4dUWMeyalYmG6E/j3WwaKY1EWJtTMub8l4j05p6tbf4WEEC0L
-         +xmH1/4AZ4pL0bj5HjlApNDzAjHonZ3M5EAj6ESpSopqBeY1atXg4zmqyxjrd8mJgk
-         ot6Tap8Q0+DZ9JHs/s02qVKEPT8X06pDRq5mv8b/DC9lxrLUQnOcr9xHpbJ5PE/ErJ
-         XNUC7im8HMAzZvxOhn7Z+fqmtdLtDTl8JrInC3DYOBcoR+WR0oxLP1paI4n40wj+C5
-         aHO+iZ6QY43bqVym0Y8oAfAsSmQLbu03/sbeycoT3JW/UjNuuq/N0sB5cXCEgG2OFY
-         WB1Adv5FE6EiDjb0NH+xEmUs+UFsy9Fa26BmSmpqZwjr0ZHyvFS4GeXY8Gl2DIER+o
-         Uuf3AgqIFWX8zI+BXttk0n92zluKsUl3lm1KgrjRUBX3IAiy5yP+ZBm1oc+L+MHFgv
-         mZLMEHoCZ0c9mOAXlxyyYd9SJZMjHVd9tjBr15RtbclqfW5aMv1
-Date:   Mon, 28 Jun 2021 14:07:50 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?S8O2cHBlbiw=?= Thomas <thomas.koeppen@nordlb.de>
-Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
-Subject: Re: Release notes: mIssing version information for git-LFS
-Message-ID: <YNnXti6Bf0SP7OIO@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?S8O2cHBlbiw=?= Thomas <thomas.koeppen@nordlb.de>,
-        "'git@vger.kernel.org'" <git@vger.kernel.org>
-References: <21210b30b6c44361aef0c99ca5983f52@nordlb.de>
+        id S237165AbhF1PWn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 11:22:43 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:26330 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237846AbhF1PUd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 11:20:33 -0400
+Received: from host-84-13-154-214.opaltelecom.net ([84.13.154.214] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1lxt1R-0003eI-6x; Mon, 28 Jun 2021 16:18:05 +0100
+Subject: Re: Definition of "the Git repository"
+To:     Kevin Buckley <Kevin.Buckley@pawsey.org.au>, git@vger.kernel.org
+References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
+ <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
+ <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <070e36dc-f126-661a-3af7-b44d47ef7861@iee.email>
+Date:   Mon, 28 Jun 2021 16:18:04 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Smd5DmYCO2y3xHor"
-Content-Disposition: inline
-In-Reply-To: <21210b30b6c44361aef0c99ca5983f52@nordlb.de>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 28/06/2021 03:24, Kevin Buckley wrote:
+> On 2021/06/26 04:48, Philip Oakley wrote:
+>>
+>> ... One can also include in the generic 'repository' the
+>> various special .git* files that are [user] added to the main source
+>> directory.
+>>
+>> But it gets worse. In the .git directory there is the 'objects' ...
+>
+> I don't believe it does get worse, indeed, I am not convinced that it
+> is as bad as your observation on the semantics might suggest.
+>
+> Everything within the .git directory "belongs", in my way of thinking,
+> to the "repository", that is, the directory that gets created when git
+> is (init)ialised.
 
---Smd5DmYCO2y3xHor
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Part of my view (of the multiplicity of descriptives within Git)
+regarding what is in a repository is from comparing the git created
+content from a clone, that of a `git init`, and a users overall project
+and .git trees after multiple interactions. Each has different features.
 
-On 2021-06-28 at 13:46:02, K=C3=B6ppen, Thomas wrote:
-> Hello all,
->=20
-> in the release notes for git i miss the information which version of git-=
-LFS was implemented.
-> Am I just reading over it or is this information really missing?
+>
+> For me, the 'objects", the 'ref/heads', the "staging area' and the like,
+> also lie within the repository.
+>
+> As for any anciliary files, that control how the git commands actually
+> process any data in the "working directory" beyond the defaults, some
+> of them, eg the global commands, will typically exist outside of the
+> working directory: below one's home directory, and, of course, there
+> are the system-wide files, typically below /etc.
+>
+> Given then, that we can have Git-related files, for any given working
+> directory, below /etc, below the user's home directory, and within the
+> working directory itself, perhaps it is the whole "computer" which
+> should be referred to as "the repository"?
+>
+> Furthermore, even in the case of anciliary files typically found within
+> the working directory, and I'm thinking of .gitignore as the obvious
+> example, even the directives in that can be overriden on the command
+> line, as well as complemented by files outside of the working directory.
+>
+>
+> I am tempted to say that even if the definition of a "repository" can't
+> be agreed on, or rather, easily determined by inspection, then at least
+> the corresponding working directory can be, however, the fact that one
+> has  access to EnvVars and corresponding command line arguments such as
+> --git-dir=<path>, --work-tree=<path>, would suggest that it could be
+> harder for the novice to get their head around things, however, as it is
+> typicaly clear what the working directory is (the top level directory
+> containing the files you are working on, under the control of Git),
+> calling that same directory the "repository" seems, to me anyway, to add
+> to any confusion, that a Git novice may have.
+>
+> Given the can of worms that this question has opened up, although I'm
+> getting the feeling that it has long since been opened, I still maintain
+> that it would be less confusing, at least for a novice, for the working
+> directory to be identified and for a previously non-existent directory,
+> that gets created by the 'git init', to be referred to as the repository,
+> so as to make a distinction.
 
-Git LFS is a separate open source project that's developed
-independently.  Git for Windows includes the Git LFS binary, but it is a
-separate project from Git itself and as such it isn't mentioned in the
-Git release notes.
+My main point was that there is this creative tension between the
+different contexts and that beginners should be aware that it's not all
+cut and dried in the same way that language definitions tend to be.
 
-If you're interested in the release notes or other information about Git
-LFS, you can find it at https://github.com/git-lfs/git-lfs.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+--
 
---Smd5DmYCO2y3xHor
-Content-Type: application/pgp-signature; name="signature.asc"
+Philip
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYNnXtQAKCRB8DEliiIei
-gUESAQDIBlBprROyfsEiEWli2Q3b9T7A4qrIw6oOODSjAxXcXwD/Rk2EBaz8onwB
-GUtz2ygZAM9RBEeX4Q0R3xRdCQom5Qo=
-=HEWB
------END PGP SIGNATURE-----
-
---Smd5DmYCO2y3xHor--
