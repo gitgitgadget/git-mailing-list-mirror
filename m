@@ -7,80 +7,92 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3827C49EA7
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1695C2B9F4
 	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:29:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC65A61A0F
+	by mail.kernel.org (Postfix) with ESMTP id 9FFA5614A7
 	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbhF1Fbk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 01:31:40 -0400
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:54929 "EHLO
+        id S230256AbhF1Fbh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 01:31:37 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:33859 "EHLO
         wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229692AbhF1Fbg (ORCPT
+        by vger.kernel.org with ESMTP id S229808AbhF1Fbg (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 01:31:36 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 769DC32004AE;
-        Mon, 28 Jun 2021 01:29:07 -0400 (EDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id C2EF0320014C;
+        Mon, 28 Jun 2021 01:29:10 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 28 Jun 2021 01:29:07 -0400
+  by compute1.internal (MEProxy); Mon, 28 Jun 2021 01:29:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beshr.com; h=
-        from:to:cc:subject:date:message-id:mime-version
-        :content-transfer-encoding; s=fm1; bh=M6ribsrRkWWxsxvWyy9Il9BsBl
-        ovybyefr3dpZO8WEw=; b=G7VnH153zlzgKpKtXdNzTRK2kJv+KnUJuFwn1/R16l
-        599lTN890I2arTl3YYaU1zV4AJcin22IQ8EB7GZoXM86tOokt9OERZLrU8xP99/D
-        Xidag1csJzTBMj4gDVQqBJMXunhCl+DvbaIJj0WwYw740bgQM/zVNO1ioVCx4o+O
-        ZyqHs/YyHSnJltZ4M0STogzAL9JGV+OWNhL0T7qkS9+SjTIywVlJY7C5hZuK5a6C
-        8xlRGfPyFCancKKI4PTyi7k9GvSJ7vClas2bS4pt7cR8jupgIqlYsQh2IHfRLTkX
-        2WU9kwVyCBuKLHlyxjqDA6+QWmzqzJ6V5OWa7HsxVw4A==
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-transfer-encoding; s=fm1; bh=DQF5cku/ZUc6E
+        rf7qDwXGQnT+OOEEqgRd9rk5HtcIY4=; b=JL1/1HSTOxkx6/DA30au1pwtNffRU
+        9ZL4F0ROQXMv07DKo7WykEFydGoaLcXvpsxp2SUAiR80mLS64EUdggXNq5vfjlzX
+        vpUdwm/61RmM4X4btZ2XxuUTEzrvfIqa6CQJ/SzOuIRy1UcqZC6VDTxhn1JCvksX
+        W5jOLXlAdAIXrfGy/W0CsOjWRgQL7GgGDgSN/SoLeMiYuP+ure2me/aVfx35i+5g
+        x4XkqKIfssVxTzbrSZlSHP9iXS3JjkuSWrlDUN4CDDkMCJgy4XCMyQ6crMjke7nC
+        gneTvQ6pZg3YwDvNCB7Y/jY/Qp/cj5rVtNqyywy+4PV5j2Oyh3/KyOnqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=M6ribsrRkWWxsxvWy
-        y9Il9BsBlovybyefr3dpZO8WEw=; b=ahtVP05m29I4BTTfrVN8tGHSHqzRbwwhd
-        KxmhEwtANq/CqnRDIwTCRFffCGYWN278ncJ7RqqZMHw1+vtdxIHPVV6Ma+knXUU6
-        LdoGc7A9RRpsukPjDVEO4T5gUj+v07BvH7ZFl+8z9bJWud02DWrOKMx2TN6cYrbK
-        jCGm2b8dgHfnc6LefV/JL85E2edowhakqDr8jH9MbeqTcr9/C/46wWDi3nC3EA/q
-        CR2+wV2UwXLGkYayQP0NhfLFWHkBmae71IdBvnSq89GcEgrVOCc0BjT2XT8RC43q
-        4TW/lUwwNOWplDmdGWWxcucIsfyY3e0DhC8hXqV/6iiLHDbj4A3xQ==
-X-ME-Sender: <xms:Il7ZYFUCHR_H8-XrCakn1Qy616You6hT5-vSaeG7QUXCo1h4qZJveg>
-    <xme:Il7ZYFl4xHNo0WK1ai82lgL9FUgiCXU5FMDqjhYjVekGTyyCtHL2CHLbHRN3TwMFS
-    oORFxwCdSaJhKmBlMU>
-X-ME-Received: <xmr:Il7ZYBaMM-YKRECrWFo_MxIgo39E3jb5iRLZBxI5dAykHHU8IAIhGh5EHwH2nLEBuF1Ie-MJmPtjAsxHbaYo51xtL_6-FKw0V-fFYUS1X2pBTy1RqA>
+        :in-reply-to:message-id:mime-version:references:subject:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; bh=DQF5cku/ZUc6Erf7qDwXGQnT+OOEEqgRd9rk5HtcIY4=; b=eoiEiCMW
+        V3ULEjodpRx4G0U0OciHzklDwyAq9gyrT2kDcLeOpnmvnpeLGUlDM53cDOSWuKMp
+        oscBVw1OG04Qw9TBVncuEcBnh1xGJqqsRUB22CIx+Uf99nLiVy8sAM8F1hhwCHTn
+        PUkNFUMWX3YkbMXjOcuD09SvhmRVDw6MNAAHyKKiNaZza8FcNUdTdGZjZXwHOpmW
+        gJZYNfSUKK6j+/SbBk/16MudZ3ghaNS/h4Rf+a2YZHb0GXLHpnxr46hGNs3+oC58
+        7PS4HLKmYr9i5fAKGgWThaiEkkzhDGF6uOtJ3Rmcf9NqFcDC6zyrOrFrkt/8BMLl
+        V7FX9x6KKk9dZg==
+X-ME-Sender: <xms:Jl7ZYHJ-HYRLFVPufk1ZWrFGshiv_VbzCt7NGZXA9dL9hB6xYLZruA>
+    <xme:Jl7ZYLJeN3Va1s4PS20srGOcmibOU5nM61utI0z3HSisvf7e-YbEpRm1hV0-8wj_u
+    R6XDMujJo9E2Ilky0c>
+X-ME-Received: <xmr:Jl7ZYPuVH0dThdipUGQFhVO_WlT96WIuetgkf0G3XTB2vONzr1RwpNaLKiJlHqIxt-qaEqG7spUSlN0Q5ONCqLEClopnzg1Oo5EFEFTnFMxkFdzK-w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehfedgledvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
-    dttdenucfhrhhomhepuegvshhhrhcumfgrhigrlhhiuceomhgvsegsvghshhhrrdgtohhm
-    qeenucggtffrrghtthgvrhhnpeduveettdekheejleejjedvteeigfefffeuheegudefke
-    ekffetjeeiveeugfduudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehmvgessggvshhhrhdrtghomh
-X-ME-Proxy: <xmx:Il7ZYIXV-dA2UaJQXxk0Q7KpsX6699Z5e39MMZLyHF2D19RACcX2Zw>
-    <xmx:Il7ZYPkrFdkWCjcYZPFLlEKQI1I_OSnnTi5uAFdexJPEvpunA7nsoA>
-    <xmx:Il7ZYFcL-GsI6x7u2KLt6Yy5E5ZvyE9ufQhP9K7W3HjiYTGpMizXSg>
-    <xmx:I17ZYOvVIcK__OwfSFCSDag6q9MZMW6IQVVs0ZVzxypgMPRh62MayA>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+    dtredttdenucfhrhhomhepuegvshhhrhcumfgrhigrlhhiuceomhgvsegsvghshhhrrdgt
+    ohhmqeenucggtffrrghtthgvrhhnpeejtedufeetgedtvdevveektddtudethfdtvdekle
+    fflefhgedvveetgfdvhfduieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehmvgessggvshhhrhdrtghomh
+X-ME-Proxy: <xmx:Jl7ZYAbKeduHayL2_im6No43zzpTtLmQSL7MGa_UY5bc9B34ABCSjA>
+    <xmx:Jl7ZYOYsKIztAHCjcbgIG8cVpDRsDvBc3Bc3wmYQMUGmFcFpCQmpPg>
+    <xmx:Jl7ZYEBeYB4RUDzQhJ69LU4Ui_JRJa4DjtQUMEHz59A8dZysaGFxvg>
+    <xmx:Jl7ZYHBXzYMnIyRoLzt3V9yVVzPE3f3vB5j1tXjXLsx8BOsWEUPh7w>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Jun 2021 01:29:06 -0400 (EDT)
+ 28 Jun 2021 01:29:09 -0400 (EDT)
 From:   Beshr Kayali <me@beshr.com>
 To:     git@vger.kernel.org
 Cc:     Beshr Kayali <me@beshr.com>
-Subject: [PATCH 0/1] fix a typo in patch option of the commit command
-Date:   Mon, 28 Jun 2021 07:26:30 +0200
-Message-Id: <20210628052631.345601-1-me@beshr.com>
+Subject: [PATCH 1/1] Documentation: commit patch typo
+Date:   Mon, 28 Jun 2021 07:26:31 +0200
+Message-Id: <20210628052631.345601-2-me@beshr.com>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210628052631.345601-1-me@beshr.com>
+References: <20210628052631.345601-1-me@beshr.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simple typo fix (chose -> choose) in the documentation of the patch option under the commit command.
-
-Beshr Kayali (1):
-  Documentation: commit patch typo
-
+---
  Documentation/git-commit.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 340c5fbb48..95fec5f069 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -72,7 +72,7 @@ OPTIONS
+ 
+ -p::
+ --patch::
+-	Use the interactive patch selection interface to chose
++	Use the interactive patch selection interface to choose
+ 	which changes to commit. See linkgit:git-add[1] for
+ 	details.
+ 
 -- 
 2.32.0
 
