@@ -2,148 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07EABC2B9F4
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3827C49EA7
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:29:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3C8E61352
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:21:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC65A61A0F
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbhF1FYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 01:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55094 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229692AbhF1FYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 01:24:04 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7563DC061574
-        for <git@vger.kernel.org>; Sun, 27 Jun 2021 22:21:38 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id v6-20020a0568300906b0290464d9be9510so6032094ott.12
-        for <git@vger.kernel.org>; Sun, 27 Jun 2021 22:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-transfer-encoding;
-        bh=h1rKCt3Kble1MQF7vJi8BlzTCxXHjE3s/ge4Gr5p248=;
-        b=XPjra0AG/qrCAmhLK38JiUGt6ivcYWI4iuNZXXmqHYw6gmNdIk/SnH1q4rHypfqvDD
-         hL/cL9/aUGjAFC9VmlRfZ3O8EU67PrbhAEH/F4FfdCJPyamBxTvSt6VrTT+6zqpmCQ3N
-         kb0l0uqzxI5UbdVySoeF3ENcVeDflOEnrM6N9n1QSXQZaozZiJOubnv1sX3bA0j0wipk
-         CrTpZF9CEH+QTJdv6nzS3Y5Fuuo+7Euw61heuRg0dCR/fkwgAUxLMtlc0sC1KJ98Hic7
-         X8lMxr+5nPg5xsJOqm2I9Hc4XYGx4s2FAX568jva39XZznuIbeRKQrw6HHwMsHLXkM+x
-         V4TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
-         :subject:mime-version:content-transfer-encoding;
-        bh=h1rKCt3Kble1MQF7vJi8BlzTCxXHjE3s/ge4Gr5p248=;
-        b=Es6HMZK68exZoQ2w23gCuR0PQfIXmO6tDZmWn1ArwGYA/QJoBApO0zXZ4r4JRzr0PK
-         2WQG/QFDJjuemYhOQBK7OtfpNmVoBSaj8SxgRkNvP7BTbY1Fqeg5jIsew7N7DOW9lvIM
-         YNYmmbIzt4oSxX8l6lZSZPXkJRdvHwHnl23SQZ+3rHey4EPrn1pUIeohViQ4BscBZ9gL
-         ayejKL+Rykl4xNa7+jI0Ls36FPShR19MlZJ79HsxncihrUG1EbV1Fic4Tr+qMuC93ood
-         KOAg+SZb7RHWvhzmko+GBWnDNSnDzPS4z6VqomoCy5DK74fw3A3M/gT+pZUqa907NjXW
-         Fa/Q==
-X-Gm-Message-State: AOAM5304PqQa01gk1CF12hJe3Umt3RdIJJIfxoyKg+kuFGhJy2PSPwEV
-        xCIDV7sn3VIwOhrfizoaCbm845y6aCFxDA==
-X-Google-Smtp-Source: ABdhPJwf0+BmQqdOMYeRYYWx/G5GdtKaPjUkh/3PvnZ5qOwBlOd6pUYTxWhz5vwi8yLzkpSFR1yg5A==
-X-Received: by 2002:a05:6830:1d65:: with SMTP id l5mr2165226oti.366.1624857697801;
-        Sun, 27 Jun 2021 22:21:37 -0700 (PDT)
-Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id l11sm901590oou.0.2021.06.27.22.21.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Jun 2021 22:21:37 -0700 (PDT)
-Date:   Mon, 28 Jun 2021 00:21:36 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Kevin Buckley <Kevin.Buckley@pawsey.org.au>, git@vger.kernel.org
-Message-ID: <60d95c6024f3d_aaf7e208a4@natae.notmuch>
-In-Reply-To: <ec31434f-0c99-ffb7-6eb0-6ecb1f6e761c@pawsey.org.au>
-References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
- <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
- <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
- <60d9410bb07a1_aac5d20888@natae.notmuch>
- <ec31434f-0c99-ffb7-6eb0-6ecb1f6e761c@pawsey.org.au>
-Subject: Re: Definition of "the Git repository"
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S230294AbhF1Fbk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 01:31:40 -0400
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:54929 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229692AbhF1Fbg (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 01:31:36 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 769DC32004AE;
+        Mon, 28 Jun 2021 01:29:07 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Mon, 28 Jun 2021 01:29:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beshr.com; h=
+        from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm1; bh=M6ribsrRkWWxsxvWyy9Il9BsBl
+        ovybyefr3dpZO8WEw=; b=G7VnH153zlzgKpKtXdNzTRK2kJv+KnUJuFwn1/R16l
+        599lTN890I2arTl3YYaU1zV4AJcin22IQ8EB7GZoXM86tOokt9OERZLrU8xP99/D
+        Xidag1csJzTBMj4gDVQqBJMXunhCl+DvbaIJj0WwYw740bgQM/zVNO1ioVCx4o+O
+        ZyqHs/YyHSnJltZ4M0STogzAL9JGV+OWNhL0T7qkS9+SjTIywVlJY7C5hZuK5a6C
+        8xlRGfPyFCancKKI4PTyi7k9GvSJ7vClas2bS4pt7cR8jupgIqlYsQh2IHfRLTkX
+        2WU9kwVyCBuKLHlyxjqDA6+QWmzqzJ6V5OWa7HsxVw4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=M6ribsrRkWWxsxvWy
+        y9Il9BsBlovybyefr3dpZO8WEw=; b=ahtVP05m29I4BTTfrVN8tGHSHqzRbwwhd
+        KxmhEwtANq/CqnRDIwTCRFffCGYWN278ncJ7RqqZMHw1+vtdxIHPVV6Ma+knXUU6
+        LdoGc7A9RRpsukPjDVEO4T5gUj+v07BvH7ZFl+8z9bJWud02DWrOKMx2TN6cYrbK
+        jCGm2b8dgHfnc6LefV/JL85E2edowhakqDr8jH9MbeqTcr9/C/46wWDi3nC3EA/q
+        CR2+wV2UwXLGkYayQP0NhfLFWHkBmae71IdBvnSq89GcEgrVOCc0BjT2XT8RC43q
+        4TW/lUwwNOWplDmdGWWxcucIsfyY3e0DhC8hXqV/6iiLHDbj4A3xQ==
+X-ME-Sender: <xms:Il7ZYFUCHR_H8-XrCakn1Qy616You6hT5-vSaeG7QUXCo1h4qZJveg>
+    <xme:Il7ZYFl4xHNo0WK1ai82lgL9FUgiCXU5FMDqjhYjVekGTyyCtHL2CHLbHRN3TwMFS
+    oORFxwCdSaJhKmBlMU>
+X-ME-Received: <xmr:Il7ZYBaMM-YKRECrWFo_MxIgo39E3jb5iRLZBxI5dAykHHU8IAIhGh5EHwH2nLEBuF1Ie-MJmPtjAsxHbaYo51xtL_6-FKw0V-fFYUS1X2pBTy1RqA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehfedgledvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+    dttdenucfhrhhomhepuegvshhhrhcumfgrhigrlhhiuceomhgvsegsvghshhhrrdgtohhm
+    qeenucggtffrrghtthgvrhhnpeduveettdekheejleejjedvteeigfefffeuheegudefke
+    ekffetjeeiveeugfduudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehmvgessggvshhhrhdrtghomh
+X-ME-Proxy: <xmx:Il7ZYIXV-dA2UaJQXxk0Q7KpsX6699Z5e39MMZLyHF2D19RACcX2Zw>
+    <xmx:Il7ZYPkrFdkWCjcYZPFLlEKQI1I_OSnnTi5uAFdexJPEvpunA7nsoA>
+    <xmx:Il7ZYFcL-GsI6x7u2KLt6Yy5E5ZvyE9ufQhP9K7W3HjiYTGpMizXSg>
+    <xmx:I17ZYOvVIcK__OwfSFCSDag6q9MZMW6IQVVs0ZVzxypgMPRh62MayA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Jun 2021 01:29:06 -0400 (EDT)
+From:   Beshr Kayali <me@beshr.com>
+To:     git@vger.kernel.org
+Cc:     Beshr Kayali <me@beshr.com>
+Subject: [PATCH 0/1] fix a typo in patch option of the commit command
+Date:   Mon, 28 Jun 2021 07:26:30 +0200
+Message-Id: <20210628052631.345601-1-me@beshr.com>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kevin Buckley wrote:
-> On 2021/06/28 11:24, Felipe Contreras wrote:
-> > Kevin Buckley wrote:
-> > 
-> >> Everything within the .git directory "belongs", in my way of thinking,
-> >> to the "repository", that is, the directory that gets created when git
-> >> is (init)ialised.
-> >> 
-> >> For me, the 'objects", the 'ref/heads', the "staging area' and the like,
-> >> also lie within the repository.
-> > 
-> > Does it?
-> > 
-> > Suppose you have three directories, each with exactly the same contents
-> > in their corresponding .git directory, the only difference is the
-> > .git/index file:
-> > 
-> >   a) No .git/index file at all
-> >   b) The .git/index file doesn't have anything staged
-> >   c) The .git/index file contains some staged changes
-> > 
-> > Do you really consider them three different repositories?
-> > 
-> > In my mind the staging area is where you put stuff in preparation for
-> > the commit. The commit is part of the repository, the staging area
-> > isn't.
-> > 
-> 
-> I think I do consider them as different, yes, but in the sense that,
-> because the contents of any working directory can change in isolation
-> to the others, they have become different instances (perhaps clones?)
-> of the same repository.
-> 
-> Let's say I make two commits, that resulted in the same state of the
-> files in the working directory, but I make them in different order
-> in two of the working directories.
-> 
-> Clearly I need to sync the two different repositories in order to gain
-> a consistency across them, and that suggets, to me, that they should
-> be thought of as different.
+Simple typo fix (chose -> choose) in the documentation of the patch option under the commit command.
 
-Yes, but this has nothing to do with .git/index. You are talking about
-branches and commits. Clearly these are parts of a repository, and
-nobody objects to that.
+Beshr Kayali (1):
+  Documentation: commit patch typo
 
-> As to the staging area,
-> 
-> again, for me, Git has an understanding of a "staging area" based on its
-> inspection of the state of the working directory and a comparison of that
-> state with what it knows has been committed.
-
-Wouldn't it be much easier to say that git is comparing the working
-directory with HEAD?
-
-Clearly HEAD is part of the repository, and so is the commit that it's
-pointing to (indirectly or directly).
-
-But that doesn't say anything about the staging area, which is between
-the two (in my mind): the working directory and the repository.
-
-
-To try to make it more orthogonal, let's suppose the index file was
-outside the .git directory. Would you consider then the staging area
-separate from the repository?
-
-In fact, we don't have to suppose:
-
-  GIT_INDEX_FILE=/tmp/index git checkout @~ -- .
-
-Does that command change the repository in any way?
+ Documentation/git-commit.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 -- 
-Felipe Contreras
+2.32.0
+
