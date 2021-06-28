@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D1EBC2B9F4
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 04:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07EABC2B9F4
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:21:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 72F7F61C31
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 04:52:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3C8E61352
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbhF1EzV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 00:55:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48872 "EHLO
+        id S230134AbhF1FYF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 01:24:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbhF1EzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 00:55:21 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F343C061574
-        for <git@vger.kernel.org>; Sun, 27 Jun 2021 21:52:55 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id 110-20020a9d0a770000b0290466fa79d098so805784otg.9
-        for <git@vger.kernel.org>; Sun, 27 Jun 2021 21:52:55 -0700 (PDT)
+        with ESMTP id S229692AbhF1FYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 01:24:04 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7563DC061574
+        for <git@vger.kernel.org>; Sun, 27 Jun 2021 22:21:38 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id v6-20020a0568300906b0290464d9be9510so6032094ott.12
+        for <git@vger.kernel.org>; Sun, 27 Jun 2021 22:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=RXTtH3EMtnQwg9Gt4vhHzRBJIdjuh2SdYci467aJwk4=;
-        b=rGithYkWN2WxuLyrMF1nykjjVp4gvXOh0Sq4JZYKylc2lrJ0iMfZzv3ffOzClMC4lS
-         1OCT/OBKDR0QaLaig/pCbxlhBnpQGfZ/5XcgiFlM1J9h6k4VUySvGz3bhAJKuLXjzYm2
-         z08/e3RWdz2n0Ac9d+2QhZZ2eYoTBJdEm48ilknVS/TgrIud36stmyYYHmi6kWgdTu+V
-         G9DYJsQV9KH26mq3NV38MbcJQDe6567Ii0rffvDM6Z36L5mDVx+Ib9utJedecvfV75M/
-         i3doFcGbPoiu2HlYjI5Q9NLtlPHfKn41deh/V3nR6Or5JWr71uGp87D0wSE61kKvb5HZ
-         xzyw==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=h1rKCt3Kble1MQF7vJi8BlzTCxXHjE3s/ge4Gr5p248=;
+        b=XPjra0AG/qrCAmhLK38JiUGt6ivcYWI4iuNZXXmqHYw6gmNdIk/SnH1q4rHypfqvDD
+         hL/cL9/aUGjAFC9VmlRfZ3O8EU67PrbhAEH/F4FfdCJPyamBxTvSt6VrTT+6zqpmCQ3N
+         kb0l0uqzxI5UbdVySoeF3ENcVeDflOEnrM6N9n1QSXQZaozZiJOubnv1sX3bA0j0wipk
+         CrTpZF9CEH+QTJdv6nzS3Y5Fuuo+7Euw61heuRg0dCR/fkwgAUxLMtlc0sC1KJ98Hic7
+         X8lMxr+5nPg5xsJOqm2I9Hc4XYGx4s2FAX568jva39XZznuIbeRKQrw6HHwMsHLXkM+x
+         V4TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=RXTtH3EMtnQwg9Gt4vhHzRBJIdjuh2SdYci467aJwk4=;
-        b=M3TSo3J09E1ovBIC2LE3TsNXiJ8mYSPyIXLk4L+/kacAzu3uiVfaN7bqPQR5GhZtmX
-         wtUFTvHy3Zx/2cA+O/pe5AwPnQEGxzMsOX811LogGPolG83QE4yPoGWtOi1uoxmiw64d
-         7gwiht6hlQF1XHSSWpxNJBl2mu40Pbq9Rv2Td2sqjII6+INimlZ5Fpb/IxWMY3oxurIo
-         VRTv11l1aLug9rz+0/euC10it8sRYDJmaVDTK4GKB6n/Sqj/41yu15ozWr3nYBlcAEGd
-         jw9UxNs52M+2U4b+6W3D9t4BKMZlKivj5Cuv9Ey+5mvwsQMXgEoNR1XIAuNx8K4ZoOKw
-         Ye0A==
-X-Gm-Message-State: AOAM532pdWXkbg2Fo36qBLHDFWHcMZGKn53VQIWbz9OaFJ92WBTZc6Ge
-        8Alw2ajhjRRaN8bg+4IEKiM=
-X-Google-Smtp-Source: ABdhPJwHHSxjGBHOMYRCJKYTwWwsrWkZxvZlcNOKNNMZukSYxuwEVMAIu5kEjZNjPayqKM/2t+h4iQ==
-X-Received: by 2002:a05:6830:4a2:: with SMTP id l2mr3409703otd.267.1624855974307;
-        Sun, 27 Jun 2021 21:52:54 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=h1rKCt3Kble1MQF7vJi8BlzTCxXHjE3s/ge4Gr5p248=;
+        b=Es6HMZK68exZoQ2w23gCuR0PQfIXmO6tDZmWn1ArwGYA/QJoBApO0zXZ4r4JRzr0PK
+         2WQG/QFDJjuemYhOQBK7OtfpNmVoBSaj8SxgRkNvP7BTbY1Fqeg5jIsew7N7DOW9lvIM
+         YNYmmbIzt4oSxX8l6lZSZPXkJRdvHwHnl23SQZ+3rHey4EPrn1pUIeohViQ4BscBZ9gL
+         ayejKL+Rykl4xNa7+jI0Ls36FPShR19MlZJ79HsxncihrUG1EbV1Fic4Tr+qMuC93ood
+         KOAg+SZb7RHWvhzmko+GBWnDNSnDzPS4z6VqomoCy5DK74fw3A3M/gT+pZUqa907NjXW
+         Fa/Q==
+X-Gm-Message-State: AOAM5304PqQa01gk1CF12hJe3Umt3RdIJJIfxoyKg+kuFGhJy2PSPwEV
+        xCIDV7sn3VIwOhrfizoaCbm845y6aCFxDA==
+X-Google-Smtp-Source: ABdhPJwf0+BmQqdOMYeRYYWx/G5GdtKaPjUkh/3PvnZ5qOwBlOd6pUYTxWhz5vwi8yLzkpSFR1yg5A==
+X-Received: by 2002:a05:6830:1d65:: with SMTP id l5mr2165226oti.366.1624857697801;
+        Sun, 27 Jun 2021 22:21:37 -0700 (PDT)
 Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
-        by smtp.gmail.com with ESMTPSA id a22sm3281853otq.10.2021.06.27.21.52.53
+        by smtp.gmail.com with ESMTPSA id l11sm901590oou.0.2021.06.27.22.21.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Jun 2021 21:52:53 -0700 (PDT)
-Date:   Sun, 27 Jun 2021 23:52:52 -0500
+        Sun, 27 Jun 2021 22:21:37 -0700 (PDT)
+Date:   Mon, 28 Jun 2021 00:21:36 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Message-ID: <60d955a473187_aaf7e208f6@natae.notmuch>
-In-Reply-To: <CAMMLpeQ9BVNHqk2p748+4+ufuWJ46fYUnVvMvwFPxh3N--ASPg@mail.gmail.com>
-References: <20210628031642.699156-1-felipe.contreras@gmail.com>
- <CAMMLpeQ9BVNHqk2p748+4+ufuWJ46fYUnVvMvwFPxh3N--ASPg@mail.gmail.com>
-Subject: Re: [PATCH] pull: introduce --merge option
+To:     Kevin Buckley <Kevin.Buckley@pawsey.org.au>, git@vger.kernel.org
+Message-ID: <60d95c6024f3d_aaf7e208a4@natae.notmuch>
+In-Reply-To: <ec31434f-0c99-ffb7-6eb0-6ecb1f6e761c@pawsey.org.au>
+References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
+ <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
+ <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
+ <60d9410bb07a1_aac5d20888@natae.notmuch>
+ <ec31434f-0c99-ffb7-6eb0-6ecb1f6e761c@pawsey.org.au>
+Subject: Re: Definition of "the Git repository"
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -74,91 +74,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie wrote:
-> On Sun, Jun 27, 2021 at 9:16 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> >
-> > The idea came after a comment from Linus Torvalds regarding what should
-> > be the default mode of "git pull" and why [1].
-> >
-> > [1] https://lore.kernel.org/git/CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com/
+Kevin Buckley wrote:
+> On 2021/06/28 11:24, Felipe Contreras wrote:
+> > Kevin Buckley wrote:
+> > 
+> >> Everything within the .git directory "belongs", in my way of thinking,
+> >> to the "repository", that is, the directory that gets created when git
+> >> is (init)ialised.
+> >> 
+> >> For me, the 'objects", the 'ref/heads', the "staging area' and the like,
+> >> also lie within the repository.
+> > 
+> > Does it?
+> > 
+> > Suppose you have three directories, each with exactly the same contents
+> > in their corresponding .git directory, the only difference is the
+> > .git/index file:
+> > 
+> >   a) No .git/index file at all
+> >   b) The .git/index file doesn't have anything staged
+> >   c) The .git/index file contains some staged changes
+> > 
+> > Do you really consider them three different repositories?
+> > 
+> > In my mind the staging area is where you put stuff in preparation for
+> > the commit. The commit is part of the repository, the staging area
+> > isn't.
+> > 
 > 
-> Oh wow, I didn't realize that Linus gave his opinion on the subject
-> back in 2013, and he suggested doing nearly exactly what we are trying
-> to do now.
-
-Indeed. I incorporated his feedback--along with the feedback of many
-others--in my proposal.
-
-I have been re-reading the old threads to write a blog post, and the
-whole story starts from 2008. At this point I have probably read more
-than one thousand emails, and I'm still far from done.
-
-Actually now that I'm re-reading the draft, the first suggestion of
---merge came from Thomas Rast in 2009 [1] (I forgot).
-
-Long story short: *everyone* (and I do mean everyone) is in favor making
-ff-only the default. The disagreements come from how we get there.
-
-> > ---no-rebase::
-> > -       Override earlier --rebase.
-> > +-m::
-> > +--merge::
-> > +       Force a merge.
-> > ++
-> > +Previously this was --no-rebase, but that usage has been deprecated.
+> I think I do consider them as different, yes, but in the sense that,
+> because the contents of any working directory can change in isolation
+> to the others, they have become different instances (perhaps clones?)
+> of the same repository.
 > 
-> I don't think --no-rebase should be "deprecated", at least not yet.
+> Let's say I make two commits, that resulted in the same state of the
+> files in the working directory, but I make them in different order
+> in two of the working directories.
+> 
+> Clearly I need to sync the two different repositories in order to gain
+> a consistency across them, and that suggets, to me, that they should
+> be thought of as different.
 
-Deprecated means that we discourage people from using it. It doesn't
-mean it's unsupported.
+Yes, but this has nothing to do with .git/index. You are talking about
+branches and commits. Clearly these are parts of a repository, and
+nobody objects to that.
 
-It's not obsolete.
+> As to the staging area,
+> 
+> again, for me, Git has an understanding of a "staging area" based on its
+> inspection of the state of the working directory and a comparison of that
+> state with what it knows has been committed.
 
-> After all, the equivalent config option is still pull.rebase=false.
+Wouldn't it be much easier to say that git is comparing the working
+directory with HEAD?
 
-Yes, but the equivalent from the command line is:
+Clearly HEAD is part of the repository, and so is the commit that it's
+pointing to (indirectly or directly).
 
-  git pull --rebase=false
+But that doesn't say anything about the staging area, which is between
+the two (in my mind): the working directory and the repository.
 
-And that's still properly documented:
 
-  -r, --rebase[=false|true|merges|preserve|interactive]
+To try to make it more orthogonal, let's suppose the index file was
+outside the .git directory. Would you consider then the staging area
+separate from the repository?
 
-> Also, --merge doesn't necessarily force a merge because it does not
-> imply --no-ff.
+In fact, we don't have to suppose:
 
-This is a bit of semantics that I have discussed before with Elijah, and
-somehow I managed to convince him [2] that fast-forward can be used as
-an adverb, and in fact it already is in plenty of the documentation.
+  GIT_INDEX_FILE=/tmp/index git checkout @~ -- .
 
-Basically this:
-
-  git merge --ff-only
-
-Does a fast-forward merge. So it's a merge of a special kind. What kind?
-The fast-forward kind.
-
-> I would prefer to list --no-rebase, -m, and --merge
-> together on the same line and leave the description alone.
-
-I prefer to deprecate --no-rebase. Both --rebase=false and --merge are
-less cumbersome alternatives.
-
-But I'm not married to this. If other people want to keep --no-rebase at
-the same level as the other two options, I would not object to it.
-
-> But other than the documentation and the commit message, I like the
-> idea here, and I think it will make Git a lot more user-friendly.
-
-Good. And for the record I think if this patch is not merged, eventually
-somebody else will send something along these lines, since I'm not the
-first person to think of it, nor will I be the last.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/200910201947.50423.trast@student.ethz.ch/
-[2] https://lore.kernel.org/git/CABPp-BESMs1tuVoLFMy-BahSChFz7oANqTaeJShFa_zDbEnvBA@mail.gmail.com/
+Does that command change the repository in any way?
 
 -- 
 Felipe Contreras
