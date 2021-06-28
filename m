@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB2FC49EAF
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FF01C2B9F4
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:33:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34BE561C29
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:33:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E0C661A1D
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 05:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbhF1Ffm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 01:35:42 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52853 "EHLO
+        id S232124AbhF1Ffy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 01:35:54 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:45259 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232108AbhF1Ffk (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 01:35:40 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id DB8D95C00BC;
-        Mon, 28 Jun 2021 01:33:14 -0400 (EDT)
+        by vger.kernel.org with ESMTP id S232123AbhF1Ffo (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 01:35:44 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3AC745C009A;
+        Mon, 28 Jun 2021 01:33:19 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 28 Jun 2021 01:33:14 -0400
+  by compute2.internal (MEProxy); Mon, 28 Jun 2021 01:33:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=zn+uMerVuuQkXaCrcow4DAa4iIC
-        o/FcB46h+SWFoLrY=; b=C8c29wBPycCR+zBJSkR7YSFRoAu8SZwS7XF6mEKEuMk
-        egJoZ1y7pm699ps2NsQdCMMAgopUh8TLCwOKB0V/6DUVWDwdnfo0wZ6imZM75Z3S
-        9mHyc1J2+ih1F5+d1YFFYI+rH2wz4oKvASopalbvlRe6vlgjjgFs3Dezp/1iYDJI
-        8GhWtN6pcriFFzyH3p1lJpPNQJAfhCbm1dmHJCyM+ea9uXhMHk0FyLzFxQz+6Awl
-        fwUxx6PkCZ4Mz6TSUww+PTJwmItrteg7gYg74DtVOzw0VMPsAMfbzQU9QeY93Qml
-        fw9tGn/wYEKFi2PSS9+tbQk5oClxj4wlbe/BPA2Ghpg==
+        :content-type:in-reply-to; s=fm1; bh=dyDH9Mp1qN04zjse7YSeWzQOTAM
+        NNWPJMNZ/eUDr3pU=; b=g8lNQsLf1rX2cZz3mlCmxn265VVkP8zJ/ubs6PuLcqv
+        z/HN+Gau3ZBbArFv4bKjQNjuZQdwDPrj7Z8PhJBsABXrEhfsMPHaiJBtlVP7QCBp
+        d/2lqWaamAH22N0UUhCPQ4iDs6kH0W4e257T5Hy7f3F7kWpeqRELcj3PzZ/s+3dG
+        ddvGw8nDdDjvKWyW5Ct1DiI8ktHOM1C+HlytOU1pr1GDGAaj/TboktEf0tTUPZcO
+        fSNcsmXAurA2HfB5FbDSWuh+0CojG9qxfpqY3kgvobiDSys0caryWirUO/l4QsyQ
+        i4VUT3icT8j8pNqoexBKXmfMDr7m9uMm4r8nuUDTqpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=zn+uMe
-        rVuuQkXaCrcow4DAa4iICo/FcB46h+SWFoLrY=; b=gq5XZpz5MHAlJt+3lMPMQD
-        VrNmOpSj839jwhVkXZyEgAsWSrMrdrBJ5Nq+JBn9cNrCjAF83gbVtEd/whzRMCe7
-        xPYnGjUAiMrNrm79Sv1c9++QMgQYcwxv/K4DbcyCfkLUK1cbz+FRSQJkY8dK/18Q
-        DFReFFahjMhvWf5+o+fwVGagg3VihOCbVhg2jLBUB8AyE/axrHfNExoymS+/9Wvv
-        Vw8LaceLfVt22PzJ2E54VFyHKd33i5yhx5owyytMOf3aYGJvNJ67FFrutpB0DHgk
-        D0eU9hoMxZHB+HS1qax8whe8vxoMpstOfoya4K2Am31O8AXoLF5pbpSbAgjVh/jg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=dyDH9M
+        p1qN04zjse7YSeWzQOTAMNNWPJMNZ/eUDr3pU=; b=Ue9AJwIDvoX40c5ysnZ8aa
+        NEhwBDRdVBf2vq9G7vX6RdAj+CAC5Qs7hu0m5uqZ7jMu8YFn4/pDLJWgecY9ECc7
+        e8mYEsCbz3KgkQfHqdY8fa6FD99iH7b49O3B+FrTTyZ7rALqNDmirEFHmbtjsdg4
+        WbGTklbqZitHOghfn3hzxPRtCQvpApEfVURKWA6+xrLiMnZxRGMi1NpVL7DGhWqQ
+        ftwuExMS/iI6QA1E069NgfDh2OoYDAO3OTyLmGRfYQ294BC+ieVAtHJ2tdc4Cl83
+        5KVNxdvQ/vSGk4mvDQbIqVvQAr8cdm1JSBSsJBiK6asaefQ1fCkHQy3JXgEFl8Zw
         ==
-X-ME-Sender: <xms:Gl_ZYIT2OtlWcWhLuME3nmKxzEL9MzdDS89YMvU3TxGhc0s4OKSlGQ>
-    <xme:Gl_ZYFyqO3m4OgFllscL-cgcMJrnSiMaAR7qqOyulv-P2gbk7OLAXbJm2OV04tBrX
-    2A7AkGLJSmo0w4KVw>
-X-ME-Received: <xmr:Gl_ZYF2JpgV-8vQ990BmonAUW-Xwagntf1T8QKXzRK_IP_cfWJBPMMuZmXrSmZS__o4OxMMSDhCnAHhs9kJpbDQEfKQ0v7g_3PT8cjtz1k72UcRfK_Bcfp4>
+X-ME-Sender: <xms:H1_ZYFPq1SP-ebRv3Z-grAtd8x1T2iKJ8wTBIdA8dWXE1zgea9bJ0g>
+    <xme:H1_ZYH9zFbmCTwmpJFZioWpxNmfXjemeh--SceY1NWfxa1VyBPMrlwLaWRuTCiUfw
+    pDdn0s7xnp_AW1tLA>
+X-ME-Received: <xmr:H1_ZYESfWqZusQTva-ftKZThP_FSoIyyhJFI0RBSU7_-WMwLsiNTfVkdVEQCbeTXlHcR-K9W2FJZuTLhnY129jO3qtQxLC66k2RDsDHpl_hrpyQlvu5bsO0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehfedgledvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,16 +56,16 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehfedgledvucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:Gl_ZYMB28ZOMq0R4hFTxCABhxpffCnNWyDTGJL176kKGTteVAxVS0Q>
-    <xmx:Gl_ZYBjUwyNIXIrbFcJAVWbA4veoBcJy7Dxi2DQtBrUb7_KXunykxA>
-    <xmx:Gl_ZYIp69QHnBQ1q4prdeZNVArX96g-tP4JeI4YFD67CIVHQBYz1tA>
-    <xmx:Gl_ZYPYrS3Xf-ZdR--mfELwyxgLJv8T8xY0VCJw7l8UgvtMHld9bBA>
+X-ME-Proxy: <xmx:H1_ZYBtUQE-vNdZutKpPfQgusxUZ705poOj3Xp9fSo7EipB0KgFdDA>
+    <xmx:H1_ZYNfVG7lp7YsCUnjwhPdluF36ran8SPat0xd_QbqZz-vAW54oZA>
+    <xmx:H1_ZYN3SE-hIC1-kTyCEu5tJpxDQ3F1qi_q3vPWTy5nh3ziIj8lZqw>
+    <xmx:H1_ZYGF6JbcE9WyR_Y0NO8aSdmVeuVbJ81wvjgjFpbebwEhdkeqxMQ>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Jun 2021 01:33:13 -0400 (EDT)
+ 28 Jun 2021 01:33:18 -0400 (EDT)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b2510573 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 28 Jun 2021 05:33:12 +0000 (UTC)
-Date:   Mon, 28 Jun 2021 07:33:11 +0200
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6a6fec77 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 28 Jun 2021 05:33:16 +0000 (UTC)
+Date:   Mon, 28 Jun 2021 07:33:15 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
@@ -74,13 +74,12 @@ Cc:     Jeff King <peff@peff.net>,
         Chris Torek <chris.torek@gmail.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/3] receive-pack: skip connectivity checks on delete-only
- commands
-Message-ID: <b3272f499e51cfc53345f9f09f8762db1a4cf0a6.1624858240.git.ps@pks.im>
+Subject: [PATCH v2 3/3] connected: implement connectivity check using bitmaps
+Message-ID: <7687dedd4722c39b5ecef2c2165147c25d16b8d9.1624858240.git.ps@pks.im>
 References: <cover.1624858240.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="U4nlkKMm3GAwkLQP"
+        protocol="application/pgp-signature"; boundary="sMpAWHIRdsq6JklT"
 Content-Disposition: inline
 In-Reply-To: <cover.1624858240.git.ps@pks.im>
 Precedence: bulk
@@ -88,165 +87,319 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---U4nlkKMm3GAwkLQP
+--sMpAWHIRdsq6JklT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In the case where git-receive-pack(1) receives only commands which
-delete references, then per technical specification the client MUST NOT
-send a packfile. As a result, we know that no new objects have been
-received, which makes it a moot point to check whether all received
-objects are fully connected.
+The connectivity checks are currently implemented via git-rev-list(1):
+we simply ignore any objects which are reachable from preexisting refs
+via `--not --all`, and pass all new refs which are to be checked via its
+stdin. While this works well enough for repositories which do not have a
+lot of references, it's clear that `--not --all` will linearly scale
+with the number of refs which do exist: for each reference, we'll walk
+through its commit as well as its five parent commits (defined via
+`SLOP`). Given that many major hosting sites which use a pull/merge
+request workflow keep refs to the request's HEAD, this effectively means
+that `--not --all` will do a nearly complete graph walk.
 
-Fix this by not doing a connectivity check in case there were no pushed
-objects. Given that git-rev-walk(1) with only negative references will
-not do any graph walk, no performance improvements are to be expected.
-Conceptionally, it is still the right thing to do though.
+This commit implements an alternate strategy if the target repository
+has bitmaps. Objects referenced by a bitmap are by definition always
+fully connected, so they form a natural boundary between old revisions
+and new revisions. With this alternate strategy, we walk all given new
+object IDs. Whenever we hit any object which is covered by the bitmap,
+we stop the walk.
 
-The following tests were executed on linux.git and back up above
-expectation:
+The logic only kicks in in case we have a bitmap in the repository. If
+not, we wouldn't be able to efficiently abort the walk because we cannot
+easily tell whether an object already exists in the target repository
+and, if it does, whether it's fully connected. As a result, we'd have to
+perform a always do graph walk in this case. Naturally, we could do the
+same thing the previous git-rev-list(1) implementation did in that case
+and just use preexisting branch tips as boundaries. But for now, we just
+keep the old implementation for simplicity's sake given that performance
+characteristics are likely not significantly different.
+
+An easier solution may have been to simply add `--use-bitmap-index` to
+the git-rev-list(1) invocation, but benchmarks have shown that this is
+not effective: performance characteristics remain the same except for
+some cases where the bitmap walks performs much worse compared to the
+non-bitmap walk
+
+The following benchmarks have been performed in linux.git:
 
 Test                                                  origin/master        =
    HEAD
 ---------------------------------------------------------------------------=
 ------------------------------
-5400.4: empty receive-pack updated:new                178.36(428.22+164.36)=
-   177.62(421.33+164.48) -0.4%
-5400.7: clone receive-pack updated:new                0.10(0.08+0.02)      =
-   0.10(0.08+0.02) +0.0%
-5400.9: clone receive-pack updated:main               0.10(0.08+0.02)      =
-   0.11(0.08+0.02) +10.0%
-5400.11: clone receive-pack main~10:main              0.15(0.11+0.04)      =
-   0.15(0.10+0.05) +0.0%
-5400.13: clone receive-pack :main                     0.01(0.00+0.01)      =
+5400.4: empty receive-pack updated:new                176.02(387.28+175.12)=
+   176.86(388.75+175.51) +0.5%
+5400.7: clone receive-pack updated:new                0.10(0.09+0.01)      =
+   0.08(0.06+0.03) -20.0%
+5400.9: clone receive-pack updated:main               0.09(0.08+0.01)      =
+   0.09(0.06+0.03) +0.0%
+5400.11: clone receive-pack main~10:main              0.14(0.11+0.03)      =
+   0.13(0.11+0.02) -7.1%
+5400.13: clone receive-pack :main                     0.01(0.01+0.00)      =
+   0.02(0.01+0.00) +100.0%
+5400.16: clone_bitmap receive-pack updated:new        0.10(0.09+0.01)      =
+   0.28(0.13+0.15) +180.0%
+5400.18: clone_bitmap receive-pack updated:main       0.10(0.08+0.02)      =
+   0.28(0.12+0.16) +180.0%
+5400.20: clone_bitmap receive-pack main~10:main       0.13(0.11+0.02)      =
+   0.26(0.12+0.14) +100.0%
+5400.22: clone_bitmap receive-pack :main              0.01(0.01+0.00)      =
    0.01(0.01+0.00) +0.0%
-5400.16: clone_bitmap receive-pack updated:new        0.10(0.07+0.02)      =
-   0.09(0.06+0.02) -10.0%
-5400.18: clone_bitmap receive-pack updated:main       0.10(0.07+0.02)      =
-   0.10(0.08+0.02) +0.0%
-5400.20: clone_bitmap receive-pack main~10:main       0.15(0.11+0.03)      =
-   0.15(0.12+0.03) +0.0%
-5400.22: clone_bitmap receive-pack :main              0.02(0.01+0.01)      =
-   0.01(0.00+0.00) -50.0%
-5400.25: extrarefs receive-pack updated:new           32.34(20.72+11.86)   =
-   32.56(20.82+11.95) +0.7%
-5400.27: extrarefs receive-pack updated:main          32.42(21.02+11.61)   =
-   32.52(20.64+12.10) +0.3%
-5400.29: extrarefs receive-pack main~10:main          32.53(20.74+12.01)   =
-   32.39(20.63+11.97) -0.4%
-5400.31: extrarefs receive-pack :main                 7.13(3.53+3.59)      =
-   7.15(3.80+3.34) +0.3%
-5400.34: extrarefs_bitmap receive-pack updated:new    32.55(20.72+12.04)   =
-   32.65(20.68+12.18) +0.3%
-5400.36: extrarefs_bitmap receive-pack updated:main   32.50(20.90+11.86)   =
-   32.67(20.93+11.94) +0.5%
-5400.38: extrarefs_bitmap receive-pack main~10:main   32.43(20.88+11.75)   =
-   32.35(20.68+11.89) -0.2%
-5400.40: extrarefs_bitmap receive-pack :main          7.21(3.58+3.63)      =
-   7.18(3.61+3.57) -0.4%
+5400.25: extrarefs receive-pack updated:new           32.14(20.76+11.59)   =
+   32.35(20.52+12.03) +0.7%
+5400.27: extrarefs receive-pack updated:main          32.08(20.54+11.75)   =
+   32.10(20.78+11.53) +0.1%
+5400.29: extrarefs receive-pack main~10:main          32.14(20.66+11.68)   =
+   32.27(20.65+11.83) +0.4%
+5400.31: extrarefs receive-pack :main                 7.09(3.56+3.53)      =
+   7.10(3.70+3.40) +0.1%
+5400.34: extrarefs_bitmap receive-pack updated:new    32.41(20.59+12.02)   =
+   7.36(3.76+3.60) -77.3%
+5400.36: extrarefs_bitmap receive-pack updated:main   32.26(20.53+11.95)   =
+   7.34(3.56+3.78) -77.2%
+5400.38: extrarefs_bitmap receive-pack main~10:main   32.44(20.77+11.90)   =
+   7.40(3.70+3.70) -77.2%
+5400.40: extrarefs_bitmap receive-pack :main          7.09(3.62+3.46)      =
+   7.17(3.79+3.38) +1.1%
+
+As expected, performance doesn't change in cases where we do not have a
+bitmap available given that the old code path still kicks in. In case we
+do have bitmaps, this is kind of a mixed bag: while git-receive-pack(1)
+is slower in a "normal" clone of linux.git, it is significantly faster
+for a clone with lots of references. The slowness can potentially be
+explained by the overhead of loading the bitmap. On the other hand, the
+new code is faster as expected in repos which have lots of references
+given that we do not have to mark all negative references anymore.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/receive-pack.c | 49 ++++++++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 19 deletions(-)
+ connected.c   | 136 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ pack-bitmap.c |   4 +-
+ pack-bitmap.h |   2 +
+ 3 files changed, 140 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index a34742513a..b9263cec15 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1918,11 +1918,8 @@ static void execute_commands(struct command *command=
-s,
- 			     struct shallow_info *si,
- 			     const struct string_list *push_options)
- {
--	struct check_connected_options opt =3D CHECK_CONNECTED_INIT;
- 	struct command *cmd;
- 	struct iterate_data data;
--	struct async muxer;
--	int err_fd =3D 0;
- 	int run_proc_receive =3D 0;
-=20
- 	if (unpacker_error) {
-@@ -1931,25 +1928,39 @@ static void execute_commands(struct command *comman=
-ds,
- 		return;
- 	}
-=20
--	if (use_sideband) {
--		memset(&muxer, 0, sizeof(muxer));
--		muxer.proc =3D copy_to_sideband;
--		muxer.in =3D -1;
--		if (!start_async(&muxer))
--			err_fd =3D muxer.in;
--		/* ...else, continue without relaying sideband */
--	}
--
- 	data.cmds =3D commands;
- 	data.si =3D si;
--	opt.err_fd =3D err_fd;
--	opt.progress =3D err_fd && !quiet;
--	opt.env =3D tmp_objdir_env(tmp_objdir);
--	if (check_connected(iterate_receive_command_list, &data, &opt))
--		set_connectivity_errors(commands, si);
-=20
--	if (use_sideband)
--		finish_async(&muxer);
+diff --git a/connected.c b/connected.c
+index b18299fdf0..474275a52f 100644
+--- a/connected.c
++++ b/connected.c
+@@ -6,6 +6,127 @@
+ #include "transport.h"
+ #include "packfile.h"
+ #include "promisor-remote.h"
++#include "object.h"
++#include "tree-walk.h"
++#include "commit.h"
++#include "tag.h"
++#include "progress.h"
++#include "oidset.h"
++#include "pack-bitmap.h"
++
++#define QUEUED (1u<<0)
++
++static int queue_object(struct repository *repo,
++			struct bitmap_index *bitmap,
++			struct object_array *pending,
++			const struct object_id *oid)
++{
++	struct object *object;
++
 +	/*
-+	 * If received commands only consist of deletions, then the client MUST
-+	 * NOT send a packfile because there cannot be any new objects in the
-+	 * first place. As a result, we do not set up a quarantine environment
-+	 * because we know no new objects will be received. And that in turn
-+	 * means that we can skip connectivity checks here.
++	 * If the object ID is part of the bitmap, then we know that it must by
++	 * definition be reachable in the target repository and be fully
++	 * connected. We can thus skip checking the objects' referenced
++	 * objects.
 +	 */
-+	if (tmp_objdir) {
-+		struct check_connected_options opt =3D CHECK_CONNECTED_INIT;
-+		struct async muxer;
-+		int err_fd =3D 0;
++	if (bitmap_position(bitmap, oid) >=3D 0)
++		return 0;
 +
-+		if (use_sideband) {
-+			memset(&muxer, 0, sizeof(muxer));
-+			muxer.proc =3D copy_to_sideband;
-+			muxer.in =3D -1;
-+			if (!start_async(&muxer))
-+				err_fd =3D muxer.in;
-+			/* ...else, continue without relaying sideband */
-+		}
-+
-+		opt.err_fd =3D err_fd;
-+		opt.progress =3D err_fd && !quiet;
-+		opt.env =3D tmp_objdir_env(tmp_objdir);
-+		if (check_connected(iterate_receive_command_list, &data, &opt))
-+			set_connectivity_errors(commands, si);
-+
-+		if (use_sideband)
-+			finish_async(&muxer);
++	/* Otherwise the object is queued up for a connectivity check. */
++	object =3D parse_object(repo, oid);
++	if (!object) {
++		/* Promisor objects do not need to be traversed. */
++		if (is_promisor_object(oid))
++			return 0;
++		return -1;
 +	}
++
++	/*
++	 * If the object has been queued before already, then we don't need to
++	 * do so again.
++	 */
++	if (object->flags & QUEUED)
++		return 0;
++	object->flags |=3D QUEUED;
++
++	/*
++	 * We do not need to queue up blobs given that they don't reference any
++	 * other objects anyway.
++	 */
++	if (object->type =3D=3D OBJ_BLOB)
++		return 0;
++
++	add_object_array(object, NULL, pending);
++
++	return 0;
++}
++
++static int check_object(
++	struct repository *repo,
++	struct bitmap_index *bitmap,
++	struct object_array *pending,
++	const struct object *object)
++{
++	int ret =3D 0;
++
++	if (object->type =3D=3D OBJ_TREE) {
++		struct tree *tree =3D (struct tree *)object;
++		struct tree_desc tree_desc;
++		struct name_entry entry;
++
++		if (init_tree_desc_gently(&tree_desc, tree->buffer, tree->size))
++			return error(_("cannot parse tree entry"));
++		while (tree_entry_gently(&tree_desc, &entry))
++			ret |=3D queue_object(repo, bitmap, pending, &entry.oid);
++
++		free_tree_buffer(tree);
++	} else if (object->type =3D=3D OBJ_COMMIT) {
++		struct commit *commit =3D (struct commit *) object;
++		struct commit_list *parents;
++
++		for (parents =3D commit->parents; parents; parents =3D parents->next)
++			ret |=3D queue_object(repo, bitmap, pending, &parents->item->object.oid=
+);
++
++		free_commit_buffer(repo->parsed_objects, commit);
++	} else if (object->type =3D=3D OBJ_TAG) {
++		ret |=3D queue_object(repo, bitmap, pending, get_tagged_oid((struct tag =
+*) object));
++	} else {
++		return error(_("unexpected object type"));
++	}
++
++	return ret;
++}
++
++/*
++ * If the target repository has a bitmap, then we treat all objects reacha=
+ble
++ * via the bitmap as fully connected. Bitmapped objects thus serve as the
++ * boundary between old and new objects.
++ */
++static int check_connected_with_bitmap(struct repository *repo,
++				       struct bitmap_index *bitmap,
++				       oid_iterate_fn fn, void *cb_data,
++				       struct check_connected_options *opt)
++{
++	struct object_array pending =3D OBJECT_ARRAY_INIT;
++	struct progress *progress =3D NULL;
++	size_t checked_objects =3D 0;
++	struct object_id oid;
++	int ret =3D 0;
++
++	if (opt->progress)
++		progress =3D start_delayed_progress("Checking connectivity", 0);
++
++	while (!fn(cb_data, &oid))
++		ret |=3D queue_object(repo, bitmap, &pending, &oid);
++	while (pending.nr) {
++		ret |=3D check_object(repo, bitmap, &pending, object_array_pop(&pending)=
+);
++		display_progress(progress, ++checked_objects);
++	}
++
++	stop_progress(&progress);
++	object_array_clear(&pending);
++	return ret;
++}
 =20
- 	reject_updates_to_hidden(commands);
+ /*
+  * If we feed all the commits we want to verify to this command
+@@ -28,12 +149,27 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 	int err =3D 0;
+ 	struct packed_git *new_pack =3D NULL;
+ 	struct transport *transport;
++	struct bitmap_index *bitmap;
+ 	size_t base_len;
 =20
+ 	if (!opt)
+ 		opt =3D &defaults;
+ 	transport =3D opt->transport;
+=20
++	bitmap =3D prepare_bitmap_git(the_repository);
++	if (bitmap) {
++		/*
++		 * If we have a bitmap, then we can reuse the bitmap as
++		 * boundary between old and new objects.
++		 */
++		err =3D check_connected_with_bitmap(the_repository, bitmap,
++						  fn, cb_data, opt);
++		if (opt->err_fd)
++			close(opt->err_fd);
++		free_bitmap_index(bitmap);
++		return err;
++	}
++
+ 	if (fn(cb_data, &oid)) {
+ 		if (opt->err_fd)
+ 			close(opt->err_fd);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d90e1d9d8c..d88a882ee1 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -418,8 +418,8 @@ static inline int bitmap_position_packfile(struct bitma=
+p_index *bitmap_git,
+ 	return pos;
+ }
+=20
+-static int bitmap_position(struct bitmap_index *bitmap_git,
+-			   const struct object_id *oid)
++int bitmap_position(struct bitmap_index *bitmap_git,
++		    const struct object_id *oid)
+ {
+ 	int pos =3D bitmap_position_packfile(bitmap_git, oid);
+ 	return (pos >=3D 0) ? pos : bitmap_position_extended(bitmap_git, oid);
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 99d733eb26..7b4b386107 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -63,6 +63,8 @@ int rebuild_existing_bitmaps(struct bitmap_index *, struc=
+t packing_data *mapping
+ void free_bitmap_index(struct bitmap_index *);
+ int bitmap_walk_contains(struct bitmap_index *,
+ 			 struct bitmap *bitmap, const struct object_id *oid);
++int bitmap_position(struct bitmap_index *bitmap_git,
++		    const struct object_id *oid);
+=20
+ /*
+  * After a traversal has been performed by prepare_bitmap_walk(), this can=
+ be
 --=20
 2.32.0
 
 
---U4nlkKMm3GAwkLQP
+--sMpAWHIRdsq6JklT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmDZXxYACgkQVbJhu7ck
-PpRTMw//ZX4vPc2kWq3HRzpoiLV8nXizmXjgWueKsSkJnXyx4UgsoirLtsPsjFZH
-/n1If8zLzIBG2eFw8DcLBGrUj6YlCzbW3c+iyvYISzOT+i8oTEA/a3mh6unHbruv
-vvo3kaTU2LAHQw4JruGeiyMzz/PDlRctfjTOpmhGo/cw7kAERanJKwVfeKTJaj5r
-xm+ZTL8+djOjfbUwcC+lWzN7hQQBBTcDDs6j5VvfZB8q4WH8SVBiMEAgjZzMiabg
-/9w0UpNlnNeHccTjSn/RHbv4urQdaqTp6HpEWwW3ljIZeL2P4jlcEnHN0UieN/xx
-buL6bdJlM900cRtxB+9sHAZYjW2YH2IVq40pDe2Sdid6eX1Y0zJI5eDmOmSjEQfo
-z5g/tudPRXZHG7zF4Qk+YuembvwzEKSwtavlKIZ25bhB9rzk/ja/r540uZn7JWFp
-faqWdpKz/CbBRvt/g+3M1+UkBjcU4beNrcfxTFf/Is5SJqnEer0BBMeSlLAlFyZ6
-/ia2rSaqNOxRyxmPq8nGvfBZBFlpaLFwSy+CXVOtsP2B76JC4Ds1djwod5soT6oZ
-ZfXP2RHB1aM8MQX9OkGt2MAghVbZCbPYEg5TOzWiwaP2BbKHuinqy7eQcSmM7ui7
-OCU3uJ2m3vfiTn7ZB78Gvfvty0dSKqWUF+gJZ9jXmpacs5P+Hbo=
-=eUSR
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmDZXxoACgkQVbJhu7ck
+PpRDZg//cmNT68HFZzoOsInDIwPHqZUjqwW94HQDs9AVJ9ruAgPohHfTH2wcVQ5D
+9loJXuraeK0+ArKOBKojW97HBx2pUIP+Se+absdw0uUlqyNqHGmfvio0LuaImEEK
+qOSdtHW7g834Wo5gAs2czdbayPBWB1B2OZShvv5LGpcSxPKyJKz9pW9jKUyV6/ru
+RJ6bHi4a+eCMXqSh9y44U1Y6xT1IvehM3QMLH/mE1t0Taxu8pq0Dj9YwJpNkKjjO
+p1n840An2Mf4MvhGagtflvTxaBxtAc27l+8hLw+j5LMpPbNOmOGF1V3yZYd9lgkx
+yvmcWpdPw1EWKbTvKlEsq1oMIG8cYCgBTf6wnPjBu5SL2CE7MwF7S2SKIsyLCHQj
+nYwrV1cihl8+tpkuYU0zmE//h+cNMZrAXBAufT4BIiQCvrCbPgejvgapYJU5cJb2
+si+DXPhojrKqVe3ERrHFrs/JTbawAsjFMsZOp8EIhKcIJznxM7MYsFJ96bjdoG5I
+pgz51e3cnNt7jOU7F9Lmp+EIlrNdhf2Xof2X/OKBLl3M/mti9yZ1ffnpK645KZUU
+CSz7ti9m12ixY/txqL04jbGUfTiJpp2TN/sAQQBuT+QS+kP0qCQzjN4DTtYGMyWS
+hB8chgMH2EIWawvH5XyxNGEQ3Ygl8xFiRc0lfyoiRhSgxmTWhsI=
+=9AfG
 -----END PGP SIGNATURE-----
 
---U4nlkKMm3GAwkLQP--
+--sMpAWHIRdsq6JklT--
