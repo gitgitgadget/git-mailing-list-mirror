@@ -2,130 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFF15C2B9F4
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 13:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 599EFC2B9F4
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 14:08:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2E0961C74
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 13:52:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E18A61C76
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 14:08:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232057AbhF1Nyc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 09:54:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56114 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230163AbhF1Nyb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 09:54:31 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3583DC061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 06:52:06 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id a6so22355213ioe.0
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 06:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0q1CndmCeLFiM+eglOkiOeN6sSgpw2AKBu3HGjV9roY=;
-        b=aO/yAhYg7UASaYvH12sqQ6J1QKVYxYRYYi/Rz1hmh5QtzEN4EQ7xb00X3sLdbKRWnX
-         8d52ss09ZfjT3F08OVvraFfd/2PsES+xibvpdDgGUDTpq1/BSFvepnqsQSrbVxIR9m/K
-         VjXzo2ly4o9K6FwnfZlL6GdKw2tA3Jr7LjUn5BErFshn+wgA4++kNBY1pr9xQ/V0cKzv
-         sdvC43NOyfOfyshQ9g+CignokHFgp/AVlgr8A4NfLDzWz7G0RaNbysQsN/ZtPFtwtlPX
-         fSCVk9nAIwMuxb/4C0viGKqjaYWSZHFDx5foLjZMgyAF1lh9NC+A5Lr2HDgY9fzOWq/N
-         dM8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0q1CndmCeLFiM+eglOkiOeN6sSgpw2AKBu3HGjV9roY=;
-        b=cbZq2UKTQtRdAskL0rzfHuxMaRLSZLUmTzfpN/WCqjeXO0EIJDMzQcdIjA4LgGb5++
-         LJayQauk/ryeHTl6/Q/ZE7BwBmGF0rMSNchMi/up7WWeW2pw67U1TzKcwNFdOMnQn0mJ
-         1bm8RpZDlfSHyZUcey4Pbrfsl3x58OamBtVCUJX9YAIpJndSr7TPkS9RubHAiVu35exC
-         cqxTQN3a2fzgCMIOkpkLkGdcs0ODsITycvJemXLtoHEP+BY5yAQpA4Jrg6pwtKf7/VBm
-         Vr+n5QdfiT77QPNQeP4Tqz0TgP3E5zueY9Jj/FZ4uwEg0euTXjkxP/ZHi2Gq4V2Aj40n
-         hhzA==
-X-Gm-Message-State: AOAM532OciPMnOzS3zGJCTHi0U/m2ixMmPJn5Q0T7CCwJFX0j83gNOY+
-        F5nzesBqHBzMESrYjiu01sTxrkmaBY3YhjyEPro=
-X-Google-Smtp-Source: ABdhPJxOeN29EDPez8qtTOgBdgwBr1WUFGiiOVyBlLW4M4Wf9bifug83FOZ5njIc11DHxwuBtKRDJhbf5FRFruphVJs=
-X-Received: by 2002:a02:ba0a:: with SMTP id z10mr23228639jan.10.1624888325593;
- Mon, 28 Jun 2021 06:52:05 -0700 (PDT)
+        id S232307AbhF1OKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 10:10:52 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58798 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230033AbhF1OKu (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 28 Jun 2021 10:10:50 -0400
+Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 197BB6073C;
+        Mon, 28 Jun 2021 14:07:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1624889274;
+        bh=RIo4sPYej2FTt7rW9kPddCjw1s2psWLPcM9mv5s6Ix0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=z3l/c5g5F5uuKDeg4dUWMeyalYmG6E/j3WwaKY1EWJtTMub8l4j05p6tbf4WEEC0L
+         +xmH1/4AZ4pL0bj5HjlApNDzAjHonZ3M5EAj6ESpSopqBeY1atXg4zmqyxjrd8mJgk
+         ot6Tap8Q0+DZ9JHs/s02qVKEPT8X06pDRq5mv8b/DC9lxrLUQnOcr9xHpbJ5PE/ErJ
+         XNUC7im8HMAzZvxOhn7Z+fqmtdLtDTl8JrInC3DYOBcoR+WR0oxLP1paI4n40wj+C5
+         aHO+iZ6QY43bqVym0Y8oAfAsSmQLbu03/sbeycoT3JW/UjNuuq/N0sB5cXCEgG2OFY
+         WB1Adv5FE6EiDjb0NH+xEmUs+UFsy9Fa26BmSmpqZwjr0ZHyvFS4GeXY8Gl2DIER+o
+         Uuf3AgqIFWX8zI+BXttk0n92zluKsUl3lm1KgrjRUBX3IAiy5yP+ZBm1oc+L+MHFgv
+         mZLMEHoCZ0c9mOAXlxyyYd9SJZMjHVd9tjBr15RtbclqfW5aMv1
+Date:   Mon, 28 Jun 2021 14:07:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?S8O2cHBlbiw=?= Thomas <thomas.koeppen@nordlb.de>
+Cc:     "'git@vger.kernel.org'" <git@vger.kernel.org>
+Subject: Re: Release notes: mIssing version information for git-LFS
+Message-ID: <YNnXti6Bf0SP7OIO@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?S8O2cHBlbiw=?= Thomas <thomas.koeppen@nordlb.de>,
+        "'git@vger.kernel.org'" <git@vger.kernel.org>
+References: <21210b30b6c44361aef0c99ca5983f52@nordlb.de>
 MIME-Version: 1.0
-References: <pull.980.v5.git.1624636945.gitgitgadget@gmail.com>
- <pull.980.v6.git.1624797350.gitgitgadget@gmail.com> <9a1f07329401434b5960ef8ae002f11b1133506a.1624797351.git.gitgitgadget@gmail.com>
- <CA+CkUQ-gHT=g3KwcBXkp8eBX7wfY_HkT1=hhRiYLap-Av2w5MA@mail.gmail.com>
-In-Reply-To: <CA+CkUQ-gHT=g3KwcBXkp8eBX7wfY_HkT1=hhRiYLap-Av2w5MA@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 28 Jun 2021 21:51:54 +0800
-Message-ID: <CAOLTT8RLX2Zn7C3hd5JhiAYK9TptXbraf=jobL7Cj+p=uLitvA@mail.gmail.com>
-Subject: Re: [PATCH v6 12/15] [GSOC] cat-file: reuse ref-filter logic
-To:     Hariom verma <hariom18599@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Smd5DmYCO2y3xHor"
+Content-Disposition: inline
+In-Reply-To: <21210b30b6c44361aef0c99ca5983f52@nordlb.de>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Hariom verma <hariom18599@gmail.com> =E4=BA=8E2021=E5=B9=B46=E6=9C=8828=E6=
-=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=883:47=E5=86=99=E9=81=93=EF=BC=9A
->
-> Hi,
->
-> >
-> > Most of the atoms in `for-each-ref --format` are now supported,
-> > such as `%(tree)`, `%(parent)`, `%(author)`, `%(tagger)`, `%(if)`,
-> > `%(then)`, `%(else)`, `%(end)`. But these atoms will be rejected:
-> > `%(refname)`, `%(symref)`, `%(upstream)`, `%(push)`, `%(worktreepath)`,
-> > `%(flag)`, `%(HEAD)`, because our objects don't have a refname.
->
-> It's not clear why some atoms are rejected?
->
-> Are we going to support them in later commits? (or sometime in the future=
-)
-> OR
-> We are never going to support them. Because they make no sense to
-> cat-file? (or whatever the reason)
->
+--Smd5DmYCO2y3xHor
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Because in "git for-each-ref"'s "family", ref_array_item is generated
-by filter_refs(),
-which uses ref_filter_handler() to fill ref_array_item with ref's
-data. In "git cat-file",
-we care about the object, not the ref. Therefore, ref_array_item is
-only filled with
-{oid, rest} in batch_object_write() in cat-file.c. We cannot represent
-some specific
-ref-related data in "git cat-file", so we cannot have some atoms in ref_fil=
-ter.
-Yes, we probably won't support them in the future.
+On 2021-06-28 at 13:46:02, K=C3=B6ppen, Thomas wrote:
+> Hello all,
+>=20
+> in the release notes for git i miss the information which version of git-=
+LFS was implemented.
+> Am I just reading over it or is this information really missing?
 
-From an object-oriented point of view, the atom supported by
-"cat-file" should be a
-parent class, "for-each-ref"',"branch","tag"... they have more
-specific object details (ref),
-their supported atom should be a derived class, they can support more atoms=
-.
+Git LFS is a separate open source project that's developed
+independently.  Git for Windows includes the Git LFS binary, but it is a
+separate project from Git itself and as such it isn't mentioned in the
+Git release notes.
 
-> Whatever is the reason, I think it's a good idea to include it in the
-> commit message.
->
+If you're interested in the release notes or other information about Git
+LFS, you can find it at https://github.com/git-lfs/git-lfs.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Yeah.  The sentence "because our objects don't have a refname." may not
-correctly express the reason for rejecting these atoms.  I will add
-more descriptions.
+--Smd5DmYCO2y3xHor
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> --
-> Hariom
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-Thanks.
---
-ZheNing Hu
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYNnXtQAKCRB8DEliiIei
+gUESAQDIBlBprROyfsEiEWli2Q3b9T7A4qrIw6oOODSjAxXcXwD/Rk2EBaz8onwB
+GUtz2ygZAM9RBEeX4Q0R3xRdCQom5Qo=
+=HEWB
+-----END PGP SIGNATURE-----
+
+--Smd5DmYCO2y3xHor--
