@@ -2,88 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5905C11F64
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 23:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47A67C11F64
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 23:44:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B996861D03
-	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 23:12:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A80161CAD
+	for <git@archiver.kernel.org>; Mon, 28 Jun 2021 23:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235725AbhF1XPJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 19:15:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57813 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235349AbhF1XPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 19:15:07 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EAD8BC44CC;
-        Mon, 28 Jun 2021 19:12:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=MRjMb1mHCnH7t1alA5zJRSDdEQKKPrTJXY8vPk+CVew=; b=vUlM
-        KY8JReDcotHceL3OaFfdSrS1FtJXv04bQzY2FDNVN3PO3/53iTHnxwyuZelehhkX
-        YdnvCTqtAOtRrKrAwshQi+jDVwtq7HjOecZQuSIVNNZK/lJTI93wjuIaUNqXroYi
-        F4OXuLKT+eZQMQOLhGvbMZpoMXrMb5n+J3YateQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1A9CC44CB;
-        Mon, 28 Jun 2021 19:12:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 60B4CC44C8;
-        Mon, 28 Jun 2021 19:12:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [RFC PATCH 0/2] MVP implementation of remote-suggested hooks
-References: <cover.1623881977.git.jonathantanmy@google.com>
-        <87fsxc47le.fsf@evledraar.gmail.com>
-        <YNExhalSLWvmky55@camp.crustytoothpaste.net>
-Date:   Mon, 28 Jun 2021 16:12:37 -0700
-Message-ID: <xmqqa6n960t6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 54B1EC22-D866-11EB-A303-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+        id S234537AbhF1Xqu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 19:46:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47140 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234139AbhF1Xqr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 19:46:47 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD172C061574
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 16:44:20 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id 11so15929807oid.3
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 16:44:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=3I9EGZmgWpKYSEsAB251K13RR0VqvvI6c1UbHUR1d8Y=;
+        b=RST3a0KLgBzdXb3g5qBLbJ92mPL/sY0oGzMqFlXYnZPNjY3qBujTMpEO/S60BuVM3W
+         2H+dvwLKnYBRNN/pl7JiXSpMryjpgwvmbHjceVM0gh6FQ3iVpUNiPgG9/imjz+vhL0F8
+         7QfObHUImyc4nPY/51jS8rO1MJLn4iAqokxPZJW4nloVUWjG90WOe7nf3up9boy4CVt+
+         EhgbeyftHABHAcacGNjKE2Yv9G/zpPW23BizHvltd89fi/QnUlr+Jr3B3U0YVwfExi9A
+         GrMRLP/HZ8L9iD2NtPt3PnM5G99cEwkShw0F5V6Bb9pmKmoU5Vn/F5iITB7d2JrilSme
+         CbBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=3I9EGZmgWpKYSEsAB251K13RR0VqvvI6c1UbHUR1d8Y=;
+        b=ZYzrvgz/oXyTPDywqNS8GLtPJH+c0ZffMlk2bSz4ws2je+w0BR2nXYRlwI3HelnPdl
+         pziLXyq+SYLtLlGZHOd9+otp86ZhrulaVQ1empfkHGX/Kt1K1m6PCKBHOoBvJTHqUP/n
+         LKVuxq1tRlV6T7NY6bEgp23yyN2EVuqWVej8Rm0h6SVwxoAUlohkbK1s3FljrkrDVJnc
+         U9ReCsz73fqsPrn25FQQKwV99aVrqjCnogb4kz+6WLMT5hgdlur+pI0Eu5DF3ggv//BV
+         bRDo41pPXC9KOrn28itO8JQ2Wyu2GzvPPJPtGunGoInLMxypxVGTScItCUyFD6Hh6xKn
+         50wQ==
+X-Gm-Message-State: AOAM530yslOHBh3kE2FtDA09EoZFabXxWAPydkVUaIAZjCwzu+gCEUWs
+        DkCnNBSSIqXbhA2a+BBVdPqiy/rxsM1krw==
+X-Google-Smtp-Source: ABdhPJzr3VCFoT4mOezffxGtD5sqRtm/itThbeQZ+ZpLmWgVzAH3gMEkIbFP4dfQV4OCWd70zZ3g/A==
+X-Received: by 2002:aca:38c5:: with SMTP id f188mr18899677oia.36.1624923860002;
+        Mon, 28 Jun 2021 16:44:20 -0700 (PDT)
+Received: from localhost (fixed-187-189-165-231.totalplay.net. [187.189.165.231])
+        by smtp.gmail.com with ESMTPSA id 2sm3675074ota.58.2021.06.28.16.44.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jun 2021 16:44:19 -0700 (PDT)
+Date:   Mon, 28 Jun 2021 18:44:18 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>, git@vger.kernel.org
+Message-ID: <60da5ed21ec8c_1f78f2082a@natae.notmuch>
+In-Reply-To: <20210628183004.flxirucfv2celll3@yadavpratyush.com>
+References: <20210628183004.flxirucfv2celll3@yadavpratyush.com>
+Subject: RE: Applying a patch with a diff header in its commit message
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Pratyush Yadav wrote:
+> I have a patch at $DAYJOB that contains a diff header ("diff --git 
+> a/...") in its commit message, and unfortunately it is not indented. So 
+> naturally, git-am trips up and thinks it is the start of the main diff 
+> and tries to apply the diff starting there. It does not apply and the 
+> patch is rejected as being corrupt.
+> 
+> I know one option for me is to manually edit the patch and indent the 
+> diff header. But I would like to avoid that if possible. Is there any 
+> way to apply that patch as-is? Is it possible to tell git-am where to 
+> start looking for the diff?
 
-> If we do add this feature (which, as I said, I'm opposed to) and we
-> decide to store it in a ref, that ref should not be a normal branch by
-> default (it should be a special one-level ref, like refs/stash or such),
-> and the ref name should be configurable.  Not all developers use English
-> as their working language and we should respect that.
+git apply?
 
-Just this part.
-
-I am not sure what you are trying to achieve by requiring it to be
-configurable.  After all, even for names of branches that are used
-to store the code, which is of more significance than this "unusual"
-ref, we've lived with a hardcoded 'master' and with the server-end
-advertisability of the configured values (i.e. "git clone" was
-designed to figure out if the origin used a custom name for the
-primary line of history and use the same name from the beginning),
-the end-user sitting on the receiving end did not have to do
-anything special even when the project wanted to use a custom name.
-
-But this "unusual" ref would not have a natural equivalent of "the
-origin side can point the primary branch with its HEAD", so by
-allowing it to be configurable, you are pretty much closing the door
-for those who blindly honor whatever the origin tells them to use
-when running "git clone" from doing so.  I agree that it is a good
-security measure (and I am not sold to the "remote suggested hooks"
-idea in the first place), but is that the real reason why you
-suggested configurability?
-
+-- 
+Felipe Contreras
