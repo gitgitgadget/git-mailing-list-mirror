@@ -2,143 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B95C11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 17:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FE58C11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:01:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4528361DC8
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 17:54:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F26AB6192F
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232491AbhF2R4e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 13:56:34 -0400
-Received: from mout.web.de ([212.227.17.11]:56671 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231856AbhF2R4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 13:56:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1624989236;
-        bh=+qbhCyJ2nfgbg4Cox6YVu0NTmmcgHMRsYS+oJsLhi04=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=XA7+JgOFrKZWs+0JFAoZBQeBAz/Xqz0hr9JQgn01a476zwGV8KUqx7ELoWr2xHTch
-         0u6P9x8wxYsywZI7U/JZXzjzZAwtWWzq4/IJvL/Qgmbyd/fyr0FlW/MqRQTqN6YiNC
-         cxzdF9eP4MqF/1ApRChDvq/gOC19r/zOfGApRkHo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
- (mrweb105 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MIya8-1ldrP42vQg-00KM6C; Tue, 29 Jun 2021 19:53:56 +0200
-Subject: Re: [PATCH 3/3] hook-list.h: add a generated list of hooks, like
- config-list.h
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
- <patch-3.3-f343fc7ae6-20210617T100239Z-avarab@gmail.com>
- <20210618170550.GE6312@szeder.dev>
- <648321ed-bda9-d7fc-73e1-7ccf48addf9c@web.de>
- <nycvar.QRO.7.76.6.2106221642560.57@tvgsbejvaqbjf.bet>
- <xmqqv95x4ijd.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <20b1bfb6-8881-2a21-1753-0e2e508a7861@web.de>
-Date:   Tue, 29 Jun 2021 19:53:55 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        id S234044AbhF2SDd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 14:03:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37104 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231856AbhF2SDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 14:03:32 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C612EC061760
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:01:03 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id nd37so37840891ejc.3
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=+tT/eG+Qt8OetWRripQd+GdeBm9SdOpt0vs2yiela/0=;
+        b=aA3r3p2NtOa5hF7lsgt9WI3zUQ9VONgdIJ8GhD13g2ksQnboIvL0iJXg8XOWR5PoKI
+         Uzpe3mwNc3o/tFFP7eJsWKwBEs7u+RRIerk5jYWrxZbh10c99UagpSTLI61BJqQ5BGYD
+         jYMHleAr3ufosM3mY75JqcXeHxVZkJj4F9LTJxFpJ679KN4Gk4XzrfTqQF2QJWMs3i48
+         d+b5xCYSHW2nZhimE0o2AwHVdYxlyIalu3erQFlciYI5agvM3xQpo7h2DbRbTEvj228j
+         O108saK12HSTZopNIYSEROP2WjVWd83IeRv9qsoEZklYhMi8ql5cgwNm8gyUtYhrdyPI
+         LArg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=+tT/eG+Qt8OetWRripQd+GdeBm9SdOpt0vs2yiela/0=;
+        b=aczHBDaM18DMnpEmuxw2FbRko4e2EZUEMuSL4DaS4ueX8XwSVU2lQuGrkTkqWw26fY
+         uiNCbIsCOBCVj21ya14gLtkzc51wgcp45yom59T/7sYM7Hzwq/XjFlsDPNu7FHcGJpYS
+         PQW7a09ZnGNaofMjawGwPNODTWNRoNpOyrNdDhi6seJqK3NCWPy1kp9yTLn+1qCH4Uv7
+         v75UffPZ11k5rxDUzmDaI4LJSGxi8lA1QH5+5Jsi/pojKzxOtK0D30bJtXreBRC0o0Jd
+         EzLfJoS0ad/Or/KjRAlDieAjYAe38BYz16Vz3Ur/IC/GkOcqu/DDxk9Mcx5XUUbKMD/s
+         GthQ==
+X-Gm-Message-State: AOAM5305mEwy+r7SrlVVvM6XiIlMCHlEl+KhTYob8JkU2UQUOcDYdeS1
+        umTLMK/hRfkctYqaGv5sHIEMqFRjKr70TQ==
+X-Google-Smtp-Source: ABdhPJwv0zRKVCtl8ybm2RIpgLWOGZbJ4sCXIExv1JREroILqw9y1wm97C+hm7+3FxZCG+q2zpUZyQ==
+X-Received: by 2002:a17:906:29c7:: with SMTP id y7mr24387224eje.404.1624989662222;
+        Tue, 29 Jun 2021 11:01:02 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id em20sm8659437ejc.70.2021.06.29.11.01.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jun 2021 11:01:01 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] grep: report missing left operand of --and
+Date:   Tue, 29 Jun 2021 19:52:19 +0200
+References: <20210628121748.f3yrc72v4mynknl3@debianXPS.lan>
+ <98171911-ba39-27f1-d068-4d381bcd4804@web.de>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <98171911-ba39-27f1-d068-4d381bcd4804@web.de>
+Message-ID: <87im1wft42.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqv95x4ijd.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8lztWQZP+yd+kMj+VBdsPBe3wfLPhhRP7ldFxSxBz3yJO03sakW
- acQKPUBwv4b3hSUoox/YAdpGgh4breYtKpub5siDJ/B0k0RPirzBmSKmr2g8HvhFORxmhxE
- JVZVHuIM5U0duI2NI8/QDEAdAX3EBsgRkaJUXScRT3xlj8kVDvwkWIl8VgiCyqxFxNJYDR1
- ALOGPcpVJqoapWGnboCjA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/EFjpwh4Kos=:k2V9T4zjSomKlvrmlJRTik
- 1SDvM9L3GgwCPumQ7hmaQjBqx55ig1bVYdGH3laa+7NyYMbUnPChTljQs85TZVKH/eQrtKgKA
- MZ8m4ySEvUdGEDz0EE4OfVKscspfj8b3JWFqX1vy+Sil9CirGv1sg6X1Rogae/jWoQp4bAOhI
- 1xJt30VTbcROByQo9p0chMz0Mcac0lQzVpWjk31q9ytoL0ufe4NEcOjZ/PXuU5xiTAluOxv7b
- jzdABDcfJZk50GHzwlVYwEIaNJiyNTzvRkcGtfO0Y27jOJzOB2whT2P8e27mKUTmY/ML/CWDy
- zb70JhLz1xkLbXcLd0jg7H+dsPpxYP/mMn6o9bAgFrKFIpfZJQGWvozCyE0DQPQ5i4YHUH8n1
- hB0PGmXXN0cGYcip4sXUFg9sqKYsZ8tooQqSHukOAlCz0jBLcFTE0DP8Iw+w/lHsuz8QJvhgE
- Q6ltRDtMT+Z82/YUxSD8WE0urc/ef1wwy2VlW3UrJyAF5YkAPajX2LiyCYKSAGo1gcxBsWD3m
- 07rrcU/a4kuFEjyphJ7erdYtZCcnjeBPMnDUpLSsCvfqz/3/UvQu45bk3pCxrOQcrZFPd8C3i
- F/J29POXr5QZ2b0VTJ4RCsOoe6DvkhykdVQkM05WyYs9wQLOumBlXNCoCgmnfUbifgBlNOYi2
- FWczd6tRac1gjtF8y2dITegPEsScLs7AKtEh5o/4DsQxVBRbrkXp4D2/zywhcahkWu3fjlLwn
- sL+6syJIFK1y3piLi3G6/T1c1FGwymwM/z/xJOa0csT4bFI5eCIPSjLYGVHZxuXqsUw/q7t1g
- zbDDwFBz+OiUFCN9jGa1TN4Psyhof6+ZnrUVx0FgPF/yjDN/iKjlMsr7TOPd8fm3s+bwZ37Yr
- kRilcrlSkClyJWgrDJlBDUsvi4nCU657ZEfgXxSMXugQ3g0r+aSAgjMuoQgUgviuBYu6a5U1J
- oDibkptCjzlh9T7J3Nky59IPTHqr7F7tONlK9Z9zjJ7/zunv8v7qkBWHSVvvG0ck+klqnzeH/
- uo7ZnDlo++wsRYTGfwR+neo4NdGwW78VE3WQNNxreCoNWGYRTToDwPs8obySb8KSSksg7qDG/
- E0YW3cQJm7sF86aPzN3lyKq9yAF6BofeFiI
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.06.21 um 02:32 schrieb Junio C Hamano:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+On Mon, Jun 28 2021, Ren=C3=A9 Scharfe wrote:
+
+> Git grep allows combining two patterns with --and.  It checks and
+> reports if the second pattern is missing when compiling the expression.
+> A missing first pattern, however, is only reported later at match time.
+> Thus no error is returned if no matching is done, e.g. because no file
+> matches the also given pathspec.
 >
->> On Sun, 20 Jun 2021, Ren=C3=A9 Scharfe wrote:
->>
->>> How about something like this?
->>>
->>> 	sed -n '/^~~~~*$/ {x; p;}; x' Documentation/githooks.txt |
->>> 	sort |
->>> 	sed 's/^.*$/	"&",/'
->>>
->>> sed is already used by generate-configlist.sh.
->>
->> I do like me a good sed script.
->>
->> Thanks,
->> Dscho
+> When that happens we get an expression tree with an GREP_NODE_AND node
+> and a NULL pointer to the missing left child.  free_pattern_expr()
+> tries to dereference it during the cleanup at the end, which result in
+> a segmentation fault.
 >
-> Yup.
+> Fix this by verifying the presence of the left operand at expression
+> compilation time.
 >
-> This is buried below the 27-patch series, so the whole thing cannot
-> advance until this gets sorted out.
+> Reported-by: Matthew Hughes <matthewhughes934@gmail.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+> Whether the check in match_expr_eval() can now be turned into a BUG is
+> left as an exercise for the reader. ;-)
+>
+>  grep.c          |  2 ++
+>  t/t7810-grep.sh | 10 ++++++++++
+>  2 files changed, 12 insertions(+)
+>
+> diff --git a/grep.c b/grep.c
+> index 8f91af1cb0..7d0ea4e956 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -655,6 +655,8 @@ static struct grep_expr *compile_pattern_and(struct g=
+rep_pat **list)
+>  	struct grep_expr *x, *y, *z;
+>
+>  	x =3D compile_pattern_not(list);
+> +	if (!x)
+> +		die("Not a valid grep expression");
+>  	p =3D *list;
+>  	if (p && p->token =3D=3D GREP_AND) {
+>  		if (!p->next)
+> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+> index 5830733f3d..c581239674 100755
+> --- a/t/t7810-grep.sh
+> +++ b/t/t7810-grep.sh
+> @@ -11,6 +11,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+>  . ./test-lib.sh
+>
+> +test_invalid_grep_expression() {
+> +	params=3D"$@" &&
+> +	test_expect_success "invalid expression: grep $params" '
+> +		test_must_fail git grep $params -- nonexisting
+> +	'
+> +}
+> +
+>  cat >hello.c <<EOF
+>  #include <assert.h>
+>  #include <stdio.h>
+> @@ -89,6 +96,9 @@ test_expect_success 'grep should not segfault with a ba=
+d input' '
+>  	test_must_fail git grep "("
+>  '
+>
+> +test_invalid_grep_expression -e A --and
+> +test_invalid_grep_expression --and -e A
+> +
+>  for H in HEAD ''
+>  do
+>  	case "$H" in
 
-If it helps: You can add the patch below as number 28 or squash
-it in.
+This seems like an incomplete fix, for the exact same thing with --or we
+silently return 1, as we would if we exited early in free_pattern_expr
+on !x, which aside from the segfault I think we should probably make a
+habit in our own free()-like functions.
 
-=2D-- >8 ---
-Subject: [PATCH] generate-hooklist.sh: use sed instead of Perl
+Whatever we're doing about the --and segfault it seems like we should do
+the same under --or, no?
 
-Allow hooklist.h to be built without Perl by finding, sorting and
-formatting hook names using two short sed(1) scripts and sort(1).
+Your first test also passes before your fix, it's only the latter that
+segfaults. The first one emits:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- generate-hooklist.sh | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+    fatal: --and not followed by pattern expression
 
-diff --git a/generate-hooklist.sh b/generate-hooklist.sh
-index 5a3f7f849c..6f3de0a2ec 100755
-=2D-- a/generate-hooklist.sh
-+++ b/generate-hooklist.sh
-@@ -6,14 +6,9 @@ print_hook_list () {
- 	cat <<EOF
- static const char *hook_name_list[] =3D {
- EOF
--	perl -ne '
--		chomp;
--		@l[$.] =3D $_;
--		push @h =3D> $l[$. - 1] if /^~~~+$/s;
--		END {
--			print qq[\t"$_",\n] for sort @h;
--		}
--	' <Documentation/githooks.txt
-+	sed -n '/^~~~~*$/ {x; p;}; x' Documentation/githooks.txt |
-+	sort |
-+	sed 's/^.*$/	"&",/'
- 	cat <<EOF
- 	NULL,
- };
-=2D-
-2.32.0
+So having that in a leading patch to indicate no behavior was changed
+would be better.
+
+Instead of the "Not a valid grep expression" error let's instead say
+something like:
+
+    fatal: --[and|or] must follow a pattern expression
+
+The error (which I know you just copied from elsewhere) is misleading,
+it's not the pattern that's not valid (as to me it implies), but our own
+--and/--or option usage.
+
+And the "excercise for the reader" is a bit flippant, do we actually hit
+that condition now? If not and we're sure we won't now seems like the
+time to add a BUG() there, and to change the "Not a valid grep
+expression" to "internal error in --and/--or parsing" or something.
+
+Thanks for the patch!
