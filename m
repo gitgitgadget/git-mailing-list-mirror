@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60170C11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D36C11F65
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A6EE61CE5
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F07361C99
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231512AbhF2CHc (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231559AbhF2CHc (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 28 Jun 2021 22:07:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49926 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231133AbhF2CHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 22:07:25 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EF65C061768
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:04:59 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id g7so19090275wri.7
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:04:59 -0700 (PDT)
+        with ESMTP id S231225AbhF2CH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 22:07:27 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3E46C061760
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:00 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id u8so10418384wrq.8
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0UG3JvnANj8n21Qt83opuTu+nCqIMnauASnFCxaQri4=;
-        b=VrS3rgNld0bAw9sg8rqhGLX2CmoO140VKd/tDbFcbZO+Hod4KsLn0W1dmY+Ty7xPfe
-         Y4N/YngBk5K+rdTb8Nb8Jvib2Mki46FqzJCDDzDhtg6dwHDZiCAHDkN3y3jb5VKHSuZV
-         UHF6DTlmGYnagzrROm5vNWF1Lp3Dm/zAs11cjI3OKcYs9mwWNxRiPQAftPNdLTmR6gBM
-         SmyLJ6gZ/B6wNyWUC58oEW0C6bopWe4RbA9Ag61ieuxVipLh0NRX/0+1Q92EH8uoZe/J
-         TlMEHkkqgDwRLwN9NHmPR0AlAdFXXxsiWy6QvsJM7MpDHtPzmwtkAEvoNKEb9iAzE5wv
-         qxog==
+        bh=O0bk0uMoOfzc+R3V+w3r7b7PaKiQoEFR2JUhLyX6ccg=;
+        b=Yast+wFnNT8WJjGHCAMvvCvJNwi1E9F5rwYxG9fgDHKjG5Mat+OnQyCUN5MCymzUwo
+         Y1T8T70kMqbUWBwcvRURWki7DhiUdaNYAt5/+iLdehKZKeVESZWl5SQJhezNCp3ANQad
+         r+Y2VOK1urs9A9I2iKniCM8gBC8lFXT1vMv7DzKDSroDSMsTl6zahNrpt5LoWBBXFp14
+         cKFq+5o5KZ263IbSqH03p6EOom9KPMe6pG8ZIYbFAjSfLEDDihdmf7ALNWtXMlYo27ar
+         nUm6wQNIRPvpuRsJqRvknIgRCNyI/a4BuXqt5xTmZg/MDeCBwn0GEDuiqH45S/jsm+PX
+         LixA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0UG3JvnANj8n21Qt83opuTu+nCqIMnauASnFCxaQri4=;
-        b=CpHzSo9S/9m2AfVxviizGWD5cFqlFXMfRhr93CD8nR2+cip11R2tqHlxB/ylXJZarA
-         MggN9MLNmABBJGysMpc2CltaUnR55Xgd11sPmOwbZ1Q1EBgBLt0hf6OpL1tFV4LwCiVt
-         KXWrun6V7QasFhyPT0ogElKpjiwdUeVnDoL+WWy3cYQMvIVEBytv+D06yW1ZHgN99cCI
-         Df2zZA9jKSRjGIkw7gsgB3BCN0wFLAYpxDOaEW5Vb4B05KgUOa/f+Ic+o6zsbfiETfGv
-         BOs4N5JaF25OnX726VLBxdwyRaG2AHN+BaosthyQYPsDXk+elmoyqBZs9WAuBy0kSSeX
-         fMXw==
-X-Gm-Message-State: AOAM532qgK1XkY4UHWWGoJ9iPqpjjFI07REEF1OdskTTjeIqZ20hKQkK
-        7IoSoXVJVXRoFvpFjD7LyX8muz8JVlQ=
-X-Google-Smtp-Source: ABdhPJygZ292atiG47Yf169lgf1byvU3hSV6mgVsl+bIDLM45T8oHctGhBQTG9TWHjNO6FEyerRrqw==
-X-Received: by 2002:a5d:6106:: with SMTP id v6mr29607384wrt.278.1624932297836;
-        Mon, 28 Jun 2021 19:04:57 -0700 (PDT)
+        bh=O0bk0uMoOfzc+R3V+w3r7b7PaKiQoEFR2JUhLyX6ccg=;
+        b=APGimeOK0WBbq8qIodTsUdUYR93kfWrs7Kd4Mtn6FBPKifTuPNr1KsvaVRVFFHo8Ew
+         C5xroDCPVOSIB9tDqZJ0mA5HxbSqP0CHWJaq0mQxTuH90jiR6ym0/bY6iV+i8s+TMTrr
+         dRNCDapaOnYI+67my90tQqLu3Oir0+0jP6gMcuyXLT5QJUguDNkjAMazgku9YvWIfi+p
+         pq1ZFAMhgtehLLEUCDTht3XRl1Mtj2FV4wEHcgHyK2uJeUioMaP7V3JMu9FvQMto2vu6
+         6I1GHOJGeqex7qw1LgA6JFr4V16htrLK8NfpPw2lQeIKkzsBs5GlVbsgDcSa3fEjAS20
+         QmAQ==
+X-Gm-Message-State: AOAM530uxXI+9DkoFdojdvsZdchodmfe2LLVVqi6oNG337dVq0nGrRvW
+        cTNNLSSh8XOJ6x91Wl4XIZjMo5T4M08=
+X-Google-Smtp-Source: ABdhPJx5DogrQVbHoYXr1LRhzKPKQpylDjcRRsfUDCKFPN1T8fKM7keWMyqj3DhktEGfjc9ZVKz8pw==
+X-Received: by 2002:adf:f606:: with SMTP id t6mr10303292wrp.52.1624932299568;
+        Mon, 28 Jun 2021 19:04:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s18sm16886203wrw.33.2021.06.28.19.04.57
+        by smtp.gmail.com with ESMTPSA id y17sm15308834wma.48.2021.06.28.19.04.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 19:04:57 -0700 (PDT)
-Message-Id: <e94ffa07d4671c4f2ab87ab0a1abba53b5906678.1624932293.git.gitgitgadget@gmail.com>
+        Mon, 28 Jun 2021 19:04:59 -0700 (PDT)
+Message-Id: <d04b62381b8c18cce8ec499d7213041772bfd4b2.1624932294.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
 References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
         <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Jun 2021 02:04:42 +0000
-Subject: [PATCH v7 05/16] t1092: add tests for status/add and sparse files
+Date:   Tue, 29 Jun 2021 02:04:45 +0000
+Subject: [PATCH v7 08/16] unpack-trees: rename unpack_nondirectories()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,78 +80,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before moving to update 'git status' and 'git add' to work with sparse
-indexes, add an explicit test that ensures the sparse-index works the
-same as a normal sparse-checkout when the worktree contains directories
-and files outside of the sparse cone.
-
-Specifically, 'folder1/a' is a file in our test repo, but 'folder1' is
-not in the sparse cone. When 'folder1/a' is modified, the file is not
-shown as modified and adding it will fail. This is new behavior as of
-a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
-2021-04-08). Before that change, these adds would be silently ignored.
-
-Untracked files are fine: adding new files both with 'git add .' and
-'git add folder1/' works just as in a full checkout. This may not be
-entirely desirable, but we are not intending to change behavior at the
-moment, only document it. A future change could alter the behavior to
-be more sensible, and this test could be modified to satisfy the new
-expected behavior.
+In the next change, we will use this method to unpack a sparse directory
+entry, so change the name to unpack_single_entry() so these entries
+apply. The new name reflects that we will not recurse into trees in
+order to resolve the conflicts.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 38 ++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ unpack-trees.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 363d605c209..3f61e5686b5 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -254,6 +254,44 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout -
- '
+diff --git a/unpack-trees.c b/unpack-trees.c
+index b113cc750f2..d26386ce8b2 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -804,7 +804,7 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
+ 		BUG("We need cache-tree to do this optimization");
  
-+test_expect_success 'status/add: outside sparse cone' '
-+	init_repos &&
-+
-+	# adding a "missing" file outside the cone should fail
-+	test_sparse_match test_must_fail git add folder1/a &&
-+
-+	# folder1 is at HEAD, but outside the sparse cone
-+	run_on_sparse mkdir folder1 &&
-+	cp initial-repo/folder1/a sparse-checkout/folder1/a &&
-+	cp initial-repo/folder1/a sparse-index/folder1/a &&
-+
-+	test_sparse_match git status &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+	run_on_sparse ../edit-contents folder1/a &&
-+	run_on_all ../edit-contents folder1/new &&
-+
-+	test_sparse_match git status --porcelain=v2 &&
-+
-+	# This "git add folder1/a" fails with a warning
-+	# in the sparse repos, differing from the full
-+	# repo. This is intentional.
-+	test_sparse_match test_must_fail git add folder1/a &&
-+	test_sparse_match test_must_fail git add --refresh folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git add . &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/new &&
-+
-+	run_on_all ../edit-contents folder1/newer &&
-+	test_all_match git add folder1/ &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git commit -m folder1/newer
-+'
-+
- test_expect_success 'checkout and reset --hard' '
- 	init_repos &&
+ 	/*
+-	 * Do what unpack_callback() and unpack_nondirectories() normally
++	 * Do what unpack_callback() and unpack_single_entry() normally
+ 	 * do. But we walk all paths in an iterative loop instead.
+ 	 *
+ 	 * D/F conflicts and higher stage entries are not a concern
+@@ -1075,11 +1075,11 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
+  * without actually calling it. If you change the logic here you may need to
+  * check and change there as well.
+  */
+-static int unpack_nondirectories(int n, unsigned long mask,
+-				 unsigned long dirmask,
+-				 struct cache_entry **src,
+-				 const struct name_entry *names,
+-				 const struct traverse_info *info)
++static int unpack_single_entry(int n, unsigned long mask,
++			       unsigned long dirmask,
++			       struct cache_entry **src,
++			       const struct name_entry *names,
++			       const struct traverse_info *info)
+ {
+ 	int i;
+ 	struct unpack_trees_options *o = info->data;
+@@ -1322,7 +1322,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
+ 		}
+ 	}
  
+-	if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
++	if (unpack_single_entry(n, mask, dirmask, src, names, info) < 0)
+ 		return -1;
+ 
+ 	if (o->merge && src[0]) {
 -- 
 gitgitgadget
 
