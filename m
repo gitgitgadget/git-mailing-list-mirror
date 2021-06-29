@@ -2,80 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86EF6C11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 05:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19423C11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 06:09:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62CA061DC3
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 05:05:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1F9B61D92
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 06:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbhF2FHc convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 29 Jun 2021 01:07:32 -0400
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:36371 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbhF2FHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 01:07:31 -0400
-Received: by mail-ed1-f41.google.com with SMTP id h2so29467960edt.3
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 22:05:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=j+ghGziP2uL6bwLhkHL/U3rRov6LZ0kq9veG6K97rUA=;
-        b=t3Xb/PB4MARUVfP0C9eAwnHsZjItPsEyNBtUxt5a/x/EZHA8KsV9e/1612F2s0KQY5
-         qWM0pEHo+jlVNzFB5/EklFBP+sx0iXr+6RkCmAkHQx28JqvG+/pJYCxA7F+X/YhOkKpQ
-         muFNV4bGLsZf+StvY9nO1TbE8MquxHb/bXhAJq39P6g4hKLDnO3yLResPXirlbWPDk8V
-         2f9IV6uABIjy59UXWtYzmP8MGJ1iQd0QhRMpJ/gGPpYGOvzTRrBD8ZkQans+EJTIgLv+
-         ohZJCcCUGhi1VH/8TTTu0EDTrw0Ihh7T4NtGDdT9wj+pA/tJrUkmOK9dZMMTY6/cC+WB
-         DZww==
-X-Gm-Message-State: AOAM533uyEZDO/P8BLHmwxQBB6fmTDkGgeWTd45ENfvIm2ZoAg4IdzbY
-        m4R2erNF2IbpXbUNkxGeHtsH9qzTWjW8grkAVmA=
-X-Google-Smtp-Source: ABdhPJyFfWYZxcUHF0iOBprccDGAvAtm2uzKhbD09XbbQhZodIGXr0HUdQmpPqLJpcmuj8zIjhWMgP+AK36N/g5LC9I=
-X-Received: by 2002:a05:6402:152:: with SMTP id s18mr37144686edu.221.1624943103904;
- Mon, 28 Jun 2021 22:05:03 -0700 (PDT)
+        id S232011AbhF2GLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 02:11:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50784 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231958AbhF2GLu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 02:11:50 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 04E39D50F6;
+        Tue, 29 Jun 2021 02:09:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=Xy7WZ7L6WcMnKPV6qDi17s0TJ
+        ukp3ij2usENPS9FHGw=; b=ogdCDbCJM2q5iu0cfhWf2F0EvAbWutpX8pQBYJwmr
+        dhqz3SWLuwt4ugXgNuO6jFrncHoFM2nwZemmBD4tsw7MWn9LukwGZPmKlZJEbfIR
+        pIWznVJ2uIY8iRTBWIvKlquGWiG+5gjMYx3QIutwvftE+pnhp/mIqCzrJIp1/FcA
+        FI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DEA72D50F4;
+        Tue, 29 Jun 2021 02:09:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 57A16D50F3;
+        Tue, 29 Jun 2021 02:09:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Avishay Matayev <me@avishay.dev>, phillip.wood@dunelm.org.uk,
+        git@vger.kernel.org
+Subject: Re: Forcing git to use a pager without a tty
+References: <CAJ-0OswsrnAuCwU6U=S2i1qKkg=66U-8RHSGqD2kh9T_30Yw9w@mail.gmail.com>
+        <077d147c-c22f-6463-6545-3aa991e7868b@gmail.com>
+        <b5462f20-5d9d-4775-ad5c-c8de686167af@gmail.com>
+        <CAJ-0Osy9JhGD0=6eF3jgZuoHJEzymksCWZZZC+A4FtHxzOrdhA@mail.gmail.com>
+        <87pmwazygf.fsf@evledraar.gmail.com>
+Date:   Mon, 28 Jun 2021 23:09:21 -0700
+Message-ID: <xmqqlf6tyzfy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <874kdn1j6i.fsf@evledraar.gmail.com> <YNSh0CskelTwuZq0@coredump.intra.peff.net>
-In-Reply-To: <YNSh0CskelTwuZq0@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 29 Jun 2021 01:04:53 -0400
-Message-ID: <CAPig+cSzKoOzU-zPOZqfNpPYBFpcWqvDP3mwLvAn5WkiNW0UMw@mail.gmail.com>
-Subject: Re: Why the Makefile is so eager to re-build & re-link
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8C3775D8-D8A0-11EB-BBAB-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 24, 2021 at 11:16 AM Jeff King <peff@peff.net> wrote:
-> On Thu, Jun 24, 2021 at 03:16:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> >    I think the best solution here is to make the generate-*.sh
-> >    shellscripts faster (just one takes ~300ms of nested shellscripting,
-> >    just to grep out the first few lines of every git-*.txt, in e.g. Perl
-> >    or a smarter awk script this would be <5ms).
->
-> Yeah, I think Eric mentioned he had looked into doing this in perl, but
-> we weren't entirely happy with the dependency. [...]
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-For what it's worth, the original `generate-cmdlist` was a shell
-script which I rewrote[1] in `awk` to extend the functionality, but
-Junio felt uncomfortable[2] about making `awk` a build dependency, so
-I rewrote[3] it again in `perl`. However, the `perl` version didn't
-last long since we got a report[4] that Git would no longer build in
-the FreeBSD ports tree, so I rewrote[5] it a final time in shell, thus
-coming full circle (but with extended functionality).
+> What do you do about things like "git status" etc. that produce a lot o=
+f
+> output, but don't invoke the pager even then (but perhaps should), ditt=
+o
+> for all the plumbing or plumbing-like such as "ls-files", "ls-tree" etc=
+?
 
-[1]: https://lore.kernel.org/git/1431976697-26288-4-git-send-email-sebastien.guimmara@gmail.com/
-[2]: https://lore.kernel.org/git/xmqqr3qda7kx.fsf@gitster.dls.corp.google.com/
-[3]: https://lore.kernel.org/git/1432149781-24596-4-git-send-email-sebastien.guimmara@gmail.com/
-[4]: https://lore.kernel.org/git/loom.20150814T171757-901@post.gmane.org/
-[5]: https://lore.kernel.org/git/1440365469-9928-1-git-send-email-sunshine@sunshineco.com/
+I am puzzled.  Doesn't "git -p status" force spawning the pager?
+
+    ... goes and checks ...
+
+Ahh, OK, -p does force us to try to see if pager is warranted, and
+then we decide it is not because the output is not sent to the tty.
+
+This behaviour makes sense if we are truly driving a pager via
+GIT_PAGER, but I agree with you that it probably is inconvenient if
+you are abusing the GIT_PAGER mechanism to drive something that is
+not about paging output but about grabbing the output and
+post-processing it.
