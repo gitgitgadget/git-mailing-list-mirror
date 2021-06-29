@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54BD8C11F64
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5061EC11F64
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:52:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3159C61CD5
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:51:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A37061CCE
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231559AbhF2ByY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 21:54:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46948 "EHLO
+        id S231347AbhF2ByZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 21:54:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230451AbhF2ByP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 21:54:15 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3879C061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:47 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id p10-20020a05600c430ab02901df57d735f7so686653wme.3
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:47 -0700 (PDT)
+        with ESMTP id S231139AbhF2ByQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 21:54:16 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C83C061760
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:48 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id j1so23627856wrn.9
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Yb2PnTjyl04QScNrCyVgl4dORDLdN86qbe9qCleSmYI=;
-        b=dseMkZtjQ0fRuIJUEDWZeizu+ZfsZYyb18KRzujCu16TEROWX0GU0r7yO62zj4Gk1+
-         GvVTm/UpVvwXy3yge5EAjVffo0p9AiQ6hft2xK+nQaq78sJrLMuxUDK3V+CjTph2+DRm
-         1elYJO/TuuIEBYd1IQDxIF+qtS1MFFce3tsnxY9CUw0DZ+oRfmWD4zwZfBbOx9VKhY8w
-         SnkV6g1J+8EVgR4vTadMxsr3A+AYAF8YZsKQvs8Q/IWA3y1hyBKr8MT3D9RRhanax5fm
-         bCw0K+J8lefH08bLe6JqBdM8yGkmHla9zH+T5nZOJZD2PbKX5IWr2v206F+X7WJDmrx8
-         dDKw==
+        bh=7JZLdoqa+U8o4yiwGgoo7PP+W0UjuNrjA0Zez9LhlL0=;
+        b=UKlX1EVg+Amzc0bavReHXEq/CoGdPXtM96g21GHuvN08CPXmqz4ielAymdTz/qJSl6
+         oVU7V+3cfhAHVo6dtWAAC888DBjj8mME0DFTOiP5XBxJvf1HuVHjVjRYbQbOTIWWAvr0
+         /soqNbEeVnZcEthrLXCWqGoHavpE+oU8sx1sXV/qIP5q21pTYs5mxhW1HxPVnqrQfLAz
+         lg8kE08FLzP98qDoyUUYQv8qBjHeX15n5iRxgzqw2UisGLHGg44SBbwZYJifavjOf6XV
+         jm7cnP4G/r4sSU5ZDE9aNucWJE5coklFFyw84VTJhwJsZfy/UkQc0NLojhYtolM352g9
+         xRKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Yb2PnTjyl04QScNrCyVgl4dORDLdN86qbe9qCleSmYI=;
-        b=TdrqjT5h642lNyFXS2EiUKtn0ho81aDykBYNo0+hOw1RnsNnauk4G+dZ4h75fvJx7B
-         q8xjVxUJAYuSLBQnGB5OWVGx+EBwoF7cM9wS/1K0HQTpY+VLtMiw9qxSYiwq3HQWnFAv
-         ktEmETKsn1Q5E63N3Ozr7z7aKMaKbGtvwEqbLPL2zoM1hjifgWoiFTYzwWaSy13dO7YD
-         V1K/oxKwq64lFFqKR57ILIwQonf8OS5MuRutjTCTDV7lRl0Kg1KivRYwQ1DAEQyESJLb
-         S6QS2Sk0fc7dOX8lu2MRKhJIYcVNtB/+5OmeExJpFwzi4uEjeMFehKV0FnxsXcUZWAjd
-         j42A==
-X-Gm-Message-State: AOAM5329AwXcEeMYs+F94Lw/DeZXdC4N6Q025Ru1mNgdzl1YLbZu/fVz
-        Zd21xjh61FK4g6zrXNmhLyY784kP87M=
-X-Google-Smtp-Source: ABdhPJxg7J8GGoFcOMUUe4jiSmRXYQ4xAEmLPeOpC3BgZ6nhgClO9MxdYzYdT7L2wd284Qnn55H/0Q==
-X-Received: by 2002:a05:600c:2482:: with SMTP id 2mr29274474wms.67.1624931506284;
+        bh=7JZLdoqa+U8o4yiwGgoo7PP+W0UjuNrjA0Zez9LhlL0=;
+        b=sqCB2pMeJMwI+9vLup2h95laa91Nsm/vaPX711xqmBss3pY49ot5RT3sWTe6Dnry4A
+         aaQ/e1AUs9rRgtiF2v7HwbboQVdbQhJS/FEmZljYDdRSvxKVtg3yDubGR1TsFUoIyTkQ
+         LvPvVHuGdOT4QVHVK4sNb15cMWxQA+qYiAW3rfeHkp6Qxym+C3xTluxLwvcMIBqsjUbN
+         ZbIvel0mfOvuNjiFBM9JVSJDfPkXnwlC+OUPi1/tj9HLES2+b74gKUMMV9MEdGZt05gB
+         Jwrv1zeWi6ZIuPIOuV6x13bmRWKwUoPddOPg8uLmOcpMS3hkzZRM1YRmZJMyOsX1VToC
+         WFDA==
+X-Gm-Message-State: AOAM531FYgZumPxjXQ/28/atSuO9PiG3T47Y88Jk1vlfxjs02peZBs0d
+        xXvoQ6tHepp/RjnQ5HUlpfRWXlfZnWI=
+X-Google-Smtp-Source: ABdhPJzQNrofL23pa5lWLRVFYwaFB6PvWMrApQ52FfK6MvGBcguCoRTy5dXK18qv7RylBPEAyFkrcg==
+X-Received: by 2002:adf:ce07:: with SMTP id p7mr7109560wrn.114.1624931506965;
         Mon, 28 Jun 2021 18:51:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p7sm4115605wrr.68.2021.06.28.18.51.45
+        by smtp.gmail.com with ESMTPSA id s18sm16862439wrw.33.2021.06.28.18.51.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 28 Jun 2021 18:51:46 -0700 (PDT)
-Message-Id: <44a940211b2fedc4a65b6dc2379e99c29cc5b64f.1624931502.git.gitgitgadget@gmail.com>
+Message-Id: <701ac0e8ff6331284e63047bceed98d1219daa47.1624931502.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
 References: <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
         <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Jun 2021 01:51:32 +0000
-Subject: [PATCH v6 04/14] t1092: expand repository data shape
+Date:   Tue, 29 Jun 2021 01:51:33 +0000
+Subject: [PATCH v6 05/14] t1092: add tests for status/add and sparse files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,121 +80,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-As more features integrate with the sparse-index feature, more and more
-special cases arise that require different data shapes within the tree
-structure of the repository in order to demonstrate those cases.
+Before moving to update 'git status' and 'git add' to work with sparse
+indexes, add an explicit test that ensures the sparse-index works the
+same as a normal sparse-checkout when the worktree contains directories
+and files outside of the sparse cone.
 
-Add several interesting special cases all at once instead of sprinkling
-them across several commits. The interesting cases being added here are:
+Specifically, 'folder1/a' is a file in our test repo, but 'folder1' is
+not in the sparse cone. When 'folder1/a' is modified, the file is not
+shown as modified and adding it will fail. This is new behavior as of
+a20f704 (add: warn when asked to update SKIP_WORKTREE entries,
+2021-04-08). Before that change, these adds would be silently ignored.
 
-* Add sparse-directory entries on both sides of directories within the
-  sparse-checkout definition.
-
-* Add directories outside the sparse-checkout definition who have only
-  one entry and are the first entry of a directory with multiple
-  entries.
-
-Later tests will take advantage of these shapes, but they also deepen
-the tests that already exist.
+Untracked files are fine: adding new files both with 'git add .' and
+'git add folder1/' works just as in a full checkout. This may not be
+entirely desirable, but we are not intending to change behavior at the
+moment, only document it. A future change could alter the behavior to
+be more sensible, and this test could be modified to satisfy the new
+expected behavior.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 39 ++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 2 deletions(-)
+ t/t1092-sparse-checkout-compatibility.sh | 38 ++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index ebbba044f77..4a7b48e8d3f 100755
+index 4a7b48e8d3f..7c78e40b861 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -17,7 +17,7 @@ test_expect_success 'setup' '
- 		echo "after folder1" >g &&
- 		echo "after x" >z &&
- 		mkdir folder1 folder2 deep x &&
--		mkdir deep/deeper1 deep/deeper2 &&
-+		mkdir deep/deeper1 deep/deeper2 deep/before deep/later &&
- 		mkdir deep/deeper1/deepest &&
- 		echo "after deeper1" >deep/e &&
- 		echo "after deepest" >deep/deeper1/e &&
-@@ -25,10 +25,20 @@ test_expect_success 'setup' '
- 		cp a folder2 &&
- 		cp a x &&
- 		cp a deep &&
-+		cp a deep/before &&
- 		cp a deep/deeper1 &&
- 		cp a deep/deeper2 &&
-+		cp a deep/later &&
- 		cp a deep/deeper1/deepest &&
- 		cp -r deep/deeper1/deepest deep/deeper2 &&
-+		mkdir deep/deeper1/0 &&
-+		mkdir deep/deeper1/0/0 &&
-+		touch deep/deeper1/0/1 &&
-+		touch deep/deeper1/0/0/0 &&
-+		cp -r deep/deeper1/0 folder1 &&
-+		cp -r deep/deeper1/0 folder2 &&
-+		echo >>folder1/0/0/0 &&
-+		echo >>folder2/0/1 &&
- 		git add . &&
- 		git commit -m "initial commit" &&
- 		git checkout -b base &&
-@@ -56,11 +66,17 @@ test_expect_success 'setup' '
- 		mv folder1/a folder2/b &&
- 		mv folder1/larger-content folder2/edited-content &&
- 		echo >>folder2/edited-content &&
-+		echo >>folder2/0/1 &&
-+		echo stuff >>deep/deeper1/a &&
- 		git add . &&
- 		git commit -m "rename folder1/... to folder2/..." &&
- 
- 		git checkout -b rename-out-to-in rename-base &&
- 		mv folder1/a deep/deeper1/b &&
-+		echo more stuff >>deep/deeper1/a &&
-+		rm folder2/0/1 &&
-+		mkdir folder2/0/1 &&
-+		echo >>folder2/0/1/1 &&
- 		mv folder1/larger-content deep/deeper1/edited-content &&
- 		echo >>deep/deeper1/edited-content &&
- 		git add . &&
-@@ -68,6 +84,9 @@ test_expect_success 'setup' '
- 
- 		git checkout -b rename-in-to-out rename-base &&
- 		mv deep/deeper1/a folder1/b &&
-+		echo >>folder2/0/1 &&
-+		rm -rf folder1/0/0 &&
-+		echo >>folder1/0/0 &&
- 		mv deep/deeper1/larger-content folder1/edited-content &&
- 		echo >>folder1/edited-content &&
- 		git add . &&
-@@ -262,13 +281,29 @@ test_expect_success 'diff --staged' '
- 	test_all_match git diff --staged
+@@ -251,6 +251,44 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout -
  '
  
--test_expect_success 'diff with renames' '
-+test_expect_success 'diff with renames and conflicts' '
- 	init_repos &&
- 
- 	for branch in rename-out-to-out rename-out-to-in rename-in-to-out
- 	do
- 		test_all_match git checkout rename-base &&
- 		test_all_match git checkout $branch -- .&&
-+		test_all_match git status --porcelain=v2 &&
-+		test_all_match git diff --staged --no-renames &&
-+		test_all_match git diff --staged --find-renames || return 1
-+	done
-+'
-+
-+test_expect_success 'diff with directory/file conflicts' '
++test_expect_success 'status/add: outside sparse cone' '
 +	init_repos &&
 +
-+	for branch in rename-out-to-out rename-out-to-in rename-in-to-out
-+	do
-+		git -C full-checkout reset --hard &&
-+		test_sparse_match git reset --hard &&
-+		test_all_match git checkout $branch &&
-+		test_all_match git checkout rename-base -- . &&
-+		test_all_match git status --porcelain=v2 &&
- 		test_all_match git diff --staged --no-renames &&
- 		test_all_match git diff --staged --find-renames || return 1
- 	done
++	# adding a "missing" file outside the cone should fail
++	test_sparse_match test_must_fail git add folder1/a &&
++
++	# folder1 is at HEAD, but outside the sparse cone
++	run_on_sparse mkdir folder1 &&
++	cp initial-repo/folder1/a sparse-checkout/folder1/a &&
++	cp initial-repo/folder1/a sparse-index/folder1/a &&
++
++	test_sparse_match git status &&
++
++	write_script edit-contents <<-\EOF &&
++	echo text >>$1
++	EOF
++	run_on_sparse ../edit-contents folder1/a &&
++	run_on_all ../edit-contents folder1/new &&
++
++	test_sparse_match git status --porcelain=v2 &&
++
++	# This "git add folder1/a" fails with a warning
++	# in the sparse repos, differing from the full
++	# repo. This is intentional.
++	test_sparse_match test_must_fail git add folder1/a &&
++	test_sparse_match test_must_fail git add --refresh folder1/a &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_all_match git add . &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git commit -m folder1/new &&
++
++	run_on_all ../edit-contents folder1/newer &&
++	test_all_match git add folder1/ &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git commit -m folder1/newer
++'
++
+ test_expect_success 'checkout and reset --hard' '
+ 	init_repos &&
+ 
 -- 
 gitgitgadget
 
