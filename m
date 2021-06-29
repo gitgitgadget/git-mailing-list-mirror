@@ -2,175 +2,256 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A3E4C11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 007D9C11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 12:05:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD251619AB
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:29:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC68061D70
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 12:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233451AbhF2LcJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 07:32:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33426 "EHLO
+        id S233110AbhF2MIV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 08:08:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233260AbhF2LcI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 07:32:08 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A92C061760
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 04:29:40 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id j11-20020a05600c1c0bb02901e23d4c0977so1577529wms.0
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 04:29:40 -0700 (PDT)
+        with ESMTP id S233001AbhF2MIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 08:08:20 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07FFC061760
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 05:05:52 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id v20so17392464eji.10
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 05:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=t7SzyISZebYsr2LXf9HYfptT48h5YeNbvQEp7hvN5dY=;
-        b=W9RY/V32MpLRcSLgV6lOdFd9BG8h+zHzCCTFDbT6dWdBcLgqot617crrsaR4ocuLN5
-         3I9Zzm+XCtJWgCkcpkzD8ar/3twEmXHmTtaMyIcbmK1nmF0CBPXJDUKzHlNgRn99vVwJ
-         2HUaI257vME6o/ypb+uyexMDPTKdmsanH7Nmbkp4J278VHTc5RglWqBRS8wqzTzweob+
-         DyXY+ahJx08E8aofonvd+H95hZWHGMUTBGxgvho8KkKc5xR0InchldHOzea2DGVL3x5n
-         //QxGTqAbuCCl+DMjkCF/w1PhVV3FVAjExAowfzJJbVIHbFEaDMoEuadududDFtjcEqP
-         l9uw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=4Z0USvEE+uqnPr2Zqd8YjwWeB2EMOvv+QrzD+GxB5YQ=;
+        b=D6DM0n25hMdj+dz2Yv2Rxb2TZm30s+AFVDoZhDJuift4pdhExKMWFfPYwLtdNLmBcd
+         PY1q3cFlL/7z+EKtItUzloNNJWjnImL+72U/4ILWdK8hvymvVRJK5zzHYLiptGXMCZug
+         hmnvYU5NJlux7a1zft6uqBGB9f5m4QE7ZdjJ9E3Fb3l7mLgLhkexd7j0fbhpTIJo1t2j
+         gL2tXhnEJeEWHCCvGbIHH4EKiyBNru8T1FpNhP+8UXibwU9qN1g1ejN9JAc27g913qz3
+         MxWImSibjNsYNENjT6l4d1USNTUZhnl5S3tUU/81XpoeeQ4B9LOxrLkvLc5Yfzj1rWzP
+         i6kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=t7SzyISZebYsr2LXf9HYfptT48h5YeNbvQEp7hvN5dY=;
-        b=KzP/ZJKgx1GgMxcvngkyJrXp6NRSNl0R+Gfdjx3+j3UWii2k9lG1ATNS4cYuMUp2cQ
-         TB0z5C5SPs6XIBoQqHNcwB1llySRZAXwmVJEx/KcldBbdCC22B7QPzui45EHvUXMCHn6
-         7d2BVIBjJl3+BLoDhCQWlKQntWkmUzUEFCbXSrsWkW4ACSRUJmaJC9YbUgqS0TX3ghNE
-         Dvm4mD8fWL5o1xuyf+vYqyHIdKRK2gwhpjMq+KLgsPHpqAhBO36qBp50o2/FeKSUSbjc
-         2i4re8fxNIDeSWKv82xYrApnj2/wXZfTql3ineNwJQjbf2we4N1zzEZODyNx44yJQrrk
-         PfaQ==
-X-Gm-Message-State: AOAM530vWNDETDKUKVU5qQM2PS8MI/m20VsjtDl8tuVKuN5heagI9RMp
-        kuMNQuU6HNBiy9sMHGjq9vbvC+Dd8LvjOw==
-X-Google-Smtp-Source: ABdhPJzV+kpQZqrr62rZMFUjfV2yJN07qcLXwPBnpmsYOu9jbj8tWcwoOM3AyCSZGsgMcDzYH9ODYA==
-X-Received: by 2002:a7b:c770:: with SMTP id x16mr30971701wmk.56.1624966178561;
-        Tue, 29 Jun 2021 04:29:38 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z8sm18129661wrw.18.2021.06.29.04.29.37
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=4Z0USvEE+uqnPr2Zqd8YjwWeB2EMOvv+QrzD+GxB5YQ=;
+        b=WR4Ujg+n7bBxOCqKf9DtZB8sLy7AsIaIR+VKiWGUYrVMD4wTsqQ0N1BL1nmfKA0XzS
+         seIx3uFZ710esmsUOhZiXKKetmb3lrSq2ZfrXKftQF8SmbvGRkpRMc9pvIZkhXN6B83j
+         WrG033VaM/zch1vhnT5gpc6IunF8YcwBFHSpLiTnCj6C38UokZPVaH2SO0B0OAanrTH9
+         5h33Ue5DcZBgvwIAehb4a5IlzszOUt2xf1jWjSfuAOjUJndFEeYuf8b2zcCPPCPKJCMd
+         ULnD8gKYt0x9Aa2R3gtYhKycBmoDvrJMx8LZn1+y1483UBcV0xoJVtAralpVYNjebks8
+         0/Mg==
+X-Gm-Message-State: AOAM532cx36U0wkzqnpofdCxiIFDGcy8TdMvQEjto2+6BfXRx4DjYBww
+        NQlH0qap/G5aHMVWtQzr2R8=
+X-Google-Smtp-Source: ABdhPJxQndSFykCfhVHGnHgVFXDsUpbl4QpxDnOT8Tem2KYJFb/ZgAT2T8i3IWomHdFzr34IPhbzAw==
+X-Received: by 2002:a17:906:6b8a:: with SMTP id l10mr29280686ejr.125.1624968351383;
+        Tue, 29 Jun 2021 05:05:51 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id x1sm4447552edd.25.2021.06.29.05.05.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 04:29:38 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] test-lib.sh: set COLUMNS=80 for --verbose repeatability
-Date:   Tue, 29 Jun 2021 13:29:36 +0200
-Message-Id: <patch-1.1-bd2bd89a2b-20210629T112910Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.615.g90fb4d7369
-In-Reply-To: <patch-1.1-765c2793122-20210624T101839Z-avarab@gmail.com>
-References: <patch-1.1-765c2793122-20210624T101839Z-avarab@gmail.com>
+        Tue, 29 Jun 2021 05:05:50 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Martin <git@mfriebe.de>
+Cc:     git@vger.kernel.org
+Subject: Re: feedback/idea about "switch -C" force create
+Date:   Tue, 29 Jun 2021 13:33:12 +0200
+References: <20eb626d-89b4-fe2a-7cf4-c596b634f0f8@mfriebe.de>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <20eb626d-89b4-fe2a-7cf4-c596b634f0f8@mfriebe.de>
+Message-ID: <87wnqcg9k1.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some tests will fail under --verbose because while we've unset COLUMNS
-since b1d645b58ac (tests: unset COLUMNS inherited from environment,
-2012-03-27), we also look for the columns with an ioctl(..,
-TIOCGWINSZ, ...) on some platforms. By setting COLUMNS again we
-preempt the TIOCGWINSZ lookup in pager.c's term_columns(), it'll take
-COLUMNS over TIOCGWINSZ,
 
-This fixes t0500-progress-display.sh., which broke because of a
-combination of the this issue and the progress output reacting to the
-column width since 545dc345ebd (progress: break too long progress bar
-lines, 2019-04-12). The t5324-split-commit-graph.sh fails in a similar
-manner due to progress output, see [1] for details.
+On Tue, Jun 29 2021, Martin wrote:
 
-The issue is not specific to progress.c, the diff code also checks
-COLUMNS and some of its tests can be made to fail in a similar
-manner[2], anything that invokes a pager is potentially affected.
+> First of all, my first post, hope it's the correct place.
 
-See ea77e675e56 (Make "git help" react to window size correctly,
-2005-12-18) and ad6c3739a33 (pager: find out the terminal width before
-spawning the pager, 2012-02-12) for how the TIOCGWINSZ code ended up
-in pager.c
+Hi Martin. Welcome, and yes you're in the right place.
 
-1. http://lore.kernel.org/git/20210624051253.GG6312@szeder.dev
-2. https://lore.kernel.org/git/20210627074419.GH6312@szeder.dev/
+> I've been using the new git switch for some time, and also I have
+> helped people new to git.
+> When people are new to git, I try to avoid introducing them to
+> commands that can loose them commits (such as git reset).
+>
+> "git switch" however has to be on the list of commands that new user
+> have to learn early, but unfortunately when used with "-C" it may
+> cause the loss of commits.
+> I am aware, it is a force option. But I still think it may be better
+> if it could emit a warning, or even reject the job.
+>
+> Reasons:
+> 1) Newcomers may not be aware of the extend of such a force at
+> all. Newcomers may not expect loss of commits, on such an elementary
+> command.
+>
+> 2) People aware that it is a "force" may not be aware of the extend of
+> the force, because there are either up to 2 actions forced.
+>
+> Action 1)
+> The move of the branch is forced.
+> - That means, the info which commit was on the top of the branch
+>   before will be lost.
+> - Also the move may affect push-ability without "force"
+>
+> Action 2)
+> The commit may be lost (except for the reflog, but many less
+> experienced people do not know that).
+> This loss is dependent on other factors. It may or may not happen.
+> Because it does not always happen, people may not expect it.
+>
+> As a result:
+> - A user could believe the force is for the effect on the branch, and
+>   be unaware of the loss of commit
+> - A user (ever experienced) could opt for the force in the good belief
+>   that their commits are held by other branches, when maybe they are
+>  not.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Makes sense. So basically the users are not using "-C" as some typo for
+"-c" (e.g. as a result of using the readline M-u key-combo), but mean
+"force", they just don't know what "force" actually does, and lose data.
 
-No code changes since v1, just the suggested commit message change.
+While I suspect the answer is something like "they had no idea, git
+errored, and they tried another option" I'd be interested if you know
+what these users were expecting the "force version of -c" to do in this
+case & what the use-case is.
 
-Range-diff against v1:
-1:  765c279312 ! 1:  bd2bd89a2b test-lib.sh: set COLUMNS=80 for --verbose repeatability
-    @@ Commit message
-         preempt the TIOCGWINSZ lookup in pager.c's term_columns(), it'll take
-         COLUMNS over TIOCGWINSZ,
-     
-    -    This fixes the t0500-progress-display.sh test when run as:
-    +    This fixes t0500-progress-display.sh., which broke because of a
-    +    combination of the this issue and the progress output reacting to the
-    +    column width since 545dc345ebd (progress: break too long progress bar
-    +    lines, 2019-04-12). The t5324-split-commit-graph.sh fails in a similar
-    +    manner due to progress output, see [1] for details.
-     
-    -        ./t0500-progress-display.sh --verbose
-    -
-    -    It broke because of a combination of the this issue and the progress
-    -    output reacting to the column width since 545dc345ebd (progress: break
-    -    too long progress bar lines, 2019-04-12). The
-    -    t5324-split-commit-graph.sh fails in a similar manner due to progress
-    -    output, see [1] for details.
-    -
-    -    A more narrow fix here would be to only do this in the --verbose mode,
-    -    but there's no harm in setting this for everything. If we're not
-    -    connected to a TTY the COLUMNS setting won't matter.
-    +    The issue is not specific to progress.c, the diff code also checks
-    +    COLUMNS and some of its tests can be made to fail in a similar
-    +    manner[2], anything that invokes a pager is potentially affected.
-     
-         See ea77e675e56 (Make "git help" react to window size correctly,
-         2005-12-18) and ad6c3739a33 (pager: find out the terminal width before
-    @@ Commit message
-         in pager.c
-     
-         1. http://lore.kernel.org/git/20210624051253.GG6312@szeder.dev
-    +    2. https://lore.kernel.org/git/20210627074419.GH6312@szeder.dev/
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
+E.g. are they using this to (re-)create a local topic branch for an
+upstream PR that may or may not have advanced, and they may or may not
+have local work they forgot about, so they get in the habit of using it
+& sometimes it destroys their data. More below...
 
- t/test-lib.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> Therefore I believe, it would be best, if=C2=A0=C2=A0 git -C=C2=A0 branch=
+ new-location
+> would give an error, if this will lose commits.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 54938c6427..1a6ca772d6 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -406,14 +406,15 @@ LANG=C
- LC_ALL=C
- PAGER=cat
- TZ=UTC
--export LANG LC_ALL PAGER TZ
-+COLUMNS=80
-+export LANG LC_ALL PAGER TZ COLUMNS
- EDITOR=:
- 
- # A call to "unset" with no arguments causes at least Solaris 10
- # /usr/xpg4/bin/sh and /bin/ksh to bail out.  So keep the unsets
- # deriving from the command substitution clustered with the other
- # ones.
--unset VISUAL EMAIL LANGUAGE COLUMNS $("$PERL_PATH" -e '
-+unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
- 	my @env = keys %ENV;
- 	my $ok = join("|", qw(
- 		TRACE
--- 
-2.32.0.615.g90fb4d7369
+...so just to clarify, do you mean that forcing it would be OK if you
+advance the branch, so in git.git terms you could do:
 
+    git switch -c mynewbranch master # creates new branch
+    git switch -C mynewbranch next
+
+Which would be OK since what's in "next" is in "master", But doing the
+reverse would error:
+
+    git switch -c mynewbranch next # creates new branch
+    git switch -C mynewbranch master
+
+Do you think just a plain "-c" should also error if you "lose" a commit
+by committing on a detached head, or that should be treated differently
+(and if so, why?). I.e.:
+
+    git checkout master^0
+    touch foo && git add foo && git commit -m"foo"
+    git switch -c a-branch master
+
+Which gives you something like:
+=20=20=20=20
+    $ git switch -c a-branch master
+    Warning: you are leaving 1 commit behind, not connected to
+    any of your branches:
+=20=20=20=20
+      ceccd14206 foo
+=20=20=20=20
+    If you want to keep it by creating a new branch, this may be a good time
+    to do so with:
+=20=20=20=20
+     git branch <new-branch-name> ceccd14206
+
+I mean, you could pun on that warning for what you're suggesting, but it
+seems to me that it would be sensible that they're consistent, no?
+
+I.e. either we don't error on -C and give a similar useful warning (now
+we don't say anything), or error on both.
+
+Don't read any of the above as disagreement with your proposal, just
+spitballing ideas & edge cases.
+
+> There could be
+> - a git config to=C2=A0 toggle this
+> - an additional command line option to extend the force to drop commits
+>
+>
+> I would like to know if that idea might in general be acceptable at all.
+> If so, where it could or should be made as a feature request
+> (unfortunately I wont be able to provide a patch myself)
+
+Ideas are most welcome, unfortunately the git project is almost entirely
+limited by who can come up with patches.
+
+I had some more general proposals for the UI of "git switch" recently at
+https://lore.kernel.org/git/877dkdwgfe.fsf@evledraar.gmail.com/
+
+None of that steps on the toes of the idea you have explicitly, but it's
+a very adjacent area, so I'd be interested to know what you think.
+
+I haven't had the time or desire to write up complete patches for that
+idea of mine, so it's gone nowhere thus far. I'm afraid yours will
+probably similarly languish unless you or someone else is willing to
+pick it up...
+
+> On top, I would propose that the documentation of the current
+> behaviour should be made more clear.
+>
+> https://git-scm.com/docs/git-switch about -C / --force-create
+>> =C2=A0 Similar to --create except that if <new-branch> already exists, it
+>> will be reset to <start-point>. This is a convenient shortcut for:
+>>
+>> =C2=A0 $ git branch -f <new-branch>
+>> =C2=A0 $ git switch <new-branch>
+> While the word "force" is in the option itself, the description does
+> not explain what is forced, or what effects this may have.
+> Instead it only refers the user to study another option.
+> I believe the documentation should state directly
+> - commits currently in part of that branch may be lost [under certain
+>   circumstances]
+>
+> and maybe, but less important
+> - the old location of the branch will be lost
+
+...realistically unless you provide a patch or someone interested
+happens to pick this up (which I'd deem to be not likely) this
+observation is likely to just languish in our ML archive.
+
+If the "I won't be able to provide a patch" has to do with not thinking
+you have the know-how to do so I and others would be happy to
+help.
+
+E.g. in the case of the documentation change you can even do the change
+entirely on the github.com/git/git web UI, no C compilation
+etc. needed. Our Documentation/SubmittingPatches has more info on the
+general process.
+
+Most of the actual work in doing the sort of change you're suggesting is
+the leg-work of figuring out the relevant UI edge cases. E.g. I could
+write (and could provide you, if you want to run with it) a patch for
+"git switch" that dies on "-C" unless "--force-i-really-mean-it" or
+whatever is provided. The real work is then going through the test
+failures, checking/explaining that each thing you need to change as a
+result makes sense etc.
+
+I think your idea of a config option for this sort of thing might make
+sense, but really only if it's done in a more holistic way. That's
+basically saying "I wouldn't like the small change you want unless it's
+a more general feature", but I think for users having just *one* of our
+many --force options behave this way would just be more confusing than
+not.
+
+E.g. Emacs has a general facility for disabling the training wheels it
+comes with by default, certain commands are considered dangerous or
+confusing to newbies and disabled by default.
+
+I'd think such a mode would be useful e.g. for this, replacing "git push
+--force" with the "--force-with-lease" option etc., but starting on an
+end-state where a user who means "--force" eventually needs to tweak a
+"yes I mean force" for all the commands they regularly use would be
+worse for everyone.
