@@ -2,164 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E339C11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7849AC11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:20:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65A4561D97
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:13:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4707B61D6E
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:20:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232371AbhF2IQP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 04:16:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46262 "EHLO
+        id S232338AbhF2IWe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 04:22:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232308AbhF2IQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 04:16:14 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5FBC061574
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 01:13:47 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id n20so30096192edv.8
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 01:13:47 -0700 (PDT)
+        with ESMTP id S232308AbhF2IWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 04:22:33 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46656C061574
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 01:20:05 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id df12so30122499edb.2
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 01:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=o5gx1Ub2uvG5MGGfdu3HlbnCmLgj+jRrOvhKAe/ZTbY=;
-        b=IdybAcE9DhX0r3kec7CEvpB9yZ6JJulhi2/UBtqBVfeHWeFA7gkWCv4bEJdl5VGlco
-         39tVAZtln3Wu2COthg2Axs8G3QG7cmR60s90m5d3xEQw6mMN6Rs5QJ+y8SIgMhzOoYyQ
-         rtlM9Um+7J3twSj8CaZ1ihTwpN6ntPdmfbjPc9y4/0csu1P4HiIbEgCm6dAM+ppEX6sq
-         iM0DmHQNW8tHZUuaoL7AqboIw6oV26kMzXN7nKmueOabDSTgbHqkXO2WNys+vgRHVmuG
-         cFE6d+mRGTZlkOB/7SeR0E68HTfG6XOqEi0y9iNokZzNbuvD8SflxcI/lra3bDJARx2+
-         OQZw==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=I2CWQEOnlseEJCyMYMlBNB7rGuVkScxFC8334Zyl7UQ=;
+        b=Xw3igjQ3FaFl1BFU6AGOlTVlpj8Fma6i2fWj+78dr8AYz6BUVFPik5P0d4DqYd7V00
+         yOiMtCOkt0CsJCSf9S88V+wth3CLvTCrA9JLwB6ZlmhZ41gdVXqk2MWm1W1ZLoDv23N3
+         faHlR3LhqWPJQLeITu0SQBFIQD0rSmTER18vtQh7+EEGsUhO6xIdM/C212mopCmslXJF
+         VA+DWb0hVIk1P07UiMAPIM8oZOt8rgdtWoNZM/MPWYo0d6KPrv8/E8YyVaxqB3xcwO9j
+         33SwOEtolvf04iHZM1uCm4zLih70Kq+J7jCiis1pzCn+co+eBKHH2eopP0PeDtZ0h6IN
+         ICyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=o5gx1Ub2uvG5MGGfdu3HlbnCmLgj+jRrOvhKAe/ZTbY=;
-        b=eJNUEWAAiBUnz9jn3yX4SvQuRItXP009lc9woY+7Tsso79M80CTUIDLAfJkE9Ctyl9
-         uvbXHTK5l/YbiBJrWXHNMxr6FYzvzzrPPqIY3u63qqIIkB7xvBVGwpY0LutvMl8p+Gqx
-         sCpE3EL9Z9o9PjzAovMOQliX/RHNUeSonrJPQgiDSfPtkevx1bb5QkkSgvQ9GEJtRSWx
-         nOdrsEzwYcsWQyDEhXNWlaMfcmIj54qLzaJAp/wLQlpHbiKRC1SwYJvuDQ8rmnrUtJbA
-         Ilth+OPJ9u+mMZLPGfomu4bHG0Ul0FQhxt+RWod5aLiWVGwHBUF3N+uX8fNUcJ4zs42V
-         /rOA==
-X-Gm-Message-State: AOAM5317AXzdK7TIjqwFUR79ANYXoQf6apUH3nzefhyuzLeqjmMbHzZZ
-        j+FpuXKspH4vzzna1aaA12c=
-X-Google-Smtp-Source: ABdhPJxSMyE+Hl8l9GxVgbiCw8ab+PC8ZcE2GRPKh1pB/hiJisnx+TWPBwvw98xutlz4zo9JWdn2EQ==
-X-Received: by 2002:a05:6402:42cc:: with SMTP id i12mr38762535edc.88.1624954425606;
-        Tue, 29 Jun 2021 01:13:45 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=I2CWQEOnlseEJCyMYMlBNB7rGuVkScxFC8334Zyl7UQ=;
+        b=Mgb9EPP6xWKE/QL9epQ7W8YL5G2ZmJ2pjcOuVPrYBbdgQ9ndj4fjY8HyEtZY7IA5A2
+         RQW2Z40NJnAJ94xPVYS9YpdzaUsEUp+lNY5iSNFOpBLEqFV0ceLVyiWF9xS9vD7+OiCG
+         4oi73L5I+ET4VG4VA3loWRHYbE6RZfgL3PdWJf+7UhP0mRx99iNlfvXzCNrIs/sDJ8ky
+         tV2YY8IYTAW18jbZfznzsY7XWRst1+Ue+MjN7vDjxBBQdC9Y6XVIz726Mgk9D4mDqukS
+         SXhjbUWJiEEeXTm3v8MxtHEO+4yk2PqFxEvQ0D3LQaPZlCcVezbxxGQSli37aSdzwZmF
+         tTEg==
+X-Gm-Message-State: AOAM533BL8GJaAnqTthHa1sFnFTMHBei3hCT390fUeSvurSjz/CaP2Bi
+        LkUJqQKIFE2iNWs3wcCR0A4=
+X-Google-Smtp-Source: ABdhPJzRNVzjLu0iuI5bugqNyhjpijEFB1WsBINMEqC+ShsOb/VSvcuUkuUeiL2BF8EldK4P3w2DiA==
+X-Received: by 2002:aa7:dcd5:: with SMTP id w21mr37870674edu.144.1624954803669;
+        Tue, 29 Jun 2021 01:20:03 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id ia26sm7903272ejc.73.2021.06.29.01.13.44
+        by smtp.gmail.com with ESMTPSA id e16sm1603821edr.86.2021.06.29.01.20.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 01:13:44 -0700 (PDT)
+        Tue, 29 Jun 2021 01:20:03 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
-Date:   Tue, 29 Jun 2021 09:39:26 +0200
+Date:   Tue, 29 Jun 2021 10:17:43 +0200
 References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
-        <YNIBRboFiCRAq3aA@nand.local> <8735t93h0u.fsf@evledraar.gmail.com>
-        <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
-        <87r1gs1hfx.fsf@evledraar.gmail.com>
-        <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
-        <871r8r1hwe.fsf@evledraar.gmail.com>
-        <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
-        <87fsx6xn0b.fsf@evledraar.gmail.com>
-        <YNqE8BIRF6NeYQcd@coredump.intra.peff.net>
-        <xmqqfsx1yyza.fsf@gitster.g>
+ <60d389d015943_4290208ae@natae.notmuch>
+ <87o8bw1hc5.fsf@evledraar.gmail.com>
+ <60d39ef9a8071_429020896@natae.notmuch>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <xmqqfsx1yyza.fsf@gitster.g>
-Message-ID: <875yxxgkav.fsf@evledraar.gmail.com>
+In-reply-to: <60d39ef9a8071_429020896@natae.notmuch>
+Message-ID: <8735t1gk0d.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Jun 28 2021, Junio C Hamano wrote:
+On Wed, Jun 23 2021, Felipe Contreras wrote:
 
-> Jeff King <peff@peff.net> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Wed, Jun 23 2021, Felipe Contreras wrote:
+>>=20
+>> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> >> @@ -2243,7 +2253,6 @@ SCRIPT_DEFINES =3D $(SHELL_PATH_SQ):$(DIFF_SQ):=
+$(GIT_VERSION):\
+>> >>  	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV):\
+>> >>  	$(perllibdir_SQ)
+>> >>  define cmd_munge_script
+>> >> -$(RM) $@ $@+ && \
+>> >>  sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+>> >>      -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
+>> >>      -e 's|@@DIFF@@|$(DIFF_SQ)|' \
+>> >
+>> > Any reason why the same isn't done for the $(BUILT_INS) target?
+>> >
+>> >> @@ -2514,7 +2522,6 @@ endif
+>> >>  ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+>> >>  all:: compile_commands.json
+>> >>  compile_commands.json:
+>> >> -	@$(RM) $@
+>> >>  	$(QUIET_GEN)sed -e '1s/^/[/' -e '$$s/,$$/]/' $(compdb_dir)/*.o.json=
+ > $@+
+>> >>  	@if test -s $@+; then mv $@+ $@; else $(RM) $@+; fi
+>> >>  endif
+>> >
+>> > What about these?
+>> >
+>> >   $(REMOTE_CURL_ALIASES):
+>>=20
+>> Uses a chain of ln/ln -s/cp, would need to add "-f" flags.
 >
->> Yeah, I can see the view that running the test suite as a basic sanity
->> check may have value, if it's backed by more careful testing later (and
->> certainly while I'm developing, I wouldn't hesitate to run a subset of
->> the test suite to see how my work is progressing).
->>
->> My main point was that I don't see much reason to do work to make that
->> kind of continuous "make test" work with simultaneous recompiles and
->> test-runs, if we can encourage people to do it more robustly with a
->> single compile-and-test-run loop. Maybe adding in the extra workdir
->> there makes it too heavy-weight? (Certainly my "ci" script is overkill,
->> but it seems like a loop of "reset to the current branch tip, compile,
->> run" in a worktree would be the minimal thing).
+> Why? Isn't "x && a || b || c" the same as "a || b || c" if x is always tr=
+ue?
+
+It does:
+
+    rm x &&
+    ln y x || ln -s y x || cp y x
+
+If you run that you'll get a hardlink the first time around, but the
+second time around you'll fall back to the "cp" if you remove the "rm".
+
+>> >   $(LIB_FILE):
+>>=20
+>> Can we rely on $(AR) happily clobbering things everywhere? Not knowing
+>> is why I skipped it.
 >
-> I actually do use such a "runs tests in the background while I am
-> not watching", so I am sympathetic to the higher-level goal, but I
-> find any execution of the idea that requires "let's reduce the
-> window where freshly built 'git' or any other things are not ready
-> by forcing 'mv $@+ $@' trick for added atomicity" simply insane and
-> not worth supporting.
+> We have c (create) in ARFLAGS, so presumably yes.
 
-Do you think upgrading git on your system without having to stop the
-world is worth supporting?
+Will change.
 
-Ultimately they're the same problem, and I had some patches in the works
-to make "make install" work like that, and wanted to eventually make the
-normal compilation use the same helper(s).
+>> >   $(ETAGS_TARGET):
+>> >   tags:
+>> >   cscope:
+>>=20
+>> Addressed in the related:
+>> https://lore.kernel.org/git/YNH+zsXDnRsT3uvZ@nand.local/T/#t
+>
+> I think ideally this patch should remove the $(RM) and the other patch
+> should focus on the rest of the changes, but given the difficulty of
+> landing chained patch series in git I understand the decision to clump
+> them together.
+>
+> Cheers.
 
-Ensuring that tests don't fail either due to re-compilation is also a
-nice way to dogfood/smoketest if the installer is keeping that promise.
-
-> Tests are run to find cases where things go wrong, and it is a waste
-> of cycles if that background task is not being run in isolation and
-> on a stable state.
-
-Sure, at this point it's clear you won't take the patch. Just a note
-that this reply addresses 1/2 reasons I wanted this, i.e. not the AIX
-FS/behavior portability issue.
-
->  A separate working tree is so easy to set up these days,[...]
-
-I also test git on e.g. gcc farm boxes where I run out of disk space if
-I have a .git, a checkout directory with compiled files, and add a
-second checkout directory with compiled files, and on others where a
-compile/test cycle takes 30-40 minutes.
-
-If I had to do compilation twice things would slow to a crawl, and no,
-I'm not going to try to install ccache or whatever on some
-$OBSCURE_PLATFORM/$ANCIENT_OS/$ODD_TOOLCHAIN.
-
-> I do not see a point in complicating the build procedure to avoid
-> using it.
-
-I'd really understand your and Jeff's concerns if I was proposing some
-really complex workaround, but it's just extending & making consistent
-the "mv" dance we already use for 1/2 our rules already.
-
-Even if you don't care about the end result or making git easier to hack
-on for people who don't share your setup, I'd think that making those
-rules consistent across the board makes things less complex, not more.
-
-Anyway, let's not discussed this forever. We're clearly getting
-nowhere. Just for the record I'm quite miffed about the bar for "I don't
-care about this area/platform/use-case, but this person actively sending
-me patches in the area says it's helpful to send more patches" is so
-low.
-
-For comparison we have >1000 lines of CMake duplicating the entire
-Makefile now, all just to make things easier on Windows. It doesn't even
-work on *nix, so when the CI breaks because I updated the Makefile I
-need to push to some Windows box on GitHub and twiddle my thumbs hoping
-it'll pass this time around.
-
-Maybe that's all worth it, and I'd be willing to take the Windows devs
-at their word that dealing with the make dependency was really *that*
-painful. But compare that to carrying a few lines of "mv $@+ $@" to, I
-daresay, make the same or larger relative improvement on AIX.
-
-1. https://lore.kernel.org/git/cover-0.6-00000000000-20210329T161723Z-avarab@gmail.com/
