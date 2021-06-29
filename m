@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D36C11F65
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D291EC11F67
 	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F07361C99
+	by mail.kernel.org (Postfix) with ESMTP id BFB1F61CEB
 	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231559AbhF2CHc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 22:07:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
+        id S231618AbhF2CHd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 22:07:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231225AbhF2CH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231263AbhF2CH1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Jun 2021 22:07:27 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3E46C061760
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45ACBC0617A6
         for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:00 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id u8so10418384wrq.8
+Received: by mail-wr1-x435.google.com with SMTP id j2so23718979wrs.12
         for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=O0bk0uMoOfzc+R3V+w3r7b7PaKiQoEFR2JUhLyX6ccg=;
-        b=Yast+wFnNT8WJjGHCAMvvCvJNwi1E9F5rwYxG9fgDHKjG5Mat+OnQyCUN5MCymzUwo
-         Y1T8T70kMqbUWBwcvRURWki7DhiUdaNYAt5/+iLdehKZKeVESZWl5SQJhezNCp3ANQad
-         r+Y2VOK1urs9A9I2iKniCM8gBC8lFXT1vMv7DzKDSroDSMsTl6zahNrpt5LoWBBXFp14
-         cKFq+5o5KZ263IbSqH03p6EOom9KPMe6pG8ZIYbFAjSfLEDDihdmf7ALNWtXMlYo27ar
-         nUm6wQNIRPvpuRsJqRvknIgRCNyI/a4BuXqt5xTmZg/MDeCBwn0GEDuiqH45S/jsm+PX
-         LixA==
+        bh=HDhgtJZsDGyJtVd/z+kWysbOePZ/rRg7q4HZzXdKryk=;
+        b=XiXS9E5d72nTFTLR77JXYd7COWiY8sK9jM+bphCP0SJFcMRiqqRutqC8AfLhhcXLqZ
+         111WUYHWZZ+5eahJ2TQKTBZZ7zD0wuu8dn1w2ofB3QWQUvbdIIl9/9mE6DVJFNfugLKD
+         zQCIFQclwf1PMbg+VC7cyOjrQMZm0Q7q74AXtGHoTyhWMJVO40DRjnBURlsLmM4cXeYg
+         kLsYTjSsSGqu/LA/JXnbY10nb+sNBMatCRj2Q2oN4nz71WAJ5U+XLp0K0wE8sauiTe/p
+         S7snZxd/8a8LCxLsurZ7qm1WYsfYDR59C+VdV3Zc3q/rsXUNVvWwmyIwNsWSImltMRDu
+         08nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=O0bk0uMoOfzc+R3V+w3r7b7PaKiQoEFR2JUhLyX6ccg=;
-        b=APGimeOK0WBbq8qIodTsUdUYR93kfWrs7Kd4Mtn6FBPKifTuPNr1KsvaVRVFFHo8Ew
-         C5xroDCPVOSIB9tDqZJ0mA5HxbSqP0CHWJaq0mQxTuH90jiR6ym0/bY6iV+i8s+TMTrr
-         dRNCDapaOnYI+67my90tQqLu3Oir0+0jP6gMcuyXLT5QJUguDNkjAMazgku9YvWIfi+p
-         pq1ZFAMhgtehLLEUCDTht3XRl1Mtj2FV4wEHcgHyK2uJeUioMaP7V3JMu9FvQMto2vu6
-         6I1GHOJGeqex7qw1LgA6JFr4V16htrLK8NfpPw2lQeIKkzsBs5GlVbsgDcSa3fEjAS20
-         QmAQ==
-X-Gm-Message-State: AOAM530uxXI+9DkoFdojdvsZdchodmfe2LLVVqi6oNG337dVq0nGrRvW
-        cTNNLSSh8XOJ6x91Wl4XIZjMo5T4M08=
-X-Google-Smtp-Source: ABdhPJx5DogrQVbHoYXr1LRhzKPKQpylDjcRRsfUDCKFPN1T8fKM7keWMyqj3DhktEGfjc9ZVKz8pw==
-X-Received: by 2002:adf:f606:: with SMTP id t6mr10303292wrp.52.1624932299568;
-        Mon, 28 Jun 2021 19:04:59 -0700 (PDT)
+        bh=HDhgtJZsDGyJtVd/z+kWysbOePZ/rRg7q4HZzXdKryk=;
+        b=sb6K2DSwyp9NzUzfGdLmziQFfSsnidiCfPulx3k30IjqKjo16zsl2qLY5/nYi/QB2b
+         PmZ+DtrsloQl/XEdJtIC2InZ54/UxclI67zKUz7GJOSERriWBXmcLc7ohExIFHMWCTks
+         /UQjAX2jcgOLdWsblUMvRGU8rHAof/U74cG4QpZWIEdKmjOLW/O06NQQCUanUfPoBmgF
+         HUePrF5vD2s5uo8uCqjZJyoZM+vXJod/ngihzroJPoeaWnONsfrBivqzuAq4CxAfBMBO
+         uMcSrN8BQO0qJU/oIwY/22k/rjkqVJ+lS2BH/it30MIuEqZqGsu3lgLkASxvQn4Cftu0
+         o8KA==
+X-Gm-Message-State: AOAM530t+9n25YDUq4osRIfWHUZO7rfCk5IF5bhc3HkgV1gU81J1FpqC
+        YffnlSC7oxwnyZV+i0alklLI4bYMiwA=
+X-Google-Smtp-Source: ABdhPJyg5ntvrISEYcnteRqTxjv255CuzZum3bUE4QDeZnLiV2j/By8mswZuu+NsXHA5lEzuMnsDlw==
+X-Received: by 2002:a5d:6d87:: with SMTP id l7mr1223817wrs.222.1624932298968;
+        Mon, 28 Jun 2021 19:04:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y17sm15308834wma.48.2021.06.28.19.04.59
+        by smtp.gmail.com with ESMTPSA id z3sm1097740wmi.29.2021.06.28.19.04.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 19:04:59 -0700 (PDT)
-Message-Id: <d04b62381b8c18cce8ec499d7213041772bfd4b2.1624932294.git.gitgitgadget@gmail.com>
+        Mon, 28 Jun 2021 19:04:58 -0700 (PDT)
+Message-Id: <e52166f6e4c0a7316214971c462d66f4c2c9cad9.1624932294.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
 References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
         <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Jun 2021 02:04:45 +0000
-Subject: [PATCH v7 08/16] unpack-trees: rename unpack_nondirectories()
+Date:   Tue, 29 Jun 2021 02:04:44 +0000
+Subject: [PATCH v7 07/16] unpack-trees: compare sparse directories correctly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,55 +80,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In the next change, we will use this method to unpack a sparse directory
-entry, so change the name to unpack_single_entry() so these entries
-apply. The new name reflects that we will not recurse into trees in
-order to resolve the conflicts.
+As we further integrate the sparse-index into unpack-trees, we need to
+ensure that we compare sparse directory entries correctly with other
+entries. This affects searching for an exact path as well as sorting
+index entries.
+
+Sparse directory entries contain the trailing directory separator. This
+is important for the sorting, in particular. Thus, within
+do_compare_entry() we stop using S_IFREG in all cases, since sparse
+directories should use S_IFDIR to indicate that the comparison should
+treat the entry name as a dirctory.
+
+Within compare_entry(), it first calls do_compare_entry() to check the
+leading portion of the name. When the input path is a directory name, we
+could match exactly already. Thus, we should return 0 if we have an
+exact string match on a sparse directory entry. The final check is a
+length comparison between the strings.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- unpack-trees.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ unpack-trees.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index b113cc750f2..d26386ce8b2 100644
+index 87c1ed204c8..b113cc750f2 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -804,7 +804,7 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 		BUG("We need cache-tree to do this optimization");
+@@ -983,6 +983,7 @@ static int do_compare_entry(const struct cache_entry *ce,
+ 	int pathlen, ce_len;
+ 	const char *ce_name;
+ 	int cmp;
++	unsigned ce_mode;
  
  	/*
--	 * Do what unpack_callback() and unpack_nondirectories() normally
-+	 * Do what unpack_callback() and unpack_single_entry() normally
- 	 * do. But we walk all paths in an iterative loop instead.
- 	 *
- 	 * D/F conflicts and higher stage entries are not a concern
-@@ -1075,11 +1075,11 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
-  * without actually calling it. If you change the logic here you may need to
-  * check and change there as well.
-  */
--static int unpack_nondirectories(int n, unsigned long mask,
--				 unsigned long dirmask,
--				 struct cache_entry **src,
--				 const struct name_entry *names,
--				 const struct traverse_info *info)
-+static int unpack_single_entry(int n, unsigned long mask,
-+			       unsigned long dirmask,
-+			       struct cache_entry **src,
-+			       const struct name_entry *names,
-+			       const struct traverse_info *info)
- {
- 	int i;
- 	struct unpack_trees_options *o = info->data;
-@@ -1322,7 +1322,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
- 		}
- 	}
+ 	 * If we have not precomputed the traverse path, it is quicker
+@@ -1005,7 +1006,8 @@ static int do_compare_entry(const struct cache_entry *ce,
+ 	ce_len -= pathlen;
+ 	ce_name = ce->name + pathlen;
  
--	if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
-+	if (unpack_single_entry(n, mask, dirmask, src, names, info) < 0)
- 		return -1;
+-	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
++	ce_mode = S_ISSPARSEDIR(ce->ce_mode) ? S_IFDIR : S_IFREG;
++	return df_name_compare(ce_name, ce_len, ce_mode, name, namelen, mode);
+ }
  
- 	if (o->merge && src[0]) {
+ static int compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
+@@ -1014,6 +1016,16 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
+ 	if (cmp)
+ 		return cmp;
+ 
++	/*
++	 * At this point, we know that we have a prefix match. If ce
++	 * is a sparse directory, then allow an exact match. This only
++	 * works when the input name is a directory, since ce->name
++	 * ends in a directory separator.
++	 */
++	if (S_ISSPARSEDIR(ce->ce_mode) &&
++	    ce->ce_namelen == traverse_path_len(info, tree_entry_len(n)) + 1)
++		return 0;
++
+ 	/*
+ 	 * Even if the beginning compared identically, the ce should
+ 	 * compare as bigger than a directory leading up to it!
 -- 
 gitgitgadget
 
