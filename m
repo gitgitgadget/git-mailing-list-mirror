@@ -2,190 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E925FC11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F6B4C11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C150B61DE3
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:35:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 255C661DBA
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235161AbhF2SiZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 14:38:25 -0400
-Received: from mout.web.de ([217.72.192.78]:44375 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235154AbhF2SiX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 14:38:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1624991748;
-        bh=JoKQB1eCbDSjRWjTSAEVjOPCS4KT3y90AyyRxTMrpa0=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=pxqDj/m6/ZygQUCKNulKzZRE9iG6hw44X70+wrmOtB4iYMvk/qggw2OA2VPrpJxt0
-         Ad01LziGxZ72ooMOs7ZxM+HsceX0p5FSn4Q6IUzvx80lQKXJ6UTqs2/Pq9XNxOaai0
-         Z+/9wXIfSiHI3+fmGT04y/jG9hNgFniI3fFghgCM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
- (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1Mdf8F-1lOxtt0A5Z-00Zf0I; Tue, 29 Jun 2021 20:35:48 +0200
-Subject: Re: [PATCH] grep: report missing left operand of --and
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <20210628121748.f3yrc72v4mynknl3@debianXPS.lan>
- <98171911-ba39-27f1-d068-4d381bcd4804@web.de>
- <87im1wft42.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <7c462dc5-f250-0bc3-5e85-cf394fd8fbb9@web.de>
-Date:   Tue, 29 Jun 2021 20:35:47 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
+        id S234532AbhF2S4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 14:56:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232256AbhF2S4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 14:56:51 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2550DC061766
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:23 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id v20-20020a05600c2154b02901dcefb16af0so3146208wml.5
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fDZqGB6BfNWzU/GXOxaeSbtrvgSjQgt3ad9FwrVTq7Q=;
+        b=fC+jsTmctUNfIcd69eDJMCdhGdk06CVnYV4hJUBkkyKPYyOcvNKp+rz/7QlOUPfRfF
+         14o2v4z36eM4dtKYYKtjUTtc8bBfg8CDCMHKgFo5FFaXCj4GbBzLh9S/M9v1HIr2TNcC
+         7gT+tVQUSioJqE+pADiGyfVfGdrjRr8foDuJ0krYFiaUULIXIbt+Llg+kG9+/E8T6eTK
+         opYFjbH9El3VBLfGJqvrhIQEawTmIOBv9xlD2yIIuIJ7rA2pzBfUBBkolILcc2AKntpP
+         wjcHrHbRbZ7sfxXO3ixWPCPIBY4pysnlf4I4tLQ2KOFKiyA0k54LyzPimJDblilVl4D0
+         9b6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fDZqGB6BfNWzU/GXOxaeSbtrvgSjQgt3ad9FwrVTq7Q=;
+        b=rpT+0KI1tOFdJ1wAvDg55EFSjQ1kD9/vw2Xmphv+TSk4TZNh4jRpXJxTc4JFXsZQC1
+         VcNso3DrWHKcgGjvr1jlBeQbNnZSSBZAXQSM40naqVcwEfSboFh9CxUlVOp7knqAA42k
+         CsHxMsWGX+Y2S/mBQJzo4zGiEeoRmRgYam30Z631cFYV0NMouHPWPNS0fbBafOAEQnL/
+         e4u9kAA+r54n5zuM1uGpeddWvzEH38U6PDKZeeeMBrbdDxYwmplouJj5nwWHCFph8oeM
+         FnWcJaJ7u6trPIukGcDAvloNiPukmmprxa+M/UaEm2EKUNZPvbOdEVmNh2pimnXTrRIp
+         DMqg==
+X-Gm-Message-State: AOAM532Qnw+02YoOdm+ZWQ8p5imisxwjwykl9ZInu9LNmv0Uw/ESSiww
+        tJrimQjzJxwR4jP3AIXSqez1OWji4hydPw==
+X-Google-Smtp-Source: ABdhPJziA+x6vxJbx7stYmAdy+wwLBlkVjfP367B8lOhRxrwYi3wCFbhrCktjYJICfsT8qqZXqzljQ==
+X-Received: by 2002:a7b:c8c1:: with SMTP id f1mr9109369wml.135.1624992860481;
+        Tue, 29 Jun 2021 11:54:20 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id k13sm19025218wrp.73.2021.06.29.11.54.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jun 2021 11:54:20 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/3] Add a generated list of hooks in hook-list.h
+Date:   Tue, 29 Jun 2021 20:53:59 +0200
+Message-Id: <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.615.g90fb4d7369
+In-Reply-To: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
+References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87im1wft42.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zzUmB7buGMY3iGbjfwPO0CtxcPgHsWpl8TYflyWY1BizMOQPJj+
- tjsu2FNgpcr+c540A4yXRjDqF8ADkZz+epx6vs5eb+0TjCXHIXMANw8N7EuTcH7K+iIo/Br
- YwYjJWWBmwzbnOYLDR1mD8l++duDglREELzkqgOrDSOqqM60DQ0aOcgkFbME17lpJBxaDj4
- Sq4yT7zBdXkdTdeVD0xwQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8YtIzdUK2kc=:dLNJIUiq77i3z9pgXKESb1
- 9DwDnHWYNZOhAKCsQyaDiShoAVMMqYyI4bDXfTSXT2Ocmpg7PtGJUbitD7FC1/sHu5J6CUfWv
- NB1v3tmMlOdNPBruzC8jWcGI2mLFp8tgl7Pha2G7aQK2mzyMobXNSLKVKtgYMKyA713zJZpTV
- eFNGGO1PgRRwu2o62C0BPvwYI3np9LgmTDw7qyQdJtNoopGLyuFB40ku9m1QdkalSt0VkC2/h
- pJ6CerdbZDRcdKAx5ja1qhAF8aHQeteSsk1IVrxRL8EPW2JHkS9r1tXPu7KDVE5Iv0oJeCFNd
- QNGXcOFyRjYTk+Om+cTXWhJ3dgYsFyVPcdrta8JsQbzvfiuZ9+MuvEeP35V8AC07ggpeTYM3b
- fezfcHcFoXk3K6X3WJ3H5h84xy2TF5HNI5+SOxvmThTXDiZgudcQ1UblRLBU5soONH0QCeOSj
- OtekTcbtxo2AfBhIgSG6+t+sFyH1Q7DLt98RY+i8NA981HfWcYVZhjVpSBJw4C/FZHMX0v7XX
- tpi4g5i28c6/2H8I9Ld/1DgIlO27Umo9GIQwQAuaKO6e/ktk37tGSGb11XTTwzWbkerk0XA+T
- DuRtoWAEK3z7yEEBEGkIzCgHBliXZ1QcVAtSD+PKTtgxTuDRMSvahsvJFrUX1dJWfZExwX/nG
- tZdJiQb3VLBtCQxBjftOXBP3rVAFHlG2LOcJ9ApWA/VRRYHYZf8y/QP7O7Ag0M3HECHZWDW62
- rDkL6mmjl7GLdCFdEnaQT6P0EdXYzfWniD9ErtMr0YKd4ujxm+QoFnwBK9Izea2uv5o17Pvde
- 4QZdvJDxPfIZigPJPQKovg/0C+BPXS2Y+9mfoUzXieAulxNoL1BmIXVNPYNCS1++6KZTz0SdG
- JZJAvF2wT1H5XCyDWgdxoJqe9cF5VMCx6w0qOxcoWgzTLDXAu9GlIYdUa/BlcySBKbuMDHw6H
- j/oyajvbuFjhSCXzMJ49hxcSaApzxlHjvMK0dqrSNUclZV3OB7E5W9FxGFZnsHj93UcmRuc6+
- cnK+lgPqpVQNaKGqozcVwqttFnjJLCwITPCGBwoSzAedZkY6PEbILgomW3YfnG6h0TNgYzTi8
- nqP7VfshhdgGm53KBLg3BLxjNL+r7dPG8Vc
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.06.21 um 19:52 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Mon, Jun 28 2021, Ren=C3=A9 Scharfe wrote:
->
->> Git grep allows combining two patterns with --and.  It checks and
->> reports if the second pattern is missing when compiling the expression.
->> A missing first pattern, however, is only reported later at match time.
->> Thus no error is returned if no matching is done, e.g. because no file
->> matches the also given pathspec.
->>
->> When that happens we get an expression tree with an GREP_NODE_AND node
->> and a NULL pointer to the missing left child.  free_pattern_expr()
->> tries to dereference it during the cleanup at the end, which result in
->> a segmentation fault.
->>
->> Fix this by verifying the presence of the left operand at expression
->> compilation time.
->>
->> Reported-by: Matthew Hughes <matthewhughes934@gmail.com>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->> Whether the check in match_expr_eval() can now be turned into a BUG is
->> left as an exercise for the reader. ;-)
->>
->>  grep.c          |  2 ++
->>  t/t7810-grep.sh | 10 ++++++++++
->>  2 files changed, 12 insertions(+)
->>
->> diff --git a/grep.c b/grep.c
->> index 8f91af1cb0..7d0ea4e956 100644
->> --- a/grep.c
->> +++ b/grep.c
->> @@ -655,6 +655,8 @@ static struct grep_expr *compile_pattern_and(struct=
- grep_pat **list)
->>  	struct grep_expr *x, *y, *z;
->>
->>  	x =3D compile_pattern_not(list);
->> +	if (!x)
->> +		die("Not a valid grep expression");
->>  	p =3D *list;
->>  	if (p && p->token =3D=3D GREP_AND) {
->>  		if (!p->next)
->> diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
->> index 5830733f3d..c581239674 100755
->> --- a/t/t7810-grep.sh
->> +++ b/t/t7810-grep.sh
->> @@ -11,6 +11,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->>
->>  . ./test-lib.sh
->>
->> +test_invalid_grep_expression() {
->> +	params=3D"$@" &&
->> +	test_expect_success "invalid expression: grep $params" '
->> +		test_must_fail git grep $params -- nonexisting
->> +	'
->> +}
->> +
->>  cat >hello.c <<EOF
->>  #include <assert.h>
->>  #include <stdio.h>
->> @@ -89,6 +96,9 @@ test_expect_success 'grep should not segfault with a =
-bad input' '
->>  	test_must_fail git grep "("
->>  '
->>
->> +test_invalid_grep_expression -e A --and
->> +test_invalid_grep_expression --and -e A
->> +
->>  for H in HEAD ''
->>  do
->>  	case "$H" in
->
-> This seems like an incomplete fix, for the exact same thing with --or we
-> silently return 1, as we would if we exited early in free_pattern_expr
-> on !x, which aside from the segfault I think we should probably make a
-> habit in our own free()-like functions.
->
-> Whatever we're doing about the --and segfault it seems like we should do
-> the same under --or, no?
+A re-roll of this v1[1] to stop hardcoding the hook list, and instead generate it.
 
-No, --or is a special case and needs special handling.  Currently it's
-ignored.  If we want to berate the user for using it without expressions
-left and right then we need to start actively handling it.
+The v1 used a Perl script to generate the hook-list.h, it's now a
+shellscsript that uses "sed" instead.
 
-> Your first test also passes before your fix, it's only the latter that
-> segfaults. The first one emits:
->
->     fatal: --and not followed by pattern expression
->
-> So having that in a leading patch to indicate no behavior was changed
-> would be better.
+The sed script is an adaptation of René's in [2]. I fixed a regression
+in it vis-a-vis the Perl version, we need to set LC_ALL so we don't
+sort the list at build-time with the locale of the user performing the
+build.
 
-True, the first test is just nice to have.  I can remove it to reduce
-confusion.
+I also turned the two sed commands into one, with a trick that's
+perhaps too clever, but which has worked in my cross-platform testing
+so far.
 
-> Instead of the "Not a valid grep expression" error let's instead say
-> something like:
->
->     fatal: --[and|or] must follow a pattern expression
+1. http://lore.kernel.org/git/cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com
+2. https://lore.kernel.org/git/648321ed-bda9-d7fc-73e1-7ccf48addf9c@web.de/
 
-Good point.
+Emily Shaffer (1):
+  hook.c: add a hook_exists() wrapper and use it in bugreport.c
 
-> The error (which I know you just copied from elsewhere) is misleading,
-> it's not the pattern that's not valid (as to me it implies), but our own
-> --and/--or option usage.
+Ævar Arnfjörð Bjarmason (2):
+  hook.[ch]: move find_hook() to this new library
+  hook-list.h: add a generated list of hooks, like config-list.h
 
-That's what's meant with extended pattern, I think.
+ .gitignore                          |  1 +
+ Makefile                            | 11 +++++-
+ builtin/am.c                        |  1 +
+ builtin/bugreport.c                 | 46 +++++-----------------
+ builtin/commit.c                    |  1 +
+ builtin/merge.c                     |  1 +
+ builtin/receive-pack.c              |  1 +
+ builtin/worktree.c                  |  1 +
+ contrib/buildsystems/CMakeLists.txt |  7 ++++
+ generate-hooklist.sh                | 18 +++++++++
+ hook.c                              | 61 +++++++++++++++++++++++++++++
+ hook.h                              | 16 ++++++++
+ refs.c                              |  1 +
+ run-command.c                       | 35 +----------------
+ run-command.h                       |  7 ----
+ sequencer.c                         |  1 +
+ transport.c                         |  1 +
+ 17 files changed, 131 insertions(+), 79 deletions(-)
+ create mode 100755 generate-hooklist.sh
+ create mode 100644 hook.c
+ create mode 100644 hook.h
 
-> And the "excercise for the reader" is a bit flippant, do we actually hit
-> that condition now? If not and we're sure we won't now seems like the
-> time to add a BUG() there, and to change the "Not a valid grep
-> expression" to "internal error in --and/--or parsing" or something.
+Range-diff against v1:
+-:  ---------- > 1:  58c37e4f06 hook.[ch]: move find_hook() to this new library
+-:  ---------- > 2:  0cf7e078ef hook.c: add a hook_exists() wrapper and use it in bugreport.c
+1:  f343fc7ae6 ! 3:  ba7f01f4f6 hook-list.h: add a generated list of hooks, like config-list.h
+    @@ Commit message
+          - 976aaedca0 (msvc: add a Makefile target to pre-generate the Visual
+            Studio solution, 2019-07-29)
+     
+    +    The LC_ALL=C is needed because at least in my locale the dash ("-") is
+    +    ignored for the purposes of sorting, which results in a different
+    +    order. I'm not aware of anything in git that has a hard dependency on
+    +    the order, but e.g. the bugreport output would end up using whatever
+    +    locale was in effect when git was compiled.
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+    +    Signed-off-by: René Scharfe <l.s.r@web.de>
+     
+      ## .gitignore ##
+     @@
+    @@ Makefile: command-list.h: $(wildcard Documentation/git*.txt)
+      		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
+      		command-list.txt >$@+ && mv $@+ $@
+      
+    -+hook-list.h: generate-hooklist.sh
+    -+hook-list.h: Documentation/githooks.txt
+    ++hook-list.h: generate-hooklist.sh Documentation/githooks.txt
+     +	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh \
+     +		>$@+ && mv $@+ $@
+     +
+    @@ contrib/buildsystems/CMakeLists.txt: if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-li
+      ## generate-hooklist.sh (new) ##
+     @@
+     +#!/bin/sh
+    ++#
+    ++# Usage: ./generate-hooklist.sh >hook-list.h
+     +
+    -+echo "/* Automatically generated by generate-hooklist.sh */"
+    ++cat <<EOF
+    ++/* Automatically generated by generate-hooklist.sh */
+     +
+    -+print_hook_list () {
+    -+	cat <<EOF
+     +static const char *hook_name_list[] = {
+     +EOF
+    -+	perl -ne '
+    -+		chomp;
+    -+		@l[$.] = $_;
+    -+		push @h => $l[$. - 1] if /^~~~+$/s;
+    -+		END {
+    -+			print qq[\t"$_",\n] for sort @h;
+    -+		}
+    -+	' <Documentation/githooks.txt
+    -+	cat <<EOF
+    ++
+    ++sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
+    ++	<Documentation/githooks.txt |
+    ++	LC_ALL=C sort
+    ++
+    ++cat <<EOF
+     +	NULL,
+     +};
+     +EOF
+    -+}
+    -+
+    -+echo
+    -+print_hook_list
+     
+      ## hook.c ##
+     @@
+-- 
+2.32.0.615.g90fb4d7369
 
-I don't know.
-
-Ren=C3=A9
