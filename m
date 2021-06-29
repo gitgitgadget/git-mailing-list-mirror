@@ -2,91 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AAB8C11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 21:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A5C6C11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 22:11:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0841261CF1
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 21:38:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E937A61D7B
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 22:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235238AbhF2VlQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 17:41:16 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59317 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233660AbhF2VlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 17:41:16 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B61AC13B49C;
-        Tue, 29 Jun 2021 17:38:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=Ex/bvjhX8GSVy6F5CKAUvYGtK
-        I/qkbee8zSHMsHjKRY=; b=FYW4QhsWwbjEmMsAJHi/VxfIqxAqzprchK2p01eIC
-        jHCIJx9Qyo+dWArtFaTfxlFvLDssdaJuRN2woNffQCd8OtXz1VtrDCK9OpE7XYkb
-        KIO2aVKJeHHBTKhAokj/n680WKilSoJe4OXr0TcN1WRIKLz2Za+zFerKmFnoyESb
-        WE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF0DA13B49B;
-        Tue, 29 Jun 2021 17:38:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F327613B49A;
-        Tue, 29 Jun 2021 17:38:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
-References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
-        <YNIBRboFiCRAq3aA@nand.local> <8735t93h0u.fsf@evledraar.gmail.com>
-        <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
-        <87r1gs1hfx.fsf@evledraar.gmail.com>
-        <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
-        <871r8r1hwe.fsf@evledraar.gmail.com>
-        <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
-        <87fsx6xn0b.fsf@evledraar.gmail.com>
-        <YNqE8BIRF6NeYQcd@coredump.intra.peff.net>
-        <xmqqfsx1yyza.fsf@gitster.g> <875yxxgkav.fsf@evledraar.gmail.com>
-X-Gnus-Delayed: Tue, 29 Jun 2021 20:01:59 -0700
-Date:   Tue, 29 Jun 2021 14:38:44 -0700
-Message-ID: <xmqqv95wuza3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S235361AbhF2WNi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 18:13:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36088 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234110AbhF2WNg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 18:13:36 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C89B3C061760
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 15:11:08 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id hq39so539409ejc.5
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 15:11:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=79zAFFOSp8SOv8lGhQvZXjYicLOEy06aIWQYDkV8ldQ=;
+        b=LHrjNdrtfIjJm5NjnCCc5R4MIDdvSgEEtxBU5Nb91ZHEVhOhYBUWWEzeZA6MnPAi2F
+         D8YudnoXWL/0De5ikOwyCbgVyk+hUNcCotFZfODBg/V/MSJwVNqFvboKkGLniFC/ni0X
+         GrBk9PfvzBjnBVFsrOQ09V4lVP7AwSIjx7SIAoxN8tjDQGABxqIYutFYS+5OWLkFgCii
+         vx8R6Bhpn3u8sn91R2n/tqtx8gYvigEBJb+wzU+c0+1oV/szKeU76Xfgwxcp4JBdseMA
+         Dq38pcx2W5Vbkq3Imn4QaKBgMHaICaHx6eBdJ9GklcydZWJ0aJOPvHnHULbPxhPBwJAf
+         aavg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=79zAFFOSp8SOv8lGhQvZXjYicLOEy06aIWQYDkV8ldQ=;
+        b=mDkPEBfNhv5YMefJWD2iV4X78+FZBueuEfVEg2Cva0BqPcsRcXZieWheKZ/v9xgzFp
+         jDfYf3F42YN3gwTc3bbcyUHr/g9bJzBqprxVUtVPHFIPul0VSxoYEvvNZCxPmeQ1IpGL
+         pUF+dlNWJIwPy7skt3Hb2E6DDO1pBcxpWPc4JsGTZw3kRVKYQy5LGsY3Uh098j3h2jc/
+         S4fFXLqGti3Rz/Gy5B772m6Jd70Skga8hk2HNujyZnQoVYKfvh0xz3xVnbrchl3Dk0UE
+         V8nipcPHGKoFuDUX9uGFSTpxpoCVE5vs5KozCf27+NKjoTSRi4/08TXRZrUJDxR6v8jQ
+         Nuew==
+X-Gm-Message-State: AOAM532gzB84hkTZwQobEhPeSsIETAMvYAkZTuRllw4dawjgeM0jkfU/
+        a4YVBEct0l26uG4DGi2gsuw=
+X-Google-Smtp-Source: ABdhPJwvXsOVm8oSjm2JnKQQ5DOTNuud5T8gGyzQQ6pc13cuTMGnbbUoNrzMZdr247pfsycRM1Hvig==
+X-Received: by 2002:a17:906:5d06:: with SMTP id g6mr32545776ejt.342.1625004667165;
+        Tue, 29 Jun 2021 15:11:07 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id ay17sm2440396ejb.80.2021.06.29.15.11.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jun 2021 15:11:06 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/3] hook-list.h: add a generated list of hooks, like
+ config-list.h
+Date:   Wed, 30 Jun 2021 00:09:26 +0200
+References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
+ <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
+ <patch-3.3-ba7f01f4f6-20210629T183325Z-avarab@gmail.com>
+ <76bd9738-65e8-3696-7934-8090b5912427@web.de>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <76bd9738-65e8-3696-7934-8090b5912427@web.de>
+Message-ID: <87fsx0fhjb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 61EF566A-D922-11EB-BD23-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Even if you don't care about the end result or making git easier to hac=
-k
-> on for people who don't share your setup, I'd think that making those
-> rules consistent across the board makes things less complex, not more.
+On Tue, Jun 29 2021, Ren=C3=A9 Scharfe wrote:
 
-I think that it is where we disagree.  "Remove $@+ and $@, generate
-into $@+ and then move it to $@" idiom has a legitimate reason to be
-used, and I do not want to see it blindly used where there is no
-reason to do so.  It misleads less experienced readers.
+> Am 29.06.21 um 20:54 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> Make githooks(5) the source of truth for what hooks git supports, and
+>> die hooks we don't know about in find_hook(). This ensures that the
+>> documentation and the C code's idea about existing hooks doesn't
+>> diverge.
+>>
+>> We still have Perl and Python code running its own hooks, but that'll
+>> be addressed by Emily Shaffer's upcoming "git hook run" command.
+>>
+>> This resolves a long-standing TODO item in bugreport.c of there being
+>> no centralized listing of hooks, and fixes a bug with the bugreport
+>> listing only knowing about 1/4 of the p4 hooks. It didn't know about
+>> the recent "reference-transaction" hook either.
+>>
+>> I have not been able to directly test the CMake change being made
+>> here. Since 4c2c38e800 (ci: modification of main.yml to use cmake for
+>> vs-build job, 2020-06-26) some of the Windows CI has a hard dependency
+>> on CMake, this change works there, and is to my eyes an obviously
+>> correct use of a pattern established in previous CMake changes,
+>> namely:
+>>
+>>  - 061c2240b1 (Introduce CMake support for configuring Git,
+>>     2020-06-12)
+>>  - 709df95b78 (help: move list_config_help to builtin/help,
+>>     2020-04-16)
+>>  - 976aaedca0 (msvc: add a Makefile target to pre-generate the Visual
+>>    Studio solution, 2019-07-29)
+>>
+>> The LC_ALL=3DC is needed because at least in my locale the dash ("-") is
+>> ignored for the purposes of sorting, which results in a different
+>> order. I'm not aware of anything in git that has a hard dependency on
+>> the order, but e.g. the bugreport output would end up using whatever
+>> locale was in effect when git was compiled.
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>
+> Please remove my sign-off line.  The code looks OK, but there are
+> basically only trivial traces of my suggestion left.  That's fine, but
+> it makes my sign-off unnecessary, and I cannot certify the origin of the
+> rest of the patch.  You could turn it into a Helped-by or
+> Contributions-by if you like.
 
-If we write a custom script that does not promise atomicity, it is a
-quite natural pattern to use, and it is clear to readers what is
-going on, especially when "generate into $@+" step is done via
-redirection.  I despise "$(CC) -o $@+ && mv $@+ $@" because there
-simply shouldn't be a need to do so---unlike our custom script that
-sends its output to its standard output, $(CC) ought to know better.
+Isn't that what the SOB is for though? I.e. a copyright audit trail, I
+wouldn't have come up with that sed code myself, it's copied & adjusted
+from your version.
 
-But as you said elsewhere, the patch in question is *not* about
-adding more use of "mv $@+ $@" in inappropriate contexts, so let's
-stop discussing it now.  We take advantage of .DELETE_ON_ERROR that
-allows us to use the upfront "rm -f $@ $@+" we do in the idiom,
-which is a good thing.
+I can re-roll with a Helped-by if you/Junio think that's appropriate, I
+just thought this was /the/ use-case for SOB.
