@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B02D0C11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB3F9C11F65
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9431561C99
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D2D761C99
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:05:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231806AbhF2CHh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 22:07:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49948 "EHLO
+        id S231810AbhF2CHj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 22:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231391AbhF2CH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 22:07:29 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C17C061766
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:02 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id j11-20020a05600c1c0bb02901e23d4c0977so739991wms.0
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:02 -0700 (PDT)
+        with ESMTP id S231392AbhF2CHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 22:07:30 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61908C061768
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:03 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id m41-20020a05600c3b29b02901dcd3733f24so719918wms.1
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=y16povR6Bo5qH6HHskkHnqLCNjqmRRpyNxlrBNS/WXw=;
-        b=hEqou1q55CYtfOp6uHsZASUFRnMG3511eRpDOEc5IjMOIvkaCyY+bLlH4jrmX4czyg
-         E4ZamItGTNlF2Im0URtfL/hSg7IIQinpqcGwSpwAVznLmznOwMrKTcSC/102BGsbiKxa
-         GtpSLAt1kuDjvlfwCPs2GKG2NkCrnMj7neQy2ELAzAsKqY+TbprN8CTOa1v9rZHhUsip
-         ctb+gpm4itEH1LII+1441GBvsL/3DcqY1LeRjlmYLQpGdtwZhkRdaEYemsoF7Q3iYB2P
-         iM7zAxXOIP2I9p+zg2SW3i1Ij4iHaiqhC5IZsd0kWw0hv88M/X2J0Flo97yeKxh8EAJp
-         zIXA==
+        bh=749a8m/Pb2tHSZcl9clKK1mNX+ACw8NI8sZI+4jwZZo=;
+        b=SDzTupqWBpJiCXl62C6IHnOaoiBHK2QN77aqVcNolJHj/G0Roxb9ELpijVB5/0xZ+3
+         6rBZwdxIc9qIzGmMBLqxHid0Xf0agL4rnqFT9/Ep2NkY2HCC9h2w60Tti/44g4ZM7Sa8
+         09BmWbBefucdZgovT7VxJ/bs8xLIDBkip/GierkyCsfBtE5ryDHCXZdD31wGQ7NGMc+w
+         JJaq38WeuwC8LcsT2mptWv8yoJ7JAE0rfUEyoqR86QdZ+NkXADUEV8rEWINSJ9LPNLLi
+         nqeGu3rFM6jEyxF+S5vB4IlUq16cwCZQwatdMyTymYv8+Vmddn51M0K/JXUcFVH1Ihxd
+         AS3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y16povR6Bo5qH6HHskkHnqLCNjqmRRpyNxlrBNS/WXw=;
-        b=Z3B81TQ2VFt/zdg5Xs4wwIJ7Vi9Gr+lYvx00sirxdcW0M6KWGEoKKl8Lcjor6oYNMN
-         OTV5VTloU8KZM0YXjZ7WBbqeluAlnTj+zuWP9wejYZHUC8yr/ZLBFVcy+9sYepg94X1c
-         pcp/OCdkZkUqVb2DPKqjMRvLALrhDI8CmLu/ajJJz5SqLkaX3wAeol6lm6R+pGSatEz3
-         vpnBxhzyX8LroAXdO/dyyWAxrKpB3i0S7N4Q8pYOj7ouSZvHB3VTkKIL3qGdfyWIgPRI
-         mZ43oj9vKsOZYgivpxtec/j5FNUzoXOvBg27x0FOSH4bhncUxZSSeRw1fNnPi2D7jBXc
-         RkMA==
-X-Gm-Message-State: AOAM532Sr6EyCql2XRWq1kxkzOJr1JyijCUsytrKJgaAsYxlzNOMNGGO
-        qv4ztLgNzVn/Du0/piLY1g5j6xAE/mU=
-X-Google-Smtp-Source: ABdhPJyj7nqVqGo9U2nQQVm83U5LwxeJYx4gpY2qKf8Kqv20r+m01m5uzakzt+piHfbhihSQZ1vxdA==
-X-Received: by 2002:a05:600c:3b28:: with SMTP id m40mr29151338wms.99.1624932300788;
-        Mon, 28 Jun 2021 19:05:00 -0700 (PDT)
+        bh=749a8m/Pb2tHSZcl9clKK1mNX+ACw8NI8sZI+4jwZZo=;
+        b=TGsIClfUx4H5A/sn5yg6AFc4n/xMR03Rc1V2WMqMV5/gBzKwOM2LZZfqu6+S3X3vhZ
+         PRpDryRTsLYvEePrgpURbAgX8q5pesjmQURzTctM1nZWZA0+NzbK+jU768klJXzgR4EJ
+         4E1Qus+0cQGqk6B7nSrZQZDLy0bwVYXQtQ3VfTFxUyUNSz6otJdYxLCq8sJzIdBYKpdN
+         WrbYgldpq5u5DZ48lKUgDDmUjzO6i941h/GE5upHA8lv3sEz8rStjdyvSmnvopaWp+ma
+         KQA7eXTgb6ZFEifZQcy9TeY6c53yXGTbQbAJFzL9QxdphyOVVlNWZcO50ThehuJ9UZVz
+         G3hg==
+X-Gm-Message-State: AOAM530I1TmaeFz2gzj8NXdTpmdrduErgnhVG3jXwanvOq7S/TK71UPd
+        xV/jgWwNErSAWRQESHiWxmB4TYkRI9k=
+X-Google-Smtp-Source: ABdhPJz9rWQzatpTYOAcwrGUAIwfQygXdh2hwIvpNU0v+UPipPhadlEWLC+vlMc0aoHMBy8cpK6D2Q==
+X-Received: by 2002:a7b:c110:: with SMTP id w16mr13836678wmi.178.1624932302015;
+        Mon, 28 Jun 2021 19:05:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10sm8409496wmb.40.2021.06.28.19.05.00
+        by smtp.gmail.com with ESMTPSA id l7sm9089771wrs.30.2021.06.28.19.05.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 19:05:00 -0700 (PDT)
-Message-Id: <9f31c691af6780f0ea48bdcb5ff6d56b628f1a81.1624932294.git.gitgitgadget@gmail.com>
+        Mon, 28 Jun 2021 19:05:01 -0700 (PDT)
+Message-Id: <f83aa08ff6b0fd18d6f9f3ce5ee993523a7f1759.1624932294.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
 References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
         <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Jun 2021 02:04:47 +0000
-Subject: [PATCH v7 10/16] unpack-trees: handle dir/file conflict of sparse
- entries
+Date:   Tue, 29 Jun 2021 02:04:49 +0000
+Subject: [PATCH v7 12/16] diff-lib: handle index diffs with sparse dirs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,78 +80,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
+While comparing an index to a tree, we may see a sparse directory entry.
+In this case, we should compare that portion of the tree to the tree
+represented by that entry. This could include a new tree which needs to
+be expanded to a full list of added files. It could also include an
+existing tree, in which case all of the changes inside are important to
+describe, including the modifications, additions, and deletions. Note
+that the case where the tree has a path and the index does not remains
+identical to before: the lack of a cache entry is the same with a sparse
+index.
+
+Use diff_tree_oid() appropriately to compute the diff.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 25 ++++++++++++++++++++++--
- unpack-trees.c                           |  5 ++++-
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ diff-lib.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 3f61e5686b5..4e6446e7545 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -95,6 +95,19 @@ test_expect_success 'setup' '
- 		git add . &&
- 		git commit -m "rename deep/deeper1/... to folder1/..." &&
+diff --git a/diff-lib.c b/diff-lib.c
+index c2ac9250fe9..3f32f038371 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -325,6 +325,11 @@ static void show_new_file(struct rev_info *revs,
+ 	unsigned dirty_submodule = 0;
+ 	struct index_state *istate = revs->diffopt.repo->index;
  
-+		git checkout -b df-conflict base &&
-+		rm -rf folder1 &&
-+		echo content >folder1 &&
-+		git add . &&
-+		git commit -m df &&
++	if (new_file && S_ISSPARSEDIR(new_file->ce_mode)) {
++		diff_tree_oid(NULL, &new_file->oid, new_file->name, &revs->diffopt);
++		return;
++	}
 +
-+		git checkout -b fd-conflict base &&
-+		rm a &&
-+		mkdir a &&
-+		echo content >a/a &&
-+		git add . &&
-+		git commit -m fd &&
+ 	/*
+ 	 * New file in the index: it might actually be different in
+ 	 * the working tree.
+@@ -347,6 +352,17 @@ static int show_modified(struct rev_info *revs,
+ 	unsigned dirty_submodule = 0;
+ 	struct index_state *istate = revs->diffopt.repo->index;
+ 
++	/*
++	 * If both are sparse directory entries, then expand the
++	 * modifications to the file level.
++	 */
++	if (old_entry && new_entry &&
++	    S_ISSPARSEDIR(old_entry->ce_mode) &&
++	    S_ISSPARSEDIR(new_entry->ce_mode)) {
++		diff_tree_oid(&old_entry->oid, &new_entry->oid, new_entry->name, &revs->diffopt);
++		return 0;
++	}
 +
- 		git checkout -b deepest base &&
- 		echo "updated deepest" >deep/deeper1/deepest/a &&
- 		git commit -a -m "update deepest" &&
-@@ -325,7 +338,11 @@ test_expect_success 'diff --staged' '
- test_expect_success 'diff with renames and conflicts' '
- 	init_repos &&
- 
--	for branch in rename-out-to-out rename-out-to-in rename-in-to-out
-+	for branch in rename-out-to-out \
-+		      rename-out-to-in \
-+		      rename-in-to-out \
-+		      df-conflict \
-+		      fd-conflict
- 	do
- 		test_all_match git checkout rename-base &&
- 		test_all_match git checkout $branch -- .&&
-@@ -338,7 +355,11 @@ test_expect_success 'diff with renames and conflicts' '
- test_expect_success 'diff with directory/file conflicts' '
- 	init_repos &&
- 
--	for branch in rename-out-to-out rename-out-to-in rename-in-to-out
-+	for branch in rename-out-to-out \
-+		      rename-out-to-in \
-+		      rename-in-to-out \
-+		      df-conflict \
-+		      fd-conflict
- 	do
- 		git -C full-checkout reset --hard &&
- 		test_sparse_match git reset --hard &&
-diff --git a/unpack-trees.c b/unpack-trees.c
-index d141dffbd94..e63b2dcacbc 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2617,7 +2617,10 @@ int twoway_merge(const struct cache_entry * const *src,
- 			 same(current, oldtree) && !same(current, newtree)) {
- 			/* 20 or 21 */
- 			return merged_entry(newtree, current, o);
--		} else
-+		} else if (current && !oldtree && newtree &&
-+			   S_ISSPARSEDIR(current->ce_mode) != S_ISSPARSEDIR(newtree->ce_mode))
-+			return merged_entry(newtree, current, o);
-+		else
- 			return reject_merge(current, o);
- 	}
- 	else if (newtree) {
+ 	if (get_stat_data(istate, new_entry, &oid, &mode, cached, match_missing,
+ 			  &dirty_submodule, &revs->diffopt) < 0) {
+ 		if (report_missing)
 -- 
 gitgitgadget
 
