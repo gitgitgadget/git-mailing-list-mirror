@@ -2,169 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9DFCC11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 16:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B95C11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 17:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F77F61DC1
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 16:35:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4528361DC8
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 17:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233609AbhF2QiO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 12:38:14 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58807 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232116AbhF2QiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 12:38:13 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B4481384C3;
-        Tue, 29 Jun 2021 12:35:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=mTofsqN/dlzr
-        zkZeuQiNxzH/SSLrBoV4SqhLidUZuBg=; b=ctO8tAdUbFLp6YjHqbElp97RvwgZ
-        5TFcRNK+E0pZLXQQ6ju7seYfbof1B738VFWGM+7V7R06KAPDzRQYiW8Mw0ekF6MC
-        F5pjN75+rT7hxPUs5x7CVyJooXsYxS6RBDjORHSN06jF4XgjTDMsWMHUI/0DsWim
-        wDZ0h9MhAemCWLk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 231081384C2;
-        Tue, 29 Jun 2021 12:35:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B67F1384C1;
-        Tue, 29 Jun 2021 12:35:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin <git@mfriebe.de>
-Cc:     git@vger.kernel.org
-Subject: Re: PATCH: improve git switch documentation
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
-Date:   Tue, 29 Jun 2021 09:35:41 -0700
-In-Reply-To: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de> (Martin's
-        message of "Tue, 29 Jun 2021 17:28:48 +0200")
-Message-ID: <xmqqk0mcy6g2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S232491AbhF2R4e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 13:56:34 -0400
+Received: from mout.web.de ([212.227.17.11]:56671 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231856AbhF2R4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 13:56:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1624989236;
+        bh=+qbhCyJ2nfgbg4Cox6YVu0NTmmcgHMRsYS+oJsLhi04=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=XA7+JgOFrKZWs+0JFAoZBQeBAz/Xqz0hr9JQgn01a476zwGV8KUqx7ELoWr2xHTch
+         0u6P9x8wxYsywZI7U/JZXzjzZAwtWWzq4/IJvL/Qgmbyd/fyr0FlW/MqRQTqN6YiNC
+         cxzdF9eP4MqF/1ApRChDvq/gOC19r/zOfGApRkHo=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
+ (mrweb105 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 1MIya8-1ldrP42vQg-00KM6C; Tue, 29 Jun 2021 19:53:56 +0200
+Subject: Re: [PATCH 3/3] hook-list.h: add a generated list of hooks, like
+ config-list.h
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
+ <patch-3.3-f343fc7ae6-20210617T100239Z-avarab@gmail.com>
+ <20210618170550.GE6312@szeder.dev>
+ <648321ed-bda9-d7fc-73e1-7ccf48addf9c@web.de>
+ <nycvar.QRO.7.76.6.2106221642560.57@tvgsbejvaqbjf.bet>
+ <xmqqv95x4ijd.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <20b1bfb6-8881-2a21-1753-0e2e508a7861@web.de>
+Date:   Tue, 29 Jun 2021 19:53:55 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqv95x4ijd.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0C495208-D8F8-11EB-80A1-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:8lztWQZP+yd+kMj+VBdsPBe3wfLPhhRP7ldFxSxBz3yJO03sakW
+ acQKPUBwv4b3hSUoox/YAdpGgh4breYtKpub5siDJ/B0k0RPirzBmSKmr2g8HvhFORxmhxE
+ JVZVHuIM5U0duI2NI8/QDEAdAX3EBsgRkaJUXScRT3xlj8kVDvwkWIl8VgiCyqxFxNJYDR1
+ ALOGPcpVJqoapWGnboCjA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/EFjpwh4Kos=:k2V9T4zjSomKlvrmlJRTik
+ 1SDvM9L3GgwCPumQ7hmaQjBqx55ig1bVYdGH3laa+7NyYMbUnPChTljQs85TZVKH/eQrtKgKA
+ MZ8m4ySEvUdGEDz0EE4OfVKscspfj8b3JWFqX1vy+Sil9CirGv1sg6X1Rogae/jWoQp4bAOhI
+ 1xJt30VTbcROByQo9p0chMz0Mcac0lQzVpWjk31q9ytoL0ufe4NEcOjZ/PXuU5xiTAluOxv7b
+ jzdABDcfJZk50GHzwlVYwEIaNJiyNTzvRkcGtfO0Y27jOJzOB2whT2P8e27mKUTmY/ML/CWDy
+ zb70JhLz1xkLbXcLd0jg7H+dsPpxYP/mMn6o9bAgFrKFIpfZJQGWvozCyE0DQPQ5i4YHUH8n1
+ hB0PGmXXN0cGYcip4sXUFg9sqKYsZ8tooQqSHukOAlCz0jBLcFTE0DP8Iw+w/lHsuz8QJvhgE
+ Q6ltRDtMT+Z82/YUxSD8WE0urc/ef1wwy2VlW3UrJyAF5YkAPajX2LiyCYKSAGo1gcxBsWD3m
+ 07rrcU/a4kuFEjyphJ7erdYtZCcnjeBPMnDUpLSsCvfqz/3/UvQu45bk3pCxrOQcrZFPd8C3i
+ F/J29POXr5QZ2b0VTJ4RCsOoe6DvkhykdVQkM05WyYs9wQLOumBlXNCoCgmnfUbifgBlNOYi2
+ FWczd6tRac1gjtF8y2dITegPEsScLs7AKtEh5o/4DsQxVBRbrkXp4D2/zywhcahkWu3fjlLwn
+ sL+6syJIFK1y3piLi3G6/T1c1FGwymwM/z/xJOa0csT4bFI5eCIPSjLYGVHZxuXqsUw/q7t1g
+ zbDDwFBz+OiUFCN9jGa1TN4Psyhof6+ZnrUVx0FgPF/yjDN/iKjlMsr7TOPd8fm3s+bwZ37Yr
+ kRilcrlSkClyJWgrDJlBDUsvi4nCU657ZEfgXxSMXugQ3g0r+aSAgjMuoQgUgviuBYu6a5U1J
+ oDibkptCjzlh9T7J3Nky59IPTHqr7F7tONlK9Z9zjJ7/zunv8v7qkBWHSVvvG0ck+klqnzeH/
+ uo7ZnDlo++wsRYTGfwR+neo4NdGwW78VE3WQNNxreCoNWGYRTToDwPs8obySb8KSSksg7qDG/
+ E0YW3cQJm7sF86aPzN3lyKq9yAF6BofeFiI
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin <git@mfriebe.de> writes:
-
-> Below is a patch, that I believe would improve the documentation of
-> git switch.
+Am 29.06.21 um 02:32 schrieb Junio C Hamano:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> The exact new wording is of course open for debate.
+>> On Sun, 20 Jun 2021, Ren=C3=A9 Scharfe wrote:
+>>
+>>> How about something like this?
+>>>
+>>> 	sed -n '/^~~~~*$/ {x; p;}; x' Documentation/githooks.txt |
+>>> 	sort |
+>>> 	sed 's/^.*$/	"&",/'
+>>>
+>>> sed is already used by generate-configlist.sh.
+>>
+>> I do like me a good sed script.
+>>
+>> Thanks,
+>> Dscho
 >
-> Reasoning for the change.
+> Yup.
 >
-> The current doc does not explain why the option is a "forceful" option.
-> Nor does explain the consequences.
->
-> Instead it leaves it to the user to lookup the alternate command, and
-> find the meaning of
-> =C2=A0=C2=A0=C2=A0 git branch -f newbranch
->
-> Only if the user does that successfully, the user may learn about the
-> full consequences of their actions.
->
-> I believe this info should be part of the "git switch" doc,
-> itself. (Especially due to the severity that the action may have).
+> This is buried below the 27-patch series, so the whole thing cannot
+> advance until this gets sorted out.
 
-Please place all of the above below the three-dash line.
+If it helps: You can add the patch below as number 28 or squash
+it in.
 
-> From 46580d07f95a18c94925afd141ba55e52a82c8e1 Mon Sep 17 00:00:00 2001
+=2D-- >8 ---
+Subject: [PATCH] generate-hooklist.sh: use sed instead of Perl
 
-Lose this line.
+Allow hooklist.h to be built without Perl by finding, sorting and
+formatting hook names using two short sed(1) scripts and sort(1).
 
-> From: Martin <User4martin@users.noreply.github.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ generate-hooklist.sh | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-Get rid of this line, too, as you have your own e-mail address on
-the real "From" line of the e-mail.
-
-> Date: Tue, 29 Jun 2021 17:22:25 +0200
-
-This too.
-
-> Subject: [PATCH] Update git-switch.txt
-
-And this one, too.
-
->
-
-And then justify and describe the change here (see
-Documentation/SubmittingPatches::describe-changes)
-
-Immediately before the three-dash line below, have your sign-off
-(see Documentation/SubmittingPatches::sign-off).
-
-> ---
->  Documentation/git-switch.txt | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.tx=
-t
-> index 5c438cd5058758..80acafad1f4a46 100644
-> --- a/Documentation/git-switch.txt
-> +++ b/Documentation/git-switch.txt
-> @@ -70,8 +70,12 @@ $ git switch <new-branch>
->  -C <new-branch>::
->  --force-create <new-branch>::
->  	Similar to `--create` except that if `<new-branch>` already
-> -	exists, it will be reset to `<start-point>`. This is a
-> -	convenient shortcut for:
-> +	exists, it will be reset to `<start-point>`.
-> +	This forces the branch to the new location.
-
-I would have written "This forces the branch to point at a different
-commit", as we do not have to use a fuzzy word "location" in this
-context (is it a location in the directory structure in the working
-tree?  is it a location in the history dag?  is it a location in
-some other dimension?).
-
-Up to this point, it makes sense.
-
-> + It also forces
-> +	any commit hold by the branch to be dropped, unless the
-> +	commit is also part of any other branch too. You may
-> +	therefore loose some of your data.
-
-Aside from typo on "lose" (not "loose") and "held" (not "hold"),
-this paragraph does not seem to add much value, at least to me, and
-I suspect that it makes things even more confusing to new readers.
-
- * Repointing the branch tip to a different commit is not limited to
-   "git switch -C".  Any commands that allow you to move the branch
-   tip, like "git branch -f", "git checkout -B", "git push --force",
-   "git reset", share the same property and singling "switch -C" out
-   gives a false impression that all other commands are OK.
-
- * "to be dropped" is unnecessarily alarming (and not even correct).
-   "gc" will not reclaim while the reflog entries hold onto them.
-
-   "Some commits that used to be reachable from the original branch
-   tip may become unreachable." would not be an incorrect
-   description per-se (and would be a vast improvement over what is
-   in the posted patch), but it is dubious to stress the obvious,
-   especially given that the whole point of "branch -f" is to make
-   wrong commits disappear by pointing at corrected commits with the
-   branch tip.
-
-Because "switch -c <new-branch>", unlike "switch <existing-branch>"
-would not have to touch the working tree at all, the only reason why
-the user has to force the operation by using "-C" is to override the
-safety offered by "-c" that protects existing branches from accidental
-overwriting.  Perhaps adding some description on "why" -c prevents
-an existing branch from being overwritten would help reduce the
-confusion better than an additional warning on "-C"?
-
-Thanks.
+diff --git a/generate-hooklist.sh b/generate-hooklist.sh
+index 5a3f7f849c..6f3de0a2ec 100755
+=2D-- a/generate-hooklist.sh
++++ b/generate-hooklist.sh
+@@ -6,14 +6,9 @@ print_hook_list () {
+ 	cat <<EOF
+ static const char *hook_name_list[] =3D {
+ EOF
+-	perl -ne '
+-		chomp;
+-		@l[$.] =3D $_;
+-		push @h =3D> $l[$. - 1] if /^~~~+$/s;
+-		END {
+-			print qq[\t"$_",\n] for sort @h;
+-		}
+-	' <Documentation/githooks.txt
++	sed -n '/^~~~~*$/ {x; p;}; x' Documentation/githooks.txt |
++	sort |
++	sed 's/^.*$/	"&",/'
+ 	cat <<EOF
+ 	NULL,
+ };
+=2D-
+2.32.0
