@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F6B4C11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1947AC11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 255C661DBA
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3A0461D88
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234532AbhF2S4w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 14:56:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
+        id S234666AbhF2S4x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 14:56:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232256AbhF2S4v (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232315AbhF2S4v (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 29 Jun 2021 14:56:51 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2550DC061766
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A7CBC061760
         for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:23 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id v20-20020a05600c2154b02901dcefb16af0so3146208wml.5
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:23 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u8so374778wrq.8
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fDZqGB6BfNWzU/GXOxaeSbtrvgSjQgt3ad9FwrVTq7Q=;
-        b=fC+jsTmctUNfIcd69eDJMCdhGdk06CVnYV4hJUBkkyKPYyOcvNKp+rz/7QlOUPfRfF
-         14o2v4z36eM4dtKYYKtjUTtc8bBfg8CDCMHKgFo5FFaXCj4GbBzLh9S/M9v1HIr2TNcC
-         7gT+tVQUSioJqE+pADiGyfVfGdrjRr8foDuJ0krYFiaUULIXIbt+Llg+kG9+/E8T6eTK
-         opYFjbH9El3VBLfGJqvrhIQEawTmIOBv9xlD2yIIuIJ7rA2pzBfUBBkolILcc2AKntpP
-         wjcHrHbRbZ7sfxXO3ixWPCPIBY4pysnlf4I4tLQ2KOFKiyA0k54LyzPimJDblilVl4D0
-         9b6w==
+        bh=zPA0+0mj2trZMF8MYkIOU4Lrp1ZEJ1Bijv1fh5CGZ9w=;
+        b=dXmSmBMARgBX5lrBk11XlgbZ3b1qItAHXvZzw0rL1UxFh1+WWfMglpycDL5ZvG+crT
+         ekfu+TkLbQ7sspcFyNlc/T6GJy+NkO2GRhZmw5+mkiQb+c7bp+3zO3LmzYxcL0+6gyRw
+         qqdcPkFNVUycsqHWAI/MfFrufWPJFOjCQfOW+XW7joO3srU9Ai1PCe1XJPj+bctzZN6X
+         RAv0ObFeXTs5Ux/8GTdxYLfv4CsvyhjBwI82jK+6ZW0w5RbCySBI5H1omxyajZEp516j
+         UM0C8g/acCEbUxjdoaNXw5u7SXXSpyDgzk6wJd+qpxGeUrnUwcrHELMxzFNVICR964G5
+         ANcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fDZqGB6BfNWzU/GXOxaeSbtrvgSjQgt3ad9FwrVTq7Q=;
-        b=rpT+0KI1tOFdJ1wAvDg55EFSjQ1kD9/vw2Xmphv+TSk4TZNh4jRpXJxTc4JFXsZQC1
-         VcNso3DrWHKcgGjvr1jlBeQbNnZSSBZAXQSM40naqVcwEfSboFh9CxUlVOp7knqAA42k
-         CsHxMsWGX+Y2S/mBQJzo4zGiEeoRmRgYam30Z631cFYV0NMouHPWPNS0fbBafOAEQnL/
-         e4u9kAA+r54n5zuM1uGpeddWvzEH38U6PDKZeeeMBrbdDxYwmplouJj5nwWHCFph8oeM
-         FnWcJaJ7u6trPIukGcDAvloNiPukmmprxa+M/UaEm2EKUNZPvbOdEVmNh2pimnXTrRIp
-         DMqg==
-X-Gm-Message-State: AOAM532Qnw+02YoOdm+ZWQ8p5imisxwjwykl9ZInu9LNmv0Uw/ESSiww
-        tJrimQjzJxwR4jP3AIXSqez1OWji4hydPw==
-X-Google-Smtp-Source: ABdhPJziA+x6vxJbx7stYmAdy+wwLBlkVjfP367B8lOhRxrwYi3wCFbhrCktjYJICfsT8qqZXqzljQ==
-X-Received: by 2002:a7b:c8c1:: with SMTP id f1mr9109369wml.135.1624992860481;
-        Tue, 29 Jun 2021 11:54:20 -0700 (PDT)
+        bh=zPA0+0mj2trZMF8MYkIOU4Lrp1ZEJ1Bijv1fh5CGZ9w=;
+        b=bfiWoJXrH6f+kcHEhhwycY97/B1n1QQgaYGBY4VTXs9miPrCWzcw2GYB/ndVvoJOop
+         ywq/0TTAP2Xcq6+xHJOAs662CGUCiLoLojeCeTVwxAuYJdAmQ6RVVcXpIpRUILBRKnY8
+         pujCp4q/EGKeIGVarOUViGfmysS30isBY8DzPkU6NpjUZU/EWwDPwBY0fr4cfkMq0esU
+         HDQyXOZNP+qih5I7V42/anfMAL9qFsGqDNZFsZSyVVtXANXrCzGu80d4L7d+wtA23QNO
+         wA/C/qIGul/971oo9VbqGKudwVr9EuPmJCZXYZOk7A8DnX93vXEUS0HkoCNKoazk9qa3
+         CATw==
+X-Gm-Message-State: AOAM531TTH3B9a34Ah856HNU8x8YzFz1upSYmXckc+vxlaGH0PQUPx53
+        FmcXHg75pB/QUFlNtJidw6/4qI4Qh42Muw==
+X-Google-Smtp-Source: ABdhPJxnxpBgZefkTBg02zwj8vRPV7YX2xhsxj7/LOF/j6AouqxBh1buUIa3A2ueDX5A5zEmQJMuVA==
+X-Received: by 2002:adf:9062:: with SMTP id h89mr34213291wrh.130.1624992861303;
+        Tue, 29 Jun 2021 11:54:21 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k13sm19025218wrp.73.2021.06.29.11.54.19
+        by smtp.gmail.com with ESMTPSA id k13sm19025218wrp.73.2021.06.29.11.54.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 29 Jun 2021 11:54:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -69,12 +69,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/3] Add a generated list of hooks in hook-list.h
-Date:   Tue, 29 Jun 2021 20:53:59 +0200
-Message-Id: <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
+Subject: [PATCH v2 1/3] hook.[ch]: move find_hook() to this new library
+Date:   Tue, 29 Jun 2021 20:54:00 +0200
+Message-Id: <patch-1.3-58c37e4f06-20210629T183325Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.615.g90fb4d7369
-In-Reply-To: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
-References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com>
+In-Reply-To: <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
+References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com> <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,121 +82,288 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A re-roll of this v1[1] to stop hardcoding the hook list, and instead generate it.
+Move the find_hook() function from run-command.c to a new hook.c
+library. This change establishes a stub library that's pretty
+pointless right now, but will see much wider use with Emily Shaffer's
+upcoming "configuration-based hooks" series.
 
-The v1 used a Perl script to generate the hook-list.h, it's now a
-shellscsript that uses "sed" instead.
+Eventually all the hook related code will live in hook.[ch]. Let's
+start that process by moving the simple find_hook() function over
+as-is.
 
-The sed script is an adaptation of René's in [2]. I fixed a regression
-in it vis-a-vis the Perl version, we need to set LC_ALL so we don't
-sort the list at build-time with the locale of the user performing the
-build.
-
-I also turned the two sed commands into one, with a trick that's
-perhaps too clever, but which has worked in my cross-platform testing
-so far.
-
-1. http://lore.kernel.org/git/cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com
-2. https://lore.kernel.org/git/648321ed-bda9-d7fc-73e1-7ccf48addf9c@web.de/
-
-Emily Shaffer (1):
-  hook.c: add a hook_exists() wrapper and use it in bugreport.c
-
-Ævar Arnfjörð Bjarmason (2):
-  hook.[ch]: move find_hook() to this new library
-  hook-list.h: add a generated list of hooks, like config-list.h
-
- .gitignore                          |  1 +
- Makefile                            | 11 +++++-
- builtin/am.c                        |  1 +
- builtin/bugreport.c                 | 46 +++++-----------------
- builtin/commit.c                    |  1 +
- builtin/merge.c                     |  1 +
- builtin/receive-pack.c              |  1 +
- builtin/worktree.c                  |  1 +
- contrib/buildsystems/CMakeLists.txt |  7 ++++
- generate-hooklist.sh                | 18 +++++++++
- hook.c                              | 61 +++++++++++++++++++++++++++++
- hook.h                              | 16 ++++++++
- refs.c                              |  1 +
- run-command.c                       | 35 +----------------
- run-command.h                       |  7 ----
- sequencer.c                         |  1 +
- transport.c                         |  1 +
- 17 files changed, 131 insertions(+), 79 deletions(-)
- create mode 100755 generate-hooklist.sh
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile               |  1 +
+ builtin/am.c           |  1 +
+ builtin/bugreport.c    |  2 +-
+ builtin/commit.c       |  1 +
+ builtin/merge.c        |  1 +
+ builtin/receive-pack.c |  1 +
+ builtin/worktree.c     |  1 +
+ hook.c                 | 37 +++++++++++++++++++++++++++++++++++++
+ hook.h                 | 11 +++++++++++
+ refs.c                 |  1 +
+ run-command.c          | 35 +----------------------------------
+ run-command.h          |  7 -------
+ sequencer.c            |  1 +
+ transport.c            |  1 +
+ 14 files changed, 59 insertions(+), 42 deletions(-)
  create mode 100644 hook.c
  create mode 100644 hook.h
 
-Range-diff against v1:
--:  ---------- > 1:  58c37e4f06 hook.[ch]: move find_hook() to this new library
--:  ---------- > 2:  0cf7e078ef hook.c: add a hook_exists() wrapper and use it in bugreport.c
-1:  f343fc7ae6 ! 3:  ba7f01f4f6 hook-list.h: add a generated list of hooks, like config-list.h
-    @@ Commit message
-          - 976aaedca0 (msvc: add a Makefile target to pre-generate the Visual
-            Studio solution, 2019-07-29)
-     
-    +    The LC_ALL=C is needed because at least in my locale the dash ("-") is
-    +    ignored for the purposes of sorting, which results in a different
-    +    order. I'm not aware of anything in git that has a hard dependency on
-    +    the order, but e.g. the bugreport output would end up using whatever
-    +    locale was in effect when git was compiled.
-    +
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    +    Signed-off-by: René Scharfe <l.s.r@web.de>
-     
-      ## .gitignore ##
-     @@
-    @@ Makefile: command-list.h: $(wildcard Documentation/git*.txt)
-      		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
-      		command-list.txt >$@+ && mv $@+ $@
-      
-    -+hook-list.h: generate-hooklist.sh
-    -+hook-list.h: Documentation/githooks.txt
-    ++hook-list.h: generate-hooklist.sh Documentation/githooks.txt
-     +	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh \
-     +		>$@+ && mv $@+ $@
-     +
-    @@ contrib/buildsystems/CMakeLists.txt: if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-li
-      ## generate-hooklist.sh (new) ##
-     @@
-     +#!/bin/sh
-    ++#
-    ++# Usage: ./generate-hooklist.sh >hook-list.h
-     +
-    -+echo "/* Automatically generated by generate-hooklist.sh */"
-    ++cat <<EOF
-    ++/* Automatically generated by generate-hooklist.sh */
-     +
-    -+print_hook_list () {
-    -+	cat <<EOF
-     +static const char *hook_name_list[] = {
-     +EOF
-    -+	perl -ne '
-    -+		chomp;
-    -+		@l[$.] = $_;
-    -+		push @h => $l[$. - 1] if /^~~~+$/s;
-    -+		END {
-    -+			print qq[\t"$_",\n] for sort @h;
-    -+		}
-    -+	' <Documentation/githooks.txt
-    -+	cat <<EOF
-    ++
-    ++sed -n -e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}; x' \
-    ++	<Documentation/githooks.txt |
-    ++	LC_ALL=C sort
-    ++
-    ++cat <<EOF
-     +	NULL,
-     +};
-     +EOF
-    -+}
-    -+
-    -+echo
-    -+print_hook_list
-     
-      ## hook.c ##
-     @@
+diff --git a/Makefile b/Makefile
+index 29a152cd4f..d155b7be21 100644
+--- a/Makefile
++++ b/Makefile
+@@ -903,6 +903,7 @@ LIB_OBJS += hash-lookup.o
+ LIB_OBJS += hashmap.o
+ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
++LIB_OBJS += hook.o
+ LIB_OBJS += ident.o
+ LIB_OBJS += json-writer.o
+ LIB_OBJS += kwset.o
+diff --git a/builtin/am.c b/builtin/am.c
+index 0b2d886c81..1c8a548903 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -11,6 +11,7 @@
+ #include "parse-options.h"
+ #include "dir.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "quote.h"
+ #include "tempfile.h"
+ #include "lockfile.h"
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 9915a5841d..596f079a7f 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -3,7 +3,7 @@
+ #include "strbuf.h"
+ #include "help.h"
+ #include "compat/compiler.h"
+-#include "run-command.h"
++#include "hook.h"
+ 
+ 
+ static void get_system_info(struct strbuf *sys_info)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 190d215d43..f1aafd67d4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -19,6 +19,7 @@
+ #include "revision.h"
+ #include "wt-status.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "refs.h"
+ #include "log-tree.h"
+ #include "strbuf.h"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a8a843b1f5..be98d66b0a 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -13,6 +13,7 @@
+ #include "builtin.h"
+ #include "lockfile.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "diff.h"
+ #include "diff-merges.h"
+ #include "refs.h"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index a34742513a..1e0e04c62f 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -7,6 +7,7 @@
+ #include "pkt-line.h"
+ #include "sideband.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "exec-cmd.h"
+ #include "commit.h"
+ #include "object.h"
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 976bf8ed06..b1350640fe 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -8,6 +8,7 @@
+ #include "branch.h"
+ #include "refs.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "sigchain.h"
+ #include "submodule.h"
+ #include "utf8.h"
+diff --git a/hook.c b/hook.c
+new file mode 100644
+index 0000000000..c4dbef1d0e
+--- /dev/null
++++ b/hook.c
+@@ -0,0 +1,37 @@
++#include "cache.h"
++#include "hook.h"
++#include "run-command.h"
++
++const char *find_hook(const char *name)
++{
++	static struct strbuf path = STRBUF_INIT;
++
++	strbuf_reset(&path);
++	strbuf_git_path(&path, "hooks/%s", name);
++	if (access(path.buf, X_OK) < 0) {
++		int err = errno;
++
++#ifdef STRIP_EXTENSION
++		strbuf_addstr(&path, STRIP_EXTENSION);
++		if (access(path.buf, X_OK) >= 0)
++			return path.buf;
++		if (errno == EACCES)
++			err = errno;
++#endif
++
++		if (err == EACCES && advice_ignored_hook) {
++			static struct string_list advise_given = STRING_LIST_INIT_DUP;
++
++			if (!string_list_lookup(&advise_given, name)) {
++				string_list_insert(&advise_given, name);
++				advise(_("The '%s' hook was ignored because "
++					 "it's not set as executable.\n"
++					 "You can disable this warning with "
++					 "`git config advice.ignoredHook false`."),
++				       path.buf);
++			}
++		}
++		return NULL;
++	}
++	return path.buf;
++}
+diff --git a/hook.h b/hook.h
+new file mode 100644
+index 0000000000..68624f1605
+--- /dev/null
++++ b/hook.h
+@@ -0,0 +1,11 @@
++#ifndef HOOK_H
++#define HOOK_H
++
++/*
++ * Returns the path to the hook file, or NULL if the hook is missing
++ * or disabled. Note that this points to static storage that will be
++ * overwritten by further calls to find_hook and run_hook_*.
++ */
++const char *find_hook(const char *name);
++
++#endif
+diff --git a/refs.c b/refs.c
+index 8c9490235e..59be29cf08 100644
+--- a/refs.c
++++ b/refs.c
+@@ -10,6 +10,7 @@
+ #include "refs.h"
+ #include "refs/refs-internal.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "object-store.h"
+ #include "object.h"
+ #include "tag.h"
+diff --git a/run-command.c b/run-command.c
+index be6bc128cd..82fdf29656 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -8,6 +8,7 @@
+ #include "string-list.h"
+ #include "quote.h"
+ #include "config.h"
++#include "hook.h"
+ 
+ void child_process_init(struct child_process *child)
+ {
+@@ -1320,40 +1321,6 @@ int async_with_fork(void)
+ #endif
+ }
+ 
+-const char *find_hook(const char *name)
+-{
+-	static struct strbuf path = STRBUF_INIT;
+-
+-	strbuf_reset(&path);
+-	strbuf_git_path(&path, "hooks/%s", name);
+-	if (access(path.buf, X_OK) < 0) {
+-		int err = errno;
+-
+-#ifdef STRIP_EXTENSION
+-		strbuf_addstr(&path, STRIP_EXTENSION);
+-		if (access(path.buf, X_OK) >= 0)
+-			return path.buf;
+-		if (errno == EACCES)
+-			err = errno;
+-#endif
+-
+-		if (err == EACCES && advice_ignored_hook) {
+-			static struct string_list advise_given = STRING_LIST_INIT_DUP;
+-
+-			if (!string_list_lookup(&advise_given, name)) {
+-				string_list_insert(&advise_given, name);
+-				advise(_("The '%s' hook was ignored because "
+-					 "it's not set as executable.\n"
+-					 "You can disable this warning with "
+-					 "`git config advice.ignoredHook false`."),
+-				       path.buf);
+-			}
+-		}
+-		return NULL;
+-	}
+-	return path.buf;
+-}
+-
+ int run_hook_ve(const char *const *env, const char *name, va_list args)
+ {
+ 	struct child_process hook = CHILD_PROCESS_INIT;
+diff --git a/run-command.h b/run-command.h
+index d08414a92e..b58531a7eb 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -201,13 +201,6 @@ int finish_command_in_signal(struct child_process *);
+  */
+ int run_command(struct child_process *);
+ 
+-/*
+- * Returns the path to the hook file, or NULL if the hook is missing
+- * or disabled. Note that this points to static storage that will be
+- * overwritten by further calls to find_hook and run_hook_*.
+- */
+-const char *find_hook(const char *name);
+-
+ /**
+  * Run a hook.
+  * The first argument is a pathname to an index file, or NULL
+diff --git a/sequencer.c b/sequencer.c
+index 0bec01cf38..3de479f90e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -8,6 +8,7 @@
+ #include "sequencer.h"
+ #include "tag.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "exec-cmd.h"
+ #include "utf8.h"
+ #include "cache-tree.h"
+diff --git a/transport.c b/transport.c
+index 50f5830eb6..2ed270171f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "transport.h"
+ #include "run-command.h"
++#include "hook.h"
+ #include "pkt-line.h"
+ #include "fetch-pack.h"
+ #include "remote.h"
 -- 
 2.32.0.615.g90fb4d7369
 
