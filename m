@@ -2,130 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15A2FC11F68
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 04:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86EF6C11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 05:05:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF2F261DA5
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 04:52:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62CA061DC3
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 05:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231864AbhF2EzM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 00:55:12 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65167 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231750AbhF2EzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 00:55:09 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BCBD0156A45;
-        Tue, 29 Jun 2021 00:52:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=Ju2TPFF+PFs3o5haFhGAXybms
-        zALbd3mP95as8e9IA4=; b=a2SsrlHZL7QffuzKyGlnbVIkriJkZ7C3gzyLPM39w
-        FEGEkNPrZhum3TGL+rdliq0nmplis7GTVQLQ7JsfEDJbw9JNQQF99pxYFOekOeDw
-        ywqSknO6EK2S97WX21jyfIBGMKtqKMT78s+4ZkT8HbtrFo8tWv9Uz91ZZRMfuzjS
-        3M=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B58AF156A44;
-        Tue, 29 Jun 2021 00:52:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 036CA156A42;
-        Tue, 29 Jun 2021 00:52:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/3] bundle doc: split out thin v.s. not discussion
- from <rev-arg>
-References: <patch-1.1-bc6a6d8922-20210607T165507Z-avarab@gmail.com>
-        <cover-0.3-00000000000-20210624T193730Z-avarab@gmail.com>
-        <patch-2.3-63f871a0c72-20210624T193730Z-avarab@gmail.com>
-Date:   Mon, 28 Jun 2021 21:52:38 -0700
-Message-ID: <xmqqr1glz2zt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S230216AbhF2FHc convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 29 Jun 2021 01:07:32 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:36371 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229480AbhF2FHb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 01:07:31 -0400
+Received: by mail-ed1-f41.google.com with SMTP id h2so29467960edt.3
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 22:05:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=j+ghGziP2uL6bwLhkHL/U3rRov6LZ0kq9veG6K97rUA=;
+        b=t3Xb/PB4MARUVfP0C9eAwnHsZjItPsEyNBtUxt5a/x/EZHA8KsV9e/1612F2s0KQY5
+         qWM0pEHo+jlVNzFB5/EklFBP+sx0iXr+6RkCmAkHQx28JqvG+/pJYCxA7F+X/YhOkKpQ
+         muFNV4bGLsZf+StvY9nO1TbE8MquxHb/bXhAJq39P6g4hKLDnO3yLResPXirlbWPDk8V
+         2f9IV6uABIjy59UXWtYzmP8MGJ1iQd0QhRMpJ/gGPpYGOvzTRrBD8ZkQans+EJTIgLv+
+         ohZJCcCUGhi1VH/8TTTu0EDTrw0Ihh7T4NtGDdT9wj+pA/tJrUkmOK9dZMMTY6/cC+WB
+         DZww==
+X-Gm-Message-State: AOAM533uyEZDO/P8BLHmwxQBB6fmTDkGgeWTd45ENfvIm2ZoAg4IdzbY
+        m4R2erNF2IbpXbUNkxGeHtsH9qzTWjW8grkAVmA=
+X-Google-Smtp-Source: ABdhPJyFfWYZxcUHF0iOBprccDGAvAtm2uzKhbD09XbbQhZodIGXr0HUdQmpPqLJpcmuj8zIjhWMgP+AK36N/g5LC9I=
+X-Received: by 2002:a05:6402:152:: with SMTP id s18mr37144686edu.221.1624943103904;
+ Mon, 28 Jun 2021 22:05:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D5018B1A-D895-11EB-8D3B-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <874kdn1j6i.fsf@evledraar.gmail.com> <YNSh0CskelTwuZq0@coredump.intra.peff.net>
+In-Reply-To: <YNSh0CskelTwuZq0@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 29 Jun 2021 01:04:53 -0400
+Message-ID: <CAPig+cSzKoOzU-zPOZqfNpPYBFpcWqvDP3mwLvAn5WkiNW0UMw@mail.gmail.com>
+Subject: Re: Why the Makefile is so eager to re-build & re-link
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> Split out the discussion of why you should or should not create "thin
-> bundles" into a new section, away from the discussion of our handling
-> of the rev-args syntax.
+On Thu, Jun 24, 2021 at 11:16 AM Jeff King <peff@peff.net> wrote:
+> On Thu, Jun 24, 2021 at 03:16:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >    I think the best solution here is to make the generate-*.sh
+> >    shellscripts faster (just one takes ~300ms of nested shellscripting,
+> >    just to grep out the first few lines of every git-*.txt, in e.g. Perl
+> >    or a smarter awk script this would be <5ms).
 >
-> See 2e0afafebd (Add git-bundle: move objects and references by
-> archive, 2007-02-22) for the introduction of the documentation being
-> changed here.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  Documentation/git-bundle.txt | 23 +++++++++++++++++++++--
->  1 file changed, 21 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.tx=
-t
-> index 1b02f8b7468..f231f42b12f 100644
-> --- a/Documentation/git-bundle.txt
-> +++ b/Documentation/git-bundle.txt
-> @@ -42,7 +42,8 @@ header indicating what references are contained withi=
-n the bundle. The
->  header is (mostly) in the format emitted by linkgit:git-show-ref[1].
-> =20
->  Like the the packed archive format itself bundles can either be
-> -self-contained or thin (see "--thin" in linkgit:git-pack-objects[1]).
-> +self-contained or thin, see the "OPEN (THIN) AND CLOSED BUNDLES"
-> +section below.
-> =20
->  See link:technical/bundle-format.html[the `bundle-format`
->  documentation] for more details.
-> @@ -139,7 +140,20 @@ contained in the union of the given bases.  Each b=
-asis can be
->  specified explicitly (e.g. `^master~10`), or implicitly (e.g.
->  `master~10..master`, `--since=3D10.days.ago master`).
-> =20
-> -It is very important that the basis used be held by the destination.
-> +OPEN (THIN) AND CLOSED BUNDLES
-> +------------------------------
-> +
-> +When creating bundles it is possible to create bundle tips that are
-> +either closed or open under reachability, i.e. those that contain all
-> +the history needed to get to a given point (closed), and those that do
-> +not (open). A revision such as "master" will produce a closed tip, a
-> +range such as "master~2..master" will not (unless the full history is
-> +contained within that range).
-> +
-> +Another name for "open" bundles might be "thin bundles", as in the
-> +`--thin` option to linkgit:git-pack-objects[1]. Under the hood that's
-> +what `git bundle create` uses to write bundles. When thin bundles
-> +it is very important that the basis used be held by the destination.
+> Yeah, I think Eric mentioned he had looked into doing this in perl, but
+> we weren't entirely happy with the dependency. [...]
 
-While it is true that "thin" bundle or packfile must have been
-created with a commit range with an uninteresting end, presence of
-the negative end in the range does not necessarily mean the
-resulting packfile or bundle is thin.
+For what it's worth, the original `generate-cmdlist` was a shell
+script which I rewrote[1] in `awk` to extend the functionality, but
+Junio felt uncomfortable[2] about making `awk` a build dependency, so
+I rewrote[3] it again in `perl`. However, the `perl` version didn't
+last long since we got a report[4] that Git would no longer build in
+the FreeBSD ports tree, so I rewrote[5] it a final time in shell, thus
+coming full circle (but with extended functionality).
 
-If you want to introduce "open" to mean "some objects reachable from
-the tip may not be present in the resulting pack/bundle", that is
-perfectly fine, but "thin" is a different concept.  For a packfile
-to be "thin", it has to be "open", but an "open" packfile can be
-"thick".  Even though they are *not* orthogonal concepts, "thin"
-packfile is a strict subset of "open" packfile.
-
-What "thin" means is that such a packfile can store an object in a
-deltified form against a base object that is not in the same
-packfile.
-
+[1]: https://lore.kernel.org/git/1431976697-26288-4-git-send-email-sebastien.guimmara@gmail.com/
+[2]: https://lore.kernel.org/git/xmqqr3qda7kx.fsf@gitster.dls.corp.google.com/
+[3]: https://lore.kernel.org/git/1432149781-24596-4-git-send-email-sebastien.guimmara@gmail.com/
+[4]: https://lore.kernel.org/git/loom.20150814T171757-901@post.gmane.org/
+[5]: https://lore.kernel.org/git/1440365469-9928-1-git-send-email-sunshine@sunshineco.com/
