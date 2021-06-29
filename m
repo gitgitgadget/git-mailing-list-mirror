@@ -2,113 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 158EEC11F64
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49B1CC11F64
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:57:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C976061CCE
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:53:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19FBE61CD6
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbhF2B4W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 21:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47444 "EHLO
+        id S230153AbhF2CAG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 22:00:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbhF2B4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 21:56:22 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91098C061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:53:54 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id g22so24800536iom.1
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=822F+7jg04PKc5FVTtqqNhzERkuqg23LegdWeDe+p5k=;
-        b=lWOW9WjC7oO1n/rerD7DQBIPh+UVBtO9ExDpeG7fjlIoKaySBoY0e4qqV9Fmwvgv0j
-         NbUGkdYKcUJ9IwKyaaRDbr3yVNy7xrJyCc3bZBMQaroVDNjJ2xr9JmQKDM4Yh6/aI1Or
-         JwpLrZkxYAljEdrnWVWQjFqoz1OGTYbK5qyMEIujZ2Qov/AsUKyzr8FtYmvH0liNY81g
-         EIafmQ59LVilHEz60RJKQwBvGzKynFlCTKCqZ3Rrtrsediz673n9TuosmSFO7bgGA3Dp
-         76RAfwwWqI5N//fZ68RZHgNKRIrVqVyjcjkbPTMSEvW1PtCKWCYQuGsOwB824+45E5B/
-         7SCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=822F+7jg04PKc5FVTtqqNhzERkuqg23LegdWeDe+p5k=;
-        b=PS1QhRm0nHP99jD8hBZz0MCUw0EBRTLo34wE4jP9FBu4XzKeLdKDugCKyypfS01aDb
-         S/oos1P4oEGjiPMLKlOPfn63pcNFHW717EoBbiINn5ZRnEsyJ0stkqDPlOMfIARUlHl4
-         Wnm8t03kcvELRR/cs1wX2M1kTK/kvHHaD0LGXXBV8M6UyIJ+MnZYm2NAhGQb3RXNI/Gi
-         +mNh9C23aUpO9/ehMlRnWaGAQevQysfShir5T5tdQdRbUBnLHQTqzUfiktAbmPq8lBSE
-         zhEthVJxPLReYYc9/9bphqwEdhq5Chwpw5s8H+kYk9AbsGAd0SfzgAth06ctw+RfKpq5
-         9xVw==
-X-Gm-Message-State: AOAM532fOarfJ9LjNkRyhw/iM4/iNpaDGs8snbrWGX7XZn8Xv2lMbbrk
-        +MNw+aTvUCh81S59YjeUGOk=
-X-Google-Smtp-Source: ABdhPJxIPKQvD3O1m546N5Z3mjb338Iy2TGE0qQYg57cL4mkDkoW0rW3rRrHwQAPfDncWUAl1XANpg==
-X-Received: by 2002:a05:6638:1349:: with SMTP id u9mr2096317jad.43.1624931633943;
-        Mon, 28 Jun 2021 18:53:53 -0700 (PDT)
-Received: from ?IPv6:2600:1700:e72:80a0:707c:50a9:e7e5:baa? ([2600:1700:e72:80a0:707c:50a9:e7e5:baa])
-        by smtp.gmail.com with ESMTPSA id h18sm9156998ilr.86.2021.06.28.18.53.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jun 2021 18:53:53 -0700 (PDT)
-Subject: Re: [PATCH v3 4/4] CodingGuidelines: recommend singular they
-To:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, emilyshaffer@google.com,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Robert Karszniewicz <avoidr@posteo.de>,
-        Jeff King <peff@peff.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        Phillip Susi <phill@thesusis.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.975.v2.git.1623246878.gitgitgadget@gmail.com>
- <pull.975.v3.git.1623766273.gitgitgadget@gmail.com>
- <f06092a9053e40d93c4ec94b7fbbb1b8d563957b.1623766273.git.gitgitgadget@gmail.com>
- <87a6nryt51.fsf@evledraar.gmail.com> <xmqqsg1iseza.fsf@gitster.g>
- <xmqqbl86qtyf.fsf@gitster.g> <87bl85y15s.fsf@evledraar.gmail.com>
- <YMvuprVu1MnokHM5@camp.crustytoothpaste.net> <xmqqr1gyjpyb.fsf@gitster.g>
- <xmqqfsx162nu.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b22f7fe0-4096-2c17-4c6b-dad08cd2a7e6@gmail.com>
-Date:   Mon, 28 Jun 2021 21:53:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+        with ESMTP id S229910AbhF2CAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 22:00:06 -0400
+Received: from act-MTAout6.csiro.au (act-mtaout6.csiro.au [IPv6:2405:b000:e00:257::7:43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0346C061574
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:57:38 -0700 (PDT)
+IronPort-SDR: PRjmaGso03woyrBPtYZW63bmwQY2QwTlegRcICmYCamF2dBM+cQENFc5bL+0gUKWx5yq7QXcRC
+ hy10f4nL7bqA==
+X-SBRS: 4.0
+IronPort-HdrOrdr: =?us-ascii?q?A9a23=3AUMAZi64rhQPBuROBnAPXwPXXdLJyesId70?=
+ =?us-ascii?q?hD6qkRc202TiX8ravFoB1173PJYUkqKRYdcLy7VpVoOEmskaKdgrNhXotKPj?=
+ =?us-ascii?q?OKhILAFugL0WKF+Vzd8kbFmdK1u50BT4FOTPHVJXheyebWiTPIdurIyeP3lp?=
+ =?us-ascii?q?yVuQ=3D=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2FVAgB2fdpgjA9OdpJagQmBV4MNbIU?=
+ =?us-ascii?q?ziQSIPjCdSgsBAQEPQQQBAYRSAoJyJjcGDgIEAQEBEgEBBgEBAQEBBgQCAhA?=
+ =?us-ascii?q?BAQEBKUOFdYZPAQIDIxUbNgsYAgImAgJXEwgBAYJtgwcBqlyBMoEBhGaDa4F?=
+ =?us-ascii?q?jgRAqjWo3gVVEgTwPgm0+hRGCSoJkBIMcgQoFoXFanEIsB4MjgS4LkBOMMwY?=
+ =?us-ascii?q?OBRYQlRqQbrpsgWqBfzMaH4M+TxkOjjiOQjRqAgYKAQEDCYtxAQE?=
+X-IPAS-Result: =?us-ascii?q?A2FVAgB2fdpgjA9OdpJagQmBV4MNbIUziQSIPjCdSgsBA?=
+ =?us-ascii?q?QEPQQQBAYRSAoJyJjcGDgIEAQEBEgEBBgEBAQEBBgQCAhABAQEBKUOFdYZPA?=
+ =?us-ascii?q?QIDIxUbNgsYAgImAgJXEwgBAYJtgwcBqlyBMoEBhGaDa4FjgRAqjWo3gVVEg?=
+ =?us-ascii?q?TwPgm0+hRGCSoJkBIMcgQoFoXFanEIsB4MjgS4LkBOMMwYOBRYQlRqQbrpsg?=
+ =?us-ascii?q?WqBfzMaH4M+TxkOjjiOQjRqAgYKAQEDCYtxAQE?=
+Received: from mail-server.pawsey.org.au (HELO prod-mail.pawsey.org.au) ([146.118.78.15])
+  by act-ironport-int.csiro.au with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 29 Jun 2021 11:57:32 +1000
+Received: from [192.168.42.112] (unknown [1.126.250.96])
+        by prod-mail.pawsey.org.au (Postfix) with ESMTPSA id E1F66315813F
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 09:57:31 +0800 (AWST)
+Subject: Re: Definition of "the Git repository"
+To:     git@vger.kernel.org
+References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
+ <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
+ <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
+ <60d9410bb07a1_aac5d20888@natae.notmuch>
+ <ec31434f-0c99-ffb7-6eb0-6ecb1f6e761c@pawsey.org.au>
+ <60d95c6024f3d_aaf7e208a4@natae.notmuch>
+From:   Kevin Buckley <Kevin.Buckley@pawsey.org.au>
+Message-ID: <a5579940-237b-2e4d-bf18-bc0a8f2f1ee3@pawsey.org.au>
+Date:   Tue, 29 Jun 2021 09:57:31 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqfsx162nu.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <60d95c6024f3d_aaf7e208a4@natae.notmuch>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/28/2021 6:32 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->> I would like to consider that the last draft I did [*1*] based on
->> earlier suggestions by Derrick and Ævar would be a reasonable middle
->> ground.
->>
->> I'll go mostly offline next week---I'd notice if the list came up
->> with a vastly different concensus when I come back, but hopefully
->> not ;-)
+On 2021/06/28 13:21, Felipe Contreras wrote:
 > 
-> Well, I misspoke.  If the list reached a consensus while I was away,
-> then that would have been a happy outcome, whether it was close to,
-> or vastly different from, the one I suggested.
+> To try to make it more orthogonal, let's suppose the index file was
+> outside the .git directory. Would you consider then the staging area
+> separate from the repository?
+> 
+> In fact, we don't have to suppose:
+> 
+>    GIT_INDEX_FILE=/tmp/index git checkout @~ -- .
+> 
+> Does that command change the repository in any way?
+  
+I have to admit that I don't know, and that I can't immediately
+see where the "repository" would be, in that example. This is
+obviously a gap in my understanding: happy to defer to yours.
 
-I hope that my reply to your attempt was clear that I found it to
-be a good approach. I'm happy with it.
+I do however feel that the fact that we have moved to using examples
+that override the Git Index file on the command line, in order to
+define what a "repository" is, just so that we might be able to give
+a "more correct" definition of the term, to someone completely new to
+Git, suggests that, as others have already noted in the discussion,
+it's not easy to be "correct"?
 
-Thanks,
--Stolee
+Kevin
