@@ -2,136 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11922C11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 22:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB7D1C11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 22:49:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF1CA61CAB
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 22:44:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A45AD61D00
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 22:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235469AbhF2Wqf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 18:46:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43200 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233056AbhF2Wqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 18:46:34 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BC3C061760
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 15:44:06 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id h2so685187iob.11
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 15:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=9uOxC4gbC8az3O1QhukX9bHZUSzEnRFkjZMcK2blOy8=;
-        b=106r+K8xY/krk+h5jZ7LgE7b7EFAhMKs7xX4PiAAJbaWFCkuKtN66WmU+gFZviYfEN
-         vX9gEXJho9PUneGFybvYAcMZMdAV+XLDQuTL/WagIGMCWk7XLhfTv2JV9nZN52K6u342
-         6I7japB0PdYTyjppGrATy+73oMxJQ62Mo52WsSvsJtHlCGzJ57hpXqwG/cNfsL9yI31q
-         20ZZ1XJ+9/mc0BYxrZIcxWm4ETlKrG1/uSztEQOxIxAyHnoWXFMH1h024Qp5J1QzPklf
-         qwLV7+2x+VeRiTmpxOqKCnWWOdG409EIfM1D2ZH7+gXmal71w0ChIlQ4FwvES9pM9GHm
-         4CIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=9uOxC4gbC8az3O1QhukX9bHZUSzEnRFkjZMcK2blOy8=;
-        b=XV4U//DpGXvAm7k0kwOvQ6Cwr4LFkDISlpteJah2cGjiZo/R5rT+1tPM61j6xs42WR
-         a+I2XAyPv9E3NbUZNDMcImt7I7ozXvQM726g/OX5l5GR+Mz1pK3jq1gvWMQFkVw5dcFY
-         nRWGRCZqpVRxLW+XBj4kYpW8zZXQCFodRxycgUbZ3D3xfXTDCh/c6nO/TQCYMG+WWxg9
-         bITpN/FA96vfbnDKu3GSBvcUiWegV+HcUVqZvlfZU3+ag0Nf4jB7rD1i/xfsVgHCJLxG
-         0vElTdKgu4H05k6uRAvy36p+zBJEbGBJK8epyMGhG0PXqXC1jB8Lh+ic9z0hQYoCfWCy
-         saQA==
-X-Gm-Message-State: AOAM532zDxq8d7tZmohFpNUlAcgWQPSMAN0bn7TuQyIsWIXIjK4rC1+K
-        s3Ko0RPWV39hF2TWp6WoGNTZ2A==
-X-Google-Smtp-Source: ABdhPJyR4M0FW2TKHb2OhjDab4hZNKItFuhKS+fYhccBr1Dd1C+AY32QAVSC/ladQMGDs0oJ65vFAg==
-X-Received: by 2002:a02:cb82:: with SMTP id u2mr6550858jap.8.1625006645899;
-        Tue, 29 Jun 2021 15:44:05 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l26sm10542523iok.26.2021.06.29.15.44.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 15:44:05 -0700 (PDT)
-Date:   Tue, 29 Jun 2021 18:44:03 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Chris Torek <chris.torek@gmail.com>,
+        id S235514AbhF2Wvz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 18:51:55 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53541 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235509AbhF2Wvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 18:51:53 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BCBACE715;
+        Tue, 29 Jun 2021 18:49:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=tdh1voZeuXNKV/H4Me9+ILIUQD+C173E0lbT9rp7UtQ=; b=MQxc
+        0jxh4i868XQkcAy/G+6YU8RJA3hFX6TIhu8bkLPI3l9XUSMyj1NLYUoiYTUpQKPi
+        QYyFlFf51dGrvrxYbRwYKYDPxo+K+dJqPWEPHph5cPUaFFZsxsQTEzbpkdpALv9i
+        SAJ3LjHPk5DngagIghkzv4IBQoCz7xEOCF2byqA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EA4FCE714;
+        Tue, 29 Jun 2021 18:49:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 853FACE712;
+        Tue, 29 Jun 2021 18:49:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Git List <git@vger.kernel.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] connected: implement connectivity check using
- bitmaps
-Message-ID: <YNuiM8TR5evSeNsN@nand.local>
-References: <cover.1624858240.git.ps@pks.im>
- <7687dedd4722c39b5ecef2c2165147c25d16b8d9.1624858240.git.ps@pks.im>
- <YNovuzAsaEb2uIaa@nand.local>
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 1/2] t6400: preserve git ls-files exit status code
+References: <20210615172038.28917-1-congdanhqx@gmail.com>
+        <cover.1624974969.git.congdanhqx@gmail.com>
+        <49104273b8b801fc61811347120c5f4c42a3700b.1624974969.git.congdanhqx@gmail.com>
+        <CAPig+cSKOzebGRyoytUGORhq56P0rijYrKO6uu7q7fWnzwiQkw@mail.gmail.com>
+Date:   Tue, 29 Jun 2021 15:49:21 -0700
+Message-ID: <xmqqk0mcuw0e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YNovuzAsaEb2uIaa@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3F1E62DE-D92C-11EB-B27F-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 28, 2021 at 04:23:23PM -0400, Taylor Blau wrote:
-> I'll try this out myself and see if it's worth it. (As an aside, I'll be
-> offline next week, so it may take me a little while to post something to
-> the list).
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I gave implementing this a shot and it seems to have produced some good
-improvements, although there are definitely some areas where it does
-better than others.
+>> +check_ls_files_count() {
+>
+> style: funcname () {
+> ...
+> I also &&-chain the `local` declaration:
+>
+>     local ops val &&
+>     if test "$#" -le 2
+> ...
+> A quick grep of the tests indicates that they are consistent about
+> using lowercase for the first word in a BUG():
 
-Here are some results running on linux.git with a cold cache, counting
-objects for commit 2ab38c17aa, which I picked deliberately since I know
-it has a bitmap:
+Thanks for a pair of sharp eyes, Eric, in your review.
 
-    $ hyperfine \
-      'GIT_READ_COMMIT_TABLE=0 git.compile rev-list --count --objects --use-bitmap-index 2ab38c17aac10bf55ab3efde4c4db3893d8691d2' \
-      'GIT_READ_COMMIT_TABLE=1 git.compile rev-list --count --objects --use-bitmap-index 2ab38c17aac10bf55ab3efde4c4db3893d8691d2' \
-      --prepare='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
+> -	test 5 -eq $(git ls-files -s | wc -l) &&
+> -	test 4 -eq $(git ls-files -u | wc -l) &&
+> +	check_ls_files_count = 5 -s &&
+> +	check_ls_files_count = 4 -u &&
 
-		Benchmark #1: GIT_READ_COMMIT_TABLE=0 git.compile rev-list --count --objects --use-bitmap-index 2ab38c17aac10bf55ab3efde4c4db3893d8691d2
-			Time (mean ± σ):     141.1 ms ±   2.5 ms    [User: 13.0 ms, System: 64.3 ms]
-			Range (min … max):   136.2 ms … 143.4 ms    10 runs
+I have one more comment on the main part of the patch.  It is easy
+to see that this conversion is correctly done in this particular
+patch from the way 5/4 and -s/u are reproduced from the preimage to
+the postimage, but I doubt that readers in the future, who long have
+forgotten that the "-s" came from "ls-files -s", would find the new
+form easy to read and understand.
 
-		Benchmark #2: GIT_READ_COMMIT_TABLE=1 git.compile rev-list --count --objects --use-bitmap-index 2ab38c17aac10bf55ab3efde4c4db3893d8691d2
-			Time (mean ± σ):      28.7 ms ±   3.2 ms    [User: 6.5 ms, System: 10.0 ms]
-			Range (min … max):    22.0 ms …  31.0 ms    21 runs
+Do we have the same helper duplicated across two test scripts?
 
-		Summary
-			'GIT_READ_COMMIT_TABLE=1 git.compile rev-list --count --objects --use-bitmap-index 2ab38c17aac10bf55ab3efde4c4db3893d8691d2' ran
-				4.91 ± 0.55 times faster than 'GIT_READ_COMMIT_TABLE=0 git.compile rev-list --count --objects --use-bitmap-index 2ab38c17aac10bf55ab3efde4c4db3893d8691d2'
+I wonder if it is worth adding a single copy that forces the callers
+to spell out the command name in test-lib.sh and make the above into
+something like
 
-That's sort of a best-case scenario, because we're not doing any
-traversal between the bitmapped commits and the traversal tips. But even
-if we do have some traversal, the results are still pretty good.
-Swapping out 2ab38c17aa for `--branches` yields a 5.02x improvement from
-141.0ms down to 28.1ms.
+	test_output_wc_l = 5 ls-files -s
 
-Adding in `--tags` basically negates any improvement (having the commit
-table extension eeks out a 1.03x improvement from 645.7ms down to
-626.0ms. `perf record` shows that 30% of time is spent outside of the
-bitmap code.
+or even
 
-If you want to give this a try yourself, I highly recommend generating
-your bitmap while packing with `-c pack.writeReverseIndex`. Building a
-reverse index on-the-fly also seems to negate any performance
-improvements here, so having an on-disk reverse index is more or less a
-prerequisite to testing this out.
+	test_output_wc_l = 5 git ls-files -s
 
-Extremely gross and inscrutable code can be found on the
-'tb/bitmap-commit-table' branch of my fork [1].
+That way, it is easier to see what command is being run (yes, I know
+you have _ls_files_ in the middle of the name of the custom helper,
+but the thing is that "-s" and "_ls_files_" in the middle of the
+helper are so far apart that it is not immediately obvious what the
+argument "-s" is about), and by not having two identical copies, we
+have less risk of them drifting apart.
 
-Thanks,
-Taylor
-
-[1]: https://github.com/git/git/compare/master...ttaylorr:tb/bitmap-commit-table
-
+Hmm?
