@@ -2,165 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BE51C11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 20:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 512E0C11F69
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 20:53:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2316B60FF0
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 20:53:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DA9C61C47
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 20:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235591AbhF2Uzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 16:55:33 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34608 "EHLO dcvr.yhbt.net"
+        id S235599AbhF2Uze (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 16:55:34 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34688 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235487AbhF2Uzd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 16:55:33 -0400
+        id S235487AbhF2Uze (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 16:55:34 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 6E11F1F8C6;
+        by dcvr.yhbt.net (Postfix) with ESMTP id 80C521F8C7;
         Tue, 29 Jun 2021 20:53:05 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v2 0/5] optimizations for many alternates
-Date:   Tue, 29 Jun 2021 20:53:00 +0000
-Message-Id: <20210629205305.7100-1-e@80x24.org>
+Subject: [PATCH v2 1/5] speed up alt_odb_usable() with many alternates
+Date:   Tue, 29 Jun 2021 20:53:01 +0000
+Message-Id: <20210629205305.7100-2-e@80x24.org>
 In-Reply-To: <20210627024718.25383-1-e@80x24.org>
 References: <20210627024718.25383-1-e@80x24.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2 has better naming for 3/5, fix test for sha256 in 5/5
-Thanks to René and Junio for feedback so far.
+With many alternates, the duplicate check in alt_odb_usable()
+wastes many cycles doing repeated fspathcmp() on every existing
+alternate.  Use a khash to speed up lookups by odb->path.
 
-Eric Wong (5):
-  speed up alt_odb_usable() with many alternates
-  avoid strlen via strbuf_addstr in link_alt_odb_entry
-  make object_directory.loose_objects_subdir_seen a bitmap
-  oidcpy_with_padding: constify `src' arg
-  oidtree: a crit-bit tree for odb_loose_cache
+Since the kh_put_* API uses the supplied key without
+duplicating it, we also take advantage of it to replace both
+xstrdup() and strbuf_release() in link_alt_odb_entry() with
+strbuf_detach() to avoid the allocation and copy.
 
- Makefile                |   3 +
- alloc.c                 |   6 ++
- alloc.h                 |   1 +
- cbtree.c                | 167 ++++++++++++++++++++++++++++++++++++++++
- cbtree.h                |  56 ++++++++++++++
- hash.h                  |   2 +-
- object-file.c           |  69 ++++++++++-------
- object-name.c           |  28 +++----
- object-store.h          |  24 +++++-
- object.c                |   2 +
- oidtree.c               |  94 ++++++++++++++++++++++
- oidtree.h               |  29 +++++++
- t/helper/test-oidtree.c |  47 +++++++++++
- t/helper/test-tool.c    |   1 +
- t/helper/test-tool.h    |   1 +
- t/t0069-oidtree.sh      |  52 +++++++++++++
- 16 files changed, 533 insertions(+), 49 deletions(-)
- create mode 100644 cbtree.c
- create mode 100644 cbtree.h
- create mode 100644 oidtree.c
- create mode 100644 oidtree.h
- create mode 100644 t/helper/test-oidtree.c
- create mode 100755 t/t0069-oidtree.sh
+In a test repository with 50K alternates and each of those 50K
+alternates having one alternate each (for a total of 100K total
+alternates); this speeds up lookup of a non-existent blob from
+over 16 minutes to roughly 2.7 seconds on my busy workstation.
 
-Interdiff against v1:
+Note: all underlying git object directories were small and
+unpacked with only loose objects and no packs.  Having to load
+packs increases times significantly.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ object-file.c  | 33 ++++++++++++++++++++++-----------
+ object-store.h | 17 +++++++++++++++++
+ object.c       |  2 ++
+ 3 files changed, 41 insertions(+), 11 deletions(-)
+
 diff --git a/object-file.c b/object-file.c
-index d33b84c4a4..6c397fb4f1 100644
+index f233b440b2..304af3a172 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -2463,16 +2463,17 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
+@@ -517,9 +517,9 @@ const char *loose_object_path(struct repository *r, struct strbuf *buf,
+  */
+ static int alt_odb_usable(struct raw_object_store *o,
+ 			  struct strbuf *path,
+-			  const char *normalized_objdir)
++			  const char *normalized_objdir, khiter_t *pos)
  {
- 	int subdir_nr = oid->hash[0];
- 	struct strbuf buf = STRBUF_INIT;
--	size_t BM_SIZE = sizeof(odb->loose_objects_subdir_seen[0]) * CHAR_BIT;
-+	size_t word_bits = bitsizeof(odb->loose_objects_subdir_seen[0]);
-+	size_t word_index = subdir_nr / word_bits;
-+	size_t mask = 1 << (subdir_nr % word_bits);
- 	uint32_t *bitmap;
--	uint32_t bit = 1 << (subdir_nr % BM_SIZE);
+-	struct object_directory *odb;
++	int r;
  
- 	if (subdir_nr < 0 ||
--	    subdir_nr >= ARRAY_SIZE(odb->loose_objects_subdir_seen) * BM_SIZE)
-+	    subdir_nr >= bitsizeof(odb->loose_objects_subdir_seen))
- 		BUG("subdir_nr out of range");
- 
--	bitmap = &odb->loose_objects_subdir_seen[subdir_nr / BM_SIZE];
--	if (*bitmap & bit)
-+	bitmap = &odb->loose_objects_subdir_seen[word_index];
-+	if (*bitmap & mask)
- 		return &odb->loose_objects_cache;
- 
- 	strbuf_addstr(&buf, odb->path);
-@@ -2480,7 +2481,7 @@ struct oidtree *odb_loose_cache(struct object_directory *odb,
- 				    append_loose_object,
- 				    NULL, NULL,
- 				    &odb->loose_objects_cache);
--	*bitmap |= bit;
-+	*bitmap |= mask;
- 	strbuf_release(&buf);
- 	return &odb->loose_objects_cache;
+ 	/* Detect cases where alternate disappeared */
+ 	if (!is_directory(path->buf)) {
+@@ -533,14 +533,22 @@ static int alt_odb_usable(struct raw_object_store *o,
+ 	 * Prevent the common mistake of listing the same
+ 	 * thing twice, or object directory itself.
+ 	 */
+-	for (odb = o->odb; odb; odb = odb->next) {
+-		if (!fspathcmp(path->buf, odb->path))
+-			return 0;
++	if (!o->odb_by_path) {
++		khiter_t p;
++
++		o->odb_by_path = kh_init_odb_path_map();
++		assert(!o->odb->next);
++		p = kh_put_odb_path_map(o->odb_by_path, o->odb->path, &r);
++		if (r < 0) die_errno(_("kh_put_odb_path_map"));
++		assert(r == 1); /* never used */
++		kh_value(o->odb_by_path, p) = o->odb;
+ 	}
+ 	if (!fspathcmp(path->buf, normalized_objdir))
+ 		return 0;
+-
+-	return 1;
++	*pos = kh_put_odb_path_map(o->odb_by_path, path->buf, &r);
++	if (r < 0) die_errno(_("kh_put_odb_path_map"));
++	/* r: 0 = exists, 1 = never used, 2 = deleted */
++	return r == 0 ? 0 : 1;
  }
-diff --git a/t/helper/test-oidtree.c b/t/helper/test-oidtree.c
-index 44bb2e7c29..e0da13eea3 100644
---- a/t/helper/test-oidtree.c
-+++ b/t/helper/test-oidtree.c
-@@ -13,6 +13,7 @@ int cmd__oidtree(int argc, const char **argv)
- 	struct oidtree ot = OIDTREE_INIT;
- 	struct strbuf line = STRBUF_INIT;
- 	int nongit_ok;
-+	int algo = GIT_HASH_UNKNOWN;
  
- 	setup_git_directory_gently(&nongit_ok);
+ /*
+@@ -566,6 +574,7 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
+ {
+ 	struct object_directory *ent;
+ 	struct strbuf pathbuf = STRBUF_INIT;
++	khiter_t pos;
  
-@@ -21,20 +22,21 @@ int cmd__oidtree(int argc, const char **argv)
- 		struct object_id oid;
+ 	if (!is_absolute_path(entry) && relative_base) {
+ 		strbuf_realpath(&pathbuf, relative_base, 1);
+@@ -587,23 +596,25 @@ static int link_alt_odb_entry(struct repository *r, const char *entry,
+ 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+ 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
  
- 		if (skip_prefix(line.buf, "insert ", &arg)) {
--			if (get_oid_hex(arg, &oid))
--				die("not a hexadecimal oid: %s", arg);
-+			if (get_oid_hex_any(arg, &oid) == GIT_HASH_UNKNOWN)
-+				die("insert not a hexadecimal oid: %s", arg);
-+			algo = oid.algo;
- 			oidtree_insert(&ot, &oid);
- 		} else if (skip_prefix(line.buf, "contains ", &arg)) {
- 			if (get_oid_hex(arg, &oid))
--				die("not a hexadecimal oid: %s", arg);
-+				die("contains not a hexadecimal oid: %s", arg);
- 			printf("%d\n", oidtree_contains(&ot, &oid));
- 		} else if (skip_prefix(line.buf, "each ", &arg)) {
--			char buf[GIT_SHA1_HEXSZ  + 1] = { '0' };
-+			char buf[GIT_MAX_HEXSZ + 1] = { '0' };
- 			memset(&oid, 0, sizeof(oid));
- 			memcpy(buf, arg, strlen(arg));
--			buf[GIT_SHA1_HEXSZ] = 0;
-+			buf[hash_algos[algo].hexsz] = 0;
- 			get_oid_hex_any(buf, &oid);
--			oid.algo = GIT_HASH_SHA1;
-+			oid.algo = algo;
- 			oidtree_each(&ot, &oid, strlen(arg), print_oid, NULL);
- 		} else if (!strcmp(line.buf, "destroy"))
- 			oidtree_destroy(&ot);
-diff --git a/t/t0069-oidtree.sh b/t/t0069-oidtree.sh
-index bb4229210c..0594f57c81 100755
---- a/t/t0069-oidtree.sh
-+++ b/t/t0069-oidtree.sh
-@@ -10,9 +10,9 @@ echoid () {
- 	do
- 		echo "$1"
- 		shift
--	done | awk -v prefix="$prefix" '{
-+	done | awk -v prefix="$prefix" -v ZERO_OID=$ZERO_OID '{
- 		printf("%s%s", prefix, $0);
--		need = 40 - length($0);
-+		need = length(ZERO_OID) - length($0);
- 		for (i = 0; i < need; i++)
- 			printf("0");
- 		printf "\n";
+-	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir)) {
++	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos)) {
+ 		strbuf_release(&pathbuf);
+ 		return -1;
+ 	}
+ 
+ 	CALLOC_ARRAY(ent, 1);
+-	ent->path = xstrdup(pathbuf.buf);
++	/* pathbuf.buf is already in r->objects->odb_by_path */
++	ent->path = strbuf_detach(&pathbuf, NULL);
+ 
+ 	/* add the alternate entry */
+ 	*r->objects->odb_tail = ent;
+ 	r->objects->odb_tail = &(ent->next);
+ 	ent->next = NULL;
++	assert(r->objects->odb_by_path);
++	kh_value(r->objects->odb_by_path, pos) = ent;
+ 
+ 	/* recursively add alternates */
+-	read_info_alternates(r, pathbuf.buf, depth + 1);
++	read_info_alternates(r, ent->path, depth + 1);
+ 
+-	strbuf_release(&pathbuf);
+ 	return 0;
+ }
+ 
+diff --git a/object-store.h b/object-store.h
+index ec32c23dcb..20c1cedb75 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -7,6 +7,8 @@
+ #include "oid-array.h"
+ #include "strbuf.h"
+ #include "thread-utils.h"
++#include "khash.h"
++#include "dir.h"
+ 
+ struct object_directory {
+ 	struct object_directory *next;
+@@ -30,6 +32,19 @@ struct object_directory {
+ 	char *path;
+ };
+ 
++static inline int odb_path_eq(const char *a, const char *b)
++{
++	return !fspathcmp(a, b);
++}
++
++static inline int odb_path_hash(const char *str)
++{
++	return ignore_case ? strihash(str) : __ac_X31_hash_string(str);
++}
++
++KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
++	struct object_directory *, 1, odb_path_hash, odb_path_eq);
++
+ void prepare_alt_odb(struct repository *r);
+ char *compute_alternate_path(const char *path, struct strbuf *err);
+ typedef int alt_odb_fn(struct object_directory *, void *);
+@@ -116,6 +131,8 @@ struct raw_object_store {
+ 	 */
+ 	struct object_directory *odb;
+ 	struct object_directory **odb_tail;
++	kh_odb_path_map_t *odb_by_path;
++
+ 	int loaded_alternates;
+ 
+ 	/*
+diff --git a/object.c b/object.c
+index 14188453c5..2b3c075a15 100644
+--- a/object.c
++++ b/object.c
+@@ -511,6 +511,8 @@ static void free_object_directories(struct raw_object_store *o)
+ 		free_object_directory(o->odb);
+ 		o->odb = next;
+ 	}
++	kh_destroy_odb_path_map(o->odb_by_path);
++	o->odb_by_path = NULL;
+ }
+ 
+ void raw_object_store_clear(struct raw_object_store *o)
