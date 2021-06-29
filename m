@@ -7,68 +7,69 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2302EC11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 12:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7E7C11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 12:55:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02FE461DC8
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 12:50:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9465C61D1C
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 12:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233819AbhF2MxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 08:53:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
+        id S233754AbhF2M6F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 08:58:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233161AbhF2MxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 08:53:04 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D344CC061760
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 05:50:36 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id g14so3409996qvo.7
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 05:50:36 -0700 (PDT)
+        with ESMTP id S233689AbhF2M6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 08:58:00 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BA0C061768
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 05:55:33 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id k206so7257265oif.2
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 05:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EmzRVMTbiWHEiiqAWAZqJndc0wjizD7Ar/J2++Y944k=;
-        b=CmsuXwqNoZlrUPN4J6uFaYFPThGaCOIHWkeUqk4auV19IlRaqf/0Ow0eF6TyTRQ0p+
-         NGyf0AuLllGWINTMF+GendWufM7UL7Fl7BOs4YKPO+eyyfCSfjyWSvrmYy6gEYUYBTA+
-         DuA57bVhRRCY0f5zo7RnDaSRD1wd+Cf0ooAX4njDGTpoXm573TwucJhBEmmT8G1KiXVm
-         yFyEWexvS249ZH7yH4+D+9pRRq3udWq1btX5I2mTjv+mNtx9jeG9SLE2ufcJjCtNk0Gk
-         Qn0h2DvDAWpXFMOaof9+YqFZoqS+arOH8lcHhSbjFfSPQ5LjOTC6GXW2SIgujvZYSsph
-         jblw==
+        bh=7U3t7BA66xNgTWP0lvJA7pQ9KYV8qUd3WHJeAcqSDdc=;
+        b=ovLJila/gt8LLH1dvf/AdwOre6zIk8f0hFXqWc14u6qPxG0WqjaXzQ2bDqDjv7kVwa
+         6m8T32CJBNHyE/TGTIrY4f+bQCwgjUNtK2qeiIwppruNTi/Go4P1l4PLLdhogLTsKO/m
+         fzs4rXRa9ZDQ8qbZhmIxkMogI88P5mp0FFjpQFbPmBzKI9vMCq9otXPx8QQzvs9Ibyqh
+         9b2/RPzqdt9nlJNo8vMK6Gxjp777uNmTT/uoFBevLzaVUC9roELGQiIKatJvCdzXbR3i
+         klkpTWM8ui2nVmPnk6ahtJc8lH9bL6UmBqAS1ESZ++g+RH9UrRXrTQv9T2l+hQqCsMFi
+         UmJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=EmzRVMTbiWHEiiqAWAZqJndc0wjizD7Ar/J2++Y944k=;
-        b=WsT81Taf12azSjp3nzPQ7NQaFnGq2DR7cpuRw2/2DRwgf9U/q4c/DuK7XFDUY0YcSq
-         SH3RxnXJQcPVgAXprTrt/JG5yJQeVhbmpKqrKtqO8xDJGwPq0VroLY6mjdraPZmolune
-         UwtnEwEu2ONj8Lc9WgKhfz8iYfpePdhrwbg92Izi86K4dwWc+y5sOPDArKhfzgZkHOMR
-         wxaUqMYIhh9g3na0ppSG/Nfp4gQ9UtZbJVykxottIlga9wvzA1ZT2isTSmR++rJDsC3M
-         v56CRqMBn6j1qTDn3ENA2sqswqztPO2BfIi0U538fz1y2xXWDQSzxxsps+0zAxE7Yvu5
-         BJLw==
-X-Gm-Message-State: AOAM530aX3dleCwTLcyT9w5rdIks102DgqBCDyQtvFszxEpbJp6y1BUN
-        55dkcKzsZUJrON0VXcm5MQs=
-X-Google-Smtp-Source: ABdhPJweDMbSg+zu83DJqrZIYDYAmFWXKsMWNUBO+2qN7mpg/giC83z9oQN8n4H8AzlfBL23Qo5uPw==
-X-Received: by 2002:a05:6214:18f2:: with SMTP id ep18mr30774753qvb.37.1624971035962;
-        Tue, 29 Jun 2021 05:50:35 -0700 (PDT)
+        bh=7U3t7BA66xNgTWP0lvJA7pQ9KYV8qUd3WHJeAcqSDdc=;
+        b=ukKh7DQSZI7y27jCmE+myWUWIoqEF0/D2TkNJfWV4GbDQLWSuKHQDyxgsdbyBPpXCt
+         Z0niNz8QcawIJBYnkXks7mBo5H9fsGoiag8DdSIdYw5+h2ajGmd8/8t1vjFQ7/a+vMeq
+         RegzB4dtAsbRmIi4Gwq5ElGBs9nC/4S0QW1JZ1whTvhF2VYlNGQGtktQ11hZGJqv++uS
+         KGfKKlRW8P9w5QHa3TI2swQ0QQHQfYN2Y6iESPrU04rAMBIAw+jEmBt6oXlVFwtse6cl
+         jLF98Oe6jgJMUShZclUWLwg6MabqxSSTEHIU+LN4s5gdVpToRVDs8jkE4uTOSWRpqo7A
+         PN1A==
+X-Gm-Message-State: AOAM532lf6EABnFHOTIOM8yMoIX2b1Y1MPq5TDeqe4JHQnEeP10hqyGl
+        NWkyrzL2v5Jj+8CQRmxPpdE=
+X-Google-Smtp-Source: ABdhPJwTNVzzvzS7s7M+efsm8v5QwjBFCiaJlflQo9oYVV0nevQWtMbE8k1csj9mHNCCpUPbuObPlA==
+X-Received: by 2002:aca:c43:: with SMTP id i3mr24668093oiy.124.1624971332648;
+        Tue, 29 Jun 2021 05:55:32 -0700 (PDT)
 Received: from ?IPv6:2600:1700:e72:80a0:a008:8d1a:199e:a08b? ([2600:1700:e72:80a0:a008:8d1a:199e:a08b])
-        by smtp.gmail.com with ESMTPSA id 28sm7726798qkp.67.2021.06.29.05.50.35
+        by smtp.gmail.com with ESMTPSA id m1sm338552otl.0.2021.06.29.05.55.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Jun 2021 05:50:35 -0700 (PDT)
-Subject: Re: [PATCH 1/3] t6423: test directory renames causing rename-to-self
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+        Tue, 29 Jun 2021 05:55:31 -0700 (PDT)
+Subject: Re: [PATCH 3/3] merge-recursive: handle rename-to-self case
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 References: <pull.1039.git.git.1624727121.gitgitgadget@gmail.com>
- <d3572e8bc85e4c7a33094f5da71957c2e59fd7f4.1624727121.git.gitgitgadget@gmail.com>
+ <dea97c25e52c0c5dcba7698cdc2af742344fe36d.1624727122.git.gitgitgadget@gmail.com>
+ <xmqqeecl1foi.fsf@gitster.g>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c088028d-3045-70ce-19e9-f3ffc9c57c98@gmail.com>
-Date:   Tue, 29 Jun 2021 08:50:33 -0400
+Message-ID: <7854e7b7-f128-e389-cc06-8b599c7b3e32@gmail.com>
+Date:   Tue, 29 Jun 2021 08:55:29 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <d3572e8bc85e4c7a33094f5da71957c2e59fd7f4.1624727121.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqeecl1foi.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -76,47 +77,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6/26/2021 1:05 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On 6/29/2021 12:02 AM, Junio C Hamano wrote:
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> Directory rename detection can cause transitive renames, e.g. if the two
-> different sides of history each do one half of:
->     A/file -> B/file
->     B/     -> C/
-> then directory rename detection transitively renames to give us C/file.
-> Since the default for merge.directoryRenames is conflict, this results
-> in an error message saying it is unclear whether the file should be
-> placed at B/file or C/file.
+>> From: Elijah Newren <newren@gmail.com>
+>>
+>> Directory rename detection can cause transitive renames, e.g. if the two
+>> different sides of history each do one half of:
+>>     A/file -> B/file
+>>     B/     -> C/
+>> then directory rename detection transitively renames to give us
+>>     A/file -> C/file
+>>
+>> However, when C/ == A/, note that this gives us
+>>     A/file -> A/file.
 > 
-> What if C/ is A/, though?
+> Heh, of course this is recent because the "guess that directory B
+> has been moved to C in its entirety" heuristic is quite new.
+> 
+> Nicely fixed and described.  Will queue.  Thanks.
 
-This case seems interesting, but somehow missing from the test cases
-below. Each of those cases include renaming up or down the directory
-hierarchy instead of doing a sideways rename.
+I agree that the fixes in patches 2 and 3 are rather clean. The
+tests added in patch 1 provide significant confidence in the
+result, though I had a minor question about a possible third
+test case.
 
-> +# Testcase 12i, Directory rename causes rename-to-self
-> +#   Commit O: source/{subdir/foo, bar, baz_1}
-> +#   Commit A: source/{foo, bar, baz_1}
-> +#   Commit B: source/{subdir/{foo, bar}, baz_2}
-> +#   Expected: source/{foo, bar, baz_2}, with conflicts on
-> +#                source/bar vs. source/subdir/bar
-
-This test goes deeper.
-
-> +# Testcase 12j, Directory rename to root causes rename-to-self
-> +#   Commit O: {subdir/foo, bar, baz_1}
-> +#   Commit A: {foo, bar, baz_1}
-> +#   Commit B: {subdir/{foo, bar}, baz_2}
-> +#   Expected: {foo, bar, baz_2}, with conflicts on bar vs. subdir/bar
-
-This test goes higher.
-
-Does the problematic case not hit when going out to the side, such
-as "with conflicts on subdir/bar vs otherdir/bar"?
-
-If so, then _maybe_ the commit message could indicate this is an
-omission on purpose. If not, then maybe a third test should be
-added?
+Seeing the solutions that make the two tests pass leaves me to
+consider that the third test case is likely unnecessary, because
+there is nothing special about how the directories are being
+renamed that must be handled by the fix.
 
 Thanks,
 -Stolee
