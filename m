@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25A98C11F64
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3EF0C11F64
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:52:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01AFE61CA3
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:52:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 877AD61CCE
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbhF2Byf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 21:54:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46972 "EHLO
+        id S231512AbhF2Byj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 21:54:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbhF2ByT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 21:54:19 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BDA1C0617A6
+        with ESMTP id S231405AbhF2ByX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 21:54:23 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ED59C0617A8
         for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:51 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id a13so23645151wrf.10
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:50 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id m18so23658549wrv.2
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cf9nIryTcanflZXsZH2iY6xWOpEH8H2fFRcItvZOPQc=;
-        b=KlfMHPf9dtASy5ggCKaaJ/rJWMiVvhkDjGwrISLYm1IKyfztrRK52IvgMPG9l/hrbL
-         OirRrkpD9M/1r7BCW/QboTZdlcfYK+URifE1rAlH0Xio4G8pEurMmZ/kMwcq2BnQxT5d
-         7P3gR99Wpoz09SqJ0tpqksVPUVc87S0XDLXuwEX58fYU7Vx3k97bxdk+jXmn3lYcL6F+
-         9IutEitRVbS84Iihi/J9z9kueTTmYZj72Kw6Fy1AESkdHelZDfNyUPKHOdADob3oUucH
-         cRHZYYnvOSZC2wix3+Y6++CsGTK15xB/N2nAS+BwQ/7Z8Q+Djzfw+KAMy6mnM4iUMvM1
-         zWkA==
+        bh=sxTXciz4KAY7fU0l8Y3HSNjtGXPSTPrbuXtexuD+41c=;
+        b=EIF9j3pvE8z9useOqoCnka6SO8sDTkOyMfyhw99wbIPgkzzM3mhbAR/LV/dGFzzKss
+         dYNvb7dofOuWtB6Nrc4K51yOkdo0yXnOLDMKLKvjybGvKUSs3Rru9DCli6KD3CTSWGuA
+         HTOxT+3Gz6h+30EWqWbWKm52JsN9RXR012AWjW72d80nbY8pKlx99G9i0WtHGJg5vMoN
+         0e5VzYquAJeY4ZXIBevKX9p70F2KehalnJGANOPRUpoQnPhI4wSb3wokzw7buwmgzkNG
+         WLT/723EJFPJrcxvBPQJ57q4LEoEpqnkujAd/0xHnF3xeHSd6K71KbSX5fHy7V42f7Pl
+         HWYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cf9nIryTcanflZXsZH2iY6xWOpEH8H2fFRcItvZOPQc=;
-        b=iRbxehrtZuxX8co6jusjJGnfTvb9F+zM5O0X0ruXSi2L/S3cBVLchJuzCzzitc7bN2
-         CG6Tr8pIwoh5px1g9Q+PkQfCNA1Nk4pNSp1Ss6nW83cGeLOVBdJWFR/jYJXhV4R7VR4J
-         4ZhaQYs2hreFsWGRtFWrSdgqu/VJzMcCbaBYHZZBjIa3rwvypM0Dx/xUFk2QGWazvQna
-         7nQ2pgVUrHO6uQmVwc+pE+7GzBdORGI9sthQswCx+0UINtt6B8Jvu723myZrZJRfGPj+
-         +YWz1T/X8XJj3rDWUsdEyBATJsv7rqMufcFsdX2VdsJKGnGUbKTwfGSlxbmI8kAX85wI
-         ZRuw==
-X-Gm-Message-State: AOAM531FoaDR2qJFp8FjJNICa78FcA0weEh5+h4f5D2jcfh0EHBCaRqw
-        MxUs6llywh6pDV/gOYFCEL3anYwpjhY=
-X-Google-Smtp-Source: ABdhPJw4bVnbY8dsU/Dp9l60m5yHwQLTfRlgQweCFBX/nBXTrYodX9TK+Df2uc8cAKS4c8iJnZFYEg==
-X-Received: by 2002:a5d:5182:: with SMTP id k2mr29856431wrv.126.1624931509738;
-        Mon, 28 Jun 2021 18:51:49 -0700 (PDT)
+        bh=sxTXciz4KAY7fU0l8Y3HSNjtGXPSTPrbuXtexuD+41c=;
+        b=qfztsRDW5ARY7TI5UHf70bakJAfYsjaXJA9160Ya0OtO7XFTVSBqdjNFCOBo4eJ45N
+         dgTZTM8/NsJVWCFKezamDZ3VNcMOhqsTtA/3qZFdvtMkrsGXHopFmWFgOWICZMJg4k+S
+         NCcOjoJ6MZR+fDRjDaJG1ubnT/0zdlIaxsfZcMfooXqA12vCMDxL6+81Vpa2i8vPHZJ6
+         js6Yy7Uo5AkqRYUOS/HXpawIw0vFhU8rn7kA6sd21GD2YvA3SCDIv551XmGQ06nkbvfp
+         sLU22IFRhFnH7bEB9dyyz/QbLGQeFaxe3iT5JwEKN+1GD/iRjjpeZab+xI8PF/FmxRnM
+         H3ag==
+X-Gm-Message-State: AOAM532O2B1zhoJIgYV/8PBGHrf+ZHxaHtTvEvu5bIzIui63lPuEt9zB
+        PFFHVB3H8xckcGMRY+HymzynEtCS7nU=
+X-Google-Smtp-Source: ABdhPJydHdzLKYkFouObaDvhNlJcu13I3X6nVyypya5pbShEtIuctUH3I10E2PKa9ih5ijY7p5qcWw==
+X-Received: by 2002:a05:6000:1245:: with SMTP id j5mr29831814wrx.371.1624931510272;
+        Mon, 28 Jun 2021 18:51:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11sm1220355wrt.71.2021.06.28.18.51.49
+        by smtp.gmail.com with ESMTPSA id k13sm16259010wrp.73.2021.06.28.18.51.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jun 2021 18:51:49 -0700 (PDT)
-Message-Id: <ed11cfc791f65fe79db3d39471a6779138370c61.1624931502.git.gitgitgadget@gmail.com>
+        Mon, 28 Jun 2021 18:51:50 -0700 (PDT)
+Message-Id: <48fd25aacbeb1baeca637aec40f3f4cba0da0f52.1624931502.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
 References: <pull.932.v5.git.1623069252.gitgitgadget@gmail.com>
         <pull.932.v6.git.1624931502.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Jun 2021 01:51:38 +0000
-Subject: [PATCH v6 10/14] diff-lib: handle index diffs with sparse dirs
+Date:   Tue, 29 Jun 2021 01:51:39 +0000
+Subject: [PATCH v6 11/14] status: skip sparse-checkout percentage with
+ sparse-index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,57 +81,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-While comparing an index to a tree, we may see a sparse directory entry.
-In this case, we should compare that portion of the tree to the tree
-represented by that entry. This could include a new tree which needs to
-be expanded to a full list of added files. It could also include an
-existing tree, in which case all of the changes inside are important to
-describe, including the modifications, additions, and deletions. Note
-that the case where the tree has a path and the index does not remains
-identical to before: the lack of a cache entry is the same with a sparse
-index.
+'git status' began reporting a percentage of populated paths when
+sparse-checkout is enabled in 051df3cf (wt-status: show sparse
+checkout status as well, 2020-07-18). This percentage is incorrect when
+the index has sparse directories. It would also be expensive to
+calculate as we would need to parse trees to count the total number of
+possible paths.
 
-Use diff_tree_oid() appropriately to appropriately compute the diff.
+Avoid the expensive computation by simplifying the output to only report
+that a sparse checkout exists, without the percentage.
+
+This change is the reason we use 'git status --porcelain=v2' in
+t1092-sparse-checkout-compatibility.sh. We don't want to ensure that
+this message is equal across both modes, but instead just the important
+information about staged, modified, and untracked files are compared.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- diff-lib.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ t/t1092-sparse-checkout-compatibility.sh |  8 ++++++++
+ wt-status.c                              | 14 +++++++++++---
+ wt-status.h                              |  1 +
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index c2ac9250fe9..3f32f038371 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -325,6 +325,11 @@ static void show_new_file(struct rev_info *revs,
- 	unsigned dirty_submodule = 0;
- 	struct index_state *istate = revs->diffopt.repo->index;
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 7c78e40b861..9035adcb7db 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -215,6 +215,14 @@ test_expect_success 'status with options' '
+ 	test_all_match git status --porcelain=v2 -uno
+ '
  
-+	if (new_file && S_ISSPARSEDIR(new_file->ce_mode)) {
-+		diff_tree_oid(NULL, &new_file->oid, new_file->name, &revs->diffopt);
++test_expect_success 'status reports sparse-checkout' '
++	init_repos &&
++	git -C sparse-checkout status >full &&
++	git -C sparse-index status >sparse &&
++	test_i18ngrep "You are in a sparse checkout with " full &&
++	test_i18ngrep "You are in a sparse checkout." sparse
++'
++
+ test_expect_success 'add, commit, checkout' '
+ 	init_repos &&
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 42b67357169..96db3e74962 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1493,9 +1493,12 @@ static void show_sparse_checkout_in_use(struct wt_status *s,
+ 	if (s->state.sparse_checkout_percentage == SPARSE_CHECKOUT_DISABLED)
+ 		return;
+ 
+-	status_printf_ln(s, color,
+-			 _("You are in a sparse checkout with %d%% of tracked files present."),
+-			 s->state.sparse_checkout_percentage);
++	if (s->state.sparse_checkout_percentage == SPARSE_CHECKOUT_SPARSE_INDEX)
++		status_printf_ln(s, color, _("You are in a sparse checkout."));
++	else
++		status_printf_ln(s, color,
++				_("You are in a sparse checkout with %d%% of tracked files present."),
++				s->state.sparse_checkout_percentage);
+ 	wt_longstatus_print_trailer(s);
+ }
+ 
+@@ -1653,6 +1656,11 @@ static void wt_status_check_sparse_checkout(struct repository *r,
+ 		return;
+ 	}
+ 
++	if (r->index->sparse_index) {
++		state->sparse_checkout_percentage = SPARSE_CHECKOUT_SPARSE_INDEX;
 +		return;
 +	}
 +
- 	/*
- 	 * New file in the index: it might actually be different in
- 	 * the working tree.
-@@ -347,6 +352,17 @@ static int show_modified(struct rev_info *revs,
- 	unsigned dirty_submodule = 0;
- 	struct index_state *istate = revs->diffopt.repo->index;
+ 	for (i = 0; i < r->index->cache_nr; i++) {
+ 		struct cache_entry *ce = r->index->cache[i];
+ 		if (ce_skip_worktree(ce))
+diff --git a/wt-status.h b/wt-status.h
+index 0d32799b28e..ab9cc9d8f03 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -78,6 +78,7 @@ enum wt_status_format {
+ };
  
-+	/*
-+	 * If both are sparse directory entries, then expand the
-+	 * modifications to the file level.
-+	 */
-+	if (old_entry && new_entry &&
-+	    S_ISSPARSEDIR(old_entry->ce_mode) &&
-+	    S_ISSPARSEDIR(new_entry->ce_mode)) {
-+		diff_tree_oid(&old_entry->oid, &new_entry->oid, new_entry->name, &revs->diffopt);
-+		return 0;
-+	}
-+
- 	if (get_stat_data(istate, new_entry, &oid, &mode, cached, match_missing,
- 			  &dirty_submodule, &revs->diffopt) < 0) {
- 		if (report_missing)
+ #define SPARSE_CHECKOUT_DISABLED -1
++#define SPARSE_CHECKOUT_SPARSE_INDEX -2
+ 
+ struct wt_status_state {
+ 	int merge_in_progress;
 -- 
 gitgitgadget
 
