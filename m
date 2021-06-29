@@ -2,119 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE481C11F64
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7B22C11F65
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:13:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9DD8361CEB
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:13:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B4F961CE4
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbhF2CPj (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231559AbhF2CPk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 22:15:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51744 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231304AbhF2CPj (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Jun 2021 22:15:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35662 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230292AbhF2CPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 22:15:38 -0400
-Received: (qmail 17654 invoked by uid 109); 29 Jun 2021 02:13:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Jun 2021 02:13:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23047 invoked by uid 111); 29 Jun 2021 02:13:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Jun 2021 22:13:12 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 28 Jun 2021 22:13:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Why the Makefile is so eager to re-build & re-link
-Message-ID: <YNqBtrXzUlJiuc7y@coredump.intra.peff.net>
-References: <874kdn1j6i.fsf@evledraar.gmail.com>
- <YNSh0CskelTwuZq0@coredump.intra.peff.net>
- <fb23a23e-13be-14a8-4fbe-5ca2b4bcdb52@kdbg.org>
- <87r1gqxqxn.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633E7C061760
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:13:11 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id u8so10438885wrq.8
+        for <git@vger.kernel.org>; Mon, 28 Jun 2021 19:13:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lX+phGtUUNbbXIoUjtKs9N0xtQbw6A/3yCrL+FgxfnM=;
+        b=AWwslph0JnXtOD852oLlfRuJSw4QT5cUuGptsrGQNHtW7YIDoJuT95GWbmfAJaquMH
+         1+qI1x6XFT4TVUHdhl2fbtol2adh97YAJHpjSFj84zC3TyVnWIogvEGVlsq0rLTKy3Zz
+         NpG52j2MKAtUVTsKpHQpMGclQ77vsVO5TN0mnd1kuMWuAZUZDT0CsPMiB5xlf47xS/W1
+         OWzkOy3VSuMJQovnTAARZMCPjjx9ab0FaYrhHu9P9eGN9Psh3dzr4UaALegVEkEo2Bw4
+         sIwKpwBUClS2xDmn/YFExoJG5zMt9WKfu6PCP/9Cg/1YbY/3bZFwZZOC9vRpmMrvE0BM
+         MK2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=lX+phGtUUNbbXIoUjtKs9N0xtQbw6A/3yCrL+FgxfnM=;
+        b=ECuMvkufyg+HqjkQJDWNn0A1y8JyLT9eKWLy7l76vROjXW6N0VdBhxodHrbL0blFBE
+         o90mk0GSZDxuHZLxQTi+wxKtgzQCKYzWp1lvvxaIEVMJibZ8Ka+YzRXnaP4B2q04aYXz
+         JAMKNgeEwOBPSvi/Xt+vpnhJoYS8RKtCgAL/VrQP1QEG5x3uJ1BLLMr9GNAuXanPrxGy
+         Xlq715CFdH+mOTFTJl++WZOngdN5mNcBasIWj/kdCdn2XFjaa6OD80kHVNVj1rK59KxR
+         gfz5r87m1WzMciMllcZadVsZAXkXVlNUfui5cMKcm5U3BAZDzpjiFtmwvnymZQ+EEG4Z
+         FvCg==
+X-Gm-Message-State: AOAM533Idbw1pFET8Ykovu3oWQhY6Y3GkPGxP6WuS0HQrktZwC8qfYZJ
+        j/MuZIwyP15M8qD16DlOSKSBz0vOYYw=
+X-Google-Smtp-Source: ABdhPJzl57MH4kVyqmEgSUXIbI/fKkaYEt80nBDaP+MNqwa9YTAMhM5lI2Oco7Es3f75p8+ZkiDbQQ==
+X-Received: by 2002:adf:ff8e:: with SMTP id j14mr30223818wrr.374.1624932790065;
+        Mon, 28 Jun 2021 19:13:10 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s7sm8448712wrp.97.2021.06.28.19.13.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jun 2021 19:13:09 -0700 (PDT)
+Message-Id: <ffe8473caab5189961ec29464629e13abbe310ed.1624932787.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+References: <pull.973.git.1624932786.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 29 Jun 2021 02:13:05 +0000
+Subject: [PATCH 4/5] sparse-index: recompute cache-tree
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87r1gqxqxn.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, newren@gmail.com, matheus.bernardino@usp.br,
+        stolee@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 25, 2021 at 10:34:20AM +0200, Ævar Arnfjörð Bjarmason wrote:
+From: Derrick Stolee <dstolee@microsoft.com>
 
-> Interesting, but I think rather than micro-optimizing the O(n) loop it
-> makes more sense to turn it into a series of O(1) in -j parallel,
-> i.e. actually use the make dependency graph for this as I suggested in:
-> https://lore.kernel.org/git/87wnqiyejg.fsf@evledraar.gmail.com/
+When some commands run with command_requires_full_index=1, then the
+index can get in a state where the in-memory cache tree is actually
+equal to the sparse index's cache tree instead of the full one.
 
-I have mixed feelings on that. I do like the general notion of breaking
-apart tasks and feeding the dependencies to "make", because that lets it
-do a better job of parallelizing or avoiding already-done work. But
-there's a cost to running any job, so eventually you get to a unit of
-work that's so small the overhead dominates.
+This results in incorrect entry_count values. By clearing the cache
+tree before converting to sparse, we avoid this issue.
 
-For instance, starting from a built Git but dirtying all doc files with
-"touch Documentation/*.txt", running "time make -j16" yields:
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ sparse-index.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-  real	0m1.749s
-  user	0m2.963s
-  sys	0m1.146s
+diff --git a/sparse-index.c b/sparse-index.c
+index 53c8f711ccc..c6b4feec413 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -170,6 +170,8 @@ int convert_to_sparse(struct index_state *istate)
+ 	if (index_has_unmerged_entries(istate))
+ 		return 0;
+ 
++	/* Clear and recompute the cache-tree */
++	cache_tree_free(&istate->cache_tree);
+ 	if (cache_tree_update(istate, 0)) {
+ 		warning(_("unable to update cache-tree, staying full"));
+ 		return -1;
+-- 
+gitgitgadget
 
-With your patch to break it apart into many jobs, the same operation
-gives:
-
-  real	0m0.762s
-  user	0m3.054s
-  sys	0m0.600s
-
-So that took fewer wall-clock seconds, but we actually spent more CPU.
-On a system with fewer cores, it would probably be a loss in both
-places.
-
-Now maybe that's a good tradeoff, especially because the common case
-(aside from a build-from-scratch, which will spend loads more time
-actually compiling anyway) is that only a handful of files would be
-updated.
-
-But if we can just make the actual operation faster, then even O(n)
-repeated work might be a win in all cases, because it's avoiding the
-overhead of extra jobs.
-
-I dunno. I think there's a formula here that depends on the overhead of
-a job versus the time to handle a single file in the script, coupled
-with the expected number of changed files for any run. I'm not sure of
-the exact values of those numbers in this case, but am mostly pointing
-out that it's a tradeoff and not always a pure win. :)
-
-> Something like the hacky throwaway patch that follows. Now when you
-> touch a file in Documentation/git-*.txt you re-make just that file
-> chain, which gets assembled into the command-list.h:
-
-I know you said this was throwaway, but in case you do pursue it
-further, my first run hit:
-
-  $ time make
-  GIT_VERSION = 2.32.0.94.gaa5e6f14dd
-      * new prefix flags
-      GEN build/Documentation
-      GEN build/Documentation/git-add.txt.cmdlist.in
-  /bin/sh: 1: cannot create build/Documentation/git-add.txt.cmdlist.in: Directory nonexistent
-  /bin/sh: 5: cannot create build/Documentation/git-add.txt.cmdlist.in: Directory nonexistent
-      GEN build/Documentation/git-am.txt.cmdlist.in
-  /bin/sh: 1: cannot create build/Documentation/git-am.txt.cmdlist.in: Directory nonexistent
-  /bin/sh: 5: cannot create build/Documentation/git-am.txt.cmdlist.in: Directory nonexistent
-
-So I'd guess there's some race with creating the build/Documentation
-directory (a subsequent run worked fine).
-
--Peff
