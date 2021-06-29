@@ -2,140 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D13A8C11F69
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6C2C11F67
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:58:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA0D461D84
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:54:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3AAC61DE3
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 18:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235284AbhF2S46 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 14:56:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48930 "EHLO
+        id S235320AbhF2TBT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 15:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234521AbhF2S4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 14:56:52 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F05D5C061767
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:23 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id n33so258257wms.2
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:54:23 -0700 (PDT)
+        with ESMTP id S235336AbhF2TBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 15:01:17 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A0FC061766
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:58:48 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a13so371008wrf.10
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 11:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Arqb+YKlaGPIXcELVOJi/Fcn2FhlR4YsbU9HyKrUrRU=;
-        b=vPo5NI/rDElXEiPZ4heqNLDAP3aMZS1jCS33xUdKFF7Xdtnf1sJIOgNiTYBOCjBGdb
-         hQuOqqnVIgO9TxBZtJ6IYep3oDDSbTpUJro6LEN2PG612tiPAey5RbGYcYtxEirvpyM4
-         c3yaG30jUKb1zp5rFivIrctyOGOAaY+eKSlNrGqeJgrzVSpzqY1BN0NqnZGiBjaULrZC
-         nkWkYsYQDYHTj9awrR1xWBOcOJaBbsWBq3fciD/VmumAesoXCgYEiE0XEke2aNCak4qI
-         qyfstURwp3vFwd5E8Op7jDJdl0zLXG28WdhXcZBuHwKYgyAtfXuQiRovIHzGBiGFm8De
-         BseQ==
+        d=tesisquare-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0/mEmGviv1AcmA6Db7nnNLjrxMWHHQK6F7WxjHGY6ac=;
+        b=cXZTZivNTW17WfklrjoBpnu/Q07Fz5u59M8nh5Jayf6Fiy8wsWBbH/M3b0qnmKrxTj
+         MRoLyY5kFZ9Ilr5XhLzF+lsFJfwUkHxux6TbiylSuemCD59eVZSS71m6EcQ1XXCbaXLV
+         qIu3kHPaytGZYjig8wt8TteftijcYZzJoLe4fnq9Q8gjdkMAopjXnmxVpADRvj8ZPqpP
+         h2W48dr7jBSIHEGskHHUJRimuCa72WlCyvbvy7fok4mwEjNhhQXLR+haM6RrUxTSTWFV
+         muXWsRL3B6Bjbd6Fv3Wb7yx27Wf8VTpuQ4XJkbjN8AcJ3UBZY+R1KMr5buWViqbK3kFw
+         Y6YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Arqb+YKlaGPIXcELVOJi/Fcn2FhlR4YsbU9HyKrUrRU=;
-        b=lD/waUt1NSwNViZjDh/WShVPL+agYzhSkcIbbWKpyo9drGo8+mZn+HGxVqo2WEBIO7
-         gMzDtouz5PREgJ9/4EcQ9itEfSwD/bu8SIk9epsxeugOXl7xY+oL3NhGCg4IJ0rcPHoT
-         22kNMaNGQlnwMZi1yKCtLb+DjpFIRh2dlAPUZ1otaNSEDCGHX4XEujXhkBy1Gvve6Adl
-         Cc3awThD8lBnxNMkY3sfJNOA/R3YRrIPhgp8/8q9L5rnlX0bXJN611GTTGOXj8Q04Qu9
-         1NIVHfNHbuVtcICkywNU7vGGIxOHttovsD+esPofTn5I0Y6tDr3PDWTE3uiHypcO3x4s
-         v6yA==
-X-Gm-Message-State: AOAM532DHmMgYHj0nhmUe82TinsXPVxuZmCbJ8y3PwpkIFWT4TXwS84Q
-        fy+Qn3OXaILL8i3O+fYN/vftAWp8HKY/yQ==
-X-Google-Smtp-Source: ABdhPJzFStvstDvrey8OvAY5tmnWAnkXsfH3FfThXpBRnqlWtFFJ/3vlTMGW2xTlsnFmaj3T1VBwlg==
-X-Received: by 2002:a05:600c:21c4:: with SMTP id x4mr34191005wmj.30.1624992862293;
-        Tue, 29 Jun 2021 11:54:22 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k13sm19025218wrp.73.2021.06.29.11.54.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 11:54:21 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/3] hook.c: add a hook_exists() wrapper and use it in bugreport.c
-Date:   Tue, 29 Jun 2021 20:54:01 +0200
-Message-Id: <patch-2.3-0cf7e078ef-20210629T183325Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.615.g90fb4d7369
-In-Reply-To: <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
-References: <cover-0.3-0000000000-20210617T100239Z-avarab@gmail.com> <cover-0.3-0000000000-20210629T183325Z-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0/mEmGviv1AcmA6Db7nnNLjrxMWHHQK6F7WxjHGY6ac=;
+        b=jx16VBoc4ZTylv44HiZa8/yWH1XcinwoI43AQYEoitwlygfHQJyBvNVtwzStkiQoWb
+         3KUd7Uovml/3K7AmBd6ezFEiL1hrfsLlvg5mjJipwAq9MIfk6RsUvc68UmBADXlEX3YL
+         3rCSxfhTZyCJd9i325k1EWtWVVRlIMzaPThnpUsoOmHuMB2+J1xutj1XobeK7kYjtLIK
+         b17hnWZ6/sR9ke4anV4eEjx5Xz7tY2LBysOgWaYh69k0DWO9hRkpv3GCrb/FgJaC7+CB
+         nfBj0TFUZ861KeX4/22ihjNf7Jadp6Kw+WSoD0NbKH5SXOCMi++JkTA7XwL+TBQ2QgJN
+         FJEg==
+X-Gm-Message-State: AOAM531FozRRbPW36bsJ8mGFHkGcMBwqc2TZYUFsfkDcrxisCYR84YFb
+        17mRTiZKKAG6I1nkVMTM4pLq7cjE4uS/xp6MQtMtcw==
+X-Google-Smtp-Source: ABdhPJwAlPKaQDpRrxoICqHDwJmvD0bgOnd6YDtINN5dtbpg3049e/7yqGc//I4gJ3XINjl0kBxzHPkFnv4ibXBVBdw=
+X-Received: by 2002:a5d:4e08:: with SMTP id p8mr17428434wrt.425.1624993127255;
+ Tue, 29 Jun 2021 11:58:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CANLwWg4hG=iv9qjOmGHSJ7z7Y+vvvP+x0o3DfR5bH5A-C6_7aQ@mail.gmail.com>
+ <9a83ef22-2291-1364-b0a8-1eb8257972a2@gmail.com> <CANLwWg5Lcf7PYtZ49U-KZ_3UYVb9FJ-g1B+eFYoO2D1t5UArmw@mail.gmail.com>
+ <6b604658-8f7e-ae5d-7161-c48aed7ccbd0@gmail.com> <CANLwWg7YFC2VrRYz1PR1U9SVG5yiyRVnyMspGc8PqKktouz8dQ@mail.gmail.com>
+ <CABPp-BH1COE8worEAuu3M_LNJfVhW3Y6+1r8zfUcVaTrVgjG5w@mail.gmail.com>
+In-Reply-To: <CABPp-BH1COE8worEAuu3M_LNJfVhW3Y6+1r8zfUcVaTrVgjG5w@mail.gmail.com>
+From:   Marco Giuliano <marco.giuliano@tesisquare.com>
+Date:   Tue, 29 Jun 2021 20:58:21 +0200
+Message-ID: <CANLwWg7Y4yH=yQYt3d7xH-LDfiZgbiMpHb9uxSJ=xT12s2WnrQ@mail.gmail.com>
+Subject: Re: Nonexistent changes appear rebasing but only with rebase.backend=apply
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Emily Shaffer <emilyshaffer@google.com>
+On Sat, Jun 26, 2021 at 9:53 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> Hi Marco,
+>
+> On Fri, Jun 25, 2021 at 12:15 AM Marco Giuliano
+> <marco.giuliano@tesisquare.com> wrote:
+> >
+> > Hi Philip,
+> > oh, so I guessed correctly...
+> > Could you be more specific about the copy/rename issue of the apply backend ?
+> > Is there any bug report I can refer to ?
+> >
+> > Thank you very much for your support
+>
+> Could you do us a favor?  Please avoid top-posting and instead answer
+> after the quoted original text, much like I'll do here...
+>
+> > On Thu, Jun 24, 2021 at 8:39 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > >
+> > > Hi Marco
+> > >
+> > > On 24/06/2021 17:23, Marco Giuliano wrote:
+> > > > Thanks Felipe and Philip for your answers.
+> > > >
+> > > > Let's proceed in order:
+> > > > @Felipe: I tried rebasing with --no-fork-point but the problem remains the same
+> > > >
+> > > > @Philip:
+> > > > I'm a basic git user, so bear with me if I say silly things...
+> > > > I tried to search for rebased-patches in .git folder when rebase
+> > > > stopped waiting for
+> > > > conflict resolution, but I didn't find any file named like that.
+> > > > There's a folder named rebase-apply though did you mean that ?
+> > >
+> > > Looking at the source I thought they ended up just in .git but I haven't
+> > > checked again, as you seem to have found the source of the problem below
+> > > lets not worry about that.
+> > >
+> > > > Anyway, looking at the conflict file of "fileA" directly (not behind a
+> > > > visual diff tool) I noticed that the marker line >>>>>>>> COMMIT
+> > > > DESCR: FILENAME indicates a different file name then the current
+> > > > conflicted file.
+> > > > That reminded me that those two files A & B, were actually copies
+> > > > (real copy, not symlink) of other two files inside the same repo.
+> > > > Is it somehow possible that auto-detected-renaming is involved in this
+> > > > (since the files are identical but in two different locations) ?
+> > > > Trying to give you some hints, maybe it is totally unrelated...
+> > >
+> > > I meant to ask if anything had been copied or renamed but forgot. The
+> > > merge backend detects copies and renames and handles them correctly but
+> > > the apply backend does not so I think this is the source of the discrepancy.
+> > >
+>
+> So I've got a hunch here.  First, Marco, from your example, can you run
+>
+> git diff --name-status -C Y...X
+>
+> and report whether the files involved were either renamed or copied on
+> the upstream side of history.  (Also, please note that there are three
+> dots between Y and X)  Also, can you report whether a message of the
+> form "inexact rename detection was skipped due to too many files" when
+> using the merge backend and that files you copied from end up in
+> modify/delete conflicts when using the merge backend?
+>
+>
+> My suspicion is:
+> * You both renamed some files and copied them on the upstream side of history
+> * You made further changes to the renamed files, more so than to the "copies"
+> * You have enough added/removed/renamed files that with the merge
+> backend you are triggering merge.renameLimit and not getting rename
+> detection, causing various reports of modify/delete conflicts
+> * The apply backend's use of fake trees can be viewed as a poor-man's
+> version of the irrelevant rename detection optimization I added to
+> merge-ort, but it works well enough to get you under merge.renameLimit
+> so that renames are detected for the apply backend
+> * The fact that you modified what you view as renames more than what
+> you viewed as copies has the perverse effect of causing git's rename
+> detection to pair up files with the copy rather than the rename, and
+> apply changes to it
+>
+> The net result is that the 'merge' backend isn't apply your changes
+> from various files to their renamed counterpart, while the 'apply'
+> backend is almost doing that but applying them to what you think of as
+> the copy rather than the intended renamed file.  The questions I asked
+> above may be able to help us either confirm or rule out this theory.
 
-Add a boolean version of the find_hook() function for those callers
-who are only interested in checking whether the hook exists, not what
-the path to it is.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/bugreport.c | 2 +-
- hook.c              | 5 +++++
- hook.h              | 5 +++++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+Hi Elijah,
+sorry for the top posting.
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 596f079a7f..941c8d5e27 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -82,7 +82,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(hook); i++)
--		if (find_hook(hook[i]))
-+		if (hook_exists(hook[i]))
- 			strbuf_addf(hook_info, "%s\n", hook[i]);
- }
- 
-diff --git a/hook.c b/hook.c
-index c4dbef1d0e..97cd799a32 100644
---- a/hook.c
-+++ b/hook.c
-@@ -35,3 +35,8 @@ const char *find_hook(const char *name)
- 	}
- 	return path.buf;
- }
-+
-+int hook_exists(const char *name)
-+{
-+	return !!find_hook(name);
-+}
-diff --git a/hook.h b/hook.h
-index 68624f1605..4c547ac15e 100644
---- a/hook.h
-+++ b/hook.h
-@@ -8,4 +8,9 @@
-  */
- const char *find_hook(const char *name);
- 
-+/*
-+ * A boolean version of find_hook()
-+ */
-+int hook_exists(const char *hookname);
-+
- #endif
--- 
-2.32.0.615.g90fb4d7369
+I tried the 3-dots command, but no changes on those 2 files are
+reported. Neither I got any message about inexact rename detection
+using the merge backend.
 
+I think it might be something related to copy/rename/slighly-change
+very similar files, but probably not exactly what you described.
+Commit 4 is the result of a squash where I remember doing changes and
+copies of those two files, is it possible that the squash operation
+(which uses rebase under the hood) somehow nullified some of those
+changes because of their similarities and the current rebase-apply
+made them reappear ?
+
+I don't know if it can be useful, but if I do an interactive rebase
+(rebase -i X), even with rebase.backend=apply, the two files do not
+appear among the conflicts (same as rebase.backend=merge).
+
+Thanks for the support
+Marco
