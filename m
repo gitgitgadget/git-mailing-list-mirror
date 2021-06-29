@@ -2,148 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 976B0C11F67
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A4CEC11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:20:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A3C661DD4
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:13:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 525E361DC2
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:20:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233465AbhF2LPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 07:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58100 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233451AbhF2LPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 07:15:53 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D18C061760
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 04:13:25 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id u6so3190053wrs.5
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 04:13:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=oLNRX4g8YYbeN8n/g4rtcPcjYSljj7AuXSJGltqZ6TU=;
-        b=IGCrzGHnUbjeBdDnRf+v2UV6BzfrWtZR2eFZ1wQH8/1H+4rGZm4A6aFsOu7Z9HsjtH
-         7CzuD+iMcTiWP9KVBEovUDg7rFlCZIb9WU9sC3QeZGS/uQEtg99uW36h6wciaJmCIPGT
-         iMSPR17ovgdypWiDlgF5oo1IrefVXPG9dO0spaE67v5VsD1rxnM/fSK4nV+kEqy7EnNC
-         JfgscJNWhjuE1ymSDj2CR7TDm4QDCy9SSVKb+Thf76G/yIKfEG9YBbba51/H/KyJZ7Hi
-         EOO0Qvbi78Xqp5cZ//nFqPNH72Xyo+/TQu1Kh8yr+79cQFhSu7qRYhiXipc2C+G6NGhX
-         4QWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=oLNRX4g8YYbeN8n/g4rtcPcjYSljj7AuXSJGltqZ6TU=;
-        b=ZFIInflHj4YqTSffXQQQEY52Ki08LUClo6swmtbH/SUAXBrlwYSmSM6svVEPF2fNeY
-         MivAO+tVjSWsV9bXEKhf+kjiuJrE8oEefSDKofK1+rS22UxhWblE9IGjU+EJUG3nD3jT
-         wG1cKP8HXJ5CiVN4gSHROGVmu3+qqzCElV4SEmbQqfIpVHWoM0ublzBA8mulXd8MDrSb
-         38SfCt9yuw+ddM1INGa9WKjqIE1Lw7Vb18HcOowx7lDS99Ec7yDAUeS0N0yHwJHjAsnV
-         ozbHd6XT5JiAIoPvbPpK+aYxHWrZrZrMMRi8MAIyiawbQem9Iv1IFgoKPicChxcX7q8J
-         FESg==
-X-Gm-Message-State: AOAM530cptX5gA3chwoGQ/82tTvVxPUoqz93CTR5UQ+INM0iBSg+Ogih
-        IwVsHl1Y16juOpIlJakESCq7hTuGKE7+Bw==
-X-Google-Smtp-Source: ABdhPJyDTmDBuISKPxFCxyJDuxq+yAYWggGe3twS66vV11BjyiDHiEEhE9VbtyFEiXCdVEI4dvzX9A==
-X-Received: by 2002:a5d:6d8d:: with SMTP id l13mr31259101wrs.358.1624965203793;
-        Tue, 29 Jun 2021 04:13:23 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r1sm2499370wmn.10.2021.06.29.04.13.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 04:13:23 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S233321AbhF2LW2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 07:22:28 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.18.16]:3842 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233281AbhF2LW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 07:22:27 -0400
+X-Greylist: delayed 489 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Jun 2021 07:22:27 EDT
+Received: from [79.233.236.111] (helo=[192.168.2.202])
+        by smtprelay04.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <git@mfriebe.de>)
+        id 1lyBeD-0003nX-V7
+        for git@vger.kernel.org; Tue, 29 Jun 2021 13:11:22 +0200
+From:   Martin <git@mfriebe.de>
+Subject: feedback/idea about "switch -C" force create
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Kristof Provost <Kristof@provost-engineering.be>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 5/5] Makefile: normalize clobbering & xargs for tags targets
-Date:   Tue, 29 Jun 2021 13:12:59 +0200
-Message-Id: <patch-5.5-5195d99e25-20210629T110837Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.32.0.613.g20d5ce26552
-In-Reply-To: <cover-0.5-0000000000-20210629T110837Z-avarab@gmail.com>
-References: <cover-0.3-00000000000-20210622T141844Z-avarab@gmail.com> <cover-0.5-0000000000-20210629T110837Z-avarab@gmail.com>
+Message-ID: <20eb626d-89b4-fe2a-7cf4-c596b634f0f8@mfriebe.de>
+Date:   Tue, 29 Jun 2021 13:11:49 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the "tags", "TAGS" and "cscope.out" targets rely on ping into
-xargs with an "echo <list> | xargs" pattern, we need to make sure
-we're in an append mode.
+First of all, my first post, hope it's the correct place.
 
-Unlike recent changes of mine to make use of ".DELETE_ON_ERROR" we
-really do need the "rm $@+" at the beginning (note, not "rm $@").
+I've been using the new git switch for some time, and also I have helped 
+people new to git.
+When people are new to git, I try to avoid introducing them to commands 
+that can loose them commits (such as git reset).
 
-This is because the xargs command may decide on multiple invocations
-of the program. We need to make sure we've got a union of its results
-at the end.
+"git switch" however has to be on the list of commands that new user 
+have to learn early, but unfortunately when used with "-C" it may cause 
+the loss of commits.
+I am aware, it is a force option. But I still think it may be better if 
+it could emit a warning, or even reject the job.
 
-For "ctags" and "etags" we used the "-a" flag for this, for cscope
-that behavior is the default. Its "-u" flag disables its equivalent of
-an implicit "-a" flag.
+Reasons:
+1) Newcomers may not be aware of the extend of such a force at all. 
+Newcomers may not expect loss of commits, on such an elementary command.
 
-Let's also consistently use the $@ and $@+ names instead of needlessly
-hardcoding or referring to more verbose names in the "tags" and "TAGS"
-rules.
+2) People aware that it is a "force" may not be aware of the extend of 
+the force, because there are either up to 2 actions forced.
 
-These targets could perhaps be improved in the future by factoring
-this "echo <list> | xargs" pattern so that we make intermediate tags
-files for each source file, and then assemble them into one "tags"
-file at the end.
+Action 1)
+The move of the branch is forced.
+- That means, the info which commit was on the top of the branch before 
+will be lost.
+- Also the move may affect push-ability without "force"
 
-The etags manual page suggests that doing that (or perhaps just
---update) might be counter-productive, in any case, the tag building
-is fast enough for me, so I'm leaving that for now.
+Action 2)
+The commit may be lost (except for the reflog, but many less experienced 
+people do not know that).
+This loss is dependent on other factors. It may or may not happen.
+Because it does not always happen, people may not expect it.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+As a result:
+- A user could believe the force is for the effect on the branch, and be 
+unaware of the loss of commit
+- A user (ever experienced) could opt for the force in the good belief 
+that their commits are held by other branches, when maybe they are not.
 
-diff --git a/Makefile b/Makefile
-index 7b0d9773b0..926c9efe43 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2730,18 +2730,19 @@ FIND_SOURCE_FILES = ( \
- FOUND_SOURCE_FILES = $(shell $(FIND_SOURCE_FILES))
- 
- $(ETAGS_TARGET): $(FOUND_SOURCE_FILES)
--	$(QUIET_GEN)$(RM) "$(ETAGS_TARGET)+" && \
--	$(FIND_SOURCE_FILES) | xargs etags -a -o "$(ETAGS_TARGET)+" && \
--	mv "$(ETAGS_TARGET)+" "$(ETAGS_TARGET)"
-+	$(QUIET_GEN)$(RM) $@+ && \
-+	echo $(FOUND_SOURCE_FILES) | xargs etags -a -o $@+ && \
-+	mv $@+ $@
- 
- tags: $(FOUND_SOURCE_FILES)
--	$(QUIET_GEN)$(RM) tags+ && \
--	$(FIND_SOURCE_FILES) | xargs ctags -a -o tags+ && \
--	mv tags+ tags
-+	$(QUIET_GEN)$(RM) $@+ && \
-+	echo $(FOUND_SOURCE_FILES) | xargs ctags -a -o $@+ && \
-+	mv $@+ $@
- 
- cscope.out: $(FOUND_SOURCE_FILES)
--	$(QUIET_GEN)$(RM) cscope.out && \
--	echo $(FOUND_SOURCE_FILES) | xargs cscope -f$@ -b
-+	$(QUIET_GEN)$(RM) $@+ && \
-+	echo $(FOUND_SOURCE_FILES) | xargs cscope -f$@+ -b && \
-+	mv $@+ $@
- 
- .PHONY: cscope
- cscope: cscope.out
--- 
-2.32.0.613.g20d5ce26552
+Therefore I believe, it would be best, if   git -C  branch new-location
+would give an error, if this will lose commits.
+
+There could be
+- a git config to  toggle this
+- an additional command line option to extend the force to drop commits
+
+
+I would like to know if that idea might in general be acceptable at all.
+If so, where it could or should be made as a feature request 
+(unfortunately I wont be able to provide a patch myself)
+
+
+On top, I would propose that the documentation of the current behaviour 
+should be made more clear.
+
+https://git-scm.com/docs/git-switch about -C / --force-create
+>   Similar to --create except that if <new-branch> already exists, it 
+> will be reset to <start-point>. This is a convenient shortcut for:
+>
+>   $ git branch -f <new-branch>
+>   $ git switch <new-branch>
+While the word "force" is in the option itself, the description does not 
+explain what is forced, or what effects this may have.
+Instead it only refers the user to study another option.
+I believe the documentation should state directly
+- commits currently in part of that branch may be lost [under certain 
+circumstances]
+
+and maybe, but less important
+- the old location of the branch will be lost
+
 
