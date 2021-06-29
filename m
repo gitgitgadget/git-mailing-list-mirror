@@ -2,91 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49B1CC11F64
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C26FC11F65
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:00:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19FBE61CD6
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 01:57:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6762661CEB
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 02:00:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbhF2CAG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Jun 2021 22:00:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbhF2CAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Jun 2021 22:00:06 -0400
-Received: from act-MTAout6.csiro.au (act-mtaout6.csiro.au [IPv6:2405:b000:e00:257::7:43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0346C061574
-        for <git@vger.kernel.org>; Mon, 28 Jun 2021 18:57:38 -0700 (PDT)
-IronPort-SDR: PRjmaGso03woyrBPtYZW63bmwQY2QwTlegRcICmYCamF2dBM+cQENFc5bL+0gUKWx5yq7QXcRC
- hy10f4nL7bqA==
-X-SBRS: 4.0
-IronPort-HdrOrdr: =?us-ascii?q?A9a23=3AUMAZi64rhQPBuROBnAPXwPXXdLJyesId70?=
- =?us-ascii?q?hD6qkRc202TiX8ravFoB1173PJYUkqKRYdcLy7VpVoOEmskaKdgrNhXotKPj?=
- =?us-ascii?q?OKhILAFugL0WKF+Vzd8kbFmdK1u50BT4FOTPHVJXheyebWiTPIdurIyeP3lp?=
- =?us-ascii?q?yVuQ=3D=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2FVAgB2fdpgjA9OdpJagQmBV4MNbIU?=
- =?us-ascii?q?ziQSIPjCdSgsBAQEPQQQBAYRSAoJyJjcGDgIEAQEBEgEBBgEBAQEBBgQCAhA?=
- =?us-ascii?q?BAQEBKUOFdYZPAQIDIxUbNgsYAgImAgJXEwgBAYJtgwcBqlyBMoEBhGaDa4F?=
- =?us-ascii?q?jgRAqjWo3gVVEgTwPgm0+hRGCSoJkBIMcgQoFoXFanEIsB4MjgS4LkBOMMwY?=
- =?us-ascii?q?OBRYQlRqQbrpsgWqBfzMaH4M+TxkOjjiOQjRqAgYKAQEDCYtxAQE?=
-X-IPAS-Result: =?us-ascii?q?A2FVAgB2fdpgjA9OdpJagQmBV4MNbIUziQSIPjCdSgsBA?=
- =?us-ascii?q?QEPQQQBAYRSAoJyJjcGDgIEAQEBEgEBBgEBAQEBBgQCAhABAQEBKUOFdYZPA?=
- =?us-ascii?q?QIDIxUbNgsYAgImAgJXEwgBAYJtgwcBqlyBMoEBhGaDa4FjgRAqjWo3gVVEg?=
- =?us-ascii?q?TwPgm0+hRGCSoJkBIMcgQoFoXFanEIsB4MjgS4LkBOMMwYOBRYQlRqQbrpsg?=
- =?us-ascii?q?WqBfzMaH4M+TxkOjjiOQjRqAgYKAQEDCYtxAQE?=
-Received: from mail-server.pawsey.org.au (HELO prod-mail.pawsey.org.au) ([146.118.78.15])
-  by act-ironport-int.csiro.au with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 29 Jun 2021 11:57:32 +1000
-Received: from [192.168.42.112] (unknown [1.126.250.96])
-        by prod-mail.pawsey.org.au (Postfix) with ESMTPSA id E1F66315813F
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 09:57:31 +0800 (AWST)
-Subject: Re: Definition of "the Git repository"
-To:     git@vger.kernel.org
-References: <7dd55e85-38eb-7346-ff10-7124102cd22b@pawsey.org.au>
- <435b0150-cd9f-32ce-7a07-3057ef20662a@iee.email>
- <12dd4f05-456f-c763-441e-5bb16634306a@pawsey.org.au>
- <60d9410bb07a1_aac5d20888@natae.notmuch>
- <ec31434f-0c99-ffb7-6eb0-6ecb1f6e761c@pawsey.org.au>
- <60d95c6024f3d_aaf7e208a4@natae.notmuch>
-From:   Kevin Buckley <Kevin.Buckley@pawsey.org.au>
-Message-ID: <a5579940-237b-2e4d-bf18-bc0a8f2f1ee3@pawsey.org.au>
-Date:   Tue, 29 Jun 2021 09:57:31 +0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S230080AbhF2CC3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Jun 2021 22:02:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35576 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229910AbhF2CC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Jun 2021 22:02:28 -0400
+Received: (qmail 17583 invoked by uid 109); 29 Jun 2021 02:00:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Jun 2021 02:00:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22759 invoked by uid 111); 29 Jun 2021 02:00:03 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Jun 2021 22:00:03 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 28 Jun 2021 22:00:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Roland Hieber <rhi@pengutronix.de>, git@vger.kernel.org,
+        Vasco Almeida <vascomalmeida@sapo.pt>
+Subject: Re: [PATCH] bisect: allow to run from subdirectories
+Message-ID: <YNp+oYKd5SSyxMk9@coredump.intra.peff.net>
+References: <20210620213836.10771-1-rhi@pengutronix.de>
+ <xmqqy2b3j317.fsf@gitster.g>
+ <YNPGb5gvygs++jlv@coredump.intra.peff.net>
+ <xmqqtulh31nm.fsf@gitster.g>
 MIME-Version: 1.0
-In-Reply-To: <60d95c6024f3d_aaf7e208a4@natae.notmuch>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtulh31nm.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021/06/28 13:21, Felipe Contreras wrote:
-> 
-> To try to make it more orthogonal, let's suppose the index file was
-> outside the .git directory. Would you consider then the staging area
-> separate from the repository?
-> 
-> In fact, we don't have to suppose:
-> 
->    GIT_INDEX_FILE=/tmp/index git checkout @~ -- .
-> 
-> Does that command change the repository in any way?
-  
-I have to admit that I don't know, and that I can't immediately
-see where the "repository" would be, in that example. This is
-obviously a gap in my understanding: happy to defer to yours.
+On Mon, Jun 28, 2021 at 06:22:37PM -0700, Junio C Hamano wrote:
 
-I do however feel that the fact that we have moved to using examples
-that override the Git Index file on the command line, in order to
-define what a "repository" is, just so that we might be able to give
-a "more correct" definition of the term, to someone completely new to
-Git, suggests that, as others have already noted in the discussion,
-it's not easy to be "correct"?
+> Jeff King <peff@peff.net> writes:
+> 
+> >> This does not depend on "do we have T as a directory?" being the
+> >> bisection criteria.  The important thing is that the current
+> >> directory would appear and disappear as the bisection process makes
+> >> you jump around in the history.
+> >
+> > I think that is a good explanation. But I remain somewhat unconvinced
+> > that it is that big a problem in practice.
+> 
+> It's just the difference in attitude, I would think.  Things like
+> "rebase" take a more liberal attitude and most of the time things
+> work out OK because removal of a directory is a rare event and
+> replacement of a directory with a non-directory is even rarer, but
+> when things break there is no provision to help users to know how it
+> broke by diagnosing why the revision cannot be checked out, or why
+> the directory D the user's shell session is sitting in is now
+> orphaned and different from the directory D the user thinks he is in
+> because it was removed (while the user's process is in there) and
+> then recreated under the same name, or any of the tricky things.
+> 
+> The ideal endgame would be to allow operating from subdirectory
+> *AND* have provisions for helping users when things go wrong because
+> the starting subdirectory goes away.  "bisect" works under the more
+> conservative philosophy (start strict and forbid operation that we
+> know we didn't spend any effort to avoid taking the user into
+> dangerous waters---we can allow it later once we make it safer but
+> not until then).
 
-Kevin
+Yes, I agree with this second paragraph. Just trying to create a
+constructive path forward, I think I'd be comfortable with a patch
+series that:
+
+  - confirmed that bisect's behavior when checkout fails produces a
+    reasonable error message that the user can act on (either from
+    checkout itself, or perhaps extra advice from bisect when the
+    checkout fails)
+
+  - detected the case when the prefix we started from goes away as part
+    of the checkout, and turned that into an error (rather than
+    orphaning the user's cwd and leading to confusing results). This
+    _might_ even be something that regular "git checkout" would benefit
+    from, too. And I think should not be too expensive to implement (at
+    least not after an admittedly moderate amount of thinking on it).
+
+  - only then turn on SUBDIRECTORY_OK.
+
+-Peff
