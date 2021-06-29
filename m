@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A70BC11F67
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DCDC11F66
 	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:11:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED82061DD6
+	by mail.kernel.org (Postfix) with ESMTP id E026161DC4
 	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232410AbhF2INn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 04:13:43 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48022 "EHLO dcvr.yhbt.net"
+        id S232405AbhF2INj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 04:13:39 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:47958 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232349AbhF2INk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 04:13:40 -0400
+        id S232349AbhF2INi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 04:13:38 -0400
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 4CD081F8C8
+        by dcvr.yhbt.net (Postfix) with ESMTP id 2C89F1F8C7
         for <git@vger.kernel.org>; Tue, 29 Jun 2021 08:11:09 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/4] map_loose_object_1: attempt to handle ENOMEM from mmap
-Date:   Tue, 29 Jun 2021 08:11:06 +0000
-Message-Id: <20210629081108.28657-3-e@80x24.org>
+Subject: [PATCH 1/4] use_pack: attempt to handle ENOMEM from mmap
+Date:   Tue, 29 Jun 2021 08:11:05 +0000
+Message-Id: <20210629081108.28657-2-e@80x24.org>
 In-Reply-To: <20210629081108.28657-1-e@80x24.org>
 References: <20210629081108.28657-1-e@80x24.org>
 MIME-Version: 1.0
@@ -35,76 +35,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since use_pack() can already safely munmap packs to respect
+core.packedGitLimit, attempt to gracefully handle ENOMEM
+errors the same way by unmapping a window and retrying.
+
 This benefits unprivileged users who lack permissions to raise
 the `sys.vm.max_map_count' sysctl and/or RLIMIT_DATA resource
 limit.
 
-Multi-threaded callers to map_loose_object_1 (e.g. "git grep")
-appear to guard against thread-safety problems.  Other
-multi-core aware pieces of code (e.g. parallel-checkout) uses
-child processes
+I've also verified it is safe to release a pack here by
+unconditionally calling unuse_one_window() before
+xmmap_gently():
 
-Forcing a call to unuse_one_window() once before xmmap_gently()
-revealed no test suite failures:
-
-	--- a/object-file.c
-	+++ b/object-file.c
-	@@ -1197,6 +1197,7 @@ static void *map_loose_object_1(struct repository *r, const char *path,
-					return NULL;
-				}
+	--- a/packfile.c
+	+++ b/packfile.c
+	@@ -649,6 +649,7 @@ unsigned char *use_pack(struct packed_git *p,
+					&& unuse_one_window(p))
+					; /* nothing */
 				do {
-	+				unuse_one_window(NULL);
-					map = xmmap_gently(NULL, *size, PROT_READ,
-							MAP_PRIVATE, fd, 0);
-				} while (map == MAP_FAILED && errno == ENOMEM
+	+				unuse_one_window(p);
+					win->base = xmmap_gently(NULL, win->len,
+						PROT_READ, MAP_PRIVATE,
+						p->pack_fd, win->offset);
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- object-file.c | 8 +++++++-
- packfile.c    | 2 +-
- packfile.h    | 2 ++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ packfile.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index f233b440b2..4c043f1f3c 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1196,7 +1196,13 @@ static void *map_loose_object_1(struct repository *r, const char *path,
- 				close(fd);
- 				return NULL;
- 			}
--			map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
-+			do {
-+				map = xmmap_gently(NULL, *size, PROT_READ,
-+						MAP_PRIVATE, fd, 0);
-+			} while (map == MAP_FAILED && errno == ENOMEM
-+				&& unuse_one_window(NULL));
-+			if (map == MAP_FAILED)
-+				die_errno("%s cannot be mapped", path);
- 		}
- 		close(fd);
- 	}
 diff --git a/packfile.c b/packfile.c
-index a0da790fb4..4bc7fa0f36 100644
+index 755aa7aec5..a0da790fb4 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -265,7 +265,7 @@ static void scan_windows(struct packed_git *p,
- 	}
- }
- 
--static int unuse_one_window(struct packed_git *current)
-+int unuse_one_window(struct packed_git *current)
- {
- 	struct packed_git *p, *lru_p = NULL;
- 	struct pack_window *lru_w = NULL, *lru_l = NULL;
-diff --git a/packfile.h b/packfile.h
-index 3ae117a8ae..da9a061e30 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -196,4 +196,6 @@ int is_promisor_object(const struct object_id *oid);
- int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
- 	     size_t idx_size, struct packed_git *p);
- 
-+int unuse_one_window(struct packed_git *);
-+
- #endif
+@@ -648,9 +648,12 @@ unsigned char *use_pack(struct packed_git *p,
+ 			while (packed_git_limit < pack_mapped
+ 				&& unuse_one_window(p))
+ 				; /* nothing */
+-			win->base = xmmap_gently(NULL, win->len,
+-				PROT_READ, MAP_PRIVATE,
+-				p->pack_fd, win->offset);
++			do {
++				win->base = xmmap_gently(NULL, win->len,
++					PROT_READ, MAP_PRIVATE,
++					p->pack_fd, win->offset);
++			} while (win->base == MAP_FAILED && errno == ENOMEM
++				&& unuse_one_window(p));
+ 			if (win->base == MAP_FAILED)
+ 				die_errno("packfile %s cannot be mapped",
+ 					  p->pack_name);
