@@ -8,67 +8,70 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A390C11F66
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8D2AC11F66
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:13:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEC9C61DD8
-	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 08:45:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F1CF61DD2
+	for <git@archiver.kernel.org>; Tue, 29 Jun 2021 11:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbhF2Ir1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 04:47:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53356 "EHLO
+        id S233375AbhF2LPt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 07:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232401AbhF2Ir0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 04:47:26 -0400
+        with ESMTP id S233156AbhF2LPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 07:15:49 -0400
 Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6FFBC061574
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 01:44:59 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id p8so8685453wrr.1
-        for <git@vger.kernel.org>; Tue, 29 Jun 2021 01:44:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13A1C061760
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 04:13:20 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id i94so25366635wri.4
+        for <git@vger.kernel.org>; Tue, 29 Jun 2021 04:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fAOtn+6w4vUvoDVfmWdGfGPtLmwX+BjWkPNCVfPY0Qo=;
-        b=XN18SJpo++D4/ZqBKZy85xWpc+NIpYWm9PtFeZ9UUY6MEFtjzT3XR8kPxdbaKe3Cji
-         Qyu7Li2zXw+uJKvAkHFJMUnX+en2TO/lPVp5znhDpsFxZl07T7wVwzYMbwEeWsek+i2B
-         lCmKK/Jj9DbgmGqDS4qEBYoPXmnD3WMQ0ERa6PrbCZQmjr7jXU6EpIqEo/R0ccIfegfN
-         lZCLNONIUullQhyWl5BAZ8bPrj0S+3cn/0PwoG7TBxv1kkP5ajVoZq2mrRMk5Q2JK2Z0
-         KaHc1CC/XIszMyNoUvZHeD6lDCzOUiOMpRtVdilYn0rBizPAzwZf9CV1+mvay5uOezqq
-         MQ7w==
+        bh=6ahe5cxkfzlgy4yHocCIMHiffT91An0/N5h5Q6/PXKo=;
+        b=LYv1hsMU++U5oka+J+lBkczC53w29YrvrVcKvjvrYBEJ88941LFdaGMf8XEoETabZ7
+         acG/9y5Db/s0gKfZYQsFI+BWuZfLGQftS/ny9FG/A2/J4qW3dD6Vse2Ihuj+1atlDS8j
+         WX1R5VNAVOj3rjCjxr4KwdBsnvwukFcM/K1NELNxjPItU42eQv8f4+Z6wQ/HijrjvJa9
+         QT8xuXxiwqVAy2pCUrsoRHa0H3cL6o9XHxeaF+QGmHbtZlgTC0nW/NpCDPNWEx/QgLV+
+         9pWPNtrI8MudEmFN5/+9em6b4QkibkJfBZ+PxOy1IulCZ+to0MH7A77CttxFBJKczRgv
+         5ZSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fAOtn+6w4vUvoDVfmWdGfGPtLmwX+BjWkPNCVfPY0Qo=;
-        b=nSjKANKQ7FuwoTXejhaSmdujqYloiBLUvQPyyRBj1Qnjip9sEVeYk3fGQppQYsm/TA
-         qaiRmbpM8Bhof8YX343tavH8brffQXnHaS6/pax361/i/Gb3GCGikQ8wB6H7i2nTS7Wv
-         EJCbAtwQ4layplNxtQAU+f6JXBh3UoiHALl+Up9aCRpUVekA4e/088ZS279odjOLARZv
-         U5cGwvdYTdIIQOm12cq8KteBZTd2PTlmaLlcv/D6WMDB9X1ZgR6qUBeTIm3CUl2BuD7f
-         phMEMgwtj3wI643Zh/B1gJUWE9m84gZbLORdpPIkjKb5RIGMdqNPgZsRCKDdO6U82/HI
-         9OwA==
-X-Gm-Message-State: AOAM5313g7pKEItML2I6j+6+Cm0P9uja48sBI6CV8CdLqA0S2DdZqmAU
-        0PMQcnphunAZZNFraGrEuBeHQ6EPPUzfjQ==
-X-Google-Smtp-Source: ABdhPJz56586IoSmoXGcrZ8EoHJ8xkCIuWmqrCqhFGVl3XimRfroRULdd/6eTgqcm+aOimAhWFRvaw==
-X-Received: by 2002:a5d:6cce:: with SMTP id c14mr11327637wrc.183.1624956298100;
-        Tue, 29 Jun 2021 01:44:58 -0700 (PDT)
+        bh=6ahe5cxkfzlgy4yHocCIMHiffT91An0/N5h5Q6/PXKo=;
+        b=WARI0OqNGecaDtfxVb6om74KKVp0gfgub5sd3I6eUtR1AY7DcXgjbl19nJ3feyoVwt
+         rl9A+R4RvRa3fY9ijhfqltukmyrxqSVRPZZc8rwKGe+fw2WaL0ySNHSfiGC/bvAGbgp7
+         kNdcmyjR1TzjPI0gwFFozX5vZdWs5iOn6jOBI2nFrJQIjLeUD11UfPgudTHDcGF0WGmF
+         XOsWITnZPj+A+feR8VipB9hB3tUWI0e1v8IMSfrfvb5aerKPahRbWRc2luMqLsGiTVlr
+         uFS4WY6PzefmTqBNEpDmklIbirtUDk35zIuU9eIT+efUZhNCJU+haK05DAY+KOJMcevE
+         i8ig==
+X-Gm-Message-State: AOAM530Ag0dj9/LkvyNk7MXo1y3rmmqPX9J/fmjgJY9GW20msxRpa2JZ
+        et/Y/0N/Dq8BkE/lZyBSEkHGsmA2GKyjsw==
+X-Google-Smtp-Source: ABdhPJzyqSPkUpeeNMOTtW3/qbA95h/jkoWg03b7EywYw6f+9GQ3NZ14VY+idVyuZhYEorUvJ6Fmtg==
+X-Received: by 2002:a5d:48ca:: with SMTP id p10mr32815149wrs.87.1624965199314;
+        Tue, 29 Jun 2021 04:13:19 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t128sm2157642wma.41.2021.06.29.01.44.57
+        by smtp.gmail.com with ESMTPSA id r1sm2499370wmn.10.2021.06.29.04.13.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jun 2021 01:44:57 -0700 (PDT)
+        Tue, 29 Jun 2021 04:13:18 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
+        Kristof Provost <Kristof@provost-engineering.be>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2] Makefile: add and use the ".DELETE_ON_ERROR" flag
-Date:   Tue, 29 Jun 2021 10:44:50 +0200
-Message-Id: <patch-1.1-2557117855-20210629T084356Z-avarab@gmail.com>
+Subject: [PATCH v2 0/5] Makefile: "make tags" fixes & cleanup
+Date:   Tue, 29 Jun 2021 13:12:54 +0200
+Message-Id: <cover-0.5-0000000000-20210629T110837Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.613.g20d5ce26552
-In-Reply-To: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
-References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
+In-Reply-To: <cover-0.3-00000000000-20210622T141844Z-avarab@gmail.com>
+References: <cover-0.3-00000000000-20210622T141844Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,208 +79,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the GNU make ".DELETE_ON_ERROR" flag in our main Makefile, as we
-already do in the Documentation/Makefile since db10fc6c09f (doc:
-simplify Makefile using .DELETE_ON_ERROR, 2021-05-21).
+A v2 of my fixes to the tags targets. This no longer depends on my
+.DELETE_ON_ERROR change, and goes directly on top of "master". See [2]
+for the just-submitted v2 of that other series.
 
-Now if a command to make X fails X will be removed, the default
-behavior of GNU make is to only do so if "make" itself is interrupted
-with a signal.
+The big win here is that none of the tags targets depend on "FORCE"
+anymore, so we'll only re-generate them if our sources change.
 
-E.g. if we now intentionally break one of the rules with:
+I missed the interaction of the "-a" flag and xargs splitting the
+arguments into am implicit -n, so in v1 of this we could end up with
+incomplete tag files. In this v2 we more incrementally reach similar
+ends, but in the end result retain our rm/gen/mv dance, since it's
+needed in this case.
 
-    -       mv $@+ $@
-    +       mv $@+ $@ && \
-    +       false
+1. http://lore.kernel.org/git/cover-0.3-00000000000-20210622T141844Z-avarab@gmail.com
+2. https://lore.kernel.org/git/patch-1.1-2557117855-20210629T084356Z-avarab@gmail.com/
 
-We'll get output like:
+Ævar Arnfjörð Bjarmason (5):
+  Makefile: move ".PHONY: cscope" near its target
+  Makefile: add QUIET_GEN to "cscope" target
+  Makefile: fix "cscope" target to refer to cscope.out
+  Makefile: don't use "FORCE" for tags targets
+  Makefile: normalize clobbering & xargs for tags targets
 
-    $ make git
-        CC git.o
-        LINK git
-    make: *** [Makefile:2179: git] Error 1
-    make: *** Deleting file 'git'
-    $ file git
-    git: cannot open `git' (No such file or directory)
-
-Before this change we'd leave the file in place in under this
-scenario.
-
-As in db10fc6c09f this allows us to remove patterns of removing
-leftover $@ files at the start of rules, since previous failing runs
-of the Makefile won't have left those littered around anymore.
-
-I'm not as confident that we should be replacing the "mv $@+ $@"
-pattern entirely, since that means that external programs or one of
-our other Makefiles might race and get partial content.
-
-I'm not changing $(REMOTE_CURL_ALIASES) since that uses a ln/ln -s/cp
-dance, and would require the addition of "-f" flags if the "rm" at the
-start was removed. I've also got plans to fix that ln/ln -s/cp pattern
-in another series.
-
-For $(LIB_FILE) and $(XDIFF_LIB) we can rely on the "c" (create) being
-present in ARFLAGS.
-
-I'm not changing "$(ETAGS_TARGET)", "tags" and "cscope" because
-they've got a messy combination of removing "$@+" not "$@" at the
-beginning, or "$@*". I'm also addressing those in another series.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-The large thread on v1 is mostly/entirely a digression about an
-earlier patch series of mine not directly applicable to the change
-here. Felipe feedback about "why not change these rules too?" which
-I've incorporated into the commit message, and fixed the omission of a
-change to the $(XDIFF_LIB) rule.
+ .gitignore |  2 +-
+ Makefile   | 34 ++++++++++++++++++++--------------
+ 2 files changed, 21 insertions(+), 15 deletions(-)
 
 Range-diff against v1:
-1:  9420448e74 ! 1:  2557117855 Makefile: add and use the ".DELETE_ON_ERROR" flag
+1:  383a90c8ac = 1:  dd6cfd6022 Makefile: move ".PHONY: cscope" near its target
+-:  ---------- > 2:  56daa09738 Makefile: add QUIET_GEN to "cscope" target
+2:  ea39f1f5cd ! 3:  35c8b83904 Makefile: fix "cscope" target to refer to cscope.out
     @@ Commit message
-         pattern entirely, since that means that external programs or one of
-         our other Makefiles might race and get partial content.
      
-    +    I'm not changing $(REMOTE_CURL_ALIASES) since that uses a ln/ln -s/cp
-    +    dance, and would require the addition of "-f" flags if the "rm" at the
-    +    start was removed. I've also got plans to fix that ln/ln -s/cp pattern
-    +    in another series.
-    +
-    +    For $(LIB_FILE) and $(XDIFF_LIB) we can rely on the "c" (create) being
-    +    present in ARFLAGS.
-    +
-    +    I'm not changing "$(ETAGS_TARGET)", "tags" and "cscope" because
-    +    they've got a messy combination of removing "$@+" not "$@" at the
-    +    beginning, or "$@*". I'm also addressing those in another series.
-    +
+         The cscope target added in a2a9150bf06 (makefile: Add a cscope target,
+         2007-10-06) has for some reason been referring to cscope* instead of
+    -    cscope.out. Let's generate the cscope.out file directly so we don't
+    -    need to speculate.
+    +    cscope.out.
+     
+    -    The "-fcscope.out" (note, no whitespace) argument is enabled by
+    -    default on my system's cscope 15.9, but let's provide it explicitly
+    -    for good measure.
+    +    Let's generate the cscope.out file directly so we don't need to
+    +    speculate. The "-fcscope.out" (note, no whitespace) argument is
+    +    enabled by default on my system's cscope 15.9, but let's provide it
+    +    explicitly for good measure.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ Makefile: tags: FORCE
+      	mv tags+ tags
+      
+     +cscope.out:
+    ++	$(QUIET_GEN)$(RM) cscope.out && \
+     +	$(FIND_SOURCE_FILES) | xargs cscope -f$@ -b
+     +
+      .PHONY: cscope
+     -cscope:
+    --	$(RM) cscope*
+    +-	$(QUIET_GEN)$(RM) cscope* && \
+     -	$(FIND_SOURCE_FILES) | xargs cscope -b
+     +cscope: cscope.out
+      
+3:  67fc87665d ! 4:  b924cc3f56 Makefile: don't use "FORCE" for tags targets
+    @@ Commit message
+         targets, instead make them depend on whether or not the relevant
+         source files have changed.
+     
+    -    I'm also removing the "-o" option from them, that seems to have been
+    -    cargo-culted when they were initially added in f81e7c626f3 (Makefile:
+    -    Add TAGS and tags targets, 2006-03-18). It would make sense to use
+    -    that option if we had been appending to tag files, it doesn't make any
+    -    sense that it was used after we'd just removed the files file being
+    -    appended to.
+    -
+    -    This will potentially cause a partial file to be left behind if the
+    -    command dies, but my in-flight series to use the ".DELETE_ON_ERROR"
+    -    flag in the Makefile[1] will make that problem go away. I think even
+    -    without that it's not problem we need to worry about in these cases.
+    -
+    -    1. https://lore.kernel.org/git/patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com/
+    -
          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
      
       ## Makefile ##
-    @@ Makefile: endif
-      	$(QUIET_GEN)sed -e '1s/^/[/' -e '$$s/,$$/]/' $(compdb_dir)/*.o.json > $@+
-      	@if test -s $@+; then mv $@+ $@; else $(RM) $@+; fi
-      endif
-    +@@ Makefile: $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS
-    + 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
-    + 
-    + $(LIB_FILE): $(LIB_OBJS)
-    +-	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-    ++	$(QUIET_AR)$(AR) $(ARFLAGS) $@ $^
-    + 
-    + $(XDIFF_LIB): $(XDIFF_OBJS)
-    +-	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-    ++	$(QUIET_AR)$(AR) $(ARFLAGS) $@ $^
-    + 
-    + export DEFAULT_EDITOR DEFAULT_PAGER
-    + 
-
- Makefile | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index c3565fc0f8..157293b555 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2160,6 +2160,16 @@ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
- strip: $(PROGRAMS) git$X
- 	$(STRIP) $(STRIP_OPTS) $^
- 
-+### Flags affecting all rules
-+
-+# A GNU make extension since gmake 3.72 (released in late 1994) to
-+# remove the target of rules if commands in those rules fail. The
-+# default is to only do that if make itself receives a signal. Affects
-+# all targets, see:
-+#
-+#    info make --index-search=.DELETE_ON_ERROR
-+.DELETE_ON_ERROR:
-+
- ### Target-specific flags and dependencies
- 
- # The generic compilation pattern rule and automatically
-@@ -2243,7 +2253,6 @@ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
- 	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV):\
- 	$(perllibdir_SQ)
- define cmd_munge_script
--$(RM) $@ $@+ && \
- sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
-     -e 's|@@DIFF@@|$(DIFF_SQ)|' \
-@@ -2313,7 +2322,7 @@ endif
- PERL_DEFINES += $(gitexecdir) $(perllibdir) $(localedir)
- 
- $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
--	$(QUIET_GEN)$(RM) $@ $@+ && \
-+	$(QUIET_GEN) \
- 	sed -e '1{' \
- 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
- 	    -e '	r GIT-PERL-HEADER' \
-@@ -2333,7 +2342,7 @@ GIT-PERL-DEFINES: FORCE
- 	    fi
- 
- GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
--	$(QUIET_GEN)$(RM) $@ && \
-+	$(QUIET_GEN) \
- 	INSTLIBDIR='$(perllibdir_SQ)' && \
- 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
- 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
-@@ -2359,7 +2368,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
- 	mv $@+ $@
- else # NO_PERL
- $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
--	$(QUIET_GEN)$(RM) $@ $@+ && \
-+	$(QUIET_GEN) \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
- 	    unimplemented.sh >$@+ && \
-@@ -2373,14 +2382,14 @@ $(SCRIPT_PYTHON_GEN): GIT-BUILD-OPTIONS
- ifndef NO_PYTHON
- $(SCRIPT_PYTHON_GEN): GIT-CFLAGS GIT-PREFIX GIT-PYTHON-VARS
- $(SCRIPT_PYTHON_GEN): % : %.py
--	$(QUIET_GEN)$(RM) $@ $@+ && \
-+	$(QUIET_GEN) \
- 	sed -e '1s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
- 	    $< >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
- else # NO_PYTHON
- $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
--	$(QUIET_GEN)$(RM) $@ $@+ && \
-+	$(QUIET_GEN) \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 	    -e 's|@@REASON@@|NO_PYTHON=$(NO_PYTHON)|g' \
- 	    unimplemented.sh >$@+ && \
-@@ -2388,8 +2397,7 @@ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
- 	mv $@+ $@
- endif # NO_PYTHON
- 
--CONFIGURE_RECIPE = $(RM) configure configure.ac+ && \
--		   sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 			configure.ac >configure.ac+ && \
- 		   autoconf -o configure configure.ac+ && \
- 		   $(RM) configure.ac+
-@@ -2514,7 +2522,6 @@ endif
- ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
- all:: compile_commands.json
- compile_commands.json:
--	@$(RM) $@
- 	$(QUIET_GEN)sed -e '1s/^/[/' -e '$$s/,$$/]/' $(compdb_dir)/*.o.json > $@+
- 	@if test -s $@+; then mv $@+ $@; else $(RM) $@+; fi
- endif
-@@ -2587,10 +2594,10 @@ $(REMOTE_CURL_PRIMARY): remote-curl.o http.o http-walker.o GIT-LDFLAGS $(GITLIBS
- 		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(LIBS)
- 
- $(LIB_FILE): $(LIB_OBJS)
--	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-+	$(QUIET_AR)$(AR) $(ARFLAGS) $@ $^
- 
- $(XDIFF_LIB): $(XDIFF_OBJS)
--	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-+	$(QUIET_AR)$(AR) $(ARFLAGS) $@ $^
- 
- export DEFAULT_EDITOR DEFAULT_PAGER
- 
+    @@ Makefile: FIND_SOURCE_FILES = ( \
+      	)
+      
+     -$(ETAGS_TARGET): FORCE
+    --	$(QUIET_GEN)$(RM) "$(ETAGS_TARGET)+" && \
+    --	$(FIND_SOURCE_FILES) | xargs etags -a -o "$(ETAGS_TARGET)+" && \
+    --	mv "$(ETAGS_TARGET)+" "$(ETAGS_TARGET)"
+     +FOUND_SOURCE_FILES = $(shell $(FIND_SOURCE_FILES))
+    ++
+    ++$(ETAGS_TARGET): $(FOUND_SOURCE_FILES)
+    + 	$(QUIET_GEN)$(RM) "$(ETAGS_TARGET)+" && \
+    + 	$(FIND_SOURCE_FILES) | xargs etags -a -o "$(ETAGS_TARGET)+" && \
+    + 	mv "$(ETAGS_TARGET)+" "$(ETAGS_TARGET)"
+      
+     -tags: FORCE
+    --	$(QUIET_GEN)$(RM) tags+ && \
+    --	$(FIND_SOURCE_FILES) | xargs ctags -a -o tags+ && \
+    --	mv tags+ tags
+    -+$(ETAGS_TARGET): $(FOUND_SOURCE_FILES)
+    -+	$(QUIET_GEN)echo $(FOUND_SOURCE_FILES) | \
+    -+	xargs etags -o $@
+    -+
+     +tags: $(FOUND_SOURCE_FILES)
+    -+	$(QUIET_GEN)echo $(FOUND_SOURCE_FILES) | \
+    -+	xargs ctags -o $@
+    + 	$(QUIET_GEN)$(RM) tags+ && \
+    + 	$(FIND_SOURCE_FILES) | xargs ctags -a -o tags+ && \
+    + 	mv tags+ tags
+      
+    - cscope.out:
+    +-cscope.out:
+    ++cscope.out: $(FOUND_SOURCE_FILES)
+    + 	$(QUIET_GEN)$(RM) cscope.out && \
+     -	$(FIND_SOURCE_FILES) | xargs cscope -f$@ -b
+    -+	$(QUIET_GEN)echo $(FOUND_SOURCE_FILES) | \
+    -+	xargs cscope -f$@ -b
+    ++	echo $(FOUND_SOURCE_FILES) | xargs cscope -f$@ -b
+      
+      .PHONY: cscope
+      cscope: cscope.out
+-:  ---------- > 5:  5195d99e25 Makefile: normalize clobbering & xargs for tags targets
 -- 
 2.32.0.613.g20d5ce26552
 
