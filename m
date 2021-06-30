@@ -2,243 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D8AC11F65
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 14:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16A30C11F65
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 16:12:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B567361477
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 14:32:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC67B61456
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 16:12:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235180AbhF3OfA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Jun 2021 10:35:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55708 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234913AbhF3Oe7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jun 2021 10:34:59 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1A24C061756
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 07:32:29 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id o13-20020a9d404d0000b0290466630039caso2890567oti.6
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 07:32:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xhKbLVd/FBb0QaNn2i8dksAKEpDJCPS/7b268gGGJQE=;
-        b=PL+pp2s3lDbLyNobh/pVAnD4RMxA+V9iCWkwo/1dsjzdX/D8w7ivAgl++uX8YNE2g7
-         W8298BVR9ce+JDvh+fzjNC56axxdZzBCRd4PBz2J4zPdUtREUMkVQXSw9q1rvwJlT8KL
-         AZAmkAubc7/vG9/JgKjPZtfQeqtAk7lkNOzy/o1KAsmbOZsez45MZBMXwCW9u7wA2ikE
-         u9UQ8G6v99Ofa+jABlraWdloikQRTe/qBsYEtTVo3SGIdNGEv6wpenRAgWXVYja70v8M
-         nbJk5RyWBxfnkeqbGf5FdNTm/BBheecmLsHCu0GvOHKbtNhteWl5PSvGIBhOYZrz2v2m
-         Cr1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xhKbLVd/FBb0QaNn2i8dksAKEpDJCPS/7b268gGGJQE=;
-        b=e2H5DejzXC49d/iyo6bCA+rmEiFL9K3UHWTvlWWo/4FF6z9mN3yfhsyjnjK7zLtGf5
-         IDMy2c5ESs0FaN8fkCc8HT9/Lg4Dh5jVud4neBrzhbhv2GiktSgjpNX1JQPJhxIrgqsg
-         hm2YGw2tjjrrqrFdXOy2apd/v3AXmi5CESWLFIpbSoctka77rKhwVJufYRg5IBQ1Ay0y
-         i3wXxn/GgjybteCrnIZObU2hRQuZFaQPHDxW70dKHq2/GZHBLzu22/0EIrljoH8ki6xu
-         j2lblejPAqOnTt0iJff8AEG6y7RKw43JT+osbkqUz/WMFFQPg1Hu9qE3UIdAlLTo6LIy
-         fL0Q==
-X-Gm-Message-State: AOAM530O6mkxknttMILlEyQfLoVTTBXg8Ybqdjkxo4OgLJxwg02u0+Ew
-        MwYLwwZ5YbY6VIin3CM9YQw83FTUrbX23vUKT7w=
-X-Google-Smtp-Source: ABdhPJwgrzMrtYKpdcM7FhG73SigbxKJuivfiAdkfZhNR/CFgiFk83PnTWsxm5ETCAayIa4h5pO6zHXVdBnGa94JZKY=
-X-Received: by 2002:a9d:7c92:: with SMTP id q18mr9404151otn.345.1625063548763;
- Wed, 30 Jun 2021 07:32:28 -0700 (PDT)
+        id S229814AbhF3QPT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Jun 2021 12:15:19 -0400
+Received: from mout.web.de ([212.227.15.4]:35745 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229548AbhF3QPS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jun 2021 12:15:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1625069564;
+        bh=zWb7s8PuJbBrsRU1laFF4O90rQSci8TZIysBanU7Pz4=;
+        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
+        b=DiBxi6Mkhk651qyGJJJz5wgOl83SG/BZfMdZwxFv0En82MxjS5TBr+tWuwJ0sLL2a
+         9iiLHWmLINZEAoF5uFQAgoxmcXJDUAJns1En9GSYhI3mwObXsBnQasIFaCKEs8kPpH
+         DwOnzpP4D1ftoAlZZa+z8CNNj42PAIQfI6LX4eSw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MDjw6-1m0IJ00LC2-00H86f; Wed, 30 Jun 2021 18:12:44 +0200
+Subject: [PATCH v2] grep: report missing left operand of --and
+To:     Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
+References: <20210628121748.f3yrc72v4mynknl3@debianXPS.lan>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <1eeb34cf-3229-21f8-23ca-ab3c6d4dff2e@web.de>
+Date:   Wed, 30 Jun 2021 18:12:43 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <pull.932.v6.git.1624931502.gitgitgadget@gmail.com> <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
-In-Reply-To: <pull.932.v7.git.1624932293.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 30 Jun 2021 07:32:17 -0700
-Message-ID: <CABPp-BHqoJjF9f6NKZ8jjQdj1bgUNgrwek5jcnGTRk2m-m8dBg@mail.gmail.com>
-Subject: Re: [PATCH v7 00/16] Sparse-index: integrate with status
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210628121748.f3yrc72v4mynknl3@debianXPS.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:f4btspnJs2+c9vqEL4owksk+j16BdSzJOWGJlBUuuCUZY7xh+SG
+ 8vFEZQfNB8dRZPhbhcgGocwXruFisuZB3kHBNhEDr9zZZ4jwDZS+/2E6k/hcbmq7dhzttPF
+ hubPItax6pxfWgdWoZRSkD5OVzAnnhinqgK3bqwZnx+lob7QZThNcSJnzuaB1gzkOLEDBa2
+ et9kRx7YdmNUgPLhOlBhw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ix3cMitgCXY=:wzMtsFerV9ET2WVvz030+8
+ h3YTcYVPuWqlGPXKvLOz7nMz8RyCjBwHYmnxRnmOs69BBX8tv81tFDlwiFJ3tOoUiMGdfTO0a
+ TAEhQ6QL/JXigJM5//M3cRObuUFd6BPyLj27E2J4T947B0GShiGoDArfkuyPqhsvqvhm73uZL
+ UYcHxWuPianr+WpMTo3t4qI8B3VmAabq+UbIGmdwZ5RKZ/72Iej/iHEbv80+jXEaQgLLCZrGn
+ kBNTKVmeRdc3k74cVKEaswm22doHqSaOS/76XOmiEXHcvfJTISLJCG6RXQH7KWu0QKofScSK+
+ VPApM1UG9FnflVs43icSKVb5KOJIm2idSTL/Dwd02Ya5Q/DLyOLsBOzpYv3qshtNa56WkoQ0v
+ fwVIa/hIEaam3aiWvC3dNj9KFqQjtV05yr3J5eMOJ00Gb7eImP5CbW3L8EP16Ty4CoJVEQExr
+ i5+HRVqgfYmqpirTrzaYrNnX2NLky8Yd11ARQCLiawIAdjc5EiJfZiuqTMBSIIDzfGeUKni6A
+ V75g6vJmcYIDidaZVyseg04CfzDuprOZ73dFtaQAOyiAf5k9R5YxbQva0oO/RDEtDarkP1BEt
+ zOqE4qUwov+ptEl4HAckFwZ7Pr/RE+U65CE5zffwwNl5LJmmmeRShc7XtzPZC9Sd9eAZZBH+6
+ ONpFvfmgHlLHRPbbI2/74ODEw/A7H6V89RhoLaHF6nf2+kQvruwRhoC6zLUzyKS6ZDiddShPu
+ 7Uq6hkqbZkNGiG6fQBp362irrIGNLGXLdUH+h/mcLWGh3vffdgmAjvXWdR09VF4XlpCbg9ZyU
+ F8Pazeu0r0LNrTXjw3QR/U9Iegs4wuWTcDQ5Hs1covo3bVDAMpbXQd8HlXCFvVXhNXJMScfxq
+ Tlo+tuGGkdkYfuZhItEvV2moqhV0Jn+eQVlwhg2giB1A4jOi5EKTMKxwav9weHubAgLiatQbm
+ QpjzQZ8/7IDBiT2KK5BAeBu6h/jZXdBUi7w0wRrMQ7v7DgSWjYPdodJeC1Zgftfx5j+dDkTD+
+ 3ZHn53MFBpjIyapVaAsh6yzvADgufTqhmgOCulXBbtT26Wvap9eqfbGVBwjAkTNFA1hb+wj3u
+ XXC72vTrIcmJY8FNkoJ4Ho6gP+bSYglaD5m
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 28, 2021 at 7:04 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This is the first "payoff" series in the sparse-index work. It makes 'git
-> status' very fast when a sparse-index is enabled on a repository with
-> cone-mode sparse-checkout (and a small populated set).
->
-> This is based on ds/sparse-index-protections AND mt/add-rm-sparse-checkout.
-> The latter branch is needed because it changes the behavior of 'git add'
-> around sparse entries, which changes the expectations of a test added in
-> patch 1.
->
-> The approach here is to audit the places where ensure_full_index() pops up
-> while doing normal commands with pathspecs within the sparse-checkout
-> definition. Each of these are checked and tested. In the end, the
-> sparse-index is integrated with these features:
->
->  * git status
->  * FS Monitor index extension.
->
-> The performance tests in p2000-sparse-operations.sh improve by 95% or more,
-> even when compared with the full-index cases, not just the sparse-index
-> cases that previously had extra overhead.
->
-> Hopefully this is the first example of how ds/sparse-index-protections has
-> done the basic work to do these conversions safely, making them look easier
-> than they seemed when starting this adventure.
->
-> Thanks, -Stolee
->
->
-> Update in V7 (relative to v5)
-> =============================
->
-> APOLOGIES: As I was working on this cover letter, I was still organizing my
-> big list of patches, including reordering some into this series. I forgot to
-> actually include them in my v6 submission, so here is a re-submission.
-> Please ignore v6.
->
-> I'm sorry that this revision took so long. Initially I was blocked on
-> getting the directory/file conflict figured out (I did), but also my team
-> was very busy with some things. Eventually, we reached an internal deadline
-> to make an experimental release available [1] with initial sparse-index
-> performance boosts. Creating that included some additional review by Jeff
-> Hostetler and Johannes Schindelin which led to more changes in this version.
->
-> The good news is that this series has now created the basis for many Git
-> commands to integrate with the sparse-index without much additional work.
-> This effort was unfortunately overloaded on this series because the changes
-> needed for things like 'git checkout' or 'git add' all intersect with the
-> changes needed for 'git status'. Might as well get it right the first time.
->
-> Because the range-diff is a big difficult to read this time, I'll break the
-> changes down on a patch-by-patch basis.
->
->  1. sparse-index: skip indexes with unmerged entries
->
->     (no change)
->
->  2. sparse-index: include EXTENDED flag when expanding
->
->  * Commit message better describes the purpose of the change.
->
->  3. t1092: replace incorrect 'echo' with 'cat'
->
->  * Typo fix
->
->  4. t1092: expand repository data shape
->
->  * some files are added that surround "folder1/" immediately before and
->    after, based on the sorting with the trailing slash. This provides extra
->    coverage.
->
->  5. t1092: add tests for status/add and sparse files
->
->     (no change)
->
->  6. unpack-trees: preserve cache_bottom
->
->     (no change)
->
->  7. unpack-trees: compare sparse directories correctly
->
->  * We were previosly not comparing the path lengths, which causes a problem
->    (with later updates) when a sparse directory such as "folder1/0/" gets
->    compared to a tree name "folder1".
->
->  8. unpack-trees: rename unpack_nondirectories()
->
->  * This new commit changes the name to make more sense with its new behavior
->    that could modify a sparse directory entry. The point of the method is in
->    contrast to recursing into trees.
->
->  9. unpack-trees: unpack sparse directory entries
->
->  * THIS is the biggest change from previous versions. There were a few
->    things going on that were tricky to get right, especially with the
->    directory/file conflict (handled in an update in the following, new
->    patch).
->
->  * The changes to create_ce_entry() regarding alloc_len missed a spot that
->    was critical to getting the length right in the allocated entry.
->
->  * Use '\0' over 0 to represent the terminating character.
->
->  * We don't need a "sparse_directory" parameter to unpack_nondirectories()
->    (which was renamed to unpack_single_entry() by the previous new patch)
->    because we can use dirmask to discover if src[0] (or any other value)
->    should be a sparse directory entry.
->
->  * Similarly, we don't need to call the method twice from unpack_callback().
->
->  * The 'conflicts' variable is set to match the dirmask in the beginning,
->    but it should depend on whether or not we have a sparse directory entry
->    instead, and if all trees that have the path have a directory.
->
->  * The implementation of find_cache_entry() uses find_cache_pos() to find an
->    insertion position for a path if it doesn't find an exact match. Before,
->    we subtracted one to find the sparse directory entry, but there could be
->    multiple paths between the sparse directory entry and the insertion
->    point, so we need to walk backwards until we find it. This requires many
->    paths having the same prefix, so hopefully is a rare case. Some of the
->    test data changes were added to cover the need for this logic. This uses
->    a helper method, sparse_dir_matches_path, which is also used by
->    is_sparse_directory_entry.
->
->  10. unpack-trees: handle dir/file conflict of sparse entries
->
->  * This new logic inside twoway_merge handles the special case for dealing
->    with a directory/file conflict during a 'git checkout'. The necessarily
->    data and tests are also added here, though the logic will only take
->    serious effect when we integrate with 'git checkout' later.
->
->  11. dir.c: accept a directory as part of cone-mode patterns
->
->  * The value slash_pos was previously a pointer within a strbuf, but in some
->    cases we add to that strbuf and that could reallocate the pointer, making
->    slash_pos be invalid. The replacement is to have slash_pos be an integer
->    position within the string, so it is consistent even if the string is
->    reallocated for an append.
->
->  12. diff-lib: handle index diffs with sparse dirs
->
->  * As recommended in the previous review, a simple diff_tree_oid() replaces
->    the complicated use of read_tree_at() and traverse_trees() in the
->    previous version.
->
->  13. status: skip sparse-checkout percentage with sparse-index
->
->      (no change)
->
->  14. status: use sparse-index throughout
->
->      (no change)
->
->  15. wt-status: expand added sparse directory entries
->
->  * Duplicate 'git status --porcelain=v2' lines are removed from tests.
->
->  * The pathspec is initialized using "= { 0 }" instead of memset().
->
->  16. fsmonitor: integrate with sparse index
->
->  * An extra test_region is added to ensure that the filesystem monitor hook
->    is still being called, and we are not simply disabling the feature
->    entirely.
+Git grep allows combining two patterns with --and.  It checks and
+reports if the second pattern is missing when compiling the expression.
+A missing first pattern, however, is only reported later at match time.
+Thus no error is returned if no matching is done, e.g. because no file
+matches the also given pathspec.
 
-This is SUPER exciting.  I've only read the cover letter, but it
-strongly suggests you've not only handled all my feedback in previous
-rounds, but got things pretty solidly nailed away.  I'll try to make
-some time to go over it all soon.
+When that happens we get an expression tree with an GREP_NODE_AND node
+and a NULL pointer to the missing left child.  free_pattern_expr()
+tries to dereference it during the cleanup at the end, which results
+in a segmentation fault.
+
+Fix this by verifying the presence of the left operand at expression
+compilation time.
+
+Reported-by: Matthew Hughes <matthewhughes934@gmail.com>
+Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Changes since v2:
+- more specific error message,
+- grammar error fix in commit message,
+- no test of already working behavior.
+
+ grep.c          | 2 ++
+ t/t7810-grep.sh | 9 +++++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/grep.c b/grep.c
+index 8f91af1cb0..424a39591b 100644
+=2D-- a/grep.c
++++ b/grep.c
+@@ -657,6 +657,8 @@ static struct grep_expr *compile_pattern_and(struct gr=
+ep_pat **list)
+ 	x =3D compile_pattern_not(list);
+ 	p =3D *list;
+ 	if (p && p->token =3D=3D GREP_AND) {
++		if (!x)
++			die("--and not preceded by pattern expression");
+ 		if (!p->next)
+ 			die("--and not followed by pattern expression");
+ 		*list =3D p->next;
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 5830733f3d..6b6423a07c 100755
+=2D-- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -11,6 +11,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+
+ . ./test-lib.sh
+
++test_invalid_grep_expression() {
++	params=3D"$@" &&
++	test_expect_success "invalid expression: grep $params" '
++		test_must_fail git grep $params -- nonexisting
++	'
++}
++
+ cat >hello.c <<EOF
+ #include <assert.h>
+ #include <stdio.h>
+@@ -89,6 +96,8 @@ test_expect_success 'grep should not segfault with a bad=
+ input' '
+ 	test_must_fail git grep "("
+ '
+
++test_invalid_grep_expression --and -e A
++
+ for H in HEAD ''
+ do
+ 	case "$H" in
+=2D-
+2.32.0
