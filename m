@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E72C11F69
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 14:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46A3FC11F68
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 14:06:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 567EB6144C
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 14:06:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CE1D61452
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 14:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235328AbhF3OI6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Jun 2021 10:08:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49844 "EHLO
+        id S235631AbhF3OJA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Jun 2021 10:09:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235047AbhF3OIv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jun 2021 10:08:51 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61FBC061756
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 07:06:21 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id r9-20020a7bc0890000b02901f347b31d55so1655028wmh.2
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 07:06:21 -0700 (PDT)
+        with ESMTP id S235119AbhF3OIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jun 2021 10:08:53 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF7CBC061766
+        for <git@vger.kernel.org>; Wed, 30 Jun 2021 07:06:22 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id w13so2160405wmc.3
+        for <git@vger.kernel.org>; Wed, 30 Jun 2021 07:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SnfDXt5sm+2eDtRCNo6bqj+fhnJFVLyFuY1GMHqWLIQ=;
-        b=kxXVQZXfEzqWIFvzrp2flvZXkwSbVPGf3jsToZQqM9Pk5O5hMZ9Jz2CtEHYlfa1tZM
-         IupW5PGB5nPju8kUt0wDDyyh58iNfuYC2HDG1v99RsMx4S6/t47/FpaHHXxN0YwF0DvO
-         swHhAQzpZiliw7FIVszUAMbJxHTOJXWwADFCxIoGz2gnJx7NIK9+z042OO0KxNaCAYnq
-         3jUoKI7EAdOMlakRYJ9JwmmIr28hvRS/Yldr4YVIZ9TwmrYRJaykbnvbBxbcROQTZFOF
-         kSuREKdGxhN2+1qsLWSRNmRQgDumJA4CTzQqANESTAvgcuxcyEdSydRZWS6Pzs05TRcN
-         jf8Q==
+        bh=lddp79Lgk80FKKHEi9+uVPIEPBz+dmYtDuZyeLqJ51I=;
+        b=H90/CbL8i2HKTcIg2bZ9uzEB/ujWqocTpggGfYbEy2esxvhpWjzNUHJEK7IlQTRTdQ
+         gwhrTy0uiZFgou2KZOzqhNor7qC5F3qhDZCAxM7h2pSO8BVRfU0r9vp19dCgYG/QVFmf
+         +1UYWyR51B3kMJnS+OHlQNVghxQ2Di9TfJD4me+UEsAEeEImTFJ3affxeSQ4HvLeYNSj
+         Vea+azdLwf0gpK9O/Ph+oLtT8NEkTGalxrt9UlA4yqQL+1aeg6O/YzzAu+Kztia61xJ9
+         1l9WfkEgeRZC6MlQY7xtOhL6M+dvbj8PSFt1XD8wLhbwa+6Vd0u3AG15ia4PuG+CMNLy
+         B4Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SnfDXt5sm+2eDtRCNo6bqj+fhnJFVLyFuY1GMHqWLIQ=;
-        b=JtuOoMrvpXBUl9iuRLvgK6356nTnddM9aFDJ7gVH+UBSh3MLemRU4kbatLVNGRrmY9
-         /0HyGXlnd5hB5hcV3cnOrqNmalBp8Wp6BNpIjPrEJuVoaOR6O2LNylf3VJvdmgRT/E3i
-         JmXsejFH6AwLMpx53ILt1rYdn9l58qJ4j00Z//T+SkIUH15xltspIOORdvytKKAexBUp
-         beuR+KuT2O5WKlhR7Mv0ORJj/zLgNlQhK1D/KaA+/Xj0XpDM/Js0qtvVXJJE7cmqaqKM
-         elQOEu624Sr91mVzfcGqIN5ZolXNDzI9TsxVKAN/IXgxJsbjZwjgCznaKG+vBc0pklb2
-         96Ig==
-X-Gm-Message-State: AOAM530J3GTet9LtiyMIFCQRRnTpyAqgcph2EP5zH9dZMGkp1hgR7w3S
-        lF9Sqx4l7hTToeC2aLBgLvXVgHpRRqbgaw==
-X-Google-Smtp-Source: ABdhPJwttmvcwQopBJdvL37ozNbQKMEMWb37hu8i3fQAYZyyHCRpKfWnAtoacmCtI4ycOonHZIddOw==
-X-Received: by 2002:a05:600c:3658:: with SMTP id y24mr4781054wmq.6.1625061980230;
-        Wed, 30 Jun 2021 07:06:20 -0700 (PDT)
+        bh=lddp79Lgk80FKKHEi9+uVPIEPBz+dmYtDuZyeLqJ51I=;
+        b=nIUl3jKVKhIFDeXy025NRK62454S9Q+3iNaEBwSdFQ/sBgoyA9RveCph6g10bZzX7y
+         H0KpUxX1vymvy46F58AjCKwIPc31kns8CzAxed153+A3qjQqaiI/1qOCLGr4sZvEEIiI
+         K3DDQ+kax3bLgimB7DsIkqyQVgHJVKZE03MKI8bW8uIQ1/MTJAmWy8xYbhjOUqZfwHbA
+         CoDPALhoHNoYfsqH72Y4FXNtV5TzyYRsdCrc7Muv/ByxO51WPLINNBCtTeCSShtJMupT
+         YcgaJdHo6izRCXDxDKx7nANFHpVR8Bi3ksSD2jN+SmcvM3eCsEQgDKnJX3q4ET3jyf0G
+         IcLg==
+X-Gm-Message-State: AOAM533SBUvKLxSpqljlRWPFiQEL6nC3qivA8YPaozWJLbPRXmGnsG5A
+        or3HHSSOAr7frn6E6WiYdW1KhKHn/Z9ZGQ==
+X-Google-Smtp-Source: ABdhPJyoutvC+XGI0/nddjDCW4lQI8BnMWxxoDoIW2n1OGvqp77k4rQlqqJA5WhhRRDlUGMuV3MIhw==
+X-Received: by 2002:a7b:c316:: with SMTP id k22mr4764920wmj.56.1625061981230;
+        Wed, 30 Jun 2021 07:06:21 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b20sm4763814wmj.7.2021.06.30.07.06.19
+        by smtp.gmail.com with ESMTPSA id b20sm4763814wmj.7.2021.06.30.07.06.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jun 2021 07:06:19 -0700 (PDT)
+        Wed, 30 Jun 2021 07:06:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 1/3] bundle cmd: stop leaking memory from parse_options_cmd_bundle()
-Date:   Wed, 30 Jun 2021 16:06:14 +0200
-Message-Id: <patch-1.3-3d0d7a8e8b5-20210630T140339Z-avarab@gmail.com>
+Subject: [PATCH v3 2/3] bundle.c: use a temporary variable for OIDs and names
+Date:   Wed, 30 Jun 2021 16:06:15 +0200
+Message-Id: <patch-2.3-e47646d3a98-20210630T140339Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.32.0.613.g8e17abc2eb
 In-Reply-To: <cover-0.3-00000000000-20210630T140339Z-avarab@gmail.com>
 References: <cover-0.3-00000000000-20210621T151357Z-avarab@gmail.com> <cover-0.3-00000000000-20210630T140339Z-avarab@gmail.com>
@@ -77,173 +77,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak from the prefix_filename() function introduced with
-its use in 3b754eedd5 (bundle: use prefix_filename with bundle path,
-2017-03-20).
-
-As noted in that commit the leak was intentional as a part of being
-sloppy about freeing resources just before we exit, I'm changing this
-because I'll be fixing other memory leaks in the bundle API (including
-the library version) in subsequent commits. It's easier to reason
-about those fixes if valgrind runs cleanly at the end without any
-leaks whatsoever.
-
-An earlier version of this change went out of its way to not leak
-memory on the die() codepaths here, but that was deemed too verbose to
-worry about in a built-in that's dying anyway. The only reason we'd
-need that is to appease a mode like SANITIZE=leak within the scope of
-an entire test file.
+In preparation for moving away from accessing the OID and name via the
+"oid" and "name" slots in a subsequent commit, change the code that
+accesses it to use named variables. This makes the subsequent change
+smaller.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/bundle.c | 62 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ bundle.c    | 26 ++++++++++++++++++--------
+ transport.c |  6 ++++--
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index ea6948110b0..15e2bd61965 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -46,7 +46,7 @@ static int parse_options_cmd_bundle(int argc,
- 		const char* prefix,
- 		const char * const usagestr[],
- 		const struct option options[],
--		const char **bundle_file) {
-+		char **bundle_file) {
- 	int newargc;
- 	newargc = parse_options(argc, argv, NULL, options, usagestr,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
-@@ -61,7 +61,7 @@ static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
- 	int progress = isatty(STDERR_FILENO);
- 	struct strvec pack_opts;
- 	int version = -1;
--
-+	int ret;
- 	struct option options[] = {
- 		OPT_SET_INT('q', "quiet", &progress,
- 			    N_("do not show progress meter"), 0),
-@@ -76,7 +76,7 @@ static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
- 			    N_("specify bundle format version")),
- 		OPT_END()
- 	};
--	const char* bundle_file;
-+	char *bundle_file;
+diff --git a/bundle.c b/bundle.c
+index 693d6195514..7210e5e7105 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -156,6 +156,9 @@ static int list_refs(struct ref_list *r, int argc, const char **argv)
+ 	int i;
  
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_create_usage, options, &bundle_file);
-@@ -94,75 +94,95 @@ static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
- 
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to create a bundle."));
--	return !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts, version);
-+	ret = !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts, version);
-+	free(bundle_file);
-+	return ret;
- }
- 
- static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
- 	struct bundle_header header;
- 	int bundle_fd = -1;
- 	int quiet = 0;
--
-+	int ret;
- 	struct option options[] = {
- 		OPT_BOOL('q', "quiet", &quiet,
- 			    N_("do not show bundle details")),
- 		OPT_END()
- 	};
--	const char* bundle_file;
-+	char *bundle_file;
- 
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_verify_usage, options, &bundle_file);
- 	/* bundle internals use argv[1] as further parameters */
- 
- 	memset(&header, 0, sizeof(header));
--	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0)
--		return 1;
-+	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0) {
-+		ret = 1;
-+		goto cleanup;
-+	}
- 	close(bundle_fd);
--	if (verify_bundle(the_repository, &header, !quiet))
--		return 1;
-+	if (verify_bundle(the_repository, &header, !quiet)) {
-+		ret = 1;
-+		goto cleanup;
-+	}
+ 	for (i = 0; i < r->nr; i++) {
++		struct object_id *oid;
++		const char *name;
 +
- 	fprintf(stderr, _("%s is okay\n"), bundle_file);
--	return 0;
-+	ret = 0;
-+cleanup:
-+	free(bundle_file);
-+	return ret;
+ 		if (argc > 1) {
+ 			int j;
+ 			for (j = 1; j < argc; j++)
+@@ -164,8 +167,10 @@ static int list_refs(struct ref_list *r, int argc, const char **argv)
+ 			if (j == argc)
+ 				continue;
+ 		}
+-		printf("%s %s\n", oid_to_hex(&r->list[i].oid),
+-				r->list[i].name);
++
++		oid = &r->list[i].oid;
++		name = r->list[i].name;
++		printf("%s %s\n", oid_to_hex(oid), name);
+ 	}
+ 	return 0;
  }
+@@ -194,15 +199,17 @@ int verify_bundle(struct repository *r,
+ 	repo_init_revisions(r, &revs, NULL);
+ 	for (i = 0; i < p->nr; i++) {
+ 		struct ref_list_entry *e = p->list + i;
+-		struct object *o = parse_object(r, &e->oid);
++		const char *name = e->name;
++		struct object_id *oid = &e->oid;
++		struct object *o = parse_object(r, oid);
+ 		if (o) {
+ 			o->flags |= PREREQ_MARK;
+-			add_pending_object(&revs, o, e->name);
++			add_pending_object(&revs, o, name);
+ 			continue;
+ 		}
+ 		if (++ret == 1)
+ 			error("%s", message);
+-		error("%s %s", oid_to_hex(&e->oid), e->name);
++		error("%s %s", oid_to_hex(oid), name);
+ 	}
+ 	if (revs.pending.nr != p->nr)
+ 		return ret;
+@@ -219,19 +226,22 @@ int verify_bundle(struct repository *r,
  
- static int cmd_bundle_list_heads(int argc, const char **argv, const char *prefix) {
- 	struct bundle_header header;
- 	int bundle_fd = -1;
--
-+	int ret;
- 	struct option options[] = {
- 		OPT_END()
- 	};
--	const char* bundle_file;
-+	char *bundle_file;
+ 	for (i = 0; i < p->nr; i++) {
+ 		struct ref_list_entry *e = p->list + i;
+-		struct object *o = parse_object(r, &e->oid);
++		const char *name = e->name;
++		struct object_id *oid = &e->oid;
++		struct object *o = parse_object(r, oid);
+ 		assert(o); /* otherwise we'd have returned early */
+ 		if (o->flags & SHOWN)
+ 			continue;
+ 		if (++ret == 1)
+ 			error("%s", message);
+-		error("%s %s", oid_to_hex(&e->oid), e->name);
++		error("%s %s", oid_to_hex(oid), name);
+ 	}
  
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_list_heads_usage, options, &bundle_file);
- 	/* bundle internals use argv[1] as further parameters */
+ 	/* Clean up objects used, as they will be reused. */
+ 	for (i = 0; i < p->nr; i++) {
+ 		struct ref_list_entry *e = p->list + i;
+-		commit = lookup_commit_reference_gently(r, &e->oid, 1);
++		struct object_id *oid = &e->oid;
++		commit = lookup_commit_reference_gently(r, oid, 1);
+ 		if (commit)
+ 			clear_commit_marks(commit, ALL_REV_FLAGS);
+ 	}
+diff --git a/transport.c b/transport.c
+index 50f5830eb6b..95c1138e9ae 100644
+--- a/transport.c
++++ b/transport.c
+@@ -148,8 +148,10 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
  
- 	memset(&header, 0, sizeof(header));
--	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0)
--		return 1;
-+	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0) {
-+		ret = 1;
-+		goto cleanup;
-+	}
- 	close(bundle_fd);
--	return !!list_bundle_refs(&header, argc, argv);
-+	ret = !!list_bundle_refs(&header, argc, argv);
-+cleanup:
-+	free(bundle_file);
-+	return ret;
- }
- 
- static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix) {
- 	struct bundle_header header;
- 	int bundle_fd = -1;
--
-+	int ret;
- 	struct option options[] = {
- 		OPT_END()
- 	};
--	const char* bundle_file;
-+	char *bundle_file;
- 
- 	argc = parse_options_cmd_bundle(argc, argv, prefix,
- 			builtin_bundle_unbundle_usage, options, &bundle_file);
- 	/* bundle internals use argv[1] as further parameters */
- 
- 	memset(&header, 0, sizeof(header));
--	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0)
--		return 1;
-+	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0) {
-+		ret = 1;
-+		goto cleanup;
-+	}
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to unbundle."));
--	return !!unbundle(the_repository, &header, bundle_fd, 0) ||
-+	ret = !!unbundle(the_repository, &header, bundle_fd, 0) ||
- 		list_bundle_refs(&header, argc, argv);
-+cleanup:
-+	free(bundle_file);
-+	return ret;
- }
- 
- int cmd_bundle(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < data->header.references.nr; i++) {
+ 		struct ref_list_entry *e = data->header.references.list + i;
+-		struct ref *ref = alloc_ref(e->name);
+-		oidcpy(&ref->old_oid, &e->oid);
++		const char *name = e->name;
++		struct ref *ref = alloc_ref(name);
++		struct object_id *oid = &e->oid;
++		oidcpy(&ref->old_oid, oid);
+ 		ref->next = result;
+ 		result = ref;
+ 	}
 -- 
 2.32.0.613.g8e17abc2eb
 
