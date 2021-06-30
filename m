@@ -2,85 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3279FC11F65
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 17:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECEADC11F65
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 17:06:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AE586146E
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 17:00:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D984D61166
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 17:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232222AbhF3RDI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Jun 2021 13:03:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhF3RDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jun 2021 13:03:07 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C3FCC061756
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 10:00:37 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id p22so6105161yba.7
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 10:00:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=nOUSsidm3nKnNZO2pFUdln0IRxO7xiTvCnAuAHdMY6Q=;
-        b=ih3p6HA168WKfW56l7s1fuMizgyD6UrZ3dFEq7U3kcjPeXuZ+gFfhyTdsAMaE9lPsj
-         5lEIKBCJPLk4fZiltsqaLqVtWUNEV5C8iSxPrxIiHtdhJQp/lcC9DdJp2VbkEncdYUyI
-         w9tqB0RItDgLXvd9Nryl/l7JNbK0heIalFk4paM6htxdIvqJBoqcNTtCET+joBVXYOdJ
-         sEmos6+megNuqCOWgVY8O1L1I0iWkzTjKW/3avVYBEtcTAWTkiaJS7bTRaY6hBQ61rqn
-         BPRUoHu9F8ka5xRIXMA/XRf6cxEFXh24ZQ/PsENRKICi5EruQInKerIBaNHIOdy71Lg8
-         vNvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=nOUSsidm3nKnNZO2pFUdln0IRxO7xiTvCnAuAHdMY6Q=;
-        b=Tw1d79EGOta8gy3rHLPc9TGlKwfo7vKRvikDIH/R9q2biYUkIz3v5YL5Dm/fq36Mzq
-         Jxi56bWPxKvG7BCfSMsMQ0oAQeXH8aoAMKFDoRCtY54IUmZdXbwMmw7PYFtTYCpGJLWe
-         vDzNFSFdF0+CdAv+E00euNiu0/sRshcHZqYzEtuSaLEjAJRinf2rEprqllatbk1nNXML
-         RyBNQn7zN3/p3oteRos0hTlbbbkvdFDBGG9Lt6gPH7U78daW0xRuDYW1FABMvrAMAUY0
-         8/JHpCsiB2MC3PfVKxu+PaXXN2y9amzd6sFD6qs3bpz5EyK0I15XtAnWfHVFZojmt+J1
-         +tHg==
-X-Gm-Message-State: AOAM5339QvlqwWmh2ISHrx+cXCe8lG+NtvDmjL2Rn/3T3gwAShS/j3rb
-        kuLOnQqEID1W7wv3k884L+VsBCuQFQuzYB72HBDRkqlofc6jtw==
-X-Google-Smtp-Source: ABdhPJzZMQaxphovc+blelbrZLWnlyeKOgUVbD6K6Og7JrCJ+tY3MxMjXNFRHJPA4e+3wo5+JAHdOY45wEuYAcJm3kY=
-X-Received: by 2002:a25:7a82:: with SMTP id v124mr22903896ybc.413.1625072435365;
- Wed, 30 Jun 2021 10:00:35 -0700 (PDT)
+        id S232416AbhF3RJG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Jun 2021 13:09:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37514 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232335AbhF3RJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jun 2021 13:09:03 -0400
+Received: (qmail 24353 invoked by uid 109); 30 Jun 2021 17:06:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Jun 2021 17:06:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8903 invoked by uid 111); 30 Jun 2021 17:06:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 30 Jun 2021 13:06:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 30 Jun 2021 13:06:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Antw: [EXT] Re: git add --interactive patch improvement for
+ split hunks
+Message-ID: <YNykmFejFG8cEjue@coredump.intra.peff.net>
+References: <60D45FE4020000A100041FCE@gwsmtp.uni-regensburg.de>
+ <YNSnlhbE30xDfVMY@coredump.intra.peff.net>
+ <60D9A01C020000A100042099@gwsmtp.uni-regensburg.de>
+ <87eecmgrnx.fsf@evledraar.gmail.com>
+ <YNvT+tUlW98dQY3B@coredump.intra.peff.net>
+ <xmqq5yxvvq7k.fsf@gitster.g>
+ <YNwd6wmt4FTyySgH@coredump.intra.peff.net>
+ <874kdfg32w.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CACPiFC++fG-WL8uvTkiydf3wD8TY6dStVpuLcKA9cX_EnwoHGA@mail.gmail.com>
-In-Reply-To: <CACPiFC++fG-WL8uvTkiydf3wD8TY6dStVpuLcKA9cX_EnwoHGA@mail.gmail.com>
-From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Wed, 30 Jun 2021 13:00:24 -0400
-Message-ID: <CACPiFCLzsiUjx-vm-dcd=0E8HezMWkErPyS==OQ7OhaXqR6CUA@mail.gmail.com>
-Subject: Structured (ie: json) output for query commands?
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874kdfg32w.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git Gang,
+On Wed, Jun 30, 2021 at 10:27:16AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-I'm used to automating git by parsing stuff in Unix shell style. But
-the golden days that gave us Perl are well behind us.
+> > I'm not sure. I think the topic would have graduated if either you had
+> > just applied the squash and merged it down, or if the original author
+> > had checked back in over the intervening year to say "hey, what happened
+> > to my patch" (either by reading "what's cooking" or manually).
+> >
+> > I suspect drive-by contributors might not realize they need to do the
+> > latter in some cases, but I wouldn't have counted 2014-era Ævar in that
+> > boat. So I dunno.
+> 
+> Or maybe the moral of the story that it's a net addition of complexity
+> to git-add--interactive.perl. If I didn't care enough to remember or
+> notice the issue again maybe it wasn't all that important to begin with.
+> 
+> Likewise when it got ejected nobody else seemed to notice/care enough to
+> say "hey I liked that feature" & to pick it up.
 
-Before I write (unreliable, leaky, likely buggy) text parsing bits one
-more time, has git grown formatted output? I'm aware of fmt and
-friends, I'm thinking of something that handles escaping, nested data
-structures, etc.
+Yeah, that's probably a fair interpretation, too. :)
 
-Something like "git shortlog --json".
+> I'd entirely forgotten I wrote that. Now that I'm reminded of it I don't
+> care enough myself to rebase it, test it again, and especially not to
+> figure out if/how it's going to interact with the new C implementation /
+> add and adjust a test for the two.
+> 
+> But maybe someone else will, it would be neat if someone has more of an
+> itch from the lack of that feature & wants to pick it up.
 
-Have there been discussions? Patches? (I don't spot anything in what's cooking).
+I can probably save you a little time/mental energy here: the C version
+already does what your patch was trying to do. Once we switch to it as
+the default, your patch would be obsolete anyway. :)
 
-
-m
--- 
- martin.langhoff@gmail.com
- - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
- - don't be distracted        ~  http://github.com/martin-langhoff
-   by shiny stuff
+-Peff
