@@ -2,155 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C4AC11F67
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 00:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A7E3C11F67
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 00:13:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64C8961D5D
-	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 00:01:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E97C661D81
+	for <git@archiver.kernel.org>; Wed, 30 Jun 2021 00:13:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235316AbhF3AEA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Jun 2021 20:04:00 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:58426 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233056AbhF3AEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Jun 2021 20:04:00 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 5DF731F8C6;
-        Wed, 30 Jun 2021 00:01:32 +0000 (UTC)
-Date:   Wed, 30 Jun 2021 00:01:32 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH v2] xmmap: inform Linux users of tuning knobs on ENOMEM
-Message-ID: <20210630000132.GA2653@dcvr>
-References: <20210629081108.28657-1-e@80x24.org>
+        id S235549AbhF3APg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Jun 2021 20:15:36 -0400
+Received: from avasout02.plus.net ([212.159.14.17]:46947 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233056AbhF3APf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Jun 2021 20:15:35 -0400
+X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Jun 2021 20:15:35 EDT
+Received: from [10.0.2.15] ([195.213.6.104])
+        by smtp with ESMTPA
+        id yNjPlHzz17QW9yNjQllqBg; Wed, 30 Jun 2021 01:05:35 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1625011535; bh=7mgqyQ9eHVXAk/w5uY95doZxS6dOnZBq2pBu03w3+Eo=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Cr7bBeZyf10+hTAGa/GTKlkjv65HP0N6Wi+w2iIaMiSBtXvCJSGC3WigCV7/UJRC6
+         jTaa9wLnXzTh1V8jVs/MMh1bQepWL2sRC71SaGS3HBizjztcTL5I7ANJJOneDLMprT
+         Cm76qlQZeT7OmXkpzNOykbeOQKHp8HLStfsZZsnycNLEZsqjuVRfdyaX7FaG7lf97A
+         GJtOozr76oN6T805twJ8+BvIrn7E/0YkVAjhet8GQmCXRmrCJHSwrxXm8uhdRUA3QU
+         zM0hzp+7+jSRD3KeFywimnCwN+KOC70dL0QSAWY1hUPrizj/NK5SldqAormmPurDO7
+         UzhYMbU2Pz1Zg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=H+BAP9Qi c=1 sm=1 tr=0
+ a=lJROvGMFj6EKeLAuyrqflg==:117 a=lJROvGMFj6EKeLAuyrqflg==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=WhUJ6HUwzuvpw2ubqXUA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 4/5] Makefile: don't use "FORCE" for tags targets
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Kristof Provost <Kristof@provost-engineering.be>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+References: <cover-0.3-00000000000-20210622T141844Z-avarab@gmail.com>
+ <cover-0.5-0000000000-20210629T110837Z-avarab@gmail.com>
+ <patch-4.5-b924cc3f56-20210629T110837Z-avarab@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <67c45b13-df8f-8065-377a-fbd2f80992ee@ramsayjones.plus.com>
+Date:   Wed, 30 Jun 2021 01:05:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <patch-4.5-b924cc3f56-20210629T110837Z-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210629081108.28657-1-e@80x24.org>
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfOr/Nb33byJCOR7VWGCGhz7oS1KxTF3hBaCd0MhZWdprD6C88Ie59QzGm7IasSNjgUkwjpxTASyfvxln0LHRbcd/b8a36KIBWgK0SAj0PvQzsvm9jQYw
+ U8e7XN5Xl9OjzdFHDrlcox82u7IKO+SNGBO+N4WvLy/2X4K1ini5PQ6CTYxfbQ2ZuSIdd8kv37ZGbg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is now down to a single patch.
 
-I wanted to make things more transparent to users without
-privileges to raise sys.vm.max_map_count and/or RLIMIT_DATA;
-but it doesn't seem possible to account for libc/zlib/etc. doing
-mmap() without our knowledge (usually via malloc).
 
-So I think giving users some information to feed their sysadmins
-is the best we can do in this situation:
+On 29/06/2021 12:12, Ævar Arnfjörð Bjarmason wrote:
+> Remove the "FORCE" dependency from the "tags", "TAGS" and "cscope.out"
+> targets, instead make them depend on whether or not the relevant
+> source files have changed.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  Makefile | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 2e3b257164..7b0d9773b0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2727,19 +2727,21 @@ FIND_SOURCE_FILES = ( \
+>  		| sed -e 's|^\./||' \
+>  	)
+>  
+> -$(ETAGS_TARGET): FORCE
+> +FOUND_SOURCE_FILES = $(shell $(FIND_SOURCE_FILES))
+> +
+> +$(ETAGS_TARGET): $(FOUND_SOURCE_FILES)
+>  	$(QUIET_GEN)$(RM) "$(ETAGS_TARGET)+" && \
+>  	$(FIND_SOURCE_FILES) | xargs etags -a -o "$(ETAGS_TARGET)+" && \
+>  	mv "$(ETAGS_TARGET)+" "$(ETAGS_TARGET)"
+>  
+> -tags: FORCE
+> +tags: $(FOUND_SOURCE_FILES)
+>  	$(QUIET_GEN)$(RM) tags+ && \
+>  	$(FIND_SOURCE_FILES) | xargs ctags -a -o tags+ && \
+>  	mv tags+ tags
 
---------------8<-----------
-Subject: [PATCH] xmmap: inform Linux users of tuning knobs on ENOMEM
+I was expecting to see the above targets to be changed, similarly to ...
 
-Linux users may benefit from additional information on how to
-avoid ENOMEM from mmap despite the system having enough RAM to
-accomodate them.  We can't reliably unmap pack windows to work
-around the issue since malloc and other library routines may
-mmap without our knowledge.
+>  
+> -cscope.out:
+> +cscope.out: $(FOUND_SOURCE_FILES)
+>  	$(QUIET_GEN)$(RM) cscope.out && \
+> -	$(FIND_SOURCE_FILES) | xargs cscope -f$@ -b
+> +	echo $(FOUND_SOURCE_FILES) | xargs cscope -f$@ -b
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
- config.c          |  3 ++-
- git-compat-util.h |  1 +
- object-file.c     | 16 +++++++++++++++-
- packfile.c        |  4 ++--
- read-cache.c      |  3 ++-
- 5 files changed, 22 insertions(+), 5 deletions(-)
+... this hunk (ie. 'an "echo <list> | xargs" pattern')
+Indeed, the above phrase was taken from the commit message of
+the next patch (5/5), which implies that this change had already
+happened (presumably in this patch).
 
-diff --git a/config.c b/config.c
-index f9c400ad30..79ae9f2dea 100644
---- a/config.c
-+++ b/config.c
-@@ -3051,7 +3051,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		if (contents == MAP_FAILED) {
- 			if (errno == ENODEV && S_ISDIR(st.st_mode))
- 				errno = EISDIR;
--			error_errno(_("unable to mmap '%s'"), config_filename);
-+			error_errno(_("unable to mmap '%s'%s"),
-+					config_filename, mmap_os_err());
- 			ret = CONFIG_INVALID_FILE;
- 			contents = NULL;
- 			goto out_free;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index fb6e9af76b..fa6dd92219 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -876,6 +876,7 @@ char *xstrndup(const char *str, size_t len);
- void *xrealloc(void *ptr, size_t size);
- void *xcalloc(size_t nmemb, size_t size);
- void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
-+const char *mmap_os_err(void);
- void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
- int xopen(const char *path, int flags, ...);
- ssize_t xread(int fd, void *buf, size_t len);
-diff --git a/object-file.c b/object-file.c
-index f233b440b2..b9c3219793 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1023,12 +1023,26 @@ void *xmmap_gently(void *start, size_t length,
- 	return ret;
- }
- 
-+const char *mmap_os_err(void)
-+{
-+	static const char blank[] = "";
-+#if defined(__linux__)
-+	if (errno == ENOMEM) {
-+		/* this continues an existing error message: */
-+		static const char enomem[] =
-+", check sys.vm.max_map_count and/or RLIMIT_DATA";
-+		return enomem;
-+	}
-+#endif /* OS-specific bits */
-+	return blank;
-+}
-+
- void *xmmap(void *start, size_t length,
- 	int prot, int flags, int fd, off_t offset)
- {
- 	void *ret = xmmap_gently(start, length, prot, flags, fd, offset);
- 	if (ret == MAP_FAILED)
--		die_errno(_("mmap failed"));
-+		die_errno(_("mmap failed%s"), mmap_os_err());
- 	return ret;
- }
- 
-diff --git a/packfile.c b/packfile.c
-index 755aa7aec5..9ef6d98292 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -652,8 +652,8 @@ unsigned char *use_pack(struct packed_git *p,
- 				PROT_READ, MAP_PRIVATE,
- 				p->pack_fd, win->offset);
- 			if (win->base == MAP_FAILED)
--				die_errno("packfile %s cannot be mapped",
--					  p->pack_name);
-+				die_errno(_("packfile %s cannot be mapped%s"),
-+					  p->pack_name, mmap_os_err());
- 			if (!win->offset && win->len == p->pack_size
- 				&& !p->do_not_close)
- 				close_pack_fd(p);
-diff --git a/read-cache.c b/read-cache.c
-index 77961a3885..a80902155c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2236,7 +2236,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 
- 	mmap = xmmap_gently(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
- 	if (mmap == MAP_FAILED)
--		die_errno(_("%s: unable to map index file"), path);
-+		die_errno(_("%s: unable to map index file%s"), path,
-+			mmap_os_err());
- 	close(fd);
- 
- 	hdr = (const struct cache_header *)mmap;
--- 
-It's probably not safe to feed sysadmins after midnight, though :>
+ATB,
+Ramsay Jones
+
+>  
+>  .PHONY: cscope
+>  cscope: cscope.out
+> @@ -2923,7 +2925,7 @@ check: config-list.h command-list.h
+>  		exit 1; \
+>  	fi
+>  
+> -FOUND_C_SOURCES = $(filter %.c,$(shell $(FIND_SOURCE_FILES)))
+> +FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
+>  COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
+>  
+>  %.cocci.patch: %.cocci $(COCCI_SOURCES)
+> 
