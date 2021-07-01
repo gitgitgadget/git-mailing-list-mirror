@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75B9AC11F69
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3698FC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F1E761414
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E8666140C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233122AbhGAOuj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37376 "EHLO
+        id S233163AbhGAOul (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232625AbhGAOu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:28 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22FC6C061765
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:57 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id i94so8602764wri.4
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:57 -0700 (PDT)
+        with ESMTP id S232953AbhGAOua (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:30 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B8FC061765
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:58 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id v5so8607380wrt.3
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wR7kYAWIpdTP/+5YQ3Emp8FTipGBv/xXPqjGmoTjFMw=;
-        b=mJJ7ashoKQVjtWiim0AQV8cbigR0mD0vE0zD+ljBBMJWFDRCCv+LC412YZ46zLpkAS
-         df451Z+rLbrhS59WKI7Hw+CZvkpJmRR2VTzsxzp2DlMPfQsxqJ5bI635YL3oXdlASWoP
-         lL+Fppq+Gw9UGygKyw1JncIapEoZBWgDO+4mz+QwUBm7jE3M2GFvxiyZNahN7HIvr2dF
-         U8GQmFo8TakGmaGmPBAZc7nO7PtoH7XLIU3qxAnlAh3nu45L32OLbE0MsuJGl59BAKy5
-         QevIWFf+6B68nbwb9fzfjqdJCIxdcoWfoIonVDMK/Z6OquePZeJTovJbOQZfSDL7QCqG
-         2EoQ==
+        bh=IdVJWUWBVm2Iwiwmd97pkicNUmd71GC3yTAVdU5z6UM=;
+        b=lmZLh49uXuwCwrWK3isnYQxMG9JMltS1Il/GpgHLReRFYbR75dJYv75dY+Xcv2TlFJ
+         uJbUfDYPG37K3LdkZuzdE+l6kxlE+VJr8xbcphz5D5rzwkEY9NaWybWzBePJX/8A6zQB
+         aPIUbF9ZzixZymLzBhUG3W/JVMCFAairXGr0axd/148ztJZfMJlDCVktrZ+D4QBoM941
+         RDqhGD31X2VfOdWhNlnOPCTJRdQ8lrVsHPf/dxaJgtfx/SCYB4uYg/mnriJTxSRTV4SW
+         +Hxbth0HoupMUQNGBK3uDLEdP9gAXnUGwvIeqiLQs97PnBrwu7qb/3Yp9TqsRbUr/46z
+         gahQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wR7kYAWIpdTP/+5YQ3Emp8FTipGBv/xXPqjGmoTjFMw=;
-        b=ApsPouxhFIlOxMizGuWi7gCYcX5T+Eut9enunUImHVsReyJQJoazA0M1sdZURAQVpJ
-         bXTD6I3M2sM26jcwQ48oEfFoiaG2EtC9ruu5HBzXLlQe2KChRtZO74tU+LrL4PohNT3S
-         I3Ar/acd/HhKo9xK6oyConaZC3gIAoHSyDJ404RKSYr7lSKwMYQmW2ZSlFjiKTN+HwfK
-         rYcOzgFgG9+DyKQSR5Wvg/EzlQBwb+jicjqYAu9wXQubCYC8/vQ4KqSGkckIz5e/2sKk
-         JPqk+88QZKQJ7uktB2316hA5CP+M0AA4pwMTQMzIeGhdLEGNc23YDZU123FsQ2jjolof
-         wAtQ==
-X-Gm-Message-State: AOAM532tkFrcMxENU6Lf7Lgmf0Io0jFzT3l0xY49gJxLUVR+C9uFh7D/
-        XUttjS+KXCb81PmHHonsbR7pGIVf+oE=
-X-Google-Smtp-Source: ABdhPJyy9pr+XTYg1uC2mERpEBTbJ4tTrKuCee7espsGVfUANblMV9LiZfSOt1OXfeFiml7gg0kiBg==
-X-Received: by 2002:a05:6000:42:: with SMTP id k2mr21370wrx.294.1625150875720;
-        Thu, 01 Jul 2021 07:47:55 -0700 (PDT)
+        bh=IdVJWUWBVm2Iwiwmd97pkicNUmd71GC3yTAVdU5z6UM=;
+        b=p/bcJZeu8nLP5nFjlruAJsS/gxeXHtidAz4iE8YYYXDcasJMxUTukxshm+zQSWSYVK
+         pRP5WBbPdZbEe2h+GFQwWrWbiotisjBAcKiC7AU+hZovCPPXDsdfLSw7DKwxqls6931P
+         feOb2mkd5W0x4tYEwIXQX9P+ux3u/zGGwY6zgsZw6CFKKnJN3uaq//j57FBppLfMwG71
+         8wddsVA5PJ6a7nf31Ri5LqEx6ocB1dGiU2Aya4k4R3gsITpeJcJDpbdn/gRGahFuiUGP
+         KmGEdEmnWFEBN0kJuBeFzG7VhkRkQgqDA5KQotlF6ORI7xXYmoHyMG2GnQI9auucwyfH
+         OP2w==
+X-Gm-Message-State: AOAM532JS5SFczfftZM40bFtXJ4Lffig59gM+AI0VHdq0x14YIdPAn8r
+        R+4TG+sGKpkhQGO/iFYfsIpxAhV4GXs=
+X-Google-Smtp-Source: ABdhPJz07kUGEr/tP5AAjbSCg7vlbLImML1TS9Q0AZrM5RRR4dt7mPNCtpXas8P3mXX/ubiiAKQxWA==
+X-Received: by 2002:a5d:59a6:: with SMTP id p6mr11103333wrr.277.1625150877372;
+        Thu, 01 Jul 2021 07:47:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u15sm9680812wmq.48.2021.07.01.07.47.55
+        by smtp.gmail.com with ESMTPSA id c10sm201876wmb.40.2021.07.01.07.47.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:47:55 -0700 (PDT)
-Message-Id: <37fdce5ec3afaa9aae5001c648fced0675dae0c4.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:47:57 -0700 (PDT)
+Message-Id: <175ae9a757e33fb119b4e01c76f851fa71ff4c9b.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:27 +0000
-Subject: [PATCH v3 17/34] fsmonitor--daemon: define token-ids
+Date:   Thu, 01 Jul 2021 14:47:30 +0000
+Subject: [PATCH v3 20/34] fsmonitor-fs-listen-macos: add macos header files
+ for FSEvent
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,148 +80,153 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to create token-ids and define the
-overall token naming scheme.
+Include MacOS system declarations to allow us to use FSEvent and
+CoreFoundation APIs.  We need GCC and clang versions because of
+compiler and header file conflicts.
 
+While it is quite possible to #include Apple's CoreServices.h when
+compiling C source code with clang, trying to build it with GCC
+currently fails with this error:
+
+In file included
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Security.framework/Headers/AuthSession.h:32,
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Security.framework/Headers/Security.h:42,
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers/CSIdentity.h:43,
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers/OSServices.h:29,
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/IconsCore.h:23,
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/LaunchServices.h:23,
+   from /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreServices.framework/Headers/CoreServices.h:45,
+     /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Security.framework/Headers/Authorization.h:193:7: error: variably modified 'bytes' at file scope
+       193 | char bytes[kAuthorizationExternalFormLength];
+           |      ^~~~~
+
+The underlying reason is that GCC (rightfully) objects that an `enum`
+value such as `kAuthorizationExternalFormLength` is not a constant
+(because it is not, the preprocessor has no knowledge of it, only the
+actual C compiler does) and can therefore not be used to define the size
+of a C array.
+
+This is a known problem and tracked in GCC's bug tracker:
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93082
+
+In the meantime, let's not block things and go the slightly ugly route
+of declaring/defining the FSEvents constants, data structures and
+functions that we need, so that we can avoid above-mentioned issue.
+
+Let's do this _only_ for GCC, though, so that the CI/PR builds (which
+build both with clang and with GCC) can guarantee that we _are_ using
+the correct data types.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 116 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 115 insertions(+), 1 deletion(-)
+ compat/fsmonitor/fsmonitor-fs-listen-macos.c | 96 ++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index e942f7c5840..e991925fafc 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -93,6 +93,120 @@ static int do_as_client__status(void)
- 	}
- }
- 
+diff --git a/compat/fsmonitor/fsmonitor-fs-listen-macos.c b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
+index b91058d1c4f..bec5130d9e1 100644
+--- a/compat/fsmonitor/fsmonitor-fs-listen-macos.c
++++ b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
+@@ -1,3 +1,99 @@
++#if defined(__GNUC__)
 +/*
-+ * Requests to and from a FSMonitor Protocol V2 provider use an opaque
-+ * "token" as a virtual timestamp.  Clients can request a summary of all
-+ * created/deleted/modified files relative to a token.  In the response,
-+ * clients receive a new token for the next (relative) request.
++ * It is possible to #include CoreFoundation/CoreFoundation.h when compiling
++ * with clang, but not with GCC as of time of writing.
 + *
-+ *
-+ * Token Format
-+ * ============
-+ *
-+ * The contents of the token are private and provider-specific.
-+ *
-+ * For the built-in fsmonitor--daemon, we define a token as follows:
-+ *
-+ *     "builtin" ":" <token_id> ":" <sequence_nr>
-+ *
-+ * The "builtin" prefix is used as a namespace to avoid conflicts
-+ * with other providers (such as Watchman).
-+ *
-+ * The <token_id> is an arbitrary OPAQUE string, such as a GUID,
-+ * UUID, or {timestamp,pid}.  It is used to group all filesystem
-+ * events that happened while the daemon was monitoring (and in-sync
-+ * with the filesystem).
-+ *
-+ *     Unlike FSMonitor Protocol V1, it is not defined as a timestamp
-+ *     and does not define less-than/greater-than relationships.
-+ *     (There are too many race conditions to rely on file system
-+ *     event timestamps.)
-+ *
-+ * The <sequence_nr> is a simple integer incremented whenever the
-+ * daemon needs to make its state public.  For example, if 1000 file
-+ * system events come in, but no clients have requested the data,
-+ * the daemon can continue to accumulate file changes in the same
-+ * bin and does not need to advance the sequence number.  However,
-+ * as soon as a client does arrive, the daemon needs to start a new
-+ * bin and increment the sequence number.
-+ *
-+ *     The sequence number serves as the boundary between 2 sets
-+ *     of bins -- the older ones that the client has already seen
-+ *     and the newer ones that it hasn't.
-+ *
-+ * When a new <token_id> is created, the <sequence_nr> is reset to
-+ * zero.
-+ *
-+ *
-+ * About Token Ids
-+ * ===============
-+ *
-+ * A new token_id is created:
-+ *
-+ * [1] each time the daemon is started.
-+ *
-+ * [2] any time that the daemon must re-sync with the filesystem
-+ *     (such as when the kernel drops or we miss events on a very
-+ *     active volume).
-+ *
-+ * [3] in response to a client "flush" command (for dropped event
-+ *     testing).
-+ *
-+ * When a new token_id is created, the daemon is free to discard all
-+ * cached filesystem events associated with any previous token_ids.
-+ * Events associated with a non-current token_id will never be sent
-+ * to a client.  A token_id change implicitly means that the daemon
-+ * has gap in its event history.
-+ *
-+ * Therefore, clients that present a token with a stale (non-current)
-+ * token_id will always be given a trivial response.
++ * See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93082 for details.
 + */
-+struct fsmonitor_token_data {
-+	struct strbuf token_id;
-+	struct fsmonitor_batch *batch_head;
-+	struct fsmonitor_batch *batch_tail;
-+	uint64_t client_ref_count;
++typedef unsigned int FSEventStreamCreateFlags;
++#define kFSEventStreamEventFlagNone               0x00000000
++#define kFSEventStreamEventFlagMustScanSubDirs    0x00000001
++#define kFSEventStreamEventFlagUserDropped        0x00000002
++#define kFSEventStreamEventFlagKernelDropped      0x00000004
++#define kFSEventStreamEventFlagEventIdsWrapped    0x00000008
++#define kFSEventStreamEventFlagHistoryDone        0x00000010
++#define kFSEventStreamEventFlagRootChanged        0x00000020
++#define kFSEventStreamEventFlagMount              0x00000040
++#define kFSEventStreamEventFlagUnmount            0x00000080
++#define kFSEventStreamEventFlagItemCreated        0x00000100
++#define kFSEventStreamEventFlagItemRemoved        0x00000200
++#define kFSEventStreamEventFlagItemInodeMetaMod   0x00000400
++#define kFSEventStreamEventFlagItemRenamed        0x00000800
++#define kFSEventStreamEventFlagItemModified       0x00001000
++#define kFSEventStreamEventFlagItemFinderInfoMod  0x00002000
++#define kFSEventStreamEventFlagItemChangeOwner    0x00004000
++#define kFSEventStreamEventFlagItemXattrMod       0x00008000
++#define kFSEventStreamEventFlagItemIsFile         0x00010000
++#define kFSEventStreamEventFlagItemIsDir          0x00020000
++#define kFSEventStreamEventFlagItemIsSymlink      0x00040000
++#define kFSEventStreamEventFlagOwnEvent           0x00080000
++#define kFSEventStreamEventFlagItemIsHardlink     0x00100000
++#define kFSEventStreamEventFlagItemIsLastHardlink 0x00200000
++#define kFSEventStreamEventFlagItemCloned         0x00400000
++
++typedef struct __FSEventStream *FSEventStreamRef;
++typedef const FSEventStreamRef ConstFSEventStreamRef;
++
++typedef unsigned int CFStringEncoding;
++#define kCFStringEncodingUTF8 0x08000100
++
++typedef const struct __CFString *CFStringRef;
++typedef const struct __CFArray *CFArrayRef;
++typedef const struct __CFRunLoop *CFRunLoopRef;
++
++struct FSEventStreamContext {
++    long long version;
++    void *cb_data, *retain, *release, *copy_description;
 +};
 +
-+static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
-+{
-+	static int test_env_value = -1;
-+	static uint64_t flush_count = 0;
-+	struct fsmonitor_token_data *token;
++typedef struct FSEventStreamContext FSEventStreamContext;
++typedef unsigned int FSEventStreamEventFlags;
++#define kFSEventStreamCreateFlagNoDefer 0x02
++#define kFSEventStreamCreateFlagWatchRoot 0x04
++#define kFSEventStreamCreateFlagFileEvents 0x10
 +
-+	CALLOC_ARRAY(token, 1);
++typedef unsigned long long FSEventStreamEventId;
++#define kFSEventStreamEventIdSinceNow 0xFFFFFFFFFFFFFFFFULL
 +
-+	strbuf_init(&token->token_id, 0);
-+	token->batch_head = NULL;
-+	token->batch_tail = NULL;
-+	token->client_ref_count = 0;
++typedef void (*FSEventStreamCallback)(ConstFSEventStreamRef streamRef,
++				      void *context,
++				      __SIZE_TYPE__ num_of_events,
++				      void *event_paths,
++				      const FSEventStreamEventFlags event_flags[],
++				      const FSEventStreamEventId event_ids[]);
++typedef double CFTimeInterval;
++FSEventStreamRef FSEventStreamCreate(void *allocator,
++				     FSEventStreamCallback callback,
++				     FSEventStreamContext *context,
++				     CFArrayRef paths_to_watch,
++				     FSEventStreamEventId since_when,
++				     CFTimeInterval latency,
++				     FSEventStreamCreateFlags flags);
++CFStringRef CFStringCreateWithCString(void *allocator, const char *string,
++				      CFStringEncoding encoding);
++CFArrayRef CFArrayCreate(void *allocator, const void **items, long long count,
++			 void *callbacks);
++void CFRunLoopRun(void);
++void CFRunLoopStop(CFRunLoopRef run_loop);
++CFRunLoopRef CFRunLoopGetCurrent(void);
++extern CFStringRef kCFRunLoopDefaultMode;
++void FSEventStreamScheduleWithRunLoop(FSEventStreamRef stream,
++				      CFRunLoopRef run_loop,
++				      CFStringRef run_loop_mode);
++unsigned char FSEventStreamStart(FSEventStreamRef stream);
++void FSEventStreamStop(FSEventStreamRef stream);
++void FSEventStreamInvalidate(FSEventStreamRef stream);
++void FSEventStreamRelease(FSEventStreamRef stream);
++#else
++/*
++ * Let Apple's headers declare `isalnum()` first, before
++ * Git's headers override it via a constant
++ */
++#include <string.h>
++#include <CoreFoundation/CoreFoundation.h>
++#include <CoreServices/CoreServices.h>
++#endif
 +
-+	if (test_env_value < 0)
-+		test_env_value = git_env_bool("GIT_TEST_FSMONITOR_TOKEN", 0);
-+
-+	if (!test_env_value) {
-+		struct timeval tv;
-+		struct tm tm;
-+		time_t secs;
-+
-+		gettimeofday(&tv, NULL);
-+		secs = tv.tv_sec;
-+		gmtime_r(&secs, &tm);
-+
-+		strbuf_addf(&token->token_id,
-+			    "%"PRIu64".%d.%4d%02d%02dT%02d%02d%02d.%06ldZ",
-+			    flush_count++,
-+			    getpid(),
-+			    tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
-+			    tm.tm_hour, tm.tm_min, tm.tm_sec,
-+			    (long)tv.tv_usec);
-+	} else {
-+		strbuf_addf(&token->token_id, "test_%08x", test_env_value++);
-+	}
-+
-+	return token;
-+}
-+
- static ipc_server_application_cb handle_client;
- 
- static int handle_client(void *data,
-@@ -283,7 +397,7 @@ static int fsmonitor_run_daemon(void)
- 
- 	pthread_mutex_init(&state.main_lock, NULL);
- 	state.error_code = 0;
--	state.current_token_data = NULL;
-+	state.current_token_data = fsmonitor_new_token_data();
- 
- 	/* Prepare to (recursively) watch the <worktree-root> directory. */
- 	strbuf_init(&state.path_worktree_watch, 0);
+ #include "cache.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-fs-listen.h"
 -- 
 gitgitgadget
 
