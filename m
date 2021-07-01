@@ -2,91 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D34CC11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31ECBC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:20:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58DA3613FE
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:17:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 103FE613FE
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:20:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232605AbhGAOUF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:20:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64595 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231844AbhGAOUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:20:04 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 52E82D3042;
-        Thu,  1 Jul 2021 10:17:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=v+ayxcDtsVvS
-        aVyuc70jvW99nGE/dYz1bnz/vWk6jPk=; b=nZ2HYB0QBJ0cbfHz4QkM0rmtDt7x
-        QfbPeHIk9uWzeaEXNwhSspF1L3244i4+wszyEuer23S7xSBFZvJylhS5NTm6bAIf
-        B2VjTMg170RbpCO4L61Bgo8D6zQdbvuPRZC9R+Wk2eXB0I801fbxZrMyKATGGQEx
-        4HXY9Sn4v/sUOpM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49CCED3040;
-        Thu,  1 Jul 2021 10:17:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232681AbhGAOXB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:23:01 -0400
+Received: from siwi.pair.com ([209.68.5.199]:14689 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231844AbhGAOXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:23:01 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A9B243F40E4;
+        Thu,  1 Jul 2021 10:20:30 -0400 (EDT)
+Received: from HOLO-STUX-BVT04.redmond.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4606D303F;
-        Thu,  1 Jul 2021 10:17:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v6 00/15] [GSOC][RFC] cat-file: reuse ref-filter logic
-References: <pull.980.v5.git.1624636945.gitgitgadget@gmail.com>
-        <pull.980.v6.git.1624797350.gitgitgadget@gmail.com>
-        <xmqqbl7nt3fh.fsf@gitster.g>
-        <CAOLTT8S=qeg8QBhMU0fCc600n-qzJBT9P9LvhSVZaXpvsr0__Q@mail.gmail.com>
-Date:   Thu, 01 Jul 2021 07:17:30 -0700
-In-Reply-To: <CAOLTT8S=qeg8QBhMU0fCc600n-qzJBT9P9LvhSVZaXpvsr0__Q@mail.gmail.com>
-        (ZheNing Hu's message of "Thu, 1 Jul 2021 20:39:18 +0800")
-Message-ID: <xmqqtulerudh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 6C80E3F4095;
+        Thu,  1 Jul 2021 10:20:30 -0400 (EDT)
+Subject: Re: What's cooking in git.git (Jun 2021, #07; Wed, 30)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <stolee@gmail.com>
+References: <xmqq4kdft122.fsf@gitster.g> <87r1gicfh1.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <4d72a3d6-397e-e55b-cc11-5591070d5e27@jeffhostetler.com>
+Date:   Thu, 1 Jul 2021 10:20:29 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 12EA222E-DA77-11EB-BEE0-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87r1gicfh1.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B47=E6=9C=881=E6=
-=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=886:04=E5=86=99=E9=81=93=EF=BC=9A
->>
->> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > This patch series make cat-file reuse ref-filter logic.
->>
->> Unfortunately this seems to interact with your own
->> zh/cat-file-batch-fix rather badly.
->>
->
-> Well, it's because I didn't base this patch on it.
-> That should be easy to achieve.
 
-It is preferrable for contributors try merging their individual
-topics with the rest of 'seen' to see if there are potential
-conflicts (either textual or semantic) before sending their topics
-out.  Not all topics need to build on top of other topics (in fact,
-the fewer inter-dependencies they have, the better), but in this
-case, I think it makes sense to build one on top of the other.
+On 7/1/21 9:42 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Jun 30 2021, Junio C Hamano wrote:
+> 
+>> * jh/builtin-fsmonitor (2021-05-24) 30 commits
+>>   - t/perf: avoid copying builtin fsmonitor files into test repo
+>>   - t7527: test status with untracked-cache and fsmonitor--daemon
+>>   - p7519: add fsmonitor--daemon
+>>   - t7527: create test for fsmonitor--daemon
+>>   - fsmonitor: force update index after large responses
+>>   - fsmonitor: enhance existing comments
+>>   - fsmonitor--daemon: use a cookie file to sync with file system
+>>   - fsmonitor--daemon: periodically truncate list of modified files
+>>   - fsmonitor--daemon: implement handle_client callback
+>>   - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
+>>   - fsmonitor-fs-listen-macos: add macos header files for FSEvent
+>>   - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
+>>   - fsmonitor--daemon: create token-based changed path cache
+>>   - fsmonitor--daemon: define token-ids
+>>   - fsmonitor--daemon: add pathname classification
+>>   - fsmonitor--daemon: implement daemon command options
+>>   - fsmonitor-fs-listen-macos: stub in backend for MacOS
+>>   - fsmonitor-fs-listen-win32: stub in backend for Windows
+>>   - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
+>>   - fsmonitor--daemon: implement client command options
+>>   - fsmonitor--daemon: add a built-in fsmonitor daemon
+>>   - fsmonitor: introduce `core.useBuiltinFSMonitor` to call the daemon via IPC
+>>   - config: FSMonitor is repository-specific
+>>   - help: include fsmonitor--daemon feature flag in version info
+>>   - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+>>   - fsmonitor--daemon: update fsmonitor documentation
+>>   - fsmonitor--daemon: man page
+>>   - simple-ipc: preparations for supporting binary messages.
+>>   - Merge branch 'jk/perf-in-worktrees' into HEAD
+>>   - Merge branch 'jh/simple-ipc' into jh/rfc-builtin-fsmonitor
+>>
+>>   An attempt to write and ship with a watchman equivalent tailored
+>>   for our use.
+>>
+>>   What's the status of this one?
+> 
+> I think Johannes's reply to the last WC applies[1]:
+> 
+>      I am not Jeff, but I know that he is busy getting back to it, and
+>      plans on submitting a third iteration.
+> 
+> FWIW I'm still curious about some details on the performance concerns
+> that seem to have prompted this built-in fsmonitor endeavor, as I asked
+> about (but didn't get a reply to) in [2].
+> 
+> Not as a "we shouldn't have this, let's keep using the hook", but just
+> curiosity about why we've seemingly gotten such different performance
+> numbers on the watchman hook v.s. a built-in approach.
+> 
+> I suspect (but don't know) that the reason is that the built-in is
+> perhaps integrating differently with git somehow, in a way that we could
+> retrofit the hook approach to also do (if anyone still cares about the
+> hook approach).
+> 
+> In any case I'm interested in *why* the new approach is faster, given
+> that I've done some testing (again, noted in [2]) that suggest that
+> bottleneck in the previous pipeline wasn't at all what Jeff H. thought
+> it was.
+> 
+> 1. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2106171135530.57@tvgsbejvaqbjf.bet/#t
+> 2. https://lore.kernel.org/git/87h7lgfchm.fsf@evledraar.gmail.com/
+> 
 
+A quick reply here of Junio's question. Yes, I'm working on a V3
+to submit (any day now -- $DAYJOB notwithstanding (read: meetings)).
+
+I'll push this up and then try to answer the perf questions.
+
+Thanks for your patience.
+Jeff
