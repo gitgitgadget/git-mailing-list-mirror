@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37F94C11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D5B5C11F69
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22D006141C
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CF5461414
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233383AbhGAOu4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37456 "EHLO
+        id S233412AbhGAOu5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233028AbhGAOuh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:37 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EB6FC0613DC
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:06 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id w13so4690859wmc.3
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:06 -0700 (PDT)
+        with ESMTP id S233067AbhGAOui (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:38 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD49C0613DF
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:07 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id j34so4679527wms.5
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=smA/CGHifxx0NwUOVPrq185XmIP/kTroOWItviZLrjw=;
-        b=Z7qfWOYyNOnwg30GmBpez0yEtBwTu4U1NPOVs1rdmGcs6D1I/LWHT4Tg0oecAVJ3aF
-         iPHT+kEWCmDapc7YEsjOduPx4CkWTG6X7cuMbvMOspoeflX8RRKG5Zle4Sq0fv6uXC7h
-         tPP0PVYdLwhTuTi2GH6civaa5XAwdFcPDDBswNoi8yxSDVWDY7aRGNbXH4UafrYWBK9J
-         Y5ZgpkLyM6mYjauOBCJXJRCsxuTdYpinusgJz1SdjZR9agjGcpanwb7nS8QMcx1JRPyN
-         9MtUhpKBUIHxQFyLQIBXVRhLQ34FpG14YycJ4vQ9KigH7F9hUr1TPBGhfP7e5ZoxDGfE
-         bxHQ==
+        bh=VhA8e70cmeJE/8taWH8a2ZkqsNWrr0+EV4Og5Cn7GBw=;
+        b=nP7INjaYjqUto4SKdXQM5YdsCHjOh/AZXC35uTTT53iUclpCt1g7lBvl6gmzmYkZu7
+         JH4+YqaoenxN6ROrkQZP0sUuNURhfnE11upP4UL93CBB0l+UaKGyXFunfbDKpMnn1Nfr
+         7368EDHFVIpaWIxXycZ6QAtUjTGVeWme+DIbYwjBvJ85gGk19uyoaMHKENb0yhKH1Jkj
+         y2aw6ucrvmMb4VAtrNKpvfPgXxUhVTm7QLz4CmnWyW+15zovEtdzOZlzpDz5GU91p3+6
+         /a28arQMrbWwK3UU/sFN3B0sCUVQTVSvxmfdIdpHuoeTW5uJVWeOVFhM0Er5Jo0IcR3n
+         LafA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=smA/CGHifxx0NwUOVPrq185XmIP/kTroOWItviZLrjw=;
-        b=ZM0zK+l/ac0d3w5JqEku/MUqUroPbp8dtP8Cg4aOIG99p+4DekOMs8DAeVO9GMW3x4
-         /cgL6Ej7mWjmk9oFig9NgsVM61LuK2vNzpi90/gcZ1xIrNKCWyw84pnpknDBcUGau2oD
-         +YVJeui6yxVjJnrw0hVh92V4a25P7AKYxmyZ59dZjzmMhNLhpdQmGPkQjXeKpk/NkFJp
-         QNwd1RDH+Uk3S7F1GyumsA+6o93Q/eIRbu1R1IGA+dw8EsikUi/O9smKEUVm3yLw88lm
-         y+/frmnaGpnAx3T/gDiz/bkZ91vAMAeZvZi++GqYXSH1RNeYx0yX0PGFE/mOW05OKd/x
-         IzPg==
-X-Gm-Message-State: AOAM5307MGAqFFvWZRn7E0fjOBOV+R3HUQA1EYdf6i/znnscphUeiPv7
-        CSBs5MhLXIJwLKkF4wEHhKiaf1aM9ho=
-X-Google-Smtp-Source: ABdhPJydrFTZHndAaymtc0JrS2svkKUSkZjQQnWlmtsEY4uQWtBxh4MfhjemV7yZIs5pJMFn7/HNnA==
-X-Received: by 2002:a7b:cd99:: with SMTP id y25mr11273161wmj.184.1625150884865;
-        Thu, 01 Jul 2021 07:48:04 -0700 (PDT)
+        bh=VhA8e70cmeJE/8taWH8a2ZkqsNWrr0+EV4Og5Cn7GBw=;
+        b=SrEza7sDLgxbCqb8E3issqdUdIOhYaSJTtfLtfZRP3lIYLqeISBkezVevHwmNhgVVk
+         0sqUAUHMVCcgzrG+DTAYr41BrsxVJyX0x/OMaiBB7keLXYb5kN8HPAr1aRRV8vw/0xPY
+         VfQdkPfRGGXUszWbw4d4Hcpub5/5fwfGztEZ+90Du/9YUpIdZL5cOOntw3NyYu7r1YCi
+         7l7IGuvwyUEaIVoD1tIVA3FMKnREPTmT+Zzyfpm7+XPpvtP/SCLhE3C09WoTxQ6/54kF
+         vMTindKeZLq1sH6F9CGHNb+jZH87iHkxRspwyZ1/CWoDUT8o4AG40KV3tXiQ/pkNjqKV
+         UM3A==
+X-Gm-Message-State: AOAM5328A5NgD/kuLMM4FaxS2fW65dQkNNHUYw5PWUaA6i7u+mfvHJiI
+        RQlMDIUkGiVjSTznWCg01DHnvKDPyUU=
+X-Google-Smtp-Source: ABdhPJw+gDT92KkYOMFJn34Muw7Wk93tFeHpfWjqXPxGYP0O4nEjDQ12zZ1Mg7uewOt8TbmSn9SS5g==
+X-Received: by 2002:a7b:c405:: with SMTP id k5mr132882wmi.34.1625150885991;
+        Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z4sm231056wmf.9.2021.07.01.07.48.04
+        by smtp.gmail.com with ESMTPSA id n15sm170890wrr.22.2021.07.01.07.48.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:48:04 -0700 (PDT)
-Message-Id: <8b3c4f4e6dd989de88b0b7b543751e362fa0d649.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
+Message-Id: <e32ba686f7e54097fb97f615d357ed3779755f21.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:41 +0000
-Subject: [PATCH v3 31/34] fsmonitor: force update index after large responses
+Date:   Thu, 01 Jul 2021 14:47:43 +0000
+Subject: [PATCH v3 33/34] fsmonitor: handle shortname for .git
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,120 +79,349 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Set the `FSMONITOR_CHANGED` bit on `istate->cache_changed` when
-FSMonitor returns a very large repsonse to ensure that the index is
-written to disk.
+On Windows, teach FSMonitor to recognize the shortname of ".git"
+as an alias for ".git".
 
-Normally, when the FSMonitor response includes a tracked file, the
-index is always updated.  Similarly, the index might be updated when
-the response alters the untracked-cache (when enabled).  However, in
-cases where neither of those cause the index to be considered changed,
-the FSMonitor response is wasted.  Subsequent Git commands will make
-requests with the same token and receive the same response.
+Sometimes we receive FS events using the shortname, such as when
+a CMD shell runs "RENAME GIT~1 FOO" or "RMDIR GIT~1".  The FS
+notification arrives using whatever combination of long and
+shortnames used by the other process.  (Shortnames do seem to
+be case normalized, however.)
 
-If that response is very large, performance may suffer.  It would be
-more efficient to force update the index now (and the token in the
-index extension) in order to reduce the size of the response received
-by future commands.
-
-This was observed on Windows after a large checkout.  On Windows, the
-kernel emits events for the files that are changed as they are
-changed.  However, it might delay events for the containing
-directories until the system is more idle (or someone scans the
-directory (so it seems)).  The first status following a checkout would
-get the list of files.  The subsequent status commands would get the
-list of directories as the events trickled out.  But they would never
-catch up because the token was not advanced because the index wasn't
-updated.
-
-This list of directories caused `wt_status_collect_untracked()` to
-unnecessarily spend time actually scanning them during each command.
+NEEDSWORK: This only addresses the case of removing or renaming
+the ".git" directory using the shortname alias, so that the daemon
+properly shuts down.  I'm leaving it a task for later to handle
+the general case of shortnames and report them to the fsmonitor
+client process.  This would include tracked and untracked paths
+that just happen to have a shortname alias.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fsmonitor.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+ compat/fsmonitor/fsmonitor-fs-listen-win32.c | 192 +++++++++++++++----
+ t/t7527-builtin-fsmonitor.sh                 |  65 +++++++
+ 2 files changed, 217 insertions(+), 40 deletions(-)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index f53791c8674..eee653f9337 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -236,6 +236,45 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
- 	untracked_cache_invalidate_path(istate, name, 0);
+diff --git a/compat/fsmonitor/fsmonitor-fs-listen-win32.c b/compat/fsmonitor/fsmonitor-fs-listen-win32.c
+index d707d47a0d7..f2ea5940790 100644
+--- a/compat/fsmonitor/fsmonitor-fs-listen-win32.c
++++ b/compat/fsmonitor/fsmonitor-fs-listen-win32.c
+@@ -48,6 +48,8 @@ struct fsmonitor_daemon_backend_data
+ #define LISTENER_HAVE_DATA_WORKTREE 1
+ #define LISTENER_HAVE_DATA_GITDIR 2
+ 	int nr_listener_handles;
++
++	struct strbuf dot_git_shortname;
+ };
+ 
+ /*
+@@ -250,6 +252,62 @@ static void cancel_rdcw_watch(struct one_watch *watch)
+ 	watch->is_active = FALSE;
  }
  
 +/*
-+ * The number of pathnames that we need to receive from FSMonitor
-+ * before we force the index to be updated.
-+ *
-+ * Note that any pathname within the set of received paths MAY cause
-+ * cache-entry or istate flag bits to be updated and thus cause the
-+ * index to be updated on disk.
-+ *
-+ * However, the response may contain many paths (such as ignored
-+ * paths) that will not update any flag bits.  And thus not force the
-+ * index to be updated.  (This is fine and normal.)  It also means
-+ * that the token will not be updated in the FSMonitor index
-+ * extension.  So the next Git command will find the same token in the
-+ * index, make the same token-relative request, and receive the same
-+ * response (plus any newly changed paths).  If this response is large
-+ * (and continues to grow), performance could be impacted.
-+ *
-+ * For example, if the user runs a build and it writes 100K object
-+ * files but doesn't modify any source files, the index would not need
-+ * to be updated.  The FSMonitor response (after the build and
-+ * relative to a pre-build token) might be 5MB.  Each subsequent Git
-+ * command will receive that same 100K/5MB response until something
-+ * causes the index to be updated.  And `refresh_fsmonitor()` will
-+ * have to iterate over those 100K paths each time.
-+ *
-+ * Performance could be improved if we optionally force update the
-+ * index after a very large response and get an updated token into
-+ * the FSMonitor index extension.  This should allow subsequent
-+ * commands to get smaller and more current responses.
-+ *
-+ * The value chosen here does not need to be precise.  The index
-+ * will be updated automatically the first time the user touches
-+ * a tracked file and causes a command like `git status` to
-+ * update an mtime to be updated and/or set a flag bit.
-+ *
-+ * NEEDSWORK: Does this need to be a config value?
++ * Process a single relative pathname event.
++ * Return 1 if we should shutdown.
 + */
-+static int fsmonitor_force_update_threshold = 100;
++static int process_1_worktree_event(
++	FILE_NOTIFY_INFORMATION *info,
++	struct string_list *cookie_list,
++	struct fsmonitor_batch **batch,
++	const struct strbuf *path,
++	enum fsmonitor_path_type t)
++{
++	const char *slash;
 +
- void refresh_fsmonitor(struct index_state *istate)
- {
- 	struct strbuf query_result = STRBUF_INIT;
-@@ -379,19 +418,28 @@ apply_results:
- 		 *
- 		 * This updates both the cache-entries and the untracked-cache.
- 		 */
-+		int count = 0;
++	switch (t) {
++	case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++		/* special case cookie files within .git */
 +
- 		buf = query_result.buf;
- 		for (i = bol; i < query_result.len; i++) {
- 			if (buf[i] != '\0')
- 				continue;
- 			fsmonitor_refresh_callback(istate, buf + bol);
- 			bol = i + 1;
-+			count++;
- 		}
--		if (bol < query_result.len)
-+		if (bol < query_result.len) {
- 			fsmonitor_refresh_callback(istate, buf + bol);
-+			count++;
++		/* Use just the filename of the cookie file. */
++		slash = find_last_dir_sep(path->buf);
++		string_list_append(cookie_list,
++				   slash ? slash + 1 : path->buf);
++		break;
++
++	case IS_INSIDE_DOT_GIT:
++		/* ignore everything inside of "<worktree>/.git/" */
++		break;
++
++	case IS_DOT_GIT:
++		/* "<worktree>/.git" was deleted (or renamed away) */
++		if ((info->Action == FILE_ACTION_REMOVED) ||
++		    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
++			trace2_data_string("fsmonitor", NULL,
++					   "fsm-listen/dotgit",
++					   "removed");
++			return 1;
 +		}
++		break;
++
++	case IS_WORKDIR_PATH:
++		/* queue normal pathname */
++		if (!*batch)
++			*batch = fsmonitor_batch__new();
++		fsmonitor_batch__add_path(*batch, path->buf);
++		break;
++
++	case IS_GITDIR:
++	case IS_INSIDE_GITDIR:
++	case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++	default:
++		BUG("unexpected path classification '%d' for '%s'",
++		    t, path->buf);
++	}
++
++	return 0;
++}
++
+ /*
+  * Process filesystem events that happen anywhere (recursively) under the
+  * <worktree> root directory.  For a normal working directory, this includes
+@@ -294,7 +352,6 @@ static int process_worktree_events(struct fsmonitor_daemon_state *state)
+ 	 */
+ 	for (;;) {
+ 		FILE_NOTIFY_INFORMATION *info = (void *)p;
+-		const char *slash;
+ 		enum fsmonitor_path_type t;
  
- 		/* Now mark the untracked cache for fsmonitor usage */
- 		if (istate->untracked)
- 			istate->untracked->use_fsmonitor = 1;
+ 		strbuf_reset(&path);
+@@ -303,45 +360,45 @@ static int process_worktree_events(struct fsmonitor_daemon_state *state)
+ 
+ 		t = fsmonitor_classify_path_workdir_relative(path.buf);
+ 
+-		switch (t) {
+-		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
+-			/* special case cookie files within .git */
+-
+-			/* Use just the filename of the cookie file. */
+-			slash = find_last_dir_sep(path.buf);
+-			string_list_append(&cookie_list,
+-					   slash ? slash + 1 : path.buf);
+-			break;
+-
+-		case IS_INSIDE_DOT_GIT:
+-			/* ignore everything inside of "<worktree>/.git/" */
+-			break;
+-
+-		case IS_DOT_GIT:
+-			/* "<worktree>/.git" was deleted (or renamed away) */
+-			if ((info->Action == FILE_ACTION_REMOVED) ||
+-			    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
+-				trace2_data_string("fsmonitor", NULL,
+-						   "fsm-listen/dotgit",
+-						   "removed");
+-				goto force_shutdown;
+-			}
+-			break;
+-
+-		case IS_WORKDIR_PATH:
+-			/* queue normal pathname */
+-			if (!batch)
+-				batch = fsmonitor_batch__new();
+-			fsmonitor_batch__add_path(batch, path.buf);
+-			break;
+-
+-		case IS_GITDIR:
+-		case IS_INSIDE_GITDIR:
+-		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
+-		default:
+-			BUG("unexpected path classification '%d' for '%s'",
+-			    t, path.buf);
+-		}
++		if (process_1_worktree_event(info, &cookie_list, &batch,
++					     &path, t))
++			goto force_shutdown;
 +
-+		if (count > fsmonitor_force_update_threshold)
-+			istate->cache_changed |= FSMONITOR_CHANGED;
++		/*
++		 * NEEDSWORK: If `path` contains a shortname (that is,
++		 * if any component within it is a shortname), we
++		 * should expand it to a longname (See
++		 * `GetLongPathNameW()`) and re-normalize, classify,
++		 * and process it because our client is probably
++		 * expecting "normal" paths.
++		 *
++		 * HOWEVER, if our process has called `chdir()` to get
++		 * us out of the root of the worktree (so that the
++		 * root directory is not busy), then we have to be
++		 * careful to convert the paths in the INFO array
++		 * (which are relative to the directory of the RDCW
++		 * watch and not the CWD) into absolute paths before
++		 * calling GetLongPathNameW() and then convert the
++		 * computed value back to a RDCW-relative pathname
++		 * (which is what we and the client expect).
++		 *
++		 * FOR NOW, just handle case (1) exactly so that we
++		 * shutdown properly when ".git" is deleted via the
++		 * shortname alias.
++		 *
++		 * We might see case (2) events for cookie files, but
++		 * we can ignore them.
++		 *
++		 * FOR LATER, handle case (3) where the worktree
++		 * events contain shortnames.  We should convert
++		 * them to longnames to avoid confusing the client.
++		 */
++		if (data->dot_git_shortname.len &&
++		    !strcmp(path.buf, data->dot_git_shortname.buf) &&
++		    process_1_worktree_event(info, &cookie_list, &batch,
++					     &data->dot_git_shortname,
++					     IS_DOT_GIT))
++			goto force_shutdown;
+ 
+ skip_this_path:
+ 		if (!info->NextEntryOffset)
+@@ -415,6 +472,14 @@ static int process_gitdir_events(struct fsmonitor_daemon_state *state)
+ 			    t, path.buf);
+ 		}
+ 
++		/*
++		 * WRT shortnames, this external gitdir will not see
++		 * case (1) nor case (3) events.
++		 *
++		 * We might see case (2) events for cookie files, but
++		 * we can ignore them.
++		 */
 +
- 	} else {
- 		/*
- 		 * We received a trivial response, so invalidate everything.
+ skip_this_path:
+ 		if (!info->NextEntryOffset)
+ 			break;
+@@ -493,6 +558,7 @@ clean_shutdown:
+ int fsmonitor_fs_listen__ctor(struct fsmonitor_daemon_state *state)
+ {
+ 	struct fsmonitor_daemon_backend_data *data;
++	char shortname[16]; /* a padded 8.3 buffer */
+ 
+ 	CALLOC_ARRAY(data, 1);
+ 
+@@ -523,6 +589,52 @@ int fsmonitor_fs_listen__ctor(struct fsmonitor_daemon_state *state)
+ 		data->nr_listener_handles++;
+ 	}
+ 
++	/*
++	 * NEEDSWORK: Properly handle 8.3 shortnames.  RDCW events can
++	 * contain a shortname (if another application uses a
++	 * shortname in a system call).  We care about aliasing and
++	 * the use of shortnames for:
++	 *
++	 * (1) ".git",
++	 *     -- if an external process deletes ".git" using "GIT~1",
++	 *        we need to catch that and shutdown.
++	 *
++	 * (2) our cookie files,
++	 *     -- if an external process deletes one of our cookie
++	 *        files using a shortname, we will get a shortname
++	 *        event for it.  However, we should have already
++	 *        gotten a longname event for it when we created the
++	 *        cookie, so we can safely discard the shortname
++	 *        events for cookie files.
++	 *
++	 * (3) the spelling of modified files that we report to clients.
++	 *     -- we need to report the longname to the client because
++	 *        that is what they are expecting.  Presumably, the
++	 *        client is going to lookup the paths that we report
++	 *        in their index and untracked-cache, so we should
++	 *        normalize the data for them.  (Technically, they
++	 *        could adapt, so we could relax this maybe.)
++	 *
++	 * FOR NOW, while our CWD is at the root of the worktree we
++	 * can easily get the spelling of the shortname of ".git" (if
++	 * the volume has shortnames enabled).  For most worktrees
++	 * this value will be "GIT~1", but we don't want to assume
++	 * that.
++	 *
++	 * Capture this so that we can handle (1).
++	 *
++	 * We leave (3) for a future effort.
++	 */
++	strbuf_init(&data->dot_git_shortname, 0);
++	GetShortPathNameA(".git", shortname, sizeof(shortname));
++	if (!strcmp(".git", shortname))
++		trace_printf_key(&trace_fsmonitor, "No shortname for '.git'");
++	else {
++		trace_printf_key(&trace_fsmonitor,
++				 "Shortname of '.git' is '%s'", shortname);
++		strbuf_addstr(&data->dot_git_shortname, shortname);
++	}
++
+ 	state->backend_data = data;
+ 	return 0;
+ 
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index d1832702397..b166b4a0a31 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -113,6 +113,71 @@ test_expect_success 'implicit daemon stop (rename .git)' '
+ 	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
+ '
+ 
++# File systems on Windows may or may not have shortnames.
++# This is a volume-specific setting on modern systems.
++# "C:/" drives are required to have them enabled.  Other
++# hard drives default to disabled.
++#
++# This is a crude test to see if shortnames are enabled
++# on the volume containing the test directory.  It is
++# crude, but it does not require elevation like `fsutil`.
++#
++test_lazy_prereq SHORTNAMES '
++	mkdir .foo &&
++	test -d "FOO~1"
++'
++
++# Here we assume that the shortname of ".git" is "GIT~1".
++test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~1)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_1s" &&
++
++	git init test_implicit_1s &&
++
++	start_daemon test_implicit_1s &&
++
++	# renaming the .git directory will implicitly stop the daemon.
++	# this moves {.git, GIT~1} to {.gitxyz, GITXYZ~1}.
++	# the rename-from FS Event will contain the shortname.
++	#
++	mv test_implicit_1s/GIT~1 test_implicit_1s/.gitxyz &&
++
++	sleep 1 &&
++	# put it back so that our status will not crawl out to our
++	# parent directory.
++	# this moves {.gitxyz, GITXYZ~1} to {.git, GIT~1}.
++	mv test_implicit_1s/.gitxyz test_implicit_1s/.git &&
++
++	test_must_fail git -C test_implicit_1s fsmonitor--daemon status
++'
++
++# Here we first create a file with LONGNAME of "GIT~1" before
++# we create the repo.  This will cause the shortname of ".git"
++# to be "GIT~2".
++test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~2)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_1s2" &&
++
++	mkdir test_implicit_1s2 &&
++	echo HELLO >test_implicit_1s2/GIT~1 &&
++	git init test_implicit_1s2 &&
++
++	[ -f test_implicit_1s2/GIT~1 ] &&
++	[ -d test_implicit_1s2/GIT~2 ] &&
++
++	start_daemon test_implicit_1s2 &&
++
++	# renaming the .git directory will implicitly stop the daemon.
++	# the rename-from FS Event will contain the shortname.
++	#
++	mv test_implicit_1s2/GIT~2 test_implicit_1s2/.gitxyz &&
++
++	sleep 1 &&
++	# put it back so that our status will not crawl out to our
++	# parent directory.
++	mv test_implicit_1s2/.gitxyz test_implicit_1s2/.git &&
++
++	test_must_fail git -C test_implicit_1s2 fsmonitor--daemon status
++'
++
+ test_expect_success 'cannot start multiple daemons' '
+ 	test_when_finished "stop_daemon_delete_repo test_multiple" &&
+ 
 -- 
 gitgitgadget
 
