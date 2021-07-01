@@ -2,133 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EA7FC11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 22:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFA4FC11F67
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 22:52:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAEFB61154
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 22:51:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDEF361410
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 22:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233980AbhGAWyZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 18:54:25 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33250 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232807AbhGAWyZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 1 Jul 2021 18:54:25 -0400
-Received: from camp.crustytoothpaste.net (unknown [69.17.174.146])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AB75360424;
-        Thu,  1 Jul 2021 22:51:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1625179883;
-        bh=c+nz3wpz+VQQGrI/SVXU4v4jI0tQi/DfLbZTqfUGDbw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=XTKFhYBor8l2LFl3sdnTpk0EYm1G7+rl/iHT1BnAGsoq7EooEQw65auwI7QPXICAS
-         T99mgYutegS6iZDlhTKyFQZafCw2pQcUMYzdqDvez+mhM9W+7RDqrzY2gwLzxCQMqY
-         /JsCMpFeenymYObF0wYL5K460RXrhws9uA2KPUeYXLaELiFKnZCYVEKxnMt0BV9tPA
-         9qqvdLsBvZ8cIOLVbn0A90iA3ZRpXzdwgolHyGz6U+Nfga1fedzJp+5E3HNx5NiAB2
-         6jp9vuKpmBPhY4TqKWhJ2bToDgpOI4Ii1jIR0/muniuSkfIdGQZwF05axCHbpznrSd
-         8qGS0zL3Mfhkd60Ne9q7b32h9lChdkoN7SWkKnDcf1lsrdlyabEDaIkomQy1pYp8dh
-         +SHEdP7dRqQJv8XIUN6IinPldNf7MFC9hIcA/cEfm0zHcAJgVucGMn+/g5lQhDzSvN
-         hSSvAW7oF+lQsdRGEYP4nR7qm2PeHu8Km8ZYWjAE4fc4uV9bpwb
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Rose Kunkel <rose@rosekunkel.me>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: [PATCH v2] submodule: mark submodules with update=none as inactive
-Date:   Thu,  1 Jul 2021 22:51:17 +0000
-Message-Id: <20210701225117.909892-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.32.0.272.g935e593368
-In-Reply-To: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
-References: <YMvgRjwyrwyLz4SC@camp.crustytoothpaste.net>
+        id S233998AbhGAWzT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 18:55:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60738 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232807AbhGAWzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 18:55:18 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AAA2C061762
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 15:52:47 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id x12so10660190eds.5
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 15:52:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=rMVDzHg80kgB1AAiy0By4BLRwd3CAXB+2QLIlWi7EVo=;
+        b=ScNRd45Sut/XRnyW/XDf06vjRCZFsvxlMKy1fnBkdzt/yLHY9aw1ArSJfc0pOUflXW
+         xCE80xZ2KWzqnXaC66Yft9Pr/tN/VyM8b/yoGB71SotS5yfs4/Bdf3yjPdmfH9nn0s1h
+         IaPRHzIGaXGSl75n7fHLPbevjJKakSBJExpT0FwK/swnCqQQz4ZgFeTz9g8Zc7Nx5TSh
+         s3AtHQWE+P2mpVoy5N3w+sdzSBhd9Kjy3xqO212f+E8TSmGYKlo5iE0CJ1bc7s3RPkkN
+         Xgtn6MueZxZETERuBEEaDbECM0gyHgaxuipp/i5kpfLjVtBWfO7R6lm7Mke/bWLxVi8P
+         0a5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=rMVDzHg80kgB1AAiy0By4BLRwd3CAXB+2QLIlWi7EVo=;
+        b=XBfQVNM6l2ym5o9gvfhLibcYQPnForxq+ykyMk5iLoA2AMSLH0PoapQFG+SwnbEe5n
+         EXQ7Z0ESEvg7PuaBUpjJ+wajeEhLPYITS3yq0UiIp+S+MYqJ0jhG/hGVZGw8nMdjWBTI
+         LB75WgkdQWXuVs8YVlGQZyn+1xI7QOUwaEJZlLXVAPhyEs2DvUojYB5ZnrIip8DdEK4M
+         XnGOBriL/MEGyDpBoCbJvw8f+St6oovwNIgrxv8gJ5+OYdAQbEk1ODX3tSBXz//ehIhs
+         WAfbKMrMgHfQ49zHUF8eU1xFTFCZpTAxvbns6CMknHjSNfOEL0sK9SF3SuscEplg3llp
+         FGqw==
+X-Gm-Message-State: AOAM533Tuu5p1diadGWNkl8auWTnSGnOlqe+e43dSrSN+mpEzWYMtmim
+        fSCeYl6bQDwKZqL/aSEWaYS0ykEjlwFWtg==
+X-Google-Smtp-Source: ABdhPJwxdxrsx41fS2M+zAZDVK4K9X3T1OEhdOx/gZCZ5Co8ykPZMUWVbNUGx8bJsS1edN6voqgodg==
+X-Received: by 2002:a05:6402:1d11:: with SMTP id dg17mr2908689edb.30.1625179965811;
+        Thu, 01 Jul 2021 15:52:45 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n13sm383319ejk.97.2021.07.01.15.52.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jul 2021 15:52:45 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 12/34] fsmonitor-fs-listen-macos: stub in backend for
+ MacOS
+Date:   Fri, 02 Jul 2021 00:49:26 +0200
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
+ <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
+ <587580489473a7a2ad665bdf3c482ea5d2c54f61.1625150864.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <587580489473a7a2ad665bdf3c482ea5d2c54f61.1625150864.git.gitgitgadget@gmail.com>
+Message-ID: <87sg0xbq9v.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the user recursively clones a repository with submodules and one or
-more of those submodules is marked with the submodule.<name>.update=none
-configuration, the submodule will end up being active.  This is a
-problem because we will have skipped cloning or checking out the
-submodule, and as a result, other commands, such as git reset or git
-checkout, will fail if they are invoked with --recurse-submodules (or
-when submodule.recurse is true).
 
-This is obviously not the behavior the user wanted, so let's fix this by
-specifically setting the submodule as inactive in this case when we're
-initializing the repository.  That will make us properly ignore the
-submodule when performing recursive operations.
+On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
 
-We only do this when initializing a submodule, since git submodule
-update can update the submodule with various options despite the setting
-of "none" and we want those options to override it as they currently do.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> Stub in empty implementation of fsmonitor--daemon
+> backend for MacOS.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  compat/fsmonitor/fsmonitor-fs-listen-macos.c | 20 ++++++++++++++++++++
+>  config.mak.uname                             |  2 ++
+>  contrib/buildsystems/CMakeLists.txt          |  3 +++
+>  3 files changed, 25 insertions(+)
+>  create mode 100644 compat/fsmonitor/fsmonitor-fs-listen-macos.c
+>
+> diff --git a/compat/fsmonitor/fsmonitor-fs-listen-macos.c b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
+> new file mode 100644
+> index 00000000000..b91058d1c4f
+> --- /dev/null
+> +++ b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
+> @@ -0,0 +1,20 @@
+> +#include "cache.h"
+> +#include "fsmonitor.h"
+> +#include "fsmonitor-fs-listen.h"
+> +
+> +int fsmonitor_fs_listen__ctor(struct fsmonitor_daemon_state *state)
+> +{
+> +	return -1;
+> +}
+> +
+> +void fsmonitor_fs_listen__dtor(struct fsmonitor_daemon_state *state)
+> +{
+> +}
+> +
+> +void fsmonitor_fs_listen__stop_async(struct fsmonitor_daemon_state *state)
+> +{
+> +}
+> +
+> +void fsmonitor_fs_listen__loop(struct fsmonitor_daemon_state *state)
+> +{
+> +}
+> diff --git a/config.mak.uname b/config.mak.uname
+> index fcd88b60b14..394355463e1 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -147,6 +147,8 @@ ifeq ($(uname_S),Darwin)
+>  			MSGFMT = /usr/local/opt/gettext/bin/msgfmt
+>  		endif
+>  	endif
+> +	FSMONITOR_DAEMON_BACKEND = macos
 
-Reported-by: Rose Kunkel <rose@rosekunkel.me>
-Helped-by: Philippe Blain <levraiphilippeblain@gmail.com>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/submodule--helper.c |  6 ++++++
- t/t5601-clone.sh            | 24 ++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+A rather trivial point, but can't we pick one of "macos" or "darwin"
+(I'd think going with the existing uname is better) and name the file
+after the uname (or lower-case thereof)?
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index ae6174ab05..a3f8c45d97 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -686,6 +686,12 @@ static void init_submodule(const char *path, const char *prefix,
- 
- 		if (git_config_set_gently(sb.buf, upd))
- 			die(_("Failed to register update mode for submodule path '%s'"), displaypath);
-+
-+		if (sub->update_strategy.type == SM_UPDATE_NONE) {
-+			strbuf_reset(&sb);
-+			strbuf_addf(&sb, "submodule.%s.active", sub->name);
-+			git_config_set_gently(sb.buf, "false");
-+		}
- 	}
- 	strbuf_release(&sb);
- 	free(displaypath);
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index c0688467e7..efe6b13be0 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -752,6 +752,30 @@ test_expect_success 'batch missing blob request does not inadvertently try to fe
- 	git clone --filter=blob:limit=0 "file://$(pwd)/server" client
- '
- 
-+test_expect_success 'clone with submodule with update=none is not active' '
-+	rm -rf server client &&
-+
-+	test_create_repo server &&
-+	echo a >server/a &&
-+	echo b >server/b &&
-+	git -C server add a b &&
-+	git -C server commit -m x &&
-+
-+	echo aa >server/a &&
-+	echo bb >server/b &&
-+	git -C server submodule add --name c "$(pwd)/repo_for_submodule" c &&
-+	git -C server config -f .gitmodules submodule.c.update none &&
-+	git -C server add a b c .gitmodules &&
-+	git -C server commit -m x &&
-+
-+	git clone --recurse-submodules server client &&
-+	git -C client config submodule.c.active >actual &&
-+	echo false >expected &&
-+	test_cmp actual expected &&
-+	# This would fail if the submodule were active, since it is not checked out.
-+	git -C client reset --recurse-submodules --hard
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
+Makes these make rules more consistent too, we could just set this to
+"YesPlease" here, and then lower case the uname for the file
+compilation/include.
