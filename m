@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CBE5C11F6B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A6DCC11F67
 	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 03:46:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26C5B61480
+	by mail.kernel.org (Postfix) with ESMTP id 33E5A6148E
 	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 03:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233679AbhGADsy (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233754AbhGADsy (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 30 Jun 2021 23:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60926 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232836AbhGADsw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232976AbhGADsw (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Jun 2021 23:48:52 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC686C0617A8
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:46:20 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id j34so3446194wms.5
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:46:20 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB956C0613A2
+        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:46:22 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id l8so6190377wry.13
+        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UtksxVEuW8oPlg3lwNLFR4T2YJ+49CjWCzglLfAr+Zc=;
-        b=OFrnRl2DskHsS/SdGZP5KGonHyEx4zLcstMhhY1FXUJNYSz0N0bZn+PxqdngkaeeJ5
-         TZc6Lt3cfRrakiseUS0xNfm4aiCRU3k0nTzuPPaFohuq1T3QGpu2L9XB5seRcJkTwuWk
-         gLN84Otx0DIhfZXxW5t4XYe0rne9osQn+Xd0ycn9bI3KguWa0h01kYNptPBvMddAvPyj
-         AG23nkLh8GtPRo40L8U/4/lcTpKIEHB1YffgbByLfcUh/5aY9jC48Dee9lHxZKyA5LsI
-         KqEL+pWmpmyOIpueuk1bqaYvjLFgNXTch8U4Le0r2jzGhTZbv+qxmrDBDefA5OgWbmGp
-         TUPQ==
+        bh=IH+wXJBQVGwRASbH9nLVutMF1YTBqHdkkh0Trwn5GRI=;
+        b=cJ3qtlQUIda5EMjpycBMLYTAIFsXia54r7MEIWOFCGG5L7n8Cp4KehhMgvFZtAw+i3
+         n695+6/T9PfkdMSK7wVvtQPBLvMupVe/4m+Q4q2OO7gZep981Zt6sNZa/apKjz/+c574
+         HWXzpe/uDxs365dDz/AWJMIgGW6neE19HiUofZcy68j5T+EzM5Sz7Rn0wnRE3LPrC1X8
+         Ia1C6dkTZ5XfHDA69ZRUDfXOnTvKKc6VOs4qKt3W/kIG9LbwjRL749HT2S47Xut6p7xF
+         c+82MFjixh/MOSqFqvmRFC21qJbDw8B/ieFdgCh5Za4FITLZq4HLJU4A7eUgI6NYjV/n
+         h/fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UtksxVEuW8oPlg3lwNLFR4T2YJ+49CjWCzglLfAr+Zc=;
-        b=MRNRnvR7O/AXkhv1Re8qsdFb3bmAzvvJ+eDXatupXzwfnZwKiPI2oyBoO8spUdjPIy
-         MU0mSI8OS+eefr5JUJXhgbLmF1qMa5GSUaoCWT4+RmU82QKSQ6Rfdrf/AHKb9DPY9s7s
-         YjgRSAFeL+bb2QT6tQh69Bjh9IBnb4b+aqPF7LD9+un9SehgRMiobthgxEmuqpg0UQXQ
-         sIKJe+qfJlxdYw6J2Imx3aMKJLEmuB2KAVaKh6uCLOLMBipVJ64WUuNrLA38A+hHm14J
-         rZip9Xv6E6KqzVWDgUwlrhRlkieC+Z8abIn6WOpECHNoXrx6c8FHlTG77Q9fZyXFpgJP
-         O/lQ==
-X-Gm-Message-State: AOAM532RYqSXRvq/ViIT7cdkDTD8IuudBvS/6+T4m4BZEDoA4R9+Cl1f
-        NbUP1dTZeAYx/y/Yfl0/LmIVmD7aWdc=
-X-Google-Smtp-Source: ABdhPJy2C5ATiTp7hCa0BVt5uJkpXbTdceW408twcp+oFHn4xqXfm+KosKQ0WKAu3lLR/Yf50FICSA==
-X-Received: by 2002:a7b:c042:: with SMTP id u2mr40894047wmc.127.1625111179392;
-        Wed, 30 Jun 2021 20:46:19 -0700 (PDT)
+        bh=IH+wXJBQVGwRASbH9nLVutMF1YTBqHdkkh0Trwn5GRI=;
+        b=Mn9ngHfnpAtcCZvdHksfWRf2SLYKkRRkdejg00vzeVhWIweDZYdRL1Xpd2ey4PoDqg
+         dfASBHxiAY/xAOdYzptzDrfK+ZcFfCBLHYHdn3ubxdt8/cPKfiIWZgrMZBXn2GCihqYG
+         TklZK0cpfhMCPk9LY86iVqEGF3PIK2MqvpwweZhYN8QxNB1N7geTqBf0W6wkamBQrkH3
+         4Yxtdarhd91IDGkvcsHiihLdFHr3E5kWeN1RyZaxz/mA5VAQE75/WgUdh9MV8bp+SIGM
+         NYylHqQQKjF4R0S3jn5trFp/19Z0N7EsE9xfqWLrNeDV1l0SVOn7dybpwsYshA80vAwW
+         CpZQ==
+X-Gm-Message-State: AOAM532jcMAl15wnMECWXUCO3r/grR4m/YPqbZxsbQy3ynM54cCaswWz
+        4+CfYpGwsIhdt5pPwShyJkuLQ/CrBF0=
+X-Google-Smtp-Source: ABdhPJweBUNEXi5BzNPNmtJTF9HreFrEbUtXIcv0OK1lWnltWFP93gnuOxAmZPAiuqxJjcubRLmjRg==
+X-Received: by 2002:adf:f482:: with SMTP id l2mr24755412wro.276.1625111181464;
+        Wed, 30 Jun 2021 20:46:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k16sm6921218wru.79.2021.06.30.20.46.19
+        by smtp.gmail.com with ESMTPSA id s62sm8182876wms.13.2021.06.30.20.46.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jun 2021 20:46:19 -0700 (PDT)
-Message-Id: <5dca982c0b061ae8d6335d4f22b78811dced054a.1625111177.git.gitgitgadget@gmail.com>
+        Wed, 30 Jun 2021 20:46:21 -0700 (PDT)
+Message-Id: <317553eadb68ce162b5ebea24045a9ca75342e91.1625111177.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.988.git.1625111177.gitgitgadget@gmail.com>
 References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 03:46:11 +0000
-Subject: [PATCH 1/7] merge-ort: resolve paths early when we have sufficient
- information
+Date:   Thu, 01 Jul 2021 03:46:15 +0000
+Subject: [PATCH 5/7] merge-ort: defer recursing into directories when merge
+ base is matched
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,69 +77,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When there are no directories involved at a given path, and all three
-sides have a file at that path, and two of the three sides of history
-match, we can immediately resolve the merge of that path in
-collect_merge_info() and do not need to wait until process_entries().
+When one side of history matches the merge base (including when the
+merge base has no entry for the given directory), have
+collect_merge_info_callback() defer recursing into the directory.  To
+ensure those entries are eventually handled, add a call to
+handled_deferred_entries() in collect_merge_info() after
+traverse_trees() returns.
 
-This is actually a very minor improvement: half the time when I run it,
-I see an improvement; the other half a slowdown.  It seems to be in the
-range of noise.  However, this idea serves as the beginning of some
-bigger optimizations coming in the following patches.
+Note that the condition in collect_merge_info_callback() may look more
+complicated than necessary at first glance;
+renames->trivial_merges_okay[side] is always true until
+handle_deferred_entries() is called, and possible_trivial_merges[side]
+is always empty right now (and in the future won't be filled until
+handle_deferred_entries() is called).  However, when
+handle_deferred_entries() calls traverse_trees() for the relevant
+deferred directories, those traverse_trees() calls will once again end
+up in collect_merge_info_callback() for all the entries under those
+subdirectories.  The extra conditions are there for such deferred cases
+and will be used more as we do more with those variables.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ merge-ort.c | 32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index e3a5dfc7b31..6299b4f9413 100644
+index eb0e18d7546..bf0712d18a0 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1023,6 +1023,43 @@ static int collect_merge_info_callback(int n,
- 		return mask;
- 	}
+@@ -1141,8 +1141,35 @@ static int collect_merge_info_callback(int n,
+ 		struct tree_desc t[3];
+ 		void *buf[3] = {NULL, NULL, NULL};
+ 		const char *original_dir_name;
+-		int i, ret;
++		int i, ret, side;
  
-+	/*
-+	 * If the sides match, and all three paths are present and are
-+	 * files, then we can take either as the resolution.  We can't do
-+	 * this with trees, because there may be rename sources from the
-+	 * merge_base.
-+	 */
-+	if (sides_match && filemask == 0x07) {
-+		/* use side1 (== side2) version as resolution */
-+		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				names, names+1, side1_null, 0,
-+				filemask, dirmask, 1);
-+		return mask;
-+	}
++		/*
++		 * Check for whether we can avoid recursing due to one side
++		 * matching the merge base.  The side that does NOT match is
++		 * the one that might have a rename destination we need.
++		 */
++		assert(!side1_matches_mbase || !side2_matches_mbase);
++		side = side1_matches_mbase ? MERGE_SIDE2 :
++			side2_matches_mbase ? MERGE_SIDE1 : MERGE_BASE;
++		if (filemask == 0 && (dirmask == 2 || dirmask == 4)) {
++			/*
++			 * Also defer recursing into new directories; set up a
++			 * few variables to let us do so.
++			 */
++			ci->match_mask = (7 - dirmask);
++			side = dirmask / 2;
++		}
++		if (renames->dir_rename_mask != 0x07 &&
++		    (side != MERGE_BASE) &&
++		    renames->trivial_merges_okay[side] &&
++		    !strset_contains(&renames->target_dirs[side], pi.string)) {
++			strintmap_set(&renames->possible_trivial_merges[side],
++				      pi.string, renames->dir_rename_mask);
++			renames->dir_rename_mask = prev_dir_rename_mask;
++			return mask;
++		}
 +
-+	/*
-+	 * If side1 matches mbase and all three paths are present and are
-+	 * files, then we can use side2 as the resolution.  We cannot
-+	 * necessarily do so this for trees, because there may be rename
-+	 * destinations within side2.
-+	 */
-+	if (side1_matches_mbase && filemask == 0x07) {
-+		/* use side2 version as resolution */
-+		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				names, names+2, side2_null, 0,
-+				filemask, dirmask, 1);
-+		return mask;
-+	}
-+
-+	/* Similar to above but swapping sides 1 and 2 */
-+	if (side2_matches_mbase && filemask == 0x07) {
-+		/* use side1 version as resolution */
-+		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				names, names+1, side1_null, 0,
-+				filemask, dirmask, 1);
-+		return mask;
-+	}
-+
- 	/*
- 	 * Gather additional information used in rename detection.
- 	 */
++		/* We need to recurse */
+ 		ci->match_mask &= filemask;
+ 		newinfo = *info;
+ 		newinfo.prev = info;
+@@ -1196,7 +1223,6 @@ static int collect_merge_info_callback(int n,
+ 	return mask;
+ }
+ 
+-MAYBE_UNUSED
+ static int handle_deferred_entries(struct merge_options *opt,
+ 				   struct traverse_info *info)
+ {
+@@ -1285,6 +1311,8 @@ static int collect_merge_info(struct merge_options *opt,
+ 
+ 	trace2_region_enter("merge", "traverse_trees", opt->repo);
+ 	ret = traverse_trees(NULL, 3, t, &info);
++	if (ret == 0)
++		ret = handle_deferred_entries(opt, &info);
+ 	trace2_region_leave("merge", "traverse_trees", opt->repo);
+ 
+ 	return ret;
 -- 
 gitgitgadget
 
