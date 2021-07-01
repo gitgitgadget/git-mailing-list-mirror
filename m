@@ -2,83 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDC71C11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 21:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9140AC11F67
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 22:03:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90847613EC
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 21:48:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BC8961410
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 22:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234088AbhGAVvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 17:51:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39322 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229934AbhGAVvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 17:51:07 -0400
-Received: (qmail 29067 invoked by uid 109); 1 Jul 2021 21:48:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Jul 2021 21:48:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19514 invoked by uid 111); 1 Jul 2021 21:48:37 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Jul 2021 17:48:37 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 1 Jul 2021 17:48:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Martin Langhoff <martin.langhoff@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Structured (ie: json) output for query commands?
-Message-ID: <YN44NB3I/nDiTVg8@coredump.intra.peff.net>
-References: <CACPiFC++fG-WL8uvTkiydf3wD8TY6dStVpuLcKA9cX_EnwoHGA@mail.gmail.com>
- <CACPiFCLzsiUjx-vm-dcd=0E8HezMWkErPyS==OQ7OhaXqR6CUA@mail.gmail.com>
- <YNyxD4qAHmbluNRe@coredump.intra.peff.net>
- <YNzR5ZZDTfcN2Q+s@camp.crustytoothpaste.net>
- <YN3mk0LnyJyuQ+9T@coredump.intra.peff.net>
- <YN4xCRDi3JwMc+S0@camp.crustytoothpaste.net>
+        id S236866AbhGAWGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 18:06:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51586 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234270AbhGAWGF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 18:06:05 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DDC64E5852;
+        Thu,  1 Jul 2021 18:03:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cLdpVjx5ZtBNoq0W5k8l5rAl9sdqepN4gs/tkY
+        7AdQw=; b=VdRTFVPdUuh3DsBTU2t7GYsrUxg7PuG0sQPEqGZz9W8acQ6M/S+17O
+        LhNG9LE2hMPaWQiC9CkLd2FsNXNJA1ypttD1Qb1MyvmaqaKincRsqk7AQFPmlvmW
+        UjZK1H9W5bHY31qfMD/cqYA/jU1qxpL5oLCe7tOvYE6xowNHLSSx4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4D04E5851;
+        Thu,  1 Jul 2021 18:03:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E48EE5850;
+        Thu,  1 Jul 2021 18:03:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/6] ci: speed-up the Windows parts of our GitHub workflow
+References: <pull.878.git.1624461857.gitgitgadget@gmail.com>
+Date:   Thu, 01 Jul 2021 15:03:32 -0700
+In-Reply-To: <pull.878.git.1624461857.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Wed, 23 Jun 2021 15:24:10
+        +0000")
+Message-ID: <xmqqk0m9r8sr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YN4xCRDi3JwMc+S0@camp.crustytoothpaste.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2D51188E-DAB8-11EB-8F1C-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 01, 2021 at 09:18:01PM +0000, brian m. carlson wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> > I don't love the invalid-utf8-in-json thing in general. But I think it
-> > may be the least-bad solution. I seem to recall that YAML has its own
-> > complexities, and losing human-readability (even to base64) is a pretty
-> > big downside. And the tooling for working with json seems more common
-> > and mature (certainly over something like CBOR, but I think even YAML
-> > doesn't have anything nearly as nice as jq).
-> 
-> I'm not opposed to JSON as long as we don't write landmines.  We could
-> URI-encode anything that contains a bag-of-bytes, which lets people have
-> the niceties of JSON without the breakage when people don't write valid
-> UTF-8.  Most things will still be human-readable.
-> 
-> We could even have --json be an alias for --json=encoded (URI-encoding)
-> and also have --json=strict for the situation where you assert
-> everything is valid UTF-8 and explicitly said you wanted us to die() if
-> we saw non-UTF-8.  I don't want us to say that something is JSON and
-> then emit junk, since that's a bad user experience.
-> 
-> Ideally, we'd have some generic serializer support for this case, so if
-> people _do_ want to add YAML or CBOR output, it can be stuffed in.
+> This patch series upgrades to newer versions of a couple GitHub Actions we
+> use, and also streamlines the Windows jobs using the relatively new
+> setup-git-for-windows-sdk Action
+> [https://github.com/marketplace/actions/setup-git-for-windows-sdk] (Git for
+> Windows is running with this Action for a while now, getting all the kinks
+> out).
+>
+> This patch series should also address the problem where seen was pushed so
+> rapidly that the windows-test jobs failed because they no longer checked out
+> the identical revision as the windows-build job.
 
-Yep, I'd agree with all of that. I think we're on more-or-less the same
-page.
+https://github.com/git/git/actions/runs/991636423 is the run on the
+real 'seen' for the day, which fails vs-build.  The same 'seen',
+with this topic excluded, seems to make everything pass and can be
+seen at https://github.com/git/git/actions/runs/991543592
 
-One annoying thing about JSON is that (to my knowledge) it doesn't have
-a binary data type. So you have to encode things and shove them into
-"string". I guess that is not too bad if you are using backslash or
-percent-encoding, as only a minority of characters get encoded. But it
-sure would be nice for readers if the values, once extracted from the
-json, could be used without further munging. That's most of the benefit
-of using json in the first place. But it may be the best we can do.
+CI/PR(seen) runs in the past few days all include this topic, and all
+of them have failed the vs-build job.
 
--Peff
+Thanks.
+
