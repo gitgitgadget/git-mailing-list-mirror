@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53D48C11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D946CC11F67
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:12:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 289336140E
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:10:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B33AF61410
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:12:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234089AbhGAXNF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 19:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36458 "EHLO
+        id S234120AbhGAXP1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 19:15:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232827AbhGAXND (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 19:13:03 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4131BC061764
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:10:31 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id nd37so13145883ejc.3
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 16:10:31 -0700 (PDT)
+        with ESMTP id S230006AbhGAXP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 19:15:26 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35AB8C061762
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:12:55 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id v20so13118407eji.10
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 16:12:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=dHQfyIvzhDLtjKlmNmykHXJG1+YtE3dM6qXRtcJ3TqA=;
-        b=KZO7DxJEXZHljT1L2ZY2F5PvQZ7+sjrZ46WGwfLJN8osS7r00vTBbVz4hSSCOvxi0F
-         OvkBk7NvD37G7FnHD1AzxOu/nyfX7r/SAKjronDowU/zsHvxD0qDJ+6Utc90u35cGGtz
-         B6xuHbTLCS9uBq0yjSp3wMqS+N3thCjOJ/diTR37yc8Gzp6825BjUqoH3mZgm7X8UILV
-         GJOhe59GPcQs7Y4jTCMxnDFkLkNpthKRhbNkFNt9S6pmLDcP6Qp5PmDpNVEzoPvGWlge
-         H4ZZacxD/Km+lsLzz91l9wi4tR721ad7PbNFjcDLoA7FSfHXEiIVD/5SqQH7RficMDv5
-         8RRQ==
+        bh=lDuh59hDttF59AfpkExLNSgSUFbMwFA4EFsUyOn6NLg=;
+        b=Nur1mDbnQsDQodG2DcQvJv3lDef3yAqtKo4R8zZoKPYNgww3HGBN01Is8IfipzKoBL
+         XpX/OSMZcCZjLK/b/pJK+Ap46/pjt5Lw0UJuwxqtEE91EEKwQkNqr2IkTp4O6cAl0y0m
+         Ytc0IY1fG9KeNi7ZSuHw99+tnTg7s40ni1p/YgoVYhkrQOZYgwOlt4/uR0iypDdSu7VZ
+         jWqeiMFpdx7U/fXMDC5KjfS2UQ4NnqDfpiktpFJiaINHHIRc/7g9LM0a/6vkX5NxXxjr
+         9QkU8ft3k32pjCey3hPY/GKxfX6DOhLWNTz4knwtyzE0P0W54huB0dXcdIJa9SKiQfqD
+         XFug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=dHQfyIvzhDLtjKlmNmykHXJG1+YtE3dM6qXRtcJ3TqA=;
-        b=ALfm8fGD9G5qjR2DHvIYgbhvUcPPH4R3QJwZVN/h68/0pX1QwCOw5S7LUk/KW3dp1G
-         1jMaGhIgmrYGr5YNnkKI36A8dM2Y8y837LOeGJU5PnhozfoZNUXgcA1CuC8DIrcfASep
-         ZP+IIfXVrPDfIZBxZPLGvxgbD//L6qd3lSN017Bbup2bBvTaPDexeG27XcW5qpaDnjFX
-         N92QzKKzpKzTaig23UwO8UJ0f4iitibft3erAhdiXx0uNq2u5aYx6ypvjDsTynP/ghvJ
-         fZwviubngujg7uHcyJqKkFZmcFKvKboFkznXI3CeZSLUXRvZwYw4nErG4MH8qWdIheF7
-         bbHw==
-X-Gm-Message-State: AOAM531HdwBjP4yM9watfZUUuzhVJbKOTmX34qHS0+ZY6CfEaSMyQxoc
-        8W4mqoE5tXLW3s9I5S5mwW/5f6ND4Ceoew==
-X-Google-Smtp-Source: ABdhPJyuowqrcaFgImBIALBaSZCf8XMcljH+6N9lbu2+S2X/Sssf4nHMmRZlhSTF03m7rn0wyzcf6Q==
-X-Received: by 2002:a17:906:5d13:: with SMTP id g19mr2431967ejt.90.1625181029487;
-        Thu, 01 Jul 2021 16:10:29 -0700 (PDT)
+        bh=lDuh59hDttF59AfpkExLNSgSUFbMwFA4EFsUyOn6NLg=;
+        b=LPL1VNtYJsPgMAeRgV9g+ltR/c5Rtflmqyq8N2Q4E3KK6+la9Qf+N0LSF4KrgZ0V/4
+         zbnXiWs1eC+j9roIDrTZyA5T1onIn7CfGpiuq9llt/6VZW7DqyunLer/NlEDWjdf4qpp
+         ypVRCuTM7g1tylD501R0EbsV2xxvke0quIJBiZGjLA8nIomRzg1m1ZkVr+g7CkqSwIvV
+         R0IYdd9Jbv1pcLyA3F28ca4MRYU02Zkq5tioQexLQNWc1glJlapYU/ZvdRZZJMIhhaas
+         vqwuW0UBOOEMxdlHLjA8lfC7kOUQB6dTHmC6Jo+OA7RR1sipIp57OkrRDoUt3alHcSmb
+         tcGw==
+X-Gm-Message-State: AOAM532IlMEmRFGoTEEZVFPX1fByqcSZnWpfHScQxPfFvXSSyzUhGG8t
+        mV1gwPbJTz08IrAciDVwMnFUbokk56QwHA==
+X-Google-Smtp-Source: ABdhPJxhsv3edn/obxZaT1jQETlpOkX38/v3eZsP8FCNvUumoL6mvhUbM+6748FFoPrqzIje7EHorw==
+X-Received: by 2002:a17:907:2d0a:: with SMTP id gs10mr2272710ejc.207.1625181173541;
+        Thu, 01 Jul 2021 16:12:53 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id t27sm396656eje.86.2021.07.01.16.10.29
+        by smtp.gmail.com with ESMTPSA id n11sm410741ejg.43.2021.07.01.16.12.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 16:10:29 -0700 (PDT)
+        Thu, 01 Jul 2021 16:12:52 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
@@ -63,15 +62,15 @@ Cc:     git@vger.kernel.org,
         Jeff Hostetler <git@jeffhostetler.com>,
         Derrick Stolee <stolee@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 24/34] t/perf/p7519: speed up test using "test-tool
- touch"
-Date:   Fri, 02 Jul 2021 01:09:04 +0200
+Subject: Re: [PATCH v3 25/34] t/perf: avoid copying builtin fsmonitor files
+ into test repo
+Date:   Fri, 02 Jul 2021 01:11:26 +0200
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
  <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <f1ef9656fc3adf079c8e40a74baeb5356bcf1586.1625150864.git.gitgitgadget@gmail.com>
+ <a83485fb10f57326a725579f329b73ebf9240ac6.1625150864.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <f1ef9656fc3adf079c8e40a74baeb5356bcf1586.1625150864.git.gitgitgadget@gmail.com>
-Message-ID: <87h7hdbpgb.fsf@evledraar.gmail.com>
+In-reply-to: <a83485fb10f57326a725579f329b73ebf9240ac6.1625150864.git.gitgitgadget@gmail.com>
+Message-ID: <87eechbpcb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -83,58 +82,22 @@ On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
 
 > From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> Change p7519 to use a single "test-tool touch" command to update
-> the mtime on a series of (thousands) files instead of invoking
-> thousands of commands to update a single file.
->
-> This is primarily for Windows where process creation is so
-> very slow and reduces the test run time by minutes.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  t/perf/p7519-fsmonitor.sh | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
->
-> diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-> index 5eb5044a103..f74e6014a0a 100755
-> --- a/t/perf/p7519-fsmonitor.sh
-> +++ b/t/perf/p7519-fsmonitor.sh
-> @@ -119,10 +119,11 @@ test_expect_success "one time repo setup" '
->  	fi &&
->  
->  	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
-> -	for i in $(test_seq 1 10); do touch 10_files/$i; done &&
-> -	for i in $(test_seq 1 100); do touch 100_files/$i; done &&
-> -	for i in $(test_seq 1 1000); do touch 1000_files/$i; done &&
-> -	for i in $(test_seq 1 10000); do touch 10000_files/$i; done &&
-> +	test-tool touch sequence --pattern="10_files/%d" --start=1 --count=10 &&
-> +	test-tool touch sequence --pattern="100_files/%d" --start=1 --count=100 &&
-> +	test-tool touch sequence --pattern="1000_files/%d" --start=1 --count=1000 &&
-> +	test-tool touch sequence --pattern="10000_files/%d" --start=1 --count=10000 &&
-> +
->  	git add 1_file 10_files 100_files 1000_files 10000_files &&
->  	git commit -qm "Add files" &&
->  
-> @@ -200,15 +201,12 @@ test_fsmonitor_suite() {
->  	# Update the mtimes on upto 100k files to make status think
->  	# that they are dirty.  For simplicity, omit any files with
->  	# LFs (i.e. anything that ls-files thinks it needs to dquote).
-> -	# Then fully backslash-quote the paths to capture any
-> -	# whitespace so that they pass thru xargs properly.
->  	#
->  	test_perf_w_drop_caches "status (dirty) ($DESC)" '
->  		git ls-files | \
->  			head -100000 | \
->  			grep -v \" | \
-> -			sed '\''s/\(.\)/\\\1/g'\'' | \
-> -			xargs test-tool chmtime -300 &&
-> +			test-tool touch stdin &&
->  		git status
->  	'
+> Do not try to copy a fsmonitor--daemon socket from the current
+> development directory into the test trash directory.
 
-Did you try to replace this with some variant of:
+Okey, the */fsmonitor--daemon* rule covers that...
 
-    test_seq 1 10000 | xargs touch
+> When we run the perf suite without an explicit source repo set,
+> we copy of the current $GIT_DIR into the test trash directory.
+> Unix domain sockets cannot be copied in that manner, so the test
+> setup fails.
+>
+> Additionally, omit any other fsmonitor--daemon temp files inside
+> the $GIT_DIR directory.
 
-Which (depending on your xargs version) would invoke "touch" commands
-with however many argv items it thinks you can handle.
+So is the "any other" also matched by that rule? Not knowing the files
+part of this is just phrasing, would be less confusing (if that's true,
+and you didn't just forget to add a match for them) as:
+
+    The */fsmonitor--daemon* glob will also match temporary files the
+    daemon creates, but that's OK. We'd like to ignore these too.
