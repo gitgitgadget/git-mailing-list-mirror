@@ -2,126 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31ECBC11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD368C11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:30:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 103FE613FE
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:20:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1FCC6140B
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232681AbhGAOXB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:23:01 -0400
-Received: from siwi.pair.com ([209.68.5.199]:14689 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231844AbhGAOXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:23:01 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A9B243F40E4;
-        Thu,  1 Jul 2021 10:20:30 -0400 (EDT)
-Received: from HOLO-STUX-BVT04.redmond.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S231993AbhGAOdB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:33:01 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61133 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231698AbhGAOdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:33:01 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BC48A1384A3;
+        Thu,  1 Jul 2021 10:30:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ggO6p1amkzaR
+        u5BNv38IuC6FZzoaSXICVbivhDwpw98=; b=ByGgVzNDpgil59wAK+XqG4DlldF3
+        GBE6RG7oG9oWR0tkKvCtfxOASi3vOROWSdZ6UC1UOCEqmQmLEW/tPL6VgeAE+Uf6
+        DnkoMmTxfItbwGBirlfafWtX+KJEIKH7stNUkfMDWlLerIibe2Nss7YfCifcv44W
+        72x4eeStQl74qWY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3E841384A2;
+        Thu,  1 Jul 2021 10:30:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 6C80E3F4095;
-        Thu,  1 Jul 2021 10:20:30 -0400 (EDT)
-Subject: Re: What's cooking in git.git (Jun 2021, #07; Wed, 30)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>
-References: <xmqq4kdft122.fsf@gitster.g> <87r1gicfh1.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <4d72a3d6-397e-e55b-cc11-5591070d5e27@jeffhostetler.com>
-Date:   Thu, 1 Jul 2021 10:20:29 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F3C1413849F;
+        Thu,  1 Jul 2021 10:30:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: Re: [PATCH 0/8] test-lib tests: split off subtest code in t0000
+ into lib-subtest.sh
+References: <cover-0.8-00000000000-20210614T104351Z-avarab@gmail.com>
+        <xmqq35tjzwz2.fsf@gitster.g> <87czsb1r85.fsf@evledraar.gmail.com>
+        <877dibg7d2.fsf@evledraar.gmail.com>
+Date:   Thu, 01 Jul 2021 07:30:26 -0700
+In-Reply-To: <877dibg7d2.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 30 Jun 2021 09:04:35 +0200")
+Message-ID: <xmqqmtr6rtrx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87r1gicfh1.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E18F595E-DA78-11EB-844A-D5C30F5B5667-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-
-On 7/1/21 9:42 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Jun 30 2021, Junio C Hamano wrote:
-> 
->> * jh/builtin-fsmonitor (2021-05-24) 30 commits
->>   - t/perf: avoid copying builtin fsmonitor files into test repo
->>   - t7527: test status with untracked-cache and fsmonitor--daemon
->>   - p7519: add fsmonitor--daemon
->>   - t7527: create test for fsmonitor--daemon
->>   - fsmonitor: force update index after large responses
->>   - fsmonitor: enhance existing comments
->>   - fsmonitor--daemon: use a cookie file to sync with file system
->>   - fsmonitor--daemon: periodically truncate list of modified files
->>   - fsmonitor--daemon: implement handle_client callback
->>   - fsmonitor-fs-listen-macos: implement FSEvent listener on MacOS
->>   - fsmonitor-fs-listen-macos: add macos header files for FSEvent
->>   - fsmonitor-fs-listen-win32: implement FSMonitor backend on Windows
->>   - fsmonitor--daemon: create token-based changed path cache
->>   - fsmonitor--daemon: define token-ids
->>   - fsmonitor--daemon: add pathname classification
->>   - fsmonitor--daemon: implement daemon command options
->>   - fsmonitor-fs-listen-macos: stub in backend for MacOS
->>   - fsmonitor-fs-listen-win32: stub in backend for Windows
->>   - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
->>   - fsmonitor--daemon: implement client command options
->>   - fsmonitor--daemon: add a built-in fsmonitor daemon
->>   - fsmonitor: introduce `core.useBuiltinFSMonitor` to call the daemon via IPC
->>   - config: FSMonitor is repository-specific
->>   - help: include fsmonitor--daemon feature flag in version info
->>   - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
->>   - fsmonitor--daemon: update fsmonitor documentation
->>   - fsmonitor--daemon: man page
->>   - simple-ipc: preparations for supporting binary messages.
->>   - Merge branch 'jk/perf-in-worktrees' into HEAD
->>   - Merge branch 'jh/simple-ipc' into jh/rfc-builtin-fsmonitor
+> On Thu, Jun 24 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Tue, Jun 15 2021, Junio C Hamano wrote:
 >>
->>   An attempt to write and ship with a watchman equivalent tailored
->>   for our use.
->>
->>   What's the status of this one?
-> 
-> I think Johannes's reply to the last WC applies[1]:
-> 
->      I am not Jeff, but I know that he is busy getting back to it, and
->      plans on submitting a third iteration.
-> 
-> FWIW I'm still curious about some details on the performance concerns
-> that seem to have prompted this built-in fsmonitor endeavor, as I asked
-> about (but didn't get a reply to) in [2].
-> 
-> Not as a "we shouldn't have this, let's keep using the hook", but just
-> curiosity about why we've seemingly gotten such different performance
-> numbers on the watchman hook v.s. a built-in approach.
-> 
-> I suspect (but don't know) that the reason is that the built-in is
-> perhaps integrating differently with git somehow, in a way that we could
-> retrofit the hook approach to also do (if anyone still cares about the
-> hook approach).
-> 
-> In any case I'm interested in *why* the new approach is faster, given
-> that I've done some testing (again, noted in [2]) that suggest that
-> bottleneck in the previous pipeline wasn't at all what Jeff H. thought
-> it was.
-> 
-> 1. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2106171135530.57@tvgsbejvaqbjf.bet/#t
-> 2. https://lore.kernel.org/git/87h7lgfchm.fsf@evledraar.gmail.com/
-> 
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>>>
+>>>> This refactors the testing of test-lib.sh itself in t0000 into a
+>>>> lib-subtest.sh, fixing duplicate setup, bugs and various shell nits
+>>>> along the way.
+> ...
+> Junio, just a reminder about this series: It has no conflicts with
+> "seen", and that WIP patch it would have conflicted with it was replace=
+d
+> by another approach.
 
-A quick reply here of Junio's question. Yes, I'm working on a V3
-to submit (any day now -- $DAYJOB notwithstanding (read: meetings)).
+https://lore.kernel.org/git/cover-0.8-00000000000-20210614T104351Z-avarab=
+@gmail.com/
+reveals that this hasn't seen much reviews, though.  I'll try to
+find time to read it through; no promises if it will be done by the
+end of the week, though.
 
-I'll push this up and then try to answer the perf questions.
+Thanks.
 
-Thanks for your patience.
-Jeff
