@@ -2,87 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5410EC11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63322C11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:00:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 385C4613CB
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:56:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 420F161403
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233879AbhGAP7T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 11:59:19 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55757 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233694AbhGAP7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 11:59:18 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E192DD3D97;
-        Thu,  1 Jul 2021 11:56:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=SBQIkHpbKqDz
-        8OtOkbS6QWqjRaFEXaMxhv1aZV8l/C4=; b=YYz8c75XJaCXnB0M/A74ZSvX2o8g
-        xn6QdeSHza9SqRud9aI4vXegVAPrgIhu6d+mt8uYH67/4Z+GW4iol+sPDTiZTddz
-        gjTa0GjYV/HUv2P4KG4LjdXjE5hS9MkCQ1RzR3LbpEV8EsjYX/0G8SBE6nBMoGcG
-        lLHEvO8yqo6FbFw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DA06ED3D95;
-        Thu,  1 Jul 2021 11:56:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5ECD9D3D94;
-        Thu,  1 Jul 2021 11:56:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] *.h: move some *_INIT to designated initializers
-References: <cover-0.5-00000000000-20210701T104855Z-avarab@gmail.com>
-        <patch-1.5-9a92e7c216f-20210701T104855Z-avarab@gmail.com>
-        <CAN0heSpsg=bwX9gbYfeWYqUbuen-zArR69FWxNmdtcQW_RubzA@mail.gmail.com>
-Date:   Thu, 01 Jul 2021 08:56:46 -0700
-In-Reply-To: <CAN0heSpsg=bwX9gbYfeWYqUbuen-zArR69FWxNmdtcQW_RubzA@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 1 Jul 2021 17:00:02
- +0200")
-Message-ID: <xmqq8s2qrps1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S233890AbhGAQCv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 12:02:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38642 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232126AbhGAQCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 12:02:51 -0400
+Received: (qmail 28105 invoked by uid 109); 1 Jul 2021 16:00:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Jul 2021 16:00:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16555 invoked by uid 111); 1 Jul 2021 16:00:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Jul 2021 12:00:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 1 Jul 2021 12:00:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Martin Langhoff <martin.langhoff@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Structured (ie: json) output for query commands?
+Message-ID: <YN3mk0LnyJyuQ+9T@coredump.intra.peff.net>
+References: <CACPiFC++fG-WL8uvTkiydf3wD8TY6dStVpuLcKA9cX_EnwoHGA@mail.gmail.com>
+ <CACPiFCLzsiUjx-vm-dcd=0E8HezMWkErPyS==OQ7OhaXqR6CUA@mail.gmail.com>
+ <YNyxD4qAHmbluNRe@coredump.intra.peff.net>
+ <YNzR5ZZDTfcN2Q+s@camp.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F0B7B136-DA84-11EB-8157-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YNzR5ZZDTfcN2Q+s@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+On Wed, Jun 30, 2021 at 08:19:49PM +0000, brian m. carlson wrote:
 
->> -#define STRING_LIST_INIT_NODUP { NULL, 0, 0, 0, NULL }
->> +#define STRING_LIST_INIT_NODUP { 0 }
->
-> This "NODUP" one is a bit of an odd case though. You don't actually
-> change it to use designated initializers, as the patch says. Instead yo=
-u
-> change it in a slightly different way. In a sense, you assign the
-> literal zero not to strdup_strings, but to the first field, which is a
-> pointer, where I would have expected NULL.
->
-> I think there's been some recent-ish "we can assign `{ 0 }` even if the
-> first field is a pointer, because it's idiomatic and works out fine"
-> even if assigning 0 to a pointer looks a bit odd. So it might not be
-> wrong as such, but it doesn't match what the commit message claims, and
-> I think it would be more clear to use `{ .strdup_strings =3D 0 }` here:
-> We're explicitly interested in *not* duplicating the strings. It's not
-> just some default "let's leave everything as zero/NULL".
+> On 2021-06-30 at 17:59:43, Jeff King wrote:
+> > One complication we faced is that a lot of Git's data is bag-of-bytes,
+> > not utf8. And json technically requires utf8. I don't remember if we
+> > simply fudged that and output possibly non-utf8 sequences, or if we
+> > actually encode them.
+> 
+> I think we just emit invalid UTF-8 in that case, which is a problem.
+> That's why Git is not well suited to JSON output and why it isn't a good
+> choice for structured data here.  I'd like us not to do more JSON in our
+> codebase, since it's practically impossible for users to depend on our
+> output if we do that due to encoding issues[0].
+> 
+> We could emit data in a different format, such as YAML, which does have
+> encoding for arbitrary byte sequences.  However, in YAML, binary data is
+> always base64 encoded, which is less readable, although still
+> interchangeable.  CBOR is also a possibility, although it's not human
+> readable at all.
 
-Well reasoned.  I agree that it is not wrong per-se, and the
-solution to use designated initializer is indeed in line with the
-theme of the topic.
+I don't love the invalid-utf8-in-json thing in general. But I think it
+may be the least-bad solution. I seem to recall that YAML has its own
+complexities, and losing human-readability (even to base64) is a pretty
+big downside. And the tooling for working with json seems more common
+and mature (certainly over something like CBOR, but I think even YAML
+doesn't have anything nearly as nice as jq).
 
+Our sloppy json encoding does work correctly if you use utf8 paths, and
+I think we could provide options to cover other common cases (e.g., a
+single option for "assume my paths are latin1"). I think life is hardest
+on somebody writing a script/service which is meant to process arbitrary
+repositories (and isn't in control of the strictness of whatever is
+parsing the json).
+
+I'm sensitive to the issue of implementing something that works most of
+the time, but then fails spectacularly when somebody does something
+unusual. But it also sucks for many users not to have that "something
+that works most of the time" if it would make their lives easier.
+
+> I'm personally fine with the ad-hoc approach we use now, which is
+> actually very convenient to script and, in my view, not to terrible to
+> parse in other tools and languages.  Your mileage may vary, though.
+
+There are a lot of gotchas, there, too. When the data gets complex, "-z"
+splitting becomes ambiguous (e.g., "git log -z --raw" uses a NUL both to
+separate commits from their diffs, diffs from each other, and diffs from
+subsequent commits, so you have to pattern-match each type). It's also
+context-dependent (e.g., you can't parse a "--raw -z" entry without
+interpreting its type character, since "R" and "C" will have multiple
+path fields; there are almost certainly a lot of "works most of the
+time" parsers out there).
+
+-Peff
