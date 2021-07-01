@@ -2,72 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 299A6C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 03:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 179EDC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 03:23:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02E9E6145F
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 03:07:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E047361463
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 03:23:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238690AbhGADJd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Jun 2021 23:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52444 "EHLO
+        id S232066AbhGADVl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Jun 2021 23:21:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238682AbhGADJd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Jun 2021 23:09:33 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F26C061756
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:07:03 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id a133so5603716oib.13
-        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:07:03 -0700 (PDT)
+        with ESMTP id S229622AbhGADVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Jun 2021 23:21:40 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 250CFC061756
+        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:19:10 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id s17so5759913oij.0
+        for <git@vger.kernel.org>; Wed, 30 Jun 2021 20:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=QMF1l5iTjRedtTVxA64vfiq9pZzpHgmBy+cGHQgEICg=;
-        b=nVm2cs8mBS4Mx1aFAJ/3dtpjWLlxWYiGZ9p/mKv9Y2qZM1O9j8GfI3RryIUfc5u34C
-         Ac4NjyUFXrS10/UPGf5jP0E7wP4+dGxQVqcUeTGv/rzxRyFVdYyTeCKSKFt6LXwYSfyP
-         /iltOutsBPnpswsdXR04BE6lXhQvNSsszWIuDqDHT0r/QKgdTAC/Vjmm0EDcjObaxF6B
-         gmQjJf44tjHDRGpRxQ+25f8GLWOwVmAuwN+//W9jnELeg9z9yP94nIXeDKUvneaX8DQ+
-         NmzoKRa8qTWJsH/X0+6z0sVibZLdVLJu/AvuyZBef4o82jLpJJdAJRDZcNtln68Utjfc
-         UsIQ==
+        bh=0nI36bv76ButPb687bTr6Wqcvv8fkiMst6bFwAkxMQM=;
+        b=hFDw0fsOmPEv6Ehy23d55NEmrBH8qR+XnxGMpHzmpJvAl+hVkGvGbEdQ+9hqIoRQik
+         49SYqMKhVFmP2MlqQBcTR834A6z+bAvoBLLTteEA3CuWEC7727Mc6pnp/4O47jpgFWUe
+         Md+OMUFGUwrude/ptJAU1ItC2xpfSlETiaYiTmTkVOOA9QuHUfVaiPTsL18pVrYPY5Y8
+         V22MU1cOTQSv9FHojyluKNORpEOgds8xOfTtdqf8IaAPcNf7C9/kULehCHY0bzYVOkra
+         vI5K7h5tb7dXleiXr6zdr8jCEgHM8WnpMAMQ4Ejs+DIwYFtjtXrqTJLsSisFR6ry1TqQ
+         lYEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=QMF1l5iTjRedtTVxA64vfiq9pZzpHgmBy+cGHQgEICg=;
-        b=L5kWX1lEctua+H9e0/JJwLAkCtEZvoxJyvd2QHunmgxYwhiO91Siz5LR8zHPXtNTee
-         YHyD8Art97ooHFtB0xCL6GvTUchQ5ZCHg/hW051XvFr1e7ATHBfnQPj2KW2oDN4GoHEP
-         +Z7TCWzLCwgWX+8jijYz6zBQT4BMmUdBbTfIiwNCnA4PgNX6/8ZuH1PpjPx0LctPCKHr
-         nThQQVQK5kD9C7nJOLzw7eJtQmSatUu0qusb1raMk2BsDgw5JOyVyhro6lqGblABTe6B
-         YFi6G4I1IXzJMcP70F50ZjQ1BAYTbrlapL9jx3EdgpLzoWU0Nw06syhAKjTCjGWzEsvt
-         2CSA==
-X-Gm-Message-State: AOAM532ShUojh3A6O4u0lBSTFLoZ2yZB392vd/AUiBbHPie64QjkyLr3
-        eXRIqqkOrFR2QyGorvkgST8=
-X-Google-Smtp-Source: ABdhPJwsNpHTx+w11d9FbzuEyK8DQGNiyRH20mXU6zb0rBa1CdFK7v7EQefb/XaamXNrEe3CMNZ0lA==
-X-Received: by 2002:aca:1910:: with SMTP id l16mr16625538oii.12.1625108821708;
-        Wed, 30 Jun 2021 20:07:01 -0700 (PDT)
+        bh=0nI36bv76ButPb687bTr6Wqcvv8fkiMst6bFwAkxMQM=;
+        b=VFinuLsqWubzhBmU4HE0EX4PGFT8Y1CH6QrV5eOHhg/tWJBgrtVnLg7bdvVKIHbqGW
+         +lWA5RURD/wXDqTYA4F0q7WEZgI0r/u6dza1P2ESJIUF8m0dRZQDnyh1v/nDu8LsSvoW
+         KU6r7CqMDOCJB5pgdDw4lAiByME2UdreBtVcTSvyrh2PfjJu3Yfx8NB9i7sMJ92jqrna
+         6SadDt3PHQTlMSpKiYuCLANPOXC/F8k1QH+QiPh64XHi40dVvgo6PtgDHwJ03/cpfvL3
+         eCkgliwVgsziLsp9dwysT3Mmg/xJIB8+6N1HdkWxlejbnTC/1LY0zS4UVhDuYL1Zxy3m
+         XI1Q==
+X-Gm-Message-State: AOAM53367xStimBi245hc1/CSEt2QKZQlixilynlwqEiJzmGVaWUEj53
+        LdVpUeflOjs9WK8EQwguDQ4=
+X-Google-Smtp-Source: ABdhPJw7LrnfG/lTvMwrCfp9EgQ7uxBTZetJOXhM8SQsBGBO9BAU0MpeFWmEeRlTsJF4xyxs1tXidA==
+X-Received: by 2002:a05:6808:910:: with SMTP id w16mr15700660oih.53.1625109549441;
+        Wed, 30 Jun 2021 20:19:09 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id s19sm4082368oic.16.2021.06.30.20.07.00
+        by smtp.gmail.com with ESMTPSA id t144sm581848oie.57.2021.06.30.20.19.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jun 2021 20:07:00 -0700 (PDT)
-Date:   Wed, 30 Jun 2021 22:06:59 -0500
+        Wed, 30 Jun 2021 20:19:08 -0700 (PDT)
+Date:   Wed, 30 Jun 2021 22:19:07 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>
-Message-ID: <60dd31535310e_174a220828@natae.notmuch>
-In-Reply-To: <878s2tglzi.fsf@evledraar.gmail.com>
+Message-ID: <60dd342b92b8b_174a22083a@natae.notmuch>
+In-Reply-To: <8735t1gk0d.fsf@evledraar.gmail.com>
 References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
- <60d384ecd5ad3_4290208c@natae.notmuch>
- <87tulo1hs4.fsf@evledraar.gmail.com>
- <60d39a71299ef_429020815@natae.notmuch>
- <878s2tglzi.fsf@evledraar.gmail.com>
+ <60d389d015943_4290208ae@natae.notmuch>
+ <87o8bw1hc5.fsf@evledraar.gmail.com>
+ <60d39ef9a8071_429020896@natae.notmuch>
+ <8735t1gk0d.fsf@evledraar.gmail.com>
 Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -79,165 +79,30 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 > On Wed, Jun 23 2021, Felipe Contreras wrote:
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> On Wed, Jun 23 2021, Felipe Contreras wrote:
-> >> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> >> >> As in db10fc6c09f this allows us to remove patterns of removing
-> >> >> leftover $@ files at the start of rules, since previous failing r=
-uns
-> >> >> of the Makefile won't have left those littered around anymore.
-> >> >> =
-
-> >> >> I'm not as confident that we should be replacing the "mv $@+ $@"
-> >> >> pattern entirely, since that means that external programs or one =
-of
-> >> >> our other Makefiles might race and get partial content.
+> >> > What about these?
 > >> >
-> >> > The reason I did it in db10fc6c09 is because both asciidoctor and
-> >> > asciidoc should deal with temporary files by themselves (like gcc)=
-. If
-> >> > you interrupt the build nothing gets generated.
+> >> >   $(REMOTE_CURL_ALIASES):
 > >> =
 
-> >> If you interrupt the build default make behavior without
-> >> .DELETE_ON_ERROR kicks in.
+> >> Uses a chain of ln/ln -s/cp, would need to add "-f" flags.
 > >
-> > Generally yes, but it's possible the program traps the interrupt sign=
-al,
-> > in which case make never receives it.
+> > Why? Isn't "x && a || b || c" the same as "a || b || c" if x is alway=
+s true?
 > =
 
-> Okey, so by "should deal with [it]" you meant that would be ideal, not
-> that it's something they're doing now. I misunderstood you there.
-
-It is tricky.
-
-For example asciidoctor does trap interrupt signals, but deals with them
-correctly. On the other hand asciidoc does not, but they clearly did
-intent to, just did it wrong. I sent a pull request for asciidoc to fix
-that [1], but so far no response.
-
-So it's a mixture of both; ideally they should do it, and they kind of
-do, but not all of them. Certainly git scripts do not. But they could.
-
-> >> My gcc 8.3.0 just does an unlink()/openat(..., O_RDWR|O_CREAT|O_TRUN=
-C)
-> >> dance followed by chmod() when I do e.g.:
-> >> =
-
-> >>     gcc -o main main.c
-> >> =
-
-> >> So no in-place atomic renaming, does yours do something different?
-> >
-> > It doesn't rename the file, but if interrupted the file is unlinked.
+> It does:
 > =
 
-> Right, and with .DELETE_ON_ERROR that "interrupted" is extended to
-> "interrupted, or errors", but bringing this discussion around that's wh=
-y
-> I was confident in replacing the "rm" pattern at the start (which reall=
-y
-> is 100% replaced by .DELETE_ON_ERROR), but not the "mv" at the end
-> (which isn't, and is an orthagonal feature).
-
-Depnds on what "the feature" is.
-
-If the feature is not having lingering partial files on error, then gcc a=
-lready
-deals with that.
-
-If the feature is never having partial files at all, then yeah, you need
-the "mv" at the end, but as Jeff and Junio already pointed out: that
-feature is of doubtful value.
-
-I see value on .DELTE_ON_ERROR, not so much on never having partial
-files. I have tried to imagine why anybody would want this, and I just
-can't picture it, though that could be a failure of my imagination.
-
-> >> > However, other scripts like build-docdep.perl would indeed generat=
-e
-> >> > partial output.
-> >> >
-> >> > In my opinion it's the scripts themselves that should be fixed, an=
-d not
-> >> > the Makefile, *if* we care about this at all.
-> >> =
-
-> >> I don't think default tool/make/*nix semantics are broken, I just th=
-ink
-> >> it's neat to do that rename dance yourself, it's a cheap way to
-> >> guarantee that we always have working tools for use by other concurr=
-ent
-> >> scripts.
-> >
-> > It is cheap in the sense that it doesn't cost the computer much, but =
-it
-> > makes the code less maintenable and harder to read.
-> >
-> > To me it's a layering violation. If the tool is already dealing with
-> > interrupted builds, and on top of that make is doing the same, not on=
-ly
-> > for interrupted builds but also failures, then it makes little sense =
-to
-> > add even more safeties on top of that in the Makefile.
+>     rm x &&
+>     ln y x || ln -s y x || cp y x
 > =
 
-> I agree for interrupted builds, but we're talking about
-> in-place-renaming, which is orthogonal.
-
-In-place-renaming is the means, the end-goal (I presume) is to never
-have partial files.
-
-Yes, it's orthogonal, but also I don't see the point.
-
-> > If this was really an important feature, it should be part of make
-> > itself, or ninja, or whatever.
-> >
-> > IMO the whole point of DELETE_ON_ERROR is to avoid everyone doing the=
-
-> > exact same dance in their Makefiles.
-> =
-
-> I agree it would be an interesting make feature, but something pretty
-> far from what it's doing now.
-> =
-
-> In general "make" has been intentionally sloppy about this sort of
-> thing. When you make a file "foo" it doesn't enforce that you fsync it
-> either, or that if it's being created the directory it's inserted into
-> is fsync'd.
-> =
-
-> In a POSIXly-strict sense it can't assume that it can operate properly
-> without those things happening, but in practice modern OS's deal with i=
-t
-> just fine, so "make" leaves that to the rule itself.
-> =
-
-> It would be nice to have a make feature to e.g. have individual rules
-> say "I emit on stdout, put it into $@ for me", then it could in-place
-> rename, fsync, display progress through "pv(1)" or whatever.
-
-Perhaps. I still don't see why this is something important.
-
-Either way a pattern I've seen lately in a lot of software is a
-reluctance to modernize itself, and that results in other software
-starting from scracth (GCC vs. LLVM, vim vs. neovim, and make vs. ninja).=
+> If you run that you'll get a hardlink the first time around, but the
+> second time around you'll fall back to the "cp" if you remove the "rm".=
 
 
-If we are reaching the limit to what make can offer us--and plenty of
-other projects are already using more modern alternatives--does it
-really make much sense to focus on a small thing make can't offer us
-natively and work around that?
-
-Maybe it would make more sense to stop relying on make so much and
-attempt to make other tools support this feature natively.
-
-Cheers.
-
-[1] https://github.com/asciidoc-py/asciidoc-py/pull/195
+Right. We'll need to do ln -f, and god knows if that's portable.
 
 -- =
 
