@@ -2,227 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EEE1C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 17:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26BC2C11F69
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 17:42:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3228161356
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 17:30:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 045AD613C0
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 17:42:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232397AbhGARcv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 13:32:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45800 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229978AbhGARcu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 13:32:50 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DD15C061762
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 10:30:18 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id i24so9529425edx.4
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 10:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=YCST9Bnc4NNcSVaVL/74TL0Jcx3MtcwNOfgUP8/uxGM=;
-        b=FlT5rAIf6vB7PLBI7cxsNu7vl4lr4PrEqRr77Cz0GucSEJJa72e7yhYBniP0ZM0jTW
-         WvgP/v+F26e14QfCoQEI9DlnDJ5geLuAuki/2nPi/wx9vjtPMsaM+Co2rDYATehJS9Yf
-         tt8rzxVNuk9q33i+uqDa40YsQbGucU37r3hklfUIP5VKA3/yg46DXo5zWT3XizmMSOMU
-         bggCVttLO5pN1+iN69w6Nvz0pziUm2mAmPItunXeQ7lj9K5eO2l0P9oaVcXvcFDntKgW
-         jiGcKbPzY2rThaz6YrP58UjQSIiGX5WECMrhv/qiA1mhQ6SvNfndH0pT9dKxrQhaeB8F
-         VM/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=YCST9Bnc4NNcSVaVL/74TL0Jcx3MtcwNOfgUP8/uxGM=;
-        b=tSiblwKhJaOTilHODA0iH16m4nDyToebxLvoe7NUsL5MVIKnOy/FGsU3Ozl2Dh2oG+
-         rSpF36Ls80JD2qdrWVuOaS158qtcb3jEZmBzc3MNqkV/ukRKSVztxP5OatZlpph90Mu3
-         mtaBuyGvYNgVUZY8ZojL7VmaE+E0/c4YrbTBze4w1xwG1SgpS7lHix1V3ng9vLEEZhmi
-         Umjqlzz8afaKCHXz/faPmvPAyp4WTiUWCxs138mLGOkrLlXKZCsQNHiMQ/AwoQKIPPB1
-         Rl505kqC/e1BcxODciSxot6HotXYcRR0NTYuGtXqOz9NEGHzebdOcnOwqxAvuN8s3WPM
-         y6DQ==
-X-Gm-Message-State: AOAM530SCNJbJ4qpieerUnW1/XrsJrt9wyU39AS6TEal9hQ/tKk/bbVO
-        PEVPh0GQ3xd6jsXznWrXi2jgBzhk9uEZAw==
-X-Google-Smtp-Source: ABdhPJz5K+/2+yINhEAc+UW8UO7FOuw6tfePpJRWR7GzIHnvzI1HzveIWtBp5eGaXdWlGpt1fN8CtQ==
-X-Received: by 2002:a05:6402:348d:: with SMTP id v13mr1248659edc.119.1625160616735;
-        Thu, 01 Jul 2021 10:30:16 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c14sm221155edr.27.2021.07.01.10.30.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 10:30:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 06/34] fsmonitor: config settings are
- repository-specific
-Date:   Thu, 01 Jul 2021 18:46:01 +0200
-References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
- <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <8b64b7cd3674163adb0588d42eccf4873b30974b.1625150864.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <8b64b7cd3674163adb0588d42eccf4873b30974b.1625150864.git.gitgitgadget@gmail.com>
-Message-ID: <87im1uc57c.fsf@evledraar.gmail.com>
+        id S233128AbhGARpP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 13:45:15 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59613 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229978AbhGARpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 13:45:14 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E20B2139E80;
+        Thu,  1 Jul 2021 13:42:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=INMKXrJGHV3qye/Rmym1481NKXEjeUwJNZmI2a
+        JEbX0=; b=ZM6fJ4EHRSNPr93OwPeFDRyn53O9pAALbjZY8xonuKvhXqGxzmjRxW
+        o26N98wjqfpzlNQvGjMRDIdjqpeqVWLIfYdckg7M/gxyb82UC/sTXNZULPSf6LPm
+        3Cd/1uB+8EA8Zn0C13MkenYLZV8PrdfVDijOpJRHFRT+HBLvi4TAM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DA765139E7F;
+        Thu,  1 Jul 2021 13:42:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 31056139E7E;
+        Thu,  1 Jul 2021 13:42:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Duy Nguyen <pclouds@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] mingw: handle absolute paths in expand_user_path()
+References: <pull.66.git.gitgitgadget@gmail.com>
+        <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
+Date:   Thu, 01 Jul 2021 10:42:39 -0700
+In-Reply-To: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Thu, 01 Jul 2021 16:03:05
+        +0000")
+Message-ID: <xmqq1r8irkvk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: BBE2A88A-DA93-11EB-946D-D5C30F5B5667-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
+> In Git for Windows, we ran with a patch "in production" for quite a while
+> where paths starting with a slash (i.e. looking like Unix paths, not like
+> Windows paths) were interpreted as being relative to the runtime prefix,
+> when expanded via expand_user_path().
+>
+> This was sent to the Git mailing list as a discussion starter, and it was
+> pointed out that this is neither portable nor unambiguous.
+>
+> After the dust settled, I thought about the presented ideas for a while
+> (quite a while...), and ended up with the following: any path starting with
+> <RUNTIME-PREFIX>/ is expanded. This is ambiguous because it could be a valid
+> path. But then, it is unlikely, and if someone really wants to specify such
+> a path, it is easy to slap a ./ in front and they're done.
 
-In a reference to a discussion[1] about an earlier version of this patch
-you said:
+I just went back to briefly scan the discussion in late 2018.
 
-    I'm going to ignore all of the thread responses to this patch
-    dealing with how we acquire config settings and macros and etc.
-    Those issues are completely independent of FSMonitor (which is
-    already way too big).
+I think the rough consensus back then was that 
 
-Since then the changes to repo-settings.c have become a lot larger, so
-let's take a look...
+ * It indeed is a problem that there is no syntax for users of
+   "relocatable Git" to use to point at things that come as part of
+   the "relocatable Git" package.
 
-1. https://lore.kernel.org/git/87mttkyrqq.fsf@evledraar.gmail.com/
-2. https://lore.kernel.org/git/4552971c-0a23-c19a-6a23-cb5737e43b2a@jeffhostetler.com/
+ * A change to expand_user_path() would be too broad, it makes sense
+   for this feature to be in git_config_pathname();
 
+ * We need to get the syntax right.
 
-> diff --git a/repo-settings.c b/repo-settings.c
-> index 0cfe8b787db..faf197ff60a 100644
-> --- a/repo-settings.c
-> +++ b/repo-settings.c
-> @@ -5,10 +5,42 @@
->  
->  #define UPDATE_DEFAULT_BOOL(s,v) do { if (s == -1) { s = v; } } while(0)
->  
-> +/*
-> + * Return 1 if the repo/workdir is incompatible with FSMonitor.
-> + */
-> +static int is_repo_incompatible_with_fsmonitor(struct repository *r)
-> +{
-> +	const char *const_strval;
-> +
-> +	/*
-> +	 * Bare repositories don't have a working directory and
-> +	 * therefore, nothing to watch.
-> +	 */
-> +	if (!r->worktree)
-> +		return 1;
+As to the last item, there were a handful of choices raised:
 
-Looking ahead in this series you end up using
-FSMONITOR_MODE_INCOMPATIBLE in two places in the codebase. In
-builtin/update-index.c to throw a "repository is incompatible with
-fsmonitor" error.
+ - Use "~~"--the downside is that this is not extensible.  Use
+   "~runtime-prefix/" would be a better choice (the likelyhood of
+   <RUNTIME-PREFIX>, $RUNTIME_PREFIX, and any other random choice
+   happens to be used as a valid directory name is just as slim as
+   the likelyhood of "runtime-prefix" used as a valid username).
 
-Can't that case just be replaced with setup_work_tree()? Other sub-modes
-of update-index already die implicitly on that, e.g.:
+ - "$RUNTIME_PREFIX" to make it read like a variable---the downside
+   was that it looked TOO MUCH like a variable and risked user
+   confusion (e.g. it may be upsetting that "$HOME/.gitconfig" is
+   not expanded like "~/.gitconfig" is).
 
-	$ git update-index test
-	fatal: this operation must be run in a work tree
+ - %(RUNTIME-PREFIX) to make it similar to how Git replaces various
+   tokens that are understood only in the context of Git.
 
-The other case is:
-	
-	+       prepare_repo_settings(the_repository);
-	+       if (!the_repository->worktree)
-	+               return error(_("fsmonitor-daemon does not support bare repos '%s'"),
-	+                            xgetcwd());
-	+       if (the_repository->settings.fsmonitor_mode == FSMONITOR_MODE_INCOMPATIBLE)
-	+               return error(_("fsmonitor-daemon is incompatible with this repo '%s'"),
-	+                            the_repository->worktree);
+ - <RUNTIME-PREFIX>---the downside is that this is an unnecessary
+   new syntax we do not have to introduce.  If <RUNTIME-PREFIX> is
+   unlikely to be used as a valid directory name, %(RUNTIME-PREFIX)
+   is just as unlikely.
 
-I.e. we just checked the_repository->worktree, but it's not that, but....
+There might have been other ideas floated back then.  I have to say
+that the one you chose in this round is the least favourite of mine,
+and if you consulted me privately before redoing this round, I would
+probably have said %(RUNTIME_PREFIX) would make the most sense among
+the candidates.
 
-> +
-> +	/*
-> +	 * GVFS (aka VFS for Git) is incompatible with FSMonitor.
-> +	 *
-> +	 * Granted, core Git does not know anything about GVFS and
-> +	 * we shouldn't make assumptions about a downstream feature,
-> +	 * but users can install both versions.  And this can lead
-> +	 * to incorrect results from core Git commands.  So, without
-> +	 * bringing in any of the GVFS code, do a simple config test
-> +	 * for a published config setting.  (We do not look at the
-> +	 * various *_TEST_* environment variables.)
-> +	 */
-> +	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_strval))
-> +		return 1;
-
-I'm skeptical of us hardcoding a third-party software config
-variable. Can't GitVFS handle this somehow on its end?
-
-But just in terms of implementation it seems the end result of that is
-to emit a very confusing error to the user. Sinc we already checked for
-bare repos we run into this and instead of sayingwhen we should really
-say "hey, maybe disable your core.virtualFileSystem setting", we say
-"your repo is incompatible".
-
-> +
-> +	return 0;
-> +}
-> +
->  void prepare_repo_settings(struct repository *r)
->  {
->  	int value;
->  	char *strval;
-> +	const char *const_strval;
-
-Can be declared in the "else" below.
-
->  
->  	if (r->settings.initialized)
->  		return;
-> @@ -26,6 +58,22 @@ void prepare_repo_settings(struct repository *r)
->  	UPDATE_DEFAULT_BOOL(r->settings.commit_graph_read_changed_paths, 1);
->  	UPDATE_DEFAULT_BOOL(r->settings.gc_write_commit_graph, 1);
->  
-> +	r->settings.fsmonitor_hook_path = NULL;
-> +	r->settings.fsmonitor_mode = FSMONITOR_MODE_DISABLED;
-
-With the memset earlier (b.t.w. I've got a patch to fix all this bizarre
-behavior in repo-settings.c, but have been waiting on this series we
-implicitly set it to FSMONITOR_MODE_UNSET (-1) with the memset, but then
-never use that ever.
-
-Your code in update-index.c then for a check against
-"FSMONITOR_MODE_DISABLED" says "core.useBuiltinFSMonitor is unset;".
-
-> +	if (is_repo_incompatible_with_fsmonitor(r))
-> +		r->settings.fsmonitor_mode = FSMONITOR_MODE_INCOMPATIBLE;
-
-Style: should have {} braces on all arms.
-
-> +	else if (!repo_config_get_bool(r, "core.usebuiltinfsmonitor", &value)
-> +		   && value)
-> +		r->settings.fsmonitor_mode = FSMONITOR_MODE_IPC;
-
-Here you're conflating false with whether the variable is set at all. I
-guess that works out here since if it's false we want to fall through
-to...
-
-> +	else {
-
-...ignoring it and looing at core.fsmonitor instead.
-
-> +		if (repo_config_get_pathname(r, "core.fsmonitor", &const_strval))
-> +			const_strval = getenv("GIT_TEST_FSMONITOR");
-
-If it's not set we pay attention to GIT_TEST_FSMONITOR, so the behavior
-from the old git_config_get_fsmonitor(). So even if the env variable is
-set we want to take the config variable over it, correct?
-
-> +		if (const_strval && *const_strval) {
-> +			r->settings.fsmonitor_hook_path = strdup(const_strval);
-
-We had a strbuf_detach()'d string in the case of
-repo_config_get_pathname(), but here we strdup() it again in case we
-were in the getenv() codepath. This code probably leaks memory now
-anyway, but perhaps it's better to split up the two so we make it easier
-to deal with who owns/frees what in the future.
+Thanks.
