@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 212CFC11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D559FC11F67
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:06:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAE0A613DC
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:01:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B04B0613FB
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 23:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234093AbhGAXES (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 19:04:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34526 "EHLO
+        id S232637AbhGAXJH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 19:09:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233648AbhGAXER (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 19:04:17 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 984ECC061762
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:01:46 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id df12so10688409edb.2
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 16:01:46 -0700 (PDT)
+        with ESMTP id S230006AbhGAXJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 19:09:06 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BCAC061762
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:06:35 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id gn32so13175844ejc.2
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 16:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=W+N8g7jgmprAlsbC3Y98cyb2uK46hcEGHkz/6gME2UE=;
-        b=I9rlwfvXePrN2rOF7g4QlaCFG6F5z22yD+rW+OeKfb8CUN2COz+Gqot/XXhqF5ln/y
-         Nzr5kMzSIKtES5ao/9SXZk0tnPR2BileyiS6VC2KKIJ9QTMle5+bR7WqPyoG+KhL4mgM
-         a02IkedVBM1PokWF0aFv06qVhLeV0cXnSoZfGUZ8rbip9pYspxMvuqiLw1w3sO2n3v4O
-         zfGkxPEXMgvMKeMw+lcE7fD7A2nc1EGgPQqWJm+gkaZ+nlpVGWcyEIiNdXZZejs91cRF
-         Yug3ewgnkRZTvPSmR9flfln31pJ5ZeESybZqUGQEEkekJPHEA7kyi5ovkBJW5fnGNjwD
-         NNBw==
+        bh=ZJ5JJU3BFeRaLYBeI5Vul40iCyGOkZuDTl3fLjxYNhQ=;
+        b=mlaTp8Lxx7e0AKwS9mczRNBh5tbaJVwn1jq9dold4LxHOF0au4PZv7hdsEVTZglAei
+         ZenYUqjJuYaf23fGqo5jCep13zvu+rbPgNPFug3jsUUiKgSHNzbLEhNj4f+kswjkTrEr
+         JHUD0xwkZUkHqRJkUpbvBaeAS3pK37uUSrEynCsvYYk4lHENOYP0YLaKGOUyL05ubcpx
+         zFbMIEp+0i4cPAvt+kUFnUW8St4AOKvOIWdTFlT+QPh9+Yqe2l7HBlNOYeGcJVMQc9dU
+         iBBmOCFuMnQoWRGGiYHaNcWpp/NVe5PX8R0/JtRimLXxKVrzFJjt1+Jdxi2v12eJYNKZ
+         s1FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=W+N8g7jgmprAlsbC3Y98cyb2uK46hcEGHkz/6gME2UE=;
-        b=lrPUeTnN7YhaSrBP3NraKWxal7R2urySdKbLtPQV5sX4+kQMsRSvZ8A6UNnvcqys2Y
-         0RQRKmvdlll2CZL0nWagPHUKxxN2IHAs/MCio0cy07/BQMRrs4Xd8IsCx85T/JD5h+Co
-         pC6VrA1O4arsUiK7Qr3HfWovvZ+/a6PGlzOYUOdY0KQkmiUGBIEmrz2HpL1B6NYCB4we
-         UXZFMZ3WMNraI/jD5M1C+Z6GoqWKyRxxDT3OoruDy6CobrxAMJHq9/ACJNpdjpToyjq8
-         UwacdLYFOEcgwmi3hkPa3f+lLhAS3LdMSQqGcNUCmaLWlF2JN1saLOfhPjaHFZ0Uewy8
-         m3eA==
-X-Gm-Message-State: AOAM530Y3a8M8qEaWFmvxWWV+ETrfIEdzexkzmV0MGE4iiJwVX/s979U
-        d/kRYmEkMm3q/+KO6795R3eF1OGubNbEAA==
-X-Google-Smtp-Source: ABdhPJyc8I1Z+Q/fhybh9dKxg3KVsQIWf/2ozPsiRblh4hpJOhh9ykaw4EjTkIzux5Gi2lTTvOAMSw==
-X-Received: by 2002:a05:6402:1d2d:: with SMTP id dh13mr2877042edb.282.1625180504818;
-        Thu, 01 Jul 2021 16:01:44 -0700 (PDT)
+        bh=ZJ5JJU3BFeRaLYBeI5Vul40iCyGOkZuDTl3fLjxYNhQ=;
+        b=S0Jd25d2roBab5edXKqGLCiLjX6XWWZk3jLY17/Yf258Psrve/xT9TmPRyf7cCPYaP
+         V+cGFjhQfmnfnvRyq2ku3hZ7lt2b+qaoMwAFlI7zp+J0avuyHEZWjg9ylIDeuPgObTwm
+         fEOTzX5eB+o51yo53sato2XELrRLh/8b2mo37AZLMd9mCM9sN/ClzrPWlIkm5sKMOox+
+         deB7x1SB9p4nLt0FcQefPDjNKCi07b3imoVvCw2MXNDiDdrI5UeZrW3hsTOaVjg6ZpWj
+         8NenncIs/+kJ1WFhaRTh/6gvvKvCdOBNV6q0COHLic/GofXQU+dSis2baOExOqnPFaDa
+         WLMA==
+X-Gm-Message-State: AOAM5324DCD+ZZwT1UPiMWS0Qc5yCdhjBXxnzXywGTvCFNj/Kua0EKHs
+        lJ2IVZr9ht+wZ57nLskhyig7XBHtrAnohg==
+X-Google-Smtp-Source: ABdhPJy/gu7ijRqbdlc1R5Q708izaA5kmN8o5EFE1GCnUMCboaeRnLAJvrhlOWIQNlH38ea2Au8kZA==
+X-Received: by 2002:a17:906:b201:: with SMTP id p1mr2346684ejz.30.1625180793716;
+        Thu, 01 Jul 2021 16:06:33 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id em20sm389933ejc.70.2021.07.01.16.01.44
+        by smtp.gmail.com with ESMTPSA id h5sm401067ejq.46.2021.07.01.16.06.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 16:01:44 -0700 (PDT)
+        Thu, 01 Jul 2021 16:06:33 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
@@ -62,14 +63,15 @@ Cc:     git@vger.kernel.org,
         Jeff Hostetler <git@jeffhostetler.com>,
         Derrick Stolee <stolee@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 17/34] fsmonitor--daemon: define token-ids
-Date:   Fri, 02 Jul 2021 00:58:28 +0200
+Subject: Re: [PATCH v3 19/34] fsmonitor-fs-listen-win32: implement FSMonitor
+ backend on Windows
+Date:   Fri, 02 Jul 2021 01:02:34 +0200
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
  <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
- <37fdce5ec3afaa9aae5001c648fced0675dae0c4.1625150864.git.gitgitgadget@gmail.com>
+ <5bba5eb3d1bd172f09fdf6eb2e9b8ac4dd7f940f.1625150864.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <37fdce5ec3afaa9aae5001c648fced0675dae0c4.1625150864.git.gitgitgadget@gmail.com>
-Message-ID: <87mtr5bpuw.fsf@evledraar.gmail.com>
+In-reply-to: <5bba5eb3d1bd172f09fdf6eb2e9b8ac4dd7f940f.1625150864.git.gitgitgadget@gmail.com>
+Message-ID: <87k0m9bpmv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,28 +81,27 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jul 01 2021, Jeff Hostetler via GitGitGadget wrote:
 
-> +	if (!test_env_value) {
-> +		struct timeval tv;
-> +		struct tm tm;
-> +		time_t secs;
-> +
-> +		gettimeofday(&tv, NULL);
-> +		secs = tv.tv_sec;
-> +		gmtime_r(&secs, &tm);
-> +
-> +		strbuf_addf(&token->token_id,
-> +			    "%"PRIu64".%d.%4d%02d%02dT%02d%02d%02d.%06ldZ",
-> +			    flush_count++,
-> +			    getpid(),
-> +			    tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
-> +			    tm.tm_hour, tm.tm_min, tm.tm_sec,
-> +			    (long)tv.tv_usec);
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> Teach the win32 backend to register a watch on the working tree
+> root directory (recursively).  Also watch the <gitdir> if it is
+> not inside the working tree.  And to collect path change notifications
+> into batches and publish.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  compat/fsmonitor/fsmonitor-fs-listen-win32.c | 530 +++++++++++++++++++
 
-Just bikeshedding, but can we have tokens that mostly sort numeric-wise
-by time order? So time at the start, not the flush_count/getpid.
+<bikeshed mode> Spying on the early history of this (looking for the
+Linux backend) I saw that at some point we had just
+compat/fsmonitor/linux.c, and presumably some of
+compat/fsmonitor/{windows,win32,macos,darwin}.c.
 
-Maybe I'm missing something, but couldn't we just re-use the trace2 SID
-+ a more trivial trailer? It would have the nice property that you could
-find the trace2 SID whenever you looked at such a token (could
-e.g. split them by "/" too), and add the tv_usec, flush_count+whatever
-else is needed to make it unique after the "/", no?
+At some point those filenames became much much longer.
+
+I've noticed you tend to prefer really long file and function names,
+e.g. your borrowed daemonize() became
+spawn_background_fsmonitor_daemon(), I think aiming for shorter
+filenames & function names helps, e.g. these long names widen diffstats,
+and many people who hack on the code stick religiously to 80 character
+width terminals.
