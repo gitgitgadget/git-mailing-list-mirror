@@ -7,64 +7,74 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08DC3C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 13:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FB8BC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 13:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC73661416
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 13:31:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 334546141A
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 13:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbhGANd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 09:33:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48404 "EHLO
+        id S232009AbhGANlS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 09:41:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbhGANdz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 09:33:55 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAA31C061762
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 06:31:23 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id w13so8536136edc.0
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 06:31:23 -0700 (PDT)
+        with ESMTP id S229512AbhGANlR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 09:41:17 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52248C061762
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 06:38:47 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id o5so10454287ejy.7
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 06:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=1cU71769iOXQfpDgavfEdkAqNtzGmY2OSklUCIOgGvM=;
-        b=qWUzrKeyxRYjR2JQxQLK8MPXQjnaEtwHzkTps1aMQZ8tS4JPTLqjwej+rVaJEfmQGc
-         xVn2lQ4ldEPOl5Lvs9V+jeAd26iQMcxxqlAgtC/BXAnKRDHnmuaMVlWUjUcbWfGMqdC4
-         vg+rt19YnxPSbPiPtswyXbdFaKDdhnMzmVxGzGlG2yqNM8w5y3bVp8xtAe4cRHX2mtF6
-         Y7qHLYZTvchDxCTYM4C92BnrzzqQ0EGa3oVxdqXofaouiekYATYtkejl1vanxM7KVGdA
-         RJFI9uowonSavOsS05BvRa6qBdPFi2TQ8gE1BLGo06Jjr57FUOS52V/DVNIxsMkVBcqz
-         Yzrw==
+        bh=dfmNPYhkWoI6cffg9f4c9WsPLQgupE629TTWYnKecVg=;
+        b=dg591mWXxnyAlbnMR4cvQFeDchCoO3fCi2vroaqCdZPqSATGpCVxX6HiYW5jL7AuWO
+         uS2mPXl97DGb63YXRG8bK27OOXf+5c1CDM7euky/uiUEYscJmDcGFIuIXHXVLI3PnYu0
+         ubkjVrNx7BmuaO+Z0lPXt+oQWpZrr5Ifj2lWOd8Pm7MXzVvAa981Ilt+3ae83SNhsoVv
+         P/NCC8QUN+CADOX3ji8D+d4InR6XxmHwSFlsmY5mWaWKdENJY2XTz2czW72fUdPh1lve
+         maP1KJmSaugsYrhlBNT7SOmW3HTIuwZgskVReORvv5pdCC9P7JXbWIoHtkSraXRlqLAe
+         QZmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=1cU71769iOXQfpDgavfEdkAqNtzGmY2OSklUCIOgGvM=;
-        b=iak/beLNz4n6dT0ZeYFRpmIitkaa4kgv96sNekH2exhbcIuhxbZ/F1QP/GSevG49fk
-         LqhvjYqX8quq3BI/HscXe/xxUNxpztGuK5nPt+E1u51xK8XwCxl0BPzkrn+mH0XfvOW8
-         qw5BFI/xHQrJuWBZouldK3Q1DN2a+HBcO0w9uVA2SQ8xzDeDylFPrqRU/k3t9Jvcky0d
-         wLqMDhADeWzUafhJOht4zXm5LEdj1htfTjkzB+wOy8/QvIvNAOOh0EXfQtZnF8Nb8JqU
-         Q97pZthLOAE2ZqAFZ3O2VJKDgdXs1bKIqO+mmMXOl1UJ2GxRwcd4yQTG4n2fT1BxLpPr
-         /DfA==
-X-Gm-Message-State: AOAM531CsBki0oWcDjtGPIlW/75Narr02VK+nLWJfasiDVjJglcgaXGz
-        CtFidF64POd4iyPtSKJeFuGU8vUz4qFw3g==
-X-Google-Smtp-Source: ABdhPJxlLV2QC1DcrzpjJxxefzeCUcH9ayLR/1s7x4iC1L7LShYwW6cw5MOIoOevm56DgHkv6aa0eQ==
-X-Received: by 2002:a05:6402:1d55:: with SMTP id dz21mr52690290edb.338.1625146281961;
-        Thu, 01 Jul 2021 06:31:21 -0700 (PDT)
+        bh=dfmNPYhkWoI6cffg9f4c9WsPLQgupE629TTWYnKecVg=;
+        b=uizbhIvja/VvYWtl5huM9cZ7sLS6ImqU6jMSLRcgwUJF2n1vFF7BmEVlJejpc69JLM
+         esfws++t8W8iUmafEQPys+bLTw2E7JUUJLduh+pl1PXejWdaUNTAKjU+84e0Mj7qjJKq
+         1lfqPBaVN70dMEL+0Nv8RHp3Zlk/nV91QRgribkFX14KtVxR7wLe92rLgyyb+D7yrKqd
+         0n+moBf5PIFa3drMfJuXpXX41KiW+CWH4UapJs15GrXVbvYhQnnGGnzR2e4TFUZk3kw4
+         oreaWJ9wwp8s1MmF2FPjbvInvFTcnPQmUI8qc2pCxAWyN6vaLu5AVigjfewjTY9MJtwS
+         B70g==
+X-Gm-Message-State: AOAM531tpz2ShY9rKFCU9Z+lW2AmP9HUJkCkr6sJIRMzRBwKDrquk3z5
+        wxUEMFo8wAWNdhKxQkyvSjw=
+X-Google-Smtp-Source: ABdhPJwuGhMzwsqI7wnMVe3DMMcBqin8prusQu8niGNS6B2RwQvj9fQkMYxl11ebhHgjWgk5wyIV7Q==
+X-Received: by 2002:a17:907:7d91:: with SMTP id oz17mr4706007ejc.250.1625146725856;
+        Thu, 01 Jul 2021 06:38:45 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id jl10sm10875277ejc.56.2021.07.01.06.31.21
+        by smtp.gmail.com with ESMTPSA id f14sm13925373edd.69.2021.07.01.06.38.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 06:31:21 -0700 (PDT)
+        Thu, 01 Jul 2021 06:38:45 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/7] Optimization batch 14: trivial directory resolution
-Date:   Thu, 01 Jul 2021 15:21:14 +0200
-References: <pull.988.git.1625111177.gitgitgadget@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
+Date:   Thu, 01 Jul 2021 15:34:00 +0200
+References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
+ <YNIBRboFiCRAq3aA@nand.local> <8735t93h0u.fsf@evledraar.gmail.com>
+ <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
+ <87r1gs1hfx.fsf@evledraar.gmail.com>
+ <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
+ <871r8r1hwe.fsf@evledraar.gmail.com>
+ <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
+ <87fsx6xn0b.fsf@evledraar.gmail.com>
+ <YNqE8BIRF6NeYQcd@coredump.intra.peff.net> <xmqqfsx1yyza.fsf@gitster.g>
+ <875yxxgkav.fsf@evledraar.gmail.com>
+ <60dd3c92ef44b_174a220836@natae.notmuch>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <pull.988.git.1625111177.gitgitgadget@gmail.com>
-Message-ID: <87wnqacg9i.fsf@evledraar.gmail.com>
+In-reply-to: <60dd3c92ef44b_174a220836@natae.notmuch>
+Message-ID: <87tulecfx7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -73,80 +83,90 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jul 01 2021, Elijah Newren via GitGitGadget wrote:
+On Wed, Jun 30 2021, Felipe Contreras wrote:
 
-> This series depends textually on ort-perf-batch-12, but is semantically
-> independent. (It is both semantically and textually independent of
-> ort-perf-batch-13.)
-
-For others following along, that ort-perf-batch-12 is at
-https://lore.kernel.org/git/pull.962.v4.git.1623168703.gitgitgadget@gmail.c=
-om/#t
-& currently marked as 'will merge to next' in what's cooking.
-
-> Most of my previous series dramatically accelerated cases with lots of
-> renames, while providing comparatively minor benefits for cases with few =
-or
-> no renames. This series is the opposite; it provides huge benefits when
-> there are few or no renames, and comparatively smaller (though still quite
-> decent) benefits for cases with many uncached renames.
-
-Sounds good, one thing I haven't seen at a glance is how these
-performance numbers compare to the merge-recursive backend. Are we in a
-state of reaching parity with it, or pulling ahead?
-
-> [...]
-> For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-> performance work; instrument with trace2_region_* calls", 2020-10-28), the
-> changes in just this series improves the performance as follows:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Mon, Jun 28 2021, Junio C Hamano wrote:
 >
->                      Before Series           After Series
-> no-renames:        5.235 s =C2=B1  0.042 s   204.2  ms =C2=B1  3.0  ms
-> mega-renames:      9.419 s =C2=B1  0.107 s     1.076 s =C2=B1  0.015 s
-> just-one-mega:   480.1  ms =C2=B1  3.9  ms   364.1  ms =C2=B1  7.0  ms
+>> > I do not see a point in complicating the build procedure to avoid
+>> > using it.
+>>=20
+>> I'd really understand your and Jeff's concerns if I was proposing some
+>> really complex workaround, but it's just extending & making consistent
+>> the "mv" dance we already use for 1/2 our rules already.
 >
+> I'm not entirely sure what's going on here. We have agreed that
+> .DELETE_ON_ERROR and the "mv" dance are orthogonal. So the patch to use
+> .DELETE_ON_ERROR can move forward, while the "mv" dance can be discussed
+> later.
 >
-> As a reminder, before any merge-ort/diffcore-rename performance work, the
-> performance results we started with were:
+> Like Junio and Jeff, I don't see much value in the "mv" dance, but that
+> doesn't mean I want it gone. On the contrary, I would to try a scenario
+> in which it's usefull.
 >
-> no-renames-am:      6.940 s =C2=B1  0.485 s
-> no-renames:        18.912 s =C2=B1  0.174 s
-> mega-renames:    5964.031 s =C2=B1 10.459 s
-> just-one-mega:    149.583 s =C2=B1  0.751 s
+> But that is *orthogonal*. Leave that for another discussion.
 
-I haven't given any of this a detailed look, just a note/question that
-(depending on the answer to the "v.s. merge-recursive above") we may
-want to consider bumping the default for the diff.renamelimit at some
-point along with any major optimizations.
+Yes, this whole sub-thread is just a side-discussion about a
+change-not-in-this-series, which started out as a reference to a larger
+series I carved this more narrow change from.
 
-<random musings follow, the tl;dr is above this line :)>
+>> Even if you don't care about the end result or making git easier to hack
+>> on for people who don't share your setup,
+>
+> I don't know about Junio, I do want to make git easier to hack for
+> people that don't share my setup, but I would like to know what that
+> setup is.
 
-As an aside that we have diff.renamelimit is one of the most "dangerous"
-landmines/fork-in-eye/shotgun-to-foot edge cases we have in using diff
-as plumbing IMO.
+I think all of this is covered in detail upthread.
 
-E.g. I somewhat recently had to deal with some 3rd party Go-language
-lint plugin that can be configured to enforce lints "as of a commit".
-I.e. it does a diff from that commit, sees in any introduced "issues"
-are "new", and complains accordingly. The idea is that it allows you to
-enforce lints on "only new code", say ignoring the return value of
-os.Write(), without insisting that all existing code must be
-whitelisted/fixed first.
+>> I'd think that making those rules consistent across the board makes
+>> things less complex, not more.
+>
+> I don't agree with that. Consistency is just one of the many factors we
+> have to consider. Even if 90% of instances in the documentation said
+> "fast forward", that doesn't necessarily mean we should convert the
+> remaining 10% away from "fast-foward".
+>
+> First we need to decide what is the end-goal we want to reach, and then
+> we can go for consistency.
+>
+> But again, this is orthogonal to this patch, isn't it?
 
-The problem being two-fold, one that the thing will get slower over time
-as we grow history (can't be avoided), but the more subtle one that at
-some point we'll bump into the diff.renamelimit, and whatever unlucky
-sob does so will find that the lint is now complaining about ALL THE
-THINGS, since "old" code is now ending up as "new" to a na=C3=AFve diff
-parser relying on not bumping into the diff.renamelimit.
+*nod*. I think for build rules it's easier to reason about them if all
+of them e.g. do "$(RM) $@" at the start followed by "mv $@ $@+" at the
+end, than wondering if the differences are accidental or intentional (in
+most cases they're just a historical accident).q
 
-Arguably bumping the diff.renamelimit would make that sort of problem
-worse for plumbing consumers, since they'd have more rope with which to
-hang themselves, maybe it's better to step on that landmine early.
+>> Anyway, let's not discussed this forever. We're clearly getting
+>> nowhere. Just for the record I'm quite miffed about the bar for "I don't
+>> care about this area/platform/use-case, but this person actively sending
+>> me patches in the area says it's helpful to send more patches" is so
+>> low.
+>
+> I don't think it's quite like that. Skepticism doesn't mean disapproval.
+>
+> I for one are skeptic of the possitive value of the "mv" dance, but I
+> wouldn't be surprised in the least if you showed the value in 4 lines of
+> code. I just haven't seen them yet.
+>
+> Once again... That's orthogonal to this patch.
 
-Sorry about the digression somewhat pointless but perhaps amusing
-digression in the last 4 paragraphs :)
+*Nod*, as noted covered upthread.
 
-P.S.: I ended up dealing with the Go plugin by not using the "diff"
-      feature, but just a one-off giant whitelist of all existing
-      instances of stuff it would complain about.
+>> Maybe that's all worth it, and I'd be willing to take the Windows devs
+>> at their word that dealing with the make dependency was really *that*
+>> painful. But compare that to carrying a few lines of "mv $@+ $@" to, I
+>> daresay, make the same or larger relative improvement on AIX.
+>
+> Oh I don't trust them at all. I did maintain some Windows installers for
+> years, and with a couple of tricks I had no problem building them with
+> plain Makefiles, with much more complex dependencies.
+>
+> I'm fairly certain I could make git build for Windows with plain
+> Makefiles... But one controversy at a time.
+
+Yeah, I think (from memory of reading the relevant threads) it's some
+combinatin of "the dependency is large & painful" and "it's a bit
+slower". I've found it hard in the past to get accurate estimates of
+what's "slow" from our resident Windows maintainer:) Per:
+https://lore.kernel.org/git/875z1lz6wl.fsf@evledraar.gmail.com/
