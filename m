@@ -8,65 +8,66 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8DEDC11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 895AAC11F69
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:03:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8598761413
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:03:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 65D7661413
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229950AbhGAQFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 12:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54406 "EHLO
+        id S231828AbhGAQFo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 12:05:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbhGAQFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 12:05:42 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6B9C061764
+        with ESMTP id S229540AbhGAQFn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 12:05:43 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A452C061762
         for <git@vger.kernel.org>; Thu,  1 Jul 2021 09:03:11 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso5268016wmc.1
+Received: by mail-wr1-x42b.google.com with SMTP id t15so5551228wry.11
         for <git@vger.kernel.org>; Thu, 01 Jul 2021 09:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=GXZ41+jgPdyF00+igEeNjUAal2iSsNHeuyjHsFuewTY=;
-        b=FGXVqHLFFwdq7BnxsKWglAAcPIUwLaTgjvG6qvIQ7GtLT/VYWcKQ1d7yHDDc4VF13f
-         ebDstEEZIbvfEnxQcs8OfYzepzuzeJEnHECCSBioAD3koTSXUJ4vWh48rKGe51u2UVP6
-         CKnP03hHhG9IQvDiIshK2sn5oVc+RFxKDkCF3I2VSJEjdUEbqZffYCjsV+mRYem7WUQO
-         soa+BpOBXJ+WaDspLsNiFpicTeLK+H1moEF95sssorJ8K7yNjezK9MLsEYXmfBmVzaYW
-         QmEVzZMW/SCXcsgiTz9ZWRYE+F8Dg9f4tvWAHW+raKJb6VSCFIBNULYhOPXHGqpuAZ+U
-         anxg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=cuZB6dre7Yqa9xzToOKmOKz+nZVO+cPRXGst0BO11TM=;
+        b=ZAcUabz6lbJulJebRbGE7BFunOCd5ogBOfNyjgrhi67QbESyXAbObdOEDFKLfw+cRV
+         V/ykjLPxKpVw2boJdYPyVNrDu51sq1REBploWvYzhLUChmHEEf8KrWWfheVDdX1z9HpH
+         Ad3Di7mtwXDnIyAprHEge5z8d1EIeJqJDqkRUBMRfA7Imxag0QdVVrDFM1DXdxlYcY1S
+         Snaum+/9p+rlelm7zjock37QUxVyQqAha85vKI9/UEIHOFT1uWrnBD8D3jyxKIBXECis
+         CN+ybf/rU6oCfd1E78EB+NLjf85y+UZoQ+p6xA0KxLK0OpIzENFojYhHvzyNy7pUtgNM
+         IMcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GXZ41+jgPdyF00+igEeNjUAal2iSsNHeuyjHsFuewTY=;
-        b=FPQws/WRUCRwUyhGkNdRgVTeEc1gODC+F+hMQPyaPR+zo8F8mYJ0MJVkQM4/E6Axav
-         3HFE8IIvrmQGEDm8outwVkCYmDEDjcz6trUTkF4gzQ1udy89rP+qUqY6Q87HiJj3Q+7l
-         q1WStejGWM87tbMZtuey7+9N2nvc3QlRRgpIku+jebsZNGI4FApyNYDJuYbsxgLA5Vjz
-         r2qyey3VEer0tVhstYf07zMI2VUg+vzKjbIOJP5lmCeicCsg82F8IGj08LgoorsyvPUb
-         B4oBidweTaRdIodBxqlBRw4WKcfJ4espeTSK6QlZbOteHuYo2ej2xAXSl5fggNzWWMGg
-         Br3Q==
-X-Gm-Message-State: AOAM533BmQTnWwRe9nqzNN4BAJBmNwCXZR87/WwQtZVqTszyEki11L8z
-        hMTfjm1M4LKCUlcXgGTAtjdq9+X7jUA=
-X-Google-Smtp-Source: ABdhPJy/frOYVHtGLc8JWQBxRp+F7hGyhYzXCKc/B4TEr3AuOv3He1+mwBlJ9CI3hp3PfNeVlo03Fw==
-X-Received: by 2002:a7b:cb92:: with SMTP id m18mr453563wmi.170.1625155389708;
-        Thu, 01 Jul 2021 09:03:09 -0700 (PDT)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=cuZB6dre7Yqa9xzToOKmOKz+nZVO+cPRXGst0BO11TM=;
+        b=IFbYOyCbR0rxgUQm2+Xf2OgRzdhVybbMffQGckJn0MddseY24zbzss5WOdxaCD3UYL
+         UM0veE6Mt6dJA40vNPTnHIxZ/YU+eFGdG/qM2AU6keAn9MY1Kw4NKZccRwQGkAoAUHRm
+         sYbZyCVmfKVOAh+3vLZKe8QpI4AlA4EPHhbvvfoYBnph14uiqmDnuGpRm1lnOl8ZbFSk
+         VlFa8k9Zn0Hboi/n+iBxg2NIWyneunyJDY4RQueCnhY+yiGSGnvPKw+SeLTVBSw8e+Xc
+         fXsBER2UxlqX/TVFgHofYVRXNiYfjQFdTu0Mfo4Sz6K9eH4IBQqGZjyMZUNAwBtbvekb
+         +ldQ==
+X-Gm-Message-State: AOAM530V47eSb9NvsSgjTrfnEhXVOVoGZbukwMuYNHZmhpR8f8nP6hoV
+        DprUpACE58AlU/VZzXGfVrB1B2+4XDs=
+X-Google-Smtp-Source: ABdhPJzwzw8C8dvI/i9bRqKWcJd2piAK1/nIKgoMdkFJbibtwFaY8oX8k1tH5u8m8WozzC0ZAzXX5A==
+X-Received: by 2002:a05:6000:188b:: with SMTP id a11mr472685wri.274.1625155390293;
+        Thu, 01 Jul 2021 09:03:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e8sm406768wrx.26.2021.07.01.09.03.09
+        by smtp.gmail.com with ESMTPSA id h15sm327954wrq.88.2021.07.01.09.03.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 01 Jul 2021 09:03:09 -0700 (PDT)
-Message-Id: <cc8f09baba94546a13087e923e9c2374284c8136.1625155388.git.gitgitgadget@gmail.com>
+Message-Id: <66df56f5db02fa43b28111bb9fcc9b06f8542154.1625155388.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
 References: <pull.66.git.gitgitgadget@gmail.com>
         <pull.66.v2.git.1625155388.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 16:03:06 +0000
-Subject: [PATCH v2 1/2] tests: exercise the RUNTIME_PREFIX feature
-Fcc:    Sent
+Date:   Thu, 01 Jul 2021 16:03:07 +0000
+Subject: [PATCH v2 2/2] expand_user_path(): support specifying paths relative
+ to the runtime prefix
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Duy Nguyen <pclouds@gmail.com>,
@@ -81,70 +82,108 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Originally, we refrained from adding a regression test in 7b6c6496374
-(system_path(): Add prefix computation at runtime if RUNTIME_PREFIX set,
-2008-08-10), and in 226c0ddd0d6 (exec_cmd: RUNTIME_PREFIX on some POSIX
-systems, 2018-04-10).
+Ever since Git learned to detect its install location at runtime, there
+was the slightly awkward problem that it was impossible to specify paths
+relative to said location.
 
-The reason was that it was deemed too tricky to test.
+For example, if a version of Git was shipped with custom SSL
+certificates to use, there was no portable way to specify
+`http.sslCAInfo`.
 
-Turns out that it is not tricky to test at all: we simply create a
-pseudo-root, copy the `git` executable into the `git/` subdirectory of
-that pseudo-root, then copy a script into the `libexec/git-core/`
-directory and expect that to be picked up.
+In Git for Windows, the problem was "solved" for years by interpreting
+paths starting with a slash as relative to the runtime prefix.
 
-As long as the trash directory is in a location where binaries can be
-executed, this works.
+However, this is not correct: such paths _are_ legal on Windows, and
+they are interpreted as absolute paths in the same drive as the current
+directory.
+
+After a lengthy discussion, and a way lengthier time to mull over the
+problem and its best solution, we decided to introduce support for the
+magic sequence `<RUNTIME-PREFIX>/`. If a path starts with this, the
+remainder is interpreted as relative to the detected runtime prefix.
+
+This solves the problem, but what new problems does it stir up? Here are
+the two most obvious ones:
+
+- What if Git was not compiled with support for a runtime prefix?
+
+  In that case, we will simply use the compiled-in hard-coded prefix.
+
+- What if a user _wants_ to specify a path starting with the magic
+  sequence?
+
+  In that case, the user will simply need to prefix the magic sequence
+  with `./` and voilà, the path won't be expanded.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile              |  5 +++++
- t/t0060-path-utils.sh | 18 ++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ Documentation/config.txt | 10 ++++++++++
+ path.c                   |  5 +++++
+ t/t0060-path-utils.sh    |  8 ++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index c3565fc0f8f..4c3e4ccabcd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2826,6 +2826,11 @@ ifdef GIT_TEST_INDEX_VERSION
- endif
- ifdef GIT_TEST_PERL_FATAL_WARNINGS
- 	@echo GIT_TEST_PERL_FATAL_WARNINGS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_PERL_FATAL_WARNINGS)))'\' >>$@+
-+endif
-+ifdef RUNTIME_PREFIX
-+	@echo RUNTIME_PREFIX=\'true\' >>$@+
-+else
-+	@echo RUNTIME_PREFIX=\'false\' >>$@+
- endif
- 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index bf82766a6a2..fd56e2c1220 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -298,6 +298,16 @@ pathname::
+ 	tilde expansion happens to such a string: `~/`
+ 	is expanded to the value of `$HOME`, and `~user/` to the
+ 	specified user's home directory.
+++
++If a path starts with `<RUNTIME-PREFIX>/`, the remainder is
++interpreted as a path relative to Git's "runtime prefix", i.e. relative
++to the location where Git itself was installed. For example,
++`<RUNTIME-PREFIX>/bin/` refers to the directory in which the Git
++executable itself lives. If Git was compiled without runtime prefix
++support, the compiled-in prefix will be subsituted instead. In the
++unlikely event that a literal path needs to be specified that should
++_not_ be expanded, it needs to be prefixed by `./`, like so:
++`./<RUNTIME-PREFIX>/bin`.
  
+ 
+ Variables
+diff --git a/path.c b/path.c
+index 7bccd830e95..d8542a7b27b 100644
+--- a/path.c
++++ b/path.c
+@@ -12,6 +12,7 @@
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "lockfile.h"
++#include "exec-cmd.h"
+ 
+ static int get_st_mode_bits(const char *path, int *mode)
+ {
+@@ -732,6 +733,10 @@ char *expand_user_path(const char *path, int real_home)
+ 
+ 	if (path == NULL)
+ 		goto return_null;
++
++	if (skip_prefix(path, "<RUNTIME-PREFIX>/", &path))
++		return system_path(path);
++
+ 	if (path[0] == '~') {
+ 		const char *first_slash = strchrnul(path, '/');
+ 		const char *username = path + 1;
 diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index de4960783f0..a76728c27bf 100755
+index a76728c27bf..cb7fbfb9af2 100755
 --- a/t/t0060-path-utils.sh
 +++ b/t/t0060-path-utils.sh
-@@ -525,4 +525,22 @@ test_expect_success MINGW 'is_valid_path() on Windows' '
- 		"PRN./abc"
+@@ -540,6 +540,14 @@ test_expect_success RUNTIME_PREFIX,CAN_EXEC_IN_PWD 'RUNTIME_PREFIX works' '
+ 	cp "$GIT_EXEC_PATH"/git$X pretend/bin/ &&
+ 	GIT_EXEC_PATH= ./pretend/bin/git here >actual &&
+ 	echo HERE >expect &&
++	test_cmp expect actual'
++
++test_expect_success RUNTIME_PREFIX,CAN_EXEC_IN_PWD '<RUNTIME-PREFIX>/ works' '
++	mkdir -p pretend/bin &&
++	cp "$GIT_EXEC_PATH"/git$X pretend/bin/ &&
++	git config yes.path "<RUNTIME-PREFIX>/yes" &&
++	GIT_EXEC_PATH= ./pretend/bin/git config --path yes.path >actual &&
++	echo "$(pwd)/pretend/yes" >expect &&
+ 	test_cmp expect actual
  '
  
-+test_lazy_prereq RUNTIME_PREFIX '
-+	test true = "$RUNTIME_PREFIX"
-+'
-+
-+test_lazy_prereq CAN_EXEC_IN_PWD '
-+	cp "$GIT_EXEC_PATH"/git$X ./ &&
-+	./git rev-parse
-+'
-+
-+test_expect_success RUNTIME_PREFIX,CAN_EXEC_IN_PWD 'RUNTIME_PREFIX works' '
-+	mkdir -p pretend/bin pretend/libexec/git-core &&
-+	echo "echo HERE" | write_script pretend/libexec/git-core/git-here &&
-+	cp "$GIT_EXEC_PATH"/git$X pretend/bin/ &&
-+	GIT_EXEC_PATH= ./pretend/bin/git here >actual &&
-+	echo HERE >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
 -- 
 gitgitgadget
-
