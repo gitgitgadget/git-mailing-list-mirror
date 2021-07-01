@@ -2,148 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22139C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 10:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B01DAC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 10:51:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01E9461468
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 10:06:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91ABA6140A
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 10:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235875AbhGAKIw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 06:08:52 -0400
-Received: from smtprelay08.ispgateway.de ([134.119.228.108]:11915 "EHLO
-        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234907AbhGAKIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 06:08:52 -0400
-Received: from [84.163.72.76] (helo=[192.168.2.202])
-        by smtprelay08.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <git@mfriebe.de>)
-        id 1lyta6-0005At-7H; Thu, 01 Jul 2021 12:06:02 +0200
-Subject: Re: PATCH: improve git switch documentation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <c593a699-eaf2-c7ab-b522-bfd224fce829@mfriebe.de>
- <xmqqk0mcy6g2.fsf@gitster.g>
- <b667ca37-b3cb-fce2-a298-63c3b839089d@mfriebe.de>
- <xmqqpmw4uwh2.fsf@gitster.g>
- <7870a0ad-8fa1-9dbd-1978-1f44ec6970c5@mfriebe.de>
- <xmqqy2arrmba.fsf@gitster.g>
-From:   Martin <git@mfriebe.de>
-Message-ID: <b80bf908-0c31-2b3a-6d6c-1a3fba5b2334@mfriebe.de>
-Date:   Thu, 1 Jul 2021 12:06:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S235388AbhGAKyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 06:54:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41092 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229738AbhGAKyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 06:54:05 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68104C061756
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 03:51:35 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id t15so4261597wry.11
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 03:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gcDtfArWhAeIMMDaRbRteyE0izCtX3TrsO7qxLls4hw=;
+        b=aJyEyHKcXyGlHN0HOmoptveDifooNavW7VdE75q18l7EZYBbaSFBBeEsda0x3JXiZ1
+         Dqw45UY0lpzfsKBkr3MIqHEMKa28LIQnCvgJEKcX/FkB96iciX2XzdkzbU28pRXwa4qW
+         NtKRTPEmHfnjkY1H1fCpmVXai64p9StRTq0ZIZ2OO3o2EN3nO0Vs3QtEIfnytdtQnVJs
+         /TQhxmyhQMb7xjsP/bgpoutd6aftXlZzQQwi3BcPbUw3yEC9/pNtf3AdMCn52z3D2HHQ
+         9gbSpWyXjZnFfFFDRAUhLjPqa3L9Y+CGAo0tYPiyNJn5Nme4/Gik74rqVhNlWbWm9GQi
+         vC8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gcDtfArWhAeIMMDaRbRteyE0izCtX3TrsO7qxLls4hw=;
+        b=AJ95PA7hfKqkezrcvDcgbq+p84C/PXu2+TKWnLnx0m5k8e+TICr5/SwepTBR4H8552
+         xr1wtN2TTDvV+rnl50BMKxBzwd5okpdbxSJW11tLW7s9WRaANFn2QDNkTiRKGjU/5/uT
+         jNHUoTI465y5wI8uQxsAyOahALOIhb/J9lW25L1xQBuNRgDgyPPqSnjkuxzZBIAne6YZ
+         52P9P6fhG7D1wk6viFdN/hPZJ6dkXizFTFtkqx4c6bzWl4Z5oqVm1gakmU8CoupmMYH6
+         YBN+KY1mHYS252dE+rHEPHJo1JFG/D/NxX9HIg1mvRXtMLspA6KYHOIRto3SkKzyd+nl
+         30FQ==
+X-Gm-Message-State: AOAM530UynAnUQE8TpwGZPk7hsBhEIMqoatsNUmUURMpO19pTWE+wXJp
+        sbBzLksZxf3Qh8FWI2V02SWkHzapVI7RfA==
+X-Google-Smtp-Source: ABdhPJwowoUI+rN8WFBWL63Lsjly5ZArjrrBtAU0vu4ikTi4W0VohOcODaYV4HVYtdFQgjSr6h8l6w==
+X-Received: by 2002:adf:ef87:: with SMTP id d7mr11289542wro.204.1625136693776;
+        Thu, 01 Jul 2021 03:51:33 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p9sm8015699wmm.17.2021.07.01.03.51.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jul 2021 03:51:33 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/5] *.[ch]: don't duplicate *_init() and *_INIT logic
+Date:   Thu,  1 Jul 2021 12:51:24 +0200
+Message-Id: <cover-0.5-00000000000-20210701T104855Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.632.g11c1df94a06
 MIME-Version: 1.0
-In-Reply-To: <xmqqy2arrmba.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/07/2021 00:59, Junio C Hamano wrote:
-> Martin <git@mfriebe.de> writes:
->
->> And yes, for the documentation, it *should* be clear that, removing a
->> branch, removes the
->> commits on it.
->> But then it must be said, that the branch is first removed. That is
->> not currently the case.
-> Sorry, but I still do not see how it makes any difference if the
-> branch is first removed and then made to point at somewhere else, or
-> the branch gets just moved without any explicit or impolicit
-> removal.  A branch cannot point at two different commits at the same
-> time, so the end result is that the commit at the old tip is no
-> longer pointed at by the branch after the update.
+This series implements a suggestion by Jeff King to use an idiom for
+*_init() functions that avoids duplicating what we've declared in the
+corresponding *_INIT macros. See
+https://lore.kernel.org/git/YNytp0JAIaQih0Y4@coredump.intra.peff.net/
 
-Well all very obvious, if you know git well.
+Ævar Arnfjörð Bjarmason (5):
+  *.h: move some *_INIT to designated initializers
+  *.c *_init(): define in terms of corresponding *_INIT macro
+  dir.[ch]: replace dir_init() with DIR_INIT
+  string-list.[ch]: add a string_list_init_{nodup,dup}()
+  string-list.h users: change to use *_{nodup,dup}()
 
-Let's take a step back. How exactly is the word "branch" actually 
-defined? Well it does not matter.
-What matters is, how the word is used.
-What does a person mean, when they speak of the branch?
+ apply.c                |  6 +++---
+ archive.c              |  2 +-
+ builtin/add.c          |  3 +--
+ builtin/check-ignore.c |  3 +--
+ builtin/clean.c        |  6 ++----
+ builtin/grep.c         |  3 +--
+ builtin/ls-files.c     |  3 +--
+ builtin/stash.c        |  3 +--
+ config.c               |  2 +-
+ credential.c           |  4 ++--
+ credential.h           |  4 +++-
+ dir.c                  |  9 ++-------
+ dir.h                  |  4 ++--
+ entry.c                |  4 ++--
+ json-writer.c          |  6 ++----
+ json-writer.h          |  5 ++++-
+ merge-ort.c            |  4 ++--
+ merge-recursive.c      |  4 ++--
+ merge.c                |  3 +--
+ refs/packed-backend.c  |  2 +-
+ run-command.c          |  5 ++---
+ run-command.h          |  5 ++++-
+ strbuf.c               |  4 ++--
+ string-list.c          | 18 ++++++++++++++++--
+ string-list.h          | 15 +++++++++++----
+ strmap.c               |  3 ++-
+ strvec.c               |  5 ++---
+ transport.c            |  2 +-
+ wt-status.c            |  3 +--
+ 29 files changed, 76 insertions(+), 64 deletions(-)
 
-And the answer is, it's not always clear.
-
-In the above conversation, we use "branch" to speak of the "pointer to a 
-single commit".
-We do not include any commits, when speaking of the "branch".
-(And this is how it is used in the docs, as far as I can find)
-
-However a lot of people use "branch" to refer to the commits within.
-"Push a branch to a remote". That obviously means the objects (e.g. 
-commits) in the branch.
-The doc says (and yes I am getting a bit picky here)
- >>> Updates remote refs using local refs, while sending objects 
-necessary to complete the given refs.
-"complete the given ref". The ref is given by the branch, and completing 
-means afaik "to make something part of"
-Maybe a mistake made, because "branch" is (according to my observation) 
-so commonly (mis-)used to include the objects.
-
-Anyway, can we agree, that there are people who  (mistakenly) 
-use/understand "branch" as including the objects?
-Enough people to call it a "common mistake".
-If so, then we should not ignore this.
-
-With this use of "branch" in mind, (re-)creating an existing  branch on 
-a new startpoint,
-does to the inexperienced user read like a rebase. It recreates all the 
-commits.
-The fact that as an experienced user, I shake my head in disbelief, does 
-not change this.
-
-But true, my attempt on adding "the old branch is removed" does not either.
-So not sure which wording will do best.
-Probably
-        "Creates a new empty branch at <start point>"
-
-Even though "empty" may be a sloppy usage too....
-
-
-The other problem with the current doc is
-
-> On 01/07/2021 02:06, Matt Rogers wrote:
->> I think the current documentations usage of "reset" in
->>
->>      Similar to --create except that if <new-branch> already exists, it
->> will be reset to <start-point>.
->>
->> Is pretty clear about what happens, although it does rely on users
->> being familiar
->> with the semantics of "resetting" a la git reset.
->
-Not everyone is "familiar" with reset.
-And if you look up reset, you are left alone if that is a --soft or 
---hard or --mixed.
-
-In any case, while it is ok, to refer to other parts of the doc, it 
-should still be possible
-to read just the current doc, and get a full understanding of the command.
-
-So a short addition to the current doc, that explains "reset" should be 
-added.
-
-I currently am out of ideas how to word it, other than based on my 
-previous ideas.
-
-But as in the first part of this mail, maybe just add the "empty" to the 
-existing doc?
-So the existing
-    "it will be reset to |<start-point>|. "
-changes to
-    "it will be reset to [become] an empty branch at |<start-point>|. "
-
-Happy for any idea, how the reader can be reminded, that "branch" is the 
-pointer only, and excludes any objects that it refers to.
-
-I was just about to write "any objects in it (in the branch)". But as 
-established the objects are not part, therefore not "in it"...
-Just how easy it is to think of branch as more than it is.
+-- 
+2.32.0.623.ge833f40cd87
 
