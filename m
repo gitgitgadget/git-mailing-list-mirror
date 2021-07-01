@@ -1,75 +1,78 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_40,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 080E7C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34059C11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:48:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E75646112D
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:47:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EB5F61418
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:48:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233845AbhGAPtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 11:49:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38618 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233828AbhGAPtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 11:49:50 -0400
-Received: (qmail 28073 invoked by uid 109); 1 Jul 2021 15:47:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Jul 2021 15:47:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16454 invoked by uid 111); 1 Jul 2021 15:47:19 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Jul 2021 11:47:19 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 1 Jul 2021 11:47:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin Langhoff <martin.langhoff@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Structured (ie: json) output for query commands?
-Message-ID: <YN3jhlXyTEmoBOon@coredump.intra.peff.net>
-References: <CACPiFC++fG-WL8uvTkiydf3wD8TY6dStVpuLcKA9cX_EnwoHGA@mail.gmail.com>
- <CACPiFCLzsiUjx-vm-dcd=0E8HezMWkErPyS==OQ7OhaXqR6CUA@mail.gmail.com>
- <YNyxD4qAHmbluNRe@coredump.intra.peff.net>
- <CACPiFC+F9P1DY_Dgt4+Z-U4o5WRbRduq60+Df0+FHBn6=XL2hw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACPiFC+F9P1DY_Dgt4+Z-U4o5WRbRduq60+Df0+FHBn6=XL2hw@mail.gmail.com>
+        id S233828AbhGAPvG convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 1 Jul 2021 11:51:06 -0400
+Received: from astra4053.startdedicated.net ([62.138.2.57]:35908 "EHLO
+        wopu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233421AbhGAPvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 11:51:05 -0400
+X-Greylist: delayed 2092 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2021 11:51:05 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by wopu.org (Postfix) with ESMTP id 0EA91126F461
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 17:12:15 +0200 (CEST)
+Received: from wopu.org ([127.0.0.1])
+        by localhost (wopu.org [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id l10IIybjt9LZ for <git@vger.kernel.org>;
+        Thu,  1 Jul 2021 17:12:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by wopu.org (Postfix) with ESMTP id 7D0E0127BCC1
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:41:16 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at wopu.org
+Received: from wopu.org ([127.0.0.1])
+        by localhost (wopu.org [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id SoxsNY1owI1A for <git@vger.kernel.org>;
+        Thu,  1 Jul 2021 16:41:16 +0200 (CEST)
+Received: from 10.0.2.15 (wopu.org [62.138.2.57])
+        by wopu.org (Postfix) with SMTP id 5D840127BD03
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:32:19 +0200 (CEST)
+From:   "Dr.  John K. Philli" <drjohn.k.phili@gmail.com>
+To:     <git@vger.kernel.org>
+Subject: We organize special issues in the following Scopus indexed Journals
+Sender: "Dr.  John K. Philli" <drjohn.k.phili@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Date:   Thu, 1 Jul 2021 17:32:17 +0300
+Message-Id: <20210701143219.5D840127BD03@wopu.org>
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 30, 2021 at 02:20:09PM -0400, Martin Langhoff wrote:
+Dear Colleagues,
 
-> > One complication we faced is that a lot of Git's data is bag-of-bytes,
-> 
-> Great point -- hadn't thought of that. Don't see anything in
-> json-writer.c but we do use iconv already.
+We are organizing now many special issues in several ISI (SCI, SCIE, ESCI) and Scopus
+indexed Journals
+of WITPress / Springer / Elsevier / IET / AIP / IEEE / CRC etc.....
 
-We do, but the problem is deeper than that. We don't always know the
-intended encoding of bytes in the repository. For commits, there's an
-"encoding" header and we default to utf8 if it's not specified. But
-filenames in trees do not have an encoding (nor are two entries in a
-single tree even required to be in the same encoding). They really are
-just sequences of NUL-terminated binary bytes from Git's perspective.
+Send us your paper by email as soon as possible in IEEE Format (.doc)
+All the papers will pass via peer review.
 
-Most of the time that just works, of course. People tend to use utf8
-these days anyway. And even if they aren't utf8, as long as the user's
-terminal is configured to match, then everything will look OK to them
-(you do have to turn off core.quotepath to see any high-bit characters
-in filenames).
+Fees: Start from 400 USD  (all the papers will pass via peer review)
 
-So in practice I suspect it is fine to just output them as-is in json.
-Things will Just Work for people using utf8 consistently. People using
-other encodings will have things look OK in their terminal, but probably
-JSON parsers would choke. We could provide an option to say "when you
-generate json, assume paths are in encoding XYZ (say, latin1) and
-convert to utf8". That wouldn't help people who have mix-and-match
-encodings in their trees, but that seems even more rare.
+We will propose you the Journal and if you agree we will start the review process.
+You will pay directly to this Journal (directly to the Publisher)
+using my name:   Dr. John Phili 
 
--Peff
+Send your paper to me by email until July 31, 2021
+
+Note that because of many articles' submission, we can offer better fees than the
+Publishers themselves. You will pay to the Publishers directly, not to us.
+Contact me by phone or by email.
+Thanks
+
+Dr. John Phili
+University of Oregon  
+386-822-7094
