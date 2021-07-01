@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 903C3C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C249C11F69
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 798F06141C
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85C306141C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233147AbhGAOuu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37464 "EHLO
+        id S233366AbhGAOuz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233004AbhGAOuh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233024AbhGAOuh (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 1 Jul 2021 10:50:37 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2838C061765
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:05 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id u6so8581640wrs.5
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7167C0613DE
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:06 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id k16-20020a05600c1c90b02901f4ed0fcfe7so3145364wms.5
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UFxndu8AKBnI+OL+LbIJO1y+ehiYxgLiTHwS0jWo67M=;
-        b=Gt1rIpvq2KfnOmgs9W4cmBQ9sKMcZ3clakZESd1zHbKmKAXbE468wPKVVu3ROYq8/Z
-         CRmH1T4vgSzEBxDDSnu0cr588viqDXm1syI8noPo2IvUnL8RagQKxtbp4WHhref/bDJf
-         nqWzuXfHBmnvP1GSoQP/TaxJgA6Pa1YD6gn9tY1PuzZ6x0QfUXTVxzE+97R1rjDUmsEk
-         f0leJ9piSsmrRKl+9u8VWb54BN9XZljAAVNubejYeRrlcUiBVTGFZwv7NoxQF6mEMkFu
-         WfDY9Ou9l/D4MLzUD+dhgbRZL+kyonXJVbrXh41iNhY7xjMNGdi5qyzRcNJXatmgfSR/
-         aBGA==
+        bh=CanizR/UrFodlfR4fnEKm8+XPFHtacDLVABF8p2xfR4=;
+        b=LO/5hAaLBO8lxBK0Kgt+4lIChL5qOpwDGriLdfumMpum69O+bTbe9ArH64zRQvBHP+
+         pyUvP5MIjqD72xK/rA4ofnCURe2U7k7Fy7XfrBDiaHa5u4xAWCrtUzpstqG4dbF/rr9q
+         cCRQ2S4Y2vcDDabQWcQcVRZ83MjcVV/KhYBDd1xs8vAbQUEfxKH45mIdQHKmdt2qMVlU
+         lY4uUVwwmBKV85UNIuSzpvl+cAnSokr5QK3xXWtCbMlDZ9JArA6Kv3iIe5Vn0Dou5Vqs
+         GP91plcEYAxEvrMb0l1AjyPzYod4wrMH8OGawG8QLWxbJ2lA1rWNxSlPd7iDqvzfVYpu
+         GohQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UFxndu8AKBnI+OL+LbIJO1y+ehiYxgLiTHwS0jWo67M=;
-        b=Puo4KxyhA3vqF5bdGr3nQchrf/Bo+eghIgh2AWHLTUMSeCdgK7SoPyrXQd1KXyQnc5
-         ZqWwliCd7k528fWwd07FjNkORoJWlTzS7qGC6y9NzXY+SD5XxDVcxrVWNf2dyw1jf/RD
-         /Z4TYQd1uI4NnrrKFebTvTksy0av25HaMQsgLsns3W0XzWVFu8w8vwi8y7AusCu7F2vj
-         8aMUTKW01EPeboGLoMO7/iXG0CxgkEaq2IQ/tQ/kFPQxxa5jmqAZjazFSBRwcEfVAqta
-         O2TZdhkoO1XKsSViOEtQ39hAYDdLQFU6Ps/2EsDK7KqE6JLQdMOB2mQonqglNGtfQxle
-         tKDw==
-X-Gm-Message-State: AOAM530F1U+aWf3BoCT1NoY6/a+5De/JSx7VJsXuzFWJMNqYhLr0M1nz
-        AQUnngYqH+d/8CfAv1nDaAuVSABvr4k=
-X-Google-Smtp-Source: ABdhPJzaOquRpd9cZ81Cz70ul/bcNGudVPuhoDh+DU2u8gpOlEICn+o79Pu+OH5VozAgCX+cqwVLug==
-X-Received: by 2002:a5d:6502:: with SMTP id x2mr45398200wru.327.1625150884348;
-        Thu, 01 Jul 2021 07:48:04 -0700 (PDT)
+        bh=CanizR/UrFodlfR4fnEKm8+XPFHtacDLVABF8p2xfR4=;
+        b=FOacgZIfxUlg3089VPTSGdngfHNran3V+9S2PVHv5t8jJTp2/6X3MaxGa0lZ5c0pjg
+         +/LhAYc9ZQa42UzKiCXRXYAL64oiqS2AwSfyLMDb0GAyqAj9ZXcmxijP/Gx4iFsrGWiB
+         EJ6Hn9TkzFZnRxWD6w3p/aEr2AvHHwxo8YH/pgvRWaEZB/UrrKshS0oOyD1593f2o6FL
+         sCmSQz7h8pEctah819m8Cfi20PC9dWfv/xkX/z60wlsRkFi5Vb9t560x6HjrNzyqtYxj
+         8+rRNWQjhYXm1eYo7MNy9MlA8z704C311U/l+bOAw/33B717sG33uwaI3UYPx7GoS6DC
+         7IVA==
+X-Gm-Message-State: AOAM532/nuSou/t2wW+sYbtF880ZY5OlaC8BaCY+kOiLpA3AyvcLtyZs
+        M7LXKVw3GZAr6NH7haVthq+hBouQYpw=
+X-Google-Smtp-Source: ABdhPJzZbzyWVOQXREC6Ydx4nECNICpB2r5d18I6jkybLUgLyPUwFVkz8KAWyAS8Zd2lBuQIorDe7Q==
+X-Received: by 2002:a7b:c417:: with SMTP id k23mr11192356wmi.87.1625150885439;
+        Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n20sm202659wmk.12.2021.07.01.07.48.02
+        by smtp.gmail.com with ESMTPSA id w9sm169405wru.3.2021.07.01.07.48.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:48:02 -0700 (PDT)
-Message-Id: <75bb4bc846364ec80e087d15bb1cb84265257ce3.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
+Message-Id: <97dce46d1d04527a540de37d814ca094e487623a.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:40 +0000
-Subject: [PATCH v3 30/34] fsmonitor: enhance existing comments
+Date:   Thu, 01 Jul 2021 14:47:42 +0000
+Subject: [PATCH v3 32/34] t7527: test status with untracked-cache and
+ fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,75 +80,118 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Create 2x2 test matrix with the untracked-cache and fsmonitor--daemon
+features and a series of edits and verify that status output is
+identical.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- fsmonitor.c | 37 ++++++++++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 7 deletions(-)
+ t/t7527-builtin-fsmonitor.sh | 87 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 87 insertions(+)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 3719ddfeec9..f53791c8674 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -360,9 +360,25 @@ void refresh_fsmonitor(struct index_state *istate)
- 	}
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 58b56dc9940..d1832702397 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -152,6 +152,8 @@ test_expect_success 'setup' '
+ 	.gitignore
+ 	expect*
+ 	actual*
++	flush*
++	trace*
+ 	EOF
  
- apply_results:
--	/* a fsmonitor process can return '/' to indicate all entries are invalid */
-+	/*
-+	 * The response from FSMonitor (excluding the header token) is
-+	 * either:
-+	 *
-+	 * [a] a (possibly empty) list of NUL delimited relative
-+	 *     pathnames of changed paths.  This list can contain
-+	 *     files and directories.  Directories have a trailing
-+	 *     slash.
-+	 *
-+	 * [b] a single '/' to indicate the provider had no
-+	 *     information and that we should consider everything
-+	 *     invalid.  We call this a trivial response.
-+	 */
- 	if (query_success && query_result.buf[bol] != '/') {
--		/* Mark all entries returned by the monitor as dirty */
-+		/*
-+		 * Mark all pathnames returned by the monitor as dirty.
-+		 *
-+		 * This updates both the cache-entries and the untracked-cache.
-+		 */
- 		buf = query_result.buf;
- 		for (i = bol; i < query_result.len; i++) {
- 			if (buf[i] != '\0')
-@@ -377,11 +393,15 @@ apply_results:
- 		if (istate->untracked)
- 			istate->untracked->use_fsmonitor = 1;
- 	} else {
--
--		/* We only want to run the post index changed hook if we've actually changed entries, so keep track
--		 * if we actually changed entries or not */
-+		/*
-+		 * We received a trivial response, so invalidate everything.
-+		 *
-+		 * We only want to run the post index changed hook if
-+		 * we've actually changed entries, so keep track if we
-+		 * actually changed entries or not.
-+		 */
- 		int is_cache_changed = 0;
--		/* Mark all entries invalid */
+ 	git -c core.useBuiltinFSMonitor= add . &&
+@@ -494,4 +496,89 @@ test_expect_success 'cleanup worktrees' '
+ 	stop_daemon_delete_repo wt-base
+ '
+ 
++# The next few tests perform arbitrary/contrived file operations and
++# confirm that status is correct.  That is, that the data (or lack of
++# data) from fsmonitor doesn't cause incorrect results.  And doesn't
++# cause incorrect results when the untracked-cache is enabled.
 +
- 		for (i = 0; i < istate->cache_nr; i++) {
- 			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID) {
- 				is_cache_changed = 1;
-@@ -389,7 +409,10 @@ apply_results:
- 			}
- 		}
- 
--		/* If we're going to check every file, ensure we save the results */
-+		/*
-+		 * If we're going to check every file, ensure we save
-+		 * the results.
-+		 */
- 		if (is_cache_changed)
- 			istate->cache_changed |= FSMONITOR_CHANGED;
- 
++test_lazy_prereq UNTRACKED_CACHE '
++	{ git update-index --test-untracked-cache; ret=$?; } &&
++	test $ret -ne 1
++'
++
++test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
++	test_might_fail git config --unset core.useBuiltinFSMonitor &&
++	git update-index --no-fsmonitor &&
++	test_might_fail git fsmonitor--daemon stop
++'
++
++matrix_clean_up_repo () {
++	git reset --hard HEAD
++	git clean -fd
++}
++
++matrix_try () {
++	uc=$1
++	fsm=$2
++	fn=$3
++
++	test_expect_success "Matrix[uc:$uc][fsm:$fsm] $fn" '
++		matrix_clean_up_repo &&
++		$fn &&
++		if test $uc = false -a $fsm = false
++		then
++			git status --porcelain=v1 >.git/expect.$fn
++		else
++			git status --porcelain=v1 >.git/actual.$fn
++			test_cmp .git/expect.$fn .git/actual.$fn
++		fi
++	'
++
++	return $?
++}
++
++uc_values="false"
++test_have_prereq UNTRACKED_CACHE && uc_values="false true"
++for uc_val in $uc_values
++do
++	if test $uc_val = false
++	then
++		test_expect_success "Matrix[uc:$uc_val] disable untracked cache" '
++			git config core.untrackedcache false &&
++			git update-index --no-untracked-cache
++		'
++	else
++		test_expect_success "Matrix[uc:$uc_val] enable untracked cache" '
++			git config core.untrackedcache true &&
++			git update-index --untracked-cache
++		'
++	fi
++
++	fsm_values="false true"
++	for fsm_val in $fsm_values
++	do
++		if test $fsm_val = false
++		then
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] disable fsmonitor" '
++				test_might_fail git config --unset core.useBuiltinFSMonitor &&
++				git update-index --no-fsmonitor &&
++				test_might_fail git fsmonitor--daemon stop 2>/dev/null
++			'
++		else
++			test_expect_success "Matrix[uc:$uc_val][fsm:$fsm_val] enable fsmonitor" '
++				git config core.useBuiltinFSMonitor true &&
++				git fsmonitor--daemon start &&
++				git update-index --fsmonitor
++			'
++		fi
++
++		matrix_try $uc_val $fsm_val edit_files
++		matrix_try $uc_val $fsm_val delete_files
++		matrix_try $uc_val $fsm_val create_files
++		matrix_try $uc_val $fsm_val rename_files
++		matrix_try $uc_val $fsm_val file_to_directory
++		matrix_try $uc_val $fsm_val directory_to_file
++	done
++done
++
+ test_done
 -- 
 gitgitgadget
 
