@@ -1,78 +1,88 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: **
-X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_40,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34059C11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5410EC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:56:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1EB5F61418
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:48:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 385C4613CB
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 15:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233828AbhGAPvG convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 1 Jul 2021 11:51:06 -0400
-Received: from astra4053.startdedicated.net ([62.138.2.57]:35908 "EHLO
-        wopu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233421AbhGAPvF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 11:51:05 -0400
-X-Greylist: delayed 2092 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2021 11:51:05 EDT
-Received: from localhost (localhost [127.0.0.1])
-        by wopu.org (Postfix) with ESMTP id 0EA91126F461
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 17:12:15 +0200 (CEST)
-Received: from wopu.org ([127.0.0.1])
-        by localhost (wopu.org [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id l10IIybjt9LZ for <git@vger.kernel.org>;
-        Thu,  1 Jul 2021 17:12:14 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by wopu.org (Postfix) with ESMTP id 7D0E0127BCC1
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:41:16 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at wopu.org
-Received: from wopu.org ([127.0.0.1])
-        by localhost (wopu.org [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id SoxsNY1owI1A for <git@vger.kernel.org>;
-        Thu,  1 Jul 2021 16:41:16 +0200 (CEST)
-Received: from 10.0.2.15 (wopu.org [62.138.2.57])
-        by wopu.org (Postfix) with SMTP id 5D840127BD03
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 16:32:19 +0200 (CEST)
-From:   "Dr.  John K. Philli" <drjohn.k.phili@gmail.com>
-To:     <git@vger.kernel.org>
-Subject: We organize special issues in the following Scopus indexed Journals
-Sender: "Dr.  John K. Philli" <drjohn.k.phili@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Date:   Thu, 1 Jul 2021 17:32:17 +0300
-Message-Id: <20210701143219.5D840127BD03@wopu.org>
-Content-Transfer-Encoding: 8BIT
+        id S233879AbhGAP7T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 11:59:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55757 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233694AbhGAP7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 11:59:18 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E192DD3D97;
+        Thu,  1 Jul 2021 11:56:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=SBQIkHpbKqDz
+        8OtOkbS6QWqjRaFEXaMxhv1aZV8l/C4=; b=YYz8c75XJaCXnB0M/A74ZSvX2o8g
+        xn6QdeSHza9SqRud9aI4vXegVAPrgIhu6d+mt8uYH67/4Z+GW4iol+sPDTiZTddz
+        gjTa0GjYV/HUv2P4KG4LjdXjE5hS9MkCQ1RzR3LbpEV8EsjYX/0G8SBE6nBMoGcG
+        lLHEvO8yqo6FbFw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DA06ED3D95;
+        Thu,  1 Jul 2021 11:56:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5ECD9D3D94;
+        Thu,  1 Jul 2021 11:56:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] *.h: move some *_INIT to designated initializers
+References: <cover-0.5-00000000000-20210701T104855Z-avarab@gmail.com>
+        <patch-1.5-9a92e7c216f-20210701T104855Z-avarab@gmail.com>
+        <CAN0heSpsg=bwX9gbYfeWYqUbuen-zArR69FWxNmdtcQW_RubzA@mail.gmail.com>
+Date:   Thu, 01 Jul 2021 08:56:46 -0700
+In-Reply-To: <CAN0heSpsg=bwX9gbYfeWYqUbuen-zArR69FWxNmdtcQW_RubzA@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 1 Jul 2021 17:00:02
+ +0200")
+Message-ID: <xmqq8s2qrps1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F0B7B136-DA84-11EB-8157-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Colleagues,
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-We are organizing now many special issues in several ISI (SCI, SCIE, ESCI) and Scopus
-indexed Journals
-of WITPress / Springer / Elsevier / IET / AIP / IEEE / CRC etc.....
+>> -#define STRING_LIST_INIT_NODUP { NULL, 0, 0, 0, NULL }
+>> +#define STRING_LIST_INIT_NODUP { 0 }
+>
+> This "NODUP" one is a bit of an odd case though. You don't actually
+> change it to use designated initializers, as the patch says. Instead yo=
+u
+> change it in a slightly different way. In a sense, you assign the
+> literal zero not to strdup_strings, but to the first field, which is a
+> pointer, where I would have expected NULL.
+>
+> I think there's been some recent-ish "we can assign `{ 0 }` even if the
+> first field is a pointer, because it's idiomatic and works out fine"
+> even if assigning 0 to a pointer looks a bit odd. So it might not be
+> wrong as such, but it doesn't match what the commit message claims, and
+> I think it would be more clear to use `{ .strdup_strings =3D 0 }` here:
+> We're explicitly interested in *not* duplicating the strings. It's not
+> just some default "let's leave everything as zero/NULL".
 
-Send us your paper by email as soon as possible in IEEE Format (.doc)
-All the papers will pass via peer review.
+Well reasoned.  I agree that it is not wrong per-se, and the
+solution to use designated initializer is indeed in line with the
+theme of the topic.
 
-Fees: Start from 400 USD  (all the papers will pass via peer review)
-
-We will propose you the Journal and if you agree we will start the review process.
-You will pay directly to this Journal (directly to the Publisher)
-using my name:   Dr. John Phili 
-
-Send your paper to me by email until July 31, 2021
-
-Note that because of many articles' submission, we can offer better fees than the
-Publishers themselves. You will pay to the Publishers directly, not to us.
-Contact me by phone or by email.
-Thanks
-
-Dr. John Phili
-University of Oregon  
-386-822-7094
