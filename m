@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0B82C11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E96BC11F69
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCB2C61414
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1662A6141A
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232124AbhGAQK7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 12:10:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
+        id S232265AbhGAQLA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 12:11:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231915AbhGAQKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 12:10:53 -0400
+        with ESMTP id S231223AbhGAQKz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 12:10:55 -0400
 Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A33ECC0613DC
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 09:08:21 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id l8so8886089wry.13
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 09:08:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99B3C0613E1
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 09:08:22 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id u6so8921709wrs.5
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 09:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lfbYbfzHd+Vf6Fe8m7hXH4Krc1XXpNy92hpUxXnxmLQ=;
-        b=iGzP4pyVZTgMKCgDR9QTrfLbUMoWqG8q2zzcrxVc//ymxM4Z0BRLGCGZiU6uJckvUW
-         cPBZdLaKrRM8VZjXYQTLCSMqtfkRlEfmzPmCDEBmuSUkO94c6GrnHQUy07pHTFscj1cz
-         5FFMDc04OQ0GZqbFKM4qJTv0GYydAazOM4IipiUtGI8ZPktdllBdijwt2PXzAfzEIboj
-         tQnymYiU1uWablT9NhBu/IO6raQcEc3w7GdOnj+NKQl0l6zqC7SrLyJwhNQtp1zpAjQJ
-         GNDyfv6b7jepWu58iHH5oAYHsOPl7NyVY/DvvF8BYCsis10IoELrRgKkkY672wdnzlGT
-         80sw==
+        bh=wxw28PT0y1HD093q1CN4MSHFbLeN7akEybJmased0TU=;
+        b=jDfsBzhAT7MOY3zqzIUPXuCVud1GhF0SizlcIoRptg5glIKz74WOk9b6othc+CZG++
+         i6F8S9ugzLBbBZX4JHNprW4aod43r59afMMC3GklcJ4mZK93Dplw8q/0goISZAEoMBv8
+         LvtEYzaST63R+ccPgGpuMxUZOAtYX5E3QKX8wQ9hXVGNlGZSHCD1j6ouDIDlwazL9OvS
+         A4Ok6lIoZGvpd5vMn/+nUARYyy3kAZr360BMdx+IQYFl38gK2eKbbKJVFNuMwpt0Z8D8
+         BRaWqdLfv9N1Bt6KmB+Wj+nr2DrcKCEtiz1Rxh6PFKtaDLaz0It26FKg20hfvLdjxXFo
+         lVtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lfbYbfzHd+Vf6Fe8m7hXH4Krc1XXpNy92hpUxXnxmLQ=;
-        b=dJi+JMiYxNzFB9ucwxXfZy5ymHeD4EC7h8PcktR0SRjq/45zesQSrXq31IXCp+2/Yk
-         zryOt/L/pUKd9E0vdufqMXu1/WWdcbx5kHupfKF0PPmBFQRXvKYuepIV9G92Or35ziUT
-         WBPkt2EO8wWCIvjvQ0IjrohTHIBCwl2tNNUaO/ttyWJa8/4Jvz+ALGyGQarofSakoctt
-         qoj0//R2/HbBBHCUt1I8vmvPqWemsA2jfA6QSyACClijnE1owrPDSSLcQua38dMoe/UG
-         XpPXIRvoQA3awaXs7ZpHgnR+ftBAVOKL+gbJ7SFY5pJwETzxL7nGHOgohuiYNNfhFC97
-         RrVg==
-X-Gm-Message-State: AOAM532ooaoBQkEi80MVonp86kUb3OcH/YYa72MRvhJVisNmrBshQK2n
-        7APhciAkLjlhbus7QkGphJOKJsnoH6Y=
-X-Google-Smtp-Source: ABdhPJx+GYoFRqBiVBjGSzCwbZstftYV42NGYWZ3JPOpgJjioprYtMIz57aDFaCh0WAtdGytv9WXuQ==
-X-Received: by 2002:a5d:678b:: with SMTP id v11mr543651wru.72.1625155700298;
-        Thu, 01 Jul 2021 09:08:20 -0700 (PDT)
+        bh=wxw28PT0y1HD093q1CN4MSHFbLeN7akEybJmased0TU=;
+        b=BWg9qOz9M08p/wumvnKGVg10OLdz7s7ntAgQJT2o+na9Vw29Lo4jLKZf+jXCKa+bjq
+         4LzybTWf7ZzxqdwQCm7SnEPivnVefHoD7cQz5z7qKkww+NBzwfwpR3eX8KLZhevd/HvK
+         BZs4vYG+2OCp4iRKMk78WMBZ7u420Q/dhoIO2dP9A4Nq9gxoQalxuqLR6PWDf9IOYgFQ
+         LPunY11VhqhyusNsjHAgaaBSJRnRojjGo+lzB7FbYz+tM+7SmJXNxiCJ5DgxTxPSKaHj
+         02QwYYUFlhx7u23DSw8UltYq9Vex0FnKJCWh5bYT9OSQECXGLHjB9Qt0KIr3oezJPxuI
+         kBZg==
+X-Gm-Message-State: AOAM532ROrNcmeeCmHtD+ZCdN+Tynv923trgLOk6/HcA1Fcx9y0NHcrR
+        mLQoKYri03bR/p6XjTXmjm/2or0WM80=
+X-Google-Smtp-Source: ABdhPJy5ou4u3U2SJaU+9Zc8zMWMG1wja2zweahTSsW2uUzgajYtQ/gXrhz9fYq0x6+R3eHPUPeNgg==
+X-Received: by 2002:adf:cd8e:: with SMTP id q14mr522457wrj.192.1625155701603;
+        Thu, 01 Jul 2021 09:08:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t11sm440479wrz.7.2021.07.01.09.08.19
+        by smtp.gmail.com with ESMTPSA id e8sm427232wrq.10.2021.07.01.09.08.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 09:08:20 -0700 (PDT)
-Message-Id: <0149940ee4d7282360234f1ef1ec270def83c907.1625155693.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 09:08:21 -0700 (PDT)
+Message-Id: <0bef02ce5a465a3c968b975a9ba75afb335e6a53.1625155693.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.989.git.1625155693.gitgitgadget@gmail.com>
 References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 16:08:07 +0000
-Subject: [PATCH 09/15] [GSOC] ref-filter: modify the error message and value
- in get_object
+Date:   Thu, 01 Jul 2021 16:08:09 +0000
+Subject: [PATCH 11/15] [GSOC] cat-file: change batch_objects parameter name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,49 +81,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-Let get_object() return 1 and print "<oid> missing" instead
-of returning -1 and printing "missing object <oid> for <refname>"
-if oid_object_info_extended() unable to find the data corresponding
-to oid. When `cat-file --batch` use ref-filter logic later it can
-help `format_ref_array_item()` just report that the object is missing
-without letting Git exit.
+Because later cat-file reuses ref-filter logic that will add
+parameter "const struct option *options" to batch_objects(),
+the two synonymous parameters of "opt" and "options" may
+confuse readers, so change batch_options parameter of
+batch_objects() from "opt" to "batch".
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c                   | 4 ++--
- t/t6301-for-each-ref-errors.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ builtin/cat-file.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 45122959eef..9ca3dd5557d 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1749,8 +1749,8 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 	}
- 	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
- 				     OBJECT_INFO_LOOKUP_REPLACE))
--		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
--				       oid_to_hex(&oi->oid), ref->refname);
-+		return strbuf_addf_ret(err, 1, _("%s missing"),
-+				       oid_to_hex(&oi->oid));
- 	if (oi->info.disk_sizep && oi->disk_size < 0)
- 		BUG("Object size is less than zero.");
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 59a86412fd0..41d407638d5 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -495,7 +495,7 @@ static int batch_unordered_packed(const struct object_id *oid,
+ 	return batch_unordered_object(oid, data);
+ }
  
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index 40edf9dab53..3553f84a00c 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -41,7 +41,7 @@ test_expect_success 'Missing objects are reported correctly' '
- 	r=refs/heads/missing &&
- 	echo $MISSING >.git/$r &&
- 	test_when_finished "rm -f .git/$r" &&
--	echo "fatal: missing object $MISSING for $r" >missing-err &&
-+	echo "fatal: $MISSING missing" >missing-err &&
- 	test_must_fail git for-each-ref 2>err &&
- 	test_cmp missing-err err &&
- 	(
+-static int batch_objects(struct batch_options *opt)
++static int batch_objects(struct batch_options *batch)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	struct strbuf output = STRBUF_INIT;
+@@ -503,8 +503,8 @@ static int batch_objects(struct batch_options *opt)
+ 	int save_warning;
+ 	int retval = 0;
+ 
+-	if (!opt->format)
+-		opt->format = "%(objectname) %(objecttype) %(objectsize)";
++	if (!batch->format)
++		batch->format = "%(objectname) %(objecttype) %(objectsize)";
+ 
+ 	/*
+ 	 * Expand once with our special mark_query flag, which will prime the
+@@ -513,20 +513,20 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	memset(&data, 0, sizeof(data));
+ 	data.mark_query = 1;
+-	strbuf_expand(&output, opt->format, expand_format, &data);
++	strbuf_expand(&output, batch->format, expand_format, &data);
+ 	data.mark_query = 0;
+ 	strbuf_release(&output);
+-	if (opt->cmdmode)
++	if (batch->cmdmode)
+ 		data.split_on_whitespace = 1;
+ 
+ 	/*
+ 	 * If we are printing out the object, then always fill in the type,
+ 	 * since we will want to decide whether or not to stream.
+ 	 */
+-	if (opt->print_contents)
++	if (batch->print_contents)
+ 		data.info.typep = &data.type;
+ 
+-	if (opt->all_objects) {
++	if (batch->all_objects) {
+ 		struct object_cb_data cb;
+ 		struct object_info empty = OBJECT_INFO_INIT;
+ 
+@@ -536,11 +536,11 @@ static int batch_objects(struct batch_options *opt)
+ 		if (has_promisor_remote())
+ 			warning("This repository uses promisor remotes. Some objects may not be loaded.");
+ 
+-		cb.opt = opt;
++		cb.opt = batch;
+ 		cb.expand = &data;
+ 		cb.scratch = &output;
+ 
+-		if (opt->unordered) {
++		if (batch->unordered) {
+ 			struct oidset seen = OIDSET_INIT;
+ 
+ 			cb.seen = &seen;
+@@ -590,7 +590,7 @@ static int batch_objects(struct batch_options *opt)
+ 			data.rest = p;
+ 		}
+ 
+-		batch_one_object(input.buf, &output, opt, &data);
++		batch_one_object(input.buf, &output, batch, &data);
+ 	}
+ 
+ 	strbuf_release(&input);
 -- 
 gitgitgadget
 
