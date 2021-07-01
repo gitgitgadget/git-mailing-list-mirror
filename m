@@ -6,64 +6,72 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 167FFC11F64
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F1BFC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:51:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6798613E8
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:47:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D50BB613E8
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbhGAQt7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 12:49:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38938 "EHLO cloud.peff.net"
+        id S229873AbhGAQxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 12:53:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38958 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229629AbhGAQt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 12:49:58 -0400
-Received: (qmail 28383 invoked by uid 109); 1 Jul 2021 16:47:27 -0000
+        id S229629AbhGAQxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 12:53:46 -0400
+Received: (qmail 28423 invoked by uid 109); 1 Jul 2021 16:51:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Jul 2021 16:47:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Jul 2021 16:51:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17525 invoked by uid 111); 1 Jul 2021 16:47:27 -0000
+Received: (qmail 17558 invoked by uid 111); 1 Jul 2021 16:51:15 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Jul 2021 12:47:27 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Jul 2021 12:51:14 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 1 Jul 2021 12:47:26 -0400
+Date:   Thu, 1 Jul 2021 12:51:14 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Bruno Albuquerque <bga@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 7/8] serve: add support for a "startup" git_config()
- callback
-Message-ID: <YN3xnjSN49HUzBSW@coredump.intra.peff.net>
-References: <cover-0.5-00000000000-20210616T141332Z-avarab@gmail.com>
- <cover-0.8-00000000000-20210628T191634Z-avarab@gmail.com>
- <patch-7.8-0a4fb01ae38-20210628T191634Z-avarab@gmail.com>
- <YN3wvy6fhD4V+FA3@coredump.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: What's cooking in git.git (Jun 2021, #07; Wed, 30)
+Message-ID: <YN3ygh98zikMmd1S@coredump.intra.peff.net>
+References: <xmqq4kdft122.fsf@gitster.g>
+ <87o8bmcd9a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YN3wvy6fhD4V+FA3@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87o8bmcd9a.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 01, 2021 at 12:43:43PM -0400, Jeff King wrote:
+On Thu, Jul 01, 2021 at 04:00:01PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> I dunno. Maybe the solution is for ls_refs() to just do a separate
-> config call to pick up the operation-specific bits, like:
+> > * ab/serve-cleanup (2021-06-28) 8 commits
+> >  - upload-pack.c: convert to new serve.c "startup" config cb
+> >  - serve: add support for a "startup" git_config() callback
+> >  - serve.c: add trace2 regions for advertise & command
+> >  - serve.c: add call_{advertise,command}() indirection
+> >  - serve: use designated initializers
+> >  - transport: use designated initializers
+> >  - transport: rename "fetch" in transport_vtable to "fetch_refs"
+> >  - serve: mark has_capability() as static
+> >
+> >  Code clean-up around "git serve".
+> 
+> Jeff, what do you think about this version & the upload-pack.c changes?
 
-By the way, I think both currently and after the patch I showed,
-ls_refs() has the same "bug" that we fixed for upload_pack_v2() a while
-ago: in a v2 world, a client could request "ls-refs" over and over, and
-each time we'd load the hiderefs config, appending duplicate config to
-the list each time.
+I left some comments on the config-callback patches. I think it's an OK
+direction.
 
-In practice this doesn't happen because unlike "fetch", which clients
-must do many rounds of, clients usually issue only a single ls-refs. So
-it may not be worth worrying too much about. I guess a malicious client
-could convince us to very slowly allocate an arbitrary amount of memory.
+I didn't read the final patch carefully. And I do think it needs to be
+gone over very carefully to make sure there are not any subtleties,
+given the problems we've had with config-reading there in the past.  I'm
+not enthused about doing so for what I consider to be a pretty
+unexciting outcome. I.e., it feels a bit like high-risk churn for low
+reward.
 
 -Peff
