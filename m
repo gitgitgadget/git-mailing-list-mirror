@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D5B5C11F69
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 439E2C11F6A
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CF5461414
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26F076141D
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233412AbhGAOu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37490 "EHLO
+        id S233449AbhGAOu6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233067AbhGAOui (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:38 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD49C0613DF
+        with ESMTP id S233119AbhGAOuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:39 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0076C0613E2
         for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:07 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id j34so4679527wms.5
+Received: by mail-wr1-x42e.google.com with SMTP id l8so8544611wry.13
         for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VhA8e70cmeJE/8taWH8a2ZkqsNWrr0+EV4Og5Cn7GBw=;
-        b=nP7INjaYjqUto4SKdXQM5YdsCHjOh/AZXC35uTTT53iUclpCt1g7lBvl6gmzmYkZu7
-         JH4+YqaoenxN6ROrkQZP0sUuNURhfnE11upP4UL93CBB0l+UaKGyXFunfbDKpMnn1Nfr
-         7368EDHFVIpaWIxXycZ6QAtUjTGVeWme+DIbYwjBvJ85gGk19uyoaMHKENb0yhKH1Jkj
-         y2aw6ucrvmMb4VAtrNKpvfPgXxUhVTm7QLz4CmnWyW+15zovEtdzOZlzpDz5GU91p3+6
-         /a28arQMrbWwK3UU/sFN3B0sCUVQTVSvxmfdIdpHuoeTW5uJVWeOVFhM0Er5Jo0IcR3n
-         LafA==
+        bh=5/sMXoHyGg+3j8jh501vy22q2NIOR4Of40K9vWI1fSY=;
+        b=oEU3GiNd+YmSC8nU1094l8MkH9kLX4rj6rZxI+eA8OA00DIeiFI1SE+NPJgf0p9Pcx
+         g2R+36AaWBZ+HhtXY1kEHs+Snu5EgXpJOGw6GpPustWpAaer0Cz8AgpquMeJ98sLPY9y
+         DoOVtOsZkWGkNVf2BQdSKra6/zDZ/HfrT8YLbVmVXu6PxDFyLtg6UtNlMd0SkO0y2FvL
+         X2SCWLh0Le6JV4+PoC/Zto+ChlipmYgswDz5xkkdcpatR0Y9fffDJK1IjGM515wD58C1
+         041/uXdUyGCpmhxTe89e7aSlVuM6peJ+MGy+sGyAqQh/0qG6Sa4PasvL+cJ+nE3ja5pS
+         cspg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VhA8e70cmeJE/8taWH8a2ZkqsNWrr0+EV4Og5Cn7GBw=;
-        b=SrEza7sDLgxbCqb8E3issqdUdIOhYaSJTtfLtfZRP3lIYLqeISBkezVevHwmNhgVVk
-         0sqUAUHMVCcgzrG+DTAYr41BrsxVJyX0x/OMaiBB7keLXYb5kN8HPAr1aRRV8vw/0xPY
-         VfQdkPfRGGXUszWbw4d4Hcpub5/5fwfGztEZ+90Du/9YUpIdZL5cOOntw3NyYu7r1YCi
-         7l7IGuvwyUEaIVoD1tIVA3FMKnREPTmT+Zzyfpm7+XPpvtP/SCLhE3C09WoTxQ6/54kF
-         vMTindKeZLq1sH6F9CGHNb+jZH87iHkxRspwyZ1/CWoDUT8o4AG40KV3tXiQ/pkNjqKV
-         UM3A==
-X-Gm-Message-State: AOAM5328A5NgD/kuLMM4FaxS2fW65dQkNNHUYw5PWUaA6i7u+mfvHJiI
-        RQlMDIUkGiVjSTznWCg01DHnvKDPyUU=
-X-Google-Smtp-Source: ABdhPJw+gDT92KkYOMFJn34Muw7Wk93tFeHpfWjqXPxGYP0O4nEjDQ12zZ1Mg7uewOt8TbmSn9SS5g==
-X-Received: by 2002:a7b:c405:: with SMTP id k5mr132882wmi.34.1625150885991;
-        Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
+        bh=5/sMXoHyGg+3j8jh501vy22q2NIOR4Of40K9vWI1fSY=;
+        b=CGJnaA45DSkw/KeDUFBS+Ml1Vkh/bGlYoD0CnEpsDNSZbymB5695TuSdDI+mizEzMZ
+         slVwBG+X1N4EwToa4i0S0f/7HIGd6SgKEmowVnGCw/sEYzgm7x/wx8OrjFiFcdrMZ/Z0
+         f6wUn36+ySmaALGYmS1Ej7qVkf/PQzmpUPwff293j3q7r8Z3nPwVznQwoP9D41aZdMdD
+         ZE5kFKAZhFYT3HZ7BYdmwS/Iem8qk5yAJqOrBOLnE8EoAC0nDkV+YiceTIB6DUOcIR5K
+         Ul6o5nt9mflF18uuMcJke3HEr6wQdEV9vX3ZJjzGsU6W2iuhA7DpsY+/Nh3C5ipUmavQ
+         2F3Q==
+X-Gm-Message-State: AOAM530f7hercwyrSHWHrGMpBHEuTpuDwoiAcEtSFg36y7nI0iwNJhu7
+        5iTcpmHF21mv1jfbRw0kI9DXrDk8OHc=
+X-Google-Smtp-Source: ABdhPJyP9Gs79IBdV5qj/HtNQom36Yu1+5ols2wk4w8oENAJemlaiKJfcZ9ultv4nJgRNmYd2U+M4Q==
+X-Received: by 2002:a5d:4003:: with SMTP id n3mr21579372wrp.147.1625150886480;
+        Thu, 01 Jul 2021 07:48:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n15sm170890wrr.22.2021.07.01.07.48.05
+        by smtp.gmail.com with ESMTPSA id y3sm136510wru.78.2021.07.01.07.48.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:48:05 -0700 (PDT)
-Message-Id: <e32ba686f7e54097fb97f615d357ed3779755f21.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:48:06 -0700 (PDT)
+Message-Id: <627e27fe60bb543902fdcc4b2179c620403d9c38.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:43 +0000
-Subject: [PATCH v3 33/34] fsmonitor: handle shortname for .git
+Date:   Thu, 01 Jul 2021 14:47:44 +0000
+Subject: [PATCH v3 34/34] t7527: test FS event reporing on MacOS WRT case and
+ Unicode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,344 +80,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-On Windows, teach FSMonitor to recognize the shortname of ".git"
-as an alias for ".git".
+Confirm that MacOS FS events are reported with a normalized spelling.
 
-Sometimes we receive FS events using the shortname, such as when
-a CMD shell runs "RENAME GIT~1 FOO" or "RMDIR GIT~1".  The FS
-notification arrives using whatever combination of long and
-shortnames used by the other process.  (Shortnames do seem to
-be case normalized, however.)
+APFS (and/or HFS+) is case-insensitive.  This means that case-independent
+lookups ( [ -d .git ] and [ -d .GIT ] ) should both succeed.  But that
+doesn't tell us how FS events are reported if we try "rm -rf .git" versus
+"rm -rf .GIT".  Are the events reported using the on-disk spelling of the
+pathname or in the spelling used by the command.
 
-NEEDSWORK: This only addresses the case of removing or renaming
-the ".git" directory using the shortname alias, so that the daemon
-properly shuts down.  I'm leaving it a task for later to handle
-the general case of shortnames and report them to the fsmonitor
-client process.  This would include tracked and untracked paths
-that just happen to have a shortname alias.
+NEEDSWORK: I was only able to test case.  It would be nice to add tests
+that use different Unicode spellings/normalizations and understand the
+differences between APFS and HFS+ in this area.  We should confirm that
+the spelling of the workdir paths that the daemon sends to clients are
+always properly normalized.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsmonitor-fs-listen-win32.c | 192 +++++++++++++++----
- t/t7527-builtin-fsmonitor.sh                 |  65 +++++++
- 2 files changed, 217 insertions(+), 40 deletions(-)
+ t/t7527-builtin-fsmonitor.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/compat/fsmonitor/fsmonitor-fs-listen-win32.c b/compat/fsmonitor/fsmonitor-fs-listen-win32.c
-index d707d47a0d7..f2ea5940790 100644
---- a/compat/fsmonitor/fsmonitor-fs-listen-win32.c
-+++ b/compat/fsmonitor/fsmonitor-fs-listen-win32.c
-@@ -48,6 +48,8 @@ struct fsmonitor_daemon_backend_data
- #define LISTENER_HAVE_DATA_WORKTREE 1
- #define LISTENER_HAVE_DATA_GITDIR 2
- 	int nr_listener_handles;
-+
-+	struct strbuf dot_git_shortname;
- };
- 
- /*
-@@ -250,6 +252,62 @@ static void cancel_rdcw_watch(struct one_watch *watch)
- 	watch->is_active = FALSE;
- }
- 
-+/*
-+ * Process a single relative pathname event.
-+ * Return 1 if we should shutdown.
-+ */
-+static int process_1_worktree_event(
-+	FILE_NOTIFY_INFORMATION *info,
-+	struct string_list *cookie_list,
-+	struct fsmonitor_batch **batch,
-+	const struct strbuf *path,
-+	enum fsmonitor_path_type t)
-+{
-+	const char *slash;
-+
-+	switch (t) {
-+	case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
-+		/* special case cookie files within .git */
-+
-+		/* Use just the filename of the cookie file. */
-+		slash = find_last_dir_sep(path->buf);
-+		string_list_append(cookie_list,
-+				   slash ? slash + 1 : path->buf);
-+		break;
-+
-+	case IS_INSIDE_DOT_GIT:
-+		/* ignore everything inside of "<worktree>/.git/" */
-+		break;
-+
-+	case IS_DOT_GIT:
-+		/* "<worktree>/.git" was deleted (or renamed away) */
-+		if ((info->Action == FILE_ACTION_REMOVED) ||
-+		    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
-+			trace2_data_string("fsmonitor", NULL,
-+					   "fsm-listen/dotgit",
-+					   "removed");
-+			return 1;
-+		}
-+		break;
-+
-+	case IS_WORKDIR_PATH:
-+		/* queue normal pathname */
-+		if (!*batch)
-+			*batch = fsmonitor_batch__new();
-+		fsmonitor_batch__add_path(*batch, path->buf);
-+		break;
-+
-+	case IS_GITDIR:
-+	case IS_INSIDE_GITDIR:
-+	case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
-+	default:
-+		BUG("unexpected path classification '%d' for '%s'",
-+		    t, path->buf);
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * Process filesystem events that happen anywhere (recursively) under the
-  * <worktree> root directory.  For a normal working directory, this includes
-@@ -294,7 +352,6 @@ static int process_worktree_events(struct fsmonitor_daemon_state *state)
- 	 */
- 	for (;;) {
- 		FILE_NOTIFY_INFORMATION *info = (void *)p;
--		const char *slash;
- 		enum fsmonitor_path_type t;
- 
- 		strbuf_reset(&path);
-@@ -303,45 +360,45 @@ static int process_worktree_events(struct fsmonitor_daemon_state *state)
- 
- 		t = fsmonitor_classify_path_workdir_relative(path.buf);
- 
--		switch (t) {
--		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
--			/* special case cookie files within .git */
--
--			/* Use just the filename of the cookie file. */
--			slash = find_last_dir_sep(path.buf);
--			string_list_append(&cookie_list,
--					   slash ? slash + 1 : path.buf);
--			break;
--
--		case IS_INSIDE_DOT_GIT:
--			/* ignore everything inside of "<worktree>/.git/" */
--			break;
--
--		case IS_DOT_GIT:
--			/* "<worktree>/.git" was deleted (or renamed away) */
--			if ((info->Action == FILE_ACTION_REMOVED) ||
--			    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
--				trace2_data_string("fsmonitor", NULL,
--						   "fsm-listen/dotgit",
--						   "removed");
--				goto force_shutdown;
--			}
--			break;
--
--		case IS_WORKDIR_PATH:
--			/* queue normal pathname */
--			if (!batch)
--				batch = fsmonitor_batch__new();
--			fsmonitor_batch__add_path(batch, path.buf);
--			break;
--
--		case IS_GITDIR:
--		case IS_INSIDE_GITDIR:
--		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
--		default:
--			BUG("unexpected path classification '%d' for '%s'",
--			    t, path.buf);
--		}
-+		if (process_1_worktree_event(info, &cookie_list, &batch,
-+					     &path, t))
-+			goto force_shutdown;
-+
-+		/*
-+		 * NEEDSWORK: If `path` contains a shortname (that is,
-+		 * if any component within it is a shortname), we
-+		 * should expand it to a longname (See
-+		 * `GetLongPathNameW()`) and re-normalize, classify,
-+		 * and process it because our client is probably
-+		 * expecting "normal" paths.
-+		 *
-+		 * HOWEVER, if our process has called `chdir()` to get
-+		 * us out of the root of the worktree (so that the
-+		 * root directory is not busy), then we have to be
-+		 * careful to convert the paths in the INFO array
-+		 * (which are relative to the directory of the RDCW
-+		 * watch and not the CWD) into absolute paths before
-+		 * calling GetLongPathNameW() and then convert the
-+		 * computed value back to a RDCW-relative pathname
-+		 * (which is what we and the client expect).
-+		 *
-+		 * FOR NOW, just handle case (1) exactly so that we
-+		 * shutdown properly when ".git" is deleted via the
-+		 * shortname alias.
-+		 *
-+		 * We might see case (2) events for cookie files, but
-+		 * we can ignore them.
-+		 *
-+		 * FOR LATER, handle case (3) where the worktree
-+		 * events contain shortnames.  We should convert
-+		 * them to longnames to avoid confusing the client.
-+		 */
-+		if (data->dot_git_shortname.len &&
-+		    !strcmp(path.buf, data->dot_git_shortname.buf) &&
-+		    process_1_worktree_event(info, &cookie_list, &batch,
-+					     &data->dot_git_shortname,
-+					     IS_DOT_GIT))
-+			goto force_shutdown;
- 
- skip_this_path:
- 		if (!info->NextEntryOffset)
-@@ -415,6 +472,14 @@ static int process_gitdir_events(struct fsmonitor_daemon_state *state)
- 			    t, path.buf);
- 		}
- 
-+		/*
-+		 * WRT shortnames, this external gitdir will not see
-+		 * case (1) nor case (3) events.
-+		 *
-+		 * We might see case (2) events for cookie files, but
-+		 * we can ignore them.
-+		 */
-+
- skip_this_path:
- 		if (!info->NextEntryOffset)
- 			break;
-@@ -493,6 +558,7 @@ clean_shutdown:
- int fsmonitor_fs_listen__ctor(struct fsmonitor_daemon_state *state)
- {
- 	struct fsmonitor_daemon_backend_data *data;
-+	char shortname[16]; /* a padded 8.3 buffer */
- 
- 	CALLOC_ARRAY(data, 1);
- 
-@@ -523,6 +589,52 @@ int fsmonitor_fs_listen__ctor(struct fsmonitor_daemon_state *state)
- 		data->nr_listener_handles++;
- 	}
- 
-+	/*
-+	 * NEEDSWORK: Properly handle 8.3 shortnames.  RDCW events can
-+	 * contain a shortname (if another application uses a
-+	 * shortname in a system call).  We care about aliasing and
-+	 * the use of shortnames for:
-+	 *
-+	 * (1) ".git",
-+	 *     -- if an external process deletes ".git" using "GIT~1",
-+	 *        we need to catch that and shutdown.
-+	 *
-+	 * (2) our cookie files,
-+	 *     -- if an external process deletes one of our cookie
-+	 *        files using a shortname, we will get a shortname
-+	 *        event for it.  However, we should have already
-+	 *        gotten a longname event for it when we created the
-+	 *        cookie, so we can safely discard the shortname
-+	 *        events for cookie files.
-+	 *
-+	 * (3) the spelling of modified files that we report to clients.
-+	 *     -- we need to report the longname to the client because
-+	 *        that is what they are expecting.  Presumably, the
-+	 *        client is going to lookup the paths that we report
-+	 *        in their index and untracked-cache, so we should
-+	 *        normalize the data for them.  (Technically, they
-+	 *        could adapt, so we could relax this maybe.)
-+	 *
-+	 * FOR NOW, while our CWD is at the root of the worktree we
-+	 * can easily get the spelling of the shortname of ".git" (if
-+	 * the volume has shortnames enabled).  For most worktrees
-+	 * this value will be "GIT~1", but we don't want to assume
-+	 * that.
-+	 *
-+	 * Capture this so that we can handle (1).
-+	 *
-+	 * We leave (3) for a future effort.
-+	 */
-+	strbuf_init(&data->dot_git_shortname, 0);
-+	GetShortPathNameA(".git", shortname, sizeof(shortname));
-+	if (!strcmp(".git", shortname))
-+		trace_printf_key(&trace_fsmonitor, "No shortname for '.git'");
-+	else {
-+		trace_printf_key(&trace_fsmonitor,
-+				 "Shortname of '.git' is '%s'", shortname);
-+		strbuf_addstr(&data->dot_git_shortname, shortname);
-+	}
-+
- 	state->backend_data = data;
- 	return 0;
- 
 diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index d1832702397..b166b4a0a31 100755
+index b166b4a0a31..d2ff1bf6c49 100755
 --- a/t/t7527-builtin-fsmonitor.sh
 +++ b/t/t7527-builtin-fsmonitor.sh
-@@ -113,6 +113,71 @@ test_expect_success 'implicit daemon stop (rename .git)' '
- 	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
+@@ -178,6 +178,36 @@ test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~2)' '
+ 	test_must_fail git -C test_implicit_1s2 fsmonitor--daemon status
  '
  
-+# File systems on Windows may or may not have shortnames.
-+# This is a volume-specific setting on modern systems.
-+# "C:/" drives are required to have them enabled.  Other
-+# hard drives default to disabled.
++# Confirm that MacOS hides all of the Unicode normalization and/or
++# case folding from the FS events.  That is, are the pathnames in the
++# FS events reported using the spelling on the disk or in the spelling
++# used by the other process.
 +#
-+# This is a crude test to see if shortnames are enabled
-+# on the volume containing the test directory.  It is
-+# crude, but it does not require elevation like `fsutil`.
++# Note that we assume that the filesystem is set to case insensitive.
 +#
-+test_lazy_prereq SHORTNAMES '
-+	mkdir .foo &&
-+	test -d "FOO~1"
-+'
++# NEEDSWORK: APFS handles Unicode and Unicode normalization
++# differently than HFS+.  I only have an APFS partition, so
++# more testing here would be helpful.
++#
 +
-+# Here we assume that the shortname of ".git" is "GIT~1".
-+test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~1)' '
-+	test_when_finished "stop_daemon_delete_repo test_implicit_1s" &&
++# Rename .git using alternate spelling and confirm that the daemon
++# sees the event using the correct spelling and shutdown.
++test_expect_success UTF8_NFD_TO_NFC 'MacOS event spelling (rename .GIT)' '
++	test_when_finished "stop_daemon_delete_repo test_apfs" &&
 +
-+	git init test_implicit_1s &&
++	git init test_apfs &&
++	start_daemon test_apfs &&
 +
-+	start_daemon test_implicit_1s &&
++	[ -d test_apfs/.git ] &&
++	[ -d test_apfs/.GIT ] &&
 +
-+	# renaming the .git directory will implicitly stop the daemon.
-+	# this moves {.git, GIT~1} to {.gitxyz, GITXYZ~1}.
-+	# the rename-from FS Event will contain the shortname.
-+	#
-+	mv test_implicit_1s/GIT~1 test_implicit_1s/.gitxyz &&
-+
++	mv test_apfs/.GIT test_apfs/.FOO &&
 +	sleep 1 &&
-+	# put it back so that our status will not crawl out to our
-+	# parent directory.
-+	# this moves {.gitxyz, GITXYZ~1} to {.git, GIT~1}.
-+	mv test_implicit_1s/.gitxyz test_implicit_1s/.git &&
++	mv test_apfs/.FOO test_apfs/.git &&
 +
-+	test_must_fail git -C test_implicit_1s fsmonitor--daemon status
-+'
-+
-+# Here we first create a file with LONGNAME of "GIT~1" before
-+# we create the repo.  This will cause the shortname of ".git"
-+# to be "GIT~2".
-+test_expect_success MINGW,SHORTNAMES 'implicit daemon stop (rename GIT~2)' '
-+	test_when_finished "stop_daemon_delete_repo test_implicit_1s2" &&
-+
-+	mkdir test_implicit_1s2 &&
-+	echo HELLO >test_implicit_1s2/GIT~1 &&
-+	git init test_implicit_1s2 &&
-+
-+	[ -f test_implicit_1s2/GIT~1 ] &&
-+	[ -d test_implicit_1s2/GIT~2 ] &&
-+
-+	start_daemon test_implicit_1s2 &&
-+
-+	# renaming the .git directory will implicitly stop the daemon.
-+	# the rename-from FS Event will contain the shortname.
-+	#
-+	mv test_implicit_1s2/GIT~2 test_implicit_1s2/.gitxyz &&
-+
-+	sleep 1 &&
-+	# put it back so that our status will not crawl out to our
-+	# parent directory.
-+	mv test_implicit_1s2/.gitxyz test_implicit_1s2/.git &&
-+
-+	test_must_fail git -C test_implicit_1s2 fsmonitor--daemon status
++	test_must_fail git -C test_apfs fsmonitor--daemon status
 +'
 +
  test_expect_success 'cannot start multiple daemons' '
@@ -424,4 +142,3 @@ index d1832702397..b166b4a0a31 100755
  
 -- 
 gitgitgadget
-
