@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5FDEC11F6A
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2D2AC11F6C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9D946140C
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A3C16140C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbhGAOuf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
+        id S233016AbhGAOug (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232866AbhGAOuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:24 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E730BC061765
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:52 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id f14so8218901wrs.6
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:52 -0700 (PDT)
+        with ESMTP id S232907AbhGAOu1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:27 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 423C6C0613E1
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:55 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id i8so8665864wrc.0
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FPBKBRBBPCafHEVXnDZiFc4V2cPGyq12y/pnJ2IeXvY=;
-        b=dVUYpjVt7yPovvdZ50QO9vtrewWbkpn3GZTPbnoFq3xivs8e3oA20weO+ltkh02hcL
-         mEo6uGO7retVFWyVjd1naYZ1irmDI5wpRjroKCabc9b92STYkLTUC2/GP4SS2qggJOI+
-         qatMm9ULdoqkxdQinjH7MotnRQm5ahzSsFRyyLhPuzYRxZkKBtIeFRfee4bnMd2XHTYD
-         FV68qXT1P24kJtzz1faQSZUDjN+OGtDGSoqOAkou3ZWj5k7NTi2BvMVqrvfjDKMe02ij
-         daCsjREA8OkE0AzQmEUMA4ywAhk4/iWB9FpGqGp318VrT+F9snvVOdHb20QDVAWyCzMU
-         o8Ig==
+        bh=UfZUXel1p6AOKNdy1ef02UiRKIjcEL1X8er7dQKR42M=;
+        b=W0YGGiO21Mdxh1rXRTHfDs9JPCDmO559ehggERJWYfYZDVLyzjHayur2yRA4nLW4EE
+         I9qDvD7+YZHME7Mv8rP1OsvhfAqxU5okvNDe440+qBlNRbJsN95PSQx9tmwGqFk289MS
+         5MI3PXxbFRpNXoHWYwa4ydvmGMQeaC/+u9iUh6ajvYDhuuf46eicqvtul4zQ8GO4TalH
+         g+t3K5EUIX2AeMakpr6vN4S/qH+/gR9hOSdPlm5h893cMWzgG+zAH2V/h5iOlpSrzWhJ
+         muC4L57Rso+fLjDsxohkj9Scjq6X1Iita40VQhXSTDGSxmy+sT/71aFC+VU8o36/QUYB
+         ze1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FPBKBRBBPCafHEVXnDZiFc4V2cPGyq12y/pnJ2IeXvY=;
-        b=eaHt4Yf0hE2fgjeNTWerQvykz+qhWuvtr46E99nk07OkekMRutdG1R5IpCoXRFBZ+P
-         AvQykhEQVTMxgTzRQXhN/bkQ+Z5Rl1VKoGLPBs7Tjg+XrmKmkTgPzlyMvPKlv7AAzdZo
-         4++OI6qOk1kGCyz7+VphwjPwa8MANbB7luYLSnTO/oBlrFsvUtCm7SY1CbRqQzosSs2V
-         hNky39tY+M3/OnpshEGjOHGEb/BPxrUYY+UAYfYkZ+HKkgpmBq4nlfRZYDuCZoLhFBUX
-         EnJra86vnw2KzMeosEdmbdH3vS0ZdnjfEE017LNjpkTfaz8OM3+xTsT1XBOW0rIUsXWm
-         aoiw==
-X-Gm-Message-State: AOAM533KlgINCEyQURgQwTblEC683kqZ8P9g9AnK9jWc2mZyUjdk21A2
-        QdLQ1TwUxtZUtmwPEsy9YQC5T4U5rII=
-X-Google-Smtp-Source: ABdhPJwpM/xG1mImS8itmI5s7cOWePi4XgZPprIgF6Uz+mlBChur+F80Cmk0IsygBlEOsnepCYKvJA==
-X-Received: by 2002:adf:fc47:: with SMTP id e7mr21404wrs.284.1625150871578;
-        Thu, 01 Jul 2021 07:47:51 -0700 (PDT)
+        bh=UfZUXel1p6AOKNdy1ef02UiRKIjcEL1X8er7dQKR42M=;
+        b=qPcZPHFe8JwBkNc9h2IeNacJpvtIRRsFyULe6g3IUD+MbSsCpYQ6ZgpP/frkFh36pg
+         3UEooRn/lV0e9oa8ikKzA57YdmYmQLUsyRiVe8sBQb1v2XuYTOOZmPCGd4PKDTUQBD0c
+         00uTunC8PcA8tubIl5yCkQYbz9v0kz+Uaoxc8mtgeNCS67QtvyWm032RnCdyjrf21rbw
+         x9ecRwSf9nlCuzMlEw8nRJQgh+ehZOBMal/wgYEJrZTOKakBxZjc+NpTar5rNleVRsTw
+         kDrACgFdj+TqxwEDGnaWwIQujFxghpfovUk9EiiyXZPDHaq8ridqGEEXEZokQmrr8Df1
+         7apA==
+X-Gm-Message-State: AOAM532CTgBys+FQpaQZKpil3UUlpulS4CO8XfmSY3kZP25SMsSpvk4V
+        rJTLGQRvYosQpA9M4HwnyjYgkfgocB4=
+X-Google-Smtp-Source: ABdhPJw2LkpQfWpv7I91AtezUZUN+HVaobQEiDFVz7y2Hh36CJo+lGtLY9xyBsAExm7fAqieiUWzLg==
+X-Received: by 2002:adf:82a1:: with SMTP id 30mr2683wrc.31.1625150873805;
+        Thu, 01 Jul 2021 07:47:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z3sm10069442wmi.29.2021.07.01.07.47.51
+        by smtp.gmail.com with ESMTPSA id f2sm127500wrq.69.2021.07.01.07.47.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:47:51 -0700 (PDT)
-Message-Id: <c2adac8ed4b4f324b54b147e1fcb1aa4a74e80dd.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:47:53 -0700 (PDT)
+Message-Id: <9fe902aad87f1192705fb69ea212a2d066d0286d.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:20 +0000
-Subject: [PATCH v3 10/34] t/helper/fsmonitor-client: create IPC client to talk
- to FSMonitor Daemon
+Date:   Thu, 01 Jul 2021 14:47:24 +0000
+Subject: [PATCH v3 14/34] fsmonitor--daemon: implement 'start' command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,180 +79,272 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create an IPC client to send query and flush commands to the daemon.
+Implement 'git fsmonitor--daemon start' command.  This command
+tries to start a daemon in the background.  It creates a background
+process to run the daemon.
+
+The updated daemon does not actually do anything yet because the
+platform backends are still just stubs.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                         |   1 +
- t/helper/test-fsmonitor-client.c | 121 +++++++++++++++++++++++++++++++
- t/helper/test-tool.c             |   1 +
- t/helper/test-tool.h             |   1 +
- 4 files changed, 124 insertions(+)
- create mode 100644 t/helper/test-fsmonitor-client.c
+ builtin/fsmonitor--daemon.c | 208 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 208 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 8fe1e42a435..c45caacf2c3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -709,6 +709,7 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
- TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-fast-rebase.o
-+TEST_BUILTINS_OBJS += test-fsmonitor-client.o
- TEST_BUILTINS_OBJS += test-genrandom.o
- TEST_BUILTINS_OBJS += test-genzeros.o
- TEST_BUILTINS_OBJS += test-hash-speed.o
-diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
-new file mode 100644
-index 00000000000..f7a5b3a32fa
---- /dev/null
-+++ b/t/helper/test-fsmonitor-client.c
-@@ -0,0 +1,121 @@
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index a265c962ccc..7fcf960652f 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -9,6 +9,7 @@
+ #include "khash.h"
+ 
+ static const char * const builtin_fsmonitor__daemon_usage[] = {
++	N_("git fsmonitor--daemon start [<options>]"),
+ 	N_("git fsmonitor--daemon run [<options>]"),
+ 	N_("git fsmonitor--daemon stop"),
+ 	N_("git fsmonitor--daemon status"),
+@@ -22,6 +23,9 @@ static const char * const builtin_fsmonitor__daemon_usage[] = {
+ #define FSMONITOR__IPC_THREADS "fsmonitor.ipcthreads"
+ static int fsmonitor__ipc_threads = 8;
+ 
++#define FSMONITOR__START_TIMEOUT "fsmonitor.starttimeout"
++static int fsmonitor__start_timeout_sec = 60;
++
+ static int fsmonitor_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, FSMONITOR__IPC_THREADS)) {
+@@ -33,6 +37,15 @@ static int fsmonitor_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, FSMONITOR__START_TIMEOUT)) {
++		int i = git_config_int(var, value);
++		if (i < 0)
++			return error(_("value of '%s' out of range: %d"),
++				     FSMONITOR__START_TIMEOUT, i);
++		fsmonitor__start_timeout_sec = i;
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -256,6 +269,194 @@ static int try_to_run_foreground_daemon(void)
+ 	return !!fsmonitor_run_daemon();
+ }
+ 
++#ifdef GIT_WINDOWS_NATIVE
 +/*
-+ * test-fsmonitor-client.c: client code to send commands/requests to
-+ * a `git fsmonitor--daemon` daemon.
++ * Create a background process to run the daemon.  It should be completely
++ * disassociated from the terminal.
++ *
++ * Conceptually like `daemonize()` but different because Windows does not
++ * have `fork(2)`.  Spawn a normal Windows child process but without the
++ * limitations of `start_command()` and `finish_command()`.
++ *
++ * The child process execs the "git fsmonitor--daemon run" command.
++ *
++ * The current process returns so that the caller can wait for the child
++ * to startup before exiting.
 + */
-+
-+#include "test-tool.h"
-+#include "cache.h"
-+#include "parse-options.h"
-+#include "fsmonitor-ipc.h"
-+
-+#ifndef HAVE_FSMONITOR_DAEMON_BACKEND
-+int cmd__fsmonitor_client(int argc, const char **argv)
++static int spawn_background_fsmonitor_daemon(pid_t *pid)
 +{
-+	die("fsmonitor--daemon not available on this platform");
++	char git_exe[MAX_PATH];
++	struct strvec args = STRVEC_INIT;
++	int in, out;
++
++	GetModuleFileNameA(NULL, git_exe, MAX_PATH);
++
++	in = open("/dev/null", O_RDONLY);
++	out = open("/dev/null", O_WRONLY);
++
++	strvec_push(&args, git_exe);
++	strvec_push(&args, "fsmonitor--daemon");
++	strvec_push(&args, "run");
++	strvec_pushf(&args, "--ipc-threads=%d", fsmonitor__ipc_threads);
++
++	*pid = mingw_spawnvpe(args.v[0], args.v, NULL, NULL, in, out, out);
++	close(in);
++	close(out);
++
++	strvec_clear(&args);
++
++	if (*pid < 0)
++		return error(_("could not spawn fsmonitor--daemon in the background"));
++
++	return 0;
 +}
 +#else
-+
 +/*
-+ * Read the `.git/index` to get the last token written to the
-+ * FSMonitor Index Extension.
-+ */
-+static const char *get_token_from_index(void)
-+{
-+	struct index_state *istate = the_repository->index;
-+
-+	if (do_read_index(istate, the_repository->index_file, 0) < 0)
-+		die("unable to read index file");
-+	if (!istate->fsmonitor_last_update)
-+		die("index file does not have fsmonitor extension");
-+
-+	return istate->fsmonitor_last_update;
-+}
-+
-+/*
-+ * Send an IPC query to a `git-fsmonitor--daemon` daemon and
-+ * ask for the changes since the given token or from the last
-+ * token in the index extension.
++ * Create a background process to run the daemon.  It should be completely
++ * disassociated from the terminal.
 + *
-+ * This will implicitly start a daemon process if necessary.  The
-+ * daemon process will persist after we exit.
-+ */
-+static int do_send_query(const char *token)
-+{
-+	struct strbuf answer = STRBUF_INIT;
-+	int ret;
-+
-+	if (!token || !*token)
-+		token = get_token_from_index();
-+
-+	ret = fsmonitor_ipc__send_query(token, &answer);
-+	if (ret < 0)
-+		die(_("could not query fsmonitor--daemon"));
-+
-+	write_in_full(1, answer.buf, answer.len);
-+	strbuf_release(&answer);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Send a "flush" command to the `git-fsmonitor--daemon` (if running)
-+ * and tell it to flush its cache.
++ * This is adapted from `daemonize()`.  Use `fork()` to directly
++ * create and run the daemon in the child process.
 + *
-+ * This feature is primarily used by the test suite to simulate a loss of
-+ * sync with the filesystem where we miss kernel events.
++ * The fork-child can just call the run code; it does not need to exec
++ * it.
++ *
++ * The fork-parent returns the child PID so that we can wait for the
++ * child to startup before exiting.
 + */
-+static int do_send_flush(void)
++static int spawn_background_fsmonitor_daemon(pid_t *pid)
 +{
-+	struct strbuf answer = STRBUF_INIT;
-+	int ret;
++	*pid = fork();
 +
-+	ret = fsmonitor_ipc__send_command("flush", &answer);
-+	if (ret)
-+		return ret;
++	switch (*pid) {
++	case 0:
++		if (setsid() == -1)
++			error_errno(_("setsid failed"));
++		close(0);
++		close(1);
++		close(2);
++		sanitize_stdfds();
 +
-+	write_in_full(1, answer.buf, answer.len);
-+	strbuf_release(&answer);
++		return !!fsmonitor_run_daemon();
 +
-+	return 0;
-+}
++	case -1:
++		return error_errno(_("could not spawn fsmonitor--daemon in the background"));
 +
-+int cmd__fsmonitor_client(int argc, const char **argv)
-+{
-+	const char *subcmd;
-+	const char *token = NULL;
-+
-+	const char * const fsmonitor_client_usage[] = {
-+		N_("test-helper fsmonitor-client query [<token>]"),
-+		N_("test-helper fsmonitor-client flush"),
-+		NULL,
-+	};
-+
-+	struct option options[] = {
-+		OPT_STRING(0, "token", &token, N_("token"),
-+			   N_("command token to send to the server")),
-+		OPT_END()
-+	};
-+
-+	if (argc < 2)
-+		usage_with_options(fsmonitor_client_usage, options);
-+
-+	if (argc == 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(fsmonitor_client_usage, options);
-+
-+	subcmd = argv[1];
-+	argv--;
-+	argc++;
-+
-+	argc = parse_options(argc, argv, NULL, options, fsmonitor_client_usage, 0);
-+
-+	setup_git_directory();
-+
-+	if (!strcmp(subcmd, "query"))
-+		return !!do_send_query(token);
-+
-+	if (!strcmp(subcmd, "flush"))
-+		return !!do_send_flush();
-+
-+	die("Unhandled subcommand: '%s'", subcmd);
++	default:
++		return 0;
++	}
 +}
 +#endif
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index c5bd0c6d4c7..af879e4a5d7 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -31,6 +31,7 @@ static struct test_cmd cmds[] = {
- 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
- 	{ "example-decorate", cmd__example_decorate },
- 	{ "fast-rebase", cmd__fast_rebase },
-+	{ "fsmonitor-client", cmd__fsmonitor_client },
- 	{ "genrandom", cmd__genrandom },
- 	{ "genzeros", cmd__genzeros },
- 	{ "hashmap", cmd__hashmap },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index e8069a3b222..6c5134b46d9 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -21,6 +21,7 @@ int cmd__dump_split_index(int argc, const char **argv);
- int cmd__dump_untracked_cache(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__fast_rebase(int argc, const char **argv);
-+int cmd__fsmonitor_client(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
- int cmd__genzeros(int argc, const char **argv);
- int cmd__hashmap(int argc, const char **argv);
++
++/*
++ * This is adapted from `wait_or_whine()`.  Watch the child process and
++ * let it get started and begin listening for requests on the socket
++ * before reporting our success.
++ */
++static int wait_for_background_startup(pid_t pid_child)
++{
++	int status;
++	pid_t pid_seen;
++	enum ipc_active_state s;
++	time_t time_limit, now;
++
++	time(&time_limit);
++	time_limit += fsmonitor__start_timeout_sec;
++
++	for (;;) {
++		pid_seen = waitpid(pid_child, &status, WNOHANG);
++
++		if (pid_seen == -1)
++			return error_errno(_("waitpid failed"));
++		else if (pid_seen == 0) {
++			/*
++			 * The child is still running (this should be
++			 * the normal case).  Try to connect to it on
++			 * the socket and see if it is ready for
++			 * business.
++			 *
++			 * If there is another daemon already running,
++			 * our child will fail to start (possibly
++			 * after a timeout on the lock), but we don't
++			 * care (who responds) if the socket is live.
++			 */
++			s = fsmonitor_ipc__get_state();
++			if (s == IPC_STATE__LISTENING)
++				return 0;
++
++			time(&now);
++			if (now > time_limit)
++				return error(_("fsmonitor--daemon not online yet"));
++		} else if (pid_seen == pid_child) {
++			/*
++			 * The new child daemon process shutdown while
++			 * it was starting up, so it is not listening
++			 * on the socket.
++			 *
++			 * Try to ping the socket in the odd chance
++			 * that another daemon started (or was already
++			 * running) while our child was starting.
++			 *
++			 * Again, we don't care who services the socket.
++			 */
++			s = fsmonitor_ipc__get_state();
++			if (s == IPC_STATE__LISTENING)
++				return 0;
++
++			/*
++			 * We don't care about the WEXITSTATUS() nor
++			 * any of the WIF*(status) values because
++			 * `cmd_fsmonitor__daemon()` does the `!!result`
++			 * trick on all function return values.
++			 *
++			 * So it is sufficient to just report the
++			 * early shutdown as an error.
++			 */
++			return error(_("fsmonitor--daemon failed to start"));
++		} else
++			return error(_("waitpid is confused"));
++	}
++}
++
++static int try_to_start_background_daemon(void)
++{
++	pid_t pid_child;
++	int ret;
++
++	/*
++	 * Before we try to create a background daemon process, see
++	 * if a daemon process is already listening.  This makes it
++	 * easier for us to report an already-listening error to the
++	 * console, since our spawn/daemon can only report the success
++	 * of creating the background process (and not whether it
++	 * immediately exited).
++	 */
++	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
++		die("fsmonitor--daemon is already running '%s'",
++		    the_repository->worktree);
++
++	printf(_("starting fsmonitor-daemon in '%s'\n"),
++	       the_repository->worktree);
++	fflush(stdout);
++
++	/*
++	 * Run the actual daemon in a background process.
++	 */
++	ret = spawn_background_fsmonitor_daemon(&pid_child);
++	if (pid_child <= 0)
++		return ret;
++
++	/*
++	 * Wait (with timeout) for the background child process get
++	 * started and begin listening on the socket/pipe.  This makes
++	 * the "start" command more synchronous and more reliable in
++	 * tests.
++	 */
++	ret = wait_for_background_startup(pid_child);
++
++	return ret;
++}
++
+ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *subcmd;
+@@ -264,6 +465,10 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ 		OPT_INTEGER(0, "ipc-threads",
+ 			    &fsmonitor__ipc_threads,
+ 			    N_("use <n> ipc worker threads")),
++		OPT_INTEGER(0, "start-timeout",
++			    &fsmonitor__start_timeout_sec,
++			    N_("Max seconds to wait for background daemon startup")),
++
+ 		OPT_END()
+ 	};
+ 
+@@ -285,6 +490,9 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ 		die(_("invalid 'ipc-threads' value (%d)"),
+ 		    fsmonitor__ipc_threads);
+ 
++	if (!strcmp(subcmd, "start"))
++		return !!try_to_start_background_daemon();
++
+ 	if (!strcmp(subcmd, "run"))
+ 		return !!try_to_run_foreground_daemon();
+ 
 -- 
 gitgitgadget
 
