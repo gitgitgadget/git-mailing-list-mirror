@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07726C11F67
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5FDEC11F6A
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E994F6141C
+	by mail.kernel.org (Postfix) with ESMTP id C9D946140C
 	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233027AbhGAOue (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37394 "EHLO
+        id S232855AbhGAOuf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232876AbhGAOuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:25 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8F3C0613DD
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:54 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id u8-20020a7bcb080000b02901e44e9caa2aso4264355wmj.4
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:53 -0700 (PDT)
+        with ESMTP id S232866AbhGAOuY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:24 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E730BC061765
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:52 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id f14so8218901wrs.6
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pIwm/Gno09dspEBpdqAIIGCyt0/sJ9C5U74NilrVyV4=;
-        b=ku0veBi14TP2PhJ5xq0vct6YMnKsbn5mz5RbSa9UjPZifnUO6DwVBr1hgDRaK+JaNs
-         Y99i1udoya2PywH1jCxG9w0QqFr/C4dEwc+poEKYfiQ9pzrXrpePIV4hyvu1+XfaKvGu
-         8Xh0Ixzfd+Q7DHMR7cW2VwpkVgq0m0eD8g6RuJsZpGPjuC31ZOaRcL0I1hcdX2x71AYT
-         qNQIFVDUCpvv9sByxbT72z2FBTiH7a5s+cDS5MNWEFNEUwfcBR5e3BzBpVnO29RWhKCI
-         DOY2/1Pks86Ms80fl/6VIy4KPfHlqz3hLpOsfYGPUl6CnAeDRqFdudi4jTmC947t7Q2L
-         BWWQ==
+        bh=FPBKBRBBPCafHEVXnDZiFc4V2cPGyq12y/pnJ2IeXvY=;
+        b=dVUYpjVt7yPovvdZ50QO9vtrewWbkpn3GZTPbnoFq3xivs8e3oA20weO+ltkh02hcL
+         mEo6uGO7retVFWyVjd1naYZ1irmDI5wpRjroKCabc9b92STYkLTUC2/GP4SS2qggJOI+
+         qatMm9ULdoqkxdQinjH7MotnRQm5ahzSsFRyyLhPuzYRxZkKBtIeFRfee4bnMd2XHTYD
+         FV68qXT1P24kJtzz1faQSZUDjN+OGtDGSoqOAkou3ZWj5k7NTi2BvMVqrvfjDKMe02ij
+         daCsjREA8OkE0AzQmEUMA4ywAhk4/iWB9FpGqGp318VrT+F9snvVOdHb20QDVAWyCzMU
+         o8Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pIwm/Gno09dspEBpdqAIIGCyt0/sJ9C5U74NilrVyV4=;
-        b=Jv+IHB+HCkc3BpW/cE0sq+hqsvGU7sGeb0ntnlQ64b1q/Enavc5WFj48gSJl6HBe4D
-         l7KC/QAiqK+pfn/OYererduHeReJ4DbmmxIq3X1DNH2zzWIRpdOmlYuxlwLnqrr+DucC
-         AHeDvUo7IFV06Mklx7bAvQ/ZuSr7hCQCI/qUE6i3XBVKf/aI8Ukikpop8a45YDn5lIEI
-         WybiwrWq6pgn1xdmZcx4ZxtUbQVcRYH+/bfqcc5HXVfbGwkKt5ClQmxKgzPM6Qpz/uZC
-         B8aX7xKDQ+9RdTvj1D0sDvZUXWI/EnZZ1/GGLMm2UpTps+DncCTPlx9pRCudZtv6cnSd
-         c5mw==
-X-Gm-Message-State: AOAM533/Nwkgfuvdv1hfK9C7HR+gsilcq5eZAZF2eFmFlAdAv/zn7xQo
-        qTETlo3W4+FqlfJ9qbTVkQjdYvOU7gQ=
-X-Google-Smtp-Source: ABdhPJz9bg5ihLnDgmE0EMtqJ0GHAXCDT7e5YwYWr5uLlPNSm1f82f0+QaGR9M65KJvHS3KTh6eU7w==
-X-Received: by 2002:a7b:c0d6:: with SMTP id s22mr11149922wmh.52.1625150872730;
-        Thu, 01 Jul 2021 07:47:52 -0700 (PDT)
+        bh=FPBKBRBBPCafHEVXnDZiFc4V2cPGyq12y/pnJ2IeXvY=;
+        b=eaHt4Yf0hE2fgjeNTWerQvykz+qhWuvtr46E99nk07OkekMRutdG1R5IpCoXRFBZ+P
+         AvQykhEQVTMxgTzRQXhN/bkQ+Z5Rl1VKoGLPBs7Tjg+XrmKmkTgPzlyMvPKlv7AAzdZo
+         4++OI6qOk1kGCyz7+VphwjPwa8MANbB7luYLSnTO/oBlrFsvUtCm7SY1CbRqQzosSs2V
+         hNky39tY+M3/OnpshEGjOHGEb/BPxrUYY+UAYfYkZ+HKkgpmBq4nlfRZYDuCZoLhFBUX
+         EnJra86vnw2KzMeosEdmbdH3vS0ZdnjfEE017LNjpkTfaz8OM3+xTsT1XBOW0rIUsXWm
+         aoiw==
+X-Gm-Message-State: AOAM533KlgINCEyQURgQwTblEC683kqZ8P9g9AnK9jWc2mZyUjdk21A2
+        QdLQ1TwUxtZUtmwPEsy9YQC5T4U5rII=
+X-Google-Smtp-Source: ABdhPJwpM/xG1mImS8itmI5s7cOWePi4XgZPprIgF6Uz+mlBChur+F80Cmk0IsygBlEOsnepCYKvJA==
+X-Received: by 2002:adf:fc47:: with SMTP id e7mr21404wrs.284.1625150871578;
+        Thu, 01 Jul 2021 07:47:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n29sm9382812wms.34.2021.07.01.07.47.52
+        by smtp.gmail.com with ESMTPSA id z3sm10069442wmi.29.2021.07.01.07.47.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:47:52 -0700 (PDT)
-Message-Id: <587580489473a7a2ad665bdf3c482ea5d2c54f61.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:47:51 -0700 (PDT)
+Message-Id: <c2adac8ed4b4f324b54b147e1fcb1aa4a74e80dd.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:22 +0000
-Subject: [PATCH v3 12/34] fsmonitor-fs-listen-macos: stub in backend for MacOS
+Date:   Thu, 01 Jul 2021 14:47:20 +0000
+Subject: [PATCH v3 10/34] t/helper/fsmonitor-client: create IPC client to talk
+ to FSMonitor Daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,70 +80,180 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Stub in empty implementation of fsmonitor--daemon
-backend for MacOS.
+Create an IPC client to send query and flush commands to the daemon.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/fsmonitor/fsmonitor-fs-listen-macos.c | 20 ++++++++++++++++++++
- config.mak.uname                             |  2 ++
- contrib/buildsystems/CMakeLists.txt          |  3 +++
- 3 files changed, 25 insertions(+)
- create mode 100644 compat/fsmonitor/fsmonitor-fs-listen-macos.c
+ Makefile                         |   1 +
+ t/helper/test-fsmonitor-client.c | 121 +++++++++++++++++++++++++++++++
+ t/helper/test-tool.c             |   1 +
+ t/helper/test-tool.h             |   1 +
+ 4 files changed, 124 insertions(+)
+ create mode 100644 t/helper/test-fsmonitor-client.c
 
-diff --git a/compat/fsmonitor/fsmonitor-fs-listen-macos.c b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
+diff --git a/Makefile b/Makefile
+index 8fe1e42a435..c45caacf2c3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -709,6 +709,7 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
+ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+ TEST_BUILTINS_OBJS += test-example-decorate.o
+ TEST_BUILTINS_OBJS += test-fast-rebase.o
++TEST_BUILTINS_OBJS += test-fsmonitor-client.o
+ TEST_BUILTINS_OBJS += test-genrandom.o
+ TEST_BUILTINS_OBJS += test-genzeros.o
+ TEST_BUILTINS_OBJS += test-hash-speed.o
+diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
 new file mode 100644
-index 00000000000..b91058d1c4f
+index 00000000000..f7a5b3a32fa
 --- /dev/null
-+++ b/compat/fsmonitor/fsmonitor-fs-listen-macos.c
-@@ -0,0 +1,20 @@
++++ b/t/helper/test-fsmonitor-client.c
+@@ -0,0 +1,121 @@
++/*
++ * test-fsmonitor-client.c: client code to send commands/requests to
++ * a `git fsmonitor--daemon` daemon.
++ */
++
++#include "test-tool.h"
 +#include "cache.h"
-+#include "fsmonitor.h"
-+#include "fsmonitor-fs-listen.h"
++#include "parse-options.h"
++#include "fsmonitor-ipc.h"
 +
-+int fsmonitor_fs_listen__ctor(struct fsmonitor_daemon_state *state)
++#ifndef HAVE_FSMONITOR_DAEMON_BACKEND
++int cmd__fsmonitor_client(int argc, const char **argv)
 +{
-+	return -1;
++	die("fsmonitor--daemon not available on this platform");
++}
++#else
++
++/*
++ * Read the `.git/index` to get the last token written to the
++ * FSMonitor Index Extension.
++ */
++static const char *get_token_from_index(void)
++{
++	struct index_state *istate = the_repository->index;
++
++	if (do_read_index(istate, the_repository->index_file, 0) < 0)
++		die("unable to read index file");
++	if (!istate->fsmonitor_last_update)
++		die("index file does not have fsmonitor extension");
++
++	return istate->fsmonitor_last_update;
 +}
 +
-+void fsmonitor_fs_listen__dtor(struct fsmonitor_daemon_state *state)
++/*
++ * Send an IPC query to a `git-fsmonitor--daemon` daemon and
++ * ask for the changes since the given token or from the last
++ * token in the index extension.
++ *
++ * This will implicitly start a daemon process if necessary.  The
++ * daemon process will persist after we exit.
++ */
++static int do_send_query(const char *token)
 +{
++	struct strbuf answer = STRBUF_INIT;
++	int ret;
++
++	if (!token || !*token)
++		token = get_token_from_index();
++
++	ret = fsmonitor_ipc__send_query(token, &answer);
++	if (ret < 0)
++		die(_("could not query fsmonitor--daemon"));
++
++	write_in_full(1, answer.buf, answer.len);
++	strbuf_release(&answer);
++
++	return 0;
 +}
 +
-+void fsmonitor_fs_listen__stop_async(struct fsmonitor_daemon_state *state)
++/*
++ * Send a "flush" command to the `git-fsmonitor--daemon` (if running)
++ * and tell it to flush its cache.
++ *
++ * This feature is primarily used by the test suite to simulate a loss of
++ * sync with the filesystem where we miss kernel events.
++ */
++static int do_send_flush(void)
 +{
++	struct strbuf answer = STRBUF_INIT;
++	int ret;
++
++	ret = fsmonitor_ipc__send_command("flush", &answer);
++	if (ret)
++		return ret;
++
++	write_in_full(1, answer.buf, answer.len);
++	strbuf_release(&answer);
++
++	return 0;
 +}
 +
-+void fsmonitor_fs_listen__loop(struct fsmonitor_daemon_state *state)
++int cmd__fsmonitor_client(int argc, const char **argv)
 +{
++	const char *subcmd;
++	const char *token = NULL;
++
++	const char * const fsmonitor_client_usage[] = {
++		N_("test-helper fsmonitor-client query [<token>]"),
++		N_("test-helper fsmonitor-client flush"),
++		NULL,
++	};
++
++	struct option options[] = {
++		OPT_STRING(0, "token", &token, N_("token"),
++			   N_("command token to send to the server")),
++		OPT_END()
++	};
++
++	if (argc < 2)
++		usage_with_options(fsmonitor_client_usage, options);
++
++	if (argc == 2 && !strcmp(argv[1], "-h"))
++		usage_with_options(fsmonitor_client_usage, options);
++
++	subcmd = argv[1];
++	argv--;
++	argc++;
++
++	argc = parse_options(argc, argv, NULL, options, fsmonitor_client_usage, 0);
++
++	setup_git_directory();
++
++	if (!strcmp(subcmd, "query"))
++		return !!do_send_query(token);
++
++	if (!strcmp(subcmd, "flush"))
++		return !!do_send_flush();
++
++	die("Unhandled subcommand: '%s'", subcmd);
 +}
-diff --git a/config.mak.uname b/config.mak.uname
-index fcd88b60b14..394355463e1 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -147,6 +147,8 @@ ifeq ($(uname_S),Darwin)
- 			MSGFMT = /usr/local/opt/gettext/bin/msgfmt
- 		endif
- 	endif
-+	FSMONITOR_DAEMON_BACKEND = macos
-+	BASIC_LDFLAGS += -framework CoreServices
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1ab94eb284f..aa80671045a 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -266,6 +266,9 @@ endif()
- if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 	add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 	list(APPEND compat_SOURCES compat/fsmonitor/fsmonitor-fs-listen-win32.c)
-+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-+	add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
-+	list(APPEND compat_SOURCES compat/fsmonitor/fsmonitor-fs-listen-macos.c)
- endif()
- 
- set(EXE_EXTENSION ${CMAKE_EXECUTABLE_SUFFIX})
++#endif
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index c5bd0c6d4c7..af879e4a5d7 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -31,6 +31,7 @@ static struct test_cmd cmds[] = {
+ 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
+ 	{ "example-decorate", cmd__example_decorate },
+ 	{ "fast-rebase", cmd__fast_rebase },
++	{ "fsmonitor-client", cmd__fsmonitor_client },
+ 	{ "genrandom", cmd__genrandom },
+ 	{ "genzeros", cmd__genzeros },
+ 	{ "hashmap", cmd__hashmap },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index e8069a3b222..6c5134b46d9 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -21,6 +21,7 @@ int cmd__dump_split_index(int argc, const char **argv);
+ int cmd__dump_untracked_cache(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
+ int cmd__fast_rebase(int argc, const char **argv);
++int cmd__fsmonitor_client(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+ int cmd__genzeros(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
 -- 
 gitgitgadget
 
