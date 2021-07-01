@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 712B8C11F6A
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0B82C11F67
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CC5261416
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCB2C61414
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 16:08:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232116AbhGAQK6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 12:10:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55552 "EHLO
+        id S232124AbhGAQK7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 12:10:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231842AbhGAQKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 12:10:51 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0CBC061762
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 09:08:20 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n33so4892530wms.2
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 09:08:20 -0700 (PDT)
+        with ESMTP id S231915AbhGAQKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 12:10:53 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A33ECC0613DC
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 09:08:21 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id l8so8886089wry.13
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 09:08:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=g3vjHjNnyLQTmf+en7FqTd/OE8rsXg7l/gd2WpOyhZ0=;
-        b=Arf3hjyyMREtqv0ipmw/FUvHUYgDUyPYo1vLP2w0bmtH/ez7CIZvwQmktLBdWDGour
-         qvujVFBC4wcvFrWgbht3auqlffKnmmSPRCvGgR7D0Htda0ZpHD6efFGPqKBd74AEHWd5
-         tKNk205YY/Rlcdsnjs2A10ltLBN0f94eZJim4Zz0xz69AVSnMpMUDotccMIjrmdbFh61
-         SXy59xL8SrwBb6pXUiSXrhBwpdWVBmgyQ1utuHaOQEMQNDJrfX7esrPj+TAaGxxlVBP1
-         6Ci9wtt8HZUYwwqxsDrlUoc1O/vmBbWpCiQu9vbAwlyKz7iLtQ0E4Xrh59nzhck0njwn
-         YKcw==
+        bh=lfbYbfzHd+Vf6Fe8m7hXH4Krc1XXpNy92hpUxXnxmLQ=;
+        b=iGzP4pyVZTgMKCgDR9QTrfLbUMoWqG8q2zzcrxVc//ymxM4Z0BRLGCGZiU6uJckvUW
+         cPBZdLaKrRM8VZjXYQTLCSMqtfkRlEfmzPmCDEBmuSUkO94c6GrnHQUy07pHTFscj1cz
+         5FFMDc04OQ0GZqbFKM4qJTv0GYydAazOM4IipiUtGI8ZPktdllBdijwt2PXzAfzEIboj
+         tQnymYiU1uWablT9NhBu/IO6raQcEc3w7GdOnj+NKQl0l6zqC7SrLyJwhNQtp1zpAjQJ
+         GNDyfv6b7jepWu58iHH5oAYHsOPl7NyVY/DvvF8BYCsis10IoELrRgKkkY672wdnzlGT
+         80sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=g3vjHjNnyLQTmf+en7FqTd/OE8rsXg7l/gd2WpOyhZ0=;
-        b=Oz/LowsYqie9rxDr38PzHewihFaLqmWSb/Hthp9ITs7cjj7QYNwpYOj3k+egwLzo9V
-         /iSZM2/suLmBAJmEHJjpNXnURpi4amzDEe4sCBalBIyCFvBKbBqQEiNO3H+t607cxmFS
-         eJdwzKepZ8x7Pre3YARQNCSYhnHZL3HSTofKcZP3ZV9o3uP0XCnsag4LMqbUHomB81Fl
-         EG743R2ELVUspWmSDNBDsq40AMcg4YLIXP801NObopCLQsY5Uxbq5WdeOUIc0birSIHR
-         zjW7E7jtYPKTkm+5V9+TlUbBH+7lZClKchUmB6V7ItF2Fq5/Weam4YRNnq3Dwd4lit3N
-         Fm/g==
-X-Gm-Message-State: AOAM533PudDmqAk9jx19NO/1VVi9CNVbxgTQIn8EEXxWZCHsQ0sfOhs4
-        ymCtytUpGRmvfrDa9wr0Fl85QPFBdEU=
-X-Google-Smtp-Source: ABdhPJyS/bGDJpjVZYJi9frbOciqnFcb/0DUq65SnvBYefr2iwP/YQ8mgWxbZt3CTOsh+vqvLEBEUQ==
-X-Received: by 2002:a05:600c:3502:: with SMTP id h2mr520984wmq.68.1625155699083;
-        Thu, 01 Jul 2021 09:08:19 -0700 (PDT)
+        bh=lfbYbfzHd+Vf6Fe8m7hXH4Krc1XXpNy92hpUxXnxmLQ=;
+        b=dJi+JMiYxNzFB9ucwxXfZy5ymHeD4EC7h8PcktR0SRjq/45zesQSrXq31IXCp+2/Yk
+         zryOt/L/pUKd9E0vdufqMXu1/WWdcbx5kHupfKF0PPmBFQRXvKYuepIV9G92Or35ziUT
+         WBPkt2EO8wWCIvjvQ0IjrohTHIBCwl2tNNUaO/ttyWJa8/4Jvz+ALGyGQarofSakoctt
+         qoj0//R2/HbBBHCUt1I8vmvPqWemsA2jfA6QSyACClijnE1owrPDSSLcQua38dMoe/UG
+         XpPXIRvoQA3awaXs7ZpHgnR+ftBAVOKL+gbJ7SFY5pJwETzxL7nGHOgohuiYNNfhFC97
+         RrVg==
+X-Gm-Message-State: AOAM532ooaoBQkEi80MVonp86kUb3OcH/YYa72MRvhJVisNmrBshQK2n
+        7APhciAkLjlhbus7QkGphJOKJsnoH6Y=
+X-Google-Smtp-Source: ABdhPJx+GYoFRqBiVBjGSzCwbZstftYV42NGYWZ3JPOpgJjioprYtMIz57aDFaCh0WAtdGytv9WXuQ==
+X-Received: by 2002:a5d:678b:: with SMTP id v11mr543651wru.72.1625155700298;
+        Thu, 01 Jul 2021 09:08:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y66sm435383wmy.39.2021.07.01.09.08.18
+        by smtp.gmail.com with ESMTPSA id t11sm440479wrz.7.2021.07.01.09.08.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 09:08:18 -0700 (PDT)
-Message-Id: <ac97ca70234240f9b67892c9a53b431f972a290e.1625155693.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 09:08:20 -0700 (PDT)
+Message-Id: <0149940ee4d7282360234f1ef1ec270def83c907.1625155693.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.989.git.1625155693.gitgitgadget@gmail.com>
 References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 16:08:05 +0000
-Subject: [PATCH 07/15] [GSOC] ref-filter: introduce
- free_ref_array_item_value() function
+Date:   Thu, 01 Jul 2021 16:08:07 +0000
+Subject: [PATCH 09/15] [GSOC] ref-filter: modify the error message and value
+ in get_object
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,66 +82,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-When we use ref_array_item which is not dynamically allocated and
-want to free the space of its member "value" after the end of use,
-free_array_item() does not meet our needs, because it tries to free
-ref_array_item itself and its member "symref".
+Let get_object() return 1 and print "<oid> missing" instead
+of returning -1 and printing "missing object <oid> for <refname>"
+if oid_object_info_extended() unable to find the data corresponding
+to oid. When `cat-file --batch` use ref-filter logic later it can
+help `format_ref_array_item()` just report that the object is missing
+without letting Git exit.
 
-Introduce free_ref_array_item_value() for freeing ref_array_item value.
-It will be called internally by free_array_item(), and it will help
-`cat-file --batch` free ref_array_item's value memory later.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Hariom Verma <hariom18599@gmail.com>
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- ref-filter.c | 11 ++++++++---
- ref-filter.h |  2 ++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ ref-filter.c                   | 4 ++--
+ t/t6301-for-each-ref-errors.sh | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index e4988aa8a24..731e596eaa6 100644
+index 45122959eef..9ca3dd5557d 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2291,16 +2291,21 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
- 	return 0;
- }
- 
--/*  Free memory allocated for a ref_array_item */
--static void free_array_item(struct ref_array_item *item)
-+void free_ref_array_item_value(struct ref_array_item *item)
- {
--	free((char *)item->symref);
- 	if (item->value) {
- 		int i;
- 		for (i = 0; i < used_atom_cnt; i++)
- 			free((char *)item->value[i].s);
- 		free(item->value);
+@@ -1749,8 +1749,8 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
  	}
-+}
-+
-+/*  Free memory allocated for a ref_array_item */
-+static void free_array_item(struct ref_array_item *item)
-+{
-+	free((char *)item->symref);
-+	free_ref_array_item_value(item);
- 	free(item);
- }
+ 	if (oid_object_info_extended(the_repository, &oi->oid, &oi->info,
+ 				     OBJECT_INFO_LOOKUP_REPLACE))
+-		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
+-				       oid_to_hex(&oi->oid), ref->refname);
++		return strbuf_addf_ret(err, 1, _("%s missing"),
++				       oid_to_hex(&oi->oid));
+ 	if (oi->info.disk_sizep && oi->disk_size < 0)
+ 		BUG("Object size is less than zero.");
  
-diff --git a/ref-filter.h b/ref-filter.h
-index c15dee8d6b9..44e6dc05ac2 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -111,6 +111,8 @@ struct ref_format {
- int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type);
- /*  Clear all memory allocated to ref_array */
- void ref_array_clear(struct ref_array *array);
-+/* Free ref_array_item's value */
-+void free_ref_array_item_value(struct ref_array_item *item);
- /*  Used to verify if the given format is correct and to parse out the used atoms */
- int verify_ref_format(struct ref_format *format);
- /*  Sort the given ref_array as per the ref_sorting provided */
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+index 40edf9dab53..3553f84a00c 100755
+--- a/t/t6301-for-each-ref-errors.sh
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -41,7 +41,7 @@ test_expect_success 'Missing objects are reported correctly' '
+ 	r=refs/heads/missing &&
+ 	echo $MISSING >.git/$r &&
+ 	test_when_finished "rm -f .git/$r" &&
+-	echo "fatal: missing object $MISSING for $r" >missing-err &&
++	echo "fatal: $MISSING missing" >missing-err &&
+ 	test_must_fail git for-each-ref 2>err &&
+ 	test_cmp missing-err err &&
+ 	(
 -- 
 gitgitgadget
 
