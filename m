@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BD23C11F69
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21BD5C11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:47:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3464B61414
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:47:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 02BBA6141C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:47:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232518AbhGAOuU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37352 "EHLO
+        id S232821AbhGAOuW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232458AbhGAOuT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:19 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1701C061764
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:47 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id i8so8665381wrc.0
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:47 -0700 (PDT)
+        with ESMTP id S232609AbhGAOuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:21 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E3D0C061764
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:49 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id j1so8559785wrn.9
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8Ey5pVclP/nMS6WKkIL4uf44AVx+0z97PoZxSVXx7Vk=;
-        b=VrGR0oKrpIWVSwyaXqbCt3yUaJvGy1G0+CajzCN85t3+eE5x9NlIQokSJCLOqJ26G4
-         YW9ADb2peo3WbUxmPkW92D19q1ShJTt4ohxl03knpusjlHaMquqwg55P6sIWLcC9/5dn
-         0V7niL9bQPdvMddh7doI2wKiATBQi8bz2WldQmRsFsIilzcvKWwVEYhkqVR55LSjuluE
-         lmlBlS3oAyYR/xdeszrL0DKAKvGai0YWp+aM0XY9SRnzfhg7pjR1twE3jaBL265FVdwR
-         jpzBMT5e3WVM2y/Vx77ul9At0+BVi3mGNwGAc5+0LEEl44i8reBRLKIU+jKDOZ4x0Y69
-         lfCg==
+        bh=q/IG4tajktxIQa8aqHJi11ZrCyXntesR5uZmvPlgdZ8=;
+        b=KP9ABWulKLo8Q+G/LRSmLP7Sk9chgfyL4Bm3WX3U77zbfIbdOsyryyHoXMGqo6rNzb
+         IZtbIL+X7NHieILVIKOPKYvho3BveB39x+1KZZz6IfuI6U6q+ZLGc4sQOQYu4TQV1jHx
+         XFMHbI92J+jd7rIjra+d8NvXFQE/YOLKN6ESqpIW9IMFNRLoCVX+N4JtkcjUJkG6PESa
+         7huslGm8sQ6KFYis/c9oJ/HnBaR/KnTEDXKI+ORb/wEE+TtWaCuZdV7YH4ulxsTkKFD4
+         u7NvoDa74kde7iN48plwNQ46hhykvV0nAaTaCVW51/rEd9OgRNXhWhZHooHOfX1/1A6e
+         o+mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8Ey5pVclP/nMS6WKkIL4uf44AVx+0z97PoZxSVXx7Vk=;
-        b=OIxpcbr7FTclUFCTshWTc52Dxl7k2ltrhTBRCqSUaQ2dis3uSDUckMJOk2Rpy3ZAw+
-         y7CEvvDCLZ8DHptPK5qVfAJwtP3mWhLHflf+HWv+Z/5py3DVk11QlxWCnRMdIKINdb27
-         GVGi52iau81JRAY4NUezDsbM3H0Zs9fYhN9Ml5Y2itnIFgaPtPoHu9qTBm6HMaJKNVPc
-         +tgK4fEO4Vn2yElh9QDsdz4RzKpOZKqJJb5+JUaIzqeatRnI6xQBNWu8cE43H1lu2pyr
-         j6h3pQDjDtNQBpR/JzgatdLd7Pbc2tMVp1et2d/qgfjh6Ex9Qez5sLcTsUgB09j/Zl4w
-         GVoQ==
-X-Gm-Message-State: AOAM530d9ObiXE9ox3Gc2tlf+sqdADrq9Ep+Lqj45ohvuIk6OlMM1+fD
-        vhTT1C4yel0BOHsp+wJXwG3JM2JKyp4=
-X-Google-Smtp-Source: ABdhPJwnXdRupQo+gq4R9+CKEDw3IRTMRRDm80OkIcDjE/YaFiiet2HyVYMW4EDFmQK+1pMBhTW+Pg==
-X-Received: by 2002:adf:facf:: with SMTP id a15mr20008wrs.308.1625150866416;
-        Thu, 01 Jul 2021 07:47:46 -0700 (PDT)
+        bh=q/IG4tajktxIQa8aqHJi11ZrCyXntesR5uZmvPlgdZ8=;
+        b=bR1Hiw1TyOChbssS5IzXh6FA6xPRR2GgyOIxlsEP9BfpnYeLJJeNoLV/5EYjrYzAOs
+         ROnyAHaHKKbsYCzpkkSy/0rRCjv/MWPy781SRJhfucrc1Fe/G4aH1dbOLd+Cp89MB9D9
+         crB5sva2BnYiUxWn7cf6s//Vepe3F0cr/YfYnrV/CoKlK/2hVuR8WpMytwQWOK4kqjqO
+         Vxr9t2BZM1vL+HYNBiTdqJtcpuLUzpkOmDb964h5rxob3dU/Dq3liM6fX1iJA8R9mLZd
+         aRSUZU4H/Ha7nSdCZVUd7DjI94Na+XI5q2zJ2cCj6oz/SgdVHAdau6EXRtcBopb5/bnK
+         i1/Q==
+X-Gm-Message-State: AOAM531ubyfo3cnDHAW6fYKkQxMVOmbsF1d9LhQz2AJvbg+OM16YqJKV
+        lxaz1XOMqF3qOzI+utMEUxOdZdV5pao=
+X-Google-Smtp-Source: ABdhPJzzJ+4xN/tyloeLIw4FVqyxdkgmwHuRSlHjdX0qmbSkVPYcUaW2JBabj7Y1SepktbbaC+hpjg==
+X-Received: by 2002:a05:6000:1889:: with SMTP id a9mr44580371wri.141.1625150868146;
+        Thu, 01 Jul 2021 07:47:48 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm215924wmh.36.2021.07.01.07.47.46
+        by smtp.gmail.com with ESMTPSA id n7sm9081442wmq.37.2021.07.01.07.47.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:47:46 -0700 (PDT)
-Message-Id: <cafc71c8d7d03e69efc13e86f828031a76f6794f.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:47:47 -0700 (PDT)
+Message-Id: <dfcd3e5ac97b9a0834d4d8f28893fbb80c79bf09.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:11 +0000
-Subject: [PATCH v3 01/34] simple-ipc: preparations for supporting binary
- messages.
+Date:   Thu, 01 Jul 2021 14:47:14 +0000
+Subject: [PATCH v3 04/34] fsmonitor-ipc: create client routines for
+ git-fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,266 +80,272 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add `command_len` argument to the Simple IPC API.
+Create fsmonitor_ipc__*() client routines to spawn the built-in file
+system monitor daemon and send it an IPC request using the `Simple
+IPC` API.
 
-In my original Simple IPC API, I assumed that the request
-would always be a null-terminated string of text characters.
-The command arg was just a `const char *`.
-
-I found a caller that would like to pass a binary command
-to the daemon, so I want to ammend the Simple IPC API to
-take `const char *command, size_t command_len` and pass
-that to the daemon.  (Really, the first arg should just be
-a `void *` or `const unsigned byte *` to make that clearer.)
-
-Note, the response side has always been a `struct strbuf`
-which includes the buffer and length, so we already support
-returning a binary answer.  (Yes, it feels a little weird
-returning a binary buffer in a `strbuf`, but it works.)
+Stub in empty fsmonitor_ipc__*() functions for unsupported platforms.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- compat/simple-ipc/ipc-unix-socket.c | 14 +++++++-----
- compat/simple-ipc/ipc-win32.c       | 14 +++++++-----
- simple-ipc.h                        |  7 ++++--
- t/helper/test-simple-ipc.c          | 34 +++++++++++++++++++----------
- 4 files changed, 46 insertions(+), 23 deletions(-)
+ Makefile        |   1 +
+ fsmonitor-ipc.c | 179 ++++++++++++++++++++++++++++++++++++++++++++++++
+ fsmonitor-ipc.h |  48 +++++++++++++
+ 3 files changed, 228 insertions(+)
+ create mode 100644 fsmonitor-ipc.c
+ create mode 100644 fsmonitor-ipc.h
 
-diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
-index 1927e6ef4bc..4e28857a0a1 100644
---- a/compat/simple-ipc/ipc-unix-socket.c
-+++ b/compat/simple-ipc/ipc-unix-socket.c
-@@ -168,7 +168,8 @@ void ipc_client_close_connection(struct ipc_client_connection *connection)
- 
- int ipc_client_send_command_to_connection(
- 	struct ipc_client_connection *connection,
--	const char *message, struct strbuf *answer)
-+	const char *message, size_t message_len,
-+	struct strbuf *answer)
- {
- 	int ret = 0;
- 
-@@ -176,7 +177,7 @@ int ipc_client_send_command_to_connection(
- 
- 	trace2_region_enter("ipc-client", "send-command", NULL);
- 
--	if (write_packetized_from_buf_no_flush(message, strlen(message),
-+	if (write_packetized_from_buf_no_flush(message, message_len,
- 					       connection->fd) < 0 ||
- 	    packet_flush_gently(connection->fd) < 0) {
- 		ret = error(_("could not send IPC command"));
-@@ -197,7 +198,8 @@ done:
- 
- int ipc_client_send_command(const char *path,
- 			    const struct ipc_client_connect_options *options,
--			    const char *message, struct strbuf *answer)
-+			    const char *message, size_t message_len,
-+			    struct strbuf *answer)
- {
- 	int ret = -1;
- 	enum ipc_active_state state;
-@@ -208,7 +210,9 @@ int ipc_client_send_command(const char *path,
- 	if (state != IPC_STATE__LISTENING)
- 		return ret;
- 
--	ret = ipc_client_send_command_to_connection(connection, message, answer);
-+	ret = ipc_client_send_command_to_connection(connection,
-+						    message, message_len,
-+						    answer);
- 
- 	ipc_client_close_connection(connection);
- 
-@@ -503,7 +507,7 @@ static int worker_thread__do_io(
- 	if (ret >= 0) {
- 		ret = worker_thread_data->server_data->application_cb(
- 			worker_thread_data->server_data->application_data,
--			buf.buf, do_io_reply_callback, &reply_data);
-+			buf.buf, buf.len, do_io_reply_callback, &reply_data);
- 
- 		packet_flush_gently(reply_data.fd);
- 	}
-diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
-index 8dc7bda087d..8e889d6a506 100644
---- a/compat/simple-ipc/ipc-win32.c
-+++ b/compat/simple-ipc/ipc-win32.c
-@@ -208,7 +208,8 @@ void ipc_client_close_connection(struct ipc_client_connection *connection)
- 
- int ipc_client_send_command_to_connection(
- 	struct ipc_client_connection *connection,
--	const char *message, struct strbuf *answer)
-+	const char *message, size_t message_len,
-+	struct strbuf *answer)
- {
- 	int ret = 0;
- 
-@@ -216,7 +217,7 @@ int ipc_client_send_command_to_connection(
- 
- 	trace2_region_enter("ipc-client", "send-command", NULL);
- 
--	if (write_packetized_from_buf_no_flush(message, strlen(message),
-+	if (write_packetized_from_buf_no_flush(message, message_len,
- 					       connection->fd) < 0 ||
- 	    packet_flush_gently(connection->fd) < 0) {
- 		ret = error(_("could not send IPC command"));
-@@ -239,7 +240,8 @@ done:
- 
- int ipc_client_send_command(const char *path,
- 			    const struct ipc_client_connect_options *options,
--			    const char *message, struct strbuf *response)
-+			    const char *message, size_t message_len,
-+			    struct strbuf *response)
- {
- 	int ret = -1;
- 	enum ipc_active_state state;
-@@ -250,7 +252,9 @@ int ipc_client_send_command(const char *path,
- 	if (state != IPC_STATE__LISTENING)
- 		return ret;
- 
--	ret = ipc_client_send_command_to_connection(connection, message, response);
-+	ret = ipc_client_send_command_to_connection(connection,
-+						    message, message_len,
-+						    response);
- 
- 	ipc_client_close_connection(connection);
- 
-@@ -458,7 +462,7 @@ static int do_io(struct ipc_server_thread_data *server_thread_data)
- 	if (ret >= 0) {
- 		ret = server_thread_data->server_data->application_cb(
- 			server_thread_data->server_data->application_data,
--			buf.buf, do_io_reply_callback, &reply_data);
-+			buf.buf, buf.len, do_io_reply_callback, &reply_data);
- 
- 		packet_flush_gently(reply_data.fd);
- 
-diff --git a/simple-ipc.h b/simple-ipc.h
-index 2c48a5ee004..9c7330fcda0 100644
---- a/simple-ipc.h
-+++ b/simple-ipc.h
-@@ -107,7 +107,8 @@ void ipc_client_close_connection(struct ipc_client_connection *connection);
-  */
- int ipc_client_send_command_to_connection(
- 	struct ipc_client_connection *connection,
--	const char *message, struct strbuf *answer);
-+	const char *message, size_t message_len,
-+	struct strbuf *answer);
- 
- /*
-  * Used by the client to synchronously connect and send and receive a
-@@ -119,7 +120,8 @@ int ipc_client_send_command_to_connection(
-  */
- int ipc_client_send_command(const char *path,
- 			    const struct ipc_client_connect_options *options,
--			    const char *message, struct strbuf *answer);
-+			    const char *message, size_t message_len,
-+			    struct strbuf *answer);
- 
- /*
-  * Simple IPC Server Side API.
-@@ -144,6 +146,7 @@ typedef int (ipc_server_reply_cb)(struct ipc_server_reply_data *,
-  */
- typedef int (ipc_server_application_cb)(void *application_data,
- 					const char *request,
-+					size_t request_len,
- 					ipc_server_reply_cb *reply_cb,
- 					struct ipc_server_reply_data *reply_data);
- 
-diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
-index 42040ef81b1..91345180750 100644
---- a/t/helper/test-simple-ipc.c
-+++ b/t/helper/test-simple-ipc.c
-@@ -112,7 +112,7 @@ static int app__slow_command(ipc_server_reply_cb *reply_cb,
- /*
-  * The client sent a command followed by a (possibly very) large buffer.
-  */
--static int app__sendbytes_command(const char *received,
-+static int app__sendbytes_command(const char *received, size_t received_len,
- 				  ipc_server_reply_cb *reply_cb,
- 				  struct ipc_server_reply_data *reply_data)
- {
-@@ -123,6 +123,13 @@ static int app__sendbytes_command(const char *received,
- 	int errs = 0;
- 	int ret;
- 
-+	/*
-+	 * The test is setup to send:
-+	 *     "sendbytes" SP <n * char>
-+	 */
-+	if (received_len < strlen("sendbytes "))
-+		BUG("received_len is short in app__sendbytes_command");
+diff --git a/Makefile b/Makefile
+index c3565fc0f8f..209c97aa22d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -893,6 +893,7 @@ LIB_OBJS += fetch-pack.o
+ LIB_OBJS += fmt-merge-msg.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += fsmonitor.o
++LIB_OBJS += fsmonitor-ipc.o
+ LIB_OBJS += gettext.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+new file mode 100644
+index 00000000000..41706972520
+--- /dev/null
++++ b/fsmonitor-ipc.c
+@@ -0,0 +1,179 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "simple-ipc.h"
++#include "fsmonitor-ipc.h"
++#include "run-command.h"
++#include "strbuf.h"
++#include "trace2.h"
 +
- 	if (skip_prefix(received, "sendbytes ", &p))
- 		len_ballast = strlen(p);
- 
-@@ -160,7 +167,7 @@ static ipc_server_application_cb test_app_cb;
-  * by this application.
-  */
- static int test_app_cb(void *application_data,
--		       const char *command,
-+		       const char *command, size_t command_len,
- 		       ipc_server_reply_cb *reply_cb,
- 		       struct ipc_server_reply_data *reply_data)
- {
-@@ -173,7 +180,7 @@ static int test_app_cb(void *application_data,
- 	if (application_data != (void*)&my_app_data)
- 		BUG("application_cb: application_data pointer wrong");
- 
--	if (!strcmp(command, "quit")) {
-+	if (command_len == 4 && !strncmp(command, "quit", 4)) {
- 		/*
- 		 * The client sent a "quit" command.  This is an async
- 		 * request for the server to shutdown.
-@@ -193,22 +200,23 @@ static int test_app_cb(void *application_data,
- 		return SIMPLE_IPC_QUIT;
- 	}
- 
--	if (!strcmp(command, "ping")) {
-+	if (command_len == 4 && !strncmp(command, "ping", 4)) {
- 		const char *answer = "pong";
- 		return reply_cb(reply_data, answer, strlen(answer));
- 	}
- 
--	if (!strcmp(command, "big"))
-+	if (command_len == 3 && !strncmp(command, "big", 3))
- 		return app__big_command(reply_cb, reply_data);
- 
--	if (!strcmp(command, "chunk"))
-+	if (command_len == 5 && !strncmp(command, "chunk", 5))
- 		return app__chunk_command(reply_cb, reply_data);
- 
--	if (!strcmp(command, "slow"))
-+	if (command_len == 4 && !strncmp(command, "slow", 4))
- 		return app__slow_command(reply_cb, reply_data);
- 
--	if (starts_with(command, "sendbytes "))
--		return app__sendbytes_command(command, reply_cb, reply_data);
-+	if (command_len >= 10 && starts_with(command, "sendbytes "))
-+		return app__sendbytes_command(command, command_len,
-+					      reply_cb, reply_data);
- 
- 	return app__unhandled_command(command, reply_cb, reply_data);
- }
-@@ -488,7 +496,9 @@ static int client__send_ipc(void)
- 	options.wait_if_busy = 1;
- 	options.wait_if_not_found = 0;
- 
--	if (!ipc_client_send_command(cl_args.path, &options, command, &buf)) {
-+	if (!ipc_client_send_command(cl_args.path, &options,
-+				     command, strlen(command),
-+				     &buf)) {
- 		if (buf.len) {
- 			printf("%s\n", buf.buf);
- 			fflush(stdout);
-@@ -556,7 +566,9 @@ static int do_sendbytes(int bytecount, char byte, const char *path,
- 	strbuf_addstr(&buf_send, "sendbytes ");
- 	strbuf_addchars(&buf_send, byte, bytecount);
- 
--	if (!ipc_client_send_command(path, options, buf_send.buf, &buf_resp)) {
-+	if (!ipc_client_send_command(path, options,
-+				     buf_send.buf, buf_send.len,
-+				     &buf_resp)) {
- 		strbuf_rtrim(&buf_resp);
- 		printf("sent:%c%08d %s\n", byte, bytecount, buf_resp.buf);
- 		fflush(stdout);
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++
++int fsmonitor_ipc__is_supported(void)
++{
++	return 1;
++}
++
++GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
++
++enum ipc_active_state fsmonitor_ipc__get_state(void)
++{
++	return ipc_get_active_state(fsmonitor_ipc__get_path());
++}
++
++static int spawn_daemon(void)
++{
++	const char *args[] = { "fsmonitor--daemon", "start", NULL };
++
++	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
++				    "fsmonitor");
++}
++
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer)
++{
++	int ret = -1;
++	int tried_to_spawn = 0;
++	enum ipc_active_state state = IPC_STATE__OTHER_ERROR;
++	struct ipc_client_connection *connection = NULL;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++	const char *tok = since_token ? since_token : "";
++	size_t tok_len = since_token ? strlen(since_token) : 0;
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++
++	trace2_region_enter("fsm_client", "query", NULL);
++	trace2_data_string("fsm_client", NULL, "query/command", tok);
++
++try_again:
++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
++				       &connection);
++
++	switch (state) {
++	case IPC_STATE__LISTENING:
++		ret = ipc_client_send_command_to_connection(
++			connection, tok, tok_len, answer);
++		ipc_client_close_connection(connection);
++
++		trace2_data_intmax("fsm_client", NULL,
++				   "query/response-length", answer->len);
++
++		if (fsmonitor_is_trivial_response(answer))
++			trace2_data_intmax("fsm_client", NULL,
++					   "query/trivial-response", 1);
++
++		goto done;
++
++	case IPC_STATE__NOT_LISTENING:
++		ret = error(_("fsmonitor_ipc__send_query: daemon not available"));
++		goto done;
++
++	case IPC_STATE__PATH_NOT_FOUND:
++		if (tried_to_spawn)
++			goto done;
++
++		tried_to_spawn++;
++		if (spawn_daemon())
++			goto done;
++
++		/*
++		 * Try again, but this time give the daemon a chance to
++		 * actually create the pipe/socket.
++		 *
++		 * Granted, the daemon just started so it can't possibly have
++		 * any FS cached yet, so we'll always get a trivial answer.
++		 * BUT the answer should include a new token that can serve
++		 * as the basis for subsequent requests.
++		 */
++		options.wait_if_not_found = 1;
++		goto try_again;
++
++	case IPC_STATE__INVALID_PATH:
++		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
++			    fsmonitor_ipc__get_path());
++		goto done;
++
++	case IPC_STATE__OTHER_ERROR:
++	default:
++		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
++			    fsmonitor_ipc__get_path());
++		goto done;
++	}
++
++done:
++	trace2_region_leave("fsm_client", "query", NULL);
++
++	return ret;
++}
++
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer)
++{
++	struct ipc_client_connection *connection = NULL;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++	int ret;
++	enum ipc_active_state state;
++	const char *c = command ? command : "";
++	size_t c_len = command ? strlen(command) : 0;
++
++	strbuf_reset(answer);
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++
++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
++				       &connection);
++	if (state != IPC_STATE__LISTENING) {
++		die("fsmonitor--daemon is not running");
++		return -1;
++	}
++
++	ret = ipc_client_send_command_to_connection(connection, c, c_len,
++						    answer);
++	ipc_client_close_connection(connection);
++
++	if (ret == -1) {
++		die("could not send '%s' command to fsmonitor--daemon", c);
++		return -1;
++	}
++
++	return 0;
++}
++
++#else
++
++/*
++ * A trivial implementation of the fsmonitor_ipc__ API for unsupported
++ * platforms.
++ */
++
++int fsmonitor_ipc__is_supported(void)
++{
++	return 0;
++}
++
++const char *fsmonitor_ipc__get_path(void)
++{
++	return NULL;
++}
++
++enum ipc_active_state fsmonitor_ipc__get_state(void)
++{
++	return IPC_STATE__OTHER_ERROR;
++}
++
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer)
++{
++	return -1;
++}
++
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer)
++{
++	return -1;
++}
++
++#endif
+diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
+new file mode 100644
+index 00000000000..837c5e5b64a
+--- /dev/null
++++ b/fsmonitor-ipc.h
+@@ -0,0 +1,48 @@
++#ifndef FSMONITOR_IPC_H
++#define FSMONITOR_IPC_H
++
++/*
++ * Returns true if built-in file system monitor daemon is defined
++ * for this platform.
++ */
++int fsmonitor_ipc__is_supported(void);
++
++/*
++ * Returns the pathname to the IPC named pipe or Unix domain socket
++ * where a `git-fsmonitor--daemon` process will listen.  This is a
++ * per-worktree value.
++ *
++ * Returns NULL if the daemon is not supported on this platform.
++ */
++const char *fsmonitor_ipc__get_path(void);
++
++/*
++ * Try to determine whether there is a `git-fsmonitor--daemon` process
++ * listening on the IPC pipe/socket.
++ */
++enum ipc_active_state fsmonitor_ipc__get_state(void);
++
++/*
++ * Connect to a `git-fsmonitor--daemon` process via simple-ipc
++ * and ask for the set of changed files since the given token.
++ *
++ * This DOES NOT use the hook interface.
++ *
++ * Spawn a daemon process in the background if necessary.
++ *
++ * Returns -1 on error; 0 on success.
++ */
++int fsmonitor_ipc__send_query(const char *since_token,
++			      struct strbuf *answer);
++
++/*
++ * Connect to a `git-fsmonitor--daemon` process via simple-ipc and
++ * send a command verb.  If no daemon is available, we DO NOT try to
++ * start one.
++ *
++ * Returns -1 on error; 0 on success.
++ */
++int fsmonitor_ipc__send_command(const char *command,
++				struct strbuf *answer);
++
++#endif /* FSMONITOR_IPC_H */
 -- 
 gitgitgadget
 
