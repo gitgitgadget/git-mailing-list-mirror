@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 817B1C11F69
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2F3AC11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 695606140C
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CEA56140C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232974AbhGAOug (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Jul 2021 10:50:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37396 "EHLO
+        id S233094AbhGAOui (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Jul 2021 10:50:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232923AbhGAOu1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jul 2021 10:50:27 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0CD2C0613E6
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:55 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id i94so8602675wri.4
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:55 -0700 (PDT)
+        with ESMTP id S232817AbhGAOu2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jul 2021 10:50:28 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DADEC061762
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:47:56 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id g8-20020a1c9d080000b02901f13dd1672aso4392592wme.0
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vMyqH4atwMy0u8EpIhOh4lmPem4fMyJcVWM1txZGxbs=;
-        b=GBs+I4PpzHuu4Y3uxLRIW+4CsoUeQmUBc3jnX8ZejlLahZ7pgx87zoyloaDS1dmC1T
-         l2Had6DuRLIpi6EcXAWKAruyySORq4Icy6nvATBUkx5XYElJjUBlq/Ww8/i605E2B5KC
-         QXgbl1dPAxoptPt5lXjP8QvBGNSEL4SBbColeWoyN88PHwDpVhHO6AnNZUpxw4fwJB2p
-         vatibS205gHChZSXwiDXUn8xo11V8OO5ZeBo/XTXlH6LAZO3swYQeQRo7r90eNSq1UnO
-         +pZpw1LORHjqpVCbY/OlfNRBqE+SEsRmD+tKRNkrtbdvDnNjtwMEhu2mAHn6w/PpWcOU
-         aWyw==
+        bh=e9Y6nq/FoJ44oZvKJhw5ixuYaT7LRyHPOTQ3LNw2vyQ=;
+        b=EG1Ihcx8vi7tFeaucaCuhWV8BaalCFgJykui/8EwhFNdffa5pfY9s3U+L93MRGf30a
+         ePr2BnBJcSf1HLBv7uvm/iREmAe8Jz46sTMofH/biPQlh3vIMTAM3DsufJ1SSfr6G9ve
+         pzUGnd/CM3w+LHGnpAS1j9Tl/qGhzLdOOOn4amK58gbApIkRFyxlDXqCHCtCcWO0RWfp
+         ePFEtDVZZ15cL2+TGZkPesGqZQ4ODB6+bzd5G5EG8+1GGSlzS8ZdYVgMRyoCzDD+fXnw
+         6H8ATPN9X7OVzj0oPvPTxegOtZ6lS+hQCrjdIC0r+Hr/dF1ih8Aa4hEG//KlAGECvRKH
+         mXUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vMyqH4atwMy0u8EpIhOh4lmPem4fMyJcVWM1txZGxbs=;
-        b=kgEAu8AkZMaF6sVLzsZW8fdPNlsgY+jSg7bRby1Jbtkz+HppbNBeTlPFIrGHDaAZlK
-         CbRM35xPFScwbonTV+yByAzxfg9/qSdDfdOVi2EgIedVU1W0cmvuLNBBXIRGuVsjRN9j
-         HWv94Zr6ND/WRd7rEXuG8h7qRupu54PmfBstK1Y2CfhRDKOGWRWxT8JmfxawwuGJxBdi
-         YQBM4rLRGC9vwYJIraWY7dufymy6gVHHs3YO4tBU39mTK8DEhycaNICnsaO/NSdrMZJq
-         i8R/6cEMYkuj02OCAMxMu9e3U8OnypExba+lBacbJcCXyJN95pDNtaRBgZ435ETt/T5U
-         rIpw==
-X-Gm-Message-State: AOAM5320zBmV3cUYEwfzEngTploay6YKCWXxJ7vrS9rZIoZQTL2gHz2w
-        ut0sRLj9IFlCaZXIHK4hT04pqBSh9x8=
-X-Google-Smtp-Source: ABdhPJyKGADITEgtTh4cpQ/4iQVdilhIZVpldaeeJoZX/jqrv/S7tgXAIMTT7DybzTXN4hjF6741PQ==
-X-Received: by 2002:a5d:488a:: with SMTP id g10mr30379wrq.180.1625150874413;
+        bh=e9Y6nq/FoJ44oZvKJhw5ixuYaT7LRyHPOTQ3LNw2vyQ=;
+        b=oAxkCPuwXXT8rgnajhqJR2N5tTWJQ3b/aJkkPxumcqkH8hNMCjWX+KVoRX7BXOvbU4
+         Mug0z3X2cSpcH6RKP67AzjwAQGtZ+ZpI+ynx0JKSBYvDm0x5slrZX5/AUumKIgd/vopX
+         Gsdsjbk7WfWm5rHqrkHGxpCMpHgl3lOnxzsbexQhrs9VgcFRfbKwFQN9pykPdEeP7s9T
+         CpO1JDNR22dh3B/DfsV80jPfYAnrba01zNQtMAKdP4KKIH1F/myfIVyCLcTmfrWuUwzk
+         /C1mkmKYzK1XLCNHYHRq+5uWfGAD0ziwC5BRafda3MnFN0NOgojR1cPhlxeAAmKD/Roz
+         wkcA==
+X-Gm-Message-State: AOAM533XdQc2NxatBugO+vca6Mep2ATgcFzrO3hBE/k73JcOu4o1hD2T
+        Pf3J2t1R8nQJc2BMg8XA7sol+17m1+Y=
+X-Google-Smtp-Source: ABdhPJxB55g74BC++KUx2M1JIiMzdvSzdCBkOmuWe+XzpRAWskC4KeYZT7ZTySD/jKWs9bamovpjOA==
+X-Received: by 2002:a1c:7f4a:: with SMTP id a71mr11185167wmd.33.1625150874983;
         Thu, 01 Jul 2021 07:47:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y66sm235579wmy.39.2021.07.01.07.47.54
+        by smtp.gmail.com with ESMTPSA id p7sm134749wrr.68.2021.07.01.07.47.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 01 Jul 2021 07:47:54 -0700 (PDT)
-Message-Id: <eef39aa168fec58321ee233d907db696b56ee0b8.1625150864.git.gitgitgadget@gmail.com>
+Message-Id: <3b12f668060fc757d7d36dcad2c86bbb917a8b8b.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:25 +0000
-Subject: [PATCH v3 15/34] fsmonitor: do not try to operate on bare repos
+Date:   Thu, 01 Jul 2021 14:47:26 +0000
+Subject: [PATCH v3 16/34] fsmonitor--daemon: add pathname classification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,62 +79,189 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Bare repos do not have a working directory, so there is no
-directory for the daemon to register a watch upon.  And therefore
-there are no files within the directory for it to actually watch.
+Teach fsmonitor--daemon to classify relative and absolute
+pathnames and decide how they should be handled.  This will
+be used by the platform-specific backend to respond to each
+filesystem event.
+
+When we register for filesystem notifications on a directory,
+we get events for everything (recursively) in the directory.
+We want to report to clients changes to tracked and untracked
+paths within the working directory.  We do not want to report
+changes within the .git directory, for example.
+
+This classification will be used in a later commit by the
+different backends to classify paths as events are received.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c |  8 ++++++++
- t/t7519-status-fsmonitor.sh | 16 ++++++++++++++++
- 2 files changed, 24 insertions(+)
+ builtin/fsmonitor--daemon.c | 81 +++++++++++++++++++++++++++++++++++++
+ fsmonitor--daemon.h         | 61 ++++++++++++++++++++++++++++
+ 2 files changed, 142 insertions(+)
 
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 7fcf960652f..d6161ad95a5 100644
+index d6161ad95a5..e942f7c5840 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -490,6 +490,14 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		die(_("invalid 'ipc-threads' value (%d)"),
- 		    fsmonitor__ipc_threads);
+@@ -121,6 +121,87 @@ static int handle_client(void *data,
+ 	return result;
+ }
  
-+	prepare_repo_settings(the_repository);
-+	if (!the_repository->worktree)
-+		return error(_("fsmonitor-daemon does not support bare repos '%s'"),
-+			     xgetcwd());
-+	if (the_repository->settings.fsmonitor_mode == FSMONITOR_MODE_INCOMPATIBLE)
-+		return error(_("fsmonitor-daemon is incompatible with this repo '%s'"),
-+			     the_repository->worktree);
++#define FSMONITOR_COOKIE_PREFIX ".fsmonitor-daemon-"
 +
- 	if (!strcmp(subcmd, "start"))
- 		return !!try_to_start_background_daemon();
++enum fsmonitor_path_type fsmonitor_classify_path_workdir_relative(
++	const char *rel)
++{
++	if (fspathncmp(rel, ".git", 4))
++		return IS_WORKDIR_PATH;
++	rel += 4;
++
++	if (!*rel)
++		return IS_DOT_GIT;
++	if (*rel != '/')
++		return IS_WORKDIR_PATH; /* e.g. .gitignore */
++	rel++;
++
++	if (!fspathncmp(rel, FSMONITOR_COOKIE_PREFIX,
++			strlen(FSMONITOR_COOKIE_PREFIX)))
++		return IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX;
++
++	return IS_INSIDE_DOT_GIT;
++}
++
++enum fsmonitor_path_type fsmonitor_classify_path_gitdir_relative(
++	const char *rel)
++{
++	if (!fspathncmp(rel, FSMONITOR_COOKIE_PREFIX,
++			strlen(FSMONITOR_COOKIE_PREFIX)))
++		return IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX;
++
++	return IS_INSIDE_GITDIR;
++}
++
++static enum fsmonitor_path_type try_classify_workdir_abs_path(
++	struct fsmonitor_daemon_state *state,
++	const char *path)
++{
++	const char *rel;
++
++	if (fspathncmp(path, state->path_worktree_watch.buf,
++		       state->path_worktree_watch.len))
++		return IS_OUTSIDE_CONE;
++
++	rel = path + state->path_worktree_watch.len;
++
++	if (!*rel)
++		return IS_WORKDIR_PATH; /* it is the root dir exactly */
++	if (*rel != '/')
++		return IS_OUTSIDE_CONE;
++	rel++;
++
++	return fsmonitor_classify_path_workdir_relative(rel);
++}
++
++enum fsmonitor_path_type fsmonitor_classify_path_absolute(
++	struct fsmonitor_daemon_state *state,
++	const char *path)
++{
++	const char *rel;
++	enum fsmonitor_path_type t;
++
++	t = try_classify_workdir_abs_path(state, path);
++	if (state->nr_paths_watching == 1)
++		return t;
++	if (t != IS_OUTSIDE_CONE)
++		return t;
++
++	if (fspathncmp(path, state->path_gitdir_watch.buf,
++		       state->path_gitdir_watch.len))
++		return IS_OUTSIDE_CONE;
++
++	rel = path + state->path_gitdir_watch.len;
++
++	if (!*rel)
++		return IS_GITDIR; /* it is the <gitdir> exactly */
++	if (*rel != '/')
++		return IS_OUTSIDE_CONE;
++	rel++;
++
++	return fsmonitor_classify_path_gitdir_relative(rel);
++}
++
+ static void *fsmonitor_fs_listen__thread_proc(void *_state)
+ {
+ 	struct fsmonitor_daemon_state *state = _state;
+diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
+index 3009c1a83de..7bbb3a27a1c 100644
+--- a/fsmonitor--daemon.h
++++ b/fsmonitor--daemon.h
+@@ -30,5 +30,66 @@ struct fsmonitor_daemon_state {
+ 	struct ipc_server_data *ipc_server_data;
+ };
  
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 02919c68ddd..ed20a4f7fb9 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -394,6 +394,22 @@ test_expect_success 'incompatible bare repo' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success FSMONITOR_DAEMON 'try running fsmonitor-daemon in bare repo' '
-+	test_when_finished "rm -rf ./bare-clone" &&
-+	git clone --bare . ./bare-clone &&
-+	test_must_fail git -C ./bare-clone fsmonitor--daemon run 2>actual &&
-+	grep "fsmonitor-daemon does not support bare repos" actual
-+'
++/*
++ * Pathname classifications.
++ *
++ * The daemon classifies the pathnames that it receives from file
++ * system notification events into the following categories and uses
++ * that to decide whether clients are told about them.  (And to watch
++ * for file system synchronization events.)
++ *
++ * The client should only care about paths within the working
++ * directory proper (inside the working directory and not ".git" nor
++ * inside of ".git/").  That is, the client has read the index and is
++ * asking for a list of any paths in the working directory that have
++ * been modified since the last token.  The client does not care about
++ * file system changes within the .git directory (such as new loose
++ * objects or packfiles).  So the client will only receive paths that
++ * are classified as IS_WORKDIR_PATH.
++ *
++ * The daemon uses the IS_DOT_GIT and IS_GITDIR internally to mean the
++ * exact ".git" directory or GITDIR.  If the daemon receives a delete
++ * event for either of these directories, it will automatically
++ * shutdown, for example.
++ *
++ * Note that the daemon DOES NOT explicitly watch nor special case the
++ * ".git/index" file.  The daemon does not read the index and does not
++ * have any internal index-relative state.  The daemon only collects
++ * the set of modified paths within the working directory.
++ */
++enum fsmonitor_path_type {
++	IS_WORKDIR_PATH = 0,
 +
-+test_expect_success FSMONITOR_DAEMON 'try running fsmonitor-daemon in virtual repo' '
-+	test_when_finished "rm -rf ./fake-virtual-clone" &&
-+	git clone . ./fake-virtual-clone &&
-+	test_must_fail git -C ./fake-virtual-clone \
-+			   -c core.virtualfilesystem=true \
-+			   fsmonitor--daemon run 2>actual &&
-+	grep "fsmonitor-daemon is incompatible with this repo" actual
-+'
++	IS_DOT_GIT,
++	IS_INSIDE_DOT_GIT,
++	IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX,
 +
- test_expect_success 'incompatible core.virtualfilesystem' '
- 	test_when_finished "rm -rf ./fake-gvfs-clone" &&
- 	git clone . ./fake-gvfs-clone &&
++	IS_GITDIR,
++	IS_INSIDE_GITDIR,
++	IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX,
++
++	IS_OUTSIDE_CONE,
++};
++
++/*
++ * Classify a pathname relative to the root of the working directory.
++ */
++enum fsmonitor_path_type fsmonitor_classify_path_workdir_relative(
++	const char *relative_path);
++
++/*
++ * Classify a pathname relative to a <gitdir> that is external to the
++ * worktree directory.
++ */
++enum fsmonitor_path_type fsmonitor_classify_path_gitdir_relative(
++	const char *relative_path);
++
++/*
++ * Classify an absolute pathname received from a filesystem event.
++ */
++enum fsmonitor_path_type fsmonitor_classify_path_absolute(
++	struct fsmonitor_daemon_state *state,
++	const char *path);
++
+ #endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
+ #endif /* FSMONITOR_DAEMON_H */
 -- 
 gitgitgadget
 
