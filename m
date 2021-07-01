@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C4A7C11F6A
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21EB6C11F64
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5347D61414
-	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0888E6141C
+	for <git@archiver.kernel.org>; Thu,  1 Jul 2021 14:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233235AbhGAOur (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233267AbhGAOur (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 1 Jul 2021 10:50:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37462 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232894AbhGAOuf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233042AbhGAOuf (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 1 Jul 2021 10:50:35 -0400
 Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7693C06178A
-        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:03 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id v5so8607706wrt.3
-        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBF2C0613E8
+        for <git@vger.kernel.org>; Thu,  1 Jul 2021 07:48:02 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id l8so8544243wry.13
+        for <git@vger.kernel.org>; Thu, 01 Jul 2021 07:48:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TOIsbteyOxly7Ebv5T9N4h7JB9VV+mW6FkAPqdMo/4k=;
-        b=PA/nclOQw2yvYYNrnEaaUCBzGpjWSMKEl9X8OigaY9jXH88KRky3HEcFuqL3NF6GU5
-         uVbIEPOHA+mLsf+phknKSagsrGNIVhY3HZQFlAhJicWUpvwbIukR6/x3cTQUv7gDxQhE
-         gFiA0vcXR1eddBRxz/mcBAtucsc42S1pvLTrj/uR+i77w0LF8PcmoYWD9Vvvup8HxvW9
-         oritKfV+0XtQUajOIqj3STfA/ME2qp+J7yL/SVEFIgbcT3r9diuP7XFs/lvYfj3G4mB6
-         aM+S+Mdul4l5zFFQAJkF0U3SyOi9NvBv2tIeuMiO0pR2V9zUMSxGGFVztc+vxnRKLy4+
-         FMnw==
+        bh=isJoYhm2+oaxv7Cx3ZTwRhx3+algwlrSdiIX84BJk2M=;
+        b=Y6AJ8if8NNi0iq4C4Xl7k3eOHvff2W5J8BbT3I8NyQPZ2f+7V8kCpK3jfwunCEEYlV
+         b9OxaXFOSuvgsq6PdZ0e5gIeyz5jqirvid4ibGzLG2zVWybvE3MZOE3IMYaD+DbdTVr6
+         9rbAWgusDfd/wiOckj1O1zmUeKYL9bobiWBfHzFk9lmNzAUsXLZTP4cQvjl8brQiNArU
+         cU4VEJbXJGlplQM/qTiHpawDjpWOfh9NgsC4GCC4IkHvutwmkYZSb15/eDS/yQYQvoiN
+         Gh1HpRkVSdDyp54Ax8ViitPhNH0msIzo3VsuKibTaTUKr7LXIwZhzTLqW1LtlmzQheIk
+         c1WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TOIsbteyOxly7Ebv5T9N4h7JB9VV+mW6FkAPqdMo/4k=;
-        b=OFhj3+E6S0szUZEF2SPSYGxMrnCm0pMG0k3h9B+fr7LaSidDfa1MbCaQkyuObXO4EN
-         8288UBOzo4rI/jbdJQEHPTpYWst4/QAo0zxxaZvNC5n/kyzdwmPQ8pIYq3euOXvp8flP
-         YFvfQ5B+zmzWwoW8uqYeMgOlMuel4QlOcZ0Ub+spNqZlX9ajzdyxVc8+VnmkGtTzyD+3
-         7qFaI+ZTf4x5GLfytV06/RBelyIZBt4rWt5hMpXkBwRC6ea3fSyUx7P/FTzMg/HXBo1h
-         jrLD15OPOFWOa1LzAByDpgsCWUp65R0rqxYfTtk08qRu/OCmMoWSteiUfC3WS+EQOWcU
-         EpBw==
-X-Gm-Message-State: AOAM532R53Knb9CqqGgzW4blU5urnwSTLP31ANayE9epl5Jaz65Fme46
-        vdqZcKz3tU3Jqekwmf4jIgllhhZ9z+U=
-X-Google-Smtp-Source: ABdhPJx258gqv6MY88BdLfAV3CzP/hNWrEIA2AkPWUU2lbjQqfgGYBAZ9hGM74Sb9On0iKHiVbflrg==
-X-Received: by 2002:a5d:498d:: with SMTP id r13mr21350332wrq.379.1625150882346;
-        Thu, 01 Jul 2021 07:48:02 -0700 (PDT)
+        bh=isJoYhm2+oaxv7Cx3ZTwRhx3+algwlrSdiIX84BJk2M=;
+        b=h3FRQtz1z5SHu7iQYkZGp6uoSDyunDZszsFXjtd2s0uRBCtGb9agOWd1Z+3HKTfmO/
+         I3hXZ0DRUVWdTU0069ZdEEmislvz+YeTPWPpqGx3dTC/W9BYL5OyA1Zq87mO83SUe3Dj
+         RWWKH6d9c72EO5bgmdXVLvRXurxo8jZ5Xz4DRuCeo80Ww/JTPktdleAwZKN7rJz17sGs
+         EGtZ9TTO68r2KMHuf5TY4GVgHpG9/18+PAeGYWm+Nl1/UVRitW8Glil4AVdBj4misoEs
+         E9EfAGnIVrXGnYbd3JZCFeFMHzJEUmnQQk1ZHLg9iDvPz8o4BBzBoukbnvNDFTV+mdQt
+         0HOg==
+X-Gm-Message-State: AOAM530k5B2oAGmKvPKsFF0TE6cXTsJ+uMoUfy6cJARq22IzqQ6+GXiE
+        p/hRsFL38uFVjNb71w+5QrQlaO/NRWE=
+X-Google-Smtp-Source: ABdhPJzTjQmJg63pe1oJJvxQduENIFMuGAasDbFkuCDi9+RNnUp2uE7IKQsxpSyoimXqnhKS5gtRzg==
+X-Received: by 2002:adf:b64b:: with SMTP id i11mr46909417wre.393.1625150881196;
+        Thu, 01 Jul 2021 07:48:01 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y7sm9726141wma.22.2021.07.01.07.48.01
+        by smtp.gmail.com with ESMTPSA id g17sm157565wrw.31.2021.07.01.07.48.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jul 2021 07:48:02 -0700 (PDT)
-Message-Id: <555caca2216dd3e459c118d76b46eb983a58e051.1625150864.git.gitgitgadget@gmail.com>
+        Thu, 01 Jul 2021 07:48:00 -0700 (PDT)
+Message-Id: <99279c0ebd2b36fe276301f018ca4e24e4cdff36.1625150864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>
         <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Jul 2021 14:47:39 +0000
-Subject: [PATCH v3 29/34] fsmonitor--daemon: use a cookie file to sync with
- file system
+Date:   Thu, 01 Jul 2021 14:47:37 +0000
+Subject: [PATCH v3 27/34] t7527: create test for fsmonitor--daemon
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,364 +79,515 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon client threads to create a cookie file
-inside the .git directory and then wait until FS events for the
-cookie are observed by the FS listener thread.
-
-This helps address the racy nature of file system events by
-blocking the client response until the kernel has drained any
-event backlog.
-
-This is especially important on MacOS where kernel events are
-only issued with a limited frequency.  See the `latency` argument
-of `FSeventStreamCreate()`.  The kernel only signals every `latency`
-seconds, but does not guarantee that the kernel queue is completely
-drained, so we may have to wait more than one interval.  If we
-increase the frequency, the system is more likely to drop events.
-We avoid these issues by having each client thread create a unique
-cookie file and then wait until it is seen in the event stream.
-
-Co-authored-by: Kevin Willford <Kevin.Willford@microsoft.com>
-Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 228 +++++++++++++++++++++++++++++++++++-
- fsmonitor--daemon.h         |   5 +
- 2 files changed, 232 insertions(+), 1 deletion(-)
+ t/t7527-builtin-fsmonitor.sh | 497 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 497 insertions(+)
+ create mode 100755 t/t7527-builtin-fsmonitor.sh
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 8249420ba18..25f18f2726b 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -94,6 +94,149 @@ static int do_as_client__status(void)
- 	}
- }
- 
-+enum fsmonitor_cookie_item_result {
-+	FCIR_ERROR = -1, /* could not create cookie file ? */
-+	FCIR_INIT = 0,
-+	FCIR_SEEN,
-+	FCIR_ABORT,
-+};
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+new file mode 100755
+index 00000000000..58b56dc9940
+--- /dev/null
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -0,0 +1,497 @@
++#!/bin/sh
 +
-+struct fsmonitor_cookie_item {
-+	struct hashmap_entry entry;
-+	const char *name;
-+	enum fsmonitor_cookie_item_result result;
-+};
++test_description='built-in file system watcher'
 +
-+static int cookies_cmp(const void *data, const struct hashmap_entry *he1,
-+		     const struct hashmap_entry *he2, const void *keydata)
-+{
-+	const struct fsmonitor_cookie_item *a =
-+		container_of(he1, const struct fsmonitor_cookie_item, entry);
-+	const struct fsmonitor_cookie_item *b =
-+		container_of(he2, const struct fsmonitor_cookie_item, entry);
++. ./test-lib.sh
 +
-+	return strcmp(a->name, keydata ? keydata : b->name);
++if ! test_have_prereq FSMONITOR_DAEMON
++then
++	skip_all="fsmonitor--daemon is not supported on this platform"
++	test_done
++fi
++
++stop_daemon_delete_repo () {
++	r=$1
++	git -C $r fsmonitor--daemon stop >/dev/null 2>/dev/null
++	rm -rf $1
++	return 0
 +}
 +
-+static enum fsmonitor_cookie_item_result with_lock__wait_for_cookie(
-+	struct fsmonitor_daemon_state *state)
-+{
-+	/* assert current thread holding state->main_lock */
++start_daemon () {
++	case "$#" in
++		1) r="-C $1";;
++		*) r="";
++	esac
 +
-+	int fd;
-+	struct fsmonitor_cookie_item *cookie;
-+	struct strbuf cookie_pathname = STRBUF_INIT;
-+	struct strbuf cookie_filename = STRBUF_INIT;
-+	enum fsmonitor_cookie_item_result result;
-+	int my_cookie_seq;
++	git $r fsmonitor--daemon start || return $?
++	git $r fsmonitor--daemon status || return $?
 +
-+	CALLOC_ARRAY(cookie, 1);
-+
-+	my_cookie_seq = state->cookie_seq++;
-+
-+	strbuf_addf(&cookie_filename, "%i-%i", getpid(), my_cookie_seq);
-+
-+	strbuf_addbuf(&cookie_pathname, &state->path_cookie_prefix);
-+	strbuf_addbuf(&cookie_pathname, &cookie_filename);
-+
-+	cookie->name = strbuf_detach(&cookie_filename, NULL);
-+	cookie->result = FCIR_INIT;
-+	hashmap_entry_init(&cookie->entry, strhash(cookie->name));
-+
-+	hashmap_add(&state->cookies, &cookie->entry);
-+
-+	trace_printf_key(&trace_fsmonitor, "cookie-wait: '%s' '%s'",
-+			 cookie->name, cookie_pathname.buf);
-+
-+	/*
-+	 * Create the cookie file on disk and then wait for a notification
-+	 * that the listener thread has seen it.
-+	 */
-+	fd = open(cookie_pathname.buf, O_WRONLY | O_CREAT | O_EXCL, 0600);
-+	if (fd >= 0) {
-+		close(fd);
-+		unlink(cookie_pathname.buf);
-+
-+		/*
-+		 * NEEDSWORK: This is an infinite wait (well, unless another
-+		 * thread sends us an abort).  I'd like to change this to
-+		 * use `pthread_cond_timedwait()` and return an error/timeout
-+		 * and let the caller do the trivial response thing.
-+		 */
-+		while (cookie->result == FCIR_INIT)
-+			pthread_cond_wait(&state->cookies_cond,
-+					  &state->main_lock);
-+	} else {
-+		error_errno(_("could not create fsmonitor cookie '%s'"),
-+			    cookie->name);
-+
-+		cookie->result = FCIR_ERROR;
-+	}
-+
-+	hashmap_remove(&state->cookies, &cookie->entry, NULL);
-+
-+	result = cookie->result;
-+
-+	free((char*)cookie->name);
-+	free(cookie);
-+	strbuf_release(&cookie_pathname);
-+
-+	return result;
++	return 0
 +}
 +
-+/*
-+ * Mark these cookies as _SEEN and wake up the corresponding client threads.
-+ */
-+static void with_lock__mark_cookies_seen(struct fsmonitor_daemon_state *state,
-+					 const struct string_list *cookie_names)
-+{
-+	/* assert current thread holding state->main_lock */
++test_expect_success 'explicit daemon start and stop' '
++	test_when_finished "stop_daemon_delete_repo test_explicit" &&
 +
-+	int k;
-+	int nr_seen = 0;
++	git init test_explicit &&
++	start_daemon test_explicit &&
 +
-+	for (k = 0; k < cookie_names->nr; k++) {
-+		struct fsmonitor_cookie_item key;
-+		struct fsmonitor_cookie_item *cookie;
++	git -C test_explicit fsmonitor--daemon stop &&
++	test_must_fail git -C test_explicit fsmonitor--daemon status
++'
 +
-+		key.name = cookie_names->items[k].string;
-+		hashmap_entry_init(&key.entry, strhash(key.name));
++test_expect_success 'implicit daemon start' '
++	test_when_finished "stop_daemon_delete_repo test_implicit" &&
 +
-+		cookie = hashmap_get_entry(&state->cookies, &key, entry, NULL);
-+		if (cookie) {
-+			trace_printf_key(&trace_fsmonitor, "cookie-seen: '%s'",
-+					 cookie->name);
-+			cookie->result = FCIR_SEEN;
-+			nr_seen++;
-+		}
-+	}
++	git init test_implicit &&
++	test_must_fail git -C test_implicit fsmonitor--daemon status &&
 +
-+	if (nr_seen)
-+		pthread_cond_broadcast(&state->cookies_cond);
++	# query will implicitly start the daemon.
++	#
++	# for test-script simplicity, we send a V1 timestamp rather than
++	# a V2 token.  either way, the daemon response to any query contains
++	# a new V2 token.  (the daemon may complain that we sent a V1 request,
++	# but this test case is only concerned with whether the daemon was
++	# implicitly started.)
++
++	GIT_TRACE2_EVENT="$(pwd)/.git/trace" \
++		test-tool -C test_implicit fsmonitor-client query --token 0 >actual &&
++	nul_to_q <actual >actual.filtered &&
++	grep "builtin:" actual.filtered &&
++
++	# confirm that a daemon was started in the background.
++	#
++	# since the mechanism for starting the background daemon is platform
++	# dependent, just confirm that the foreground command received a
++	# response from the daemon.
++
++	grep :\"query/response-length\" .git/trace &&
++
++	git -C test_implicit fsmonitor--daemon status &&
++	git -C test_implicit fsmonitor--daemon stop &&
++	test_must_fail git -C test_implicit fsmonitor--daemon status
++'
++
++test_expect_success 'implicit daemon stop (delete .git)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_1" &&
++
++	git init test_implicit_1 &&
++
++	start_daemon test_implicit_1 &&
++
++	# deleting the .git directory will implicitly stop the daemon.
++	rm -rf test_implicit_1/.git &&
++
++	# [1] Create an empty .git directory so that the following Git
++	#     command will stay relative to the `-C` directory.
++	#
++	#     Without this, the Git command will override the requested
++	#     -C argument and crawl out to the containing Git source tree.
++	#     This would make the test result dependent upon whether we
++	#     were using fsmonitor on our development worktree.
++	#
++	sleep 1 &&
++	mkdir test_implicit_1/.git &&
++
++	test_must_fail git -C test_implicit_1 fsmonitor--daemon status
++'
++
++test_expect_success 'implicit daemon stop (rename .git)' '
++	test_when_finished "stop_daemon_delete_repo test_implicit_2" &&
++
++	git init test_implicit_2 &&
++
++	start_daemon test_implicit_2 &&
++
++	# renaming the .git directory will implicitly stop the daemon.
++	mv test_implicit_2/.git test_implicit_2/.xxx &&
++
++	# See [1] above.
++	#
++	sleep 1 &&
++	mkdir test_implicit_2/.git &&
++
++	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
++'
++
++test_expect_success 'cannot start multiple daemons' '
++	test_when_finished "stop_daemon_delete_repo test_multiple" &&
++
++	git init test_multiple &&
++
++	start_daemon test_multiple &&
++
++	test_must_fail git -C test_multiple fsmonitor--daemon start 2>actual &&
++	grep "fsmonitor--daemon is already running" actual &&
++
++	git -C test_multiple fsmonitor--daemon stop &&
++	test_must_fail git -C test_multiple fsmonitor--daemon status
++'
++
++# These tests use the main repo in the trash directory
++
++test_expect_success 'setup' '
++	>tracked &&
++	>modified &&
++	>delete &&
++	>rename &&
++	mkdir dir1 &&
++	>dir1/tracked &&
++	>dir1/modified &&
++	>dir1/delete &&
++	>dir1/rename &&
++	mkdir dir2 &&
++	>dir2/tracked &&
++	>dir2/modified &&
++	>dir2/delete &&
++	>dir2/rename &&
++	mkdir dirtorename &&
++	>dirtorename/a &&
++	>dirtorename/b &&
++
++	cat >.gitignore <<-\EOF &&
++	.gitignore
++	expect*
++	actual*
++	EOF
++
++	git -c core.useBuiltinFSMonitor= add . &&
++	test_tick &&
++	git -c core.useBuiltinFSMonitor= commit -m initial &&
++
++	git config core.useBuiltinFSMonitor true
++'
++
++# The test already explicitly stopped (or tried to stop) the daemon.
++# This is here in case something else fails first.
++#
++redundant_stop_daemon () {
++	git fsmonitor--daemon stop
++	return 0
 +}
 +
-+/*
-+ * Set _ABORT on all pending cookies and wake up all client threads.
-+ */
-+static void with_lock__abort_all_cookies(struct fsmonitor_daemon_state *state)
-+{
-+	/* assert current thread holding state->main_lock */
++test_expect_success 'update-index implicitly starts daemon' '
++	test_when_finished redundant_stop_daemon &&
 +
-+	struct hashmap_iter iter;
-+	struct fsmonitor_cookie_item *cookie;
-+	int nr_aborted = 0;
++	test_must_fail git fsmonitor--daemon status &&
 +
-+	hashmap_for_each_entry(&state->cookies, &iter, cookie, entry) {
-+		trace_printf_key(&trace_fsmonitor, "cookie-abort: '%s'",
-+				 cookie->name);
-+		cookie->result = FCIR_ABORT;
-+		nr_aborted++;
-+	}
++	GIT_TRACE2_EVENT="$(pwd)/.git/trace_implicit_1" \
++		git update-index --fsmonitor &&
 +
-+	if (nr_aborted)
-+		pthread_cond_broadcast(&state->cookies_cond);
++	git fsmonitor--daemon status &&
++	test_might_fail git fsmonitor--daemon stop &&
++
++	grep \"event\":\"start\".*\"fsmonitor--daemon\" .git/trace_implicit_1
++'
++
++test_expect_success 'status implicitly starts daemon' '
++	test_when_finished redundant_stop_daemon &&
++
++	test_must_fail git fsmonitor--daemon status &&
++
++	GIT_TRACE2_EVENT="$(pwd)/.git/trace_implicit_2" \
++		git status >actual &&
++
++	git fsmonitor--daemon status &&
++	test_might_fail git fsmonitor--daemon stop &&
++
++	grep \"event\":\"start\".*\"fsmonitor--daemon\" .git/trace_implicit_2
++'
++
++edit_files() {
++	echo 1 >modified
++	echo 2 >dir1/modified
++	echo 3 >dir2/modified
++	>dir1/untracked
 +}
 +
- /*
-  * Requests to and from a FSMonitor Protocol V2 provider use an opaque
-  * "token" as a virtual timestamp.  Clients can request a summary of all
-@@ -397,6 +540,9 @@ static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
-  *     We should create a new token and start fresh (as if we just
-  *     booted up).
-  *
-+ * [2] Some of those lost events may have been for cookie files.  We
-+ *     should assume the worst and abort them rather letting them starve.
-+ *
-  * If there are no concurrent threads readering the current token data
-  * series, we can free it now.  Otherwise, let the last reader free
-  * it.
-@@ -418,6 +564,8 @@ static void with_lock__do_force_resync(struct fsmonitor_daemon_state *state)
- 	state->current_token_data = new_one;
- 
- 	fsmonitor_free_token_data(free_me);
++delete_files() {
++	rm -f delete
++	rm -f dir1/delete
++	rm -f dir2/delete
++}
 +
-+	with_lock__abort_all_cookies(state);
- }
- 
- void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
-@@ -492,6 +640,8 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 	int hash_ret;
- 	int do_trivial = 0;
- 	int do_flush = 0;
-+	int do_cookie = 0;
-+	enum fsmonitor_cookie_item_result cookie_result;
- 
- 	/*
- 	 * We expect `command` to be of the form:
-@@ -552,6 +702,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 			 * We have a V2 valid token:
- 			 *     "builtin:<token_id>:<seq_nr>"
- 			 */
-+			do_cookie = 1;
- 		}
- 	}
- 
-@@ -560,6 +711,30 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 	if (!state->current_token_data)
- 		BUG("fsmonitor state does not have a current token");
- 
-+	/*
-+	 * Write a cookie file inside the directory being watched in
-+	 * an effort to flush out existing filesystem events that we
-+	 * actually care about.  Suspend this client thread until we
-+	 * see the filesystem events for this cookie file.
-+	 *
-+	 * Creating the cookie lets us guarantee that our FS listener
-+	 * thread has drained the kernel queue and we are caught up
-+	 * with the kernel.
-+	 *
-+	 * If we cannot create the cookie (or otherwise guarantee that
-+	 * we are caught up), we send a trivial response.  We have to
-+	 * assume that there might be some very, very recent activity
-+	 * on the FS still in flight.
-+	 */
-+	if (do_cookie) {
-+		cookie_result = with_lock__wait_for_cookie(state);
-+		if (cookie_result != FCIR_SEEN) {
-+			error(_("fsmonitor: cookie_result '%d' != SEEN"),
-+			      cookie_result);
-+			do_trivial = 1;
-+		}
-+	}
++create_files() {
++	echo 1 >new
++	echo 2 >dir1/new
++	echo 3 >dir2/new
++}
 +
- 	if (do_flush)
- 		with_lock__do_force_resync(state);
- 
-@@ -771,7 +946,9 @@ static int handle_client(void *data,
- 	return result;
- }
- 
--#define FSMONITOR_COOKIE_PREFIX ".fsmonitor-daemon-"
-+#define FSMONITOR_DIR           "fsmonitor--daemon"
-+#define FSMONITOR_COOKIE_DIR    "cookies"
-+#define FSMONITOR_COOKIE_PREFIX (FSMONITOR_DIR "/" FSMONITOR_COOKIE_DIR "/")
- 
- enum fsmonitor_path_type fsmonitor_classify_path_workdir_relative(
- 	const char *rel)
-@@ -924,6 +1101,9 @@ void fsmonitor_publish(struct fsmonitor_daemon_state *state,
- 		}
- 	}
- 
-+	if (cookie_names->nr)
-+		with_lock__mark_cookies_seen(state, cookie_names);
++rename_files() {
++	mv rename renamed
++	mv dir1/rename dir1/renamed
++	mv dir2/rename dir2/renamed
++}
 +
- 	pthread_mutex_unlock(&state->main_lock);
- }
- 
-@@ -1013,7 +1193,9 @@ static int fsmonitor_run_daemon(void)
- 
- 	memset(&state, 0, sizeof(state));
- 
-+	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
- 	pthread_mutex_init(&state.main_lock, NULL);
-+	pthread_cond_init(&state.cookies_cond, NULL);
- 	state.error_code = 0;
- 	state.current_token_data = fsmonitor_new_token_data();
- 
-@@ -1038,6 +1220,44 @@ static int fsmonitor_run_daemon(void)
- 		state.nr_paths_watching = 2;
- 	}
- 
-+	/*
-+	 * We will write filesystem syncing cookie files into
-+	 * <gitdir>/<fsmonitor-dir>/<cookie-dir>/<pid>-<seq>.
-+	 *
-+	 * The extra layers of subdirectories here keep us from
-+	 * changing the mtime on ".git/" or ".git/foo/" when we create
-+	 * or delete cookie files.
-+	 *
-+	 * There have been problems with some IDEs that do a
-+	 * non-recursive watch of the ".git/" directory and run a
-+	 * series of commands any time something happens.
-+	 *
-+	 * For example, if we place our cookie files directly in
-+	 * ".git/" or ".git/foo/" then a `git status` (or similar
-+	 * command) from the IDE will cause a cookie file to be
-+	 * created in one of those dirs.  This causes the mtime of
-+	 * those dirs to change.  This triggers the IDE's watch
-+	 * notification.  This triggers the IDE to run those commands
-+	 * again.  And the process repeats and the machine never goes
-+	 * idle.
-+	 *
-+	 * Adding the extra layers of subdirectories prevents the
-+	 * mtime of ".git/" and ".git/foo" from changing when a
-+	 * cookie file is created.
-+	 */
-+	strbuf_init(&state.path_cookie_prefix, 0);
-+	strbuf_addbuf(&state.path_cookie_prefix, &state.path_gitdir_watch);
++file_to_directory() {
++	rm -f delete
++	mkdir delete
++	echo 1 >delete/new
++}
 +
-+	strbuf_addch(&state.path_cookie_prefix, '/');
-+	strbuf_addstr(&state.path_cookie_prefix, FSMONITOR_DIR);
-+	mkdir(state.path_cookie_prefix.buf, 0777);
++directory_to_file() {
++	rm -rf dir1
++	echo 1 >dir1
++}
 +
-+	strbuf_addch(&state.path_cookie_prefix, '/');
-+	strbuf_addstr(&state.path_cookie_prefix, FSMONITOR_COOKIE_DIR);
-+	mkdir(state.path_cookie_prefix.buf, 0777);
++verify_status() {
++	git status >actual &&
++	GIT_INDEX_FILE=.git/fresh-index git read-tree master &&
++	GIT_INDEX_FILE=.git/fresh-index git -c core.useBuiltinFSMonitor= status >expect &&
++	test_cmp expect actual &&
++	echo HELLO AFTER &&
++	cat .git/trace &&
++	echo HELLO AFTER
++}
 +
-+	strbuf_addch(&state.path_cookie_prefix, '/');
++# The next few test cases confirm that our fsmonitor daemon sees each type
++# of OS filesystem notification that we care about.  At this layer we just
++# ensure we are getting the OS notifications and do not try to confirm what
++# is reported by `git status`.
++#
++# We run a simple query after modifying the filesystem just to introduce
++# a bit of a delay so that the trace logging from the daemon has time to
++# get flushed to disk.
++#
++# We `reset` and `clean` at the bottom of each test (and before stopping the
++# daemon) because these commands might implicitly restart the daemon.
 +
- 	/*
- 	 * Confirm that we can create platform-specific resources for the
- 	 * filesystem listener before we bother starting all the threads.
-@@ -1050,6 +1270,7 @@ static int fsmonitor_run_daemon(void)
- 	err = fsmonitor_run_daemon_1(&state);
- 
- done:
-+	pthread_cond_destroy(&state.cookies_cond);
- 	pthread_mutex_destroy(&state.main_lock);
- 	fsmonitor_fs_listen__dtor(&state);
- 
-@@ -1057,6 +1278,11 @@ done:
- 
- 	strbuf_release(&state.path_worktree_watch);
- 	strbuf_release(&state.path_gitdir_watch);
-+	strbuf_release(&state.path_cookie_prefix);
++clean_up_repo_and_stop_daemon () {
++	git reset --hard HEAD
++	git clean -fd
++	git fsmonitor--daemon stop
++	rm -f .git/trace
++}
 +
-+	/*
-+	 * NEEDSWORK: Consider "rm -rf <gitdir>/<fsmonitor-dir>"
-+	 */
- 
- 	return err;
- }
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 89a9ef20b24..e9fc099bae9 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -45,6 +45,11 @@ struct fsmonitor_daemon_state {
- 
- 	struct fsmonitor_token_data *current_token_data;
- 
-+	struct strbuf path_cookie_prefix;
-+	pthread_cond_t cookies_cond;
-+	int cookie_seq;
-+	struct hashmap cookies;
++test_expect_success 'edit some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
 +
- 	int error_code;
- 	struct fsmonitor_daemon_backend_data *backend_data;
- 
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	edit_files &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: dir1/modified$"  .git/trace &&
++	grep "^event: dir2/modified$"  .git/trace &&
++	grep "^event: modified$"       .git/trace &&
++	grep "^event: dir1/untracked$" .git/trace
++'
++
++test_expect_success 'create some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	create_files &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: dir1/new$" .git/trace &&
++	grep "^event: dir2/new$" .git/trace &&
++	grep "^event: new$"      .git/trace
++'
++
++test_expect_success 'delete some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	delete_files &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: dir1/delete$" .git/trace &&
++	grep "^event: dir2/delete$" .git/trace &&
++	grep "^event: delete$"      .git/trace
++'
++
++test_expect_success 'rename some files' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	rename_files &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: dir1/rename$"  .git/trace &&
++	grep "^event: dir2/rename$"  .git/trace &&
++	grep "^event: rename$"       .git/trace &&
++	grep "^event: dir1/renamed$" .git/trace &&
++	grep "^event: dir2/renamed$" .git/trace &&
++	grep "^event: renamed$"      .git/trace
++'
++
++test_expect_success 'rename directory' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	mv dirtorename dirrenamed &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: dirtorename/*$" .git/trace &&
++	grep "^event: dirrenamed/*$"  .git/trace
++'
++
++test_expect_success 'file changes to directory' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	file_to_directory &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: delete$"     .git/trace &&
++	grep "^event: delete/new$" .git/trace
++'
++
++test_expect_success 'directory changes to a file' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	(
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon
++	) &&
++
++	directory_to_file &&
++
++	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
++
++	grep "^event: dir1$" .git/trace
++'
++
++# The next few test cases exercise the token-resync code.  When filesystem
++# drops events (because of filesystem velocity or because the daemon isn't
++# polling fast enough), we need to discard the cached data (relative to the
++# current token) and start collecting events under a new token.
++#
++# the 'test-tool fsmonitor-client flush' command can be used to send a
++# "flush" message to a running daemon and ask it to do a flush/resync.
++
++test_expect_success 'flush cached data' '
++	test_when_finished "stop_daemon_delete_repo test_flush" &&
++
++	git init test_flush &&
++
++	(
++		GIT_TEST_FSMONITOR_TOKEN=true &&
++		export GIT_TEST_FSMONITOR_TOKEN &&
++
++		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace_daemon" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon test_flush
++	) &&
++
++	# The daemon should have an initial token with no events in _0 and
++	# then a few (probably platform-specific number of) events in _1.
++	# These should both have the same <token_id>.
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000001:0" >actual_0 &&
++	nul_to_q <actual_0 >actual_q0 &&
++
++	touch test_flush/file_1 &&
++	touch test_flush/file_2 &&
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000001:0" >actual_1 &&
++	nul_to_q <actual_1 >actual_q1 &&
++
++	grep "file_1" actual_q1 &&
++
++	# Force a flush.  This will change the <token_id>, reset the <seq_nr>, and
++	# flush the file data.  Then create some events and ensure that the file
++	# again appears in the cache.  It should have the new <token_id>.
++
++	test-tool -C test_flush fsmonitor-client flush >flush_0 &&
++	nul_to_q <flush_0 >flush_q0 &&
++	grep "^builtin:test_00000002:0Q/Q$" flush_q0 &&
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_2 &&
++	nul_to_q <actual_2 >actual_q2 &&
++
++	grep "^builtin:test_00000002:0Q$" actual_q2 &&
++
++	touch test_flush/file_3 &&
++
++	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_3 &&
++	nul_to_q <actual_3 >actual_q3 &&
++
++	grep "file_3" actual_q3
++'
++
++# The next few test cases create repos where the .git directory is NOT
++# inside the one of the working directory.  That is, where .git is a file
++# that points to a directory elsewhere.  This happens for submodules and
++# non-primary worktrees.
++
++test_expect_success 'setup worktree base' '
++	git init wt-base &&
++	echo 1 >wt-base/file1 &&
++	git -C wt-base add file1 &&
++	git -C wt-base commit -m "c1"
++'
++
++test_expect_success 'worktree with .git file' '
++	git -C wt-base worktree add ../wt-secondary &&
++
++	(
++		GIT_TRACE2_PERF="$(pwd)/trace2_wt_secondary" &&
++		export GIT_TRACE2_PERF &&
++
++		GIT_TRACE_FSMONITOR="$(pwd)/trace_wt_secondary" &&
++		export GIT_TRACE_FSMONITOR &&
++
++		start_daemon wt-secondary
++	) &&
++
++	git -C wt-secondary fsmonitor--daemon stop &&
++	test_must_fail git -C wt-secondary fsmonitor--daemon status
++'
++
++# NEEDSWORK: Repeat one of the "edit" tests on wt-secondary and
++# confirm that we get the same events and behavior -- that is, that
++# fsmonitor--daemon correctly watches BOTH the working directory and
++# the external GITDIR directory and behaves the same as when ".git"
++# is a directory inside the working directory.
++
++test_expect_success 'cleanup worktrees' '
++	stop_daemon_delete_repo wt-secondary &&
++	stop_daemon_delete_repo wt-base
++'
++
++test_done
 -- 
 gitgitgadget
 
