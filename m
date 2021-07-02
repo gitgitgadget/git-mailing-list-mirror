@@ -2,188 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D02BC11F68
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 15:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B9AC11F6A
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 15:10:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7075461405
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 15:04:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 018C66141D
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 15:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231753AbhGBPHA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 11:07:00 -0400
-Received: from 82-64-198-250.subs.proxad.net ([82.64.198.250]:34198 "EHLO
-        mail.lhuard.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231549AbhGBPG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 11:06:59 -0400
-Received: from coruscant.lhuard.fr (unknown [IPv6:2a01:e0a:465:5440:796c:f829:f2b6:ea8e])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S232171AbhGBPNK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 11:13:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63401 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232108AbhGBPNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 11:13:10 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E148814C7A6;
+        Fri,  2 Jul 2021 11:10:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=rAzsgj8WxaOw
+        S9iZMkYdpsHWL8uuj/81rO3t+iBLivs=; b=MJqZTjp+Zn4Lasjj+rjTH+5nXY7V
+        m2EE5lkkf0lplMgUttPCjKMmEVggue/GjQ2DgNweXuGCTEwZdcLLgjUwf7OedhzV
+        EVNnJqIoBoSOAZPgRpnXjQ+wPJ2+51up5MvPFDF/L1QQzirOHbHT84aecsAgrZBJ
+        f89fpAviPFFaXjQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D9BE114C7A5;
+        Fri,  2 Jul 2021 11:10:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.3.135])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.lhuard.fr (Postfix) with ESMTPSA id 01ED94A597D;
-        Fri,  2 Jul 2021 17:04:21 +0200 (CEST)
-Authentication-Results: mail.lhuard.fr; dmarc=fail (p=quarantine dis=none) header.from=lhuard.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lhuard.fr; s=rpi3;
-        t=1625238262; bh=335ctzJb5N8l3+ls83WbbZr+Ff+NjF2z4P+LIuibW80=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=gqceaP/JNlZuvppIlnFE070o5JQdt9CRHCMDIqfD1pPoAxtIW+G3YwDio6m5T4hyX
-         q8yEGtoPx3cdlv/p04gQrU3qDfNIQqN+RHtYLOgqxRWrtdILySQCNbpzZXRiM3LfTV
-         qBdMILkH0bkRrc2Byy21KmjogIghZmOiLX4pbErk=
-From:   =?ISO-8859-1?Q?L=E9na=EFc?= Huard <lenaic@lhuard.fr>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Martin =?ISO-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 2/3] maintenance: `git maintenance run` learned `--scheduler=<scheduler>`
-Date:   Fri, 02 Jul 2021 17:04:10 +0200
-Message-ID: <2080051.vtJqlmqO2r@coruscant.lhuard.fr>
-In-Reply-To: <CAPig+cSLi7aN=6ahrHwy4fO-7JMBN3pmzfpWe5ZXOcC9j4+e+g@mail.gmail.com>
-References: <20210608134000.663398-1-lenaic@lhuard.fr> <20210612165043.165579-3-lenaic@lhuard.fr> <CAPig+cSLi7aN=6ahrHwy4fO-7JMBN3pmzfpWe5ZXOcC9j4+e+g@mail.gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C585F14C7A1;
+        Fri,  2 Jul 2021 11:10:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 2/3] bundle doc: elaborate on object prerequisites
+References: <cover-0.3-00000000000-20210630T091548Z-avarab@gmail.com>
+        <cover-0.3-00000000000-20210702T112254Z-avarab@gmail.com>
+        <patch-2.3-444b06740bc-20210702T112254Z-avarab@gmail.com>
+Date:   Fri, 02 Jul 2021 08:10:32 -0700
+In-Reply-To: <patch-2.3-444b06740bc-20210702T112254Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 2 Jul
+ 2021 13:26:54 +0200")
+Message-ID: <xmqq7di8rbtj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A68B6940-DB47-11EB-BE76-FA9E2DDBB1FC-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le lundi 14 juin 2021, 06:36:09 CEST Eric Sunshine a =C3=A9crit :
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Thanks. Unfortunately, I haven't been following this series too
-> closely since I reviewed v1, so I set aside time to review v6, which I
-> have now done.
-> =E2=80=A6
-> I do, though, have one question (below) about is_crontab_available()
-> for which I could not figure out the answer.
+> Split out the discussion bout "object prerequisites" into its own
+> section, and add some more examples of the common cases.
+>
+> See 2e0afafebd (Add git-bundle: move objects and references by
+> archive, 2007-02-22) for the introduction of the documentation being
+> changed here.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  Documentation/git-bundle.txt | 26 +++++++++++++++++++++++---
+>  1 file changed, 23 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.tx=
+t
+> index 9c743aed49f..f5430029b8c 100644
+> --- a/Documentation/git-bundle.txt
+> +++ b/Documentation/git-bundle.txt
+> @@ -45,6 +45,7 @@ header is (mostly) in the format emitted by linkgit:g=
+it-show-ref[1].
+> =20
+>  Like the the packed archive format itself bundles can either be
+>  self-contained, or be created using exclusions.
+> +See the "OBJECT PREREQUISITES" section below.
+> =20
+>  Bundles created using revision exclusions are "thin packs" created
+>  using the `--thin` option to linkgit:git-pack-objects[1], and
+> @@ -153,19 +154,38 @@ contained in the union of the given bases.  Each =
+basis can be
+>  specified explicitly (e.g. `^master~10`), or implicitly (e.g.
+>  `master~10..master`, `--since=3D10.days.ago master`).
+> =20
+> -It is very important that the basis used be held by the destination.
+> +OBJECT PREREQUISITES
+> +--------------------
+> +
+> +When creating bundles it is possible to create a fully self-contained
+> +bundle with all the prerequisite objects, as well as providing
+> +negative revisions to exclude prerequisite objects.
+> +
+> +A revision such as `new` will produce a tip with all the prerequisite
+> +objects needed for the `new` reference.
 
-Thank you very much for your review.
-I=E2=80=99ve just submitted a new re-roll that should address the points yo=
-u raised=20
-and in particular the `is_crontab_available` unexpected behavior.
+The above two paragraphs use the word "prerequisites" in a confusing
+way.  The original meaning of the word in the context of talking
+about a bundle is "you must have these commits in the receiving
+repository for the bundle to be unbundle-able".
 
-=E2=80=A6
-> > +static int is_launchctl_available(void)
-> > +{
-> > +       const char *cmd =3D "launchctl";
-> > +       int is_available;
-> > +       if (get_schedule_cmd(&cmd, &is_available))
-> > +               return is_available;
-> > +
-> > +#ifdef __APPLE__
-> > +       return 1;
-> > +#else
-> > +       return 0;
-> > +#endif
-> > +}
->=20
-> On this project, we usually frown upon #if conditionals within
-> functions since the code often can become unreadable. The usage in
-> this function doesn't suffer from that problem, however,
-> resolve_auto_scheduler() is somewhat ugly. An alternative would be to
-> set up these values outside of all functions, perhaps like this:
->=20
->     #ifdef __APPLE__
->     #define MAINT_SCHEDULER SCHEDULER_LAUNCHCTL
->     #elif GIT_WINDOWS_NATIVE
->     #define MAINT_SCHEDULER SCHEDULER_SCHTASKS
->     #else
->     #define MAINT_SCHEDULER SCHEDULER_CRON
->     #endif
->=20
-> and then:
->=20
->     static int is_launchctl_available(void)
->     {
->         if (get_schedule_cmd(...))
->             return is_available;
->         return MAINT_SCHEDULER =3D=3D SCHEDULER_LAUNCHCTL;
->     }
->=20
->     static void resolve_auto_scheduler(enum scheduler *scheduler)
->     {
->         if (*scheduler =3D=3D SCHEDULER_AUTO)
->             *scheduler =3D MAINT_SCHEDULER;
->     }
->=20
+"git bundle create recent.bndl old..new" creates a bundle that
+requires 'old' (and everything reachable from it) to exist in the
+receiving repository.  We call the object 'old' (not the objects
+reachable from it) the prerequisite of the bundle.
 
-This approach would unfortunately work only for the second patch of this=20
-series where a single scheduler is available on each platform.
-With the third patch of this series, `resolve_auto_scheduler` doesn=E2=80=
-=99t return a=20
-value that is fully determined at compilation time anymore.
-On Linux, both `crontab` and `systemd-timers` are susceptible to be availab=
-le=20
-and this is checked at runtime.
-So, with the third patch of this series, it wouldn=E2=80=99t be possible an=
-ymore to=20
-define a single value for `MAINT_SCHEDULER` and to base=20
-`resolve_auto_scheduler` on it.
+"git bundle create full.bndl new" creates a bundle that needs no
+prerequistes.
 
-=E2=80=A6
-> > +                       PARSE_OPT_NONEG, maintenance_opt_scheduler),
-> > +               OPT_END()
-> > +       };
-> > diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> > @@ -494,8 +494,21 @@ test_expect_success !MINGW 'register and unregister
-> > with regex metacharacters' ' +test_expect_success 'start
-> > --scheduler=3D<scheduler>' '
-> > +       test_expect_code 129 git maintenance start --scheduler=3Dfoo 2>=
-err
-> > &&
-> > +       test_i18ngrep "unrecognized --scheduler argument" err &&
-> > +
-> > +       test_expect_code 129 git maintenance start --no-scheduler 2>err=
- &&
-> > +       test_i18ngrep "unknown option" err &&
-> > +
-> > +       test_expect_code 128 \
-> > +               env
-> > GIT_TEST_MAINT_SCHEDULER=3D"launchctl:true,schtasks:true" \ +          =
-   =20
-> > git maintenance start --scheduler=3Dcrontab 2>err && +       test_i18ng=
-rep
-> > "fatal: crontab scheduler is not available" err +'
->=20
-> Why does this test care about the exact exit codes rather than simply
-> using test_must_fail() as is typically done elsewhere in the test
-> suite, especially since we're also checking the error message itself?
-> Am I missing some non-obvious property of the error codes?
+It is confusing to say that full.bndl has all the prerequisite
+objects needed.  It is correct to say that it has all the objects
+reachable from 'new', but if we wanted to say that, we did not have
+to introduce the new term "prerequisite" when we invented the bundle
+format.  The concept "prerequisite" tries to convey is different.
 
-I have no strong opinion on this.
-I only mimicked the `help text` test that is at the top of the `t7900-
-maintenance.sh` file as it was also testing invalid commands and checking t=
-he=20
-resulting error message.
+So, the two paragraphs above use the word "prerequisite" when it
+wants to talk about "reachable objects" (except for one use---the
+one in "to exclude prerequisite objects" is correctly used), which
+is confusing.  Here is the first paragraph with probably a better
+phrasing.
 
-> I don't see `auto` being tested anywhere. Do we want such a test? (It
-> seems like it should be doable, though perhaps the complexity is too
-> high -- I haven't thought it through fully.)
+	... it is possible to create a self-contained bundle that
+	can be unbundled in an empty repository, as well as
+	providing negative revisions to exclude objects needed in
+	the earlier parts of the history.
 
-My main problem with the `auto` is that a big part of its logic is determin=
-ed=20
-at compilation time with `#if` statements based on the platform.
-And it seems that the tests are designed so far to test the same things on =
-all=20
-platforms.
-A solution could be to completely get rid of the platform `#if` statements =
-and=20
-to turn all the detection logic as runtime tests.
-But it would mean that, for ex., the git binary for Linux would systematica=
-lly=20
-check if the MacOS and Windows specific schedulers are available.
+As to the second paragraph:
 
-Cheers,
-L=C3=A9na=C3=AFc.
+	... will produce a bundle without any prerequisites.  It can
+	be unbundled in any repository to obtain a full history that
+	leads to the commit `new`.
 
+By the way, I needed to read "a revision such as `new` will produce
+..." three times before realizing that the reader must fill quite a
+lot of missing words to understand what the sentence wanted to say,
+which is:
 
+	(feeding) a revision such as `new` (to "git bundle create"
+	as the revision range argument) will produce ...
+
+I think it is easier to follow if you spelled the command out, e.g.
+
+    A command
+
+    $ git bundle create full.bndl new
+
+    will create a bundle file that contains all the objects
+    reachable from the branch 'new'.
+
+> +A revision range such as `old..new` will produce a bundle tip that'll
+> +require any objects existing before `new` to already be present in the
+> +repository performing the 'git bundle unbundle' operation.
+
+Getting warmer ;-).  In this case, 'old' is the prerequisite, so
+
+    ... that'll require the commit 'old' (and any objects reachable
+    from it) to exist for the bundle to be "unbundle"-able.
+
+would be correct.
+
+> +A self-contained bundle without any prerequisites can be extracted
+> +into anywhere, even into an empty repository, or be cloned from
+> +(i.e., `new`, but not `old..new`).
+> +
+
+This is entirely correct.
+
+> +The 'git bundle verify' command can be used to check whether your
+> +recipient repository has the required prerequisite commits for a
+> +bundle.
+
+So is this.
+
+Thanks.
