@@ -2,90 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0F17C11F68
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1782CC11F68
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:27:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB12C61425
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:26:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4EFF61425
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232632AbhGBN3T convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 2 Jul 2021 09:29:19 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:22818 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232532AbhGBN3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 09:29:18 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 162DQaeq071933
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 2 Jul 2021 09:26:36 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'martin'" <test2@mfriebe.de>,
-        "'Felipe Contreras'" <felipe.contreras@gmail.com>,
-        "'Andreas Schwab'" <schwab@linux-m68k.org>
-Cc:     <git@vger.kernel.org>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, "'Junio C Hamano'" <gitster@pobox.com>
-References: <20210702100506.1422429-1-felipe.contreras@gmail.com> <20210702100506.1422429-6-felipe.contreras@gmail.com> <871r8hauvi.fsf@igel.home> <60dee7d4e27bf_2964b20817@natae.notmuch> <65b1d215-c3ab-e0e3-f4ac-a30131541f9b@mfriebe.de> <60def07e686c7_7442083a@natae.notmuch> <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de>
-In-Reply-To: <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de>
-Subject: RE: [PATCH 5/5] config: add default aliases
-Date:   Fri, 2 Jul 2021 09:26:30 -0400
-Message-ID: <03a401d76f45$e1c6fce0$a554f6a0$@nexbridge.com>
+        id S232500AbhGBNa0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 09:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231791AbhGBNa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 09:30:26 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3FD7C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 06:27:53 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id l24so16104387ejq.11
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 06:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=ry31w3laCU8sTyyp9PPiPbzh6nYfFNQRMD+HlcQ8FQE=;
+        b=poNz5yS1gfjnJjM5qmSKX3E67yq4fS8hjZANXvwmiNafUaSZNQOify1jH27tgobHrj
+         gZD8If4yHG4KmRhudcuz8S7purzXVD8YCPD3+FhnmULikxmtINq92yR7qDuMF76saVzk
+         l9Q3OEmZ0Ei6gUmK/Fr96aAE6+YFeYx5dwT3Skb/A78yIeXIiYl2rdVn5os7BzxLXK/x
+         5x61QHtuuB0kR919Rj95OHa0EvlPYX4+wEzv7MKu9ssQsgs2V5Uai5BYkrpg/zMCz40o
+         RJwlGq84ihtJDVE8GoJ0HT0MmG5J4KrpTltn2QNKSErLHnOyOWYjho8sgVIAYX6mvnjP
+         BShg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=ry31w3laCU8sTyyp9PPiPbzh6nYfFNQRMD+HlcQ8FQE=;
+        b=LwMnlrQ1RbEBK7Jn1Y18fdOjQRdnXoeg8ieAZiLwyr5YAWfI7mNYFmvPDBiOifir28
+         lEcv5A95TcVnLJ5KAlCk7OmnXM/wUt7/kwksiztFDs8Z5IPwAVXnl8m5ZWE2pT6qIxKV
+         0hqgs7w1dVpaVbDwD1w6oJfW09GSLZ6BCUNa9vYZVcnrW9NAFW48cuMVZvZeijeENcHd
+         wK8c7/0uyT4nW8Aj5z5DkB99MJ3qDC+ig7R1dDmawNIt7A7YH4ybkR0KsvT7U38dn2qf
+         L2VjnSwvrvDj4Mm47Lq4SRVxCpbZvhoKHb13+2O7oNC0/0d/BGIHiss72o7fE/rbEGsD
+         SyJw==
+X-Gm-Message-State: AOAM532717wtFvceKsS2i8uL3ug6qZTsl39VENCT3Y6yuZaiOs6N5xC3
+        J7DubaV1vzWbFp0heVnDJiGRdyl0DT1K3Q==
+X-Google-Smtp-Source: ABdhPJzQb23RsVxeK73ZFwl+LE33w995ot2hfnBxPUklMhEwmUgQbN84UtUUI8FD07HGL0m1nxHOpw==
+X-Received: by 2002:a17:906:7946:: with SMTP id l6mr5221902ejo.230.1625232471241;
+        Fri, 02 Jul 2021 06:27:51 -0700 (PDT)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id og26sm1082964ejc.52.2021.07.02.06.27.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jul 2021 06:27:51 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH 02/15] [GSOC] ref-filter: add %(raw) atom
+Date:   Fri, 02 Jul 2021 15:22:29 +0200
+References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
+ <ad71510feda0a100920a99de41db0ab137787796.1625155693.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
+In-reply-to: <ad71510feda0a100920a99de41db0ab137787796.1625155693.git.gitgitgadget@gmail.com>
+Message-ID: <87im1salrd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQFt4lYZIaBsC/3edPIiz2atDh3oKQJ0jboPAtZ1RKIBrdoWqQDA6SjYAdtwiv8B5YNkIKum70qA
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 2, 2021 7:15 AM, martin wrote:
->On 02/07/2021 12:54, Felipe Contreras wrote:
->> martin wrote:
->>> IMHO it would be good to (partly) follow other vcs, and have commit =
->>> ci
->> I'm fine with leaving co out of the default aliases if it's deemed
->> "too controversial".
->>
->> But ci doesn't make sense. ci comes from "check in" which has no
->> similitude in git.
->svn uses it for "commit".
->It can be seen as CommIt.
->
->But of course other letters can be picked. I don't see an advantage in it though.
->Like CoMmit cm ? or CommiT ct ? None of them seems any better to me.
->
->> I don't think it's a good idea to leave "git checkout" without an
->> alias (it's perhaps the second or third most used command), but at
->> least some aliases are better than no aliases.
->Well, that goes back to a bigger question. And from the brief time I have been on this mail list, it appears to me there is a divide into 2
->groups.
->
->If checkout is really meant to give way to switch/restore then it needs no further advertising. And then the current usage statistics are a
->relict from the before switch/restore time.
->
->If on the other hand checkout is not just to be kept for backward compatibility, but should always remain an equal alternative to
->switch/restore (i.e. it should still be taught to new user in 20 years) then it wants to have a default alias.
 
-In my opinion, default aliases are not a good path. If a command is intended to be part of the git command set, then it should be a builtin not an alias. Users have their own alias setups and implied conflicts are just going to be confusing and end up in help, examples, presentations, and so forth.
+On Thu, Jul 01 2021, ZheNing Hu via GitGitGadget wrote:
 
-If you want a default alias set, publish it as part of an extension set, like the bash-completion, so that the user has to take action to install them in their environment. Do not do this in the base git product by default.
+> @@ -1362,17 +1398,29 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct exp
+>  	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
+>  	size_t sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
+>  	void *buf = data->content;
+> +	unsigned long buf_size = data->size;
 
-Further, if you are deprecating a command like checkout (which I know is not happening), then the command should go away rather than become an alias, unless a specific user wants to include this. That's what deprecation is. Keeping it around as an alias means you are keeping it around as a command, just providing a new access path.
+Let's declare this.
 
-If I was a committer on this project, I would have to be much more convinced that there is long-term value in this series than appears on the surface.
+>  	for (i = 0; i < used_atom_cnt; i++) {
+>  		struct used_atom *atom = &used_atom[i];
+>  		const char *name = atom->name;
+>  		struct atom_value *v = &val[i];
+> +		enum atom_type atom_type = atom->atom_type;
+>  
+>  		if (!!deref != (*name == '*'))
+>  			continue;
+>  		if (deref)
+>  			name++;
+>  
+> +		if (atom_type == ATOM_RAW) {
 
-I am sorry if I am coming across too strongly on this subject, but I do think we are overloading alias capability and intruding on a domain that should be reserved for our users, not ourselves.
+Here, where it's going to be used.
 
-Sincerely,
-Randall
+> +static int memcasecmp(const void *vs1, const void *vs2, size_t n)
+> +{
+> +	const char *s1 = vs1, *s2 = vs2;
+> +	const char *end = s1 + n;
+> +
+> +	for (; s1 < end; s1++, s2++) {
+> +		int diff = tolower(*s1) - tolower(*s2);
+> +		if (diff)
+> +			return diff;
+> +	}
+> +	return 0;
+> +}
 
+I thought we had such a thing already, but clearly not...
+
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 9e0214076b4..18554f62d94 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -130,6 +130,8 @@ test_atom head parent:short=10 ''
+>  test_atom head numparent 0
+>  test_atom head object ''
+>  test_atom head type ''
+> +test_atom head raw "$(git cat-file commit refs/heads/main)
+> +"
+
+Extra stay line here, is the \n intentional?
