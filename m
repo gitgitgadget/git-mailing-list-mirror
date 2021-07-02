@@ -2,80 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 471E8C11F68
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 10:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEDA7C11F68
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 10:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FE736113B
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 10:11:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A29A06113B
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 10:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230495AbhGBKNe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 06:13:34 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:48929 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230150AbhGBKNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 06:13:34 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 4GGW7R0JZJz1qtQC;
-        Fri,  2 Jul 2021 12:10:59 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 4GGW7Q702Dz1qwYg;
-        Fri,  2 Jul 2021 12:10:58 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id RlCHS93ybSpN; Fri,  2 Jul 2021 12:10:58 +0200 (CEST)
-X-Auth-Info: dtcA2BmyPUYYm2N9yq+YlwGZA5mczubPu6mVBWlfqu1M32VOxT/tGwmkaOAk9RDm
-Received: from igel.home (ppp-46-244-180-78.dynamic.mnet-online.de [46.244.180.78])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Fri,  2 Jul 2021 12:10:58 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id BCEA42C1C67; Fri,  2 Jul 2021 12:10:57 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] config: add default aliases
-References: <20210702100506.1422429-1-felipe.contreras@gmail.com>
-        <20210702100506.1422429-6-felipe.contreras@gmail.com>
-X-Yow:  I'm having BEAUTIFUL THOUGHTS about the INSIPID WIVES
- of smug and wealthy CORPORATE LAWYERS..
-Date:   Fri, 02 Jul 2021 12:10:57 +0200
-In-Reply-To: <20210702100506.1422429-6-felipe.contreras@gmail.com> (Felipe
-        Contreras's message of "Fri, 2 Jul 2021 05:05:06 -0500")
-Message-ID: <871r8hauvi.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S231150AbhGBKPX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 06:15:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40790 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230150AbhGBKPV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 06:15:21 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B32C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 03:12:50 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id t24-20020a9d7f980000b029046f4a1a5ec4so9572764otp.1
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 03:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=AA795zjYtZsoXjAgn6DZjJLgATkUWMpu/DX8hsd3+iA=;
+        b=Br/0lVGRUnf0Owvq54Dg9obnT327+7QQ+ZBLDC8hITh98GqjPRDB9Gu9tdL6bLoEak
+         S9Ejj4x3XodipEPpy7m+UHhr6KMRzSCwjzJZGFtsrcb/onRombtc6DMOJfuwrI2Miq1s
+         vB8x5KntYeuHxFyaFIYzxcPgRT0KSZ5lVBUxITZagVistzWHxDx/haOrqAhKWiyvaNO+
+         cjn0aTgokwFkHPX9jvUfmfe+/2Dp8eRRP+h+yyTqBbzlUP2eOabsEi3e2NJicCsJ6KU+
+         rBCV0KC3vS00054D3RteAOA3pQOaLNngf7THShX03vj+CNUAi4jBuqYZEE3SHPHnw9fU
+         Fx6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=AA795zjYtZsoXjAgn6DZjJLgATkUWMpu/DX8hsd3+iA=;
+        b=ah+MUSbM/6hsarTwDOYcjN5joNIDhgzpFkB3sAceOcDbfHZ2wkfwINRIqD7XbS51fU
+         QK4wNe+mcdXwwfafOH6LaYRXFagwbny3UMGKUtz4WkWERE8vp71Hu4aceT4Fra147LIJ
+         wb18QRU5141OUbkediM/2BFsG/s2PrJqy2+RBpFZ4ImMR/BShLy9vSsNWVjcpcO6UKN1
+         i4xbmD5OiPR6VAoTzUa6pIJcCqL+COI5z/s52UwztHJo3yPBf2Wc9W8HE56TadS7IgOT
+         l97eS6dNRh6Dvgup2jfJjU6TzylMiwYROPbWOJhLpc12sECkl1jfC3cP395JKDS7xhq4
+         ZGBQ==
+X-Gm-Message-State: AOAM530+W2IwAByyUtNlbqO0yHIl1GUONX4az8ilIl0iLnCVdTwwfR3x
+        x7f4NIx4669F1OM03dttntM=
+X-Google-Smtp-Source: ABdhPJxmSXoDv0MGRWmJDEHx3qv7Kdy+aobQC+cpk0ebYlFYXkPpM2Y14r7jgODItUkxxGVzKcD7dQ==
+X-Received: by 2002:a05:6830:2478:: with SMTP id x56mr3933211otr.197.1625220769527;
+        Fri, 02 Jul 2021 03:12:49 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id t15sm387628oiw.16.2021.07.02.03.12.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jul 2021 03:12:48 -0700 (PDT)
+Date:   Fri, 02 Jul 2021 05:12:47 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        git@vger.kernel.org
+Message-ID: <60dee69fb7cc7_2964b208fb@natae.notmuch>
+In-Reply-To: <87zgw75dyi.fsf@evledraar.gmail.com>
+References: <60b5d281552d6_e359f20828@natae.notmuch>
+ <YLXl5+ronWhcGh13@danh.dev>
+ <60b61089ba63d_e40ca20894@natae.notmuch>
+ <YLcFU+ORZTzAsyBy@danh.dev>
+ <60b70eb930614_4abd208ad@natae.notmuch>
+ <87eedj74dr.fsf@evledraar.gmail.com>
+ <60b8a98d11d7c_1a0a2d20856@natae.notmuch>
+ <87zgw75dyi.fsf@evledraar.gmail.com>
+Subject: Re: The git spring cleanup challenge
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jul 02 2021, Felipe Contreras wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Thu, Jun 03 2021, Felipe Contreras wrote:
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 340c5fbb48..32b1fdba45 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -17,6 +17,10 @@ SYNOPSIS
->  	   [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
->  	   [--] [<pathspec>...]
->  
-> +ALIAS
-> +~~~~~
-> +'git co'
+> >> We could then just extend the include syntax rather easily to includ=
+e
+> >> "libraries", which would be like the current include.path, but would=
 
-That's `checkout' in hg, bzr, svn and cvs.
+> >> understand a library:: prefix (better name bikeshedding welcome). We=
+'d
+> >> then just ship these in /usr/share/git-core/config/includes or whate=
+ver,
+> >> e.g. /usr/share/git-core/config/includes/aliases/svn-like.cfg
+> >
+> > I wouldn't be against some some suggested defaults, but *in addition*=
+ to
+> > some hardcoded default aliases that are documented.
+> =
 
-Andreas.
+> I'm talking about in terms of the flexibility of implementation of
+> on-by-default defaults. We could implement it as I suggested and then
+> just have a core.defaultIncludes, which would by default be set to
+> git::aliases/svn-like.cfg or whatever, i.e. equivalent to:
+> =
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+>     [core]
+>     defaultIncludes =3D "git::default.cfg"
+> =
+
+> Which itself would include a
+> /usr/share/git-core/config/includes/default.cfg which would do:
+
+I really gave this a try, but the problem is that git doesn't even have
+a stardard location to install shared files.
+
+I started with $sharedir, but that's not git-specific. Then I added
+$gitsharedir which required a bunch of changes to the Makefile, and
+eventually I decided against it.
+
+We don't have standard location for shared files. Period.
+
+> In a way this is total bikeshedding, I just think it's worth doing it
+> this way up-front.
+
+Yes, maybe so, but git infraestructure is completely unprepared for that
+(at this point).
+
+So I just decied to hard-code them [1]
+
+[1] https://lore.kernel.org/git/20210702100506.1422429-1-felipe.contreras=
+@gmail.com/
+
+-- =
+
+Felipe Contreras=
