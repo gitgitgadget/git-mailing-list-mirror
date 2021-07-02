@@ -7,65 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAFB1C07E96
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E78F2C07E95
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:12:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 94DAC61167
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:02:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB9C261176
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbhGBVFD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 17:05:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43710 "EHLO
+        id S230429AbhGBVPB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 17:15:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230274AbhGBVFC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 17:05:02 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E56AC061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 14:02:29 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id 128-20020a4a11860000b029024b19a4d98eso2801222ooc.5
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 14:02:29 -0700 (PDT)
+        with ESMTP id S229996AbhGBVPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 17:15:00 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F1BEC061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 14:12:27 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id t3so12872573oic.5
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 14:12:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=Y7ZSWqX2AivvZRIzt8DPs0ePCwNtKSu4MiGpxRYhrtU=;
-        b=MHyfZCrv5Pg99GgXiiy1W5IXY8dAJ9CYPMQ1s44ZD6NS4XdkKK88oMPWmkMDBCxGNR
-         OodUxbFLl2k3o4HyOxyTuCY3XiVaIJFj+LXnhZC4Rg1wA7AZJ26sD2b5+Be+3Rtw35bn
-         tSQCgJA8jBO34U8eX+ZEHr9KIZY1ClCQmLYEVeite4QGuN8Uk1ZdR+AA73gEEpprCru6
-         ZVHIroMG9n91CahEMB7JppCB2JBaZa1uSkIlIjMOGHwCA7gpA6DEn3lXzGSx895DX6Kq
-         +I7jSiDbRUwvZnhFpvGUN2pwwi7alUNllyUu7NQy935+NcbK4aVVxmXb+sfBTC8fA1Lu
-         CbcA==
+        bh=AvheahUEBu1LqmnScsmkV6LP8WlYv/x18klkOciCoMM=;
+        b=L8Hwey2PzK+qVlR8kNlYIz4clxv0VtbSZiGaYs7QyhNe5q15I58ojMijgp4j2Gtak0
+         YjEBQYlyW6djPuzzH85NzVRGbThbnWtsOkZQAuWzoRF3mDCiKQL2d4BJvq0PIv7VaSAH
+         S3I7Ka30itQLogVX8CGLCBrgV3HnHnYbwKRP3rwj/WmS6Y1aowir87zcveYz7q1Mflf4
+         7d6vyHW6+hzQRoXgVUdR58gw2FPDNjzmbu3ngqmFG6E6+AFdf9dOVXewwsG1qXhRkUGq
+         dDcAOFx53Nv0OHlmj/NAgif9f8d710CnFQbQAiLzAbp/Zr5Yq44Ky63zwpGcpHXNAqDy
+         t71g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=Y7ZSWqX2AivvZRIzt8DPs0ePCwNtKSu4MiGpxRYhrtU=;
-        b=KMQRxQ3uvUfqATBch9YTOxmOZbuu4+Wq90gGiQhjHxptN87HtzgQ38Ke1O+XGu8waS
-         f0MqjhL2hGF+nLANsPKr1PG019Goc+f+dxya7iMXLmctEgejdR+XFY+YiPsoM8LGFxtG
-         sVauH+j6MN/DDJtAC+NsA6MlKR5XRAVPmoDoJ4IyRxcsHJVUfRsauXeNYRWvrwSk4v7x
-         0F+uwamnegy43j2NoAKq0aSv3lvHjXtE74ILdKLY/BKDGH3o558EitCeWby75U/160KT
-         5DmC1LLQRhaMi4ikalQySomsOnS3f7FelgyRKw525AioQmhC4AO5ORnIgrVFD9++w52Z
-         jGqw==
-X-Gm-Message-State: AOAM530WLkzx1cbEvnHjQHZX4AOVH3IX8bausvk7Ihh+rmykVt9AKJae
-        pCxw4w5z1rR+jhzRaT5TJxI=
-X-Google-Smtp-Source: ABdhPJwjXbB6zURDuJSAXga3HpvPGZx4ixizeQQTM+25RyE7wWKpRyue63tmgyj/6RO/bO9IarWiUQ==
-X-Received: by 2002:a4a:6049:: with SMTP id t9mr1285747oof.14.1625259748768;
-        Fri, 02 Jul 2021 14:02:28 -0700 (PDT)
+        bh=AvheahUEBu1LqmnScsmkV6LP8WlYv/x18klkOciCoMM=;
+        b=G/K02yohYQDvMv+DmOugPQTlGHqxTuJ9CkmXixiC4rS6zjwo/P3t1pGynvQTTEV9uQ
+         +mDRftqpSdckrHk2fAWPvRM/9qkdXGiBwA4Jn4IxRCet2v8NFUpnJO1BDu1MUowHAX7E
+         swkwxO3l9/Q67zAI1jN1jKo5xCbMKbCuU1p3kK0PGITQOXCXqhVDNQKRM1cSbSMwIkom
+         XZJSi/CFLbfVRQZ4qgTTppL2iL5xHJq77SC1ccycLHnk7q3yEDju6/j1ZsffuC3Kxu02
+         gtARBeUvcldwBGS/Nquy9PYd8NXlBzsr71a09c33aQ5dICpDOtzo2PpJJkcAoXlYEA4p
+         toRQ==
+X-Gm-Message-State: AOAM533/+eaIDMilWRzprpROUa+xIBxuo8l23okAXW92QmJt2D3AyGVu
+        gvyRW1sGZQRmqPjDsvJCdWY=
+X-Google-Smtp-Source: ABdhPJwZfpWd+cXSOTZ7sPCwt3U2K0iPJfwREGlm7HhlEfDNRtKZGD6FkRkwwXraM8q286omrA6k2w==
+X-Received: by 2002:aca:4302:: with SMTP id q2mr1150325oia.111.1625260346780;
+        Fri, 02 Jul 2021 14:12:26 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id d7sm785601otb.66.2021.07.02.14.02.27
+        by smtp.gmail.com with ESMTPSA id x18sm838846ooo.26.2021.07.02.14.12.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jul 2021 14:02:28 -0700 (PDT)
-Date:   Fri, 02 Jul 2021 16:02:27 -0500
+        Fri, 02 Jul 2021 14:12:26 -0700 (PDT)
+Date:   Fri, 02 Jul 2021 16:12:25 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'martin' <test2@mfriebe.de>,
-        'Felipe Contreras' <felipe.contreras@gmail.com>,
-        'Andreas Schwab' <schwab@linux-m68k.org>
+To:     martin <test2@mfriebe.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
 Cc:     git@vger.kernel.org,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>, 'Junio C Hamano' <gitster@pobox.com>
-Message-ID: <60df7ee3128d6_28bb2086c@natae.notmuch>
-In-Reply-To: <03a401d76f45$e1c6fce0$a554f6a0$@nexbridge.com>
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <60df813938303_28bb208c8@natae.notmuch>
+In-Reply-To: <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de>
 References: <20210702100506.1422429-1-felipe.contreras@gmail.com>
  <20210702100506.1422429-6-felipe.contreras@gmail.com>
  <871r8hauvi.fsf@igel.home>
@@ -73,8 +72,7 @@ References: <20210702100506.1422429-1-felipe.contreras@gmail.com>
  <65b1d215-c3ab-e0e3-f4ac-a30131541f9b@mfriebe.de>
  <60def07e686c7_7442083a@natae.notmuch>
  <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de>
- <03a401d76f45$e1c6fce0$a554f6a0$@nexbridge.com>
-Subject: RE: [PATCH 5/5] config: add default aliases
+Subject: Re: [PATCH 5/5] config: add default aliases
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -83,53 +81,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Randall S. Becker wrote:
+martin wrote:
+> On 02/07/2021 12:54, Felipe Contreras wrote:
+> > martin wrote:
+> >> IMHO it would be good to (partly) follow other vcs, and have
+> >> commit = ci
+> > I'm fine with leaving co out of the default aliases if it's deemed "too
+> > controversial".
+> >
+> > But ci doesn't make sense. ci comes from "check in" which has no
+> > similitude in git.
+> svn uses it for "commit".
+> It can be seen as CommIt.
 
-> In my opinion, default aliases are not a good path. If a command is
-> intended to be part of the git command set, then it should be a
-> builtin not an alias.
+I know, but it comes from CVS.
 
-Commands cannot be overriden, aliases can.
+In both CVS and Subversion "commit" pushes a commit, so it can be seen
+as the opposite of "checkout", which pulls a commit.
 
-All SCM projects have aliases, except git. Why do you think that is?
+That's not the case in git.
 
-> Users have their own alias setups and implied conflicts are just going
-> to be confusing and end up in help, examples, presentations, and so
-> forth.
+> But of course other letters can be picked. I don't see an advantage in 
+> it though.
 
-There's no conflict. Either you use the alias or you don't. Just like
-today.
+The advantage is that it's straightforward: co -> commit.
 
-> If you want a default alias set, publish it as part of an extension
-> set, like the bash-completion, so that the user has to take action to
-> install them in their environment. Do not do this in the base git
-> product by default.
+> > I don't think it's a good idea to leave "git checkout" without an alias
+> > (it's perhaps the second or third most used command), but at least some
+> > aliases are better than no aliases.
+> Well, that goes back to a bigger question. And from the brief time I 
+> have been on this mail
+> list, it appears to me there is a divide into 2 groups.
 
-The whole point is to help users so they don't have to do extra
-configurations.
+I'm on neither of those camps.
 
-Today git is pretty much unbearable without a configuration. Default
-aliases would help quell some of that pain.
+> If checkout is really meant to give way to switch/restore then it needs 
+> no further
+> advertising. And then the current usage statistics are a relict from the 
+> before switch/restore time.
 
-> If I was a committer on this project, I would have to be much more
-> convinced that there is long-term value in this series than appears on
-> the surface.
+This is what I think eventually should happen, but we are not there yet.
 
- 1. It doesn't affect anyone negatively
- 2. You don't have to use them if you don't want to
- 3. They don't affect your aliases, even if they have the same name
- 4. Everyone has aliases
- 5. Every SCM in history has had aliases
+If checkout were to disappear today, I wouldn't be able to do a lot of
+things. switch/restore are not ready yet.
 
-What more would you need?
+> If on the other hand checkout is not just to be kept for backward 
+> compatibility, but should
+> always remain an equal alternative to switch/restore (i.e. it should 
+> still be taught to new
+> user in 20 years) then it wants to have a default alias.
 
-> I am sorry if I am coming across too strongly on this subject, but I
-> do think we are overloading alias capability and intruding on a domain
-> that should be reserved for our users, not ourselves.
+Why? Not all commands need an alias, only the most widely used. If
+switch/restore can be used for 99% of use cases (not the case today),
+then there's no need for checkout to have a default alias.
 
-But why? We provide plenty of defaults so that users don't have to
-configure git in order for the program to be useful. And we will
-continue to add more defaults.
+Of course if somebody wants to keep using checkout instead of
+switch/restore, they can add an alias themselves.
+
+
+I'm on the camp of "let's see".
 
 -- 
 Felipe Contreras
