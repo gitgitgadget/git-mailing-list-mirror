@@ -2,66 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65CCAC07E95
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD0EFC07E95
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:21:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43B3D613F8
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:20:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BF936141C
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:21:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231519AbhGBVWj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 17:22:39 -0400
-Received: from smtprelay05.ispgateway.de ([80.67.18.28]:14317 "EHLO
-        smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbhGBVWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 17:22:39 -0400
-Received: from [84.163.67.238] (helo=[192.168.2.202])
-        by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2)
-        (envelope-from <test2@mfriebe.de>)
-        id 1lzKNr-0004gU-EQ; Fri, 02 Jul 2021 16:43:11 +0200
-Subject: Re: [PATCH 5/5] config: add default aliases
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
-        <avarab@gmail.com>
-Cc:     'Felipe Contreras' <felipe.contreras@gmail.com>,
-        'Andreas Schwab' <schwab@linux-m68k.org>, git@vger.kernel.org,
-        'Junio C Hamano' <gitster@pobox.com>
-References: <20210702100506.1422429-1-felipe.contreras@gmail.com>
- <20210702100506.1422429-6-felipe.contreras@gmail.com>
- <871r8hauvi.fsf@igel.home> <60dee7d4e27bf_2964b20817@natae.notmuch>
- <65b1d215-c3ab-e0e3-f4ac-a30131541f9b@mfriebe.de>
- <60def07e686c7_7442083a@natae.notmuch>
- <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de>
- <03a401d76f45$e1c6fce0$a554f6a0$@nexbridge.com>
- <874kdcal1k.fsf@evledraar.gmail.com>
- <03ac01d76f4c$ad23a130$076ae390$@nexbridge.com>
-From:   martin <test2@mfriebe.de>
-Message-ID: <8f847f31-5c5d-0236-997c-bd07040f7ea7@mfriebe.de>
-Date:   Fri, 2 Jul 2021 16:43:42 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S231684AbhGBVYW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 17:24:22 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40306 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231500AbhGBVYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 17:24:22 -0400
+Received: (qmail 32612 invoked by uid 109); 2 Jul 2021 21:21:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 02 Jul 2021 21:21:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28490 invoked by uid 111); 2 Jul 2021 21:21:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Jul 2021 17:21:49 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 2 Jul 2021 17:21:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] connected: implement connectivity check using
+ bitmaps
+Message-ID: <YN+DbDhMrqOnJbcO@coredump.intra.peff.net>
+References: <cover.1624858240.git.ps@pks.im>
+ <7687dedd4722c39b5ecef2c2165147c25d16b8d9.1624858240.git.ps@pks.im>
+ <YNovuzAsaEb2uIaa@nand.local>
+ <YNuiM8TR5evSeNsN@nand.local>
+ <YNvRSJI1oWN9W25Y@coredump.intra.peff.net>
+ <YNvgA6RLIMdD77Hk@nand.local>
+ <YNwE3wES3iv+Xynp@coredump.intra.peff.net>
+ <YN9QbEaWgP09PfeD@nand.local>
 MIME-Version: 1.0
-In-Reply-To: <03ac01d76f4c$ad23a130$076ae390$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
-X-Df-Sender: bWVAbWZyaWViZS5kZQ==
+In-Reply-To: <YN9QbEaWgP09PfeD@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/07/2021 16:15, Randall S. Becker wrote:
-> On July 2, 2021 9:42 AM, Ævar Arnfjörð Bjarmason wrote:
->> So aside from the "are these aliases good idea?" discussion, would 
->> you prefer if they're implemented that we theat them the exact same
->> way we do "git fsck-objects" and "git fsck"? I.e. list them twice in git.c, just pointing to the same cmd_fsck?
-> Without knowing the full history of why the duplication, yes. That would be my preference. If it is a git command, it should be handled like one as closely as possible. Presumably, it also would show up in git help -a. I would not expect aliases to show in help.
->
-But, if it is a git command, can you still overwrite it with your on alias?
+On Fri, Jul 02, 2021 at 01:44:12PM -0400, Taylor Blau wrote:
 
-As it was pointed out, some of those are used by people as aliases for 
-other things already.
+> I would add that these effects change with the size of the bitmap.
+> Let's just consider the "count the number of objects in a bitmapped
+> commit". On my local copy of the kernel, I see a relatively modest
+> improvement:
+> 
+>     $ tip=2ab38c17aac10bf55ab3efde4c4db3893d8691d2
+>     $ hyperfine \
+>       'GIT_READ_COMMIT_TABLE=0 git.compile rev-list --count --objects --use-bitmap-index $tip' \
+>       'GIT_READ_COMMIT_TABLE=1 git.compile rev-list --count --objects --use-bitmap-index $tip' \
+>       --warmup=3
+>     Benchmark #1: GIT_READ_COMMIT_TABLE=0 git.compile rev-list --count --objects --use-bitmap-index $tip
+>       Time (mean ± σ):      21.5 ms ±   5.6 ms    [User: 8.7 ms, System: 12.7 ms]
+>       Range (min … max):    12.4 ms …  34.2 ms    170 runs
+> 
+>     Benchmark #2: GIT_READ_COMMIT_TABLE=1 git.compile rev-list --count --objects --use-bitmap-index $tip
+>       Time (mean ± σ):      10.6 ms ±   1.6 ms    [User: 7.1 ms, System: 3.5 ms]
+>       Range (min … max):     4.5 ms …  11.9 ms    258 runs
+> 
+> but on my copy of the kernel's fork network repo (that containing all of
+> torvalds/linux's objects, as well as all of its fork's objects, too),
+> the magnitude of the effect is much bigger:
+> 
+>     Benchmark #1: GIT_READ_COMMIT_TABLE=0 git.compile rev-list --count --objects --use-bitmap-index $tip
+>       Time (mean ± σ):     332.3 ms ±  12.6 ms    [User: 210.4 ms, System: 121.8 ms]
+>       Range (min … max):   322.7 ms … 362.4 ms    10 runs
+> 
+>     Benchmark #2: GIT_READ_COMMIT_TABLE=1 git.compile rev-list --count --objects --use-bitmap-index $tip
+>       Time (mean ± σ):     260.0 ms ±   9.3 ms    [User: 191.0 ms, System: 69.0 ms]
+>       Range (min … max):   250.4 ms … 272.8 ms    11 runs
+> 
+> That's a more modest 1.28x improvement (versus 2.03x in just linux.git),
+> but the overall magnitude is much bigger.
+
+Thanks, this is much more compelling. 70ms is a lot of startup time to
+save. I am a little surprised that a no-traversal bitmap query like this
+would still take 300ms. I wonder if 2ab38c17aac actually got a bitmap in
+your second example (and if not, then there are probably cases where the
+relative speedup would be even more impressive).
+
+> This clouded up some of my timings in p5310, which made me think that it
+> would be a good idea to `git config pack.writeReverseIndex true` in the
+> setup for those tests, but an even better direction would be to change
+> the default of pack.writeReverseIndex to true everywhere.
+
+Yes, I'd be in favor of that. IMHO the reason to make it configurable at
+all was not because it's ever a bad idea, but just to phase it in and
+get experience with it (and to give an escape hatch for debugging it).
+
+It's probably _less_ useful for local clones that are not serving
+fetches. But every push is already generating the same thing in-memory,
+so it seems like a good tradeoff to just use it everywhere.
+
+> >   - there's some extra complexity in the file format and code to read
+> >     and write these (and still fall back to the old system when they're
+> >     absent). I don't think it's a deal-breaker, as it's really not that
+> >     complicated a feature.
+> 
+> I agree with both of these. The complexity is manageable, I think,
+> especially since I dropped support for the extended offset table (having
+> a bitmap file that is >2GiB seems extremely unlikely to me, and it's
+> possible to add support for it in the future) and
+> fanout table (there are usually less than <1k commits with bitmaps, so
+> a 256-entry fanout table doesn't seem to help much in benchmarking).
+> 
+> So what's left of the format is really just:
+> 
+>   - a table of object id's
+>   - a table of (uint32_t, uint32_t) tuples describing the (short) offset
+>     of the bitmap, and an index position of the xor'd bitmap (if one
+>     exists).
+
+Yeah, that really seems quite simple. I'd have to judge after seeing the
+cleaned up code, but I suspect it's not going to be a burden.
+
+> I'll be offline for the next ~week and a half for my wedding, but I'll
+> post some patches to the list shortly after I get back.
+
+Yep, no rush. Thanks for looking into this.
+
+-Peff
