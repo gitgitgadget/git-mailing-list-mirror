@@ -2,74 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D51C11F68
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 12:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41354C11F68
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 12:55:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE832613C1
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 12:53:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F099611F1
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 12:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232202AbhGBMzt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 08:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48498 "EHLO
+        id S232085AbhGBM5k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 08:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbhGBMzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 08:55:48 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B582CC061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 05:53:16 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id l24so13069214edr.11
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 05:53:16 -0700 (PDT)
+        with ESMTP id S230271AbhGBM5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 08:57:40 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1012DC061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 05:55:08 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id hc16so15946274ejc.12
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 05:55:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=RMzamJ9p1RKEAPi6OuecEFkmd8VXlCSzogY8tPjMHDU=;
-        b=c4ip1zf4xW8lDgeEq9U3biyZXPPC0Oabq+okkKFFvwFzQOhA8PRu+0TzLptMjmUCR8
-         FqKCf+l33wVGCSJP5+Kr3nbYc0oNtnNggB1Xo6zG3PoAnhM6j9NOSEVJijQHXZhGQ1KT
-         W/AD2SuPQa3Tf4MhiHk1weWkCy1GQ3umwx8Df5F2zvo7e1clfbsjoa7KsPA07Asa29Ch
-         OAjS2WfzEAzzqLoCSDS54sLQALIC8sUkBNawt2z4dbKef4cjgw0N2DYDqglkBYttyS4n
-         qEqamMDtgsq4HMmVrJ/5NMqhu4efYRWWPC7KPdj+BU6LMyueiysPv8AwCE/dkZB1NVgz
-         28gw==
+        bh=meSeLiAK+tFZ1Cj29F8DYtQA9ly89G/YHj2bYDM8vUQ=;
+        b=Pbd2b8+OAHD9RMKMxihv7ScrKRMD5dwmLIHwXOjP9GEj+WN2ailUE/yqB0ykJqINb6
+         hwmxQ34TsTKkUS6japWDx1EDtge+nisvpTIr+NYudWND5rIbXcvgJty1MU+RV+qTYKyl
+         Od0U9F9HW4NSB68bUF9Rq5OAnu1ORAzR+wykKmfWDZ8OrSmJJgcvTHLL+C165jCC/L0o
+         SK0bJ4TMIm5BAzdY9TLyfS9H/bmQ8+4XFrpwps6qsZdt04rQ7LY+u0Eildb76wWDmOjT
+         U/cj5ZOptAqKh7JDZpJadGy5KqTBqgC9AJdeKhLjMi5zLZ/B8F0F1SGnOlHcwi+a2snO
+         z+Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=RMzamJ9p1RKEAPi6OuecEFkmd8VXlCSzogY8tPjMHDU=;
-        b=a3FSnbGyzgd3fMpPLq5tXny3P8i5x1Xyu8n1VmA1RjbmsZYWG6uKBTZM8MV/6Ie8El
-         UvCuxk/6M7t/ECaG2D6UbvfD9oyrdGIFZxZfErIGLWMBXhYriHaKmrIQIWjT0473zvd+
-         DdkpVs1xPUGys9Btf4PBZ8Vd5ntppYiQTnMGu51Kx1maR77aIduXEyEC8CFVTNGhqG54
-         K3JpZSS3B/Vo8dRRdwgpywzRTbcXxBKDKzwgad1Fvwj0IAKjdKKUVsktKakR57FiQcto
-         gOcCMwI/VamaDJ+4Coo8CpmZwxennWWvcjhz7OMVVTgIN6KOOe4FBcNWpv5eiAecSa45
-         oD3w==
-X-Gm-Message-State: AOAM530IT7UfVZI6rDL2iTXvLj32q6uflpnjOr0TiNnk4dINnJQssgXi
-        ICQA3RodL6kdboSi2AlTFyM=
-X-Google-Smtp-Source: ABdhPJwJXT4UGfPcMHffxPdbwV5bFZZSvsB176K/i4Q2KuNDtsFpeSfUQlb+IwABuuBRHK1BPS+j2A==
-X-Received: by 2002:a50:9556:: with SMTP id v22mr5960186eda.360.1625230395246;
-        Fri, 02 Jul 2021 05:53:15 -0700 (PDT)
+        bh=meSeLiAK+tFZ1Cj29F8DYtQA9ly89G/YHj2bYDM8vUQ=;
+        b=eQ667+2HQI0vJWqGhUIaVD8RVa5exHYvdnCiRG/DqDhsFcmq9/MkkRGfDhAEiYt+fz
+         X0j9+o7Pr27RwR7WGXq4EUMHHSIEEq3wRZKT1XzngehduibVDN9/GHPNzntE/p7k2DZs
+         mcQy9A4MNqfs9QsYcWBP/vWu+3ps+waINfFaa2SoSqK1mc8gWBrXutl0hPrdC+aA6SYr
+         OMMdowTX4hyWdymQQRAE1i20LLL22tjOvbaO4qBhuD2kvBMDhxA1l2NtdpXkF3TLC2D3
+         7xQyVc163EN8IsjEgJYieeLJcuUX8Q+5tfYgA/4t+VEukMhCNz4KrfOJsjq3hSxLX87E
+         ozRg==
+X-Gm-Message-State: AOAM532uV9EeNcBvLGqTEdJ+9bK2vTjqO0W2Sw5dUkIenYx26ot1UT6I
+        qRXNfQNUwF5lZ5qw8kcPbAM=
+X-Google-Smtp-Source: ABdhPJz2VQ+Ujy9HSWItTVPaQ2s/Kab3IjZbth8FVjm1J2FR5HI/4tfOc/FXzV9TXcNRRz+lsByrvg==
+X-Received: by 2002:a17:906:eca1:: with SMTP id qh1mr5242554ejb.287.1625230506509;
+        Fri, 02 Jul 2021 05:55:06 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c19sm995048eja.84.2021.07.02.05.53.14
+        by smtp.gmail.com with ESMTPSA id du7sm1314952edb.1.2021.07.02.05.55.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jul 2021 05:53:14 -0700 (PDT)
+        Fri, 02 Jul 2021 05:55:06 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2021, #07; Wed, 30)
-Date:   Fri, 02 Jul 2021 14:18:40 +0200
-References: <xmqq4kdft122.fsf@gitster.g>
- <87o8bmcd9a.fsf@evledraar.gmail.com> <xmqqczs2rrew.fsf@gitster.g>
+        Josh Steadmon <steadmon@google.com>,
+        Bruno Albuquerque <bga@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 6/8] serve.c: add trace2 regions for advertise & command
+Date:   Fri, 02 Jul 2021 14:54:56 +0200
+References: <cover-0.5-00000000000-20210616T141332Z-avarab@gmail.com>
+ <cover-0.8-00000000000-20210628T191634Z-avarab@gmail.com>
+ <patch-6.8-baeee6539ad-20210628T191634Z-avarab@gmail.com>
+ <YN3tjEE8Ir7Zuvkq@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <xmqqczs2rrew.fsf@gitster.g>
-Message-ID: <87tulcand1.fsf@evledraar.gmail.com>
+In-reply-to: <YN3tjEE8Ir7Zuvkq@coredump.intra.peff.net>
+Message-ID: <87r1ggan9y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -78,106 +80,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jul 01 2021, Junio C Hamano wrote:
+On Thu, Jul 01 2021, Jeff King wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> On Mon, Jun 28, 2021 at 09:19:23PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
->> And:
->>
->>>  - Makefile: remove an out-of-date comment
->>>  - Makefile: stop hardcoding {command,config}-list.h
->>>  - Makefile: mark "check" target as .PHONY
->>
->> https://lore.kernel.org/git/cover-0.3-0000000000-20210629T190137Z-avarab=
-@gmail.com/
->>
->> But you re-combined them. If it makes things easier for you I'm all for
->> it, but it seems better to me keep them split if that mean that some
->> parts can advance faster, and thus make the rest easier to review.
+>> Now that we've factored out "call_{advertise,command}()" in a
+>> preceding commit it becomes easy to trace all these callbacks with
+>> trace2. Let's do that. As the tests demonstrate there's no v2 push
+>> protocol, which the tests assert.
 >
-> I am all for that reasoning, but in this case (and other topics that
-> I "combined", as well), one had textual dependencies on the other,
-> and didn't make sense to split them into two, as neither part can
-> advance without affecting the other, if I recall correctly.
-
-Yes, they can't be advanced separately, one depends on the other in
-turn. I'm suggesting that the parts that go earlier in the sequence
-could advance before the later parts.
-
-I.e. the whole hook topic is a big chunk that needs careful review, but
-e.g. the relatively trivial Makefile topic could hopefully advance
-fairly fast to "master", followed by the easily understood hook-list.h
-topic.
-
-The result would be peeling the first 6 commits off
-ab/config-based-hooks-base, leaving a smaller set of commits for
-reviewers of the "meaty" part of ab/config-based-hooks-base to focus on.
-
-I started doing it this way because of your comments that I tended to
-produce fairl long-winded topics. Often e.g. I'll find a bug, only to
-discover that we don't test anything in that area. I thought that by
-putting trivial cleanups, tests etc. first some of the "prep" work could
-graduate early, leaving the more complex for later.
-
-But perhaps that's not something you'd like to see. I'm still trying to
-get a feel for if/how you'd like to split certain things.
-
-One alternative in general (although not so much with the
-ab/config-based-hooks-base topic) would be to simply withhold some of
-the later parts locally. I've got several topics outstanding that are in
-that state, the real "meaty" part hasn't landed on-list yet.
-
-That has the advantage of having smaller and more incremental parts
-on-list for review, but at the drawback that those earlier topics often
-seem like a "bridge to nohere". E.g. my "handle_stdin_line" topic[1] is
-one such topic. I found an existing in-tree user for it, but the real
-thing I wanted it for still hasn't materialized.
-
->>> * ab/doc-retire-alice-bob (2021-06-16) 6 commits
->>>  - pack-protocol doc: use "www-data" in place of "alice"
->>>  - doc: replace "alice" and "bob" with "jdoe" and "msmith"
->>>  - fast-import doc: change "bob" in an example to "file.txt"
->>>  - daemon doc + code comments: reword "alice" example
->>>  - gitcvs-migration doc: replace "alice" and "bob" with "you" and "www-=
-data"
->>>  - gittutorial doc: replace "alice" and "bob" with "you" and "www-data"
->>
->> Having re-read the discussion now I don't know if there's anything
->> outstanding to change about this series. It's gotten a lot of attention
->> so far, so it's more of a matter of if you're willing to take this sort
->> of documentation change or not.
+> Seems reasonable. I haven't ever wanted these myself, but it seems like
+> a natural spot to mention when debugging server-side actions (especially
+> because we may get multiple rounds of "fetch" for a single upload-pack
+> invocation).
 >
-> I actually do agree with the objection that www-data is a contrived
-> thing to use in the examples, not because the user www-data is
-> distro specific, but because it involves one physical human user
-> acting on two accounts, instead of two human users interacting with
-> each other.
+>> diff --git a/serve.c b/serve.c
+>> index 85cd3eab26e..6dbd05248b9 100644
+>> --- a/serve.c
+>> +++ b/serve.c
+>> @@ -111,14 +111,34 @@ static struct protocol_capability capabilities[] =
+=3D {
+>>  static int call_advertise(struct protocol_capability *command,
+>>  			  struct repository *r, struct strbuf *value)
+>>  {
+>> -	return command->advertise(r, value);
+>> +	int ret;
+>> +	struct strbuf sb =3D STRBUF_INIT;
+>> +	const char *msg;
+>> +
+>> +	strbuf_addf(&sb, "advertise/%s", command->name);
+>> +	trace2_region_enter("serve", sb.buf, r);
+>> +	ret =3D command->advertise(r, value);
+>> +	msg =3D ret ? "advertised" : "hidden";
+>> +	trace2_region_leave_printf("serve", sb.buf, r, "%s", msg);
+>> +	strbuf_release(&sb);
+>
+> We'll do these allocations even if trace2 isn't enabled. I guess that's
+> probably not that big a deal in practice. I think:
+>
+>   if (trace2_is_enabled())
+> 	strbuf_addf(&sb, "advertise/%s", command->name);
+>
+> would work (everything else is cheap and handles the unallocated state
+> fine), but it might not be worth the readability hit (and it's probably
+> premature optimization anyway).
 
-The www-thing is arbitrary, and I can change that bit, but what do you
-think of what I mentioned at the end of [2], i.e.:
-
-=20=20=20=20
-    [...] the purposes of the example in the guide replacing Alice & Bob
-    with You & another version of you removes a lot of potential
-    confusion, we don't need to cover permissions, the other user doing
-    unexpected things like non-ff updates, pruning branches you may have
-    relied on through the --local clone etc.
-=20=20=20=20
-    It's implicit that both "users" are you, so we only have to discuss the
-    point of the actual example, how to pull and push between two different
-    repos, the "different users" in this case was always a distraction.
-
-I do think it makes things simpler in that sense, i.e. aside from "alice
-and bob" if we start talking about two human users on the same system
-the reader we'll need to be more guarded about describing repository
-interactions, because we're acting on remote data that the reader might
-correctly assume is changing concurrently outside of their control.
-
-Whereas the real point of that example is to demonstrate how one user
-might push and pull between two repositories under their control, so
-using an example that assumes one user implicitly side-steps any such
-discussion of permissions, data races etc.
-
-1. https://lore.kernel.org/git/cover-0.4-00000000000-20210621T150651Z-avara=
-b@gmail.com/
-2. https://lore.kernel.org/git/875yyc5i6x.fsf@evledraar.gmail.com/
+Will change it to be conditional, pending further discussion...
