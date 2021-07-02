@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ACEFC11F68
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C79FC11F68
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:39:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 711AB61427
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:34:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2238161429
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 13:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232502AbhGBNha (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 09:37:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57784 "EHLO
+        id S232467AbhGBNlj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 09:41:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232440AbhGBNha (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 09:37:30 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ED90C061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 06:34:58 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id w13so13356408edc.0
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 06:34:58 -0700 (PDT)
+        with ESMTP id S230509AbhGBNli (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 09:41:38 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDC3C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 06:39:06 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id l24so13258897edr.11
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 06:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=o/bZ0iC5+Vd2wJvZbbxrhrXkKI6wQiSeYtHnyyIc56M=;
-        b=mCrMwtmNZAxMMraSx5Vgq30ntu0uEu+Pt9UYKOnwVdKxyCAqr78opiFFuZCIhiS4Zj
-         YleeNF5I9XqI5E1N7DytroV7NSJIdaIjxO3si3CdIIGuuVp5nyBlmGqAJG+JIf8ROWyS
-         cIvRye1WI3xBdohRd88d7by6L3wSO09nqlM9EMliEetrAODzqAgwFwTTCrX684A02SZr
-         db4dBBoK3ZShojl4ZYVbd3RcwB+GXkd5Th3+hDDFcEyThrLXxcJZd2CCD424wdzLM3Sh
-         IaqaZ7QH2HXCEuOWNd4DD5v1YOMgq6Lt17BZsGg7zqnt05EOWFndlwGSrlFIggpZpGBh
-         /PtQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=VJmGSzxFZMJEXw2ElwqLB1Uyvp8jFn41mFF+4gvsKy0=;
+        b=NU2oM2wxnsvubtIMB6PqsDXoN+Y6uuylbcg8B0cYB6XVjspP3xrW27ZpFIUJWUXVNY
+         mRnHALXzjGhhXR8X3GzXCRpHlAlT2rqqtl2a65EJLM027d7rhU1NwkLhiAMHivtIW2xL
+         7Zpsr9koe5dfyrJXLOu2Ek7ixVo2BxjLXyXNALc5fSbbKOkYuTKQM3WSGEzM+MciMlE3
+         GyHKC8r36PSKObrSSw4cz8UIW6kgOBWBI2Nk7tMV1nmUhDwiU0zd/49WxR/i9DBcNrh1
+         tWxrxQzAUnWZ0UN7uAAtcJtmke1ujFZM8RU7aVcgPckDvSskKbFSxdrM83zj8LrD5Mm3
+         6KpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=o/bZ0iC5+Vd2wJvZbbxrhrXkKI6wQiSeYtHnyyIc56M=;
-        b=XM9f6ve5Pfbt0hKVPFL1YDHxj21cskXDpCbmYrks2v0POgMNwNOYdQK2KamdP3HhDv
-         Dg4hXDbGdRniEoIYmN569fBLuwSUMNTh3+CsIzHQuIypoAPV6fqArKRupDrguyik0hrL
-         5XPczzfXTdPrwgsV5ZSQ618wJE4waIW2LldhJGmzXoPH4htVM1G3GWGhv7uh3HtNaata
-         4f23U3EmTmUVtsc44fsbN0PUoUavz8KRYj2X6jp4F+RzkatkyR7RGddJSzxkI0U9Egf9
-         xhflsgXBBbaZf1pl963inCAXzdVXTeMI/oRk8osOgqLO/Wps9sth29zUwu4BJOVkZEAP
-         1Juw==
-X-Gm-Message-State: AOAM533CVmips9P1JKMypxIH3nyGCD3Y3pJMeF1gM33PF/4FIo5p3nvS
-        FAzjedI9SMM1JiQ3Qx5uFM4UbKkifpdY8g==
-X-Google-Smtp-Source: ABdhPJwWzkk2Ol8F9irN8sFjgKxRUrpCAySG2PoWOLcPqWvYYlnIYQLM6o+eaMpm5NgWGJvNtXyunQ==
-X-Received: by 2002:a05:6402:498:: with SMTP id k24mr7047609edv.25.1625232896637;
-        Fri, 02 Jul 2021 06:34:56 -0700 (PDT)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=VJmGSzxFZMJEXw2ElwqLB1Uyvp8jFn41mFF+4gvsKy0=;
+        b=oXDo1J5ilpVVwxiVviIK3akX51P5XKYzXJAzn+nw7lyk7t7WHk/ZYgZ2cty05Wro0l
+         Ckb1fQWzE0BfjDWCjOe73vCjlvXnQfYH9kjVpvNokWf8lJFoQ4Kay7L+RtNCNiHXdYO8
+         OS37+ZeDThs9avtayYJqIuwuoXQoxTdd60btWANP3yuSr5MqiRuOh97ihNrziUVxt2cA
+         1J0YHjB24uCybA9zM62avYYpUQNzTr4AX1MENdtsUky7at6PIlw3Hnc1M1TsX5BVCkm/
+         bYAxcw9RJryndWPPKiAbnk7bhaGp6/4VV9zbBFvNgZFmYRehGsMXEDoLL4iFH4I9impz
+         itSg==
+X-Gm-Message-State: AOAM532dQ4WLICu6RbUtbz4/tIEvi5GykixeEC1eW0pWkcRQgj417Uy7
+        DKVdb4DpEiy+LdlOHawKULug8+JgdLtEFQ==
+X-Google-Smtp-Source: ABdhPJxu4K7wGaS0Tp3otAVKB744rR1YOtV4OwmrdDbBCtZtm5M79WmTxe5E+QR+D46lbKzJVhAW2A==
+X-Received: by 2002:a05:6402:7cf:: with SMTP id u15mr6788353edy.197.1625233145042;
+        Fri, 02 Jul 2021 06:39:05 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id x3sm1099687ejy.0.2021.07.02.06.34.56
+        by smtp.gmail.com with ESMTPSA id h14sm1072128ejl.118.2021.07.02.06.39.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jul 2021 06:34:56 -0700 (PDT)
+        Fri, 02 Jul 2021 06:39:04 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -63,15 +62,16 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Hariom Verma <hariom18599@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH 10/15] [GSOC] cat-file: add has_object_file() check
-Date:   Fri, 02 Jul 2021 15:34:19 +0200
+Subject: Re: [PATCH 12/15] [GSOC] cat-file: reuse ref-filter logic
+Date:   Fri, 02 Jul 2021 15:36:32 +0200
 References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
- <18f38075b3c70748894ad6b2e1158f2b17460845.1625155693.git.gitgitgadget@gmail.com>
+ <e04b970ccb0cad8c0b651ab11f5f52063bd84606.1625155693.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <18f38075b3c70748894ad6b2e1158f2b17460845.1625155693.git.gitgitgadget@gmail.com>
-Message-ID: <87a6n4alfk.fsf@evledraar.gmail.com>
+In-reply-to: <e04b970ccb0cad8c0b651ab11f5f52063bd84606.1625155693.git.gitgitgadget@gmail.com>
+Message-ID: <877di8al8n.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -81,35 +81,46 @@ On Thu, Jul 01 2021, ZheNing Hu via GitGitGadget wrote:
 
 > From: ZheNing Hu <adlternative@gmail.com>
 >
-> Use `has_object_file()` in `batch_one_object()` to check
-> whether the input object exists. This can help us reject
-> the missing oid when we let `cat-file --batch` use ref-filter
-> logic later.
+> In order to let cat-file use ref-filter logic, let's do the
+> following:
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Hariom Verma <hariom18599@gmail.com>
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
->  builtin/cat-file.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+> 1. Change the type of member `format` in struct `batch_options`
+> to `ref_format`, we will pass it to ref-filter later.
+> 2. Let `batch_objects()` add atoms to format, and use
+> `verify_ref_format()` to check atoms.
+> 3. Use `format_ref_array_item()` in `batch_object_write()` to
+> get the formatted data corresponding to the object. If the
+> return value of `format_ref_array_item()` is equals to zero,
+> use `batch_write()` to print object data; else if the return
+> value is less than zero, use `die()` to print the error message
+> and exit; else if return value is greater than zero, only print
+> the error message, but don't exit.
+> 4. Use free_ref_array_item_value() to free ref_array_item's
+> value.
 >
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 243fe6844bc..59a86412fd0 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -428,6 +428,13 @@ static void batch_one_object(const char *obj_name,
->  		return;
->  	}
->  
-> +	if (!has_object_file(&data->oid)) {
-> +		printf("%s missing\n",
-> +		       obj_name ? obj_name : oid_to_hex(&data->oid));
-> +		fflush(stdout);
-> +		return;
-> +	}
-> +
->  	batch_object_write(obj_name, scratch, opt, data);
->  }
+> Most of the atoms in `for-each-ref --format` are now supported,
+> such as `%(tree)`, `%(parent)`, `%(author)`, `%(tagger)`, `%(if)`,
+> `%(then)`, `%(else)`, `%(end)`. But these atoms will be rejected:
+> `%(refname)`, `%(symref)`, `%(upstream)`, `%(push)`, `%(worktreepath)`,
+> `%(flag)`, `%(HEAD)`, because these atoms are unique to those objects
+> that pointed to by a ref, "for-each-ref"'s family can naturally use
+> these atoms, but not all objects are pointed to be a ref, so "cat-file"
+> will not be able to use them.
+>
+> The performance for `git cat-file --batch-all-objects
+> --batch-check` on the Git repository itself with performance
+> testing tool `hyperfine` changes from 669.4 ms =C2=B1  31.1 ms to
+> 1.134 s =C2=B1  0.063 s.
+>
+> The performance for `git cat-file --batch-all-objects --batch
+>>/dev/null` on the Git repository itself with performance testing
+> tool `time` change from "27.37s user 0.29s system 98% cpu 28.089
+> total" to "33.69s user 1.54s system 87% cpu 40.258 total".
 
-In 12/15 the old "missing" is removed, so is this strictly redundant to
-what's in batch_object_write() for now, does it change anything?
+This new feature is really nice, but that's a really bad performance
+regression. A lot of software in the wild relies on "cat-file --batch"
+to be *the* performant interface to git for mass-extrction of object
+data.
+
+That's in increase of ~70% and ~20%, respectively. Have you dug into
+(e.g. with a profiler) where we're now spending all this time?
