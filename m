@@ -2,336 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29AFBC07E95
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BCE1C07E95
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 22:00:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E7DB0613FC
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 21:59:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E291C613D8
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 22:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhGBWBe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 18:01:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhGBWBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 18:01:33 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71CC3C061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 14:58:59 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id c12-20020a9d684c0000b029047762db628aso7494120oto.13
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 14:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=oTeDs7QSrru96rXb+CHs8fd7MrLtDK4gFi4bZDBmvVM=;
-        b=FRFThOAnnYDKGwhAoZXP8/Ruvc1Kx/5/Q59gGYPGEwzFq9eOP20fhGpCd3Qo6kT5kh
-         nvbHGwASok+RCi3pwJlEqQwbbb+Lrt3Czm84eTg6ZlONlWC91aIVFzSkfBEojQ/yee7k
-         xIiQ3vik83HEkpfeVjoAp8rdo8VHiCGz4A2WqRK0eXdqGuy20U6KWMSJmauluk2UDHHG
-         khDsYANIQliJzRSDe+OP0T5O4bWDLD1tLcB85PAyESOlBYga/gzsOe6vcjUObTjQxTu9
-         CsvyFpdF8tQTaMWaqeMzNHXMNozA4v6qkWgD4ODLO1yNq5CrNwB+FCP0AcyEJoKBlQDA
-         hwGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=oTeDs7QSrru96rXb+CHs8fd7MrLtDK4gFi4bZDBmvVM=;
-        b=ehgUahiV/DGYVhw0Zvp90ryYiqpJ3pVSBjlNl4opDq3PHHwi93xt8qtfTqzszD9h+x
-         JpZoYPqBI3eDxw8Ubhc2rJkhxLIDCESVHZP/NwM55AWTuEwnJzXN3gnGwIvKxoKyTWir
-         p3w2HsFIw0ldBASY5cFQUyqVsDaExo5KVFihiQfKKKvw8GfZObAPfaKGovjIBdmPVENz
-         Vp5EueL8hPbmrtBRNFGpUkhyGnjerkW6ZlakPjMXYQk9YFqzbBhnVeSikPtq84CUAiQT
-         Ted4kFDi/uljcJyCr3nN10A6aAgmrYgWyxv1KbgDER0kv90P6SsVDYF76VdKtSmh7E2I
-         hBvg==
-X-Gm-Message-State: AOAM5320ibG4JpqckiHOgZ1IW3xGS4NfkKz0VzQo3RrcU3VxHoHOpd0r
-        PB0v4uaACaZ6ga3g9r+nIlU=
-X-Google-Smtp-Source: ABdhPJwcrgPf3v/NX+HGsz1Nc9Q7k92Ai8HLJ1PQbLehjBSmEX+KZN51sCcXDwCGiLvPkjXBgnwT3A==
-X-Received: by 2002:a9d:67c1:: with SMTP id c1mr1066103otn.51.1625263138617;
-        Fri, 02 Jul 2021 14:58:58 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id l7sm825165otu.76.2021.07.02.14.58.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jul 2021 14:58:58 -0700 (PDT)
-Date:   Fri, 02 Jul 2021 16:58:56 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Message-ID: <60df8c20e8518_28bb20846@natae.notmuch>
-In-Reply-To: <8735sxaqln.fsf@evledraar.gmail.com>
-References: <20210702100506.1422429-1-felipe.contreras@gmail.com>
- <20210702100506.1422429-6-felipe.contreras@gmail.com>
- <8735sxaqln.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH 5/5] config: add default aliases
-Mime-Version: 1.0
+        id S230135AbhGBWDS convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 2 Jul 2021 18:03:18 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:57933 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229648AbhGBWDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 18:03:18 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 162M0bcs018257
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 2 Jul 2021 18:00:37 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Felipe Contreras'" <felipe.contreras@gmail.com>,
+        "'martin'" <test2@mfriebe.de>,
+        "'Andreas Schwab'" <schwab@linux-m68k.org>
+Cc:     <git@vger.kernel.org>,
+        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Junio C Hamano'" <gitster@pobox.com>
+References: <20210702100506.1422429-1-felipe.contreras@gmail.com> <20210702100506.1422429-6-felipe.contreras@gmail.com> <871r8hauvi.fsf@igel.home> <60dee7d4e27bf_2964b20817@natae.notmuch> <65b1d215-c3ab-e0e3-f4ac-a30131541f9b@mfriebe.de> <60def07e686c7_7442083a@natae.notmuch> <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de> <03a401d76f45$e1c6fce0$a554f6a0$@nexbridge.com> <60df7ee3128d6_28bb2086c@natae.notmuch>
+In-Reply-To: <60df7ee3128d6_28bb2086c@natae.notmuch>
+Subject: RE: [PATCH 5/5] config: add default aliases
+Date:   Fri, 2 Jul 2021 18:00:32 -0400
+Message-ID: <03ce01d76f8d$b0cfa8b0$126efa10$@nexbridge.com>
+MIME-Version: 1.0
 Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQFt4lYZIaBsC/3edPIiz2atDh3oKQJ0jboPAtZ1RKIBrdoWqQDA6SjYAdtwiv8B5YNkIAHEAWDFAd18l9mrim6JQA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> =
+On July 2, 2021 5:02 PM, Felipe Contreras wrote:
+>To: Randall S. Becker <rsbecker@nexbridge.com>; 'martin' <test2@mfriebe.de>; 'Felipe Contreras' <felipe.contreras@gmail.com>;
+>'Andreas Schwab' <schwab@linux-m68k.org>
+>Cc: git@vger.kernel.org; 'Ævar Arnfjörð Bjarmason' <avarab@gmail.com>; 'Junio C Hamano' <gitster@pobox.com>
+>Subject: RE: [PATCH 5/5] config: add default aliases
+>
+>Randall S. Becker wrote:
+>
+>> In my opinion, default aliases are not a good path. If a command is
+>> intended to be part of the git command set, then it should be a
+>> builtin not an alias.
+>
+>Commands cannot be overriden, aliases can.
+>
+>All SCM projects have aliases, except git. Why do you think that is?
 
-> On Fri, Jul 02 2021, Felipe Contreras wrote:
-> =
+I do not think my intent was conveyed. Default aliases made by the product provider, regardless of who that is, are not a good path. If I was RCS, I would not make an alias that everyone had to take. Same for git. git has aliases, but they are for the user. If the end-user team wants to implement a particular set of primitives for their environment, that's fantastic, and entirely possible in git. But I do not want to be constrained by someone else's primitives that are not core product.
 
-> > These are all the aliases everyone agrees are essential.
-> >
-> > Virtually all VCS in the world have aliases, except git, so let's cha=
-nge
-> > that.
-> >
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  Documentation/git-branch.txt      |  4 ++++
-> >  Documentation/git-cherry-pick.txt |  4 ++++
-> >  Documentation/git-commit.txt      |  4 ++++
-> >  Documentation/git-mergetool.txt   |  4 ++++
-> >  Documentation/git-rebase.txt      |  4 ++++
-> >  Documentation/git-status.txt      |  4 ++++
-> >  config.c                          | 29 +++++++++++++++++++++++++++++=
+>> Users have their own alias setups and implied conflicts are just going
+>> to be confusing and end up in help, examples, presentations, and so
+>> forth.
+>
+>There's no conflict. Either you use the alias or you don't. Just like today.
 
-> >  config.h                          |  3 ++-
-> >  t/test-lib.sh                     |  2 ++
-> >  9 files changed, 57 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.=
-txt
-> > index 94dc9a54f2..fbf5ebd27a 100644
-> > --- a/Documentation/git-branch.txt
-> > +++ b/Documentation/git-branch.txt
-> > @@ -24,6 +24,10 @@ SYNOPSIS
-> >  'git branch' (-d | -D) [-r] <branchname>...
-> >  'git branch' --edit-description [<branchname>]
-> >  =
+Then what is the point of this? I want my aliases, not someone else's. Again, if it is a core git alias, it is not an alias, it is a supported command and I should see it in the git help -a output.
 
-> > +ALIAS
-> > +~~~~~
-> > +'git br'
-> =
+>> If you want a default alias set, publish it as part of an extension
+>> set, like the bash-completion, so that the user has to take action to
+>> install them in their environment. Do not do this in the base git
+>> product by default.
+>
+>The whole point is to help users so they don't have to do extra configurations.
 
-> I think for these it would be good to explicitly mention the mnemonic, =
-e.g.:
-> =
+The whole point is that a user team should give thought to the functional extensions they want, as a team, which is where aliases come in. We, as git contributors, should not be telling them what their extensions are.
 
-> 'git br', git 'br'anch. It's pretty obvious in this case, but not all o=
-f
-> them.
+>Today git is pretty much unbearable without a configuration. Default aliases would help quell some of that pain.
 
-If we are on `man git-branch(1)`, `git help branch`, or
-`git branch --help` I think it's pretty obvious what the alias is for.
+Git is entirely bearable particularly in my own pons and medulla. I have three bash aliases, two for log, one for removing tags and no git aliases and I am highly productive.
 
-Especially since it's right after the synopsis.
+Would that make ECLIPSE intolerable?
 
-FTR all other SCM's specify the alias directly. Perhaps we could even do
-'br' instead of 'git br'.
+>> If I was a committer on this project, I would have to be much more
+>> convinced that there is long-term value in this series than appears on
+>> the surface.
+>
+> 1. It doesn't affect anyone negatively
+> 2. You don't have to use them if you don't want to  3. They don't affect your aliases, even if they have the same name  4. Everyone has
+>aliases  5. Every SCM in history has had aliases
+>
+>What more would you need?
+>
+>> I am sorry if I am coming across too strongly on this subject, but I
+>> do think we are overloading alias capability and intruding on a domain
+>> that should be reserved for our users, not ourselves.
+>
+>But why? We provide plenty of defaults so that users don't have to configure git in order for the program to be useful. And we will
+>continue to add more defaults.
 
-> This also addresses the '"ci" or "co"' discussion downthread
-> somewhat, i.e. at least we'll see if we always pick the first two
-> letters, or if it's somewhat arbitrary.
+I remain unconvinced and I found the assertion #5 somewhat specious and incorrect. SCCS and RCS use Shell aliases. There are no aliases in ClearCase. Granted Perforce has them, but that is not a sufficient differentiator to use that over git by any stretch.
 
-How? What would be the mnemonic for 'ci'?
+Why are we trying to create a standard set of aliases? I do not like the RCS primitives - never did - as a base and would not use them. If the command set is not sufficient, then it should be extended. If it is sufficient but complex for some, *they* can create aliases. I come back to my point that a community-based set of alias extensions should be managed as a distinct Open Source product that can be cloned from some cloud service and maintained independently from git. There is nothing stopping that from happening, except perhaps for something like an include operation in .gitconfig, which I think would be either a really good idea, or subject to a CVE, or both.
 
-> > +~~~~~
-> > +'git pi'
-> =
+I've expressed my opinion, and it's not my decision to adopt this. So whatever happens, as long as it does not pollute my community's expectation of git. Although, providing aliases will handcuff future command naming.
 
-> I've got this this as 'git chrp' locally FWIW, I'd think this would mak=
-e
-> more sense if it was called 'git pick'.
-
-Yeah, but we are aiming for two letters the only other good option is
-'cp' which can be easily confused.
-
-For a past discussion on this alias see [1].
-
-> > +~~~~~
-> > +'git co'
-> =
-
-> Not going to wade into the downhtread co/ci discussion, except to say
-> that this is 'co'mmit, i.e. first two letters, like 'br'anch.
-
-Yeap, so it's straightforward.
-
-> >  'git mergetool' [--tool=3D<tool>] [-y | --[no-]prompt] [<file>...]
-> >  =
-
-> > +ALIAS
-> > +~~~~~
-> > +'git mt'
-> =
-
-> Maybe it's just me, but I don't think I've ever used git-mergetool
-> directly. I don't think it's worthy of squatting on such a short name.
-
-Huh? How is a user supposed to jump from a merge failing to mergetool?
-(or rebase, or cherr-pick)
-
-> > +ALIAS
-> > +~~~~~
-> > +'git rb'
-> =
-
-> So 'r'e'b'ase, not 're'base.
-
-I don't know if 're' makes more sense here.
-
-> >  'git status' [<options>...] [--] [<pathspec>...]
-> >  =
-
-> > +ALIAS
-> > +~~~~~
-> > +'git st'
-> =
-
-> FWIW I've got this aliased to 'git status --short', anyway, 'st'atus, s=
-o
-> first two letters...
-
-Me too. Actually --short --branch.
-
-> > +static int git_config_default(config_fn_t fn, void *data)
-> > +{
-> > +	int ret =3D 0;
-> > +	struct config_source source;
-> > +
-> > +	if (getenv("GIT_NO_DEFAULT_ALIASES"))
-> > +		return 0;
-> =
-
-> Can't we just include this under GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS?=
-
-> Maybe rename it to GIT_TEST_DISALLOW_ABBREVIATED now that the "OPTIONS"=
-
-> part is considered inaccurate.
-
-Fine by me.
-
-> > +	memset(&source, 0, sizeof(source));
-> > +	source.prev =3D cf;
-> > +	source.origin_type =3D CONFIG_ORIGIN_DEFAULT;
-> > +	cf =3D &source;
-> > +
-> > +	ret +=3D fn("alias.co", "commit", data);
-> > +	ret +=3D fn("alias.rb", "rebase", data);
-> > +	ret +=3D fn("alias.st", "status", data);
-> > +	ret +=3D fn("alias.br", "branch", data);
-> > +	ret +=3D fn("alias.pi", "cherry-pick", data);
-> > +	ret +=3D fn("alias.mt", "mergetool", data);
-> =
-
-> I haven't looked but does this also inject things into the configset
-> API, or is it just going to be used by things that do
-> git_config_mycommand and fall back on git_config_default?
-
-I'm not sure what you mean. But it's basically as if you have them in
-a config file.
-
-Initially I used a diffent approach but the bash completion did not pick
-them up. This is as close to a config file as possible.
-
-> >  static int config_parse_pair(const char *key, const char *value,
-> >  			  config_fn_t fn, void *data)
-> >  {
-> > @@ -1897,6 +1921,9 @@ static int do_git_config_sequence(const struct =
-config_options *opts,
-> >  		repo_config =3D NULL;
-> >  =
-
-> >  	current_parsing_scope =3D CONFIG_SCOPE_SYSTEM;
-> > +
-> > +	git_config_default(fn, data);
-> > +
-> >  	if (git_config_system() && system_config &&
-> >  	    !access_or_die(system_config, R_OK,
-> >  			   opts->system_gently ? ACCESS_EACCES_OK : 0))
-> > @@ -3497,6 +3524,8 @@ const char *current_config_origin_type(void)
-> >  		return "submodule-blob";
-> >  	case CONFIG_ORIGIN_CMDLINE:
-> >  		return "command line";
-> > +	case CONFIG_ORIGIN_DEFAULT:
-> > +		return "default";
-> >  	default:
-> >  		BUG("unknown config origin type");
-> >  	}
-> =
-
-> Ah, this is likely it, do we incclude this in 'git config -l' etc? =
-
-
-Yes. Just like all other configurations.
-
-> > diff --git a/config.h b/config.h
-> > index 9038538ffd..bc3ecca313 100644
-> > --- a/config.h
-> > +++ b/config.h
-> > @@ -58,7 +58,8 @@ enum config_origin_type {
-> >  	CONFIG_ORIGIN_FILE,
-> >  	CONFIG_ORIGIN_STDIN,
-> >  	CONFIG_ORIGIN_SUBMODULE_BLOB,
-> > -	CONFIG_ORIGIN_CMDLINE
-> > +	CONFIG_ORIGIN_CMDLINE,
-> > +	CONFIG_ORIGIN_DEFAULT
-> >  };
-> >  =
-
-> >  enum config_event_t {
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 49b80a4eb5..a15965e2f4 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -456,6 +456,8 @@ GIT_DEFAULT_HASH=3D"${GIT_TEST_DEFAULT_HASH:-sha1=
-}"
-> >  export GIT_DEFAULT_HASH
-> >  GIT_TEST_MERGE_ALGORITHM=3D"${GIT_TEST_MERGE_ALGORITHM:-ort}"
-> >  export GIT_TEST_MERGE_ALGORITHM
-> > +GIT_NO_DEFAULT_ALIASES=3D1
-> > +export GIT_NO_DEFAULT_ALIASES
-> >  =
-
-> >  # Tests using GIT_TRACE typically don't want <timestamp> <file>:<lin=
-e> output
-> >  GIT_TRACE_BARE=3D1
-> =
-
-> Really needs more tests.
-> =
-
-> We had some other thread where this was discussed where I suggested tha=
-t
-> we implement some way to include default config. Ah, here it is:
-> https://lore.kernel.org/git/87eedj74dr.fsf@evledraar.gmail.com/
-> =
-
-> It's more work for this, but I think it would really go a long way to
-> addressing the concerns people are going to have about this.
-> =
-
-> I think we should not opt-in to this from day one, but have some knob t=
-o
-> enable including one of those shipped-by-default alias includes. Then
-> people could trivially mock svn/cvs or whatever their favorite VCS is,
-> and eventually as people vote with their feed we could pick a canonical=
-
-> one.
-
-As I mentioned there the problem is where do we put that file, and how
-do we distribute it.
-
-I think it's a cleaner approach, and we should definitely try it, but
-ultimately it's not going to change the fact that these aliases should
-be part of the distribution, especially if they are mentioned in the man
-pages. So it would just be an alternative way of hardcoding them.
-
-[1] https://lore.kernel.org/git/20140421204506.GD5105@thunk.org/
-
--- =
-
-Felipe Contreras=
