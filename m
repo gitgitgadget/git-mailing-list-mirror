@@ -2,71 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64410C07E95
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 22:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9B74C07E95
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 22:11:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4484C6140E
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 22:03:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76A1E613D8
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 22:11:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbhGBWFx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 2 Jul 2021 18:05:53 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:58065 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhGBWFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 18:05:53 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 162M3Cbr018447
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 2 Jul 2021 18:03:13 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'martin'" <test2@mfriebe.de>,
-        "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>
-Cc:     "'Felipe Contreras'" <felipe.contreras@gmail.com>,
-        "'Andreas Schwab'" <schwab@linux-m68k.org>, <git@vger.kernel.org>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-References: <20210702100506.1422429-1-felipe.contreras@gmail.com> <20210702100506.1422429-6-felipe.contreras@gmail.com> <871r8hauvi.fsf@igel.home> <60dee7d4e27bf_2964b20817@natae.notmuch> <65b1d215-c3ab-e0e3-f4ac-a30131541f9b@mfriebe.de> <60def07e686c7_7442083a@natae.notmuch> <3e82a574-fdcc-08b8-8fb5-1ff15f8ae564@mfriebe.de> <03a401d76f45$e1c6fce0$a554f6a0$@nexbridge.com> <874kdcal1k.fsf@evledraar.gmail.com> <03ac01d76f4c$ad23a130$076ae390$@nexbridge.com> <8f847f31-5c5d-0236-997c-bd07040f7ea7@mfriebe.de>
-In-Reply-To: <8f847f31-5c5d-0236-997c-bd07040f7ea7@mfriebe.de>
-Subject: RE: [PATCH 5/5] config: add default aliases
-Date:   Fri, 2 Jul 2021 18:03:07 -0400
-Message-ID: <03cf01d76f8e$0d8cf620$28a6e260$@nexbridge.com>
+        id S233671AbhGBWOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 18:14:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58990 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233522AbhGBWOP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 18:14:15 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9921C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 15:11:41 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id gb6so1855799ejc.5
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 15:11:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PS1O1n0PQ2mbbyYTfeW/ye1ieOE2Q2B4p3x2QZqvNoQ=;
+        b=WJwdJBQ7zryNcr3qrZXb2r72UL6KEWbUlSF2KMtPrqlFtABeICuDi+lezEg/s3iSNz
+         kQMJVtCMM5VvqajLvICQ5CqzBA6R0v4rBI01Pg8Wlp7ZCVpi260ihFgqojfL4Rj5Q58W
+         01G4c9NtwstfEOj68H14d7WcSSYknYDcpZkC+mkwSGV8TsYv6/78j9btjWq92cdt+s5r
+         989iN3jUHwANflgNIv1ACkkjDPBwnwLDmdeQoA9qO++K//H/eTUbowYlMk0Oaz5jJM6k
+         sg/uqwzl/+2PGbn8et81C/gYCeZypQyYm2N9Bth9PGQseqkcZFUTPtJp03mtP0FLSAHw
+         ypgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PS1O1n0PQ2mbbyYTfeW/ye1ieOE2Q2B4p3x2QZqvNoQ=;
+        b=dK8Ie0QZWzGLfiZRr98xRTS5O8uLKhH9SaXHqjhF03tfUCkYRb9QGhUDvt1HBeUPix
+         HU4yTUV4ubHGBV4dmzctppuIMoiXV4ZULQ33EG+HL8BIHDRZMR5FwUIFGi+HN5radxde
+         +sXDaPVLLNGT90tp+zjPXgVHM6e9cwq2VzOEnF8jMKGa+dDZkMalscVV5Rlk8kY0B0AO
+         nfWMeztObS6ovyqdDMDFdhhIQHm8nTd6EzSZbWdzrs3YvihWDNbVbGsO58s5OkqKwmDp
+         5vbdNV024D8liXGQC7JMk5CkOdnUlNHu2c2jUtEMXkiZKBq2iOYOrG9oJ9ow2vO5ATIV
+         a73Q==
+X-Gm-Message-State: AOAM530LSIT6fXvjB87wVEgVxnDgQG5FAF/K6XE0d/kspG7gMqPqN64H
+        Y1qIUdvd8TrNMPtUeIly8obWIBdlthgqiKyKX78=
+X-Google-Smtp-Source: ABdhPJzQwWSY2dPH7uLRTQm0/uUNvxJmYE7UDeS4W0Ygq2+kdBEir+KEtCZpteDXimKagcdOI6IN3ZUv73gTkcYr0HM=
+X-Received: by 2002:a17:906:26c7:: with SMTP id u7mr1871306ejc.211.1625263900382;
+ Fri, 02 Jul 2021 15:11:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQFt4lYZIaBsC/3edPIiz2atDh3oKQJ0jboPAtZ1RKIBrdoWqQDA6SjYAdtwiv8B5YNkIAHEAWDFAhqQj4MBoKTRiQHzUw0Fq2vswnA=
+References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
+ <9568baf5dddcc0637c15f698aea24d230c4d01b2.1625155693.git.gitgitgadget@gmail.com>
+ <87czs0alhg.fsf@evledraar.gmail.com> <CAPig+cQinUsEZqEDb2_zhi37SdYuBCVEznmFbXPJuFB5cFznKg@mail.gmail.com>
+In-Reply-To: <CAPig+cQinUsEZqEDb2_zhi37SdYuBCVEznmFbXPJuFB5cFznKg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 3 Jul 2021 00:11:29 +0200
+Message-ID: <CAP8UFD2FjY1mY=GS4ZZHiAxTpsqq7+1ywHfCvdRvJrr8Oo9-qg@mail.gmail.com>
+Subject: Re: [PATCH 08/15] [GSOC] ref-filter: add cat_file_mode in struct ref_format
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On July 2, 2021 10:44 AM, martin wrote:
->To: Randall S. Becker <rsbecker@nexbridge.com>; 'Ævar Arnfjörð Bjarmason' <avarab@gmail.com>
->Cc: 'Felipe Contreras' <felipe.contreras@gmail.com>; 'Andreas Schwab' <schwab@linux-m68k.org>; git@vger.kernel.org; 'Junio C
->Hamano' <gitster@pobox.com>
->Subject: Re: [PATCH 5/5] config: add default aliases
+On Fri, Jul 2, 2021 at 9:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
->On 02/07/2021 16:15, Randall S. Becker wrote:
->> On July 2, 2021 9:42 AM, Ævar Arnfjörð Bjarmason wrote:
->>> So aside from the "are these aliases good idea?" discussion, would
->>> you prefer if they're implemented that we theat them the exact same
->>> way we do "git fsck-objects" and "git fsck"? I.e. list them twice in git.c, just pointing to the same cmd_fsck?
->> Without knowing the full history of why the duplication, yes. That would be my preference. If it is a git command, it should be handled
->like one as closely as possible. Presumably, it also would show up in git help -a. I would not expect aliases to show in help.
->>
->But, if it is a git command, can you still overwrite it with your on alias?
->
->As it was pointed out, some of those are used by people as aliases for other things already.
+> Aside from the potential maintenance burden of the `atom_type >= ...
+> && atom_type <= ...` approach, another problem is that it increases
+> cognitive load. The reader has to go reference the enum to fully
+> understand the cases to which this code applies. On the other hand,
+> the way the patch mentions the enumeration items explicitly, it is
+> obvious at-a-glance to which cases the code applies. An additional
+> downside of the suggestion is that the range specified by `>=` and
+> `<=` may cause some readers to think that there is some sort of
+> implicit relationship between the items in the range, which doesn't
+> seem to be the case. So, I find the way it's done in the patch
+> presently easier to comprehend.
 
-If an alias overwrites/overrides a git command, I would expect NIST to have a proverbial cow and a CVE will be raised, probably by me.
+I agree that it's less cognitive load, but maybe it could be improved
+using a separate function like:
 
-Overriding base product functionality with something that does something other than what is documented is a highly questionable practice.
+static int reject_atom(int cat_file_mode, enum atom_type atom_type)
+{
+    if (!cat_file_mode)
+        return atom_type == ATOM_REST;
 
+    /* cat_file_mode */
+    switch (atom_type) {
+    case ATOM_FLAG:
+    case ATOM_HEAD:
+    case ATOM_PUSH:
+    case ATOM_REFNAME:
+    case ATOM_SYMREF:
+    case ATOM_UPSTREAM:
+    case ATOM_WORKTREEPATH:
+        return 1;
+    default:
+        return 0;
+    }
+}
