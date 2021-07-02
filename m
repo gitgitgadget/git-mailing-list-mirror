@@ -2,153 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 067E6C11F68
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 11:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51F45C11F68
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 11:59:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D36B561402
-	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 11:52:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 306DB6141D
+	for <git@archiver.kernel.org>; Fri,  2 Jul 2021 11:59:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231980AbhGBLyv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 07:54:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34814 "EHLO
+        id S232002AbhGBMBc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 08:01:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231956AbhGBLyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 07:54:50 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8732EC061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 04:52:18 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id l24so15663565ejq.11
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 04:52:18 -0700 (PDT)
+        with ESMTP id S231956AbhGBMBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 08:01:31 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 943F1C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 04:58:59 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id m9-20020a05600c3b09b02901f246b43bbeso6208686wms.3
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 04:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ZF20XKg6I+29JcsT/Idm/2xahWk0Uho0y658s8QHoQg=;
-        b=d2YKl/f+giMj8AXoD/uEosP4Tifgqv1qSKsJRfGpHapzfrI1hyGcP3UANT7rt7B8vg
-         /yJ/mqicewmOxIT3+xI2xlum51ai4es8qdnKAgpeDoHknqGYUaswD2VPpVH9tdfEVwAm
-         4qcqSKCF1iiAkXX8RhI3NXKVlRXe+utN/1vqAej/pe2ZLzS4DTJaCa98P0kUALfcWLoT
-         KFnKVjtLoTjQXUdoc+X+E+eO791g0Hz9gCbjCu/o+cyPbQzasGPiGfnIbQBNrAJc0PoQ
-         7q2IWJZ5sQ6deAvjmb0fAaNez0DXUhbFlQq1UCsGfg4Qk1ubeaURSho9mMQl0M08ymje
-         G+/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zkOINdz4ayE/MhcaBd/umdF89rOui0Iw9vUkYtZCQto=;
+        b=Z4wvP7iDrKYA4vyP1OkWOy0K/sUigAXSc9f3kqDckJq17GwLLI1VmThoh9A24c1yfs
+         BIy0LFvRbQjhmaZSDP7dDv2uU3RvtoNLTnKuou9qVLoxSIjz9TNh+UmLy3kWSRuSdDyr
+         2i0Kxaz6zitertImB30w8NnEJ/4vYm45FXhdK688ML8/NJ//LVo2yS4v/IRTCpfxHzYP
+         Id6/FvRVNvOo3AufwB1dYXq9LsNqFDOEZrEm6M7tmqU+vumxuJVIj6wA3nKAB4uD8+gc
+         8FXgpwHbfG+b5H1ky+UOemxCEY/CcQrQ26lpA3ioCOGl9UHUhlfh0CrZ7OHn2bNdz1wx
+         O80w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ZF20XKg6I+29JcsT/Idm/2xahWk0Uho0y658s8QHoQg=;
-        b=SFC1HWxjEA9J7thvq4LjwiHTHwsd1HB7xqbZL29PFwOhK8beBZasn0g5tddDkp7jHU
-         6xKtrvnqVCCVHZpcMKS/n7xHlzjldA4teUYqztckz648DieGJ1zBFPLnlgYCHKaQwNo5
-         NqYmPPdYGvIPgRak4/lKZIwchfjQ1k2xkHjjtXv/1XZ/UaSwZ7l2YfEXSFt0bJQlkPQl
-         Aor6YFnRmNXcX3GHFR0rSv3qp9SXao8dZ56R1UJkQ8XAxbdpKlIXwq2sD6gUWd1KahBX
-         +q981U7QzD+IB55T5eoKRNwKkcyth+vj00yB1d2Z20IZvmhCTyuCoZER8/AZky+sKh44
-         ua8Q==
-X-Gm-Message-State: AOAM533j5brjS24xW2Eag+dBr6xDiMsVh87VB+lDDiBk0L1C22uZAZv8
-        b7cURBNbBzQMSn70knv2O1Q=
-X-Google-Smtp-Source: ABdhPJw5UvIprcfi+JYIIKrT5OPsEwA9Ei/5bCIWwl8yEHU8801YFSfcGKyz6OWhZ6fp0dM1GDYLZg==
-X-Received: by 2002:a17:907:3e09:: with SMTP id hp9mr4907630ejc.37.1625226737039;
-        Fri, 02 Jul 2021 04:52:17 -0700 (PDT)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id b8sm1216243edr.42.2021.07.02.04.52.16
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zkOINdz4ayE/MhcaBd/umdF89rOui0Iw9vUkYtZCQto=;
+        b=tmjdC9xyge97hL4iQkgU2u9czonkqx6EqH5x6rqi+el/5zW2LZ/ruJFmkm+qj3oH7R
+         +xQnfu+uXObxb9dTq/s2HnLvGHvCGj3jV+JafKaEK1Vp0rp6WNY3H0B970SsCLaxnkCg
+         pB5f6kIS9VAKDU7Pde87zx0Zuw8H9efxBj76tJkldTDPFlosMt+cDKVdN4mAZPKm/91N
+         KbSf85ffvMer9b8GQGblC42tmQfJ2KyzVLvUrdfv0dLR1Y9OPfGNcuRFXFmGNZaAqVX4
+         DmysfsXqVANtV4MVa5wUzqKMIE1rbY1t4kbpM6gh35KpC1JuEsNwP6TnXvAbezZNFchY
+         yuQA==
+X-Gm-Message-State: AOAM530G3vuBvq4hYmgOEvypegpmo+cJUAcXGLT/eF56pTdoweskEDSD
+        RSmK+1Y88brRX+lH2vHgh6DaDT1VAMUudw==
+X-Google-Smtp-Source: ABdhPJwrtLMq91SZ7fGOM+EjSDi0qZBXZxErIicL7OBDjpkJEKljmLGqHVgTA2prQfrbmy5uQdKARA==
+X-Received: by 2002:a7b:cc08:: with SMTP id f8mr5066259wmh.58.1625227137711;
+        Fri, 02 Jul 2021 04:58:57 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x17sm3842641wrn.62.2021.07.02.04.58.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jul 2021 04:52:16 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: The git spring cleanup challenge
-Date:   Fri, 02 Jul 2021 13:43:52 +0200
-References: <60b5d281552d6_e359f20828@natae.notmuch>
- <YLXl5+ronWhcGh13@danh.dev> <60b61089ba63d_e40ca20894@natae.notmuch>
- <YLcFU+ORZTzAsyBy@danh.dev> <60b70eb930614_4abd208ad@natae.notmuch>
- <87eedj74dr.fsf@evledraar.gmail.com>
- <60b8a98d11d7c_1a0a2d20856@natae.notmuch>
- <87zgw75dyi.fsf@evledraar.gmail.com>
- <60dee69fb7cc7_2964b208fb@natae.notmuch>
-User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <60dee69fb7cc7_2964b208fb@natae.notmuch>
-Message-ID: <87zgv59bm8.fsf@evledraar.gmail.com>
+        Fri, 02 Jul 2021 04:58:57 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Documentation/Makefile: don't re-build on 'git version' changes
+Date:   Fri,  2 Jul 2021 13:58:47 +0200
+Message-Id: <patch-1.1-911881ce19f-20210702T115617Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.32.0.634.g284ac724283
+In-Reply-To: <874kdn1j6i.fsf@evledraar.gmail.com>
+References: <874kdn1j6i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since 9a71722b4df (Doc: auto-detect changed build flags, 2019-03-17)
+we've been eagerly re-building the documentation whenever the output
+of "git version" (via the GIT-VERSION file) changed. This was never
+the intention, and was a regression on what we intended in
+7b8a74f39cb (Documentation: Replace @@GIT_VERSION@@ in documentation,
+2007-03-25).
 
-On Fri, Jul 02 2021, Felipe Contreras wrote:
+So let's add an ASCIIDOC_MANVERSION variable that we exclude from
+ASCIIDOC_COMMON. The change in 9a71722b4df was only intending to catch
+cases where we e.g. switched between asciidoc and asciidoctor, not to
+undo the logic in 7b8a74f39cb and force a re-build every time our HEAD
+changed in the repository.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Thu, Jun 03 2021, Felipe Contreras wrote:
->> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> >> We could then just extend the include syntax rather easily to include
->> >> "libraries", which would be like the current include.path, but would
->> >> understand a library:: prefix (better name bikeshedding welcome). We'd
->> >> then just ship these in /usr/share/git-core/config/includes or whatev=
-er,
->> >> e.g. /usr/share/git-core/config/includes/aliases/svn-like.cfg
->> >
->> > I wouldn't be against some some suggested defaults, but *in addition* =
-to
->> > some hardcoded default aliases that are documented.
->>=20
->> I'm talking about in terms of the flexibility of implementation of
->> on-by-default defaults. We could implement it as I suggested and then
->> just have a core.defaultIncludes, which would by default be set to
->> git::aliases/svn-like.cfg or whatever, i.e. equivalent to:
->>=20
->>     [core]
->>     defaultIncludes =3D "git::default.cfg"
->>=20
->> Which itself would include a
->> /usr/share/git-core/config/includes/default.cfg which would do:
->
-> I really gave this a try, but the problem is that git doesn't even have
-> a stardard location to install shared files.
->
-> I started with $sharedir, but that's not git-specific. Then I added
-> $gitsharedir which required a bunch of changes to the Makefile, and
-> eventually I decided against it.
->
-> We don't have standard location for shared files. Period.
->
->> In a way this is total bikeshedding, I just think it's worth doing it
->> this way up-front.
->
-> Yes, maybe so, but git infraestructure is completely unprepared for that
-> (at this point).
->
-> So I just decied to hard-code them [1]
->
-> [1] https://lore.kernel.org/git/20210702100506.1422429-1-felipe.contreras=
-@gmail.com/
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-FWIW I only saw this reply after I replied in that thread
-... referencing this one.
+As a follow-up to
+https://lore.kernel.org/git/874kdn1j6i.fsf@evledraar.gmail.com/ I cut
+"make man" out of my "rebase -x" invocations, I could swear it didn't
+used to take so long. Turns out it didn't, and that its eagerness is a
+recent-ish regression.
 
-I haven't tried, but I'd think it wouldn't be a big change. You're
-injecting alias.* config directly, you could just inject an
-include.path=3D* in the relevant part of the config machinery instead.
+This is what we used to do before v2.22.0, so I'm not too worried
+about the edge case discussed in the comment here. I think an
+improvement on this might be to e.g. force all the flags with a "make
+dist" or one of the install targets.
 
-We'd need a new verb like gitdir:* and onbranch:*, maybe system:* or
-git:*, we'd then search system:foo.cfg for those relative to our libexec
-or /usr/share data, e.g. /usr/lib/git-core/config/foo.cfg
+In practice I don't think there's many/any people who build releases
+that matter to anyone out of the checkout they've been using for their
+own development.
 
-We could then carry those in includes/* in the git.git repo, and to
-address the "let's make sure they're there" have a trivial build step
-like the command-list.h to build those into a C object. I.e. dog-food on
-our own build process and run `git config -f <file> -l -z` for each one,
-munge that and spew it into a *.c
-file. I.e. include/aliases/svn-like.cfg or whatever.
+ Documentation/Makefile | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-Then when we can't find a system:* (or whatever it's called)
-handle_path_include() we'd consult that list of fallbacks.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index f5605b7767f..6b3f0bb6c8b 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -137,11 +137,12 @@ ASCIIDOC_HTML = xhtml11
+ ASCIIDOC_DOCBOOK = docbook
+ ASCIIDOC_CONF = -f asciidoc.conf
+ ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
+-		-amanversion=$(GIT_VERSION) \
+ 		-amanmanual='Git Manual' -amansource='Git'
++ASCIIDOC_MANVERSION = -amanversion=$(GIT_VERSION)
++ASCIIDOC_ALL = $(ASCIIDOC_COMMON) $(ASCIIDOC_MANVERSION)
+ ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
+-TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
+-TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
++TXT_TO_HTML = $(ASCIIDOC_ALL) -b $(ASCIIDOC_HTML)
++TXT_TO_XML = $(ASCIIDOC_ALL) -b $(ASCIIDOC_DOCBOOK)
+ MANPAGE_XSL = manpage-normal.xsl
+ XMLTO = xmlto
+ XMLTO_EXTRA =
+@@ -333,6 +334,16 @@ mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
+ 		show_tool_names can_merge "* " || :' >mergetools-merge.txt && \
+ 	date >$@
+ 
++# We use $(ASCIIDOC_COMMON) here, and not $(ASCIIDOC_ALL). We don't
++# want to include $(ASCIIDOC_MANVERSION) and have the documentation
++# re-built every time HEAD changes.
++#
++# This is a trade-off requiring a "clean" build of the documentation
++# for release purposes, in the future we might include the version if
++# there's a cheaper way to re-insert the "Source" version during
++# re-builds. If we detect that that's the only thing we changed we
++# could insert it with a cheap search/replacement against the existing
++# files.
+ TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK))
+ 
+ GIT-ASCIIDOCFLAGS: FORCE
+-- 
+2.32.0.634.g284ac724283
 
-I'm not saying it's trivial, just that I think in practice building
-consensus for a "one blessed list of hardcoded aliases" is going to be a
-very tough sell, and making it optional/configurable/pluggable might
-make that sell a lot easier.
