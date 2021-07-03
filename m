@@ -2,167 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBDC6C07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7AB4C07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:14:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDAF0613C0
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:04:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86C98613FE
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbhGCFH3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 01:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36004 "EHLO
+        id S229879AbhGCFQt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 01:16:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbhGCFH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 01:07:29 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D236C061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 22:04:55 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id 11so14010783oid.3
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 22:04:54 -0700 (PDT)
+        with ESMTP id S229557AbhGCFQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 01:16:49 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73632C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 22:14:16 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id g3so12236336iok.12
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 22:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eZoRyRAUg5NM6DUtLpADRzTK6NuB/iorWs0CRdlWNJs=;
-        b=t1/m38sfVtKgJ6w3rfKSE5o8KMSOsC2JYa/5LnOzEsE/fz7jbPsu5yNum+ig5B9Bcx
-         TkcvdewXfHhl6UXyq4t6A0MhrsOWhdw+jBpY0MbSJxPEo2Bgoitkt/3NLeGouZGDeTRm
-         G6LYtfHsAfftXzDr0bTEwY6R9YpTnOTk9a8bqYM+VAHUMWHBHOaFLUFRv1Hb4LKUNnjx
-         QqDp4DnWxz1gP4lNjDNR3FXHu+7ZtItzWPV0B4EyScgC0EAB4doFZIfwyGR5fF8s+ETR
-         PfHIBB6yL8N6OKlQanJPayvuqeALUQlNe6TVARy3PXGGOd6m6vHRh/HjzDnYQhy1DhNX
-         zGvw==
+         :cc:content-transfer-encoding;
+        bh=eqHcCYyb0krwkehfr+z4CTCS1/jQUPeriBMVHJ7mpSA=;
+        b=L6Y1gqL1MqZwriML0ESKwQHQPA0I9UZAd3y3bxEdBv2iF7SodHpYTMcAeWdk04WJFV
+         zXQstf/wtw0uKDNZm+hgRgotwTqJAx+Axh/F92qcocDUN42j/5xj6VL75ME6ntP2F0zr
+         KX0rJptxcrUlup3E1QhX392lgvXJjzmyEZc5XbWrPTU8WIYQRp2SMJFeTu8txEnSQZ0H
+         yA4Oy3pEWyI9+KMSqjTwgC367CzKNhQv5uI5oFRQ0KVHsLzdjFEFVqNxJsXoqMe33BkO
+         O+gF7hSzhopCEkqqsPGMz0ZXTEznF256YyGqBxMWofHHTGQr8cOncz6Y+YD38ZVi7J0m
+         zpQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eZoRyRAUg5NM6DUtLpADRzTK6NuB/iorWs0CRdlWNJs=;
-        b=C7kjAiujXynrCYkFN2DR/aUFMS8lp3ZPg620Qyhs+6Fj7GS3rJEwzRNaIzOkIA6j60
-         s/UQX/QTL5u3Ee3rzTT7lIleo3IjU6RRrrR7lu1CVC058OlpS8EAVR5ACmeG6RiGLPOA
-         8OYPMErKTaP+F/bQ81RSiwxI/m7T89MBBvOpBTsa76N68ftBU7vq3rc3usynSBqG0poE
-         lzisSZ36Cg3I5F2cn/BTRJSwTYDYDAid54V3dMLwP0C9kvAeDE/FT8acxWIqTdRUaAcR
-         H5q2pX1SvHVE9C2vAFu+Ki+SXCBNARcfj3TUHol4XacWZEeLKnSopNzrhO/WYsjhoUuP
-         aaqg==
-X-Gm-Message-State: AOAM5300bWk6HCsHMWwv5gYLKXMUSXYjFg4xLmYQ9z3b5dkmocgaMxDD
-        bEu44+/e3mpLhF6vYwydDUP4kTmCOO80ykAca7uGgUxCaW1ELw==
-X-Google-Smtp-Source: ABdhPJxYYTfBUzu7F7T32aRwBNsyqQvvwt2Xl3jV0+4GICqX44iGLyOijQBSEbiMH/TESGDETzGetBZ+BtrjfLmXuK0=
-X-Received: by 2002:aca:ed0b:: with SMTP id l11mr2475294oih.167.1625288694148;
- Fri, 02 Jul 2021 22:04:54 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=eqHcCYyb0krwkehfr+z4CTCS1/jQUPeriBMVHJ7mpSA=;
+        b=F4sQ4vNHWI9YzU7gWySQDZPe4nOnleB6eQT6c4/0DnMtacYw83Sa1z+rm0MpFk/CVr
+         WrlQ3w69uEUG73ULXgXQNpa4FFxHUOfY8nkIPzsU3fKaCw1BaDtXMARUQyO9dsGayHTx
+         mcxtwtP9AA4+YB4eKYyW2oU4hicAqppDPFEGYsTN6sexPkcQplOqoUdITwg8AI9zckVP
+         vO6CCIyDsIXYA6cQW4ggyPPzjxcPv9p5wpiv9MMt72Uti/fAGI++N+qqfJH33nlaMx+k
+         xAZCbAxpd/U18+77QbdL+opWJ5FPel+pqr0pZS34N0q3rSgDgg1Lse0ns8+e2P6C18uw
+         AqSQ==
+X-Gm-Message-State: AOAM532rMof6TyRjh88ktVkP+N8OABcqrzMxQPUOVq5rHXxcn9lUnJpZ
+        WOI4FJBIexXiZBNLJDQrU+e8Rbx8JD8yo/qrFTg=
+X-Google-Smtp-Source: ABdhPJzsMF8YzhYooNuN9v0UHy8S8RvDHN+qWxixGp1oOr8nm00Xmlyo1I7JiN42FcpnT50S9yImJ9vWPLPoLgTA6aU=
+X-Received: by 2002:a05:6638:3294:: with SMTP id f20mr2473328jav.130.1625289255284;
+ Fri, 02 Jul 2021 22:14:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq4kdft122.fsf@gitster.g>
-In-Reply-To: <xmqq4kdft122.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 2 Jul 2021 22:04:42 -0700
-Message-ID: <CABPp-BGF4K4mAXf6X1rTpTmPCfQgwdhv_VUVg2icGk5Dw7Q1yw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2021, #07; Wed, 30)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
+ <ad71510feda0a100920a99de41db0ab137787796.1625155693.git.gitgitgadget@gmail.com>
+ <87im1salrd.fsf@evledraar.gmail.com>
+In-Reply-To: <87im1salrd.fsf@evledraar.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 3 Jul 2021 13:14:09 +0800
+Message-ID: <CAOLTT8QjGekriRWFp_HM0Cqiz4TYB_=cN7bBxhCSdZqzg4BG0w@mail.gmail.com>
+Subject: Re: [PATCH 02/15] [GSOC] ref-filter: add %(raw) atom
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 30, 2021 at 3:58 PM Junio C Hamano <gitster@pobox.com> wrote:
-
-I've started reviewing v7 of ds/status-with-sparse-index and will also
-look at ds/commit-and-checkout-with-sparse-index afterwards.
-
-> * en/ort-perf-batch-13 (2021-06-28) 5 commits
->  - merge-ort: add prefetching for content merges
->  - diffcore-rename: use a different prefetch for basename comparisons
->  - diffcore-rename: allow different missing_object_cb functions
->  - t6421: add tests checking for excessive object downloads during merge
->  - promisor-remote: output trace2 statistics for number of objects fetched
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=E5=
+=B9=B47=E6=9C=882=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=889:27=E5=86=
+=99=E9=81=93=EF=BC=9A
 >
->  Performance tweaks of "git merge -sort" around lazy fetching of objects.
-
-Most of the discussion on this series was actually about related
-improvements and ideas, with both Stolee and I agreeing those belong
-outside this particular series.
-
-I also tried to ask Jonathan Tan to review since it was based upon his
-similar work to do the original prefetching in diffcore-rename, but I
-think he's been busy.
-
-I'm not aware of further tweaks needed right now, but it's not at all
-clear to me whether I addressed your and Stolee's feedback to each of
-your satisfaction.  So this one could potentially be marked "Waiting
-for reviews (to finalize)"
-
-> * en/zdiff3 (2021-06-15) 2 commits
->  - update documentation for new zdiff3 conflictStyle
->  - xdiff: implement a zealous diff3, or "zdiff3"
 >
->  "Zealous diff3" style of merge conflict presentation has been added.
+> On Thu, Jul 01 2021, ZheNing Hu via GitGitGadget wrote:
 >
->  Expecting a reroll.
->  cf. <CABPp-BE7-E03+x38EK-=AE5mwwdST+d50hiiud2eY2Nsf3rM5g@mail.gmail.com>
-
-I've got some updates for this RFC series (in part thanks to Phillip's
-awesome digging!), including some tests.  However, I've also got a
-clear testcase failure, and another
-I-know-I-saw-a-real-problem-in-real-testing-but-lost-the-details
-issue.  So I may wait a while to resend.
-
-> * pw/diff-color-moved-fix (2021-06-15) 10 commits
->  - diff --color-moved: intern strings
->  - diff --color-moved-ws=allow-indentation-change: improve hash lookups
->  - diff --color-moved: stop clearing potential moved blocks
->  - diff --color-moved: shrink potential moved blocks as we go
->  - diff --color-moved: unify moved block growth functions
->  - diff --color-moved: call comparison function directly
->  - diff --color-moved-ws=allow-indentation-change: simplify and optimize
->  - diff: simplify allow-indentation-change delta calculation
->  - diff --color-moved: avoid false short line matches and bad zebra coloring
->  - diff --color-moved=zebra: fix alternate coloring
+> > @@ -1362,17 +1398,29 @@ static void grab_sub_body_contents(struct atom_=
+value *val, int deref, struct exp
+> >       const char *subpos =3D NULL, *bodypos =3D NULL, *sigpos =3D NULL;
+> >       size_t sublen =3D 0, bodylen =3D 0, nonsiglen =3D 0, siglen =3D 0=
+;
+> >       void *buf =3D data->content;
+> > +     unsigned long buf_size =3D data->size;
 >
->  Long-overdue correctness and performance update to "diff
->  --color-moved" feature.
+> Let's declare this.
 >
->  Waiting for reviews.
-
-I read through the first half the patches or so and didn't spot
-anything wrong, though I'm very unfamiliar with this code area and
-don't yet understand much of what's going on; it was more of a spot
-check.  I'll try to get back to it again, but my review probably won't
-be that deep.
-
-> * en/ort-perf-batch-12 (2021-06-09) 4 commits
->  - merge-ort: miscellaneous touch-ups
->  - Fix various issues found in comments
->  - diffcore-rename: avoid unnecessary strdup'ing in break_idx
->  - merge-ort: replace string_list_df_name_compare with faster alternative
+> >       for (i =3D 0; i < used_atom_cnt; i++) {
+> >               struct used_atom *atom =3D &used_atom[i];
+> >               const char *name =3D atom->name;
+> >               struct atom_value *v =3D &val[i];
+> > +             enum atom_type atom_type =3D atom->atom_type;
+> >
+> >               if (!!deref !=3D (*name =3D=3D '*'))
+> >                       continue;
+> >               if (deref)
+> >                       name++;
+> >
+> > +             if (atom_type =3D=3D ATOM_RAW) {
 >
->  More fix-ups and optimization to "merge -sort".
+> Here, where it's going to be used.
 >
->  Will merge to 'next'.
 
-Sounds good, thanks.  As far as I can tell, I addressed everyone's
-feedback a month or more ago (including getting Stolee's Reviewed-by);
-no changes since then.
+Yeah, buf_size is only used here.
 
-> * ab/send-email-optim (2021-05-28) 13 commits
->  - perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
->  - send-email: move trivial config handling to Perl
->  - perl: lazily load some common Git.pm setup code
->  - send-email: lazily load modules for a big speedup
->  - send-email: get rid of indirect object syntax
->  - send-email: use function syntax instead of barewords
->  - send-email: lazily shell out to "git var"
->  - send-email: lazily load config for a big speedup
->  - send-email: copy "config_regxp" into git-send-email.perl
->  - send-email: refactor sendemail.smtpencryption config parsing
->  - send-email: remove non-working support for "sendemail.smtpssl"
->  - send-email tests: test for boolean variables without a value
->  - send-email tests: support GIT_TEST_PERL_FATAL_WARNINGS=true
+> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> > index 9e0214076b4..18554f62d94 100755
+> > --- a/t/t6300-for-each-ref.sh
+> > +++ b/t/t6300-for-each-ref.sh
+> > @@ -130,6 +130,8 @@ test_atom head parent:short=3D10 ''
+> >  test_atom head numparent 0
+> >  test_atom head object ''
+> >  test_atom head type ''
+> > +test_atom head raw "$(git cat-file commit refs/heads/main)
+> > +"
 >
->  "git send-email" optimization.
->
->  Will merge to 'next'.
+> Extra stay line here, is the \n intentional?
 
-Wahoo!
+I think so. `\n` is necessary.
+In cmd_for_each_ref(), there have a  extern "putchar('\n');"
+In cat_one_file(), write_or_die() output origin data of the object.
+
+Thanks.
+--
+ZheNing Hu
