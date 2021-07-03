@@ -2,81 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20616C07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 13:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EF25C07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 13:07:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E351C6191C
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 13:01:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CCB261445
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 13:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbhGCNDd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 09:03:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54156 "EHLO
+        id S229540AbhGCNK3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 09:10:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbhGCNDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 09:03:33 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB86C061762
-        for <git@vger.kernel.org>; Sat,  3 Jul 2021 06:00:59 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id w17so17073832edd.10
-        for <git@vger.kernel.org>; Sat, 03 Jul 2021 06:00:59 -0700 (PDT)
+        with ESMTP id S229484AbhGCNK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 09:10:28 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60D66C061762
+        for <git@vger.kernel.org>; Sat,  3 Jul 2021 06:07:54 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id h2so17132541edt.3
+        for <git@vger.kernel.org>; Sat, 03 Jul 2021 06:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=ZXADej4bcsjz1LTN8wVMw9CTQhJJ5/8KNxOLRgFoDu4=;
-        b=MEmmPqP8KfgNT7jhXU+6zzTC1pxXrwD0+UED/3cGR0ITbGPU/ZNqB4u4BadHCxoH1M
-         1V/1sl777QDxSkMf8aIqmec2WTqYT6P5CTYBJaaW+RSKcKm9y3HoaRpkzkFHAFkpnvkw
-         H20UF+76LZsgMoIfDmE5aZqZjZYHLF+h4E9DZqrL18rr9k1bDScm/RXg4heej13yh3EC
-         P9lfk6GDXqt2czhsl/ythpWQLbhMIl02nwgTm1/qyOz0/j8nuz6Bhk15XAna4K9n3xvG
-         HFWlkTwrscwKwsuwv8m1S4cPc90sagEOZvVm2cn0Bw0aAc5ULjOQFtN7S3iHUzHaI4sa
-         CqUQ==
+        bh=Hu2MnfyUmHqpCxlKGkcl/Gi8e3CjQsHewA76GhHMpU4=;
+        b=EHa109x0kOvQEOA1pHLMOcauiKtdQLeXrCtf7OsBTWZRA5NQVGjBRnAzUYq/ttQchg
+         v+/u2sfAfJoCVICIlJP16j5ly9hEafYWyUkNo+HrkpiflYcvpaR5Xf96cBBDuK4iVI3k
+         N3iBo6j8z9tMV1f8+SbEeoPiG/tivytEzETrPVlHvEgX41mH3QqjIF0TKeALbS+eG/8m
+         mFFy6+ajJr8WpYRVamkoZQXAY/EA/350QhDFyIvxX17+0roNIeK7NF2Av9viVmTr4XHS
+         TY/My2x/LdoTASV0Wd55JbbwxC8jdzMh8fK9vDRW1ZfWZHaOEDZXpa2J9yzNkwEAZvXq
+         mTYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=ZXADej4bcsjz1LTN8wVMw9CTQhJJ5/8KNxOLRgFoDu4=;
-        b=Kp+8HIaJV8QBzr1ABEkfFYhJ2KVo6Eia6mPmPv2Q1Mwh/bz4qvlRsm20PQF8AkhaH5
-         qMdTzAJ6lFqUSlZo6D1nYBj61kY0tcKAFzqa6lZvVBPB0dP6seYfAU5GAgfwTtsjDP4p
-         M2BruotFPTgI2JISRhsGEN1BleUwfOvMN7nPj5DFmIV6vSnSPtesYVtA8rn+d0PCevmA
-         LOoNJzFT/mJECXu1tGkQzVLwqy7drXi42LbnJZ8BN8B4dLO+vmq/rT+bxwa8a/pu35EU
-         X5CnpRa+PRqbM9V8A4Jnxm1zQVb9ZhWLlVDM7cGV1Qd46isa8SSGHi4420Bfewr83rFt
-         Lu6g==
-X-Gm-Message-State: AOAM530DGGAPuxwWNXd49EUNvDuDMSuZbCX2zE18Cj7NilVVkFLlHqC3
-        6bQe/3cXZvcxU4XZjsCkyv4=
-X-Google-Smtp-Source: ABdhPJzJBXscgwoiSYuA1yY+F8XxC/nCwtUKnWUahCQNxF46tZyDWKhTvlKdj04TQ3Z9GIzAiTbwBw==
-X-Received: by 2002:aa7:c7d0:: with SMTP id o16mr5162084eds.75.1625317258176;
-        Sat, 03 Jul 2021 06:00:58 -0700 (PDT)
+        bh=Hu2MnfyUmHqpCxlKGkcl/Gi8e3CjQsHewA76GhHMpU4=;
+        b=LXYYm3ubuhebPJ9leyHWyNnkjngJkZW8CA0q1tXlrtpxQtj9WOWleyoxWra0xhrZok
+         Qk90hh0RHsLq9Hh9imB1vwq9HGzWE2q24m9h7bXzX8bF71xKBGOiVJQEi9oyiUmaIG7j
+         BmCPFU8w6x46MzIyLCuN+D/ctO9DLVv6DoZB5ZDi9IIXjPuRJ4+w3f7b9dWp7QCmm7wZ
+         X4m/fM9GJqGYkEyePx8d07T9r4iWF1q8H7H2uNY4fLA7spdopo/wR3Z7KesppDgfydeC
+         o0GvKH+4VYnxW/mFfVKRsZ3nLRCZfwPOisFWEo0f+8BszsNvsX99nsPRN+2O0ni9PpTp
+         vJCw==
+X-Gm-Message-State: AOAM531an9kuRLVXc+lOERBulhALAWn0lK9vLG4xdxOMZ+ADmBCRKxKW
+        n1xXdBhtBMtxg5ipsK6l7p8=
+X-Google-Smtp-Source: ABdhPJwctQN8hWffUiiJE9W0WiwZI8UGlvym82WlmHwxXK+mnPDHeatDq9lqgUi+al+ZHE88klMM1A==
+X-Received: by 2002:aa7:cf91:: with SMTP id z17mr5247629edx.112.1625317672755;
+        Sat, 03 Jul 2021 06:07:52 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id w21sm2479782edc.95.2021.07.03.06.00.57
+        by smtp.gmail.com with ESMTPSA id b25sm2648698edv.9.2021.07.03.06.07.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jul 2021 06:00:57 -0700 (PDT)
+        Sat, 03 Jul 2021 06:07:52 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
-Date:   Sat, 03 Jul 2021 14:31:40 +0200
-References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
-        <YNIBRboFiCRAq3aA@nand.local> <8735t93h0u.fsf@evledraar.gmail.com>
-        <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
-        <87r1gs1hfx.fsf@evledraar.gmail.com>
-        <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
-        <871r8r1hwe.fsf@evledraar.gmail.com>
-        <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
-        <87fsx6xn0b.fsf@evledraar.gmail.com>
-        <YNqE8BIRF6NeYQcd@coredump.intra.peff.net>
-        <xmqqfsx1yyza.fsf@gitster.g> <875yxxgkav.fsf@evledraar.gmail.com>
-        <60dd3c92ef44b_174a220836@natae.notmuch>
-        <87tulecfx7.fsf@evledraar.gmail.com>
-        <60dfb240ec471_3dd220879@natae.notmuch>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH] khash: clarify that allocations never fail
+Date:   Sat, 03 Jul 2021 15:05:28 +0200
+References: <d13b50fd-5944-0bbe-d28e-8232a2932598@web.de>
+ <YOA+IibZw6C9mkdF@coredump.intra.peff.net>
+ <87v95r8w86.fsf@evledraar.gmail.com>
+ <5cc24582-ed96-453a-fbad-d3fb83c8f949@web.de>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <60dfb240ec471_3dd220879@natae.notmuch>
-Message-ID: <87k0m78sc7.fsf@evledraar.gmail.com>
+In-reply-to: <5cc24582-ed96-453a-fbad-d3fb83c8f949@web.de>
+Message-ID: <87h7hb8s0o.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -85,118 +76,104 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Jul 02 2021, Felipe Contreras wrote:
+On Sat, Jul 03 2021, Ren=C3=A9 Scharfe wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Wed, Jun 30 2021, Felipe Contreras wrote:
->> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> >> Even if you don't care about the end result or making git easier to h=
-ack
->> >> on for people who don't share your setup,
->> >
->> > I don't know about Junio, I do want to make git easier to hack for
->> > people that don't share my setup, but I would like to know what that
->> > setup is.
->>=20
->> I think all of this is covered in detail upthread.
+> Am 03.07.21 um 13:35 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>
+>> On Sat, Jul 03 2021, Jeff King wrote:
+>>
+>>> On Sat, Jul 03, 2021 at 12:05:46PM +0200, Ren=C3=A9 Scharfe wrote:
+>>>
+>>>> We use our standard allocation functions and macros (xcalloc,
+>>>> ALLOC_ARRAY, REALLOC_ARRAY) in our version of khash.h.  They terminate
+>>>> the program on error, so code that's using them doesn't have to handle
+>>>> allocation failures.  Make this behavior explicit by replacing the code
+>>>> that handles allocation errors in kh_resize_ and kh_put_ with BUG call=
+s.
+>>>
+>>> Seems like a good idea.
+>>>
+>>> We're very sloppy about checking the "ret" field from kh_put_* for
+>>> errors (it's a tri-state for "already existed", "newly added", or
+>>> "error"). I think that's not a problem because as you show here, we
+>>> can't actually hit the error case. This makes that much more obvious.
+>>>
+>>> Two nits if we wanted to go further:
+>>>
+>>>> diff --git a/khash.h b/khash.h
+>>>> index 21c2095216..84ff7230b6 100644
+>>>> --- a/khash.h
+>>>> +++ b/khash.h
+>>>> @@ -126,7 +126,7 @@ static const double __ac_HASH_UPPER =3D 0.77;
+>>>>  			if (h->size >=3D (khint_t)(new_n_buckets * __ac_HASH_UPPER + 0.5))=
+ j =3D 0;	/* requested size is too small */ \
+>>>>  			else { /* hash table size to be changed (shrink or expand); rehash=
+ */ \
+>>>>  				ALLOC_ARRAY(new_flags, __ac_fsize(new_n_buckets)); \
+>>>> -				if (!new_flags) return -1;								\
+>>>> +				if (!new_flags) BUG("ALLOC_ARRAY failed");				\
+>>>
+>>> I converted this in b32fa95fd8 (convert trivial cases to ALLOC_ARRAY,
+>>> 2016-02-22), but left the now-obsolete error-check.
+>>>
+>>> But a few lines below...
+>>>
+>>>>  				memset(new_flags, 0xaa, __ac_fsize(new_n_buckets) * sizeof(khint3=
+2_t)); \
+>>>>  				if (h->n_buckets < new_n_buckets) {	/* expand */		\
+>>>>  					REALLOC_ARRAY(h->keys, new_n_buckets); \
+>>>
+>>> These REALLOC_ARRAY() calls are in the same boat. You dropped the error
+>>> check in 2756ca4347 (use REALLOC_ARRAY for changing the allocation size
+>>> of arrays, 2014-09-16).
+>>>
+>>> Should we make the two match? I'd probably do so by making the former
+>>> match the latter, and just drop the conditional and BUG entirely.
+>>
+>> Yes, I don't see why we should be guarding theis anymore than we do
+>> xmalloc() or other x*() functions in various places (which is what it
+>> resolves to).
 >
-> From [1] I understand some systems have a problem clobbering a binary
-> that is being run. So if you are running a test that is using a binary
-> that you are rebuilding at the same time, you get an error.
+> Agreed.
 >
-> OK.
+>> If anything we might consider renaming it via coccinelle to
+>> XALLOC_ARRAY(), XREALLOC_ARRAY() etc. to make it clear that they handle
+>> any errors themselves.
 >
-> I still don't see why anyone would want to rebuild the binary in the
-> middle of running tests. The result of the tests is only meaningful for
-> a particular build. This is what I don't get. I get that you want to do
-> this, what I don't get is *why*.
+> I don't think there's any confusion in our internal code about the macros'
+> handling of allocation errors.
+>
+> The following semantic patch finds a leery xmalloc() caller in
+> compat/mmap.c, though:
+>
+> @@
+> expression PTR, SIZE, SIZE2;
+> @@
+> (
+>   PTR =3D xmalloc(SIZE);
+> |
+>   PTR =3D xcalloc(SIZE, SIZE2);
+> |
+>   PTR =3D xrealloc(SIZE);
+> |
+>   ALLOC_ARRAY(PTR, SIZE);
+> |
+>   CALLOC_ARRAY(PTR, SIZE);
+> |
+>   REALLOC_ARRAY(PTR, SIZE);
+> )
+>   if (
+> - PTR =3D=3D NULL
+> + 0
+>   ) {...}
+>
+> Ren=C3=A9
 
-This is mostly covered upthread & in the linked thread(s), but as
-summary / elaboration:
+Good catch, a bug as old as 730d48a2ef8 ([PATCH] If NO_MMAP is defined,
+fake mmap() and munmap(), 2005-10-08).
 
- 1. Running the tests on some of these machines takes 30-45 minutes. A
-    common use-case is firing off a test run to see how bright the
-    dumpster fire is that day, noticing an early failure, and inspecting
-    it manually.
+It would be nice to have that coccinelle patch as a follow-up
+patch. Perhaps along with changing that "0" to something that's simply a
+syntax error, or just:
 
-    Then while the rest of the full run is underway I'd like to
-    re-compile and e.g. add some printf debugging guarded by a getenv()
-    to some isolated code I'm poking, it's nice if the full test run
-    isn't invalidated by that.
-
-    Keep in mind that it takes 30-45 minutes because it's *slooooooow*,
-    so "just use another workdir" isn't a viable option. I'm also going
-    to wait 10-20 minutes for another full recompile in that workdir
-    (and now the concurrent test run takes more than an hour).
-
- 2. We have bugs in the test suite that e.g. leave orphaned git-daemon
-    background processes on these platforms.
-
-    Yes that should be fixed, but fixing it is annoying when you can't
-    even recompile and run other (even more broken) tests due to the bug
-    you're trying to fix.
-
- 3. You're assuming that the only thing I might want to use the built
-    git for is the tests.
-
-    E.g. I might (and do) also clone some other repo to debug something
-    else, if that one-off clone is running in one terminal I can't
-    recompile git until it's finished.
-
-    (Most of the boxes on the GCC farm have a /usr/bin/git, but some
-    have e.g. version 1.8-something of git, so to do anything usefully
-    modern like worktrees I'll need to bootstrap my own git anyway).
-
- 4. I think you/Junio/Jeff (although maybe less so in Jeff's case) are
-    taking this axiom that thou shalt not recompile during tests as an
-    absolute.
-
-    I just don't agree with that in general. E.g. if I'm hacking on some
-    object.c changes and fire of a test run then sure, that's a general
-    enough component that I'd like a full test run. The failure might
-    (and often is) be in some obscure edge case in a test I won't expect
-    to fail.
-
-    But while that run is taking the better part of an hour maybe I'll
-    fix a small bug in git-send-email, recompile, and run t/t9001*.sh
-    while the main test run is underway.
-
-    I'd be completely confident in submitting such a fix to
-    git-send-email, even though I've never run the full test suite with
-    it. It's simply not the case that all the code we develop is so
-    generally used that all of it requires a full test suite run.
-
-    I usually I do a full run anyway, but for something like a
-    portability fix on an obscure platform on the GCC farm. No, often I
-    don't run the full test suite, if I've assured myself that I've
-    tested the code in question thoroughly by some other means
-    (e.g. running the subset of tests I know stress it meaningfully).
-
-I think you've also said something to the effect that the 3rd party tool
-should be the thing doing the in-place-rename if needed, fair
-enough.
-
-But claiming that it's both an external implementation detail (so it
-could do an in-place rename, or not), and also maintaining that we can't
-do in-place rename ourselves because doing so would enable bad thing XYZ
-to happen (i.e. this concurrent test thing), seems like a case of
-wanting to have your cake and eat it too.
-
-I.e. surely it's one or the other. If it's so important that we use this
-behavior as a proxy in case someone is so mistaken as to re-build git
-during tests we should be replacing things like:
-
-	cc -o $@ $<
-
-With:
-
-	cc -o $@+ $< &&
-	cat $@+ >$@
-
-Just in case the "cc" is doing my proposed version of:
-
-	cc -o $@+ $< &&
-	mv $@+ $@
-
-behind our backs.
+    if (0 /* always false due to (implicit?) x*() function call above */)
