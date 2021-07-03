@@ -7,168 +7,206 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C60EAC07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC941C07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:42:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B30661934
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:16:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BDD261919
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbhGCSSy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 14:18:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37754 "EHLO
+        id S229492AbhGCSo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 14:44:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbhGCSSy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 14:18:54 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33490C061762
-        for <git@vger.kernel.org>; Sat,  3 Jul 2021 11:16:19 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id s17so15719767oij.0
-        for <git@vger.kernel.org>; Sat, 03 Jul 2021 11:16:19 -0700 (PDT)
+        with ESMTP id S229463AbhGCSo7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 14:44:59 -0400
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93AB1C061762
+        for <git@vger.kernel.org>; Sat,  3 Jul 2021 11:42:25 -0700 (PDT)
+Received: by mail-oo1-xc2b.google.com with SMTP id d1-20020a4ad3410000b029024c4d2ea72aso3393821oos.4
+        for <git@vger.kernel.org>; Sat, 03 Jul 2021 11:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=zeIicGb0TDyeLogabQGzotz3nuXpRlLW/1k8jELSEX8=;
-        b=pjLLf3hme+8wZ3a/cBh1FU7eGc88VwTjUDvHzGc/hcn2+mFnxty6Oe/GvWBYBwAhRV
-         50W//ALJSKrvdoEKCfJbW1OK9TeMrSdFzKH7JQGYqPFEpKTKjA8JTXrPIBE47cJerItI
-         xXPFVktB/cNdjeyKqnmy2RFaKNJf/J/VAB8XZ7xg4da/5b/hw/UbaHumRGmA0WxDUK9R
-         KQ7d+QXZiUpl0jazm6npP8/D0F1sB/cmPygG0zmos5Y2GWpHRGt4WE54PjHn9mgjnyf3
-         NJmaHG33j814GM3sj0TSMTZcIDwnsLm82tPSoEczq+HXOKQRXRoTBQWFizD/7MdRsdH4
-         bT+w==
+        bh=LuJKMxhi5vH55i3cbSflrK5Ko9+TSVEK7sTV7SiXH8Y=;
+        b=KXYXa9Xdpz0HAMgpbOy875Iiqb6Fcs98JpoiAQDAykDnChJ8ytySFiVcVfBF0kakMQ
+         AVGtPcWRPL5/xsTZMwieibe4jweV7MVjhwiR3nhLpfnTFEcpnw+9Doza/MkWXp8vjaFp
+         ZRHQpnWmGgaQuoj0m45cKMZN0RnD33n55IplBrVWzK1SHMmqUuEZdivSc7Dy5aNHQuG4
+         hdiZGZplyt3vnpMwKpbvlrE3+NU3ey98eqQmYPdBhtX/xq/lfXk6KjqdnS6cPwwSjbEw
+         Vm4E2XR2btqAU1DTROlJi2Ug/VkJXU/1YU+q8v0JxJ7/0mbWQ3x1Vlfybq3MCjG6rU1p
+         ZL1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=zeIicGb0TDyeLogabQGzotz3nuXpRlLW/1k8jELSEX8=;
-        b=jUT9L/YWiItGxDOlqTi6lB0ytmKj4m8iW+rluePJvJRfMWZOfq7t0b71Ndot57ir6K
-         LBIjl0cMf+ookzIfzIW4X2FwjVIVlyBDGMmuC6G3MCPX7MMUy7JuWoLCa7umS2NVaKxS
-         l9KnFwXz6qspTYwl17l+gL5xF2i/oirgkK0f5/amka1oDwJbs0MfFqCaK5gbnaUOShj5
-         D/rEDNf3Xyf0AAjBhcEePqaWJDJrtDcW/infJMVSrA+tUBYEOlimt+36PLTpDvGTkg4l
-         3YEqZ5rS9p0+00CONFv5kl+a++J9z2eW8ynqP7sCeDMXJVajg0pZ+p3w3gcHCVvctQhG
-         lPKw==
-X-Gm-Message-State: AOAM5322R9Ry8Ucnv+xG7euJoFj3gGumAdxWlQwy0cFSEOOur4+k3GOM
-        0U9mhO8n620U+TPVo0T9s5w=
-X-Google-Smtp-Source: ABdhPJwyBAM5HfzqZK/CtAaW6T5MeJhTA+h2YG57anx2RCP98wvy1URNTHFC0VsZgT1isYIorpF/cw==
-X-Received: by 2002:a54:488b:: with SMTP id r11mr2370605oic.116.1625336178309;
-        Sat, 03 Jul 2021 11:16:18 -0700 (PDT)
+        bh=LuJKMxhi5vH55i3cbSflrK5Ko9+TSVEK7sTV7SiXH8Y=;
+        b=Gn++qbQNxBSiwALp+xFHzQLMI8v+mNKL7iGiqcho2ADrMzX1MxoNnHEYBJLuOLB/yL
+         1KCJ7mvzFCOKvNEg17CKZJTcZd7t3TjydsuwA8M2utxaZ1rIpXgsfVFTiwFz2EKBqi+E
+         Zj6JMwKoqB6I+CoKS0Cg1jMu+N+fvGvMA8I6PvvnkksCnHw6pVaoj7+i0382hv7zHv/3
+         dCVMzvQNO+d/CYOkuQa7prL8YwXi0NxVV0u6KUPFAux8nYXmeo7fxOVHqGcjTiYcke4/
+         4j1H95Jcac53PxpWSt1n3ZvjheczUyZSpeVzwru4ItX4HgzkYuBrRMUnYllsr2ubaexN
+         iZUw==
+X-Gm-Message-State: AOAM531TqLNHdX7ZVZdipbMXPMzkFOSgOtO+2N3k2xSqrlVjorZ6bQd8
+        mr+EQtBx5I84NygkKXEtK/4=
+X-Google-Smtp-Source: ABdhPJw8CVElvdtMfftEqf7WnaVADPTzrdRJXK1qpt67MXr4PDZAPDooyZzMhZaqgP8C+UkToOp+zw==
+X-Received: by 2002:a4a:6941:: with SMTP id v1mr4610092oof.38.1625337744946;
+        Sat, 03 Jul 2021 11:42:24 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id 6sm1552306oip.9.2021.07.03.11.16.17
+        by smtp.gmail.com with ESMTPSA id j22sm1422127otl.46.2021.07.03.11.42.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jul 2021 11:16:17 -0700 (PDT)
-Date:   Sat, 03 Jul 2021 13:16:16 -0500
+        Sat, 03 Jul 2021 11:42:24 -0700 (PDT)
+Date:   Sat, 03 Jul 2021 13:42:23 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Atharva Raykar <raykar.ath@gmail.com>,
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Message-ID: <60e0a9707e09a_2f7208f2@natae.notmuch>
-In-Reply-To: <C19D6C61-D62A-4344-BA1C-A532EB4FEFFE@gmail.com>
-References: <60df97ed24687_34a92088a@natae.notmuch>
- <C19D6C61-D62A-4344-BA1C-A532EB4FEFFE@gmail.com>
-Subject: Re: The git spring cleanup challenge completion
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Message-ID: <60e0af8f1636d_2f720865@natae.notmuch>
+In-Reply-To: <87k0m78sc7.fsf@evledraar.gmail.com>
+References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
+ <YNIBRboFiCRAq3aA@nand.local>
+ <8735t93h0u.fsf@evledraar.gmail.com>
+ <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
+ <87r1gs1hfx.fsf@evledraar.gmail.com>
+ <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
+ <871r8r1hwe.fsf@evledraar.gmail.com>
+ <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
+ <87fsx6xn0b.fsf@evledraar.gmail.com>
+ <YNqE8BIRF6NeYQcd@coredump.intra.peff.net>
+ <xmqqfsx1yyza.fsf@gitster.g>
+ <875yxxgkav.fsf@evledraar.gmail.com>
+ <60dd3c92ef44b_174a220836@natae.notmuch>
+ <87tulecfx7.fsf@evledraar.gmail.com>
+ <60dfb240ec471_3dd220879@natae.notmuch>
+ <87k0m78sc7.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Atharva Raykar wrote:
-> On 03-Jul-2021, at 04:19, Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> > 
-> > [...]
-> > Other than that, it's fair to say that *everyone* needs some command
-> > aliases to use git. This past month shell completions have saved me, but
-> > not completely. I can't imagine how a newcomer must feel using git
-> > without any alias.
-> 
-> TLDR: I don't think young, first-time learners of Git would mind the lack
-> of aliases. I cannot speak for people coming from other VCS's.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
 
-That's not the same thing. Of course a user wouldn't mind the lack of
-certain feature if he doesn't know he is missing that feature in the
-first place.
+> On Fri, Jul 02 2021, Felipe Contreras wrote:
+> =
 
-Humans went for thousands of years using luggage without wheels, does
-that mean they "didn't mind" luggage without wheels? They had nothing to
-compare it to, so they of course didn't complain, but that doesn't mean
-they were "fine".
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> On Wed, Jun 30 2021, Felipe Contreras wrote:
+> >> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >> =
 
-In order for them to know if they mind it or not they would first need
-to try them.
+> >> >> Even if you don't care about the end result or making git easier =
+to hack
+> >> >> on for people who don't share your setup,
+> >> >
+> >> > I don't know about Junio, I do want to make git easier to hack for=
 
-> ------ Long Version -------
-> 
-> Hi, maybe I can help bring some perspective on how newcomers view and use
-> Git. I help run an Open Source club in my University, and one of the first
-> things we help a lot of new contributors with is teaching Git.
-> 
-> I have conducted multiple workshops over the last two years, so I have
-> some idea of what the usual struggles and pain points are. I also have
-> some recollection of what it's like being a new user.
-> 
-> Most of these new users have never used any kind of VCS before, so half
-> the problem is the overload of all these new concepts of branches,
-> checking out, staging area, committing, pushing, pulling, etc.
+> >> > people that don't share my setup, but I would like to know what th=
+at
+> >> > setup is.
+> >> =
 
-Sure, that's understandable.
+> >> I think all of this is covered in detail upthread.
+> >
+> > From [1] I understand some systems have a problem clobbering a binary=
 
-> Users are not able to properly map the name of these commands with what
-> it actually does. Most of the issues stem from trying to memorise these
-> commands as a series of mantras and applying them without knowing what
-> is actually happening.
+> > that is being run. So if you are running a test that is using a binar=
+y
+> > that you are rebuilding at the same time, you get an error.
+> >
+> > OK.
+> >
+> > I still don't see why anyone would want to rebuild the binary in the
+> > middle of running tests. The result of the tests is only meaningful f=
+or
+> > a particular build. This is what I don't get. I get that you want to =
+do
+> > this, what I don't get is *why*.
+> =
 
-I recall using git that way a long time ago.
+> This is mostly covered upthread & in the linked thread(s), but as
+> summary / elaboration:
+> =
 
-> Users are confused about why there is an "add", and then a "commit".
-> It seems conceptually similar to them. The difference between reset,
-> restore, revert (and even rebase) is also a pain point, because those
-> words sound very similar.
+>  1. Running the tests on some of these machines takes 30-45 minutes. A
+>     common use-case is firing off a test run to see how bright the
+>     dumpster fire is that day, noticing an early failure, and inspectin=
+g
+>     it manually.
+> =
 
-Yeap, I remember that.
+>     Then while the rest of the full run is underway I'd like to
+>     re-compile and e.g. add some printf debugging guarded by a getenv()=
 
-> Combine the lack of understanding of what Git is actually doing, with the
-> fear of losing work, and you get the perfect storm of a difficult
-> experience.
-> 
-> For most new users Git is unusable, unless you explain to them the right
-> mental model of Git being a graph of immutable commit objects with
-> pointers to access their contents. In my opinion, trying to make this
-> model more transparent to a new user is the best way to improve their
-> experience.
+>     to some isolated code I'm poking, it's nice if the full test run
+>     isn't invalidated by that.
+> =
 
-Sure, I see those pain points, and I have sent plenty of patches to
-improve that experience, but none of them have been applied.
+>     Keep in mind that it takes 30-45 minutes because it's *slooooooow*,=
 
-> What new users do not have a problem with is a lack of aliases, because
-> they carry no previous expectation from other VCS's, as Git is always their
-> first one.
+>     so "just use another workdir" isn't a viable option. I'm also going=
 
-Sure, when they are learning git they don't need aliases, but after they
-become fluent and can do some basic workflow without looking to cheat
-sheets they *immediately* would benefit from them.
+>     to wait 10-20 minutes for another full recompile in that workdir
+>     (and now the concurrent test run takes more than an hour).
 
-> I can imagine aliases like 'co' only adding to the overload of
-> information if an instructor is not careful. FWIW, I have never seen a new
-> user complain about the length of the typing, it's usually with the plethora
-> of unintelligible (to them) options that each command has when they open the
-> Git man pages, which adds more fear.
+OK. If you are careful enough that makes sense.
 
-This is one of the reasons I suggested to split git into two binaries:
-git for normal users, and git-tool for all the plumbing not many humans
-use.
+>  2. We have bugs in the test suite that e.g. leave orphaned git-daemon
+>     background processes on these platforms.
+> =
 
-> I do not have an opinion about default aliases, I only had a narrow point,
-> ie, on the list of impactful things that helps Git newcomers around my
-> circles, aliases would not score very high. Those who love the command
-> line among the more enthusiastic learners will set those aliases themselves
-> anyway.
+>     Yes that should be fixed, but fixing it is annoying when you can't
+>     even recompile and run other (even more broken) tests due to the bu=
+g
+>     you're trying to fix.
 
-Sure, initially aliases would not help them very much, but after the
-initial learning period when they actually start using git for real,
-then aliases help tremendously.
+Yeah, that's a separate issue.
 
-Cheers.
+>  3. You're assuming that the only thing I might want to use the built
+>     git for is the tests.
 
--- 
-Felipe Contreras
+Not really.
+
+>  4. I think you/Junio/Jeff (although maybe less so in Jeff's case) are
+>     taking this axiom that thou shalt not recompile during tests as an
+>     absolute.
+
+Just like in language I'm not a prescriptivist in workflows either. The
+fact that I don't recompile during tests doesn't mean I would presume to
+dictate to others what they should do.
+
+You know more about your setup than me.
+
+> I think you've also said something to the effect that the 3rd party too=
+l
+> should be the thing doing the in-place-rename if needed, fair
+> enough.
+> =
+
+> But claiming that it's both an external implementation detail (so it
+> could do an in-place rename, or not), and also maintaining that we can'=
+t
+> do in-place rename ourselves because doing so would enable bad thing XY=
+Z
+> to happen (i.e. this concurrent test thing), seems like a case of
+> wanting to have your cake and eat it too.
+
+I never claimed we can't do in-place rename ourselves, I only said that
+I did not see the point. And to be clear the fact that I don't see it
+doesn't mean it isn't here.
+
+
+Now I see why you want this and I suppose for this particular case only
+it does make sense to do the renaming. But it still seems like a wart to
+me. If the build system supported out-of-tree builds there would be no
+need for us to do this manually in the Makefile, correct?
+
+But yeah, for now I suppose there's no better alternative.
+
+-- =
+
+Felipe Contreras=
