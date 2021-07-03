@@ -2,167 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88973C07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90656C07E99
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 20:03:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 614F8616EC
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:56:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7840161438
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 20:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229488AbhGCS7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 14:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46498 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbhGCS71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 14:59:27 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27711C061762
-        for <git@vger.kernel.org>; Sat,  3 Jul 2021 11:56:53 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id d21-20020a9d72d50000b02904604cda7e66so13760634otk.7
-        for <git@vger.kernel.org>; Sat, 03 Jul 2021 11:56:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=J0qo2Cf8uvGPSkHXZPzuBWVLAAhtEv/7CvObB+gXduM=;
-        b=VoMZNCLhyX1wZfJ8oDusgdoY2m227jIF9nu3G4t3yVaiwQj0qoYQtAJGt62djeDABw
-         GWsHvtvCotirAkx2//NKt32ODpXvi1imMhG8nB3LgsDzfvA+6qoxgZUApe5i78PvdjCd
-         HnC+/jSKO0jYsFfvpCoYDcrYVA/uowAO6LdMJJIziw9VVVfVbKeYXlfbNJoSkjYUJRB7
-         EECHdP3kDVaIIKv5CGun1k6LilVZJuIV2V0HtNG9NqDLH+uQU6ktpjU985bwalUoEq76
-         j+HLIIqkkqUbbuzn5Mb7jnF2iMc/FpLY3nGCVHW0XkHiSAbXcDWTlHiFbuvpyFwxd5W+
-         v9pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=J0qo2Cf8uvGPSkHXZPzuBWVLAAhtEv/7CvObB+gXduM=;
-        b=YaI9lcH5g52lSHRHxhWeAyfSx+Cr+T6v2D0VF0pi8Ove8zbw1TS0n1MF1T/Z18Aq+7
-         IO45pPFM9vDhRaMX7TrrEFoeQcMu9rOWFFyZs9FlfM8MWwjOLMo9tzPzNk6FNRev1lQH
-         IIw2oSwq5zPGGljl8HDzjub1cl+XyZk7AAtPCthSXNFLgrXinGEMTges74pAC569Iu3A
-         Bxp+P6lSiWGXujr8Yein3IXe4rA0E3JeJtg/70XOH/16aDnWEDuVcJX2aMWwIWSVgN/U
-         seQgeLxW79kAj0GuI1Xx1zZo4uBJHJ5pB3yEYXs55PIOkCMJUAO0JC/V8lhKeCA0aaMT
-         vUbA==
-X-Gm-Message-State: AOAM530ba2JYDQfRQvM3Guix/Uo33zq71vGVMoLLXrRXOEJjBBrq+Z4J
-        A5QRfxWIVkQbz2KH3OJl3Uw=
-X-Google-Smtp-Source: ABdhPJyd4WKVgTqgE5UnAv8VKPv7ttrPzwC1a0JFpMo9VOSWZnh/1DAdtSZrbbxVOZ5zRNYxrUenfg==
-X-Received: by 2002:a9d:68d1:: with SMTP id i17mr4610828oto.227.1625338612591;
-        Sat, 03 Jul 2021 11:56:52 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id x30sm1461827ote.44.2021.07.03.11.56.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jul 2021 11:56:52 -0700 (PDT)
-Date:   Sat, 03 Jul 2021 13:56:50 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w5h5c3RlaW4gV2FsbGU=?= <oystwa@gmail.com>
-Message-ID: <60e0b2f2f198d_2f72081c@natae.notmuch>
-In-Reply-To: <87mtr38tvd.fsf@evledraar.gmail.com>
-References: <874kdn1j6i.fsf@evledraar.gmail.com>
- <patch-1.1-911881ce19f-20210702T115617Z-avarab@gmail.com>
- <60dfb7d11cac3_3dd220811@natae.notmuch>
- <87mtr38tvd.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH] Documentation/Makefile: don't re-build on 'git version'
- changes
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        id S229792AbhGCUGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 16:06:05 -0400
+Received: from mout.web.de ([212.227.15.4]:41483 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229473AbhGCUGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 16:06:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1625342606;
+        bh=CRWfB+bmc0Z/o01bAccDh2GQYsuKXPYtAj/RaNhfxgk=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=UJqYdKn3OzatWDnSH83oLzJAfCfWhTqBy5Vls1Ab0h9UGDcs3x1gIk79ruEMZD3oX
+         +ZIwhdaroM9odI3awLwYVjuPcFlbruC7/J38EMXlsbVBhaLy16vfhdVqrNeDPR8mIh
+         ebcylt74ChuTXxNVAm4fb45Tpr47jgH+LpXGHGmQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1M3m59-1m0awH2VZT-000eBO; Sat, 03 Jul 2021 22:03:26 +0200
+Subject: Re: bug in "git fsck"?
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+Cc:     git@vger.kernel.org
+References: <60DF1C22020000A100042225@gwsmtp.uni-regensburg.de>
+ <xmqqczs0popg.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <52847a99-db7c-9634-b3b1-fd9b1342bc32@web.de>
+Date:   Sat, 3 Jul 2021 22:03:25 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqczs0popg.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:29H3gYz7ujWM+EIBLiTmZ9N0g8hXnjdzF4PkSPFbAIwy0d+Qg5R
+ WipjdFeEXVeWkt/ZVFfytmp4qKI3j3SPrAUf53BPbpFy0mbUmYN4iJkEIsW+R4DW0GfCb/J
+ M4/4YrqL22AG55OXlWxokfezIuMoDeREZb5cnj7gCaxMTgEIokziXBNx6IBp+Zg2MLfi7Z7
+ 3rnlGsETod1KGpuWRVDbA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CaQJ/f4f/zQ=:mdpFy82tk3tHJ9+uGLzpnL
+ doYD1pqtV2M2CiuZ8jHdUs/Zs1/2+jPBOn9nnWiklWQoDqgzrOyT13XNBLd399U3ynKzoB962
+ /DgQXDudkKbuMpq0NhUS+tpRv0eY3Qgr2ityN6CUWTGfBg9oLhWvSPPnWa0Hmn+pXJ9gLQUPD
+ 84Y6kCalWNBaK/oHODwMdJltijLR9bqSb/s0yLhntuHjH4tQMtrlt+rX5dTcO9Auud76SAYLr
+ Z8ISVLZIYtfozRSem9zmxIWPTnDpcr08Un1ktDRiIwKoVDl1ncnUlxX7y0uIZMtjh7t8JMKnm
+ M6GNVKDYEAWOPhAsZmZ+EJysOtyy6Fg5HdiLLn8JTr6JpxE8B1uUc2zndjdV1IkN8TX//kPrW
+ ey4J81PJ2zR1xXfVKDVRZI7J+LsQC76NNT0nHruHQd/FJx+/1QP1HhvbfLhy9cJly/+TQ9uIj
+ WUbX6TrThBbnzcoK35o5Vit7hQjOeJ+yY+rFTeDbUnoTykxIYAvWH1vIAzsemrmhcGi5/PVIe
+ ZTyFWvYMort0Xh2s/kPECQ4jyo4PoO2Nn1qSvvHc4fNcvyw9mpET/K0nZ8wUaQgnyYZZ9V1M/
+ OoEVBQRh3uWaVR8/FxVIkd7Rz8hgeREb2o2ORNmZaMNYMsFZxZxyssAX/TBKW+pWAt2+a/tQi
+ 2UbmGO66Pe/9TH3N5mvlDLeTA0pqfkNbwDhBVZKCt3qGubQ4u3aIF6SS0vkrxmyZnu4ZC/1gP
+ 6B22FAzm7xeW5eeW/0n1F5Td0Gi7htURjTndaUdUC1D0c4ly4/APTOpOtQ5ORXWlYozVo2veU
+ 3kIdDHCp8YOcuHCIfv6WElbfrxNmM0Ytk0AiClAfcR4SK1uuFI3uSlsxPfOLGZXJHS9lX1xKk
+ yBIX3dYOCm9AIPKskGa2micULNUokwcupsvuvYOn9cImNAuScKz5+I87d184yQTMoiauAesjG
+ BhAM1wMLlCxbqLKV7skknQKCY1EqqAkrE6DZL7jcmfEf5OK/RN5CPpCPfCx6fVyfnK7qCinUd
+ VGuD+9CHsQioOiUDW1Fjg010IVcJP8ceC/2BKsTAZsC9b8wkN98/mfFyLGeY+m8GY4H+wwXCi
+ W1mWDwH5C+X2GBzW0rQrYXbLNXTZVsTOJDB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> =
+Am 02.07.21 um 20:15 schrieb Junio C Hamano:
+> "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
+>
+>> I was wondering whether git fsck should be able to cleanup
+>> orphaned branches ("HEAD points to an unborn branch") as described
+>> in https://stackoverflow.com/q/68226081/6607497 It seems I can fix
+>> it be editing files in the repository, but I feed that's not the
+>> way it should be.
+>
+> HEAD pointing at an unborn branch is not even a corruption, isn't
+> it?
+>
+>    $ rm -rf trash && git init trash
+>
+> would point HEAD at an unborn one, ready to be used.
 
-> On Fri, Jul 02 2021, Felipe Contreras wrote:
-> =
+True, but the scenario described on StackOverflow is a bit different.
+Commits were filtered out, and branches still pointing to them cannot
+be deleted with "git branch -d" or "git branch -D".  Git fsck only
+reports them.
 
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> Since 9a71722b4df (Doc: auto-detect changed build flags, 2019-03-17)=
+You *can* overwrite them using "git branch --force foo" and then
+"git branch -d foo" works.
 
-> >> we've been eagerly re-building the documentation whenever the output=
+I think it makes sense to let "git branch -D foo" work directly in such
+a case.  That would be a user-visible change that may cause data loss,
+so we better be careful.  I can't imagine a practical data-loss
+scenario, but that might be just me.  Under which circumstances do we
+want to keep a branch that does not point to a commit?
 
-> >> of "git version" (via the GIT-VERSION file) changed. This was never
-> >> the intention, and was a regression on what we intended in
-> >> 7b8a74f39cb (Documentation: Replace @@GIT_VERSION@@ in documentation=
-,
-> >> 2007-03-25).
-> >> =
+Anyway, here's what the change would look like:
 
-> >> So let's add an ASCIIDOC_MANVERSION variable that we exclude from
-> >> ASCIIDOC_COMMON. The change in 9a71722b4df was only intending to cat=
-ch
-> >> cases where we e.g. switched between asciidoc and asciidoctor, not t=
-o
-> >> undo the logic in 7b8a74f39cb and force a re-build every time our HE=
-AD
-> >> changed in the repository.
-> >
-> > Once again, why do we care that the version is 2.32.0.98.gcfb60a24d6 =
-and
-> > not 2.32.0.97.g949e814b27?
-> >
-> > Not just in the documentation, but everywhere.
-> =
+=2D-- >8 ---
+Subject: [PATCH] branch: allow deleting dangling branches with --force
 
-> It's useful e.g. on my Debian system to see that the "next" Debian
-> packaged is 2.31.0.291.g576ba9dcdaf in docs & "git version", arguably
-> less so for documentation.
+git branch only allows deleting branches that point to valid commits.
+Skip that check if --force is given, as the caller is indicating with
+it that they know what they are doing and accept the consequences.
+This allows deleting dangling branches, which previously had to be
+reset to a valid start-point using --force first.
 
-Obviously packagers would use real versions I meant this only for
-developers (e.g. DEVELOPER=3D1).
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ Documentation/git-branch.txt | 3 ++-
+ builtin/branch.c             | 2 +-
+ t/t3200-branch.sh            | 7 +++++++
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-And BTW, where is that Debian package coming from? I thought
-distributions didn't package git pre-releases.
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 94dc9a54f2..5449767121 100644
+=2D-- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -118,7 +118,8 @@ OPTIONS
+ 	Reset <branchname> to <startpoint>, even if <branchname> exists
+ 	already. Without `-f`, 'git branch' refuses to change an existing branch=
+.
+ 	In combination with `-d` (or `--delete`), allow deleting the
+-	branch irrespective of its merged status. In combination with
++	branch irrespective of its merged status, or whether it even
++	points to a valid commit. In combination with
+ 	`-m` (or `--move`), allow renaming the branch even if the new
+ 	branch name already exists, the same applies for `-c` (or `--copy`).
 
-> > Maybe we can add a GIT_RELEASE variable that unlike GIT_VERSION it
-> > doesn't contain the precise commit. For example GIT_RELEASE =3D 2.33-=
-dev.
-> =
-
-> I just added this to my pre-make script:
-> =
-
-> 	grep -q ^/version .git/info/exclude || echo /version >>.git/info/exclu=
-de
-> 	echo $(grep -o -P '(?<=3D^DEF_VER=3Dv).*' GIT-VERSION-GEN)-dev >versio=
-n
-> =
-
-> It makes use of GIT-VERSION-GEN picking up a tarball "version" file.
-
-This would also do the trick (you need DEVELOPER on the environment
-though).
-
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -6,9 +6,10 @@ DEF_VER=3Dv2.32.0
- LF=3D'
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b23b1d1752..03c7b7253a 100644
+=2D-- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -168,7 +168,7 @@ static int check_branch_commit(const char *branchname,=
+ const char *refname,
+ 			       int kinds, int force)
+ {
+ 	struct commit *rev =3D lookup_commit_reference(the_repository, oid);
+-	if (!rev) {
++	if (!force && !rev) {
+ 		error(_("Couldn't look up commit object for '%s'"), refname);
+ 		return -1;
+ 	}
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index cc4b10236e..ec61a10c29 100755
+=2D-- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1272,6 +1272,13 @@ test_expect_success 'attempt to delete a branch mer=
+ged to its base' '
+ 	test_must_fail git branch -d my10
  '
- =
 
--# First see if there is a version file (included in release tarballs),
--# then try git-describe, then default.
--if test -f version
-+if test -n "$DEVELOPER"
-+then
-+       VN=3D"$DEF_VER"-dev
-+elif test -f version
- then
-        VN=3D$(cat version) || VN=3D"$DEF_VER"
- elif test -d ${GIT_DIR:-.git} -o -f .git &&
-
-
--- =
-
-Felipe Contreras=
++test_expect_success 'branch --delete --force removes dangling branch' '
++	test_when_finished "rm -f .git/refs/heads/dangling" &&
++	echo $ZERO_OID >.git/refs/heads/dangling &&
++	git branch --delete --force dangling &&
++	test_path_is_missing .git/refs/heads/dangling
++'
++
+ test_expect_success 'use --edit-description' '
+ 	write_script editor <<-\EOF &&
+ 		echo "New contents" >"$1"
+=2D-
+2.32.0
