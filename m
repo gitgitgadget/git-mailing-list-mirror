@@ -2,87 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2547C07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 11:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0654C07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 12:02:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CE6F61919
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 11:47:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6784617ED
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 12:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230247AbhGCLtp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 07:49:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38090 "EHLO
+        id S230223AbhGCME7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 08:04:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230230AbhGCLto (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 07:49:44 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5A5C061762
-        for <git@vger.kernel.org>; Sat,  3 Jul 2021 04:47:10 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id m1so16888763edq.8
-        for <git@vger.kernel.org>; Sat, 03 Jul 2021 04:47:10 -0700 (PDT)
+        with ESMTP id S230209AbhGCME6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 08:04:58 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D374CC061762
+        for <git@vger.kernel.org>; Sat,  3 Jul 2021 05:02:24 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id j11so16940015edq.6
+        for <git@vger.kernel.org>; Sat, 03 Jul 2021 05:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=CPIBMOKNI4mKdyQ4UbRxDNaZc/bzan79Fl5FAsx8PSE=;
-        b=D28lqmczaaz+MOhbLkyaKqKmScAA5cM+baggPNo/WesUa0R2xSXOyaeEJP0MqWqM6X
-         8+RYTBFj5N/5i4ybv4adjHDnhXvTZJbk5gQfpwa9Xqj3CqHDPnoTmtMSqV6OvDZFQeVl
-         nsrjSOLwXZZ619nxeZ0e9H9WJ+0JZoQ04mIXtkZBdz14aKPylSRxAnZhBKJxpvxqFeQ9
-         z/e4xj8en8f/kqhLtsEf593YMDm9xEqZMbVBSYc+C3jBhc8QxIFXCBmxeEb6Hujfjz10
-         6+cW41dcUJnRGhnpf8VXDWHMEUXIUwsnqNXU25iLE2UYxDX2EA0FLFnPiLcApdDasiUJ
-         nS4Q==
+        bh=flzwKw6IRbwJmUD48v5BSkiiTaGJRNsG1aWHvcqA8a0=;
+        b=e+weN8gF4BmTOnWxWb2unh7dTHQsPq2EsMbeAOaaptAiTNHDMPP2y6aLBEr2TaunPu
+         X7FBZ/EQhcCnbn38hoCtvI5ik0hBPrWkam6m/Gzeb1b1az3mzpNU2CSToGiGrlo0oJ8U
+         N/nkGJU9hiPgRLNs+Fie+lKBCTfv6c4HLxkRuOFwJxXRiTRxE6sxb1G2OaYnODcoWp4H
+         mVDXpyNNvYcvGpgMOLGGsKFR1bay+q40V+W1d9miBZH9jFsvGjPIE1pEnDnQoZstPihW
+         tN7KenMTefrzjAqoWlhlzJVSvN7Mlej/dcFIInbBwTLi2eKJLEbl4gJcm3mSkjD//bwA
+         CKQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=CPIBMOKNI4mKdyQ4UbRxDNaZc/bzan79Fl5FAsx8PSE=;
-        b=CqmU4/+QTSpEERyFVV0Bd/fRWudu0ZO9MvtY5vDdQ6/+QkjN3qO4cgwBtTRle+zC+O
-         T/JZ8ABOT9tU2UXOyo5JZe9Vktzy6n3H7LYRyDF66RreJK2fQx55TllQwnMwhmsSzxyb
-         KLnD9OT8XPKrEDX1CImK/q0KgI+SkIgjnPm2VSMSQNHnb2mjlM0bWOBMUFBeWrhLYJiI
-         YZUDegdyt1mEMr3yWLoTOmBxUJToKCoCJyZ6SPjLHWEENKRlwnTc7AzvImM1ETix3AvM
-         SIICFLrTVovc/6MN7U5MEBk7ONBwWtM/8W8hyumV9qPn81pQCKYngxwai89gewu7vSSp
-         0+yA==
-X-Gm-Message-State: AOAM5321xdZ3UEJHeepWh6Qu03GqrDyQenyPRJg+yT5/f19V5Lqb9ygP
-        dGptWCHJxuS4gsX1l/p44qaQyd95+WdSvg==
-X-Google-Smtp-Source: ABdhPJx4AfFcINtBRU5BGNeH3uusyksiNLgWiL1CzPgQktUrKq35g11zxz/yIoWz5u91loVanSItag==
-X-Received: by 2002:a05:6402:498:: with SMTP id k24mr5035387edv.25.1625312828748;
-        Sat, 03 Jul 2021 04:47:08 -0700 (PDT)
+        bh=flzwKw6IRbwJmUD48v5BSkiiTaGJRNsG1aWHvcqA8a0=;
+        b=Jn2YCI9VW4iDi5EimpPz2xaw8NDjAKgaAoS9QFjPizlcaqNefEpy8RQWgtfy9i9DjT
+         vOEzodbWJ/wKDgiFFb2xc9t1BZ+zpnyGUA5xMv8wV1Rdd4uLQg19pR6gtttvBbDXwLFE
+         YQ6PepsKEfp7ffLyJur5gGwrp++9CNCGKp8SYAhSjJBnW1lElTQJSlqDyETAUrwkzsgS
+         U+2ZO88CETN3R4LatZl8nWeXK1am/lTezUbyxXwxc69HB47iFZyJM9Q3cFScnOnrFpZt
+         0ju+tBNGIwldG1l3bRBIgpCxR2V+DiHGmO8hTKeHAqloHnrL+PYL1/z39PLdrIpJoIjZ
+         V0Ow==
+X-Gm-Message-State: AOAM530IK5Kf/BvHbaTsqvBhd6WbdDEEwzeXlRAHNFvTyd/Xl7t9HKTt
+        pfXE1wP2mwaxGrxnUwle3jw=
+X-Google-Smtp-Source: ABdhPJxz6IX4qgijbTP3ZcrA0eY41tvwoFT5CB7/olAHKKsnFQB82J5oPdbV66/U3yaOalKW+I3VHQ==
+X-Received: by 2002:a05:6402:5114:: with SMTP id m20mr5009664edd.174.1625313743271;
+        Sat, 03 Jul 2021 05:02:23 -0700 (PDT)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id v5sm2496877edy.50.2021.07.03.04.47.08
+        by smtp.gmail.com with ESMTPSA id j1sm2509464edl.80.2021.07.03.05.02.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jul 2021 04:47:08 -0700 (PDT)
+        Sat, 03 Jul 2021 05:02:22 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Peter Krefting <peter@softwolves.pp.se>,
-        Andrei Rybak <rybak.a.v@gmail.com>,
-        Jordi Mas <jmas@softcatala.org>,
-        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Christopher =?utf-8?Q?D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Daniel Santos <hello@brighterdan.com>,
-        Emir SARI <bitigchi@me.com>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Jimmy Angelakos <vyruss@hellug.gr>, Arusekk <arek_koz@o2.pl>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>
-Subject: Re: [L10N] fixed mismatched variable names
-Date:   Sat, 03 Jul 2021 13:43:59 +0200
-References: <alpine.DEB.2.21.2106212034050.12899@perkele.intern.softwolves.pp.se>
- <20210703111837.14894-1-worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Subject: Re: [PATCH] Documentation/Makefile: don't re-build on 'git version'
+ changes
+Date:   Sat, 03 Jul 2021 13:58:55 +0200
+References: <874kdn1j6i.fsf@evledraar.gmail.com>
+ <patch-1.1-911881ce19f-20210702T115617Z-avarab@gmail.com>
+ <xmqqmtr4pv9r.fsf@gitster.g>
 User-agent: Debian GNU/Linux 11 (bullseye); Emacs 27.1; mu4e 1.5.13
-In-reply-to: <20210703111837.14894-1-worldhello.net@gmail.com>
-Message-ID: <87sg0v8vr8.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqmtr4pv9r.fsf@gitster.g>
+Message-ID: <87pmvz8v1u.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -91,69 +82,53 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Jul 03 2021, Jiang Xin wrote:
+On Fri, Jul 02 2021, Junio C Hamano wrote:
 
-> From: Peter Krefting <peter@softwolves.pp.se>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
-> On Tue, Jun 22 2021, Peter Krefting wrote:
+>> Since 9a71722b4df (Doc: auto-detect changed build flags, 2019-03-17)
+>> we've been eagerly re-building the documentation whenever the output
+>> of "git version" (via the GIT-VERSION file) changed. This was never
+>> the intention, and was a regression on what we intended in
+>> 7b8a74f39cb (Documentation: Replace @@GIT_VERSION@@ in documentation,
+>> 2007-03-25).
 >
->> Andrei also pointed out another typo in the Swedish translation, where
->> a configuration option had been copied incorrectly. Could you please
->> amend your patch to contain both these changes?
->>
->> ... ...
->>
->> @@ -2734,7 +2734,7 @@ msgstr "Felaktigt %s: \"%s\""
->>   #: config.c:2512
->>   #, c-format
->>   msgid "splitIndex.maxPercentChange value '%d' should be between 0 and =
-100"
->> -msgstr "v=C3=A4rdet \"%d\" f=C3=B6r splitIndex.maxPercentage borde vara=
- mellan 0 och 100"
->> +msgstr "v=C3=A4rdet \"%d\" f=C3=B6r splitIndex.maxPercentChange borde v=
-ara mellan 0 och 100"
->>=20
->>   #: config.c:2558
->>   #, c-format
+> I am not sure.  Even if there were no changes in say
+> 'Documentation/git-cat-file.txt' and the sources it depends on
+> between 'master' and 'next', after doing this:
 >
-> There are definitely more typos like this! In order to find mismatched
-> git config variables and other mismatched variable names in the po file,
-> I implemented a checker for such typos in the "git-po-helper" in commit:
+>     $ git checkout next
+>     $ make prefix=3D$HOME/git-next/ install install-doc
+>     $ git checkout master
+>     $ make prefix=3D$HOME/git-master/ install install-doc
+>     $ $HOME/git-master/bin/git help cat-file | tail -n 1
 >
->  * https://github.com/git-l10n/git-po-helper/commit/e44df847abb9122777156=
-0aca56719031f280068
->
-> To find typos, run:
->
->     git-po-helper check-po XX.po
->
-> All easy-to-fix typos can be fixed using the following patch, but there
-> are still some typos need to be fixed by l10n team leaders for the
-> following languages:
->
->  + bg.po=20
->  + id.po
->  + tr.po
->
-> Patch for easy-to-fix typos, cut here -- 8< --
->
-> Subject: [PATCH] l10n: fixed mismatched config variables
->
-> Andrei pointed out a typo in the Swedish translation, where a config
-> variable name had been copied incorrectly.
->
-> By introducing typo detection function in "git-po-helper", more typos
-> were found. All easy-to-fix typos were fixed in this commit.
+> I should see that the documentation should say it is from the
+> 'master' branch in its footer, no?
 
-This seems like a good narrow fix for now, but I'd think a much better
-fix would be to e.g. add something to the CI or a lintk check based on
-"git help --config" that errored if any string meant for gettext
-contains such a variable.
+Yes in theory, in practice it's very annoying to have the very slow
+documentation build be re-built so aggressively. Since it wasn't a
+practical issue anyone worried about before 2019 I think it's worth
+reverting it.
 
-It's data that isn't meant to be translated at all, so we should be
-passing it as %s to the format string.
+> In other words, I think 7b8a74f39cb's reasoning (not the
+> implementation), especially the last sentence of its log message, is
+> flawed, where it said:
+>
+>     Documentation: Replace @@GIT_VERSION@@ in documentation
+>=20=20=20=20=20
+>     Include GIT-VERSION-FILE and replace @@GIT_VERSION@@ in
+>     the HTML and XML asciidoc output. The documentation
+>     doesn't depend on GIT-VERSION-FILE so it will not be
+>     automatically rebuild if nothing else changed.
 
-I see there's at least one fix that fixes a reference to a function
-internal to git.git, such a check wouldn't catch that, but that message
-should be fixed too. We shouldn't have anything referencing code names
-except the BUG() messages (which we don't translate)>
+Arguably it's a feature. The point of the version in the documentation
+is to make it clear what version we're discussing. If I build something
+on the master SHA-1 and advance to next, and none of the documentation
+dependencies change, it's most useful to refer to the oldest last
+version we can cover.
+
+I think nobody's doing such a "chained" build when building the docs for
+a "real" release, and having mixed versions might be confusing, but for
+the "local build" case from a development checkout it's arguably more
+useful.
