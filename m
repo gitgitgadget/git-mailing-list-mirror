@@ -2,355 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76B79C07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 17:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C60EAC07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:16:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5238F61934
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 17:38:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B30661934
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 18:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbhGCRko (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 13:40:44 -0400
-Received: from bee.birch.relay.mailchannels.net ([23.83.209.14]:16424 "EHLO
-        bee.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229557AbhGCRkn (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 3 Jul 2021 13:40:43 -0400
-X-Sender-Id: dreamhost|x-authsender|tessa@assorted.tech
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id E4D3F3414A4;
-        Sat,  3 Jul 2021 17:29:35 +0000 (UTC)
-Received: from pdx1-sub0-mail-a8.g.dreamhost.com (100-96-18-98.trex.outbound.svc.cluster.local [100.96.18.98])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 01E73341CEC;
-        Sat,  3 Jul 2021 17:29:34 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|tessa@assorted.tech
-Received: from pdx1-sub0-mail-a8.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.96.18.98 (trex/6.3.3);
-        Sat, 03 Jul 2021 17:29:35 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|tessa@assorted.tech
-X-MailChannels-Auth-Id: dreamhost
-X-Versed-Imminent: 23688989144dd6c3_1625333375745_287142612
-X-MC-Loop-Signature: 1625333375745:2562543877
-X-MC-Ingress-Time: 1625333375745
-Received: from pdx1-sub0-mail-a8.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a8.g.dreamhost.com (Postfix) with ESMTP id B8EA98A59C;
-        Sat,  3 Jul 2021 10:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=assorted.tech; h=
-        message-id:subject:from:reply-to:to:cc:date:in-reply-to
-        :references:content-type:mime-version:content-transfer-encoding;
-         s=assorted.tech; bh=JNRJGKWl/ZHU1GcFGjnChXnjoaw=; b=FH9KwHnPyiW
-        G7Y2+hzPyfIdR1gTlBk/jL+vpd+imaS4kAP77ZI+j/R89alKljVb+Yq1kPiiyc/T
-        ryR6Rlng56dg7E7MYAR+0LZw2VQs/sVmGJECZ0XMPUg7PjKM5YDV7YnTXgWlbf6y
-        vxFc7B1rfiAK17/xPKztjGNnNFnKyxgE=
-Received: from slate (scio-198-15-3-17.static.smt-net.com [198.15.3.17])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tessa@assorted.tech)
-        by pdx1-sub0-mail-a8.g.dreamhost.com (Postfix) with ESMTPSA id 39BEE81D06;
-        Sat,  3 Jul 2021 10:29:34 -0700 (PDT)
-Message-ID: <81d63ed42d5c7b442cff616dcc2766bebc265381.camel@assorted.tech>
-Subject: Re: Using .gitignore symbolic links?
-X-DH-BACKEND: pdx1-sub0-mail-a8
-From:   "Tessa L." <tessa@assorted.tech>
-Reply-To: office@assorted.tech
-To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Date:   Sat, 03 Jul 2021 10:29:33 -0700
-In-Reply-To: <87o8c34dq6.fsf@evledraar.gmail.com>
-References: <1623983680.3494.0@smtp.dreamhost.com>
-         <87o8c34dq6.fsf@evledraar.gmail.com>
-Organization: Assorted Tech
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
+        id S229499AbhGCSSy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 14:18:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37754 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229473AbhGCSSy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 14:18:54 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33490C061762
+        for <git@vger.kernel.org>; Sat,  3 Jul 2021 11:16:19 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id s17so15719767oij.0
+        for <git@vger.kernel.org>; Sat, 03 Jul 2021 11:16:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=zeIicGb0TDyeLogabQGzotz3nuXpRlLW/1k8jELSEX8=;
+        b=pjLLf3hme+8wZ3a/cBh1FU7eGc88VwTjUDvHzGc/hcn2+mFnxty6Oe/GvWBYBwAhRV
+         50W//ALJSKrvdoEKCfJbW1OK9TeMrSdFzKH7JQGYqPFEpKTKjA8JTXrPIBE47cJerItI
+         xXPFVktB/cNdjeyKqnmy2RFaKNJf/J/VAB8XZ7xg4da/5b/hw/UbaHumRGmA0WxDUK9R
+         KQ7d+QXZiUpl0jazm6npP8/D0F1sB/cmPygG0zmos5Y2GWpHRGt4WE54PjHn9mgjnyf3
+         NJmaHG33j814GM3sj0TSMTZcIDwnsLm82tPSoEczq+HXOKQRXRoTBQWFizD/7MdRsdH4
+         bT+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=zeIicGb0TDyeLogabQGzotz3nuXpRlLW/1k8jELSEX8=;
+        b=jUT9L/YWiItGxDOlqTi6lB0ytmKj4m8iW+rluePJvJRfMWZOfq7t0b71Ndot57ir6K
+         LBIjl0cMf+ookzIfzIW4X2FwjVIVlyBDGMmuC6G3MCPX7MMUy7JuWoLCa7umS2NVaKxS
+         l9KnFwXz6qspTYwl17l+gL5xF2i/oirgkK0f5/amka1oDwJbs0MfFqCaK5gbnaUOShj5
+         D/rEDNf3Xyf0AAjBhcEePqaWJDJrtDcW/infJMVSrA+tUBYEOlimt+36PLTpDvGTkg4l
+         3YEqZ5rS9p0+00CONFv5kl+a++J9z2eW8ynqP7sCeDMXJVajg0pZ+p3w3gcHCVvctQhG
+         lPKw==
+X-Gm-Message-State: AOAM5322R9Ry8Ucnv+xG7euJoFj3gGumAdxWlQwy0cFSEOOur4+k3GOM
+        0U9mhO8n620U+TPVo0T9s5w=
+X-Google-Smtp-Source: ABdhPJwyBAM5HfzqZK/CtAaW6T5MeJhTA+h2YG57anx2RCP98wvy1URNTHFC0VsZgT1isYIorpF/cw==
+X-Received: by 2002:a54:488b:: with SMTP id r11mr2370605oic.116.1625336178309;
+        Sat, 03 Jul 2021 11:16:18 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id 6sm1552306oip.9.2021.07.03.11.16.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Jul 2021 11:16:17 -0700 (PDT)
+Date:   Sat, 03 Jul 2021 13:16:16 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Atharva Raykar <raykar.ath@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Message-ID: <60e0a9707e09a_2f7208f2@natae.notmuch>
+In-Reply-To: <C19D6C61-D62A-4344-BA1C-A532EB4FEFFE@gmail.com>
+References: <60df97ed24687_34a92088a@natae.notmuch>
+ <C19D6C61-D62A-4344-BA1C-A532EB4FEFFE@gmail.com>
+Subject: Re: The git spring cleanup challenge completion
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robert, Peff, and =C3=86var,
+Atharva Raykar wrote:
+> On 03-Jul-2021, at 04:19, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > 
+> > [...]
+> > Other than that, it's fair to say that *everyone* needs some command
+> > aliases to use git. This past month shell completions have saved me, but
+> > not completely. I can't imagine how a newcomer must feel using git
+> > without any alias.
+> 
+> TLDR: I don't think young, first-time learners of Git would mind the lack
+> of aliases. I cannot speak for people coming from other VCS's.
 
-Thanks for the responses on this.
+That's not the same thing. Of course a user wouldn't mind the lack of
+certain feature if he doesn't know he is missing that feature in the
+first place.
 
-Will attempt to better-articulate both my use case and my concerns.
+Humans went for thousands of years using luggage without wheels, does
+that mean they "didn't mind" luggage without wheels? They had nothing to
+compare it to, so they of course didn't complain, but that doesn't mean
+they were "fine".
 
+In order for them to know if they mind it or not they would first need
+to try them.
 
----=20
+> ------ Long Version -------
+> 
+> Hi, maybe I can help bring some perspective on how newcomers view and use
+> Git. I help run an Open Source club in my University, and one of the first
+> things we help a lot of new contributors with is teaching Git.
+> 
+> I have conducted multiple workshops over the last two years, so I have
+> some idea of what the usual struggles and pain points are. I also have
+> some recollection of what it's like being a new user.
+> 
+> Most of these new users have never used any kind of VCS before, so half
+> the problem is the overload of all these new concepts of branches,
+> checking out, staging area, committing, pushing, pulling, etc.
 
-First, an attempt to provide clarity regarding my use case.
+Sure, that's understandable.
 
-This is a hypothetical representational of my project's structure
-(symlinks designated by '->'):
-```
-..
-.
-./.gitignore  -> ./doc/.gitignore
-./doc
-./doc/readme.md
-./doc/.gitignore
-./main
-./main/.gitignore -> ../doc/.gitignore./main/00_textFile.src
-./main/00_textfile.src~
-./main/00_textFile.src~
-./main/01_differenTextFile.src
-./static
-./static/.gitignore -> ../doc/.gitignore
-./static/executeable.sh
-./static/executeable.sh~
-```
-The contents of these listed files (aside from the .gitignore, as
-articulated below) don't actually matter, though it's possibly relevant
-that the tilde-differentiated files are the default "temp/backup" file
-for GNU nano.
+> Users are not able to properly map the name of these commands with what
+> it actually does. Most of the issues stem from trying to memorise these
+> commands as a series of mantras and applying them without knowing what
+> is actually happening.
 
-By creating symbolic links between the single file in ./doc/.gitignore,
-and other directories (repository root, ./main, ./static, etc...) means
-repo-wide ignoring of nano's backup files can be added with the single
-line:
-```
-*~
-```
-...in my ./doc/.gitignore. And just like that, I've eliminated the
-entire visible clutter of those backup files from my filetree.
+I recall using git that way a long time ago.
 
----
+> Users are confused about why there is an "add", and then a "commit".
+> It seems conceptually similar to them. The difference between reset,
+> restore, revert (and even rebase) is also a pain point, because those
+> words sound very similar.
 
+Yeap, I remember that.
 
-Having said that, it's worth noting that I was, also, trying to solve
-the "...but adding the metaphorical '*~' to my gitignore on every new
-project is a pain, and then if there's another global-ish file-pattern
-to squash, updating each and every repo is a pain, too..." problem.
+> Combine the lack of understanding of what Git is actually doing, with the
+> fear of losing work, and you get the perfect storm of a difficult
+> experience.
+> 
+> For most new users Git is unusable, unless you explain to them the right
+> mental model of Git being a graph of immutable commit objects with
+> pointers to access their contents. In my opinion, trying to make this
+> model more transparent to a new user is the best way to improve their
+> experience.
 
-Thank you, Robert, for calling my attention to core.excludesFile,
-that's going to be horrifically misused in my homelab sometime soon-
-ish.
+Sure, I see those pain points, and I have sent plenty of patches to
+improve that experience, but none of them have been applied.
 
+> What new users do not have a problem with is a lack of aliases, because
+> they carry no previous expectation from other VCS's, as Git is always their
+> first one.
 
----
+Sure, when they are learning git they don't need aliases, but after they
+become fluent and can do some basic workflow without looking to cheat
+sheets they *immediately* would benefit from them.
 
-Having said *that*, I did not have visibility on commit 2ef579e261, and
-am especially in favour of the mentality of "Let's do X instead of Y so
-that (the) two cases behave consistently."
+> I can imagine aliases like 'co' only adding to the overload of
+> information if an instructor is not careful. FWIW, I have never seen a new
+> user complain about the length of the typing, it's usually with the plethora
+> of unintelligible (to them) options that each command has when they open the
+> Git man pages, which adds more fear.
 
-The subtle difference between my actual case of (ab)using symlinks to
-point at a single 'ignore' file within the repo (vs linking from
-outside the repo) is definitely not within the supported use of git as
-a version control system, and I'm not expecting to halt progress
-because of some edge case use like this.
+This is one of the reasons I suggested to split git into two binaries:
+git for normal users, and git-tool for all the plumbing not many humans
+use.
 
-I'd rather come up with a better path than "take it back", if that
-makes sense.
+> I do not have an opinion about default aliases, I only had a narrow point,
+> ie, on the list of impactful things that helps Git newcomers around my
+> circles, aliases would not score very high. Those who love the command
+> line among the more enthusiastic learners will set those aliases themselves
+> anyway.
 
----
+Sure, initially aliases would not help them very much, but after the
+initial learning period when they actually start using git for real,
+then aliases help tremendously.
 
+Cheers.
 
-That being said, I have concerns about the implemented approach here.
-
-As a former information security professional, I'm comfortable saying
-that the presented dichotomy of the "inherent conflict between security
-and convenience" ignores how effective communication and user-consent
-fixes the problem.
-
-Arbitrarily breaking system-wide expectations for a low-level utility
-(symlinking) in the name of security (it's still a hypothetical RCE,
-right? There's not currently a working proof of this exploit?)
-seems...problematic...in that it prioritizes something that *may*
-happen over pushing breaking changes down the pipe and assuming that
-the user will just figure it out...when often even highly technical
-users completely miss that something has changed, much less on what
-level.
-
-Obviously, security has to happen at all levels...and, a bash-
-compatible system has literally countably infinite amount of ways to
-cause harm, if you're running someone else's code without attempting
-some form of analysis beforehand.
-
-
-I, and others who use bash or similar shells, are going to expect
-symlinks to work consistently both inside git repos and out of it, and
-'what if a malicious repo symlinks to Something Bad' seems...outside
-the scope of doing version control.=20
-
-Trying to detect exploits at this level (the version control system)
-seems like a lot of complexity to add for something that is
-fundamentally at odds with the philosophy of 'do one thing well'. And,
-choosing to pursue and define what is or is not an acceptable use of
-symlinks, or even changing behavior based on internal/external linking,
-sounds a lot like scope creep to me.
-
-
-I'm not saying that to downplay the seriousness of the security
-concern...but hopefully to contextualize my deeper concerns about a
-choice to not just start breaking the (working, system-level-
-consistent) defaults, but to do so without somehow informing the user
-and giving them a form of choice regarding the change.
-
-
----
-
-I acknowledge that 'too many levels of symlinks' is technically valid
-for 'zero levels allowed', but that's not what is functionally
-communicated to the end user. I debated about calling out this
-distinction, but decided to orient on how a less-technical user would
-perceive the error.
-
-
-In that mindset (of keeping an eye on what a less-technical user will
-have perceive), I've watched with happy interest the process of
-adjusting the defaults for various commands (git pull and git init,
-especially).
-
-The excellent use of user-communicating blocks of text in those cases
-while preserving the in-use legacy defaults, while allowing an informed
-choice (eg, presenting the user with a suggestion to run specific
-command(s) to change the fast-forward behavior or to rename the default
-branch on init, respectively) seems like a much better path to me.
-
-
-If nothing else, I'd like to see that model of user-
-querying/informing/consenting behaviour (from the fast-forward and init
-examples) happen with this case, for consistency at the very least.
-
-
----
-
-Back to my specific use case.
-
-All three of the potential solutions subtly miss my need, so my
-suggestion for a 'fourth option' would look something like a flag to
-prompt a 'flat' (non-tree) interpretation of the file(s) inside the
-repo when filtering the displayed file-list via gitignore/excludesFile.
-
-So, instead of checking if each folder has a rule matching against it,
-any rule in the .gitignore (or wherever the core.excludesFile points)
-applies to the base-level of any directory inside the repo, resulting
-in essentially the same behaviour.
-
-This would eliminate my specific use of symlinks entirely, though it
-doesn't touch on my concern about symlinks behaving differently inside
-version control than pretty much everywhere else inside a symlink-
-capable filesystem.
-
-
-I don't have visibility on the complexities of adjusting/adding this,
-so please correct my assumptions where they conflict with the realities
-of developing the next release candidate.
-
-
-Once again, I appreciate your time and communication on this.
-
---
-Tessa L.
-
-office: 503.893.9709
-web: 	https://assorted.tech
-
-On Fri, 2021-06-18 at 13:15 +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- wrote:
-> On Thu, Jun 17 2021, Tessa L. H. Lovelace wrote:
->=20
-> > The recent release candidate of Git (v2.32.0) hit my OS this week,
-> > and
-> > it included a line () on symbolic links for several specific files
-> > are=20
-> > now ignored.
-> >=20
-> > Thank you for putting the changelogs in an accessible location,
-> > knowing that this was a known breaking change was useful in
-> > debugging
-> > why my workflows stopped working.
-> >=20
-> > I have two concerns.
-> >=20
-> > First, the error thrown is
-> >=20
-> > > "warning: unable to access '.gitignore': Too many levels of
-> > > symbolic
-> >=20
-> >   links",
-> >=20
-> > ,,,which does not accurately represent what is happening.
-> >=20
-> > I spent a bit of time convinced that I'd broken something with the
-> > symbolic links during setup, and an error such as "symbolic linking
-> > no=20
-> > longer allowed for 'filename'." would make more sense, given the
-> > change under discussion eliminates *any* use of symbolic links.
-> >=20
-> >=20
-> > Secondly, and more personally important to me, a system
-> > administrator:
-> > My repositories use symbolic links to allow a single .gitignore
-> > file
-> > to define my folder structure, allowing me to avoid hardcoding the=20
-> > repo-specific folder paths into my configs.
-> >=20
-> > Is there a flag to disable this new behavior?
-> >=20
-> > If not, this change means I need to update dozens of files,
-> > duplicates
-> > all, or completely rewrite my .gitignore files to have shyteloads
-> > of=20
-> > arbitrary file paths in them, which I'd rather not do.
-> >=20
-> > Also, is there a justification for forcing this as the on-update
-> > default new behavior, when a user-querying behavior (such as with
-> > 'git=20
-> > pull' defaults as they've changed recently) exists?
->=20
-> [CC-ing Jeff]
->=20
-> Breaking this was intentional, see=20
-> https://github.com/git/git/commit/2ef579e261
->=20
-> That doesn't mean we can't take it back.
->=20
-> As discussed by Robert's reply and in that commit there's the
-> workaround
-> of .git/info/exclude and the core.excludesFile.
->=20
-> However, we realize that sucks for many users. Let's say you have a
-> script to clone a "tree" of repositories similar to but not using
-> git-submodule (or they live side-by-side), such a thing won't Just
-> Work
-> anymore.
->=20
-> At the end of the day there's an inherent conflict here between
-> security
-> and convenience. We really want a repository to be safe to just "git
-> clone", i.e. we don't set up any hooks, execute code etc.; these
-> gitattributes and gitignore issues were on edges of that.
->=20
-> We can make it work as before, but it gets hard to distinguish the
-> gitignore you mean, from a gitignore that's pointing to /dev/urandom
-> (annoying), or to some crafted out-of-tree thing that'll cause an
-> overflow in the parser and an RCE.
->=20
-> Any way out of that that's configurable is going to be be the same
-> opt-in problem as core.excludesFile is now.
->=20
-> So I'd think our options are basically:
->=20
->  1) Do nothing, it sucks for some people (like you) but we think it's
-> worth it
->=20
->  2) Some DWYM middle ground, e.g. we could discover if the link
-> points
->     to another git repo, and only trust it then, or if it's in the
->     user's $HOME or whatever.
->=20
->  3) Bring back the old behavior, it was more of a "while we're at it
-> for
->     gitattributes..." fix than something specifically a problem with
->     gitignore, the RCE threat is a hypothetical, and we can more
-> easily
->     audit/be confident in the gitignore parser, probably...
->=20
-
+-- 
+Felipe Contreras
