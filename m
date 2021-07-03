@@ -7,77 +7,73 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 032A7C07E95
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 00:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D63C07E96
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 01:07:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D135F61427
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 00:41:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E98DC6142C
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 01:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230056AbhGCAoN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Jul 2021 20:44:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35690 "EHLO
+        id S230109AbhGCBH6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Jul 2021 21:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230017AbhGCAoN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jul 2021 20:44:13 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1436C061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 17:41:39 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id i12-20020a05683033ecb02903346fa0f74dso11837565otu.10
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 17:41:39 -0700 (PDT)
+        with ESMTP id S230017AbhGCBH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jul 2021 21:07:57 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEE7EC061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 18:05:23 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id o17-20020a9d76510000b02903eabfc221a9so11962535otl.0
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 18:05:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=zr2+PczYQKcwfIwyxEkZk9apqJ/83cgePL4VVxMLJA0=;
-        b=sM1e3AbiQaUdQdqWtBfHFq90ltnKClpdwVzhFSM48clGzpx/bIhNMNRvw/POgtXUZU
-         bqNC+rf3fdhQQAFmRACNWZlXqYqozXhoz2F4kRVRrYTPQ0VeGijdj0E1n9wd4ua+Xb2A
-         e4eCzZjvfdfcmkBGi27sFG7D7UDcd5+s0F87Y2NUrwplBurz6nbFZZFEoDJ6J+fF59Gl
-         BtNYeGePKb9hyGWLdO37UgumSk1D9B+ZqR2OsCvEw3my9icX3WplbxKokMpYDxMr4MkR
-         KJyq7J8asUCk/6DygSX1VlpCsHQs7i6hpRyuAOerVtE2S6iIvXkdnqqvvYZyB++AAfl1
-         eUoQ==
+        bh=xOT91NRoauLlH5WEXFP0oK/CWAzNZt7u+P6drJkiW0A=;
+        b=plSfoqlK/LrfuTBmgs10rcnaoLD+NGTfcJ0J+VRakOM2wXVKa0NdS+wizIvwkzCbJT
+         1ZJCOGWb2PoVGtzDDohbQB2EDin0GaQrShU0cgb28oj7JweMsWsndAwmS76xmqYsYIjM
+         TcSeuj3UBh3XgJE/egjTJHMZNxtYqAoiEtBdQ0Stq45aq804FETmhdDlS/RlFrGCPuz8
+         3PE0WgsUQYDnKNPZqWyM9XHxhstSco5GYihQSbG2hXFDBP34pogv3HfrKxw4+rzQjsP0
+         eQxzOnb0PWwgXhKNHpkBjn7pibvv+5/T59lNKOyYqks6EpsjGZUD9cxRlFRfub4GQTS8
+         a9Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=zr2+PczYQKcwfIwyxEkZk9apqJ/83cgePL4VVxMLJA0=;
-        b=QaK4FXWxQf6e964R6axWASzqPdkXFEyYM2vUW+GT8RN5ofuo54cIPOGBOcdZmgB5w2
-         nlDyaP7Aeb2csaCyAHP7oyNUPkbyubXb1n0U7xbVaz/2a23yDHSZGB+CQoAhzKwgIMC6
-         neY5bL5qXo03JIDWOVVNfHW1loXIPNb8M83P5VDcZgMp6Hoj9H6+pdcMaiXiTPCe5zfC
-         hcyI9nmUsRMDChP94h3a1GcTnU7PtUX6wkC/7bMeC2qZ6/bMD5UFxCsc4ePYFCbBRNjQ
-         Y/y86rZ1xEoTsdSssSVrUgPrPaPVd8K1aGSJsBbRoGo7CIwsNyZ6G5sQzB9cf9zIBfEs
-         U+AA==
-X-Gm-Message-State: AOAM531F7ZRNjJqwj1MgEeVYkareRiuGUy9CUDGNYcigZFVC0ymd0RGc
-        uNpykJyKX3AASnxqDg/JhfA=
-X-Google-Smtp-Source: ABdhPJytwAcUEG6Z5RfxJUdZwbbuNOobb0tRjp3r/O9jlChe42JNzm63VDWRUfO8lq42685r0k4crQ==
-X-Received: by 2002:a9d:68d1:: with SMTP id i17mr1554180oto.227.1625272898945;
-        Fri, 02 Jul 2021 17:41:38 -0700 (PDT)
+        bh=xOT91NRoauLlH5WEXFP0oK/CWAzNZt7u+P6drJkiW0A=;
+        b=jHwvo/H1Z/WDblwIK9/mbJA0dzldmOYM68cwtiFIj4kTP8DfBIweVfRTZnhXL5AuqP
+         QdFyaLOFfe9yXA+shlscjow0/mbhMtkmmp9vA+xCIrN9TsTudN0LI4nVytfT3TSPC2jS
+         3sqFKxsgwF+bdgDsV8mjNXIepd7T/gp8SiGg7ym0bFSeDWZxbt6X4ZYqlhM29w1p4KIY
+         LcYJeDORhmdr6RU7gdC6w2ihOuFPDF0ZBkxsy4UOsY5wkgJVpwnYDcqjmhYxPUBVVtV0
+         ax1OSAn0gpPtEig84OrO9Q3FmHVST7oTd3Efda0gcdG2i6n1czLDPpF8waBHRjIAUavW
+         CqYQ==
+X-Gm-Message-State: AOAM530bYbICzULfHahZAFxaT/eNRSGIkIWFVcQ8qA07uFNNjmXxQZcJ
+        30FDUI6VdCXvVpcU43MNXwg=
+X-Google-Smtp-Source: ABdhPJxHZGI8e6Sf/QnThA3ACa2Q1G6uJmS72R6/zmVJIsQJXTMnz/FRdkX+j90O3JXpT9G3TAfW1w==
+X-Received: by 2002:a9d:60b:: with SMTP id 11mr1579693otn.244.1625274323005;
+        Fri, 02 Jul 2021 18:05:23 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id a7sm1026290oia.42.2021.07.02.17.41.37
+        by smtp.gmail.com with ESMTPSA id q13sm941466oov.6.2021.07.02.18.05.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jul 2021 17:41:38 -0700 (PDT)
-Date:   Fri, 02 Jul 2021 19:41:36 -0500
+        Fri, 02 Jul 2021 18:05:22 -0700 (PDT)
+Date:   Fri, 02 Jul 2021 20:05:21 -0500
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Message-ID: <60dfb240ec471_3dd220879@natae.notmuch>
-In-Reply-To: <87tulecfx7.fsf@evledraar.gmail.com>
-References: <patch-1.1-9420448e74f-20210622T141100Z-avarab@gmail.com>
- <YNIBRboFiCRAq3aA@nand.local>
- <8735t93h0u.fsf@evledraar.gmail.com>
- <YNI3WVu5SK7pHI7T@coredump.intra.peff.net>
- <87r1gs1hfx.fsf@evledraar.gmail.com>
- <YNOz1GD/8+CaUvRz@coredump.intra.peff.net>
- <871r8r1hwe.fsf@evledraar.gmail.com>
- <YNSbe0At6SaQu1Z4@coredump.intra.peff.net>
- <87fsx6xn0b.fsf@evledraar.gmail.com>
- <YNqE8BIRF6NeYQcd@coredump.intra.peff.net>
- <xmqqfsx1yyza.fsf@gitster.g>
- <875yxxgkav.fsf@evledraar.gmail.com>
- <60dd3c92ef44b_174a220836@natae.notmuch>
- <87tulecfx7.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH] Makefile: add and use the ".DELETE_ON_ERROR" flag
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w5h5c3RlaW4gV2FsbGU=?= <oystwa@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Message-ID: <60dfb7d11cac3_3dd220811@natae.notmuch>
+In-Reply-To: <patch-1.1-911881ce19f-20210702T115617Z-avarab@gmail.com>
+References: <874kdn1j6i.fsf@evledraar.gmail.com>
+ <patch-1.1-911881ce19f-20210702T115617Z-avarab@gmail.com>
+Subject: RE: [PATCH] Documentation/Makefile: don't re-build on 'git version'
+ changes
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -87,44 +83,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Jun 30 2021, Felipe Contreras wrote:
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> Since 9a71722b4df (Doc: auto-detect changed build flags, 2019-03-17)
+> we've been eagerly re-building the documentation whenever the output
+> of "git version" (via the GIT-VERSION file) changed. This was never
+> the intention, and was a regression on what we intended in
+> 7b8a74f39cb (Documentation: Replace @@GIT_VERSION@@ in documentation,
+> 2007-03-25).
 > =
 
-> >> Even if you don't care about the end result or making git easier to =
-hack
-> >> on for people who don't share your setup,
-> >
-> > I don't know about Junio, I do want to make git easier to hack for
-> > people that don't share my setup, but I would like to know what that
-> > setup is.
-> =
+> So let's add an ASCIIDOC_MANVERSION variable that we exclude from
+> ASCIIDOC_COMMON. The change in 9a71722b4df was only intending to catch
+> cases where we e.g. switched between asciidoc and asciidoctor, not to
+> undo the logic in 7b8a74f39cb and force a re-build every time our HEAD
+> changed in the repository.
 
-> I think all of this is covered in detail upthread.
+Once again, why do we care that the version is 2.32.0.98.gcfb60a24d6 and
+not 2.32.0.97.g949e814b27?
 
-From [1] I understand some systems have a problem clobbering a binary
-that is being run. So if you are running a test that is using a binary
-that you are rebuilding at the same time, you get an error.
+Not just in the documentation, but everywhere.
 
-OK.
+Maybe we can add a GIT_RELEASE variable that unlike GIT_VERSION it
+doesn't contain the precise commit. For example GIT_RELEASE =3D 2.33-dev.=
 
-I still don't see why anyone would want to rebuild the binary in the
-middle of running tests. The result of the tests is only meaningful for
-a particular build. This is what I don't get. I get that you want to do
-this, what I don't get is *why*.
-
-In order to be able to rebuild _and_ keep running the tests for a
-certain build an out-of-source build is needed. Modern build systems
-like CMake and Meson do these kinds of builds by default. In fact, Meson
-doesn't support anything else.
-
-With an in-source build such as in git, I first stop the tests, and
-then rebuild, and that's what I would expect everyone else to do. I
-don't think it has been explained why anybody wouldn't.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/871r8r1hwe.fsf@evledraar.gmail.com/
 
 -- =
 
