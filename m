@@ -2,67 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2BFC07E9A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CC8CC07E9D
 	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 21:26:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48BDF613D3
+	by mail.kernel.org (Postfix) with ESMTP id 5EC9061438
 	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 21:26:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229996AbhGCV3R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 17:29:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50630 "EHLO
+        id S230001AbhGCV3S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 17:29:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229917AbhGCV3N (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229919AbhGCV3N (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 3 Jul 2021 17:29:13 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F2D2C0613DB
-        for <git@vger.kernel.org>; Sat,  3 Jul 2021 14:26:39 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id l1so8788380wme.4
-        for <git@vger.kernel.org>; Sat, 03 Jul 2021 14:26:39 -0700 (PDT)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40BDC061762
+        for <git@vger.kernel.org>; Sat,  3 Jul 2021 14:26:37 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id j34so8791491wms.5
+        for <git@vger.kernel.org>; Sat, 03 Jul 2021 14:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OZTzR01ECxBymzSoayWdhb0eSWSZDeJvZ5Se3aZe5BQ=;
-        b=h373bSosPK+aMWv0Oxo//o4FZoHBehlDvu8ZIFXN3LMSDXvQivbwWHhGuVbS+AfGhn
-         4bCKRlFmTh1ZC3DqSLQREfxKhLSWf5+V5H6Z0z5MsxoPA/V2jSZBPm2AKvVhKZX6mgUq
-         1bPUZWPQs0KrmV/stg8DhzoZM3uhKUTgASsqzFL0uR7/7imm7g1pwOV9lz3vn87DRplh
-         M4HIBmKxEnaIBgEAk1v8m1X5sf8lASTQqpSJ08inBMwD/u+jORb5ZYGQ7kvOhI8kv4QS
-         k1fL2BNk4sMI9OT3RpJHSGGm9h94qptg6D5yoL9niW2T0/fG80Nm9bWab9OiuIf8iFQ6
-         ZUOw==
+        bh=OWdmvoLFvRKaZ00xRXQUel4GoLKe8gPH+g71h/kYGls=;
+        b=YdJVgSFX2gM29l6O2ujSzhaShqp6YUXjBQFWBVtcT+mzT15uION72JR++tiZR5sK2A
+         1lk1jGsWRTjRatVJuY7bVWbMs0v2NMkBmWfSFDcsqhBafDCi7yu+5IV+DCZfMFCq1qEy
+         Byp+zrIuT9i50TjSUGA2PtTSxLcymIJElcBq0lDQ/8lLgDCg6jlyOJAWGbd+uvshy43x
+         2WcHliWpJ+iEnlA6qxqRlUJy5Blp1ICbvCSSd9FAF/S/C2vQ3nyLnQgP15EPkH6jS1Mr
+         7DxeeM7hw7DP2tWzPmCQ7/t+4buXh/8Ie4F5nPzIpzstEddHjKeu9Ev0MWUEJrNXY5An
+         eUdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OZTzR01ECxBymzSoayWdhb0eSWSZDeJvZ5Se3aZe5BQ=;
-        b=f3TimZVshOWLxSp4K0QDvmCkywKr2IN7dyO4ebCy4LapUp/PRpelOtwgnlJndiki18
-         qDOOx/Os5KHq9LFQb4F8mOFso7zayJP5+ttTNg7HvbPFc2a5eL8Cf6dTAgN+Bp5r96mh
-         trHwmWwf0B5Y4vZ4is89yFDlrZdu4SsrBdO8B6Z6xs2pObDWjGnlQVeORPFpTKS6PRLa
-         nmbF4W6uy94LX1CE5kIBahok6JmJoyCNuRiR3CSSfzfbpC4vgLZTB0WIXSEVh9rpmmns
-         OoNCP6HmKgh9J+zw3ar6hnFF90v4yZ2lp6lTyoT7gGvvxyCDomfx1NB1QRL0E8rAcwX0
-         +Uag==
-X-Gm-Message-State: AOAM532duXOqHVbMO/u6LlUTJRrK/1d59ebew5sBPQPTRhQGBps68Yhq
-        YUrewMa/pewqjvNdt6DaQ/PwtOBaq30=
-X-Google-Smtp-Source: ABdhPJyLmdd7B7uvixSjcdaBuUH+5P2V2p+ep4gzm2bQoDbCW59lhPmv3TpwyuK1OW7HzVimLQT6pg==
-X-Received: by 2002:a1c:f016:: with SMTP id a22mr6590631wmb.65.1625347597931;
-        Sat, 03 Jul 2021 14:26:37 -0700 (PDT)
+        bh=OWdmvoLFvRKaZ00xRXQUel4GoLKe8gPH+g71h/kYGls=;
+        b=oEcpTfW23+0u17+bOXDjs89KL4jnA8v35PMe+OmEF9R8/zBbBCJ2IzDZbX5d5GJ3/8
+         sepGUIya7uJcfAcbT1bS73VmZoXxd5HhedndEqFY3Szc3r3UxNikvCaIIkiAYj4JH8wC
+         wbuqRhWNcJJryDW8/VVOnYJWwrmtu+XAaY/Pc16cWLCCc3lQFGY5p6nZzLeln6gboUOu
+         oO8Pon0/R8vObys3q9f64DLYJz+zOanYDlOCLtakZZEMcFyNBXeLTV3TMbbK3TbdY0lz
+         DrpD0etkkwWCMFNdtEP2FlSBuRg0oKERUJVoeAXp8LaJfoYw8elL7VXcsBkbcEyKIXqC
+         +65w==
+X-Gm-Message-State: AOAM530lT9qi3TM2L8KR1VOu29LNkIIMJLSa7u/sKjsgMu08kqFRwbLp
+        KQ1C7DM5fHwVBXSn/MHeAcQumfSnWlU=
+X-Google-Smtp-Source: ABdhPJyCMSZSOpZSWY1UqipMriWugwld2qs+z+GTXreFZtRKdZCygCikRbxR4KX+PuH2uOexykwpgw==
+X-Received: by 2002:a05:600c:b59:: with SMTP id k25mr6766306wmr.117.1625347596442;
+        Sat, 03 Jul 2021 14:26:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 2sm7117315wmn.44.2021.07.03.14.26.37
+        by smtp.gmail.com with ESMTPSA id r16sm9181685wrx.63.2021.07.03.14.26.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Jul 2021 14:26:37 -0700 (PDT)
-Message-Id: <88a44863cd013fc9c152ff91cf109fd7b1073257.1625347592.git.gitgitgadget@gmail.com>
+        Sat, 03 Jul 2021 14:26:36 -0700 (PDT)
+Message-Id: <59dc44428fbc168a5edbb6e6679c9b8aff8d74c1.1625347592.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.878.v2.git.1625347592.gitgitgadget@gmail.com>
 References: <pull.878.git.1624461857.gitgitgadget@gmail.com>
         <pull.878.v2.git.1625347592.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 03 Jul 2021 21:26:32 +0000
-Subject: [PATCH v2 7/7] ci: accelerate the checkout
+Date:   Sat, 03 Jul 2021 21:26:29 +0000
+Subject: [PATCH v2 4/7] ci(windows): transfer also the Git-tracked files to
+ the test jobs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,66 +77,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-By upgrading from v1 to v2 of `actions/checkout`, we avoid fetching all
-the tags and the complete history: v2 only fetches one revision by
-default. This should make things a lot faster.
+Git's test suite is excruciatingly slow on Windows, mainly due to the
+fact that it executes a lot of shell script code, and that's simply not
+native to Windows.
 
-Note that `actions/checkout@v2` seems to be incompatible with running in
-containers: https://github.com/actions/checkout/issues/151. Therefore,
-we stick with v1 there.
+To help with that, we established the pattern where the artifacts are
+first built in one job, and then multiple test jobs run in parallel
+using the artifacts built in the first job.
+
+We take pains in transferring only the build outputs, and letting
+`actions/checkout` fill in the rest of the files.
+
+One major downside of that strategy is that the test jobs might fail to
+check out the intended revision (e.g. because the branch has been
+updated while the build was running, as is frequently the case with the
+`seen` branch).
+
+Let's transfer also the files tracked by Git, and skip the checkout step
+in the test jobs.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/main.yml | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .github/workflows/main.yml | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 3b40c677ab5..405204c78a7 100644
+index a399114c0f8..0f7516c9ef3 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -81,7 +81,7 @@ jobs:
-     if: needs.ci-config.outputs.enabled == 'yes'
-     runs-on: windows-latest
+@@ -89,7 +89,9 @@ jobs:
+         HOME: ${{runner.workspace}}
+         NO_PERL: 1
+       run: ci/make-test-artifacts.sh artifacts
+-    - name: upload build artifacts
++    - name: zip up tracked files
++      run: git archive -o artifacts/tracked.tar.gz HEAD
++    - name: upload tracked files and build artifacts
+       uses: actions/upload-artifact@v2
+       with:
+         name: windows-artifacts
+@@ -102,15 +104,14 @@ jobs:
+       matrix:
+         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
      steps:
 -    - uses: actions/checkout@v1
-+    - uses: actions/checkout@v2
-     - uses: git-for-windows/setup-git-for-windows-sdk@v1
-     - name: build
+-    - name: download build artifacts
++    - name: download tracked files and build artifacts
+       uses: actions/download-artifact@v2
+       with:
+         name: windows-artifacts
+         path: ${{github.workspace}}
+-    - name: extract build artifacts
++    - name: extract tracked files and build artifacts
        shell: bash
-@@ -134,7 +134,7 @@ jobs:
-       GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
-     runs-on: windows-latest
-     steps:
--    - uses: actions/checkout@v1
-+    - uses: actions/checkout@v2
+-      run: tar xf artifacts.tar.gz
++      run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
      - uses: git-for-windows/setup-git-for-windows-sdk@v1
-     - name: initialize vcpkg
-       uses: actions/checkout@v2
-@@ -237,7 +237,7 @@ jobs:
-       jobname: ${{matrix.vector.jobname}}
-     runs-on: ${{matrix.vector.pool}}
+     - name: test
+       shell: bash
+@@ -169,7 +170,9 @@ jobs:
+       run: |
+         mkdir -p artifacts &&
+         eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)"
+-    - name: upload build artifacts
++    - name: zip up tracked files
++      run: git archive -o artifacts/tracked.tar.gz HEAD
++    - name: upload tracked files and build artifacts
+       uses: actions/upload-artifact@v2
+       with:
+         name: vs-artifacts
+@@ -182,16 +185,15 @@ jobs:
+       matrix:
+         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
      steps:
 -    - uses: actions/checkout@v1
-+    - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
-     - run: ci/run-build-and-tests.sh
-     - run: ci/print-test-failures.sh
-@@ -282,7 +282,7 @@ jobs:
-       jobname: StaticAnalysis
-     runs-on: ubuntu-18.04
-     steps:
--    - uses: actions/checkout@v1
-+    - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
-     - run: ci/run-static-analysis.sh
-   documentation:
-@@ -292,6 +292,6 @@ jobs:
-       jobname: Documentation
-     runs-on: ubuntu-latest
-     steps:
--    - uses: actions/checkout@v1
-+    - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
-     - run: ci/test-documentation.sh
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+-    - name: download build artifacts
++    - name: download tracked files and build artifacts
+       uses: actions/download-artifact@v2
+       with:
+         name: vs-artifacts
+         path: ${{github.workspace}}
+-    - name: extract build artifacts
++    - name: extract tracked files and build artifacts
+       shell: bash
+-      run: tar xf artifacts.tar.gz
++      run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+     - name: test
+       shell: bash
+       env:
 -- 
 gitgitgadget
+
