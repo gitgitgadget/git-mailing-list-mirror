@@ -2,147 +2,294 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F33BC07E98
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 07:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 755A4C07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 10:06:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FEA061421
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 07:58:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 463936145C
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 10:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbhGCIAa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 04:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45026 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbhGCIA3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 04:00:29 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04DBAC061762
-        for <git@vger.kernel.org>; Sat,  3 Jul 2021 00:57:56 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id u14so12286844pga.11
-        for <git@vger.kernel.org>; Sat, 03 Jul 2021 00:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=eiQ+J++MPEOXmS3ucZeZeURtjkCKfxOIfE08FA9bbqs=;
-        b=dflWbXNqjAfrK6vHI8pu3T1kD43vyB/ptwtpgF9XvF5zPQym80JoIww0Fr1JcV01XB
-         ce8BDM/5odtPnsBeHsFZG4ULbFZ2LSD4dYD5QnLyHRPw7MHIDBo0JVulr9emerESXoTP
-         6F9OB1l47JYIkxJPpFVe5/xgwxPSGmdE7EzyKu3rzer9b/w7ACr7h07q1DY8vts8IH7M
-         7KCwma4ikoJC/2/tAJGgiIIklTCF/cY/5erHu0m/k5vteoTzugnlY8VPGR/ekcpVN8CV
-         XcWcF9usws+1XVBvFRJA1zRQhCphjAwQ439tii039sL65JmvK1AIAA8PKe0sHqs/Cdj1
-         x5xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=eiQ+J++MPEOXmS3ucZeZeURtjkCKfxOIfE08FA9bbqs=;
-        b=WBxdqw4Hi2rjuRym2izKDZs6SLe3ckWsmhaSgfzUcywANioJQuyYkOQ6vAQVcnPhc4
-         snwwxlqemGG3AGozICLIFpmMK15PUEuakEoCq7QQeSO/MVccmHJaoXM3rLJL2cWixNyv
-         CLf7vRjm85oc62+IUavhsCq3D9Vxs/h69ZFDZOkR1DrwPyYvmatF0wA0+9McHUlbt3/W
-         TWnds3dleqtt3jXbFSAD1Xq0QjTvUF0VeIYL21vWDWzR3hqsRwYm+rYduRuSWqfDuRYN
-         GAiDySar6AaQTaVsjuyzzGKiT+dTQhi4dCXogyfx89zPDTVuQ7Bn8FNylT/z5aKwrUpk
-         l9AA==
-X-Gm-Message-State: AOAM532x43UVitBz9zX4ASclGSLXRwJkjw8N9CSNEAcCNzA+kDAlFcLg
-        +oKNvnxzVZAYoGqWlesBODE=
-X-Google-Smtp-Source: ABdhPJz1ZzmftVwY96Q6RDF6lrkftCVR5gXf2tW6QJJJp7xzEF9X0e3rZsPtGl/+rAtsae1RUS0s7g==
-X-Received: by 2002:a63:f20:: with SMTP id e32mr4162735pgl.235.1625299075492;
-        Sat, 03 Jul 2021 00:57:55 -0700 (PDT)
-Received: from smtpclient.apple ([119.82.121.73])
-        by smtp.gmail.com with ESMTPSA id k20sm14907924pji.3.2021.07.03.00.57.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Jul 2021 00:57:55 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: Logical bug during MERGE or REBASE
-From:   Atharva Raykar <raykar.ath@gmail.com>
-X-Priority: 3 (Normal)
-In-Reply-To: <1932019063.20210702192555@wp.pl>
-Date:   Sat, 3 Jul 2021 13:27:51 +0530
-Cc:     git@vger.kernel.org
+        id S230118AbhGCKIg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 06:08:36 -0400
+Received: from mout.web.de ([212.227.17.11]:39867 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230081AbhGCKIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 06:08:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1625306745;
+        bh=+TAo//fbu0gj2pNQawLYJbyAwNlgU92Oh3l0QBn5t84=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=TcQnEZJ4UQFnaQVVd4nIu99T041nv2yM4EzyrNdlDb23Ox5iyDPY4SloV1YpOnYQJ
+         BtJE46J5HED8uythvYbkXmEtGyacMyZQ7uASBqEZjkMeqEcukjzHSxjO9mXxP867zq
+         SQW0WVJ4gzCqXD4JhJhturZPmmsxL5XQcXi9JErU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
+ (mrweb103 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 0MKIzC-1m1GQR0c5u-001iyS; Sat, 03 Jul 2021 12:05:45 +0200
+Subject: Re: [PATCH v2 1/5] speed up alt_odb_usable() with many alternates
+To:     Eric Wong <e@80x24.org>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>
+References: <20210627024718.25383-1-e@80x24.org>
+ <20210629205305.7100-2-e@80x24.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <fc342ddd-1b35-62cc-dd4b-e0462d595819@web.de>
+Date:   Sat, 3 Jul 2021 12:05:44 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20210629205305.7100-2-e@80x24.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <3CD890FA-7A99-4DDC-9691-80D1ED6BD51B@gmail.com>
-References: <1932019063.20210702192555@wp.pl>
-To:     skottkuk@wp.pl
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+X-Provags-ID: V03:K1:VWgot2Y7Gdj2Rk9Du5S1ik+KUIo9NZTg2O7FDijo7lY8O3GeR/r
+ pxOArumjw/Jm0QxKeZyveqhElLaO+h/u4zBC1GYdgwPmaXB1L9grSrNkztvNeIgOuS0n6Yp
+ BhZGsqsi9G8X3OX1jQugO83tNcn9rqJBHJ+OfLG/yZNf1FlGEE2UMht1mQKzBuoGlcgn3ZN
+ x+nhYdR5dAU/NDfGIFFQw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EEbE4DHhU4I=:o5COKe2h5vi2SYa/KBvOGN
+ TsSJ3zsAwQN+ZaxLod49XXhEPrSy/GYkzrjF2tDfvIJTw6ugER8Kf8EqwqB3lceHT/qAZR4LA
+ nydT+UqSQ0vwk1GhYxzd4PQBffqJyNuRR5ObJJiKwmdLNv1O9ie8hCTegNbx98E7fAakiGXBj
+ vfwexUFlIf0a1iM3FVhWtgNYozr2QYz9P+JMPUuDpHaEKwWF+r87ZER4eVNj/kc8EUcz+0Ywh
+ gPw04UA2OiY/yLfmFN1ASiAh/5yxp9Ta6pB/jRuClPJEYbdXPD5nuQI+1VmfyvRb5Kp4uCetO
+ PpyznsalthZWe1TJgZX12HAAH8blQFrzIF4azFpVoQRha2d7D19F3bkQPKvfB6pwzj1OvMshO
+ SazoD48Z9TBb/mrTQw8JCWZks7jRD7tTlOvicLvMSsxsEct9HxS+/JnBuejIuUSBmtF7k/djc
+ sjY1FUcNwdWf4FKec48QxloD1KIHyIKwWT0qMwbuO5zScWOvzkZ6D/qE2KPabRsKfSr00SKoT
+ joVmdkP4lDjhE9UYJtBHDWd8mAN3xiImN6Cvk/cTHjMX2ADSfD+/fcLJ+/Y5WOGb2JWbm+HGm
+ N9xA4W+U1MjKwgELiPcDP5q0iRd7Xzk78I/FcQhmQ8N87IgP0hxOQuPDrg7hvHUI2Rg1uhU8w
+ fJgojvozz/R2uFNqEyyilKUb738RewKpVZRPx10xDKbQ3SzWJ1V/Jz+L5mMue6M+ql/LrrXuk
+ mSK/KfVEYBpyBUCscKyVp2xu8x0lIiajv3ulra4trRifGuKcrWUE3qdvjisbkpic9BRwVAEx/
+ DwX0ndTgk4OHxSy8BRyJ004AyIkSwC3a+hbwPDG2wc26C61ovXEDDUHDCh9jdseP2LvZYaoQy
+ OG80vup/s/dxunWoTJUUH7pTebXdzrMPM2AZ61d1at9oHrJhg59wHXpSJktyMUe9bTRf5c1oO
+ CeAs223bXZh+UCe6rHg7fB6qJyyfMezlwSqIzrFpK1Z4hFvoAHlANQTzl0dLgSKS+qvarYQQe
+ 5ywQHkswLG9Myp60W+oZghFSVEvHrV4wXQHx3ZMQy9gdeLkkntmLMrQXUukSlnNSIVhAnyr5q
+ QL3EfnByA1oJ7DAh3UgQPfOW9d6d8jr7nrL
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02-Jul-2021, at 21:55, skottkuk@wp.pl wrote:
->=20
-> Hello.
->=20
-> I got a strange result in the process of "merge" and/or "rebase".
->=20
-> I'm not a git professional, so maybe this is not a bug, but a feature.
-> But as for me, it would be logical to consider the construction inside =
-{}
-> as something whole, and not just put all the changes into one heap =
-with
-> notification what all OK, no conflicts.
->=20
-> All the details are inside the git-bugreport-2021-07-02-1737.txt.
-> I hope this log will be useful. Feel free to write me for extra =
-details. =20
->=20
-> Best regards,
-> Skott<git-bugreport-2021-07-02-1737.txt>
+Am 29.06.21 um 22:53 schrieb Eric Wong:
+> With many alternates, the duplicate check in alt_odb_usable()
+> wastes many cycles doing repeated fspathcmp() on every existing
+> alternate.  Use a khash to speed up lookups by odb->path.
+>
+> Since the kh_put_* API uses the supplied key without
+> duplicating it, we also take advantage of it to replace both
+> xstrdup() and strbuf_release() in link_alt_odb_entry() with
+> strbuf_detach() to avoid the allocation and copy.
+>
+> In a test repository with 50K alternates and each of those 50K
+> alternates having one alternate each (for a total of 100K total
+> alternates); this speeds up lookup of a non-existent blob from
+> over 16 minutes to roughly 2.7 seconds on my busy workstation.
 
-Let's look at the diffs (I have annotated this with arrows):
+Yay for hashmaps! :)
 
-$ # common ancestor, ie, the first commit
-$ initial=3D$(git merge-base master dev)
+> Note: all underlying git object directories were small and
+> unpacked with only loose objects and no packs.  Having to load
+> packs increases times significantly.
+>
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+>  object-file.c  | 33 ++++++++++++++++++++++-----------
+>  object-store.h | 17 +++++++++++++++++
+>  object.c       |  2 ++
+>  3 files changed, 41 insertions(+), 11 deletions(-)
+>
+> diff --git a/object-file.c b/object-file.c
+> index f233b440b2..304af3a172 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -517,9 +517,9 @@ const char *loose_object_path(struct repository *r, =
+struct strbuf *buf,
+>   */
+>  static int alt_odb_usable(struct raw_object_store *o,
+>  			  struct strbuf *path,
+> -			  const char *normalized_objdir)
+> +			  const char *normalized_objdir, khiter_t *pos)
+>  {
+> -	struct object_directory *odb;
+> +	int r;
+>
+>  	/* Detect cases where alternate disappeared */
+>  	if (!is_directory(path->buf)) {
+> @@ -533,14 +533,22 @@ static int alt_odb_usable(struct raw_object_store =
+*o,
+>  	 * Prevent the common mistake of listing the same
+>  	 * thing twice, or object directory itself.
+>  	 */
+> -	for (odb =3D o->odb; odb; odb =3D odb->next) {
+> -		if (!fspathcmp(path->buf, odb->path))
+> -			return 0;
+> +	if (!o->odb_by_path) {
+> +		khiter_t p;
+> +
+> +		o->odb_by_path =3D kh_init_odb_path_map();
+> +		assert(!o->odb->next);
+> +		p =3D kh_put_odb_path_map(o->odb_by_path, o->odb->path, &r);
 
-$ git diff $initial master
+So on the first run you not just create the hashmap, but you also
+pre-populate it with the main object directory.  Makes sense.  The
+hashmap wouldn't even be created in repositories without alternates.
 
-diff --git a/program.cs b/program.cs
-index 8bc1a4d..93f872f 100644
---- a/program.cs
-+++ b/program.cs
-@@ -1,4 +1,6 @@
- {
-  Console.Writeline("1");
-+ Console.Writeline("2");
-+ Console.Readline();
-  Console.Readline();     <--- X
- }
+> +		if (r < 0) die_errno(_("kh_put_odb_path_map"));
 
-$ git diff $initial dev
+Our other callers don't handle a negative return code because it would
+indicate an allocation failure, and in our version we use ALLOC_ARRAY,
+which dies on error.  So you don't need that check here, but we better
+clarify that in khash.h.
 
-diff --git a/program.cs b/program.cs
-index 8bc1a4d..eb91c97 100644
---- a/program.cs
-+++ b/program.cs
-@@ -1,4 +1,6 @@
- {
-  Console.Writeline("1");
-  Console.Readline();     <--- X
-+ Console.Readline();
-+ Console.Readline();
- }
+> +		assert(r =3D=3D 1); /* never used */
+> +		kh_value(o->odb_by_path, p) =3D o->odb;
+>  	}
+>  	if (!fspathcmp(path->buf, normalized_objdir))
+>  		return 0;
+> -
+> -	return 1;
+> +	*pos =3D kh_put_odb_path_map(o->odb_by_path, path->buf, &r);
+> +	if (r < 0) die_errno(_("kh_put_odb_path_map"));
 
-As you can tell, on the master branch, Git sees the changes as
-"lines were added above the line labeled X",
-and on the dev branch, Git sees the changes as
-"lines were added below the line labeled X".
+Dito.
 
-Thus when a 3-way merge is performed, it sees no conflicting changes.
-Adding lines above X does not conflict with adding lines below X.
+> +	/* r: 0 =3D exists, 1 =3D never used, 2 =3D deleted */
+> +	return r =3D=3D 0 ? 0 : 1;
 
-I do agree the result does look surprising at first. If in the dev
-branch, git had assumed the "Readline()s" to be added in between,
-rather than at the bottom, you would have ended up with a conflict,
-but that did not happen.
+The comment indicates that khash would be nicer to use if it had an
+enum for the kh_put return values.  Perhaps, but that should be done in
+another series.
 
----
-Atharva Raykar
-=E0=B2=85=E0=B2=A5=E0=B2=B0=E0=B3=8D=E0=B2=B5 =E0=B2=B0=E0=B2=BE=E0=B2=AF=E0=
-=B3=8D=E0=B2=95=E0=B2=B0=E0=B3=8D
-=E0=A4=85=E0=A4=A5=E0=A4=B0=E0=A5=8D=E0=A4=B5 =E0=A4=B0=E0=A4=BE=E0=A4=AF=E0=
-=A4=95=E0=A4=B0
+I like the solution in oidset.c to make this more readable, though: Call
+the return value "added" instead of "r" and then a "return !added;"
+makes sense without additional comments.
 
+>  }
+>
+>  /*
+> @@ -566,6 +574,7 @@ static int link_alt_odb_entry(struct repository *r, =
+const char *entry,
+>  {
+>  	struct object_directory *ent;
+>  	struct strbuf pathbuf =3D STRBUF_INIT;
+> +	khiter_t pos;
+>
+>  	if (!is_absolute_path(entry) && relative_base) {
+>  		strbuf_realpath(&pathbuf, relative_base, 1);
+> @@ -587,23 +596,25 @@ static int link_alt_odb_entry(struct repository *r=
+, const char *entry,
+>  	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] =3D=3D '/')
+>  		strbuf_setlen(&pathbuf, pathbuf.len - 1);
+>
+> -	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir)) {
+> +	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos)) {
+>  		strbuf_release(&pathbuf);
+>  		return -1;
+>  	}
+>
+>  	CALLOC_ARRAY(ent, 1);
+> -	ent->path =3D xstrdup(pathbuf.buf);
+> +	/* pathbuf.buf is already in r->objects->odb_by_path */
+
+Tricky stuff (to me), important comment.
+
+> +	ent->path =3D strbuf_detach(&pathbuf, NULL);
+>
+>  	/* add the alternate entry */
+>  	*r->objects->odb_tail =3D ent;
+>  	r->objects->odb_tail =3D &(ent->next);
+>  	ent->next =3D NULL;
+> +	assert(r->objects->odb_by_path);
+> +	kh_value(r->objects->odb_by_path, pos) =3D ent;
+>
+>  	/* recursively add alternates */
+> -	read_info_alternates(r, pathbuf.buf, depth + 1);
+> +	read_info_alternates(r, ent->path, depth + 1);
+>
+> -	strbuf_release(&pathbuf);
+>  	return 0;
+>  }
+>
+> diff --git a/object-store.h b/object-store.h
+> index ec32c23dcb..20c1cedb75 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -7,6 +7,8 @@
+>  #include "oid-array.h"
+>  #include "strbuf.h"
+>  #include "thread-utils.h"
+> +#include "khash.h"
+> +#include "dir.h"
+>
+>  struct object_directory {
+>  	struct object_directory *next;
+> @@ -30,6 +32,19 @@ struct object_directory {
+>  	char *path;
+>  };
+>
+> +static inline int odb_path_eq(const char *a, const char *b)
+> +{
+> +	return !fspathcmp(a, b);
+> +}
+
+This is not specific to the object store.  It could be called fspatheq
+and live in dir.h.  Or dir.c -- a surprising amount of code seems to
+necessary for that negation (https://godbolt.org/z/MY7Wda3a7).  Anyway,
+it's just an idea for another series.
+
+> +
+> +static inline int odb_path_hash(const char *str)
+> +{
+> +	return ignore_case ? strihash(str) : __ac_X31_hash_string(str);
+> +}
+
+The internal Attractive Chaos (__ac_*) macros should be left confined
+to khash.h, I think.  Its alias kh_str_hash_func would be better
+suited here.
+
+Do we want to use the K&R hash function here at all, though?  If we
+use FNV-1 when ignoring case, why not also use it (i.e. strhash) when
+respecting it?  At least that's done in builtin/sparse-checkout.c,
+dir.c and merge-recursive.c.  This is just handwaving and yammering
+about lack of symmetry, but I do wonder how your performance numbers
+look with strhash.  If it's fine then we could package this up as
+fspathhash..
+
+And I also wonder how it looks if you use strihash unconditionally.
+I guess case collisions are usually rare and branching based on a
+global variable may be more expensive than case folding..
+
+Anyway, just ideas; kh_str_hash_func would be OK as well.
+
+> +
+> +KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+> +	struct object_directory *, 1, odb_path_hash, odb_path_eq);
+> +
+>  void prepare_alt_odb(struct repository *r);
+>  char *compute_alternate_path(const char *path, struct strbuf *err);
+>  typedef int alt_odb_fn(struct object_directory *, void *);
+> @@ -116,6 +131,8 @@ struct raw_object_store {
+>  	 */
+>  	struct object_directory *odb;
+>  	struct object_directory **odb_tail;
+> +	kh_odb_path_map_t *odb_by_path;
+> +
+>  	int loaded_alternates;
+>
+>  	/*
+> diff --git a/object.c b/object.c
+> index 14188453c5..2b3c075a15 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -511,6 +511,8 @@ static void free_object_directories(struct raw_objec=
+t_store *o)
+>  		free_object_directory(o->odb);
+>  		o->odb =3D next;
+>  	}
+> +	kh_destroy_odb_path_map(o->odb_by_path);
+> +	o->odb_by_path =3D NULL;
+>  }
+>
+>  void raw_object_store_clear(struct raw_object_store *o)
+>
