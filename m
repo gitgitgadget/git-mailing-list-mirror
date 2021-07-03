@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7AB4C07E97
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1417CC07E97
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:15:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86C98613FE
-	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:14:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E954B610A6
+	for <git@archiver.kernel.org>; Sat,  3 Jul 2021 05:15:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhGCFQt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Jul 2021 01:16:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38016 "EHLO
+        id S229532AbhGCFRf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Jul 2021 01:17:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbhGCFQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jul 2021 01:16:49 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73632C061762
-        for <git@vger.kernel.org>; Fri,  2 Jul 2021 22:14:16 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id g3so12236336iok.12
-        for <git@vger.kernel.org>; Fri, 02 Jul 2021 22:14:16 -0700 (PDT)
+        with ESMTP id S229854AbhGCFRe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jul 2021 01:17:34 -0400
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3F7C061762
+        for <git@vger.kernel.org>; Fri,  2 Jul 2021 22:15:00 -0700 (PDT)
+Received: by mail-il1-x12c.google.com with SMTP id i13so11766656ilu.4
+        for <git@vger.kernel.org>; Fri, 02 Jul 2021 22:15:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=eqHcCYyb0krwkehfr+z4CTCS1/jQUPeriBMVHJ7mpSA=;
-        b=L6Y1gqL1MqZwriML0ESKwQHQPA0I9UZAd3y3bxEdBv2iF7SodHpYTMcAeWdk04WJFV
-         zXQstf/wtw0uKDNZm+hgRgotwTqJAx+Axh/F92qcocDUN42j/5xj6VL75ME6ntP2F0zr
-         KX0rJptxcrUlup3E1QhX392lgvXJjzmyEZc5XbWrPTU8WIYQRp2SMJFeTu8txEnSQZ0H
-         yA4Oy3pEWyI9+KMSqjTwgC367CzKNhQv5uI5oFRQ0KVHsLzdjFEFVqNxJsXoqMe33BkO
-         O+gF7hSzhopCEkqqsPGMz0ZXTEznF256YyGqBxMWofHHTGQr8cOncz6Y+YD38ZVi7J0m
-         zpQg==
+        bh=aFyJbHRr+GiNiDM7YdOylPrG0Losef49vfbDlmURzpc=;
+        b=o4+C90W2Y6VPdV6YYkzYA91jfy67eC2ww9m54R8c4bCWVxFJAKdXXqv4WcWS7p1UUn
+         YP9gSFaxB0JlB/GkSJiLUUblKiB47vqDWu6okYG7A6WPJRMnpfz+dm1uNU5SznNPPkX6
+         EvgoGjxtJveUImH50+xiu1o/7xGavULBZibMh96P1iME41eSqXxCTRqHvHNC+JS3+f54
+         r9i01rMd21JoOxlS5rbVzEM9MB7LA1Wo7azdg/EGwT3gVXyp6AMttPe6Zlvu3Nm6/7Zf
+         4zslCnje6i6yypj4GOMkdyHe0bFRo/Uj14NEvBPuotjv9CO87a3YYQh4mXvZE0ioMMF0
+         uIdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eqHcCYyb0krwkehfr+z4CTCS1/jQUPeriBMVHJ7mpSA=;
-        b=F4sQ4vNHWI9YzU7gWySQDZPe4nOnleB6eQT6c4/0DnMtacYw83Sa1z+rm0MpFk/CVr
-         WrlQ3w69uEUG73ULXgXQNpa4FFxHUOfY8nkIPzsU3fKaCw1BaDtXMARUQyO9dsGayHTx
-         mcxtwtP9AA4+YB4eKYyW2oU4hicAqppDPFEGYsTN6sexPkcQplOqoUdITwg8AI9zckVP
-         vO6CCIyDsIXYA6cQW4ggyPPzjxcPv9p5wpiv9MMt72Uti/fAGI++N+qqfJH33nlaMx+k
-         xAZCbAxpd/U18+77QbdL+opWJ5FPel+pqr0pZS34N0q3rSgDgg1Lse0ns8+e2P6C18uw
-         AqSQ==
-X-Gm-Message-State: AOAM532rMof6TyRjh88ktVkP+N8OABcqrzMxQPUOVq5rHXxcn9lUnJpZ
-        WOI4FJBIexXiZBNLJDQrU+e8Rbx8JD8yo/qrFTg=
-X-Google-Smtp-Source: ABdhPJzsMF8YzhYooNuN9v0UHy8S8RvDHN+qWxixGp1oOr8nm00Xmlyo1I7JiN42FcpnT50S9yImJ9vWPLPoLgTA6aU=
-X-Received: by 2002:a05:6638:3294:: with SMTP id f20mr2473328jav.130.1625289255284;
- Fri, 02 Jul 2021 22:14:15 -0700 (PDT)
+        bh=aFyJbHRr+GiNiDM7YdOylPrG0Losef49vfbDlmURzpc=;
+        b=r7gyV+fglrSpKmDOAdl4DQKk7Qgp7rVjOFQb6V8JXc6scx6mxdNXvmnECYrrvkrnBp
+         jtEz5HTlpXCOB+AxvBSKd+0W4sW+w0LkQT06FQ3eFPj/MC+2LXxP+UJO8RiCLWxXtDuU
+         IwS53kNp39V6APT3d7wUfOGwmdSIGBYTsSNx+vxrYsl7axuRbYRLSQfdWI5/ng1aUCIO
+         Ff52YI0BD+DOB1s4tmwrw7tX+oHs7z8JZAg2BQCRVRqC9qh780uJRr2oMUACFSh9XSfz
+         GLAWAc5opXIHD9pwWJPB2VPbmtM4YXYGZJ6gGZ5+yaC8vEvNr+dEMPQX0RvzxfaKLBnL
+         em7A==
+X-Gm-Message-State: AOAM531CV9/Suxp9C6b4RoeIzLANoEeUCCjEO4MxJuIZ9otaDD/ujp+1
+        oHMoxac7sJBNBoz/1Uz5cMGqK0EZtgU3YzEDee8=
+X-Google-Smtp-Source: ABdhPJxHc4B+h43YU3NDicUCGu7/kE3ud82zwjcpJ01fiNTiuB1CXU6MnOqPqAX0lFUfV9QJsU26+BsKWUe3rqEDvds=
+X-Received: by 2002:a05:6e02:bed:: with SMTP id d13mr2187220ilu.259.1625289300385;
+ Fri, 02 Jul 2021 22:15:00 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.989.git.1625155693.gitgitgadget@gmail.com>
- <ad71510feda0a100920a99de41db0ab137787796.1625155693.git.gitgitgadget@gmail.com>
- <87im1salrd.fsf@evledraar.gmail.com>
-In-Reply-To: <87im1salrd.fsf@evledraar.gmail.com>
+ <7d2314b43f21a470667971f1fdcb382f43bf51ed.1625155693.git.gitgitgadget@gmail.com>
+ <87fswwalmv.fsf@evledraar.gmail.com>
+In-Reply-To: <87fswwalmv.fsf@evledraar.gmail.com>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 3 Jul 2021 13:14:09 +0800
-Message-ID: <CAOLTT8QjGekriRWFp_HM0Cqiz4TYB_=cN7bBxhCSdZqzg4BG0w@mail.gmail.com>
-Subject: Re: [PATCH 02/15] [GSOC] ref-filter: add %(raw) atom
+Date:   Sat, 3 Jul 2021 13:14:54 +0800
+Message-ID: <CAOLTT8RK4y76XAzFf+X=Dh7ysO4a-2-F08hdaof8gYWL8Kuv3w@mail.gmail.com>
+Subject: Re: [PATCH 03/15] [GSOC] ref-filter: --format=%(raw) re-support --perl
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -74,57 +74,51 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2021=E5=
-=B9=B47=E6=9C=882=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=889:27=E5=86=
+=B9=B47=E6=9C=882=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8B=E5=8D=889:30=E5=86=
 =99=E9=81=93=EF=BC=9A
 >
 >
 > On Thu, Jul 01 2021, ZheNing Hu via GitGitGadget wrote:
 >
-> > @@ -1362,17 +1398,29 @@ static void grab_sub_body_contents(struct atom_=
-value *val, int deref, struct exp
-> >       const char *subpos =3D NULL, *bodypos =3D NULL, *sigpos =3D NULL;
-> >       size_t sublen =3D 0, bodylen =3D 0, nonsiglen =3D 0, siglen =3D 0=
-;
-> >       void *buf =3D data->content;
-> > +     unsigned long buf_size =3D data->size;
->
-> Let's declare this.
->
-> >       for (i =3D 0; i < used_atom_cnt; i++) {
-> >               struct used_atom *atom =3D &used_atom[i];
-> >               const char *name =3D atom->name;
-> >               struct atom_value *v =3D &val[i];
-> > +             enum atom_type atom_type =3D atom->atom_type;
+> > From: ZheNing Hu <adlternative@gmail.com>
 > >
-> >               if (!!deref !=3D (*name =3D=3D '*'))
-> >                       continue;
-> >               if (deref)
-> >                       name++;
+> > Because the perl language can handle binary data correctly,
+> > add the function perl_quote_buf_with_len(), which can specify
+> > the length of the data and prevent the data from being truncated
+> > at '\0' to help `--format=3D"%(raw)"` re-support `--perl`.
 > >
-> > +             if (atom_type =3D=3D ATOM_RAW) {
+> > Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 >
-> Here, where it's going to be used.
+> Thanks!
 >
-
-Yeah, buf_size is only used here.
-
-> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> > index 9e0214076b4..18554f62d94 100755
-> > --- a/t/t6300-for-each-ref.sh
-> > +++ b/t/t6300-for-each-ref.sh
-> > @@ -130,6 +130,8 @@ test_atom head parent:short=3D10 ''
-> >  test_atom head numparent 0
-> >  test_atom head object ''
-> >  test_atom head type ''
-> > +test_atom head raw "$(git cat-file commit refs/heads/main)
-> > +"
+> > -test_expect_success '%(raw) with --perl must fail' '
+> > -     test_must_fail git for-each-ref --format=3D"%(raw)" --perl
+> > +test_expect_success '%(raw) with --perl' '
+> > +     git for-each-ref --format=3D"\$name=3D %(raw);
+> > +print \"\$name\"" refs/myblobs/blob1 --perl | perl > actual &&
+> > +     cmp blob1 actual &&
+> > +     git for-each-ref --format=3D"\$name=3D %(raw);
+> > +print \"\$name\"" refs/myblobs/blob3 --perl | perl > actual &&
+> > +     cmp blob3 actual &&
+> > +     git for-each-ref --format=3D"\$name=3D %(raw);
+> > +print \"\$name\"" refs/myblobs/blob8 --perl | perl > actual &&
+> > +     cmp blob8 actual &&
+> > +     git for-each-ref --format=3D"\$name=3D %(raw);
+> > +print \"\$name\"" refs/myblobs/first --perl | perl > actual &&
+> > +     cmp one actual &&
+> > +     git cat-file tree refs/mytrees/first > expected &&
+> > +     git for-each-ref --format=3D"\$name=3D %(raw);
+> > +print \"\$name\"" refs/mytrees/first --perl | perl > actual &&
+> > +     cmp expected actual
+> >  '
+> >
+> >  test_expect_success '%(raw) with --shell must fail' '
 >
-> Extra stay line here, is the \n intentional?
+>
+> Nit: Formatting can be "| perl >actual", not "| perl > actual", like the
+> usual style...
 
-I think so. `\n` is necessary.
-In cmd_for_each_ref(), there have a  extern "putchar('\n');"
-In cat_one_file(), write_or_die() output origin data of the object.
-
-Thanks.
+Yeah, thanks.
 --
 ZheNing Hu
