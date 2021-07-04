@@ -2,161 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C5B0C07E95
-	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 15:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 536D8C07E9B
+	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 17:23:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43AC1613D1
-	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 15:39:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3801D613B1
+	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 17:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbhGDPly (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jul 2021 11:41:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32778 "EHLO
+        id S229725AbhGDRZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jul 2021 13:25:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhGDPly (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jul 2021 11:41:54 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28A9C061574
-        for <git@vger.kernel.org>; Sun,  4 Jul 2021 08:39:17 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id he13so6373792ejc.11
-        for <git@vger.kernel.org>; Sun, 04 Jul 2021 08:39:17 -0700 (PDT)
+        with ESMTP id S229547AbhGDRZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jul 2021 13:25:55 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B512C061574
+        for <git@vger.kernel.org>; Sun,  4 Jul 2021 10:23:18 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id f12-20020a056830204cb029048bcf4c6bd9so3752486otp.8
+        for <git@vger.kernel.org>; Sun, 04 Jul 2021 10:23:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=h3p1wvspqzEEtHU6j+1MiPfhGz9iO2FvEbjGJUTuOqM=;
-        b=nuNO7nZYjxxJIF7cnQXJE4FfbX2qZGNeKItBQodbjLz0fSuim4VqGLOHZCEH2egSTy
-         hz6z2IIuehevo+0G1XFunFxv+zGT36+HFqxCjUbW+8pE+rUSpBWi/c8MqBdfWPIxlcV6
-         GR7Q++Tc+wxW86ZWfPTxEH3vV2ynl3dHnLAfK80IjudUroLErqDGDBtmBHcINTTKmgcc
-         gwTos1UDXv+9cdmcM45/OZswwlrRIESa3lZpORu14QlUAsVA3Fnsk89n2wmoJ6u5LwAg
-         b3DYewebZqBOrM0Mp2whuBC7/mDlhDe6PMH7cD2N4UsfVb8cG5QyMPSgMPYztqAmwCuP
-         gLKg==
+        bh=JK9V7Y4+uOC0ea1jMz0CtVrkAbn0yhHWvyaFqf4xKEQ=;
+        b=vUdttkDFLXKBV71O+39LDCIiGkDzmjQOfdMnxUUapgUUwovLulV+OIXSRgM0Y7+ZTw
+         Wd56wY33PN5hLVxQCedyKs6ELfP8kyqctmM91k13GPatiFhsw+AC4DJCollOP+kDcHiX
+         NTh1hE2rurQMkTMpX+uwg+UQWLbxfPl0t+7FskaN+xcOp3VQCSp0FiKrRN2cHFqdKlgv
+         4HoBlPgn/yRnYRGSvc9rbJL60QemSJ651fVDOXrGwFp2NdRVMojIOXqOIQ6gYJy6uhpG
+         Pgds0gS7puGIP/dBMm42g6A7LCSeu3kXAl+TsvhPTWLj2GZdLGirvj4bcGUitFi5Ox5j
+         zPHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=h3p1wvspqzEEtHU6j+1MiPfhGz9iO2FvEbjGJUTuOqM=;
-        b=hCb4+WSKtSuwQoN7WW4pHBsJWkzXdPCb7jc9Zvpv7wZQnp+HpT/FA+oUeAF0a+sdm2
-         x/Q6rsAcDeKiEkmBN5Gic54UHLl4AxwwKbXd06SeWScDB1N+CtJD7IejMeehXifkr67G
-         LnFOdn9UHv1bKnfUtYcSrYRErZ0EwGSe2u2by/sndOLzqXsNQ/LbJTXwSbY9HxdTY9zW
-         DY9r88d/z+eV7uFTGGNL+9Calk+t6pKzy3d7AuDwSv7udq+5aaWrzNRNgfD7ZmrBZkIs
-         /fqcJCr2Edz+c6sR6a77CBE0NDo7B1oTL/gDH3HTqr33oV8AfwN1ZRPBMnYlgoKhDnFs
-         XiXw==
-X-Gm-Message-State: AOAM530XgTEBYgRYGOirrrItTiXRaP0YvSOqxXtdFn3rVmvD/dHEzhr7
-        0UZimkKAnzS37wgO+YY3M43pi8Npg9lbjw==
-X-Google-Smtp-Source: ABdhPJwLPOead5/BexPoIzAMJ9C+Co74ZRTrvNABq+NqHhjR26haiKu7EAKSfFQxv+Jr7734yMV/qA==
-X-Received: by 2002:a17:907:3f08:: with SMTP id hq8mr9225384ejc.150.1625413155264;
-        Sun, 04 Jul 2021 08:39:15 -0700 (PDT)
-Received: from localhost.localdomain ([212.102.57.156])
-        by smtp.gmail.com with ESMTPSA id j5sm3301274ejn.19.2021.07.04.08.39.14
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=JK9V7Y4+uOC0ea1jMz0CtVrkAbn0yhHWvyaFqf4xKEQ=;
+        b=uU3/p2/OW6BECO+tlg1zjZj3HDFcQ/FPVNuvHGFsvX4uYmr8mg558X/Zo9N+yBoEg5
+         Kn5qVWI/8d+WaVKvINsOBim+CxPbUTFpzI0m055CV8wZhFUmNVPZDwHAmz/SAV7pPTGD
+         g6uKwznj+/0t9rVj0x5hQe3/c4G3k9IDmJgowZEUlkHm/nW82J6fUdEyEj+Gg+NnUQIM
+         /G+F7i59T27xKANpXKzFJIZozFASaCv4N6u39FQkpgzCtasktycB1R2pynvuTjU7Wm1X
+         vct8rtVEhi9dLm1NTmxQFtV38XadxJ4derbQf+Hg1FEQMOURdg6HADKRnZEggk3WRPhm
+         Womg==
+X-Gm-Message-State: AOAM530fpJPH+4fTpynFggwU0YwVhCeNKmsWe2+yDmvQ4Xx0L+kCyOhb
+        wK1RfZ4K+8PW1vYNcRK7U6/1EjSinon1SA==
+X-Google-Smtp-Source: ABdhPJxMNgsHWKFyZcFuJg34pxf9vgm6A30PP6XQeLlxAUKlxPGdFFvthJTM6iLtbDfMjR/XtjyIfA==
+X-Received: by 2002:a05:6830:314b:: with SMTP id c11mr7758532ots.358.1625419398024;
+        Sun, 04 Jul 2021 10:23:18 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id l10sm2043005oti.9.2021.07.04.10.23.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Jul 2021 08:39:14 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Christian Couder <christian.couder@gmail.com>,
+        Sun, 04 Jul 2021 10:23:17 -0700 (PDT)
+Date:   Sun, 04 Jul 2021 12:23:06 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Theodore Ts'o <tytso@mit.edu>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH resend] help: convert git_cmd to page in one place
-Date:   Sun,  4 Jul 2021 17:39:12 +0200
-Message-Id: <20210704153912.2742106-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210626163219.4137317-1-rybak.a.v@gmail.com>
-References: <20210626163219.4137317-1-rybak.a.v@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     Atharva Raykar <raykar.ath@gmail.com>,
+        Git List <git@vger.kernel.org>
+Message-ID: <60e1ee7a3cfbc_6d11d20811@natae.notmuch>
+In-Reply-To: <YOEEjwbMPRmWOmrM@mit.edu>
+References: <60df97ed24687_34a92088a@natae.notmuch>
+ <C19D6C61-D62A-4344-BA1C-A532EB4FEFFE@gmail.com>
+ <60e0a9707e09a_2f7208f2@natae.notmuch>
+ <YOEEjwbMPRmWOmrM@mit.edu>
+Subject: Re: The git spring cleanup challenge completion
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Depending on the chosen format of help pages, git-help uses function
-show_man_page, show_info_page, or show_html_page.  The first thing all
-three functions do is to convert given `git_cmd` to a `page` using
-function cmd_to_page.
+Theodore Ts'o wrote:
+> On Sat, Jul 03, 2021 at 01:16:16PM -0500, Felipe Contreras wrote:
+> > Atharva Raykar wrote:
+> > > I can imagine aliases like 'co' only adding to the overload of
+> > > information if an instructor is not careful. FWIW, I have never seen a new
+> > > user complain about the length of the typing, it's usually with the plethora
+> > > of unintelligible (to them) options that each command has when they open the
+> > > Git man pages, which adds more fear.
+> > 
+> > This is one of the reasons I suggested to split git into two binaries:
+> > git for normal users, and git-tool for all the plumbing not many humans
+> > use.
+> 
+> It might be that the answer for the problem Atharva has described
+> would be for someone so include to create a new front-end to git ---
+> call it "sg", for simplified git", or "gt" for git tool (different
+> from the "git-tool suggested by Felipe), etc.
+> 
+> It could be an extremely opinionated subset of git's functionality;
+> for example, it could be one where the index is completely hidden from
+> the user, so you never need to type "sg add" when modifying a file,
+> but only when adding a new file to be under source code management
+> (e.g., that "sg commit" would effectively imply "git add -u ; git
+> commit"), and so on.  Since the index doesn't conceptually exist in
+> the sg interface, then "sg reset" would only have the meaning of "git
+> reset --hard", etc.
+> 
+> By definition this simplified front-end to git would have a subset of
+> the functionality of "full git", but that's OK.  The whole goal would
+> be to make something super newbie-friendly --- the equivalent of a
+> "Mac OS-like" interface, that perhaps doesn't have the power of
+> someone who opens up a shell and uses tools like awk or perl, but is
+> good enough "for the rest of the human race".
+> 
+> Note that this doesn't have to be an official "git" ccommunity
+> initiative; anyone could try to create such one of these things (and I
+> believe a few things exist already).
+> 
+> Making it a non-goal that this "user friendly" front end doesn't have
+> to have the full functionality of git, and its main goal is to allow
+> the use of different user interface design choices made by git, might
+> be much simpler than trying to change git, which would require having
+> the argument over which functionality is used by "normal users", and
+> which features should be exiled to "git-pull" as being "fringe"
+> features.
 
-Move the common part of these three functions to function cmd_help to
-avoid code duplication.
+I think there's some value in that idea but that doesn't solve the same
+problem my suggestion solves. Basically there's too many commands in
+`man git`. Splitting the git binary would allow us to only put the
+important commands in `man git`.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
-Reviewed-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+I think having too many commands overwhelms many newcomers, because they
+don't know which it's important for them to learn and which are
+basically noise.
 
-Resending to make sure that this patch isn't forgotten.
-Originally sent as https://lore.kernel.org/git/20210626163219.4137317-1-rybak.a.v@gmail.com/
-
- builtin/help.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/help.c b/builtin/help.c
-index bb339f0fc8..b7eec06c3d 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -436,10 +436,9 @@ static void exec_viewer(const char *name, const char *page)
- 		warning(_("'%s': unknown man viewer."), name);
- }
- 
--static void show_man_page(const char *git_cmd)
-+static void show_man_page(const char *page)
- {
- 	struct man_viewer_list *viewer;
--	const char *page = cmd_to_page(git_cmd);
- 	const char *fallback = getenv("GIT_MAN_VIEWER");
- 
- 	setup_man_path();
-@@ -453,9 +452,8 @@ static void show_man_page(const char *git_cmd)
- 	die(_("no man viewer handled the request"));
- }
- 
--static void show_info_page(const char *git_cmd)
-+static void show_info_page(const char *page)
- {
--	const char *page = cmd_to_page(git_cmd);
- 	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
- 	execlp("info", "info", "gitman", page, (char *)NULL);
- 	die(_("no info viewer handled the request"));
-@@ -486,9 +484,8 @@ static void open_html(const char *path)
- 	execl_git_cmd("web--browse", "-c", "help.browser", path, (char *)NULL);
- }
- 
--static void show_html_page(const char *git_cmd)
-+static void show_html_page(const char *page)
- {
--	const char *page = cmd_to_page(git_cmd);
- 	struct strbuf page_path; /* it leaks but we exec bellow */
- 
- 	get_html_page_path(&page_path, page);
-@@ -548,6 +545,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- {
- 	int nongit;
- 	enum help_format parsed_help_format;
-+	const char *page;
- 
- 	argc = parse_options(argc, argv, prefix, builtin_help_options,
- 			builtin_help_usage, 0);
-@@ -606,16 +604,17 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 
- 	argv[0] = check_git_cmd(argv[0]);
- 
-+	page = cmd_to_page(argv[0]);
- 	switch (help_format) {
- 	case HELP_FORMAT_NONE:
- 	case HELP_FORMAT_MAN:
--		show_man_page(argv[0]);
-+		show_man_page(page);
- 		break;
- 	case HELP_FORMAT_INFO:
--		show_info_page(argv[0]);
-+		show_info_page(page);
- 		break;
- 	case HELP_FORMAT_WEB:
--		show_html_page(argv[0]);
-+		show_html_page(page);
- 		break;
- 	}
- 
 -- 
-2.32.0
-
+Felipe Contreras
