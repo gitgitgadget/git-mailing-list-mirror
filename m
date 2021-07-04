@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C563CC07E96
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFB6BC07E9A
 	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 22:55:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD2626145D
+	by mail.kernel.org (Postfix) with ESMTP id C2DAE613F9
 	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 22:55:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbhGDW55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jul 2021 18:57:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbhGDW54 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S229760AbhGDW54 (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 4 Jul 2021 18:57:56 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F70C061574
-        for <git@vger.kernel.org>; Sun,  4 Jul 2021 15:55:18 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id u5-20020a7bc0450000b02901480e40338bso8912752wmc.1
-        for <git@vger.kernel.org>; Sun, 04 Jul 2021 15:55:18 -0700 (PDT)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42060 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229733AbhGDW5z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jul 2021 18:57:55 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C79BC061762
+        for <git@vger.kernel.org>; Sun,  4 Jul 2021 15:55:19 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a8so8041745wrp.5
+        for <git@vger.kernel.org>; Sun, 04 Jul 2021 15:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1u8MGfSxgCE03cekx/+oC9KGRE09BcEKKiz0MnCYhaQ=;
-        b=OsLJOGqKdNcYpnS+lj4aBgHRAdgXxyY8yJ9OuSB/0ohyFHYaCGfSTX6oI04arFaHL3
-         z9xiyWZOKjyB24ZF0YWiw4DUaFVHXoIXYXoIwiK/uA6luy51SzwxPeOhHyZJCCIDPhSI
-         jVzZl8/kXTkl7XDkSgvYO6M57fUU6PyufX6Z0qPHYWyBNDkLY1oljKI7dovlab3vw3cS
-         lOMu9PygGEubEyeKwOY3+WClv7cIDsXzkuoIFfaFLpR4zfuJFx5w0AaHcPywVAGy2bfq
-         MnEQ0bByDQJnO4+nEYWxTTMZ1bSD/tUXahFx/g1IxzWR7VTDa3ZiWOFrpo/kznxyC3/z
-         bsIQ==
+        bh=OWdmvoLFvRKaZ00xRXQUel4GoLKe8gPH+g71h/kYGls=;
+        b=Gxm9As2Xt2y+NDVANJlw9HhYSBcmdG8nBlmL87wDcYFYho+sNMcagJB61XmsYA3eds
+         DWSGUuCMfAsc73ZbLxRMdTw/H41phytJXysJLawLEiZd9O2Ktk5iw/uypuFzasO78cKs
+         gnKstph39T+MM104dv/INAU54kEigFV+MmfQu8l44572HGxg9hvYP3gtS1be2t4qH5di
+         8CsEtojY7yJAebBp19pPxgiJXmb8CnrVMVLb4HgauK2PEd4ihDcw64/7o6vYUaqM49fQ
+         a/70MhMciXoMqwREBiDXCqW/D2nOUkfwZ3rT+QWLLIFSJQ5nBMBXlakK8ivI1KOkAkL1
+         hRdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1u8MGfSxgCE03cekx/+oC9KGRE09BcEKKiz0MnCYhaQ=;
-        b=i5DbBXNViej/oPzIw9iixMpyU7w/MFPv8hPTUgo18GRjRZKa0DCdfqzt9khRB9pRbI
-         Zt4zP2950wzZCy8UWZbDXBAoe9f/6EepYvhflFRh9cDZ2jjA36RZMVSBGEd0hpxfdup9
-         3uFQmaO29BLLD1paCmLc7mnO+GQg/G0fUpVbKRvW4tO0DAkRh7IWQTj9LvwOC9urroEc
-         byxhB7tC7TawOaS36uzyE7rNpWqbtltaq+mmRHsp7erTYIOKxpiCL0xZ8I5Kue2Ip0Is
-         H8RjZ49FolDAK+WqHXXbB1JXPk+FY61koTmoAZuB82lNaYvHfZfh0H/NUoCvn1JmnzN7
-         /0WA==
-X-Gm-Message-State: AOAM531mYKvLOu9+H0IEp9/j7Ju3TmEGeKloxaF51zJfvH5wt/enpAN2
-        HjgX3IkGZ7Wg0Vri9/QRcjVP6wDjsOE=
-X-Google-Smtp-Source: ABdhPJxSaFDX9ayJtdDiVkhJ0ZyoD05tX22Q1ykHGkTwcv5VC9Z/zVCL5geoXV/kGDrwimZ8ROsvLw==
-X-Received: by 2002:a05:600c:3782:: with SMTP id o2mr11442062wmr.152.1625439317568;
-        Sun, 04 Jul 2021 15:55:17 -0700 (PDT)
+        bh=OWdmvoLFvRKaZ00xRXQUel4GoLKe8gPH+g71h/kYGls=;
+        b=SdSyGSNzAXveUqRnJr8YoMLoDj+2kHk79+cyz8IF17YQ7qACtzeRpN5UxrUFQeJMZN
+         94nkXmaucw5tRLpdFQcG7zcqWyXZdsm8EC5/phIzNTJAcPkq0nxx6YO8501aAoW56+DN
+         v7QZfu1KJEjXXu7VF8lpgRy3V9c5qnONMKDIcccl2J5qQ5CC2Zy8Mp1VWw6NZ7duf3+q
+         ue7SDEk7MpkC27r5Myn0Hc9ICUUvWoibfkFw5/Jc8nXjcXw1PpO+Lfw8ESHGa+YhERuX
+         zLNeiZod+6/39zUDNuLsVYcpdIHl0CX2nEY9cgTAQxSxpscs0bTRHvbCoVpl8AWrbXyf
+         q70w==
+X-Gm-Message-State: AOAM533/LE6bCARuiXWmq2UumwPM3cD0nTkH1d1A08G78wyaZoiWXEy4
+        anx9TKPv0s1bz1qqx5L7KGKQe6eQfDY=
+X-Google-Smtp-Source: ABdhPJyuI5NAMHgIl2S+jNqEGle+I+OB0R6QwNn+VLk9ldMfepePNtUIUR8KtSQwbUVO+imuENnLSg==
+X-Received: by 2002:a5d:448c:: with SMTP id j12mr12729517wrq.105.1625439318276;
+        Sun, 04 Jul 2021 15:55:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c8sm10713764wri.91.2021.07.04.15.55.17
+        by smtp.gmail.com with ESMTPSA id r3sm8223086wrz.89.2021.07.04.15.55.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 04 Jul 2021 15:55:17 -0700 (PDT)
-Message-Id: <c256bbf4b1ce5f8fc13ca3aae47618b87985a906.1625439315.git.gitgitgadget@gmail.com>
+Message-Id: <59dc44428fbc168a5edbb6e6679c9b8aff8d74c1.1625439315.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.878.v3.git.1625439315.gitgitgadget@gmail.com>
 References: <pull.878.v2.git.1625347592.gitgitgadget@gmail.com>
         <pull.878.v3.git.1625439315.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 04 Jul 2021 22:55:10 +0000
-Subject: [PATCH v3 3/7] ci: upgrade to using actions/{up,down}load-artifacts
- v2
+Date:   Sun, 04 Jul 2021 22:55:11 +0000
+Subject: [PATCH v3 4/7] ci(windows): transfer also the Git-tracked files to
+ the test jobs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,90 +79,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The GitHub Actions to upload/download workflow artifacts saw a major
-upgrade since Git's GitHub workflow was established. Let's use it.
+Git's test suite is excruciatingly slow on Windows, mainly due to the
+fact that it executes a lot of shell script code, and that's simply not
+native to Windows.
+
+To help with that, we established the pattern where the artifacts are
+first built in one job, and then multiple test jobs run in parallel
+using the artifacts built in the first job.
+
+We take pains in transferring only the build outputs, and letting
+`actions/checkout` fill in the rest of the files.
+
+One major downside of that strategy is that the test jobs might fail to
+check out the intended revision (e.g. because the branch has been
+updated while the build was running, as is frequently the case with the
+`seen` branch).
+
+Let's transfer also the files tracked by Git, and skip the checkout step
+in the test jobs.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/main.yml | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ .github/workflows/main.yml | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index d430c4e0d20..a399114c0f8 100644
+index a399114c0f8..0f7516c9ef3 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -90,7 +90,7 @@ jobs:
+@@ -89,7 +89,9 @@ jobs:
+         HOME: ${{runner.workspace}}
          NO_PERL: 1
        run: ci/make-test-artifacts.sh artifacts
-     - name: upload build artifacts
--      uses: actions/upload-artifact@v1
-+      uses: actions/upload-artifact@v2
+-    - name: upload build artifacts
++    - name: zip up tracked files
++      run: git archive -o artifacts/tracked.tar.gz HEAD
++    - name: upload tracked files and build artifacts
+       uses: actions/upload-artifact@v2
        with:
          name: windows-artifacts
-         path: artifacts
-@@ -104,7 +104,7 @@ jobs:
+@@ -102,15 +104,14 @@ jobs:
+       matrix:
+         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
      steps:
-     - uses: actions/checkout@v1
-     - name: download build artifacts
--      uses: actions/download-artifact@v1
-+      uses: actions/download-artifact@v2
+-    - uses: actions/checkout@v1
+-    - name: download build artifacts
++    - name: download tracked files and build artifacts
+       uses: actions/download-artifact@v2
        with:
          name: windows-artifacts
          path: ${{github.workspace}}
-@@ -121,7 +121,7 @@ jobs:
-       run: ci/print-test-failures.sh
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
--      uses: actions/upload-artifact@v1
-+      uses: actions/upload-artifact@v2
-       with:
-         name: failed-tests-windows
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
-@@ -170,7 +170,7 @@ jobs:
+-    - name: extract build artifacts
++    - name: extract tracked files and build artifacts
+       shell: bash
+-      run: tar xf artifacts.tar.gz
++      run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: test
+       shell: bash
+@@ -169,7 +170,9 @@ jobs:
+       run: |
          mkdir -p artifacts &&
          eval "$(make -n artifacts-tar INCLUDE_DLLS_IN_ARTIFACTS=YesPlease ARTIFACTS_DIRECTORY=artifacts 2>&1 | grep ^tar)"
-     - name: upload build artifacts
--      uses: actions/upload-artifact@v1
-+      uses: actions/upload-artifact@v2
+-    - name: upload build artifacts
++    - name: zip up tracked files
++      run: git archive -o artifacts/tracked.tar.gz HEAD
++    - name: upload tracked files and build artifacts
+       uses: actions/upload-artifact@v2
        with:
          name: vs-artifacts
-         path: artifacts
-@@ -185,7 +185,7 @@ jobs:
-     - uses: actions/checkout@v1
+@@ -182,16 +185,15 @@ jobs:
+       matrix:
+         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+     steps:
+-    - uses: actions/checkout@v1
      - uses: git-for-windows/setup-git-for-windows-sdk@v1
-     - name: download build artifacts
--      uses: actions/download-artifact@v1
-+      uses: actions/download-artifact@v2
+-    - name: download build artifacts
++    - name: download tracked files and build artifacts
+       uses: actions/download-artifact@v2
        with:
          name: vs-artifacts
          path: ${{github.workspace}}
-@@ -204,7 +204,7 @@ jobs:
-       run: ci/print-test-failures.sh
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
--      uses: actions/upload-artifact@v1
-+      uses: actions/upload-artifact@v2
-       with:
-         name: failed-tests-windows
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
-@@ -242,7 +242,7 @@ jobs:
-       if: failure()
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
--      uses: actions/upload-artifact@v1
-+      uses: actions/upload-artifact@v2
-       with:
-         name: failed-tests-${{matrix.vector.jobname}}
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
-@@ -269,7 +269,7 @@ jobs:
-       if: failure()
-     - name: Upload failed tests' directories
-       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
--      uses: actions/upload-artifact@v1
-+      uses: actions/upload-artifact@v2
-       with:
-         name: failed-tests-${{matrix.vector.jobname}}
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
+-    - name: extract build artifacts
++    - name: extract tracked files and build artifacts
+       shell: bash
+-      run: tar xf artifacts.tar.gz
++      run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+     - name: test
+       shell: bash
+       env:
 -- 
 gitgitgadget
 
