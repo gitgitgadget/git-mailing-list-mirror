@@ -2,101 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC6AC07E95
-	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 14:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C5B0C07E95
+	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 15:39:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB97A613DD
-	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 14:42:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43AC1613D1
+	for <git@archiver.kernel.org>; Sun,  4 Jul 2021 15:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbhGDOpL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Jul 2021 10:45:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48816 "EHLO
+        id S229570AbhGDPly (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Jul 2021 11:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhGDOpL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jul 2021 10:45:11 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB16AC061574
-        for <git@vger.kernel.org>; Sun,  4 Jul 2021 07:42:34 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id a11so14854959ilf.2
-        for <git@vger.kernel.org>; Sun, 04 Jul 2021 07:42:34 -0700 (PDT)
+        with ESMTP id S229537AbhGDPly (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jul 2021 11:41:54 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28A9C061574
+        for <git@vger.kernel.org>; Sun,  4 Jul 2021 08:39:17 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id he13so6373792ejc.11
+        for <git@vger.kernel.org>; Sun, 04 Jul 2021 08:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=o0f7A/bOMmDflzG2XHlcFc5Z8kI8JzY4GkNUnjIBxNo=;
-        b=YExWRXFEUPdQOVzQtRLCa1V9Y+QWWWuSy8yBboOWXt6xsa10k+jSSKK/pNXe9RvoUZ
-         vdKKEzQDrE+uJ+aR6gnG5FQJMVCIdxH+xIR/+MI8NCktFGfGvjTaw1deA+2NbpipjpNR
-         b1pcHE81bQw1w6m/kM/LTfJwGl/6pD0hmV0Hh+s9SnC9jz0SI7SejsydSs0HPy+Jt9+X
-         GuGOWaEeLBkONBY6YmKK11Pi3x5hsPOtqqxen+jZJYX4y210F4JVrBmcvfRPaIgwTG/I
-         TrR0VGPIp0URKX97RK6g/kWerCfyKbAKwRdAeyEcu40HoawMm0qSaTrPrsF9l5ne2A7j
-         1ipQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=h3p1wvspqzEEtHU6j+1MiPfhGz9iO2FvEbjGJUTuOqM=;
+        b=nuNO7nZYjxxJIF7cnQXJE4FfbX2qZGNeKItBQodbjLz0fSuim4VqGLOHZCEH2egSTy
+         hz6z2IIuehevo+0G1XFunFxv+zGT36+HFqxCjUbW+8pE+rUSpBWi/c8MqBdfWPIxlcV6
+         GR7Q++Tc+wxW86ZWfPTxEH3vV2ynl3dHnLAfK80IjudUroLErqDGDBtmBHcINTTKmgcc
+         gwTos1UDXv+9cdmcM45/OZswwlrRIESa3lZpORu14QlUAsVA3Fnsk89n2wmoJ6u5LwAg
+         b3DYewebZqBOrM0Mp2whuBC7/mDlhDe6PMH7cD2N4UsfVb8cG5QyMPSgMPYztqAmwCuP
+         gLKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=o0f7A/bOMmDflzG2XHlcFc5Z8kI8JzY4GkNUnjIBxNo=;
-        b=sON9WCqyin0NCXBrbQumYzRGvoLt7Ktm90X62d3+T3uVeOWQn6gD8lPmbPomXnhUDf
-         ncHByqBr+M93liUEGizNNkhUhRsNKZZFcICLqd0pbAVCqn/Iuvf3mj/mHAyczE9RAjq8
-         dzB5SGZdAULo8FnNI49eZcnnc5QS4/Fjf7MPJNbsFwYvqM7XB/cESZNAN1Fs5iweWKKU
-         TiN10/wMHfEqbEA+Vg9Clil2NMl+91WsWmMofQAOwXn7pLMpFaXoV1oV7xt4kPCG+DJE
-         5kiYc4sFfGy6BeWRPaAe4ZOWl/IOF6nyav2xsL9zcS++cKi//Ss73MGJQE1V5ki9VNe/
-         CBuw==
-X-Gm-Message-State: AOAM531P78QhVrmpFr1YvyoNPzXIWqtnHKtxajB+3e51lC5z3RzIiPmr
-        Ul+7cnNiCYO9dsQl28OXGbBQjpSIMslLUcIACannFwrKQRuhd1t3
-X-Google-Smtp-Source: ABdhPJyBWL7tPOIGEyy0ONTA1j0wOUvCdnQXUjtSXajaE0k047D2T2E3Jx+r5ORH57hIx6UDNDxtGrAHfls+NkoZrYk=
-X-Received: by 2002:a05:6e02:bed:: with SMTP id d13mr6695731ilu.259.1625409754228;
- Sun, 04 Jul 2021 07:42:34 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=h3p1wvspqzEEtHU6j+1MiPfhGz9iO2FvEbjGJUTuOqM=;
+        b=hCb4+WSKtSuwQoN7WW4pHBsJWkzXdPCb7jc9Zvpv7wZQnp+HpT/FA+oUeAF0a+sdm2
+         x/Q6rsAcDeKiEkmBN5Gic54UHLl4AxwwKbXd06SeWScDB1N+CtJD7IejMeehXifkr67G
+         LnFOdn9UHv1bKnfUtYcSrYRErZ0EwGSe2u2by/sndOLzqXsNQ/LbJTXwSbY9HxdTY9zW
+         DY9r88d/z+eV7uFTGGNL+9Calk+t6pKzy3d7AuDwSv7udq+5aaWrzNRNgfD7ZmrBZkIs
+         /fqcJCr2Edz+c6sR6a77CBE0NDo7B1oTL/gDH3HTqr33oV8AfwN1ZRPBMnYlgoKhDnFs
+         XiXw==
+X-Gm-Message-State: AOAM530XgTEBYgRYGOirrrItTiXRaP0YvSOqxXtdFn3rVmvD/dHEzhr7
+        0UZimkKAnzS37wgO+YY3M43pi8Npg9lbjw==
+X-Google-Smtp-Source: ABdhPJwLPOead5/BexPoIzAMJ9C+Co74ZRTrvNABq+NqHhjR26haiKu7EAKSfFQxv+Jr7734yMV/qA==
+X-Received: by 2002:a17:907:3f08:: with SMTP id hq8mr9225384ejc.150.1625413155264;
+        Sun, 04 Jul 2021 08:39:15 -0700 (PDT)
+Received: from localhost.localdomain ([212.102.57.156])
+        by smtp.gmail.com with ESMTPSA id j5sm3301274ejn.19.2021.07.04.08.39.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Jul 2021 08:39:14 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH resend] help: convert git_cmd to page in one place
+Date:   Sun,  4 Jul 2021 17:39:12 +0200
+Message-Id: <20210704153912.2742106-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210626163219.4137317-1-rybak.a.v@gmail.com>
+References: <20210626163219.4137317-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 4 Jul 2021 22:42:31 +0800
-Message-ID: <CAOLTT8R_=8Md3vk5yBK4dggq1RKof_6c1tOEtfchbSmYf+gwtA@mail.gmail.com>
-Subject: [GSoC] Git Blog 7
-To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My seventh week blog finished:
-The web version is here:
-https://adlternative.github.io/GSOC-Git-Blog-7/
+Depending on the chosen format of help pages, git-help uses function
+show_man_page, show_info_page, or show_html_page.  The first thing all
+three functions do is to convert given `git_cmd` to a `page` using
+function cmd_to_page.
 
-## Week7 Performance Testing 2
+Move the common part of these three functions to function cmd_help to
+avoid code duplication.
 
-This week I used performance flame graph at the suggestion of
-my mentor `Christian` to find out where my patch affected the
-performance of `cat-file --batch`. `oid_object_info_extended()`
-takes the largest proportion of time, accounting for `90.28%`
-and `41.60%` in `cat-file --batch` and `cat-file --batch-check`
-respectively. Part of the reason is that `oid_object_info_extended()`
-is called twice in `get_object()` with my patch. I tried to revise its
-logic (`WIP`), the performance is improved when without using
-`--textconv` and `--filters`.
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+Reviewed-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-`=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason` gave me a good suggestion on
-performance regression: When we use the default format of
-`git cat-file --batch-check` or `git cat-file --batch`, we can
-directly print the meta-data of the object without going through
-the logic of `ref-filter`; When we use other format, use the
-logic in ref-filter.
+Resending to make sure that this patch isn't forgotten.
+Originally sent as https://lore.kernel.org/git/20210626163219.4137317-1-rybak.a.v@gmail.com/
 
-In addition, `=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason` also suggests adding =
-a
-performance test for `git cat-file --batch`, this can help us analyze
-and compare performance changes later.
+ builtin/help.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-There are intensive exams in these two weeks, and sometimes the
-response may be delayed.
+diff --git a/builtin/help.c b/builtin/help.c
+index bb339f0fc8..b7eec06c3d 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -436,10 +436,9 @@ static void exec_viewer(const char *name, const char *page)
+ 		warning(_("'%s': unknown man viewer."), name);
+ }
+ 
+-static void show_man_page(const char *git_cmd)
++static void show_man_page(const char *page)
+ {
+ 	struct man_viewer_list *viewer;
+-	const char *page = cmd_to_page(git_cmd);
+ 	const char *fallback = getenv("GIT_MAN_VIEWER");
+ 
+ 	setup_man_path();
+@@ -453,9 +452,8 @@ static void show_man_page(const char *git_cmd)
+ 	die(_("no man viewer handled the request"));
+ }
+ 
+-static void show_info_page(const char *git_cmd)
++static void show_info_page(const char *page)
+ {
+-	const char *page = cmd_to_page(git_cmd);
+ 	setenv("INFOPATH", system_path(GIT_INFO_PATH), 1);
+ 	execlp("info", "info", "gitman", page, (char *)NULL);
+ 	die(_("no info viewer handled the request"));
+@@ -486,9 +484,8 @@ static void open_html(const char *path)
+ 	execl_git_cmd("web--browse", "-c", "help.browser", path, (char *)NULL);
+ }
+ 
+-static void show_html_page(const char *git_cmd)
++static void show_html_page(const char *page)
+ {
+-	const char *page = cmd_to_page(git_cmd);
+ 	struct strbuf page_path; /* it leaks but we exec bellow */
+ 
+ 	get_html_page_path(&page_path, page);
+@@ -548,6 +545,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ {
+ 	int nongit;
+ 	enum help_format parsed_help_format;
++	const char *page;
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+ 			builtin_help_usage, 0);
+@@ -606,16 +604,17 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	argv[0] = check_git_cmd(argv[0]);
+ 
++	page = cmd_to_page(argv[0]);
+ 	switch (help_format) {
+ 	case HELP_FORMAT_NONE:
+ 	case HELP_FORMAT_MAN:
+-		show_man_page(argv[0]);
++		show_man_page(page);
+ 		break;
+ 	case HELP_FORMAT_INFO:
+-		show_info_page(argv[0]);
++		show_info_page(page);
+ 		break;
+ 	case HELP_FORMAT_WEB:
+-		show_html_page(argv[0]);
++		show_html_page(page);
+ 		break;
+ 	}
+ 
+-- 
+2.32.0
 
-Thanks.
---
-ZheNing Hu
