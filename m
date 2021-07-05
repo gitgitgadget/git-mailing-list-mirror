@@ -2,101 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DC48C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD54FC07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:39:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 277656141C
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:38:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E1DC61961
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:39:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbhGETlG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 15:41:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62406 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhGETlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 15:41:06 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CAB7D7D6F;
-        Mon,  5 Jul 2021 15:38:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FRCA8nezTioN
-        Zum4KcC26QaDSBa92OliCr+FgO5PvcI=; b=DNRHUjG//Mp/SdWVWqwc4IaF84if
-        CkGa3ExVJvy820d5r2cUD8pwGth62y3EUVIAxh1Ez+L2ZOtgjF8iPlhekPDaDMn6
-        z5FtztUDPLBaIKuornSefZ0x293Dl518rYNlI1K0lviTDlmzJg5UcjRyZQa4nKu/
-        MpeLjPLnITNH9zY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 31D8ED7D6E;
-        Mon,  5 Jul 2021 15:38:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB448D7D6D;
-        Mon,  5 Jul 2021 15:38:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH] Documentation/Makefile: don't re-build on 'git version'
- changes
-References: <874kdn1j6i.fsf@evledraar.gmail.com>
-        <patch-1.1-911881ce19f-20210702T115617Z-avarab@gmail.com>
-        <60dfb7d11cac3_3dd220811@natae.notmuch>
-        <87mtr38tvd.fsf@evledraar.gmail.com>
-Date:   Mon, 05 Jul 2021 12:38:26 -0700
-In-Reply-To: <87mtr38tvd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 03 Jul 2021 14:03:40 +0200")
-Message-ID: <xmqqh7h8mtzh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229818AbhGETl7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 15:41:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229686AbhGETl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 15:41:58 -0400
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDC3C061574
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 12:39:20 -0700 (PDT)
+Received: by mail-vs1-xe34.google.com with SMTP id h5so8906003vsg.12
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 12:39:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3BSExrnvNjvJ4rkmD+vArYnzINht7Bwj6gIw9z/KLb4=;
+        b=t6mlNp/tIM1DSxEhdnZhZUQ5qyyz9pkFzOpl75Z+EhwY43Ye16BxUbQjpU6Wi3ge0U
+         /DSk/HaSDAoDQy8Er5LluYgkNpQkAX1M5pbsWBvzOZwaEtQTfTPSA1zUXjEtfcglHuO6
+         Z+30OwrRzQUl1T4XD7UQ+kvuyvfebo1yGbiNGRsB/6vrV/e/yBQhMWl5peQwvuI13WMm
+         ZPwb6zGktyjBbcOokbbm+4SKpcGJHfeaBU+Fc1MQ80cgMIGZMsVkNhdb7uUOxESMiJr+
+         hHvkMNw3+D3+4giFrb+MDm6GVxDwp76NDRsCBeoZlpNHK8VCyOmyMG9t7a/jjw2aS/rz
+         fJpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3BSExrnvNjvJ4rkmD+vArYnzINht7Bwj6gIw9z/KLb4=;
+        b=EFMGhLifTM5wAHK+PiOQe9FsrJrTOmR4vYn8yV7UKmKBGCCGo8glWME9evUW2kW9xe
+         Flcj/i9fbQd/Mp20er1gcRO9pEFlcvPnDfta3pXcFXfZfPTEV+gqzoVUhZfqujqTBMTT
+         vcDz5D56VOfi7j3TqsuaCf0GHR5+x+qv/NFoNZVqFDgsz31GeEZG7XdDMjKimpK/myX6
+         58exqIaSQV64NS2Zwx0/55P8/RIvqmNmkWRIdXpRD3FZBOlPSnoV3Mh9Yhl3g/CbbqpO
+         GTHuJy6MjlYklML765aCEg4zvcqfWm6YOfK2BwfV+kXauf0OqFdsNnayrhLPY1aI0GDK
+         DxQA==
+X-Gm-Message-State: AOAM533CYFfznYFVeOqwYbByO/Ywwjn5HrlconYG+7dixFSVVhoaTI8j
+        JKqC+4PMM9uTKqVqqtmNCZfQ2jyRDaXPv8S3yb3ZjQ==
+X-Google-Smtp-Source: ABdhPJyqfXyVdHkYSZcnmt24hRKZtJ4pMAjFc66UtM9YeJy0PWdVEGExkylogLIy7Ezyh1ttrBcxumWtypGyE9SlhpU=
+X-Received: by 2002:a67:6992:: with SMTP id e140mr11317838vsc.2.1625513959617;
+ Mon, 05 Jul 2021 12:39:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 91FA3B0E-DDC8-11EB-8148-8B3BC6D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
+ <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com> <2a9ebe43deac3da9baf241ff1e494f8210c27981.1623329869.git.gitgitgadget@gmail.com>
+ <8735sydvzs.fsf@evledraar.gmail.com> <CAFQ2z_OeO8ALHPv6JzL2UDWqEb6Um8e8nPYMWBH8mmaMvibMhQ@mail.gmail.com>
+ <877di47e2j.fsf@evledraar.gmail.com>
+In-Reply-To: <877di47e2j.fsf@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 5 Jul 2021 21:39:08 +0200
+Message-ID: <CAFQ2z_MuZJ7FmaZ8pjb51dhSHuHYipesHn8hum3Af49qwiZL6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 8/8] refs: explicitly propagate errno from refs_read_raw_ref
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Jul 5, 2021 at 9:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+> > and the case you pointed out is the only one which inspects errno
+> > after calling resolve_ref_unsafe (transitively through the grepped
+> > functions.)
+>
+> Isn't the `errno =3D=3D EISDIR` in files_copy_or_rename_ref() another one=
+?
+> It's just after calling refs_read_ref_full().
 
-> It's useful e.g. on my Debian system to see that the "next" Debian
-> packaged is 2.31.0.291.g576ba9dcdaf in docs & "git version", arguably
-> less so for documentation.
+no. It's handling the EISDIR for refs_delete_ref.
 
-If it is arguable, perhaps make an argument that is more convincing?
+> > I'll take from this review that I should elide the part where errno is
+> > cleared, and leave it to someone else to figure out a more holistic
+> > strategy to error reporting.
+>
+> ...or if we don't clear errno introducing those sorts of subtle bugs
+> when we use reftable instead of the files backend. I.e. no, we really
+> should be clearing errno, if not in this series then in some other
+> pre-reftable series.
+>
+> To not do so would be kicking this particular can down the road, and
+> leaving those bugs for reftable users to find. Which given that I've
+> found a few cases with no test coverage...
 
-What I dislike the most is that in the sample scenario where master
-and next has the same documentation material to build "git-cat-file.1",
-the installed result would be different depending on the order of
-building the documentation, with the change being discussed, i.e.
+too late :-)
 
-    $ git checkout master && make prefix=3D$HOME/git-master install-doc
-    $ git checkout next && make prefix=3D$HOME/git-next install-doc
+I've already kicked the can down the road by not clearing errno in the
+current version of the series.
 
-would make "~/git-next/bin/git help cat-file" to claim the
-documentation is from the "master" version.  Which is not all that
-bad, given that there wasn't anything that changed the documentation
-between 'master' and 'next'.  But if you swap the installation
-order, "~/git-master/bin/git help cat-file" would say that the
-documentation is from a version much newer than 'master', which is
-not quite acceptable.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-I am OK with the approach you hinted to have an option to _hide_ the
-version string in the generated documentation (hence they lose their
-dependency on GIT-VERSION-FILE), while keeping the dependency of
-version.o on GIT-VERSION-FILE, so that something goes wrong in a
-built binary, the developer can still ask "git version" to identify
-where the binary came from.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Thanks.
+Registergericht und -nummer: Hamburg, HRB 86891
 
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
