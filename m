@@ -2,92 +2,494 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA66DC07E9B
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 15:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA087C07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 15:30:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7D696196C
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 15:28:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6365619BF
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 15:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231902AbhGEPbG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 11:31:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37866 "EHLO
+        id S232525AbhGEPcm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 11:32:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231865AbhGEPbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 11:31:03 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D879C061762
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 08:28:26 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id k1-20020a0568200161b029024bef8a628bso4541209ood.7
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 08:28:26 -0700 (PDT)
+        with ESMTP id S232416AbhGEPcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 11:32:22 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92344C0613B6
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 08:29:23 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id t6so12622533wrm.9
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 08:29:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:message-id:subject:mime-version
-         :content-transfer-encoding;
-        bh=X3HkvAY+O4eMw0qP5hmj2gJH+kHCc9yBTrMfg7G+aMg=;
-        b=peM/lHrSHMgbAF4LWe359Wy3r/Q9XcZvUXV2Y95H6ZeYN6KDj+BgwDfhbMGnrog41z
-         rVVtiCblg0By+LoqFAXTR3pcRO9ZtxfcdKx4lFA3Xjl7DUZyW2k5MDBxOrH+Y+9R8qCy
-         lTvugcls4C7VjHNaRNWDPcZ5OKZnafkz2zed/Y8q9cdQN1FmXwPgazXxrPXoIgJeZ4Ax
-         YLRWWHUX6q5/EURLzSHqL0jFnmgKLTNs/Ho7MTjD51g3y2rHrMaT6UwBBSHtLMZYXN9f
-         AgAHLOJ9NdevfntmTnd7CKbP2/Sawk/8PI0HtaMHlIGWqVZbxfnsJrTHuv8zUoy/HMem
-         r1kQ==
+        h=reply-to:subject:from:to:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=eUF3aYvjTIYgvixtfgVKSmCVTcEdP74ii9YBvxA/Uyc=;
+        b=lxkbJ48EwKMV/jWRRKQux721imh5azy8ch4lB8uI3pj7rCNJObxIKYqvwoMssL9BkL
+         EylMExz9eE2lCsUif89Re3/ikLNgOwqzHhrF79fSKtQywwaWzYZIIYEbaJyFFNx7Peu3
+         OIS8Sfm8t/ZkSzUUls3SrYED1Fyq3J8Emhm9nIQiFS9PljDy4lH253g3z/N4vjiQUILf
+         e8Rhpl0ilV2x90N7/QFhmTreJ9D0NcWDUndutEonuIqlV54dBngxrVcU7A2noEUPeTTm
+         93tk25UEK3SO2xzbvTVfr+uZ5TFk9gb3NHHAg6vngcZ2hl6Uf7cdYfShIVUfb+CvRuNx
+         Pivw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:message-id:subject:mime-version
+        h=x-gm-message-state:reply-to:subject:from:to:references:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=X3HkvAY+O4eMw0qP5hmj2gJH+kHCc9yBTrMfg7G+aMg=;
-        b=tBVcLvUll286O1nbvLxVQ0Gxl/Td/5aG6SlvKghbk1A3orgPz6O23BthTzSd5QIVTW
-         APHvrqbFA4phFCenId1XFjB1KTQiPgkPiDh5MwY/Hmn9+8M7R70h8S2ieke4h5qbN31x
-         lLNB5LMToMT3XajPta4PJYYbl7hgAtcwlhUdlzTyhzFAh6pjJrwc/ymL47EPWIMNtY+O
-         xkblAZgne7TRX9pvBkbsUl+WBLnGVnT+6lVi3IE1Ndb8EtuTiZEDUM/gThlR3yo74+yJ
-         9KdPK9Dj6UN+9OrqsPq6KO2eZU4JNbGsrXPMV9+aDHc+1eUCOHRrQ7JbRD/r80bma4mL
-         9O1w==
-X-Gm-Message-State: AOAM533ZLXko03IkCNMXNNHEfV+YFgN+6xbXWnuvEOkxHYssrmc4C9sN
-        5oLrsI+AW0vODNGCOIzWtCoH/zUpaLU=
-X-Google-Smtp-Source: ABdhPJyRJOQHky/j9kmC7BsZrLEDOhnFUtx2j3Yq9nHhAGX5458qIg08bBl3Xqa+QgtQp15YZuW9hQ==
-X-Received: by 2002:a4a:9c2:: with SMTP id 185mr10341679ooa.93.1625498905248;
-        Mon, 05 Jul 2021 08:28:25 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id o26sm2707688oic.12.2021.07.05.08.28.24
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jul 2021 08:28:24 -0700 (PDT)
-Date:   Mon, 05 Jul 2021 10:28:23 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <60e325175e689_1baed32081c@natae.notmuch>
-Subject: Blog post: git update: the odyssey for a sensible git pull
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        bh=eUF3aYvjTIYgvixtfgVKSmCVTcEdP74ii9YBvxA/Uyc=;
+        b=EN1HzBK/EUDxBycOj8R+bgVMCRIwK2lP3i4HbGFZ5cJt6rumXxesnsEQ967P1D888a
+         b9jpQojxU5V+NtM7fa6BLVDJYUuXMcpyk7D/wm3GCKh/sdlxM4vgAwIODq1jk7U3GUjV
+         hTrpalMPqpPHKK9CWCNky96MNinydjEeAJ2YMlL8vSmsJ19yePgRf0sUrmwQXOevGCyQ
+         XwllHXdpuKoHlp4TnTNoIrwV2Bm5wrGTpkJp/i6ndWyys92ITdI/2+lQizGIe4KW58Jv
+         4gWAHsILWgQb8dVY2xA2eeSk0vnM012TjHcYicfgpndZY7ORUK33PjUVfMUDN+4Hjwmp
+         wCtg==
+X-Gm-Message-State: AOAM530m2xhfBWqZJUPjHvsIv+ss77aUo3+Zzf6jXBqRsGeaepESgiXJ
+        3ieFPeSVLWY78ekIOBvzyCy9C2qBIwg=
+X-Google-Smtp-Source: ABdhPJy3oUfwtcMSpx/7qU2kpfRw6cmVZoN2CUdcOu3Jy0WHhYpVszmlsjOGJwnT8OP7MZfQOT2yeg==
+X-Received: by 2002:adf:fd12:: with SMTP id e18mr16130659wrr.69.1625498962146;
+        Mon, 05 Jul 2021 08:29:22 -0700 (PDT)
+Received: from [192.168.1.240] (118.22.198.146.dyn.plus.net. [146.198.22.118])
+        by smtp.gmail.com with ESMTPSA id j17sm16464715wmi.41.2021.07.05.08.29.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jul 2021 08:29:21 -0700 (PDT)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH RFC] rebase: respect --ff-only option
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, newren@gmail.com
+References: <20210705044505.666977-1-alexhenrie24@gmail.com>
+ <349748b4-3c48-7ca7-eb0f-e859a15cab0f@gmail.com>
+Message-ID: <7ee36923-0806-4316-729c-8418df5b6555@gmail.com>
+Date:   Mon, 5 Jul 2021 16:29:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <349748b4-3c48-7ca7-eb0f-e859a15cab0f@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 05/07/2021 09:53, Phillip Wood wrote:
+> Hi Alex
+> 
+> On 05/07/2021 05:45, Alex Henrie wrote:
+>> The warning about pulling without specifying how to reconcile divergent
+>> branches says that after setting pull.rebase to true, --ff-only can
+>> still be passed on the command line to require a fast-forward. Make that
+>> actually work.
+> 
+> As I understand it the motivation for this change is to have 'git -c 
+> pull.rebase=true pull --ff-only' actually fast forward. Why cant we just 
+> change pull not to rebase in that case? 
 
-As I mentioned in my `git update` patch series [1], I spent several days
-re-reading old threads looking for anything related to `git pull` and
-fast-forward throughout the entire history of the git mailing list.
+Looking at origin/seen:builtin/pull.c we already check if we can 
+fast-forward and unconditionally merge in that case irrespective of any 
+'--rebase' option or pull.rebase config. It should be simple for pull to 
+error out if '--ff-only' is given and we cannot fast-forward.
 
-I documented everything that I found of interest, and the result is a
-pretty lengthy article.
+Best Wishes
 
-Long story short: a new `git update` command fixes all the issues people
-have been reporting for almost a decade now.
+Phillip
 
-Even if it's not a particularly interesting read, it's a good reference
-that records all the attempts that have been made, along with many ideas
-and proposals.
-
-https://felipec.wordpress.com/2021/07/05/git-update/
-
-[1] https://lore.kernel.org/git/20210705123209.1808663-1-felipe.contreras@gmail.com/
-
--- 
-Felipe Contreras
+> I've left some comments about 
+> the rebase changes below
+> 
+>  > [...]
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 12f093121d..b88f0cbcca 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -1345,12 +1349,14 @@ int cmd_rebase(int argc, const char **argv, 
+>> const char *prefix)
+>>                N_("ignore changes in whitespace")),
+>>           OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
+>>                     N_("action"), N_("passed to 'git apply'"), 0),
+>> -        OPT_BIT('f', "force-rebase", &options.flags,
+>> -            N_("cherry-pick all commits, even if unchanged"),
+>> -            REBASE_FORCE),
+>> -        OPT_BIT(0, "no-ff", &options.flags,
+>> -            N_("cherry-pick all commits, even if unchanged"),
+>> -            REBASE_FORCE),
+>> +        OPT_SET_INT_F('f', "force-rebase", &options.fast_forward,
+>> +                  N_("cherry-pick all commits, even if unchanged"),
+>> +                  FF_NO, PARSE_OPT_NONEG),
+> 
+> Why does this change rebase to start rejecting --no-force-rebase? This 
+> is the sort of behavior change that deserves a mention in the commit 
+> message.
+> 
+>> +        OPT_SET_INT(0, "ff", &options.fast_forward, N_("allow 
+>> fast-forward"),
+>> +                FF_ALLOW),
+> 
+> The useful option when rebasing is '--no-ff', now that will no longer 
+> appear in the output of 'git rebase -h'
+> 
+>> +        OPT_SET_INT_F(0, "ff-only", &options.fast_forward,
+>> +                  N_("abort if fast-forward is not possible"),
+>> +                  FF_ONLY, PARSE_OPT_NONEG),
+> 
+> Is there a use for this outside of 'git pull --ff-only'? I'm far from 
+> convinced we want this new option but if we do end up adding it I think 
+> it should error out in combination with '-i' or '-x' as '-i' implies the 
+> user wants to change the existing commits and '-x' can end up changing 
+> them as well.
+> 
+> I think this patch addresses a valid problem but it seems to me that the 
+> approach taken pushes complexity into rebase to handle a case when pull 
+> does not need to invoke rebase in the first place.
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+>>           OPT_CMDMODE(0, "continue", &action, N_("continue"),
+>>                   ACTION_CONTINUE),
+>>           OPT_CMDMODE(0, "skip", &action,
+>> @@ -1635,7 +1641,7 @@ int cmd_rebase(int argc, const char **argv, 
+>> const char *prefix)
+>>           allow_preemptive_ff = 0;
+>>       }
+>>       if (options.committer_date_is_author_date || options.ignore_date)
+>> -        options.flags |= REBASE_FORCE;
+>> +        options.fast_forward = FF_NO;
+>>       for (i = 0; i < options.git_am_opts.nr; i++) {
+>>           const char *option = options.git_am_opts.v[i], *p;
+>> @@ -1809,7 +1815,7 @@ int cmd_rebase(int argc, const char **argv, 
+>> const char *prefix)
+>>               die("cannot combine '--signoff' with "
+>>                   "'--preserve-merges'");
+>>           strvec_push(&options.git_am_opts, "--signoff");
+>> -        options.flags |= REBASE_FORCE;
+>> +        options.fast_forward = FF_NO;
+>>       }
+>>       if (options.type == REBASE_PRESERVE_MERGES) {
+>> @@ -1952,6 +1958,24 @@ int cmd_rebase(int argc, const char **argv, 
+>> const char *prefix)
+>>       if (repo_read_index(the_repository) < 0)
+>>           die(_("could not read index"));
+>> +    /*
+>> +     * Check if we are already based on onto with linear history,
+>> +     * in which case we could fast-forward without replacing the commits
+>> +     * with new commits recreated by replaying their changes.
+>> +     *
+>> +     * Note that can_fast_forward() initializes merge_base, so we 
+>> have to
+>> +     * call it before checking allow_preemptive_ff.
+>> +     */
+>> +    allow_preemptive_ff = can_fast_forward(options.onto, 
+>> options.upstream,
+>> +                           options.restrict_revision,
+>> +                           &options.orig_head, &merge_base)
+>> +                  && allow_preemptive_ff;
+>> +
+>> +    if (!allow_preemptive_ff && options.fast_forward == FF_ONLY) {
+>> +        ret = error_ff_impossible();
+>> +        goto cleanup;
+>> +    }
+>> +
+>>       if (options.autostash) {
+>>           create_autostash(the_repository, state_dir_path("autostash", 
+>> &options),
+>>                    DEFAULT_REFLOG_ACTION);
+>> @@ -1968,20 +1992,10 @@ int cmd_rebase(int argc, const char **argv, 
+>> const char *prefix)
+>>        * everything leading up to orig_head) on top of onto.
+>>        */
+>> -    /*
+>> -     * Check if we are already based on onto with linear history,
+>> -     * in which case we could fast-forward without replacing the commits
+>> -     * with new commits recreated by replaying their changes.
+>> -     *
+>> -     * Note that can_fast_forward() initializes merge_base, so we 
+>> have to
+>> -     * call it before checking allow_preemptive_ff.
+>> -     */
+>> -    if (can_fast_forward(options.onto, options.upstream, 
+>> options.restrict_revision,
+>> -            &options.orig_head, &merge_base) &&
+>> -        allow_preemptive_ff) {
+>> +    if (allow_preemptive_ff) {
+>>           int flag;
+>> -        if (!(options.flags & REBASE_FORCE)) {
+>> +        if (options.fast_forward != FF_NO) {
+>>               /* Lazily switch to the target branch if needed... */
+>>               if (options.switch_to) {
+>>                   strbuf_reset(&buf);
+>> diff --git a/builtin/revert.c b/builtin/revert.c
+>> index 237f2f18d4..f9b61478a2 100644
+>> --- a/builtin/revert.c
+>> +++ b/builtin/revert.c
+>> @@ -123,7 +123,7 @@ static int run_sequencer(int argc, const char 
+>> **argv, struct replay_opts *opts)
+>>       if (opts->action == REPLAY_PICK) {
+>>           struct option cp_extra[] = {
+>>               OPT_BOOL('x', NULL, &opts->record_origin, N_("append 
+>> commit name")),
+>> -            OPT_BOOL(0, "ff", &opts->allow_ff, N_("allow 
+>> fast-forward")),
+>> +            OPT_SET_INT(0, "ff", &opts->fast_forward, N_("allow 
+>> fast-forward"), FF_ALLOW),
+>>               OPT_BOOL(0, "allow-empty", &opts->allow_empty, 
+>> N_("preserve initially empty commits")),
+>>               OPT_BOOL(0, "allow-empty-message", 
+>> &opts->allow_empty_message, N_("allow commits with empty messages")),
+>>               OPT_BOOL(0, "keep-redundant-commits", 
+>> &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
+>> @@ -166,7 +166,7 @@ static int run_sequencer(int argc, const char 
+>> **argv, struct replay_opts *opts)
+>>                   "--strategy", opts->strategy ? 1 : 0,
+>>                   "--strategy-option", opts->xopts ? 1 : 0,
+>>                   "-x", opts->record_origin,
+>> -                "--ff", opts->allow_ff,
+>> +                "--ff", opts->fast_forward == FF_ALLOW,
+>>                   "--rerere-autoupdate", opts->allow_rerere_auto == 
+>> RERERE_AUTOUPDATE,
+>>                   "--no-rerere-autoupdate", opts->allow_rerere_auto == 
+>> RERERE_NOAUTOUPDATE,
+>>                   NULL);
+>> @@ -177,7 +177,7 @@ static int run_sequencer(int argc, const char 
+>> **argv, struct replay_opts *opts)
+>>           opts->default_strategy = NULL;
+>>       }
+>> -    if (opts->allow_ff)
+>> +    if (opts->fast_forward == FF_ALLOW)
+>>           verify_opt_compatible(me, "--ff",
+>>                   "--signoff", opts->signoff,
+>>                   "--no-commit", opts->no_commit,
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 0bec01cf38..84447937d2 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2120,18 +2120,23 @@ static int do_pick_commit(struct repository *r,
+>>           return error(_("cannot get commit message for %s"),
+>>               oid_to_hex(&commit->object.oid));
+>> -    if (opts->allow_ff && !is_fixup(command) &&
+>> -        ((parent && oideq(&parent->object.oid, &head)) ||
+>> -         (!parent && unborn))) {
+>> -        if (is_rebase_i(opts))
+>> -            write_author_script(msg.message);
+>> -        res = fast_forward_to(r, &commit->object.oid, &head, unborn,
+>> -            opts);
+>> -        if (res || command != TODO_REWORD)
+>> +    if (opts->fast_forward != FF_NO) {
+>> +        if (!is_fixup(command) &&
+>> +            ((parent && oideq(&parent->object.oid, &head)) ||
+>> +             (!parent && unborn))) {
+>> +            if (is_rebase_i(opts))
+>> +                write_author_script(msg.message);
+>> +            res = fast_forward_to(r, &commit->object.oid, &head, unborn,
+>> +                opts);
+>> +            if (res || command != TODO_REWORD)
+>> +                goto leave;
+>> +            reword = 1;
+>> +            msg_file = NULL;
+>> +            goto fast_forward_edit;
+>> +        } else if (opts->fast_forward == FF_ONLY) {
+>> +            res = error_ff_impossible();
+>>               goto leave;
+>> -        reword = 1;
+>> -        msg_file = NULL;
+>> -        goto fast_forward_edit;
+>> +        }
+>>       }
+>>       if (parent && parse_commit(parent) < 0)
+>>           /* TRANSLATORS: The first %s will be a "todo" command like
+>> @@ -2764,7 +2769,7 @@ static int populate_opts_cb(const char *key, 
+>> const char *value, void *data)
+>>       else if (!strcmp(key, "options.record-origin"))
+>>           opts->record_origin = git_config_bool_or_int(key, value, 
+>> &error_flag);
+>>       else if (!strcmp(key, "options.allow-ff"))
+>> -        opts->allow_ff = git_config_bool_or_int(key, value, 
+>> &error_flag);
+>> +        opts->fast_forward = git_config_bool_or_int(key, value, 
+>> &error_flag) ? FF_ALLOW : FF_NO;
+>>       else if (!strcmp(key, "options.mainline"))
+>>           opts->mainline = git_config_int(key, value);
+>>       else if (!strcmp(key, "options.strategy"))
+>> @@ -2853,17 +2858,17 @@ static int read_populate_opts(struct 
+>> replay_opts *opts)
+>>               opts->quiet = 1;
+>>           if (file_exists(rebase_path_signoff())) {
+>> -            opts->allow_ff = 0;
+>> +            opts->fast_forward = FF_NO;
+>>               opts->signoff = 1;
+>>           }
+>>           if (file_exists(rebase_path_cdate_is_adate())) {
+>> -            opts->allow_ff = 0;
+>> +            opts->fast_forward = FF_NO;
+>>               opts->committer_date_is_author_date = 1;
+>>           }
+>>           if (file_exists(rebase_path_ignore_date())) {
+>> -            opts->allow_ff = 0;
+>> +            opts->fast_forward = FF_NO;
+>>               opts->ignore_date = 1;
+>>           }
+>> @@ -3320,7 +3325,7 @@ static int save_opts(struct replay_opts *opts)
+>>       if (opts->record_origin)
+>>           res |= git_config_set_in_file_gently(opts_file,
+>>                       "options.record-origin", "true");
+>> -    if (opts->allow_ff)
+>> +    if (opts->fast_forward == FF_ALLOW)
+>>           res |= git_config_set_in_file_gently(opts_file,
+>>                       "options.allow-ff", "true");
+>>       if (opts->mainline) {
+>> @@ -3849,9 +3854,9 @@ static int do_merge(struct repository *r,
+>>        * If HEAD is not identical to the first parent of the original 
+>> merge
+>>        * commit, we cannot fast-forward.
+>>        */
+>> -    can_fast_forward = opts->allow_ff && commit && commit->parents &&
+>> -        oideq(&commit->parents->item->object.oid,
+>> -              &head_commit->object.oid);
+>> +    can_fast_forward = opts->fast_forward != FF_NO && commit &&
+>> +        commit->parents && oideq(&commit->parents->item->object.oid,
+>> +                     &head_commit->object.oid);
+>>       /*
+>>        * If any merge head is different from the original one, we cannot
+>> @@ -3885,6 +3890,11 @@ static int do_merge(struct repository *r,
+>>           goto leave_merge;
+>>       }
+>> +    if (opts->fast_forward == FF_ONLY && !can_fast_forward) {
+>> +        ret = error_ff_impossible();
+>> +        goto leave_merge;
+>> +    }
+>> +
+>>       if (strategy || to_merge->next) {
+>>           /* Octopus merge */
+>>           struct child_process cmd = CHILD_PROCESS_INIT;
+>> @@ -4276,7 +4286,7 @@ static int pick_commits(struct repository *r,
+>>       /* Note that 0 for 3rd parameter of setenv means set only if not 
+>> set */
+>>       setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+>>       prev_reflog_action = xstrdup(getenv(GIT_REFLOG_ACTION));
+>> -    if (opts->allow_ff)
+>> +    if (opts->fast_forward != FF_NO)
+>>           assert(!(opts->signoff || opts->no_commit ||
+>>                opts->record_origin || should_edit(opts) ||
+>>                opts->committer_date_is_author_date ||
+>> @@ -5646,7 +5656,8 @@ int complete_action(struct repository *r, struct 
+>> replay_opts *opts, unsigned fla
+>>           BUG("invalid todo list after expanding IDs:\n%s",
+>>               new_todo.buf.buf);
+>> -    if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &oid)) {
+>> +    if (opts->fast_forward != FF_NO
+>> +        && skip_unnecessary_picks(r, &new_todo, &oid)) {
+>>           todo_list_release(&new_todo);
+>>           return error(_("could not skip unnecessary pick commands"));
+>>       }
+>> diff --git a/sequencer.h b/sequencer.h
+>> index d57d8ea23d..e188dec312 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -28,6 +28,12 @@ enum commit_msg_cleanup_mode {
+>>       COMMIT_MSG_CLEANUP_ALL
+>>   };
+>> +enum ff_type {
+>> +    FF_NO,
+>> +    FF_ALLOW,
+>> +    FF_ONLY
+>> +};
+>> +
+>>   struct replay_opts {
+>>       enum replay_action action;
+>> @@ -38,7 +44,6 @@ struct replay_opts {
+>>       int record_origin;
+>>       int no_commit;
+>>       int signoff;
+>> -    int allow_ff;
+>>       int allow_rerere_auto;
+>>       int allow_empty;
+>>       int allow_empty_message;
+>> @@ -50,6 +55,8 @@ struct replay_opts {
+>>       int committer_date_is_author_date;
+>>       int ignore_date;
+>> +    enum ff_type fast_forward;
+>> +
+>>       int mainline;
+>>       char *gpg_sign;
+>> diff --git a/t/t3404-rebase-interactive.sh 
+>> b/t/t3404-rebase-interactive.sh
+>> index 66bcbbf952..858e406725 100755
+>> --- a/t/t3404-rebase-interactive.sh
+>> +++ b/t/t3404-rebase-interactive.sh
+>> @@ -895,6 +895,11 @@ test_expect_success 'always cherry-pick with 
+>> --no-ff' '
+>>       test_must_be_empty out
+>>   '
+>> +test_expect_success 'interactive rebase prevents non-fast-forward 
+>> with --ff-only' '
+>> +    git checkout primary &&
+>> +    test_must_fail git rebase -i --ff-only branch1
+>> +'
+>> +
+>>   test_expect_success 'set up commits with funny messages' '
+>>       git checkout -b funny A &&
+>>       echo >>file1 &&
+>> diff --git a/t/t3409-rebase-preserve-merges.sh 
+>> b/t/t3409-rebase-preserve-merges.sh
+>> index ec8062a66a..e656b5bd28 100755
+>> --- a/t/t3409-rebase-preserve-merges.sh
+>> +++ b/t/t3409-rebase-preserve-merges.sh
+>> @@ -127,4 +127,8 @@ test_expect_success 'rebase -p ignores merge.log 
+>> config' '
+>>       )
+>>   '
+>> +test_expect_success 'rebase -p prevents non-fast-forward with 
+>> --ff-only' '
+>> +    test_must_fail git rebase -p --ff-only main
+>> +'
+>> +
+>>   test_done
+>> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+>> index 43fcb68f27..69a85cb645 100755
+>> --- a/t/t3420-rebase-autostash.sh
+>> +++ b/t/t3420-rebase-autostash.sh
+>> @@ -246,6 +246,15 @@ test_expect_success "rebase: fast-forward rebase" '
+>>       git checkout feature-branch
+>>   '
+>> +test_expect_success "rebase: impossible fast-forward rebase" '
+>> +    test_config rebase.autostash true &&
+>> +    git reset --hard &&
+>> +    echo dirty >>file1 &&
+>> +    (git rebase --ff-only unrelated-onto-branch || true) &&
+>> +    grep dirty file1 &&
+>> +    git checkout feature-branch
+>> +'
+>> +
+>>   test_expect_success "rebase: noop rebase" '
+>>       test_config rebase.autostash true &&
+>>       git reset --hard &&
+>> diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+>> index 52e8ccc933..af260b9faa 100755
+>> --- a/t/t7601-merge-pull-config.sh
+>> +++ b/t/t7601-merge-pull-config.sh
+>> @@ -183,6 +183,16 @@ test_expect_success 'pull prevents 
+>> non-fast-forward with "only" in pull.ff' '
+>>       test_must_fail git pull . c3
+>>   '
+>> +test_expect_success 'pull prevents non-fast-forward with --rebase 
+>> --ff-only' '
+>> +    git reset --hard c1 &&
+>> +    test_must_fail git pull --rebase --ff-only . c3
+>> +'
+>> +
+>> +test_expect_success 'pull prevents non-fast-forward with --no-rebase 
+>> --ff-only' '
+>> +    git reset --hard c1 &&
+>> +    test_must_fail git pull --no-rebase --ff-only . c3
+>> +'
+>> +
+>>   test_expect_success 'merge c1 with c2 (ours in pull.twohead)' '
+>>       git reset --hard c1 &&
+>>       git config pull.twohead ours &&
+>>
