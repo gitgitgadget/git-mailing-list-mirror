@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2C06C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B05C4C07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA8C2613AB
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99C5D613AB
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbhGEMfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 08:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55116 "EHLO
+        id S231362AbhGEMfX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 08:35:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231317AbhGEMfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 08:35:21 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9411C06175F
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:32:44 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id s10-20020a4aeaca0000b029024c2acf6eecso4426306ooh.9
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:32:44 -0700 (PDT)
+        with ESMTP id S231359AbhGEMfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 08:35:23 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63184C061760
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:32:46 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id r29so4177374oiw.13
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:32:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=n3nDhOz0tRDLaE4sAr6KDfIcnW3qkms9yGWANOVj9k0=;
-        b=k8nNRStoi02YkrauAdhl48YiDUGORzkAOeRAoffIZtnXdFJx9SWm5LdaCV99OC5AG1
-         CJb48JGDScVkUJdkny80HuQE44aw5F0aLCvv+VVbVprPlBwxWoXeHav3xLZP3B8Lk+s3
-         oexaXufCm37483nwDg471LUJ44DRVYkwhUFW+mv0VE36uFpnOJIYVysq70++i4NBp6ky
-         Z7aNBuu56aZss4j7wcs4YP7kP8FIx0Y/rijeOq0urx3xqqOI36LXUBzr4SYmC0jwpUWj
-         ZLzzA1+PDkOOlC5g7DOCc3EusPhQp9k/jbFUToSMmfZ3C8LX2ga5mz0bGpg6Goupx3fY
-         5+ww==
+        bh=f/XjHp84gR4nhhd/wr7xj9B256dmgyCzuJvw0eFg7QM=;
+        b=AauQqA6JbMkgUT9c2O22ffCIsgGdge1uHCANK7fIW/u2YpQwRtTT5/BZptjdAox/FK
+         gFDRlbEepngJsI2A9fDbp3lsbftBn0pIb+7xQER3LhwFHJ5yxwiQ/YEj6z4Ntpc36TtP
+         K51w5f6sW8b98cEp16JE/2tmfH3J6XtTxQOvx5FhMB1npyuxlLEGQqNmquV6ImaxK4IN
+         sITMQqko/522xobw6qeOs1QM8jr9K4WYNEzeGHsfq+LvAg2u6dFl9+j9pnsCeXoe/EFv
+         4s/K/7T59NRCea5y93xS6dEGByW7pl05PnlpIXS7a24eL71tkst+nvG8My2/JwBXl188
+         JFkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=n3nDhOz0tRDLaE4sAr6KDfIcnW3qkms9yGWANOVj9k0=;
-        b=OyqOtfaZYFJ/X8pGPg3o/sHyTY29tmmx0YeWke/CzOzlr1hBU8IOVrKNUCBRphew2H
-         1L83q4YNLN0a18sWbwDobPDRrMqzEi7mfx3Ryvn8OvIE1V0o8C+oeq6I3x4ZZGet0mEi
-         p/VH5P8YtPywZRpS7v+y+Q1szcTrjmE8cN4TdG3K3HwTFR9Fp441JHM7wWtFEtR5/wct
-         uS5WpX2E7ZAmMkgFpCTMY5vfjTPwcMMu6FX3XlBSVUwtFUcdvFPnHE6iUT16GEj72TRE
-         D8mdtvEaziOgYuFfzJYlLBYWyzzGU1THaA+bxIVZhumN9+JhWGoyHz4qNORz7oXc23aw
-         xqBQ==
-X-Gm-Message-State: AOAM532S4aecTWbDkSrzvYsx3Ne9AS2HQEsfVpdSCH+c9zZLxsdTGKGq
-        Gt7mjjD9YRCRxdfAiyIaDFHAdNi7yrxIyg==
-X-Google-Smtp-Source: ABdhPJySQUg6rOSpZXNflHTDbhPvIG/VvHJwn/9d9vcihnQSKcHkXrilXpLRrcaDPC5IKjfnDXnHQA==
-X-Received: by 2002:a4a:9fc1:: with SMTP id b1mr9839882oom.51.1625488364030;
-        Mon, 05 Jul 2021 05:32:44 -0700 (PDT)
+        bh=f/XjHp84gR4nhhd/wr7xj9B256dmgyCzuJvw0eFg7QM=;
+        b=GeDwtCOsRxSgjA/Y1nvq1ICONaCeN9IiDVCaA/lP87cmSrVNS6bIQlVMPAf2hbr65Y
+         Vhv3h4qAsNelolUzZzR0t36lMFiLZdZ45E0iXaMj5aK7Zeh6mwqZwC4oN0xeaIubXQ26
+         X7qBcHQFVL+WXM0ZNRL+tb4Gjt5Vrg6yU1s3gb+WnGyYfMlbxm57XUnv6CsuLyHQU19G
+         JJHgosQBTBWN5ohqCeElU04X6RGVQ8YyyZB7A2Ws+RrlziOzUOjgR9oSKML269DSSpcQ
+         aVoiS1m22T0OSVmQHQJxXyYkE21sKr9lulFZN9q7hv+u7VpBb8UNFMYfIWdOrCBxdZQT
+         xDIA==
+X-Gm-Message-State: AOAM5316/YXQCZCqYswO8tOY9BnoYscnOfg4GfUBiys6ey5s0jvYD9hQ
+        dXInPmckwRx/w6yhy1IopCXX8RIJ0lalIQ==
+X-Google-Smtp-Source: ABdhPJzYI86GeMxxu+E9EDoo/eP+PzfvseLyaBkIrAbdHed1NyXmfjrNlzf84MrNR5gDBauAz94quA==
+X-Received: by 2002:a05:6808:15a6:: with SMTP id t38mr10326275oiw.157.1625488365631;
+        Mon, 05 Jul 2021 05:32:45 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id y193sm2694840oia.48.2021.07.05.05.32.43
+        by smtp.gmail.com with ESMTPSA id n20sm2609036otj.11.2021.07.05.05.32.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jul 2021 05:32:43 -0700 (PDT)
+        Mon, 05 Jul 2021 05:32:45 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Richard Hansen <rhansen@rhansen.org>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC PATCH 19/35] pull: cleanup autostash check
-Date:   Mon,  5 Jul 2021 07:31:53 -0500
-Message-Id: <20210705123209.1808663-20-felipe.contreras@gmail.com>
+Subject: [RFC PATCH 20/35] pull: trivial cleanup
+Date:   Mon,  5 Jul 2021 07:31:54 -0500
+Message-Id: <20210705123209.1808663-21-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.36.g70aac2b1aa
 In-Reply-To: <20210705123209.1808663-1-felipe.contreras@gmail.com>
 References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
@@ -74,74 +74,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently "git pull --rebase" takes a shortcut in the case a
-fast-forward merge is possible; run_merge() is called with --ff-only.
-
-However, "git merge" didn't have an --autostash option, so, when "git
-pull --rebase --autostash" was called *and* the fast-forward merge
-shortcut was taken, then the pull failed.
-
-This was fixed in commit f15e7cf5cc (pull: ff --rebase --autostash
-works in dirty repo, 2017-06-01) by simply skipping the fast-forward
-merge shortcut.
-
-Later on "git merge" learned the --autostash option [a03b55530a
-(merge: teach --autostash option, 2020-04-07)], and so did "git pull"
-[d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)].
-
-Therefore it's not necessary to skip the fast-forward merge shortcut
-anymore when called with --rebase --autostash.
-
-Let's always take the fast-forward merge shortcut by essentially
-reverting f15e7cf5cc.
+There's no need to store ran_ff. Now it's obvious from the conditionals.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/pull.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ builtin/pull.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index e8927fc2ff..a22293b7db 100644
+index a22293b7db..80e2f55cbc 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -947,7 +947,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	struct oid_array merge_heads = OID_ARRAY_INIT;
- 	struct object_id orig_head, curr_head;
- 	struct object_id rebase_fork_point;
--	int autostash;
- 	int rebase_unspecified = 0;
- 	int can_ff;
+@@ -1053,7 +1053,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
  
-@@ -982,8 +981,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (get_oid("HEAD", &orig_head))
- 		oidclr(&orig_head);
- 
--	autostash = config_autostash;
  	if (opt_rebase) {
-+		int autostash = config_autostash;
- 		if (opt_autostash != -1)
- 			autostash = opt_autostash;
+ 		int ret = 0;
+-		int ran_ff = 0;
  
-@@ -1065,13 +1064,12 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) &&
- 		    submodule_touches_in_range(the_repository, &upstream, &curr_head))
- 			die(_("cannot rebase with locally recorded submodule modifications"));
--		if (!autostash) {
--			if (can_ff) {
--				/* we can fast-forward this without invoking rebase */
--				opt_ff = "--ff-only";
--				ran_ff = 1;
--				ret = run_merge();
--			}
-+
-+		if (can_ff) {
-+			/* we can fast-forward this without invoking rebase */
-+			opt_ff = "--ff-only";
-+			ran_ff = 1;
-+			ret = run_merge();
- 		}
- 		if (!ran_ff)
+ 		struct object_id newbase;
+ 		struct object_id upstream;
+@@ -1068,11 +1067,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		if (can_ff) {
+ 			/* we can fast-forward this without invoking rebase */
+ 			opt_ff = "--ff-only";
+-			ran_ff = 1;
+ 			ret = run_merge();
+-		}
+-		if (!ran_ff)
++		} else {
  			ret = run_rebase(&newbase, &upstream);
++		}
+ 
+ 		if (!ret && (recurse_submodules == RECURSE_SUBMODULES_ON ||
+ 			     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
 -- 
 2.32.0.36.g70aac2b1aa
 
