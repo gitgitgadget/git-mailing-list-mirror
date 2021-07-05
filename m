@@ -2,110 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09916C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 14:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA66DC07E9B
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 15:28:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF25A61283
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 14:44:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7D696196C
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 15:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231474AbhGEOra (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 10:47:30 -0400
-Received: from mout.web.de ([212.227.15.3]:57511 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230504AbhGEOr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 10:47:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1625496291;
-        bh=+zS3BqxbpgYfDcngPTk39hrWMLDEpE1kltQWQJ/jCsI=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=o748ZwS+f0MIkqsn7vznzpQdOOXBrCGYu+srJX3CkKRaaV22jlTXRsvopNePBA0ts
-         5dK/U5Zd7KPZw+4mVNUSQhmclZZKcn5YaxYHOf3cgKpR6iYIQ1Dv/DxZSI3jSrbXm7
-         HfdlBTBqtofEhIgBL1vKI1UX/11SPjyazhc+gqa4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.158.105]) by smtp.web.de
- (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MC0PR-1lufjr3Uuz-00CThW; Mon, 05 Jul 2021 16:44:50 +0200
-Subject: Re: Antw: [EXT] Re: bug in "git fsck"?
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     git@vger.kernel.org
-References: <60DF1C22020000A100042225@gwsmtp.uni-regensburg.de>
- <xmqqczs0popg.fsf@gitster.g> <52847a99-db7c-9634-b3b1-fd9b1342bc32@web.de>
- <60E2B7FB020000A1000422A0@gwsmtp.uni-regensburg.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <77655a4e-8c39-5ccc-71af-d2d8684bf208@web.de>
-Date:   Mon, 5 Jul 2021 16:44:50 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <60E2B7FB020000A1000422A0@gwsmtp.uni-regensburg.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LmWc43Gu8CZm+8S5AuYCd1Ooig5vaumkj3e/Cq52EJvrlI8Ziiq
- t4ceBsby9c6SEqk3lmk+iVmt/LyPYX3fYIflRjNXxfFmPHiliZEhiBSDhJtGt4eD+mVWKr4
- bmR4r9rWs+kr6dNWrk7TjxfAyGY6rVVkFddwovkKs/tK9LngT+gFdy/vldVM3Ciik/WzjRG
- 4gOJBhJ5vRm/wu1cxQ/ew==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uN1WXmzXNmo=:Ffh/z26LaYeWT+r8hSusJF
- AVopLnk7pYHHh265UiLrZnQH9d3huUHdhowM+LSi5t0RMgtKUPN9Sx6bgIy6kcTYymkLCPGH3
- Aze2Uu6JY0jT7nUF8hhuRXGxvwPI+FEPFh4qnLyfyBdwoKqdaxcHIajCawwfzD+cffeHvGg/m
- DXQ5RbnhMEMAQsuGdHXViQsGGddGlJmJte+Phytty5GcSZjfhwfBr2sN4LNrKs2g2bo2eJqfn
- 26GLy6GxmwlYLyruRzFyrCh7k4vckATm+mwsKtccvUmEuPcqFaptHayuyZqrOKbUUIQeLVyQJ
- +cQkRq/3VY6b6EYGVllYQsHVr3yvIJfW2Ffi9STnazbJU3VqqKOIQp3R9gdVPJIwo1vPxkuW1
- tTdwvny23ROHwkWViyOHKhseeO60ND1WnGKlR0tbSNGnJ89G4hKXrwiJwDDMKnBFJL97GN/Nk
- SGe24nMce0Xz9kCJpH1G4zNORtkA7H8PFYihRPWecOSM34vKwOScvqT/ebmVTwKF3s6OotFSE
- F2duUmYmm1JKCCjhyEZU0KHnHCKvmg3PpVMx36AkDjbPjr75X0/2nL/0HOPvVaSbzU/s96DW4
- wB6CI7ro1Un9kJSr1vOOB8thOo6ijKGviMJ8xnRNAkw0cFl0VvKSET9VLgKfIDzTLAlVgWrrN
- a2ZkD+alVkziwWMdPebRNX5jw6ld5WLHKknQRItDlQmbwmT3qYLVOAgGM6pGdO0ooQ5otoV6g
- 5VcwxlAfRXn9jhGXTv7tJUS/dLm3WCtKn2dC4ILLycKwe/f4vRDoU6nR7p/CUGhoetsw5gpla
- td6XmzpVP42dzwShbgODcf/7538amdCG3MmRvI4qireWPYFTqPAPyThW+ZVLqj63upr+XkCWx
- DFuDIvWAhIwMsNERCnCZ6JXmj6eW4YCUYUH+NI8wuTH5CFzt4ybKlkw3PsGtPN7QGxFFbkaRG
- CqrkPDEHvv7UmzEnqjp/SKlklU/ZxqQTby0waaEoFFSJMvFrD7SPRcMWaf+42E2milxZyRfGO
- cQ+Lt+gYkw8cCoU948mKG3SUEj3IKHMFzNNpRE2Y+w4kQsrtPlV60fGOAOSKqOb3Bw6p1yYV6
- oLVwenJ/zYkEmAUnuvUf7ubSz4RZRz3+OBT
+        id S231902AbhGEPbG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 11:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231865AbhGEPbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 11:31:03 -0400
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D879C061762
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 08:28:26 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id k1-20020a0568200161b029024bef8a628bso4541209ood.7
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 08:28:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:message-id:subject:mime-version
+         :content-transfer-encoding;
+        bh=X3HkvAY+O4eMw0qP5hmj2gJH+kHCc9yBTrMfg7G+aMg=;
+        b=peM/lHrSHMgbAF4LWe359Wy3r/Q9XcZvUXV2Y95H6ZeYN6KDj+BgwDfhbMGnrog41z
+         rVVtiCblg0By+LoqFAXTR3pcRO9ZtxfcdKx4lFA3Xjl7DUZyW2k5MDBxOrH+Y+9R8qCy
+         lTvugcls4C7VjHNaRNWDPcZ5OKZnafkz2zed/Y8q9cdQN1FmXwPgazXxrPXoIgJeZ4Ax
+         YLRWWHUX6q5/EURLzSHqL0jFnmgKLTNs/Ho7MTjD51g3y2rHrMaT6UwBBSHtLMZYXN9f
+         AgAHLOJ9NdevfntmTnd7CKbP2/Sawk/8PI0HtaMHlIGWqVZbxfnsJrTHuv8zUoy/HMem
+         r1kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:message-id:subject:mime-version
+         :content-transfer-encoding;
+        bh=X3HkvAY+O4eMw0qP5hmj2gJH+kHCc9yBTrMfg7G+aMg=;
+        b=tBVcLvUll286O1nbvLxVQ0Gxl/Td/5aG6SlvKghbk1A3orgPz6O23BthTzSd5QIVTW
+         APHvrqbFA4phFCenId1XFjB1KTQiPgkPiDh5MwY/Hmn9+8M7R70h8S2ieke4h5qbN31x
+         lLNB5LMToMT3XajPta4PJYYbl7hgAtcwlhUdlzTyhzFAh6pjJrwc/ymL47EPWIMNtY+O
+         xkblAZgne7TRX9pvBkbsUl+WBLnGVnT+6lVi3IE1Ndb8EtuTiZEDUM/gThlR3yo74+yJ
+         9KdPK9Dj6UN+9OrqsPq6KO2eZU4JNbGsrXPMV9+aDHc+1eUCOHRrQ7JbRD/r80bma4mL
+         9O1w==
+X-Gm-Message-State: AOAM533ZLXko03IkCNMXNNHEfV+YFgN+6xbXWnuvEOkxHYssrmc4C9sN
+        5oLrsI+AW0vODNGCOIzWtCoH/zUpaLU=
+X-Google-Smtp-Source: ABdhPJyRJOQHky/j9kmC7BsZrLEDOhnFUtx2j3Yq9nHhAGX5458qIg08bBl3Xqa+QgtQp15YZuW9hQ==
+X-Received: by 2002:a4a:9c2:: with SMTP id 185mr10341679ooa.93.1625498905248;
+        Mon, 05 Jul 2021 08:28:25 -0700 (PDT)
+Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
+        by smtp.gmail.com with ESMTPSA id o26sm2707688oic.12.2021.07.05.08.28.24
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jul 2021 08:28:24 -0700 (PDT)
+Date:   Mon, 05 Jul 2021 10:28:23 -0500
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <60e325175e689_1baed32081c@natae.notmuch>
+Subject: Blog post: git update: the odyssey for a sensible git pull
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.07.21 um 09:42 schrieb Ulrich Windl:
->>>> Ren=C3=A9 Scharfe <l.s.r@web.de> schrieb am 03.07.2021 um 22:03 in Na=
-chricht
-> <52847a99-db7c-9634-b3b1-fd9b1342bc32@web.de>:
->> Am 02.07.21 um 20:15 schrieb Junio C Hamano:
->>> "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
->>>
->>>> I was wondering whether git fsck should be able to cleanup
->>>> orphaned branches ("HEAD points to an unborn branch") as described
->>>> in https://stackoverflow.com/q/68226081/6607497 It seems I can fix
->>>> it be editing files in the repository, but I feed that's not the
->>>> way it should be.
->>>
->>> HEAD pointing at an unborn branch is not even a corruption, isn't
->>> it?
->>>
->>>    $ rm -rf trash && git init trash
->>>
->>> would point HEAD at an unborn one, ready to be used.
->>
->> True, but the scenario described on StackOverflow is a bit different.
->> Commits were filtered out, and branches still pointing to them cannot
->> be deleted with "git branch -d" or "git branch -D".  Git fsck only
->> reports them.
->>
->> You *can* overwrite them using "git branch --force foo" and then
->> "git branch -d foo" works.
->
-> Would it be OK to force the branch to any commit (e.g.: "master"), relyi=
-ng on
-> the fact that any reference (read: "master") to that commit will prevent=
- actual
-> removal of the commit?
+Hello,
 
-Yes, any valid commit would do.  This turns dangling branches into
-normal delete-able ones.  Other branches are unaffected.
+As I mentioned in my `git update` patch series [1], I spent several days
+re-reading old threads looking for anything related to `git pull` and
+fast-forward throughout the entire history of the git mailing list.
 
-Ren=C3=A9
+I documented everything that I found of interest, and the result is a
+pretty lengthy article.
+
+Long story short: a new `git update` command fixes all the issues people
+have been reporting for almost a decade now.
+
+Even if it's not a particularly interesting read, it's a good reference
+that records all the attempts that have been made, along with many ideas
+and proposals.
+
+https://felipec.wordpress.com/2021/07/05/git-update/
+
+[1] https://lore.kernel.org/git/20210705123209.1808663-1-felipe.contreras@gmail.com/
+
+-- 
+Felipe Contreras
