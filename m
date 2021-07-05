@@ -6,72 +6,97 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8375C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 16:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 393CAC07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 17:30:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A98B61975
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 16:51:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F9276196C
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 17:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbhGEQxd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 12:53:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51199 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhGEQxc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 12:53:32 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22248C4F23;
-        Mon,  5 Jul 2021 12:50:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RB8y7236edSTp1ZrRearn+0xj0G4jt8eVNyItQ
-        spifM=; b=qxjilcFCXeQALBHdnDoJC+OZQSbAhAlB3DYgU/I0OxxP/i9NlfG+VB
-        oxiLhuGTtQzOpy1yRo45hql9ROJ9meElGUlPCh3mJ7O42h3vFsyblcby3xpxTO7p
-        rpApPNNf/uP1RfmWgsmH/aW4tLP6aW4gMJX1Vk8B0+pLhD/ZBIRxo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A04DC4F22;
-        Mon,  5 Jul 2021 12:50:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.3.135])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A0374C4F21;
-        Mon,  5 Jul 2021 12:50:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        newren@gmail.com
-Subject: Re: [PATCH RFC] rebase: respect --ff-only option
-References: <20210705044505.666977-1-alexhenrie24@gmail.com>
-        <349748b4-3c48-7ca7-eb0f-e859a15cab0f@gmail.com>
-        <7ee36923-0806-4316-729c-8418df5b6555@gmail.com>
-Date:   Mon, 05 Jul 2021 09:50:54 -0700
-In-Reply-To: <7ee36923-0806-4316-729c-8418df5b6555@gmail.com> (Phillip Wood's
-        message of "Mon, 5 Jul 2021 16:29:20 +0100")
-Message-ID: <xmqqpmvwn1qp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229809AbhGERdf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 13:33:35 -0400
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:38305 "EHLO
+        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229689AbhGERde (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Jul 2021 13:33:34 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailout.west.internal (Postfix) with ESMTP id 555653200942;
+        Mon,  5 Jul 2021 13:30:57 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Mon, 05 Jul 2021 13:30:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=furrypaws.ca; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-type; s=fm3; bh=CNOI4OhlzLrB+tK36CP5M5bcbg
+        mU3qjiVa6mxetkU3M=; b=eA0chMxgRT/wBbeU4PexUHsdHW8COqcbgM/0/VkOlh
+        xwoCzvaJjJp3SvyFzTPHt8WRbgLe/aDNdGLnMaIYZnjFL/6yJ/ZArzcXDo64h8Oy
+        gHi/HO6HGwT3Bm8DVs/1tj8yf1KXbE3sorfvb7htL+WBkuGMGUtpORu4t5uXgn3t
+        SRqtxh3nS3Vr7gFOr0jAUOS0TS5H+b2P+GB/taaZtQOEAE5yrnummid9MvDG+XfB
+        cfwG1LXArGjbkuUqYGlpie1zArfsLgku3PtzRiqDsXSVPkvM5cdHEQfMnH25xOiJ
+        h7RSHmjt6KWTHaNr+6nHhepbDnoawAhAzZ4iQHgvQmag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=CNOI4O
+        hlzLrB+tK36CP5M5bcbgmU3qjiVa6mxetkU3M=; b=rdqx2Qfj1ll/vhWhUv+n+q
+        obWtto8KJ7326HrHdoTQqiwQLZHSLvFbgfEHYuxMt7+vrQVNRXtA403gy+k0guF/
+        By5OgepKhqWpguz66Z8TB49WbDNIkH9UUJ7TdKusO76W9iBUfCWXH+uAy9BL9gmq
+        OOpmnbg41TwrcdMP6J9WbwKFsT5G70EZ8DthDBxMRsBujShRiK9E7kvKU8EVs3rs
+        AG0kKunYYxZ4FZLkrXxhmFpKAL1Ji3ekxgDRK6ppON+e6LDstTtwhbz77UpuEVcz
+        ryP78eIZpic1tug0uAsze0ZyQQAM4FC1WuW7D0t17KZqvSqKriMve6z+REAQWIgw
+        ==
+X-ME-Sender: <xms:0EHjYKQAjjgEMsDqtiWIlaL2tvGKNRG6_NJeQPh1K7sjziPIuuhhSw>
+    <xme:0EHjYPy5L8CqBBy1krXXRC7-wN9JPka6oFsplKzw-hJxjPrbh2dkU6uhRp456eq23
+    qJZ3hr25ncBiKVkzw>
+X-ME-Received: <xmr:0EHjYH3wGqnCZNk70iEjThliG3SnG_xDhUuDS6wTdXXw9VmiUs0kY3n4afZ6O4BOOPNG0QJNJOzr6PdY0xXKwfeYZGrW0Ssg6-IE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeejgedgudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffoffkjghfgggtsehttd
+    hmtdertddtnecuhfhrohhmpedftehnughrvgifuceuvghrrhihfdcuoegrnhgurhgvfies
+    fhhurhhrhihprgifshdrtggrqeenucggtffrrghtthgvrhhnpeffueeiuedtvdehheevff
+    fhtdevhffgheeggeefvdevhefhiedugeejgfffteefveenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesfhhurhhrhihprgifsh
+    drtggr
+X-ME-Proxy: <xmx:0EHjYGAfqJIXRf4Lk_QKauuMshe_02f10Jb3-SLJA83fh006eJDWaQ>
+    <xmx:0EHjYDhgieYoiqINOLY1y11E_XkiWOuTmGYQLhug_BNnK4GflEue-g>
+    <xmx:0EHjYCrkdln36zEl6MUwpQLrG5cMDXGeZIhINLbeVej0LHncvQayfw>
+    <xmx:0UHjYJZyQ4LB9CD7zdSpgkHs5iETJvJ5vd6ZgefpvKn0a5jIj1RaWg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jul 2021 13:30:56 -0400 (EDT)
+From:   "Andrew Berry" <andrew@furrypaws.ca>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, "Bagas Sanjaya" <bagasdotme@gmail.com>
+Subject: Re: [PATCH] docs: .gitignore in parents is current repo only
+Date:   Mon, 05 Jul 2021 13:30:50 -0400
+X-Mailer: MailMate (1.13.2r5673)
+Message-ID: <889D9AD1-1114-49B4-ADB0-BF78160743E4@furrypaws.ca>
+In-Reply-To: <b9da43a8-897b-7cce-ecbc-ea56078f0f09@gmail.com>
+References: <20210702222044.72767-1-andrew@furrypaws.ca>
+ <b9da43a8-897b-7cce-ecbc-ea56078f0f09@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29E433EC-DDB1-11EB-B616-FD8818BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; format=flowed
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 2 Jul 2021, at 20:06, Junio C Hamano wrote:
 
-> Looking at origin/seen:builtin/pull.c we already check if we can
-> fast-forward and unconditionally merge in that case irrespective of
-> any '--rebase' option or pull.rebase config. It should be simple for
-> pull to error out if '--ff-only' is given and we cannot fast-forward.
+> I would have thought that "up to the toplevel of the work
+> tree" would be sufficiently clear where the upward traversal of the
+> directories ends, i.e. at the repository boundary.
 
-Excellent.
+Seems reasonable. What if we move that note to come after "any parent 
+directory"?
 
-Even though teaching even more special case on the "git pull" side
-makes me feel somewhat dirty, but I think it would be a small price
-to pay, and the end result would save an useless fork whose sole
-purpose is to make the integration step after fetch fail when "pull"
-can easily tell, as you said, that it ought to fail, so overall it
-would probably be a net win.
+On 2 Jul 2021, at 20:21, Bagas Sanjaya wrote:
 
-Thanks.
+> So for example I have `something/foo` in ../.gitignore, but .gitignore 
+> (in current directory `something`) has `foo`. Is .gitignore from 
+> current directory or ../.gitignore takes effect?
+
+In this case, both rules resolve to the same path, so I don't think it 
+matters? But in practice I'd expect it to be `something/.gitignore`, 
+since you can negate the pattern from the parent ignore file.
+
+> Also s/toplevel/top level/
+
+That showed up in the diff due to word wrapping. If no other changes are 
+accepted, I'll file a followup after to get this fixed on it's own.
