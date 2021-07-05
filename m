@@ -2,150 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A96C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2050BC07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:02:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F8CB60FE6
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:00:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E703360241
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231343AbhGEMCu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 08:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47814 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231329AbhGEMCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 08:02:49 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43CCC061574
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:00:12 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id l26so17886060oic.7
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:00:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=pNUGSgpfgq662S1VGTNT4g20vd2J/lONZJvYplfD0g4=;
-        b=C3JF7FIXynztbrqhDcvbEeCfU3370qcB6wA7nTkeXOZ9emK8x5kFJ+mMr0YdSvK+sK
-         NjRLOXhbwijcaYiID82nRlpSNe/ODP1hQ3nsbb4t3P0p+RW41aQZqsHDk1qP/eB5jsJp
-         aE470rO0kjTO44ZLHPiCXxiEtjdnz+MK0HQyLuIrdIjMhhqrhDg6k7XCaRyaVKlXg8Zk
-         WqIasHbmEFG7aHEqhypAocVNm2ouEx2l5wjzoaH5TIN+fOSezp/JAqKFZIPu+Ag1a9qy
-         bskb/R/abusiV9K4sBd1jT25jiRm+hPCAZQHh7JizBHL5wmNKv0FaYGMYbhjoTVko37M
-         mhew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=pNUGSgpfgq662S1VGTNT4g20vd2J/lONZJvYplfD0g4=;
-        b=HqBR9aBz8yoAGWmK0mmVFdKjfd+KkWna73U/jSmXg5ttzHSV4d5oM9gCQvioKd2qXi
-         HzHmAaozMEVPs4lCBnmI1o8pDamd8ePsVXo8l6dPtsMqQd0Dgiirz21xeZ/sTt9/d9KO
-         aAileS3L7n7A8dGN1tjGo1r5qXId3L+yVk9HdmJIkrJDFD563miuVWIytlvBOvGetlqJ
-         ZnP0gTcYeouoklFxQFlNXLD3ylHszw6CjuC1SFBRNlpIDogyEPySIZeCz6cKzXXMIP1S
-         bHCIHSW3Fd0s8HteYLxTJ1w8SS016W3/ANs9Np9v//8GT+VY+XIBq7nXZqQ7zcHh7Mu5
-         LnIw==
-X-Gm-Message-State: AOAM531dxU3Mff7iCVKCPrP1TeX1ogQKwY17+laFWHQJF0mhPy7fHST0
-        vXBPR1MYY45tzG/2hAZFiaA=
-X-Google-Smtp-Source: ABdhPJy2IvEbVedrYGx5itVe8K+VcniV1dyJMFV+99L8Vikya7du+MKTJANZT6Uc1G3MU0FYmk2LXA==
-X-Received: by 2002:aca:f105:: with SMTP id p5mr9720744oih.148.1625486409220;
-        Mon, 05 Jul 2021 05:00:09 -0700 (PDT)
-Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id l3sm2681418oif.49.2021.07.05.05.00.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jul 2021 05:00:08 -0700 (PDT)
-Date:   Mon, 05 Jul 2021 07:00:07 -0500
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, newren@gmail.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Message-ID: <60e2f44749749_1b8e782081f@natae.notmuch>
-In-Reply-To: <20210705044505.666977-1-alexhenrie24@gmail.com>
-References: <20210705044505.666977-1-alexhenrie24@gmail.com>
-Subject: RE: [PATCH RFC] rebase: respect --ff-only option
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S231276AbhGEMEp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 08:04:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41500 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230435AbhGEMEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 08:04:44 -0400
+Received: (qmail 11940 invoked by uid 109); 5 Jul 2021 12:02:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Jul 2021 12:02:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12394 invoked by uid 111); 5 Jul 2021 12:02:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Jul 2021 08:02:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 5 Jul 2021 08:02:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2021, #07; Wed, 30)
+Message-ID: <YOL0voZhJolF8Rg4@coredump.intra.peff.net>
+References: <xmqq4kdft122.fsf@gitster.g>
+ <CABPp-BGF4K4mAXf6X1rTpTmPCfQgwdhv_VUVg2icGk5Dw7Q1yw@mail.gmail.com>
+ <87czrx6v9w.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87czrx6v9w.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie wrote:
-> The warning about pulling without specifying how to reconcile divergent
-> branches says that after setting pull.rebase to true, --ff-only can
-> still be passed on the command line to require a fast-forward. Make that
-> actually work.
+On Mon, Jul 05, 2021 at 10:03:58AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-I don't see any value in doing `git rebase --ff-only`. What is the
-difference with `git merge --ff-only`?
+> >> * ab/send-email-optim (2021-05-28) 13 commits
+> >>  - perl: nano-optimize by replacing Cwd::cwd() with Cwd::getcwd()
+> >>  - send-email: move trivial config handling to Perl
+> >>  - perl: lazily load some common Git.pm setup code
+> >>  - send-email: lazily load modules for a big speedup
+> >>  - send-email: get rid of indirect object syntax
+> >>  - send-email: use function syntax instead of barewords
+> >>  - send-email: lazily shell out to "git var"
+> >>  - send-email: lazily load config for a big speedup
+> >>  - send-email: copy "config_regxp" into git-send-email.perl
+> >>  - send-email: refactor sendemail.smtpencryption config parsing
+> >>  - send-email: remove non-working support for "sendemail.smtpssl"
+> >>  - send-email tests: test for boolean variables without a value
+> >>  - send-email tests: support GIT_TEST_PERL_FATAL_WARNINGS=true
+> >>
+> >>  "git send-email" optimization.
+> >>
+> >>  Will merge to 'next'.
+> >
+> > Wahoo!
+> 
+> Do you find the faster t9001*.sh helps your overall test-run time?
 
-Presumably this isn't meant to to be called directly by the user, but
-only by `git pull`, so it's trying to address my comment [1]:
+It does for me. Running "make test" on 'next' (with -O2, and prove
+--state=slow,save so it realizes t9001 is slow) takes 66 wallclock
+seconds total. The top culprits are:
 
-  > You can also pass --rebase, --no-rebase, or --ff-only on the command
-  > line to override the configured default per invocation.
+  $ perl -MYAML -e ' 
+      $_ = do { local $/; <> };
+      # prove puts this non-YAML cruft at the end
+      s/\.\.\.$//s;
+      my $t = YAML::Load($_)->{tests};
+      print "$_->[1] $_->[0]\n" for
+        sort { $b->[1] <=> $a->[1] } 
+        map { [$_, $t->{$_}->{elapsed}] } 
+        keys(%$t);
+    ' t/.prove  | head
+  65.4168658256531 t9001-send-email.sh
+  40.6761560440063 t0027-auto-crlf.sh
+  26.0225791931152 t7610-mergetool.sh
+  24.0760719776154 t7112-reset-submodule.sh
+  23.5710120201111 t5572-pull-submodule.sh
+  23.2557609081268 t9500-gitweb-standalone-no-errors.sh
+  20.9747018814087 t1701-racy-split-index.sh
+  20.7937531471252 t7400-submodule-basic.sh
+  20.4510779380798 t5510-fetch.sh
+  20.0246639251709 t3305-notes-fanout.sh
 
-  Can I?
+Merging in ab/send-email-optim takes 60s, and yields:
 
-    git -c pull.rebase=true pull --ff-only
+  39.4541878700256 t0027-auto-crlf.sh
+  27.2213349342346 t7610-mergetool.sh
+  26.2227098941803 t9001-send-email.sh
+  25.0272631645203 t5572-pull-submodule.sh
+  24.3502569198608 t7112-reset-submodule.sh
+  24.0568630695343 t9500-gitweb-standalone-no-errors.sh
+  22.3555839061737 t7400-submodule-basic.sh
+  21.2626190185547 t3305-notes-fanout.sh
+  21.1138088703156 t5510-fetch.sh
+  21.0040950775146 t1701-racy-split-index.sh
 
-  `--ff-only` doesn't seem to be overriding the configuration.
+So we shaved 39s of CPU (albeit clocked-down-due-to-parallelism
+seconds), and gained 6 wallclock seconds. Subsequent runs seem to shave
+off a few more seconds even (presumably because the test-slowness
+ordering is updated).
 
-Passing --ff-only to `git rebase` doesn't solve the problem I was
-pointing out, only half of it.
-
-Sure, now this works:
-
-  git -c pull.rebase=true pull --ff-only
-
-But --ff-only is not really overriding anything, now you are passing the
-problem along.
-
-Consider it the other way around:
-
-  git -c pull.ff=only pull --rebase
-
-Is --rebase overriding anything?
-
-No, now all these three fail:
-
-  git -c pull.ff=only pull
-  git -c pull.ff=only pull --rebase
-  git -c pull.ff=only pull --merge
-
-This is making the situation even worse.
-
-Junio already made the same mistake [2], and I already pointed out why
-that doesn't work [3].
-
-This is what we want:
-
-  1. git pull # fail by default unless it's a fast-forward
-  2. git pull --merge # force a merge (unless it's a fast-forward)
-  3. git pull --rebase # force a rebase (unless it's a fast-forward)
-
-If you make `git rebase` honor --ff-only, and you make --ff-only the
-default, then `git pull --rebase` will *always* fail (unless it's a
-fast-forward).
-
-We want this:
-
-  git -c pull.ff=only pull --rebase
-
-To *ignore* pull.ff=only, not honor it.
-
-I already explored all the options, which is why I maintain that the
-only reasonable option is an orthogonal configuration:
-
-  pull.mode=fast-forward
-
-Cheers.
-
-[1] https://lore.kernel.org/git/60d7faaf5311a_b8dfe208bd@natae.notmuch/
-[2] https://lore.kernel.org/git/xmqqy2irjy4f.fsf@gitster.c.googlers.com/
-[3] https://lore.kernel.org/git/CAMP44s08mEyYqbjOeTeS46CngrbQMqP2=cMr1dtRLLk_BLAq3w@mail.gmail.com/
-
--- 
-Felipe Contreras
+-Peff
