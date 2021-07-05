@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91479C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 685B0C07E9C
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:33:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FE8E613AB
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:33:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54D98613AB
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbhGEMfp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 08:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55310 "EHLO
+        id S231452AbhGEMfq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 08:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231449AbhGEMfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 08:35:42 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EEDBC061765
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:33:05 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id t24-20020a9d7f980000b029046f4a1a5ec4so18198109otp.1
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:33:05 -0700 (PDT)
+        with ESMTP id S231444AbhGEMfo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 08:35:44 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C957C061760
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:33:07 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id t3so20601206oic.5
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ECxxfPK1SRxAWQfueTPq13GzKWFfnsCubYM8g8rb+x4=;
-        b=kvRn1cuBdxQ3gNSg8OXPRVrE3ZT/YAMVNcZTWL6dpVefz0Rwj78qgxG64b3jLiZZKA
-         g11KodxU8gLkePJPNo1hT3pnCtjUm/P3NBjIMCGDJm/Gtxl2GzLK9X+Q7jv7sc1ATDU5
-         pbZGsWpMEZjxIUipq/wzeUfpwrgmZA6hqFt0FgSdg06MDB6VuyU98fnZejnTnlL2auzU
-         9loUqHxdXMHfqdPDNHujsde0KvkdiXTRmZRBcKhELk2QMLkM+Urpl6Yf/CNr7Cq9DI2K
-         45EPxpy34TnktTyvDMJ4l5tvjBfLnhf0PBo05eCUpIItHnGKoeSrUb/NbM14YrnmEWbO
-         wvzA==
+        bh=iiRGE79cD5Fir74ETzs25vEZusqv1C5LQYgatYSNv6s=;
+        b=Cdgtk9xUWWqLrGTSYcEOFoW+DLuDEIt+Xvt3H3yTaYXR50U9mWmmNdiZGsZp0ycqVp
+         nM/9I2085AfVUtUZrbEsTyDd+LNDHpGixIKXBgKcNOm9+wcoLAJx/kTuwwKQ5mHQKbK0
+         9qIQnWiD03ycpF4JiO4c065BLLDkZbs0dLoAIjc7KrGzMWsmZHPVk89pbwfwc2zvVNv5
+         qryvggNP1MbKKONKAXHFL4XQikgDGM6WGZl96lYhb8BdD1hzoEGUd/1BhEoWuPSB7hC8
+         O7x82AJ/qwa1SvhLGNgUmty5Pqhuf9R4IONr91J/w3HI1TD2ZBixHUBO2r2uPjnfPjrf
+         K9gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ECxxfPK1SRxAWQfueTPq13GzKWFfnsCubYM8g8rb+x4=;
-        b=PnMC7Al4eK6AVw0YrqUiFQB0GvLqtXnRJJJzwm5YOADAJsudD1LDoFsUUwCVr5NXj0
-         JrDHDf7AoP7Yc5mAf/Hg7pQcfLPrZ8ng7VAYmEap/rli8ZVFNu/GGo+T1OHUFZBaYgYG
-         V52EAAWWDPw+ngT5wFYpNUKpzi3PD3qQJ+DstatxGKYuqsxKaMMoriEq1SoMT6opHT3R
-         dbu2qUK3N1JuUNvUZS9ZawWdB9sDFTYZksnDsMkbWjV66I9wIng2ITcII2sQmci/QQBO
-         OdXncHrrxgpPKZ9T+JBvKszV74b7/WLv/0b12SHgeMDkGPCiLtC6EzPoNPOgIUWlPURm
-         DblQ==
-X-Gm-Message-State: AOAM532Zydp1Ke8IFq+MCrtJkRcj3L0crWuT9HK3NY8f/No3Xu4VR+/M
-        Nx2cp5JfGu/SeandlINz00IMQblY2hvAvA==
-X-Google-Smtp-Source: ABdhPJxv+gyrfR60YApuYY1rxg2bHwSfikR8gU5tA4z2HiGr4zytcZYna2si9FAR1JJpohhw4EDPaQ==
-X-Received: by 2002:a9d:4b84:: with SMTP id k4mr6823343otf.262.1625488384577;
-        Mon, 05 Jul 2021 05:33:04 -0700 (PDT)
+        bh=iiRGE79cD5Fir74ETzs25vEZusqv1C5LQYgatYSNv6s=;
+        b=oI8dWfiIs691M5SqQH9sVyeE/2nXMj1v4FoE16PjuRgGSmq4N3wfea0yY7Cy83VdEc
+         qmoaT8f6AGd6aGpzZABTIZjYNBGgiaMh/j+q41PIkR6dTpyKCkqCuhWIVb5dGqwois26
+         dFJd+LOl3N/h9bwKY7xca8+bkHSHtt413D0o7b+5WGEjLMqzbZVGqd3ZUeBTqFLAbVxu
+         AhzGgT8vkhaipa5SbEgUFW85uuZCYWgRjC6MUGGd0Xrm4dwWh6yURttjMQlopwjGpkBl
+         KSxxwARY/itiinh3NjUJU7xuy5mJrHMjJWwWFFwObAR8Epi+oGzRwhnGCavE56ruDDuD
+         wsNg==
+X-Gm-Message-State: AOAM533tZEqcSxwZJQUvbyLo96Bd/doxTHKY3f4Y9vfReL8L9Lm5CQVG
+        jilEWmryrZLER1OqcCRtPxt8FNK0Drb5tA==
+X-Google-Smtp-Source: ABdhPJwaSpO3e6HIYyBm5MolK9+ZlTBGqqyjrWczYkQHaJSCBBJWz9tbQdUolnpRb0Zn364r6XCLgQ==
+X-Received: by 2002:aca:2806:: with SMTP id 6mr9724811oix.2.1625488386487;
+        Mon, 05 Jul 2021 05:33:06 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id p18sm2586451oth.60.2021.07.05.05.33.03
+        by smtp.gmail.com with ESMTPSA id p9sm2543210otl.64.2021.07.05.05.33.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jul 2021 05:33:04 -0700 (PDT)
+        Mon, 05 Jul 2021 05:33:05 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Richard Hansen <rhansen@rhansen.org>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC PATCH 31/35] pull: improve --rebase and pull.rebase interaction
-Date:   Mon,  5 Jul 2021 07:32:05 -0500
-Message-Id: <20210705123209.1808663-32-felipe.contreras@gmail.com>
+Subject: [RFC PATCH 32/35] pull: improve default warning
+Date:   Mon,  5 Jul 2021 07:32:06 -0500
+Message-Id: <20210705123209.1808663-33-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.36.g70aac2b1aa
 In-Reply-To: <20210705123209.1808663-1-felipe.contreras@gmail.com>
 References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
@@ -74,79 +74,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently --rebase without argument overrides pull.rebase:
+We don't want to start by recommending a permanent configuration, but a
+temporary solution so they start training their fingers and maybe learn
+how to do a rebase. So we start with the commands.
 
-  git config pull.rebase merges
-  git pull --rebase
+Also, we need to be clear about what we mean by "specifying"; merge, or
+rebase.
 
-Up until now this hasn't been a big issue, since user has not been
-forced to specify a merge, or a rebase. But with the introduction of
---merge and pull.mode, the user could in theory have the following
-configuration:
+Moreover, it's better use --global in the configuration commands like we
+did with push.default.
 
-  git config pull.mode merge
-  git config pull.rebase merges
+And finally, point to the documentation that explains what is a
+non-fast-forward, and how to solve it:
 
-In such case, the user would expect:
-
-  git pull --rebase
-
-To be the same as:
-
-  git pull --rebase=merges
-
-If the user wants to override the configuration, she can do:
-
-  git pull --rebase=true
+  git help fast-forward
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/pull.c  | 10 ++++++++--
- t/t5520-pull.sh | 10 ++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ builtin/pull.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index f4f822700a..e304b22bd8 100644
+index e304b22bd8..27ce2f2183 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -68,8 +68,14 @@ static int parse_opt_rebase(const struct option *opt, const char *arg, int unset
+@@ -979,18 +979,19 @@ static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_
  
- 	if (arg)
- 		*value = parse_config_rebase("--rebase", arg, 0);
--	else
--		*value = unset ? REBASE_FALSE : REBASE_TRUE;
-+	else {
-+		if (!unset) {
-+			/* --rebase shouldn't override pull.rebase=merges (and others) */
-+			if (*value < REBASE_TRUE)
-+				*value = REBASE_TRUE;
-+		} else
-+			*value = REBASE_FALSE;
-+	}
+ static void show_advice_pull_non_ff(void)
+ {
+-	advise(_("Pulling without specifying how to reconcile divergent branches is\n"
+-		 "discouraged. You can squelch this message by running one of the following\n"
+-		 "commands sometime before your next pull:\n"
++	advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
++		 "you need to specify if you want a merge, or a rebase.\n"
+ 		 "\n"
+-		 "  git config pull.mode merge  # the default strategy\n"
+-		 "  git config pull.mode rebase\n"
+-		 "  git config pull.mode fast-forward\n"
++		 "  git pull --merge # the default\n"
++		 "  git pull --rebase\n"
+ 		 "\n"
+-		 "You can replace \"git config\" with \"git config --global\" to set a default\n"
+-		 "preference for all repositories. You can also pass --rebase, --merge,\n"
+-		 "or --ff-only on the command line to override the configured default per\n"
+-		 "invocation.\n"));
++		 "You can quell this message by running one of the following commands:\n"
++		 "\n"
++		 "  git config --global pull.mode merge\n"
++		 "  git config --global pull.mode rebase\n"
++		 "  git config --global pull.mode fast-forward\n"
++		 "\n"
++		 "For more information check \"git help fast-forward\"."));
+ }
  
- 	if (*value > 0)
- 		mode = *value >= REBASE_TRUE ? PULL_MODE_REBASE : PULL_MODE_MERGE;
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 7ea558651d..b3b70d145f 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -597,6 +597,16 @@ test_expect_success REBASE_P \
- 	test_cmp_rev HEAD^2 keep-merge
- '
- 
-+test_expect_success REBASE_P \
-+	'pull.rebase=preserve interacts correctly with pull.mode and --rebase' '
-+	git reset --hard before-preserve-rebase &&
-+	test_config pull.mode merge &&
-+	test_config pull.rebase preserve &&
-+	git pull --rebase . copy &&
-+	test_cmp_rev HEAD^^ copy &&
-+	test_cmp_rev HEAD^2 keep-merge
-+'
-+
- test_expect_success 'pull.rebase=interactive' '
- 	write_script "$TRASH_DIRECTORY/fake-editor" <<-\EOF &&
- 	echo I was here >fake.out &&
+ int cmd_pull(int argc, const char **argv, const char *prefix)
 -- 
 2.32.0.36.g70aac2b1aa
 
