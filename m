@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0CB5C07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F422BC07E9C
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2520613AE
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D58F5613AA
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 12:32:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231177AbhGEMe4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 08:34:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54894 "EHLO
+        id S230492AbhGEMe6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 08:34:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230492AbhGEMe4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 08:34:56 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB06AC061574
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:32:18 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id t24-20020a9d7f980000b029046f4a1a5ec4so18195940otp.1
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:32:18 -0700 (PDT)
+        with ESMTP id S230440AbhGEMe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 08:34:57 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C6FC061574
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 05:32:20 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id r29so4176015oiw.13
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 05:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SRcvqel+3yC5OJOh9fWMay2wHUWwhrsVkld23PgM71g=;
-        b=ckP3TAzm6EbGuRJF4XRHFKDEOKfyqPVw1VpsUpKiQLQapQ7wMkYjTssd/ATBE2NDev
-         qFdPopAU/xgk7gDF3swuqeL/MWu2KkL0++KHZtqDWxh0+USyWnbQGgLJmu8fpBzSV/xo
-         AnjgP1e9PE4Ahs4IKyGwyd66LWjMDIXjIxPxpMriWR4Pj8iVvKZBNXdqQooVG1WHPIey
-         6915t1dEHMcQPf75TEl+eAojBNbpDMsomXyz6Btanydh9Oj0+ET9KCQfj1udzrVdvH6n
-         NEuxG3nFZiWPhX5taJKcjx2tpxGnpsBodk0P3/tLQ61F/NcuP1EBW0IaT7htyihMaWAd
-         0slg==
+        bh=zUFu2zuIjC4xz1tJv3wiAI3LhueGdoPq4NGJJM+hK+U=;
+        b=JjU6Ry8xAJUJ3w31f5P6jziDw2rdVVyByBQ3iz2spjCW3k8HlBTqzPK3q0L3NpvdNb
+         o2VgBHhgJuNKvvxjiaOWPu24nEh/x5wvcqu/aQ/4/91aiMe6u8w8yerOoV+qSfH2/MQv
+         m9WOIukrCU5cC3PFJ8QWgdzIfF5/FNBFfS5ksXkiInHXWbufGgYco9ShYoTYA2MgLs81
+         PtHlaz3s/mzAQK2sWEestiPhsV+f9IQUkGWzkiYhhbTtV8C7QyUbXquDv1799vOetRvX
+         ReNdGIVBu7Bm+MZPkzz6gUw07lO/BJ/BXdAU3kTCDiiV3QjC5zi33rNCgxQiYiwPDx5w
+         Q2jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SRcvqel+3yC5OJOh9fWMay2wHUWwhrsVkld23PgM71g=;
-        b=bV2lYWGXBTMlqyfKC0eqweqBJLP/XJYm7kf0sew9YM7rF4FA3cZ2EeDCuVs50cOixh
-         lhzhwqMW4eHCGo8J4vA9TdZgyb2fid4GFH8oXMzv60oNDyPss2X1ZIzFEQoI4Bh5GhlE
-         zmvz669jdYogOocVaHr/4Z/znJcbfW2QMHjI/5YEX+gANuuJXUtzjUC+fMS3hoNnZNmk
-         imim4Jr1F3blHNr36jJ3axYu2M7y7J+u4XfFBlWAWDDGTYNFbiNvpO7/rOtEEaK7ww50
-         wPBaLhVf8QsUkqqeAhAxOTNFCSB/RPJInnh8Rkj0Jg5gUoJFkX+NHx2IPGeI//3u9/hZ
-         zmfQ==
-X-Gm-Message-State: AOAM533BAMvb0JJMj0697nNxie3Z/ZKnOeVWZU61cYtbu/izmbdMqO2k
-        q5PUFxA+do2IrXnBA+lWST/WS/Aomnn9jw==
-X-Google-Smtp-Source: ABdhPJycpynoPVLpK9dsZVoMrfEO4ORJEXQQ6KJfvM1ogmVpj/U6XVLQwHM9eRUKKiy0UDyc/k/0Gw==
-X-Received: by 2002:a05:6830:119:: with SMTP id i25mr4821815otp.28.1625488338068;
-        Mon, 05 Jul 2021 05:32:18 -0700 (PDT)
+        bh=zUFu2zuIjC4xz1tJv3wiAI3LhueGdoPq4NGJJM+hK+U=;
+        b=ZFD9in4aFsup63upXgwLPISEtYonVA3kFONhlsZzyLF6MebidggXibgihNo/lcC5QK
+         mShZXLBjsLfajTyjcOcPYC/S2Pp9y+jxpEjd8bLa2g3b+Tcj1j+fuqwOHZaHV6TEu02j
+         UM7di6XHIvAATNXNtAFe9S8dvqKHGqJ7teoqmqTj+oJVL/RVVnn9HPRrfWIoAT3kVNBO
+         swcka+FSyItdRY6fAEFFYJnMUyEePRugsrYfNJKEky1CIuCUjfQGuL7/ANLSWpzD4SUq
+         clEnMvTuKmJuEGIgRoEjUA0fXEnCxoxDeUNPCPddFFJ/IDYueBIPJotclkv/XTH+vfCs
+         dJcg==
+X-Gm-Message-State: AOAM532EjM+9qzwBx3zIAoLccLtj1y6c3WRsv00gqTGcxRnjRY6s5HZI
+        +VEquC1U2Qbsnxpw7/RH+Dul9gJKdomdHw==
+X-Google-Smtp-Source: ABdhPJwjJ91824XHAZEthsbKgP77RtllSe4R0TlnsKwxagnRXpcAqCQDX1Srv2u/AkOGYzAVSfWSgg==
+X-Received: by 2002:a05:6808:2115:: with SMTP id r21mr5508716oiw.10.1625488339919;
+        Mon, 05 Jul 2021 05:32:19 -0700 (PDT)
 Received: from localhost (fixed-187-189-187-231.totalplay.net. [187.189.187.231])
-        by smtp.gmail.com with ESMTPSA id 59sm2547314otp.68.2021.07.05.05.32.17
+        by smtp.gmail.com with ESMTPSA id e18sm2631729oiw.27.2021.07.05.05.32.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jul 2021 05:32:17 -0700 (PDT)
+        Mon, 05 Jul 2021 05:32:19 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Alex Henrie <alexhenrie24@gmail.com>,
         Richard Hansen <rhansen@rhansen.org>,
         Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC PATCH 04/35] doc: fast-forward: explain what it is
-Date:   Mon,  5 Jul 2021 07:31:38 -0500
-Message-Id: <20210705123209.1808663-5-felipe.contreras@gmail.com>
+Subject: [RFC PATCH 05/35] fast-forward: add advice for novices
+Date:   Mon,  5 Jul 2021 07:31:39 -0500
+Message-Id: <20210705123209.1808663-6-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.32.0.36.g70aac2b1aa
 In-Reply-To: <20210705123209.1808663-1-felipe.contreras@gmail.com>
 References: <20210705123209.1808663-1-felipe.contreras@gmail.com>
@@ -74,58 +74,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+It doesn't hurt showing it on `git merge --ff-only` too.
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-fast-forward.txt | 32 +++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ advice.c        | 11 +++++++++++
+ advice.h        |  1 +
+ builtin/merge.c |  4 +++-
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-fast-forward.txt b/Documentation/git-fast-forward.txt
-index d457022629..b7322c437e 100644
---- a/Documentation/git-fast-forward.txt
-+++ b/Documentation/git-fast-forward.txt
-@@ -15,11 +15,41 @@ DESCRIPTION
- Incorporates changes into the current branch. By default the upstream branch is
- used, but a different commit can be specified in the arguments.
+diff --git a/advice.c b/advice.c
+index 0b9c89c48a..8f068c8be9 100644
+--- a/advice.c
++++ b/advice.c
+@@ -326,3 +326,14 @@ void detach_advice(const char *new_name)
  
-+Assume the following history exists and the current branch is
-+`master`:
+ 	fprintf(stderr, fmt, new_name);
+ }
 +
-+------------
-+    D---C---B---A origin/master
-+	^
-+	|
-+      master
-+------------
-+
-+Then `git fast-forward` will advance the local `master` to `origin/master`:
-+
-+------------
-+    D---C---B---A master, origin/master
-+------------
-+
-+This operation is not always possible; if you made changes and the branches
-+have diverged:
-+
-+------------
-+    D---C---B---A origin/master
-+	 \
-+	  X---Y master
-+------------
-+
-+then the fast-forward command will fail.
-+
-+In those cases you need to either `git merge`, or `git rebase` in order to
-+synchronize the two branches.
-+
- THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOUR MAY CHANGE.
++void diverging_advice(void)
++{
++	advise(_("Diverging branches can't be fast-forwarded, you need to either:\n"
++		"\n"
++		"\tgit merge\n"
++		"\n"
++		"or:\n"
++		"\n"
++		"\tgit rebase\n"));
++}
+diff --git a/advice.h b/advice.h
+index bd26c385d0..6ce967c962 100644
+--- a/advice.h
++++ b/advice.h
+@@ -97,5 +97,6 @@ void NORETURN die_resolve_conflict(const char *me);
+ void NORETURN die_conclude_merge(void);
+ void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
+ void detach_advice(const char *new_name);
++void diverging_advice(void);
  
- SEE ALSO
- --------
--linkgit:git-merge[1]
-+linkgit:git-merge[1], linkgit:git-rebase[1]
+ #endif /* ADVICE_H */
+diff --git a/builtin/merge.c b/builtin/merge.c
+index e396943d37..1836f98f82 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1625,8 +1625,10 @@ static int merge_common(int argc, const char **argv, const char *prefix,
+ 		}
+ 	}
  
- GIT
- ---
+-	if (fast_forward == FF_ONLY)
++	if (fast_forward == FF_ONLY) {
++		diverging_advice();
+ 		die(_("unable to fast-forward"));
++	}
+ 
+ 	if (autostash)
+ 		create_autostash(the_repository,
 -- 
 2.32.0.36.g70aac2b1aa
 
