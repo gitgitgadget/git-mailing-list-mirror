@@ -2,114 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD54FC07E99
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76DE4C07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:48:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E1DC61961
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:39:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56D5E61426
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 19:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229818AbhGETl7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 15:41:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
+        id S229753AbhGETu5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 15:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhGETl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 15:41:58 -0400
-Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDC3C061574
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 12:39:20 -0700 (PDT)
-Received: by mail-vs1-xe34.google.com with SMTP id h5so8906003vsg.12
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 12:39:20 -0700 (PDT)
+        with ESMTP id S229565AbhGETu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 15:50:56 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45642C061574
+        for <git@vger.kernel.org>; Mon,  5 Jul 2021 12:48:18 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id p21so12482701lfj.13
+        for <git@vger.kernel.org>; Mon, 05 Jul 2021 12:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=3BSExrnvNjvJ4rkmD+vArYnzINht7Bwj6gIw9z/KLb4=;
-        b=t6mlNp/tIM1DSxEhdnZhZUQ5qyyz9pkFzOpl75Z+EhwY43Ye16BxUbQjpU6Wi3ge0U
-         /DSk/HaSDAoDQy8Er5LluYgkNpQkAX1M5pbsWBvzOZwaEtQTfTPSA1zUXjEtfcglHuO6
-         Z+30OwrRzQUl1T4XD7UQ+kvuyvfebo1yGbiNGRsB/6vrV/e/yBQhMWl5peQwvuI13WMm
-         ZPwb6zGktyjBbcOokbbm+4SKpcGJHfeaBU+Fc1MQ80cgMIGZMsVkNhdb7uUOxESMiJr+
-         hHvkMNw3+D3+4giFrb+MDm6GVxDwp76NDRsCBeoZlpNHK8VCyOmyMG9t7a/jjw2aS/rz
-         fJpA==
+        bh=QQvsQ0RZViT7bmCTr2z6aS2g3klpkfl0PXpvk+i5CqU=;
+        b=GSa3cQtZKOxVmsOJxrGMISYEv8jnW7x6bJtd8K5PDFCFhEBocjcO626+Dkmp2nQHmA
+         1Q7SNTBVCQM79cUN60X2CuAR6oy3ofF72UnQsstWgmTBeQyNQkZUThvkGri+DQEAvi12
+         xXiTIhaeKz1aAXK7vIQdxjyxEvq7S3rUU5mNPatl3LHzm6aCQi+9+vxVlxeSZVGaIwwD
+         /eToct33I+cXMuD5VKSgNd8kyT4nCslDX8P+mRtCR64rEQfO/gKa/KpW7PB6nec3ivdt
+         317QCQdQXBG5hCFm1212us6avTSmammmIKvh4vX7s+mnEbe6zKrHbGPgkcoMOJNphID5
+         oSKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3BSExrnvNjvJ4rkmD+vArYnzINht7Bwj6gIw9z/KLb4=;
-        b=EFMGhLifTM5wAHK+PiOQe9FsrJrTOmR4vYn8yV7UKmKBGCCGo8glWME9evUW2kW9xe
-         Flcj/i9fbQd/Mp20er1gcRO9pEFlcvPnDfta3pXcFXfZfPTEV+gqzoVUhZfqujqTBMTT
-         vcDz5D56VOfi7j3TqsuaCf0GHR5+x+qv/NFoNZVqFDgsz31GeEZG7XdDMjKimpK/myX6
-         58exqIaSQV64NS2Zwx0/55P8/RIvqmNmkWRIdXpRD3FZBOlPSnoV3Mh9Yhl3g/CbbqpO
-         GTHuJy6MjlYklML765aCEg4zvcqfWm6YOfK2BwfV+kXauf0OqFdsNnayrhLPY1aI0GDK
-         DxQA==
-X-Gm-Message-State: AOAM533CYFfznYFVeOqwYbByO/Ywwjn5HrlconYG+7dixFSVVhoaTI8j
-        JKqC+4PMM9uTKqVqqtmNCZfQ2jyRDaXPv8S3yb3ZjQ==
-X-Google-Smtp-Source: ABdhPJyqfXyVdHkYSZcnmt24hRKZtJ4pMAjFc66UtM9YeJy0PWdVEGExkylogLIy7Ezyh1ttrBcxumWtypGyE9SlhpU=
-X-Received: by 2002:a67:6992:: with SMTP id e140mr11317838vsc.2.1625513959617;
- Mon, 05 Jul 2021 12:39:19 -0700 (PDT)
+        bh=QQvsQ0RZViT7bmCTr2z6aS2g3klpkfl0PXpvk+i5CqU=;
+        b=nRQ3ZykJ9NHUcMn7vsWLEJzDW7BrOo/k/XkTUy/b9Lu1Xg29FKipJZgfDruHwL2QBl
+         vHUYlx7cuR55JJPdeqtCbSkomQeXcGTBPgdgyE6OLXfubJZmD39zovXFVWZzWiIXP2oN
+         ila+P1DzhXFCED8cROh7PlCXlciUb58NGZ+MKJFvIZA5VQzWNfoaRmalvgGn87iT+b61
+         ETkO0CkVjR87YxJOCUH/jGTwNuSpTD9tXlB3+aeZ42eIMS810u71Sg7i2ybRqKWVzys8
+         T50cRuaRqFxk523NXMjlNZ9Gf5XMaht5UrWJOt+qjqs8QAXUhapQIxSy5UvXM5KQEjgE
+         u/NQ==
+X-Gm-Message-State: AOAM533adWfkBgs7Nf59jb1JHUh1aUitlVeV4LpaBHWmvCyNoSMMiL2m
+        2b51UDm74OVWDocdPxmpVN1cwDJHzXjdJy1sHKs=
+X-Google-Smtp-Source: ABdhPJw/7F3U71hKtEFfjhZDecqqPwQmpJZrjeTaMvHjCiGd6GC4Nz75s4dzfeAibkLVqrmGlVJ48BiTKgGd8nzLCoc=
+X-Received: by 2002:ac2:5318:: with SMTP id c24mr11635892lfh.167.1625514496522;
+ Mon, 05 Jul 2021 12:48:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1012.git.git.1619710329.gitgitgadget@gmail.com>
- <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com> <2a9ebe43deac3da9baf241ff1e494f8210c27981.1623329869.git.gitgitgadget@gmail.com>
- <8735sydvzs.fsf@evledraar.gmail.com> <CAFQ2z_OeO8ALHPv6JzL2UDWqEb6Um8e8nPYMWBH8mmaMvibMhQ@mail.gmail.com>
- <877di47e2j.fsf@evledraar.gmail.com>
-In-Reply-To: <877di47e2j.fsf@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 5 Jul 2021 21:39:08 +0200
-Message-ID: <CAFQ2z_MuZJ7FmaZ8pjb51dhSHuHYipesHn8hum3Af49qwiZL6Q@mail.gmail.com>
-Subject: Re: [PATCH v2 8/8] refs: explicitly propagate errno from refs_read_raw_ref
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <20210705044505.666977-1-alexhenrie24@gmail.com>
+ <349748b4-3c48-7ca7-eb0f-e859a15cab0f@gmail.com> <7ee36923-0806-4316-729c-8418df5b6555@gmail.com>
+ <xmqqpmvwn1qp.fsf@gitster.g> <xmqqlf6kmup4.fsf@gitster.g>
+In-Reply-To: <xmqqlf6kmup4.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Mon, 5 Jul 2021 13:48:05 -0600
+Message-ID: <CAMMLpeQG-eYgWTXyG0YzgN3U8QDASAtNFpxyXDFFPSVNzfw18g@mail.gmail.com>
+Subject: Re: [PATCH RFC] rebase: respect --ff-only option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 5, 2021 at 9:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+On Mon, Jul 5, 2021 at 2:53 AM Phillip Wood <phillip.wood123@gmail.com> wro=
+te:
+>
+> On 05/07/2021 05:45, Alex Henrie wrote:
+> > index 12f093121d..b88f0cbcca 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -1345,12 +1349,14 @@ int cmd_rebase(int argc, const char **argv, con=
+st char *prefix)
+> >                        N_("ignore changes in whitespace")),
+> >               OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
+> >                                 N_("action"), N_("passed to 'git apply'=
+"), 0),
+> > -             OPT_BIT('f', "force-rebase", &options.flags,
+> > -                     N_("cherry-pick all commits, even if unchanged"),
+> > -                     REBASE_FORCE),
+> > -             OPT_BIT(0, "no-ff", &options.flags,
+> > -                     N_("cherry-pick all commits, even if unchanged"),
+> > -                     REBASE_FORCE),
+> > +             OPT_SET_INT_F('f', "force-rebase", &options.fast_forward,
+> > +                           N_("cherry-pick all commits, even if unchan=
+ged"),
+> > +                           FF_NO, PARSE_OPT_NONEG),
+>
+> Why does this change rebase to start rejecting --no-force-rebase? This
+> is the sort of behavior change that deserves a mention in the commit
+> message.
+
+That was accidental, sorry. I copied and pasted option code from
+another place without paying attention to the PARSE_OPT_NONEG.
+
+> > +             OPT_SET_INT(0, "ff", &options.fast_forward, N_("allow fas=
+t-forward"),
+> > +                         FF_ALLOW),
+>
+> The useful option when rebasing is '--no-ff', now that will no longer
+> appear in the output of 'git rebase -h'
+
+Yeah, that's a good point.
+
+On Mon, Jul 5, 2021 at 3:36 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
 ab@gmail.com> wrote:
-> > and the case you pointed out is the only one which inspects errno
-> > after calling resolve_ref_unsafe (transitively through the grepped
-> > functions.)
 >
-> Isn't the `errno =3D=3D EISDIR` in files_copy_or_rename_ref() another one=
-?
-> It's just after calling refs_read_ref_full().
-
-no. It's handling the EISDIR for refs_delete_ref.
-
-> > I'll take from this review that I should elide the part where errno is
-> > cleared, and leave it to someone else to figure out a more holistic
-> > strategy to error reporting.
+> On Sun, Jul 04 2021, Alex Henrie wrote:
 >
-> ...or if we don't clear errno introducing those sorts of subtle bugs
-> when we use reftable instead of the files backend. I.e. no, we really
-> should be clearing errno, if not in this series then in some other
-> pre-reftable series.
+> > +int error_ff_impossible(void)
+> > +{
+> > +     error(_("Not possible to fast-forward, aborting."));
+> > +     return -1;
+> > +}
 >
-> To not do so would be kicking this particular can down the road, and
-> leaving those bugs for reftable users to find. Which given that I've
-> found a few cases with no test coverage...
+> Here's one, the idiom is just "return error", i.e it itself returns -1.
 
-too late :-)
+That would indeed be simpler; thanks for pointing that out.
 
-I've already kicked the can down the road by not clearing errno in the
-current version of the series.
+> FWIW I'd consider doing:
+>
+>         /* earlier, static scope */
+>         static const char error_ff_impossible =3D N_("Not possible...");
+>         /* later, function scope */
+>             return error(error_ff_impossible);
+>
+> It's a small difference, but for translators who use the jump-to-source
+> while translating not having the indirection helps, and in this case
+> it's just used 3 times...
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+Wouldn't jump-to-source take the user to the English text in advice.c
+either way? How does putting it in a static variable help?
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+> > [...]
+> >       if (parent && parse_commit(parent) < 0)
+> >               /* TRANSLATORS: The first %s will be a "todo" command lik=
+e
+> > @@ -2764,7 +2769,7 @@ static int populate_opts_cb(const char *key, cons=
+t char *value, void *data)
+> >       else if (!strcmp(key, "options.record-origin"))
+> >               opts->record_origin =3D git_config_bool_or_int(key, value=
+, &error_flag);
+> >       else if (!strcmp(key, "options.allow-ff"))
+> > -             opts->allow_ff =3D git_config_bool_or_int(key, value, &er=
+ror_flag);
+> > +             opts->fast_forward =3D git_config_bool_or_int(key, value,=
+ &error_flag) ? FF_ALLOW : FF_NO;
+>
+> Since we're on nits, we try to wrap at 80 characters.
 
-Registergericht und -nummer: Hamburg, HRB 86891
+Thanks, I didn't know what the exact cutoff was.
 
-Sitz der Gesellschaft: Hamburg
+> > +test_expect_success "rebase: impossible fast-forward rebase" '
+> > +     test_config rebase.autostash true &&
+> > +     git reset --hard &&
+> > +     echo dirty >>file1 &&
+> > +     (git rebase --ff-only unrelated-onto-branch || true) &&
+>
+> Never "||" git commands, better as test_might_fail. We don't want to
+> hide segfaults.
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Also thanks for the advice here.
+
+On Mon, Jul 5, 2021 at 10:50 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > Looking at origin/seen:builtin/pull.c we already check if we can
+> > fast-forward and unconditionally merge in that case irrespective of
+> > any '--rebase' option or pull.rebase config. It should be simple for
+> > pull to error out if '--ff-only' is given and we cannot fast-forward.
+>
+> Excellent.
+>
+> Even though teaching even more special case on the "git pull" side
+> makes me feel somewhat dirty, but I think it would be a small price
+> to pay, and the end result would save an useless fork whose sole
+> purpose is to make the integration step after fetch fail when "pull"
+> can easily tell, as you said, that it ought to fail, so overall it
+> would probably be a net win.
+
+Okay, so it sounds like I should just scrap this patch and try again,
+after "pull: cleanup autostash check" is in master, with a patch that
+only modifies `git pull` and not `git rebase`. (Unless someone more
+experienced wants to take over, which would be fine by me.)
+
+Thanks anyway to Phillip and =C3=86var: Your feedback will help me write
+better patches in the future.
+
+-Alex
