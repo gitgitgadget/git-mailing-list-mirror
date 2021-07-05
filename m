@@ -2,163 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A7ECC07E9C
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 20:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 659D9C07E99
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 21:35:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 23A1961985
-	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 20:56:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38CCF61988
+	for <git@archiver.kernel.org>; Mon,  5 Jul 2021 21:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230048AbhGEU7H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Jul 2021 16:59:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229997AbhGEU6u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jul 2021 16:58:50 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABDA9C061574
-        for <git@vger.kernel.org>; Mon,  5 Jul 2021 13:56:11 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id i8so10604547wrp.12
-        for <git@vger.kernel.org>; Mon, 05 Jul 2021 13:56:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=wJ8tP77YWHy9FvkzV2fhzNftEApwtOKkhypJepj/ttE=;
-        b=nE2dWaPs9mK8fm22CyX8Ew9jRDVGadw7d+HPUmYk0SUG+MuwYx0wZmZlegdsijSsey
-         QZgqlu5a5IzmmW6qkHq/5Sgr6eo2wie2RXt/2ofkht7knlWv9aqQP6muhpzegRLB5v3z
-         nimFl3nXihos/CzkW62jyr/oqPiYHMz+Q0TtiAOFe/tRAnqjh7DuxnG9MvKbnH5Euw/g
-         fLOLXAHNLdW7UAGK9RiH64d28JnqZHQU+ug534oC8Von2Ck2YGqZ3n6dS7yXO2S3xWwD
-         eUKkUxtAoYTuUrMNa80AYJk8kyR3sIaxFhWYH77MgdRzvUCE7yBepVfH3M2zCKrs4GVD
-         ZxyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=wJ8tP77YWHy9FvkzV2fhzNftEApwtOKkhypJepj/ttE=;
-        b=RGR7gr63FE4ErVTQk1WtLecaWQzMrcMpYuu/gmSBi4CpsOHuoAGXwD29AWyEzx8pcO
-         TRXA5ZbeLCbPldwTsMyqMD3z4K8E3vmfLykpq7mklDG3RKrSIHhaPKADiBeLw/BRBS8+
-         DwyKgk5vIRJYriXehbpa497vdqUFCWJHxO295uhgC5XOJVDEF2PT+1ydCTIyhQEDDk5S
-         hUL8kOO+wt8q9xlZlFERGZild68Vm/eXTm7r2bTHTlHH0//XCn3mxNSlXAlLZ5Dci4x/
-         HiMiJidKpo6+dTVVlNC0w6ajGf31NQsGOt9KTaKYR/+8Jo4X3ETRSw/eofRL6ocX2CEW
-         NBag==
-X-Gm-Message-State: AOAM532kCqIPMRQkjo02MzQ4SO3lPpNlqcMtGxMChwJQCUSyQzp1UCpk
-        R4BlNzljIoWaq3XvpNHbcnVN3mzZzQ4=
-X-Google-Smtp-Source: ABdhPJzbtHnXianiXwYhSK52J4nkGbx7TKk7G0lypman6wa6jy5RTI4+rOQ1CXRRajTCMOz/0DCWkQ==
-X-Received: by 2002:a5d:6511:: with SMTP id x17mr17612629wru.212.1625518570385;
-        Mon, 05 Jul 2021 13:56:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u15sm1028138wmq.1.2021.07.05.13.56.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jul 2021 13:56:10 -0700 (PDT)
-Message-Id: <ed5347d7bb61257a164750835b754babb876e36a.1625518566.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1012.v3.git.git.1625518566.gitgitgadget@gmail.com>
-References: <pull.1012.v2.git.git.1623329868.gitgitgadget@gmail.com>
-        <pull.1012.v3.git.git.1625518566.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Jul 2021 20:56:05 +0000
-Subject: [PATCH v3 5/5] refs: make errno output explicit for
- refs_resolve_ref_unsafe
+        id S233086AbhGEVie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Jul 2021 17:38:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:44603 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233060AbhGEVie (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jul 2021 17:38:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1625520942;
+        bh=crPdysO+ngBCzCp/dQWxn3ElGD+zR2UfC8bl1h9lLYI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FQp+29qNZpDKSX0gNsDkjo4zMkdiSKOXDMea27ffpK90qYXCMLX5BEHtfXArFERob
+         mx1rvDQOkUqt98Dv0iD9hO0k+RFpP+eub0fUVEJ1OX6h5hKiL+tWxSwIjU30Ylwh/z
+         7/Z4YmGGvcSh48R8kAM63g67CtJxJxkSzECJTIzQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.249.152] ([89.1.213.17]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwZ4-1lD5UY0Ado-00uLTf; Mon, 05
+ Jul 2021 23:35:42 +0200
+Date:   Mon, 5 Jul 2021 23:35:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        David Turner <David.Turner@twosigma.com>
+Subject: Re: [PATCH v3 00/34] Builtin FSMonitor Feature
+In-Reply-To: <87czs1d6uy.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2107052259340.8230@tvgsbejvaqbjf.bet>
+References: <pull.923.v2.git.1621691828.gitgitgadget@gmail.com>        <pull.923.v3.git.1625150864.gitgitgadget@gmail.com>        <87fswyc4dz.fsf@evledraar.gmail.com>        <e1442a04-7c68-0a7a-6e95-304854adff39@jeffhostetler.com>
+ <87czs1d6uy.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: multipart/mixed; boundary="8323328-799668434-1625520942=:8230"
+X-Provags-ID: V03:K1:HnGoKXrUDPFYecso+Ajnp9U1D1Ms+Hr0qvhizkL/TN3PWBE+HQX
+ /HT6LeXsj0/EnldsTJF1N0Mi65JgGn1opUJ8xLopJBZyTM30j4m6L+KEgQCb9KLShlvd3qw
+ DPSrG6wBWoxKGuMY1mLs4+JgP2WS6oBjnTUBSQl0M+2/XiYWaHq7cRxBLa1hs5zpuGA6Rzf
+ e+n89SAdNdZpEYqKGotSw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R62LSLjxPfU=:RBMZCcMARB3ZurajwCGO2L
+ PboIqLFqGl1Wb59VrybnPOUl3APq4ekCd24gI3WoihDcxxVdyoobKHO6U+T/c5jXtH096tDLO
+ RQMPoDTLzHR3r0YYVLI4Su7PxR8Gew8RqztCitn98GE4Oq1yIorWvjGyAGzGHRZADQOnAG0mh
+ 9snUac4oSx1ONHqqyAgoq8cAcvcS1WZsvuALHQGu+9u02+DbPeyCLROTEqv5iDCA9MIAsbn+P
+ MVFWR/lldwIaVj9gHiWS0b8ZmldOmPJB8C6Ji32+HQK4KyG6YiXOQSfwf/RTUeOh7qbRAXIZr
+ j1Ga3qXnA5K6hhDFZFkkkc2UbtZD3GsZH3cfECfauehq6ilh1Evf/xwTF7ptdvQgmHIqvb2Ki
+ wBPIpuHz8Ng9RaKTyiIyAWKr8cvg3Yc3xU5xqKL2NpLb22n6QWzKagHkHe/r7fO9x4qMnfgSa
+ a68Miy9wOFlnJdSr2UN9NSfl7FAmmE224n/pvXowKhZe3qBNtLCK+0pWrSmy0tuzN+fllutcl
+ VnRgr/xfdK3dQ7OidSuqb2YD3HYijWHFU+vY3aPCDqZNBao/9zDuikNkD8/0so0NgQW/JsUNS
+ g+8hwLtj+dSJLBUfD0V7HNbdNBa1T2YrGoomXLoEjw9ZwvuBT9kmx/ZxI02CskisSweiE+K7P
+ ssj2DYOzHr+3MhUfRD4XZpF9VDsktDZlqYFWkZsGM4udLPcgxxhwWRulk/r10cZeRUYwd8Lnh
+ V9L8gF/dqfxCkHVjYpiRAxiKrDzcCZbORFgjkNsKkWGPl12nMxsutdfgr4RYmN+2bFvccbO+2
+ 8ztofYRA/QT4V3LBrfwYxF0t2BWc5C2oX4VI4gnscPgJJZU1gBGaWG9ttsJVQ9erf/JzzqPV4
+ bN1CBJ0bu0CiQqgc65gflJcL4sI7sb8fX9bskmcS6aJ2wiAtNlqOwHeOhtdAKbxjNqDDa9OZE
+ YKIVUxrZ5mx2bqUl76jz5zgbWL+dZ2/QNc0rw/A32eManMs20bUQWiOSS5H/eqZPzG/XR9Cdy
+ zLQhrRKPxM5zM3R9nq4NAq0iR1klKqKqADPoCECYpnz74lUep7zWRTL+pEhspwTmkb2CctLlJ
+ 5YpkfeLlx/5b2H5B0q9L2TNaayXCjE3rBRxHWvTjWvcSQNWQQD1UJXENA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This introduces refs_resolve_ref_unsafe_with_errno(), which makes the API
-contract for the errno output explicit. The implementation still relies on
-the global errno variable to ensure no side effects of this refactoring.
+--8323328-799668434-1625520942=:8230
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-lock_ref_oid_basic() in files-backend.c is the only caller of refs_resolve_ref()
-that needs error information to make logic decisions, so update that caller
+Hi =C3=86var,
 
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
-Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- refs/files-backend.c | 15 ++++++++-------
- refs/refs-internal.h |  8 ++++++++
- 2 files changed, 16 insertions(+), 7 deletions(-)
+On Thu, 1 Jul 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f38c9703504..8506c8b3bde 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -923,6 +923,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 	int mustexist = (old_oid && !is_null_oid(old_oid));
- 	int resolve_flags = RESOLVE_REF_NO_RECURSE;
- 	int resolved;
-+	int resolve_errno = 0;
- 
- 	files_assert_main_repository(refs, "lock_ref_oid_basic");
- 	assert(err);
-@@ -935,10 +936,11 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 		resolve_flags |= RESOLVE_REF_ALLOW_BAD_NAME;
- 
- 	files_ref_path(refs, &ref_file, refname);
--	resolved = !!refs_resolve_ref_unsafe(&refs->base,
--					     refname, resolve_flags,
--					     &lock->old_oid, type);
--	if (!resolved && errno == EISDIR) {
-+	resolved = !!refs_resolve_ref_unsafe_with_errno(&refs->base, refname,
-+							resolve_flags,
-+							&lock->old_oid, type,
-+							&resolve_errno);
-+	if (!resolved && resolve_errno == EISDIR) {
- 		/*
- 		 * we are trying to lock foo but we used to
- 		 * have foo/bar which now does not exist;
-@@ -958,15 +960,14 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
- 						     &lock->old_oid, type);
- 	}
- 	if (!resolved) {
--		int last_errno = errno;
--		if (last_errno != ENOTDIR ||
-+		if (resolve_errno != ENOTDIR ||
- 		    /* in case of D/F conflict, try to generate a better error
- 		     * message. If that fails, fall back to strerror(ENOTDIR).
- 		     */
- 		    !refs_verify_refname_available(&refs->base, refname, extras,
- 						   skip, err))
- 			strbuf_addf(err, "unable to resolve reference '%s': %s",
--				    refname, strerror(last_errno));
-+				    refname, strerror(resolve_errno));
- 
- 		goto error_return;
- 	}
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 54f57c6a2df..c52a64b081b 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -153,6 +153,14 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
- 		      struct object_id *oid, struct strbuf *referent,
- 		      unsigned int *type, int *failure_errno);
- 
-+/* Like refs_resolve_ref_unsafe, but provide access to errno code that lead to a
-+ * failure. */
-+const char *refs_resolve_ref_unsafe_with_errno(struct ref_store *refs,
-+					       const char *refname,
-+					       int resolve_flags,
-+					       struct object_id *oid,
-+					       int *flags, int *failure_errno);
-+
- /*
-  * Write an error to `err` and return a nonzero value iff the same
-  * refname appears multiple times in `refnames`. `refnames` must be
--- 
-gitgitgadget
+> On Thu, Jul 01 2021, Jeff Hostetler wrote:
+>
+> > On 7/1/21 1:40 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >> Any other testing of it is stalled by there being no linux backend
+> >> for it as part of this series. I see from spelunking repos that
+> >> Johannes had a WIP compat/fsmonitor/linux.c which looks like it
+> >> could/should mostly work, but the API names all changed since then,
+> >> and after a short try I gave up on trying to rebase it.
+
+I am a bit surprised that you gave up so easily, it cannot be that hard if
+you use `git rebase -i` smartly.
+
+But I think there is an even bigger obstacle lurking than just the
+challenge of rebasing that experimental backend.
+
+> > The early Linux version was dropped because inotify does not give
+> > recursive coverage -- only the requested directory.  Using inotify
+> > requires adding a watch to each subdirectory (recursively) in the
+> > worktree.  There's a system limit on the maximum number of watched
+> > directories (defaults to 8K IIRC) and that limit is system-wide.
+> >
+> > Since the whole point was to support large very large repos, using
+> > inotify was a non-starter, so I removed the Linux version from our
+> > patch series.  For example, the first repo I tried it on (outside of
+> > the test suite) had 25K subdirectories.
+> >
+> > I'm told there is a new fanotify API in recent Linux kernels that is a
+> > better fit for what we need, but we haven't had time to investigate it
+> > yet.
+>
+> That default limit is a bit annoying, but I don't see how it's a blocker
+> in any way.
+
+Let me help you to see it.
+
+So let's assume that you start FSMonitor-enabled Git, with the default
+values. What is going to happen if you have any decently-sized worktree?
+You run out of handles. What then? Throw your hands in the air? Stop
+working? Report incorrect results?
+
+Those are real design challenges, and together with the race problems Jeff
+mentioned, they pose a much bigger obstacle than the rebasing you
+mentioned above.
+
+> You simply adjust the limit. E.g. I deployed and tested the hook version
+> of inotify (using watchman) in a sizable development environment, and
+> written my own code using the API. This was all before fanotify(7)
+> existed. IIRC I set most of the limits to 2^24 or 2^20. I've used it
+> with really large Git repos, including with David Turner's
+> 2015-04-03-1M-git for testing (`git ls-files | wc -l` on that is around
+> a quarter-million).
+>
+> If you have a humongous repository and don't have root on your own
+> machine you're out of luck. But I think most people who'd use this are
+> either using their own laptop, or e.g. in a corporate setting where
+> administrators would tweak the sysctl limits given the performance
+> advantages (as I did).
+
+This conjecture that most people who'd use this are using their own laptop
+or have a corporate setting where administrators would tweak the sysctl
+limits according to engineers' wishes strikes me as totally made up from
+thin air, nothing else.
+
+In other words, I find it an incredibly unconvincing argument.
+
+I prefer not to address the rest of your mail, as I found it not only a
+lengthy tangent (basically trying to talk Jeff into adding Linux support
+in what could have been a much shorter mail), but actively distracting
+from the already long patch series Jeff presented. It is so long, in fact,
+that we had to put in an exemption in GitGitGadget because it is already
+longer than a usually-unreasonable 30 patches. Also, at this point,
+insisting on Linux support (in so many words) is unhelpful.
+
+Let me summarize why I think this is unhelpful: In Git, it is our
+tradition to develop incrementally, for better or worse. Jeff's effort
+brought us to a point where we already have Windows and macOS support,
+i.e. support for the most prevalent development platforms (see e.g.
+https://insights.stackoverflow.com/survey/2020#technology-developers-prima=
+ry-operating-systems).
+We already established multiple obstacles for Linux support, therefore
+demanding Linux support to be included Right Now would increase the patch
+series even further, making it even less reviewable, being even less
+incremental, hold up the current known-to-work-well state, force Jeff to
+work on something he probably cannot work on right now, and therefore
+delaying the entire effort even further.
+
+Ciao,
+Johannes
+
+--8323328-799668434-1625520942=:8230--
